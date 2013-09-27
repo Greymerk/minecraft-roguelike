@@ -1,0 +1,26 @@
+package greymerk.roguelike;
+
+import net.minecraft.src.ItemStack;
+import net.minecraft.src.TileEntityChest;
+
+public class TreasureChestOre extends TreasureChestBase{
+	
+	@Override
+	protected void fillChest(TileEntityChest chest){
+
+		int rank = Dungeon.getRank(posY);
+		int middle;
+		try{
+			middle = chest.getSizeInventory()/2;
+		} catch(NullPointerException e){
+			return;
+		}
+		
+		ItemStack item;
+
+		for (int i = 0; i < 2 + rand.nextInt(2 + rank); i++) {
+			item = ItemLoot.getBlocks(rand, rank);			
+			chest.setInventorySlotContents(rand.nextInt(chest.getSizeInventory()), item);
+		}
+	}
+}
