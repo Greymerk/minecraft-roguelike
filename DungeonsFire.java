@@ -13,13 +13,7 @@ public class DungeonsFire implements IDungeon{
 	@Override
 	public boolean generate(World inWorld, Random inRandom, int inOriginX, int inOriginY, int inOriginZ) {
 
-		BlockRandomizer fillBlocks;
-		
-		fillBlocks = new BlockRandomizer(inRandom, new MetaBlock(Block.stoneBrick.blockID));
-		fillBlocks.addBlock(new MetaBlock(Block.stoneBrick.blockID, 1), 3);
-		fillBlocks.addBlock(new MetaBlock(Block.stoneBrick.blockID, 2), 3);
-		fillBlocks.addBlock(new MetaBlock(Block.cobblestone.blockID, 1), 20);
-		fillBlocks.addBlock(new MetaBlock(Block.gravel.blockID, 1), 30);
+		IBlockFactory fillBlocks = BlockFactoryProvider.getRandomizer(Dungeon.getRank(inOriginY), inRandom);
 		
 		// clear air
 		WorldGenPrimitive.fillRectSolid(inWorld, inOriginX - 6, inOriginY, inOriginZ - 6, inOriginX + 6, inOriginY + 3, inOriginZ + 6, 0);

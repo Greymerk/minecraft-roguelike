@@ -111,20 +111,8 @@ public class CatacombTunneler {
 			return;
 		}
 		
-		BlockRandomizer fillBlocks;
+		IBlockFactory fillBlocks = BlockFactoryProvider.getRandomizer(Dungeon.getRank(y), rand);
 		
-		if(Dungeon.getRank(y) == 3){
-			fillBlocks = new BlockRandomizer(rand, new MetaBlock(Block.netherBrick.blockID));
-			fillBlocks.addBlock(new MetaBlock(Block.netherrack.blockID), 10);
-			fillBlocks.addBlock(new MetaBlock(Block.oreNetherQuartz.blockID), 20);
-		} else {
-			fillBlocks = new BlockRandomizer(rand, new MetaBlock(Block.stoneBrick.blockID));
-			fillBlocks.addBlock(new MetaBlock(Block.stoneBrick.blockID, 1), 3);
-			fillBlocks.addBlock(new MetaBlock(Block.stoneBrick.blockID, 2), 3);
-			fillBlocks.addBlock(new MetaBlock(Block.cobblestone.blockID, 1), 10);
-			fillBlocks.addBlock(new MetaBlock(Block.gravel.blockID, 1), 20);
-		}
-
 		int bridgeBlock = Dungeon.getRank(y) == 3 ? Block.netherrack.blockID : Block.cobblestone.blockID;
 		
 		for (Tuple location : tunnel){

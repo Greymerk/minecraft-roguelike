@@ -29,7 +29,8 @@ public class DungeonsBrick implements IDungeon {
 		originX = inOriginX;
 		originY = inOriginY;
 		originZ = inOriginZ;
-
+		IBlockFactory blocks = BlockFactoryProvider.getRandomizer(Dungeon.getRank(inOriginY), rand);
+		
 		// fill air inside
 		WorldGenPrimitive.fillRectSolid(world, 	originX - LENGTH, originY, originZ - WIDTH,
 												originX + LENGTH, originY + HEIGHT, originZ + WIDTH, 0);
@@ -45,7 +46,7 @@ public class DungeonsBrick implements IDungeon {
 			int y = block.getY();
 			int z = block.getZ();
 			
-			WorldGenPrimitive.setBlock(world, x, y, z, Block.stoneBrick.blockID, rand.nextInt(3), 2, false, true);
+			blocks.setBlock(inWorld, x, y, z, false, true);
 		}
 
 		//floor
@@ -57,13 +58,13 @@ public class DungeonsBrick implements IDungeon {
 			int y = block.getY();
 			int z = block.getZ();
 			
-			WorldGenPrimitive.setBlock(world, x, y, z, Block.stoneBrick.blockID, rand.nextInt(3), 2, false, true);
+			blocks.setBlock(inWorld, x, y, z, false, true);
 		}
 				
 		// roof
 		WorldGenPrimitive.fillRectSolid(world, 	originX - LENGTH - 1, originY + HEIGHT + 1, originZ - WIDTH - 1, 
 				originX + LENGTH + 1, originY + HEIGHT + 1, originZ + WIDTH + 1,
-				Block.stoneBrick.blockID, 0, 2, false, true);
+				blocks, false, true);
 		
 		// Chests
 		List<Coord> space = new ArrayList<Coord>();

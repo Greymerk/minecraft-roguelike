@@ -60,89 +60,89 @@ public enum ItemNovelty {
 		
 		case GREYMERK:
 			item = new ItemStack(Item.axeIron);
-			item.setItemName("§5Greymerk's Hatchet");
-			ItemLoot.setItemLore(item, "§2Made for war");
-			item.addEnchantment(Enchantment.sharpness, 3);
+			ItemLoot.setItemName(item, "Greymerk's Hatchet", TextFormat.DARKPURPLE);
+			ItemLoot.setItemLore(item, "Made for war", TextFormat.DARKGREEN);
+			item.addEnchantment(Enchantment.sharpness, 2);
 			item.addEnchantment(Enchantment.knockback, 1);
-			item.addEnchantment(Enchantment.unbreaking, 3);
+			item.addEnchantment(Enchantment.unbreaking, 100);
 			return item;
 		case GREYMERK2:
 			item = new ItemStack(Item.axeDiamond);
-			item.setItemName("§5Greymerk's Battle-Axe");
-			ItemLoot.setItemLore(item, "§2Made for war");
+			ItemLoot.setItemName(item, "Greymerk's Battle-Axe", TextFormat.DARKPURPLE);
+			ItemLoot.setItemLore(item, "Made for war", TextFormat.DARKGREEN);
 			item.addEnchantment(Enchantment.sharpness, 7);
 			item.addEnchantment(Enchantment.knockback, 2);
-			item.addEnchantment(Enchantment.unbreaking, 10);
+			item.addEnchantment(Enchantment.unbreaking, 100);
 			return item;
 		case ANDERZEL:
 			item = new ItemStack(Item.plateChain);
-			item.setItemName("§5AnderZEL's Battle Garb");
-			ItemLoot.setItemLore(item, "§2Protection against sneaky ninja");
+			ItemLoot.setItemName(item, "AnderZEL's Battle Garb", TextFormat.DARKPURPLE);
+			ItemLoot.setItemLore(item, "Protection against sneaky ninja", TextFormat.DARKGREEN);
 			item.addEnchantment(Enchantment.projectileProtection, 4);
-			item.addEnchantment(Enchantment.unbreaking, 3);
+			item.addEnchantment(Enchantment.unbreaking, 100);
 			return item;
 		case NEBRIS:
 			item = new ItemStack(Item.helmetGold);
-			item.setItemName("§5Nebris' Gold Crown");
-			ItemLoot.setItemLore(item, "§2Dressed for success");
+			ItemLoot.setItemName(item, "Nebris' Gold Crown", TextFormat.DARKPURPLE);
+			ItemLoot.setItemLore(item, "Dressed for success", TextFormat.DARKGREEN);
 			item.addEnchantment(Enchantment.protection, 4);
-			item.addEnchantment(Enchantment.unbreaking, 3);
+			item.addEnchantment(Enchantment.unbreaking, 100);
 			return item;
 		case ZISTEAUPANTS:
 			item = new ItemStack(Item.legsLeather);
-			item.setItemName("§5Zisteau's Man Pants");
-			ItemLoot.setItemLore(item, "§2Yessss, Manpants!");
+			ItemLoot.setItemName(item, "Zisteau's Man Pants", TextFormat.DARKPURPLE);
+			ItemLoot.setItemLore(item, "Yessss, Manpants!", TextFormat.DARKGREEN);
 			item.addEnchantment(Enchantment.fireProtection, 4);
-			item.addEnchantment(Enchantment.unbreaking, 3);
+			item.addEnchantment(Enchantment.unbreaking, 100);
 		case ZISTEAUSIGN:
 			item = new ItemStack(Item.sign);
-			item.setItemName("§5Zistonian Battle Sign");
-			ItemLoot.setItemLore(item, "§2\"Say g'bye spawnah!\"");
+			ItemLoot.setItemName(item, "Zistonian Battle Sign", TextFormat.DARKPURPLE);
+			ItemLoot.setItemLore(item, "\"Say g'bye spawnah!\"", TextFormat.DARKGREEN);
 			item.addEnchantment(Enchantment.sharpness, 1);
 			item.addEnchantment(Enchantment.knockback, 2);
 			item.addEnchantment(Enchantment.fireAspect, 1);
 		case ZISTEAUSIGN2:
 			item = new ItemStack(Item.sign);
-			item.setItemName("§6Zistonian Battle Sign II");
-			ItemLoot.setItemLore(item, "§2\"Say g'bye spawnah!\"");
+			ItemLoot.setItemName(item, "Zistonian Battle Sign II", TextFormat.DARKPURPLE);
+			ItemLoot.setItemLore(item, "\"Say g'bye spawnah!\"", TextFormat.DARKGREEN);
 			item.addEnchantment(Enchantment.sharpness, 5);
 			item.addEnchantment(Enchantment.knockback, 3);
 			item.addEnchantment(Enchantment.fireAspect, 2);	
 		case AVIDYA:
 			item = new ItemStack(Item.bucketMilk);
-			item.setItemName("§5Avidya's white russian");
-			ItemLoot.setItemLore(item, "§2The dude's favourite");
+			ItemLoot.setItemName(item, "Avidya's white russian", TextFormat.DARKPURPLE);
+			ItemLoot.setItemLore(item, "The dude's favourite", TextFormat.DARKGREEN);
 			item.addEnchantment(Enchantment.baneOfArthropods, 4);
 			item.addEnchantment(Enchantment.knockback, 1);
 			item.addEnchantment(Enchantment.fireAspect, 1);
 			return item;
 		case ASHLEA:
 			item = new ItemStack(Item.cookie);
-			item.setItemName("§5Ashlea's Oatmeal Cookie");
-			ItemLoot.setItemLore(item, "§2Perfect for elevensies");
+			ItemLoot.setItemName(item, "Ashlea's Oatmeal Cookie", TextFormat.DARKPURPLE);
+			ItemLoot.setItemLore(item, "Perfect for elevensies", TextFormat.DARKGREEN);
 			item.addEnchantment(Enchantment.sharpness, 2);
 			item.addEnchantment(Enchantment.knockback, 1);
 			return item;
 		case KURT:
 			item = new ItemStack(Item.bootsLeather);
-			item.setItemName("§5Kurt's Farland Travellers");
-			ItemLoot.setItemLore(item, "§2Indeed!");
+			ItemLoot.setItemName(item, "Kurt's Farland Travellers", TextFormat.DARKPURPLE);
+			ItemLoot.setItemLore(item, "Indeed!", TextFormat.DARKGREEN);
 			item.addEnchantment(Enchantment.protection, 2);
 			item.addEnchantment(Enchantment.featherFalling, 2);
-			item.addEnchantment(Enchantment.unbreaking, 3);
+			item.addEnchantment(Enchantment.unbreaking, 100);
 			return item;
 		case AMLP:
 			item = new ItemStack(Item.shears);
-			item.setItemName("§5Amlpian Lascerator");
-			ItemLoot.setItemLore(item, "§2Milbee approved");
+			ItemLoot.setItemName(item, "Amlpian Lascerator", TextFormat.DARKPURPLE);
+			ItemLoot.setItemLore(item, "Milbee approved", TextFormat.DARKGREEN);
 			item.addEnchantment(Enchantment.sharpness, 3);
 			item.addEnchantment(Enchantment.knockback, 2);
 			item.addEnchantment(Enchantment.fireAspect, 1);
 			return item;
 		case CLEO:
 			item = new ItemStack(Item.fishRaw);
-			item.setItemName("§5Cleophian Digging Feesh");
-			ItemLoot.setItemLore(item, "§2Feesh are not efeeshent for digging");
+			ItemLoot.setItemName(item, "Cleophian Digging Feesh", TextFormat.DARKPURPLE);
+			ItemLoot.setItemLore(item, "Feesh are not efeeshent for digging", TextFormat.DARKGREEN);
 			item.addEnchantment(Enchantment.efficiency, 10);
 			item.addEnchantment(Enchantment.knockback, 5);
 			item.addEnchantment(Enchantment.fortune, 10);
@@ -150,166 +150,165 @@ public enum ItemNovelty {
 			return item;
 		case BOOROCKJOB:
 			item = new ItemStack(Item.pickaxeDiamond);
-			item.setItemName("§6BdoubleO's Rock Job");
-			ItemLoot.setItemLore(item, "§2Recovered from hell's blazes");
-			item.addEnchantment(Enchantment.efficiency, 7);
-			item.addEnchantment(Enchantment.unbreaking, 10);
+			ItemLoot.setItemName(item, "BdoubleO's Rock Job", TextFormat.DARKPURPLE);
+			ItemLoot.setItemLore(item, "Recovered from hell's blazes", TextFormat.DARKGREEN);
+			item.addEnchantment(Enchantment.efficiency, 6);
+			item.addEnchantment(Enchantment.unbreaking, 100);
 			return item;
 		case BOODIGJOB:
 			item = new ItemStack(Item.shovelDiamond);
-			item.setItemName("§6BdoubleO's Dig Job");
-			ItemLoot.setItemLore(item, "§2Recovered from hell's blazes");
-			item.addEnchantment(Enchantment.efficiency, 7);
-			item.addEnchantment(Enchantment.unbreaking, 10);
+			ItemLoot.setItemName(item, "BdoubleO's Dig Job", TextFormat.DARKPURPLE);
+			ItemLoot.setItemLore(item, "Recovered from hell's blazes", TextFormat.DARKGREEN);
+			item.addEnchantment(Enchantment.efficiency, 6);
+			item.addEnchantment(Enchantment.unbreaking, 100);
 			return item;
 		case GUUDE:
 			item = new ItemStack(Item.record13);
-			item.setItemName("§5Boulderfistian Golden Record");
-			ItemLoot.setItemLore(item, "§2\"You're Watching Guude Boulderfist...\"");
+			ItemLoot.setItemName(item, "Boulderfistian Golden Record", TextFormat.DARKPURPLE);
+			ItemLoot.setItemLore(item, "\"You're Watching Guude Boulderfist...\"", TextFormat.DARKGREEN);
 			item.addEnchantment(Enchantment.sharpness, 3);
 			item.addEnchantment(Enchantment.knockback, 1);
 			item.addEnchantment(Enchantment.blastProtection, 3);
 			return item;
 		case RLEAHY:
 			item = new ItemStack(Item.bread);
-			item.setItemName("§5Rleahian battle sub");
-			ItemLoot.setItemLore(item, "§2With extra pastrami");
+			ItemLoot.setItemName(item, "Rleahian battle sub", TextFormat.DARKPURPLE);
+			ItemLoot.setItemLore(item, "With extra pastrami", TextFormat.DARKGREEN);
 			item.addEnchantment(Enchantment.sharpness, 2);
 			item.addEnchantment(Enchantment.knockback, 1);
 			item.addEnchantment(Enchantment.fireAspect, 2);
 			return item;
 		case ETHO:
 			item = new ItemStack(Item.pickaxeWood);
-			item.setItemName("§5Etho's First Pick");
-			ItemLoot.setItemLore(item, "§2Barely used...");
+			ItemLoot.setItemName(item, "Etho's First Pick", TextFormat.DARKPURPLE);
+			ItemLoot.setItemLore(item, "Barely used...", TextFormat.DARKGREEN);
 			item.addEnchantment(Enchantment.efficiency, 5);
-			item.addEnchantment(Enchantment.unbreaking, 3);
+			item.addEnchantment(Enchantment.unbreaking, 100);
 			return item;
 		case ENIKOBOW:
 			item = new ItemStack(Item.bow);
-			item.setItemName("§6Eniko's String Theory");
-			ItemLoot.setItemLore(item, "§2For Science!");
-			item.addEnchantment(Enchantment.power, 7);
+			ItemLoot.setItemName(item, "Eniko's String Theory", TextFormat.DARKPURPLE);
+			ItemLoot.setItemLore(item, "For Science!", TextFormat.DARKGREEN);
+			item.addEnchantment(Enchantment.power, 6);
 			item.addEnchantment(Enchantment.knockback, 2);
 			item.addEnchantment(Enchantment.infinity, 1);
-			item.addEnchantment(Enchantment.unbreaking, 10);
+			item.addEnchantment(Enchantment.unbreaking, 100);
 			return item;
 		case ENIKOSWORD:
-			item = new ItemStack(Item.swordDiamond);
-			item.setItemName("§6Eniko's Earring");
-			ItemLoot.setItemLore(item, "§2\"She do the loot take boogie\"");
+			item = new ItemStack(Item.swordGold);
+			ItemLoot.setItemName(item, "Eniko's Earring", TextFormat.DARKPURPLE);
+			ItemLoot.setItemLore(item, "\"She do the loot take boogie\"", TextFormat.DARKGREEN);
 			item.addEnchantment(Enchantment.sharpness, 7);
 			item.addEnchantment(Enchantment.looting, 3);
-			item.addEnchantment(Enchantment.unbreaking, 10);
+			item.addEnchantment(Enchantment.unbreaking, 100);
 			return item;
 		case BAJ:
 			item = new ItemStack(Item.hoeGold);
-			item.setItemName("§5Baj's Last Resort");
-			ItemLoot.setItemLore(item, "§2Watching grass grow");
-			item.addEnchantment(Enchantment.sharpness, 3);
-			item.addEnchantment(Enchantment.knockback, 2);
+			ItemLoot.setItemName(item, "Baj's Last Resort", TextFormat.DARKPURPLE);
+			ItemLoot.setItemLore(item, "Watching grass grow", TextFormat.DARKGREEN);
+			item.addEnchantment(Enchantment.sharpness, 2);
+			item.addEnchantment(Enchantment.knockback, 1);
 			item.addEnchantment(Enchantment.fortune, 5);
 			return item;
 		case DOCM:
 			item = new ItemStack(Item.fishingRod);
-			item.setItemName("§5DocM's Rod of Command");
-			ItemLoot.setItemLore(item, "§2\"Get to the dang land!\"");
+			ItemLoot.setItemName(item, "DocM's Rod of Command", TextFormat.DARKPURPLE);
+			ItemLoot.setItemLore(item, "\"Get to the dang land!\"",  TextFormat.DARKGREEN);
 			item.addEnchantment(Enchantment.sharpness, 3);
 			item.addEnchantment(Enchantment.knockback, 1);
 			return item;
 		case GINGER:
 			item = new ItemStack(Item.chickenCooked);
-			item.setItemName("§5Ginger's Spicy Chicken");
-			ItemLoot.setItemLore(item, "§2Five Alarm");
+			ItemLoot.setItemName(item, "Ginger's Spicy Chicken", TextFormat.DARKPURPLE);
+			ItemLoot.setItemLore(item, "Five Alarm",  TextFormat.DARKGREEN);
 			item.addEnchantment(Enchantment.knockback, 1);
 			item.addEnchantment(Enchantment.fireAspect, 3);
 			item.addEnchantment(Enchantment.sharpness, 1);
 			return item;
 		case VECHS:
 			item = new ItemStack(Item.stick);
-			item.setItemName("§5Vechsing Stick");
-			ItemLoot.setItemLore(item, "§2\"Really?!\"");
+			ItemLoot.setItemName(item, "Vechsing Stick", TextFormat.DARKPURPLE);
+			ItemLoot.setItemLore(item, "\"Really?!\"",  TextFormat.DARKGREEN);
 			return item;
 		case VECHS2:
 			item = new ItemStack(Item.blazeRod);
-			item.setItemName("§6Vechsian Rod");
-			ItemLoot.setItemLore(item, "§2\"Not again!\"");
+			ItemLoot.setItemName(item, "Vechsian Rod", TextFormat.DARKPURPLE);
+			ItemLoot.setItemLore(item, "\"Not again!\"",  TextFormat.DARKGREEN);
 			return item;
 		case NOTCH:
 			item = new ItemStack(Item.appleRed);
-			item.setItemName("§5Notch's apple");
-			ItemLoot.setItemLore(item, "§2Imbued with the creator's power");
+			ItemLoot.setItemName(item, "Notch's apple", TextFormat.DARKPURPLE);
+			ItemLoot.setItemLore(item, "Imbued with the creator's power",  TextFormat.DARKGREEN);
 			item.addEnchantment(Enchantment.sharpness, 10);
 			item.addEnchantment(Enchantment.knockback, 10);
 			return item;
 		case JOHNNYRAGGOT:
 			item = new ItemStack(Item.paper);
-			item.setItemName("§5Johnnyraggot's Loot Card");
-			ItemLoot.setItemLore(item, "§2Depicts a facemelting zombie");
+			ItemLoot.setItemName(item, "Johnnyraggot's Loot Card", TextFormat.DARKPURPLE);
+			ItemLoot.setItemLore(item, "Depicts a facemelting zombie",  TextFormat.DARKGREEN);
 			item.addEnchantment(Enchantment.sharpness, 2);
 			item.addEnchantment(Enchantment.looting, 2);
 			return item;
 		case QUANTUMLEAP:
 			item = new ItemStack(Block.sponge);
-			item.setItemName("§5QuantumLeap's Swiss Cheese");
-			ItemLoot.setItemLore(item, "§2\"Oh boy\"");
+			ItemLoot.setItemName(item, "QuantumLeap's Swiss Cheese", TextFormat.DARKPURPLE);
+			ItemLoot.setItemLore(item, "\"Oh boy\"",  TextFormat.DARKGREEN);
 			item.addEnchantment(Enchantment.sharpness, 4);
 			return item;
 		case MCGAMER:
 			item = new ItemStack(Item.dyePowder, 1, 4);
-			item.setItemName("§5McGamer's Precious");
-			ItemLoot.setItemLore(item, "§2\"Who needs diamonds?\"");
+			ItemLoot.setItemName(item, "McGamer's Precious", TextFormat.DARKPURPLE);
+			ItemLoot.setItemLore(item, "\"Who needs diamonds?\"",  TextFormat.DARKGREEN);
 			item.addEnchantment(Enchantment.sharpness, 2);
 			item.addEnchantment(Enchantment.knockback, 1);
 			return item;
 		case GENERIKB:
 			item = new ItemStack(Item.bakedPotato);
-			item.setItemName("§5GenerikB's Hot Potato");
-			ItemLoot.setItemLore(item, "§2All a hermit needs");
+			ItemLoot.setItemName(item, "GenerikB's Hot Potato", TextFormat.DARKPURPLE);
+			ItemLoot.setItemLore(item, "All a hermit needs",  TextFormat.DARKGREEN);
 			item.addEnchantment(Enchantment.fireAspect, 3);
 			item.addEnchantment(Enchantment.knockback, 1);
 			return item;
 		case PAUSE:
 			item = new ItemStack(Item.bow);
-			item.setItemName("§5Pauseunpause endless repeater");
-			ItemLoot.setItemLore(item, "§2\"OMG WTF\"");
+			ItemLoot.setItemName(item, "Pauseunpause endless repeater", TextFormat.DARKPURPLE);
+			ItemLoot.setItemLore(item, "\"OMG WTF\"",  TextFormat.DARKGREEN);
 			item.addEnchantment(Enchantment.power, 3);
 			item.addEnchantment(Enchantment.flame, 2);
 			item.addEnchantment(Enchantment.infinity, 1);
-			item.addEnchantment(Enchantment.unbreaking, 3);
+			item.addEnchantment(Enchantment.unbreaking, 100);
 			return item;
 		case PAULSOARESJR:
-			item = new ItemStack(Item.shovelIron);
-			item.setItemName("§5Soarian Bonker");
-			ItemLoot.setItemLore(item, "§2\"Aaaaauuaahh!!\"");
+			item = new ItemStack(Item.feather);
+			ItemLoot.setItemName(item, "Soarian Bonker", TextFormat.DARKPURPLE);
+			ItemLoot.setItemLore(item, "\"Aaaaauuaahh!!\"",  TextFormat.DARKGREEN);
 			item.addEnchantment(Enchantment.knockback, 10);
-			item.addEnchantment(Enchantment.unbreaking, 10);
 			return item;
 		case FOURLES:
 			item = new ItemStack(Item.dyePowder, 1, 3);
-			item.setItemName("§5Fourles Darkroast Beans");
-			ItemLoot.setItemLore(item, "§2\"Mmmm... Dark Roast\"");
+			ItemLoot.setItemName(item, "Fourles Darkroast Beans", TextFormat.DARKPURPLE);
+			ItemLoot.setItemLore(item, "\"Mmmm... Dark Roast\"",  TextFormat.DARKGREEN);
 			item.addEnchantment(Enchantment.fireAspect, 2);
 			item.addEnchantment(Enchantment.sharpness, 2);
 			return item;
 		case DINNERBONE:
 			item = new ItemStack(Item.bone, 1);
-			item.setItemName("§5Old Dinnerbone");
-			ItemLoot.setItemLore(item, "§2\"Dang Skellies!\"");
-			item.addEnchantment(Enchantment.sharpness, 5);
+			ItemLoot.setItemName(item, "Old Dinnerbone", TextFormat.DARKPURPLE);
+			ItemLoot.setItemLore(item, "\"Dang Skellies!\"",  TextFormat.DARKGREEN);
+			item.addEnchantment(Enchantment.sharpness, 4);
 			item.addEnchantment(Enchantment.fireAspect, 2);
 			return item;
 		case GRIM:
 			item = new ItemStack(Item.rottenFlesh);
-			item.setItemName("§5Grim's chew-toy");
-			ItemLoot.setItemLore(item, "§2\"Come on Grim, let's do this!\"");
+			ItemLoot.setItemName(item, "Grim's chew-toy", TextFormat.DARKPURPLE);
+			ItemLoot.setItemLore(item, "\"Come on Grim, let's do this!\"",  TextFormat.DARKGREEN);
 			item.addEnchantment(Enchantment.smite, 2);
 			item.addEnchantment(Enchantment.looting, 1);
 			return item;
 		case MMILLSS:
 			item = new ItemStack(Block.cactus);
-			item.setItemName("§5MMillssian spider bane");
-			ItemLoot.setItemLore(item, "§2\"I really don't need anymore string...\"");
+			ItemLoot.setItemName(item, "MMillssian spider bane", TextFormat.DARKPURPLE);
+			ItemLoot.setItemLore(item, "\"I really don't need anymore string...\"",  TextFormat.DARKGREEN);
 			item.addEnchantment(Enchantment.baneOfArthropods, 4);
 			item.addEnchantment(Enchantment.thorns, 2);
 			item.addEnchantment(Enchantment.looting, 1);

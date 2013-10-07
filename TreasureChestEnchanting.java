@@ -9,13 +9,7 @@ public class TreasureChestEnchanting extends TreasureChestBase{
 	@Override
 	protected void fillChest(TileEntityChest chest){
 		int rank = Dungeon.getRank(posY);
-		int middle;
-		try{
-			middle = chest.getSizeInventory()/2;
-		} catch(NullPointerException e){
-			return;
-		}
-		
+		int middle = chest.getSizeInventory()/2;
 				
 		ItemStack item;
 		

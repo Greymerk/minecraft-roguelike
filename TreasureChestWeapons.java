@@ -11,12 +11,7 @@ public class TreasureChestWeapons extends TreasureChestBase{
 		
 		int rank = Dungeon.getRank(posY);
 		
-		int middle;
-		try{
-			middle = chest.getSizeInventory()/2;
-		} catch(NullPointerException e){
-			return;
-		}
+		int middle = chest.getSizeInventory()/2;
 						
 		ItemStack item;
 		

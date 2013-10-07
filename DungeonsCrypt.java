@@ -27,7 +27,7 @@ public class DungeonsCrypt implements IDungeon {
 	public boolean generate(World inWorld, Random inRandom, int inOriginX, int inOriginY, int inOriginZ) {
 		rand = inRandom;
 		world = inWorld;
-		blocks = new BlockFactoryBrick(rand);
+		blocks = BlockFactoryProvider.getRandomizer(Dungeon.getRank(inOriginY), rand);
 		
 		originX = inOriginX;
 		originY = inOriginY;

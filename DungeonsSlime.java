@@ -17,7 +17,7 @@ public class DungeonsSlime implements IDungeon {
 	int originY;
 	int originZ;
 
-	BlockRandomizer fillBlocks;
+	IBlockFactory fillBlocks;
 	int liquid;
 	
 	public DungeonsSlime() {
@@ -32,19 +32,7 @@ public class DungeonsSlime implements IDungeon {
 
 		liquid = Dungeon.getRank(originY) == 3 ? Block.lavaStill.blockID : Block.waterStill.blockID;
 
-		
-		
-		if(Dungeon.getRank(inOriginY) == 3){
-			fillBlocks = new BlockRandomizer(rand, new MetaBlock(Block.netherBrick.blockID));
-			fillBlocks.addBlock(new MetaBlock(Block.netherrack.blockID), 10);
-			fillBlocks.addBlock(new MetaBlock(Block.oreNetherQuartz.blockID), 20);
-		} else {
-			fillBlocks = new BlockRandomizer(rand, new MetaBlock(Block.stoneBrick.blockID));
-			fillBlocks.addBlock(new MetaBlock(Block.stoneBrick.blockID, 1), 3);
-			fillBlocks.addBlock(new MetaBlock(Block.stoneBrick.blockID, 2), 3);
-			fillBlocks.addBlock(new MetaBlock(Block.cobblestone.blockID, 1), 10);
-			fillBlocks.addBlock(new MetaBlock(Block.gravel.blockID, 1), 20);
-		}
+		fillBlocks = BlockFactoryProvider.getRandomizer(Dungeon.getRank(inOriginY), inRandom);
 		
 		
 		// fill air

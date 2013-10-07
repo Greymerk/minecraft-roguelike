@@ -12,12 +12,7 @@ public class TreasureChestSupplies extends TreasureChestBase{
 	@Override
 	protected void fillChest(TileEntityChest chest) {
 
-		int middle;
-		try{
-			middle = chest.getSizeInventory()/2;
-		} catch(NullPointerException e){
-			return;
-		}
+		int middle = chest.getSizeInventory()/2;
 				
 		ItemStack item;
 		

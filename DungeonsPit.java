@@ -22,16 +22,12 @@ public class DungeonsPit implements IDungeon {
 	int dungeonWidth;
 	int woolColor;
 	int numChests;
-	
-	int floorBlock;
-	int wallBlock;
+	IBlockFactory blocks;
 	
 	public DungeonsPit() {
 		dungeonHeight = 3;
 		dungeonLength = 2;
 		dungeonWidth = 2;
-		floorBlock = Block.stoneBrick.blockID;
-		wallBlock = Block.stoneBrick.blockID;
 	}
 
 	public boolean generate(World inWorld, Random inRandom, int inOriginX, int inOriginY, int inOriginZ) {
@@ -41,6 +37,8 @@ public class DungeonsPit implements IDungeon {
 		originY = inOriginY;
 		originZ = inOriginZ;
 
+		blocks = BlockFactoryProvider.getRandomizer(Dungeon.getRank(inOriginY), inRandom);
+		
 		buildWalls();
 		buildFloor();
 		buildRoof();
@@ -125,7 +123,7 @@ public class DungeonsPit implements IDungeon {
 							continue;
 						}
 						
-						WorldGenPrimitive.setBlock(world, blockX, blockY, blockZ, wallBlock);
+						blocks.setBlock(world, blockX, blockY, blockZ);
 						
 					} else {
 						WorldGenPrimitive.setBlock(world, blockX, blockY, blockZ, 0);
@@ -139,13 +137,7 @@ public class DungeonsPit implements IDungeon {
 		
 		for (int blockX = originX - dungeonLength - 1; blockX <= originX + dungeonLength + 1; blockX++){
 			for (int blockZ = originZ - dungeonWidth - 1; blockZ <= originZ + dungeonWidth + 1; blockZ++){
-				if (rand.nextInt(4) == 0) {
-					WorldGenPrimitive.setBlock(world, blockX, originY - 1, blockZ, floorBlock);
-				}
-
-				else {
-					WorldGenPrimitive.setBlock(world, blockX, originY - 1, blockZ, wallBlock);
-				}				
+				blocks.setBlock(world, blockX, originY - 1, blockZ);				
 			}
 		}
 	}
@@ -153,7 +145,7 @@ public class DungeonsPit implements IDungeon {
 	protected void buildRoof(){
 		for (int blockX = originX - dungeonLength - 1; blockX <= originX + dungeonLength + 1; blockX++){
 			for (int blockZ = originZ - dungeonWidth - 1; blockZ <= originZ + dungeonWidth + 1; blockZ++){
-				WorldGenPrimitive.setBlock(world, blockX, originY + dungeonHeight + 1, blockZ, wallBlock);
+				blocks.setBlock(world, blockX, dungeonHeight + 1, blockZ);
 			}
 		}
 	}
@@ -181,7 +173,7 @@ public class DungeonsPit implements IDungeon {
 						|| z == originZ -2
 						|| z == originZ +2){
 						
-						WorldGenPrimitive.setBlock(world, x, y, z, Block.stoneBrick.blockID, rand.nextInt(3), 2, true, true);
+						blocks.setBlock(world, x, y, z, true, true);
 						continue;
 						
 					}

@@ -1020,8 +1020,8 @@ public final class ItemLoot {
 		return armor;
 	}
 	
-    public static void setItemLore(ItemStack item, String loreText)
-    {
+    public static void setItemLore(ItemStack item, String loreText){
+    	
         if (item.stackTagCompound == null)
         {
             item.stackTagCompound = new NBTTagCompound("tag");
@@ -1045,9 +1045,16 @@ public final class ItemLoot {
         
         lore.appendTag(toAdd);
         
-        display.setTag("Lore", lore);
-        
-        
+        display.setTag("Lore", lore);   
     }
+    
+    public static void setItemLore(ItemStack item, String loreText, TextFormat option){
+    	setItemLore(item, TextFormat.apply(loreText, option));
+    }
+    
+    public static void setItemName(ItemStack item, String name, TextFormat option){
+    	item.setItemName(TextFormat.apply(name, option));
+    }
+    
 	
 }

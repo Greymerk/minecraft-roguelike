@@ -9,12 +9,7 @@ public class TreasureChestPotions extends TreasureChestBase{
 	
 	@Override
 	protected void fillChest(TileEntityChest chest){
-		int middle;
-		try{
-			middle = chest.getSizeInventory()/2;
-		} catch(NullPointerException e){
-			return;
-		}
+		int middle = chest.getSizeInventory()/2;
 		
 		chest.setInventorySlotContents(middle - 1, Potion.getRandom(rand, Dungeon.getRank(posY)));
 

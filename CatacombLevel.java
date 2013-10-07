@@ -78,6 +78,8 @@ public class CatacombLevel {
 		// shell
 		List<Coord> shell = WorldGenPrimitive.getRectHollow(originX - 4, originY - 1, originZ - 4, originX + 4, originY + 16, originZ + 4);
 
+		IBlockFactory blocks = BlockFactoryProvider.getRandomizer(Dungeon.getRank(originY), rand);
+		
 		for (Coord block : shell){
 			
 			int x = block.getX();
@@ -86,13 +88,13 @@ public class CatacombLevel {
 			
 			// floor & ceiling
 			if(y == originY - 1 || y == originY + 26){
-				WorldGenPrimitive.setBlock(world, x, y, z, Block.stoneBrick.blockID, rand.nextInt(3), 2, true, true);
+				blocks.setBlock(world, x, y, z, true, true);
 			}
 			
 			if(world.isAirBlock(x, y, z) && y < originY + 9){
 				WorldGenPrimitive.setBlock(world, x, y, z, Block.fenceIron.blockID);
 			} else {
-				WorldGenPrimitive.setBlock(world, x, y, z, Block.stoneBrick.blockID, rand.nextInt(3), 2, false, true);
+				blocks.setBlock(world, x, y, z, false, true);
 			}
 		
 			
@@ -100,7 +102,7 @@ public class CatacombLevel {
 		
 		
 		// middle floor
-		WorldGenPrimitive.fillRectHollow(world, originX - 4, originY + 9, originZ - 4, originX + 4, originY + 9, originZ + 4, Block.stoneBrick.blockID);
+		WorldGenPrimitive.fillRectHollow(world, originX - 4, originY + 9, originZ - 4, originX + 4, originY + 9, originZ + 4, blocks, true, true);
 		
 		for (int y = originY; y <= originY + 9; y++){
 			WorldGenPrimitive.spiralStairStep(world, originX, y, originZ);

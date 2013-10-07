@@ -14,14 +14,7 @@ public class TreasureChestStarter extends TreasureChestBase{
 	@Override
 	protected void fillChest(TileEntityChest chest) {
 
-		int size;
-		
-		int middle;
-		try{
-			size = chest.getSizeInventory();
-		} catch(NullPointerException e){
-			return;
-		}
+		int size = chest.getSizeInventory();
 				
 		int quantity = 20;
 

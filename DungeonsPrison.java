@@ -9,7 +9,7 @@ public class DungeonsPrison implements IDungeon {
 
 	World world;
 	Random rand;
-	BlockFactoryBrick blocks;
+	IBlockFactory blocks;
 	
 	public DungeonsPrison(){}
 	
@@ -19,7 +19,7 @@ public class DungeonsPrison implements IDungeon {
 		world = inWorld;
 		rand = inRandom;
 		
-		blocks = new BlockFactoryBrick(rand);
+		blocks = BlockFactoryProvider.getRandomizer(Dungeon.getRank(inOriginY), inRandom);
 		
 		// clear air
 		WorldGenPrimitive.fillRectSolid(inWorld, inOriginX - 7, inOriginY, inOriginZ - 7, inOriginX + 7, inOriginY + 3, inOriginZ + 7, 0);

@@ -45,13 +45,13 @@ public enum ItemSpecialty {
 			item = new ItemStack(Item.shovelDiamond);
 			item.addEnchantment(Enchantment.efficiency, 3 + rand.nextInt(3));
 			item.addEnchantment(Enchantment.unbreaking, getUnbreakingLevel(rank, rand));
-			item.setItemName("§eSoulsand Spade");
+			item.setItemName("Soulsand Spade");
 			return item;
 		} else {
 			item = new ItemStack(Item.shovelIron);
 			item.addEnchantment(Enchantment.efficiency, 1 + rand.nextInt(2));
 			item.addEnchantment(Enchantment.unbreaking, getUnbreakingLevel(rank, rand));
-			item.setItemName("§eGrave Spade");
+			item.setItemName("Grave Spade");
 			return item;
 		}
 	}
@@ -63,13 +63,13 @@ public enum ItemSpecialty {
 			item = new ItemStack(Item.axeDiamond);
 			item.addEnchantment(Enchantment.efficiency, 3 + rand.nextInt(3));
 			item.addEnchantment(Enchantment.unbreaking, getUnbreakingLevel(rank, rand));
-			item.setItemName("§eHellsteel Axe");
+			item.setItemName("Hellsteel Axe");
 			return item;
 		} else {
 			item = new ItemStack(Item.axeIron);
 			item.addEnchantment(Enchantment.efficiency, 1 + rand.nextInt(2));
 			item.addEnchantment(Enchantment.unbreaking, getUnbreakingLevel(rank, rand));
-			item.setItemName("§eLumberjack's Hatchet");
+			item.setItemName("Lumberjack's Hatchet");
 			return item;
 		}
 		
@@ -86,15 +86,15 @@ public enum ItemSpecialty {
 			item.addEnchantment(Enchantment.unbreaking, getUnbreakingLevel(rank, rand));
 			if(rand.nextInt(10) == 0){
 				item.addEnchantment(Enchantment.silkTouch, 1);
-				item.setItemName("§eCrystal Pick of Precision");
+				item.setItemName("Crystal Pick of Precision");
 				return item;
 			}
 			if(rand.nextInt(10) == 0){
 				item.addEnchantment(Enchantment.fortune, 2 + rand.nextInt(2));
-				item.setItemName("§eCrystal Pick of Prospecting");
+				item.setItemName("Crystal Pick of Prospecting");
 				return item;
 			}
-			item.setItemName("§eCrystal Pick");
+			item.setItemName("Crystal Pick");
 			return item;
 		} else {
 			item = new ItemStack(Item.pickaxeIron);
@@ -102,15 +102,15 @@ public enum ItemSpecialty {
 			item.addEnchantment(Enchantment.unbreaking, getUnbreakingLevel(rank, rand));
 			if(rand.nextInt(10) == 0){
 				item.addEnchantment(Enchantment.silkTouch, 1);
-				item.setItemName("§eCase Hardened Pick of Precision");
+				item.setItemName("Case Hardened Pick of Precision");
 				return item;
 			}
 			if(rand.nextInt(10) == 0){
 				item.addEnchantment(Enchantment.fortune, 1 + rand.nextInt(3));
-				item.setItemName("§eCase Hardened Pick of Prospecting");
+				item.setItemName("Case Hardened Pick of Prospecting");
 				return item;
 			}
-			item.setItemName("§eCase Hardened Pick");
+			item.setItemName("Case Hardened Pick");
 			return item;
 		}
 		
@@ -126,20 +126,20 @@ public enum ItemSpecialty {
 			if(rand.nextInt(10) == 0){
 				item.addEnchantment(Enchantment.looting, 2 + rand.nextInt(2));
 				item.addEnchantment(Enchantment.unbreaking, getUnbreakingLevel(rank, rand));
-				item.setItemName("§eEldritch Blade of Plundering");
-				ItemLoot.setItemLore(item, "§2The loot taker");
+				item.setItemName("Eldritch Blade of Plundering");
+				ItemLoot.setItemLore(item, "The loot taker", TextFormat.DARKGREEN);
 				return item;
 			}
 			if(rand.nextInt(10) == 0){
 				item.addEnchantment(Enchantment.fireAspect, 2 + rand.nextInt(2));
 				item.addEnchantment(Enchantment.unbreaking, getUnbreakingLevel(rank, rand));
-				item.setItemName("§eEldritch Blade of the Inferno");
-				ItemLoot.setItemLore(item, "§2From the fiery depths");
+				item.setItemName("Eldritch Blade of the Inferno");
+				ItemLoot.setItemLore(item, "From the fiery depths", TextFormat.DARKGREEN);
 				return item;
 			}
 			item.addEnchantment(Enchantment.unbreaking, rank == 3 ? 3 : 1 + rand.nextInt(2));
-			item.setItemName("§eEldritch Blade");
-			ItemLoot.setItemLore(item, "§2Rune Etched");
+			item.setItemName("Eldritch Blade");
+			ItemLoot.setItemLore(item, "Rune Etched", TextFormat.DARKGREEN);
 			return item;
 		} else {
 			item = new ItemStack(Item.swordIron);
@@ -147,8 +147,8 @@ public enum ItemSpecialty {
 				item.addEnchantment(Enchantment.sharpness, 1);
 			}
 			item.addEnchantment(Enchantment.unbreaking, getUnbreakingLevel(rank, rand));
-			item.setItemName("§eTempered Blade");
-			ItemLoot.setItemLore(item, "§2Highly Durable");
+			item.setItemName("Tempered Blade");
+			ItemLoot.setItemLore(item, "Highly Durable", TextFormat.DARKGREEN);
 			return item;
 		}
 		
@@ -162,14 +162,14 @@ public enum ItemSpecialty {
 		case 0:
 			item.addEnchantment(Enchantment.power, 1 + rand.nextInt(3));
 			item.addEnchantment(Enchantment.unbreaking, 1);
-			item.setItemName("§eYew Longbow");
-			ItemLoot.setItemLore(item, "§2Superior craftsmanship");
+			item.setItemName("Yew Longbow");
+			ItemLoot.setItemLore(item, "Superior craftsmanship", TextFormat.DARKGREEN);
 			return item;
 		case 1:
 			item.addEnchantment(Enchantment.power, 1 + rand.nextInt(3));
 			item.addEnchantment(Enchantment.unbreaking, 1 + rand.nextInt(3));
-			item.setItemName("§eLaminated Bow");
-			ItemLoot.setItemLore(item, "§2Highly polished");
+			item.setItemName("Laminated Bow");
+			ItemLoot.setItemLore(item, "Highly polished", TextFormat.DARKGREEN);
 			return item;
 		case 2:
 			item.addEnchantment(Enchantment.power, 3 + rand.nextInt(3));
@@ -177,16 +177,16 @@ public enum ItemSpecialty {
 				item.addEnchantment(Enchantment.infinity, 1);
 			}
 			item.addEnchantment(Enchantment.unbreaking, 1 + rand.nextInt(3));
-			item.setItemName("§eRecurve Bow");
-			ItemLoot.setItemLore(item, "§2Beautifully crafted");
+			item.setItemName("Recurve Bow");
+			ItemLoot.setItemLore(item, "Beautifully crafted", TextFormat.DARKGREEN);
 			return item;
 		case 3:
 			item.addEnchantment(Enchantment.power, 3 + rand.nextInt(3));
 			item.addEnchantment(Enchantment.flame, 1);
 			item.addEnchantment(Enchantment.infinity, 1);
 			item.addEnchantment(Enchantment.unbreaking, getUnbreakingLevel(rank, rand));
-			item.setItemName("§eEldritch Bow");
-			ItemLoot.setItemLore(item, "§2Warm to the touch");
+			item.setItemName("Eldritch Bow");
+			ItemLoot.setItemLore(item, "Warm to the touch", TextFormat.DARKGREEN);
 			return item;
 		default:
 			return null;
@@ -242,7 +242,7 @@ public enum ItemSpecialty {
 		
 		item.addEnchantment(Enchantment.unbreaking, getUnbreakingLevel(rank, rand));
 		
-		String name = "§e" + getArmourPrefix(rank) + " " + canonical + " " + suffix;
+		String name = getArmourPrefix(rank) + " " + canonical + " " + suffix;
 		item.setItemName(name);
 		return item;
 	}
@@ -295,7 +295,7 @@ public enum ItemSpecialty {
 		
 		item.addEnchantment(Enchantment.unbreaking, getUnbreakingLevel(rank, rand));
 		
-		String name = "§e" + getArmourPrefix(rank) + " " + canonical + " " + suffix;
+		String name = getArmourPrefix(rank) + " " + canonical + " " + suffix;
 		item.setItemName(name);
 		return item;
 	}
@@ -346,7 +346,7 @@ public enum ItemSpecialty {
 		
 		item.addEnchantment(Enchantment.unbreaking, getUnbreakingLevel(rank, rand));
 		
-		String name = "§e" + getArmourPrefix(rank) + " " + canonical + " " + suffix;
+		String name = getArmourPrefix(rank) + " " + canonical + " " + suffix;
 		item.setItemName(name);
 		return item;
 	}
@@ -397,7 +397,7 @@ public enum ItemSpecialty {
 		
 		item.addEnchantment(Enchantment.unbreaking, getUnbreakingLevel(rank, rand));
 		
-		String name = "§e" + getArmourPrefix(rank) + " " + canonical + " " + suffix;
+		String name = getArmourPrefix(rank) + " " + canonical + " " + suffix;
 		item.setItemName(name);
 		return item;
 	}
@@ -433,7 +433,6 @@ public enum ItemSpecialty {
 	}
 	
 	private static String getArmourPrefix(int rank){
-		String prefix = "";
 		
 		switch(rank){
 		case 0:

@@ -37,12 +37,21 @@ public abstract class TreasureChestBase implements ITreasureChest{
 		
 		chest = (TileEntityChest) world.getBlockTileEntity(posX, posY, posZ);
 		
-		for (int i = 0; i < 15; i++) {
-			ItemStack item = ItemLoot.getJunk(rand, Dungeon.getRank(posY));
-			chest.setInventorySlotContents(rand.nextInt(chest.getSizeInventory()), item);
+		try{
+			
+			for (int i = 0; i < 15; i++) {
+				ItemStack item = ItemLoot.getJunk(rand, Dungeon.getRank(posY));
+				chest.setInventorySlotContents(rand.nextInt(chest.getSizeInventory()), item);
+			}
+			
+			fillChest(chest);
+			
+		} catch(NullPointerException e){
+			return false;
 		}
 		
-		fillChest(chest);
+
+		
 
 		return true;
 	}
@@ -54,6 +63,4 @@ public abstract class TreasureChestBase implements ITreasureChest{
 	
 	protected abstract void fillChest(TileEntityChest chest);
 	
-
-
 }
