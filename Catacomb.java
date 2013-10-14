@@ -3,6 +3,7 @@ package greymerk.roguelike;
 import java.util.ArrayList;
 import java.util.Random;
 
+import net.minecraft.src.BiomeGenBase;
 import net.minecraft.src.Block;
 import net.minecraft.src.World;
 
@@ -50,6 +51,46 @@ public class Catacomb {
 		tower.generate();
 		
 		
+	}
+	
+	public static boolean canSpawn(int chunkX, int chunkZ, World world){
+		
+		chunkX -= 4;
+		
+		int x = chunkX * 16;
+		int z = chunkZ * 16;
+		
+		BiomeGenBase[] invalidBiomes = {BiomeGenBase.ocean, BiomeGenBase.frozenOcean, BiomeGenBase.extremeHills, BiomeGenBase.iceMountains, BiomeGenBase.jungleHills};
+		BiomeGenBase localBiome = world.getBiomeGenForCoords(x, z);
+
+		for(BiomeGenBase biome : invalidBiomes){
+			if(biome == localBiome){
+				return false;
+			}
+		}
+
+		int min = 8;
+		int max = 32;
+		
+		int tempX = chunkX < 0 ? chunkX - (max - 1) : chunkX;
+		int tempZ = chunkZ < 0 ? chunkZ - (max - 1) : chunkZ;
+
+		int m = tempX / max;
+		int n = tempZ / max;
+		
+		Random r = world.setRandomSeed(m, n, 10387312);
+		
+		m *= max;
+		n *= max;
+		
+		m += r.nextInt(max - min);
+		n += r.nextInt(max - min);
+		
+		if(!(chunkX == m && chunkZ == n)){
+			return false;
+		}
+		
+		return true;
 	}
 	
 	
