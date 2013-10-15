@@ -13,14 +13,12 @@ public class Catacomb {
 	public static final int DEPTH = 5;
 	public static final int VERTICAL_SPACING = 10;
 	public static final int TOPLEVEL = 50;
-	private Dungeon dungeons;
 	private Random rand;
 	private CatacombNode previous;
 	
 	public Catacomb(World world, Random rand){
 		 this.world = world;
 		 this.rand = rand;
-		 this.dungeons = new Dungeon(world, rand);
 		 this.previous = null;
 	}
 	
@@ -33,7 +31,7 @@ public class Catacomb {
 		// generate levels
 		while(y > DEPTH){
 			
-			CatacombLevel level = new CatacombLevel(world, rand, dungeons, x, y, z);
+			CatacombLevel level = new CatacombLevel(world, rand, x, y, z);
 	
 			while(!level.isDone()){
 				level.update();

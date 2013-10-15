@@ -1,6 +1,7 @@
 package greymerk.roguelike;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -15,7 +16,6 @@ public class CatacombLevel {
 	
 	private World world;
 	private Random rand;
-	private Dungeon dungeons;
 	private CatacombNode start;
 	private CatacombNode end;
 	private List<CatacombNode> nodes;
@@ -25,10 +25,9 @@ public class CatacombLevel {
 	private boolean done;
 	
 	
-	public CatacombLevel(World world, Random rand, Dungeon dungeons, int originX, int originY, int originZ){
+	public CatacombLevel(World world, Random rand, int originX, int originY, int originZ){
 		this.world = world;
 		this.rand = rand;
-		this.dungeons = dungeons;
 		this.nodes = new ArrayList<CatacombNode>();
 		
 		this.originX = originX;
@@ -46,7 +45,9 @@ public class CatacombLevel {
 			node.construct(world);
 		}
 
-		boolean start = false;
+		IDungeonFactory rooms = Dungeon.getFactory(rand, Dungeon.getRank(originY));
+		
+		Collections.shuffle(nodes);
 		
 		// node dungeons
 		for (CatacombNode node : nodes){
@@ -61,11 +62,10 @@ public class CatacombLevel {
 			
 			if(node == this.start){
 				generateLevelLink(world, rand, x, y, z);
-				start = true;
 				continue;
 			}
 
-			dungeons.pickCatacombDungeon(y).generate(world, rand, x, y, z);
+			rooms.get().generate(world, rand, x, y, z);
 					
 		}		
 	}
