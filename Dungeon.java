@@ -26,6 +26,7 @@ public enum Dungeon {
 		case PIT: return new DungeonsPit();
 		case PRISON: return new DungeonsPrison();
 		case SLIME: return new DungeonsSlime();
+		case SMITH: return new DungeonsSmithy();
 		case SPIDER: return new DungeonsSpiderNest();
 		case CAKE: return new DungeonsWood();
 		default: return new DungeonsBase();
@@ -72,99 +73,30 @@ public enum Dungeon {
 	public static IDungeon pickCaveDungeon(Random rand, int posY) {	
 		
 		switch(getRank(posY)){
-		
 		case 3:
-
 			if(rand.nextInt(10) == 0){
 				return getInstance(SPIDER);
 			}
-			
 			if(rand.nextInt(10) == 0){
-				return new DungeonsCreeperDen();
+				return getInstance(CREEPER);
 			}
-			
-			return new DungeonsBase();
-
+			return getInstance(BASE);
 		case 2:
-			
 			if(rand.nextInt(20) == 0){
-				return new DungeonsSpiderNest();
+				return getInstance(SPIDER);
 			}
-			
 			if(rand.nextInt(20) == 0){
-				return new DungeonsCreeperDen();
+				return getInstance(CREEPER);
 			}
-			
-			return new DungeonsBase();
-		
+			return getInstance(BASE);
 		case 1:
-		
-			return new DungeonsBase();
-
-		
+			return getInstance(BASE);
 		case 0:
-			
-			return new DungeonsBase();
-			
-		
+			return getInstance(BASE);
 		default:
-			return new DungeonsBase();
+			return getInstance(BASE);
 		}
-		
-
-	}
-	
-	public static IDungeonFactory getFactory(Random rand, int rank){
-		
-		DungeonFactory factory;
-		
-		switch(rank){
-		case 0:
-			factory = new DungeonFactory(rand, rank, BRICK);
-			factory.addSingle(ENCHANT);
-			factory.addSingle(SMITH);
-			factory.addSingle(MUSIC);
-			factory.addSingle(PIT);
-			factory.addRandom(CAKE, 15);
-			factory.addRandom(SLIME, 20);
-			factory.addRandom(FIRE, 30);
-			break;
-		case 1:
-			factory = new DungeonFactory(rand, rank, BRICK);
-			factory.addSingle(ENDER);
-			factory.addSingle(SPIDER);
-			factory.addSingle(CREEPER);
-			factory.addSingle(CRYPT);
-			factory.addSingle(PRISON);
-			factory.addRandom(FIRE, 20);
-			factory.addRandom(PIT, 30);
-			break;
-		case 2:
-			factory = new DungeonFactory(rand, rank, BRICK);
-			factory.addSingle(ENDER);
-			factory.addRandom(FIRE, 20);
-			factory.addRandom(CRYPT, 20);
-			factory.addRandom(PRISON, 20);
-			factory.addRandom(SPIDER, 20);
-			factory.addRandom(CREEPER, 30);
-			factory.addRandom(PIT, 30);
-			factory.addRandom(FIRE, 30);
-			break;
-		case 3:
-			factory = new DungeonFactory(rand, rank, NETHER);
-			factory.addRandom(NETHERFORT, 20);
-			factory.addRandom(SLIME, 30);
-			factory.addRandom(SPIDER, 40);
-			factory.addRandom(FIRE, 50);
-			break;
-		default:
-			factory = new DungeonFactory(rand, rank, BRICK);
-		}
-		
-		
-		return factory;
-	}
-	
+	}	
 	
 	public static int getRank(int y){
 		

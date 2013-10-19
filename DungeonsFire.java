@@ -55,8 +55,8 @@ public class DungeonsFire implements IDungeon{
 		WorldGenPrimitive.setBlock(inWorld, inOriginX - 5, inOriginY, inOriginZ + 5, Block.netherrack.blockID);
 		WorldGenPrimitive.setBlock(inWorld, inOriginX - 5, inOriginY + 1, inOriginZ + 5, Block.fire.blockID);
 		
-		WorldGenPrimitive.fillRectSolid(inWorld, inOriginX - 3, inOriginY + 3, inOriginZ + 5, inOriginX - 3, inOriginY + 3, inOriginZ + 6, Block.stoneBrick.blockID);
-		WorldGenPrimitive.fillRectSolid(inWorld, inOriginX - 6, inOriginY + 3, inOriginZ + 3, inOriginX - 5, inOriginY + 3, inOriginZ + 3, Block.stoneBrick.blockID);
+		WorldGenPrimitive.fillRectSolid(inWorld, inOriginX - 3, inOriginY + 3, inOriginZ + 5, inOriginX - 3, inOriginY + 3, inOriginZ + 6, fillBlocks);
+		WorldGenPrimitive.fillRectSolid(inWorld, inOriginX - 6, inOriginY + 3, inOriginZ + 3, inOriginX - 5, inOriginY + 3, inOriginZ + 3, fillBlocks);
 		
 		//column 3
 		WorldGenPrimitive.fillRectHollow(inWorld, inOriginX + 4, inOriginY, inOriginZ - 6, inOriginX + 6, inOriginY + 6, inOriginZ - 4, fillBlocks, true, true);

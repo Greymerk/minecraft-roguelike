@@ -10,8 +10,6 @@ import net.minecraft.src.World;
 
 public class CatacombLevel {
 
-	public static final int MAX_NODES = 60;
-	public static final int RANGE = 80;
 	public static final int SCATTER = 12;
 	
 	private World world;
@@ -23,20 +21,32 @@ public class CatacombLevel {
 	private int originY;
 	private int originZ;
 	private boolean done;
+	private int maxNodes;
+	private int range;
 	
 	
 	public CatacombLevel(World world, Random rand, int originX, int originY, int originZ){
 		this.world = world;
 		this.rand = rand;
 		this.nodes = new ArrayList<CatacombNode>();
-		
+				
 		this.originX = originX;
 		this.originY = originY;
 		this.originZ = originZ;
 		
+		maxNodes = 60;
+		range = 80;
+		
 		start = new CatacombNode(world, rand, this, originX, originY, originZ);
 		nodes.add(start);
-	}	
+	}
+	
+	public CatacombLevel(World world, Random rand, int originX, int originY, int originZ, int maxNodes, int range){
+		this(world, rand, originX, originY, originZ);
+		
+		this.maxNodes = maxNodes;
+		this.range = range;
+	}
 	
 	public void generate(){
 		
@@ -45,7 +55,7 @@ public class CatacombLevel {
 			node.construct(world);
 		}
 
-		IDungeonFactory rooms = Dungeon.getFactory(rand, Dungeon.getRank(originY));
+		IDungeonFactory rooms = Catacomb.getFactory(rand, Dungeon.getRank(originY));
 		
 		Collections.shuffle(nodes);
 		
@@ -164,7 +174,7 @@ public class CatacombLevel {
 		int zrel = Math.abs(this.originZ - z);
 		
 		int dist = (int) Math.sqrt((float)(xrel * xrel + zrel * zrel));
-		return dist < RANGE;
+		return dist < this.range;
 	}
 	
 	public int distance(CatacombNode aNode, CatacombNode other){
@@ -203,7 +213,7 @@ public class CatacombLevel {
 	}
 	
 	public boolean full(){
-		return this.nodes.size() >= MAX_NODES;
+		return this.nodes.size() >= this.maxNodes;
 	}
 	
 	public int nodeCount(){

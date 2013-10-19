@@ -31,7 +31,13 @@ public class Catacomb {
 		// generate levels
 		while(y > DEPTH){
 			
-			CatacombLevel level = new CatacombLevel(world, rand, x, y, z);
+			CatacombLevel level;
+			
+			if(Dungeon.getRank(y) == 0){
+				level = new CatacombLevel(world, rand, x, y, z, 20, 40);
+			} else {
+				level = new CatacombLevel(world, rand, x, y, z);
+			}
 	
 			while(!level.isDone()){
 				level.update();
@@ -42,7 +48,7 @@ public class Catacomb {
 			x = end.getX();
 			y = y - VERTICAL_SPACING;
 			z = end.getZ();
-			
+
 		} 
 		
 		CatacombTower tower = new CatacombTower(world, rand, inX, TOPLEVEL, inZ);
@@ -89,6 +95,58 @@ public class Catacomb {
 		}
 		
 		return true;
+	}
+	
+	public static IDungeonFactory getFactory(Random rand, int rank){
+		
+		DungeonFactory factory;
+		
+		switch(rank){
+		case 0:
+			factory = new DungeonFactory(rand, Dungeon.BRICK);
+			factory.addSingle(Dungeon.ENCHANT);
+			factory.addSingle(Dungeon.SMITH);
+			factory.addSingle(Dungeon.MUSIC);
+			factory.addSingle(Dungeon.FIRE);
+			factory.addSingle(Dungeon.CAKE);
+			factory.addRandom(Dungeon.CAKE, 20);
+			factory.addRandom(Dungeon.SLIME, 20);
+			break;
+		case 1:
+			factory = new DungeonFactory(rand, Dungeon.BRICK);
+			factory.addSingle(Dungeon.ENDER);
+			factory.addSingle(Dungeon.SPIDER);
+			factory.addSingle(Dungeon.CREEPER);
+			factory.addSingle(Dungeon.CRYPT);
+			factory.addSingle(Dungeon.PRISON);
+			factory.addRandom(Dungeon.FIRE, 20);
+			factory.addRandom(Dungeon.PIT, 30);
+			factory.addRandom(Dungeon.SLIME, 30);
+			break;
+		case 2:
+			factory = new DungeonFactory(rand, Dungeon.BRICK);
+			factory.addSingle(Dungeon.ENDER);
+			factory.addRandom(Dungeon.FIRE, 20);
+			factory.addRandom(Dungeon.CRYPT, 20);
+			factory.addRandom(Dungeon.PRISON, 20);
+			factory.addRandom(Dungeon.SPIDER, 20);
+			factory.addRandom(Dungeon.PIT, 20);
+			factory.addRandom(Dungeon.CREEPER, 30);
+			factory.addRandom(Dungeon.FIRE, 30);
+			break;
+		case 3:
+			factory = new DungeonFactory(rand, Dungeon.NETHER);
+			factory.addRandom(Dungeon.NETHERFORT, 20);
+			factory.addRandom(Dungeon.SLIME, 30);
+			factory.addRandom(Dungeon.SPIDER, 40);
+			factory.addRandom(Dungeon.FIRE, 50);
+			break;
+		default:
+			factory = new DungeonFactory(rand, Dungeon.BRICK);
+		}
+		
+		
+		return factory;
 	}
 	
 	

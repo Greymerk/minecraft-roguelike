@@ -2,7 +2,9 @@ package greymerk.roguelike;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import net.minecraft.src.Block;
@@ -14,8 +16,49 @@ public enum ItemNovelty {
 
 	GREYMERK, GREYMERK2, ANDERZEL, NEBRIS, ZISTEAUPANTS, ZISTEAUSIGN, ZISTEAUSIGN2, AVIDYA, ASHLEA, KURT, AMLP,
 	CLEO, ENIKOSWORD, ENIKOBOW, BOOROCKJOB, BOODIGJOB, GUUDE, RLEAHY, ETHO, BAJ, DOCM, GINGER, VECHS, VECHS2,
-	NOTCH, JOHNNYRAGGOT, QUANTUMLEAP, MCGAMER, GENERIKB, PAUSE, PAULSOARESJR, FOURLES, DINNERBONE, GRIM, MMILLSS;
+	NOTCH, JOHNNYRAGGOT, QUANTUMLEAP, MCGAMER, GENERIKB, PAUSE, PAULSOARESJR, FOURLES, DINNERBONE, GRIM, MMILLSS, MILLBEE;
 		
+	public static final Map<String, ItemNovelty> names;
+	static {
+		names = new HashMap<String, ItemNovelty>();
+		names.put("greymerk", ItemNovelty.GREYMERK);
+		names.put("greymerk2", ItemNovelty.GREYMERK2);
+		names.put("anderzel", ItemNovelty.ANDERZEL);
+		names.put("nebris", ItemNovelty.NEBRIS);
+		names.put("zisteaupants", ItemNovelty.ZISTEAUPANTS);
+		names.put("zisteausign", ItemNovelty.ZISTEAUSIGN);
+		names.put("zisteausign2", ItemNovelty.ZISTEAUSIGN2);
+		names.put("avidya", ItemNovelty.AVIDYA);
+		names.put("ashlea", ItemNovelty.ASHLEA);
+		names.put("kurt", ItemNovelty.KURT);
+		names.put("amlp", ItemNovelty.AMLP);
+		names.put("cleo", ItemNovelty.CLEO);
+		names.put("enikosword", ItemNovelty.ENIKOSWORD);
+		names.put("enikobow", ItemNovelty.ENIKOBOW);
+		names.put("boorockjob", ItemNovelty.BOOROCKJOB);
+		names.put("boodigjob", ItemNovelty.BOODIGJOB);
+		names.put("guude", ItemNovelty.GUUDE);
+		names.put("rleahy", ItemNovelty.RLEAHY);
+		names.put("etho", ItemNovelty.ETHO);
+		names.put("baj", ItemNovelty.BAJ);
+		names.put("docm", ItemNovelty.DOCM);
+		names.put("ginger", ItemNovelty.GINGER);
+		names.put("vechs", ItemNovelty.VECHS);
+		names.put("vechs2", ItemNovelty.VECHS2);
+		names.put("notch", ItemNovelty.NOTCH);
+		names.put("johnnyraggot", ItemNovelty.JOHNNYRAGGOT);
+		names.put("quantumleap", ItemNovelty.QUANTUMLEAP);
+		names.put("mcgamer", ItemNovelty.MCGAMER);
+		names.put("generikb", ItemNovelty.GENERIKB);
+		names.put("pause", ItemNovelty.PAUSE);
+		names.put("paulsoaresjr", ItemNovelty.PAULSOARESJR);
+		names.put("fourles", ItemNovelty.FOURLES);
+		names.put("dinnerbone", ItemNovelty.DINNERBONE);
+		names.put("grim", ItemNovelty.GRIM);
+		names.put("mmillss", ItemNovelty.MMILLSS);
+		names.put("millbee", ItemNovelty.MILLBEE);
+	};
+	
 	private static final int SIZE = ItemNovelty.values().length;
 	private static ItemNovelty[] RANK0 = {
 		GRIM, MMILLSS, DOCM, ZISTEAUPANTS, ZISTEAUSIGN, ASHLEA, MCGAMER
@@ -51,6 +94,9 @@ public enum ItemNovelty {
 		}
 	}
 	
+	public static ItemStack getItemByName(String name){
+		return getItem(names.get(name));
+	}
 	
 	public static ItemStack getItem(ItemNovelty choice){
 		
@@ -130,11 +176,12 @@ public enum ItemNovelty {
 			item.addEnchantment(Enchantment.protection, 2);
 			item.addEnchantment(Enchantment.featherFalling, 2);
 			item.addEnchantment(Enchantment.unbreaking, 100);
+			ItemLoot.dyeArmor(item, 165, 42, 42);
 			return item;
 		case AMLP:
 			item = new ItemStack(Item.shears);
 			ItemLoot.setItemName(item, "Amlpian Lascerator", TextFormat.DARKPURPLE);
-			ItemLoot.setItemLore(item, "Milbee approved", TextFormat.DARKGREEN);
+			ItemLoot.setItemLore(item, "The wool collector", TextFormat.DARKGREEN);
 			item.addEnchantment(Enchantment.sharpness, 3);
 			item.addEnchantment(Enchantment.knockback, 2);
 			item.addEnchantment(Enchantment.fireAspect, 1);
@@ -312,6 +359,14 @@ public enum ItemNovelty {
 			item.addEnchantment(Enchantment.baneOfArthropods, 4);
 			item.addEnchantment(Enchantment.thorns, 2);
 			item.addEnchantment(Enchantment.looting, 1);
+			return item;
+		case MILLBEE:
+			item = new ItemStack(Item.plateLeather);
+			ItemLoot.setItemName(item, "Millbee's Cosy Fleece", TextFormat.DARKPURPLE);
+			ItemLoot.setItemLore(item, "\"Warm and fuzzy\"",  TextFormat.DARKGREEN);
+			item.addEnchantment(Enchantment.protection, 4);
+			item.addEnchantment(Enchantment.unbreaking, 100);
+			ItemLoot.dyeArmor(item, 250, 128, 114);
 			return item;
 		default:
 			return null;

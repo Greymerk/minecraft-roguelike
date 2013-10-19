@@ -9,14 +9,12 @@ public class DungeonFactory implements IDungeonFactory {
 
 	private List<Dungeon> singles;
 	private LinkedList<DungeonWeightedChoice> types;
-	private int rank;
 	private Random rand;
 	
-	public DungeonFactory(Random rand, int rank, Dungeon base){
+	public DungeonFactory(Random rand, Dungeon base){
 		singles = new ArrayList<Dungeon>();
 		types = new LinkedList<DungeonWeightedChoice>();
 		addRandom(base, 1);
-		this.rank = rank;
 		this.rand = rand;
 	}
 	
@@ -42,7 +40,6 @@ public class DungeonFactory implements IDungeonFactory {
 			}
 		}
 		
-		return types.get(types.size() - 1).getInstance();
+		return types.getLast().getInstance();
 	}
-
 }

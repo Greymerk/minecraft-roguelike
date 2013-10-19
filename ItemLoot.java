@@ -309,61 +309,42 @@ public final class ItemLoot {
 				return ItemNovelty.getItem(ItemNovelty.VECHS);
 			}
 			
-			if(rank == 0){
-				return ItemNovelty.getItem(ItemNovelty.GRIM);
-			}
-			
-			if(rank == 1){
-				return ItemNovelty.getItem(ItemNovelty.ZISTEAUSIGN);
-			}
-			
-			if(rank == 3){
-				return ItemNovelty.getItem(ItemNovelty.DINNERBONE);
+			switch(rank){
+			case 0: return ItemNovelty.getItem(ItemNovelty.GRIM);
+			case 1: return ItemNovelty.getItem(ItemNovelty.ZISTEAUSIGN);
+			case 2: return ItemNovelty.getItem(ItemNovelty.FOURLES);
+			case 3: return ItemNovelty.getItem(ItemNovelty.DINNERBONE);
 			}
 		}
 		
 		if(rand.nextInt(20) == 0){
 			switch(rand.nextInt(3)){
-			case 0:
-				return new ItemStack(Item.redstone);
-			case 1:
-				return new ItemStack(Item.glowstone);
-			case 2:
-				return new ItemStack(Item.gunpowder);			
+			case 0: return new ItemStack(Item.redstone);
+			case 1: return new ItemStack(Item.glowstone);
+			case 2: return new ItemStack(Item.gunpowder);			
 			}
 		}
 		
 		
 		if(rand.nextInt(10) == 0){
-			switch(rand.nextInt(6)){
-			case 0:
-				return new ItemStack(Item.slimeBall);
-			case 1:
-				return new ItemStack(Item.snowball);
-			case 2:
-				return new ItemStack(Item.bowlEmpty);
-			case 3:
-				return new ItemStack(Item.clay);
-			case 4:
-				return new ItemStack(Item.flint);
-			case 5:
-				return new ItemStack(Item.feather);
+			switch(rand.nextInt(7)){
+			case 0: return new ItemStack(Item.slimeBall);
+			case 1: return new ItemStack(Item.snowball);
+			case 2: return new ItemStack(Item.bowlEmpty);
+			case 3: return new ItemStack(Item.clay);
+			case 4: return new ItemStack(Item.flint);
+			case 5: return new ItemStack(Item.feather);
+			case 6: return new ItemStack(Item.glassBottle);
 			}
 		}
 		
 		switch(rand.nextInt(5)){
-		case 0:
-			return new ItemStack(Item.bone);
-		case 1:
-			return new ItemStack(Item.rottenFlesh);
-		case 2:
-			return new ItemStack(Item.spiderEye);
-		case 3:
-			return new ItemStack(Item.stick);
-		case 4:
-			return new ItemStack(Item.silk);
-		default:
-			return new ItemStack(Item.stick);
+		case 0: return new ItemStack(Item.bone);
+		case 1: return new ItemStack(Item.rottenFlesh);
+		case 2: return new ItemStack(Item.spiderEye);
+		case 3: return new ItemStack(Item.stick);
+		case 4: return new ItemStack(Item.silk);
+		default: return new ItemStack(Item.stick);
 		}
 	}
 

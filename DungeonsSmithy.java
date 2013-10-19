@@ -63,7 +63,7 @@ public class DungeonsSmithy implements IDungeon{
 		space.add(new Coord(originX + 2, originY, originZ - 2));
 		space.add(new Coord(originX + 2, originY, originZ + 2));
 		
-		TreasureChest[] types = {TreasureChest.ORE};
+		TreasureChest[] types = {TreasureChest.SMITH};
 		TreasureChest.createChests(inWorld, inRandom, 1, space, types);
 		
 		return true;
@@ -79,7 +79,7 @@ public class DungeonsSmithy implements IDungeon{
 		
 			int x = block.getX();
 			int y = block.getY();
-			int z = block.getZ();	
+			int z = block.getZ();
 			
 			WorldGenPrimitive.setBlock(world, x, y, z, Block.stoneBrick.blockID, rand.nextInt(3), 2, false, true);
 		}

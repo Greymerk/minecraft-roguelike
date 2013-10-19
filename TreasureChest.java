@@ -10,11 +10,11 @@ import net.minecraft.src.World;
 
 public enum TreasureChest {
 
-	ARMOUR, WEAPONS, BLOCKS, ENCHANTING, FOOD, NOVELTY, ORE, POTIONS, STARTER, TOOLS, SUPPLIES;
+	ARMOUR, WEAPONS, BLOCKS, ENCHANTING, FOOD, NOVELTY, ORE, POTIONS, STARTER, TOOLS, SUPPLIES, SMITH;
 	
-	public static final TreasureChest[] rank0 = {ORE, TOOLS, ARMOUR, WEAPONS, FOOD, SUPPLIES, BLOCKS, POTIONS};
-	public static final TreasureChest[] rank1 = {ORE, TOOLS, ARMOUR, WEAPONS, FOOD, BLOCKS, POTIONS};
-	public static final TreasureChest[] rank2 = {ORE, TOOLS, ARMOUR, WEAPONS, BLOCKS, POTIONS};
+	public static final TreasureChest[] rank0 = {ORE, TOOLS, ARMOUR, WEAPONS, FOOD, SUPPLIES, BLOCKS};
+	public static final TreasureChest[] rank1 = {ORE, TOOLS, ARMOUR, WEAPONS, FOOD, BLOCKS};
+	public static final TreasureChest[] rank2 = {ORE, TOOLS, ARMOUR, WEAPONS, BLOCKS};
 	public static final TreasureChest[] rank3 = {ORE, TOOLS, ARMOUR, WEAPONS};
 	
 	public static void generate(World world, Random rand, int posX, int posY, int posZ){
@@ -91,31 +91,19 @@ public enum TreasureChest {
 	private static ITreasureChest getChest(TreasureChest type) {
 		
 		switch(type){
-		
-		case ARMOUR:
-			return new TreasureChestArmour();
-		case WEAPONS:
-			return new TreasureChestWeapons();
-		case BLOCKS:
-			return new TreasureChestBlocks();
-		case ENCHANTING:
-			return new TreasureChestEnchanting();
-		case FOOD:
-			return new TreasureChestFood();
-		case NOVELTY:
-			return new TreasureChestNovelty();
-		case ORE:
-			return new TreasureChestOre();
-		case POTIONS:
-			return new TreasureChestPotions();
-		case STARTER:
-			return new TreasureChestStarter();
-		case TOOLS:
-			return new TreasureChestTools();
-		case SUPPLIES:
-			return new TreasureChestSupplies();
-		default:
-			return new TreasureChestFood();
+		case ARMOUR: return new TreasureChestArmour();
+		case WEAPONS: return new TreasureChestWeapons();
+		case BLOCKS: return new TreasureChestBlocks();
+		case ENCHANTING: return new TreasureChestEnchanting();
+		case FOOD: return new TreasureChestFood();
+		case NOVELTY: return new TreasureChestNovelty();
+		case ORE: return new TreasureChestOre();
+		case POTIONS: return new TreasureChestPotions();
+		case STARTER: return new TreasureChestStarter();
+		case TOOLS: return new TreasureChestTools();
+		case SUPPLIES: return new TreasureChestSupplies();
+		case SMITH: return new TreasureChestSmithy();
+		default: return new TreasureChestFood();
 		}
 	}
 
