@@ -93,7 +93,7 @@ public enum Spawner {
 			} else if(rand.nextInt(5) == 0){
 				weapon = ItemLoot.getSword(rand, rank, enchant);
 			} else {
-				weapon = ItemLoot.getTool(rand, rank);
+				weapon = ItemLoot.getTool(rand, rank, enchant);
 			}
 			
 			mob.setCurrentItemOrArmor(0, weapon);

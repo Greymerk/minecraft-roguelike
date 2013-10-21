@@ -17,21 +17,7 @@ public class TreasureChestTools extends TreasureChestBase{
 		item = new ItemStack(Block.torchWood, 4 + rand.nextInt(12));
 		chest.setInventorySlotContents(middle - 1, item);
 		
-		if(rand.nextInt(10 + (rank * 3)) == 0){
-			switch(rand.nextInt(3)){
-			case 0:
-				item = ItemSpecialty.getItem(ItemSpecialty.PICK, rand, rank);
-				break;
-			case 1:
-				item = ItemSpecialty.getItem(ItemSpecialty.AXE, rand, rank);
-				break;
-			case 2:
-				item = ItemSpecialty.getItem(ItemSpecialty.SHOVEL, rand, rank);
-				break;
-			}
-		} else {
-			item = ItemLoot.getTool(rand, rank);
-		}
+		item = ItemLoot.getTool(rand, rank, true);
 		chest.setInventorySlotContents(middle, item);
 		
 		item = ItemLoot.getOre(rand, rank);

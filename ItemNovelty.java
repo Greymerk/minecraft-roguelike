@@ -14,15 +14,14 @@ import net.minecraft.src.ItemStack;
 
 public enum ItemNovelty {
 
-	GREYMERK, GREYMERK2, ANDERZEL, NEBRIS, ZISTEAUPANTS, ZISTEAUSIGN, ZISTEAUSIGN2, AVIDYA, ASHLEA, KURT, AMLP,
-	CLEO, ENIKOSWORD, ENIKOBOW, BOOROCKJOB, BOODIGJOB, GUUDE, RLEAHY, ETHO, BAJ, DOCM, GINGER, VECHS, VECHS2,
+	GREYMERK, ANDERZEL, NEBRIS, ZISTEAUPANTS, ZISTEAUSIGN, ZISTEAUSIGN2, AVIDYA, ASHLEA, KURT, AMLP,
+	CLEO, ENIKOSWORD, ENIKOBOW, BDOUBLEO, GUUDE, RLEAHY, ETHO, BAJ, DOCM, GINGER, VECHS, VECHS2,
 	NOTCH, JOHNNYRAGGOT, QUANTUMLEAP, MCGAMER, GENERIKB, PAUSE, PAULSOARESJR, FOURLES, DINNERBONE, GRIM, MMILLSS, MILLBEE;
 		
 	public static final Map<String, ItemNovelty> names;
 	static {
 		names = new HashMap<String, ItemNovelty>();
 		names.put("greymerk", ItemNovelty.GREYMERK);
-		names.put("greymerk2", ItemNovelty.GREYMERK2);
 		names.put("anderzel", ItemNovelty.ANDERZEL);
 		names.put("nebris", ItemNovelty.NEBRIS);
 		names.put("zisteaupants", ItemNovelty.ZISTEAUPANTS);
@@ -35,8 +34,7 @@ public enum ItemNovelty {
 		names.put("cleo", ItemNovelty.CLEO);
 		names.put("enikosword", ItemNovelty.ENIKOSWORD);
 		names.put("enikobow", ItemNovelty.ENIKOBOW);
-		names.put("boorockjob", ItemNovelty.BOOROCKJOB);
-		names.put("boodigjob", ItemNovelty.BOODIGJOB);
+		names.put("bdoubleo", ItemNovelty.BDOUBLEO);
 		names.put("guude", ItemNovelty.GUUDE);
 		names.put("rleahy", ItemNovelty.RLEAHY);
 		names.put("etho", ItemNovelty.ETHO);
@@ -58,42 +56,7 @@ public enum ItemNovelty {
 		names.put("mmillss", ItemNovelty.MMILLSS);
 		names.put("millbee", ItemNovelty.MILLBEE);
 	};
-	
-	private static final int SIZE = ItemNovelty.values().length;
-	private static ItemNovelty[] RANK0 = {
-		GRIM, MMILLSS, DOCM, ZISTEAUPANTS, ZISTEAUSIGN, ASHLEA, MCGAMER
-	};
-	private static ItemNovelty[] RANK1 = {
-		VECHS, GREYMERK, ANDERZEL, AVIDYA, KURT, AMLP, CLEO, GUUDE, RLEAHY, BAJ,
-		DOCM, JOHNNYRAGGOT, QUANTUMLEAP, PAULSOARESJR, ZISTEAUPANTS, ZISTEAUSIGN,
-		ASHLEA, ETHO, BAJ, GINGER, MCGAMER, FOURLES, MMILLSS
-	};
-	private static ItemNovelty[] RANK2 = {
-		VECHS, GREYMERK, NEBRIS, AVIDYA, AMLP, GUUDE,
-		QUANTUMLEAP, GENERIKB, PAUSE, PAULSOARESJR, DINNERBONE, MMILLSS
-	};
-	private static ItemNovelty[] RANK3 = {
-		GREYMERK2, VECHS2, ENIKOBOW, BOOROCKJOB, BOODIGJOB, DINNERBONE, ENIKOSWORD, ZISTEAUSIGN2
-	};
-	
-	
-	
-	public static ItemStack getItemByRank(Random rand, int rank){
-				
-		switch(rank){
-			case 3:
-				return getItem(RANK3[rand.nextInt(RANK3.length)]);
-			case 2:
-				return getItem(RANK2[rand.nextInt(RANK2.length)]);
-			case 1:
-				return getItem(RANK1[rand.nextInt(RANK1.length)]);
-			case 0:
-				return getItem(RANK0[rand.nextInt(RANK0.length)]);
-			default:
-				return getItem(RANK0[rand.nextInt(RANK0.length)]);
-		}
-	}
-	
+		
 	public static ItemStack getItemByName(String name){
 		return getItem(names.get(name));
 	}
@@ -105,19 +68,11 @@ public enum ItemNovelty {
 		switch(choice){
 		
 		case GREYMERK:
-			item = new ItemStack(Item.axeIron);
+			item = new ItemStack(Item.axeGold);
 			ItemLoot.setItemName(item, "Greymerk's Hatchet", TextFormat.DARKPURPLE);
 			ItemLoot.setItemLore(item, "Made for war", TextFormat.DARKGREEN);
 			item.addEnchantment(Enchantment.sharpness, 2);
 			item.addEnchantment(Enchantment.knockback, 1);
-			item.addEnchantment(Enchantment.unbreaking, 100);
-			return item;
-		case GREYMERK2:
-			item = new ItemStack(Item.axeDiamond);
-			ItemLoot.setItemName(item, "Greymerk's Battle-Axe", TextFormat.DARKPURPLE);
-			ItemLoot.setItemLore(item, "Made for war", TextFormat.DARKGREEN);
-			item.addEnchantment(Enchantment.sharpness, 7);
-			item.addEnchantment(Enchantment.knockback, 2);
 			item.addEnchantment(Enchantment.unbreaking, 100);
 			return item;
 		case ANDERZEL:
@@ -140,6 +95,8 @@ public enum ItemNovelty {
 			ItemLoot.setItemLore(item, "Yessss, Manpants!", TextFormat.DARKGREEN);
 			item.addEnchantment(Enchantment.fireProtection, 4);
 			item.addEnchantment(Enchantment.unbreaking, 100);
+			ItemLoot.dyeArmor(item, 250, 128, 114);
+			return item;
 		case ZISTEAUSIGN:
 			item = new ItemStack(Item.sign);
 			ItemLoot.setItemName(item, "Zistonian Battle Sign", TextFormat.DARKPURPLE);
@@ -147,13 +104,15 @@ public enum ItemNovelty {
 			item.addEnchantment(Enchantment.sharpness, 1);
 			item.addEnchantment(Enchantment.knockback, 2);
 			item.addEnchantment(Enchantment.fireAspect, 1);
+			return item;
 		case ZISTEAUSIGN2:
 			item = new ItemStack(Item.sign);
 			ItemLoot.setItemName(item, "Zistonian Battle Sign II", TextFormat.DARKPURPLE);
 			ItemLoot.setItemLore(item, "\"Say g'bye spawnah!\"", TextFormat.DARKGREEN);
 			item.addEnchantment(Enchantment.sharpness, 5);
 			item.addEnchantment(Enchantment.knockback, 3);
-			item.addEnchantment(Enchantment.fireAspect, 2);	
+			item.addEnchantment(Enchantment.fireAspect, 2);
+			return item;
 		case AVIDYA:
 			item = new ItemStack(Item.bucketMilk);
 			ItemLoot.setItemName(item, "Avidya's white russian", TextFormat.DARKPURPLE);
@@ -195,14 +154,7 @@ public enum ItemNovelty {
 			item.addEnchantment(Enchantment.fortune, 10);
 			item.addEnchantment(Enchantment.unbreaking, 10);
 			return item;
-		case BOOROCKJOB:
-			item = new ItemStack(Item.pickaxeDiamond);
-			ItemLoot.setItemName(item, "BdoubleO's Rock Job", TextFormat.DARKPURPLE);
-			ItemLoot.setItemLore(item, "Recovered from hell's blazes", TextFormat.DARKGREEN);
-			item.addEnchantment(Enchantment.efficiency, 6);
-			item.addEnchantment(Enchantment.unbreaking, 100);
-			return item;
-		case BOODIGJOB:
+		case BDOUBLEO:
 			item = new ItemStack(Item.shovelDiamond);
 			ItemLoot.setItemName(item, "BdoubleO's Dig Job", TextFormat.DARKPURPLE);
 			ItemLoot.setItemLore(item, "Recovered from hell's blazes", TextFormat.DARKGREEN);
@@ -236,7 +188,7 @@ public enum ItemNovelty {
 			item = new ItemStack(Item.bow);
 			ItemLoot.setItemName(item, "Eniko's String Theory", TextFormat.DARKPURPLE);
 			ItemLoot.setItemLore(item, "For Science!", TextFormat.DARKGREEN);
-			item.addEnchantment(Enchantment.power, 6);
+			item.addEnchantment(Enchantment.power, 5);
 			item.addEnchantment(Enchantment.knockback, 2);
 			item.addEnchantment(Enchantment.infinity, 1);
 			item.addEnchantment(Enchantment.unbreaking, 100);
@@ -245,7 +197,7 @@ public enum ItemNovelty {
 			item = new ItemStack(Item.swordGold);
 			ItemLoot.setItemName(item, "Eniko's Earring", TextFormat.DARKPURPLE);
 			ItemLoot.setItemLore(item, "\"She do the loot take boogie\"", TextFormat.DARKGREEN);
-			item.addEnchantment(Enchantment.sharpness, 7);
+			item.addEnchantment(Enchantment.sharpness, 5);
 			item.addEnchantment(Enchantment.looting, 3);
 			item.addEnchantment(Enchantment.unbreaking, 100);
 			return item;

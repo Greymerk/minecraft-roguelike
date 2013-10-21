@@ -14,12 +14,11 @@ public class TreasureChestNovelty extends TreasureChestBase{
 
 	@Override
 	protected void fillChest(TileEntityChest chest){
-		int middle = chest.getSizeInventory()/2;
-		
-		ItemStack item;
-		
-		item = ItemNovelty.getItemByRank(rand, Dungeon.getRank(posY));
 
+		ItemNovelty choice = ItemNovelty.values()[rand.nextInt(ItemNovelty.values().length)];
+		ItemStack item = ItemNovelty.getItem(choice);
+
+		int middle = chest.getSizeInventory()/2;
 		chest.setInventorySlotContents(middle, item);
 	}
 	

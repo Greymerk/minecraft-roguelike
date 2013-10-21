@@ -11,6 +11,13 @@ import net.minecraft.src.World;
 
 public class WorldGenPrimitive {
 
+	public static final int UPSIDEDOWN = 4;
+	
+	public static final int WEST = 0;
+	public static final int EAST = 1;
+	public static final int NORTH = 2;
+	public static final int SOUTH = 3;
+	
 	public static boolean setBlock(World world, int x, int y, int z, int blockID, int meta, int flags, boolean fillAir, boolean replaceSolid){
 		
 		if(world.blockHasTileEntity(x, y, z)){
@@ -123,35 +130,37 @@ public class WorldGenPrimitive {
 	}
 	
 	
-	public static void spiralStairStep(World world, int inX, int inY, int inZ){
+	public static void spiralStairStep(World world, int inX, int inY, int inZ, MetaBlock stair, MetaBlock fill){
 		
 		final int UPSIDEDOWN = 4;
 		
 		// air
 		fillRectSolid(world, inX - 1, inY, inZ - 1, inX + 1, inY, inZ + 1, 0, 0, 2, true, true);
-		setBlock(world, inX, inY, inZ, Block.stoneBrick.blockID);
+		
+		// core
+		setBlock(world, inX, inY, inZ, fill.getBlockID(), fill.getMeta(), fill.getFlag(), true, true);
 		
 		switch (inY % 4){
 		case 0: // north
 			// stairs
-			setBlock(world, inX, inY, inZ - 1, Block.stairsStoneBrick.blockID, 0, 2, true, true);
-			setBlock(world, inX + 1, inY, inZ - 1, Block.stairsStoneBrick.blockID, 1 + UPSIDEDOWN, 2, true, true);
-			setBlock(world, inX + 1, inY, inZ, Block.stairsStoneBrick.blockID, 3 + UPSIDEDOWN, 2, true, true);
+			setBlock(world, inX, inY, inZ - 1, stair.getBlockID(), stair.getMeta() + WEST, stair.getFlag(), true, true);
+			setBlock(world, inX + 1, inY, inZ - 1, stair.getBlockID(), stair.getMeta() + EAST + UPSIDEDOWN, stair.getFlag(), true, true);
+			setBlock(world, inX + 1, inY, inZ, stair.getBlockID(), stair.getMeta() + SOUTH + UPSIDEDOWN, stair.getFlag(), true, true);
 			return;
 		case 1: // east
-			setBlock(world, inX + 1, inY, inZ, Block.stairsStoneBrick.blockID, 2, 2, true, true);
-			setBlock(world, inX + 1, inY, inZ + 1, Block.stairsStoneBrick.blockID, 3 + UPSIDEDOWN, 2, true, true);
-			setBlock(world, inX, inY, inZ + 1, Block.stairsStoneBrick.blockID, 0 + UPSIDEDOWN, 2, true, true);
+			setBlock(world, inX + 1, inY, inZ, stair.getBlockID(), stair.getMeta() + NORTH, stair.getFlag(), true, true);
+			setBlock(world, inX + 1, inY, inZ + 1, stair.getBlockID(), stair.getMeta() + SOUTH + UPSIDEDOWN, stair.getFlag(), true, true);
+			setBlock(world, inX, inY, inZ + 1, stair.getBlockID(), stair.getMeta() + WEST + UPSIDEDOWN, stair.getFlag(), true, true);
 			return;
 		case 2: // south
-			setBlock(world, inX, inY, inZ + 1, Block.stairsStoneBrick.blockID, 1, 2, true, true);
-			setBlock(world, inX - 1, inY, inZ + 1, Block.stairsStoneBrick.blockID, 0 + UPSIDEDOWN, 2, true, true);
-			setBlock(world, inX - 1, inY, inZ, Block.stairsStoneBrick.blockID, 2 + UPSIDEDOWN, 2, true, true);
+			setBlock(world, inX, inY, inZ + 1, stair.getBlockID(), stair.getMeta() + EAST, stair.getFlag(), true, true);
+			setBlock(world, inX - 1, inY, inZ + 1, stair.getBlockID(), stair.getMeta() + WEST + UPSIDEDOWN, stair.getFlag(), true, true);
+			setBlock(world, inX - 1, inY, inZ, stair.getBlockID(), stair.getMeta() + NORTH + UPSIDEDOWN, stair.getFlag(), true, true);
 			return;
 		case 3: // west
-			setBlock(world, inX - 1, inY, inZ, Block.stairsStoneBrick.blockID, 3, 2, true, true);
-			setBlock(world, inX - 1, inY, inZ - 1, Block.stairsStoneBrick.blockID, 2 + UPSIDEDOWN, 2, true, true);
-			setBlock(world, inX, inY, inZ - 1, Block.stairsStoneBrick.blockID, 1 + UPSIDEDOWN, 2, true, true);
+			setBlock(world, inX - 1, inY, inZ, stair.getBlockID(), stair.getMeta() + SOUTH, stair.getFlag(), true, true);
+			setBlock(world, inX - 1, inY, inZ - 1, stair.getBlockID(), stair.getMeta() + NORTH + UPSIDEDOWN, stair.getFlag(), true, true);
+			setBlock(world, inX, inY, inZ - 1, stair.getBlockID(), stair.getMeta() + EAST + UPSIDEDOWN, stair.getFlag(), true, true);
 			return;
 		default:
 			return;

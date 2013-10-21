@@ -242,10 +242,12 @@ public class CatacombTower {
 		WorldGenPrimitive.fillRectSolid(world, originX + 4, roof, originZ - 4, originX + 4, roof + 1, originZ - 4, fillBlocks);
 		WorldGenPrimitive.fillRectSolid(world, originX + 4, roof, originZ + 4, originX + 4, roof + 1, originZ + 4, fillBlocks);		
 		
+		MetaBlock stair = new MetaBlock(Block.stairsStoneBrick.blockID);;
+		MetaBlock fill = new MetaBlock(Block.stoneBrick.blockID);
 		
 		// stairs
 		for (int y = originY; y <= floor2; y++){
-			WorldGenPrimitive.spiralStairStep(world, originX, y, originZ);
+			WorldGenPrimitive.spiralStairStep(world, originX, y, originZ, stair, fill);
 		}
 	}
 	

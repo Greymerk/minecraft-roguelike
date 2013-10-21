@@ -34,46 +34,10 @@ public final class ItemLoot {
 		
 		if(slot == WEAPON){
 			if(rand.nextInt(10) == 0){
-				return getBow(rand, rank, true);
+				return getBow(rand, rank, enchant);
 			} else {
-				return getSword(rand, rank);
+				return getSword(rand, rank, enchant);
 			}
-		}
-		
-		if(rand.nextInt(20 + (rank * 10)) == 0){
-			switch(slot){
-			case HEAD:
-				return ItemSpecialty.getItem(ItemSpecialty.HELMET, rand, rank); 
-			case CHEST:
-				return ItemSpecialty.getItem(ItemSpecialty.CHEST, rand, rank); 
-			case LEGS:
-				return ItemSpecialty.getItem(ItemSpecialty.LEGS, rand, rank); 
-			case FEET:
-				return ItemSpecialty.getItem(ItemSpecialty.FEET, rand, rank); 
-			}
-		}
-	
-		switch(slot){
-		case HEAD:
-			if(rank > 1 && rand.nextInt(300) == 0){
-				return ItemNovelty.getItem(ItemNovelty.NEBRIS);
-			}
-			break; 
-		case CHEST:
-			if(rank == 1 && rand.nextInt(300) == 0){
-				return ItemNovelty.getItem(ItemNovelty.ANDERZEL);
-			}
-			break;
-		case LEGS:
-			if(rank < 2 && rand.nextInt(300) == 0){
-				return ItemNovelty.getItem(ItemNovelty.ZISTEAUPANTS);
-			}
-			break;
-		case FEET:
-			if(rank < 2 && rand.nextInt(300) == 0){
-				return ItemNovelty.getItem(ItemNovelty.KURT);
-			}
-			break;
 		}
 		
 		return getArmour(rand, rank, slot, enchant);
@@ -114,10 +78,6 @@ public final class ItemLoot {
 		return pickOre(rand, rank);
 	}
 	
-	public static ItemStack getSword(Random rand, int rank){
-		return getSword(rand, rank, true);
-	}
-	
 	public static ItemStack getSword(Random rand, int rank, boolean enchant){
 		ItemStack sword;
 		
@@ -136,20 +96,37 @@ public final class ItemLoot {
 	
 	public static ItemStack getArmour(Random rand, int rank, int slot, boolean enchant){
 
-		if(rand.nextInt(100) == 0){
-			if(enchant && slot == HEAD && rank > 1){
+		if(enchant && rand.nextInt(20 + (rank * 10)) == 0){
+			switch(slot){
+			case HEAD:
+				return ItemSpecialty.getItem(ItemSpecialty.HELMET, rand, rank); 
+			case CHEST:
+				return ItemSpecialty.getItem(ItemSpecialty.CHEST, rand, rank); 
+			case LEGS:
+				return ItemSpecialty.getItem(ItemSpecialty.LEGS, rand, rank); 
+			case FEET:
+				return ItemSpecialty.getItem(ItemSpecialty.FEET, rand, rank); 
+			}
+		}
+		
+		if(enchant && rand.nextInt(100) == 0){
+			if(slot == HEAD && rank > 1){
 				return ItemNovelty.getItem(ItemNovelty.NEBRIS);
 			}
 			
-			if(enchant && slot == FEET && rank < 2){
+			if(slot == FEET && rank < 2){
 				return ItemNovelty.getItem(ItemNovelty.KURT);
 			}
 			
-			if(enchant && slot == CHEST && rank == 2){
+			if(slot == CHEST && rank == 1){
+				return ItemNovelty.getItem(ItemNovelty.MILLBEE);
+			}
+			
+			if(slot == CHEST && rank == 2){
 				return ItemNovelty.getItem(ItemNovelty.ANDERZEL);
 			}
 			
-			if(enchant && slot == LEGS && rank == 0){
+			if(slot == LEGS && rank == 0){
 				return ItemNovelty.getItem(ItemNovelty.ZISTEAUPANTS);
 			}
 		}
@@ -185,7 +162,13 @@ public final class ItemLoot {
 	
 	public static ItemStack getFood(Random rand, int rank){
 		
-		ItemNovelty[] items = {ItemNovelty.RLEAHY, ItemNovelty.GINGER, ItemNovelty.GENERIKB, ItemNovelty.ASHLEA, ItemNovelty.CLEO};
+		ItemNovelty[] items = {
+				ItemNovelty.RLEAHY,
+				ItemNovelty.GINGER,
+				ItemNovelty.GENERIKB,
+				ItemNovelty.ASHLEA,
+				ItemNovelty.CLEO
+		};
 		
 		if(rank > 0 && rand.nextInt(100) == 0){
 			return ItemNovelty.getItem(items[rand.nextInt(items.length)]);
@@ -194,54 +177,32 @@ public final class ItemLoot {
 		return pickFood(rand, rank);
 	}
 	
-	public static ItemStack getTool(Random rand, int rank){
-		return getTool(rand, rank, true);
-	}
-	
 	public static ItemStack getTool(Random rand, int rank, boolean enchant){
 		
 		if(enchant && rand.nextInt(20 + (rank * 10)) == 0){
 			switch(rand.nextInt(3)){
-			case 0:
-				return ItemSpecialty.getItem(ItemSpecialty.PICK, rand, rank);
-			case 1:
-				return ItemSpecialty.getItem(ItemSpecialty.AXE, rand, rank);
-			case 2:
-				return ItemSpecialty.getItem(ItemSpecialty.SHOVEL, rand, rank);
+			case 0: return ItemSpecialty.getItem(ItemSpecialty.PICK, rand, rank);
+			case 1: return ItemSpecialty.getItem(ItemSpecialty.AXE, rand, rank);
+			case 2: return ItemSpecialty.getItem(ItemSpecialty.SHOVEL, rand, rank);
 			}
 			
 		}
 		
-		if(enchant && rand.nextInt(100) == 0){
-			switch(rank){
-			case 0:
-				return ItemNovelty.getItem(ItemNovelty.ETHO);
-			case 1:
-				if(rand.nextBoolean()){
-					return ItemNovelty.getItem(ItemNovelty.GREYMERK);
-				} else {
-					return ItemNovelty.getItem(ItemNovelty.BAJ);
-				}
-			case 2:
-				return ItemNovelty.getItem(ItemNovelty.AMLP);
-			case 3:
-				if(rand.nextBoolean()){
-					return ItemNovelty.getItem(ItemNovelty.BOODIGJOB);
-				} else {
-					return ItemNovelty.getItem(ItemNovelty.BOOROCKJOB);
-				}
-			}
+		if(enchant && rank > 0 && rand.nextInt(100) == 0){
+			ItemNovelty[] items = {
+					ItemNovelty.ETHO,
+					ItemNovelty.GREYMERK,
+					ItemNovelty.BAJ,
+					ItemNovelty.AMLP,
+					ItemNovelty.BDOUBLEO
+			};
+			
+			return ItemNovelty.getItem(items[rand.nextInt(items.length)]);
 		}
 		
-		ItemStack tool;
+		ItemStack tool = pickTool(rand, rank);
 		
-		tool = pickTool(rand, rank);
-		
-		if(!enchant){
-			return tool;
-		}
-		
-		if(rand.nextInt(6 - rank) == 0){
+		if(enchant && rand.nextInt(6 - rank) == 0){
 			enchantItem(tool, rand, getEnchantLevel(rank));
 		}
 		
@@ -260,12 +221,17 @@ public final class ItemLoot {
 		
 		return pickBlocks(rand, rank);
 	}
-	
+
 	public static ItemStack getSupplyItem(Random rand, int rank){
-		
-		ItemNovelty[] items = {ItemNovelty.GUUDE, ItemNovelty.BAJ, ItemNovelty.JOHNNYRAGGOT, ItemNovelty.FOURLES};
-		
+
 		if(rand.nextInt(200) == 0){
+			ItemNovelty[] items = {
+					ItemNovelty.GUUDE,
+					ItemNovelty.BAJ,
+					ItemNovelty.JOHNNYRAGGOT,
+					ItemNovelty.FOURLES
+			};
+			
 			return ItemNovelty.getItem(items[rand.nextInt(items.length)]);
 		}
 		
@@ -280,27 +246,6 @@ public final class ItemLoot {
 		return pickSupplyItem(rand);
 	}
 	
-	public static ItemStack getStarterLoot(Random rand){
-		
-		ItemStack item;
-		
-		switch (rand.nextInt(6)){
-		case 5:
-			return getTool(rand, 0, false);
-		case 4:
-			return new ItemStack(Item.swordStone);
-		case 3:
-			return pickBlocks(rand, 0);	
-		case 2:
-			return pickFood(rand, 0);
-		case 1:
-			return ItemSpecialty.getItem(ItemSpecialty.LEGS, rand, 0);
-		default:
-			return new ItemStack(Block.torchWood, 1 + rand.nextInt(10));
-		}
-		
-	}
-
 	public static ItemStack getJunk(Random rand, int rank){
 		
 		if(rand.nextInt(1000) == 0){
@@ -311,21 +256,36 @@ public final class ItemLoot {
 			
 			switch(rank){
 			case 0: return ItemNovelty.getItem(ItemNovelty.GRIM);
-			case 1: return ItemNovelty.getItem(ItemNovelty.ZISTEAUSIGN);
+			case 1: return ItemNovelty.getItem(ItemNovelty.PAULSOARESJR);
 			case 2: return ItemNovelty.getItem(ItemNovelty.FOURLES);
 			case 3: return ItemNovelty.getItem(ItemNovelty.DINNERBONE);
 			}
 		}
 		
-		if(rand.nextInt(20) == 0){
+		if(rand.nextInt(40) == 0){
 			switch(rand.nextInt(3)){
-			case 0: return new ItemStack(Item.redstone);
-			case 1: return new ItemStack(Item.glowstone);
-			case 2: return new ItemStack(Item.gunpowder);			
+			case 0: return new ItemStack(Item.ghastTear);
+			case 1: return new ItemStack(Item.blazePowder);
+			case 2: return new ItemStack(Item.goldNugget);
 			}
 		}
 		
-		
+		if(rand.nextInt(30) == 0){
+			if(rand.nextBoolean()){
+				return getBlocks(rand, rank);
+			} else {
+				return getFood(rand, rank);
+			}
+		}
+
+		if(rand.nextInt(15) == 0){
+			switch(rand.nextInt(3)){
+			case 0: return new ItemStack(Item.redstone);
+			case 1: return new ItemStack(Item.glowstone);
+			case 2: return new ItemStack(Item.gunpowder);
+			}
+		}
+
 		if(rand.nextInt(10) == 0){
 			switch(rand.nextInt(7)){
 			case 0: return new ItemStack(Item.slimeBall);
@@ -591,80 +551,46 @@ public final class ItemLoot {
 	private static ItemStack pickTool(Random rand, int rank){
 		
 		switch(rand.nextInt(3)){
-		
-		case 0:
-			return pickPick(rand, rank);
-		case 1:
-			return pickAxe(rand, rank);
-		case 2:
-			return pickShovel(rand, rank);		
-		default:
-			return pickPick(rand, rank);
-		
+		case 0: return pickPick(rand, rank);
+		case 1: return pickAxe(rand, rank);
+		case 2: return pickShovel(rand, rank);		
+		default: return pickPick(rand, rank);
 		}
-		
-		
 	}
 	
 
 	private static ItemStack pickAxe(Random rand, int rank) {
-		
 		int quality = getQuality(rand, rank);
-
 		switch (quality) {
-
-		case DIAMOND:
-			return new ItemStack(Item.axeDiamond);
-		case GOLD:
-			return new ItemStack(Item.axeGold);
-		case IRON:
-			return new ItemStack(Item.axeIron);
-		case STONE:
-			return new ItemStack(Item.axeStone);
-		default:
-			return new ItemStack(Item.axeWood);
-
+		case DIAMOND: return new ItemStack(Item.axeDiamond);
+		case GOLD: return new ItemStack(Item.axeGold);
+		case IRON: return new ItemStack(Item.axeIron);
+		case STONE: return new ItemStack(Item.axeStone);
+		default: return new ItemStack(Item.axeWood);
 		}
-
 	}
 	
 	private static ItemStack pickShovel(Random rand, int rank) {
 
 		int quality = getQuality(rand, rank);
-
 		switch (quality) {
-
-		case DIAMOND:
-			return new ItemStack(Item.shovelDiamond);
-		case GOLD:
-			return new ItemStack(Item.shovelGold);
-		case IRON:
-			return new ItemStack(Item.shovelIron);
-		case STONE:
-			return new ItemStack(Item.shovelStone);
-		default:
-			return new ItemStack(Item.shovelWood);
-
+		case DIAMOND: return new ItemStack(Item.shovelDiamond);
+		case GOLD: return new ItemStack(Item.shovelGold);
+		case IRON: return new ItemStack(Item.shovelIron);
+		case STONE: return new ItemStack(Item.shovelStone);
+		default: return new ItemStack(Item.shovelWood);
 		}
 	}
 	
 	private static ItemStack pickPick(Random rand, int rank) {
 
 		int quality = getQuality(rand, rank);
-
 		switch (quality) {
-
-		case DIAMOND:
-			return new ItemStack(Item.pickaxeDiamond);
-		case GOLD:
-			return new ItemStack(Item.pickaxeGold);
-		case IRON:
-			return new ItemStack(Item.pickaxeIron);
-		case STONE:
-			return new ItemStack(Item.pickaxeStone);
-		default:
-			return new ItemStack(Item.pickaxeWood);
-
+		case DIAMOND: return new ItemStack(Item.pickaxeDiamond);
+		case GOLD: return new ItemStack(Item.pickaxeGold);
+		case IRON: return new ItemStack(Item.pickaxeIron);
+		case STONE: return new ItemStack(Item.pickaxeStone);
+		default: return new ItemStack(Item.pickaxeWood);
 		}
 	}
 	
@@ -674,16 +600,14 @@ public final class ItemLoot {
 
 	private static ItemStack pickSupplyItem(Random rand) {
 
-		switch(rand.nextInt(9)){
+		switch(rand.nextInt(7)){
 		
 		case 0:
-			switch(rand.nextInt(3)){
-			case 0:
-				return new ItemStack(Item.seeds, rand.nextInt(8) + 1);
-			case 1:
-				return new ItemStack(Item.pumpkinSeeds, rand.nextInt(8) + 1);
-			case 2:
-				return new ItemStack(Item.melonSeeds, rand.nextInt(8) + 1);
+			switch(rand.nextInt(4)){
+			case 0: return new ItemStack(Item.seeds, rand.nextInt(8) + 1);
+			case 1: return new ItemStack(Item.pumpkinSeeds, rand.nextInt(8) + 1);
+			case 2: return new ItemStack(Item.melonSeeds, rand.nextInt(8) + 1);
+			case 3: return new ItemStack(Block.sapling);
 			}			
 		case 1:
 			return new ItemStack(Item.wheat, rand.nextInt(8) + 1);
@@ -711,7 +635,7 @@ public final class ItemLoot {
 			}
 			
 			// iron horse armour
-			return new ItemStack(417, 1, 0);			
+			return new ItemStack(417, 1, 0);
 		default:
 			return new ItemStack(Item.stick, 1);
 		}

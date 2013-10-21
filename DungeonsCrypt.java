@@ -173,12 +173,6 @@ public class DungeonsCrypt implements IDungeon {
 	}
 	
 	private TreasureChest getType(){
-		
-		
-		if(rand.nextInt(20) == 0){
-			return TreasureChest.NOVELTY;
-		}
-		
 		TreasureChest[] types = {TreasureChest.ARMOUR, TreasureChest.WEAPONS};
 		return types[rand.nextInt(types.length)];		
 	}

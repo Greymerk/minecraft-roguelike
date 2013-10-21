@@ -19,7 +19,6 @@ public class TreasureChestWeapons extends TreasureChestBase{
 		chest.setInventorySlotContents(middle - 1, item);
 		
 		item = ItemLoot.getEquipmentBySlot(rand, ItemLoot.WEAPON, rank, true);
-
 		chest.setInventorySlotContents(middle, item);
 		
 		item = ItemLoot.getFood(rand, rank);

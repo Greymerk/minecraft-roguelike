@@ -8,7 +8,7 @@ import net.minecraft.src.ItemStack;
 import net.minecraft.src.TileEntityChest;
 
 public class TreasureChestSupplies extends TreasureChestBase{
-
+	
 	@Override
 	protected void fillChest(TileEntityChest chest) {
 

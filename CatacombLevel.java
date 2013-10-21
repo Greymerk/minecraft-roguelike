@@ -114,10 +114,26 @@ public class CatacombLevel {
 		// middle floor
 		WorldGenPrimitive.fillRectHollow(world, originX - 4, originY + 9, originZ - 4, originX + 4, originY + 9, originZ + 4, blocks, true, true);
 		
-		for (int y = originY; y <= originY + 9; y++){
-			WorldGenPrimitive.spiralStairStep(world, originX, y, originZ);
+		MetaBlock stair;
+		MetaBlock fill;
+		
+		switch(Dungeon.getRank(originY)){
+		case 2:
+			stair = new MetaBlock(Block.stairsCobblestone.blockID);
+			fill = new MetaBlock(Block.cobblestone.blockID);
+			break;
+		case 3:
+			stair = new MetaBlock(Block.stairsNetherBrick.blockID);
+			fill = new MetaBlock(Block.netherBrick.blockID);
+			break;
+		default:
+			stair = new MetaBlock(Block.stairsStoneBrick.blockID);
+			fill = new MetaBlock(Block.stoneBrick.blockID);
 		}
 		
+		for (int y = originY; y <= originY + 9; y++){
+			WorldGenPrimitive.spiralStairStep(world, originX, y, originZ, stair, fill);
+		}	
 	}
 
 	public void update(){

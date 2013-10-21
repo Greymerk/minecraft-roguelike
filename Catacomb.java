@@ -34,7 +34,7 @@ public class Catacomb {
 			CatacombLevel level;
 			
 			if(Dungeon.getRank(y) == 0){
-				level = new CatacombLevel(world, rand, x, y, z, 20, 40);
+				level = new CatacombLevel(world, rand, x, y, z, 30, 50);
 			} else {
 				level = new CatacombLevel(world, rand, x, y, z);
 			}
@@ -109,6 +109,7 @@ public class Catacomb {
 			factory.addSingle(Dungeon.MUSIC);
 			factory.addSingle(Dungeon.FIRE);
 			factory.addSingle(Dungeon.CAKE);
+			factory.addSingle(Dungeon.LAB);
 			factory.addRandom(Dungeon.CAKE, 20);
 			factory.addRandom(Dungeon.SLIME, 20);
 			break;

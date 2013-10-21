@@ -8,7 +8,7 @@ import net.minecraft.src.World;
 public enum Dungeon {
 	
 	BASE, BRICK, CREEPER, CRYPT, ENCHANT, ENDER, FIRE, MUSIC, NETHER, NETHERFORT, PIT, PRISON,
-	SLIME, SMITH, SPIDER, CAKE;
+	SLIME, SMITH, SPIDER, CAKE, LAB;
 	
 	public static IDungeon getInstance(Dungeon choice){
 		
@@ -29,6 +29,7 @@ public enum Dungeon {
 		case SMITH: return new DungeonsSmithy();
 		case SPIDER: return new DungeonsSpiderNest();
 		case CAKE: return new DungeonsWood();
+		case LAB: return new DungeonLab();
 		default: return new DungeonsBase();
 		}
 		

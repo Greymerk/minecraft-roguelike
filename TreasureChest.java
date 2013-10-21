@@ -10,7 +10,7 @@ import net.minecraft.src.World;
 
 public enum TreasureChest {
 
-	ARMOUR, WEAPONS, BLOCKS, ENCHANTING, FOOD, NOVELTY, ORE, POTIONS, STARTER, TOOLS, SUPPLIES, SMITH;
+	ARMOUR, WEAPONS, BLOCKS, ENCHANTING, FOOD, ORE, POTIONS, STARTER, TOOLS, SUPPLIES, SMITH;
 	
 	public static final TreasureChest[] rank0 = {ORE, TOOLS, ARMOUR, WEAPONS, FOOD, SUPPLIES, BLOCKS};
 	public static final TreasureChest[] rank1 = {ORE, TOOLS, ARMOUR, WEAPONS, FOOD, BLOCKS};
@@ -96,7 +96,6 @@ public enum TreasureChest {
 		case BLOCKS: return new TreasureChestBlocks();
 		case ENCHANTING: return new TreasureChestEnchanting();
 		case FOOD: return new TreasureChestFood();
-		case NOVELTY: return new TreasureChestNovelty();
 		case ORE: return new TreasureChestOre();
 		case POTIONS: return new TreasureChestPotions();
 		case STARTER: return new TreasureChestStarter();
@@ -108,10 +107,6 @@ public enum TreasureChest {
 	}
 
 	private static TreasureChest getChestType(Random rand, int rank){		
-		
-		if(rand.nextInt(30) == 0){
-			return NOVELTY;
-		}
 		
 		switch(rank){
 		
