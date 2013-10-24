@@ -98,37 +98,19 @@ public final class ItemLoot {
 
 		if(enchant && rand.nextInt(20 + (rank * 10)) == 0){
 			switch(slot){
-			case HEAD:
-				return ItemSpecialty.getItem(ItemSpecialty.HELMET, rand, rank); 
-			case CHEST:
-				return ItemSpecialty.getItem(ItemSpecialty.CHEST, rand, rank); 
-			case LEGS:
-				return ItemSpecialty.getItem(ItemSpecialty.LEGS, rand, rank); 
-			case FEET:
-				return ItemSpecialty.getItem(ItemSpecialty.FEET, rand, rank); 
+			case HEAD: return ItemSpecialty.getItem(ItemSpecialty.HELMET, rand, rank); 
+			case CHEST: return ItemSpecialty.getItem(ItemSpecialty.CHEST, rand, rank); 
+			case LEGS: return ItemSpecialty.getItem(ItemSpecialty.LEGS, rand, rank); 
+			case FEET: return ItemSpecialty.getItem(ItemSpecialty.FEET, rand, rank); 
 			}
 		}
 		
 		if(enchant && rand.nextInt(100) == 0){
-			if(slot == HEAD && rank > 1){
-				return ItemNovelty.getItem(ItemNovelty.NEBRIS);
-			}
-			
-			if(slot == FEET && rank < 2){
-				return ItemNovelty.getItem(ItemNovelty.KURT);
-			}
-			
-			if(slot == CHEST && rank == 1){
-				return ItemNovelty.getItem(ItemNovelty.MILLBEE);
-			}
-			
-			if(slot == CHEST && rank == 2){
-				return ItemNovelty.getItem(ItemNovelty.ANDERZEL);
-			}
-			
-			if(slot == LEGS && rank == 0){
-				return ItemNovelty.getItem(ItemNovelty.ZISTEAUPANTS);
-			}
+			if(slot == HEAD && rank > 1) return ItemNovelty.getItem(ItemNovelty.NEBRIS);
+			if(slot == FEET && rank < 2) return ItemNovelty.getItem(ItemNovelty.KURT);
+			if(slot == CHEST && rank == 1) return ItemNovelty.getItem(ItemNovelty.MILLBEE);
+			if(slot == CHEST && rank == 2) return ItemNovelty.getItem(ItemNovelty.ANDERZEL);
+			if(slot == LEGS && rank == 0) return ItemNovelty.getItem(ItemNovelty.ZISTEAUPANTS);
 		}
 
 		ItemStack item = pickArmour(rand, slot, rank);
@@ -211,12 +193,12 @@ public final class ItemLoot {
 	
 	public static ItemStack getBlocks(Random rand, int rank){
 		
-		if(rank < 2 && rand.nextInt(100) == 0){
-			return ItemNovelty.getItem(ItemNovelty.MMILLSS);
-		}
-		
-		if(rank == 2 && rand.nextInt(100) == 0){
-			return ItemNovelty.getItem(ItemNovelty.QUANTUMLEAP);
+		if(rank > 0 && rand.nextInt(300) == 0){
+			if(rand.nextBoolean()){
+				return ItemNovelty.getItem(ItemNovelty.MMILLSS);
+			} else {
+				return ItemNovelty.getItem(ItemNovelty.QUANTUMLEAP);
+			}
 		}
 		
 		return pickBlocks(rand, rank);
@@ -262,11 +244,17 @@ public final class ItemLoot {
 			}
 		}
 		
-		if(rand.nextInt(40) == 0){
-			switch(rand.nextInt(3)){
-			case 0: return new ItemStack(Item.ghastTear);
+		if(rand.nextInt(100) == 0){
+			return new ItemStack(Item.ghastTear);
+		}
+		
+		if(rand.nextInt(50) == 0){
+			switch(rand.nextInt(5)){
+			case 0: return new ItemStack(Item.gunpowder);
 			case 1: return new ItemStack(Item.blazePowder);
 			case 2: return new ItemStack(Item.goldNugget);
+			case 3: return new ItemStack(Item.redstone);
+			case 4: return new ItemStack(Item.glowstone);
 			}
 		}
 		
@@ -278,14 +266,6 @@ public final class ItemLoot {
 			}
 		}
 
-		if(rand.nextInt(15) == 0){
-			switch(rand.nextInt(3)){
-			case 0: return new ItemStack(Item.redstone);
-			case 1: return new ItemStack(Item.glowstone);
-			case 2: return new ItemStack(Item.gunpowder);
-			}
-		}
-
 		if(rand.nextInt(10) == 0){
 			switch(rand.nextInt(7)){
 			case 0: return new ItemStack(Item.slimeBall);
@@ -294,16 +274,17 @@ public final class ItemLoot {
 			case 3: return new ItemStack(Item.clay);
 			case 4: return new ItemStack(Item.flint);
 			case 5: return new ItemStack(Item.feather);
-			case 6: return new ItemStack(Item.glassBottle);
+			case 6: return new ItemStack(Item.glassBottle, 1 + rand.nextInt(3));
 			}
 		}
 		
-		switch(rand.nextInt(5)){
+		switch(rand.nextInt(6)){
 		case 0: return new ItemStack(Item.bone);
 		case 1: return new ItemStack(Item.rottenFlesh);
 		case 2: return new ItemStack(Item.spiderEye);
 		case 3: return new ItemStack(Item.stick);
 		case 4: return new ItemStack(Item.silk);
+		case 5: return new ItemStack(Item.stick);
 		default: return new ItemStack(Item.stick);
 		}
 	}
@@ -317,155 +298,52 @@ public final class ItemLoot {
 		int quality = getQuality(rand, rank);
 		
 		switch (quality) {
-
-		case DIAMOND:
-			return new ItemStack(Item.swordDiamond);
-		case GOLD:
-			return new ItemStack(Item.swordGold);
-		case IRON:
-			return new ItemStack(Item.swordIron);
-		case STONE:
-			return new ItemStack(Item.swordStone);
-		default:
-			return new ItemStack(Item.swordWood);
+		case DIAMOND: return new ItemStack(Item.swordDiamond);
+		case GOLD: return new ItemStack(Item.swordGold);
+		case IRON: return new ItemStack(Item.swordIron);
+		case STONE: return new ItemStack(Item.swordStone);
+		default: return new ItemStack(Item.swordWood);
 		}
 	}
 	
 	private static ItemStack pickBlocks(Random rand, int rank) {
 
-		switch(rank){
+		if(rank > 1 && rand.nextInt((5 - rank) * 50) == 0){
+			return new ItemStack(Block.blockDiamond, 1);
+		}
 		
-		case 0:
-			if(rand.nextInt(100) == 0){
-				return new ItemStack(Block.blockIron, 1);
+		if(rank > 1 && rand.nextInt((5 - rank) * 30) == 0){
+			switch(rand.nextInt(3)){
+			case 0: return new ItemStack(Block.blockLapis, 2 + rand.nextInt(6));
+			case 1: return new ItemStack(Block.blockEmerald, 1 + rand.nextInt(3));
+			case 2: return new ItemStack(Block.blockGold, 1);
 			}
-			
-			if(rand.nextInt(50) == 0){
-				return new ItemStack(Block.blockRedstone, 1);
+		}
+		
+		if(rank > 0 && rand.nextInt((5 - rank) * 20) == 0){
+			switch(rand.nextInt(6)){
+			case 0: return new ItemStack(Block.blockIron, 1);
+			case 1: return new ItemStack(Block.coalBlock, 1 + rand.nextInt(rank + 1));
+			case 2: return new ItemStack(Block.blockRedstone, 1);
+			case 3: return new ItemStack(Block.tnt, 2 * rand.nextInt(rank + 1));
+			case 4: return new ItemStack(Block.glowStone, 3 + rand.nextInt(1 + rank * 2));
+			case 5: return new ItemStack(Block.glass, 1 + rand.nextInt(1 + rank * 2));
 			}
-			
-			if(rand.nextInt(50) == 0){
-				return new ItemStack(Block.coalBlock, 1);
+		}
+		
+		if(rank == 3){
+			if(rand.nextBoolean()){
+				return new ItemStack(Block.netherBrick, 5 + rand.nextInt(10));
+			} else {
+				return new ItemStack(Block.blockNetherQuartz, 5 + rand.nextInt(10));
 			}
-			
-			if(rand.nextInt(30) == 0){
-				return new ItemStack(Block.glass, 1 + rand.nextInt(5));
-			}
-			
-			if(rand.nextInt(10) == 0){
-				return new ItemStack(Block.wood, 2 + rand.nextInt(4));
-			}
-			break;
-		case 1:
-			if(rand.nextInt(50) == 0){
-				return new ItemStack(Block.blockIron, 1);
-			}
-			
-			if(rand.nextInt(30) == 0){
-				return new ItemStack(Block.blockRedstone, 1);
-			}
-			
-			if(rand.nextInt(30) == 0){
-				return new ItemStack(Block.glass, 1 + rand.nextInt(10));
-			}
-			
-			if(rand.nextInt(30) == 0){
-				return new ItemStack(Block.coalBlock, 1 + rand.nextInt(2));
-			}
-			
-			if(rand.nextInt(30) == 0){
-				return new ItemStack(Block.tnt, 2 + rand.nextInt(4));
-			}
-			
-			if(rand.nextInt(10) == 0){
-				return new ItemStack(Block.glowStone, 3 + rand.nextInt(5));
-			}
-			
-			break;
-		case 2:
-			if(rand.nextInt(300) == 0){
-				return new ItemStack(Block.blockDiamond, 1);
-			}
-			
-			if(rand.nextInt(100) == 0){
-				return new ItemStack(Block.blockGold, 1);
-			}
-			
-			if(rand.nextInt(50) == 0){
-				return new ItemStack(Block.blockRedstone, 1 + rand.nextInt(3));
-			}
-
-			if(rand.nextInt(30) == 0){
-				return new ItemStack(Block.blockEmerald, 1);
-			}
-			
-			if(rand.nextInt(30) == 0){
-				return new ItemStack(Block.blockIron, 1);
-			}
-			
-			if(rand.nextInt(30) == 0){
-				return new ItemStack(Block.glass, 1 + rand.nextInt(15));
-			}
-			
-			if(rand.nextInt(20) == 0){
-				return new ItemStack(Block.coalBlock, 1 + rand.nextInt(3));
-			}
-			
-			if(rand.nextInt(20) == 0){
-				return new ItemStack(Block.tnt, 3 + rand.nextInt(6));
-			}
-			
-			if(rand.nextInt(10) == 0){
-				return new ItemStack(Block.glowStone, 3 + rand.nextInt(10));
-			}
-			if(rand.nextInt(5) == 0){
-				return new ItemStack(Block.wood, 2 + rand.nextInt(4));
-			}
-			break;
-		case 3:
-			
-			if(rand.nextInt(100) == 0){
-				return new ItemStack(Block.blockGold, 1);
-			}
-			
-			if(rand.nextInt(100) == 0){
-				return new ItemStack(Block.blockDiamond, 1);
-			}
-
-			if(rand.nextInt(30) == 0){
-				return new ItemStack(Block.blockRedstone, 1 + rand.nextInt(5));
-			}
-			
-			if(rand.nextInt(30) == 0){
-				return new ItemStack(Block.glass, 1 + rand.nextInt(20));
-			}
-
-			if(rand.nextInt(20) == 0){
-				return new ItemStack(Block.blockEmerald, 1 + rand.nextInt(3));
-			}
-			
-			if(rand.nextInt(20) == 0){
-				return new ItemStack(Block.coalBlock, 1 + rand.nextInt(5));
-			}
-			
-			if(rand.nextInt(15) == 0){
-				return new ItemStack(Block.tnt, 4 + rand.nextInt(8));
-			}
-			
-			if(rand.nextInt(15) == 0){
-				return new ItemStack(Block.blockIron, 1);
-			}
-			
-			return new ItemStack(Block.netherBrick, 5 + rand.nextInt(10));			
 		}
 		
 		switch (rand.nextInt(4)) {
-		case (3): 
-			return new ItemStack(Block.planks, 5 + rand.nextInt(10));
-		case (2): 
-			return new ItemStack(Block.cobblestone, 5 + rand.nextInt(10));
-		case (1): 
-			return new ItemStack(Block.stoneBrick, 5 + rand.nextInt(10));
+		case 0: return new ItemStack(Block.planks, 5 + rand.nextInt(10));
+		case 1: return new ItemStack(Block.cobblestone, 5 + rand.nextInt(1 + rank * 5));
+		case 2: return new ItemStack(Block.stoneBrick, 5 + rand.nextInt(1 + rank * 5));
+		case 3: return new ItemStack(Block.wood, 1 + rank + rand.nextInt(1 + rank * 3));
 		default: 
 			return new ItemStack(Block.dirt, 5 + rand.nextInt(10));
 		}
@@ -480,14 +358,10 @@ public final class ItemLoot {
 		case HEAD:
 			switch (quality) {
 
-			case DIAMOND:
-				return new ItemStack(Item.helmetDiamond);
-			case GOLD:
-				return new ItemStack(Item.helmetGold);
-			case IRON:
-				return new ItemStack(Item.helmetIron);
-			case STONE:
-				return new ItemStack(Item.helmetChain);
+			case DIAMOND: return new ItemStack(Item.helmetDiamond);
+			case GOLD: return new ItemStack(Item.helmetGold);
+			case IRON: return new ItemStack(Item.helmetIron);
+			case STONE: return new ItemStack(Item.helmetChain);
 			default:
 				ItemStack item = new ItemStack(Item.helmetLeather);
 				dyeArmor(item, rand.nextInt(256), rand.nextInt(255), rand.nextInt(255));
@@ -497,14 +371,10 @@ public final class ItemLoot {
 		case FEET:
 			switch (quality) {
 
-			case DIAMOND:
-				return new ItemStack(Item.bootsDiamond);
-			case GOLD:
-				return new ItemStack(Item.bootsGold);
-			case IRON:
-				return new ItemStack(Item.bootsIron);
-			case STONE:
-				return new ItemStack(Item.bootsChain);
+			case DIAMOND: return new ItemStack(Item.bootsDiamond);
+			case GOLD: return new ItemStack(Item.bootsGold);
+			case IRON: return new ItemStack(Item.bootsIron);
+			case STONE: return new ItemStack(Item.bootsChain);
 			default:
 				ItemStack item = new ItemStack(Item.bootsLeather);
 				dyeArmor(item, rand.nextInt(256), rand.nextInt(255), rand.nextInt(255));
@@ -514,14 +384,10 @@ public final class ItemLoot {
 		case CHEST:
 			switch (quality) {
 
-			case DIAMOND:
-				return new ItemStack(Item.plateDiamond);
-			case GOLD:
-				return new ItemStack(Item.plateGold);
-			case IRON:
-				return new ItemStack(Item.plateIron);
-			case STONE:
-				return new ItemStack(Item.plateChain);
+			case DIAMOND: return new ItemStack(Item.plateDiamond);
+			case GOLD: return new ItemStack(Item.plateGold);
+			case IRON: return new ItemStack(Item.plateIron);
+			case STONE: return new ItemStack(Item.plateChain);
 			default:
 				ItemStack item = new ItemStack(Item.plateLeather);
 				dyeArmor(item, rand.nextInt(256), rand.nextInt(255), rand.nextInt(255));
@@ -530,14 +396,10 @@ public final class ItemLoot {
 		case LEGS:
 			switch (quality) {
 	
-			case DIAMOND:
-				return new ItemStack(Item.legsDiamond);
-			case GOLD:
-				return new ItemStack(Item.legsGold);
-			case IRON:
-				return new ItemStack(Item.legsIron);
-			case STONE:
-				return new ItemStack(Item.legsChain);
+			case DIAMOND: return new ItemStack(Item.legsDiamond);
+			case GOLD: return new ItemStack(Item.legsGold);
+			case IRON: return new ItemStack(Item.legsIron);
+			case STONE: return new ItemStack(Item.legsChain);
 			default:
 				ItemStack item = new ItemStack(Item.legsLeather);
 				dyeArmor(item, rand.nextInt(256), rand.nextInt(255), rand.nextInt(255));
@@ -854,16 +716,11 @@ public final class ItemLoot {
 	private static int getEnchantLevel(int rank) {
 
 		switch(rank){
-		case 3:
-			return 30;
-		case 2:
-			return 20;
-		case 1:
-			return 10;
-		case 0:
-			return 1;
-		default:
-			return 1;
+		case 3: return 30;
+		case 2: return 20;
+		case 1: return 10;
+		case 0: return 1;
+		default: return 1;
 		}
 	}
 

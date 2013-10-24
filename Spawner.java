@@ -7,7 +7,10 @@ import net.minecraft.src.Entity;
 import net.minecraft.src.EntitySkeleton;
 import net.minecraft.src.EntityZombie;
 import net.minecraft.src.ItemStack;
+import net.minecraft.src.MobSpawnerBaseLogic;
+import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.TileEntityMobSpawner;
+import net.minecraft.src.WeightedRandomMinecart;
 import net.minecraft.src.World;
 
 public enum Spawner {
@@ -29,7 +32,11 @@ public enum Spawner {
         if (spawner != null)
         {
         	String name = getSpawnerName(type);
-        	spawner.getSpawnerLogic().setMobID(name);
+        	MobSpawnerBaseLogic logic = spawner.getSpawnerLogic();
+        	logic.setMobID(name);
+        	
+        	//setRoguelike(logic);
+        	
         }
         else
         {
@@ -125,5 +132,20 @@ public enum Spawner {
 				mob.setCurrentItemOrArmor(i, ItemLoot.getEquipmentBySlot(rand, i, rank, enchant));
 			}
 		}
+    }
+	
+	private static void setRoguelike(MobSpawnerBaseLogic logic){
+    	NBTTagCompound nbt = new NBTTagCompound();
+    	nbt.setString("Type", logic.getEntityNameToSpawn());
+    	nbt.setInteger("Weight", 1);
+    	
+    	NBTTagCompound properties = new NBTTagCompound();
+    	nbt.setCompoundTag("Properties", properties);
+    	
+    	properties.setString("CustomName", "roguelike");
+    	
+    	WeightedRandomMinecart cart = new WeightedRandomMinecart(logic, nbt);
+    	logic.setRandomMinecart(cart);
+    	logic.updateSpawner();
     }
 }

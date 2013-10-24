@@ -8,7 +8,7 @@ import net.minecraft.src.Block;
 import net.minecraft.src.World;
 
 public class Catacomb {
-	
+		
 	private World world;
 	public static final int DEPTH = 5;
 	public static final int VERTICAL_SPACING = 10;
@@ -34,7 +34,7 @@ public class Catacomb {
 			CatacombLevel level;
 			
 			if(Dungeon.getRank(y) == 0){
-				level = new CatacombLevel(world, rand, x, y, z, 30, 50);
+				level = new CatacombLevel(world, rand, x, y, z, 20, 50);
 			} else {
 				level = new CatacombLevel(world, rand, x, y, z);
 			}
@@ -110,6 +110,7 @@ public class Catacomb {
 			factory.addSingle(Dungeon.FIRE);
 			factory.addSingle(Dungeon.CAKE);
 			factory.addSingle(Dungeon.LAB);
+			factory.addSingle(Dungeon.SLIME);
 			factory.addRandom(Dungeon.CAKE, 20);
 			factory.addRandom(Dungeon.SLIME, 20);
 			break;
@@ -149,6 +150,4 @@ public class Catacomb {
 		
 		return factory;
 	}
-	
-	
 }
