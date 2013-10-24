@@ -18,8 +18,8 @@ import java.util.regex.*;
 public class INIParser implements ConfigurationParser {
 
 
-	private final String comment_regex="^#";
-	private final String line_regex="^([^=]+)=(.*)$";
+	private static final String comment_regex="^#";
+	private static final String line_regex="^([^=]+)=(.*)$";
 	
 	
 	private Pattern line_pattern;
