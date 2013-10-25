@@ -11,25 +11,18 @@ import net.minecraft.src.World;
 
 public class CatacombTunneler {
 
-	
-	public static final Tuple NORTH = new Tuple(0, -1); 
-	public static final Tuple SOUTH = new Tuple(0, 1);
-	public static final Tuple WEST = new Tuple(-1, 0);
-	public static final Tuple EAST = new Tuple(1, 0);
-	public static final List<Tuple> DIRECTIONS = Arrays.asList(NORTH, SOUTH, WEST, EAST);
-
 	private World world;
 	private Random rand;
 	private CatacombLevel level;
 	private List<Tuple> tunnel;
-	private Tuple direction;
+	private Cardinal direction;
 	private int x;
 	private int y;
 	private int z;
 	private boolean done;
 	private int extend;
 	
-	public CatacombTunneler(Random rand, CatacombLevel level, Tuple direction, int x, int y, int z){
+	public CatacombTunneler(Random rand, CatacombLevel level, Cardinal direction, int x, int y, int z){
 		this.rand = rand;
 		this.level = level;
 		this.direction = direction;
@@ -41,13 +34,6 @@ public class CatacombTunneler {
 		tunnel = new ArrayList<Tuple>();
 		tunnel.add(new Tuple(x, z));
 
-	}
-	
-	public static Tuple reverse(Tuple direction){
-		int dx = (Integer)direction.getFirst() * -1;
-		int dz = (Integer)direction.getSecond() * -1;
-		
-		return new Tuple(dx, dz);
 	}
 	
 	public void update(){
@@ -76,8 +62,8 @@ public class CatacombTunneler {
 
 		tunnel.add(new Tuple(x, z));
 		
-		x = x + (Integer)direction.getFirst();
-		z = z + (Integer)direction.getSecond();
+		x = x + (Integer)(Cardinal.getTuple(direction).getFirst());
+		z = z + (Integer)(Cardinal.getTuple(direction).getSecond());
 		
 	}
 		
@@ -89,7 +75,7 @@ public class CatacombTunneler {
 		return done;
 	}
 	
-	public Tuple getDirection(){
+	public Cardinal getDirection(){
 		return this.direction;
 	}
 	
@@ -120,7 +106,7 @@ public class CatacombTunneler {
 			int x = (Integer)location.getFirst();
 			int z = (Integer)location.getSecond();
 			
-			if(direction == NORTH || direction == SOUTH){
+			if(direction == Cardinal.NORTH || direction == Cardinal.SOUTH){
 				WorldGenPrimitive.fillRectSolid(world, x - 1, y, z, x + 1, y + 2, z, 0, 0, 0, false, true);
 				WorldGenPrimitive.fillRectSolid(world, x - 2, y - 1, z, x + 2, y + 4, z, fillBlocks, false, true);
 				WorldGenPrimitive.fillRectSolid(world, x - 1, y - 1, z, x + 1, y - 1, z, bridgeBlock, 0, 2, true, false);
@@ -134,10 +120,10 @@ public class CatacombTunneler {
 		
 		// end of the tunnel;
 		Tuple location = tunnel.get(tunnel.size() - 1);
-		int x = (Integer)location.getFirst() + (Integer)direction.getFirst();
-		int z = (Integer)location.getSecond() + (Integer)direction.getSecond();
+		int x = (Integer)location.getFirst() + (Integer)(Cardinal.getTuple(direction).getFirst());
+		int z = (Integer)location.getSecond() + (Integer)(Cardinal.getTuple(direction).getSecond());
 		
-		if(direction == NORTH || direction == SOUTH){
+		if(direction == Cardinal.NORTH || direction == Cardinal.SOUTH){
 			WorldGenPrimitive.fillRectSolid(world, x - 2, y - 1, z, x + 2, y + 4, z, fillBlocks, false, true);
 		} else {
 			WorldGenPrimitive.fillRectSolid(world, x, y - 1, z - 2, x, y + 4, z + 2, fillBlocks, false, true);

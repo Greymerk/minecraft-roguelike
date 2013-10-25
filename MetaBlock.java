@@ -31,4 +31,16 @@ public class MetaBlock {
 	public int getFlag(){
 		return flag;
 	}
+	
+	public void setBlockID(int in){
+		blockID = in;
+	}
+	
+	public void setMeta(int in){
+		meta = in;
+	}
+	
+	public void setFlag(int in){
+		flag = in;
+	}
 }

@@ -10,13 +10,6 @@ import net.minecraft.src.Facing;
 import net.minecraft.src.World;
 
 public class WorldGenPrimitive {
-
-	public static final int UPSIDEDOWN = 4;
-	
-	public static final int WEST = 0;
-	public static final int EAST = 1;
-	public static final int NORTH = 2;
-	public static final int SOUTH = 3;
 	
 	public static boolean setBlock(World world, int x, int y, int z, int blockID, int meta, int flags, boolean fillAir, boolean replaceSolid){
 		
@@ -132,8 +125,6 @@ public class WorldGenPrimitive {
 	
 	public static void spiralStairStep(World world, int inX, int inY, int inZ, MetaBlock stair, MetaBlock fill){
 		
-		final int UPSIDEDOWN = 4;
-		
 		// air
 		fillRectSolid(world, inX - 1, inY, inZ - 1, inX + 1, inY, inZ + 1, 0, 0, 2, true, true);
 		
@@ -143,24 +134,24 @@ public class WorldGenPrimitive {
 		switch (inY % 4){
 		case 0: // north
 			// stairs
-			setBlock(world, inX, inY, inZ - 1, stair.getBlockID(), stair.getMeta() + WEST, stair.getFlag(), true, true);
-			setBlock(world, inX + 1, inY, inZ - 1, stair.getBlockID(), stair.getMeta() + EAST + UPSIDEDOWN, stair.getFlag(), true, true);
-			setBlock(world, inX + 1, inY, inZ, stair.getBlockID(), stair.getMeta() + SOUTH + UPSIDEDOWN, stair.getFlag(), true, true);
+			setBlock(world, inX, inY, inZ - 1, stair.getBlockID(), blockOrientation(Cardinal.WEST, false), stair.getFlag(), true, true);
+			setBlock(world, inX + 1, inY, inZ - 1, stair.getBlockID(), blockOrientation(Cardinal.EAST, true), stair.getFlag(), true, true);
+			setBlock(world, inX + 1, inY, inZ, stair.getBlockID(), blockOrientation(Cardinal.SOUTH, true), stair.getFlag(), true, true);
 			return;
 		case 1: // east
-			setBlock(world, inX + 1, inY, inZ, stair.getBlockID(), stair.getMeta() + NORTH, stair.getFlag(), true, true);
-			setBlock(world, inX + 1, inY, inZ + 1, stair.getBlockID(), stair.getMeta() + SOUTH + UPSIDEDOWN, stair.getFlag(), true, true);
-			setBlock(world, inX, inY, inZ + 1, stair.getBlockID(), stair.getMeta() + WEST + UPSIDEDOWN, stair.getFlag(), true, true);
+			setBlock(world, inX + 1, inY, inZ, stair.getBlockID(), blockOrientation(Cardinal.NORTH, false), stair.getFlag(), true, true);
+			setBlock(world, inX + 1, inY, inZ + 1, stair.getBlockID(), blockOrientation(Cardinal.SOUTH, true), stair.getFlag(), true, true);
+			setBlock(world, inX, inY, inZ + 1, stair.getBlockID(), blockOrientation(Cardinal.WEST, true), stair.getFlag(), true, true);
 			return;
 		case 2: // south
-			setBlock(world, inX, inY, inZ + 1, stair.getBlockID(), stair.getMeta() + EAST, stair.getFlag(), true, true);
-			setBlock(world, inX - 1, inY, inZ + 1, stair.getBlockID(), stair.getMeta() + WEST + UPSIDEDOWN, stair.getFlag(), true, true);
-			setBlock(world, inX - 1, inY, inZ, stair.getBlockID(), stair.getMeta() + NORTH + UPSIDEDOWN, stair.getFlag(), true, true);
+			setBlock(world, inX, inY, inZ + 1, stair.getBlockID(), blockOrientation(Cardinal.EAST, false), stair.getFlag(), true, true);
+			setBlock(world, inX - 1, inY, inZ + 1, stair.getBlockID(), blockOrientation(Cardinal.WEST, true), stair.getFlag(), true, true);
+			setBlock(world, inX - 1, inY, inZ, stair.getBlockID(), blockOrientation(Cardinal.NORTH, true), stair.getFlag(), true, true);
 			return;
 		case 3: // west
-			setBlock(world, inX - 1, inY, inZ, stair.getBlockID(), stair.getMeta() + SOUTH, stair.getFlag(), true, true);
-			setBlock(world, inX - 1, inY, inZ - 1, stair.getBlockID(), stair.getMeta() + NORTH + UPSIDEDOWN, stair.getFlag(), true, true);
-			setBlock(world, inX, inY, inZ - 1, stair.getBlockID(), stair.getMeta() + EAST + UPSIDEDOWN, stair.getFlag(), true, true);
+			setBlock(world, inX - 1, inY, inZ, stair.getBlockID(), blockOrientation(Cardinal.SOUTH, false), stair.getFlag(), true, true);
+			setBlock(world, inX - 1, inY, inZ - 1, stair.getBlockID(), blockOrientation(Cardinal.NORTH, true), stair.getFlag(), true, true);
+			setBlock(world, inX, inY, inZ - 1, stair.getBlockID(), blockOrientation(Cardinal.EAST, true), stair.getFlag(), true, true);
 			return;
 		default:
 			return;
@@ -191,6 +182,10 @@ public class WorldGenPrimitive {
         }
 
 	}
+
+	public static int blockOrientation(Cardinal dir, Boolean upsideDown){
+		return Cardinal.getBlockMeta(dir) + (upsideDown ? 4 : 0);
+	}
 	
 	private static class SingleBlockFactory implements IBlockFactory{
 
@@ -215,5 +210,7 @@ public class WorldGenPrimitive {
 			return block;
 		}		
 	}
+	
+
 }
 

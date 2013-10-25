@@ -19,7 +19,7 @@ public class CatacombNode {
 	private boolean done;
 	
 	
-	private Tuple direction;
+	private Cardinal direction;
 	
 	public CatacombNode (World world, Random rand, CatacombLevel level, int x, int y, int z){
 		this.world = world;
@@ -31,7 +31,7 @@ public class CatacombNode {
 		this.done = false;
 		this.tunnelers = new ArrayList<CatacombTunneler>();
 		
-		this.direction = CatacombTunneler.DIRECTIONS.get(rand.nextInt(CatacombTunneler.DIRECTIONS.size()));
+		this.direction = Cardinal.values()[rand.nextInt(Cardinal.values().length)];
 		
 		if(this.level.inRange(x, z)){
 			spawnTunnelers();
@@ -49,7 +49,7 @@ public class CatacombNode {
 		this.done = false;
 		this.tunnelers = new ArrayList<CatacombTunneler>();
 		
-		this.direction = CatacombTunneler.reverse(tunneler.getDirection());
+		this.direction = Cardinal.reverse(tunneler.getDirection());
 		
 		if(this.level.inRange(x, z)){
 			spawnTunnelers();
@@ -58,7 +58,7 @@ public class CatacombNode {
 	
 	private void spawnTunnelers(){
 		
-		for(Tuple dir : CatacombTunneler.DIRECTIONS){
+		for(Cardinal dir : Cardinal.values()){
 			if (dir.equals(direction)){
 				continue;
 			}

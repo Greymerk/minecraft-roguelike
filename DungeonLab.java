@@ -87,8 +87,8 @@ public class DungeonLab implements IDungeon {
 		
 		corner(world, x, y, z);
 		
-		WorldGenPrimitive.fillRectSolid(world, x + 1, y, z + 5, x + 4, y, z + 5, Block.stairsWoodSpruce.blockID, WorldGenPrimitive.NORTH + WorldGenPrimitive.UPSIDEDOWN, 2, true, true);
-		WorldGenPrimitive.fillRectSolid(world, x, y, z + 1, x, y, z + 4, Block.stairsWoodSpruce.blockID, WorldGenPrimitive.EAST + WorldGenPrimitive.UPSIDEDOWN, 2, true, true);
+		WorldGenPrimitive.fillRectSolid(world, x + 1, y, z + 5, x + 4, y, z + 5, Block.stairsWoodSpruce.blockID, WorldGenPrimitive.blockOrientation(Cardinal.NORTH, true), 2, true, true);
+		WorldGenPrimitive.fillRectSolid(world, x, y, z + 1, x, y, z + 4, Block.stairsWoodSpruce.blockID, WorldGenPrimitive.blockOrientation(Cardinal.EAST, true), 2, true, true);
 		
 		WorldGenPrimitive.setBlock(world, x, y + 1, z + 1, Block.brewingStand.blockID);
 		TreasureChest.generate(world, rand, x, y + 1, z + 4, TreasureChest.POTIONS);
@@ -104,26 +104,26 @@ public class DungeonLab implements IDungeon {
 		corner(world, x, y, z);
 		
 		WorldGenPrimitive.fillRectSolid(world, x + 1, y, z + 5, x + 4, y, z + 5, Block.stoneBrick.blockID, 0, 2, true, true);
-		WorldGenPrimitive.setBlock(world, x + 1, y + 1, z + 5, Block.stairsStoneBrick.blockID, WorldGenPrimitive.WEST, 2, true, true);
+		WorldGenPrimitive.setBlock(world, x + 1, y + 1, z + 5, Block.stairsStoneBrick.blockID, Cardinal.getBlockMeta(Cardinal.WEST), 2, true, true);
 		WorldGenPrimitive.setBlock(world, x + 2, y + 1, z + 5, Block.waterMoving.blockID);
 		world.markBlockForUpdate(x + 2, y + 1, z + 5);
 		WorldGenPrimitive.setBlock(world, x + 2, y + 2, z + 5, Block.stoneSingleSlab.blockID);
-		WorldGenPrimitive.setBlock(world, x + 3, y + 1, z + 5, Block.stairsStoneBrick.blockID, WorldGenPrimitive.EAST, 2, true, true);
+		WorldGenPrimitive.setBlock(world, x + 3, y + 1, z + 5, Block.stairsStoneBrick.blockID, Cardinal.getBlockMeta(Cardinal.EAST), 2, true, true);
 		
 		WorldGenPrimitive.fillRectSolid(world, x + 5, y, z + 1, x + 5, y, z + 4, Block.stoneBrick.blockID, 0, 2, true, true);
-		WorldGenPrimitive.setBlock(world, x + 5, y + 1, z + 1, Block.stairsStoneBrick.blockID, WorldGenPrimitive.NORTH, 2, true, true);
+		WorldGenPrimitive.setBlock(world, x + 5, y + 1, z + 1, Block.stairsStoneBrick.blockID, Cardinal.getBlockMeta(Cardinal.NORTH), 2, true, true);
 		WorldGenPrimitive.setBlock(world, x + 5, y + 1, z + 2, Block.waterMoving.blockID);
 		world.markBlockForUpdate(x + 5, y + 1, z + 2);
 		WorldGenPrimitive.setBlock(world, x + 5, y + 2, z + 2, Block.stoneSingleSlab.blockID);
-		WorldGenPrimitive.setBlock(world, x + 5, y + 1, z + 3, Block.stairsStoneBrick.blockID, WorldGenPrimitive.SOUTH, 2, true, true);
+		WorldGenPrimitive.setBlock(world, x + 5, y + 1, z + 3, Block.stairsStoneBrick.blockID, Cardinal.getBlockMeta(Cardinal.SOUTH), 2, true, true);
 		
 		WorldGenPrimitive.fillRectSolid(world, x + 3, y, z + 3, x + 4, y, z + 4, Block.stoneBrick.blockID);
 		WorldGenPrimitive.setBlock(world, x + 3, y + 1, x + 3, Block.torchWood.blockID);
 		
-		WorldGenPrimitive.setBlock(world, x + 4, y, z + 1, Block.stairsStoneBrick.blockID, WorldGenPrimitive.NORTH, 2, true, true);
-		WorldGenPrimitive.setBlock(world, x + 3, y, z + 2, Block.stairsStoneBrick.blockID, WorldGenPrimitive.WEST, 2, true, true);
-		WorldGenPrimitive.setBlock(world, x + 2, y, z + 3, Block.stairsStoneBrick.blockID, WorldGenPrimitive.NORTH, 2, true, true);
-		WorldGenPrimitive.setBlock(world, x + 1, y, z + 4, Block.stairsStoneBrick.blockID, WorldGenPrimitive.WEST, 2, true, true);
+		WorldGenPrimitive.setBlock(world, x + 4, y, z + 1, Block.stairsStoneBrick.blockID, Cardinal.getBlockMeta(Cardinal.NORTH), 2, true, true);
+		WorldGenPrimitive.setBlock(world, x + 3, y, z + 2, Block.stairsStoneBrick.blockID, Cardinal.getBlockMeta(Cardinal.WEST), 2, true, true);
+		WorldGenPrimitive.setBlock(world, x + 2, y, z + 3, Block.stairsStoneBrick.blockID, Cardinal.getBlockMeta(Cardinal.NORTH), 2, true, true);
+		WorldGenPrimitive.setBlock(world, x + 1, y, z + 4, Block.stairsStoneBrick.blockID, Cardinal.getBlockMeta(Cardinal.WEST), 2, true, true);
 		
 		
 	}
@@ -151,8 +151,8 @@ public class DungeonLab implements IDungeon {
 		
 		WorldGenPrimitive.setBlock(world, x + 1, y, z + 1, Block.stoneBrick.blockID);
 		
-		WorldGenPrimitive.fillRectSolid(world, x + 2, y, z + 1, x + 4, y, z + 1, Block.stairsStoneBrick.blockID, WorldGenPrimitive.SOUTH, 2, true, true);
-		WorldGenPrimitive.fillRectSolid(world, x + 1, y, z + 2, x + 1, y, z + 4, Block.stairsStoneBrick.blockID, WorldGenPrimitive.EAST, 2, true, true);
+		WorldGenPrimitive.fillRectSolid(world, x + 2, y, z + 1, x + 4, y, z + 1, Block.stairsStoneBrick.blockID, Cardinal.getBlockMeta(Cardinal.SOUTH), 2, true, true);
+		WorldGenPrimitive.fillRectSolid(world, x + 1, y, z + 2, x + 1, y, z + 4, Block.stairsStoneBrick.blockID, Cardinal.getBlockMeta(Cardinal.EAST), 2, true, true);
 		
 		WorldGenPrimitive.setBlock(world, x + 2, y - 1, z + 2, Block.blockRedstone.blockID);
 		WorldGenPrimitive.setBlock(world, x + 3, y - 1, z + 2, Block.redstoneLampActive.blockID);
@@ -182,8 +182,8 @@ public class DungeonLab implements IDungeon {
 		
 		WorldGenPrimitive.setBlock(world, x + 4, y, z + 1, Block.stoneBrick.blockID);
 		
-		WorldGenPrimitive.fillRectSolid(world, x + 1, y, z + 1, x + 3, y, z + 1, Block.stairsStoneBrick.blockID, WorldGenPrimitive.SOUTH, 2, true, true);
-		WorldGenPrimitive.fillRectSolid(world, x + 4, y, z + 2, x + 4, y, z + 4, Block.stairsStoneBrick.blockID, WorldGenPrimitive.WEST, 2, true, true);
+		WorldGenPrimitive.fillRectSolid(world, x + 1, y, z + 1, x + 3, y, z + 1, Block.stairsStoneBrick.blockID, Cardinal.getBlockMeta(Cardinal.SOUTH), 2, true, true);
+		WorldGenPrimitive.fillRectSolid(world, x + 4, y, z + 2, x + 4, y, z + 4, Block.stairsStoneBrick.blockID, Cardinal.getBlockMeta(Cardinal.WEST), 2, true, true);
 		
 		WorldGenPrimitive.setBlock(world, x + 3, y - 1, z + 2, Block.blockRedstone.blockID);
 		WorldGenPrimitive.setBlock(world, x + 2, y - 1, z + 2, Block.redstoneLampActive.blockID);
@@ -195,10 +195,10 @@ public class DungeonLab implements IDungeon {
 	private static void pillar(World world, int x, int y, int z){
 		
 		WorldGenPrimitive.fillRectSolid(world, x, y, z, x, y + 3, z, Block.wood.blockID, 1, 2, true, true);
-		WorldGenPrimitive.setBlock(world, x + 1, y + 3, z, Block.stairsStoneBrick.blockID, WorldGenPrimitive.UPSIDEDOWN + WorldGenPrimitive.EAST, 2, true, true);
-		WorldGenPrimitive.setBlock(world, x - 1, y + 3, z, Block.stairsStoneBrick.blockID, WorldGenPrimitive.UPSIDEDOWN + WorldGenPrimitive.WEST, 2, true, true);
-		WorldGenPrimitive.setBlock(world, x, y + 3, z + 1, Block.stairsStoneBrick.blockID, WorldGenPrimitive.UPSIDEDOWN + WorldGenPrimitive.SOUTH, 2, true, true);
-		WorldGenPrimitive.setBlock(world, x, y + 3, z - 1, Block.stairsStoneBrick.blockID, WorldGenPrimitive.UPSIDEDOWN + WorldGenPrimitive.NORTH, 2, true, true);
+		WorldGenPrimitive.setBlock(world, x + 1, y + 3, z, Block.stairsStoneBrick.blockID, WorldGenPrimitive.blockOrientation(Cardinal.EAST, true), 2, true, true);
+		WorldGenPrimitive.setBlock(world, x - 1, y + 3, z, Block.stairsStoneBrick.blockID, WorldGenPrimitive.blockOrientation(Cardinal.WEST, true), 2, true, true);
+		WorldGenPrimitive.setBlock(world, x, y + 3, z + 1, Block.stairsStoneBrick.blockID, WorldGenPrimitive.blockOrientation(Cardinal.SOUTH, true), 2, true, true);
+		WorldGenPrimitive.setBlock(world, x, y + 3, z - 1, Block.stairsStoneBrick.blockID, WorldGenPrimitive.blockOrientation(Cardinal.NORTH, true), 2, true, true);
 		
 	}
 	
