@@ -46,6 +46,10 @@ public class WorldGenPrimitive {
 		return setBlock(world, x, y, z, blockID, 0, 2, true, true);
 	}
 	
+	public static boolean setBlock(World world, int x, int y, int z, MetaBlock block, boolean fillAir, boolean replaceSolid){
+		return setBlock(world, x, y, z, block.getBlockID(), block.getMeta(), block.getFlag(), fillAir, replaceSolid);
+	}
+	
 	public static void fillRectSolid(World world, int x1, int y1, int z1, int x2, int y2, int z2, int blockID, int meta, int flag, boolean fillAir, boolean replaceSolid){
 		fillRectSolid(world, x1, y1, z1, x2, y2, z2, new SingleBlockFactory(blockID, meta, flag), fillAir, replaceSolid);
 	}

@@ -41,4 +41,12 @@ public enum Cardinal {
 		default: return null;
 		}
 	}
+
+	public static Cardinal[] getOrthogonal(Cardinal dir) {
+		if(dir == NORTH || dir == SOUTH){
+			return new Cardinal[] {EAST, WEST};
+		} else {
+			return new Cardinal[] {NORTH, SOUTH};
+		}
+	}
 }

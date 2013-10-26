@@ -77,7 +77,12 @@ public class CatacombLevel {
 
 			rooms.get().generate(world, rand, x, y, z);
 					
-		}		
+		}
+		
+		// tunnel segment features
+		for (CatacombNode node : nodes){
+			node.segments();
+		}
 	}
 	
 	private void generateLevelLink(World world, Random rand, int originX, int originY, int originZ) {

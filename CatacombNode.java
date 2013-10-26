@@ -108,4 +108,11 @@ public class CatacombNode {
 		}
 	}
 	
+	public void segments(){
+
+		for (CatacombTunneler tunneler : tunnelers){
+			tunneler.addSegments(world);
+		}
+	}
+	
 }
