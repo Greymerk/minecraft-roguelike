@@ -55,10 +55,10 @@ public class TreasureChestStarter extends TreasureChestBase{
 		
 		String page1 = 
 				"This dungeon was generated with the roguelike dungeons " +
-				"mod version 1.2.5\n\n" +
+				"mod version 1.2.6\n\n" +
 				"Thanks for playing\n\n" +
 				"-greymerk\n" +
-				"October 24th 2013";
+				"October 26th 2013";
 		
 		String page2 = 
 				"You can find updates and information about the mod at http://dungeons.homelinux.org/";

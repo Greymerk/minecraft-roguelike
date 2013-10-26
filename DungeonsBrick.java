@@ -16,9 +16,7 @@ public class DungeonsBrick implements IDungeon {
 	int originX;
 	int originY;
 	int originZ;
-	private static final int HEIGHT = 3;
-	private static final int LENGTH = 2;
-	private static final int WIDTH = 2;
+
 		
 	public DungeonsBrick(){
 	}
@@ -29,49 +27,99 @@ public class DungeonsBrick implements IDungeon {
 		originX = inOriginX;
 		originY = inOriginY;
 		originZ = inOriginZ;
+		
+		
+		
+		int stair;
+		switch(Dungeon.getRank(originY)){
+		case 2:
+			stair = Block.stairsCobblestone.blockID;
+			break;
+		case 3:
+			stair = Block.stairsNetherBrick.blockID;
+			break;
+		default:
+			stair = Block.stairsStoneBrick.blockID;
+		}
+		
+		
+		
+		MetaBlock southStair = new MetaBlock(stair, WorldGenPrimitive.blockOrientation(Cardinal.SOUTH, true));
+		MetaBlock northStair = new MetaBlock(stair, WorldGenPrimitive.blockOrientation(Cardinal.NORTH, true));
+		MetaBlock eastStair = new MetaBlock(stair, WorldGenPrimitive.blockOrientation(Cardinal.EAST, true));
+		MetaBlock westStair = new MetaBlock(stair, WorldGenPrimitive.blockOrientation(Cardinal.WEST, true));
+		
+		
 		IBlockFactory blocks = BlockFactoryProvider.getRandomizer(Dungeon.getRank(inOriginY), rand);
 		
 		// fill air inside
-		WorldGenPrimitive.fillRectSolid(world, 	originX - LENGTH, originY, originZ - WIDTH,
-												originX + LENGTH, originY + HEIGHT, originZ + WIDTH, 0);
+		WorldGenPrimitive.fillRectSolid(world, 	originX - 3, originY, originZ - 3, originX + 3, originY + 3, originZ + 3, 0);
 		
-		// walls
-		List<Coord> walls = WorldGenPrimitive.getRectHollow(	originX - LENGTH - 1, originY - 1, originZ - WIDTH - 1, 
-																originX + LENGTH + 1, originY + HEIGHT, originZ + WIDTH + 1);
-		
-		
-		for (Coord block : walls){
-			
-			int x = block.getX();
-			int y = block.getY();
-			int z = block.getZ();
-			
-			blocks.setBlock(inWorld, x, y, z, false, true);
-		}
+		// shell
+		WorldGenPrimitive.fillRectHollow(world, originX - 4, originY - 1, originZ - 4, originX + 4, originY + 4, originZ + 4, blocks, false, true);
 
-		//floor
-		List<Coord> floor = WorldGenPrimitive.getRectSolid(	originX - LENGTH - 1, originY + HEIGHT + 1, originZ - WIDTH - 1, 
-															originX + LENGTH + 1, originY + HEIGHT + 1, originZ + WIDTH + 1);
-
-		for (Coord block : floor){
-			int x = block.getX();
-			int y = block.getY();
-			int z = block.getZ();
-			
-			blocks.setBlock(inWorld, x, y, z, false, true);
-		}
-				
+		// pillars
+		WorldGenPrimitive.fillRectSolid(world, originX - 3, originY, originZ - 3, originX - 3, originY + 3, originZ - 3, blocks, true, true);
+		WorldGenPrimitive.setBlock(world, originX - 3, originY + 3, originZ - 2, southStair, true, true);
+		WorldGenPrimitive.setBlock(world, originX - 2, originY + 3, originZ - 3, eastStair, true, true);
+		WorldGenPrimitive.fillRectSolid(world, originX - 3, originY, originZ + 3, originX - 3, originY + 3, originZ + 3, blocks, true, true);
+		WorldGenPrimitive.setBlock(world, originX - 2, originY + 3, originZ + 3, eastStair, true, true);
+		WorldGenPrimitive.setBlock(world, originX - 3, originY + 3, originZ + 2, northStair, true, true);
+		WorldGenPrimitive.fillRectSolid(world, originX + 3, originY, originZ - 3, originX + 3, originY + 3, originZ - 3, blocks, true, true);
+		WorldGenPrimitive.setBlock(world, originX + 2, originY + 3, originZ - 3, westStair, true, true);
+		WorldGenPrimitive.setBlock(world, originX + 3, originY + 3, originZ - 2, southStair, true, true);
+		WorldGenPrimitive.fillRectSolid(world, originX + 3, originY, originZ + 3, originX + 3, originY + 3, originZ + 3, blocks, true, true);
+		WorldGenPrimitive.setBlock(world, originX + 2, originY + 3, originZ + 3, westStair, true, true);
+		WorldGenPrimitive.setBlock(world, originX + 3, originY + 3, originZ + 2, northStair, true, true);
+		
 		// roof
-		WorldGenPrimitive.fillRectSolid(world, 	originX - LENGTH - 1, originY + HEIGHT + 1, originZ - WIDTH - 1, 
-				originX + LENGTH + 1, originY + HEIGHT + 1, originZ + WIDTH + 1,
-				blocks, false, true);
+		WorldGenPrimitive.fillRectSolid(world, originX - 2, originY + 4, originZ - 2, originX + 2, originY + 4, originZ + 2, 0);
+		
+		blocks.setBlock(world, originX - 2, originY + 4, originZ - 2);
+		WorldGenPrimitive.setBlock(world, originX - 2, originY + 4, originZ - 1, southStair, true, true);
+		WorldGenPrimitive.setBlock(world, originX - 1, originY + 4, originZ - 2, eastStair, true, true);
+		blocks.setBlock(world, originX - 2, originY + 4, originZ + 2, true, true);
+		WorldGenPrimitive.setBlock(world, originX - 1, originY + 4, originZ + 2, eastStair, true, true);
+		WorldGenPrimitive.setBlock(world, originX - 2, originY + 4, originZ + 1, northStair, true, true);
+		blocks.setBlock(world, originX + 2, originY + 4, originZ - 2, true, true);
+		WorldGenPrimitive.setBlock(world, originX + 1, originY + 4, originZ - 2, westStair, true, true);
+		WorldGenPrimitive.setBlock(world, originX + 2, originY + 4, originZ - 1, southStair, true, true);
+		blocks.setBlock(world, originX + 2, originY + 4, originZ + 2, true, true);
+		WorldGenPrimitive.setBlock(world, originX + 1, originY + 4, originZ + 2, westStair, true, true);
+		WorldGenPrimitive.setBlock(world, originX + 2, originY + 4, originZ + 1, northStair, true, true);
+		
+		
+		WorldGenPrimitive.fillRectSolid(world, originX - 2, originY + 5, originZ - 2, originX + 2, originY + 5, originZ + 2, blocks, false, true);
+		WorldGenPrimitive.setBlock(world, originX, originY + 5, originZ, 0);
+		
+		blocks.setBlock(world, originX - 1, originY + 5, originZ - 1, false, true);
+		blocks.setBlock(world, originX - 1, originY + 5, originZ + 1, false, true);
+		blocks.setBlock(world, originX + 1, originY + 5, originZ - 1, false, true);
+		blocks.setBlock(world, originX + 1, originY + 5, originZ + 1, false, true);
+		
+		WorldGenPrimitive.setBlock(world, originX - 1, originY + 5, originZ, eastStair, false, true);
+		WorldGenPrimitive.setBlock(world, originX + 1, originY + 5, originZ, westStair, false, true);
+		WorldGenPrimitive.setBlock(world, originX, originY + 5, originZ - 1, southStair, false, true);
+		WorldGenPrimitive.setBlock(world, originX, originY + 5, originZ + 1, northStair, false, true);
+		
+		blocks.setBlock(world, originX, originY + 6, originZ, false, true);
+		
+		
+		
 		
 		// Chests
 		List<Coord> space = new ArrayList<Coord>();
-		space.add(new Coord(originX - 2, originY, originZ - 2));
-		space.add(new Coord(originX - 2, originY, originZ + 2));
-		space.add(new Coord(originX + 2, originY, originZ - 2));
-		space.add(new Coord(originX + 2, originY, originZ + 2));
+		space.add(new Coord(originX - 2, originY, originZ - 3));
+		space.add(new Coord(originX - 3, originY, originZ - 2));
+		
+		space.add(new Coord(originX - 2, originY, originZ + 3));
+		space.add(new Coord(originX - 3, originY, originZ + 2));
+		
+		space.add(new Coord(originX + 2, originY, originZ - 3));
+		space.add(new Coord(originX + 3, originY, originZ - 2));
+		
+		space.add(new Coord(originX + 2, originY, originZ + 3));
+		space.add(new Coord(originX + 3, originY, originZ + 2));
 
 		TreasureChest[] types = {TreasureChest.ARMOUR, TreasureChest.WEAPONS, TreasureChest.TOOLS};
 		TreasureChest.createChests(inWorld, inRandom, 1, space, types);
@@ -86,39 +134,6 @@ public class DungeonsBrick implements IDungeon {
 
 	
 	public boolean isValidDungeonLocation(World world, int originX, int originY, int originZ) {
-
-		int dungeonClearance = 0;
-		for (int x = originX - LENGTH - 1; x <= originX + LENGTH + 1; x++) {
-			for (int y = originY - 1; y <= originY + HEIGHT + 1; y++) {
-				for (int z = originZ - WIDTH - 1; z <= originZ + WIDTH + 1; z++) {
-					Material material = world.getBlockMaterial(x, y, z);
-
-					if (y == originY - 1 && !material.isSolid()) {
-						return false;
-					}
-
-					if (y == originY + HEIGHT + 1 && !material.isSolid()) {
-						return false;
-					}
-
-					if ((      x == originX - LENGTH - 1
-							|| x == originX + LENGTH + 1
-							|| z == originZ - WIDTH - 1
-							|| z == originZ + WIDTH + 1)
-							&& y == originY
-							&& world.isAirBlock(x, y, z)
-							&& world.isAirBlock(x, y + 1, z)){
-						dungeonClearance++;
-					}
-				}
-			}
-		}
-		
-		if (dungeonClearance < 1 || dungeonClearance > 5) {
-			return false;
-		}
-
-		return true;
-	
+		return false;
 	}
 }

@@ -6,10 +6,10 @@ import net.minecraft.src.Tuple;
 
 public enum Segment {
 
-	BRICKARCH, BRICKLAVA, BRICKSHELF;
+	BRICKARCH, BRICKLAVA, BRICKSHELF, BRICKINSET;
 	
-	public static final Segment[] rank0 = {BRICKLAVA, BRICKSHELF};
-	public static final Segment[] rank1 = {BRICKSHELF};
+	public static final Segment[] rank0 = {BRICKLAVA, BRICKSHELF, BRICKINSET};
+	public static final Segment[] rank1 = {BRICKSHELF, BRICKINSET};
 	
 	public static ISegment getSegment(Segment choice){
 		
@@ -17,6 +17,7 @@ public enum Segment {
 		case BRICKARCH: return new SegmentBrickArch();
 		case BRICKLAVA: return new SegmentBrickLava();
 		case BRICKSHELF: return new SegmentBrickShelf();
+		case BRICKINSET: return new SegmentBrickInset();
 		}
 		
 		return null;

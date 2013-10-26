@@ -151,7 +151,6 @@ public class DungeonsBase implements IDungeon {
 			} else {
 				WorldGenPrimitive.setBlock(world, x, y, z, wallBlock);
 			}
-			
 		}
 	}
 	

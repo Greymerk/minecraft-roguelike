@@ -103,7 +103,7 @@ public class Catacomb {
 		
 		switch(rank){
 		case 0:
-			factory = new DungeonFactory(rand, Dungeon.BRICK);
+			factory = new DungeonFactory(rand, Dungeon.CORNER);
 			factory.addSingle(Dungeon.ENCHANT);
 			factory.addSingle(Dungeon.SMITH);
 			factory.addSingle(Dungeon.MUSIC);
@@ -111,23 +111,26 @@ public class Catacomb {
 			factory.addSingle(Dungeon.CAKE);
 			factory.addSingle(Dungeon.LAB);
 			factory.addSingle(Dungeon.SLIME);
+			factory.addRandom(Dungeon.BRICK, 3);
 			factory.addRandom(Dungeon.CAKE, 20);
 			factory.addRandom(Dungeon.SLIME, 20);
 			break;
 		case 1:
-			factory = new DungeonFactory(rand, Dungeon.BRICK);
+			factory = new DungeonFactory(rand, Dungeon.CORNER);
 			factory.addSingle(Dungeon.ENDER);
 			factory.addSingle(Dungeon.SPIDER);
 			factory.addSingle(Dungeon.CREEPER);
 			factory.addSingle(Dungeon.CRYPT);
 			factory.addSingle(Dungeon.PRISON);
+			factory.addRandom(Dungeon.BRICK, 3);
 			factory.addRandom(Dungeon.FIRE, 20);
 			factory.addRandom(Dungeon.PIT, 30);
 			factory.addRandom(Dungeon.SLIME, 30);
 			break;
 		case 2:
-			factory = new DungeonFactory(rand, Dungeon.BRICK);
+			factory = new DungeonFactory(rand, Dungeon.CORNER);
 			factory.addSingle(Dungeon.ENDER);
+			factory.addRandom(Dungeon.BRICK, 3);
 			factory.addRandom(Dungeon.FIRE, 20);
 			factory.addRandom(Dungeon.CRYPT, 20);
 			factory.addRandom(Dungeon.PRISON, 20);
@@ -137,14 +140,15 @@ public class Catacomb {
 			factory.addRandom(Dungeon.FIRE, 30);
 			break;
 		case 3:
-			factory = new DungeonFactory(rand, Dungeon.NETHER);
+			factory = new DungeonFactory(rand, Dungeon.CORNER);
+			factory.addRandom(Dungeon.NETHER, 3);
 			factory.addRandom(Dungeon.NETHERFORT, 20);
 			factory.addRandom(Dungeon.SLIME, 30);
 			factory.addRandom(Dungeon.SPIDER, 40);
 			factory.addRandom(Dungeon.FIRE, 50);
 			break;
 		default:
-			factory = new DungeonFactory(rand, Dungeon.BRICK);
+			factory = new DungeonFactory(rand, Dungeon.CORNER);
 		}
 		
 		
