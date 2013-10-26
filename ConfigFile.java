@@ -12,7 +12,8 @@ import java.util.*;
 public class ConfigFile extends ConfigurationProvider {
 
 
-	private Hashtable<String,String> kvp;
+	private String filename;
+	private ConfigurationParser parser;
 
 
 	/**
@@ -28,17 +29,30 @@ public class ConfigFile extends ConfigurationProvider {
 	 */
 	public ConfigFile (String filename, ConfigurationParser parser) throws Exception {
 	
+		this.filename=filename;
+		this.parser=parser;
+	
+		//	Open a stream to the file-in-question
+		FileInputStream stream;
+		try {
+		
+			stream=new FileInputStream(filename);
+		
+		} catch (Exception e) {
+		
+			//	If the file could not be opened,
+			//	we just create an empty set of
+			//	configurations
+			return;
+		
+		}
+	
 		//	Create an input stream reader
 		//	to read from the specified file
+		//	stream
 		BufferedReader reader=new BufferedReader(
-			new InputStreamReader(
-				new FileInputStream(
-					filename
-				)
-			)
+			new InputStreamReader(stream)
 		);
-		
-		kvp=new Hashtable<String,String>();
 		
 		//	Loop until all settings have
 		//	been extracted
@@ -63,13 +77,18 @@ public class ConfigFile extends ConfigurationProvider {
 	}
 	
 	
-	public String Get (String key) {
+	/**
+	 *	Writes configurations back to the file from
+	 *	which they were originally drawn, according
+	 *	to the strategy used to parse them.
+	 */
+	public void Write () throws Exception {
 	
-		//	Guard against nulls
-		if (key==null) return null;
-		
-		//	Fetch
-		return kvp.get(key);
+		ConfigFileWriter.Write(
+			filename,
+			this,
+			parser
+		);
 	
 	}
 
