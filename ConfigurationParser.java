@@ -1,7 +1,7 @@
 package greymerk.roguelike;
 
 
-import java.io.BufferedReader;
+import java.io.*;
 
 
 /**
@@ -11,6 +11,10 @@ import java.io.BufferedReader;
  *	Configuration parsers process raw strings from
  *	a configuration source, and transform it into
  *	a set of key/value pairs.
+ *
+ *	Configuration parsers process configuration data,
+ *	and transform it back into the raw strings from
+ *	which it may be reparsed.
  */
 public interface ConfigurationParser {
 
@@ -28,6 +32,17 @@ public interface ConfigurationParser {
 	 *		\em reader.
 	 */
 	public Configuration Parse (BufferedReader reader) throws Exception;
+	
+	
+	/**
+	 *	Writes one configurations to an output stream.
+	 *
+	 *	\param [in] writer
+	 *		A writer which writes to the destination.
+	 *	\param [in] config
+	 *		The configuration to serialize.
+	 */
+	public void Write (Writer writer, Configuration config) throws Exception;
 
 
 }

@@ -1,7 +1,7 @@
 package greymerk.roguelike;
 
 
-import java.io.BufferedReader;
+import java.io.*;
 import java.util.regex.*;
 
 
@@ -80,6 +80,16 @@ public class INIParser implements ConfigurationParser {
 			return new Configuration(key,value);
 		
 		}
+	
+	}
+	
+	
+	public void Write (Writer writer, Configuration config) throws Exception {
+	
+		writer.write(config.Key);
+		writer.write("=");
+		writer.write(config.Value);
+		writer.write(System.getProperty("line.separator"));
 	
 	}
 

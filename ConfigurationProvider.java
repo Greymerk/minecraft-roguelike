@@ -1,10 +1,23 @@
 package greymerk.roguelike;
 
 
+import java.util.*;
+
+
 /**
  *	Provides configuration information.
  */
-public abstract class ConfigurationProvider {
+public abstract class ConfigurationProvider implements Iterable<Configuration> {
+
+
+	protected Hashtable<String,String> kvp;
+	
+	
+	protected ConfigurationProvider () {
+	
+		kvp=new Hashtable<String,String>();
+	
+	}
 
 
 	/**
@@ -19,7 +32,15 @@ public abstract class ConfigurationProvider {
 	 *		The data associated with \em key,
 	 *		if it exists, \em null otherwise.
 	 */
-	public abstract String Get (String key);
+	public String Get (String key) {
+	
+		//	Guard against null keys
+		if (key==null) return null;
+		
+		//	Fetch
+		return kvp.get(key);
+	
+	}
 	
 	
 	/**
@@ -65,6 +86,8 @@ public abstract class ConfigurationProvider {
 	
 		String value=Get(key);
 		
+		if (value==null) return fallback;
+		
 		try {
 		
 			return Double.parseDouble(value);
@@ -93,6 +116,8 @@ public abstract class ConfigurationProvider {
 	
 		String value=Get(key);
 		
+		if (value==null) return fallback;
+		
 		try {
 		
 			return Integer.parseInt(value);
@@ -100,6 +125,112 @@ public abstract class ConfigurationProvider {
 		} catch (NumberFormatException e) {	}
 		
 		return fallback;
+	
+	}
+	
+	
+	/**
+	 *	Sets a configuration, creating it if it
+	 *	does not exist, updating it otherwise.
+	 *
+	 *	\param [in] key
+	 *		The key associated with the configuration
+	 *		to update or create.
+	 *	\param [in] value
+	 *		The value to associate with \em key.
+	 */
+	public void Set (String key, String value) {
+	
+		//	If the key is null, pass, that's
+		//	meaningless
+		if (key==null) return;
+		
+		//	If the value is null, that's actually
+		//	an attempt to remove a configuration
+		if (value==null) {
+		
+			kvp.remove(key);
+		
+			return;
+		
+		}
+		
+		//	Otherwise we update/insert the
+		//	configuration
+		kvp.put(key,value);
+	
+	}
+	/**
+	 *	Sets a configuration, creating it if it
+	 *	does not exist, updating it otherwise.
+	 *
+	 *	\param [in] key
+	 *		The key associated with the configuration
+	 *		to update or create.
+	 *	\param [in] value
+	 *		The value to associate with \em key.
+	 */
+	public void Set (String key, double value) {
+	
+		Set(
+			key,
+			Double.toString(value)
+		);
+	
+	}
+	/**
+	 *	Sets a configuration, creating it if it
+	 *	does not exist, updating it otherwise.
+	 *
+	 *	\param [in] key
+	 *		The key associated with the configuration
+	 *		to update or create.
+	 *	\param [in] value
+	 *		The value to associate with \em key.
+	 */
+	public void Set (String key, int value) {
+	
+		Set(
+			key,
+			Integer.toString(value)
+		);
+	
+	}
+	
+	
+	/**
+	 *	Unsets a configuration, removing it.
+	 *
+	 *	If the requested configuration didn't
+	 *	exist, nothing happens.
+	 *
+	 *	\param [in] key
+	 *		The key associated with the
+	 *		configuration to remote.
+	 */
+	public void Unset (String key) {
+	
+		//	If the key is null, pass, that's
+		//	meaningless
+		if (key==null) return;
+		
+		//	Remove
+		kvp.remove(key);
+	
+	}
+	
+	
+	/**
+	 *	Fetches an iterator which may be used
+	 *	to traverse the configurations in this
+	 *	provider in an unspecified order.
+	 *
+	 *	\return
+	 *		An iterator.
+	 */
+	public Iterator<Configuration> iterator () {
+	
+		return new ConfigurationProviderIterator(kvp.entrySet().iterator());
 	
 	}
 
