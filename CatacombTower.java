@@ -70,6 +70,8 @@ public class CatacombTower {
 			towerY = 12;
 		}
 		
+		towerY++;
+		
 		floor1 = originY + towerY;
 		floor2 = originY + towerY + 5;
 		roof = originY + towerY + 9;

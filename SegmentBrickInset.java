@@ -107,10 +107,14 @@ public class SegmentBrickInset extends SegmentBase {
 			return;
 		}
 		
+		if(world.isAirBlock(x, y - 1, z)){
+			return;
+		}
+		
 		if(rand.nextBoolean()){
 			TreasureChest type = types[rand.nextInt(types.length)];
 			TreasureChest.generate(world, rand, x, y, z, type);
-		} else {
+		} else if(Dungeon.getRank(y) > 0){
 			Spawner.generate(world, rand, x, y, z);
 		}
 	}

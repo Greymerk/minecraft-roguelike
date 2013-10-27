@@ -42,7 +42,7 @@ public enum Dungeon {
 			return;
 		}
 		
-		makeAreaEvil(world, rand, chunkX * 16 + 8, 5, chunkZ * 16 + 8, chunkX * 16 + 16 + 8, 50, chunkZ * 16 + 16 + 8, frequency);
+		//makeAreaEvil(world, rand, chunkX * 16 + 8, 5, chunkZ * 16 + 8, chunkX * 16 + 16 + 8, 50, chunkZ * 16 + 16 + 8, frequency);
 
 		if(Catacomb.canSpawn(chunkX, chunkZ, world)){
 			int x = chunkX * 16 + 4;
