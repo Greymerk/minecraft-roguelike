@@ -26,7 +26,11 @@ public enum Spawner {
 	}
 	
 	public static void generate(World world, Random rand, int posX, int posY, int posZ, Spawner type){
-		world.setBlock(posX, posY, posZ, Block.mobSpawner.blockID, 0, 2);
+		
+		if(!WorldGenPrimitive.setBlock(world, posX, posY, posZ, Block.mobSpawner.blockID)){
+			return;
+		}
+		
 		TileEntityMobSpawner spawner = (TileEntityMobSpawner) world.getBlockTileEntity(posX, posY, posZ);
 
         if (spawner != null)

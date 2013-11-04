@@ -31,7 +31,9 @@ public abstract class TreasureChestBase implements ITreasureChest{
 		int type = trapped ? Block.chestTrapped.blockID : Block.chest.blockID;
 		
 		
-		world.setBlock(posX, posY, posZ, type, 0, 2);
+		if(!WorldGenPrimitive.setBlock(world, posX, posY, posZ, type)){
+			return false;
+		}
 	
 		TileEntityChest chest;
 		
