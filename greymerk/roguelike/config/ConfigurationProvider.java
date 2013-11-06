@@ -18,6 +18,28 @@ public abstract class ConfigurationProvider implements Iterable<Configuration> {
 		kvp=new Hashtable<String,String>();
 	
 	}
+	
+	
+	/**
+	 *	Checks to see whether a configuration
+	 *	setting exists.
+	 *
+	 *	\param [in] key
+	 *		The key to check.
+	 *
+	 *	\return
+	 *		\em true if \em key has associated
+	 *		data in the configuration store,
+	 *		\em false otherwise.
+	 */
+	public boolean ContainsKey (String key) {
+	
+		//	Null keys never exist
+		if (key==null) return false;
+		
+		return kvp.get(key)!=null;
+	
+	}
 
 
 	/**
