@@ -2,6 +2,7 @@ package greymerk.roguelike.config;
 
 
 import java.util.*;
+import java.util.regex.*;
 
 
 /**
@@ -10,12 +11,24 @@ import java.util.*;
 public abstract class ConfigurationProvider implements Iterable<Configuration> {
 
 
+	private static final String true_regex="^\\s*(?:t(?:rue)?|y(?:es)?)\\s*$";
+	private static final String false_regex="^\\s*(?:f(?:alse)?|no?)\\s*$";
+	private static final String true_string="true";
+	private static final String false_string="false";
+	
+	
+	private Pattern true_pattern;
+	private Pattern false_pattern;
+
+
 	protected Hashtable<String,String> kvp;
 	
 	
 	protected ConfigurationProvider () {
 	
 		kvp=new Hashtable<String,String>();
+		true_pattern=Pattern.compile(true_regex);
+		false_pattern=Pattern.compile(false_regex);
 	
 	}
 	
@@ -149,6 +162,34 @@ public abstract class ConfigurationProvider implements Iterable<Configuration> {
 		return fallback;
 	
 	}
+	/**
+	 *	Gets a configuration setting as a boolean.
+	 *
+	 *	\param [in] key
+	 *		The key whose associated configuration
+	 *		information is to be retrieved.
+	 *	\param [in] fallback
+	 *		The value which will be retrieved if
+	 *		\em key is not present, or if \em key
+	 *		could not be parsed to an integer.
+	 *
+	 *	\return
+	 *		Either the configuration associated with
+	 *		\em key, or \em fallback.
+	 */
+	public boolean GetBoolean (String key, boolean fallback) {
+	
+		String value=Get(key);
+		
+		if (value==null) return fallback;
+		
+		if (true_pattern.matcher(value).find()) return true;
+		
+		if (false_pattern.matcher(value).find()) return false;
+		
+		return fallback;
+	
+	}
 	
 	
 	/**
@@ -215,6 +256,24 @@ public abstract class ConfigurationProvider implements Iterable<Configuration> {
 		Set(
 			key,
 			Integer.toString(value)
+		);
+	
+	}
+	/**
+	 *	Sets a configuration, creating it if it
+	 *	does not exist, updating it otherwise.
+	 *
+	 *	\param [in] key
+	 *		The key associated with the configuration
+	 *		to update or create.
+	 *	\param [in] value
+	 *		The value to associate with \em key.
+	 */
+	public void Set (String key, boolean value) {
+	
+		Set(
+			key,
+			value ? true_string : false_string
 		);
 	
 	}
