@@ -123,7 +123,7 @@ public class DungeonsSpiderNest implements IDungeon {
 					if(rand.nextInt(clearHeight)  == 0){
 						clear(blockX, blockY, blockZ);
 					} else if(rand.nextInt(5) == 0){
-						world.setBlock(blockX, blockY, blockZ, Block.gravel.blockID);
+						WorldGenPrimitive.setBlock(world, blockX, blockY, blockZ, Block.gravel.blockID);
 					}
 					
 				}
@@ -133,10 +133,9 @@ public class DungeonsSpiderNest implements IDungeon {
 
 	private void clear(int x, int y, int z){
 		if(rand.nextInt(3) == 0){
-			world.setBlock(x, y, z, Block.web.blockID);
+			WorldGenPrimitive.setBlock(world, x, y, z, Block.web.blockID);
 			return;
 		}
-		
-		world.setBlock(x, y, z, 0);
+		WorldGenPrimitive.setBlock(world, x, y, z, 0);
 	}
 }

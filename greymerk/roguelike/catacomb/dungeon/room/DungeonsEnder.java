@@ -180,7 +180,7 @@ public class DungeonsEnder implements IDungeon {
 					|| world.getBlockId(x, y, z + 1) == Block.obsidian.blockID
 					&& world.getBlockId(x, y, z) == 0){
 					
-					world.setBlock(x, y, z, Block.enderChest.blockID);
+					WorldGenPrimitive.setBlock(world, x, y, z, Block.enderChest.blockID);
 					break;
 				}
 			}

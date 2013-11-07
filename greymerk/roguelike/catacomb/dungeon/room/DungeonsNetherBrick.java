@@ -187,8 +187,6 @@ public class DungeonsNetherBrick implements IDungeon {
 			int spawnY = originY + rand.nextInt(3);
 			int spawnZ = originZ + zOffset[i];
 			
-			
-	        world.setBlock(spawnX, spawnY, spawnZ, Block.mobSpawner.blockID, 0, 2);
 	        Spawner.generate(world, rand, spawnX, spawnY, spawnZ);
 		}
 	}

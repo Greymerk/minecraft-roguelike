@@ -215,11 +215,11 @@ public class DungeonsPit implements IDungeon {
 				}
 			}
 			
-			world.setBlock(originX, originY, originZ + 2, Block.pressurePlateStone.blockID);
-			world.setBlock(originX, originY - 1, originZ + 3, Block.torchRedstoneActive.blockID, 3, 2);
-			world.setBlock(originX, originY - 1, originZ + 4, Block.redstoneWire.blockID);
-			world.setBlock(originX, originY, originZ + 5, Block.torchRedstoneIdle.blockID, 5, 2);
-			world.setBlock(originX, originY + 1, originZ + 4, Block.pistonStickyBase.blockID, 2, 2);
+			WorldGenPrimitive.setBlock(world, originX, originY, originZ + 2, Block.pressurePlateStone.blockID);
+			WorldGenPrimitive.setBlock(world, originX, originY - 1, originZ + 3, Block.torchRedstoneActive.blockID, 3, 2, true, true);
+			WorldGenPrimitive.setBlock(world, originX, originY - 1, originZ + 4, Block.redstoneWire.blockID);
+			WorldGenPrimitive.setBlock(world, originX, originY, originZ + 5, Block.torchRedstoneIdle.blockID, 5, 2, true, true);
+			WorldGenPrimitive.setBlock(world, originX, originY + 1, originZ + 4, Block.pistonStickyBase.blockID, 2, 2, true, true);
 			break;
 			
 			
@@ -236,11 +236,11 @@ public class DungeonsPit implements IDungeon {
 				}
 			}
 			
-			world.setBlock(originX - 2, originY, originZ, Block.pressurePlateStone.blockID);
-			world.setBlock(originX - 3, originY - 1, originZ, Block.torchRedstoneActive.blockID, 2, 2);
-			world.setBlock(originX - 4, originY - 1, originZ, Block.redstoneWire.blockID);
-			world.setBlock(originX - 5, originY, originZ, Block.torchRedstoneIdle.blockID, 5, 2);
-			world.setBlock(originX - 4, originY + 1, originZ, Block.pistonStickyBase.blockID, 5, 2);
+			WorldGenPrimitive.setBlock(world, originX - 2, originY, originZ, Block.pressurePlateStone.blockID);
+			WorldGenPrimitive.setBlock(world, originX - 3, originY - 1, originZ, Block.torchRedstoneActive.blockID, 2, 2, true, true);
+			WorldGenPrimitive.setBlock(world, originX - 4, originY - 1, originZ, Block.redstoneWire.blockID);
+			WorldGenPrimitive.setBlock(world, originX - 5, originY, originZ, Block.torchRedstoneIdle.blockID, 5, 2, true, true);
+			WorldGenPrimitive.setBlock(world, originX - 4, originY + 1, originZ, Block.pistonStickyBase.blockID, 5, 2, true, true);
 			break;
 			
 		// North
@@ -256,11 +256,11 @@ public class DungeonsPit implements IDungeon {
 				}
 			}
 			
-			world.setBlock(originX, originY, originZ - 2, Block.pressurePlateStone.blockID);
-			world.setBlock(originX, originY - 1, originZ - 3, Block.torchRedstoneActive.blockID, 4, 2);
-			world.setBlock(originX, originY - 1, originZ - 4, Block.redstoneWire.blockID);
-			world.setBlock(originX, originY, originZ - 5, Block.torchRedstoneIdle.blockID, 5, 2);
-			world.setBlock(originX, originY + 1, originZ - 4, Block.pistonStickyBase.blockID, 3, 2);
+			WorldGenPrimitive.setBlock(world, originX, originY, originZ - 2, Block.pressurePlateStone.blockID);
+			WorldGenPrimitive.setBlock(world, originX, originY - 1, originZ - 3, Block.torchRedstoneActive.blockID, 4, 2, true, true);
+			WorldGenPrimitive.setBlock(world, originX, originY - 1, originZ - 4, Block.redstoneWire.blockID);
+			WorldGenPrimitive.setBlock(world, originX, originY, originZ - 5, Block.torchRedstoneIdle.blockID, 5, 2, true, true);
+			WorldGenPrimitive.setBlock(world, originX, originY + 1, originZ - 4, Block.pistonStickyBase.blockID, 3, 2, true, true);
 			break;
 			
 		// East 
@@ -276,11 +276,11 @@ public class DungeonsPit implements IDungeon {
 				}
 			}
 			
-			world.setBlock(originX + 2, originY, originZ, Block.pressurePlateStone.blockID);
-			world.setBlock(originX + 3, originY - 1, originZ, Block.torchRedstoneActive.blockID, 1, 2);
-			world.setBlock(originX + 4, originY - 1, originZ, Block.redstoneWire.blockID);
-			world.setBlock(originX + 5, originY, originZ, Block.torchRedstoneIdle.blockID, 5, 2);
-			world.setBlock(originX + 4, originY + 1, originZ, Block.pistonStickyBase.blockID, 4, 2);
+			WorldGenPrimitive.setBlock(world, originX + 2, originY, originZ, Block.pressurePlateStone.blockID);
+			WorldGenPrimitive.setBlock(world, originX + 3, originY - 1, originZ, Block.torchRedstoneActive.blockID, 1, 2, true, true);
+			WorldGenPrimitive.setBlock(world, originX + 4, originY - 1, originZ, Block.redstoneWire.blockID);
+			WorldGenPrimitive.setBlock(world, originX + 5, originY, originZ, Block.torchRedstoneIdle.blockID, 5, 2, true, true);
+			WorldGenPrimitive.setBlock(world, originX + 4, originY + 1, originZ, Block.pistonStickyBase.blockID, 4, 2, true, true);
 			break;
 		}
 	}

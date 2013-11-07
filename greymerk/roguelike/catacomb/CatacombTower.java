@@ -180,15 +180,16 @@ public class CatacombTower {
 		WorldGenPrimitive.setBlock(world, originX + 2, floor2 + 2, originZ + 4, Block.fenceIron.blockID);
 
 		// furniture
-		world.setBlock(originX + 1, floor2 + 1, originZ - 3, Block.enderChest.blockID);
-		world.setBlock(originX + 2, floor2 + 1, originZ - 3, Block.furnaceIdle.blockID);
-		TileEntityFurnace furnace = (TileEntityFurnace)world.getBlockTileEntity(originX + 2, floor2 + 1, originZ - 3);
-		ItemStack coal = new ItemStack(Item.coal, 5 + rand.nextInt(10));
-		furnace.setInventorySlotContents(1, coal);
-		world.setBlock(originX - 1, floor2 + 1, originZ - 3, Block.workbench.blockID);
-		
-		world.setBlock(originX + 3, floor2 + 1, originZ + 1, Block.bed.blockID, 0, 3);
-		world.setBlock(originX + 3, floor2 + 1, originZ + 2, Block.bed.blockID, 0 + 8, 3);
+		WorldGenPrimitive.setBlock(world, originX + 1, floor2 + 1, originZ - 3, Block.enderChest.blockID);
+		if(WorldGenPrimitive.setBlock(world, originX + 2, floor2 + 1, originZ - 3, Block.furnaceIdle.blockID)){
+			TileEntityFurnace furnace = (TileEntityFurnace)world.getBlockTileEntity(originX + 2, floor2 + 1, originZ - 3);
+			ItemStack coal = new ItemStack(Item.coal, 5 + rand.nextInt(10));
+			furnace.setInventorySlotContents(1, coal);
+		}
+
+		WorldGenPrimitive.setBlock(world, originX - 1, floor2 + 1, originZ - 3, Block.workbench.blockID);
+		WorldGenPrimitive.setBlock(world, originX + 3, floor2 + 1, originZ + 1, Block.bed.blockID, 0, 3, true, true);
+		WorldGenPrimitive.setBlock(world, originX + 3, floor2 + 1, originZ + 2, Block.bed.blockID, 0 + 8, 3, true, true);
 		
 		new TreasureChestStarter().generate(world, rand, originX - 3, floor2 + 1, originZ + 2);
 		new TreasureChestStarter().generate(world, rand, originX - 3, floor2 + 1, originZ - 2);

@@ -2,10 +2,10 @@ package greymerk.roguelike.catacomb.segment;
 
 import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.catacomb.dungeon.Dungeon;
-import greymerk.roguelike.catacomb.segment.part.SegmentBrickArch;
-import greymerk.roguelike.catacomb.segment.part.SegmentBrickInset;
-import greymerk.roguelike.catacomb.segment.part.SegmentBrickLava;
-import greymerk.roguelike.catacomb.segment.part.SegmentBrickShelf;
+import greymerk.roguelike.catacomb.segment.part.SegmentArch;
+import greymerk.roguelike.catacomb.segment.part.SegmentInset;
+import greymerk.roguelike.catacomb.segment.part.SegmentFire;
+import greymerk.roguelike.catacomb.segment.part.SegmentShelf;
 import greymerk.roguelike.worldgen.Cardinal;
 
 import java.util.Random;
@@ -14,18 +14,18 @@ import net.minecraft.src.Tuple;
 
 public enum Segment {
 
-	BRICKARCH, BRICKLAVA, BRICKSHELF, BRICKINSET;
+	ARCH, FIRE, SHELF, INSET;
 	
-	public static final Segment[] rank0 = {BRICKLAVA, BRICKSHELF, BRICKINSET};
-	public static final Segment[] rank1 = {BRICKSHELF, BRICKINSET};
+	public static final Segment[] rank0 = {FIRE, SHELF, INSET};
+	public static final Segment[] rank1 = {SHELF, INSET};
 	
 	public static ISegment getSegment(Segment choice){
 		
 		switch(choice){
-		case BRICKARCH: return new SegmentBrickArch();
-		case BRICKLAVA: return new SegmentBrickLava();
-		case BRICKSHELF: return new SegmentBrickShelf();
-		case BRICKINSET: return new SegmentBrickInset();
+		case ARCH: return new SegmentArch();
+		case FIRE: return new SegmentFire();
+		case SHELF: return new SegmentShelf();
+		case INSET: return new SegmentInset();
 		}
 		
 		return null;
@@ -39,11 +39,11 @@ public enum Segment {
 		
 		switch(Catacomb.getRank(y)){
 		case 0:
-			pillar = BRICKARCH;
+			pillar = ARCH;
 			spacers = rank0;
 			break;
 		default: 
-			pillar = BRICKARCH;
+			pillar = ARCH;
 			spacers = rank1;
 		}
 	

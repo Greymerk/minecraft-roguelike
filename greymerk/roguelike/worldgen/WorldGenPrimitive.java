@@ -177,7 +177,7 @@ public class WorldGenPrimitive {
 	        				
 	            		    if (Block.vine.canPlaceBlockOnSide(world, x, y, z, dir))
 	                        {
-	                            world.setBlock(x, y, z, Block.vine.blockID, 1 << Direction.facingToDirection[Facing.oppositeSide[dir]], 2);
+	            		    	setBlock(world, x, y, z, Block.vine.blockID, 1 << Direction.facingToDirection[Facing.oppositeSide[dir]], 2, true, true);
 	                            break;
 	                        }
 	        			}
