@@ -2,7 +2,8 @@ package greymerk.roguelike.treasure;
 
 import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.catacomb.dungeon.Dungeon;
-import greymerk.roguelike.treasure.loot.ItemLoot;
+import greymerk.roguelike.treasure.loot.Loot;
+import greymerk.roguelike.treasure.loot.Slot;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.TileEntityChest;
 
@@ -16,14 +17,13 @@ public class TreasureChestArmour extends TreasureChestBase{
 						
 		ItemStack item;
 		
-		item = ItemLoot.getPotion(rand, rank);
+		item = Loot.getLootByCategory(Loot.POTION, rand, rank);
 		chest.setInventorySlotContents(middle - 1, item);
 		
-		int slot = 1 + rand.nextInt(4);
-		item = ItemLoot.getEquipmentBySlot(rand, slot, rank, true);
+		item = Loot.getLootByCategory(Loot.ARMOUR, rand, rank);
 		chest.setInventorySlotContents(middle, item);
 		
-		item = ItemLoot.getFood(rand, rank);
+		item = Loot.getLootByCategory(Loot.FOOD, rand, rank);
 		chest.setInventorySlotContents(middle + 1, item);
 	}
 

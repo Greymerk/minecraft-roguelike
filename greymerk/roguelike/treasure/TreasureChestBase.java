@@ -2,7 +2,7 @@ package greymerk.roguelike.treasure;
 
 import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.catacomb.dungeon.Dungeon;
-import greymerk.roguelike.treasure.loot.ItemLoot;
+import greymerk.roguelike.treasure.loot.Loot;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
 
 import java.util.Iterator;
@@ -47,7 +47,7 @@ public abstract class TreasureChestBase implements ITreasureChest{
 		try{
 			
 			for (int i = 0; i < 15; i++) {
-				ItemStack item = ItemLoot.getJunk(rand, Catacomb.getRank(posY));
+				ItemStack item = Loot.getLootByCategory(Loot.JUNK, rand, Catacomb.getRank(posY));
 				chest.setInventorySlotContents(rand.nextInt(chest.getSizeInventory()), item);
 			}
 			

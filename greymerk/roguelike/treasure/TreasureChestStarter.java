@@ -1,6 +1,6 @@
 package greymerk.roguelike.treasure;
 
-import greymerk.roguelike.treasure.loot.ItemLoot;
+import greymerk.roguelike.treasure.loot.Loot;
 import greymerk.roguelike.treasure.loot.ItemSpecialty;
 
 import java.util.Arrays;
@@ -22,11 +22,11 @@ public class TreasureChestStarter extends TreasureChestBase{
 	private ItemStack getStarterLoot(int choice){
 		
 		switch (choice){
-		case 5: return ItemLoot.getTool(rand, 0, false);
+		case 5: return Loot.getLootByCategory(Loot.TOOL, rand, 0, false);
 		case 4: return new ItemStack(Item.swordStone);
-		case 3: return ItemLoot.getBlocks(rand, 0);	
-		case 2: return ItemLoot.getFood(rand, 0);
-		case 1: return ItemSpecialty.getItem(ItemSpecialty.LEGS, rand, 0);
+		case 3: return Loot.getLootByCategory(Loot.BLOCK, rand, 0);
+		case 2: return Loot.getLootByCategory(Loot.FOOD, rand, 0);
+		case 1: return ItemSpecialty.getRandomItem(ItemSpecialty.LEGS, rand, 0);
 		default: return new ItemStack(Block.torchWood, 3 + rand.nextInt(6));
 		}
 		
@@ -58,10 +58,10 @@ public class TreasureChestStarter extends TreasureChestBase{
 		
 		String page1 = 
 				"This dungeon was generated with the roguelike dungeons " +
-				"mod version 1.2.6\n\n" +
+				"mod version 1.2.62\n\n" +
 				"Thanks for playing\n\n" +
 				"-greymerk\n" +
-				"October 26th 2013";
+				"November 7th 2013";
 		
 		String page2 = 
 				"You can find updates and information about the mod at http://dungeons.homelinux.org/";

@@ -5,7 +5,7 @@ import java.util.Random;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 
-public enum Potion {
+public enum ItemPotion {
 	
 	HEALING, HARM, REGEN, POISON, STRENGTH, WEAKNESS, SLOWNESS, SWIFTNESS, FIRERESIST;
 	
@@ -16,11 +16,15 @@ public enum Potion {
 	
 	public static ItemStack getRandom(Random rand, int rank){
 
-		Potion type = Potion.values()[rand.nextInt(Potion.values().length)];
+		if(rand.nextInt(200) == 0){
+			return ItemNovelty.getItem(ItemNovelty.AVIDYA);
+		}
+		
+		ItemPotion type = ItemPotion.values()[rand.nextInt(ItemPotion.values().length)];
 		return getSpecific(rand, rank, type);
 	}
 	
-	public static ItemStack getSpecific(Random rand, int rank, Potion type){
+	public static ItemStack getSpecific(Random rand, int rank, ItemPotion type){
 		
 		boolean splash = rand.nextBoolean();
 		boolean upgrade = rand.nextInt(5 - rank) == 0;
@@ -28,47 +32,11 @@ public enum Potion {
 		
 		return getSpecific(rand, type, upgrade, extend, splash);
 	}
-	
-	public static ItemStack getSpecific(Random rand, Potion type, boolean upgrade, boolean extend, boolean splash){
+
+	public static ItemStack getSpecific(Random rand, ItemPotion type, boolean upgrade, boolean extend, boolean splash){
 		
-		int id;
-		
-		switch(type){
-		
-		
-		case REGEN:
-			id = 1;
-			break;
-		case SWIFTNESS:
-			id = 2;
-			break;
-		case FIRERESIST:
-			id = 3;
-			break;
-		case POISON:
-			id = 4;
-			break;
-		case HEALING:
-			id = 5;
-			break;
-		case WEAKNESS:
-			id = 8;
-			break;
-		case STRENGTH:
-			id = 9;
-			break;
-		case SLOWNESS:
-			id = 10;
-			break;
-		case HARM:
-			id = 12;
-			break;
-			
-		default:
-			id = 5;
-		
-		}
-		
+		int id = getPotionID(type);
+
 		if(upgrade && !extend){
 			id = upgrade(type, id);
 		}
@@ -95,7 +63,22 @@ public enum Potion {
 		
 	}
 	
-	private static int upgrade(Potion type, int id){
+	public static int getPotionID(ItemPotion type){
+		switch(type){
+		case REGEN: return 1;
+		case SWIFTNESS: return 2;
+		case FIRERESIST: return 3;
+		case POISON: return 4;
+		case HEALING: return 5;
+		case WEAKNESS: return 8;
+		case STRENGTH: return 9;
+		case SLOWNESS: return 10;
+		case HARM: return 12;
+		default: return 0;
+		}
+	}
+	
+	private static int upgrade(ItemPotion type, int id){
 		
 		if(type == FIRERESIST){
 			return id;
@@ -106,7 +89,7 @@ public enum Potion {
 		return id | UPGRADE;
 	}
 	
-	private static int extend(Potion type, int id){
+	private static int extend(ItemPotion type, int id){
 		
 		if(type == HEALING || type == HARM){
 			return id;

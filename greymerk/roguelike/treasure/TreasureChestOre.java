@@ -2,7 +2,7 @@ package greymerk.roguelike.treasure;
 
 import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.catacomb.dungeon.Dungeon;
-import greymerk.roguelike.treasure.loot.ItemLoot;
+import greymerk.roguelike.treasure.loot.Loot;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.TileEntityChest;
 
@@ -17,7 +17,7 @@ public class TreasureChestOre extends TreasureChestBase{
 		ItemStack item;
 
 		for (int i = 0; i < 2 + rand.nextInt(2 + rank); i++) {
-			item = ItemLoot.getBlocks(rand, rank);			
+			item = Loot.getLootByCategory(Loot.ORE, rand, rank);			
 			chest.setInventorySlotContents(rand.nextInt(chest.getSizeInventory()), item);
 		}
 	}

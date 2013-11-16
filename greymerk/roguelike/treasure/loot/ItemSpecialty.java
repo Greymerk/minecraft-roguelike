@@ -12,32 +12,41 @@ public enum ItemSpecialty {
 
 	SWORD, BOW, HELMET, CHEST, LEGS, FEET, PICK, AXE, SHOVEL;
 	
-	public static ItemStack getItem(ItemSpecialty type, Random rand, int rank){
+	public static ItemStack getRandomItem(ItemSpecialty type, Random rand, int rank){
 		
 		ItemStack item;
 		
 		switch(type){
 		
-		case SWORD:
-			return getSword(rand, rank);
-		case BOW:
-			return getBow(rand, rank);
-		case HELMET:
-			return getHelmet(rand, rank);
-		case CHEST:
-			return getChest(rand, rank);
-		case LEGS:
-			return getLegs(rand, rank);
-		case FEET:
-			return getBoots(rand, rank);
-		case PICK:
-			return getPick(rand, rank);
-		case AXE:
-			return getAxe(rand, rank);
-		case SHOVEL:
-			return getShovel(rand, rank);		
-		default:
-			return new ItemStack(Item.stick);
+		case SWORD: return getSword(rand, rank);
+		case BOW: return getBow(rand, rank);
+		case HELMET: return getHelmet(rand, rank);
+		case CHEST: return getChest(rand, rank);
+		case LEGS: return getLegs(rand, rank);
+		case FEET: return getBoots(rand, rank);
+		case PICK: return getPick(rand, rank);
+		case AXE: return getAxe(rand, rank);
+		case SHOVEL: return getShovel(rand, rank);		
+		default: return null;
+		}
+	}
+	
+	public static ItemStack getRandomArmour(Random rand, int rank){
+		switch(rand.nextInt(4)){
+		case 0: return getRandomItem(HELMET, rand, rank);
+		case 1: return getRandomItem(CHEST, rand, rank);
+		case 2: return getRandomItem(LEGS, rand, rank);
+		case 3: return getRandomItem(FEET, rand, rank);
+		default: return null;
+		}
+	}
+	
+	public static ItemStack getRandomTool(Random rand, int rank){
+		switch(rand.nextInt(3)){
+		case 0: return getRandomItem(PICK, rand, rank);
+		case 1: return getRandomItem(AXE, rand, rank);
+		case 2: return getRandomItem(SHOVEL, rand, rank);
+		default: return null;
 		}
 	}
 	
@@ -129,19 +138,19 @@ public enum ItemSpecialty {
 				item.addEnchantment(Enchantment.looting, 2 + rand.nextInt(2));
 				item.addEnchantment(Enchantment.unbreaking, getUnbreakingLevel(rank, rand));
 				item.setItemName("Eldritch Blade of Plundering");
-				ItemLoot.setItemLore(item, "The loot taker", TextFormat.DARKGREEN);
+				Loot.setItemLore(item, "The loot taker", TextFormat.DARKGREEN);
 				return item;
 			}
 			if(rand.nextInt(10) == 0){
 				item.addEnchantment(Enchantment.fireAspect, 2 + rand.nextInt(2));
 				item.addEnchantment(Enchantment.unbreaking, getUnbreakingLevel(rank, rand));
 				item.setItemName("Eldritch Blade of the Inferno");
-				ItemLoot.setItemLore(item, "From the fiery depths", TextFormat.DARKGREEN);
+				Loot.setItemLore(item, "From the fiery depths", TextFormat.DARKGREEN);
 				return item;
 			}
 			item.addEnchantment(Enchantment.unbreaking, rank == 3 ? 3 : 1 + rand.nextInt(2));
 			item.setItemName("Eldritch Blade");
-			ItemLoot.setItemLore(item, "Rune Etched", TextFormat.DARKGREEN);
+			Loot.setItemLore(item, "Rune Etched", TextFormat.DARKGREEN);
 			return item;
 		} else {
 			item = new ItemStack(Item.swordIron);
@@ -150,7 +159,7 @@ public enum ItemSpecialty {
 			}
 			item.addEnchantment(Enchantment.unbreaking, getUnbreakingLevel(rank, rand));
 			item.setItemName("Tempered Blade");
-			ItemLoot.setItemLore(item, "Highly Durable", TextFormat.DARKGREEN);
+			Loot.setItemLore(item, "Highly Durable", TextFormat.DARKGREEN);
 			return item;
 		}
 		
@@ -165,13 +174,13 @@ public enum ItemSpecialty {
 			item.addEnchantment(Enchantment.power, 1 + rand.nextInt(3));
 			item.addEnchantment(Enchantment.unbreaking, 1);
 			item.setItemName("Yew Longbow");
-			ItemLoot.setItemLore(item, "Superior craftsmanship", TextFormat.DARKGREEN);
+			Loot.setItemLore(item, "Superior craftsmanship", TextFormat.DARKGREEN);
 			return item;
 		case 1:
 			item.addEnchantment(Enchantment.power, 1 + rand.nextInt(3));
 			item.addEnchantment(Enchantment.unbreaking, 1 + rand.nextInt(3));
 			item.setItemName("Laminated Bow");
-			ItemLoot.setItemLore(item, "Highly polished", TextFormat.DARKGREEN);
+			Loot.setItemLore(item, "Highly polished", TextFormat.DARKGREEN);
 			return item;
 		case 2:
 			item.addEnchantment(Enchantment.power, 3 + rand.nextInt(3));
@@ -180,7 +189,7 @@ public enum ItemSpecialty {
 			}
 			item.addEnchantment(Enchantment.unbreaking, 1 + rand.nextInt(3));
 			item.setItemName("Recurve Bow");
-			ItemLoot.setItemLore(item, "Beautifully crafted", TextFormat.DARKGREEN);
+			Loot.setItemLore(item, "Beautifully crafted", TextFormat.DARKGREEN);
 			return item;
 		case 3:
 			item.addEnchantment(Enchantment.power, 3 + rand.nextInt(3));
@@ -188,7 +197,7 @@ public enum ItemSpecialty {
 			item.addEnchantment(Enchantment.infinity, 1);
 			item.addEnchantment(Enchantment.unbreaking, getUnbreakingLevel(rank, rand));
 			item.setItemName("Eldritch Bow");
-			ItemLoot.setItemLore(item, "Warm to the touch", TextFormat.DARKGREEN);
+			Loot.setItemLore(item, "Warm to the touch", TextFormat.DARKGREEN);
 			return item;
 		default:
 			return null;
@@ -207,7 +216,7 @@ public enum ItemSpecialty {
 		switch(rank){
 		case 0:
 			item = new ItemStack(Item.helmetLeather);
-			ItemLoot.dyeArmor(item, rand.nextInt(256), rand.nextInt(255), rand.nextInt(255));
+			ItemArmour.dyeArmor(item, rand.nextInt(256), rand.nextInt(255), rand.nextInt(255));
 			canonical = "Bonnet";
 			break;
 		case 1:
@@ -258,7 +267,7 @@ public enum ItemSpecialty {
 		switch(rank){
 		case 0:
 			item = new ItemStack(Item.bootsLeather);
-			ItemLoot.dyeArmor(item, rand.nextInt(256), rand.nextInt(255), rand.nextInt(255));
+			ItemArmour.dyeArmor(item, rand.nextInt(256), rand.nextInt(255), rand.nextInt(255));
 			canonical = "Shoes";
 			break;
 		case 1:
@@ -311,7 +320,7 @@ public enum ItemSpecialty {
 		switch(rank){
 		case 0:
 			item = new ItemStack(Item.legsLeather);
-			ItemLoot.dyeArmor(item, rand.nextInt(256), rand.nextInt(255), rand.nextInt(255));
+			ItemArmour.dyeArmor(item, rand.nextInt(256), rand.nextInt(255), rand.nextInt(255));
 			canonical = "Pantaloons";
 			break;
 		case 1:
@@ -361,7 +370,7 @@ public enum ItemSpecialty {
 		switch(rank){
 		case 0:
 			item = new ItemStack(Item.plateLeather);
-			ItemLoot.dyeArmor(item, rand.nextInt(256), rand.nextInt(255), rand.nextInt(255));
+			ItemArmour.dyeArmor(item, rand.nextInt(256), rand.nextInt(255), rand.nextInt(255));
 			canonical = "Tunic";
 			break;
 		case 1:

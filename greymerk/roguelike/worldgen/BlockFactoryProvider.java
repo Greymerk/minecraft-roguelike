@@ -33,7 +33,7 @@ public class BlockFactoryProvider {
 			return randomizer;
 		case 0:
 			randomizer = new BlockRandomizer(rand, new MetaBlock(Block.stoneBrick.blockID));
-			randomizer.addBlock(new MetaBlock(Block.stoneBrick.blockID, 1), 3);
+			randomizer.addBlock(new MetaBlock(Block.stoneBrick.blockID, 1), 2);
 			randomizer.addBlock(new MetaBlock(Block.stoneBrick.blockID, 2), 3);
 			return randomizer;			
 		default:

@@ -38,7 +38,6 @@ public enum TreasureChest {
 		int rank = Catacomb.getRank(posY);
 		
 		ITreasureChest chest = getChest(type);
-		
 		chest.generate(world, rand, posX, posY, posZ, false);
 	}
 

@@ -1,6 +1,6 @@
 package greymerk.roguelike.worldgen;
 
-import greymerk.roguelike.treasure.loot.ItemLoot;
+import greymerk.roguelike.treasure.loot.Loot;
 import greymerk.roguelike.treasure.loot.ItemNovelty;
 
 import java.util.Random;
@@ -43,7 +43,6 @@ public enum Spawner {
         	logic.setMobID(name);
         	
         	//setRoguelike(logic);
-        	
         }
         else
         {
