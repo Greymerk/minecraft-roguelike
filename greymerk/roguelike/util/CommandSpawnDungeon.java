@@ -2,6 +2,7 @@ package greymerk.roguelike.util;
 
 
 import greymerk.roguelike.catacomb.Catacomb;
+import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.treasure.loot.ItemNovelty;
 
 import java.util.List;
@@ -34,6 +35,13 @@ public class CommandSpawnDungeon extends CommandBase
     }
 
     public void processCommand(ICommandSender sender, String[] args){
+    	
+    	if(args[0].equals("config")){
+    		if(args[1].equals("reload")){
+    			RogueConfig.reload(true);
+    		}
+    		return;
+    	}
     	
     	if(args[0].equals("give")){
     		EntityPlayerMP player = getCommandSenderAsPlayer(sender);

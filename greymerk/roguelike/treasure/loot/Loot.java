@@ -1,5 +1,6 @@
 package greymerk.roguelike.treasure.loot;
 
+import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.util.TextFormat;
 
 import java.util.Dictionary;
@@ -260,11 +261,8 @@ public enum Loot {
 		// put on some armour
 		for(int i = 1; i < 5; i++){
 			
-			int chance;
-			chance = 5 - rank + ((3 - difficulty) * 2);
-			if (difficulty == 3 && rank >= 3){
-				mob.setCurrentItemOrArmor(i, Loot.getEquipmentBySlot(rand, Slot.getSlotByNumber(i), rank, enchant));
-			} else if(rand.nextInt(chance) == 0){
+			int chance = 5 - rank + ((3 - difficulty) * 2);
+			if (difficulty == 3 || rank == 3 || rand.nextInt(chance) == 0){
 				mob.setCurrentItemOrArmor(i, Loot.getEquipmentBySlot(rand, Slot.getSlotByNumber(i), rank, enchant));
 			}
 		}

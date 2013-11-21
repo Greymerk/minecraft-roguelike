@@ -3,6 +3,8 @@ package greymerk.roguelike.catacomb;
 import greymerk.roguelike.catacomb.dungeon.Dungeon;
 import greymerk.roguelike.catacomb.dungeon.DungeonFactory;
 import greymerk.roguelike.catacomb.dungeon.IDungeonFactory;
+import greymerk.roguelike.config.ConfigFile;
+import greymerk.roguelike.config.RogueConfig;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -21,9 +23,10 @@ public class Catacomb {
 	private CatacombNode previous;
 	
 	public Catacomb(World world, Random rand){
-		 this.world = world;
-		 this.rand = rand;
-		 this.previous = null;
+		
+		this.world = world;
+		this.rand = rand;
+		this.previous = null;
 	}
 	
 	public void generate(int inX, int inZ){
@@ -63,6 +66,12 @@ public class Catacomb {
 	
 	public static boolean canSpawn(int chunkX, int chunkZ, World world){
 		
+		if(!RogueConfig.getBoolean(RogueConfig.DONATURALSPAWN)){
+			return false;
+		}
+		
+		if(true);
+		
 		chunkX -= 4;
 		
 		int x = chunkX * 16;
@@ -77,8 +86,12 @@ public class Catacomb {
 			}
 		}
 
-		int min = 8;
-		int max = 32;
+		int frequency = RogueConfig.getInt(RogueConfig.SPAWNFREQUENCY);
+		int min = 8 * frequency / 10;
+		int max = 32 * frequency / 10;
+		
+		min = min < 2 ? 2 : min;
+		max = max < 8 ? 8 : max;
 		
 		int tempX = chunkX < 0 ? chunkX - (max - 1) : chunkX;
 		int tempZ = chunkZ < 0 ? chunkZ - (max - 1) : chunkZ;

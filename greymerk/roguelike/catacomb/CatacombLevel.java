@@ -2,6 +2,7 @@ package greymerk.roguelike.catacomb;
 
 import greymerk.roguelike.catacomb.dungeon.Dungeon;
 import greymerk.roguelike.catacomb.dungeon.IDungeonFactory;
+import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.worldgen.BlockFactoryProvider;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
@@ -18,7 +19,7 @@ import net.minecraft.src.World;
 
 public class CatacombLevel {
 
-	public static final int SCATTER = 12;
+	public static int SCATTER = 12;
 	
 	private World world;
 	private Random rand;
@@ -42,18 +43,29 @@ public class CatacombLevel {
 		this.originY = originY;
 		this.originZ = originZ;
 		
-		maxNodes = 60;
-		range = 80;
+		SCATTER = RogueConfig.getInt(RogueConfig.LEVELSCATTER);
+		maxNodes = RogueConfig.getInt(RogueConfig.LEVELMAXROOMS);
+		range = RogueConfig.getInt(RogueConfig.LEVELRANGE);
 		
 		start = new CatacombNode(world, rand, this, originX, originY, originZ);
 		nodes.add(start);
 	}
 	
 	public CatacombLevel(World world, Random rand, int originX, int originY, int originZ, int maxNodes, int range){
-		this(world, rand, originX, originY, originZ);
+		this.world = world;
+		this.rand = rand;
+		this.nodes = new ArrayList<CatacombNode>();
+				
+		this.originX = originX;
+		this.originY = originY;
+		this.originZ = originZ;
 		
+		SCATTER = RogueConfig.getInt(RogueConfig.LEVELSCATTER);
 		this.maxNodes = maxNodes;
 		this.range = range;
+		
+		start = new CatacombNode(world, rand, this, originX, originY, originZ);
+		nodes.add(start);
 	}
 	
 	public void generate(){
