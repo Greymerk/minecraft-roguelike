@@ -25,21 +25,21 @@ public enum Loot {
 
 	WEAPON, ARMOUR, BLOCK, JUNK, ORE, TOOL, POTION, FOOD;
 	
-	public static ItemStack getLootByCategory(Loot category, Random rand, int rank){
-		return getLootByCategory(category, rand, rank, true);
+	public static ItemStack getLootByCategory(Loot category, Random rand, int level){
+		return getLootByCategory(category, rand, level, true);
 	}
 	
-	public static ItemStack getLootByCategory(Loot category, Random rand, int rank, boolean enchant){
+	public static ItemStack getLootByCategory(Loot category, Random rand, int level, boolean enchant){
 		
 		switch(category){
-		case WEAPON: return ItemWeapon.getRandom(rand, rank, enchant);
-		case ARMOUR: return ItemArmour.getRandom(rand, rank, enchant);
-		case BLOCK: return ItemBlock.getRandom(rand, rank);
-		case JUNK: return ItemJunk.getRandom(rand, rank);
-		case ORE: return ItemOre.getRandom(rand, rank);
-		case TOOL: return ItemTool.getRandom(rand, rank, enchant);
-		case POTION: return ItemPotion.getRandom(rand, rank);
-		case FOOD: return ItemFood.getRandom(rand, rank);
+		case WEAPON: return ItemWeapon.getRandom(rand, level, enchant);
+		case ARMOUR: return ItemArmour.getRandom(rand, level, enchant);
+		case BLOCK: return ItemBlock.getRandom(rand, level);
+		case JUNK: return ItemJunk.getRandom(rand, level);
+		case ORE: return ItemOre.getRandom(rand, level);
+		case TOOL: return ItemTool.getRandom(rand, level, enchant);
+		case POTION: return ItemPotion.getRandom(rand);
+		case FOOD: return ItemFood.getRandom(rand, level);
 		default: return null;		
 		}
 	}
@@ -119,34 +119,28 @@ public enum Loot {
 		case 5:
 			return new ItemStack(Item.saddle);
 		case 6:
-			// diamond horse armour
-			if(rand.nextInt(10) == 0){
-				return new ItemStack(419, 1, 0);
-			}
-			
-			// gold horse armour
-			if(rand.nextInt(5) == 0){
-				return new ItemStack(418, 1, 0);
-			}
-			
-			// iron horse armour
-			return new ItemStack(417, 1, 0);
+			return new ItemStack(Item.horseArmorIron, 1, 0);
 		default:
 			return new ItemStack(Item.stick, 1);
 		}
 	}
 
-	public static int getEnchantLevel(int rank) {
+	public static int getEnchantLevel(int level) {
 
-		switch(rank){
-		case 3: return 30;
-		case 2: return 20;
-		case 1: return 10;
+		switch(level){
+		case 4: return 30;
+		case 3: return 20;
+		case 2: return 10;
+		case 1: return 5;
 		case 0: return 1;
 		default: return 1;
 		}
 	}
 
+	public static void enchantItemChance(ItemStack item, Random rand, int level){
+		if(rand.nextInt(7 - level) == 0) enchantItem(item, rand, getEnchantLevel(level));
+	}
+	
 	public static void enchantItem(ItemStack item, Random rand, int enchantLevel) {
 		
         List enchants = EnchantmentHelper.buildEnchantmentList(rand, item, enchantLevel);
@@ -216,6 +210,12 @@ public enum Loot {
     }
     
     public static void setItemName(ItemStack item, String name, TextFormat option){
+    	
+    	if(option == null){
+    		item.setItemName(name);
+    		return;
+    	}
+    	
     	item.setItemName(TextFormat.apply(name, option));
     }
     

@@ -21,20 +21,7 @@ public class SegmentInset extends SegmentBase {
 	@Override
 	protected void genWall(Cardinal wallDirection) {
 		
-		switch(Catacomb.getRank(originY)){
-		
-		case 0:
-			stairType = Block.stairsWoodSpruce.blockID;
-			break;
-		case 2:
-			stairType = Block.stairsCobblestone.blockID;
-			break;
-		case 3:
-			stairType = Block.stairsNetherBrick.blockID;
-			break;
-		default:
-			stairType = Block.stairsStoneBrick.blockID;
-		}
+		stairType = getStairType(Catacomb.getLevel(originY));
 
 		switch(wallDirection){
 		case NORTH: north(); break;
@@ -53,7 +40,7 @@ public class SegmentInset extends SegmentBase {
 		WorldGenPrimitive.setBlock(world, originX - 1, originY, originZ - 2, stairType, WorldGenPrimitive.blockOrientation(Cardinal.EAST, false), 2, true, true);
 		WorldGenPrimitive.setBlock(world, originX + 1, originY, originZ - 2, stairType, WorldGenPrimitive.blockOrientation(Cardinal.WEST, false), 2, true, true);
 		
-		if(Catacomb.getRank(originY) == 0){
+		if(Catacomb.getLevel(originY) < 2){
 			WorldGenPrimitive.fillRectSolid(world, originX - 1, originY, originZ - 3, originX + 1, originY + 2, originZ - 3, Block.planks.blockID, SPRUCE, 2, false, true);
 		}
 		
@@ -75,7 +62,7 @@ public class SegmentInset extends SegmentBase {
 		WorldGenPrimitive.setBlock(world, originX - 1, originY, originZ + 2, stairType, WorldGenPrimitive.blockOrientation(Cardinal.EAST, false), 2, true, true);
 		WorldGenPrimitive.setBlock(world, originX + 1, originY, originZ + 2, stairType, WorldGenPrimitive.blockOrientation(Cardinal.WEST, false), 2, true, true);
 		
-		if(Catacomb.getRank(originY) == 0){
+		if(Catacomb.getLevel(originY)  < 2){
 			WorldGenPrimitive.fillRectSolid(world, originX - 1, originY, originZ + 3, originX + 1, originY + 2, originZ + 3, Block.planks.blockID, SPRUCE, 2, false, true);
 		}
 		
@@ -96,7 +83,7 @@ public class SegmentInset extends SegmentBase {
 		WorldGenPrimitive.setBlock(world, originX + 2, originY, originZ - 1, stairType, WorldGenPrimitive.blockOrientation(Cardinal.SOUTH, false), 2, true, true);
 		WorldGenPrimitive.setBlock(world, originX + 2, originY, originZ + 1, stairType, WorldGenPrimitive.blockOrientation(Cardinal.NORTH, false), 2, true, true);
 		
-		if(Catacomb.getRank(originY) == 0){
+		if(Catacomb.getLevel(originY)  < 2){
 			WorldGenPrimitive.fillRectSolid(world, originX + 3, originY, originZ - 1, originX + 3, originY + 2, originZ + 1, Block.planks.blockID, SPRUCE, 2, false, true);
 		}
 		
@@ -117,7 +104,7 @@ public class SegmentInset extends SegmentBase {
 		WorldGenPrimitive.setBlock(world, originX - 2, originY, originZ - 1, stairType, WorldGenPrimitive.blockOrientation(Cardinal.SOUTH, false), 2, true, true);
 		WorldGenPrimitive.setBlock(world, originX - 2, originY, originZ + 1, stairType, WorldGenPrimitive.blockOrientation(Cardinal.NORTH, false), 2, true, true);
 		
-		if(Catacomb.getRank(originY) == 0){
+		if(Catacomb.getLevel(originY)  < 2){
 			WorldGenPrimitive.fillRectSolid(world, originX - 3, originY, originZ - 1, originX - 3, originY + 2, originZ + 1, Block.planks.blockID, SPRUCE, 2, false, true);
 		}
 		
@@ -139,10 +126,15 @@ public class SegmentInset extends SegmentBase {
 			return;
 		}
 		
+		if(Catacomb.getLevel(y) == 1 && rand.nextInt(10) == 0){
+			WorldGenPrimitive.setBlock(world, x, y, z, Block.bookShelf.blockID);
+			return;
+		}
+		
 		if(rand.nextBoolean()){
 			TreasureChest type = types[rand.nextInt(types.length)];
 			TreasureChest.generate(world, rand, x, y, z, type);
-		} else if(Catacomb.getRank(y) > 0){
+		} else if(Catacomb.getLevel(y) > 0){
 			Spawner.generate(world, rand, x, y, z);
 		}
 	}

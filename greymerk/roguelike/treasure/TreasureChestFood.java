@@ -11,14 +11,14 @@ public class TreasureChestFood extends TreasureChestBase{
 	@Override
 	protected void fillChest(TileEntityChest chest){
 
-		int rank = Catacomb.getRank(posY);
+		int level = Catacomb.getLevel(posY);
 		
 		int middle = chest.getSizeInventory()/2;
 						
 		ItemStack item;		
 		
 		for(int i = 0; i < 3; i++){
-			item = Loot.getLootByCategory(Loot.FOOD, rand, rank);
+			item = Loot.getLootByCategory(Loot.FOOD, rand, level);
 			chest.setInventorySlotContents((middle - 1) + i, item);
 		}
 	}

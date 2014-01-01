@@ -31,11 +31,14 @@ public class DungeonCorner implements IDungeon {
 		originZ = inOriginZ;
 		
 		int stair;
-		switch(Catacomb.getRank(originY)){
+		switch(Catacomb.getLevel(originY)){
 		case 2:
 			stair = Block.stairsCobblestone.blockID;
 			break;
 		case 3:
+			stair = Block.stairsCobblestone.blockID;
+			break;
+		case 4:
 			stair = Block.stairsNetherBrick.blockID;
 			break;
 		default:
@@ -48,7 +51,7 @@ public class DungeonCorner implements IDungeon {
 		MetaBlock westStair = new MetaBlock(stair, WorldGenPrimitive.blockOrientation(Cardinal.WEST, true));
 		
 		
-		IBlockFactory blocks = BlockFactoryProvider.getRandomizer(Catacomb.getRank(inOriginY), rand);
+		IBlockFactory blocks = BlockFactoryProvider.getRandomizer(Catacomb.getLevel(inOriginY), rand);
 		
 		// fill air inside
 		WorldGenPrimitive.fillRectSolid(world, 	originX - 2, originY, originZ - 2, originX + 2, originY + 3, originZ + 2, 0);
@@ -76,7 +79,7 @@ public class DungeonCorner implements IDungeon {
 		WorldGenPrimitive.setBlock(world, originX, originY + 4, originZ + 1, northStair, false, true);
 		
 		WorldGenPrimitive.setBlock(world, originX, originY + 4, originZ, 0);
-		blocks.setBlock(world, originX, originY + 6, originZ, false, true);
+		blocks.setBlock(world, originX, originY + 5, originZ, false, true);
 		
 		return true;
 	}

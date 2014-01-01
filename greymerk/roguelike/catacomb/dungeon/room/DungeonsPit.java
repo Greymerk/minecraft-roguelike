@@ -45,7 +45,7 @@ public class DungeonsPit implements IDungeon {
 		originY = inOriginY;
 		originZ = inOriginZ;
 
-		blocks = BlockFactoryProvider.getRandomizer(Catacomb.getRank(inOriginY), inRandom);
+		blocks = BlockFactoryProvider.getRandomizer(Catacomb.getLevel(inOriginY), inRandom);
 		
 		buildWalls();
 		buildFloor();

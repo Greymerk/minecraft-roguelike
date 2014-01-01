@@ -6,17 +6,28 @@ public enum Quality {
 	
 	WOOD, STONE, IRON, GOLD, DIAMOND;
 	
-	public static Quality getQuality(Random rand, int rank) {
+	public static Quality getQuality(Random rand, int level) {
 
-		switch(rank){
+		switch(level){
 		
-		case 3:
-			
+		case 4:
 			if(rand.nextInt(20) == 0){
 				return GOLD;
 			}
 			
-			if(rand.nextInt(10) == 0){
+			if(rand.nextInt(5) == 0){
+				return DIAMOND;
+			}
+
+			return IRON;
+		
+		case 3:
+			
+			if(rand.nextInt(30) == 0){
+				return GOLD;
+			}
+			
+			if(rand.nextInt(20) == 0){
 				return DIAMOND;
 			}
 
@@ -40,19 +51,19 @@ public enum Quality {
 			
 		case 1:
 			
-			if(rand.nextInt(200) == 0){
+			if(rand.nextInt(100) == 0){
 				return DIAMOND;
 			}
 			
-			if(rand.nextInt(100) == 0){
+			if(rand.nextInt(50) == 0){
 				return GOLD;
 			}
 			
-			if(rand.nextInt(20) == 0){
+			if(rand.nextInt(10) == 0){
 				return IRON;
 			}
 			
-			if(rand.nextBoolean()){
+			if(rand.nextInt(5) == 0){
 				return WOOD;
 			}
 			
@@ -60,11 +71,11 @@ public enum Quality {
 			
 		case 0:
 			
-			if(rand.nextInt(100) == 0){
+			if(rand.nextInt(30) == 0){
 				return IRON;
 			}
 			
-			if(rand.nextInt(10) == 0){
+			if(rand.nextInt(5) == 0){
 				return STONE;
 			}
 			

@@ -1,5 +1,7 @@
 package greymerk.roguelike.treasure.loot;
 
+import greymerk.roguelike.catacomb.Catacomb;
+
 import java.util.Random;
 
 import net.minecraft.src.Item;
@@ -8,43 +10,44 @@ import net.minecraft.src.NBTTagCompound;
 
 public class ItemArmour {
 
-	public static ItemStack getRandom(Random rand, int rank, boolean enchant){
-		return getRandom(rand, rank, Slot.getSlotByNumber(rand.nextInt(4) + 1), enchant);
+	public static ItemStack getRandom(Random rand, int level, boolean enchant){
+		return getRandom(rand, level,
+				Slot.getSlotByNumber(rand.nextInt(4) + 1),
+				enchant ? Loot.getEnchantLevel(level) : 0);
 	}
 	
+	public static ItemStack getRandom(Random rand, int level, Slot slot, boolean enchant){
+		return getRandom(rand, level, slot, enchant ? Loot.getEnchantLevel(level) : 0);
+	}
 	
-	public static ItemStack getRandom(Random rand, int rank, Slot slot, boolean enchant){
+	public static ItemStack getRandom(Random rand, int level, Slot slot, int enchantLevel){
 
-		if(enchant && rand.nextInt(20 + (rank * 10)) == 0){
+		if(enchantLevel > 0 && rand.nextInt(20 + (level * 10)) == 0){
 			switch(slot){
-			case HEAD: return ItemSpecialty.getRandomItem(ItemSpecialty.HELMET, rand, rank); 
-			case CHEST: return ItemSpecialty.getRandomItem(ItemSpecialty.CHEST, rand, rank); 
-			case LEGS: return ItemSpecialty.getRandomItem(ItemSpecialty.LEGS, rand, rank); 
-			case FEET: return ItemSpecialty.getRandomItem(ItemSpecialty.FEET, rand, rank); 
+			case HEAD: return ItemSpecialty.getRandomItem(ItemSpecialty.HELMET, rand, level); 
+			case CHEST: return ItemSpecialty.getRandomItem(ItemSpecialty.CHEST, rand, level); 
+			case LEGS: return ItemSpecialty.getRandomItem(ItemSpecialty.LEGS, rand, level); 
+			case FEET: return ItemSpecialty.getRandomItem(ItemSpecialty.FEET, rand, level); 
 			}
 		}
 		
-		if(enchant && rand.nextInt(100) == 0){
-			if(slot == Slot.HEAD && rank > 1) return ItemNovelty.getItem(ItemNovelty.NEBRIS);
-			if(slot == Slot.FEET && rank < 2) return ItemNovelty.getItem(ItemNovelty.KURT);
-			if(slot == Slot.CHEST && rank == 1) return ItemNovelty.getItem(ItemNovelty.MILLBEE);
-			if(slot == Slot.CHEST && rank == 2) return ItemNovelty.getItem(ItemNovelty.ANDERZEL);
-			if(slot == Slot.LEGS && rank == 0) return ItemNovelty.getItem(ItemNovelty.ZISTEAUPANTS);
+		if(enchantLevel > 0 && rand.nextInt(100) == 0){
+			if(slot == Slot.HEAD && level > 1) return ItemNovelty.getItem(ItemNovelty.NEBRIS);
+			if(slot == Slot.FEET && level < 2) return ItemNovelty.getItem(ItemNovelty.KURT);
+			if(slot == Slot.CHEST && level == 1) return ItemNovelty.getItem(ItemNovelty.MILLBEE);
+			if(slot == Slot.CHEST && level == 2) return ItemNovelty.getItem(ItemNovelty.ANDERZEL);
+			if(slot == Slot.LEGS && level == 0) return ItemNovelty.getItem(ItemNovelty.ZISTEAUPANTS);
 		}
 
-		ItemStack item = pickArmour(rand, slot, rank);
+		ItemStack item = pickArmour(rand, slot, Quality.getQuality(rand, level));
 		
-		if(enchant && rand.nextInt(6 - rank) == 0){
-			Loot.enchantItem(item, rand, Loot.getEnchantLevel(rank));
-		}
+		if(enchantLevel > 0) Loot.enchantItem(item, rand, enchantLevel);
 		
 		return item;
 		
 	}
 	
-	private static ItemStack pickArmour(Random rand, Slot slot, int rank) {
-
-		Quality quality = Quality.getQuality(rand, rank);
+	private static ItemStack pickArmour(Random rand, Slot slot, Quality quality) {
 		
 		switch(slot){
 		

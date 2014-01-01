@@ -14,11 +14,11 @@ public class TreasureChestPotions extends TreasureChestBase{
 	protected void fillChest(TileEntityChest chest){
 		int middle = chest.getSizeInventory()/2;
 		
-		chest.setInventorySlotContents(middle - 1, ItemPotion.getRandom(rand, Catacomb.getRank(posY)));
+		chest.setInventorySlotContents(middle - 1, ItemPotion.getRandom(rand));
 
-		chest.setInventorySlotContents(middle, ItemPotion.getSpecific(rand, Catacomb.getRank(posY), ItemPotion.HEALING));
+		chest.setInventorySlotContents(middle, ItemPotion.getSpecific(rand, ItemPotion.HEALING));
 
-		chest.setInventorySlotContents(middle + 1, ItemPotion.getRandom(rand, Catacomb.getRank(posY)));
+		chest.setInventorySlotContents(middle + 1, ItemPotion.getRandom(rand));
 		
 	}
 }

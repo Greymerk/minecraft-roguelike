@@ -2,7 +2,9 @@ package greymerk.roguelike.catacomb.dungeon;
 
 import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.catacomb.dungeon.room.DungeonCorner;
+import greymerk.roguelike.catacomb.dungeon.room.DungeonEtho;
 import greymerk.roguelike.catacomb.dungeon.room.DungeonLab;
+import greymerk.roguelike.catacomb.dungeon.room.DungeonMess;
 import greymerk.roguelike.catacomb.dungeon.room.DungeonsBrick;
 import greymerk.roguelike.catacomb.dungeon.room.DungeonsCreeperDen;
 import greymerk.roguelike.catacomb.dungeon.room.DungeonsCrypt;
@@ -27,7 +29,7 @@ import net.minecraft.src.World;
 public enum Dungeon {
 	
 	BASE, BRICK, CREEPER, CRYPT, ENCHANT, ENDER, FIRE, MUSIC, NETHER, NETHERFORT, PIT, PRISON,
-	SLIME, SMITH, SPIDER, CAKE, LAB, CORNER;
+	SLIME, SMITH, SPIDER, CAKE, LAB, CORNER, MESS, ETHO;
 	
 	public static IDungeon getInstance(Dungeon choice){
 		
@@ -50,6 +52,8 @@ public enum Dungeon {
 		case CAKE: return new DungeonsWood();
 		case LAB: return new DungeonLab();
 		case CORNER: return new DungeonCorner();
+		case MESS: return new DungeonMess();
+		case ETHO: return new DungeonEtho();
 		default: return new DungeonsBase();
 		}
 		

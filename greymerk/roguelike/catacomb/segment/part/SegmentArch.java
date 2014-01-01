@@ -19,19 +19,7 @@ public class SegmentArch extends SegmentBase {
 	@Override
 	protected void genWall(Cardinal wallDirection) {
 		
-		switch(Catacomb.getRank(originY)){
-		case 0:
-			stairType = Block.stairsWoodSpruce.blockID;
-			break;
-		case 2:
-			stairType = Block.stairsCobblestone.blockID;
-			break;
-		case 3:
-			stairType = Block.stairsNetherBrick.blockID;
-			break;
-		default:
-			stairType = Block.stairsStoneBrick.blockID;
-		}
+		stairType = getStairType(Catacomb.getLevel(originY));
 		
 		switch(wallDirection){
 		case NORTH: north(); break;
@@ -51,7 +39,7 @@ public class SegmentArch extends SegmentBase {
 		WorldGenPrimitive.setBlock(world, originX - 1, originY + 2, originZ - 1, stair, true, true);
 		WorldGenPrimitive.setBlock(world, originX + 1, originY + 2, originZ - 1, stair, true, true);
 		
-		if(Catacomb.getRank(originY) == 0){
+		if(Catacomb.getLevel(originY)  < 2){
 			WorldGenPrimitive.fillRectSolid(world, originX - 1, originY, originZ - 2, originX - 1, originY + 1, originZ - 2, Block.wood.blockID, SPRUCE, 2, true, true);
 			WorldGenPrimitive.setBlock(world, originX - 1, originY + 2, originZ - 2, Block.planks.blockID, SPRUCE, 2, true, true);
 			WorldGenPrimitive.fillRectSolid(world, originX + 1, originY, originZ - 2, originX + 1, originY + 1, originZ - 2, Block.wood.blockID, SPRUCE, 2, true, true);
@@ -71,7 +59,7 @@ public class SegmentArch extends SegmentBase {
 		WorldGenPrimitive.setBlock(world, originX - 1, originY + 2, originZ + 1, stair, true, true);
 		WorldGenPrimitive.setBlock(world, originX + 1, originY + 2, originZ + 1, stair, true, true);
 		
-		if(Catacomb.getRank(originY) == 0){
+		if(Catacomb.getLevel(originY)  < 2){
 			WorldGenPrimitive.fillRectSolid(world, originX - 1, originY, originZ + 2, originX - 1, originY + 1, originZ + 2, Block.wood.blockID, SPRUCE, 2, true, true);
 			WorldGenPrimitive.setBlock(world, originX - 1, originY + 2, originZ + 2, Block.planks.blockID, SPRUCE, 2, true, true);
 			WorldGenPrimitive.fillRectSolid(world, originX + 1, originY, originZ + 2, originX + 1, originY + 1, originZ + 2, Block.wood.blockID, SPRUCE, 2, true, true);
@@ -91,7 +79,7 @@ public class SegmentArch extends SegmentBase {
 		WorldGenPrimitive.setBlock(world, originX + 1, originY + 2, originZ - 1, stair, true, true);
 		WorldGenPrimitive.setBlock(world, originX + 1, originY + 2, originZ + 1, stair, true, true);
 		
-		if(Catacomb.getRank(originY) == 0){
+		if(Catacomb.getLevel(originY)  < 2){
 			WorldGenPrimitive.fillRectSolid(world, originX + 2, originY, originZ - 1, originX + 2, originY + 1, originZ - 1, Block.wood.blockID, SPRUCE, 2, true, true);
 			WorldGenPrimitive.setBlock(world, originX + 2, originY + 2, originZ - 1, Block.planks.blockID, SPRUCE, 2, true, true);
 			WorldGenPrimitive.fillRectSolid(world, originX + 2, originY, originZ + 1, originX + 2, originY + 1, originZ + 1, Block.wood.blockID, SPRUCE, 2, true, true);
@@ -111,7 +99,7 @@ public class SegmentArch extends SegmentBase {
 		WorldGenPrimitive.setBlock(world, originX - 1, originY + 2, originZ - 1, stair, true, true);
 		WorldGenPrimitive.setBlock(world, originX - 1, originY + 2, originZ + 1, stair, true, true);
 		
-		if(Catacomb.getRank(originY) == 0){
+		if(Catacomb.getLevel(originY)  < 2){
 			WorldGenPrimitive.fillRectSolid(world, originX - 2, originY, originZ - 1, originX - 2, originY + 1, originZ - 1, Block.wood.blockID, SPRUCE, 2, true, true);
 			WorldGenPrimitive.setBlock(world, originX - 2, originY + 2, originZ - 1, Block.planks.blockID, SPRUCE, 2, true, true);
 			WorldGenPrimitive.fillRectSolid(world, originX - 2, originY, originZ + 1, originX - 2, originY + 1, originZ + 1, Block.wood.blockID, SPRUCE, 2, true, true);

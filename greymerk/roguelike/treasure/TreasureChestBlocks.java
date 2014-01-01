@@ -12,13 +12,13 @@ public class TreasureChestBlocks extends TreasureChestBase{
 	@Override
 	protected void fillChest(TileEntityChest chest){
 
-		int rank = Catacomb.getRank(posY);
+		int level = Catacomb.getLevel(posY);
 		int middle = chest.getSizeInventory()/2;
 		
 		ItemStack item;
 
 		for (int i = 0; i < 4 + rand.nextInt(3); i++) {
-			item = Loot.getLootByCategory(Loot.BLOCK, rand, rank);		
+			item = Loot.getLootByCategory(Loot.BLOCK, rand, level);		
 			chest.setInventorySlotContents(rand.nextInt(chest.getSizeInventory()), item);
 		}
 	}

@@ -33,7 +33,7 @@ public class ItemFood {
 		switch(choice){
 		case 0:
 			if(rank >= 3){
-				return new ItemStack(Item.appleGold, quantity);
+				return new ItemStack(Item.appleGold, 1);
 			}
 			
 			return new ItemStack(Item.appleRed, quantity);
@@ -41,7 +41,7 @@ public class ItemFood {
 		case 1:
 			
 			if(rank > 1){
-				return new ItemStack(Item.appleGold, quantity);
+				return new ItemStack(Item.appleGold, 1);
 			}
 			
 			return new ItemStack(Item.appleRed, quantity);

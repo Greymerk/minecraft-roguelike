@@ -37,9 +37,9 @@ public class DungeonsSlime implements IDungeon {
 		originY = inOriginY;
 		originZ = inOriginZ;
 
-		liquid = Catacomb.getRank(originY) == 3 ? Block.lavaStill.blockID : Block.waterStill.blockID;
+		liquid = Catacomb.getLevel(originY) == 4 ? Block.lavaStill.blockID : Block.waterStill.blockID;
 
-		fillBlocks = BlockFactoryProvider.getRandomizer(Catacomb.getRank(inOriginY), inRandom);
+		fillBlocks = BlockFactoryProvider.getRandomizer(Catacomb.getLevel(inOriginY), inRandom);
 		
 		
 		// fill air
@@ -62,7 +62,7 @@ public class DungeonsSlime implements IDungeon {
 		WorldGenPrimitive.fillRectSolid(world, originX - 2, originY + 3, originZ - 1, originX - 2, originY + 3, originZ + 1, fillBlocks);
 		WorldGenPrimitive.fillRectSolid(world, originX + 2, originY + 3, originZ - 1, originX + 2, originY + 3, originZ + 1, fillBlocks);
 		
-		if(Catacomb.getRank(originY) < 3){
+		if(Catacomb.getLevel(originY) < 4){
 			WorldGenPrimitive.randomVines(world, rand, originX - 7, originY + 2, originZ - 7, originX + 7, originY + 5, originZ + 7);
 			Spawner.generate(world, rand, originX, originY + 5, originZ, Spawner.SLIME);
 		} else {

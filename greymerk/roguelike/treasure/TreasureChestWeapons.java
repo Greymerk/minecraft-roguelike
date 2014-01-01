@@ -14,7 +14,7 @@ public class TreasureChestWeapons extends TreasureChestBase{
 	@Override
 	protected void fillChest(TileEntityChest chest){
 		
-		int rank = Catacomb.getRank(posY);
+		int level = Catacomb.getLevel(posY);
 		
 		int middle = chest.getSizeInventory()/2;
 						
@@ -23,10 +23,10 @@ public class TreasureChestWeapons extends TreasureChestBase{
 		item = new ItemStack(Item.arrow, 2 + rand.nextInt(6));
 		chest.setInventorySlotContents(middle - 1, item);
 		
-		item = Loot.getEquipmentBySlot(rand, Slot.WEAPON, rank, true);
+		item = Loot.getEquipmentBySlot(rand, Slot.WEAPON, level, true);
 		chest.setInventorySlotContents(middle, item);
 		
-		item = ItemFood.getRandom(rand, rank);
+		item = ItemFood.getRandom(rand, level);
 		chest.setInventorySlotContents(middle + 1, item);
 	}
 

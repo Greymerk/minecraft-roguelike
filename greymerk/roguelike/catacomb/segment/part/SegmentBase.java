@@ -1,10 +1,12 @@
 package greymerk.roguelike.catacomb.segment.part;
 
+import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.catacomb.segment.ISegment;
 import greymerk.roguelike.worldgen.Cardinal;
 
 import java.util.Random;
 
+import net.minecraft.src.Block;
 import net.minecraft.src.World;
 
 public abstract class SegmentBase implements ISegment {
@@ -64,5 +66,16 @@ public abstract class SegmentBase implements ISegment {
 		}
 		
 		return true;
+	}
+	
+	protected int getStairType(int level){
+		switch(Catacomb.getLevel(originY)){
+		case 0: return Block.stairsWoodSpruce.blockID;
+		case 1: return Block.stairsWoodSpruce.blockID;
+		case 2: return Block.stairsStoneBrick.blockID;
+		case 3: return Block.stairsCobblestone.blockID;
+		case 4: return Block.stairsNetherBrick.blockID;
+		default: return Block.stairsStoneBrick.blockID;
+		}
 	}
 }

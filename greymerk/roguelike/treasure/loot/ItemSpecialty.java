@@ -12,74 +12,78 @@ public enum ItemSpecialty {
 
 	SWORD, BOW, HELMET, CHEST, LEGS, FEET, PICK, AXE, SHOVEL;
 	
-	public static ItemStack getRandomItem(ItemSpecialty type, Random rand, int rank){
+	public static ItemStack getRandomItem(ItemSpecialty type, Random rand, int level){
+		return getRandomItem(type, rand, Quality.getQuality(rand, level));
+	}
+	
+	public static ItemStack getRandomItem(ItemSpecialty type, Random rand, Quality quality){
 		
 		ItemStack item;
-		
+				
 		switch(type){
 		
-		case SWORD: return getSword(rand, rank);
-		case BOW: return getBow(rand, rank);
-		case HELMET: return getHelmet(rand, rank);
-		case CHEST: return getChest(rand, rank);
-		case LEGS: return getLegs(rand, rank);
-		case FEET: return getBoots(rand, rank);
-		case PICK: return getPick(rand, rank);
-		case AXE: return getAxe(rand, rank);
-		case SHOVEL: return getShovel(rand, rank);		
+		case SWORD: return getSword(rand, quality);
+		case BOW: return getBow(rand, quality);
+		case HELMET: return getHelmet(rand, quality);
+		case CHEST: return getChest(rand, quality);
+		case LEGS: return getLegs(rand, quality);
+		case FEET: return getBoots(rand, quality);
+		case PICK: return getPick(rand, quality);
+		case AXE: return getAxe(rand, quality);
+		case SHOVEL: return getShovel(rand, quality);		
 		default: return null;
 		}
 	}
 	
-	public static ItemStack getRandomArmour(Random rand, int rank){
+	public static ItemStack getRandomArmour(Random rand, Quality quality){
 		switch(rand.nextInt(4)){
-		case 0: return getRandomItem(HELMET, rand, rank);
-		case 1: return getRandomItem(CHEST, rand, rank);
-		case 2: return getRandomItem(LEGS, rand, rank);
-		case 3: return getRandomItem(FEET, rand, rank);
+		case 0: return getRandomItem(HELMET, rand, quality);
+		case 1: return getRandomItem(CHEST, rand, quality);
+		case 2: return getRandomItem(LEGS, rand, quality);
+		case 3: return getRandomItem(FEET, rand, quality);
 		default: return null;
 		}
 	}
 	
-	public static ItemStack getRandomTool(Random rand, int rank){
+	public static ItemStack getRandomTool(Random rand, Quality quality){
 		switch(rand.nextInt(3)){
-		case 0: return getRandomItem(PICK, rand, rank);
-		case 1: return getRandomItem(AXE, rand, rank);
-		case 2: return getRandomItem(SHOVEL, rand, rank);
+		case 0: return getRandomItem(PICK, rand, quality);
+		case 1: return getRandomItem(AXE, rand, quality);
+		case 2: return getRandomItem(SHOVEL, rand, quality);
 		default: return null;
 		}
 	}
 	
-	private static ItemStack getShovel(Random rand, int rank){
+	private static ItemStack getShovel(Random rand, Quality quality){
 		ItemStack item;
-		if(rank == 3){
+		if(quality == Quality.DIAMOND){
 			item = new ItemStack(Item.shovelDiamond);
 			item.addEnchantment(Enchantment.efficiency, 3 + rand.nextInt(3));
-			item.addEnchantment(Enchantment.unbreaking, getUnbreakingLevel(rank, rand));
+			item.addEnchantment(Enchantment.unbreaking, getUnbreakingLevel(quality, rand));
 			item.setItemName("Soulsand Spade");
 			return item;
 		} else {
 			item = new ItemStack(Item.shovelIron);
 			item.addEnchantment(Enchantment.efficiency, 1 + rand.nextInt(2));
-			item.addEnchantment(Enchantment.unbreaking, getUnbreakingLevel(rank, rand));
+			item.addEnchantment(Enchantment.unbreaking, getUnbreakingLevel(quality, rand));
 			item.setItemName("Grave Spade");
 			return item;
 		}
 	}
 	
-	private static ItemStack getAxe(Random rand, int rank){
+	private static ItemStack getAxe(Random rand, Quality quality){
 		
 		ItemStack item;
-		if(rank == 3){
+		if(quality == Quality.DIAMOND){
 			item = new ItemStack(Item.axeDiamond);
 			item.addEnchantment(Enchantment.efficiency, 3 + rand.nextInt(3));
-			item.addEnchantment(Enchantment.unbreaking, getUnbreakingLevel(rank, rand));
+			item.addEnchantment(Enchantment.unbreaking, getUnbreakingLevel(quality, rand));
 			item.setItemName("Hellsteel Axe");
 			return item;
 		} else {
 			item = new ItemStack(Item.axeIron);
 			item.addEnchantment(Enchantment.efficiency, 1 + rand.nextInt(2));
-			item.addEnchantment(Enchantment.unbreaking, getUnbreakingLevel(rank, rand));
+			item.addEnchantment(Enchantment.unbreaking, getUnbreakingLevel(quality, rand));
 			item.setItemName("Lumberjack's Hatchet");
 			return item;
 		}
@@ -87,14 +91,14 @@ public enum ItemSpecialty {
 		
 	}
 	
-	private static ItemStack getPick(Random rand, int rank){
+	private static ItemStack getPick(Random rand, Quality quality){
 		
 		ItemStack item;
 		
-		if(rank == 3){
+		if(quality == Quality.DIAMOND){
 			item = new ItemStack(Item.pickaxeDiamond);
 			item.addEnchantment(Enchantment.efficiency, 3 + rand.nextInt(3));
-			item.addEnchantment(Enchantment.unbreaking, getUnbreakingLevel(rank, rand));
+			item.addEnchantment(Enchantment.unbreaking, getUnbreakingLevel(quality, rand));
 			if(rand.nextInt(10) == 0){
 				item.addEnchantment(Enchantment.silkTouch, 1);
 				item.setItemName("Crystal Pick of Precision");
@@ -110,7 +114,7 @@ public enum ItemSpecialty {
 		} else {
 			item = new ItemStack(Item.pickaxeIron);
 			item.addEnchantment(Enchantment.efficiency, 1 + rand.nextInt(2));
-			item.addEnchantment(Enchantment.unbreaking, getUnbreakingLevel(rank, rand));
+			item.addEnchantment(Enchantment.unbreaking, getUnbreakingLevel(quality, rand));
 			if(rand.nextInt(10) == 0){
 				item.addEnchantment(Enchantment.silkTouch, 1);
 				item.setItemName("Case Hardened Pick of Precision");
@@ -128,27 +132,27 @@ public enum ItemSpecialty {
 		
 	}
 	
-	private static ItemStack getSword(Random rand, int rank){
+	private static ItemStack getSword(Random rand, Quality quality){
 		
 		ItemStack item;
-		if (rank == 3){
+		if (quality == Quality.DIAMOND){
 			item = new ItemStack(Item.swordDiamond);
 			item.addEnchantment(Enchantment.sharpness, 3 + rand.nextInt(3));
 			if(rand.nextInt(10) == 0){
 				item.addEnchantment(Enchantment.looting, 2 + rand.nextInt(2));
-				item.addEnchantment(Enchantment.unbreaking, getUnbreakingLevel(rank, rand));
+				item.addEnchantment(Enchantment.unbreaking, getUnbreakingLevel(quality, rand));
 				item.setItemName("Eldritch Blade of Plundering");
 				Loot.setItemLore(item, "The loot taker", TextFormat.DARKGREEN);
 				return item;
 			}
 			if(rand.nextInt(10) == 0){
 				item.addEnchantment(Enchantment.fireAspect, 2 + rand.nextInt(2));
-				item.addEnchantment(Enchantment.unbreaking, getUnbreakingLevel(rank, rand));
+				item.addEnchantment(Enchantment.unbreaking, getUnbreakingLevel(quality, rand));
 				item.setItemName("Eldritch Blade of the Inferno");
 				Loot.setItemLore(item, "From the fiery depths", TextFormat.DARKGREEN);
 				return item;
 			}
-			item.addEnchantment(Enchantment.unbreaking, rank == 3 ? 3 : 1 + rand.nextInt(2));
+			item.addEnchantment(Enchantment.unbreaking, quality == Quality.DIAMOND ? 3 : 1 + rand.nextInt(2));
 			item.setItemName("Eldritch Blade");
 			Loot.setItemLore(item, "Rune Etched", TextFormat.DARKGREEN);
 			return item;
@@ -157,7 +161,7 @@ public enum ItemSpecialty {
 			if(rand.nextBoolean()){
 				item.addEnchantment(Enchantment.sharpness, 1);
 			}
-			item.addEnchantment(Enchantment.unbreaking, getUnbreakingLevel(rank, rand));
+			item.addEnchantment(Enchantment.unbreaking, getUnbreakingLevel(quality, rand));
 			item.setItemName("Tempered Blade");
 			Loot.setItemLore(item, "Highly Durable", TextFormat.DARKGREEN);
 			return item;
@@ -165,24 +169,25 @@ public enum ItemSpecialty {
 		
 	}
 	
-	private static ItemStack getBow(Random rand, int rank){
+	private static ItemStack getBow(Random rand, Quality quality){
 		
 		ItemStack item = new ItemStack(Item.bow);
 		
-		switch(rank){
-		case 0:
+		switch(quality){
+		case WOOD:
+		case STONE:
 			item.addEnchantment(Enchantment.power, 1 + rand.nextInt(3));
 			item.addEnchantment(Enchantment.unbreaking, 1);
 			item.setItemName("Yew Longbow");
 			Loot.setItemLore(item, "Superior craftsmanship", TextFormat.DARKGREEN);
 			return item;
-		case 1:
+		case IRON:
 			item.addEnchantment(Enchantment.power, 1 + rand.nextInt(3));
 			item.addEnchantment(Enchantment.unbreaking, 1 + rand.nextInt(3));
 			item.setItemName("Laminated Bow");
 			Loot.setItemLore(item, "Highly polished", TextFormat.DARKGREEN);
 			return item;
-		case 2:
+		case GOLD:
 			item.addEnchantment(Enchantment.power, 3 + rand.nextInt(3));
 			if(rand.nextBoolean()){
 				item.addEnchantment(Enchantment.infinity, 1);
@@ -191,43 +196,40 @@ public enum ItemSpecialty {
 			item.setItemName("Recurve Bow");
 			Loot.setItemLore(item, "Beautifully crafted", TextFormat.DARKGREEN);
 			return item;
-		case 3:
+		case DIAMOND:
 			item.addEnchantment(Enchantment.power, 3 + rand.nextInt(3));
 			item.addEnchantment(Enchantment.flame, 1);
 			item.addEnchantment(Enchantment.infinity, 1);
-			item.addEnchantment(Enchantment.unbreaking, getUnbreakingLevel(rank, rand));
+			item.addEnchantment(Enchantment.unbreaking, getUnbreakingLevel(quality, rand));
 			item.setItemName("Eldritch Bow");
 			Loot.setItemLore(item, "Warm to the touch", TextFormat.DARKGREEN);
 			return item;
 		default:
 			return null;
 		}
-		
-		
-		
-		
 	}
 	
-	private static ItemStack getHelmet(Random rand, int rank){
+	private static ItemStack getHelmet(Random rand, Quality quality){
 		ItemStack item;
 		
 		String canonical = "";
 		
-		switch(rank){
-		case 0:
+		switch(quality){
+		case WOOD:
 			item = new ItemStack(Item.helmetLeather);
 			ItemArmour.dyeArmor(item, rand.nextInt(256), rand.nextInt(255), rand.nextInt(255));
 			canonical = "Bonnet";
 			break;
-		case 1:
+		case STONE:
 			item = new ItemStack(Item.helmetChain);
 			canonical = "Coif";
 			break;
-		case 2:
+		case IRON:
+		case GOLD:
 			item = new ItemStack(Item.helmetIron);
 			canonical = "Sallet";
 			break;
-		case 3:
+		case DIAMOND:
 			item = new ItemStack(Item.helmetDiamond);
 			canonical = "Helm";
 			break;
@@ -239,46 +241,47 @@ public enum ItemSpecialty {
 		String suffix = "";
 
 		if(rand.nextInt(20) == 0){
-			item.addEnchantment(Enchantment.protection, getProtectionLevel(rank, rand));
+			item.addEnchantment(Enchantment.protection, getProtectionLevel(quality, rand));
 			item.addEnchantment(Enchantment.respiration, 3);
 			item.addEnchantment(Enchantment.aquaAffinity, 1);
 			suffix = "of diving";
 		} else if(rand.nextInt(3) == 0){
-			item.addEnchantment(Enchantment.projectileProtection, getProtectionLevel(rank, rand));
+			item.addEnchantment(Enchantment.projectileProtection, getProtectionLevel(quality, rand));
 			suffix = "of the archer";
 		} else {		
-			item.addEnchantment(Enchantment.protection, getProtectionLevel(rank, rand));
+			item.addEnchantment(Enchantment.protection, getProtectionLevel(quality, rand));
 			suffix = "of Defense";
 		}
 		
-		item.addEnchantment(Enchantment.unbreaking, getUnbreakingLevel(rank, rand));
+		item.addEnchantment(Enchantment.unbreaking, getUnbreakingLevel(quality, rand));
 		
-		String name = getArmourPrefix(rank) + " " + canonical + " " + suffix;
+		String name = getArmourPrefix(quality) + " " + canonical + " " + suffix;
 		item.setItemName(name);
 		return item;
 	}
 	
 	
-	private static ItemStack getBoots(Random rand, int rank){
+	private static ItemStack getBoots(Random rand, Quality quality){
 		ItemStack item;
 		
 		String canonical = "";
 		
-		switch(rank){
-		case 0:
+		switch(quality){
+		case WOOD:
 			item = new ItemStack(Item.bootsLeather);
 			ItemArmour.dyeArmor(item, rand.nextInt(256), rand.nextInt(255), rand.nextInt(255));
 			canonical = "Shoes";
 			break;
-		case 1:
+		case STONE:
 			item = new ItemStack(Item.bootsChain);
 			canonical = "Greaves";
 			break;
-		case 2:
+		case IRON:
+		case GOLD:
 			item = new ItemStack(Item.bootsIron);
 			canonical = "Sabatons";
 			break;
-		case 3:
+		case DIAMOND:
 			item = new ItemStack(Item.bootsDiamond);
 			canonical = "Boots";
 			break;
@@ -290,48 +293,49 @@ public enum ItemSpecialty {
 		String suffix = "";
 		
 		if(rand.nextInt(10) == 0){
-			item.addEnchantment(Enchantment.fireProtection, getProtectionLevel(rank, rand));
+			item.addEnchantment(Enchantment.fireProtection, getProtectionLevel(quality, rand));
 			suffix = "of Warding";
 		} else if(rand.nextInt(5) == 0){
-			item.addEnchantment(Enchantment.protection, getProtectionLevel(rank, rand));
-			item.addEnchantment(Enchantment.featherFalling, rank == 3 ? 4 : 1 + rand.nextInt(3));
+			item.addEnchantment(Enchantment.protection, getProtectionLevel(quality, rand));
+			item.addEnchantment(Enchantment.featherFalling, quality == quality.DIAMOND ? 4 : 1 + rand.nextInt(3));
 			suffix = "of Lightness";
 		} else if(rand.nextInt(3) == 0){
-			item.addEnchantment(Enchantment.projectileProtection, getProtectionLevel(rank, rand));
+			item.addEnchantment(Enchantment.projectileProtection, getProtectionLevel(quality, rand));
 			suffix = "of Archery";
 		} else {
-			item.addEnchantment(Enchantment.protection, getProtectionLevel(rank, rand));
+			item.addEnchantment(Enchantment.protection, getProtectionLevel(quality, rand));
 			suffix = "of Defense";
 		}
 		
-		item.addEnchantment(Enchantment.unbreaking, getUnbreakingLevel(rank, rand));
+		item.addEnchantment(Enchantment.unbreaking, getUnbreakingLevel(quality, rand));
 		
-		String name = getArmourPrefix(rank) + " " + canonical + " " + suffix;
+		String name = getArmourPrefix(quality) + " " + canonical + " " + suffix;
 		item.setItemName(name);
 		return item;
 	}
 	
 	
-	private static ItemStack getLegs(Random rand, int rank){
+	private static ItemStack getLegs(Random rand, Quality quality){
 		ItemStack item;
 		
 		String canonical = "";
 		
-		switch(rank){
-		case 0:
+		switch(quality){
+		case WOOD:
 			item = new ItemStack(Item.legsLeather);
 			ItemArmour.dyeArmor(item, rand.nextInt(256), rand.nextInt(255), rand.nextInt(255));
 			canonical = "Pantaloons";
 			break;
-		case 1:
+		case STONE:
 			item = new ItemStack(Item.legsChain);
 			canonical = "Chausses";
 			break;
-		case 2:
+		case IRON:
+		case GOLD:
 			item = new ItemStack(Item.legsIron);
 			canonical = "Leg-plates";
 			break;
-		case 3:
+		case DIAMOND:
 			item = new ItemStack(Item.legsDiamond);
 			canonical = "Leggings";
 			break;
@@ -342,46 +346,47 @@ public enum ItemSpecialty {
 		String suffix = "";
 		
 		if(rand.nextInt(10) == 0){
-			item.addEnchantment(Enchantment.fireProtection, getProtectionLevel(rank, rand));
+			item.addEnchantment(Enchantment.fireProtection, getProtectionLevel(quality, rand));
 			suffix = "of Warding";
 		} else if(rand.nextInt(10) == 0){
-			item.addEnchantment(Enchantment.blastProtection, getProtectionLevel(rank, rand));
+			item.addEnchantment(Enchantment.blastProtection, getProtectionLevel(quality, rand));
 			suffix = "of Integrity";
 		} else if(rand.nextInt(3) == 0){
-			item.addEnchantment(Enchantment.projectileProtection, getProtectionLevel(rank, rand));
+			item.addEnchantment(Enchantment.projectileProtection, getProtectionLevel(quality, rand));
 			suffix = "of Archery";
 		} else {
-			item.addEnchantment(Enchantment.protection, getProtectionLevel(rank, rand));
+			item.addEnchantment(Enchantment.protection, getProtectionLevel(quality, rand));
 			suffix = "of Defense";
 		}
 		
-		item.addEnchantment(Enchantment.unbreaking, getUnbreakingLevel(rank, rand));
+		item.addEnchantment(Enchantment.unbreaking, getUnbreakingLevel(quality, rand));
 		
-		String name = getArmourPrefix(rank) + " " + canonical + " " + suffix;
+		String name = getArmourPrefix(quality) + " " + canonical + " " + suffix;
 		item.setItemName(name);
 		return item;
 	}
 	
-	private static ItemStack getChest(Random rand, int rank){
+	private static ItemStack getChest(Random rand, Quality quality){
 		ItemStack item;
 		
 		String canonical = "";
 		
-		switch(rank){
-		case 0:
+		switch(quality){
+		case WOOD:
 			item = new ItemStack(Item.plateLeather);
 			ItemArmour.dyeArmor(item, rand.nextInt(256), rand.nextInt(255), rand.nextInt(255));
 			canonical = "Tunic";
 			break;
-		case 1:
+		case STONE:
 			item = new ItemStack(Item.plateChain);
 			canonical = "Hauberk";
 			break;
-		case 2:
+		case IRON:
+		case GOLD:
 			item = new ItemStack(Item.plateIron);
 			canonical = "Cuirass";
 			break;
-		case 3:
+		case DIAMOND:
 			item = new ItemStack(Item.plateDiamond);
 			canonical = "Armour";
 			break;
@@ -393,49 +398,50 @@ public enum ItemSpecialty {
 		String suffix = "";
 		
 		if(rand.nextInt(10) == 0){
-			item.addEnchantment(Enchantment.fireProtection, getProtectionLevel(rank, rand));
+			item.addEnchantment(Enchantment.fireProtection, getProtectionLevel(quality, rand));
 			suffix = "of Flamewarding";
 		} else if(rand.nextInt(10) == 0){
-			item.addEnchantment(Enchantment.blastProtection, getProtectionLevel(rank, rand));
+			item.addEnchantment(Enchantment.blastProtection, getProtectionLevel(quality, rand));
 			suffix = "of Integrity";
 		} else if(rand.nextInt(3) == 0){
-			item.addEnchantment(Enchantment.projectileProtection, getProtectionLevel(rank, rand));
+			item.addEnchantment(Enchantment.projectileProtection, getProtectionLevel(quality, rand));
 			suffix = "of Archery";
 		} else {
-			item.addEnchantment(Enchantment.protection, getProtectionLevel(rank, rand));
+			item.addEnchantment(Enchantment.protection, getProtectionLevel(quality, rand));
 			suffix = "of Defense";
 		}
 		
-		item.addEnchantment(Enchantment.unbreaking, getUnbreakingLevel(rank, rand));
+		item.addEnchantment(Enchantment.unbreaking, getUnbreakingLevel(quality, rand));
 		
-		String name = getArmourPrefix(rank) + " " + canonical + " " + suffix;
+		String name = getArmourPrefix(quality) + " " + canonical + " " + suffix;
 		item.setItemName(name);
 		return item;
 	}
 	
-	private static int getUnbreakingLevel(int rank, Random rand){
-		return rank == 3 ? 3 : 1 + rand.nextInt(2);
+	private static int getUnbreakingLevel(Quality quality, Random rand){
+		return quality == Quality.DIAMOND ? 3 : 1 + rand.nextInt(2);
 	}
 	
-	private static int getProtectionLevel(int rank, Random rand){
+	private static int getProtectionLevel(Quality quality, Random rand){
 		
 		int value = 1;
 		
-		switch(rank){
-		case 0:
+		switch(quality){
+		case WOOD:
 			if(rand.nextInt(3) == 0){
 				value++;
 			}
 			break;
-		case 1:
+		case STONE:
 			if(rand.nextBoolean()){
 				value++;
 			}
 			break;
-		case 2:
+		case IRON:
+		case GOLD:
 			value += rand.nextInt(3);
 			break;
-		case 3:
+		case DIAMOND:
 			value += 3 + rand.nextInt(3);
 			break;
 		}
@@ -443,19 +449,15 @@ public enum ItemSpecialty {
 		return value;
 	}
 	
-	private static String getArmourPrefix(int rank){
+	private static String getArmourPrefix(Quality quality){
 		
-		switch(rank){
-		case 0:
-			return "Surplus";
-		case 1:
-			return "Riveted";
-		case 2:
-			return "Gothic";
-		case 3:
-			return "Magic";
-		default:
-			return "Strange";
+		switch(quality){
+		case WOOD: return "Surplus";
+		case STONE: return "Riveted";
+		case IRON: return "Gothic";
+		case GOLD: return "Jewelled";
+		case DIAMOND: return "Magic";
+		default: return "Strange";
 		}
 	}		
 }

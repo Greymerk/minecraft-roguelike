@@ -11,7 +11,7 @@ public class TreasureChestEnchanting extends TreasureChestBase{
 	
 	@Override
 	protected void fillChest(TileEntityChest chest){
-		int rank = Catacomb.getRank(posY);
+		int level = Catacomb.getLevel(posY);
 		int middle = chest.getSizeInventory()/2;
 				
 		ItemStack item;
@@ -19,7 +19,7 @@ public class TreasureChestEnchanting extends TreasureChestBase{
 		item = new ItemStack(Item.expBottle, 2 + rand.nextInt(6));
 		chest.setInventorySlotContents(middle - 1, item);
 		
-		item = Loot.getEnchantedBook(rand, rank);
+		item = Loot.getEnchantedBook(rand, level);
 		chest.setInventorySlotContents(middle, item);
 		
 		item = new ItemStack(Item.enderPearl, 1 + rand.nextInt(3));

@@ -27,7 +27,7 @@ public class DungeonsPrison implements IDungeon {
 		world = inWorld;
 		rand = inRandom;
 		
-		blocks = BlockFactoryProvider.getRandomizer(Catacomb.getRank(inOriginY), inRandom);
+		blocks = BlockFactoryProvider.getRandomizer(Catacomb.getLevel(inOriginY), inRandom);
 		
 		// clear air
 		WorldGenPrimitive.fillRectSolid(inWorld, inOriginX - 7, inOriginY, inOriginZ - 7, inOriginX + 7, inOriginY + 3, inOriginZ + 7, 0);

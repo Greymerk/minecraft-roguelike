@@ -16,8 +16,8 @@ public enum Segment {
 
 	ARCH, FIRE, SHELF, INSET;
 	
-	public static final Segment[] rank0 = {FIRE, SHELF, INSET};
-	public static final Segment[] rank1 = {SHELF, INSET};
+	public static final Segment[] level0 = {FIRE, SHELF, INSET};
+	public static final Segment[] level1 = {SHELF, INSET};
 	
 	public static ISegment getSegment(Segment choice){
 		
@@ -37,14 +37,14 @@ public enum Segment {
 		Segment pillar;
 		Segment[] spacers;
 		
-		switch(Catacomb.getRank(y)){
+		switch(Catacomb.getLevel(y)){
 		case 0:
 			pillar = ARCH;
-			spacers = rank0;
+			spacers = level0;
 			break;
 		default: 
 			pillar = ARCH;
-			spacers = rank1;
+			spacers = level1;
 		}
 	
 		if((dir == Cardinal.NORTH || dir == Cardinal.SOUTH) && z % 3 == 0){

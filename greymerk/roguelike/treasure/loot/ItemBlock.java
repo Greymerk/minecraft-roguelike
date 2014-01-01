@@ -7,9 +7,9 @@ import net.minecraft.src.ItemStack;
 
 public class ItemBlock {
 	
-	public static ItemStack getRandom(Random rand, int rank){
+	public static ItemStack getRandom(Random rand, int level){
 		
-		if(rank > 0 && rand.nextInt(300) == 0){
+		if(level > 0 && rand.nextInt(300) == 0){
 			if(rand.nextBoolean()){
 				return ItemNovelty.getItem(ItemNovelty.MMILLSS);
 			} else {
@@ -17,16 +17,16 @@ public class ItemBlock {
 			}
 		}
 		
-		return pickBlocks(rand, rank);
+		return pickBlocks(rand, level);
 	}
 	
-	private static ItemStack pickBlocks(Random rand, int rank) {
+	private static ItemStack pickBlocks(Random rand, int level) {
 
-		if(rank > 1 && rand.nextInt((5 - rank) * 50) == 0){
+		if(level > 1 && rand.nextInt((5 - level) * 50) == 0){
 			return new ItemStack(Block.blockDiamond, 1);
 		}
 		
-		if(rank > 1 && rand.nextInt((5 - rank) * 30) == 0){
+		if(level > 1 && rand.nextInt((5 - level) * 30) == 0){
 			switch(rand.nextInt(3)){
 			case 0: return new ItemStack(Block.blockLapis, 2 + rand.nextInt(6));
 			case 1: return new ItemStack(Block.blockEmerald, 1 + rand.nextInt(3));
@@ -34,18 +34,18 @@ public class ItemBlock {
 			}
 		}
 		
-		if(rank > 0 && rand.nextInt((5 - rank) * 20) == 0){
+		if(level > 0 && rand.nextInt((5 - level) * 20) == 0){
 			switch(rand.nextInt(6)){
 			case 0: return new ItemStack(Block.blockIron, 1);
-			case 1: return new ItemStack(Block.coalBlock, 1 + rand.nextInt(rank + 1));
+			case 1: return new ItemStack(Block.coalBlock, 1 + rand.nextInt(level + 1));
 			case 2: return new ItemStack(Block.blockRedstone, 1);
-			case 3: return new ItemStack(Block.tnt, 2 * rand.nextInt(rank + 1));
-			case 4: return new ItemStack(Block.glowStone, 3 + rand.nextInt(1 + rank * 2));
-			case 5: return new ItemStack(Block.glass, 1 + rand.nextInt(1 + rank * 2));
+			case 3: return new ItemStack(Block.tnt, 2 * rand.nextInt(level + 1));
+			case 4: return new ItemStack(Block.glowStone, 3 + rand.nextInt(1 + level * 2));
+			case 5: return new ItemStack(Block.glass, 1 + rand.nextInt(1 + level * 2));
 			}
 		}
 		
-		if(rank == 3){
+		if(level > 3){
 			if(rand.nextBoolean()){
 				return new ItemStack(Block.netherBrick, 5 + rand.nextInt(10));
 			} else {
@@ -55,9 +55,9 @@ public class ItemBlock {
 		
 		switch (rand.nextInt(4)) {
 		case 0: return new ItemStack(Block.planks, 5 + rand.nextInt(10));
-		case 1: return new ItemStack(Block.cobblestone, 5 + rand.nextInt(1 + rank * 5));
-		case 2: return new ItemStack(Block.stoneBrick, 5 + rand.nextInt(1 + rank * 5));
-		case 3: return new ItemStack(Block.wood, 1 + rank + rand.nextInt(1 + rank * 3));
+		case 1: return new ItemStack(Block.cobblestone, 5 + rand.nextInt(1 + level * 5));
+		case 2: return new ItemStack(Block.stoneBrick, 5 + rand.nextInt(1 + level * 5));
+		case 3: return new ItemStack(Block.wood, 1 + level + rand.nextInt(1 + level * 3));
 		default: 
 			return new ItemStack(Block.dirt, 5 + rand.nextInt(10));
 		}

@@ -12,7 +12,7 @@ public class TreasureChestTools extends TreasureChestBase{
 	@Override
 	protected void fillChest(TileEntityChest chest){
 
-		int rank = Catacomb.getRank(posY);
+		int level = Catacomb.getLevel(posY);
 		int middle = chest.getSizeInventory()/2;
 						
 		ItemStack item;		
@@ -20,7 +20,7 @@ public class TreasureChestTools extends TreasureChestBase{
 		item = new ItemStack(Block.torchWood, 4 + rand.nextInt(12));
 		chest.setInventorySlotContents(middle - 1, item);
 		
-		item = Loot.getLootByCategory(Loot.TOOL, rand, rank);
+		item = Loot.getLootByCategory(Loot.TOOL, rand, level);
 		chest.setInventorySlotContents(middle, item);
 		
 		item = Loot.getLootByCategory(Loot.ORE, rand, 0);

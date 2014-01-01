@@ -7,21 +7,21 @@ import net.minecraft.src.ItemStack;
 
 public class ItemOre {
 
-	public static ItemStack getRandom(Random rand, int rank){
+	public static ItemStack getRandom(Random rand, int level){
 		
-		if(rank < 2 && rand.nextInt(100) == 0){
+		if(level < 2 && rand.nextInt(100) == 0){
 			return ItemNovelty.getItem(ItemNovelty.MCGAMER);
 		}
-		return pickOre(rand, rank);
+		return pickOre(rand, level);
 	}
 	
-	private static ItemStack pickOre(Random rand, int rank) {
+	private static ItemStack pickOre(Random rand, int level) {
 
 		int quantity = 1 + rand.nextInt(4);		
 		
-		switch(rank){
+		switch(level){
 		
-		case 3:
+		case 4:
 
 			
 			if (rand.nextInt(10) == 0) {
@@ -38,6 +38,7 @@ public class ItemOre {
 			
 			return new ItemStack(Item.ingotIron, quantity * 3);
 
+		case 3:
 		case 2:
 			
 			if (rand.nextInt(15) == 0){

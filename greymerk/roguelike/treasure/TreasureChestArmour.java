@@ -12,18 +12,18 @@ public class TreasureChestArmour extends TreasureChestBase{
 	@Override
 	protected void fillChest(TileEntityChest chest){
 
-		int rank = Catacomb.getRank(posY);
+		int level = Catacomb.getLevel(posY);
 		int middle = chest.getSizeInventory()/2;
 						
 		ItemStack item;
 		
-		item = Loot.getLootByCategory(Loot.POTION, rand, rank);
+		item = Loot.getLootByCategory(Loot.POTION, rand, level);
 		chest.setInventorySlotContents(middle - 1, item);
 		
-		item = Loot.getLootByCategory(Loot.ARMOUR, rand, rank);
+		item = Loot.getLootByCategory(Loot.ARMOUR, rand, level);
 		chest.setInventorySlotContents(middle, item);
 		
-		item = Loot.getLootByCategory(Loot.FOOD, rand, rank);
+		item = Loot.getLootByCategory(Loot.FOOD, rand, level);
 		chest.setInventorySlotContents(middle + 1, item);
 	}
 

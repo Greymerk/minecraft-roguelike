@@ -47,7 +47,7 @@ public abstract class TreasureChestBase implements ITreasureChest{
 		try{
 			
 			for (int i = 0; i < 15; i++) {
-				ItemStack item = Loot.getLootByCategory(Loot.JUNK, rand, Catacomb.getRank(posY));
+				ItemStack item = Loot.getLootByCategory(Loot.JUNK, rand, Catacomb.getLevel(posY));
 				chest.setInventorySlotContents(rand.nextInt(chest.getSizeInventory()), item);
 			}
 			

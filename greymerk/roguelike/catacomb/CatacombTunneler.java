@@ -104,9 +104,9 @@ public class CatacombTunneler {
 			return;
 		}
 		
-		IBlockFactory fillBlocks = BlockFactoryProvider.getRandomizer(Catacomb.getRank(originY), rand);
+		IBlockFactory fillBlocks = BlockFactoryProvider.getRandomizer(Catacomb.getLevel(originY), rand);
 		
-		int bridgeBlock = Catacomb.getRank(originY) == 3 ? Block.netherrack.blockID : Block.cobblestone.blockID;
+		int bridgeBlock = Catacomb.getLevel(originY) == 4 ? Block.netherrack.blockID : Block.cobblestone.blockID;
 		
 		for (Tuple location : tunnel){
 			

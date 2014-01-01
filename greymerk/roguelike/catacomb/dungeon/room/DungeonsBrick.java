@@ -42,7 +42,7 @@ public class DungeonsBrick implements IDungeon {
 		
 		
 		int stair;
-		switch(Catacomb.getRank(originY)){
+		switch(Catacomb.getLevel(originY)){
 		case 2:
 			stair = Block.stairsCobblestone.blockID;
 			break;
@@ -61,7 +61,7 @@ public class DungeonsBrick implements IDungeon {
 		MetaBlock westStair = new MetaBlock(stair, WorldGenPrimitive.blockOrientation(Cardinal.WEST, true));
 		
 		
-		IBlockFactory blocks = BlockFactoryProvider.getRandomizer(Catacomb.getRank(inOriginY), rand);
+		IBlockFactory blocks = BlockFactoryProvider.getRandomizer(Catacomb.getLevel(inOriginY), rand);
 		
 		// fill air inside
 		WorldGenPrimitive.fillRectSolid(world, 	originX - 3, originY, originZ - 3, originX + 3, originY + 3, originZ + 3, 0);

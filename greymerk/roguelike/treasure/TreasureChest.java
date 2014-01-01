@@ -16,17 +16,18 @@ public enum TreasureChest {
 
 	ARMOUR, WEAPONS, BLOCKS, ENCHANTING, FOOD, ORE, POTIONS, STARTER, TOOLS, SUPPLIES, SMITH;
 	
-	public static final TreasureChest[] rank0 = {ORE, TOOLS, ARMOUR, WEAPONS, FOOD, SUPPLIES, BLOCKS};
-	public static final TreasureChest[] rank1 = {ORE, TOOLS, ARMOUR, WEAPONS, FOOD, BLOCKS};
-	public static final TreasureChest[] rank2 = {ORE, TOOLS, ARMOUR, WEAPONS, BLOCKS};
-	public static final TreasureChest[] rank3 = {ORE, TOOLS, ARMOUR, WEAPONS};
+	public static final TreasureChest[] level0 = {ORE, TOOLS, ARMOUR, WEAPONS, FOOD, SUPPLIES, BLOCKS};
+	public static final TreasureChest[] level1 = {ORE, TOOLS, ARMOUR, WEAPONS, FOOD, BLOCKS};
+	public static final TreasureChest[] level2 = {ORE, TOOLS, ARMOUR, WEAPONS, BLOCKS};
+	public static final TreasureChest[] level3 = {ORE, TOOLS, ARMOUR, WEAPONS, BLOCKS};
+	public static final TreasureChest[] level4 = {ORE, TOOLS, ARMOUR, WEAPONS};
 	
 	public static void generate(World world, Random rand, int posX, int posY, int posZ){
 		generate(world, rand, posX, posY, posZ, false);
 	}
 	
 	public static void generate(World world, Random rand, int posX, int posY, int posZ, boolean trapped){
-		int rank = Catacomb.getRank(posY);
+		int rank = Catacomb.getLevel(posY);
 		
 		TreasureChest type = getChestType(rand, rank);
 		ITreasureChest chest = getChest(type);
@@ -35,7 +36,7 @@ public enum TreasureChest {
 	}
 	
 	public static void generate(World world, Random rand, int posX, int posY, int posZ, TreasureChest type){
-		int rank = Catacomb.getRank(posY);
+		int rank = Catacomb.getLevel(posY);
 		
 		ITreasureChest chest = getChest(type);
 		chest.generate(world, rand, posX, posY, posZ, false);
@@ -62,7 +63,7 @@ public enum TreasureChest {
 			int z = block.getZ();
 			
 			if (isValidChestSpace(world, x, y, z)) {
-				generate(world, rand, x, y, z, getChestType(rand, Catacomb.getRank(y)));
+				generate(world, rand, x, y, z, getChestType(rand, Catacomb.getLevel(y)));
 				count++;
 			}
 		}
@@ -109,9 +110,9 @@ public enum TreasureChest {
 		}
 	}
 
-	private static TreasureChest getChestType(Random rand, int rank){		
+	private static TreasureChest getChestType(Random rand, int level){		
 		
-		switch(rank){
+		switch(level){
 		
 		case 0:
 			
@@ -123,7 +124,7 @@ public enum TreasureChest {
 				return SUPPLIES;
 			}
 			
-			return rank0[rand.nextInt(rank0.length)];
+			return level0[rand.nextInt(level0.length)];
 			
 		case 1:
 			
@@ -131,7 +132,7 @@ public enum TreasureChest {
 				return ENCHANTING;
 			}
 			
-			return rank1[rand.nextInt(rank1.length)];
+			return level1[rand.nextInt(level1.length)];
 						
 		case 2:
 			
@@ -139,7 +140,7 @@ public enum TreasureChest {
 				return ENCHANTING;
 			}
 			
-			return rank2[rand.nextInt(rank2.length)];
+			return level2[rand.nextInt(level2.length)];
 		
 		case 3:
 			
@@ -147,7 +148,15 @@ public enum TreasureChest {
 				return ENCHANTING;
 			}
 			
-			return rank3[rand.nextInt(rank3.length)];
+			return level3[rand.nextInt(level3.length)];
+			
+		case 4:
+			
+			if(rand.nextInt(10) == 0){
+				return ENCHANTING;
+			}
+			
+			return level4[rand.nextInt(level4.length)];
 		
 		default:
 			return FOOD;

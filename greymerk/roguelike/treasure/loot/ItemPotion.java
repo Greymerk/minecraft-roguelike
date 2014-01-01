@@ -14,23 +14,18 @@ public enum ItemPotion {
 	public static final int UPGRADE = 32;
 	public static final int EXTEND = 64;
 	
-	public static ItemStack getRandom(Random rand, int rank){
+	public static ItemStack getRandom(Random rand){
 
 		if(rand.nextInt(200) == 0){
 			return ItemNovelty.getItem(ItemNovelty.AVIDYA);
 		}
 		
 		ItemPotion type = ItemPotion.values()[rand.nextInt(ItemPotion.values().length)];
-		return getSpecific(rand, rank, type);
+		return getSpecific(rand, type);
 	}
 	
-	public static ItemStack getSpecific(Random rand, int rank, ItemPotion type){
-		
-		boolean splash = rand.nextBoolean();
-		boolean upgrade = rand.nextInt(5 - rank) == 0;
-		boolean extend = rand.nextInt(5 - rank) == 0;
-		
-		return getSpecific(rand, type, upgrade, extend, splash);
+	public static ItemStack getSpecific(Random rand, ItemPotion type){
+		return getSpecific(rand, type, rand.nextBoolean(), rand.nextBoolean(), rand.nextBoolean());
 	}
 
 	public static ItemStack getSpecific(Random rand, ItemPotion type, boolean upgrade, boolean extend, boolean splash){

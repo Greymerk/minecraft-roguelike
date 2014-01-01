@@ -75,7 +75,7 @@ public class CatacombLevel {
 			node.construct(world);
 		}
 
-		IDungeonFactory rooms = Catacomb.getFactory(rand, Catacomb.getRank(originY));
+		IDungeonFactory rooms = Catacomb.getFactory(rand, Catacomb.getLevel(originY));
 		
 		Collections.shuffle(nodes);
 		
@@ -91,7 +91,6 @@ public class CatacombLevel {
 			}
 			
 			if(node == this.start){
-				generateLevelLink(world, rand, x, y, z);
 				continue;
 			}
 
@@ -103,6 +102,8 @@ public class CatacombLevel {
 		for (CatacombNode node : nodes){
 			node.segments();
 		}
+		
+		generateLevelLink(world, rand, start.getX(), start.getY(), start.getZ());
 	}
 	
 	private void generateLevelLink(World world, Random rand, int originX, int originY, int originZ) {
@@ -113,7 +114,7 @@ public class CatacombLevel {
 		// shell
 		List<Coord> shell = WorldGenPrimitive.getRectHollow(originX - 4, originY - 1, originZ - 4, originX + 4, originY + 16, originZ + 4);
 
-		IBlockFactory blocks = BlockFactoryProvider.getRandomizer(Catacomb.getRank(originY), rand);
+		IBlockFactory blocks = BlockFactoryProvider.getRandomizer(Catacomb.getLevel(originY), rand);
 		
 		for (Coord block : shell){
 			
@@ -142,12 +143,12 @@ public class CatacombLevel {
 		MetaBlock stair;
 		MetaBlock fill;
 		
-		switch(Catacomb.getRank(originY)){
-		case 2:
+		switch(Catacomb.getLevel(originY)){
+		case 3:
 			stair = new MetaBlock(Block.stairsCobblestone.blockID);
 			fill = new MetaBlock(Block.cobblestone.blockID);
 			break;
-		case 3:
+		case 4:
 			stair = new MetaBlock(Block.stairsNetherBrick.blockID);
 			fill = new MetaBlock(Block.netherBrick.blockID);
 			break;

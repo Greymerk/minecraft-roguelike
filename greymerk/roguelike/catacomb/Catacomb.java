@@ -40,7 +40,7 @@ public class Catacomb {
 			
 			CatacombLevel level;
 			
-			if(Catacomb.getRank(y) == 0){
+			if(Catacomb.getLevel(y) == 0){
 				level = new CatacombLevel(world, rand, x, y, z, 20, 50);
 			} else {
 				level = new CatacombLevel(world, rand, x, y, z);
@@ -70,14 +70,19 @@ public class Catacomb {
 			return false;
 		}
 		
-		if(true);
-		
 		chunkX -= 4;
 		
 		int x = chunkX * 16;
 		int z = chunkZ * 16;
 		
-		BiomeGenBase[] invalidBiomes = {BiomeGenBase.ocean, BiomeGenBase.frozenOcean, BiomeGenBase.extremeHills, BiomeGenBase.iceMountains, BiomeGenBase.jungleHills};
+		BiomeGenBase[] invalidBiomes = {
+				BiomeGenBase.ocean, 
+				BiomeGenBase.frozenOcean, 
+				BiomeGenBase.extremeHills, 
+				BiomeGenBase.iceMountains, 
+				BiomeGenBase.jungleHills
+				};
+		
 		BiomeGenBase localBiome = world.getBiomeGenForCoords(x, z);
 
 		for(BiomeGenBase biome : invalidBiomes){
@@ -120,31 +125,33 @@ public class Catacomb {
 		
 		switch(rank){
 		case 0:
-			factory = new DungeonFactory(rand, Dungeon.CORNER);
+			factory = new DungeonFactory(rand, Dungeon.ETHO);
 			factory.addSingle(Dungeon.ENCHANT);
 			factory.addSingle(Dungeon.SMITH);
 			factory.addSingle(Dungeon.MUSIC);
-			factory.addSingle(Dungeon.FIRE);
 			factory.addSingle(Dungeon.CAKE);
 			factory.addSingle(Dungeon.LAB);
-			factory.addSingle(Dungeon.SLIME);
 			factory.addRandom(Dungeon.BRICK, 3);
-			factory.addRandom(Dungeon.CAKE, 20);
-			factory.addRandom(Dungeon.SLIME, 20);
 			break;
 		case 1:
 			factory = new DungeonFactory(rand, Dungeon.CORNER);
-			factory.addSingle(Dungeon.ENDER);
-			factory.addSingle(Dungeon.SPIDER);
-			factory.addSingle(Dungeon.CREEPER);
-			factory.addSingle(Dungeon.CRYPT);
-			factory.addSingle(Dungeon.PRISON);
+			if(rand.nextInt(3) == 0) factory.addSingle(Dungeon.ETHO);
+			factory.addSingle(Dungeon.PIT);
+			factory.addSingle(Dungeon.MESS);
+			factory.addSingle(Dungeon.MESS);
 			factory.addRandom(Dungeon.BRICK, 3);
-			factory.addRandom(Dungeon.FIRE, 20);
-			factory.addRandom(Dungeon.PIT, 30);
-			factory.addRandom(Dungeon.SLIME, 30);
 			break;
 		case 2:
+			factory = new DungeonFactory(rand, Dungeon.CORNER);
+			factory.addSingle(Dungeon.CREEPER);			
+			factory.addSingle(Dungeon.FIRE);
+			factory.addSingle(Dungeon.PRISON);
+			factory.addSingle(Dungeon.CRYPT);
+			factory.addSingle(Dungeon.PIT);
+			factory.addRandom(Dungeon.BRICK, 3);
+			factory.addRandom(Dungeon.FIRE, 30);
+			break;			
+		case 3:
 			factory = new DungeonFactory(rand, Dungeon.CORNER);
 			factory.addSingle(Dungeon.ENDER);
 			factory.addRandom(Dungeon.BRICK, 3);
@@ -152,16 +159,16 @@ public class Catacomb {
 			factory.addRandom(Dungeon.CRYPT, 20);
 			factory.addRandom(Dungeon.PRISON, 20);
 			factory.addRandom(Dungeon.SPIDER, 20);
+			factory.addRandom(Dungeon.SLIME, 20);
 			factory.addRandom(Dungeon.PIT, 20);
-			factory.addRandom(Dungeon.CREEPER, 30);
-			factory.addRandom(Dungeon.FIRE, 30);
+			factory.addRandom(Dungeon.CREEPER, 20);
 			break;
-		case 3:
+		case 4:
 			factory = new DungeonFactory(rand, Dungeon.CORNER);
 			factory.addRandom(Dungeon.NETHER, 3);
 			factory.addRandom(Dungeon.NETHERFORT, 20);
 			factory.addRandom(Dungeon.SLIME, 30);
-			factory.addRandom(Dungeon.SPIDER, 40);
+			factory.addRandom(Dungeon.SPIDER, 30);
 			factory.addRandom(Dungeon.FIRE, 50);
 			break;
 		default:
@@ -187,9 +194,13 @@ public class Catacomb {
 		}
 	}
 	
-	public static int getRank(int y){
+	public static int getLevel(int y){
 		
 		if (y < 15){
+			return 4;
+		}
+		
+		if (y < 25){
 			return 3;
 		}
 		
