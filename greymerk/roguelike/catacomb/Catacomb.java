@@ -125,8 +125,7 @@ public class Catacomb {
 		
 		switch(rank){
 		case 0:
-			factory = new DungeonFactory(rand, Dungeon.ETHO);
-			factory.addSingle(Dungeon.ENCHANT);
+			factory = new DungeonFactory(rand, Dungeon.CORNER);
 			factory.addSingle(Dungeon.SMITH);
 			factory.addSingle(Dungeon.MUSIC);
 			factory.addSingle(Dungeon.CAKE);
@@ -135,10 +134,14 @@ public class Catacomb {
 			break;
 		case 1:
 			factory = new DungeonFactory(rand, Dungeon.CORNER);
-			if(rand.nextInt(3) == 0) factory.addSingle(Dungeon.ETHO);
+			int choice = rand.nextInt(3);
+			if(choice == 0) factory.addSingle(Dungeon.ETHO);
+			if(choice == 1) factory.addSingle(Dungeon.BTEAM);
 			factory.addSingle(Dungeon.PIT);
 			factory.addSingle(Dungeon.MESS);
 			factory.addSingle(Dungeon.MESS);
+			factory.addSingle(Dungeon.ENCHANT);
+			factory.addSingle(Dungeon.SMITH);
 			factory.addRandom(Dungeon.BRICK, 3);
 			break;
 		case 2:
@@ -165,6 +168,7 @@ public class Catacomb {
 			break;
 		case 4:
 			factory = new DungeonFactory(rand, Dungeon.CORNER);
+			if(rand.nextInt(3) == 0) factory.addSingle(Dungeon.ENIKO);
 			factory.addRandom(Dungeon.NETHER, 3);
 			factory.addRandom(Dungeon.NETHERFORT, 20);
 			factory.addRandom(Dungeon.SLIME, 30);

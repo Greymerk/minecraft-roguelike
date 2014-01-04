@@ -1,6 +1,7 @@
 package greymerk.roguelike.catacomb;
 
 import greymerk.roguelike.catacomb.dungeon.Dungeon;
+import greymerk.roguelike.catacomb.dungeon.IDungeon;
 import greymerk.roguelike.catacomb.dungeon.IDungeonFactory;
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.worldgen.BlockFactoryProvider;
@@ -94,8 +95,9 @@ public class CatacombLevel {
 				continue;
 			}
 
-			rooms.get().generate(world, rand, x, y, z);
-					
+			IDungeon toGenerate = rooms.get();
+			node.setDungeon(toGenerate);
+			toGenerate.generate(world, rand, x, y, z);
 		}
 		
 		// tunnel segment features
@@ -229,6 +231,24 @@ public class CatacombLevel {
 		return dist;
 	}
 	
+	public boolean hasNearbyNode(int x, int z, int min){
+		for (CatacombNode node : nodes){
+			
+			int otherX = node.getX();
+			int otherZ = node.getZ();
+			
+			int xrel = Math.abs(otherX - x);
+			int zrel = Math.abs(otherZ - z);
+			
+			int dist = (int) Math.sqrt((float)(xrel * xrel + zrel * zrel));
+
+			if(dist < min){
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public boolean hasNearbyNode(int x, int z){
 		
 		for (CatacombNode node : nodes){
@@ -242,7 +262,7 @@ public class CatacombLevel {
 			int dist = (int) Math.sqrt((float)(xrel * xrel + zrel * zrel));
 			
 			
-			if(dist < SCATTER){
+			if(dist < node.getSize()){
 				return true;
 			}
 		}

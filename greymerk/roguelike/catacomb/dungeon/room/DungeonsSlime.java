@@ -106,5 +106,9 @@ public class DungeonsSlime implements IDungeon {
 	
 	public boolean isValidDungeonLocation(World world, int originX, int originY, int originZ) {
 		return false;
-	}	
+	}
+	
+	public int getSize(){
+		return 8;
+	}
 }

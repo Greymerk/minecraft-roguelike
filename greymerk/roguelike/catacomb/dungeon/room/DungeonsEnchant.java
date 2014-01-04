@@ -154,4 +154,7 @@ public class DungeonsEnchant implements IDungeon{
 		return false;
 	}	
 	
+	public int getSize(){
+		return 8;
+	}
 }

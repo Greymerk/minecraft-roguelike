@@ -190,4 +190,8 @@ public class DungeonsNetherBrick implements IDungeon {
 	        Spawner.generate(world, rand, spawnX, spawnY, spawnZ);
 		}
 	}
+	
+	public int getSize(){
+		return 6;
+	}
 }

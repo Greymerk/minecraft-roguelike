@@ -127,4 +127,8 @@ public class DungeonsMusic implements IDungeon {
 		return false;
 	}
 
+	public int getSize(){
+		return 7;
+	}
+	
 }

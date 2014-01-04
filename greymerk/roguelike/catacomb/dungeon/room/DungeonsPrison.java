@@ -132,4 +132,8 @@ public class DungeonsPrison implements IDungeon {
 		}
 		
 	}
+	
+	public int getSize(){
+		return 10;
+	}
 }

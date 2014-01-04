@@ -209,4 +209,8 @@ public class DungeonLab implements IDungeon {
 		
 	}
 	
+	public int getSize(){
+		return 9;
+	}
+	
 }

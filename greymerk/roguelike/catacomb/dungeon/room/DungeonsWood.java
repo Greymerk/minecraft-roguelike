@@ -65,5 +65,9 @@ public class DungeonsWood implements IDungeon{
 		
 		return true;
 	}
+	
+	public int getSize(){
+		return 6;
+	}
 
 }

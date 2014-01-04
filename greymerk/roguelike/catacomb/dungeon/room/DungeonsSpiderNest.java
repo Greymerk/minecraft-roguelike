@@ -138,4 +138,8 @@ public class DungeonsSpiderNest implements IDungeon {
 		}
 		WorldGenPrimitive.setBlock(world, x, y, z, 0);
 	}
+	
+	public int getSize(){
+		return 4;
+	}
 }

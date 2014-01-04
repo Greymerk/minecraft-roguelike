@@ -155,4 +155,8 @@ public class DungeonsEnder implements IDungeon {
 	protected void placeMobSpawner() {
 		Spawner.generate(world, rand, originX, originY, originZ, Spawner.ENDERMAN);
 	}
+	
+	public int getSize(){
+		return 7;
+	}
 }

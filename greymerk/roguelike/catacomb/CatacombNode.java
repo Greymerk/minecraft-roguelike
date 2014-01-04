@@ -1,5 +1,6 @@
 package greymerk.roguelike.catacomb;
 
+import greymerk.roguelike.catacomb.dungeon.IDungeon;
 import greymerk.roguelike.worldgen.Cardinal;
 
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ public class CatacombNode {
 	private int y;
 	private int z;
 	private boolean done;
+	private IDungeon toGenerate;
 	
 	
 	private Cardinal direction;
@@ -115,6 +117,20 @@ public class CatacombNode {
 		for (CatacombTunneler tunneler : tunnelers){
 			tunneler.addSegments(world);
 		}
+	}
+	
+	public void setDungeon(IDungeon toGenerate){
+		this.toGenerate = toGenerate;
+	}
+	
+	public int getSize(){
+		
+		if(toGenerate == null){
+			return 6;
+		}
+		
+		return toGenerate.getSize();
+		
 	}
 	
 }

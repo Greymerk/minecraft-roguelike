@@ -29,7 +29,7 @@ public enum RogueConfig {
 		switch(option){
 		case DONATURALSPAWN: return new Tuple(getName(option), true);
 		case LEVELRANGE: return new Tuple(getName(option), 80);
-		case LEVELMAXROOMS: return new Tuple(getName(option), 60);
+		case LEVELMAXROOMS: return new Tuple(getName(option), 40);
 		case LEVELSCATTER: return new Tuple(getName(option), 12);
 		case SPAWNFREQUENCY: return new Tuple(getName(option), 10);
 		default: return null;

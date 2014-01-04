@@ -83,5 +83,9 @@ public class DungeonCorner implements IDungeon {
 		
 		return true;
 	}
+	
+	public int getSize(){
+		return 2;
+	}
 
 }

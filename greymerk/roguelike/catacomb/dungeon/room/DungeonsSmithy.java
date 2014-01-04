@@ -149,4 +149,8 @@ public class DungeonsSmithy implements IDungeon{
 		return false;
 	}
 	
+	public int getSize(){
+		return 5;
+	}
+	
 }

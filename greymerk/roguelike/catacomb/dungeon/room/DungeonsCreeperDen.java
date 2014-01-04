@@ -194,4 +194,8 @@ public class DungeonsCreeperDen implements IDungeon {
 	protected void placeMobSpawner() {
 		Spawner.generate(world, rand, originX, originY, originZ, Spawner.CREEPER);
 	}
+	
+	public int getSize(){
+		return 6;
+	}
 }

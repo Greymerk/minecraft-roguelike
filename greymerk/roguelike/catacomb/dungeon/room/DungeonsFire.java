@@ -126,5 +126,9 @@ public class DungeonsFire implements IDungeon{
 		
 		return false;
 	}
+	
+	public int getSize(){
+		return 10;
+	}
 
 }

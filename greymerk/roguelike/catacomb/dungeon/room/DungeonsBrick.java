@@ -43,10 +43,10 @@ public class DungeonsBrick implements IDungeon {
 		
 		int stair;
 		switch(Catacomb.getLevel(originY)){
-		case 2:
+		case 3:
 			stair = Block.stairsCobblestone.blockID;
 			break;
-		case 3:
+		case 4:
 			stair = Block.stairsNetherBrick.blockID;
 			break;
 		default:
@@ -146,5 +146,9 @@ public class DungeonsBrick implements IDungeon {
 	
 	public boolean isValidDungeonLocation(World world, int originX, int originY, int originZ) {
 		return false;
+	}
+	
+	public int getSize(){
+		return 4;
 	}
 }

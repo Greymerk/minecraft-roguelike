@@ -52,7 +52,7 @@ public class CatacombTunneler {
 			return;
 		}
 		
-		if(level.hasNearbyNode(originX, originZ)){
+		if(level.hasNearbyNode(originX, originZ, CatacombLevel.SCATTER)){
 			advance();
 		} else {
 			if(rand.nextInt(extend) == 0){
@@ -146,7 +146,7 @@ public class CatacombTunneler {
 			
 			if(seg == null) continue;
 			
-			seg.generate(world, rand, direction, x, originY, z);
+			seg.generate(world, rand, level, direction, x, originY, z);
 		}
 	}
 }

@@ -1,6 +1,7 @@
 package greymerk.roguelike.catacomb.segment.part;
 
 import greymerk.roguelike.catacomb.Catacomb;
+import greymerk.roguelike.catacomb.CatacombLevel;
 import greymerk.roguelike.catacomb.segment.ISegment;
 import greymerk.roguelike.worldgen.Cardinal;
 
@@ -22,7 +23,11 @@ public abstract class SegmentBase implements ISegment {
 	protected Cardinal[] orth;
 	
 	@Override
-	public void generate(World world, Random rand, Cardinal dir, int x, int y, int z) {
+	public void generate(World world, Random rand, CatacombLevel level, Cardinal dir, int x, int y, int z) {
+		
+		if(level.hasNearbyNode(x, z)){
+			return;
+		}
 		
 		this.world = world;
 		this.rand = rand;

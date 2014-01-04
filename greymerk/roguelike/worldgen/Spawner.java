@@ -12,6 +12,7 @@ import net.minecraft.src.EntityZombie;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.MobSpawnerBaseLogic;
 import net.minecraft.src.NBTTagCompound;
+import net.minecraft.src.NBTTagList;
 import net.minecraft.src.TileEntityMobSpawner;
 import net.minecraft.src.WeightedRandomMinecart;
 import net.minecraft.src.World;
@@ -42,7 +43,7 @@ public enum Spawner {
         	MobSpawnerBaseLogic logic = spawner.getSpawnerLogic();
         	logic.setMobID(name);
         	
-        	//setRoguelike(logic);
+        	setRoguelike(logic);
         }
         else
         {
@@ -96,8 +97,17 @@ public enum Spawner {
     	
     	NBTTagCompound properties = new NBTTagCompound();
     	nbt.setCompoundTag("Properties", properties);
+    	    	
+    	NBTTagList activeEffects = new NBTTagList();
+    	properties.setTag("ActiveEffects", activeEffects);
     	
-    	properties.setString("CustomName", "roguelike");
+    	NBTTagCompound buff = new NBTTagCompound();
+    	activeEffects.appendTag(buff);
+    	
+    	buff.setByte("Id", (byte) 4);
+    	buff.setByte("Amplifier", (byte) 1);
+    	buff.setInteger("Duration", 10);
+    	buff.setByte("Ambient", (byte) 0);
     	
     	WeightedRandomMinecart cart = new WeightedRandomMinecart(logic, nbt);
     	logic.setRandomMinecart(cart);

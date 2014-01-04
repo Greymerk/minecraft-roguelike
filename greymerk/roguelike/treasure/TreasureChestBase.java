@@ -21,12 +21,13 @@ public abstract class TreasureChestBase implements ITreasureChest{
 	protected int posX;
 	protected int posY;
 	protected int posZ;
-
+	protected TileEntityChest chest;
+	
 	public TreasureChestBase(){
 	}
 		
 
-	public boolean generate(World world, Random rand, int posX, int posY, int posZ, boolean trapped) {
+	public ITreasureChest generate(World world, Random rand, int posX, int posY, int posZ, boolean trapped) {
 		this.world = world;
 		this.rand = rand;
 		this.posX = posX;
@@ -37,10 +38,8 @@ public abstract class TreasureChestBase implements ITreasureChest{
 		
 		
 		if(!WorldGenPrimitive.setBlock(world, posX, posY, posZ, type)){
-			return false;
+			return null;
 		}
-	
-		TileEntityChest chest;
 		
 		chest = (TileEntityChest) world.getBlockTileEntity(posX, posY, posZ);
 		
@@ -54,18 +53,33 @@ public abstract class TreasureChestBase implements ITreasureChest{
 			fillChest(chest);
 			
 		} catch(NullPointerException e){
-			return false;
+			return null;
 		}
 		
-
-		
-
-		return true;
+		return this;
 	}
 	
 	@Override
-	public boolean generate(World world, Random rand, int posX, int posY, int posZ) {
+	public ITreasureChest generate(World world, Random rand, int posX, int posY, int posZ) {
 		return generate(world, rand, posX, posY, posZ, false);
+	}
+	
+	public boolean setInventorySlot(ItemStack item, int slot){
+		try{
+			chest.setInventorySlotContents(slot, item);
+			return true;
+		} catch(NullPointerException e){
+			return false;
+		}
+	}
+	
+	public int getInventorySize(){
+		
+		if(chest == null){
+			return 0;
+		}
+		
+		return chest.getSizeInventory();
 	}
 	
 	protected abstract void fillChest(TileEntityChest chest);

@@ -168,5 +168,9 @@ public class DungeonsBase implements IDungeon {
 	protected void placeMobSpawner() {
 		Spawner.generate(world, rand, originX, originY, originZ);
 	}
+	
+	public int getSize(){
+		return 6;
+	}
 
 }

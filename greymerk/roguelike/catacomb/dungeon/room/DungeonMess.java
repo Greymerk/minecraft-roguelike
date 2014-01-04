@@ -191,4 +191,8 @@ public class DungeonMess implements IDungeon {
 		}
 		
 	}
+	
+	public int getSize(){
+		return 8;
+	}
 }

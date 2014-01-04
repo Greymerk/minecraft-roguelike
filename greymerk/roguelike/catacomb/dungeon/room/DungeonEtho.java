@@ -5,6 +5,9 @@ import java.util.Random;
 import net.minecraft.src.Block;
 import net.minecraft.src.World;
 import greymerk.roguelike.catacomb.dungeon.IDungeon;
+import greymerk.roguelike.treasure.ITreasureChest;
+import greymerk.roguelike.treasure.TreasureChestEmpty;
+import greymerk.roguelike.treasure.loot.ItemNovelty;
 import greymerk.roguelike.worldgen.BlockRandomizer;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.IBlockFactory;
@@ -204,8 +207,15 @@ public class DungeonEtho implements IDungeon {
 		WorldGenPrimitive.setBlock(world, x + 5, y - 2, z + 2, Block.glowStone.blockID);
 		WorldGenPrimitive.fillRectSolid(world, x + 5, y - 1, z + 2, x + 5, y, z + 2, jungleLeaf, true, true);
 		
+		ITreasureChest chest = new TreasureChestEmpty();
+		chest.generate(world, rand, x - 4, y - 2, z - 4);
+		chest.setInventorySlot(ItemNovelty.getItem(ItemNovelty.ETHO), chest.getInventorySize() / 2);
 		
 		return true;
+	}
+	
+	public int getSize(){
+		return 8;
 	}
 
 }

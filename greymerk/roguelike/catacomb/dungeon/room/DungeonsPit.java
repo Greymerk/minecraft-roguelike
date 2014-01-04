@@ -284,4 +284,8 @@ public class DungeonsPit implements IDungeon {
 			break;
 		}
 	}
+	
+	public int getSize(){
+		return 4;
+	}
 }

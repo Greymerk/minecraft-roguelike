@@ -150,8 +150,8 @@ public enum ItemNovelty {
 			item = new ItemStack(Item.shovelDiamond);
 			Loot.setItemName(item, "BdoubleO's Dig Job", null);
 			Loot.setItemLore(item, "Recovered from hell's blazes", TextFormat.DARKGREEN);
-			item.addEnchantment(Enchantment.efficiency, 6);
-			item.addEnchantment(Enchantment.unbreaking, 100);
+			item.addEnchantment(Enchantment.efficiency, 5);
+			item.addEnchantment(Enchantment.unbreaking, 3);
 			return item;
 		case GUUDE:
 			item = new ItemStack(Item.record13);
