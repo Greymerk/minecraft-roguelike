@@ -1,6 +1,7 @@
 package greymerk.roguelike.catacomb.dungeon.room;
 
 import greymerk.roguelike.catacomb.dungeon.IDungeon;
+import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.treasure.TreasureChest;
 import greymerk.roguelike.worldgen.BlockFactoryProvider;
 import greymerk.roguelike.worldgen.Cardinal;
@@ -97,11 +98,14 @@ public class DungeonLab implements IDungeon {
 		WorldGenPrimitive.fillRectSolid(world, x + 1, y, z + 5, x + 4, y, z + 5, Block.stairsWoodSpruce.blockID, WorldGenPrimitive.blockOrientation(Cardinal.NORTH, true), 2, true, true);
 		WorldGenPrimitive.fillRectSolid(world, x, y, z + 1, x, y, z + 4, Block.stairsWoodSpruce.blockID, WorldGenPrimitive.blockOrientation(Cardinal.EAST, true), 2, true, true);
 		
-		WorldGenPrimitive.setBlock(world, x, y + 1, z + 1, Block.brewingStand.blockID);
-		TreasureChest.generate(world, rand, x, y + 1, z + 4, TreasureChest.POTIONS);
+		if(RogueConfig.getBoolean(RogueConfig.GENEROUS)){
+			WorldGenPrimitive.setBlock(world, x, y + 1, z + 1, Block.brewingStand.blockID);
+			WorldGenPrimitive.setBlock(world, x + 1, y + 1, z + 5, Block.brewingStand.blockID);
+		}
 		
-		WorldGenPrimitive.setBlock(world, x + 1, y + 1, z + 5, Block.brewingStand.blockID);
+		TreasureChest.generate(world, rand, x, y + 1, z + 4, TreasureChest.POTIONS);
 		TreasureChest.generate(world, rand, x + 4, y + 1, z + 5, TreasureChest.POTIONS);
+		
 		
 	}
 	

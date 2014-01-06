@@ -1,7 +1,12 @@
 package greymerk.roguelike.catacomb.dungeon.room;
 
+import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.catacomb.dungeon.IDungeon;
 import greymerk.roguelike.treasure.TreasureChest;
+import greymerk.roguelike.worldgen.BlockFactoryProvider;
+import greymerk.roguelike.worldgen.BlockRandomizer;
+import greymerk.roguelike.worldgen.IBlockFactory;
+import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.Spawner;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
 
@@ -13,182 +18,44 @@ import net.minecraft.src.World;
 
 public class DungeonsNetherBrick implements IDungeon {
 	
-	World world;
-	Random rand;
-	int originX;
-	int originY;
-	int originZ;
-	byte dungeonHeight;
-	int dungeonLength;
-	int dungeonWidth;
 
 	public DungeonsNetherBrick() {
 	}
 
-	public boolean generate(World inWorld, Random inRandom, int inOriginX, int inOriginY, int inOriginZ) {
-		world = inWorld;
-		rand = inRandom;
-		originX = inOriginX;
-		originY = inOriginY;
-		originZ = inOriginZ;
+	public boolean generate(World world, Random rand, int x, int y, int z) {
 		
-		dungeonHeight = 3;
-		dungeonLength = 2 + rand.nextInt(3);
-		dungeonWidth = 2 + rand.nextInt(3);
+		int height = 3;
+		int length = 2 + rand.nextInt(3);
+		int width = 2 + rand.nextInt(3);
 		
-		buildWalls();
-		buildFloor();
-		buildRoof();
-		TreasureChest.createChests(world, rand, 1, WorldGenPrimitive.getRectSolid(
-				originX - dungeonLength, originY, originZ - dungeonWidth,
-				originX + dungeonLength, originY, originZ + dungeonWidth));
+		IBlockFactory walls = BlockFactoryProvider.getRandomizer(Catacomb.getLevel(y), rand);
+		WorldGenPrimitive.fillRectHollow(world, x - length - 1, y - 1, z - width - 1, x + length + 1, y + height + 1, z + width + 1, walls, false, true);
+		
+		BlockRandomizer floor = new BlockRandomizer(rand, new MetaBlock(Block.netherBrick.blockID));
+		floor.addBlock(new MetaBlock(Block.netherrack.blockID), 3);
+		floor.addBlock(new MetaBlock(Block.oreNetherQuartz.blockID), 5);
+		floor.addBlock(new MetaBlock(Block.blockRedstone.blockID), 10);
+		floor.addBlock(new MetaBlock(Block.blockGold.blockID), 50);
+		floor.addBlock(new MetaBlock(Block.blockDiamond.blockID), 100);
+		WorldGenPrimitive.fillRectSolid(world, x - length - 1, y - 1, z - width - 1, x + length + 1, y - 1, z + width + 1, floor);
 
-		placeMobSpawner();
+		// lava crap under the floor
+		BlockRandomizer subFloor = new BlockRandomizer(rand, new MetaBlock(Block.lavaStill.blockID));
+		subFloor.addBlock(new MetaBlock(Block.obsidian.blockID), 3);
+		WorldGenPrimitive.fillRectSolid(world, x - length, y - 5, z - width, x + length, y - 2, z + width, subFloor);
+		
+		BlockRandomizer ceiling = new BlockRandomizer(rand, new MetaBlock(Block.netherFence.blockID));
+		ceiling.addBlock(new MetaBlock(0), 2);
+		WorldGenPrimitive.fillRectSolid(world, x - length, y + height, z - width, x + length, y + height, z + width, ceiling);
+		
+		TreasureChest.createChests(world, rand, 1, WorldGenPrimitive.getRectSolid(x - length, y, z - width, x + length, y, z + width));
+
+		Spawner.generate(world, rand, x - length - 1, y + rand.nextInt(2), z - width - 1);
+		Spawner.generate(world, rand, x - length - 1, y + rand.nextInt(2), z + width + 1);
+		Spawner.generate(world, rand, x + length + 1, y + rand.nextInt(2), z - width - 1);
+		Spawner.generate(world, rand, x + length + 1, y + rand.nextInt(2), z + width + 1);
 
 		return true;
-	}
-	
-	public boolean isValidDungeonLocation(World world, int originX, int originY, int originZ) {
-
-		int dungeonClearance = 0;
-		for (int x = originX - dungeonLength - 1; x <= originX + dungeonLength + 1; x++) {
-			for (int y = originY - 1; y <= originY + dungeonHeight + 1; y++) {
-				for (int z = originZ - dungeonWidth - 1; z <= originZ + dungeonWidth + 1; z++) {
-					Material material = world.getBlockMaterial(x, y, z);
-
-					if (y == originY - 1 && !material.isSolid()) {
-						return false;
-					}
-
-					if (y == originY + dungeonHeight + 1 && !material.isSolid()) {
-						return false;
-					}
-
-					if ((      x == originX - dungeonLength - 1
-							|| x == originX + dungeonLength + 1
-							|| z == originZ - dungeonWidth - 1
-							|| z == originZ + dungeonWidth + 1)
-							&& y == originY
-							&& world.isAirBlock(x, y, z)
-							&& world.isAirBlock(x, y + 1, z)){
-						dungeonClearance++;
-					}
-				}
-			}
-		}
-
-		if (dungeonClearance < 1 || dungeonClearance > 5) {
-			return false;
-		}
-
-		return true;
-	}
-
-	protected void buildWalls() {
-		for (int x = originX - dungeonLength - 1; x <= originX + dungeonLength + 1; x++) {
-			for (int y = originY + dungeonHeight; y >= originY - 1; y--) {
-				for (int z = originZ - dungeonWidth - 1; z <= originZ + dungeonWidth + 1; z++) {
-
-					// This prevents overlapping dungeons from overwriting
-					// spawners
-					if (world.getBlockId(x, y, z) == Block.mobSpawner.blockID) {
-						continue;
-					}
-
-					// this prevents overlapping dungeons from breaking chests
-					if (world.getBlockId(x, y, z) == Block.chest.blockID) {
-						continue;
-					}
-
-					if (x == originX - dungeonLength - 1 || z == originZ - dungeonWidth - 1 || x == originX + dungeonLength + 1 || z == originZ + dungeonWidth + 1) {
-
-						if (y >= 0 && !world.getBlockMaterial(x, y - 1, z).isSolid()) {
-							WorldGenPrimitive.setBlock(world, x, y, z, 0);
-							continue;
-						}
-						if (!world.getBlockMaterial(x, y, z)
-								.isSolid()) {
-							continue;
-						}
-						
-                    	if(y > originY && y < originY + 4){
-	                    	
-	                    	if((z == originZ - dungeonWidth - 1 || z == originZ + dungeonWidth + 1) && x % 3 == 0){
-	                    		WorldGenPrimitive.setBlock(world, x, y, z, Block.netherFence.blockID);
-	                    		continue;
-	                    	}
-	                    	
-	                    	if((x == originX - dungeonLength - 1 || x == originX + dungeonLength + 1) && z % 3 == 0){
-	                    		WorldGenPrimitive.setBlock(world, x, y, z, Block.netherFence.blockID);
-	                    		continue;
-	                    	}
-	                    }
-						
-
-                    	WorldGenPrimitive.setBlock(world, x, y, z, Block.netherBrick.blockID);
-						
-					} else {
-						WorldGenPrimitive.setBlock(world, x, y, z, 0);
-					}
-				}
-			}
-		}
-	}
-	
-	protected void buildFloor(){
-		
-		for (int blockX = originX - dungeonLength - 1; blockX <= originX + dungeonLength + 1; blockX++){
-			for (int blockZ = originZ - dungeonWidth - 1; blockZ <= originZ + dungeonWidth + 1; blockZ++){
-
-				if (rand.nextInt(10) == 0) {
-					WorldGenPrimitive.setBlock(world, blockX, originY - 1, blockZ, Block.oreNetherQuartz.blockID);
-					continue;
-				}
-				
-				if (rand.nextInt(10) == 0) {
-					WorldGenPrimitive.setBlock(world, blockX, originY - 1, blockZ, Block.blockRedstone.blockID);
-					continue;
-				}
-				
-				if (rand.nextInt(4) == 0) {
-					WorldGenPrimitive.setBlock(world, blockX, originY - 1, blockZ, Block.netherrack.blockID);
-					continue;
-				}
-
-				WorldGenPrimitive.setBlock(world, blockX, originY - 1, blockZ, Block.netherBrick.blockID);
-			}
-		}
-	}
-	
-	protected void buildRoof(){
-		for (int blockX = originX - dungeonLength - 1; blockX <= originX + dungeonLength + 1; blockX++){
-			for (int blockZ = originZ - dungeonWidth - 1; blockZ <= originZ + dungeonWidth + 1; blockZ++){
-				WorldGenPrimitive.setBlock(world, blockX, originY + dungeonHeight + 1, blockZ, Block.netherBrick.blockID);
-			}
-		}
-		
-		for (int blockX = originX - dungeonLength; blockX <= originX + dungeonLength; blockX++){
-			for (int blockZ = originZ - dungeonWidth; blockZ <= originZ + dungeonWidth; blockZ++){
-				if(rand.nextBoolean()){
-					WorldGenPrimitive.setBlock(world, blockX, originY + dungeonHeight, blockZ, Block.netherFence.blockID);
-				}
-			}
-		}
-	}
-	
-	protected void placeMobSpawner(){
-	
-		int xOffset[] = {4, -4, 4, -4};
-		int zOffset[] = {4, 4, -4, -4};
-		
-		for(int i = 0; i < 4; i++){
-			
-			int spawnX = originX + xOffset[i];
-			int spawnY = originY + rand.nextInt(3);
-			int spawnZ = originZ + zOffset[i];
-			
-	        Spawner.generate(world, rand, spawnX, spawnY, spawnZ);
-		}
 	}
 	
 	public int getSize(){

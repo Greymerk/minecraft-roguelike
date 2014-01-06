@@ -1,6 +1,7 @@
 package greymerk.roguelike.catacomb.dungeon.room;
 
 import greymerk.roguelike.catacomb.dungeon.IDungeon;
+import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.worldgen.Spawner;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
 
@@ -47,8 +48,7 @@ public class DungeonsEnder implements IDungeon {
 		buildWalls();
 		buildFloor();
 
-		
-		createChests(2);
+		if(RogueConfig.getBoolean(RogueConfig.GENEROUS)) createChests(2);
 		placeMobSpawner();
 
 		return true;

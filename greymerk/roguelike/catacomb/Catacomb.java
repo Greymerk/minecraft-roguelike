@@ -140,12 +140,13 @@ public class Catacomb {
 			factory.addSingle(Dungeon.PIT);
 			factory.addSingle(Dungeon.MESS);
 			factory.addSingle(Dungeon.MESS);
-			factory.addSingle(Dungeon.ENCHANT);
+			if(RogueConfig.getBoolean(RogueConfig.GENEROUS))factory.addSingle(Dungeon.ENCHANT);
 			factory.addSingle(Dungeon.SMITH);
 			factory.addRandom(Dungeon.BRICK, 3);
 			break;
 		case 2:
 			factory = new DungeonFactory(rand, Dungeon.CORNER);
+			factory.addSingle(Dungeon.OSSUARY);
 			factory.addSingle(Dungeon.CREEPER);			
 			factory.addSingle(Dungeon.FIRE);
 			factory.addSingle(Dungeon.PRISON);
@@ -156,6 +157,8 @@ public class Catacomb {
 			break;			
 		case 3:
 			factory = new DungeonFactory(rand, Dungeon.CORNER);
+			if(rand.nextInt(3) == 0) factory.addSingle(Dungeon.BAJ);
+			factory.addSingle(Dungeon.OSSUARY);
 			factory.addSingle(Dungeon.ENDER);
 			factory.addRandom(Dungeon.BRICK, 3);
 			factory.addRandom(Dungeon.FIRE, 20);
@@ -178,8 +181,7 @@ public class Catacomb {
 		default:
 			factory = new DungeonFactory(rand, Dungeon.CORNER);
 		}
-		
-		
+
 		return factory;
 	}
 	

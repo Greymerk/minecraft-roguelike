@@ -30,14 +30,6 @@ public class ItemArmour {
 			case FEET: return ItemSpecialty.getRandomItem(ItemSpecialty.FEET, rand, level); 
 			}
 		}
-		
-		if(enchantLevel > 0 && rand.nextInt(100) == 0){
-			if(slot == Slot.HEAD && level > 1) return ItemNovelty.getItem(ItemNovelty.NEBRIS);
-			if(slot == Slot.FEET && level < 2) return ItemNovelty.getItem(ItemNovelty.KURT);
-			if(slot == Slot.CHEST && level == 1) return ItemNovelty.getItem(ItemNovelty.MILLBEE);
-			if(slot == Slot.CHEST && level == 2) return ItemNovelty.getItem(ItemNovelty.ANDERZEL);
-			if(slot == Slot.LEGS && level == 0) return ItemNovelty.getItem(ItemNovelty.ZISTEAUPANTS);
-		}
 
 		ItemStack item = pickArmour(rand, slot, Quality.getQuality(rand, level));
 		

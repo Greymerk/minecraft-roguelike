@@ -18,14 +18,6 @@ public class ItemWeapon {
 	
 	public static ItemStack getBow(Random rand, int rank, boolean enchant){
 		
-		if(rank == 3 && rand.nextInt(100) == 0){
-			return ItemNovelty.getItem(ItemNovelty.ENIKOBOW);
-		}
-		
-		if(rank > 1 && rand.nextInt(100) == 0){
-			return ItemNovelty.getItem(ItemNovelty.PAUSE);
-		}
-		
 		if(rand.nextInt(20 + (rank * 10)) == 0){
 			return ItemSpecialty.getRandomItem(ItemSpecialty.BOW, rand, rank);
 		}

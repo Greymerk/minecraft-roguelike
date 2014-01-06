@@ -5,6 +5,9 @@ import java.util.Random;
 import net.minecraft.src.Block;
 import net.minecraft.src.World;
 import greymerk.roguelike.catacomb.dungeon.IDungeon;
+import greymerk.roguelike.treasure.ITreasureChest;
+import greymerk.roguelike.treasure.TreasureChestEmpty;
+import greymerk.roguelike.treasure.loot.ItemNovelty;
 import greymerk.roguelike.worldgen.BlockFactoryCheckers;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.MetaBlock;
@@ -56,6 +59,12 @@ public class DungeonEniko implements IDungeon {
 		WorldGenPrimitive.fillRectSolid(world, x - 4, y, z + 5, x - 3, y, z + 5, shelf, true, true);
 		WorldGenPrimitive.fillRectSolid(world, x + 3, y + 1, z + 6, x + 4, y + 3, z + 6, Block.coalBlock.blockID);
 		WorldGenPrimitive.fillRectSolid(world, x + 3, y, z + 5, x + 4, y, z + 5, shelf, true, true);
+		ITreasureChest eniChest = new TreasureChestEmpty().generate(world, rand, x + 3, y + 1, z + 5);
+		if(rand.nextBoolean()){
+			eniChest.setInventorySlot(ItemNovelty.getItem(ItemNovelty.ENIKOBOW), eniChest.getInventorySize() / 2);
+		} else {
+			eniChest.setInventorySlot(ItemNovelty.getItem(ItemNovelty.ENIKOSWORD), eniChest.getInventorySize() / 2);
+		}
 		
 		// floor
 		WorldGenPrimitive.fillRectSolid(world, x - 5, y - 1, z - 5, x + 5, y - 1, z + 5, Block.stoneBrick.blockID);

@@ -19,18 +19,6 @@ public class ItemTool {
 			
 		}
 		
-		if(enchant && rank > 0 && rand.nextInt(100) == 0){
-			ItemNovelty[] items = {
-					ItemNovelty.ETHO,
-					ItemNovelty.GREYMERK,
-					ItemNovelty.BAJ,
-					ItemNovelty.AMLP,
-					ItemNovelty.BDOUBLEO
-			};
-			
-			return ItemNovelty.getItem(items[rand.nextInt(items.length)]);
-		}
-		
 		ItemStack tool = pickTool(rand, rank);
 		
 		if(enchant && rand.nextInt(6 - rank) == 0){

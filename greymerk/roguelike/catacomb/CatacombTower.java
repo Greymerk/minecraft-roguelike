@@ -1,5 +1,6 @@
 package greymerk.roguelike.catacomb;
 
+import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.treasure.TreasureChestStarter;
 import greymerk.roguelike.worldgen.BlockRandomizer;
 import greymerk.roguelike.worldgen.MetaBlock;
@@ -121,10 +122,12 @@ public class CatacombTower {
 		WorldGenPrimitive.fillRectSolid(world, originX + 1, floor1, originZ + 4, originX + 3, floor2, originZ + 4, fillBlocks);
 		
 		// floor 1 glowstones
-		WorldGenPrimitive.setBlock(world, originX - 3, originY + towerY, originZ - 3, Block.glowStone.blockID);
-		WorldGenPrimitive.setBlock(world, originX - 3, originY + towerY, originZ + 3, Block.glowStone.blockID);
-		WorldGenPrimitive.setBlock(world, originX + 3, originY + towerY, originZ - 3, Block.glowStone.blockID);
-		WorldGenPrimitive.setBlock(world, originX + 3, originY + towerY, originZ + 3, Block.glowStone.blockID);
+		if(RogueConfig.getBoolean(RogueConfig.GENEROUS)){
+			WorldGenPrimitive.setBlock(world, originX - 3, originY + towerY, originZ - 3, Block.glowStone.blockID);
+			WorldGenPrimitive.setBlock(world, originX - 3, originY + towerY, originZ + 3, Block.glowStone.blockID);
+			WorldGenPrimitive.setBlock(world, originX + 3, originY + towerY, originZ - 3, Block.glowStone.blockID);
+			WorldGenPrimitive.setBlock(world, originX + 3, originY + towerY, originZ + 3, Block.glowStone.blockID);
+		}
 		
 		// floor 1 doors
 		for (int y = floor1 + 1; y <= floor1 + 2; y++){
@@ -141,11 +144,13 @@ public class CatacombTower {
 		WorldGenPrimitive.fillRectSolid(world, originX - 3, floor2, originZ - 3, originX + 3, floor2, originZ + 3, Block.planks.blockID, 1, 2, true, true);
 		
 		// floor2 glowstones
-		WorldGenPrimitive.setBlock(world, originX - 3, floor2, originZ - 3, Block.glowStone.blockID);
-		WorldGenPrimitive.setBlock(world, originX - 3, floor2, originZ + 3, Block.glowStone.blockID);
-		WorldGenPrimitive.setBlock(world, originX + 3, floor2, originZ - 3, Block.glowStone.blockID);
-		WorldGenPrimitive.setBlock(world, originX + 3, floor2, originZ + 3, Block.glowStone.blockID);
-				
+		if(RogueConfig.getBoolean(RogueConfig.GENEROUS)){
+			WorldGenPrimitive.setBlock(world, originX - 3, floor2, originZ - 3, Block.glowStone.blockID);
+			WorldGenPrimitive.setBlock(world, originX - 3, floor2, originZ + 3, Block.glowStone.blockID);
+			WorldGenPrimitive.setBlock(world, originX + 3, floor2, originZ - 3, Block.glowStone.blockID);
+			WorldGenPrimitive.setBlock(world, originX + 3, floor2, originZ + 3, Block.glowStone.blockID);
+		}
+		
 		// outer walls
 		WorldGenPrimitive.fillRectSolid(world, originX - 4, floor2, originZ - 3, originX - 4, roof, originZ + 3, fillBlocks);
 		WorldGenPrimitive.fillRectSolid(world, originX + 4, floor2, originZ - 3, originX + 4, roof, originZ + 3, fillBlocks);
@@ -180,20 +185,21 @@ public class CatacombTower {
 		WorldGenPrimitive.setBlock(world, originX + 2, floor2 + 2, originZ + 4, Block.fenceIron.blockID);
 
 		// furniture
-		WorldGenPrimitive.setBlock(world, originX + 1, floor2 + 1, originZ - 3, Block.enderChest.blockID);
-		if(WorldGenPrimitive.setBlock(world, originX + 2, floor2 + 1, originZ - 3, Block.furnaceIdle.blockID)){
-			TileEntityFurnace furnace = (TileEntityFurnace)world.getBlockTileEntity(originX + 2, floor2 + 1, originZ - 3);
-			ItemStack coal = new ItemStack(Item.coal, 5 + rand.nextInt(10));
-			furnace.setInventorySlotContents(1, coal);
+		if(RogueConfig.getBoolean(RogueConfig.GENEROUS)){
+			WorldGenPrimitive.setBlock(world, originX + 1, floor2 + 1, originZ - 3, Block.enderChest.blockID);
+			if(WorldGenPrimitive.setBlock(world, originX + 2, floor2 + 1, originZ - 3, Block.furnaceIdle.blockID)){
+				TileEntityFurnace furnace = (TileEntityFurnace)world.getBlockTileEntity(originX + 2, floor2 + 1, originZ - 3);
+				ItemStack coal = new ItemStack(Item.coal, 5 + rand.nextInt(10));
+				furnace.setInventorySlotContents(1, coal);
+			}
+	
+			WorldGenPrimitive.setBlock(world, originX - 1, floor2 + 1, originZ - 3, Block.workbench.blockID);
+			WorldGenPrimitive.setBlock(world, originX + 3, floor2 + 1, originZ + 1, Block.bed.blockID, 0, 3, true, true);
+			WorldGenPrimitive.setBlock(world, originX + 3, floor2 + 1, originZ + 2, Block.bed.blockID, 0 + 8, 3, true, true);
+			
+			new TreasureChestStarter().generate(world, rand, originX - 3, floor2 + 1, originZ + 2);
+			new TreasureChestStarter().generate(world, rand, originX - 3, floor2 + 1, originZ - 2);
 		}
-
-		WorldGenPrimitive.setBlock(world, originX - 1, floor2 + 1, originZ - 3, Block.workbench.blockID);
-		WorldGenPrimitive.setBlock(world, originX + 3, floor2 + 1, originZ + 1, Block.bed.blockID, 0, 3, true, true);
-		WorldGenPrimitive.setBlock(world, originX + 3, floor2 + 1, originZ + 2, Block.bed.blockID, 0 + 8, 3, true, true);
-		
-		new TreasureChestStarter().generate(world, rand, originX - 3, floor2 + 1, originZ + 2);
-		new TreasureChestStarter().generate(world, rand, originX - 3, floor2 + 1, originZ - 2);
-		
 		
 		// ROOF
 		WorldGenPrimitive.fillRectSolid(world, originX - 4, roof, originZ - 4, originX + 4, roof, originZ + 4, fillBlocks);

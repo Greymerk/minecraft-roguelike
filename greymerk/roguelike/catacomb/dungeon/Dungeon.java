@@ -2,11 +2,13 @@ package greymerk.roguelike.catacomb.dungeon;
 
 import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.catacomb.dungeon.room.DungeonBTeam;
+import greymerk.roguelike.catacomb.dungeon.room.DungeonBaj;
 import greymerk.roguelike.catacomb.dungeon.room.DungeonCorner;
 import greymerk.roguelike.catacomb.dungeon.room.DungeonEniko;
 import greymerk.roguelike.catacomb.dungeon.room.DungeonEtho;
 import greymerk.roguelike.catacomb.dungeon.room.DungeonLab;
 import greymerk.roguelike.catacomb.dungeon.room.DungeonMess;
+import greymerk.roguelike.catacomb.dungeon.room.DungeonOssuary;
 import greymerk.roguelike.catacomb.dungeon.room.DungeonsBrick;
 import greymerk.roguelike.catacomb.dungeon.room.DungeonsCreeperDen;
 import greymerk.roguelike.catacomb.dungeon.room.DungeonsCrypt;
@@ -31,7 +33,7 @@ import net.minecraft.src.World;
 public enum Dungeon {
 	
 	BASE, BRICK, CREEPER, CRYPT, ENCHANT, ENDER, FIRE, MUSIC, NETHER, NETHERFORT, PIT, PRISON,
-	SLIME, SMITH, SPIDER, CAKE, LAB, CORNER, MESS, ETHO, ENIKO, BTEAM;
+	SLIME, SMITH, SPIDER, CAKE, LAB, CORNER, MESS, ETHO, ENIKO, BTEAM, BAJ, OSSUARY;
 	
 	public static IDungeon getInstance(Dungeon choice){
 		
@@ -58,6 +60,8 @@ public enum Dungeon {
 		case ETHO: return new DungeonEtho();
 		case ENIKO: return new DungeonEniko();
 		case BTEAM: return new DungeonBTeam();
+		case BAJ: return new DungeonBaj();
+		case OSSUARY: return new DungeonOssuary();
 		default: return new DungeonsBase();
 		}
 		
