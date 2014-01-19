@@ -104,9 +104,8 @@ public class CatacombTunneler {
 			return;
 		}
 		
-		IBlockFactory fillBlocks = BlockFactoryProvider.getRandomizer(Catacomb.getLevel(originY), rand);
-		
-		int bridgeBlock = Catacomb.getLevel(originY) == 4 ? Block.netherrack.blockID : Block.cobblestone.blockID;
+		IBlockFactory wallBlocks = BlockFactoryProvider.getRandomizer(Catacomb.getLevel(originY), rand);
+		IBlockFactory bridgeBlocks = BlockFactoryProvider.getRandomizer(Catacomb.getLevel(originY), rand, true);
 		
 		for (Tuple location : tunnel){
 			
@@ -115,12 +114,12 @@ public class CatacombTunneler {
 			
 			if(direction == Cardinal.NORTH || direction == Cardinal.SOUTH){
 				WorldGenPrimitive.fillRectSolid(world, x - 1, originY, z, x + 1, originY + 2, z, 0, 0, 0, false, true);
-				WorldGenPrimitive.fillRectSolid(world, x - 2, originY - 1, z, x + 2, originY + 4, z, fillBlocks, false, true);
-				WorldGenPrimitive.fillRectSolid(world, x - 1, originY - 1, z, x + 1, originY - 1, z, bridgeBlock, 0, 2, true, false);
+				WorldGenPrimitive.fillRectSolid(world, x - 2, originY - 1, z, x + 2, originY + 4, z, wallBlocks, false, true);
+				WorldGenPrimitive.fillRectSolid(world, x - 1, originY - 1, z, x + 1, originY - 1, z, bridgeBlocks, true, false);
 			} else {
 				WorldGenPrimitive.fillRectSolid(world, x, originY, z - 1, x, originY + 2, z + 1, 0, 0, 0, false, true);
-				WorldGenPrimitive.fillRectSolid(world, x, originY - 1, z - 2, x, originY + 4, z + 2, fillBlocks, false, true);
-				WorldGenPrimitive.fillRectSolid(world, x, originY - 1, z - 1, x, originY - 1, z + 1, bridgeBlock, 0, 2, true, false);
+				WorldGenPrimitive.fillRectSolid(world, x, originY - 1, z - 2, x, originY + 4, z + 2, wallBlocks, false, true);
+				WorldGenPrimitive.fillRectSolid(world, x, originY - 1, z - 1, x, originY - 1, z + 1, bridgeBlocks, true, false);
 			}
 			
 		}
@@ -131,9 +130,9 @@ public class CatacombTunneler {
 		int z = (Integer)location.getSecond() + (Integer)(Cardinal.getTuple(direction).getSecond());
 		
 		if(direction == Cardinal.NORTH || direction == Cardinal.SOUTH){
-			WorldGenPrimitive.fillRectSolid(world, x - 2, originY - 1, z, x + 2, originY + 4, z, fillBlocks, false, true);
+			WorldGenPrimitive.fillRectSolid(world, x - 2, originY - 1, z, x + 2, originY + 4, z, wallBlocks, false, true);
 		} else {
-			WorldGenPrimitive.fillRectSolid(world, x, originY - 1, z - 2, x, originY + 4, z + 2, fillBlocks, false, true);
+			WorldGenPrimitive.fillRectSolid(world, x, originY - 1, z - 2, x, originY + 4, z + 2, wallBlocks, false, true);
 		}
 	}
 	

@@ -9,7 +9,7 @@ import net.minecraft.src.TileEntityChest;
 public class TreasureChestSmithy extends TreasureChestBase{
 	
 	@Override
-	protected void fillChest(TileEntityChest chest){
+	protected void fillChest(TileEntityChest chest, int level){
 
 		int middle = chest.getSizeInventory()/2;
 						

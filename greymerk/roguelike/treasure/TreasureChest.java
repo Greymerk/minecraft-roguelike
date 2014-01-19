@@ -23,23 +23,25 @@ public enum TreasureChest {
 	public static final TreasureChest[] level4 = {ORE, TOOLS, ARMOUR, WEAPONS};
 	
 	public static void generate(World world, Random rand, int posX, int posY, int posZ){
-		generate(world, rand, posX, posY, posZ, false);
+		generate(world, rand, posX, posY, posZ, Catacomb.getLevel(posY), false);
 	}
 	
-	public static void generate(World world, Random rand, int posX, int posY, int posZ, boolean trapped){
-		int rank = Catacomb.getLevel(posY);
+	public static void generate(World world, Random rand, int posX, int posY, int posZ, int level, boolean trapped){
 		
-		TreasureChest type = getChestType(rand, rank);
+		TreasureChest type = getChestType(rand, level);
 		ITreasureChest chest = getChest(type);
 		
-		chest.generate(world, rand, posX, posY, posZ, trapped);
+		chest.generate(world, rand, posX, posY, posZ, level, trapped);
 	}
+
 	
 	public static void generate(World world, Random rand, int posX, int posY, int posZ, TreasureChest type){
-		int rank = Catacomb.getLevel(posY);
-		
+		generate(world, rand, posX, posY, posZ, type, Catacomb.getLevel(posY), false);
+	}
+	
+	public static void generate(World world, Random rand, int posX, int posY, int posZ, TreasureChest type, int level, boolean trapped){
 		ITreasureChest chest = getChest(type);
-		chest.generate(world, rand, posX, posY, posZ, false);
+		chest.generate(world, rand, posX, posY, posZ, level, trapped);
 	}
 
 	public static void createChests(World world, Random rand, int numChests, List<Coord> space){

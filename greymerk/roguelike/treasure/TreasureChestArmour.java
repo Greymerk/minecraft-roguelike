@@ -10,9 +10,8 @@ import net.minecraft.src.TileEntityChest;
 public class TreasureChestArmour extends TreasureChestBase{
 	
 	@Override
-	protected void fillChest(TileEntityChest chest){
+	protected void fillChest(TileEntityChest chest, int level){
 
-		int level = Catacomb.getLevel(posY);
 		int middle = chest.getSizeInventory()/2;
 						
 		ItemStack item;

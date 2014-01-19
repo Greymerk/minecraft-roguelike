@@ -4,8 +4,9 @@ import net.minecraft.src.Tuple;
 
 public enum Cardinal {
 
-	NORTH, EAST, WEST, SOUTH;
+	NORTH, EAST, WEST, SOUTH, UP, DOWN;
 	
+	public static Cardinal[] directions = {NORTH, SOUTH, EAST, WEST};
 	private static final Tuple northT = new Tuple(0, -1); 
 	private static final Tuple southT = new Tuple(0, 1);
 	private static final Tuple westT = new Tuple(-1, 0);

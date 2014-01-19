@@ -196,7 +196,7 @@ public enum ItemNovelty {
 		case BAJ:
 			item = new ItemStack(Item.hoeGold);
 			Loot.setItemName(item, "Baj's Last Resort", TextFormat.DARKPURPLE);
-			Loot.setItemLore(item, "Watching grass grow", TextFormat.DARKGREEN);
+			Loot.setItemLore(item, "\"Starvation could be fatal\"", TextFormat.DARKGREEN);
 			item.addEnchantment(Enchantment.sharpness, 2);
 			item.addEnchantment(Enchantment.knockback, 1);
 			item.addEnchantment(Enchantment.fortune, 5);

@@ -5,6 +5,8 @@ import greymerk.roguelike.catacomb.dungeon.Dungeon;
 import greymerk.roguelike.catacomb.segment.part.SegmentArch;
 import greymerk.roguelike.catacomb.segment.part.SegmentInset;
 import greymerk.roguelike.catacomb.segment.part.SegmentFire;
+import greymerk.roguelike.catacomb.segment.part.SegmentMossyArch;
+import greymerk.roguelike.catacomb.segment.part.SegmentMossyMushrooms;
 import greymerk.roguelike.catacomb.segment.part.SegmentShelf;
 import greymerk.roguelike.worldgen.Cardinal;
 
@@ -14,10 +16,13 @@ import net.minecraft.src.Tuple;
 
 public enum Segment {
 
-	ARCH, FIRE, SHELF, INSET;
+	ARCH, FIRE, SHELF, INSET, MOSSYARCH, MOSSYMUSHROOM;
 	
 	public static final Segment[] level0 = {FIRE, SHELF, INSET};
 	public static final Segment[] level1 = {SHELF, INSET};
+	public static final Segment[] level2 = {SHELF, INSET};
+	public static final Segment[] level3 = {MOSSYMUSHROOM, SHELF, INSET};
+	public static final Segment[] level4 = {SHELF, INSET};
 	
 	public static ISegment getSegment(Segment choice){
 		
@@ -26,6 +31,8 @@ public enum Segment {
 		case FIRE: return new SegmentFire();
 		case SHELF: return new SegmentShelf();
 		case INSET: return new SegmentInset();
+		case MOSSYARCH: return new SegmentMossyArch();
+		case MOSSYMUSHROOM: return new SegmentMossyMushrooms();
 		}
 		
 		return null;
@@ -41,6 +48,22 @@ public enum Segment {
 		case 0:
 			pillar = ARCH;
 			spacers = level0;
+			break;
+		case 1:
+			pillar = ARCH;
+			spacers = level1;
+			break;
+		case 2:
+			pillar = ARCH;
+			spacers = level2;
+			break;
+		case 3:
+			pillar = MOSSYARCH;
+			spacers = level3;
+			break;
+		case 4:
+			pillar = ARCH;
+			spacers = level4;
 			break;
 		default: 
 			pillar = ARCH;

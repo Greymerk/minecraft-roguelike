@@ -1,8 +1,10 @@
 package greymerk.roguelike.catacomb.dungeon.room;
 
 import greymerk.roguelike.catacomb.dungeon.IDungeon;
+import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.treasure.TreasureChest;
 import greymerk.roguelike.worldgen.Coord;
+import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
 
 import java.io.PrintStream;
@@ -41,8 +43,7 @@ public class DungeonsSmithy implements IDungeon{
 		dungeonLength = 2;
 		dungeonWidth = 2;
 		numChests = 0;
-		
-		
+				
 	}
 
 	public boolean generate(World inWorld, Random inRandom, int inOriginX, int inOriginY, int inOriginZ) {
@@ -60,7 +61,9 @@ public class DungeonsSmithy implements IDungeon{
 		buildFloor();
 		buildRoof();
 		
-		WorldGenPrimitive.setBlock(world, inOriginX, inOriginY, inOriginZ, Block.anvil.blockID);
+		MetaBlock anvil = new MetaBlock(Block.anvil.blockID, RogueConfig.getBoolean(RogueConfig.GENEROUS) ? 0 : 8);
+		
+		WorldGenPrimitive.setBlock(world, inOriginX, inOriginY, inOriginZ, anvil);
 		
 		List<Coord> space = new ArrayList<Coord>();
 		space.add(new Coord(originX - 2, originY, originZ - 2));
@@ -143,10 +146,6 @@ public class DungeonsSmithy implements IDungeon{
 			WorldGenPrimitive.setBlock(world, x, y, z, blockID, 0, 2, false, true);
 			
 		}
-	}
-
-	public boolean isValidDungeonLocation(World world, int x, int y, int z){
-		return false;
 	}
 	
 	public int getSize(){

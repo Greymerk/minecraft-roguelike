@@ -34,7 +34,7 @@ public class TreasureChestStarter extends TreasureChestBase{
 	}	
 	
 	@Override
-	protected void fillChest(TileEntityChest chest) {
+	protected void fillChest(TileEntityChest chest, int level) {
 
 		int size = chest.getSizeInventory();
 				
@@ -55,14 +55,14 @@ public class TreasureChestStarter extends TreasureChestBase{
 		ItemStack book = new ItemStack(Item.writableBook);
 		
 		book.setTagInfo("author", new NBTTagString("author", "greymerk"));
-		book.setTagInfo("title", new NBTTagString("title", "Roguelike Dungeons Mod"));
+		book.setTagInfo("title", new NBTTagString("title", "Roguelike Dungeons"));
 		
 		String page1 = 
 				"This dungeon was generated with the roguelike dungeons " +
-				"mod version 1.2.7\n\n" +
+				"mod version 1.2.9\n\n" +
 				"Thanks for playing\n\n" +
 				"-greymerk\n" +
-				"November 20th 2013";
+				"January 18th 2014";
 		
 		String page2 = 
 				"You can find updates and information about the mod at http://dungeons.homelinux.org/";
@@ -71,7 +71,7 @@ public class TreasureChestStarter extends TreasureChestBase{
 				"Credits\n\n" +
 				"Author: Greymerk\n\n" +
 				"Bits: Drainedsoul\n\n" +
-				"Ideas: Eniko";
+				"Ideas: Eniko @enichan";
 	
 		
 		NBTTagList pages = new NBTTagList();

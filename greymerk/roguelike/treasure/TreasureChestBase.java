@@ -2,6 +2,7 @@ package greymerk.roguelike.treasure;
 
 import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.catacomb.dungeon.Dungeon;
+import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.treasure.loot.Loot;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
 
@@ -27,7 +28,7 @@ public abstract class TreasureChestBase implements ITreasureChest{
 	}
 		
 
-	public ITreasureChest generate(World world, Random rand, int posX, int posY, int posZ, boolean trapped) {
+	public ITreasureChest generate(World world, Random rand, int posX, int posY, int posZ, int level, boolean trapped) {
 		this.world = world;
 		this.rand = rand;
 		this.posX = posX;
@@ -45,12 +46,14 @@ public abstract class TreasureChestBase implements ITreasureChest{
 		
 		try{
 			
-			for (int i = 0; i < 15; i++) {
-				ItemStack item = Loot.getLootByCategory(Loot.JUNK, rand, Catacomb.getLevel(posY));
+			int amount = RogueConfig.getBoolean(RogueConfig.GENEROUS) ? 16 : 12;
+			
+			for (int i = 0; i < amount; i++) {
+				ItemStack item = Loot.getLootByCategory(Loot.JUNK, rand, level);
 				chest.setInventorySlotContents(rand.nextInt(chest.getSizeInventory()), item);
 			}
 			
-			fillChest(chest);
+			fillChest(chest, level);
 			
 		} catch(NullPointerException e){
 			return null;
@@ -61,7 +64,7 @@ public abstract class TreasureChestBase implements ITreasureChest{
 	
 	@Override
 	public ITreasureChest generate(World world, Random rand, int posX, int posY, int posZ) {
-		return generate(world, rand, posX, posY, posZ, false);
+		return generate(world, rand, posX, posY, posZ, Catacomb.getLevel(posY), false);
 	}
 	
 	public boolean setInventorySlot(ItemStack item, int slot){
@@ -82,6 +85,6 @@ public abstract class TreasureChestBase implements ITreasureChest{
 		return chest.getSizeInventory();
 	}
 	
-	protected abstract void fillChest(TileEntityChest chest);
+	protected abstract void fillChest(TileEntityChest chest, int level);
 	
 }

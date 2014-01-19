@@ -35,7 +35,7 @@ public class CatacombNode {
 		this.done = false;
 		this.tunnelers = new ArrayList<CatacombTunneler>();
 		
-		this.direction = Cardinal.values()[rand.nextInt(Cardinal.values().length)];
+		this.direction = Cardinal.directions[rand.nextInt(Cardinal.directions.length)];
 		
 		if(this.level.inRange(x, z)){
 			spawnTunnelers();
@@ -62,14 +62,13 @@ public class CatacombNode {
 	
 	private void spawnTunnelers(){
 		
-		for(Cardinal dir : Cardinal.values()){
+		for(Cardinal dir : Cardinal.directions){
+			
 			if (dir.equals(direction)){
 				continue;
 			}
 			
-			if(level.nodeCount() == 0){
-				this.tunnelers.add(new CatacombTunneler(rand, this.level, dir, x, y, z));
-			} else if (rand.nextBoolean()){
+			if(level.nodeCount() == 0 || tunnelers.isEmpty() || rand.nextBoolean()){
 				this.tunnelers.add(new CatacombTunneler(rand, this.level, dir, x, y, z));
 			}
 		}

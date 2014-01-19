@@ -19,7 +19,7 @@ public class SegmentShelf extends SegmentBase {
 	@Override
 	protected void genWall(Cardinal wallDirection) {
 		
-		stairType = getStairType(Catacomb.getLevel(originY));
+		stairType = getStairType(Catacomb.getLevel(y));
 		
 		switch(wallDirection){
 		case NORTH: north(); break;
@@ -30,50 +30,50 @@ public class SegmentShelf extends SegmentBase {
 	}
 	
 	private void north(){
-		WorldGenPrimitive.fillRectSolid(world, originX - 1, originY + 1, originZ - 2, originX + 1, originY + 2, originZ - 2, 0);
+		WorldGenPrimitive.fillRectSolid(world, x - 1, y + 1, z - 2, x + 1, y + 2, z - 2, 0);
 
-		WorldGenPrimitive.setBlock(world, originX - 1, originY + 2, originZ - 2, stairType, WorldGenPrimitive.blockOrientation(Cardinal.EAST, true), 2, true, true);
-		WorldGenPrimitive.setBlock(world, originX + 1, originY + 2, originZ - 2, stairType, WorldGenPrimitive.blockOrientation(Cardinal.WEST, true), 2, true, true);
+		WorldGenPrimitive.setBlock(world, x - 1, y + 2, z - 2, stairType, WorldGenPrimitive.blockOrientation(Cardinal.EAST, true), 2, true, true);
+		WorldGenPrimitive.setBlock(world, x + 1, y + 2, z - 2, stairType, WorldGenPrimitive.blockOrientation(Cardinal.WEST, true), 2, true, true);
 		
-		if(Catacomb.getLevel(originY)  < 2){
-			WorldGenPrimitive.fillRectSolid(world, originX - 1, originY + 1, originZ - 3, originX + 1, originY + 2, originZ - 3, Block.planks.blockID, SPRUCE, 2, false, true);
-			WorldGenPrimitive.fillRectSolid(world, originX - 1, originY, originZ - 2, originX + 1, originY, originZ - 2, Block.planks.blockID, SPRUCE, 2, false, true);
+		if(Catacomb.getLevel(y)  < 2){
+			WorldGenPrimitive.fillRectSolid(world, x - 1, y + 1, z - 3, x + 1, y + 2, z - 3, Block.planks.blockID, SPRUCE, 2, false, true);
+			WorldGenPrimitive.fillRectSolid(world, x - 1, y, z - 2, x + 1, y, z - 2, Block.planks.blockID, SPRUCE, 2, false, true);
 		}
 	}
 	
 	private void south(){
-		WorldGenPrimitive.fillRectSolid(world, originX - 1, originY + 1, originZ + 2, originX + 1, originY + 2, originZ + 2, 0);
+		WorldGenPrimitive.fillRectSolid(world, x - 1, y + 1, z + 2, x + 1, y + 2, z + 2, 0);
 
-		WorldGenPrimitive.setBlock(world, originX - 1, originY + 2, originZ + 2, stairType, WorldGenPrimitive.blockOrientation(Cardinal.EAST, true), 2, true, true);
-		WorldGenPrimitive.setBlock(world, originX + 1, originY + 2, originZ + 2, stairType, WorldGenPrimitive.blockOrientation(Cardinal.WEST, true), 2, true, true);
+		WorldGenPrimitive.setBlock(world, x - 1, y + 2, z + 2, stairType, WorldGenPrimitive.blockOrientation(Cardinal.EAST, true), 2, true, true);
+		WorldGenPrimitive.setBlock(world, x + 1, y + 2, z + 2, stairType, WorldGenPrimitive.blockOrientation(Cardinal.WEST, true), 2, true, true);
 		
-		if(Catacomb.getLevel(originY)  < 2){
-			WorldGenPrimitive.fillRectSolid(world, originX - 1, originY + 1, originZ + 3, originX + 1, originY + 2, originZ + 3, Block.planks.blockID, SPRUCE, 2, false, true);
-			WorldGenPrimitive.fillRectSolid(world, originX - 1, originY, originZ + 2, originX + 1, originY, originZ + 2, Block.planks.blockID, SPRUCE, 2, false, true);
+		if(Catacomb.getLevel(y)  < 2){
+			WorldGenPrimitive.fillRectSolid(world, x - 1, y + 1, z + 3, x + 1, y + 2, z + 3, Block.planks.blockID, SPRUCE, 2, false, true);
+			WorldGenPrimitive.fillRectSolid(world, x - 1, y, z + 2, x + 1, y, z + 2, Block.planks.blockID, SPRUCE, 2, false, true);
 		}
 	}
 	
 	private void east(){
-		WorldGenPrimitive.fillRectSolid(world, originX + 2, originY + 1, originZ - 1, originX + 2, originY + 2, originZ + 1, 0);
+		WorldGenPrimitive.fillRectSolid(world, x + 2, y + 1, z - 1, x + 2, y + 2, z + 1, 0);
 
-		WorldGenPrimitive.setBlock(world, originX + 2, originY + 2, originZ - 1, stairType, WorldGenPrimitive.blockOrientation(Cardinal.SOUTH, true), 2, true, true);
-		WorldGenPrimitive.setBlock(world, originX + 2, originY + 2, originZ + 1, stairType, WorldGenPrimitive.blockOrientation(Cardinal.NORTH, true), 2, true, true);
+		WorldGenPrimitive.setBlock(world, x + 2, y + 2, z - 1, stairType, WorldGenPrimitive.blockOrientation(Cardinal.SOUTH, true), 2, true, true);
+		WorldGenPrimitive.setBlock(world, x + 2, y + 2, z + 1, stairType, WorldGenPrimitive.blockOrientation(Cardinal.NORTH, true), 2, true, true);
 		
-		if(Catacomb.getLevel(originY)  < 2){
-			WorldGenPrimitive.fillRectSolid(world, originX + 3, originY + 1, originZ - 1, originX + 3, originY + 2, originZ + 1, Block.planks.blockID, SPRUCE, 2, false, true);
-			WorldGenPrimitive.fillRectSolid(world, originX + 2, originY, originZ - 1, originX + 2, originY, originZ + 1, Block.planks.blockID, SPRUCE, 2, false, true);
+		if(Catacomb.getLevel(y)  < 2){
+			WorldGenPrimitive.fillRectSolid(world, x + 3, y + 1, z - 1, x + 3, y + 2, z + 1, Block.planks.blockID, SPRUCE, 2, false, true);
+			WorldGenPrimitive.fillRectSolid(world, x + 2, y, z - 1, x + 2, y, z + 1, Block.planks.blockID, SPRUCE, 2, false, true);
 		}
 	}
 	
 	private void west(){
-		WorldGenPrimitive.fillRectSolid(world, originX - 2, originY + 1, originZ - 1, originX - 2, originY + 2, originZ + 1, 0);
+		WorldGenPrimitive.fillRectSolid(world, x - 2, y + 1, z - 1, x - 2, y + 2, z + 1, 0);
 
-		WorldGenPrimitive.setBlock(world, originX - 2, originY + 2, originZ - 1, stairType, WorldGenPrimitive.blockOrientation(Cardinal.SOUTH, true), 2, true, true);
-		WorldGenPrimitive.setBlock(world, originX - 2, originY + 2, originZ + 1, stairType, WorldGenPrimitive.blockOrientation(Cardinal.NORTH, true), 2, true, true);
+		WorldGenPrimitive.setBlock(world, x - 2, y + 2, z - 1, stairType, WorldGenPrimitive.blockOrientation(Cardinal.SOUTH, true), 2, true, true);
+		WorldGenPrimitive.setBlock(world, x - 2, y + 2, z + 1, stairType, WorldGenPrimitive.blockOrientation(Cardinal.NORTH, true), 2, true, true);
 		
-		if(Catacomb.getLevel(originY)  < 2){
-			WorldGenPrimitive.fillRectSolid(world, originX - 3, originY + 1, originZ - 1, originX - 3, originY + 2, originZ + 1, Block.planks.blockID, SPRUCE, 2, false, true);
-			WorldGenPrimitive.fillRectSolid(world, originX - 2, originY, originZ - 1, originX - 2, originY, originZ + 1, Block.planks.blockID, SPRUCE, 2, false, true);
+		if(Catacomb.getLevel(y)  < 2){
+			WorldGenPrimitive.fillRectSolid(world, x - 3, y + 1, z - 1, x - 3, y + 2, z + 1, Block.planks.blockID, SPRUCE, 2, false, true);
+			WorldGenPrimitive.fillRectSolid(world, x - 2, y, z - 1, x - 2, y, z + 1, Block.planks.blockID, SPRUCE, 2, false, true);
 		}
 	}
 }

@@ -16,9 +16,9 @@ public abstract class SegmentBase implements ISegment {
 	protected Random rand;
 	protected Cardinal dir;
 	
-	protected int originX;
-	protected int originY;
-	protected int originZ;
+	protected int x;
+	protected int y;
+	protected int z;
 	
 	protected Cardinal[] orth;
 	
@@ -33,9 +33,9 @@ public abstract class SegmentBase implements ISegment {
 		this.rand = rand;
 		this.dir = dir;
 		
-		originX = x;
-		originY = y;
-		originZ = z;
+		this.x = x;
+		this.y = y;
+		this.z = z;
 		
 		
 		orth = Cardinal.getOrthogonal(dir);
@@ -53,20 +53,20 @@ public abstract class SegmentBase implements ISegment {
 		
 		switch(wallDirection){
 		case NORTH:
-			if(world.isAirBlock(originX - 1, originY + 1, originZ - 2)) return false;
-			if(world.isAirBlock(originX + 1, originY + 1, originZ - 2)) return false;
+			if(world.isAirBlock(x - 1, y + 1, z - 2)) return false;
+			if(world.isAirBlock(x + 1, y + 1, z - 2)) return false;
 			break;
 		case SOUTH:
-			if(world.isAirBlock(originX - 1, originY + 1, originZ + 2)) return false;
-			if(world.isAirBlock(originX + 1, originY + 1, originZ + 2)) return false;
+			if(world.isAirBlock(x - 1, y + 1, z + 2)) return false;
+			if(world.isAirBlock(x + 1, y + 1, z + 2)) return false;
 			break;
 		case EAST:
-			if(world.isAirBlock(originX + 2, originY + 1, originZ - 1)) return false;
-			if(world.isAirBlock(originX + 2, originY + 1, originZ + 1)) return false;
+			if(world.isAirBlock(x + 2, y + 1, z - 1)) return false;
+			if(world.isAirBlock(x + 2, y + 1, z + 1)) return false;
 			break;
 		case WEST:
-			if(world.isAirBlock(originX - 2, originY + 1, originZ - 1)) return false;
-			if(world.isAirBlock(originX - 2, originY + 1, originZ + 1)) return false;
+			if(world.isAirBlock(x - 2, y + 1, z - 1)) return false;
+			if(world.isAirBlock(x - 2, y + 1, z + 1)) return false;
 			break;
 		}
 		
@@ -74,7 +74,7 @@ public abstract class SegmentBase implements ISegment {
 	}
 	
 	protected int getStairType(int level){
-		switch(Catacomb.getLevel(originY)){
+		switch(Catacomb.getLevel(y)){
 		case 0: return Block.stairsWoodSpruce.blockID;
 		case 1: return Block.stairsWoodSpruce.blockID;
 		case 2: return Block.stairsStoneBrick.blockID;

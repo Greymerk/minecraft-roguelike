@@ -60,8 +60,8 @@ public class DungeonsWood implements IDungeon{
 		space.add(new Coord(originX + WIDTH, originY, originZ - LENGTH + 1));
 		space.add(new Coord(originX + WIDTH, originY, originZ + LENGTH - 1));
 		
-		TreasureChest[] types = {TreasureChest.FOOD, TreasureChest.POTIONS, TreasureChest.SUPPLIES};
-		TreasureChest.createChests(inWorld, inRandom, 1 + inRandom.nextInt(2), space, types);
+		TreasureChest[] types = {TreasureChest.FOOD};
+		TreasureChest.createChests(inWorld, inRandom, 1, space, types);
 		
 		return true;
 	}

@@ -9,14 +9,13 @@ import net.minecraft.src.TileEntityChest;
 public class TreasureChestOre extends TreasureChestBase{
 	
 	@Override
-	protected void fillChest(TileEntityChest chest){
+	protected void fillChest(TileEntityChest chest, int level){
 
-		int level = Catacomb.getLevel(posY);
-		int middle = chest.getSizeInventory()/2;
+		int quantity = 4 + rand.nextInt(4);
 		
 		ItemStack item;
 
-		for (int i = 0; i < 2 + rand.nextInt(2 + level); i++) {
+		for (int i = 0; i < quantity; i++) {
 			item = Loot.getLootByCategory(Loot.ORE, rand, level);			
 			chest.setInventorySlotContents(rand.nextInt(chest.getSizeInventory()), item);
 		}

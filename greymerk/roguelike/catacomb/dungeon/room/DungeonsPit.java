@@ -67,42 +67,7 @@ public class DungeonsPit implements IDungeon {
 		
 		return true;
 	}
-	
-	public boolean isValidDungeonLocation(World world, int originX, int originY, int originZ) {
 
-		int dungeonClearance = 0;
-		for (int x = originX - dungeonLength - 1; x <= originX + dungeonLength + 1; x++) {
-			for (int y = originY - 1; y <= originY + dungeonHeight + 1; y++) {
-				for (int z = originZ - dungeonWidth - 1; z <= originZ + dungeonWidth + 1; z++) {
-					Material material = world.getBlockMaterial(x, y, z);
-
-					if (y == originY - 1 && !material.isSolid()) {
-						return false;
-					}
-
-					if (y == originY + dungeonHeight + 1 && !material.isSolid()) {
-						return false;
-					}
-
-					if ((      x == originX - dungeonLength - 1
-							|| x == originX + dungeonLength + 1
-							|| z == originZ - dungeonWidth - 1
-							|| z == originZ + dungeonWidth + 1)
-							&& y == originY
-							&& world.isAirBlock(x, y, z)
-							&& world.isAirBlock(x, y + 1, z)){
-						dungeonClearance++;
-					}
-				}
-			}
-		}
-
-		if (dungeonClearance < 1 || dungeonClearance > 5) {
-			return false;
-		}
-
-		return true;
-	}
 
 	protected void buildWalls() {
 		for (int blockX = originX - dungeonLength - 1; blockX <= originX + dungeonLength + 1; blockX++) {

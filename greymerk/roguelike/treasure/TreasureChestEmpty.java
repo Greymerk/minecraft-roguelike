@@ -14,7 +14,7 @@ import net.minecraft.src.World;
 public class TreasureChestEmpty extends TreasureChestBase implements ITreasureChest {
 
 	@Override
-	public ITreasureChest generate(World inWorld, Random inRand, int x, int y, int z, boolean trapped) {
+	public ITreasureChest generate(World inWorld, Random inRand, int x, int y, int z, int level, boolean trapped) {
 		
 		world = inWorld;
 		rand = inRand;
@@ -36,6 +36,6 @@ public class TreasureChestEmpty extends TreasureChestBase implements ITreasureCh
 	}
 
 	@Override
-	protected void fillChest(TileEntityChest chest) {
+	protected void fillChest(TileEntityChest chest, int level) {
 	}
 }

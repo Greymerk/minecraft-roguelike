@@ -8,7 +8,7 @@ import net.minecraft.src.World;
 
 public interface ITreasureChest {
 		
-	public ITreasureChest generate(World world, Random rand, int x, int y, int z, boolean trapped);
+	public ITreasureChest generate(World world, Random rand, int x, int y, int z, int level, boolean trapped);
 	
 	public ITreasureChest generate(World world, Random rand, int x, int y, int z);
 

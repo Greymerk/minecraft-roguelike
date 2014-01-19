@@ -41,7 +41,7 @@ public class Catacomb {
 			CatacombLevel level;
 			
 			if(Catacomb.getLevel(y) == 0){
-				level = new CatacombLevel(world, rand, x, y, z, 20, 50);
+				level = new CatacombLevel(world, rand, x, y, z, 10, 40);
 			} else {
 				level = new CatacombLevel(world, rand, x, y, z);
 			}
@@ -126,10 +126,14 @@ public class Catacomb {
 		switch(rank){
 		case 0:
 			factory = new DungeonFactory(rand, Dungeon.CORNER);
-			factory.addSingle(Dungeon.SMITH);
+			if(RogueConfig.getBoolean(RogueConfig.GENEROUS)) factory.addSingle(Dungeon.SMITH);
 			factory.addSingle(Dungeon.MUSIC);
 			factory.addSingle(Dungeon.CAKE);
-			factory.addSingle(Dungeon.LAB);
+			if(rand.nextBoolean()){
+				factory.addSingle(Dungeon.FIRE);
+			} else {
+				factory.addSingle(Dungeon.SLIME);
+			}
 			factory.addRandom(Dungeon.BRICK, 3);
 			break;
 		case 1:
@@ -139,9 +143,10 @@ public class Catacomb {
 			if(choice == 1) factory.addSingle(Dungeon.BTEAM);
 			factory.addSingle(Dungeon.PIT);
 			factory.addSingle(Dungeon.MESS);
-			factory.addSingle(Dungeon.MESS);
-			if(RogueConfig.getBoolean(RogueConfig.GENEROUS))factory.addSingle(Dungeon.ENCHANT);
+			if(RogueConfig.getInt(RogueConfig.LEVELMAXROOMS) > 30) factory.addSingle(Dungeon.MESS);
+			factory.addSingle(Dungeon.ENCHANT);
 			factory.addSingle(Dungeon.SMITH);
+			factory.addSingle(Dungeon.LAB);
 			factory.addRandom(Dungeon.BRICK, 3);
 			break;
 		case 2:
@@ -160,6 +165,10 @@ public class Catacomb {
 			if(rand.nextInt(3) == 0) factory.addSingle(Dungeon.BAJ);
 			factory.addSingle(Dungeon.OSSUARY);
 			factory.addSingle(Dungeon.ENDER);
+			factory.addSingle(Dungeon.CRYPT);
+			factory.addSingle(Dungeon.PRISON);
+			factory.addSingle(Dungeon.SPIDER);
+			factory.addSingle(Dungeon.CREEPER);
 			factory.addRandom(Dungeon.BRICK, 3);
 			factory.addRandom(Dungeon.FIRE, 20);
 			factory.addRandom(Dungeon.CRYPT, 20);

@@ -11,7 +11,7 @@ public class TreasureChestPotions extends TreasureChestBase{
 	
 	
 	@Override
-	protected void fillChest(TileEntityChest chest){
+	protected void fillChest(TileEntityChest chest, int level){
 		int middle = chest.getSizeInventory()/2;
 		
 		chest.setInventorySlotContents(middle - 1, ItemPotion.getRandom(rand));

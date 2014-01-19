@@ -9,7 +9,7 @@ public class ItemBlock {
 	
 	public static ItemStack getRandom(Random rand, int level){
 		
-		if(level > 0 && rand.nextInt(300) == 0){
+		if(level > 0 && rand.nextInt(1000) == 0){
 			if(rand.nextBoolean()){
 				return ItemNovelty.getItem(ItemNovelty.MMILLSS);
 			} else {
@@ -22,22 +22,25 @@ public class ItemBlock {
 	
 	private static ItemStack pickBlocks(Random rand, int level) {
 
-		if(level > 1 && rand.nextInt((5 - level) * 50) == 0){
-			return new ItemStack(Block.blockDiamond, 1);
-		}
+
 		
-		if(level > 1 && rand.nextInt((5 - level) * 30) == 0){
+		if(level > 2 && rand.nextInt(20) == 0){
+			
+			if(rand.nextInt(50) == 0){
+				return new ItemStack(Block.blockDiamond, 1);
+			}
+			
 			switch(rand.nextInt(3)){
-			case 0: return new ItemStack(Block.blockLapis, 2 + rand.nextInt(6));
+			case 0: return new ItemStack(Block.blockLapis, 1 + rand.nextInt(6));
 			case 1: return new ItemStack(Block.blockEmerald, 1 + rand.nextInt(3));
 			case 2: return new ItemStack(Block.blockGold, 1);
 			}
 		}
 		
-		if(level > 0 && rand.nextInt((5 - level) * 20) == 0){
+		if(level > 0 && rand.nextInt(20) == 0){
 			switch(rand.nextInt(6)){
 			case 0: return new ItemStack(Block.blockIron, 1);
-			case 1: return new ItemStack(Block.coalBlock, 1 + rand.nextInt(level + 1));
+			case 1: return new ItemStack(Block.coalBlock, 3 + rand.nextInt(1 + level * 2));
 			case 2: return new ItemStack(Block.blockRedstone, 1);
 			case 3: return new ItemStack(Block.tnt, 2 * rand.nextInt(level + 1));
 			case 4: return new ItemStack(Block.glowStone, 3 + rand.nextInt(1 + level * 2));

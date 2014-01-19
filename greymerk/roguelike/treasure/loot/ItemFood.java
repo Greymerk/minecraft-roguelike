@@ -17,76 +17,48 @@ public class ItemFood {
 				ItemNovelty.CLEO
 		};
 		
-		if(rank > 0 && rand.nextInt(100) == 0){
+		if(rank > 0 && rand.nextInt(500) == 0){
 			return ItemNovelty.getItem(items[rand.nextInt(items.length)]);
 		}
 		
 		return pickFood(rand, rank);
 	}
 	
-	private static ItemStack pickFood(Random rand, int rank) {
+	private static ItemStack pickFood(Random rand, int level) {
 
-		int quantity = 2 + rand.nextInt(6);
+		int quantity = 1 + rand.nextInt(2 + level);
+		
+		switch(level){
 
-		int choice = rand.nextInt(10);
-
-		switch(choice){
-		case 0:
-			if(rank >= 3){
-				return new ItemStack(Item.appleGold, 1);
-			}
+		case 4:
+		case 3:
+			if(rand.nextInt(10) == 0) return new ItemStack(Item.goldenCarrot, quantity);
 			
-			return new ItemStack(Item.appleRed, quantity);
+			if(rand.nextInt(10) == 0) return new ItemStack(Item.appleGold, 1);
+		case 2:
+			if(rand.nextInt(5) == 0){
+				if(rand.nextBoolean()) return new ItemStack(Item.porkCooked, quantity);
+				return new ItemStack(Item.beefCooked, quantity);
+			}
 			
 		case 1:
+			if(rand.nextInt(10) == 0) return new ItemStack(Item.melon, quantity);
 			
-			if(rank > 1){
-				return new ItemStack(Item.appleGold, 1);
+			if(rand.nextInt(5) == 0){
+				if(rand.nextBoolean()) return new ItemStack(Item.chickenCooked, quantity);
+				return new ItemStack(Item.bakedPotato, quantity);
 			}
+		case 0:
+			if(rand.nextInt(20) == 0) return new ItemStack(Item.appleRed, 1);
 			
-			return new ItemStack(Item.appleRed, quantity);
+			if(rand.nextInt(10) == 0) return new ItemStack(Item.bowlSoup);
 			
-		case 2:
-			return new ItemStack(Item.bowlSoup);
-			
-		case 3:
-			return new ItemStack(Item.beefCooked, quantity);
-			
-		case 4:
-			if(rank > 1){
-				return new ItemStack(Item.goldenCarrot, quantity);
-			}
-			
+			if(rand.nextInt(5) == 0) return new ItemStack(Item.fishCooked, quantity);
+		default:
 			return new ItemStack(Item.bread, quantity);
 		
-		case 5:
-			return new ItemStack(Item.porkCooked, quantity);
-			
-		case 6:
-			
-			if(rank > 1){
-				return new ItemStack(Item.goldenCarrot, quantity);
-			}
-			
-			return new ItemStack(Item.melon, quantity);
-			
-		case 7:
-			return new ItemStack(Item.chickenCooked, quantity);
-			
-		case 8:
-			if(rank > 1){
-				return new ItemStack(Item.goldenCarrot, quantity);
-			}
-			
-			return new ItemStack(Item.fishCooked, quantity);
 		
-		case 9:
-			return new ItemStack(Item.bakedPotato, quantity);
-
+		
 		}
-		return new ItemStack(Item.bread, quantity);
-	}
-
-
-	
+	}	
 }

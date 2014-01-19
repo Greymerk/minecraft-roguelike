@@ -67,10 +67,27 @@ public class WorldGenPrimitive {
 		fillRectSolid(world, x1, y1, z1, x2, y2, z2, blocks, true, true);
 	}
 	
+	public static void fillRectSolid(World world, Coord first, Coord second, MetaBlock block, boolean fillAir, boolean replaceSolid){
+		Coord.correct(first, second);
+		fillRectSolid(world, first.getX(), first.getY(), first.getZ(), second.getX(), second.getY(), second.getZ(), block, true, true);
+	}
+	
+	public static void fillRectSolid(World world, Coord first, Coord second, IBlockFactory blocks, boolean fillAir, boolean replaceSolid){
+		Coord.correct(first, second);
+		fillRectSolid(world, first.getX(), first.getY(), first.getZ(), second.getX(), second.getY(), second.getZ(), blocks, true, true);
+	}
+	
+	
 	public static void fillRectSolid(World world, int x1, int y1, int z1, int x2, int y2, int z2, IBlockFactory blocks, boolean fillAir, boolean replaceSolid){
-		for(int x = x1; x <= x2; x++){
-			for(int y = y1; y <= y2; y++){
-				for(int z = z1; z <= z2; z++){
+		
+		Coord c1 = new Coord(x1, y1, z1);
+		Coord c2 = new Coord(x2, y2, z2);
+		
+		Coord.correct(c1, c2);
+		
+		for(int x = c1.getX(); x <= c2.getX(); x++){
+			for(int y = c1.getY(); y <= c2.getY(); y++){
+				for(int z = c1.getZ(); z <= c2.getZ(); z++){
 					blocks.setBlock(world, x, y, z, fillAir, replaceSolid);	
 				}
 			}
@@ -82,11 +99,17 @@ public class WorldGenPrimitive {
 	}
 	
 	public static List<Coord> getRectSolid(int x1, int y1, int z1, int x2, int y2, int z2){
+		
+		Coord c1 = new Coord(x1, y1, z1);
+		Coord c2 = new Coord(x2, y2, z2);
+		
+		Coord.correct(c1, c2);
+		
 		List<Coord> points = new LinkedList<Coord>();
 		
-		for(int x = x1; x <= x2; x++){
-			for(int y = y1; y <= y2; y++){
-				for(int z = z1; z <= z2; z++){
+		for(int x = c1.getX(); x <= c2.getX(); x++){
+			for(int y = c1.getY(); y <= c2.getY(); y++){
+				for(int z = c1.getZ(); z <= c2.getZ(); z++){
 					points.add(new Coord(x, y, z));
 				}
 			}
@@ -104,10 +127,26 @@ public class WorldGenPrimitive {
 		fillRectHollow(world, x1, y1, z1, x2, y2, z2, new SingleBlockFactory(blockID, meta, flag), fillAir, replaceSolid);
 	}
 	
+	public static void fillRectHollow(World world, Coord first, Coord second, MetaBlock block, boolean fillAir, boolean replaceSolid){
+		Coord.correct(first, second);
+		fillRectHollow(world, first.getX(), first.getY(), first.getZ(), second.getX(), second.getY(), second.getZ(), block, true, true);
+	}
+	
+	public static void fillRectHollow(World world, Coord first, Coord second, IBlockFactory blocks, boolean fillAir, boolean replaceSolid){
+		Coord.correct(first, second);
+		fillRectHollow(world, first.getX(), first.getY(), first.getZ(), second.getX(), second.getY(), second.getZ(), blocks, true, true);
+	}
+	
 	public static void fillRectHollow(World world, int x1, int y1, int z1, int x2, int y2, int z2, IBlockFactory blocks, boolean fillAir, boolean replaceSolid){
-		for(int x = x1; x <= x2; x++){
-			for(int y = y1; y <= y2; y++){
-				for(int z = z1; z <= z2; z++){
+		
+		Coord c1 = new Coord(x1, y1, z1);
+		Coord c2 = new Coord(x2, y2, z2);
+		
+		Coord.correct(c1, c2);
+		
+		for(int x = c1.getX(); x <= c2.getX(); x++){
+			for(int y = c1.getY(); y <= c2.getY(); y++){
+				for(int z = c1.getZ(); z <= c2.getZ(); z++){
 					if(x == x1 || x == x2 || y == y1 || y == y2 || z == z1 || z == z2){
 						blocks.setBlock(world, x, y, z, fillAir, replaceSolid);
 					} else {					
@@ -124,12 +163,18 @@ public class WorldGenPrimitive {
 	
 	
 	public static List<Coord> getRectHollow(int x1, int y1, int z1, int x2, int y2, int z2){
+
 		
 		List<Coord> points = new LinkedList<Coord>();
 		
-		for(int x = x1; x <= x2; x++){
-			for(int y = y1; y <= y2; y++){
-				for(int z = z1; z <= z2; z++){
+		Coord c1 = new Coord(x1, y1, z1);
+		Coord c2 = new Coord(x2, y2, z2);
+		
+		Coord.correct(c1, c2);
+		
+		for(int x = c1.getX(); x <= c2.getX(); x++){
+			for(int y = c1.getY(); y <= c2.getY(); y++){
+				for(int z = c1.getZ(); z <= c2.getZ(); z++){
 					if(x == x1 || x == x2 || y == y1 || y == y2 || z == z1 || z == z2){
 						points.add(new Coord(x, y, z));
 					}
@@ -178,9 +223,14 @@ public class WorldGenPrimitive {
 	
 	public static void randomVines(World world, Random rand, int x1, int y1, int z1, int x2, int y2, int z2){
 
-        for (int y = y1; y <= y2; y++){
-        	for (int x = x1; x <= x2; x++){
-        		for(int z = z1; z <= z2; z++){
+		Coord c1 = new Coord(x1, y1, z1);
+		Coord c2 = new Coord(x2, y2, z2);
+		
+		Coord.correct(c1, c2);
+		
+		for(int x = c1.getX(); x <= c2.getX(); x++){
+			for(int y = c1.getY(); y <= c2.getY(); y++){
+				for(int z = c1.getZ(); z <= c2.getZ(); z++){
         			for (int dir = 2; dir <= 5; ++dir){
 	        			if(world.isAirBlock(x, y, z)){
 	        				

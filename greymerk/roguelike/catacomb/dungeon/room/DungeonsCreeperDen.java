@@ -1,5 +1,6 @@
 package greymerk.roguelike.catacomb.dungeon.room;
 
+import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.catacomb.dungeon.IDungeon;
 import greymerk.roguelike.treasure.TreasureChest;
 import greymerk.roguelike.worldgen.Spawner;
@@ -173,20 +174,21 @@ public class DungeonsCreeperDen implements IDungeon {
 		for (int chestCount = 0; chestCount < numChests; chestCount++) {
 
 			for (int attempts = 0; attempts < 3; attempts++) {
-				int chestPosX = (originX + rand.nextInt(dungeonLength * 2 + 1))
-						- dungeonLength;
+				int chestPosX = (originX + rand.nextInt(dungeonLength * 2 + 1)) - dungeonLength;
 				int chestPosY = originY;
-				int chestPosZ = (originZ + rand.nextInt(dungeonWidth * 2 + 1))
-						- dungeonWidth;
+				int chestPosZ = (originZ + rand.nextInt(dungeonWidth * 2 + 1)) - dungeonWidth;
 
 				if (TreasureChest.isValidChestSpace(world, chestPosX, chestPosY, chestPosZ)) {
-					TreasureChest.generate(world, rand, chestPosX, chestPosY, chestPosZ, true);
+					TreasureChest.generate(world, rand, chestPosX, chestPosY, chestPosZ, Catacomb.getLevel(chestPosY), true);
+					
+					if(rand.nextBoolean()){
+						WorldGenPrimitive.setBlock(world, chestPosX, chestPosY - 2, chestPosZ, Block.tnt.blockID);
+					}
+					
 					break;
 				}
 				
-				if(rand.nextBoolean() && !(world.isAirBlock(chestPosX, chestPosY - 2, chestPosZ))){
-					WorldGenPrimitive.setBlock(world, chestPosX, chestPosY - 2, chestPosZ, Block.tnt.blockID);
-				}
+
 			}
 		}
 	}

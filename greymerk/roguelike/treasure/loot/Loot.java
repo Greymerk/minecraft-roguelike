@@ -12,6 +12,7 @@ import net.minecraft.src.Block;
 import net.minecraft.src.EnchantmentData;
 import net.minecraft.src.EnchantmentHelper;
 import net.minecraft.src.Entity;
+import net.minecraft.src.EntityLiving;
 import net.minecraft.src.EntitySkeleton;
 import net.minecraft.src.EntityZombie;
 import net.minecraft.src.Item;
@@ -96,32 +97,14 @@ public enum Loot {
 	private static ItemStack pickSupplyItem(Random rand) {
 
 		switch(rand.nextInt(7)){
-		
-		case 0:
-			switch(rand.nextInt(4)){
-			case 0: return new ItemStack(Item.seeds, rand.nextInt(8) + 1);
-			case 1: return new ItemStack(Item.pumpkinSeeds, rand.nextInt(8) + 1);
-			case 2: return new ItemStack(Item.melonSeeds, rand.nextInt(8) + 1);
-			case 3: return new ItemStack(Block.sapling);
-			}			
-		case 1:
-			return new ItemStack(Item.wheat, rand.nextInt(8) + 1);
-		case 2:
-			// name tag
-			return new ItemStack(421, 1, 0);
-		case 3:
-			return new ItemStack(Block.torchWood, 10 + rand.nextInt(10));
-		case 4:
-			if(rand.nextBoolean()){
-				return new ItemStack(Item.paper, rand.nextInt(8) + 1);
-			}
-			return new ItemStack(Item.book, rand.nextInt(4) + 1);
-		case 5:
-			return new ItemStack(Item.saddle);
-		case 6:
-			return new ItemStack(Item.horseArmorIron, 1, 0);
-		default:
-			return new ItemStack(Item.stick, 1);
+		case 0: return new ItemStack(Item.seeds, rand.nextInt(8) + 1);
+		case 1: return new ItemStack(Item.pumpkinSeeds, rand.nextInt(8) + 1);
+		case 2: return new ItemStack(Item.melonSeeds, rand.nextInt(8) + 1);		
+		case 3: return new ItemStack(Item.wheat, rand.nextInt(8) + 1);
+		case 4: return new ItemStack(Block.torchWood, 10 + rand.nextInt(10));
+		case 5: return new ItemStack(Item.paper, rand.nextInt(8) + 1);
+		case 6:	return new ItemStack(Item.book, rand.nextInt(4) + 1);
+		default: return new ItemStack(Item.stick, 1);
 		}
 	}
 
@@ -267,6 +250,4 @@ public enum Loot {
 			}
 		}
     }
-
-	
 }

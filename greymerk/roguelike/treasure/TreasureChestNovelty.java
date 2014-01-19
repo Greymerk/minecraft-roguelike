@@ -15,7 +15,7 @@ import net.minecraft.src.TileEntityChest;
 public class TreasureChestNovelty extends TreasureChestBase{
 
 	@Override
-	protected void fillChest(TileEntityChest chest){
+	protected void fillChest(TileEntityChest chest, int level){
 
 		ItemNovelty choice = ItemNovelty.values()[rand.nextInt(ItemNovelty.values().length)];
 		ItemStack item = ItemNovelty.getItem(choice);
