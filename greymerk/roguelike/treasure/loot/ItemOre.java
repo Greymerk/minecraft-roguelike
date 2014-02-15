@@ -20,9 +20,9 @@ public class ItemOre {
 		switch(level){
 		
 		case 4:
-			if (rand.nextInt(15) == 0) return new ItemStack(Item.diamond, 1 + rand.nextInt(3));
-			if(rand.nextInt(10) == 0) return new ItemStack(Item.emerald, 1 + rand.nextInt(6));
-			if(rand.nextInt(10) == 0) return new ItemStack(Item.ingotIron, 5 + rand.nextInt(1 + level));
+			if (rand.nextInt(10) == 0) return new ItemStack(Item.diamond, 1);
+			if (rand.nextInt(5) == 0) return new ItemStack(Item.emerald, 1);
+			if (rand.nextInt(10) == 0) return new ItemStack(Item.ingotIron, 4 + rand.nextInt(5));
 		case 3:
 			if (rand.nextInt(15) == 0) return new ItemStack(Item.diamond, 1);
 			if (rand.nextInt(10) == 0) return new ItemStack(Item.ingotGold, 2 + rand.nextInt(4));

@@ -8,15 +8,13 @@ import net.minecraft.src.Enchantment;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 
-public enum ItemSpecialty {
+public class ItemSpecialty {
 
-	SWORD, BOW, HELMET, CHEST, LEGS, FEET, PICK, AXE, SHOVEL;
-	
-	public static ItemStack getRandomItem(ItemSpecialty type, Random rand, int level){
-		return getRandomItem(type, rand, Quality.getQuality(rand, level));
+	public static ItemStack getRandomItem(Equipment type, Random rand, int level){
+		return getRandomItem(type, rand, Quality.getQuality(rand, level, type));
 	}
 	
-	public static ItemStack getRandomItem(ItemSpecialty type, Random rand, Quality quality){
+	public static ItemStack getRandomItem(Equipment type, Random rand, Quality quality){
 		
 		ItemStack item;
 				
@@ -37,19 +35,19 @@ public enum ItemSpecialty {
 	
 	public static ItemStack getRandomArmour(Random rand, Quality quality){
 		switch(rand.nextInt(4)){
-		case 0: return getRandomItem(HELMET, rand, quality);
-		case 1: return getRandomItem(CHEST, rand, quality);
-		case 2: return getRandomItem(LEGS, rand, quality);
-		case 3: return getRandomItem(FEET, rand, quality);
+		case 0: return getRandomItem(Equipment.HELMET, rand, quality);
+		case 1: return getRandomItem(Equipment.CHEST, rand, quality);
+		case 2: return getRandomItem(Equipment.LEGS, rand, quality);
+		case 3: return getRandomItem(Equipment.FEET, rand, quality);
 		default: return null;
 		}
 	}
 	
 	public static ItemStack getRandomTool(Random rand, Quality quality){
 		switch(rand.nextInt(3)){
-		case 0: return getRandomItem(PICK, rand, quality);
-		case 1: return getRandomItem(AXE, rand, quality);
-		case 2: return getRandomItem(SHOVEL, rand, quality);
+		case 0: return getRandomItem(Equipment.PICK, rand, quality);
+		case 1: return getRandomItem(Equipment.AXE, rand, quality);
+		case 2: return getRandomItem(Equipment.SHOVEL, rand, quality);
 		default: return null;
 		}
 	}

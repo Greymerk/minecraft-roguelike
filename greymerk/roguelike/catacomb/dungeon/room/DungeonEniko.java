@@ -5,6 +5,7 @@ import java.util.Random;
 import net.minecraft.src.Block;
 import net.minecraft.src.World;
 import greymerk.roguelike.catacomb.dungeon.IDungeon;
+import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.treasure.ITreasureChest;
 import greymerk.roguelike.treasure.TreasureChestEmpty;
 import greymerk.roguelike.treasure.loot.ItemNovelty;
@@ -69,8 +70,8 @@ public class DungeonEniko implements IDungeon {
 		// floor
 		WorldGenPrimitive.fillRectSolid(world, x - 5, y - 1, z - 5, x + 5, y - 1, z + 5, Block.stoneBrick.blockID);
 				
-		MetaBlock blockOne = new MetaBlock(Block.blockNetherQuartz.blockID);
-		MetaBlock blockTwo = new MetaBlock(Block.blockLapis.blockID);
+		MetaBlock blockOne = RogueConfig.getBoolean(RogueConfig.PRECIOUSBLOCKS) ? new MetaBlock(Block.blockLapis.blockID) : new MetaBlock(Block.stainedClay.blockID, 11);
+		MetaBlock blockTwo = new MetaBlock(Block.blockNetherQuartz.blockID);
 		BlockFactoryCheckers checkers = new BlockFactoryCheckers(blockOne, blockTwo);
 		
 		WorldGenPrimitive.fillRectSolid(world, x - 3, y - 1, z - 3, x + 3, y - 1, z + 3, checkers);

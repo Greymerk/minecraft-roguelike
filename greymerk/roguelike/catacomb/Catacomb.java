@@ -70,6 +70,11 @@ public class Catacomb {
 			return false;
 		}
 		
+		if(!(world.provider.dimensionId == RogueConfig.getInt(RogueConfig.DIMENSION))){
+			return false;
+		}
+
+			
 		chunkX -= 4;
 		
 		int x = chunkX * 16;
@@ -138,7 +143,7 @@ public class Catacomb {
 			break;
 		case 1:
 			factory = new DungeonFactory(rand, Dungeon.CORNER);
-			int choice = rand.nextInt(3);
+			int choice = rand.nextInt(5);
 			if(choice == 0) factory.addSingle(Dungeon.ETHO);
 			if(choice == 1) factory.addSingle(Dungeon.BTEAM);
 			factory.addSingle(Dungeon.PIT);
@@ -159,10 +164,10 @@ public class Catacomb {
 			factory.addSingle(Dungeon.PIT);
 			factory.addRandom(Dungeon.BRICK, 3);
 			factory.addRandom(Dungeon.FIRE, 30);
-			break;			
+			break;	
 		case 3:
 			factory = new DungeonFactory(rand, Dungeon.CORNER);
-			if(rand.nextInt(3) == 0) factory.addSingle(Dungeon.BAJ);
+			if(rand.nextInt(5) == 0) factory.addSingle(Dungeon.BAJ);
 			factory.addSingle(Dungeon.OSSUARY);
 			factory.addSingle(Dungeon.ENDER);
 			factory.addSingle(Dungeon.CRYPT);
@@ -180,7 +185,8 @@ public class Catacomb {
 			break;
 		case 4:
 			factory = new DungeonFactory(rand, Dungeon.CORNER);
-			if(rand.nextInt(3) == 0) factory.addSingle(Dungeon.ENIKO);
+			if(rand.nextInt(5) == 0) factory.addSingle(Dungeon.ENIKO);
+			factory.addSingle(Dungeon.FIRE);
 			factory.addRandom(Dungeon.NETHER, 3);
 			factory.addRandom(Dungeon.NETHERFORT, 20);
 			factory.addRandom(Dungeon.SLIME, 30);

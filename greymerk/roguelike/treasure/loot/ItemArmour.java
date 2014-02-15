@@ -24,14 +24,14 @@ public class ItemArmour {
 
 		if(enchantLevel > 0 && rand.nextInt(20 + (level * 10)) == 0){
 			switch(slot){
-			case HEAD: return ItemSpecialty.getRandomItem(ItemSpecialty.HELMET, rand, level); 
-			case CHEST: return ItemSpecialty.getRandomItem(ItemSpecialty.CHEST, rand, level); 
-			case LEGS: return ItemSpecialty.getRandomItem(ItemSpecialty.LEGS, rand, level); 
-			case FEET: return ItemSpecialty.getRandomItem(ItemSpecialty.FEET, rand, level); 
+			case HEAD: return ItemSpecialty.getRandomItem(Equipment.HELMET, rand, level); 
+			case CHEST: return ItemSpecialty.getRandomItem(Equipment.CHEST, rand, level); 
+			case LEGS: return ItemSpecialty.getRandomItem(Equipment.LEGS, rand, level); 
+			case FEET: return ItemSpecialty.getRandomItem(Equipment.FEET, rand, level); 
 			}
 		}
 
-		ItemStack item = pickArmour(rand, slot, Quality.getQuality(rand, level));
+		ItemStack item = pickArmour(rand, slot, Quality.getArmourQuality(rand, level));
 		
 		if(enchantLevel > 0) Loot.enchantItem(item, rand, enchantLevel);
 		

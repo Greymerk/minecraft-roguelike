@@ -6,6 +6,8 @@ import greymerk.roguelike.treasure.TreasureChest;
 import greymerk.roguelike.worldgen.BlockFactoryProvider;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
+import greymerk.roguelike.worldgen.MetaBlock;
+import greymerk.roguelike.worldgen.Spawner;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
 
 import java.util.List;
@@ -118,7 +120,14 @@ public class DungeonsFire implements IDungeon{
 		WorldGenPrimitive.fillRectSolid(inWorld, inOriginX, inOriginY + 5, inOriginZ - 5, inOriginX, inOriginY + 5, inOriginZ + 5, fillBlocks);
 		
 		WorldGenPrimitive.fillRectSolid(inWorld, inOriginX - 1, inOriginY + 5, inOriginZ - 1, inOriginX + 1, inOriginY + 5, inOriginZ + 1, fillBlocks);
-		WorldGenPrimitive.setBlock(inWorld, inOriginX, inOriginY + 5, inOriginZ, 0);
+		
+		if(Catacomb.getLevel(inOriginY) == 4){
+			Spawner.generate(inWorld, inRandom, inOriginX, inOriginY + 5, inOriginZ, Spawner.BLAZE);
+			WorldGenPrimitive.fillRectSolid(inWorld, inOriginX - 1, inOriginY + 6, inOriginZ - 1, inOriginX + 1, inOriginY + 6, inOriginZ + 1, new MetaBlock(Block.stoneSingleSlab.blockID, 6), true, true);
+			WorldGenPrimitive.fillRectSolid(inWorld, inOriginX - 1, inOriginY + 4, inOriginZ - 1, inOriginX + 1, inOriginY + 4, inOriginZ + 1, new MetaBlock(Block.stoneSingleSlab.blockID, 14), true, true);
+		} else {
+			WorldGenPrimitive.setBlock(inWorld, inOriginX, inOriginY + 5, inOriginZ, 0);	
+		}
 		
 		List<Coord> chestSpace = WorldGenPrimitive.getRectSolid(inOriginX - 3, inOriginY, inOriginZ - 3, inOriginX + 3, inOriginY, inOriginZ + 3);
 		

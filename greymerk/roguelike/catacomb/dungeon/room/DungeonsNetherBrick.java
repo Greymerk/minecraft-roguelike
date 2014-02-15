@@ -2,6 +2,7 @@ package greymerk.roguelike.catacomb.dungeon.room;
 
 import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.catacomb.dungeon.IDungeon;
+import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.treasure.TreasureChest;
 import greymerk.roguelike.worldgen.BlockFactoryProvider;
 import greymerk.roguelike.worldgen.BlockRandomizer;
@@ -35,8 +36,8 @@ public class DungeonsNetherBrick implements IDungeon {
 		floor.addBlock(new MetaBlock(Block.netherrack.blockID), 3);
 		floor.addBlock(new MetaBlock(Block.oreNetherQuartz.blockID), 5);
 		floor.addBlock(new MetaBlock(Block.blockRedstone.blockID), 10);
-		floor.addBlock(new MetaBlock(Block.blockGold.blockID), 50);
-		floor.addBlock(new MetaBlock(Block.blockDiamond.blockID), 100);
+		if (RogueConfig.getBoolean(RogueConfig.PRECIOUSBLOCKS)) floor.addBlock(new MetaBlock(Block.blockGold.blockID), 50);
+		if (RogueConfig.getBoolean(RogueConfig.PRECIOUSBLOCKS)) floor.addBlock(new MetaBlock(Block.blockDiamond.blockID), 100);
 		WorldGenPrimitive.fillRectSolid(world, x - length - 1, y - 1, z - width - 1, x + length + 1, y - 1, z + width + 1, floor);
 
 		// lava crap under the floor

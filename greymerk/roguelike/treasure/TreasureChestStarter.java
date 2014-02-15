@@ -1,5 +1,6 @@
 package greymerk.roguelike.treasure;
 
+import greymerk.roguelike.treasure.loot.Equipment;
 import greymerk.roguelike.treasure.loot.Loot;
 import greymerk.roguelike.treasure.loot.ItemSpecialty;
 import greymerk.roguelike.treasure.loot.Quality;
@@ -27,7 +28,7 @@ public class TreasureChestStarter extends TreasureChestBase{
 		case 4: return new ItemStack(Item.swordStone);
 		case 3: return Loot.getLootByCategory(Loot.BLOCK, rand, 0);
 		case 2: return Loot.getLootByCategory(Loot.FOOD, rand, 0);
-		case 1: return ItemSpecialty.getRandomItem(ItemSpecialty.LEGS, rand, Quality.WOOD);
+		case 1: return ItemSpecialty.getRandomItem(Equipment.LEGS, rand, Quality.WOOD);
 		default: return new ItemStack(Block.torchWood, 3 + rand.nextInt(6));
 		}
 		

@@ -7,6 +7,7 @@ import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.World;
 import greymerk.roguelike.catacomb.dungeon.IDungeon;
+import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.treasure.ITreasureChest;
 import greymerk.roguelike.treasure.TreasureChest;
 import greymerk.roguelike.treasure.TreasureChestEmpty;
@@ -14,11 +15,11 @@ import greymerk.roguelike.treasure.loot.ItemArmour;
 import greymerk.roguelike.treasure.loot.ItemNovelty;
 import greymerk.roguelike.treasure.loot.ItemPotion;
 import greymerk.roguelike.treasure.loot.Loot;
+import greymerk.roguelike.treasure.loot.ItemRecord;
 import greymerk.roguelike.worldgen.BlockFactoryCheckers;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Log;
 import greymerk.roguelike.worldgen.MetaBlock;
-import greymerk.roguelike.worldgen.Record;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
 
 public class DungeonBTeam implements IDungeon {
@@ -75,14 +76,17 @@ public class DungeonBTeam implements IDungeon {
 		// east wall
 		WorldGenPrimitive.fillRectSolid(world, x + 5, y + 1, z - 4, x + 5, y + 4, z + 5, Block.stoneBrick.blockID);
 		
-		WorldGenPrimitive.fillRectSolid(world, x + 5, y, z - 1, x + 5, y + 4, z - 1, Block.blockEmerald.blockID);
-		WorldGenPrimitive.fillRectSolid(world, x + 5, y, z, x + 5, y, z + 1, Block.blockEmerald.blockID);
+		
+		int greenBlock = RogueConfig.getBoolean(RogueConfig.PRECIOUSBLOCKS) ? Block.blockEmerald.blockID : Block.oreEmerald.blockID;
+		
+		WorldGenPrimitive.fillRectSolid(world, x + 5, y, z - 1, x + 5, y + 4, z - 1, greenBlock);
+		WorldGenPrimitive.fillRectSolid(world, x + 5, y, z, x + 5, y, z + 1, greenBlock);
 		WorldGenPrimitive.fillRectSolid(world, x + 5, y + 1, z, x + 5, y + 1, z + 1, 0);
-		WorldGenPrimitive.setBlock(world, x + 5, y + 1, z + 2, Block.blockEmerald.blockID);
-		WorldGenPrimitive.fillRectSolid(world, x + 5, y + 2, z, x + 5, y + 2, z + 1, Block.blockEmerald.blockID);
+		WorldGenPrimitive.setBlock(world, x + 5, y + 1, z + 2, greenBlock);
+		WorldGenPrimitive.fillRectSolid(world, x + 5, y + 2, z, x + 5, y + 2, z + 1, greenBlock);
 		WorldGenPrimitive.fillRectSolid(world, x + 5, y + 3, z, x + 5, y + 3, z + 1, 0);
-		WorldGenPrimitive.setBlock(world, x + 5, y + 3, z + 2, Block.blockEmerald.blockID);
-		WorldGenPrimitive.fillRectSolid(world, x + 5, y + 4, z, x + 5, y + 4, z + 1, Block.blockEmerald.blockID);
+		WorldGenPrimitive.setBlock(world, x + 5, y + 3, z + 2, greenBlock);
+		WorldGenPrimitive.fillRectSolid(world, x + 5, y + 4, z, x + 5, y + 4, z + 1, greenBlock);
 		
 		// roof
 		WorldGenPrimitive.fillRectSolid(world, x - 4, y + 5, z - 5, x + 4, y + 6, z + 6, Block.stone.blockID);
@@ -126,7 +130,7 @@ public class DungeonBTeam implements IDungeon {
 		
 		
 		ITreasureChest recordChest = new TreasureChestEmpty().generate(world, rand, x - 4, y, z - 4);
-		recordChest.setInventorySlot(Record.getRecord(Record.STAL), recordChest.getInventorySize() / 2);
+		recordChest.setInventorySlot(ItemRecord.getRecord(ItemRecord.STAL), recordChest.getInventorySize() / 2);
 		WorldGenPrimitive.setBlock(world, x - 3, y, z - 4, Block.jukebox.blockID);
 		
 		ITreasureChest bdubsChest = new TreasureChestEmpty().generate(world, rand, x - 3, y, z + 5);

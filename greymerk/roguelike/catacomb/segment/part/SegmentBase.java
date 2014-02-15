@@ -3,7 +3,10 @@ package greymerk.roguelike.catacomb.segment.part;
 import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.catacomb.CatacombLevel;
 import greymerk.roguelike.catacomb.segment.ISegment;
+import greymerk.roguelike.worldgen.BlockFactoryProvider;
 import greymerk.roguelike.worldgen.Cardinal;
+import greymerk.roguelike.worldgen.MetaBlock;
+import greymerk.roguelike.worldgen.WorldGenPrimitive;
 
 import java.util.Random;
 
@@ -45,6 +48,11 @@ public abstract class SegmentBase implements ISegment {
 				genWall(wall);
 			}
 		}
+		
+		if(this instanceof SegmentArch || this instanceof SegmentMossyArch){
+			addSupport();
+		}
+		
 	}
 	
 	protected abstract void genWall(Cardinal wallDirection);
@@ -82,5 +90,37 @@ public abstract class SegmentBase implements ISegment {
 		case 4: return Block.stairsNetherBrick.blockID;
 		default: return Block.stairsStoneBrick.blockID;
 		}
+	}
+	
+	private void addSupport(){
+		if(!world.isAirBlock(x, y - 2, z)) return;
+		
+		int level = Catacomb.getLevel(y);
+		
+		WorldGenPrimitive.fillDown(world, x, y - 2, z, BlockFactoryProvider.getRandomizer(level, rand));
+		
+		int stairId;
+		switch(level){
+		case 0: 
+		case 1: 
+		case 2: stairId = Block.stairsStoneBrick.blockID; break;
+		case 3: stairId = Block.stairsCobblestone.blockID; break;
+		case 4: stairId = Block.stairsNetherBrick.blockID; break;
+		default: stairId = Block.stairsStoneBrick.blockID;
+		}
+		
+		MetaBlock stair = new MetaBlock(stairId);
+		stair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.WEST, true));
+		WorldGenPrimitive.setBlock(world, x - 1, y - 2, z, stair);
+		
+		stair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.EAST, true));
+		WorldGenPrimitive.setBlock(world, x + 1, y - 2, z, stair);
+		
+		stair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.SOUTH, true));
+		WorldGenPrimitive.setBlock(world, x, y - 2, z + 1, stair);
+		
+		stair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.NORTH, true));
+		WorldGenPrimitive.setBlock(world, x, y - 2, z - 1, stair);
+		
 	}
 }

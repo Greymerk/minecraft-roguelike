@@ -92,10 +92,8 @@ public class DungeonsMusic implements IDungeon {
 		
 		chestSpace.addAll(WorldGenPrimitive.getRectSolid(originX + 5, originY + 1, originZ - 4, originX + 5, originY + 1, originZ - 3));
 		chestSpace.addAll(WorldGenPrimitive.getRectSolid(originX + 5, originY + 1, originZ + 3, originX + 5, originY + 1, originZ + 4));
-		
-		TreasureChest[] types = {TreasureChest.SUPPLIES};
-		int numChests = RogueConfig.getBoolean(RogueConfig.GENEROUS) ? 2 : 1;
-		TreasureChest.createChests(world, rand, numChests, new ArrayList<Coord>(chestSpace), types);
+
+		TreasureChest.generate(world, rand, new ArrayList<Coord>(chestSpace), TreasureChest.MUSIC);
 		
 		// horizontal beams
 		WorldGenPrimitive.fillRectSolid(world, originX - 5, originY + 3, originZ - 5, originX - 5, originY + 3, originZ + 5, Block.wood.blockID, 0, 2, true, true);

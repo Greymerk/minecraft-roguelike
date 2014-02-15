@@ -4,6 +4,7 @@ import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.catacomb.dungeon.Dungeon;
 import greymerk.roguelike.catacomb.segment.IAlcove;
 import greymerk.roguelike.catacomb.segment.alcove.PrisonCell;
+import greymerk.roguelike.worldgen.BlockFactoryProvider;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
@@ -139,4 +140,6 @@ public class SegmentArch extends SegmentBase {
 			WorldGenPrimitive.setBlock(world, x - 2, y + 2, z, Block.planks.blockID, SPRUCE, 2, true, true);
 		}
 	}
+	
+
 }

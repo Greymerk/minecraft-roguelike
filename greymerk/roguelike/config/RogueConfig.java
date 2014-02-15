@@ -7,7 +7,7 @@ import net.minecraft.src.Tuple;
 
 public enum RogueConfig {
 
-	DONATURALSPAWN, LEVELRANGE, LEVELMAXROOMS, LEVELSCATTER, SPAWNFREQUENCY, GENEROUS;
+	DONATURALSPAWN, LEVELRANGE, LEVELMAXROOMS, LEVELSCATTER, SPAWNFREQUENCY, GENEROUS, MOBDROPS, DIMENSION, PRECIOUSBLOCKS;
 	
 	public static final String configDirName = "config";
 	public static final String configFileName = "roguelike.cfg";
@@ -22,6 +22,8 @@ public enum RogueConfig {
 		case LEVELSCATTER: return "levelScatter";
 		case SPAWNFREQUENCY: return "spawnFrequency";
 		case GENEROUS: return "generous";
+		case DIMENSION: return "dimension";
+		case PRECIOUSBLOCKS: return "preciousBlocks";
 		default: return null;
 		}
 	}
@@ -34,6 +36,8 @@ public enum RogueConfig {
 		case LEVELSCATTER: return new Tuple(getName(option), 12);
 		case SPAWNFREQUENCY: return new Tuple(getName(option), 10);
 		case GENEROUS: return new Tuple(getName(option), true);
+		case DIMENSION: return new Tuple(getName(option), 0);
+		case PRECIOUSBLOCKS: return new Tuple(getName(option), true);
 		default: return null;
 		}
 	}
@@ -45,6 +49,8 @@ public enum RogueConfig {
 		if(!instance.ContainsKey(getName(LEVELSCATTER)))setInt(LEVELSCATTER, (Integer)getDefault(LEVELSCATTER).getSecond());
 		if(!instance.ContainsKey(getName(SPAWNFREQUENCY)))setInt(SPAWNFREQUENCY, (Integer)getDefault(SPAWNFREQUENCY).getSecond());
 		if(!instance.ContainsKey(getName(GENEROUS))) setBoolean(GENEROUS, (Boolean)getDefault(GENEROUS).getSecond());
+		if(!instance.ContainsKey(getName(DIMENSION)))setInt(DIMENSION, (Integer)getDefault(DIMENSION).getSecond());
+		if(!instance.ContainsKey(getName(PRECIOUSBLOCKS)))setBoolean(PRECIOUSBLOCKS, (Boolean)getDefault(PRECIOUSBLOCKS).getSecond());
 	}
 	
 	public static boolean getBoolean(RogueConfig option){

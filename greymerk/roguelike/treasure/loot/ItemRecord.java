@@ -1,17 +1,23 @@
-package greymerk.roguelike.worldgen;
+package greymerk.roguelike.treasure.loot;
+
+import java.util.Random;
 
 import net.minecraft.src.ItemStack;
 
-public enum Record {
+public enum ItemRecord {
 
 	THIRTEEN, CAT, BLOCKS, CHIRP, FAR, MALL, MELLOHI,
 	STAL, STRAD, WARD, ELEVEN, WAIT;
 	
-	public static ItemStack getRecord(Record type){
+	public static ItemStack getRecord(ItemRecord type){
 		return new ItemStack(getId(type), 1, 0);
 	}
 	
-	public static int getId(Record type){
+	public static ItemStack getRandomRecord(Random rand){
+		return getRecord(ItemRecord.values()[rand.nextInt(ItemRecord.values().length)]);
+	}
+	
+	public static int getId(ItemRecord type){
 		
 		int base = 2256;
 		

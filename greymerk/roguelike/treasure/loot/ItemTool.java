@@ -12,9 +12,9 @@ public class ItemTool {
 		
 		if(enchant && rand.nextInt(20 + (rank * 10)) == 0){
 			switch(rand.nextInt(3)){
-			case 0: return ItemSpecialty.getRandomItem(ItemSpecialty.PICK, rand, rank);
-			case 1: return ItemSpecialty.getRandomItem(ItemSpecialty.AXE, rand, rank);
-			case 2: return ItemSpecialty.getRandomItem(ItemSpecialty.SHOVEL, rand, rank);
+			case 0: return ItemSpecialty.getRandomItem(Equipment.PICK, rand, rank);
+			case 1: return ItemSpecialty.getRandomItem(Equipment.AXE, rand, rank);
+			case 2: return ItemSpecialty.getRandomItem(Equipment.SHOVEL, rand, rank);
 			}
 			
 		}
@@ -40,7 +40,7 @@ public class ItemTool {
 	
 
 	private static ItemStack pickAxe(Random rand, int rank) {
-		Quality quality = Quality.getQuality(rand, rank);
+		Quality quality = Quality.getToolQuality(rand, rank);
 		switch (quality) {
 		case DIAMOND: return new ItemStack(Item.axeDiamond);
 		case GOLD: return new ItemStack(Item.axeGold);
@@ -52,7 +52,7 @@ public class ItemTool {
 	
 	private static ItemStack pickShovel(Random rand, int rank) {
 
-		Quality quality = Quality.getQuality(rand, rank);
+		Quality quality = Quality.getToolQuality(rand, rank);
 		switch (quality) {
 		case DIAMOND: return new ItemStack(Item.shovelDiamond);
 		case GOLD: return new ItemStack(Item.shovelGold);
@@ -64,7 +64,7 @@ public class ItemTool {
 	
 	private static ItemStack pickPick(Random rand, int rank) {
 
-		Quality quality = Quality.getQuality(rand, rank);
+		Quality quality = Quality.getToolQuality(rand, rank);
 		switch (quality) {
 		case DIAMOND: return new ItemStack(Item.pickaxeDiamond);
 		case GOLD: return new ItemStack(Item.pickaxeGold);

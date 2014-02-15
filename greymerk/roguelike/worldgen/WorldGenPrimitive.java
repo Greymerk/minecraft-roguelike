@@ -279,6 +279,13 @@ public class WorldGenPrimitive {
 		}		
 	}
 	
+	public static void fillDown(World world, int x, int y, int z, IBlockFactory blocks){
+		while(!world.isBlockOpaqueCube(x, y, z) && y > 1){
+			blocks.setBlock(world, x, y, z);
+			--y;
+		}
+	}
+	
 
 }
 

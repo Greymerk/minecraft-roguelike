@@ -19,7 +19,7 @@ public class ItemWeapon {
 	public static ItemStack getBow(Random rand, int rank, boolean enchant){
 		
 		if(rand.nextInt(20 + (rank * 10)) == 0){
-			return ItemSpecialty.getRandomItem(ItemSpecialty.BOW, rand, rank);
+			return ItemSpecialty.getRandomItem(Equipment.BOW, rand, rank);
 		}
 		
 		ItemStack bow = new ItemStack(Item.bow);
@@ -36,7 +36,7 @@ public class ItemWeapon {
 		ItemStack sword;
 		
 		if(enchant && rand.nextInt(10 + (rank * 10)) == 0){
-			return ItemSpecialty.getRandomItem(ItemSpecialty.SWORD, rand, rank);
+			return ItemSpecialty.getRandomItem(Equipment.SWORD, rand, rank);
 		}
 		
 		sword = pickSword(rand, rank);
@@ -50,7 +50,7 @@ public class ItemWeapon {
 	
 	private static ItemStack pickSword(Random rand, int rank){
 		
-		Quality quality = Quality.getQuality(rand, rank);
+		Quality quality = Quality.getWeaponQuality(rand, rank);
 		
 		switch (quality) {
 		case DIAMOND: return new ItemStack(Item.swordDiamond);

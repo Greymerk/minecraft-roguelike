@@ -45,33 +45,32 @@ public enum Loot {
 		}
 	}
 	
-	public static ItemStack getEquipmentBySlot(Random rand, Slot slot, int rank, boolean enchant){
+	public static ItemStack getEquipmentBySlot(Random rand, Slot slot, int level, boolean enchant){
 		
 		ItemStack item;
 		
 		if(slot == Slot.WEAPON){
-			return ItemWeapon.getRandom(rand, rank, enchant);
+			return ItemWeapon.getRandom(rand, level, enchant);
 		}
 		
-		return ItemArmour.getRandom(rand, rank, slot, enchant);
+		return ItemArmour.getRandom(rand, level, slot, enchant);
 		
 	}
 	
-	public static ItemStack getEnchantedBook(Random rand, int rank){
+	public static ItemStack getEnchantedBook(Random rand, int level){
 		
 		ItemStack book = new ItemStack(Item.book);
 		
-		enchantItem(book, rand, getEnchantLevel(rank));
+		enchantItem(book, rand, getEnchantLevel(level));
 		
 		return book;
 	}
 	
-	public static ItemStack getSupplyItem(Random rand, int rank){
+	public static ItemStack getSupplyItem(Random rand, int level){
 
-		if(rand.nextInt(200) == 0){
+		if(rand.nextInt(500) == 0){
 			ItemNovelty[] items = {
 					ItemNovelty.GUUDE,
-					ItemNovelty.BAJ,
 					ItemNovelty.JOHNNYRAGGOT,
 					ItemNovelty.FOURLES
 			};
@@ -80,20 +79,12 @@ public enum Loot {
 		}
 		
 		if(rand.nextInt(10) == 0){
-			return pickRecord(rand);
-		}
-		
-		if(rand.nextInt(10) == 0){
-			return ItemBlock.getRandom(rand, rank);
+			return ItemBlock.getRandom(rand, level);
 		}
 		
 		return pickSupplyItem(rand);
 	}
 	
-	private static ItemStack pickRecord(Random rand){
-		return new ItemStack(Item.record13.itemID + rand.nextInt(12), 1, 0);
-	}
-
 	private static ItemStack pickSupplyItem(Random rand) {
 
 		switch(rand.nextInt(7)){
@@ -246,7 +237,8 @@ public enum Loot {
 			
 			int chance = 5 - rank + ((3 - difficulty) * 2);
 			if (difficulty == 3 || rank == 3 || rand.nextInt(chance) == 0){
-				mob.setCurrentItemOrArmor(i, Loot.getEquipmentBySlot(rand, Slot.getSlotByNumber(i), rank, enchant));
+				ItemStack item = Loot.getEquipmentBySlot(rand, Slot.getSlotByNumber(i), rank, enchant);
+				mob.setCurrentItemOrArmor(i, item);
 			}
 		}
     }
