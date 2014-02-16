@@ -52,7 +52,7 @@ public class ItemJunk {
 		}
 		
 		/*
-		if(rand.nextInt(10) == 0){
+		if(level > 1 && rand.nextInt(10) == 0){
 			ChestGenHooks hook = ChestGenHooks.getInfo(ChestGenHooks.DUNGEON_CHEST);
 			ItemStack toReturn = hook.getOneItem(rand);
 			if(toReturn != null) return toReturn;

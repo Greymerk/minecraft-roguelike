@@ -6,6 +6,8 @@ import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.Spawner;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -44,9 +46,12 @@ public class DungeonsNetherBrickFortress implements IDungeon {
 		buildWalls();
 		buildFloor();
 		buildRoof();
-		TreasureChest.createChests(world, rand, 3 + rand.nextInt(3), WorldGenPrimitive.getRectSolid(
+		
+		ArrayList<TreasureChest> types = new ArrayList<TreasureChest>(Arrays.asList(TreasureChest.SPECIALTY));		
+		TreasureChest.createChests(world, rand, 3, WorldGenPrimitive.getRectSolid(
 				originX - 6, originY, originZ - 6,
-				originX + 6, originY, originZ + 6));
+				originX + 6, originY, originZ + 6),
+				types);
 
 		return true;
 	}

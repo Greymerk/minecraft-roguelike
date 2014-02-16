@@ -5,6 +5,8 @@ import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.catacomb.dungeon.Dungeon;
 import greymerk.roguelike.worldgen.Coord;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -14,13 +16,13 @@ import net.minecraft.src.World;
 
 public enum TreasureChest {
 
-	ARMOUR, WEAPONS, BLOCKS, ENCHANTING, FOOD, ORE, POTIONS, STARTER, TOOLS, SUPPLIES, SMITH, MUSIC;
+	ARMOUR, WEAPONS, BLOCKS, ENCHANTING, FOOD, ORE, POTIONS, STARTER, TOOLS, SUPPLIES, SMITH, MUSIC, SPECIALTY;
 	
-	public static final TreasureChest[] level0 = {ORE, TOOLS, ARMOUR, WEAPONS, FOOD, SUPPLIES, BLOCKS};
-	public static final TreasureChest[] level1 = {ORE, TOOLS, ARMOUR, WEAPONS, FOOD, BLOCKS};
-	public static final TreasureChest[] level2 = {ORE, TOOLS, ARMOUR, WEAPONS, BLOCKS};
-	public static final TreasureChest[] level3 = {ORE, TOOLS, ARMOUR, WEAPONS, BLOCKS};
-	public static final TreasureChest[] level4 = {ORE, TOOLS, ARMOUR, WEAPONS};
+	public static final List<TreasureChest> level0 = new ArrayList<TreasureChest>(Arrays.asList(ORE, TOOLS, ARMOUR, WEAPONS, FOOD, SUPPLIES, BLOCKS));
+	public static final List<TreasureChest> level1 = new ArrayList<TreasureChest>(Arrays.asList(ORE, TOOLS, ARMOUR, WEAPONS, FOOD, BLOCKS));
+	public static final List<TreasureChest> level2 = new ArrayList<TreasureChest>(Arrays.asList(ORE, TOOLS, ARMOUR, WEAPONS, BLOCKS));
+	public static final List<TreasureChest> level3 = new ArrayList<TreasureChest>(Arrays.asList(ORE, TOOLS, ARMOUR, WEAPONS, BLOCKS));
+	public static final List<TreasureChest> level4 = new ArrayList<TreasureChest>(Arrays.asList(ORE, TOOLS, ARMOUR, WEAPONS));
 	
 	public static void generate(World world, Random rand, int posX, int posY, int posZ){
 		generate(world, rand, posX, posY, posZ, Catacomb.getLevel(posY), false);
@@ -45,7 +47,7 @@ public enum TreasureChest {
 	}
 	
 	public static void generate(World world, Random rand, List<Coord> space, TreasureChest type){
-		createChests(world, rand, 1, space, new TreasureChest[]{type});
+		createChests(world, rand, 1, space, new ArrayList<TreasureChest>(Arrays.asList(type)));
 	}
 
 	public static void createChests(World world, Random rand, int numChests, List<Coord> space){
@@ -75,7 +77,7 @@ public enum TreasureChest {
 		}
 	}
 	
-	public static void createChests(World world, Random rand, int numChests, List<Coord> space, TreasureChest[] types){
+	public static void createChests(World world, Random rand, int numChests, List<Coord> space, List<TreasureChest> types){
 		
 		Collections.shuffle(space);
 		
@@ -92,7 +94,7 @@ public enum TreasureChest {
 			int z = block.getZ();
 			
 			if (isValidChestSpace(world, x, y, z)) {
-				generate(world, rand, x, y, z, types[rand.nextInt(types.length)]);
+				generate(world, rand, x, y, z, types.get(rand.nextInt(types.size())));
 				count++;
 			}
 		}
@@ -113,6 +115,7 @@ public enum TreasureChest {
 		case SUPPLIES: return new TreasureChestSupplies();
 		case SMITH: return new TreasureChestSmithy();
 		case MUSIC: return new TreasureChestMusic();
+		case SPECIALTY: return new TreasureChestSpecialty();
 		default: return new TreasureChestFood();
 		}
 	}
@@ -131,7 +134,7 @@ public enum TreasureChest {
 				return SUPPLIES;
 			}
 			
-			return level0[rand.nextInt(level0.length)];
+			return level0.get(rand.nextInt(level0.size()));
 			
 		case 1:
 			
@@ -139,7 +142,7 @@ public enum TreasureChest {
 				return ENCHANTING;
 			}
 			
-			return level1[rand.nextInt(level1.length)];
+			return level1.get(rand.nextInt(level1.size()));
 						
 		case 2:
 			
@@ -147,7 +150,7 @@ public enum TreasureChest {
 				return ENCHANTING;
 			}
 			
-			return level2[rand.nextInt(level2.length)];
+			return level2.get(rand.nextInt(level2.size()));
 		
 		case 3:
 			
@@ -155,7 +158,7 @@ public enum TreasureChest {
 				return ENCHANTING;
 			}
 			
-			return level3[rand.nextInt(level3.length)];
+			return level3.get(rand.nextInt(level3.size()));
 			
 		case 4:
 			
@@ -163,7 +166,7 @@ public enum TreasureChest {
 				return ENCHANTING;
 			}
 			
-			return level4[rand.nextInt(level4.length)];
+			return level4.get(rand.nextInt(level4.size()));
 		
 		default:
 			return FOOD;

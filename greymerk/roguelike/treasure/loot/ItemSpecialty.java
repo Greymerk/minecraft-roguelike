@@ -10,6 +10,14 @@ import net.minecraft.src.ItemStack;
 
 public class ItemSpecialty {
 
+	
+
+	
+	public static ItemStack getRandomItem(Random rand, int level){
+		return getRandomItem(Equipment.values()[rand.nextInt(Equipment.values().length)], rand, level);
+	}
+	
+	
 	public static ItemStack getRandomItem(Equipment type, Random rand, int level){
 		return getRandomItem(type, rand, Quality.getQuality(rand, level, type));
 	}
@@ -440,7 +448,7 @@ public class ItemSpecialty {
 			value += rand.nextInt(3);
 			break;
 		case DIAMOND:
-			value += 3 + rand.nextInt(3);
+			value += 2 + rand.nextInt(2);
 			break;
 		}
 		

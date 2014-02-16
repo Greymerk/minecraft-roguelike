@@ -6,6 +6,7 @@ import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -60,8 +61,7 @@ public class DungeonsWood implements IDungeon{
 		space.add(new Coord(originX + WIDTH, originY, originZ - LENGTH + 1));
 		space.add(new Coord(originX + WIDTH, originY, originZ + LENGTH - 1));
 		
-		TreasureChest[] types = {TreasureChest.FOOD};
-		TreasureChest.createChests(inWorld, inRandom, 1, space, types);
+		TreasureChest.generate(inWorld, inRandom, space, TreasureChest.FOOD);
 		
 		return true;
 	}

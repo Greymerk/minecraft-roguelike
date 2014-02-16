@@ -10,6 +10,7 @@ import greymerk.roguelike.worldgen.WorldGenPrimitive;
 import java.io.PrintStream;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
@@ -71,8 +72,7 @@ public class DungeonsSmithy implements IDungeon{
 		space.add(new Coord(originX + 2, originY, originZ - 2));
 		space.add(new Coord(originX + 2, originY, originZ + 2));
 		
-		TreasureChest[] types = {TreasureChest.SMITH};
-		TreasureChest.createChests(inWorld, inRandom, 1, space, types);
+		TreasureChest.generate(inWorld, inRandom, space, TreasureChest.SMITH);
 		
 		return true;
 	}

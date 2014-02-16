@@ -20,7 +20,7 @@ public class ItemOre {
 		switch(level){
 		
 		case 4:
-			if (rand.nextInt(10) == 0) return new ItemStack(Item.diamond, 1);
+			if (rand.nextInt(5) == 0) return new ItemStack(Item.diamond, 1);
 			if (rand.nextInt(5) == 0) return new ItemStack(Item.emerald, 1);
 			if (rand.nextInt(10) == 0) return new ItemStack(Item.ingotIron, 4 + rand.nextInt(5));
 		case 3:

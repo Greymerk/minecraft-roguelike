@@ -82,7 +82,11 @@ public abstract class TreasureChestBase implements ITreasureChest{
 			return 0;
 		}
 		
-		return chest.getSizeInventory();
+		try{
+			return chest.getSizeInventory();
+		} catch(NullPointerException e){
+			return 0;
+		}
 	}
 	
 	protected abstract void fillChest(TileEntityChest chest, int level);

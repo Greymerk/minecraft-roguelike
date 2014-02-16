@@ -8,6 +8,7 @@ import greymerk.roguelike.worldgen.WorldGenPrimitive;
 import java.io.PrintStream;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
@@ -50,7 +51,7 @@ public class DungeonsBase implements IDungeon {
 		buildWalls();
 		buildFloor();
 		buildRoof();
-		TreasureChest[] types = {TreasureChest.BLOCKS, TreasureChest.FOOD, TreasureChest.SUPPLIES, TreasureChest.TOOLS};
+		List<TreasureChest> types = new ArrayList<TreasureChest>(Arrays.asList(TreasureChest.BLOCKS, TreasureChest.FOOD, TreasureChest.SUPPLIES, TreasureChest.TOOLS));
 		TreasureChest.createChests(world, rand, 1, WorldGenPrimitive.getRectSolid(
 										originX - dungeonLength, originY, originZ - dungeonWidth,
 										originX + dungeonLength, originY, originZ + dungeonWidth), types);

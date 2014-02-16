@@ -12,6 +12,7 @@ import greymerk.roguelike.worldgen.Spawner;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -132,7 +133,7 @@ public class DungeonsBrick implements IDungeon {
 		space.add(new Coord(originX + 2, originY, originZ + 3));
 		space.add(new Coord(originX + 3, originY, originZ + 2));
 
-		TreasureChest[] types = {TreasureChest.ARMOUR, TreasureChest.WEAPONS, TreasureChest.TOOLS};
+		List<TreasureChest> types = new ArrayList<TreasureChest>(Arrays.asList(TreasureChest.ARMOUR, TreasureChest.WEAPONS, TreasureChest.TOOLS));
 		TreasureChest.createChests(inWorld, inRandom, 1, space, types);
 		
 		placeMobSpawner();

@@ -5,8 +5,11 @@ import greymerk.roguelike.catacomb.dungeon.DungeonFactory;
 import greymerk.roguelike.catacomb.dungeon.IDungeonFactory;
 import greymerk.roguelike.config.ConfigFile;
 import greymerk.roguelike.config.RogueConfig;
+import greymerk.roguelike.worldgen.Coord;
+import greymerk.roguelike.worldgen.WorldGenPrimitive;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import net.minecraft.src.BiomeGenBase;
@@ -27,6 +30,19 @@ public class Catacomb {
 		this.world = world;
 		this.rand = rand;
 		this.previous = null;
+	}
+	
+	
+	public void generateNear(int x, int z){
+		int attempts = 50;
+		
+		for(int i = 0;i < attempts;i++){
+			Coord location = getNearbyCoord(rand, x, z, 40, 100);
+			if(validLocation(world, rand, location.getX(), location.getZ())){
+				generate(location.getX(), location.getZ());
+				return;
+			}
+		}
 	}
 	
 	public void generate(int inX, int inZ){
@@ -64,7 +80,7 @@ public class Catacomb {
 		
 	}
 	
-	public static boolean canSpawn(int chunkX, int chunkZ, World world){
+	public static boolean canSpawnInChunk(int chunkX, int chunkZ, World world){
 		
 		if(!RogueConfig.getBoolean(RogueConfig.DONATURALSPAWN)){
 			return false;
@@ -74,28 +90,9 @@ public class Catacomb {
 			return false;
 		}
 
-			
-		chunkX -= 4;
-		
 		int x = chunkX * 16;
 		int z = chunkZ * 16;
 		
-		BiomeGenBase[] invalidBiomes = {
-				BiomeGenBase.ocean, 
-				BiomeGenBase.frozenOcean, 
-				BiomeGenBase.extremeHills, 
-				BiomeGenBase.iceMountains, 
-				BiomeGenBase.jungleHills
-				};
-		
-		BiomeGenBase localBiome = world.getBiomeGenForCoords(x, z);
-
-		for(BiomeGenBase biome : invalidBiomes){
-			if(biome == localBiome){
-				return false;
-			}
-		}
-
 		int frequency = RogueConfig.getInt(RogueConfig.SPAWNFREQUENCY);
 		int min = 8 * frequency / 10;
 		int max = 32 * frequency / 10;
@@ -148,7 +145,6 @@ public class Catacomb {
 			if(choice == 1) factory.addSingle(Dungeon.BTEAM);
 			factory.addSingle(Dungeon.PIT);
 			factory.addSingle(Dungeon.MESS);
-			if(RogueConfig.getInt(RogueConfig.LEVELMAXROOMS) > 30) factory.addSingle(Dungeon.MESS);
 			factory.addSingle(Dungeon.ENCHANT);
 			factory.addSingle(Dungeon.SMITH);
 			factory.addSingle(Dungeon.LAB);
@@ -187,11 +183,11 @@ public class Catacomb {
 			factory = new DungeonFactory(rand, Dungeon.CORNER);
 			if(rand.nextInt(5) == 0) factory.addSingle(Dungeon.ENIKO);
 			factory.addSingle(Dungeon.FIRE);
+			factory.addSingle(Dungeon.NETHERFORT);
+			factory.addSingle(Dungeon.SLIME);
 			factory.addRandom(Dungeon.NETHER, 3);
-			factory.addRandom(Dungeon.NETHERFORT, 20);
 			factory.addRandom(Dungeon.SLIME, 30);
 			factory.addRandom(Dungeon.SPIDER, 30);
-			factory.addRandom(Dungeon.FIRE, 50);
 			break;
 		default:
 			factory = new DungeonFactory(rand, Dungeon.CORNER);
@@ -200,18 +196,14 @@ public class Catacomb {
 		return factory;
 	}
 	
-	public static void spawnInChunk(World world, Random rand, int chunkX, int chunkZ, int frequency) {
+	public static void spawnInChunk(World world, Random rand, int chunkX, int chunkZ) {
 		
-		if(world.provider.dimensionId != 0){
-			return;
-		}
-		
-		if(Catacomb.canSpawn(chunkX, chunkZ, world)){
+		if(Catacomb.canSpawnInChunk(chunkX, chunkZ, world)){
 			int x = chunkX * 16 + 4;
 			int z = chunkZ * 16 + 4;
 			
 			Catacomb cata = new Catacomb(world, rand);
-			cata.generate(x, z);
+			cata.generateNear(x, z);
 		}
 	}
 	
@@ -234,5 +226,57 @@ public class Catacomb {
 		}
 		
 		return 0;
+	}
+	
+	public static boolean validLocation(World world, Random rand, int x, int z){
+		
+		if(!world.isAirBlock(x, 100, z)){
+			return false;
+		}
+		
+		int y = 100;
+		
+		while(!world.isBlockOpaqueCube(x, y, z) && y > 50){
+			--y;
+		}
+		
+		if(y < 60){
+			return false;
+		}
+		
+		List<Coord> above = WorldGenPrimitive.getRectSolid(x - 4, y + 4, z - 4, x + 4, y + 4, z + 4);
+
+		for (Coord c : above){
+			if(world.isBlockOpaqueCube(c.getX(), c.getY(), c.getZ())){
+				return false;
+			}
+		}
+		
+		List<Coord> below = WorldGenPrimitive.getRectSolid(x - 4, y - 3, z - 4, x + 4, y - 3, z + 4);
+		
+		int airCount = 0;
+		for (Coord c : below){
+			if(!world.isBlockOpaqueCube(c.getX(), c.getY(), c.getZ())){
+				airCount++;
+			}
+			if(airCount > 8){
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
+	public static Coord getNearbyCoord(Random rand, int x, int z, int min, int max){
+		
+		int distance = min + rand.nextInt(max - min);
+		
+		double angle = rand.nextDouble() * 2 * Math.PI;
+		
+		int xOffset = (int) (Math.cos(angle) * distance);
+		int zOffset = (int) (Math.sin(angle) * distance);
+		
+		Coord nearby = new Coord(x + xOffset, 0, z + zOffset);		
+		return nearby;
 	}
 }
