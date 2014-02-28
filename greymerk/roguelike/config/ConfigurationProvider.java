@@ -308,6 +308,7 @@ public abstract class ConfigurationProvider implements Iterable<Configuration> {
 			
 			if(!it.hasNext()) { // last
 				intString += it.next().toString();
+				break;
 			}
 
 			intString += it.next().toString() + ',';
