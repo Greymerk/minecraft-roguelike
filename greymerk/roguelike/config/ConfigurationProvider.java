@@ -191,6 +191,27 @@ public abstract class ConfigurationProvider implements Iterable<Configuration> {
 	
 	}
 	
+	public List<Integer> GetListInteger (String key, List<Integer> fallback) {
+
+		String value = Get(key);
+		
+		if(value == null) return fallback;
+		
+		String[] arrValues = value.split(",");
+		
+		List<String> values = Arrays.asList(arrValues);
+		
+		List<Integer> ints = new ArrayList<Integer>();
+		
+		for (String s : values) {
+			try {
+				ints.add(Integer.parseInt(s));
+			} catch (NumberFormatException e) {	}
+		}
+			
+		return ints;
+	}
+	
 	
 	/**
 	 *	Sets a configuration, creating it if it
@@ -278,6 +299,23 @@ public abstract class ConfigurationProvider implements Iterable<Configuration> {
 	
 	}
 	
+	
+	public void Set (String key, List<Integer> intList){
+		
+		String intString = "";
+		
+		for (Iterator it = intList.iterator() ; it.hasNext(); ) {
+			
+			if(!it.hasNext()) { // last
+				intString += it.next().toString();
+			}
+
+			intString += it.next().toString() + ',';
+		}
+		
+		Set(key, intString);
+		
+	}
 	
 	/**
 	 *	Unsets a configuration, removing it.

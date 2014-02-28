@@ -86,7 +86,7 @@ public class Catacomb {
 			return false;
 		}
 		
-		if(!(world.provider.dimensionId == RogueConfig.getInt(RogueConfig.DIMENSION))){
+		if(!RogueConfig.getIntList(RogueConfig.DIMENSION).contains(world.provider.dimensionId)){
 			return false;
 		}
 

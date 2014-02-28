@@ -1,7 +1,10 @@
 package greymerk.roguelike.config;
 
+
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import net.minecraft.src.Tuple;
 
@@ -38,7 +41,7 @@ public enum RogueConfig {
 		case LEVELSCATTER: return new Tuple(getName(option), 12);
 		case SPAWNFREQUENCY: return new Tuple(getName(option), 10);
 		case GENEROUS: return new Tuple(getName(option), true);
-		case DIMENSION: return new Tuple(getName(option), 0);
+		case DIMENSION: return new Tuple(getName(option), new ArrayList<Integer>(0));
 		case PRECIOUSBLOCKS: return new Tuple(getName(option), true);
 		case LOOTING: return new Tuple(getName(option), 0.085D);
 		default: return null;
@@ -52,7 +55,7 @@ public enum RogueConfig {
 		if(!instance.ContainsKey(getName(LEVELSCATTER)))setInt(LEVELSCATTER, (Integer)getDefault(LEVELSCATTER).getSecond());
 		if(!instance.ContainsKey(getName(SPAWNFREQUENCY)))setInt(SPAWNFREQUENCY, (Integer)getDefault(SPAWNFREQUENCY).getSecond());
 		if(!instance.ContainsKey(getName(GENEROUS))) setBoolean(GENEROUS, (Boolean)getDefault(GENEROUS).getSecond());
-		if(!instance.ContainsKey(getName(DIMENSION)))setInt(DIMENSION, (Integer)getDefault(DIMENSION).getSecond());
+		if(!instance.ContainsKey(getName(DIMENSION)))setIntList(DIMENSION, (List<Integer>)getDefault(DIMENSION).getSecond());
 		if(!instance.ContainsKey(getName(PRECIOUSBLOCKS)))setBoolean(PRECIOUSBLOCKS, (Boolean)getDefault(PRECIOUSBLOCKS).getSecond());
 		if(!instance.ContainsKey(getName(LOOTING)))setDouble(LOOTING, (Double) getDefault(LOOTING).getSecond());
 	}
@@ -88,6 +91,18 @@ public enum RogueConfig {
 	}
 	
 	public static void setInt(RogueConfig option, int value){
+		reload(false);
+		Tuple def = getDefault(option);
+		instance.Set((String)def.getFirst(), value);
+	}
+	
+	public static List<Integer> getIntList(RogueConfig option){
+		reload(false);
+		Tuple def = getDefault(option);
+		return instance.GetListInteger((String)def.getFirst(), (ArrayList<Integer>)def.getSecond());
+	}
+	
+	public static void setIntList(RogueConfig option, List<Integer> value){
 		reload(false);
 		Tuple def = getDefault(option);
 		instance.Set((String)def.getFirst(), value);
