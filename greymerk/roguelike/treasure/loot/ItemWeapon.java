@@ -16,33 +16,33 @@ public class ItemWeapon {
 		}
 	}
 	
-	public static ItemStack getBow(Random rand, int rank, boolean enchant){
+	public static ItemStack getBow(Random rand, int level, boolean enchant){
 		
-		if(rand.nextInt(20 + (rank * 10)) == 0){
-			return ItemSpecialty.getRandomItem(Equipment.BOW, rand, rank);
+		if(rand.nextInt(20 + (level * 10)) == 0){
+			return ItemSpecialty.getRandomItem(Equipment.BOW, rand, level);
 		}
 		
 		ItemStack bow = new ItemStack(Item.bow);
 		
-		if(enchant && rand.nextInt(6 - rank) == 0){
-			Loot.enchantItem(bow, rand, Loot.getEnchantLevel(rank));
+		if(enchant && rand.nextInt(6 - level) == 0){
+			Loot.enchantItem(bow, rand, Loot.getEnchantLevel(rand, level));
 		}
 		
 		return bow;
 		
 	}
 	
-	public static ItemStack getSword(Random rand, int rank, boolean enchant){
+	public static ItemStack getSword(Random rand, int level, boolean enchant){
 		ItemStack sword;
 		
-		if(enchant && rand.nextInt(10 + (rank * 10)) == 0){
-			return ItemSpecialty.getRandomItem(Equipment.SWORD, rand, rank);
+		if(enchant && rand.nextInt(10 + (level * 10)) == 0){
+			return ItemSpecialty.getRandomItem(Equipment.SWORD, rand, level);
 		}
 		
-		sword = pickSword(rand, rank);
+		sword = pickSword(rand, level);
 		
-		if(enchant && rand.nextInt(6 - rank) == 0){
-			Loot.enchantItem(sword, rand, Loot.getEnchantLevel(rank));
+		if(enchant && rand.nextInt(6 - level) == 0){
+			Loot.enchantItem(sword, rand, Loot.getEnchantLevel(rand, level));
 		}
 		
 		return sword;		

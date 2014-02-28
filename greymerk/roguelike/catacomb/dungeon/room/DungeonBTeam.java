@@ -76,17 +76,16 @@ public class DungeonBTeam implements IDungeon {
 		// east wall
 		WorldGenPrimitive.fillRectSolid(world, x + 5, y + 1, z - 4, x + 5, y + 4, z + 5, Block.stoneBrick.blockID);
 		
+		MetaBlock greenBlock = RogueConfig.getBoolean(RogueConfig.PRECIOUSBLOCKS) ? new MetaBlock(Block.blockEmerald.blockID) : new MetaBlock(Block.cloth.blockID, 5);
 		
-		int greenBlock = RogueConfig.getBoolean(RogueConfig.PRECIOUSBLOCKS) ? Block.blockEmerald.blockID : Block.oreEmerald.blockID;
-		
-		WorldGenPrimitive.fillRectSolid(world, x + 5, y, z - 1, x + 5, y + 4, z - 1, greenBlock);
-		WorldGenPrimitive.fillRectSolid(world, x + 5, y, z, x + 5, y, z + 1, greenBlock);
+		WorldGenPrimitive.fillRectSolid(world, x + 5, y, z - 1, x + 5, y + 4, z - 1, greenBlock, true, true);
+		WorldGenPrimitive.fillRectSolid(world, x + 5, y, z, x + 5, y, z + 1, greenBlock, true, true);
 		WorldGenPrimitive.fillRectSolid(world, x + 5, y + 1, z, x + 5, y + 1, z + 1, 0);
-		WorldGenPrimitive.setBlock(world, x + 5, y + 1, z + 2, greenBlock);
-		WorldGenPrimitive.fillRectSolid(world, x + 5, y + 2, z, x + 5, y + 2, z + 1, greenBlock);
+		WorldGenPrimitive.setBlock(world, x + 5, y + 1, z + 2, greenBlock, true, true);
+		WorldGenPrimitive.fillRectSolid(world, x + 5, y + 2, z, x + 5, y + 2, z + 1, greenBlock, true, true);
 		WorldGenPrimitive.fillRectSolid(world, x + 5, y + 3, z, x + 5, y + 3, z + 1, 0);
-		WorldGenPrimitive.setBlock(world, x + 5, y + 3, z + 2, greenBlock);
-		WorldGenPrimitive.fillRectSolid(world, x + 5, y + 4, z, x + 5, y + 4, z + 1, greenBlock);
+		WorldGenPrimitive.setBlock(world, x + 5, y + 3, z + 2, greenBlock, true, true);
+		WorldGenPrimitive.fillRectSolid(world, x + 5, y + 4, z, x + 5, y + 4, z + 1, greenBlock, true, true);
 		
 		// roof
 		WorldGenPrimitive.fillRectSolid(world, x - 4, y + 5, z - 5, x + 4, y + 6, z + 6, Block.stone.blockID);

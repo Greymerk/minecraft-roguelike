@@ -3,11 +3,14 @@ package greymerk.roguelike.catacomb.dungeon.room;
 import java.util.Random;
 
 import net.minecraft.src.Block;
+import net.minecraft.src.Item;
+import net.minecraft.src.ItemStack;
 import net.minecraft.src.World;
 import greymerk.roguelike.catacomb.dungeon.IDungeon;
 import greymerk.roguelike.treasure.ITreasureChest;
 import greymerk.roguelike.treasure.TreasureChestEmpty;
 import greymerk.roguelike.treasure.loot.ItemNovelty;
+import greymerk.roguelike.treasure.loot.Loot;
 import greymerk.roguelike.worldgen.BlockRandomizer;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.IBlockFactory;
@@ -209,7 +212,17 @@ public class DungeonEtho implements IDungeon {
 		
 		ITreasureChest chest = new TreasureChestEmpty();
 		chest.generate(world, rand, x - 4, y - 2, z - 4);
-		chest.setInventorySlot(ItemNovelty.getItem(ItemNovelty.ETHO), chest.getInventorySize() / 2);
+		
+		ItemStack yourMum = new ItemStack(Item.hoeWood);
+		Loot.setItemName(yourMum, "Your Mum", null);
+		int middle = chest.getInventorySize() / 2;
+		int mumSlot = rand.nextInt(chest.getInventorySize());
+		if (mumSlot == middle){
+			mumSlot += rand.nextInt(5);
+		}
+		chest.setInventorySlot(yourMum, mumSlot);
+		
+		chest.setInventorySlot(ItemNovelty.getItem(ItemNovelty.ETHO), middle);
 		
 		return true;
 	}

@@ -13,11 +13,11 @@ public class ItemArmour {
 	public static ItemStack getRandom(Random rand, int level, boolean enchant){
 		return getRandom(rand, level,
 				Slot.getSlotByNumber(rand.nextInt(4) + 1),
-				enchant ? Loot.getEnchantLevel(level) : 0);
+				enchant ? Loot.getEnchantLevel(rand, level) : 0);
 	}
 	
 	public static ItemStack getRandom(Random rand, int level, Slot slot, boolean enchant){
-		return getRandom(rand, level, slot, enchant ? Loot.getEnchantLevel(level) : 0);
+		return getRandom(rand, level, slot, enchant ? Loot.getEnchantLevel(rand, level) : 0);
 	}
 	
 	public static ItemStack getRandom(Random rand, int level, Slot slot, int enchantLevel){

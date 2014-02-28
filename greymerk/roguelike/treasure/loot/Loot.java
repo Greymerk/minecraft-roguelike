@@ -61,7 +61,7 @@ public enum Loot {
 		
 		ItemStack book = new ItemStack(Item.book);
 		
-		enchantItem(book, rand, getEnchantLevel(level));
+		enchantItem(book, rand, getEnchantLevel(rand, level));
 		
 		return book;
 	}
@@ -99,20 +99,20 @@ public enum Loot {
 		}
 	}
 
-	public static int getEnchantLevel(int level) {
+	public static int getEnchantLevel(Random rand, int level) {
 
 		switch(level){
-		case 4: return 30;
-		case 3: return 20;
-		case 2: return 10;
-		case 1: return 5;
+		case 4: return 21 + rand.nextInt(10);
+		case 3: return 16 + rand.nextInt(10);
+		case 2: return 5 + rand.nextInt(10);
+		case 1: return 1 + rand.nextInt(5);
 		case 0: return 1;
 		default: return 1;
 		}
 	}
 
 	public static void enchantItemChance(ItemStack item, Random rand, int level){
-		if(rand.nextInt(7 - level) == 0) enchantItem(item, rand, getEnchantLevel(level));
+		if(rand.nextInt(7 - level) == 0) enchantItem(item, rand, getEnchantLevel(rand, level));
 	}
 	
 	public static void enchantItem(ItemStack item, Random rand, int enchantLevel) {
@@ -240,6 +240,12 @@ public enum Loot {
 				ItemStack item = Loot.getEquipmentBySlot(rand, Slot.getSlotByNumber(i), rank, enchant);
 				mob.setCurrentItemOrArmor(i, item);
 			}
+		}
+		
+		// lower drop chance
+
+		for(int s = 0; s < 5; s++){
+			((EntityLiving)mob).setEquipmentDropChance(s, (float) RogueConfig.getDouble(RogueConfig.LOOTING));
 		}
     }
 }

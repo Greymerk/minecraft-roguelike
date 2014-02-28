@@ -79,13 +79,13 @@ public abstract class TreasureChestBase implements ITreasureChest{
 	public int getInventorySize(){
 		
 		if(chest == null){
-			return 0;
+			return 1;
 		}
 		
 		try{
 			return chest.getSizeInventory();
 		} catch(NullPointerException e){
-			return 0;
+			return 1;
 		}
 	}
 	

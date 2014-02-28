@@ -18,7 +18,8 @@ public enum ItemNovelty {
 
 	GREYMERK, ANDERZEL, NEBRIS, ZISTEAUPANTS, ZISTEAUSIGN, AVIDYA, ASHLEA, KURT, AMLP,
 	CLEO, ENIKOSWORD, ENIKOBOW, BDOUBLEO, GUUDE, RLEAHY, ETHO, BAJ, DOCM, GINGER, VECHS,
-	NOTCH, JOHNNYRAGGOT, QUANTUMLEAP, MCGAMER, GENERIKB, PAUSE, PAULSOARESJR, FOURLES, DINNERBONE, GRIM, MMILLSS, MILLBEE;
+	NOTCH, JOHNNYRAGGOT, QUANTUMLEAP, MCGAMER, GENERIKB, PAUSE, PAULSOARESJR, FOURLES,
+	DINNERBONE, GRIM, MMILLSS, MILLBEE, VINTAGEBEEF;
 		
 	public static final Map<String, ItemNovelty> names;
 	static {
@@ -55,6 +56,7 @@ public enum ItemNovelty {
 		names.put("grim", ItemNovelty.GRIM);
 		names.put("mmillss", ItemNovelty.MMILLSS);
 		names.put("millbee", ItemNovelty.MILLBEE);
+		names.put("vintagebeef", ItemNovelty.VINTAGEBEEF);
 	};
 		
 	public static ItemStack getItemByName(String name){
@@ -211,7 +213,7 @@ public enum ItemNovelty {
 		case GINGER:
 			item = new ItemStack(Item.chickenCooked);
 			Loot.setItemName(item, "Ginger's Spicy Chicken", TextFormat.DARKPURPLE);
-			Loot.setItemLore(item, "Five Alarm",  TextFormat.DARKGREEN);
+			Loot.setItemLore(item, "\"Kung Pao!\"",  TextFormat.DARKGREEN);
 			item.addEnchantment(Enchantment.knockback, 1);
 			item.addEnchantment(Enchantment.fireAspect, 3);
 			item.addEnchantment(Enchantment.sharpness, 1);
@@ -220,6 +222,7 @@ public enum ItemNovelty {
 			item = new ItemStack(Item.stick);
 			Loot.setItemName(item, "Vechsing Stick", TextFormat.DARKPURPLE);
 			Loot.setItemLore(item, "\"Really?!\"",  TextFormat.DARKGREEN);
+			item.addEnchantment(Enchantment.unbreaking, 1);
 			return item;
 		case NOTCH:
 			item = new ItemStack(Item.appleRed);
@@ -244,9 +247,9 @@ public enum ItemNovelty {
 		case MCGAMER:
 			item = new ItemStack(Item.dyePowder, 1, 4);
 			Loot.setItemName(item, "McGamer's Precious", TextFormat.DARKPURPLE);
-			Loot.setItemLore(item, "\"Who needs diamonds?\"",  TextFormat.DARKGREEN);
+			Loot.setItemLore(item, "\"The lapis\"",  TextFormat.DARKGREEN);
 			item.addEnchantment(Enchantment.sharpness, 2);
-			item.addEnchantment(Enchantment.knockback, 1);
+			item.addEnchantment(Enchantment.fortune, 3);
 			return item;
 		case GENERIKB:
 			item = new ItemStack(Item.bakedPotato);
@@ -268,7 +271,7 @@ public enum ItemNovelty {
 			item = new ItemStack(Item.feather);
 			Loot.setItemName(item, "Soarian Bonker", TextFormat.DARKPURPLE);
 			Loot.setItemLore(item, "\"Aaaaauuaahh!!\"",  TextFormat.DARKGREEN);
-			item.addEnchantment(Enchantment.knockback, 10);
+			item.addEnchantment(Enchantment.knockback, 4);
 			return item;
 		case FOURLES:
 			item = new ItemStack(Item.dyePowder, 1, 3);
@@ -286,7 +289,7 @@ public enum ItemNovelty {
 			return item;
 		case GRIM:
 			item = new ItemStack(Item.rottenFlesh);
-			Loot.setItemName(item, "Grim's chew-toy", TextFormat.DARKPURPLE);
+			Loot.setItemName(item, "Grim chew-toy", TextFormat.DARKPURPLE);
 			Loot.setItemLore(item, "\"Come on Grim, let's do this!\"",  TextFormat.DARKGREEN);
 			item.addEnchantment(Enchantment.smite, 2);
 			item.addEnchantment(Enchantment.looting, 1);
@@ -306,6 +309,13 @@ public enum ItemNovelty {
 			item.addEnchantment(Enchantment.protection, 4);
 			item.addEnchantment(Enchantment.unbreaking, 3);
 			ItemArmour.dyeArmor(item, 250, 128, 114);
+			return item;
+		case VINTAGEBEEF:
+			item = new ItemStack(Item.beefCooked);
+			Loot.setItemName(item, "Vintage Beef", TextFormat.DARKPURPLE);
+			Loot.setItemLore(item, "It never seems to go bad...",  TextFormat.DARKGREEN);
+			item.addEnchantment(Enchantment.fortune, 2);
+			item.addEnchantment(Enchantment.looting, 2);
 			return item;
 		default:
 			return null;

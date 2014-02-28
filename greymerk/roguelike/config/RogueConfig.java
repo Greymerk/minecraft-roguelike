@@ -7,7 +7,8 @@ import net.minecraft.src.Tuple;
 
 public enum RogueConfig {
 
-	DONATURALSPAWN, LEVELRANGE, LEVELMAXROOMS, LEVELSCATTER, SPAWNFREQUENCY, GENEROUS, MOBDROPS, DIMENSION, PRECIOUSBLOCKS;
+	DONATURALSPAWN, LEVELRANGE, LEVELMAXROOMS, LEVELSCATTER, SPAWNFREQUENCY, GENEROUS, MOBDROPS, DIMENSION, 
+	PRECIOUSBLOCKS, LOOTING;
 	
 	public static final String configDirName = "config";
 	public static final String configFileName = "roguelike.cfg";
@@ -24,6 +25,7 @@ public enum RogueConfig {
 		case GENEROUS: return "generous";
 		case DIMENSION: return "dimension";
 		case PRECIOUSBLOCKS: return "preciousBlocks";
+		case LOOTING: return "looting";
 		default: return null;
 		}
 	}
@@ -38,6 +40,7 @@ public enum RogueConfig {
 		case GENEROUS: return new Tuple(getName(option), true);
 		case DIMENSION: return new Tuple(getName(option), 0);
 		case PRECIOUSBLOCKS: return new Tuple(getName(option), true);
+		case LOOTING: return new Tuple(getName(option), 0.085D);
 		default: return null;
 		}
 	}
@@ -51,6 +54,19 @@ public enum RogueConfig {
 		if(!instance.ContainsKey(getName(GENEROUS))) setBoolean(GENEROUS, (Boolean)getDefault(GENEROUS).getSecond());
 		if(!instance.ContainsKey(getName(DIMENSION)))setInt(DIMENSION, (Integer)getDefault(DIMENSION).getSecond());
 		if(!instance.ContainsKey(getName(PRECIOUSBLOCKS)))setBoolean(PRECIOUSBLOCKS, (Boolean)getDefault(PRECIOUSBLOCKS).getSecond());
+		if(!instance.ContainsKey(getName(LOOTING)))setDouble(LOOTING, (Double) getDefault(LOOTING).getSecond());
+	}
+	
+	public static double getDouble(RogueConfig option){
+		reload(false);
+		Tuple def = getDefault(option);
+		return instance.GetDouble(getName(option), (Double)def.getSecond());
+	}
+	
+	public static void setDouble(RogueConfig option, double value){
+		reload(false);
+		Tuple def = getDefault(option);
+		instance.Set(getName(option), value);
 	}
 	
 	public static boolean getBoolean(RogueConfig option){

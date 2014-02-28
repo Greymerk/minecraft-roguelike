@@ -8,21 +8,24 @@ import net.minecraft.src.ItemStack;
 public class ItemTool {
 
 
-	public static ItemStack getRandom(Random rand, int rank, boolean enchant){
+	public static ItemStack getRandom(Random rand, int level, boolean enchant){
 		
-		if(enchant && rand.nextInt(20 + (rank * 10)) == 0){
-			switch(rand.nextInt(3)){
-			case 0: return ItemSpecialty.getRandomItem(Equipment.PICK, rand, rank);
-			case 1: return ItemSpecialty.getRandomItem(Equipment.AXE, rand, rank);
-			case 2: return ItemSpecialty.getRandomItem(Equipment.SHOVEL, rand, rank);
-			}
-			
+		if(level > 1 && rand.nextInt(500) == 0){
+			return ItemNovelty.getItem(ItemNovelty.AMLP);
 		}
 		
-		ItemStack tool = pickTool(rand, rank);
+		if(enchant && rand.nextInt(20 + (level * 10)) == 0){
+			switch(rand.nextInt(3)){
+			case 0: return ItemSpecialty.getRandomItem(Equipment.PICK, rand, level);
+			case 1: return ItemSpecialty.getRandomItem(Equipment.AXE, rand, level);
+			case 2: return ItemSpecialty.getRandomItem(Equipment.SHOVEL, rand, level);
+			}
+		}
 		
-		if(enchant && rand.nextInt(6 - rank) == 0){
-			Loot.enchantItem(tool, rand, Loot.getEnchantLevel(rank));
+		ItemStack tool = pickTool(rand, level);
+		
+		if(enchant && rand.nextInt(6 - level) == 0){
+			Loot.enchantItem(tool, rand, Loot.getEnchantLevel(rand, level));
 		}
 		
 		return tool;

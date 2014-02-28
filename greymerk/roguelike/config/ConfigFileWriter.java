@@ -41,6 +41,7 @@ public class ConfigFileWriter {
 		BufferedWriter buffered=new BufferedWriter(
 			new OutputStreamWriter(stream)
 		);
+
 		
 		//	Write all configurations
 		for (Configuration c : config) writer.Write(buffered,c);

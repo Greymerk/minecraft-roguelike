@@ -196,11 +196,11 @@ public class DungeonsNetherBrickFortress implements IDungeon {
     protected Spawner pickMobSpawner(Random random)
     {
     	
-    	if(rand.nextInt(30) == 0){
+    	if(rand.nextInt(10) == 0){
     		return Spawner.CAVESPIDER;
     	}
     	
-    	if(rand.nextInt(10) == 0){
+    	if(rand.nextInt(5) == 0){
     		return Spawner.CREEPER;
     	}
     	
