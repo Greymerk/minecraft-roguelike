@@ -4,6 +4,8 @@ package greymerk.roguelike.config;
 import java.util.*;
 import java.util.regex.*;
 
+import org.apache.commons.lang3.StringUtils;
+
 
 /**
  *	Provides configuration information.
@@ -302,19 +304,7 @@ public abstract class ConfigurationProvider implements Iterable<Configuration> {
 	
 	public void Set (String key, List<Integer> intList){
 		
-		String intString = "";
-		
-		for (Iterator it = intList.iterator() ; it.hasNext(); ) {
-			
-			if(!it.hasNext()) { // last
-				intString += it.next().toString();
-				break;
-			}
-
-			intString += it.next().toString() + ',';
-		}
-		
-		Set(key, intString);
+		Set(key, StringUtils.join(intList, ","));
 		
 	}
 	

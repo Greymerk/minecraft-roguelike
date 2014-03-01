@@ -39,7 +39,7 @@ public class TreasureChestStarter extends TreasureChestBase{
 
 		int size = chest.getSizeInventory();
 				
-		int quantity = 18;
+		int quantity = RogueConfig.getBoolean(RogueConfig.GENEROUS) ? 18 : 3;
 
 		for (int i = 0; i < quantity; i++) {
 			ItemStack item;
@@ -56,19 +56,21 @@ public class TreasureChestStarter extends TreasureChestBase{
 		ItemStack book = new ItemStack(Item.writableBook);
 		
 		book.setTagInfo("author", new NBTTagString("author", "greymerk"));
-		book.setTagInfo("title", new NBTTagString("title", "Roguelike Dungeons"));
+		book.setTagInfo("title", new NBTTagString("title", "Journal"));
 		
 		String page1 = 
-				"This dungeon was generated with the roguelike dungeons " +
-				"mod version 1.2.9\n\n" +
-				"Thanks for playing\n\n" +
+				"Forced out of our own base, " +
+				"monsters everywhere, " +
+				"was such a marvelous home. " +
+				"Our stuff is still down there, " +
+				"we're running out of food and " +
+				"have to leave soon before the tower " +
+				"is taken over as well\n\n" +
 				"-greymerk\n" +
-				"January 18th 2014";
+				"February 28th 2014";
 		
 		String page2 = 
-				"You can find updates and information about the mod at http://dungeons.homelinux.org/";
-
-		String page3 = 
+				"Roguelike Dungeons v1.3.0\n\n" +
 				"Credits\n\n" +
 				"Author: Greymerk\n\n" +
 				"Bits: Drainedsoul\n\n" +
@@ -78,7 +80,6 @@ public class TreasureChestStarter extends TreasureChestBase{
 		NBTTagList pages = new NBTTagList();
 		pages.appendTag(new NBTTagString("1", page1));
 		pages.appendTag(new NBTTagString("2", page2));
-		pages.appendTag(new NBTTagString("3", page3));
 		
 		book.setTagInfo("pages", pages);
 		book.itemID = Item.writtenBook.itemID;

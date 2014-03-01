@@ -198,8 +198,10 @@ public class CatacombTower {
 			WorldGenPrimitive.setBlock(world, originX + 3, floor2 + 1, originZ + 2, Block.bed.blockID, 0 + 8, 3, true, true);
 			
 			new TreasureChestStarter().generate(world, rand, originX - 3, floor2 + 1, originZ + 2);
-			new TreasureChestStarter().generate(world, rand, originX - 3, floor2 + 1, originZ - 2);
+			
 		}
+		
+		new TreasureChestStarter().generate(world, rand, originX - 3, floor2 + 1, originZ - 2);
 		
 		// ROOF
 		WorldGenPrimitive.fillRectSolid(world, originX - 4, roof, originZ - 4, originX + 4, roof, originZ + 4, fillBlocks);

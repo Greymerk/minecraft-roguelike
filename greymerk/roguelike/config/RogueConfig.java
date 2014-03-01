@@ -41,7 +41,10 @@ public enum RogueConfig {
 		case LEVELSCATTER: return new Tuple(getName(option), 12);
 		case SPAWNFREQUENCY: return new Tuple(getName(option), 10);
 		case GENEROUS: return new Tuple(getName(option), true);
-		case DIMENSION: return new Tuple(getName(option), new ArrayList<Integer>(0));
+		case DIMENSION:
+			List<Integer> ints = new ArrayList<Integer>();
+			ints.add(0);
+			return new Tuple(getName(option), ints);
 		case PRECIOUSBLOCKS: return new Tuple(getName(option), true);
 		case LOOTING: return new Tuple(getName(option), 0.085D);
 		default: return null;
