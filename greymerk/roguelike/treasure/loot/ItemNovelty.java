@@ -86,7 +86,7 @@ public enum ItemNovelty {
 			return item;
 		case NEBRIS:
 			item = new ItemStack(Item.helmetGold);
-			Loot.setItemName(item, "Nebrian Gold Crown", null);
+			Loot.setItemName(item, "Nebrian Crown of Justice", null);
 			Loot.setItemLore(item, "Adorned with precious gemstones", TextFormat.DARKGREEN);
 			item.addEnchantment(Enchantment.protection, 4);
 			item.addEnchantment(Enchantment.unbreaking, 3);
@@ -150,7 +150,7 @@ public enum ItemNovelty {
 			return item;
 		case BDOUBLEO:
 			item = new ItemStack(Item.shovelDiamond);
-			Loot.setItemName(item, "BdoubleO's Dig Job", null);
+			Loot.setItemName(item, "Bdoublian Dig Job", null);
 			Loot.setItemLore(item, "Recovered from hell's blazes", TextFormat.DARKGREEN);
 			item.addEnchantment(Enchantment.efficiency, 5);
 			item.addEnchantment(Enchantment.unbreaking, 3);
@@ -173,8 +173,8 @@ public enum ItemNovelty {
 			return item;
 		case ETHO:
 			item = new ItemStack(Item.pickaxeWood);
-			Loot.setItemName(item, "Etho's First Pick", null);
-			Loot.setItemLore(item, "Barely used...", TextFormat.DARKGREEN);
+			Loot.setItemName(item, "Ethonian Pick", null);
+			Loot.setItemLore(item, "The original", TextFormat.DARKGREEN);
 			item.addEnchantment(Enchantment.efficiency, 5);
 			item.addEnchantment(Enchantment.unbreaking, 3);
 			return item;
@@ -212,7 +212,7 @@ public enum ItemNovelty {
 			return item;
 		case GINGER:
 			item = new ItemStack(Item.chickenCooked);
-			Loot.setItemName(item, "Ginger's Spicy Chicken", TextFormat.DARKPURPLE);
+			Loot.setItemName(item, "Gingerian Spice Chicken", TextFormat.DARKPURPLE);
 			Loot.setItemLore(item, "\"Kung Pao!\"",  TextFormat.DARKGREEN);
 			item.addEnchantment(Enchantment.knockback, 1);
 			item.addEnchantment(Enchantment.fireAspect, 3);

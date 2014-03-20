@@ -61,8 +61,7 @@ public class CommandSpawnDungeon extends CommandBase
     	Random rand = new Random();
     	rand.setSeed(world.getSeed() | x | z);
     	
-    	Catacomb cata = new Catacomb(world, rand);
-    	cata.generate(x, z);
+    	Catacomb.generate(world, rand, x, z);
     }
 
     /**

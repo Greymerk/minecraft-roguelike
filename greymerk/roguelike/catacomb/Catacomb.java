@@ -18,34 +18,23 @@ import net.minecraft.src.World;
 
 public class Catacomb {
 		
-	private World world;
 	public static final int DEPTH = 5;
 	public static final int VERTICAL_SPACING = 10;
 	public static final int TOPLEVEL = 50;
-	private Random rand;
-	private CatacombNode previous;
 	
-	public Catacomb(World world, Random rand){
-		
-		this.world = world;
-		this.rand = rand;
-		this.previous = null;
-	}
-	
-	
-	public void generateNear(int x, int z){
+	public static void generateNear(World world, Random rand, int x, int z){
 		int attempts = 50;
 		
 		for(int i = 0;i < attempts;i++){
 			Coord location = getNearbyCoord(rand, x, z, 40, 100);
 			if(validLocation(world, rand, location.getX(), location.getZ())){
-				generate(location.getX(), location.getZ());
+				Catacomb.generate(world, rand, location.getX(), location.getZ());
 				return;
 			}
 		}
 	}
 	
-	public void generate(int inX, int inZ){
+	public static void generate(World world, Random rand, int inX, int inZ){
 				
 		int x = inX;
 		int y = TOPLEVEL;
@@ -202,8 +191,7 @@ public class Catacomb {
 			int x = chunkX * 16 + 4;
 			int z = chunkZ * 16 + 4;
 			
-			Catacomb cata = new Catacomb(world, rand);
-			cata.generateNear(x, z);
+			Catacomb.generateNear(world, rand, x, z);
 		}
 	}
 	

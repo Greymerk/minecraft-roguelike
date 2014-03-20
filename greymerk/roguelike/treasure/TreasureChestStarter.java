@@ -4,6 +4,7 @@ import greymerk.roguelike.treasure.loot.Equipment;
 import greymerk.roguelike.treasure.loot.Loot;
 import greymerk.roguelike.treasure.loot.ItemSpecialty;
 import greymerk.roguelike.treasure.loot.Quality;
+import greymerk.roguelike.config.RogueConfig;
 
 import java.util.Arrays;
 import java.util.Collections;
