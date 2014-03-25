@@ -11,7 +11,7 @@ import net.minecraft.src.Tuple;
 public enum RogueConfig {
 
 	DONATURALSPAWN, LEVELRANGE, LEVELMAXROOMS, LEVELSCATTER, SPAWNFREQUENCY, GENEROUS, MOBDROPS, DIMENSION, 
-	PRECIOUSBLOCKS, LOOTING;
+	PRECIOUSBLOCKS, LOOTING, OVERRIDELOOT;
 	
 	public static final String configDirName = "config";
 	public static final String configFileName = "roguelike.cfg";
@@ -29,6 +29,7 @@ public enum RogueConfig {
 		case DIMENSION: return "dimension";
 		case PRECIOUSBLOCKS: return "preciousBlocks";
 		case LOOTING: return "looting";
+		case OVERRIDELOOT: return "overrideLoot";
 		default: return null;
 		}
 	}
@@ -47,6 +48,7 @@ public enum RogueConfig {
 			return new Tuple(getName(option), ints);
 		case PRECIOUSBLOCKS: return new Tuple(getName(option), true);
 		case LOOTING: return new Tuple(getName(option), 0.085D);
+		case OVERRIDELOOT: return new Tuple(getName(option), false);
 		default: return null;
 		}
 	}
@@ -61,6 +63,7 @@ public enum RogueConfig {
 		if(!instance.ContainsKey(getName(DIMENSION)))setIntList(DIMENSION, (List<Integer>)getDefault(DIMENSION).getSecond());
 		if(!instance.ContainsKey(getName(PRECIOUSBLOCKS)))setBoolean(PRECIOUSBLOCKS, (Boolean)getDefault(PRECIOUSBLOCKS).getSecond());
 		if(!instance.ContainsKey(getName(LOOTING)))setDouble(LOOTING, (Double) getDefault(LOOTING).getSecond());
+		if(!instance.ContainsKey(getName(OVERRIDELOOT)))setBoolean(OVERRIDELOOT, (Boolean)getDefault(OVERRIDELOOT).getSecond());
 	}
 	
 	public static double getDouble(RogueConfig option){

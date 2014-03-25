@@ -2,7 +2,7 @@ package greymerk.roguelike.treasure.loot;
 
 import java.util.Random;
 
-public enum Quality {
+public enum Quality{
 	
 	WOOD, STONE, IRON, GOLD, DIAMOND;
 	
