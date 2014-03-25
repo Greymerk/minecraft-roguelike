@@ -41,11 +41,11 @@ public class WeightedRandomLoot implements Comparable{
 		
 		WeightedRandomLoot other = (WeightedRandomLoot)o;
 		
-		if (this.scale < other.scale) return -1;
-		if (this.scale > other.scale) return 1;
+		if (this.scale > other.scale) return -1;
+		if (this.scale < other.scale) return 1;
 		
-		if (this.weight < other.weight) return -1;
-		if (this.weight > other.weight) return 1;
+		if (this.weight > other.weight) return -1;
+		if (this.weight < other.weight) return 1;
 		
 		return 0;
 	}
