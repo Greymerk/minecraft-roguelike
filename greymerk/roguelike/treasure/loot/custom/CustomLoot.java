@@ -7,7 +7,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import com.google.common.base.Charsets;
@@ -24,26 +26,18 @@ import net.minecraft.src.ItemStack;
 
 public class CustomLoot{
 	
-	private List<WeightedRandomLoot> lootList;
+	private List<LootProvider> lootList;
 		
 	public CustomLoot(){
-		lootList = new ArrayList<WeightedRandomLoot>();
-	}
-	
-	public void addLoot(WeightedRandomLoot loot){
-		lootList.add(loot);
-		Collections.sort(lootList);
-	}
-	
-	public ItemStack getLoot(Random rand, int scale) {
+		lootList = new ArrayList<LootProvider>();
 		
-		for(WeightedRandomLoot loot : lootList){
-			if(loot.roll(rand, scale)){
-				return loot.getItem(rand);
-			}
+		for(int i = 0; i <= 4; i++){
+			lootList.add(new LootProvider());
 		}
-		
-		return new ItemStack(Item.stick);
+	}
+	
+	public ItemStack getLoot(Random rand, int level) {
+		return lootList.get(level).getLoot(rand);
 	}
 	
 	public void parseLoot(){
@@ -65,19 +59,22 @@ public class CustomLoot{
 		
 		JsonElement root = new JsonParser().parse(content);
 		
-		JsonElement lootList = root.getAsJsonObject().get("CustomLoot");
-		JsonArray jList = lootList.getAsJsonArray(); 
+		JsonElement lootTable = root.getAsJsonObject().get("CustomLoot");
 		
-		for(JsonElement e : jList){
-			JsonArray itemData = e.getAsJsonArray(); 
-			int id = itemData.get(0).getAsInt();
-			int dam = itemData.get(1).getAsInt();
-			int min = itemData.get(2).getAsInt();
-			int max = itemData.get(3).getAsInt();
-			int weight = itemData.get(4).getAsInt();
-			int scale = itemData.get(5).getAsInt();
-			
-			this.addLoot(new WeightedRandomLoot(id, dam, min, max, weight, scale));
+		for(int i = 0; i <= 4; i++){
+			JsonObject tableData = lootTable.getAsJsonObject();
+			JsonElement tierData = tableData.get(Integer.toString(i));
+			JsonArray tier = tierData.getAsJsonArray();
+			for(JsonElement loot : tier){
+				JsonArray itemData = loot.getAsJsonArray(); 
+				int id = itemData.get(0).getAsInt();
+				int dam = itemData.get(1).getAsInt();
+				int min = itemData.get(2).getAsInt();
+				int max = itemData.get(3).getAsInt();
+				int weight = itemData.get(4).getAsInt();
+				
+				lootList.get(i).add(new WeightedRandomLoot(id, dam, min, max, weight));
+			}
 		}		
 	}
 	

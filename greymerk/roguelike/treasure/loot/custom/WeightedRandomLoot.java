@@ -6,22 +6,21 @@ import net.minecraft.src.ItemStack;
 
 public class WeightedRandomLoot implements Comparable{
 	
-	int id;
-	int damage;
+	private int id;
+	private int damage;
 	
-	int min;
-	int max;
+	private int min;
+	private int max;
 	
-	int weight;
-	int scale;
+	private int weight;
+
 	
-	public WeightedRandomLoot(int id, int damage, int minStackSize, int maxStackSize, int weight, int scale){
+	public WeightedRandomLoot(int id, int damage, int minStackSize, int maxStackSize, int weight){
 		this.id = id;
 		this.damage = damage;
 		this.min = minStackSize;
 		this.max = maxStackSize;
 		this.weight = weight;
-		this.scale = scale;
 	}
 	
 	
@@ -41,20 +40,13 @@ public class WeightedRandomLoot implements Comparable{
 		
 		WeightedRandomLoot other = (WeightedRandomLoot)o;
 		
-		if (this.scale > other.scale) return -1;
-		if (this.scale < other.scale) return 1;
-		
 		if (this.weight > other.weight) return -1;
 		if (this.weight < other.weight) return 1;
 		
 		return 0;
 	}
-
-	public boolean roll(Random rand, int rollScale) {
-		
-		if(rollScale < scale) return false;
-		if(weight > 1 && rand.nextInt(weight) != 0) return false;
-		
-		return true;
+	
+	public int getWeight(){
+		return this.weight;
 	}
 }
