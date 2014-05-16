@@ -45,11 +45,14 @@ public class CatacombNode {
 
 	public CatacombNode (World world, Random rand, CatacombLevel level, CatacombTunneler tunneler){
 		this.world = world;
-		this.rand = rand;
+
 		this.level = level;
 		this.x = tunneler.getX();
 		this.y = tunneler.getY();
 		this.z = tunneler.getZ();
+		
+		this.rand = rand;
+		
 		this.done = false;
 		this.tunnelers = new ArrayList<CatacombTunneler>();
 		
@@ -69,7 +72,7 @@ public class CatacombNode {
 			}
 			
 			if(level.nodeCount() == 0 || tunnelers.isEmpty() || rand.nextBoolean()){
-				this.tunnelers.add(new CatacombTunneler(rand, this.level, dir, x, y, z));
+				this.tunnelers.add(new CatacombTunneler(world, rand, this.level, dir, x, y, z));
 			}
 		}
 	}

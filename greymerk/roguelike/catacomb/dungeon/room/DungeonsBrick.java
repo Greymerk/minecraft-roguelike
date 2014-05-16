@@ -134,7 +134,7 @@ public class DungeonsBrick implements IDungeon {
 		space.add(new Coord(originX + 3, originY, originZ + 2));
 
 		List<TreasureChest> types = new ArrayList<TreasureChest>(Arrays.asList(TreasureChest.ARMOUR, TreasureChest.WEAPONS, TreasureChest.TOOLS));
-		TreasureChest.createChests(inWorld, inRandom, 1, space, types);
+		TreasureChest.createChests(inWorld, rand, 1, space, types);
 		
 		placeMobSpawner();
 

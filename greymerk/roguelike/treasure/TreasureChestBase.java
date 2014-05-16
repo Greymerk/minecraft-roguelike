@@ -29,7 +29,9 @@ public abstract class TreasureChestBase implements ITreasureChest{
 	private static CustomLoot custom;
 	static {
 		TreasureChestBase.custom = new CustomLoot();
-		custom.parseLoot();
+		if(RogueConfig.getBoolean(RogueConfig.OVERRIDELOOT)){
+			custom.parseLoot();
+		}		
 	}
 	
 	public TreasureChestBase(){

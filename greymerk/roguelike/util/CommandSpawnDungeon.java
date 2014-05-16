@@ -56,12 +56,8 @@ public class CommandSpawnDungeon extends CommandBase
     	int x = parseInt(sender, args[0]);
     	int z = parseInt(sender, args[1]);
     	
-    	World world = sender.getEntityWorld();
-    	
-    	Random rand = new Random();
-    	rand.setSeed(world.getSeed() | x | z);
-    	
-    	Catacomb.generate(world, rand, x, z);
+    	World world = sender.getEntityWorld();    	
+    	Catacomb.generate(world, x, z);
     }
 
     /**

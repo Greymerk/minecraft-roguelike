@@ -37,9 +37,9 @@ public class CatacombLevel {
 	
 	public CatacombLevel(World world, Random rand, int originX, int originY, int originZ){
 		this.world = world;
-		this.rand = rand;
 		this.nodes = new ArrayList<CatacombNode>();
 				
+		this.rand = rand;
 		this.originX = originX;
 		this.originY = originY;
 		this.originZ = originZ;
@@ -54,9 +54,9 @@ public class CatacombLevel {
 	
 	public CatacombLevel(World world, Random rand, int originX, int originY, int originZ, int maxNodes, int range){
 		this.world = world;
-		this.rand = rand;
 		this.nodes = new ArrayList<CatacombNode>();
 				
+		this.rand = rand;
 		this.originX = originX;
 		this.originY = originY;
 		this.originZ = originZ;
@@ -78,7 +78,7 @@ public class CatacombLevel {
 
 		IDungeonFactory rooms = Catacomb.getFactory(rand, Catacomb.getLevel(originY));
 		
-		Collections.shuffle(nodes);
+		Collections.shuffle(nodes, rand);
 		
 		// node dungeons
 		for (CatacombNode node : nodes){

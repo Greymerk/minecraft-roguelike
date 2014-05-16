@@ -56,7 +56,7 @@ public enum TreasureChest {
 	
 	public static void createChests(World world, Random rand, int numChests, List<Coord> space, boolean trapped){
 		
-		Collections.shuffle(space);
+		Collections.shuffle(space, rand);
 		
 		int count = 0;
 		
@@ -79,7 +79,7 @@ public enum TreasureChest {
 	
 	public static void createChests(World world, Random rand, int numChests, List<Coord> space, List<TreasureChest> types){
 		
-		Collections.shuffle(space);
+		Collections.shuffle(space, rand);
 		
 		int count = 0;
 		

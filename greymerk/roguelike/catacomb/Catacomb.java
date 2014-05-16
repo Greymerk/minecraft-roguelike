@@ -28,17 +28,19 @@ public class Catacomb {
 		for(int i = 0;i < attempts;i++){
 			Coord location = getNearbyCoord(rand, x, z, 40, 100);
 			if(validLocation(world, rand, location.getX(), location.getZ())){
-				Catacomb.generate(world, rand, location.getX(), location.getZ());
+				Catacomb.generate(world, location.getX(), location.getZ());
 				return;
 			}
 		}
 	}
 	
-	public static void generate(World world, Random rand, int inX, int inZ){
+	public static void generate(World world, int inX, int inZ){
 				
 		int x = inX;
 		int y = TOPLEVEL;
 		int z = inZ;
+		
+    	Random rand = getRandom(world, inX, inZ);
 		
 		// generate levels
 		while(y > DEPTH){
@@ -266,5 +268,11 @@ public class Catacomb {
 		
 		Coord nearby = new Coord(x + xOffset, 0, z + zOffset);		
 		return nearby;
+	}
+	
+	public static Random getRandom(World world, int x, int z){
+		Random rand = new Random();
+    	rand.setSeed(world.getSeed() | x | z);
+    	return rand;
 	}
 }

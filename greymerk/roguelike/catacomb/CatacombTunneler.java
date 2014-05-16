@@ -19,6 +19,7 @@ import net.minecraft.src.World;
 
 public class CatacombTunneler {
 
+	private World world;
 	private Random rand;
 	private CatacombLevel level;
 	private List<Tuple> tunnel;
@@ -29,7 +30,9 @@ public class CatacombTunneler {
 	private boolean done;
 	private int extend;
 	
-	public CatacombTunneler(Random rand, CatacombLevel level, Cardinal direction, int x, int y, int z){
+	public CatacombTunneler(World world, Random rand, CatacombLevel level, Cardinal direction, int x, int y, int z){
+
+		this.world = world;
 		this.rand = rand;
 		this.level = level;
 		this.direction = direction;

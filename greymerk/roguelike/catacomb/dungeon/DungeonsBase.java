@@ -1,5 +1,6 @@
 package greymerk.roguelike.catacomb.dungeon;
 
+import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.treasure.TreasureChest;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.Spawner;

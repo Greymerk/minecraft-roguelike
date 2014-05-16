@@ -1,5 +1,6 @@
 package greymerk.roguelike.catacomb.dungeon.room;
 
+import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.catacomb.dungeon.IDungeon;
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.treasure.TreasureChest;
@@ -72,7 +73,7 @@ public class DungeonsSmithy implements IDungeon{
 		space.add(new Coord(originX + 2, originY, originZ - 2));
 		space.add(new Coord(originX + 2, originY, originZ + 2));
 		
-		TreasureChest.generate(inWorld, inRandom, space, TreasureChest.SMITH);
+		TreasureChest.generate(inWorld, rand, space, TreasureChest.SMITH);
 		
 		return true;
 	}
