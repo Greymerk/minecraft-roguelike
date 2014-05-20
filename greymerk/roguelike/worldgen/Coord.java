@@ -1,5 +1,7 @@
 package greymerk.roguelike.worldgen;
 
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 public class Coord{
 
 	private int x;
@@ -43,6 +45,8 @@ public class Coord{
 		}		
 	}
 
+	// Arranges two coords so that the they create a positive cube.
+	// used in fill routines.
 	public static void correct(Coord one, Coord two){
 		
 		int temp;
@@ -64,5 +68,14 @@ public class Coord{
 			two.z = one.z;
 			one.z = temp;
 		}
+	}
+	
+	@Override
+	public int hashCode(){
+		 return new HashCodeBuilder(17, 31)
+		 .append(x)
+		 .append(y)
+		 .append(z)
+		 .toHashCode();
 	}
 }

@@ -8,6 +8,7 @@ import greymerk.roguelike.catacomb.dungeon.room.DungeonEniko;
 import greymerk.roguelike.catacomb.dungeon.room.DungeonEtho;
 import greymerk.roguelike.catacomb.dungeon.room.DungeonLab;
 import greymerk.roguelike.catacomb.dungeon.room.DungeonMess;
+import greymerk.roguelike.catacomb.dungeon.room.DungeonObsidian;
 import greymerk.roguelike.catacomb.dungeon.room.DungeonOssuary;
 import greymerk.roguelike.catacomb.dungeon.room.DungeonsBrick;
 import greymerk.roguelike.catacomb.dungeon.room.DungeonsCreeperDen;
@@ -33,7 +34,7 @@ import net.minecraft.src.World;
 public enum Dungeon {
 	
 	BASE, BRICK, CREEPER, CRYPT, ENCHANT, ENDER, FIRE, MUSIC, NETHER, NETHERFORT, PIT, PRISON,
-	SLIME, SMITH, SPIDER, CAKE, LAB, CORNER, MESS, ETHO, ENIKO, BTEAM, BAJ, OSSUARY;
+	SLIME, SMITH, SPIDER, CAKE, LAB, CORNER, MESS, ETHO, ENIKO, BTEAM, BAJ, OSSUARY, OBSIDIAN;
 	
 	public static IDungeon getInstance(Dungeon choice){
 		
@@ -62,6 +63,7 @@ public enum Dungeon {
 		case BTEAM: return new DungeonBTeam();
 		case BAJ: return new DungeonBaj();
 		case OSSUARY: return new DungeonOssuary();
+		case OBSIDIAN: return new DungeonObsidian();
 		default: return new DungeonsBase();
 		}
 		

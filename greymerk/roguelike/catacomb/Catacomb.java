@@ -119,14 +119,9 @@ public class Catacomb {
 		switch(rank){
 		case 0:
 			factory = new DungeonFactory(rand, Dungeon.CORNER);
-			if(RogueConfig.getBoolean(RogueConfig.GENEROUS)) factory.addSingle(Dungeon.SMITH);
-			factory.addSingle(Dungeon.MUSIC);
 			factory.addSingle(Dungeon.CAKE);
-			if(rand.nextBoolean()){
-				factory.addSingle(Dungeon.FIRE);
-			} else {
-				factory.addSingle(Dungeon.SLIME);
-			}
+			factory.addSingle(Dungeon.SMITH);
+			factory.addSingle(Dungeon.FIRE);
 			factory.addRandom(Dungeon.BRICK, 3);
 			break;
 		case 1:
@@ -134,33 +129,33 @@ public class Catacomb {
 			int choice = rand.nextInt(10);
 			if(choice == 0) factory.addSingle(Dungeon.ETHO);
 			if(choice == 1) factory.addSingle(Dungeon.BTEAM);
+			factory.addSingle(Dungeon.MUSIC);
 			factory.addSingle(Dungeon.PIT);
-			factory.addSingle(Dungeon.MESS);
 			factory.addSingle(Dungeon.ENCHANT);
 			factory.addSingle(Dungeon.SMITH);
 			factory.addSingle(Dungeon.LAB);
+			factory.addByRatio(Dungeon.MESS, 30);
 			factory.addRandom(Dungeon.BRICK, 3);
 			break;
 		case 2:
 			factory = new DungeonFactory(rand, Dungeon.CORNER);
 			factory.addSingle(Dungeon.OSSUARY);
-			factory.addSingle(Dungeon.CREEPER);			
+			factory.addSingle(Dungeon.CREEPER);
 			factory.addSingle(Dungeon.FIRE);
-			factory.addSingle(Dungeon.PRISON);
-			factory.addSingle(Dungeon.CRYPT);
-			factory.addSingle(Dungeon.PIT);
+			factory.addByRatio(Dungeon.PRISON, 10);
+			factory.addByRatio(Dungeon.CRYPT, 10);
+			factory.addByRatio(Dungeon.PIT, 10);
 			factory.addRandom(Dungeon.BRICK, 3);
-			factory.addRandom(Dungeon.FIRE, 30);
 			break;	
 		case 3:
 			factory = new DungeonFactory(rand, Dungeon.CORNER);
 			if(rand.nextInt(10) == 0) factory.addSingle(Dungeon.BAJ);
 			factory.addSingle(Dungeon.OSSUARY);
 			factory.addSingle(Dungeon.ENDER);
-			factory.addSingle(Dungeon.CRYPT);
-			factory.addSingle(Dungeon.PRISON);
-			factory.addSingle(Dungeon.SPIDER);
-			factory.addSingle(Dungeon.CREEPER);
+			factory.addByRatio(Dungeon.CRYPT, 15);
+			factory.addByRatio(Dungeon.PRISON, 15);
+			factory.addByRatio(Dungeon.SPIDER, 15);
+			factory.addByRatio(Dungeon.CREEPER, 15);
 			factory.addRandom(Dungeon.BRICK, 3);
 			factory.addRandom(Dungeon.FIRE, 20);
 			factory.addRandom(Dungeon.CRYPT, 20);
@@ -173,12 +168,14 @@ public class Catacomb {
 		case 4:
 			factory = new DungeonFactory(rand, Dungeon.CORNER);
 			if(rand.nextInt(10) == 0) factory.addSingle(Dungeon.ENIKO);
-			factory.addSingle(Dungeon.FIRE);
-			factory.addSingle(Dungeon.NETHERFORT);
-			factory.addSingle(Dungeon.SLIME);
+			factory.addSingle(Dungeon.OBSIDIAN);
+			factory.addByRatio(Dungeon.FIRE, 30);
+			factory.addByRatio(Dungeon.NETHERFORT, 20);
+			factory.addByRatio(Dungeon.SLIME, 15);
 			factory.addRandom(Dungeon.NETHER, 3);
-			factory.addRandom(Dungeon.SLIME, 30);
-			factory.addRandom(Dungeon.SPIDER, 30);
+			factory.addRandom(Dungeon.SLIME, 20);
+			factory.addRandom(Dungeon.SPIDER, 20);
+
 			break;
 		default:
 			factory = new DungeonFactory(rand, Dungeon.CORNER);

@@ -47,6 +47,10 @@ public class WorldGenPrimitive {
 		return setBlock(world, x, y, z, blockID, 0, 2, true, true);
 	}
 	
+	public static boolean setBlock(World world, Coord coord, int blockID) {
+		return setBlock(world, coord.getX(), coord.getY(), coord.getZ(), blockID);
+	}
+	
 	public static boolean setBlock(World world, int x, int y, int z, MetaBlock block, boolean fillAir, boolean replaceSolid){
 		return setBlock(world, x, y, z, block.getBlockID(), block.getMeta(), block.getFlag(), fillAir, replaceSolid);
 	}
@@ -69,12 +73,12 @@ public class WorldGenPrimitive {
 	
 	public static void fillRectSolid(World world, Coord first, Coord second, MetaBlock block, boolean fillAir, boolean replaceSolid){
 		Coord.correct(first, second);
-		fillRectSolid(world, first.getX(), first.getY(), first.getZ(), second.getX(), second.getY(), second.getZ(), block, true, true);
+		fillRectSolid(world, first.getX(), first.getY(), first.getZ(), second.getX(), second.getY(), second.getZ(), block, fillAir, replaceSolid);
 	}
 	
 	public static void fillRectSolid(World world, Coord first, Coord second, IBlockFactory blocks, boolean fillAir, boolean replaceSolid){
 		Coord.correct(first, second);
-		fillRectSolid(world, first.getX(), first.getY(), first.getZ(), second.getX(), second.getY(), second.getZ(), blocks, true, true);
+		fillRectSolid(world, first.getX(), first.getY(), first.getZ(), second.getX(), second.getY(), second.getZ(), blocks, fillAir, replaceSolid);
 	}
 	
 	
@@ -285,7 +289,9 @@ public class WorldGenPrimitive {
 			--y;
 		}
 	}
-	
 
+	public static boolean setBlock(World world, Coord coord, MetaBlock block, boolean fillAir, boolean replaceSolid) {
+		return setBlock(world, coord.getX(), coord.getY(), coord.getZ(), block.getBlockID(), block.getMeta(), block.getFlag(), fillAir, replaceSolid);
+	}
 }
 
