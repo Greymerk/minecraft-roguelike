@@ -129,6 +129,7 @@ public class Catacomb {
 			int choice = rand.nextInt(10);
 			if(choice == 0) factory.addSingle(Dungeon.ETHO);
 			if(choice == 1) factory.addSingle(Dungeon.BTEAM);
+			if(choice == 2) factory.addSingle(Dungeon.AVIDYA);
 			factory.addSingle(Dungeon.MUSIC);
 			factory.addSingle(Dungeon.PIT);
 			factory.addSingle(Dungeon.ENCHANT);

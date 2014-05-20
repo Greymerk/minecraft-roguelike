@@ -6,7 +6,7 @@ import net.minecraft.src.World;
 
 public interface IDungeon {
 
-	public boolean generate(World inWorld, Random inRandom, int inOriginX, int inOriginY, int inOriginZ);
+	public boolean generate(World world, Random rand, int x, int y, int z);
 		
 	public int getSize();
 	

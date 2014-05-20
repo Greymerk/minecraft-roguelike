@@ -71,12 +71,16 @@ public class WorldGenPrimitive {
 		fillRectSolid(world, x1, y1, z1, x2, y2, z2, blocks, true, true);
 	}
 	
-	public static void fillRectSolid(World world, Coord first, Coord second, MetaBlock block, boolean fillAir, boolean replaceSolid){
+	public static void fillRectSolid(World world, Coord c1, Coord c2, MetaBlock block, boolean fillAir, boolean replaceSolid){
+		Coord first = new Coord(c1);
+		Coord second = new Coord(c2);
 		Coord.correct(first, second);
 		fillRectSolid(world, first.getX(), first.getY(), first.getZ(), second.getX(), second.getY(), second.getZ(), block, fillAir, replaceSolid);
 	}
 	
-	public static void fillRectSolid(World world, Coord first, Coord second, IBlockFactory blocks, boolean fillAir, boolean replaceSolid){
+	public static void fillRectSolid(World world, Coord c1, Coord c2, IBlockFactory blocks, boolean fillAir, boolean replaceSolid){
+		Coord first = new Coord(c1);
+		Coord second = new Coord(c2);
 		Coord.correct(first, second);
 		fillRectSolid(world, first.getX(), first.getY(), first.getZ(), second.getX(), second.getY(), second.getZ(), blocks, fillAir, replaceSolid);
 	}
@@ -131,12 +135,16 @@ public class WorldGenPrimitive {
 		fillRectHollow(world, x1, y1, z1, x2, y2, z2, new SingleBlockFactory(blockID, meta, flag), fillAir, replaceSolid);
 	}
 	
-	public static void fillRectHollow(World world, Coord first, Coord second, MetaBlock block, boolean fillAir, boolean replaceSolid){
+	public static void fillRectHollow(World world, Coord c1, Coord c2, MetaBlock block, boolean fillAir, boolean replaceSolid){
+		Coord first = new Coord(c1);
+		Coord second = new Coord(c2);
 		Coord.correct(first, second);
 		fillRectHollow(world, first.getX(), first.getY(), first.getZ(), second.getX(), second.getY(), second.getZ(), block, true, true);
 	}
 	
-	public static void fillRectHollow(World world, Coord first, Coord second, IBlockFactory blocks, boolean fillAir, boolean replaceSolid){
+	public static void fillRectHollow(World world, Coord c1, Coord c2, IBlockFactory blocks, boolean fillAir, boolean replaceSolid){
+		Coord first = new Coord(c1);
+		Coord second = new Coord(c2);
 		Coord.correct(first, second);
 		fillRectHollow(world, first.getX(), first.getY(), first.getZ(), second.getX(), second.getY(), second.getZ(), blocks, true, true);
 	}
