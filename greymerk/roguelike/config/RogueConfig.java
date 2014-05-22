@@ -39,7 +39,7 @@ public enum RogueConfig {
 		case DONATURALSPAWN: return new Tuple(getName(option), true);
 		case LEVELRANGE: return new Tuple(getName(option), 80);
 		case LEVELMAXROOMS: return new Tuple(getName(option), 40);
-		case LEVELSCATTER: return new Tuple(getName(option), 8);
+		case LEVELSCATTER: return new Tuple(getName(option), 12);
 		case SPAWNFREQUENCY: return new Tuple(getName(option), 10);
 		case GENEROUS: return new Tuple(getName(option), true);
 		case DIMENSION:
@@ -63,7 +63,7 @@ public enum RogueConfig {
 		if(!instance.ContainsKey(getName(DIMENSION)))setIntList(DIMENSION, (List<Integer>)getDefault(DIMENSION).getSecond());
 		if(!instance.ContainsKey(getName(PRECIOUSBLOCKS)))setBoolean(PRECIOUSBLOCKS, (Boolean)getDefault(PRECIOUSBLOCKS).getSecond());
 		if(!instance.ContainsKey(getName(LOOTING)))setDouble(LOOTING, (Double) getDefault(LOOTING).getSecond());
-		if(!instance.ContainsKey(getName(OVERRIDELOOT)))setBoolean(OVERRIDELOOT, (Boolean)getDefault(OVERRIDELOOT).getSecond());
+		//if(!instance.ContainsKey(getName(OVERRIDELOOT)))setBoolean(OVERRIDELOOT, (Boolean)getDefault(OVERRIDELOOT).getSecond());
 	}
 	
 	public static double getDouble(RogueConfig option){

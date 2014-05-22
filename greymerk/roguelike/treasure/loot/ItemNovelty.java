@@ -16,7 +16,7 @@ import net.minecraft.src.ItemStack;
 
 public enum ItemNovelty {
 
-	GREYMERK, ANDERZEL, NEBRIS, ZISTEAUPANTS, ZISTEAUSIGN, AVIDYA, ASHLEA, KURT, AMLP,
+	GREYMERK, ANDERZEL, NEBRISCROWN, NEBRISSWORD, ZISTEAUPANTS, ZISTEAUSIGN, AVIDYA, ASHLEA, KURT, AMLP,
 	CLEO, ENIKOSWORD, ENIKOBOW, BDOUBLEO, GUUDE, RLEAHY, ETHO, BAJ, DOCM, GINGER, VECHS,
 	NOTCH, JOHNNYRAGGOT, QUANTUMLEAP, MCGAMER, GENERIKB, PAUSE, PAULSOARESJR, FOURLES,
 	DINNERBONE, GRIM, MMILLSS, MILLBEE, VINTAGEBEEF;
@@ -26,7 +26,8 @@ public enum ItemNovelty {
 		names = new HashMap<String, ItemNovelty>();
 		names.put("greymerk", ItemNovelty.GREYMERK);
 		names.put("anderzel", ItemNovelty.ANDERZEL);
-		names.put("nebris", ItemNovelty.NEBRIS);
+		names.put("nebriscrown", ItemNovelty.NEBRISCROWN);
+		names.put("nebrissword", ItemNovelty.NEBRISSWORD);
 		names.put("zisteaupants", ItemNovelty.ZISTEAUPANTS);
 		names.put("zisteausign", ItemNovelty.ZISTEAUSIGN);
 		names.put("avidya", ItemNovelty.AVIDYA);
@@ -84,11 +85,19 @@ public enum ItemNovelty {
 			item.addEnchantment(Enchantment.projectileProtection, 4);
 			item.addEnchantment(Enchantment.unbreaking, 3);
 			return item;
-		case NEBRIS:
+		case NEBRISCROWN:
 			item = new ItemStack(Item.helmetGold);
 			Loot.setItemName(item, "Nebrian Crown of Justice", null);
 			Loot.setItemLore(item, "Adorned with precious gemstones", TextFormat.DARKGREEN);
 			item.addEnchantment(Enchantment.protection, 4);
+			item.addEnchantment(Enchantment.unbreaking, 3);
+			return item;
+		case NEBRISSWORD:
+			item = new ItemStack(Item.swordDiamond);
+			Loot.setItemName(item, "Nebrian Null Pointer", null);
+			Loot.setItemLore(item, "\"Sword of pointy Justice\"", TextFormat.DARKGREEN);
+			item.addEnchantment(Enchantment.sharpness, 5);
+			item.addEnchantment(Enchantment.knockback, 2);
 			item.addEnchantment(Enchantment.unbreaking, 3);
 			return item;
 		case ZISTEAUPANTS:

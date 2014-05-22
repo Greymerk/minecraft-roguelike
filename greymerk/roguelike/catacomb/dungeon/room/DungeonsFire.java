@@ -130,9 +130,7 @@ public class DungeonsFire implements IDungeon{
 		}
 		
 		List<Coord> chestSpace = WorldGenPrimitive.getRectSolid(inOriginX - 3, inOriginY, inOriginZ - 3, inOriginX + 3, inOriginY, inOriginZ + 3);
-		
-		TreasureChest.createChests(inWorld, inRandom, 1 + inRandom.nextInt(2), chestSpace);
-		
+				
 		return false;
 	}
 	

@@ -49,7 +49,7 @@ public class DungeonsNetherBrickFortress implements IDungeon {
 		buildRoof();
 		
 		ArrayList<TreasureChest> types = new ArrayList<TreasureChest>(Arrays.asList(TreasureChest.SPECIALTY));		
-		TreasureChest.createChests(world, rand, 3, WorldGenPrimitive.getRectSolid(
+		TreasureChest.createChests(world, rand, 2, WorldGenPrimitive.getRectSolid(
 				originX - 6, originY, originZ - 6,
 				originX + 6, originY, originZ + 6),
 				types);
@@ -157,7 +157,7 @@ public class DungeonsNetherBrickFortress implements IDungeon {
 			int y = block.getY();
 			int z = block.getZ();
 			
-			if(rand.nextInt(10) == 0){
+			if(rand.nextInt(15) == 0){
 				Spawner type = this.pickMobSpawner(rand);
 				Spawner.generate(world, rand, x, y, z, type);
 				continue;

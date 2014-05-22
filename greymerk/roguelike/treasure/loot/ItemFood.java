@@ -10,10 +10,8 @@ public class ItemFood {
 	public static ItemStack getRandom(Random rand, int rank){
 		
 		ItemNovelty[] items = {
-				ItemNovelty.RLEAHY,
 				ItemNovelty.GINGER,
 				ItemNovelty.GENERIKB,
-				ItemNovelty.ASHLEA,
 				ItemNovelty.CLEO
 		};
 		
@@ -22,6 +20,19 @@ public class ItemFood {
 		}
 		
 		return pickFood(rand, rank);
+	}
+	
+	public static ItemStack getDessert(Random rand){
+		
+		switch(rand.nextInt(4)){
+		case 0: return new ItemStack(Item.cake);
+		case 1: return new ItemStack(Item.egg);
+		case 2: return new ItemStack(Item.bucketMilk);
+		case 3: return new ItemStack(Item.pumpkinPie);
+		default: return new ItemStack(Item.cookie);
+		}
+		
+		
 	}
 	
 	private static ItemStack pickFood(Random rand, int level) {

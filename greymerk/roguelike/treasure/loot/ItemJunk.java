@@ -10,7 +10,7 @@ public class ItemJunk {
 
 	public static ItemStack getRandom(Random rand, int level){
 		
-		if(rand.nextInt(1000) == 0){
+		if(rand.nextInt(500) == 0){
 			if(rand.nextBoolean()) return ItemNovelty.getItem(ItemNovelty.VECHS);
 
 			switch(level){
@@ -30,6 +30,7 @@ public class ItemJunk {
 		}
 		
 		if(level > 1 && rand.nextInt(100) == 0) return new ItemStack(Item.ghastTear);
+		if(rand.nextInt(100) == 0) return ItemBlock.getRandom(rand, level);
 		
 		if(rand.nextInt(80) == 0) return ItemOre.getRandom(rand, level);
 		
@@ -46,10 +47,7 @@ public class ItemJunk {
 		
 		if(level < 3 && rand.nextInt(10 + ((1 + level) * 5)) == 0) return new ItemStack(Item.book);
 
-		if(rand.nextInt(30) == 0){
-			if(rand.nextBoolean()) return ItemBlock.getRandom(rand, level);
-			return ItemFood.getRandom(rand, level);
-		}
+		if(rand.nextInt(30) == 0) return ItemFood.getRandom(rand, level);
 		
 		/*
 		if(level > 0 && rand.nextInt(20 / (1 + level)) == 0){

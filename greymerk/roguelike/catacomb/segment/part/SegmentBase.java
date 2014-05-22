@@ -83,7 +83,7 @@ public abstract class SegmentBase implements ISegment {
 	
 	protected int getStairType(int level){
 		switch(Catacomb.getLevel(y)){
-		case 0: return Block.stairsWoodSpruce.blockID;
+		case 0: return Block.stairsWoodOak.blockID;
 		case 1: return Block.stairsWoodSpruce.blockID;
 		case 2: return Block.stairsStoneBrick.blockID;
 		case 3: return Block.stairsCobblestone.blockID;

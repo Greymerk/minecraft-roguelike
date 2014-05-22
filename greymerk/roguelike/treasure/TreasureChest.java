@@ -18,10 +18,10 @@ public enum TreasureChest {
 
 	ARMOUR, WEAPONS, BLOCKS, ENCHANTING, FOOD, ORE, POTIONS, STARTER, TOOLS, SUPPLIES, SMITH, MUSIC, SPECIALTY;
 	
-	public static final List<TreasureChest> level0 = new ArrayList<TreasureChest>(Arrays.asList(ORE, TOOLS, ARMOUR, WEAPONS, FOOD, SUPPLIES, BLOCKS));
-	public static final List<TreasureChest> level1 = new ArrayList<TreasureChest>(Arrays.asList(ORE, TOOLS, ARMOUR, WEAPONS, FOOD, BLOCKS));
-	public static final List<TreasureChest> level2 = new ArrayList<TreasureChest>(Arrays.asList(ORE, TOOLS, ARMOUR, WEAPONS, BLOCKS));
-	public static final List<TreasureChest> level3 = new ArrayList<TreasureChest>(Arrays.asList(ORE, TOOLS, ARMOUR, WEAPONS, BLOCKS));
+	public static final List<TreasureChest> level0 = new ArrayList<TreasureChest>(Arrays.asList(ORE, TOOLS, ARMOUR, WEAPONS, FOOD));
+	public static final List<TreasureChest> level1 = new ArrayList<TreasureChest>(Arrays.asList(ORE, TOOLS, ARMOUR, WEAPONS, FOOD));
+	public static final List<TreasureChest> level2 = new ArrayList<TreasureChest>(Arrays.asList(ORE, TOOLS, ARMOUR, WEAPONS));
+	public static final List<TreasureChest> level3 = new ArrayList<TreasureChest>(Arrays.asList(ORE, TOOLS, ARMOUR, WEAPONS));
 	public static final List<TreasureChest> level4 = new ArrayList<TreasureChest>(Arrays.asList(ORE, TOOLS, ARMOUR, WEAPONS));
 	
 	public static void generate(World world, Random rand, int posX, int posY, int posZ){

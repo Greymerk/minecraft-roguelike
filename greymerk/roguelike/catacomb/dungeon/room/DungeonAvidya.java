@@ -18,12 +18,12 @@ import greymerk.roguelike.worldgen.WorldGenPrimitive;
 
 public class DungeonAvidya implements IDungeon {
 
-	private static MetaBlock redClay = new MetaBlock(Block.stainedClay.blockID, 14);
-	private static MetaBlock whiteClay = new MetaBlock(Block.stainedClay.blockID, 0);
-	private static MetaBlock pillarQuartz = new MetaBlock(Block.blockNetherQuartz.blockID, 2);
-	
 	@Override
 	public boolean generate(World world, Random rand, int x, int y, int z) {
+		
+		MetaBlock redClay = new MetaBlock(Block.stainedClay.blockID, 14);
+		MetaBlock whiteClay = new MetaBlock(Block.stainedClay.blockID, 0);
+		MetaBlock pillarQuartz = new MetaBlock(Block.blockNetherQuartz.blockID, 2);
 		
 		// clear space
 		WorldGenPrimitive.fillRectSolid(world, x - 8, y, z - 8, x + 8, y + 5, z + 8, 0);
@@ -95,9 +95,7 @@ public class DungeonAvidya implements IDungeon {
 		
 		for(Cardinal dir : Cardinal.directions){
 			for (Cardinal orth : Cardinal.getOrthogonal(dir)){
-				
-				
-				
+
 				// upper trim
 				start = new Coord(x, y, z);
 				start.add(dir, 8);

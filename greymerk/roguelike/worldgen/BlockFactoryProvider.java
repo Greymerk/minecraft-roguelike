@@ -48,6 +48,8 @@ public class BlockFactoryProvider {
 			if(broken) randomizer.addBlock(new MetaBlock(0), 3);
 			randomizer.addBlock(new MetaBlock(Block.netherrack.blockID), 10);
 			randomizer.addBlock(new MetaBlock(Block.oreNetherQuartz.blockID), 20);
+			randomizer.addBlock(new MetaBlock(Block.slowSand.blockID), 30);
+			randomizer.addBlock(new MetaBlock(Block.coalBlock.blockID), 100);
 			return randomizer;
 		default:
 			return new BlockFactoryBrick(rand);

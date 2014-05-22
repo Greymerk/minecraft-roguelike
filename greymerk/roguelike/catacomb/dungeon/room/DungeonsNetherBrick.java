@@ -36,8 +36,8 @@ public class DungeonsNetherBrick implements IDungeon {
 		floor.addBlock(new MetaBlock(Block.netherrack.blockID), 3);
 		floor.addBlock(new MetaBlock(Block.oreNetherQuartz.blockID), 5);
 		floor.addBlock(new MetaBlock(Block.blockRedstone.blockID), 10);
-		if (RogueConfig.getBoolean(RogueConfig.PRECIOUSBLOCKS)) floor.addBlock(new MetaBlock(Block.blockGold.blockID), 50);
-		if (RogueConfig.getBoolean(RogueConfig.PRECIOUSBLOCKS)) floor.addBlock(new MetaBlock(Block.blockDiamond.blockID), 100);
+		if (RogueConfig.getBoolean(RogueConfig.PRECIOUSBLOCKS)) floor.addBlock(new MetaBlock(Block.blockGold.blockID), 500);
+		if (RogueConfig.getBoolean(RogueConfig.PRECIOUSBLOCKS)) floor.addBlock(new MetaBlock(Block.blockDiamond.blockID), 1000);
 		WorldGenPrimitive.fillRectSolid(world, x - length - 1, y - 1, z - width - 1, x + length + 1, y - 1, z + width + 1, floor);
 
 		// lava crap under the floor

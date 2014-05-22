@@ -25,7 +25,7 @@ public class DungeonEtho implements IDungeon {
 		WorldGenPrimitive.fillRectSolid(world, x - 5, y, z - 5, x + 5, y + 3, z + 5, 0);
 		
 		BlockRandomizer leafJumble = new BlockRandomizer(rand, new MetaBlock(0));
-		leafJumble.addBlock(new MetaBlock(Block.leaves.blockID), 2);
+		leafJumble.addBlock(new MetaBlock(Block.leaves.blockID, 4), 2);
 		leafJumble.addBlock(new MetaBlock(Block.wood.blockID), 20);
 		
 		WorldGenPrimitive.fillRectSolid(world, x - 4, y + 6, z - 4, x + 4, y + 6, z + 4, Block.wood.blockID);

@@ -87,7 +87,8 @@ public class DungeonLab implements IDungeon {
 		WorldGenPrimitive.setBlock(world, x + 4, y + 4, z + 3, 0);
 		WorldGenPrimitive.setBlock(world, x + 4, y + 4, z + 4, 0);
 		
-		WorldGenPrimitive.fillRectHollow(world, x + 1, y + 4, z + 1, x + 4, y + 9, z + 4, Block.cobblestone.blockID, 0, 2, false, true);
+		WorldGenPrimitive.fillRectHollow(world, x + 1, y + 4, z + 1, x + 4, y + 8, z + 4, Block.cobblestone.blockID, 0, 2, false, true);
+		WorldGenPrimitive.fillRectSolid(world, x + 2, y + 8, z + 2, x + 3, y + 8, z + 3, 0);
 	}
 	
 	

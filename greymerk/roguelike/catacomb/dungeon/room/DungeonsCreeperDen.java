@@ -51,8 +51,9 @@ public class DungeonsCreeperDen implements IDungeon {
 		buildWalls();
 		buildFloor();
 		buildRoof();
-		createChests(numChests);
 		placeMobSpawner();
+		createChests(numChests);
+
 
 		return true;
 	}

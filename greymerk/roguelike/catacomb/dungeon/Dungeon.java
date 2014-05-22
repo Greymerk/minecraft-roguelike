@@ -1,6 +1,7 @@
 package greymerk.roguelike.catacomb.dungeon;
 
 import greymerk.roguelike.catacomb.Catacomb;
+import greymerk.roguelike.catacomb.dungeon.room.DungeonAshlea;
 import greymerk.roguelike.catacomb.dungeon.room.DungeonAvidya;
 import greymerk.roguelike.catacomb.dungeon.room.DungeonBTeam;
 import greymerk.roguelike.catacomb.dungeon.room.DungeonBaj;
@@ -9,8 +10,10 @@ import greymerk.roguelike.catacomb.dungeon.room.DungeonEniko;
 import greymerk.roguelike.catacomb.dungeon.room.DungeonEtho;
 import greymerk.roguelike.catacomb.dungeon.room.DungeonLab;
 import greymerk.roguelike.catacomb.dungeon.room.DungeonMess;
+import greymerk.roguelike.catacomb.dungeon.room.DungeonNebris;
 import greymerk.roguelike.catacomb.dungeon.room.DungeonObsidian;
 import greymerk.roguelike.catacomb.dungeon.room.DungeonOssuary;
+import greymerk.roguelike.catacomb.dungeon.room.DungeonStorage;
 import greymerk.roguelike.catacomb.dungeon.room.DungeonsBrick;
 import greymerk.roguelike.catacomb.dungeon.room.DungeonsCreeperDen;
 import greymerk.roguelike.catacomb.dungeon.room.DungeonsCrypt;
@@ -36,7 +39,7 @@ public enum Dungeon {
 	
 	BASE, BRICK, CREEPER, CRYPT, ENCHANT, ENDER, FIRE, MUSIC, NETHER, NETHERFORT, PIT, PRISON,
 	SLIME, SMITH, SPIDER, CAKE, LAB, CORNER, MESS, ETHO, ENIKO, BTEAM, BAJ, OSSUARY, OBSIDIAN,
-	AVIDYA;
+	AVIDYA, STORAGE, NEBRIS, ASHLEA;
 	
 	public static IDungeon getInstance(Dungeon choice){
 		
@@ -67,6 +70,9 @@ public enum Dungeon {
 		case OSSUARY: return new DungeonOssuary();
 		case OBSIDIAN: return new DungeonObsidian();
 		case AVIDYA: return new DungeonAvidya();
+		case STORAGE: return new DungeonStorage();
+		case NEBRIS: return new DungeonNebris();
+		case ASHLEA: return new DungeonAshlea();
 		default: return new DungeonsBase();
 		}
 		

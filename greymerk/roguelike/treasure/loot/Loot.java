@@ -87,7 +87,10 @@ public enum Loot {
 	
 	private static ItemStack pickSupplyItem(Random rand) {
 
-		switch(rand.nextInt(7)){
+		if(rand.nextInt(20) == 0) return new ItemStack(Item.carrot, 1);
+		if(rand.nextInt(20) == 0) return new ItemStack(Item.potato, 1);
+		
+		switch(rand.nextInt(8)){
 		case 0: return new ItemStack(Item.seeds, rand.nextInt(8) + 1);
 		case 1: return new ItemStack(Item.pumpkinSeeds, rand.nextInt(8) + 1);
 		case 2: return new ItemStack(Item.melonSeeds, rand.nextInt(8) + 1);		
@@ -95,6 +98,7 @@ public enum Loot {
 		case 4: return new ItemStack(Block.torchWood, 10 + rand.nextInt(10));
 		case 5: return new ItemStack(Item.paper, rand.nextInt(8) + 1);
 		case 6:	return new ItemStack(Item.book, rand.nextInt(4) + 1);
+		case 7:	return new ItemStack(Block.sapling, rand.nextInt(4) + 1, rand.nextInt(4));
 		default: return new ItemStack(Item.stick, 1);
 		}
 	}

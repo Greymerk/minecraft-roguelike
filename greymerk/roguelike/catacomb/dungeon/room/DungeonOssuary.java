@@ -363,7 +363,7 @@ public class DungeonOssuary implements IDungeon {
 		
 		MetaBlock skull = new MetaBlock(Block.skull.blockID, 1);
 		
-		WorldGenPrimitive.setBlock(world, x, y, z, skull, true, true);
+		if(!WorldGenPrimitive.setBlock(world, x, y, z, skull, true, true)) return;
 		
 		TileEntitySkull skullEntity;
 		

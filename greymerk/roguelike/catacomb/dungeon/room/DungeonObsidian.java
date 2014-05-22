@@ -214,7 +214,7 @@ public class DungeonObsidian implements IDungeon {
 				chestPos.add(dir, 4);
 				chestPos.add(orth, 2);
 				chestPos.add(Cardinal.DOWN, 3);
-				TreasureChest.generate(world, rand, chestPos.getX(), chestPos.getY(), chestPos.getZ());
+				TreasureChest.generate(world, rand, chestPos.getX(), chestPos.getY(), chestPos.getZ(), TreasureChest.ORE);
 			}
 		}
 		
