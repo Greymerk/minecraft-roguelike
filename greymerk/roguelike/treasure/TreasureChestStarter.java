@@ -25,10 +25,9 @@ public class TreasureChestStarter extends TreasureChestBase{
 	private ItemStack getStarterLoot(int choice){
 		
 		switch (choice){
-		case 5: return Loot.getLootByCategory(Loot.TOOL, rand, 0, false);
-		case 4: return new ItemStack(Item.swordStone);
-		case 3: return Loot.getLootByCategory(Loot.BLOCK, rand, 0);
-		case 2: return Loot.getLootByCategory(Loot.FOOD, rand, 0);
+		case 4: return new ItemStack(Item.pickaxeStone);
+		case 3: return new ItemStack(Item.swordStone);
+		case 2: return Loot.getLoot(Loot.FOOD, rand, 0);
 		case 1: return ItemSpecialty.getRandomItem(Equipment.LEGS, rand, Quality.WOOD);
 		default: return new ItemStack(Block.torchWood, 3 + rand.nextInt(6));
 		}
@@ -44,7 +43,7 @@ public class TreasureChestStarter extends TreasureChestBase{
 
 		for (int i = 0; i < quantity; i++) {
 			ItemStack item;
-			item = getStarterLoot(i % 6);
+			item = getStarterLoot(i % 5);
 			chest.setInventorySlotContents(rand.nextInt(size), item);
 		}
 		
@@ -60,18 +59,17 @@ public class TreasureChestStarter extends TreasureChestBase{
 		book.setTagInfo("title", new NBTTagString("title", "Journal"));
 		
 		String page1 = 
-				"Forced out of our own base, " +
-				"monsters everywhere, " +
-				"was such a marvelous home. " +
+				"Monsters invading from the depths, " +
+				"perhaps we dug too deeply. " +
 				"Our stuff is still down there, " +
 				"we're running out of food and " +
 				"have to leave soon before the tower " +
-				"is taken over as well\n\n" +
-				"-greymerk\n" +
-				"February 28th 2014";
+				"is overtaken as well\n\n" +
+				"-greymerk\n";
 		
 		String page2 = 
-				"Roguelike Dungeons v1.3.0\n\n" +
+				"Roguelike Dungeons v1.3.1\n" +
+				"May 21th 2014\n\n" + 
 				"Credits\n\n" +
 				"Author: Greymerk\n\n" +
 				"Bits: Drainedsoul\n\n" +

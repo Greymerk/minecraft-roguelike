@@ -16,13 +16,13 @@ public class TreasureChestEnchanting extends TreasureChestBase{
 				
 		ItemStack item;
 		
-		item = new ItemStack(Item.expBottle, 2 + rand.nextInt(6));
+		item = Loot.getLoot(Loot.ENCHANTBONUS, rand, level);
 		chest.setInventorySlotContents(middle - 1, item);
 		
-		item = Loot.getEnchantedBook(rand, level);
+		item = Loot.getLoot(Loot.ENCHANTBOOK, rand, level);	
 		chest.setInventorySlotContents(middle, item);
 		
-		item = new ItemStack(Item.enderPearl, 1 + rand.nextInt(3));
+		item = Loot.getLoot(Loot.ENCHANTBONUS, rand, level);
 		chest.setInventorySlotContents(middle + 1, item);
 	}
 	

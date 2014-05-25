@@ -112,12 +112,12 @@ public class Catacomb {
 		return true;
 	}
 	
-	public static IDungeonFactory getFactory(Random rand, int rank){
+	public static IDungeonFactory getFactory(Random rand, int level){
 		
 		DungeonFactory factory;
 		int choice = rand.nextInt(10);
 		
-		switch(rank){
+		switch(level){
 		case 0:
 			factory = new DungeonFactory(rand, Dungeon.CORNER);
 			factory.addSingle(Dungeon.CAKE);
@@ -135,7 +135,6 @@ public class Catacomb {
 			factory.addSingle(Dungeon.MUSIC);
 			factory.addSingle(Dungeon.PIT);
 			factory.addSingle(Dungeon.ENCHANT);
-			factory.addSingle(Dungeon.SMITH);
 			factory.addSingle(Dungeon.LAB);
 			factory.addByRatio(Dungeon.MESS, 30);
 			factory.addByRatio(Dungeon.STORAGE, 30);

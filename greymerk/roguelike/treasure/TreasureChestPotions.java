@@ -2,7 +2,8 @@ package greymerk.roguelike.treasure;
 
 import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.catacomb.dungeon.Dungeon;
-import greymerk.roguelike.treasure.loot.ItemPotion;
+import greymerk.roguelike.treasure.loot.Potion;
+import greymerk.roguelike.treasure.loot.Loot;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.TileEntityChest;
@@ -14,11 +15,15 @@ public class TreasureChestPotions extends TreasureChestBase{
 	protected void fillChest(TileEntityChest chest, int level){
 		int middle = chest.getSizeInventory()/2;
 		
-		chest.setInventorySlotContents(middle - 1, ItemPotion.getRandom(rand));
+		ItemStack item;
+		item = Loot.getLoot(Loot.POTION, rand, level);	
+		chest.setInventorySlotContents(middle - 1, Potion.getRandom(rand));
 
-		chest.setInventorySlotContents(middle, ItemPotion.getSpecific(rand, ItemPotion.HEALING));
+		item = Loot.getLoot(Loot.POTION, rand, level);
+		chest.setInventorySlotContents(middle, item);
 
-		chest.setInventorySlotContents(middle + 1, ItemPotion.getRandom(rand));
+		item = Loot.getLoot(Loot.POTION, rand, level);
+		chest.setInventorySlotContents(middle + 1, item);
 		
 	}
 }

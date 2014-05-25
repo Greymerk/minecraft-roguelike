@@ -6,10 +6,14 @@ import net.minecraft.src.Block;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 
-public class ItemJunk {
+public class ItemJunk extends ItemBase implements ILootProvider{
 
-	public static ItemStack getRandom(Random rand, int level){
-		
+	public ItemJunk(int weight) {
+		super(weight);
+	}
+
+	@Override
+	public ItemStack getLootItem(Random rand, int level){
 		if(rand.nextInt(500) == 0){
 			if(rand.nextBoolean()) return ItemNovelty.getItem(ItemNovelty.VECHS);
 
@@ -21,19 +25,16 @@ public class ItemJunk {
 			case 4: return ItemNovelty.getItem(ItemNovelty.DINNERBONE);
 			}
 		}
-		
+
 		if(level > 0 && rand.nextInt(200) == 0){
 			if(level > 2 && rand.nextInt(10) == 0) return new ItemStack(Item.horseArmorDiamond.itemID, 1, 0);
 			if(level > 1 && rand.nextInt(5) == 0) return new ItemStack(Item.horseArmorGold, 1, 0);
 			if(rand.nextInt(3) == 0) return new ItemStack(Item.horseArmorIron, 1, 0);
 			return new ItemStack(Item.saddle);
 		}
-		
+
 		if(level > 1 && rand.nextInt(100) == 0) return new ItemStack(Item.ghastTear);
-		if(rand.nextInt(100) == 0) return ItemBlock.getRandom(rand, level);
-		
-		if(rand.nextInt(80) == 0) return ItemOre.getRandom(rand, level);
-		
+
 		if(level > 1 && rand.nextInt(50) == 0){			
 			switch(rand.nextInt(6)){
 			case 0: return new ItemStack(Item.gunpowder, 1 + rand.nextInt(3));
@@ -44,11 +45,9 @@ public class ItemJunk {
 			case 5: return new ItemStack(Item.dyePowder, 1 + rand.nextInt(3));
 			}
 		}
-		
+
 		if(level < 3 && rand.nextInt(10 + ((1 + level) * 5)) == 0) return new ItemStack(Item.book);
 
-		if(rand.nextInt(30) == 0) return ItemFood.getRandom(rand, level);
-		
 		/*
 		if(level > 0 && rand.nextInt(20 / (1 + level)) == 0){
 			
@@ -65,11 +64,11 @@ public class ItemJunk {
 			if(toReturn != null) return toReturn;
 		}
 		*/
-		
+
 		if(rand.nextInt(20) == 0){
 			return new ItemStack(Block.torchWood, 3 + rand.nextInt(3 + level));
 		}
-		
+
 		if(rand.nextInt(10) == 0){
 			switch(rand.nextInt(7)){
 			case 0: return new ItemStack(Item.slimeBall);
@@ -81,7 +80,7 @@ public class ItemJunk {
 			case 6: return new ItemStack(Item.glassBottle, 1 + rand.nextInt(3));
 			}
 		}
-		
+
 		switch(rand.nextInt(6)){
 		case 0: return new ItemStack(Item.bone);
 		case 1: return new ItemStack(Item.rottenFlesh);

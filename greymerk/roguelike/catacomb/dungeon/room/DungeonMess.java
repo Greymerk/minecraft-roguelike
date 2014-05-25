@@ -124,13 +124,13 @@ public class DungeonMess implements IDungeon {
 		WorldGenPrimitive.setBlock(world, x + 2, y, z - 1, stairSpruce, WorldGenPrimitive.blockOrientation(Cardinal.SOUTH, true), 2, true, true);
 		WorldGenPrimitive.setBlock(world, x + 2, y, z, stairSpruce, WorldGenPrimitive.blockOrientation(Cardinal.WEST, true), 2, true, true);
 		WorldGenPrimitive.setBlock(world, x + 2, y, z + 1, stairSpruce, WorldGenPrimitive.blockOrientation(Cardinal.NORTH, true), 2, true, true);
-		new TreasureChestFoodStore().generate(world, rand, x + 2, y + 1, z, 2, false);
+		new TreasureChestFoodStore().generate(world, rand, x + 2, y + 1, z, 1, false);
 		
 		// south shelf
 		WorldGenPrimitive.setBlock(world, x - 1, y, z + 2, stairSpruce, WorldGenPrimitive.blockOrientation(Cardinal.EAST, true), 2, true, true);
 		WorldGenPrimitive.setBlock(world, x, y, z + 2, stairSpruce, WorldGenPrimitive.blockOrientation(Cardinal.NORTH, true), 2, true, true);
 		WorldGenPrimitive.setBlock(world, x + 1, y, z + 2, stairSpruce, WorldGenPrimitive.blockOrientation(Cardinal.WEST, true), 2, true, true);
-		new TreasureChestFoodStore().generate(world, rand, x, y + 1, z + 2, 2, false);
+		new TreasureChestFoodStore().generate(world, rand, x, y + 1, z + 2, 1, false);
 	}
 	
 	private void northTable(World world, Random rand, int x, int y, int z){
@@ -187,7 +187,7 @@ public class DungeonMess implements IDungeon {
 			
 			for (int i = 0; i < stacks; i++) {
 				if(rand.nextInt(10) < 8){
-					item = Loot.getLootByCategory(Loot.FOOD, rand, level);
+					item = Loot.getLoot(Loot.FOOD, rand, level);
 					chest.setInventorySlotContents(rand.nextInt(chest.getSizeInventory()), item);	
 				}
 			}

@@ -16,13 +16,13 @@ public class TreasureChestArmour extends TreasureChestBase{
 						
 		ItemStack item;
 		
-		item = Loot.getLootByCategory(Loot.POTION, rand, level);
+		item = Loot.getLoot(Loot.POTION, rand, level);
 		chest.setInventorySlotContents(middle - 1, item);
 		
-		item = Loot.getLootByCategory(Loot.ARMOUR, rand, level);
+		item = Loot.getLoot(Loot.ARMOUR, rand, level);
 		chest.setInventorySlotContents(middle, item);
 		
-		item = Loot.getLootByCategory(Loot.FOOD, rand, level);
+		item = Loot.getLoot(Loot.FOOD, rand, level);
 		chest.setInventorySlotContents(middle + 1, item);
 	}
 

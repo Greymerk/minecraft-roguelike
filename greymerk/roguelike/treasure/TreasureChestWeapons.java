@@ -18,13 +18,13 @@ public class TreasureChestWeapons extends TreasureChestBase{
 						
 		ItemStack item;
 		
-		item = new ItemStack(Item.arrow, 2 + rand.nextInt(6));
+		item = Loot.getLoot(Loot.POTION, rand, level);
 		chest.setInventorySlotContents(middle - 1, item);
 		
-		item = Loot.getEquipmentBySlot(rand, Slot.WEAPON, level, true);
+		item = Loot.getLoot(Loot.WEAPON, rand, level);
 		chest.setInventorySlotContents(middle, item);
 		
-		item = ItemFood.getRandom(rand, level);
+		item = Loot.getLoot(Loot.FOOD, rand, level);
 		chest.setInventorySlotContents(middle + 1, item);
 	}
 

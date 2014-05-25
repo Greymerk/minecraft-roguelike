@@ -8,7 +8,16 @@ import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.NBTTagCompound;
 
-public class ItemArmour {
+public class ItemArmour extends ItemBase implements ILootProvider {
+
+	public ItemArmour(int weight) {
+		super(weight);
+	}
+	
+	@Override
+	public ItemStack getLootItem(Random rand, int level) {
+		return getRandom(rand, level, true);
+	}
 
 	public static ItemStack getRandom(Random rand, int level, boolean enchant){
 		return getRandom(rand, level,
@@ -120,4 +129,6 @@ public class ItemArmour {
         
 		return armor;
 	}
+
+
 }

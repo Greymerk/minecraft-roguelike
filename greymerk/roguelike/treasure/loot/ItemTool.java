@@ -5,8 +5,18 @@ import java.util.Random;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 
-public class ItemTool {
+public class ItemTool extends ItemBase {
 
+
+	public ItemTool(int weight) {
+		super(weight);
+		// TODO Auto-generated constructor stub
+	}
+	
+	@Override
+	public ItemStack getLootItem(Random rand, int level) {
+		return getRandom(rand, level, true);
+	}
 
 	public static ItemStack getRandom(Random rand, int level, boolean enchant){
 		
@@ -76,5 +86,7 @@ public class ItemTool {
 		default: return new ItemStack(Item.pickaxeWood);
 		}
 	}
+
+
 	
 }

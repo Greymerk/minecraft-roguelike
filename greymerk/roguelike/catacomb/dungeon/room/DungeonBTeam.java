@@ -13,9 +13,9 @@ import greymerk.roguelike.treasure.TreasureChest;
 import greymerk.roguelike.treasure.TreasureChestEmpty;
 import greymerk.roguelike.treasure.loot.ItemArmour;
 import greymerk.roguelike.treasure.loot.ItemNovelty;
-import greymerk.roguelike.treasure.loot.ItemPotion;
+import greymerk.roguelike.treasure.loot.Potion;
 import greymerk.roguelike.treasure.loot.Loot;
-import greymerk.roguelike.treasure.loot.ItemRecord;
+import greymerk.roguelike.treasure.loot.Record;
 import greymerk.roguelike.worldgen.BlockFactoryCheckers;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Log;
@@ -129,7 +129,7 @@ public class DungeonBTeam implements IDungeon {
 		
 		
 		ITreasureChest recordChest = new TreasureChestEmpty().generate(world, rand, x - 4, y, z - 4);
-		recordChest.setInventorySlot(ItemRecord.getRecord(ItemRecord.STAL), recordChest.getInventorySize() / 2);
+		recordChest.setInventorySlot(Record.getRecord(Record.STAL), recordChest.getInventorySize() / 2);
 		WorldGenPrimitive.setBlock(world, x - 3, y, z - 4, Block.jukebox.blockID);
 		
 		ITreasureChest bdubsChest = new TreasureChestEmpty().generate(world, rand, x - 3, y, z + 5);
@@ -150,17 +150,17 @@ public class DungeonBTeam implements IDungeon {
 		WorldGenPrimitive.setBlock(world, x + 4, y + 1, z - 4, Block.brewingStand.blockID);
 		
 		ITreasureChest contraband = new TreasureChestEmpty().generate(world, rand, x + 3, y, z - 4);
-		ItemStack moonshine = ItemPotion.getSpecific(rand, ItemPotion.HARM);
+		ItemStack moonshine = Potion.getSpecific(rand, Potion.HARM);
 		Loot.setItemName(moonshine, "Moonshine", null);
 		contraband.setInventorySlot(moonshine, rand.nextInt(contraband.getInventorySize()));
 		contraband.setInventorySlot(moonshine, rand.nextInt(contraband.getInventorySize()));
 		
-		ItemStack absinthe = ItemPotion.getSpecific(rand, ItemPotion.POISON);
+		ItemStack absinthe = Potion.getSpecific(rand, Potion.POISON);
 		Loot.setItemName(absinthe, "Absinthe", null);
 		contraband.setInventorySlot(absinthe, rand.nextInt(contraband.getInventorySize()));
 		contraband.setInventorySlot(absinthe, rand.nextInt(contraband.getInventorySize()));
 		
-		ItemStack grog = ItemPotion.getSpecific(rand, ItemPotion.WEAKNESS);
+		ItemStack grog = Potion.getSpecific(rand, Potion.WEAKNESS);
 		Loot.setItemName(grog, "Grog", null);
 		contraband.setInventorySlot(grog, rand.nextInt(contraband.getInventorySize()));
 		contraband.setInventorySlot(grog, rand.nextInt(contraband.getInventorySize()));

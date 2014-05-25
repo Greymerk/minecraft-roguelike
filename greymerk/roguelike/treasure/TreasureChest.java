@@ -16,7 +16,7 @@ import net.minecraft.src.World;
 
 public enum TreasureChest {
 
-	ARMOUR, WEAPONS, BLOCKS, ENCHANTING, FOOD, ORE, POTIONS, STARTER, TOOLS, SUPPLIES, SMITH, MUSIC, SPECIALTY;
+	ARMOUR, WEAPONS, BLOCKS, ENCHANTING, FOOD, ORE, POTIONS, STARTER, TOOLS, SUPPLIES, SMITH, MUSIC;
 	
 	public static final List<TreasureChest> level0 = new ArrayList<TreasureChest>(Arrays.asList(ORE, TOOLS, ARMOUR, WEAPONS, FOOD));
 	public static final List<TreasureChest> level1 = new ArrayList<TreasureChest>(Arrays.asList(ORE, TOOLS, ARMOUR, WEAPONS, FOOD));
@@ -115,7 +115,6 @@ public enum TreasureChest {
 		case SUPPLIES: return new TreasureChestSupplies();
 		case SMITH: return new TreasureChestSmithy();
 		case MUSIC: return new TreasureChestMusic();
-		case SPECIALTY: return new TreasureChestSpecialty();
 		default: return new TreasureChestFood();
 		}
 	}

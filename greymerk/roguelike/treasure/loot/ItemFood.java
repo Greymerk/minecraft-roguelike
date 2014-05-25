@@ -5,8 +5,17 @@ import java.util.Random;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 
-public class ItemFood {
+public class ItemFood extends ItemBase{
 
+	public ItemFood(int weight) {
+		super(weight);
+	}
+
+	@Override
+	public ItemStack getLootItem(Random rand, int level) {
+		return getRandom(rand, level);
+	}		
+	
 	public static ItemStack getRandom(Random rand, int rank){
 		
 		ItemNovelty[] items = {
@@ -21,6 +30,8 @@ public class ItemFood {
 		
 		return pickFood(rand, rank);
 	}
+	
+	
 	
 	public static ItemStack getDessert(Random rand){
 		
@@ -71,5 +82,7 @@ public class ItemFood {
 		
 		
 		}
-	}	
+	}
+
+
 }

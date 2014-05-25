@@ -1,10 +1,10 @@
-package greymerk.roguelike.treasure.loot.custom;
+package greymerk.roguelike.treasure.loot;
 
 import java.util.Random;
 
 import net.minecraft.src.ItemStack;
 
-public class WeightedRandomLoot implements Comparable{
+public class WeightedRandomLoot implements Comparable, ILootProvider{
 	
 	private int id;
 	private int damage;
@@ -13,7 +13,6 @@ public class WeightedRandomLoot implements Comparable{
 	private int max;
 	
 	private int weight;
-
 	
 	public WeightedRandomLoot(int id, int damage, int minStackSize, int maxStackSize, int weight){
 		this.id = id;
@@ -25,7 +24,7 @@ public class WeightedRandomLoot implements Comparable{
 	
 	
 	
-	public ItemStack getItem(Random rand){
+	public ItemStack getLootItem(Random rand, int level) {
 		return new ItemStack(id, getStackSize(rand), damage);
 	}
 	
@@ -49,4 +48,6 @@ public class WeightedRandomLoot implements Comparable{
 	public int getWeight(){
 		return this.weight;
 	}
+
+
 }

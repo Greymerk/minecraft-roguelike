@@ -16,13 +16,13 @@ public class TreasureChestTools extends TreasureChestBase{
 						
 		ItemStack item;		
 		
-		item = new ItemStack(Block.torchWood, 4 + rand.nextInt(12));
+		item = Loot.getLoot(Loot.BLOCK, rand, 0);
 		chest.setInventorySlotContents(middle - 1, item);
 		
-		item = Loot.getLootByCategory(Loot.TOOL, rand, level);
+		item = Loot.getLoot(Loot.TOOL, rand, level);
 		chest.setInventorySlotContents(middle, item);
 		
-		item = Loot.getLootByCategory(Loot.ORE, rand, 0);
+		item = Loot.getLoot(Loot.ORE, rand, 0);
 		chest.setInventorySlotContents(middle + 1, item);
 	}
 }

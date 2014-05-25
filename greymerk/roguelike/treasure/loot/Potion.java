@@ -5,7 +5,7 @@ import java.util.Random;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 
-public enum ItemPotion {
+public enum Potion {
 	
 	HEALING, HARM, REGEN, POISON, STRENGTH, WEAKNESS, SLOWNESS, SWIFTNESS, FIRERESIST;
 	
@@ -20,15 +20,15 @@ public enum ItemPotion {
 			return ItemNovelty.getItem(ItemNovelty.AVIDYA);
 		}
 		
-		ItemPotion type = ItemPotion.values()[rand.nextInt(ItemPotion.values().length)];
+		Potion type = Potion.values()[rand.nextInt(Potion.values().length)];
 		return getSpecific(rand, type);
 	}
 	
-	public static ItemStack getSpecific(Random rand, ItemPotion type){
+	public static ItemStack getSpecific(Random rand, Potion type){
 		return getSpecific(rand, type, rand.nextBoolean(), rand.nextBoolean(), rand.nextBoolean());
 	}
 
-	public static ItemStack getSpecific(Random rand, ItemPotion type, boolean upgrade, boolean extend, boolean splash){
+	public static ItemStack getSpecific(Random rand, Potion type, boolean upgrade, boolean extend, boolean splash){
 		
 		int id = getPotionID(type);
 
@@ -58,7 +58,7 @@ public enum ItemPotion {
 		
 	}
 	
-	public static int getPotionID(ItemPotion type){
+	public static int getPotionID(Potion type){
 		switch(type){
 		case REGEN: return 1;
 		case SWIFTNESS: return 2;
@@ -73,7 +73,7 @@ public enum ItemPotion {
 		}
 	}
 	
-	private static int upgrade(ItemPotion type, int id){
+	private static int upgrade(Potion type, int id){
 		
 		if(type == FIRERESIST){
 			return id;
@@ -84,7 +84,7 @@ public enum ItemPotion {
 		return id | UPGRADE;
 	}
 	
-	private static int extend(ItemPotion type, int id){
+	private static int extend(Potion type, int id){
 		
 		if(type == HEALING || type == HARM){
 			return id;

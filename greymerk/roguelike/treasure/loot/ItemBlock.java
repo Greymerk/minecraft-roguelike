@@ -7,7 +7,16 @@ import java.util.Random;
 import net.minecraft.src.Block;
 import net.minecraft.src.ItemStack;
 
-public class ItemBlock {
+public class ItemBlock extends ItemBase{
+	
+	public ItemBlock(int weight) {
+		super(weight);
+	}
+
+	@Override
+	public ItemStack getLootItem(Random rand, int level) {
+		return getRandom(rand, level);
+	}
 	
 	public static ItemStack getRandom(Random rand, int level){
 		
@@ -68,5 +77,7 @@ public class ItemBlock {
 		
 		
 	}
+
+
 
 }

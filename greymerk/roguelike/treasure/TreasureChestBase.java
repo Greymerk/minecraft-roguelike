@@ -3,10 +3,10 @@ package greymerk.roguelike.treasure;
 import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.catacomb.dungeon.Dungeon;
 import greymerk.roguelike.config.RogueConfig;
+import greymerk.roguelike.treasure.loot.CustomLoot;
 import greymerk.roguelike.treasure.loot.Loot;
+import greymerk.roguelike.treasure.loot.WeightedRandomLoot;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
-import greymerk.roguelike.treasure.loot.custom.CustomLoot;
-import greymerk.roguelike.treasure.loot.custom.WeightedRandomLoot;
 
 import java.util.Iterator;
 import java.util.List;
@@ -26,13 +26,7 @@ public abstract class TreasureChestBase implements ITreasureChest{
 	protected int posY;
 	protected int posZ;
 	protected TileEntityChest chest;
-	private static CustomLoot custom;
-	static {
-		TreasureChestBase.custom = new CustomLoot();
-		if(RogueConfig.getBoolean(RogueConfig.OVERRIDELOOT)){
-			custom.parseLoot();
-		}		
-	}
+
 	
 	public TreasureChestBase(){
 	}
@@ -57,23 +51,17 @@ public abstract class TreasureChestBase implements ITreasureChest{
 		try{
 			
 			int amount = RogueConfig.getBoolean(RogueConfig.GENEROUS) ? 16 : 12;
-			boolean customLoot = RogueConfig.getBoolean(RogueConfig.OVERRIDELOOT) && !custom.isEmpty();
 			
 			for (int i = 0; i < amount; i++) {
-				
-				
+								
 				ItemStack item;
 				
-				if(customLoot){
-					item = custom.getLoot(rand, level);
-				} else {
-					item = Loot.getLootByCategory(Loot.JUNK, rand, level);
-				}
+				item = Loot.getLoot(Loot.JUNK, rand, level);
 				
 				chest.setInventorySlotContents(rand.nextInt(chest.getSizeInventory()), item);
 			}
 			
-			if(!customLoot) fillChest(chest, level);
+			fillChest(chest, level);
 			
 		} catch(NullPointerException e){
 			return null;

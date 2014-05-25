@@ -5,10 +5,14 @@ import java.util.Random;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 
-public class ItemOre {
+public class ItemOre extends ItemBase implements ILootProvider{
 
-	public static ItemStack getRandom(Random rand, int level){
-		
+	public ItemOre(int weight) {
+		super(weight);
+	}
+
+	@Override
+	public ItemStack getLootItem(Random rand, int level) {
 		if(level < 2 && rand.nextInt(100) == 0){
 			return ItemNovelty.getItem(ItemNovelty.MCGAMER);
 		}
@@ -43,5 +47,6 @@ public class ItemOre {
 		}
 				
 	}
-	
+
+
 }

@@ -1,11 +1,14 @@
 package greymerk.roguelike.treasure.loot;
 
+import greymerk.roguelike.config.ConfigFile;
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.util.TextFormat;
 
 import java.util.Dictionary;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import net.minecraft.src.Block;
@@ -24,25 +27,59 @@ import net.minecraft.src.World;
 
 public enum Loot {
 
-	WEAPON, ARMOUR, BLOCK, JUNK, ORE, TOOL, POTION, FOOD;
+	WEAPON, ARMOUR, BLOCK, JUNK, ORE, TOOL, POTION, FOOD, ENCHANTBOOK, ENCHANTBONUS, SUPPLY, MUSIC, SMITHY;
 	
-	public static ItemStack getLootByCategory(Loot category, Random rand, int level){
-		return getLootByCategory(category, rand, level, true);
+	private static Map<String, ILootProvider> loot = new HashMap<String, ILootProvider>();
+	static{
+		init();
 	}
 	
-	public static ItemStack getLootByCategory(Loot category, Random rand, int level, boolean enchant){
-		
-		switch(category){
-		case WEAPON: return ItemWeapon.getRandom(rand, level, enchant);
-		case ARMOUR: return ItemArmour.getRandom(rand, level, enchant);
-		case BLOCK: return ItemBlock.getRandom(rand, level);
-		case JUNK: return ItemJunk.getRandom(rand, level);
-		case ORE: return ItemOre.getRandom(rand, level);
-		case TOOL: return ItemTool.getRandom(rand, level, enchant);
-		case POTION: return ItemPotion.getRandom(rand);
-		case FOOD: return ItemFood.getRandom(rand, level);
-		default: return null;		
+	
+	public static void init(){
+	
+		for(Loot type : Loot.values()){
+			LootProvider loots;
+			
+			loot.put(type.name(), loots = new LootProvider(0));
+			
+			switch(type){
+			case WEAPON: loots.addAllLevels(new ItemWeapon(1000)); continue;
+			case ARMOUR: loots.addAllLevels(new ItemArmour(1000)); continue;
+			case BLOCK: loots.addAllLevels(new ItemBlock(1000)); continue;
+			case JUNK: loots.addAllLevels(new ItemJunk(1000)); continue;
+			case ORE: loots.addAllLevels(new ItemOre(1000)); continue;
+			case TOOL: loots.addAllLevels(new ItemTool(1000)); continue;
+			case POTION: loots.addAllLevels(new PotionProvider(1000)); continue;
+			case FOOD: loots.addAllLevels(new ItemFood(1000)); continue;
+			case ENCHANTBOOK: loots.addAllLevels(new ItemEnchBook(1000)); continue;
+			case ENCHANTBONUS: loots.addAllLevels(new ItemEnchBonus(1000)); continue;
+			case SUPPLY: loots.addAllLevels(new ItemSupply(1000)); continue;
+			case MUSIC: loots.addAllLevels(new ItemRecord(1000)); continue;
+			case SMITHY: loots.addAllLevels(new ItemSmithy(1000)); continue;
+			}
 		}
+
+		CustomLoot.parseLoot();
+		
+	}
+	
+	public static void clear(Loot type){
+		LootProvider lootp = (LootProvider)loot.get(type.name());
+		lootp.clear();
+	}
+	
+	public static void addAllLevels(Loot type, ILootProvider toAdd){
+		LootProvider lootp = (LootProvider)loot.get(type.name());
+		lootp.addAllLevels(toAdd);
+	}
+	
+	public static void add(Loot type, ILootProvider toAdd, int level){
+		LootProvider lootp = (LootProvider)loot.get(type.name());
+		lootp.add(level, toAdd);
+	}
+	
+	public static ItemStack getLoot(Loot type, Random rand, int level){
+		return loot.get(type.name()).getLootItem(rand, level);
 	}
 	
 	public static ItemStack getEquipmentBySlot(Random rand, Slot slot, int level, boolean enchant){
@@ -56,16 +93,7 @@ public enum Loot {
 		return ItemArmour.getRandom(rand, level, slot, enchant);
 		
 	}
-	
-	public static ItemStack getEnchantedBook(Random rand, int level){
 		
-		ItemStack book = new ItemStack(Item.book);
-		
-		enchantItem(book, rand, getEnchantLevel(rand, level));
-		
-		return book;
-	}
-	
 	public static ItemStack getSupplyItem(Random rand, int level){
 
 		if(rand.nextInt(500) == 0){

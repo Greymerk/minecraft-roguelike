@@ -16,7 +16,7 @@ public class TreasureChestOre extends TreasureChestBase{
 		ItemStack item;
 
 		for (int i = 0; i < quantity; i++) {
-			item = Loot.getLootByCategory(Loot.ORE, rand, level);			
+			item = Loot.getLoot(Loot.ORE, rand, level);			
 			chest.setInventorySlotContents(rand.nextInt(chest.getSizeInventory()), item);
 		}
 	}

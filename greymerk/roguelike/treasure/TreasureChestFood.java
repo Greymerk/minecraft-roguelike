@@ -17,7 +17,7 @@ public class TreasureChestFood extends TreasureChestBase{
 		ItemStack item;		
 		
 		for(int i = 0; i < 3; i++){
-			item = Loot.getLootByCategory(Loot.FOOD, rand, level);
+			item = Loot.getLoot(Loot.FOOD, rand, level);
 			chest.setInventorySlotContents((middle - 1) + i, item);
 		}
 	}

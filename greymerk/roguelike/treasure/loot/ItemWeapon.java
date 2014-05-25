@@ -5,8 +5,17 @@ import java.util.Random;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 
-public class ItemWeapon {
+public class ItemWeapon extends ItemBase implements ILootProvider{
 	
+	public ItemWeapon(int weight) {
+		super(weight);
+	}
+	
+	@Override
+	public ItemStack getLootItem(Random rand, int level) {
+		return getRandom(rand, level, true);
+	}
+
 	public static ItemStack getRandom(Random rand, int rank, boolean enchant){
 		
 		if(rand.nextInt(10) == 0){
@@ -60,5 +69,7 @@ public class ItemWeapon {
 		default: return new ItemStack(Item.swordWood);
 		}
 	}
+
+
 	
 }

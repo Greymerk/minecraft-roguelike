@@ -48,7 +48,7 @@ public class DungeonsNetherBrickFortress implements IDungeon {
 		buildFloor();
 		buildRoof();
 		
-		ArrayList<TreasureChest> types = new ArrayList<TreasureChest>(Arrays.asList(TreasureChest.SPECIALTY));		
+		ArrayList<TreasureChest> types = new ArrayList<TreasureChest>(Arrays.asList(TreasureChest.WEAPONS));		
 		TreasureChest.createChests(world, rand, 2, WorldGenPrimitive.getRectSolid(
 				originX - 6, originY, originZ - 6,
 				originX + 6, originY, originZ + 6),
