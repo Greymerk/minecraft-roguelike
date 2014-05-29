@@ -1,4 +1,8 @@
-package greymerk.roguelike.treasure.loot;
+package greymerk.roguelike.treasure.loot.provider;
+
+import greymerk.roguelike.treasure.loot.Equipment;
+import greymerk.roguelike.treasure.loot.Loot;
+import greymerk.roguelike.treasure.loot.Quality;
 
 import java.util.Random;
 

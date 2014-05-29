@@ -59,12 +59,8 @@ public class WorldGenPrimitive {
 		return setBlock(world, x, y, z, block.getBlockID(), block.getMeta(), block.getFlag(), true, true);
 	}
 	
-	public static void fillRectSolid(World world, int x1, int y1, int z1, int x2, int y2, int z2, MetaBlock block, boolean fillAir, boolean replaceSolid){
-		fillRectSolid(world, x1, y1, z1, x2, y2, z2, new SingleBlockFactory(block.getBlockID(), block.getMeta(), block.getFlag()), fillAir, replaceSolid);
-	}
-	
 	public static void fillRectSolid(World world, int x1, int y1, int z1, int x2, int y2, int z2, int blockID, int meta, int flag, boolean fillAir, boolean replaceSolid){
-		fillRectSolid(world, x1, y1, z1, x2, y2, z2, new SingleBlockFactory(blockID, meta, flag), fillAir, replaceSolid);
+		fillRectSolid(world, x1, y1, z1, x2, y2, z2, new MetaBlock(blockID, meta, flag), fillAir, replaceSolid);
 	}
 	
 	public static void fillRectSolid(World world, int x1, int y1, int z1, int x2, int y2, int z2, IBlockFactory blocks){
@@ -126,13 +122,8 @@ public class WorldGenPrimitive {
 		return points;
 	}
 	
-	public static void fillRectHollow(World world, int x1, int y1, int z1, int x2, int y2, int z2, MetaBlock block, boolean fillAir, boolean replaceSolid){
-		fillRectHollow(world, x1, y1, z1, x2, y2, z2, new SingleBlockFactory(block.getBlockID(), block.getMeta(), block.getFlag()), fillAir, replaceSolid);
-	}
-
-	
 	public static void fillRectHollow(World world, int x1, int y1, int z1, int x2, int y2, int z2, int blockID, int meta, int flag, boolean fillAir, boolean replaceSolid){
-		fillRectHollow(world, x1, y1, z1, x2, y2, z2, new SingleBlockFactory(blockID, meta, flag), fillAir, replaceSolid);
+		fillRectHollow(world, x1, y1, z1, x2, y2, z2, new MetaBlock(blockID, meta, flag), fillAir, replaceSolid);
 	}
 	
 	public static void fillRectHollow(World world, Coord c1, Coord c2, MetaBlock block, boolean fillAir, boolean replaceSolid){
@@ -265,30 +256,6 @@ public class WorldGenPrimitive {
 
 	public static int blockOrientation(Cardinal dir, Boolean upsideDown){
 		return Cardinal.getBlockMeta(dir) + (upsideDown ? 4 : 0);
-	}
-	
-	private static class SingleBlockFactory implements IBlockFactory{
-
-		private MetaBlock block;
-		
-		public SingleBlockFactory(int blockID, int meta, int flag){
-			this.block = new MetaBlock(blockID, meta, flag);
-		}
-		
-		@Override
-		public void setBlock(World world, int x, int y, int z) {
-			WorldGenPrimitive.setBlock(world, x, y, z, block.getBlockID(), block.getMeta(), block.getFlag(), true, true);
-		}
-
-		@Override
-		public void setBlock(World world, int x, int y, int z, boolean fillAir, boolean replaceSolid) {
-			WorldGenPrimitive.setBlock(world, x, y, z, block.getBlockID(), block.getMeta(), block.getFlag(), fillAir, replaceSolid);
-		}
-
-		@Override
-		public MetaBlock getMetaBlock() {
-			return block;
-		}		
 	}
 	
 	public static void fillDown(World world, int x, int y, int z, IBlockFactory blocks){

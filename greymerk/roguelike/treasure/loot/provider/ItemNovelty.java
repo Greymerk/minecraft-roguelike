@@ -1,6 +1,7 @@
-package greymerk.roguelike.treasure.loot;
+package greymerk.roguelike.treasure.loot.provider;
 
 
+import greymerk.roguelike.treasure.loot.Loot;
 import greymerk.roguelike.util.TextFormat;
 
 import java.util.ArrayList;

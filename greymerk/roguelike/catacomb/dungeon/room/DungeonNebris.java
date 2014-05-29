@@ -7,7 +7,7 @@ import net.minecraft.src.World;
 import greymerk.roguelike.catacomb.dungeon.IDungeon;
 import greymerk.roguelike.treasure.ITreasureChest;
 import greymerk.roguelike.treasure.TreasureChestEmpty;
-import greymerk.roguelike.treasure.loot.ItemNovelty;
+import greymerk.roguelike.treasure.loot.provider.ItemNovelty;
 import greymerk.roguelike.worldgen.BlockRandomizer;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;

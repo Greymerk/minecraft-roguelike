@@ -1,4 +1,4 @@
-package greymerk.roguelike.treasure.loot;
+package greymerk.roguelike.treasure.loot.provider;
 
 import java.util.Random;
 
@@ -54,9 +54,8 @@ public class ItemFood extends ItemBase{
 
 		case 4:
 		case 3:
-			if(rand.nextInt(10) == 0) return new ItemStack(Item.goldenCarrot, quantity);
-			
 			if(rand.nextInt(10) == 0) return new ItemStack(Item.appleGold, 1);
+			if(rand.nextInt(5) == 0) return new ItemStack(Item.goldenCarrot, quantity);
 		case 2:
 			if(rand.nextInt(5) == 0){
 				if(rand.nextBoolean()) return new ItemStack(Item.porkCooked, quantity);

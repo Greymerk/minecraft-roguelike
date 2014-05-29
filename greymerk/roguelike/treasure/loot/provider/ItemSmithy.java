@@ -1,4 +1,7 @@
-package greymerk.roguelike.treasure.loot;
+package greymerk.roguelike.treasure.loot.provider;
+
+import greymerk.roguelike.treasure.loot.Equipment;
+import greymerk.roguelike.treasure.loot.Quality;
 
 import java.util.Random;
 
@@ -12,11 +15,7 @@ public class ItemSmithy extends ItemBase{
 
 	@Override
 	public ItemStack getLootItem(Random rand, int level) {
-		if(level == 0){
-			return ItemSpecialty.getRandomItem(Equipment.SWORD, rand, Quality.IRON);
-		}
-		
-		return ItemSpecialty.getRandomTool(rand, Quality.IRON);
+		return ItemSpecialty.getRandomItem(Equipment.SWORD, rand, Quality.IRON);
 	}
 	
 	

@@ -1,4 +1,4 @@
-package greymerk.roguelike.treasure.loot;
+package greymerk.roguelike.treasure.loot.provider;
 
 import java.util.Random;
 

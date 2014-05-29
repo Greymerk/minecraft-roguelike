@@ -3,7 +3,7 @@ package greymerk.roguelike.util;
 
 import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.config.RogueConfig;
-import greymerk.roguelike.treasure.loot.ItemNovelty;
+import greymerk.roguelike.treasure.loot.provider.ItemNovelty;
 
 import java.util.List;
 import java.util.Random;

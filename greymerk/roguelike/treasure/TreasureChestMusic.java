@@ -2,9 +2,9 @@ package greymerk.roguelike.treasure;
 
 import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.catacomb.dungeon.Dungeon;
-import greymerk.roguelike.treasure.loot.ItemNovelty;
 import greymerk.roguelike.treasure.loot.Record;
 import greymerk.roguelike.treasure.loot.Loot;
+import greymerk.roguelike.treasure.loot.provider.ItemNovelty;
 
 import java.util.Iterator;
 import java.util.List;

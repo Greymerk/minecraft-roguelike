@@ -8,7 +8,7 @@ import greymerk.roguelike.catacomb.dungeon.IDungeon;
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.treasure.ITreasureChest;
 import greymerk.roguelike.treasure.TreasureChestEmpty;
-import greymerk.roguelike.treasure.loot.ItemNovelty;
+import greymerk.roguelike.treasure.loot.provider.ItemNovelty;
 import greymerk.roguelike.worldgen.BlockFactoryCheckers;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.MetaBlock;

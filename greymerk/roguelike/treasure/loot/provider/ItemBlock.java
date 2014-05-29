@@ -1,4 +1,4 @@
-package greymerk.roguelike.treasure.loot;
+package greymerk.roguelike.treasure.loot.provider;
 
 import greymerk.roguelike.config.RogueConfig;
 
@@ -20,7 +20,7 @@ public class ItemBlock extends ItemBase{
 	
 	public static ItemStack getRandom(Random rand, int level){
 		
-		if(level > 0 && rand.nextInt(1000) == 0){
+		if(level > 0 && rand.nextInt(500) == 0){
 			if(rand.nextBoolean()){
 				return ItemNovelty.getItem(ItemNovelty.MMILLSS);
 			} else {

@@ -2,8 +2,11 @@ package greymerk.roguelike.treasure;
 
 import greymerk.roguelike.treasure.loot.Equipment;
 import greymerk.roguelike.treasure.loot.Loot;
-import greymerk.roguelike.treasure.loot.ItemSpecialty;
+import greymerk.roguelike.treasure.loot.Potion;
+import greymerk.roguelike.treasure.loot.PotionEffect;
+import greymerk.roguelike.treasure.loot.PotionMixture;
 import greymerk.roguelike.treasure.loot.Quality;
+import greymerk.roguelike.treasure.loot.provider.ItemSpecialty;
 import greymerk.roguelike.config.RogueConfig;
 
 import java.util.Arrays;
@@ -23,7 +26,6 @@ import net.minecraft.src.TileEntityChest;
 public class TreasureChestStarter extends TreasureChestBase{
 
 	private ItemStack getStarterLoot(int choice){
-		
 		switch (choice){
 		case 4: return new ItemStack(Item.pickaxeStone);
 		case 3: return new ItemStack(Item.swordStone);
@@ -31,7 +33,6 @@ public class TreasureChestStarter extends TreasureChestBase{
 		case 1: return ItemSpecialty.getRandomItem(Equipment.LEGS, rand, Quality.WOOD);
 		default: return new ItemStack(Block.torchWood, 3 + rand.nextInt(6));
 		}
-		
 	}	
 	
 	@Override
@@ -68,7 +69,7 @@ public class TreasureChestStarter extends TreasureChestBase{
 				"-greymerk\n";
 		
 		String page2 = 
-				"Roguelike Dungeons v1.3.1\n" +
+				"Roguelike Dungeons v1.3.2\n" +
 				"May 21th 2014\n\n" + 
 				"Credits\n\n" +
 				"Author: Greymerk\n\n" +

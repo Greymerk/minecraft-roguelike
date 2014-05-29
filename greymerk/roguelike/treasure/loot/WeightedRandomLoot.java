@@ -1,5 +1,6 @@
 package greymerk.roguelike.treasure.loot;
 
+
 import java.util.Random;
 
 import net.minecraft.src.ItemStack;

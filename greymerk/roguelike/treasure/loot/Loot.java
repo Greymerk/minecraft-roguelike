@@ -2,6 +2,20 @@ package greymerk.roguelike.treasure.loot;
 
 import greymerk.roguelike.config.ConfigFile;
 import greymerk.roguelike.config.RogueConfig;
+import greymerk.roguelike.treasure.loot.provider.ItemArmour;
+import greymerk.roguelike.treasure.loot.provider.ItemBlock;
+import greymerk.roguelike.treasure.loot.provider.ItemEnchBonus;
+import greymerk.roguelike.treasure.loot.provider.ItemEnchBook;
+import greymerk.roguelike.treasure.loot.provider.ItemFood;
+import greymerk.roguelike.treasure.loot.provider.ItemJunk;
+import greymerk.roguelike.treasure.loot.provider.ItemNovelty;
+import greymerk.roguelike.treasure.loot.provider.ItemOre;
+import greymerk.roguelike.treasure.loot.provider.ItemPotion;
+import greymerk.roguelike.treasure.loot.provider.ItemRecord;
+import greymerk.roguelike.treasure.loot.provider.ItemSmithy;
+import greymerk.roguelike.treasure.loot.provider.ItemSupply;
+import greymerk.roguelike.treasure.loot.provider.ItemTool;
+import greymerk.roguelike.treasure.loot.provider.ItemWeapon;
 import greymerk.roguelike.util.TextFormat;
 
 import java.util.Dictionary;
@@ -49,7 +63,7 @@ public enum Loot {
 			case JUNK: loots.addAllLevels(new ItemJunk(1000)); continue;
 			case ORE: loots.addAllLevels(new ItemOre(1000)); continue;
 			case TOOL: loots.addAllLevels(new ItemTool(1000)); continue;
-			case POTION: loots.addAllLevels(new PotionProvider(1000)); continue;
+			case POTION: loots.addAllLevels(new ItemPotion(1000)); continue;
 			case FOOD: loots.addAllLevels(new ItemFood(1000)); continue;
 			case ENCHANTBOOK: loots.addAllLevels(new ItemEnchBook(1000)); continue;
 			case ENCHANTBONUS: loots.addAllLevels(new ItemEnchBonus(1000)); continue;

@@ -1,4 +1,7 @@
-package greymerk.roguelike.treasure.loot;
+package greymerk.roguelike.treasure.loot.provider;
+
+import greymerk.roguelike.treasure.loot.ILootProvider;
+import greymerk.roguelike.treasure.loot.PotionMixture;
 
 import java.util.Random;
 
@@ -65,18 +68,20 @@ public class ItemJunk extends ItemBase implements ILootProvider{
 		}
 		*/
 
+		if(level > 0 && rand.nextInt(30) == 0) return PotionMixture.getPotion(rand, PotionMixture.VILE);
+		
 		if(rand.nextInt(20) == 0){
 			return new ItemStack(Block.torchWood, 3 + rand.nextInt(3 + level));
 		}
 
-		if(rand.nextInt(10) == 0){
+		if(level > 0 && rand.nextInt(10) == 0){
 			switch(rand.nextInt(7)){
-			case 0: return new ItemStack(Item.slimeBall);
-			case 1: return new ItemStack(Item.snowball);
+			case 0: return new ItemStack(Item.slimeBall, 1 + rand.nextInt(3));
+			case 1: return new ItemStack(Item.snowball, 1 + rand.nextInt(3));
 			case 2: return new ItemStack(Item.bowlEmpty);
-			case 3: return new ItemStack(Item.clay);
+			case 3: return new ItemStack(Item.clay, 1 + rand.nextInt(3));
 			case 4: return new ItemStack(Item.flint);
-			case 5: return new ItemStack(Item.feather);
+			case 5: return new ItemStack(Item.feather, 1 + rand.nextInt(3));
 			case 6: return new ItemStack(Item.glassBottle, 1 + rand.nextInt(3));
 			}
 		}

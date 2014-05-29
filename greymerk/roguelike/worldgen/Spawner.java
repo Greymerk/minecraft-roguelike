@@ -1,7 +1,7 @@
 package greymerk.roguelike.worldgen;
 
 import greymerk.roguelike.treasure.loot.Loot;
-import greymerk.roguelike.treasure.loot.ItemNovelty;
+import greymerk.roguelike.treasure.loot.provider.ItemNovelty;
 
 import java.util.Random;
 
