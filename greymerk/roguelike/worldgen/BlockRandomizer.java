@@ -35,7 +35,7 @@ public class BlockRandomizer implements IBlockFactory{
 		WorldGenPrimitive.setBlock(world, x, y, z, blockID, meta, flags, fillAir, replaceSolid);
 	}
 	
-	public MetaBlock getMetaBlock(){
+	private MetaBlock getMetaBlock(){
 		
 		for(BlockChoice block : blocks){
 			if(rand.nextInt(block.getChance()) == 0){

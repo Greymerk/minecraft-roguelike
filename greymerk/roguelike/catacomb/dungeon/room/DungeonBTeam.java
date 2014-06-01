@@ -13,6 +13,7 @@ import greymerk.roguelike.treasure.TreasureChest;
 import greymerk.roguelike.treasure.TreasureChestEmpty;
 import greymerk.roguelike.treasure.loot.Potion;
 import greymerk.roguelike.treasure.loot.Loot;
+import greymerk.roguelike.treasure.loot.PotionMixture;
 import greymerk.roguelike.treasure.loot.Record;
 import greymerk.roguelike.treasure.loot.provider.ItemArmour;
 import greymerk.roguelike.treasure.loot.provider.ItemNovelty;
@@ -150,20 +151,11 @@ public class DungeonBTeam implements IDungeon {
 		WorldGenPrimitive.setBlock(world, x + 4, y + 1, z - 4, Block.brewingStand.blockID);
 		
 		ITreasureChest contraband = new TreasureChestEmpty().generate(world, rand, x + 3, y, z - 4);
-		ItemStack moonshine = Potion.getSpecific(rand, Potion.HARM);
-		Loot.setItemName(moonshine, "Moonshine", null);
-		contraband.setInventorySlot(moonshine, rand.nextInt(contraband.getInventorySize()));
-		contraband.setInventorySlot(moonshine, rand.nextInt(contraband.getInventorySize()));
 		
-		ItemStack absinthe = Potion.getSpecific(rand, Potion.POISON);
-		Loot.setItemName(absinthe, "Absinthe", null);
-		contraband.setInventorySlot(absinthe, rand.nextInt(contraband.getInventorySize()));
-		contraband.setInventorySlot(absinthe, rand.nextInt(contraband.getInventorySize()));
-		
-		ItemStack grog = Potion.getSpecific(rand, Potion.WEAKNESS);
-		Loot.setItemName(grog, "Grog", null);
-		contraband.setInventorySlot(grog, rand.nextInt(contraband.getInventorySize()));
-		contraband.setInventorySlot(grog, rand.nextInt(contraband.getInventorySize()));
+		for(int i = 0; i < 8; ++i){
+			ItemStack booze = PotionMixture.getBooze(rand);
+			contraband.setInventorySlot(booze, rand.nextInt(contraband.getInventorySize()));
+		}
 		
 		return true;
 	}

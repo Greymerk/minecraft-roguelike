@@ -37,14 +37,13 @@ import net.minecraft.src.World;
 
 public enum Dungeon {
 	
-	BASE, BRICK, CREEPER, CRYPT, ENCHANT, ENDER, FIRE, MUSIC, NETHER, NETHERFORT, PIT, PRISON,
+	BRICK, CREEPER, CRYPT, ENCHANT, ENDER, FIRE, MUSIC, NETHER, NETHERFORT, PIT, PRISON,
 	SLIME, SMITH, SPIDER, CAKE, LAB, CORNER, MESS, ETHO, ENIKO, BTEAM, BAJ, OSSUARY, OBSIDIAN,
 	AVIDYA, STORAGE, NEBRIS, ASHLEA;
 	
 	public static IDungeon getInstance(Dungeon choice){
 		
 		switch(choice){
-		case BASE: return new DungeonsBase();
 		case BRICK: return new DungeonsBrick();
 		case CREEPER: return new DungeonsCreeperDen();
 		case CRYPT: return new DungeonsCrypt();
@@ -73,7 +72,7 @@ public enum Dungeon {
 		case STORAGE: return new DungeonStorage();
 		case NEBRIS: return new DungeonNebris();
 		case ASHLEA: return new DungeonAshlea();
-		default: return new DungeonsBase();
+		default: return null;
 		}
 		
 	}

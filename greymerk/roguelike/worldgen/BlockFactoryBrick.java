@@ -23,9 +23,4 @@ public class BlockFactoryBrick implements IBlockFactory{
 	public void setBlock(World world, int x, int y, int z, boolean fillAir, boolean replaceSolid) {
 		WorldGenPrimitive.setBlock(world, x, y, z, Block.stoneBrick.blockID, rand.nextInt(3), 2, fillAir, replaceSolid);
 	}
-
-	@Override
-	public MetaBlock getMetaBlock() {
-		return new MetaBlock(Block.stoneBrick.blockID, rand.nextInt(3));
-	}
 }

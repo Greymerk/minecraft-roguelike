@@ -19,6 +19,7 @@ public class ItemPotion extends ItemBase{
 		if(level > 2) return PotionMixture.getPotion(rand, PotionMixture.VILE);
 		
 		if(rand.nextInt(10) == 0) return PotionMixture.getBooze(rand);
+		if(rand.nextBoolean()) return PotionMixture.getPotion(rand, PotionMixture.LAUDANUM);
 		return Potion.getRandom(rand);
 
 	}

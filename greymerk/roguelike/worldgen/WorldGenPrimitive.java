@@ -55,6 +55,10 @@ public class WorldGenPrimitive {
 		return setBlock(world, x, y, z, block.getBlockID(), block.getMeta(), block.getFlag(), fillAir, replaceSolid);
 	}
 	
+	public static void setBlock(World world, int x, int y, int z, IBlockFactory block, boolean fillAir, boolean replaceSolid){
+		block.setBlock(world, x, y, z, fillAir, replaceSolid);
+	}
+	
 	public static boolean setBlock(World world, int x, int y, int z, MetaBlock block){
 		return setBlock(world, x, y, z, block.getBlockID(), block.getMeta(), block.getFlag(), true, true);
 	}
@@ -189,13 +193,13 @@ public class WorldGenPrimitive {
 	}
 	
 	
-	public static void spiralStairStep(World world, int inX, int inY, int inZ, MetaBlock stair, MetaBlock fill){
+	public static void spiralStairStep(World world, int inX, int inY, int inZ, MetaBlock stair, IBlockFactory fill){
 		
 		// air
 		fillRectSolid(world, inX - 1, inY, inZ - 1, inX + 1, inY, inZ + 1, 0, 0, 2, true, true);
 		
 		// core
-		setBlock(world, inX, inY, inZ, fill.getBlockID(), fill.getMeta(), fill.getFlag(), true, true);
+		setBlock(world, inX, inY, inZ, fill, true, true);
 		
 		switch (inY % 4){
 		case 0: // north
@@ -265,8 +269,8 @@ public class WorldGenPrimitive {
 		}
 	}
 
-	public static boolean setBlock(World world, Coord coord, MetaBlock block, boolean fillAir, boolean replaceSolid) {
-		return setBlock(world, coord.getX(), coord.getY(), coord.getZ(), block.getBlockID(), block.getMeta(), block.getFlag(), fillAir, replaceSolid);
+	public static void setBlock(World world, Coord coord, IBlockFactory blocks, boolean fillAir, boolean replaceSolid) {
+		blocks.setBlock(world, coord.getX(), coord.getY(), coord.getZ(), fillAir, replaceSolid);
 	}
 }
 

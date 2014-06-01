@@ -10,6 +10,4 @@ public interface IBlockFactory {
 	
 	public void setBlock(World world, int x, int y, int z, boolean fillAir, boolean replaceSolid);
 	
-	public MetaBlock getMetaBlock();
-	
 }

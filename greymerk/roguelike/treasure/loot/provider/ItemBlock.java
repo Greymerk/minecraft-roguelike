@@ -38,7 +38,7 @@ public class ItemBlock extends ItemBase{
 		switch(level){
 		case 0:
 		case 1:
-			if(rand.nextInt(10) == 0) return new ItemStack(Block.cloth, size, rand.nextInt(16));
+			if(rand.nextInt(10) == 0) return new ItemStack(Block.cloth, 16, rand.nextInt(16));
 			if(rand.nextInt(10) == 0) return new ItemStack(Block.wood, size, rand.nextInt(4));
 			
 			switch(rand.nextInt(3)){

@@ -68,7 +68,10 @@ public class ItemJunk extends ItemBase implements ILootProvider{
 		}
 		*/
 
-		if(level > 0 && rand.nextInt(30) == 0) return PotionMixture.getPotion(rand, PotionMixture.VILE);
+		if(rand.nextInt(30) == 0){
+			if(level > 2 && rand.nextBoolean()) return PotionMixture.getPotion(rand, PotionMixture.VILE);
+			return PotionMixture.getPotion(rand, PotionMixture.LAUDANUM);	
+		}
 		
 		if(rand.nextInt(20) == 0){
 			return new ItemStack(Block.torchWood, 3 + rand.nextInt(3 + level));

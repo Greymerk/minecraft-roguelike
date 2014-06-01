@@ -52,10 +52,4 @@ public class BlockFactoryCheckers implements IBlockFactory {
 			}
 		}
 	}
-
-	@Override
-	public MetaBlock getMetaBlock() {
-		return fillOne;
-	}
-
 }

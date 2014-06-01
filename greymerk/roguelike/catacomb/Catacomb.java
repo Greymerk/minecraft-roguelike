@@ -65,8 +65,8 @@ public class Catacomb {
 
 		} 
 		
-		CatacombTower tower = new CatacombTower(world, rand, inX, TOPLEVEL, inZ);
-		tower.generate();
+		CatacombTower tower = new CatacombTower();
+		tower.generate(world, rand, inX, TOPLEVEL, inZ);
 		
 		
 	}

@@ -48,14 +48,11 @@ public class MetaBlock implements IBlockFactory{
 
 	@Override
 	public void setBlock(World world, int x, int y, int z) {
-		WorldGenPrimitive.setBlock(world, x, y, z, this);
+		WorldGenPrimitive.setBlock(world, x, y, z, blockID, meta, flag, true, true);
 	}
 
 	@Override
 	public void setBlock(World world, int x, int y, int z, boolean fillAir, boolean replaceSolid) {
-		WorldGenPrimitive.setBlock(world, x, y, z, this, fillAir, replaceSolid);
+		WorldGenPrimitive.setBlock(world, x, y, z, blockID, meta, flag, fillAir, replaceSolid);
 	}
-
-	@Override
-	public MetaBlock getMetaBlock() { return this; }
 }

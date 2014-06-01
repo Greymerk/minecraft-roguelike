@@ -25,7 +25,9 @@ import net.minecraft.src.TileEntityChest;
 
 public class TreasureChestStarter extends TreasureChestBase{
 
+	
 	private ItemStack getStarterLoot(int choice){
+		
 		switch (choice){
 		case 4: return new ItemStack(Item.pickaxeStone);
 		case 3: return new ItemStack(Item.swordStone);
@@ -33,6 +35,7 @@ public class TreasureChestStarter extends TreasureChestBase{
 		case 1: return ItemSpecialty.getRandomItem(Equipment.LEGS, rand, Quality.WOOD);
 		default: return new ItemStack(Block.torchWood, 3 + rand.nextInt(6));
 		}
+		
 	}	
 	
 	@Override
