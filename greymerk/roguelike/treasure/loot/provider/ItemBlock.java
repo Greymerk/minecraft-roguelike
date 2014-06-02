@@ -39,7 +39,7 @@ public class ItemBlock extends ItemBase{
 		case 0:
 		case 1:
 			if(rand.nextInt(10) == 0) return new ItemStack(Block.cloth, 16, rand.nextInt(16));
-			if(rand.nextInt(10) == 0) return new ItemStack(Block.wood, size, rand.nextInt(4));
+			if(rand.nextInt(10) == 0) return new ItemStack(Block.wood, 16, rand.nextInt(4));
 			
 			switch(rand.nextInt(3)){
 			case 0: return new ItemStack(Block.stoneBrick, size, rand.nextInt(3));
@@ -52,25 +52,25 @@ public class ItemBlock extends ItemBase{
 			switch(rand.nextInt(3)){
 			case 0: return new ItemStack(Block.stoneBrick, size, rand.nextInt(3));
 			case 1: return new ItemStack(Block.gravel, size, rand.nextInt(4));
-			case 2: return new ItemStack(Block.stainedClay, size, rand.nextInt(16));
+			case 2: return new ItemStack(Block.stainedClay, 16, rand.nextInt(16));
 			}
 		case 3:
 			switch(rand.nextInt(5)){
 			case 0: return new ItemStack(Block.cobblestoneMossy, size);
 			case 1: return new ItemStack(Block.cobblestone, size);
-			case 2: return new ItemStack(Block.gravel, size);
-			case 3: return new ItemStack(Block.blockClay, size);
+			case 2: return new ItemStack(Block.gravel, 16);
+			case 3: return new ItemStack(Block.blockClay, 16);
 			case 4: return new ItemStack(Block.stone, size);
 			}
 		case 4:
-			if(rand.nextInt(10) == 0) return new ItemStack(Block.glowStone, 16);
-			if(rand.nextInt(10) == 0) return new ItemStack(Block.blockNetherQuartz, 16);
+			if(rand.nextInt(10) == 0) return new ItemStack(Block.glowStone, 8);
+			if(rand.nextInt(10) == 0) return new ItemStack(Block.blockNetherQuartz, 8);
 			
 			switch(rand.nextInt(4)){
 			case 0: return new ItemStack(Block.netherrack, size);
 			case 1: return new ItemStack(Block.netherBrick, size);
-			case 2: return new ItemStack(Block.slowSand, size);
-			case 3: return new ItemStack(Block.obsidian, size);
+			case 2: return new ItemStack(Block.slowSand, 16);
+			case 3: return new ItemStack(Block.obsidian, 16);
 			}
 		default: return new ItemStack(Block.dirt, size);
 		}

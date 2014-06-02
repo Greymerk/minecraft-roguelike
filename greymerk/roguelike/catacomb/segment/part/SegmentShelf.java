@@ -3,6 +3,8 @@ package greymerk.roguelike.catacomb.segment.part;
 import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.catacomb.dungeon.Dungeon;
 import greymerk.roguelike.worldgen.Cardinal;
+import greymerk.roguelike.worldgen.Coord;
+import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
 
 import java.util.Random;
@@ -11,70 +13,39 @@ import net.minecraft.src.Block;
 import net.minecraft.src.World;
 
 public class SegmentShelf extends SegmentBase {
-
-	private int stairType;
-	
-	private int woodType;
 	
 	@Override
-	protected void genWall(Cardinal wallDirection) {
+	protected void genWall(Cardinal dir) {
 		
-		stairType = getStairType(Catacomb.getLevel(y));
-		woodType = Catacomb.getLevel(y);
+		MetaBlock air = new MetaBlock(0);
+		MetaBlock stair = theme.getSecondaryStair();
 		
-		switch(wallDirection){
-		case NORTH: north(); break;
-		case SOUTH: south(); break;
-		case EAST: east(); break;
-		case WEST: west(); break;
+		Coord cursor = new Coord(x, y, z);
+		Coord start;
+		Coord end;
+		
+		Cardinal[] orth = Cardinal.getOrthogonal(dir);
+		
+		cursor.add(dir, 2);
+		start = new Coord(cursor);
+		start.add(orth[0], 1);
+		end = new Coord(cursor);
+		end.add(orth[1], 1);
+		WorldGenPrimitive.fillRectSolid(world, start, end, theme.getSecondaryWall(), false, true);
+		start.add(dir, 1);
+		end.add(dir, 1);
+		end.add(Cardinal.UP, 2);
+		WorldGenPrimitive.fillRectSolid(world, start, end, theme.getSecondaryWall(), false, true);
+		start.add(Cardinal.reverse(dir), 1);
+		start.add(Cardinal.UP, 1);
+		end.add(Cardinal.reverse(dir), 1);
+		WorldGenPrimitive.fillRectSolid(world, start, end, air, false, true);
+		cursor.add(Cardinal.UP, 2);
+		for(Cardinal d : orth){
+			Coord c = new Coord(cursor);
+			c.add(d, 1);
+			stair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.reverse(d), true));
+			WorldGenPrimitive.setBlock(world, c, stair, true, true);
 		}
-	}
-	
-	private void north(){
-		WorldGenPrimitive.fillRectSolid(world, x - 1, y + 1, z - 2, x + 1, y + 2, z - 2, 0);
-
-		WorldGenPrimitive.setBlock(world, x - 1, y + 2, z - 2, stairType, WorldGenPrimitive.blockOrientation(Cardinal.EAST, true), 2, true, true);
-		WorldGenPrimitive.setBlock(world, x + 1, y + 2, z - 2, stairType, WorldGenPrimitive.blockOrientation(Cardinal.WEST, true), 2, true, true);
-		
-		if(Catacomb.getLevel(y)  < 2){
-			WorldGenPrimitive.fillRectSolid(world, x - 1, y + 1, z - 3, x + 1, y + 2, z - 3, Block.planks.blockID, woodType, 2, false, true);
-			WorldGenPrimitive.fillRectSolid(world, x - 1, y, z - 2, x + 1, y, z - 2, Block.planks.blockID, woodType, 2, false, true);
-		}
-	}
-	
-	private void south(){
-		WorldGenPrimitive.fillRectSolid(world, x - 1, y + 1, z + 2, x + 1, y + 2, z + 2, 0);
-
-		WorldGenPrimitive.setBlock(world, x - 1, y + 2, z + 2, stairType, WorldGenPrimitive.blockOrientation(Cardinal.EAST, true), 2, true, true);
-		WorldGenPrimitive.setBlock(world, x + 1, y + 2, z + 2, stairType, WorldGenPrimitive.blockOrientation(Cardinal.WEST, true), 2, true, true);
-		
-		if(Catacomb.getLevel(y)  < 2){
-			WorldGenPrimitive.fillRectSolid(world, x - 1, y + 1, z + 3, x + 1, y + 2, z + 3, Block.planks.blockID, woodType, 2, false, true);
-			WorldGenPrimitive.fillRectSolid(world, x - 1, y, z + 2, x + 1, y, z + 2, Block.planks.blockID, woodType, 2, false, true);
-		}
-	}
-	
-	private void east(){
-		WorldGenPrimitive.fillRectSolid(world, x + 2, y + 1, z - 1, x + 2, y + 2, z + 1, 0);
-
-		WorldGenPrimitive.setBlock(world, x + 2, y + 2, z - 1, stairType, WorldGenPrimitive.blockOrientation(Cardinal.SOUTH, true), 2, true, true);
-		WorldGenPrimitive.setBlock(world, x + 2, y + 2, z + 1, stairType, WorldGenPrimitive.blockOrientation(Cardinal.NORTH, true), 2, true, true);
-		
-		if(Catacomb.getLevel(y)  < 2){
-			WorldGenPrimitive.fillRectSolid(world, x + 3, y + 1, z - 1, x + 3, y + 2, z + 1, Block.planks.blockID, woodType, 2, false, true);
-			WorldGenPrimitive.fillRectSolid(world, x + 2, y, z - 1, x + 2, y, z + 1, Block.planks.blockID, woodType, 2, false, true);
-		}
-	}
-	
-	private void west(){
-		WorldGenPrimitive.fillRectSolid(world, x - 2, y + 1, z - 1, x - 2, y + 2, z + 1, 0);
-
-		WorldGenPrimitive.setBlock(world, x - 2, y + 2, z - 1, stairType, WorldGenPrimitive.blockOrientation(Cardinal.SOUTH, true), 2, true, true);
-		WorldGenPrimitive.setBlock(world, x - 2, y + 2, z + 1, stairType, WorldGenPrimitive.blockOrientation(Cardinal.NORTH, true), 2, true, true);
-		
-		if(Catacomb.getLevel(y)  < 2){
-			WorldGenPrimitive.fillRectSolid(world, x - 3, y + 1, z - 1, x - 3, y + 2, z + 1, Block.planks.blockID, woodType, 2, false, true);
-			WorldGenPrimitive.fillRectSolid(world, x - 2, y, z - 1, x - 2, y, z + 1, Block.planks.blockID, woodType, 2, false, true);
-		}
-	}
+	}	
 }

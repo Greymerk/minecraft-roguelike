@@ -3,6 +3,8 @@ package greymerk.roguelike.treasure.loot;
 
 import java.util.Random;
 
+import com.google.gson.JsonObject;
+
 import net.minecraft.src.ItemStack;
 
 public class WeightedRandomLoot implements Comparable, ILootProvider{
@@ -15,6 +17,9 @@ public class WeightedRandomLoot implements Comparable, ILootProvider{
 	
 	private int weight;
 	
+	
+
+	
 	public WeightedRandomLoot(int id, int damage, int minStackSize, int maxStackSize, int weight){
 		this.id = id;
 		this.damage = damage;
@@ -23,7 +28,9 @@ public class WeightedRandomLoot implements Comparable, ILootProvider{
 		this.weight = weight;
 	}
 	
-	
+	public WeightedRandomLoot(int id, int damage, int weight){
+		this(id, damage, 1, 1, weight);
+	}	
 	
 	public ItemStack getLootItem(Random rand, int level) {
 		return new ItemStack(id, getStackSize(rand), damage);
@@ -44,6 +51,25 @@ public class WeightedRandomLoot implements Comparable, ILootProvider{
 		if (this.weight < other.weight) return 1;
 		
 		return 0;
+	}
+	
+	public static WeightedRandomLoot decode(JsonObject item){
+		
+		int id = item.get("id").getAsInt();
+		int dam = item.has("meta") ? item.get("meta").getAsInt() : 0;
+		int min;
+		int max;
+		int weight = item.get("weight").getAsInt();
+
+		if(item.has("min") && item.has("max")){
+			min = item.get("min").getAsInt();
+			max = item.get("max").getAsInt();	
+		} else {
+			min = 1;
+			max = 1;
+		}
+		
+		return new WeightedRandomLoot(id, dam, min, max, weight);
 	}
 	
 	public int getWeight(){

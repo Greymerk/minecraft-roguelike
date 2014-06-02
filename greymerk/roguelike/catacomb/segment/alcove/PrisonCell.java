@@ -8,7 +8,7 @@ import net.minecraft.src.Block;
 import net.minecraft.src.World;
 import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.catacomb.segment.IAlcove;
-import greymerk.roguelike.worldgen.BlockFactoryProvider;
+import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.Door;
@@ -20,9 +20,12 @@ import greymerk.roguelike.worldgen.WorldGenPrimitive;
 public class PrisonCell implements IAlcove{
 
 	private static int RECESSED = 5;
+	private ITheme theme;
 	
 	@Override
-	public void generate(World world, Random rand, int x, int y, int z, Cardinal dir) {
+	public void generate(World world, Random rand, ITheme theme, int x, int y, int z, Cardinal dir) {
+		
+		this.theme = theme;
 		
 		Coord corridor = new Coord(x, y, z);
 		Coord centre = new Coord(x, y, z);
@@ -63,7 +66,7 @@ public class PrisonCell implements IAlcove{
 		int y = centre.getY();
 		int z = centre.getZ();
 		
-		IBlockFactory walls = BlockFactoryProvider.getRandomizer(Catacomb.getLevel(centre.getY()), rand);
+		IBlockFactory walls = theme.getPrimaryWall();
 		WorldGenPrimitive.fillRectHollow(world, x - 2, y - 1, z - 2, x + 2, y + 3, z + 2, walls, true, true);
 		
 		Coord end = new Coord(centre);
@@ -83,7 +86,7 @@ public class PrisonCell implements IAlcove{
 		int y = centre.getY();
 		int z = centre.getZ();
 		
-		IBlockFactory walls = BlockFactoryProvider.getRandomizer(Catacomb.getLevel(centre.getY()), rand);
+		IBlockFactory walls = theme.getPrimaryWall();
 		WorldGenPrimitive.fillRectHollow(world, x - 2, y - 1, z - 2, x + 2, y + 3, z + 2, walls, true, true);
 		
 		Coord end = new Coord(centre);
@@ -102,7 +105,7 @@ public class PrisonCell implements IAlcove{
 		int y = centre.getY();
 		int z = centre.getZ();
 		
-		IBlockFactory walls = BlockFactoryProvider.getRandomizer(Catacomb.getLevel(centre.getY()), rand);
+		IBlockFactory walls = theme.getPrimaryWall();
 		WorldGenPrimitive.fillRectHollow(world, x - 2, y - 1, z - 2, x + 2, y + 3, z + 2, walls, true, true);
 		
 		Coord end = new Coord(centre);
@@ -121,7 +124,7 @@ public class PrisonCell implements IAlcove{
 		int y = centre.getY();
 		int z = centre.getZ();
 		
-		IBlockFactory walls = BlockFactoryProvider.getRandomizer(Catacomb.getLevel(centre.getY()), rand);
+		IBlockFactory walls = theme.getPrimaryWall();
 		WorldGenPrimitive.fillRectHollow(world, x - 2, y - 1, z - 2, x + 2, y + 3, z + 2, walls, true, true);
 		
 		Coord end = new Coord(centre);

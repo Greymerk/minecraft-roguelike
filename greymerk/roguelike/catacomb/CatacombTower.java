@@ -1,8 +1,9 @@
 package greymerk.roguelike.catacomb;
 
+import greymerk.roguelike.catacomb.theme.ITheme;
+import greymerk.roguelike.catacomb.theme.Themes;
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.treasure.TreasureChestStarter;
-import greymerk.roguelike.worldgen.BlockFactoryProvider;
 import greymerk.roguelike.worldgen.BlockRandomizer;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import net.minecraft.src.BiomeGenBase;
 import net.minecraft.src.Block;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
@@ -21,8 +23,6 @@ import net.minecraft.src.TileEntityFurnace;
 import net.minecraft.src.World;
 
 public class CatacombTower {
-
-	private BlockRandomizer blocks;
 
 	public CatacombTower(){
 	}
@@ -66,20 +66,11 @@ public class CatacombTower {
 	
 	public void generate(World world, Random rand, int x, int y, int z){
 		
-		blocks = new BlockRandomizer(rand, new MetaBlock(Block.stoneBrick.blockID));
-		blocks.addBlock(new MetaBlock(Block.stoneBrick.blockID, 1), 3);
-		blocks.addBlock(new MetaBlock(Block.stoneBrick.blockID, 2), 3);
-		blocks.addBlock(new MetaBlock(Block.cobblestone.blockID, 1), 5);
-		blocks.addBlock(new MetaBlock(Block.gravel.blockID, 1), 15);
-		blocks.addBlock(new MetaBlock(0), 20);
+		ITheme theme = getTheme(world.getBiomeGenForCoords(x, z), rand);
 		
-		BlockRandomizer solidBlocks = new BlockRandomizer(rand, new MetaBlock(Block.stoneBrick.blockID));
-		solidBlocks.addBlock(new MetaBlock(Block.stoneBrick.blockID, 1), 3);
-		solidBlocks.addBlock(new MetaBlock(Block.stoneBrick.blockID, 2), 3);
-		solidBlocks.addBlock(new MetaBlock(Block.cobblestone.blockID, 1), 5);
-		solidBlocks.addBlock(new MetaBlock(Block.gravel.blockID, 1), 20);
+		IBlockFactory blocks = theme.getPrimaryWall();
 		
-		MetaBlock stair = new MetaBlock(Block.stairsStoneBrick.blockID);
+		MetaBlock stair = theme.getPrimaryStair();
 		
 		Coord floor = this.getBaseCoord(world, x, y, z);
 		int ground = floor.getY() - 1;
@@ -140,7 +131,7 @@ public class CatacombTower {
 				start.add(orth, 3);
 				end = new Coord(start);
 				end.add(Cardinal.UP, 9);
-				WorldGenPrimitive.fillRectSolid(world, start, end, solidBlocks, true, true);
+				WorldGenPrimitive.fillRectSolid(world, start, end, blocks, true, true);
 				
 				start = new Coord(floor);
 				start.add(dir, 4);
@@ -213,7 +204,7 @@ public class CatacombTower {
 				cursor.add(orth, 1);
 				WorldGenPrimitive.setBlock(world, cursor, blocks, true, true);
 				cursor.add(Cardinal.UP, 1);
-				this.addCrenellation(world, cursor);
+				this.addCrenellation(world, cursor, blocks);
 				
 				cursor.add(Cardinal.DOWN, 2);
 				cursor.add(Cardinal.reverse(dir), 1);
@@ -239,7 +230,7 @@ public class CatacombTower {
 				cursor.add(orth, 1);
 				WorldGenPrimitive.setBlock(world, cursor, blocks, true, true);
 				cursor.add(Cardinal.UP, 1);
-				this.addCrenellation(world, cursor);
+				this.addCrenellation(world, cursor, blocks);
 				
 				cursor = new Coord(floor);
 				cursor.add(dir, 4);
@@ -254,13 +245,13 @@ public class CatacombTower {
 
 			
 			for(int i = main; i > y; --i){
-				WorldGenPrimitive.spiralStairStep(world, x, i, z, stair, solidBlocks);
+				WorldGenPrimitive.spiralStairStep(world, x, i, z, stair, blocks);
 			}
 		}
 	}
 	
 	
-	private void addCrenellation(World world, Coord cursor){
+	private void addCrenellation(World world, Coord cursor, IBlockFactory blocks){
 		
 		WorldGenPrimitive.setBlock(world, cursor, blocks, true, true);
 		
@@ -270,5 +261,16 @@ public class CatacombTower {
 
 		cursor.add(Cardinal.UP, 1);
 		WorldGenPrimitive.setBlock(world, cursor, new MetaBlock(Block.torchWood.blockID), true, true);
+	}
+	
+	private ITheme getTheme(BiomeGenBase biome, Random rand){
+		boolean hot = biome.temperature >= 1.0F;
+		boolean cold = biome.temperature <= 0.1F;
+		boolean wet = biome.rainfall >= 0.85F;
+		boolean dry = biome.rainfall <= 0.1;
+		
+		if(hot && dry) return Themes.getTheme(Themes.SANDSTONE, rand);
+		if(hot && wet) return Themes.getTheme(Themes.JUNGLE, rand);
+		return Themes.getTheme(Themes.TOWER, rand);
 	}
 }

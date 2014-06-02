@@ -2,9 +2,9 @@ package greymerk.roguelike.catacomb.dungeon.room;
 
 import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.catacomb.dungeon.IDungeon;
+import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.treasure.TreasureChest;
-import greymerk.roguelike.worldgen.BlockFactoryProvider;
 import greymerk.roguelike.worldgen.BlockRandomizer;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.MetaBlock;
@@ -23,13 +23,13 @@ public class DungeonsNetherBrick implements IDungeon {
 	public DungeonsNetherBrick() {
 	}
 
-	public boolean generate(World world, Random rand, int x, int y, int z) {
+	public boolean generate(World world, Random rand, ITheme theme, int x, int y, int z) {
 		
 		int height = 3;
 		int length = 2 + rand.nextInt(3);
 		int width = 2 + rand.nextInt(3);
 		
-		IBlockFactory walls = BlockFactoryProvider.getRandomizer(Catacomb.getLevel(y), rand);
+		IBlockFactory walls = theme.getPrimaryWall();
 		WorldGenPrimitive.fillRectHollow(world, x - length - 1, y - 1, z - width - 1, x + length + 1, y + height + 1, z + width + 1, walls, false, true);
 		
 		BlockRandomizer floor = new BlockRandomizer(rand, new MetaBlock(Block.netherBrick.blockID));

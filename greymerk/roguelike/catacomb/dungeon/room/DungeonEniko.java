@@ -5,6 +5,7 @@ import java.util.Random;
 import net.minecraft.src.Block;
 import net.minecraft.src.World;
 import greymerk.roguelike.catacomb.dungeon.IDungeon;
+import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.treasure.ITreasureChest;
 import greymerk.roguelike.treasure.TreasureChestEmpty;
@@ -17,7 +18,7 @@ import greymerk.roguelike.worldgen.WorldGenPrimitive;
 public class DungeonEniko implements IDungeon {
 
 	@Override
-	public boolean generate(World world, Random rand, int x, int y, int z) {
+	public boolean generate(World world, Random rand, ITheme theme, int x, int y, int z) {
 		
 		WorldGenPrimitive.fillRectSolid(world, x - 5, y, z - 5, x + 5, y + 4, z + 5, 0);
 		

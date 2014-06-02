@@ -3,8 +3,8 @@ package greymerk.roguelike.catacomb;
 import greymerk.roguelike.catacomb.dungeon.Dungeon;
 import greymerk.roguelike.catacomb.dungeon.IDungeon;
 import greymerk.roguelike.catacomb.dungeon.IDungeonFactory;
+import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.config.RogueConfig;
-import greymerk.roguelike.worldgen.BlockFactoryProvider;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.MetaBlock;
@@ -33,13 +33,15 @@ public class CatacombLevel {
 	private boolean done;
 	private int maxNodes;
 	private int range;
+	private ITheme theme;
 	
 	
-	public CatacombLevel(World world, Random rand, int originX, int originY, int originZ){
+	public CatacombLevel(World world, Random rand, ITheme theme, int originX, int originY, int originZ){
 		this.world = world;
 		this.nodes = new ArrayList<CatacombNode>();
 				
 		this.rand = rand;
+		this.theme = theme;
 		this.originX = originX;
 		this.originY = originY;
 		this.originZ = originZ;
@@ -48,15 +50,16 @@ public class CatacombLevel {
 		maxNodes = RogueConfig.getInt(RogueConfig.LEVELMAXROOMS);
 		range = RogueConfig.getInt(RogueConfig.LEVELRANGE);
 		
-		start = new CatacombNode(world, rand, this, originX, originY, originZ);
+		start = new CatacombNode(world, rand, this, theme, originX, originY, originZ);
 		nodes.add(start);
 	}
 	
-	public CatacombLevel(World world, Random rand, int originX, int originY, int originZ, int maxNodes, int range){
+	public CatacombLevel(World world, Random rand, ITheme theme, int originX, int originY, int originZ, int maxNodes, int range){
 		this.world = world;
 		this.nodes = new ArrayList<CatacombNode>();
 				
 		this.rand = rand;
+		this.theme = theme;
 		this.originX = originX;
 		this.originY = originY;
 		this.originZ = originZ;
@@ -65,7 +68,7 @@ public class CatacombLevel {
 		this.maxNodes = maxNodes;
 		this.range = range;
 		
-		start = new CatacombNode(world, rand, this, originX, originY, originZ);
+		start = new CatacombNode(world, rand, this, theme, originX, originY, originZ);
 		nodes.add(start);
 	}
 	
@@ -97,7 +100,7 @@ public class CatacombLevel {
 
 			IDungeon toGenerate = rooms.get();
 			node.setDungeon(toGenerate);
-			toGenerate.generate(world, rand, x, y, z);
+			toGenerate.generate(world, rand, theme, x, y, z);
 		}
 		
 		// tunnel segment features
@@ -116,7 +119,7 @@ public class CatacombLevel {
 		// shell
 		List<Coord> shell = WorldGenPrimitive.getRectHollow(originX - 4, originY - 1, originZ - 4, originX + 4, originY + 16, originZ + 4);
 
-		IBlockFactory blocks = BlockFactoryProvider.getRandomizer(Catacomb.getLevel(originY), rand);
+		IBlockFactory blocks = theme.getPrimaryWall();
 		
 		for (Coord block : shell){
 			
@@ -203,9 +206,8 @@ public class CatacombLevel {
 	}
 	
 	public void spawnNode(CatacombTunneler tunneler){		
-		CatacombNode toAdd = new CatacombNode(world, rand, this, tunneler);
+		CatacombNode toAdd = new CatacombNode(world, rand, this, theme, tunneler);
 		this.nodes.add(toAdd);
-		
 	}
 	
 	public boolean inRange(int x, int z){

@@ -2,8 +2,8 @@ package greymerk.roguelike.catacomb.dungeon.room;
 
 import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.catacomb.dungeon.IDungeon;
+import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.treasure.TreasureChest;
-import greymerk.roguelike.worldgen.BlockFactoryProvider;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.MetaBlock;
@@ -21,9 +21,9 @@ public class DungeonsFire implements IDungeon{
 	
 	
 	@Override
-	public boolean generate(World inWorld, Random inRandom, int inOriginX, int inOriginY, int inOriginZ) {
+	public boolean generate(World inWorld, Random inRandom, ITheme theme, int inOriginX, int inOriginY, int inOriginZ) {
 
-		IBlockFactory fillBlocks = BlockFactoryProvider.getRandomizer(Catacomb.getLevel(inOriginY), inRandom);
+		IBlockFactory fillBlocks = theme.getPrimaryWall();
 		
 		// clear air
 		WorldGenPrimitive.fillRectSolid(inWorld, inOriginX - 6, inOriginY, inOriginZ - 6, inOriginX + 6, inOriginY + 3, inOriginZ + 6, 0);

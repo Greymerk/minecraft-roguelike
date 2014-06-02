@@ -7,6 +7,7 @@ import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.World;
 import greymerk.roguelike.catacomb.dungeon.IDungeon;
+import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.treasure.ITreasureChest;
 import greymerk.roguelike.treasure.TreasureChest;
@@ -26,7 +27,7 @@ import greymerk.roguelike.worldgen.WorldGenPrimitive;
 public class DungeonBTeam implements IDungeon {
 
 	@Override
-	public boolean generate(World world, Random rand, int x, int y, int z) {
+	public boolean generate(World world, Random rand, ITheme theme, int x, int y, int z) {
 		
 		WorldGenPrimitive.fillRectSolid(world, x - 4, y, z - 4, x + 4, y + 4, z + 5, 0);
 		

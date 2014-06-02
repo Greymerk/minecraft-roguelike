@@ -7,20 +7,6 @@ public enum Cardinal {
 	NORTH, EAST, WEST, SOUTH, UP, DOWN;
 	
 	public static Cardinal[] directions = {NORTH, SOUTH, EAST, WEST};
-	private static final Tuple northT = new Tuple(0, -1); 
-	private static final Tuple southT = new Tuple(0, 1);
-	private static final Tuple westT = new Tuple(-1, 0);
-	private static final Tuple eastT = new Tuple(1, 0);
-	
-	public static Tuple getTuple(Cardinal in){	
-		switch(in){
-		case NORTH: return northT;
-		case EAST: return eastT;
-		case WEST: return westT;
-		case SOUTH: return southT;
-		default: return null;
-		}
-	}
 	
 	public static int getBlockMeta(Cardinal in){
 		switch(in){

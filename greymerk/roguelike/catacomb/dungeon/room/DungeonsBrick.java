@@ -2,8 +2,8 @@ package greymerk.roguelike.catacomb.dungeon.room;
 
 import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.catacomb.dungeon.IDungeon;
+import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.treasure.TreasureChest;
-import greymerk.roguelike.worldgen.BlockFactoryProvider;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
@@ -33,7 +33,7 @@ public class DungeonsBrick implements IDungeon {
 	public DungeonsBrick(){
 	}
 	
-	public boolean generate(World inWorld, Random inRandom, int inOriginX, int inOriginY, int inOriginZ) {
+	public boolean generate(World inWorld, Random inRandom, ITheme theme, int inOriginX, int inOriginY, int inOriginZ) {
 		world = inWorld;
 		rand = inRandom;
 		originX = inOriginX;
@@ -42,27 +42,17 @@ public class DungeonsBrick implements IDungeon {
 		
 		
 		
-		int stair;
-		switch(Catacomb.getLevel(originY)){
-		case 3:
-			stair = Block.stairsCobblestone.blockID;
-			break;
-		case 4:
-			stair = Block.stairsNetherBrick.blockID;
-			break;
-		default:
-			stair = Block.stairsStoneBrick.blockID;
-		}
+		MetaBlock southStair = theme.getPrimaryStair();
+		southStair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.SOUTH, true));
+		MetaBlock northStair = theme.getPrimaryStair();
+		northStair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.NORTH, true));
+		MetaBlock eastStair = theme.getPrimaryStair();
+		eastStair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.EAST, true));
+		MetaBlock westStair = theme.getPrimaryStair();
+		westStair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.WEST, true));
 		
 		
-		
-		MetaBlock southStair = new MetaBlock(stair, WorldGenPrimitive.blockOrientation(Cardinal.SOUTH, true));
-		MetaBlock northStair = new MetaBlock(stair, WorldGenPrimitive.blockOrientation(Cardinal.NORTH, true));
-		MetaBlock eastStair = new MetaBlock(stair, WorldGenPrimitive.blockOrientation(Cardinal.EAST, true));
-		MetaBlock westStair = new MetaBlock(stair, WorldGenPrimitive.blockOrientation(Cardinal.WEST, true));
-		
-		
-		IBlockFactory blocks = BlockFactoryProvider.getRandomizer(Catacomb.getLevel(inOriginY), rand);
+		IBlockFactory blocks = theme.getPrimaryWall();
 		
 		// fill air inside
 		WorldGenPrimitive.fillRectSolid(world, 	originX - 3, originY, originZ - 3, originX + 3, originY + 3, originZ + 3, 0);

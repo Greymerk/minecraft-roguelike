@@ -1,6 +1,7 @@
 package greymerk.roguelike.catacomb;
 
 import greymerk.roguelike.catacomb.dungeon.IDungeon;
+import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ public class CatacombNode {
 	private Random rand;
 	private CatacombLevel level;
 	private List<CatacombTunneler> tunnelers;
+	private ITheme theme;
 	private int x;
 	private int y;
 	private int z;
@@ -25,10 +27,11 @@ public class CatacombNode {
 	
 	private Cardinal direction;
 	
-	public CatacombNode (World world, Random rand, CatacombLevel level, int x, int y, int z){
+	public CatacombNode (World world, Random rand, CatacombLevel level, ITheme theme, int x, int y, int z){
 		this.world = world;
 		this.rand = rand;
 		this.level = level;
+		this.theme = theme;
 		this.x = x;
 		this.y = y;
 		this.z = z;
@@ -43,10 +46,11 @@ public class CatacombNode {
 	}
 	
 
-	public CatacombNode (World world, Random rand, CatacombLevel level, CatacombTunneler tunneler){
+	public CatacombNode (World world, Random rand, CatacombLevel level, ITheme theme, CatacombTunneler tunneler){
 		this.world = world;
 
 		this.level = level;
+		this.theme = theme;
 		this.x = tunneler.getX();
 		this.y = tunneler.getY();
 		this.z = tunneler.getZ();
@@ -72,7 +76,7 @@ public class CatacombNode {
 			}
 			
 			if(level.nodeCount() == 0 || tunnelers.isEmpty() || rand.nextBoolean()){
-				this.tunnelers.add(new CatacombTunneler(world, rand, this.level, dir, x, y, z));
+				this.tunnelers.add(new CatacombTunneler(world, rand, this.level, dir, theme, x, y, z));
 			}
 		}
 	}

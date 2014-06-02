@@ -3,7 +3,7 @@ package greymerk.roguelike.catacomb.segment.part;
 import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.catacomb.CatacombLevel;
 import greymerk.roguelike.catacomb.segment.ISegment;
-import greymerk.roguelike.worldgen.BlockFactoryProvider;
+import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
@@ -24,9 +24,10 @@ public abstract class SegmentBase implements ISegment {
 	protected int z;
 	
 	protected Cardinal[] orth;
+	ITheme theme;
 	
 	@Override
-	public void generate(World world, Random rand, CatacombLevel level, Cardinal dir, int x, int y, int z) {
+	public void generate(World world, Random rand, CatacombLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
 		
 		if(level.hasNearbyNode(x, z)){
 			return;
@@ -35,6 +36,7 @@ public abstract class SegmentBase implements ISegment {
 		this.world = world;
 		this.rand = rand;
 		this.dir = dir;
+		this.theme = theme;
 		
 		this.x = x;
 		this.y = y;
@@ -97,7 +99,7 @@ public abstract class SegmentBase implements ISegment {
 		
 		int level = Catacomb.getLevel(y);
 		
-		WorldGenPrimitive.fillDown(world, x, y - 2, z, BlockFactoryProvider.getRandomizer(level, rand));
+		WorldGenPrimitive.fillDown(world, x, y - 2, z, theme.getPrimaryWall());
 		
 		int stairId;
 		switch(level){

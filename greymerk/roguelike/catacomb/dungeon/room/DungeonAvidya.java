@@ -7,6 +7,7 @@ import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.World;
 import greymerk.roguelike.catacomb.dungeon.IDungeon;
+import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.treasure.ITreasureChest;
 import greymerk.roguelike.treasure.TreasureChestEmpty;
 import greymerk.roguelike.treasure.loot.Loot;
@@ -19,7 +20,7 @@ import greymerk.roguelike.worldgen.WorldGenPrimitive;
 public class DungeonAvidya implements IDungeon {
 
 	@Override
-	public boolean generate(World world, Random rand, int x, int y, int z) {
+	public boolean generate(World world, Random rand, ITheme theme, int x, int y, int z) {
 		
 		MetaBlock redClay = new MetaBlock(Block.stainedClay.blockID, 14);
 		MetaBlock whiteClay = new MetaBlock(Block.stainedClay.blockID, 0);

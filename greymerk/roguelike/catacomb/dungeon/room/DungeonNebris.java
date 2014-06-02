@@ -5,6 +5,7 @@ import java.util.Random;
 import net.minecraft.src.Block;
 import net.minecraft.src.World;
 import greymerk.roguelike.catacomb.dungeon.IDungeon;
+import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.treasure.ITreasureChest;
 import greymerk.roguelike.treasure.TreasureChestEmpty;
 import greymerk.roguelike.treasure.loot.provider.ItemNovelty;
@@ -17,7 +18,7 @@ import greymerk.roguelike.worldgen.WorldGenPrimitive;
 public class DungeonNebris implements IDungeon {
 
 	@Override
-	public boolean generate(World world, Random rand, int x, int y, int z) {
+	public boolean generate(World world, Random rand, ITheme theme, int x, int y, int z) {
 		
 		BlockRandomizer waterFloor = new BlockRandomizer(rand, new MetaBlock(Block.cobblestone.blockID));
 		waterFloor.addBlock(new MetaBlock(Block.glowStone.blockID), 7);

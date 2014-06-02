@@ -2,7 +2,7 @@ package greymerk.roguelike.catacomb.dungeon.room;
 
 import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.catacomb.dungeon.IDungeon;
-import greymerk.roguelike.worldgen.BlockFactoryProvider;
+import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.Spawner;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
@@ -30,7 +30,7 @@ public class DungeonsSlime implements IDungeon {
 	public DungeonsSlime() {
 	}
 
-	public boolean generate(World inWorld, Random inRandom, int inOriginX, int inOriginY, int inOriginZ) {
+	public boolean generate(World inWorld, Random inRandom, ITheme theme, int inOriginX, int inOriginY, int inOriginZ) {
 		world = inWorld;
 		rand = inRandom;
 		originX = inOriginX;
@@ -39,7 +39,7 @@ public class DungeonsSlime implements IDungeon {
 
 		liquid = Catacomb.getLevel(originY) == 4 ? Block.lavaStill.blockID : Block.waterStill.blockID;
 
-		fillBlocks = BlockFactoryProvider.getRandomizer(Catacomb.getLevel(inOriginY), inRandom);
+		fillBlocks = theme.getPrimaryWall();
 		
 		
 		// fill air

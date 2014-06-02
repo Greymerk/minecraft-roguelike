@@ -44,6 +44,7 @@ public class DungeonFactory implements IDungeonFactory {
 	public void addRandom(Dungeon type, int chance){
 		types.addFirst(new DungeonWeightedChoice(type, chance));
 		Collections.sort(types);
+		Collections.reverse(types);
 	}
 	
 	@Override

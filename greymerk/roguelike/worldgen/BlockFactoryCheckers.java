@@ -25,29 +25,29 @@ public class BlockFactoryCheckers implements IBlockFactory {
 		if (x % 2 == 0) {
 			if(z % 2 == 0){
 				if(y % 2 == 0){
-					WorldGenPrimitive.setBlock(world, x, y, z, fillOne);
+					WorldGenPrimitive.setBlock(world, x, y, z, fillOne, fillAir, replaceSolid);
 				} else {
-					WorldGenPrimitive.setBlock(world, x, y, z, fillTwo);
+					WorldGenPrimitive.setBlock(world, x, y, z, fillTwo, fillAir, replaceSolid);
 				}
 			} else {
 				if(y % 2 == 0){
-					WorldGenPrimitive.setBlock(world, x, y, z, fillTwo);
+					WorldGenPrimitive.setBlock(world, x, y, z, fillTwo, fillAir, replaceSolid);
 				} else {
-					WorldGenPrimitive.setBlock(world, x, y, z, fillOne);
+					WorldGenPrimitive.setBlock(world, x, y, z, fillOne, fillAir, replaceSolid);
 				}
 			}
 		} else {
 			if(z % 2 == 0){
 				if(y % 2 == 0){
-					WorldGenPrimitive.setBlock(world, x, y, z, fillTwo);
+					WorldGenPrimitive.setBlock(world, x, y, z, fillTwo, fillAir, replaceSolid);
 				} else {
-					WorldGenPrimitive.setBlock(world, x, y, z, fillOne);
+					WorldGenPrimitive.setBlock(world, x, y, z, fillOne, fillAir, replaceSolid);
 				}
 			} else {
 				if(y % 2 == 0){
-					WorldGenPrimitive.setBlock(world, x, y, z, fillOne);
+					WorldGenPrimitive.setBlock(world, x, y, z, fillOne, fillAir, replaceSolid);
 				} else {
-					WorldGenPrimitive.setBlock(world, x, y, z, fillTwo);
+					WorldGenPrimitive.setBlock(world, x, y, z, fillTwo, fillAir, replaceSolid);
 				}
 			}
 		}

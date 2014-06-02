@@ -7,6 +7,7 @@ import java.util.Random;
 import net.minecraft.src.Block;
 import net.minecraft.src.World;
 import greymerk.roguelike.catacomb.dungeon.IDungeon;
+import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.treasure.TreasureChest;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
@@ -20,7 +21,7 @@ public class DungeonObsidian implements IDungeon {
 	private static MetaBlock brick = new MetaBlock(Block.netherBrick.blockID);
 	
 	@Override
-	public boolean generate(World world, Random rand, int x, int y, int z) {
+	public boolean generate(World world, Random rand, ITheme theme, int x, int y, int z) {
 
 		HashSet<Coord> spawners = new HashSet<Coord>();
 		

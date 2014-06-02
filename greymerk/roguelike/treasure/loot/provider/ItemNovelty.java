@@ -112,7 +112,7 @@ public enum ItemNovelty {
 		case ZISTEAUSIGN:
 			item = new ItemStack(Item.sign);
 			Loot.setItemName(item, "Zistonian Battle Sign", TextFormat.DARKPURPLE);
-			Loot.setItemLore(item, "\"Say g'bye spawnah!\"", TextFormat.DARKGREEN);
+			Loot.setItemLore(item, "\"That's what you get!\"", TextFormat.DARKGREEN);
 			item.addEnchantment(Enchantment.sharpness, 1);
 			item.addEnchantment(Enchantment.knockback, 2);
 			item.addEnchantment(Enchantment.fireAspect, 1);

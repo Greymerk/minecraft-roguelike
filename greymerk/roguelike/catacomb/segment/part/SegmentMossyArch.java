@@ -2,7 +2,10 @@ package greymerk.roguelike.catacomb.segment.part;
 
 import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.catacomb.dungeon.Dungeon;
+import greymerk.roguelike.catacomb.segment.IAlcove;
+import greymerk.roguelike.catacomb.segment.alcove.PrisonCell;
 import greymerk.roguelike.worldgen.Cardinal;
+import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.Spawner;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
@@ -22,75 +25,46 @@ public class SegmentMossyArch extends SegmentBase {
 	@Override
 	protected void genWall(Cardinal wallDirection) {
 		
-		stairType = Block.stairsCobblestone.blockID;
+		MetaBlock stair = theme.getSecondaryStair(); 
+		stair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.reverse(wallDirection), true));
 		
-		switch(wallDirection){
-		case NORTH: north(); break;
-		case SOUTH: south(); break;
-		case EAST: east(); break;
-		case WEST: west(); break;
+		MetaBlock air = new MetaBlock(0);
+		
+		Coord cursor = new Coord(x, y, z);
+		cursor.add(wallDirection, 2);
+		WorldGenPrimitive.setBlock(world, cursor, air, true, true);
+		cursor.add(Cardinal.UP, 1);
+		WorldGenPrimitive.setBlock(world, cursor, air, true, true);
+		cursor.add(Cardinal.UP, 1);
+		WorldGenPrimitive.setBlock(world, cursor, stair, true, true);
+		
+		for(Cardinal orth : Cardinal.getOrthogonal(wallDirection)){
+			cursor = new Coord(x, y, z);
+			cursor.add(orth, 1);
+			cursor.add(wallDirection, 2);
+			WorldGenPrimitive.setBlock(world, cursor, theme.getSecondaryPillar(), true, true);
+			cursor.add(Cardinal.UP, 1);
+			WorldGenPrimitive.setBlock(world, cursor, theme.getSecondaryPillar(), true, true);
+			cursor.add(Cardinal.UP, 1);
+			WorldGenPrimitive.setBlock(world, cursor, theme.getSecondaryWall(), true, true);
+			cursor.add(Cardinal.reverse(wallDirection), 1);
+			WorldGenPrimitive.setBlock(world, cursor, stair, true, true);			
 		}
+		
+		cursor = new Coord(x, y, z);
+		cursor.add(wallDirection, 2);
+		cursor.add(Cardinal.DOWN, 1);
+		WorldGenPrimitive.setBlock(world, cursor, Block.waterMoving.blockID);
+		
+		cursor = new Coord(x, y, z);
+		cursor.add(Cardinal.UP, 3);
+		cursor.add(wallDirection, 1);
+		WorldGenPrimitive.setBlock(world, cursor, new MetaBlock(Block.vine.blockID, rand.nextInt(15)), true, true);
 		
 		if(!spawnHoleSet){
 			spawnHole();
 			spawnHoleSet = true;
 		}
-	}
-	
-	private void north(){
-		MetaBlock stair = new MetaBlock(stairType, WorldGenPrimitive.blockOrientation(Cardinal.SOUTH, true), 2);
-		
-		WorldGenPrimitive.setBlock(world, x, y, z - 2, 0);
-		WorldGenPrimitive.setBlock(world, x, y + 1, z - 2, 0);
-		WorldGenPrimitive.setBlock(world, x, y + 2, z - 2, stair, true, true);
-		
-		WorldGenPrimitive.setBlock(world, x - 1, y + 2, z - 1, stair, true, true);
-		WorldGenPrimitive.setBlock(world, x + 1, y + 2, z - 1, stair, true, true);
-		
-		WorldGenPrimitive.setBlock(world, x, y + 3, z - 1, new MetaBlock(Block.vine.blockID, rand.nextInt(15)));
-		WorldGenPrimitive.setBlock(world, x, y - 1, z - 2, Block.waterMoving.blockID);
-	}
-	
-	private void south(){
-		MetaBlock stair = new MetaBlock(stairType, WorldGenPrimitive.blockOrientation(Cardinal.NORTH, true), 2);
-		
-		WorldGenPrimitive.setBlock(world, x, y, z + 2, 0);
-		WorldGenPrimitive.setBlock(world, x, y + 1, z + 2, 0);
-		WorldGenPrimitive.setBlock(world, x, y + 2, z + 2, stair, true, true);
-		
-		WorldGenPrimitive.setBlock(world, x - 1, y + 2, z + 1, stair, true, true);
-		WorldGenPrimitive.setBlock(world, x + 1, y + 2, z + 1, stair, true, true);
-		
-		WorldGenPrimitive.setBlock(world, x, y + 3, z + 1, new MetaBlock(Block.vine.blockID, rand.nextInt(15)));
-		WorldGenPrimitive.setBlock(world, x, y - 1, z + 2, Block.waterMoving.blockID);
-	}
-	
-	private void east(){
-		MetaBlock stair = new MetaBlock(stairType, WorldGenPrimitive.blockOrientation(Cardinal.WEST, true), 2);
-		
-		WorldGenPrimitive.setBlock(world, x + 2, y, z, 0);
-		WorldGenPrimitive.setBlock(world, x + 2, y + 1, z, 0);
-		WorldGenPrimitive.setBlock(world, x + 2, y + 2, z, stair, true, true);
-		
-		WorldGenPrimitive.setBlock(world, x + 1, y + 2, z - 1, stair, true, true);
-		WorldGenPrimitive.setBlock(world, x + 1, y + 2, z + 1, stair, true, true);
-		
-		WorldGenPrimitive.setBlock(world, x + 1, y + 3, z, new MetaBlock(Block.vine.blockID, rand.nextInt(15)));
-		WorldGenPrimitive.setBlock(world, x + 2, y - 1, z, Block.waterMoving.blockID);
-	}
-	
-	private void west(){
-		MetaBlock stair = new MetaBlock(stairType, WorldGenPrimitive.blockOrientation(Cardinal.EAST, true), 2);
-		
-		WorldGenPrimitive.setBlock(world, x - 2, y, z, 0);
-		WorldGenPrimitive.setBlock(world, x - 2, y + 1, z, 0);
-		WorldGenPrimitive.setBlock(world, x - 2, y + 2, z, stair, true, true);
-		
-		WorldGenPrimitive.setBlock(world, x - 1, y + 2, z - 1, stair, true, true);
-		WorldGenPrimitive.setBlock(world, x - 1, y + 2, z + 1, stair, true, true);
-		
-		WorldGenPrimitive.setBlock(world, x - 1, y + 3, z, new MetaBlock(Block.vine.blockID, rand.nextInt(15)));
-		WorldGenPrimitive.setBlock(world, x - 2, y - 1, z, Block.waterMoving.blockID);
 	}
 	
 	private void spawnHole(){

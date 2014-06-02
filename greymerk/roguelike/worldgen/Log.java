@@ -8,6 +8,10 @@ public enum Log {
 		return new MetaBlock(getBlockId(type), getMeta(type, dir, onSide));
 	}
 	
+	public static MetaBlock getLog(Log type){
+		return new MetaBlock(getBlockId(type));
+	}
+	
 	public static int getBlockId(Log type){
 		switch(type){
 		case OAK: return 17;

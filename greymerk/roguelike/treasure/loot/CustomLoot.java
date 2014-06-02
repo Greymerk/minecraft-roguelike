@@ -68,33 +68,14 @@ public class CustomLoot{
 	
 	public static void add(JsonObject entry){
 		JsonObject item = entry.get("add").getAsJsonObject();
-		
-		int level = item.get("level").getAsInt();
 		String type = item.get("type").getAsString();
-		int id = item.get("id").getAsInt();
-		int dam = item.get("meta").getAsInt();
-		int min = item.get("min").getAsInt();
-		int max = item.get("max").getAsInt();
-		int weight = item.get("weight").getAsInt();
-		
-		WeightedRandomLoot toAdd = new WeightedRandomLoot(id, dam, min, max, weight);
-		
-		Loot.add(Loot.valueOf(type), toAdd, level);
+		int level = item.get("level").getAsInt();
+		Loot.add(Loot.valueOf(type), WeightedRandomLoot.decode(item), level);
 	}
 	
 	public static void addAll(JsonObject entry){
 		JsonObject item = entry.get("addAll").getAsJsonObject();
-		
 		String type = item.get("type").getAsString();
-		int id = item.get("id").getAsInt();
-		int dam = item.get("meta").getAsInt();
-		int min = item.get("min").getAsInt();
-		int max = item.get("max").getAsInt();
-		int weight = item.get("weight").getAsInt();
-		
-		WeightedRandomLoot toAdd = new WeightedRandomLoot(id, dam, min, max, weight);
-		
-		Loot.addAllLevels(Loot.valueOf(type), toAdd);
+		Loot.addAllLevels(Loot.valueOf(type), WeightedRandomLoot.decode(item));
 	}
-
 }

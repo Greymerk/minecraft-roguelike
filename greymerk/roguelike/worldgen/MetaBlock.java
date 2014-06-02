@@ -22,6 +22,12 @@ public class MetaBlock implements IBlockFactory{
 		this.flag = flag;
 	}
 	
+	public MetaBlock(MetaBlock toCopy){
+		this.blockID = toCopy.blockID;
+		this.meta = toCopy.meta;
+		this.flag = toCopy.flag;
+	}
+	
 	public int getBlockID(){
 		return blockID;
 	}

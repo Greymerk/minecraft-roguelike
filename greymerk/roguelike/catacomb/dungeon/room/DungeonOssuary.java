@@ -7,7 +7,7 @@ import net.minecraft.src.TileEntitySkull;
 import net.minecraft.src.World;
 import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.catacomb.dungeon.IDungeon;
-import greymerk.roguelike.worldgen.BlockFactoryProvider;
+import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.worldgen.BlockRandomizer;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.IBlockFactory;
@@ -17,11 +17,11 @@ import greymerk.roguelike.worldgen.WorldGenPrimitive;
 public class DungeonOssuary implements IDungeon {
 
 	@Override
-	public boolean generate(World world, Random rand, int x, int y, int z) {
+	public boolean generate(World world, Random rand, ITheme theme, int x, int y, int z) {
 			
-		MetaBlock stair = getStair(y);
+		MetaBlock stair = theme.getPrimaryStair();
 		
-		IBlockFactory walls = BlockFactoryProvider.getRandomizer(Catacomb.getLevel(y), rand);
+		IBlockFactory walls = theme.getPrimaryWall();
 		WorldGenPrimitive.fillRectHollow(world, x - 8, y - 1, z - 8, x + 8, y + 6, z + 8, walls, false, true);
 		WorldGenPrimitive.fillRectSolid(world, x - 7, y + 5, z - 7, x + 7, y + 5, z + 7, walls);
 		
@@ -214,27 +214,27 @@ public class DungeonOssuary implements IDungeon {
 		// corners
 		WorldGenPrimitive.fillRectSolid(world, x - 7, y, z - 7, x - 6, y + 5, z - 6, walls);
 		WorldGenPrimitive.fillRectSolid(world, x - 6, y + 6, z - 6, x - 3, y + 6, z - 3, walls);
-		stairCeiling(world, rand, x - 4, y + 5, z - 4);
-		stairArch(world, rand, x - 6, y + 4, z - 4, Cardinal.EAST);
-		stairArch(world, rand, x - 4, y + 4, z - 6, Cardinal.NORTH);
+		stairCeiling(world, rand, theme, x - 4, y + 5, z - 4);
+		stairArch(world, rand, theme, x - 6, y + 4, z - 4, Cardinal.EAST);
+		stairArch(world, rand, theme, x - 4, y + 4, z - 6, Cardinal.NORTH);
 		
 		WorldGenPrimitive.fillRectSolid(world, x - 7, y, z + 6, x - 6, y + 5, z + 7, walls);
 		WorldGenPrimitive.fillRectSolid(world, x - 6, y + 6, z + 3, x - 3, y + 6, z + 6, walls);
-		stairCeiling(world, rand, x - 4, y + 5, z + 4);
-		stairArch(world, rand, x - 6, y + 4, z + 4, Cardinal.EAST);
-		stairArch(world, rand, x - 4, y + 4, z + 6, Cardinal.NORTH);
+		stairCeiling(world, rand, theme, x - 4, y + 5, z + 4);
+		stairArch(world, rand, theme, x - 6, y + 4, z + 4, Cardinal.EAST);
+		stairArch(world, rand, theme, x - 4, y + 4, z + 6, Cardinal.NORTH);
 		
 		WorldGenPrimitive.fillRectSolid(world, x + 6, y, z - 7, x + 7, y + 5, z - 6, walls);
 		WorldGenPrimitive.fillRectSolid(world, x + 3, y + 6, z - 6, x + 6, y + 6, z - 3, walls);
-		stairCeiling(world, rand, x + 4, y + 5, z - 4);
-		stairArch(world, rand, x + 6, y + 4, z - 4, Cardinal.EAST);
-		stairArch(world, rand, x + 4, y + 4, z - 6, Cardinal.NORTH);
+		stairCeiling(world, rand, theme, x + 4, y + 5, z - 4);
+		stairArch(world, rand, theme, x + 6, y + 4, z - 4, Cardinal.EAST);
+		stairArch(world, rand, theme, x + 4, y + 4, z - 6, Cardinal.NORTH);
 		
 		WorldGenPrimitive.fillRectSolid(world, x + 6, y, z + 6, x + 7, y + 5, z + 7, walls);
 		WorldGenPrimitive.fillRectSolid(world, x + 3, y + 6, z + 3, x + 6, y + 6, z + 6, walls);
-		stairCeiling(world, rand, x + 4, y + 5, z + 4);
-		stairArch(world, rand, x + 6, y + 4, z + 4, Cardinal.EAST);
-		stairArch(world, rand, x + 4, y + 4, z + 6, Cardinal.NORTH);
+		stairCeiling(world, rand, theme, x + 4, y + 5, z + 4);
+		stairArch(world, rand, theme, x + 6, y + 4, z + 4, Cardinal.EAST);
+		stairArch(world, rand, theme, x + 4, y + 4, z + 6, Cardinal.NORTH);
 		
 		// shelves
 		WorldGenPrimitive.fillRectSolid(world, x - 5, y, z - 7, x - 3, y, z - 7, walls);
@@ -317,9 +317,9 @@ public class DungeonOssuary implements IDungeon {
 		return 9;
 	}
 	
-	private void stairCeiling(World world, Random rand, int x, int y, int z){
+	private void stairCeiling(World world, Random rand, ITheme theme, int x, int y, int z){
 		
-		MetaBlock stair = getStair(y);
+		MetaBlock stair = theme.getPrimaryStair();
 		
 		WorldGenPrimitive.setBlock(world, x, y, z, 0);
 		stair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.EAST, true));
@@ -334,9 +334,9 @@ public class DungeonOssuary implements IDungeon {
 		
 	}
 	
-	private void stairArch(World world, Random rand, int x, int y, int z, Cardinal dir){
+	private void stairArch(World world, Random rand, ITheme theme, int x, int y, int z, Cardinal dir){
 		
-		MetaBlock stair = getStair(y);
+		MetaBlock stair = theme.getPrimaryStair();
 		
 		if(dir == Cardinal.NORTH || dir == Cardinal.SOUTH){
 			stair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.EAST, true));
@@ -349,10 +349,6 @@ public class DungeonOssuary implements IDungeon {
 			stair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.NORTH, true));
 			WorldGenPrimitive.setBlock(world, x, y, z + 1, stair);
 		}
-	}
-	
-	private MetaBlock getStair(int y){
-		return new MetaBlock(Catacomb.getLevel(y) < 3 ? Block.stairsStoneBrick.blockID : Block.stairsCobblestone.blockID);
 	}
 	
 	private void skull(World world, Random rand, int x, int y, int z, Cardinal dir){

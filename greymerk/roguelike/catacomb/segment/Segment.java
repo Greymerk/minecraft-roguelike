@@ -5,6 +5,7 @@ import greymerk.roguelike.catacomb.dungeon.Dungeon;
 import greymerk.roguelike.catacomb.segment.part.SegmentArch;
 import greymerk.roguelike.catacomb.segment.part.SegmentInset;
 import greymerk.roguelike.catacomb.segment.part.SegmentFire;
+import greymerk.roguelike.catacomb.segment.part.SegmentJungle;
 import greymerk.roguelike.catacomb.segment.part.SegmentMossyArch;
 import greymerk.roguelike.catacomb.segment.part.SegmentMossyMushrooms;
 import greymerk.roguelike.catacomb.segment.part.SegmentNetherArch;
@@ -18,7 +19,7 @@ import net.minecraft.src.Tuple;
 
 public enum Segment {
 
-	ARCH, FIRE, SHELF, INSET, MOSSYARCH, MOSSYMUSHROOM, NETHERARCH, NETHERSTRIPE;
+	ARCH, FIRE, SHELF, INSET, MOSSYARCH, MOSSYMUSHROOM, NETHERARCH, NETHERSTRIPE, JUNGLE;
 	
 	public static final Segment[] level0 = {FIRE, SHELF, INSET};
 	public static final Segment[] level1 = {SHELF, INSET};
@@ -37,59 +38,10 @@ public enum Segment {
 		case MOSSYMUSHROOM: return new SegmentMossyMushrooms();
 		case NETHERARCH: return new SegmentNetherArch();
 		case NETHERSTRIPE: return new SegmentNetherStripes();
+		case JUNGLE: return new SegmentJungle();
 		}
 		
 		return null;
 		
-	}
-	
-	public static ISegment pickSegment(Random rand, Cardinal dir, int x, int y, int z){
-
-		Segment pillar;
-		Segment[] spacers;
-		
-		switch(Catacomb.getLevel(y)){
-		case 0:
-			pillar = ARCH;
-			spacers = level0;
-			break;
-		case 1:
-			pillar = ARCH;
-			spacers = level1;
-			break;
-		case 2:
-			pillar = ARCH;
-			spacers = level2;
-			break;
-		case 3:
-			pillar = MOSSYARCH;
-			spacers = level3;
-			break;
-		case 4:
-			pillar = NETHERARCH;
-			spacers = level4;
-			break;
-		default: 
-			pillar = ARCH;
-			spacers = level1;
-		}
-	
-		if((dir == Cardinal.NORTH || dir == Cardinal.SOUTH) && z % 3 == 0){
-			if(z % 6 == 0){
-				return getSegment(pillar);
-			}
-			
-			return getSegment(spacers[rand.nextInt(spacers.length)]);
-		}
-		
-		if((dir == Cardinal.WEST || dir == Cardinal.EAST) && x % 3 == 0){
-			if(x % 6 == 0){
-				return getSegment(pillar);
-			}
-			
-			return getSegment(spacers[rand.nextInt(spacers.length)]);
-		}
-		
-		return null;
 	}
 }

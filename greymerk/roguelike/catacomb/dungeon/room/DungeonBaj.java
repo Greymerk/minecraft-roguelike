@@ -9,6 +9,7 @@ import java.util.Random;
 import net.minecraft.src.Block;
 import net.minecraft.src.World;
 import greymerk.roguelike.catacomb.dungeon.IDungeon;
+import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.treasure.ITreasureChest;
 import greymerk.roguelike.treasure.TreasureChestEmpty;
 import greymerk.roguelike.treasure.loot.provider.ItemNovelty;
@@ -20,7 +21,7 @@ import greymerk.roguelike.worldgen.WorldGenPrimitive;
 public class DungeonBaj implements IDungeon {
 
 	@Override
-	public boolean generate(World world, Random rand, int x, int y, int z) {
+	public boolean generate(World world, Random rand, ITheme theme, int x, int y, int z) {
 
 		WorldGenPrimitive.fillRectHollow(world, x - 5, y - 2, z - 5, x + 5, y + 4, z + 5, new MetaBlock(Block.stone.blockID), true, true);
 		WorldGenPrimitive.setBlock(world, x - 5, y + 1, z, 0);

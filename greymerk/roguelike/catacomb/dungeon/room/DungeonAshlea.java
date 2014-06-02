@@ -8,6 +8,7 @@ import net.minecraft.src.TileEntityChest;
 import net.minecraft.src.World;
 import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.catacomb.dungeon.IDungeon;
+import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.treasure.ITreasureChest;
 import greymerk.roguelike.treasure.TreasureChest;
@@ -30,7 +31,7 @@ public class DungeonAshlea implements IDungeon {
 	private static int stairBirch = Block.stairsWoodBirch.blockID;
 	
 	@Override
-	public boolean generate(World world, Random rand, int x, int y, int z) {
+	public boolean generate(World world, Random rand, ITheme theme, int x, int y, int z) {
 		
 		
 		// air		

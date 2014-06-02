@@ -8,7 +8,7 @@ import net.minecraft.src.Block;
 import net.minecraft.src.World;
 import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.catacomb.segment.IAlcove;
-import greymerk.roguelike.worldgen.BlockFactoryProvider;
+import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.worldgen.BlockRandomizer;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
@@ -21,9 +21,12 @@ import greymerk.roguelike.worldgen.WorldGenPrimitive;
 public class SilverfishNest implements IAlcove{
 
 	private static int RECESSED = 6;
+	private ITheme theme;
 	
 	@Override
-	public void generate(World world, Random rand, int x, int y, int z, Cardinal dir) {
+	public void generate(World world, Random rand, ITheme theme, int x, int y, int z, Cardinal dir) {
+		
+		this.theme = theme;
 		
 		Coord corridor = new Coord(x, y, z);
 		Coord centre = new Coord(x, y, z);

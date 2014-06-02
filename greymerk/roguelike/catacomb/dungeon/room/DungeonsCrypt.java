@@ -2,8 +2,8 @@ package greymerk.roguelike.catacomb.dungeon.room;
 
 import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.catacomb.dungeon.IDungeon;
+import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.treasure.TreasureChest;
-import greymerk.roguelike.worldgen.BlockFactoryProvider;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.Spawner;
@@ -33,10 +33,10 @@ public class DungeonsCrypt implements IDungeon {
 		airFill = new ArrayList<Coord>();
 	}
 
-	public boolean generate(World inWorld, Random inRandom, int inOriginX, int inOriginY, int inOriginZ) {
+	public boolean generate(World inWorld, Random inRandom, ITheme theme, int inOriginX, int inOriginY, int inOriginZ) {
 		rand = inRandom;
 		world = inWorld;
-		blocks = BlockFactoryProvider.getRandomizer(Catacomb.getLevel(inOriginY), rand);
+		blocks = theme.getPrimaryWall();
 		
 		originX = inOriginX;
 		originY = inOriginY;

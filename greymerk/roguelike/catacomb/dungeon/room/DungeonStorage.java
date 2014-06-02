@@ -10,8 +10,8 @@ import net.minecraft.src.Block;
 import net.minecraft.src.World;
 import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.catacomb.dungeon.IDungeon;
+import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.treasure.TreasureChest;
-import greymerk.roguelike.worldgen.BlockFactoryProvider;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
@@ -22,7 +22,7 @@ import greymerk.roguelike.worldgen.WorldGenPrimitive;
 public class DungeonStorage implements IDungeon {
 
 	@Override
-	public boolean generate(World world, Random rand, int x, int y, int z) {
+	public boolean generate(World world, Random rand, ITheme theme, int x, int y, int z) {
 
 		HashSet<Coord> chestSpaces = new HashSet<Coord>();
 		
@@ -33,7 +33,7 @@ public class DungeonStorage implements IDungeon {
 		Coord start;
 		Coord end;
 		
-		IBlockFactory blocks = BlockFactoryProvider.getRandomizer(Catacomb.getLevel(y), rand);
+		IBlockFactory blocks = theme.getPrimaryWall();
 		
 		WorldGenPrimitive.fillRectSolid(world, x - 6, y - 1, z - 6, x + 6, y - 1, z + 6, blocks, true, true);
 		WorldGenPrimitive.fillRectSolid(world, x - 5, y + 4, z - 5, x + 5, y + 4, z + 5, blocks, true, true);
@@ -45,15 +45,15 @@ public class DungeonStorage implements IDungeon {
 				cursor.add(Cardinal.UP, 3);
 				cursor.add(dir, 2);
 				cursor.add(orth, 2);
-				pillarTop(world, cursor);
+				pillarTop(world, theme, cursor);
 				cursor.add(dir, 3);
 				cursor.add(orth, 3);
-				pillarTop(world, cursor);
+				pillarTop(world, theme, cursor);
 				start = new Coord(cursor);
 				
 				cursor.add(Cardinal.DOWN, 1);
 				cursor.add(dir, 1);
-				pillarTop(world, cursor);
+				pillarTop(world, theme, cursor);
 				
 				end = new Coord(cursor);
 				end.add(Cardinal.DOWN, 3);
@@ -64,20 +64,20 @@ public class DungeonStorage implements IDungeon {
 				cursor = new Coord(x, y, z);
 				cursor.add(dir, 2);
 				cursor.add(orth, 2);
-				pillar(world, rand, cursor, 4);
+				pillar(world, rand, cursor, theme, 4);
 				cursor.add(dir, 4);
-				pillar(world, rand, cursor, 3);
+				pillar(world, rand, cursor, theme, 3);
 
 				
 				cursor.add(Cardinal.UP, 2);
-				pillarTop(world, cursor);
+				pillarTop(world, theme, cursor);
 				
 				cursor.add(Cardinal.UP, 1);
 				cursor.add(Cardinal.reverse(dir), 1);
-				pillarTop(world, cursor);
+				pillarTop(world, theme, cursor);
 				
 				cursor.add(Cardinal.reverse(dir), 3);
-				pillarTop(world, cursor);
+				pillarTop(world, theme, cursor);
 				
 				start = new Coord(x, y, z);
 				start.add(dir, 6);
@@ -93,7 +93,7 @@ public class DungeonStorage implements IDungeon {
 				cursor = new Coord(x, y, z);
 				cursor.add(dir, 6);
 				cursor.add(orth, 3);
-				MetaBlock step = getStair(Catacomb.getLevel(y));
+				MetaBlock step = theme.getSecondaryStair();
 				step.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.reverse(dir), true));
 				WorldGenPrimitive.setBlock(world, cursor, step, true, true);
 				cursor.add(orth, 1);
@@ -115,7 +115,7 @@ public class DungeonStorage implements IDungeon {
 				cursor = new Coord(x, y, z);
 				cursor.add(dir, 5);
 				cursor.add(orth, 5);
-				pillar(world, rand, cursor, 4);
+				pillar(world, rand, cursor, theme, 4);
 				
 			}
 		}
@@ -134,8 +134,8 @@ public class DungeonStorage implements IDungeon {
 		return 8;
 	}
 
-	private static void pillarTop(World world, Coord cursor){
-		MetaBlock step = getStair(Catacomb.getLevel(cursor.getY()));
+	private static void pillarTop(World world, ITheme theme, Coord cursor){
+		MetaBlock step = theme.getSecondaryStair();
 		for(Cardinal dir : Cardinal.directions){
 			step.setMeta(WorldGenPrimitive.blockOrientation(dir, true));
 			cursor.add(dir, 1);
@@ -144,45 +144,9 @@ public class DungeonStorage implements IDungeon {
 		}
 	}
 	
-	private static void pillar(World world, Random rand, Coord base, int height){
-
+	private static void pillar(World world, Random rand, Coord base, ITheme theme, int height){
 		Coord top = new Coord(base);
 		top.add(Cardinal.UP, height);
-		
-		switch(Catacomb.getLevel(base.getY())){
-		case 0:
-			WorldGenPrimitive.fillRectSolid(world, base, top, Log.getLog(Log.OAK, Cardinal.UP, false), true, true);
-			return;
-		case 1:
-			WorldGenPrimitive.fillRectSolid(world, base, top, Log.getLog(Log.SPRUCE, Cardinal.UP, false), true, true);
-			return;
-		default:
-			WorldGenPrimitive.fillRectSolid(world, base, top, BlockFactoryProvider.getRandomizer(Catacomb.getLevel(base.getY()), rand), true, true);
-			return;
-		}
-		
-
-
-	
-	}
-	
-	private static MetaBlock getStair(int level){
-		switch(level){
-		case 0:
-			return new MetaBlock(Block.stairsWoodOak.blockID);
-		case 1:
-			return new MetaBlock(Block.stairsWoodSpruce.blockID);
-		case 2:
-			return new MetaBlock(Block.stairsStoneBrick.blockID);
-		case 3:
-			return new MetaBlock(Block.stairsCobblestone.blockID);
-		case 4:
-			return new MetaBlock(Block.stairsNetherBrick.blockID);
-		default:
-			return new MetaBlock(Block.stairsStoneBrick.blockID);
-		}
-		
-		
-	}
-	
+		WorldGenPrimitive.fillRectSolid(world, base, top, theme.getSecondaryPillar(), true, true);
+	}	
 }

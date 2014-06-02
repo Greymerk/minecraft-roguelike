@@ -1,5 +1,8 @@
 package greymerk.roguelike.worldgen;
 
+import greymerk.roguelike.catacomb.dungeon.DungeonWeightedChoice;
+
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Random;
 import java.util.Stack;
@@ -11,14 +14,16 @@ public class BlockRandomizer implements IBlockFactory{
 	Random rand;
 	LinkedList<BlockChoice> blocks;
 
-	public BlockRandomizer(Random rand, MetaBlock defaultBlock){
+	public BlockRandomizer(Random rand, IBlockFactory defaultBlock){
 		this.rand = rand;
 		this.blocks = new LinkedList<BlockChoice>();
-		blocks.addFirst(new BlockChoice(defaultBlock, 1));
+		blocks.add(new BlockChoice(defaultBlock, 1));
 	}
 	
 	public void addBlock(MetaBlock block, int chance){
-		blocks.addFirst(new BlockChoice(block, chance));
+		blocks.add(new BlockChoice(block, chance));
+		Collections.sort(blocks);
+		Collections.reverse(blocks);
 	}
 	
 	public void setBlock(World world, int x, int y, int z){
@@ -26,16 +31,11 @@ public class BlockRandomizer implements IBlockFactory{
 	}
 	
 	public void setBlock(World world, int x, int y, int z, boolean fillAir, boolean replaceSolid){
-		
-		MetaBlock choice = getMetaBlock();
-		int blockID = choice.getBlockID();
-		int meta = choice.getMeta();
-		int flags = choice.getFlag();
-		
-		WorldGenPrimitive.setBlock(world, x, y, z, blockID, meta, flags, fillAir, replaceSolid);
+		IBlockFactory choice = getBlock();
+		choice.setBlock(world, x, y, z, fillAir, replaceSolid);
 	}
 	
-	private MetaBlock getMetaBlock(){
+	private IBlockFactory getBlock(){
 		
 		for(BlockChoice block : blocks){
 			if(rand.nextInt(block.getChance()) == 0){
@@ -47,17 +47,17 @@ public class BlockRandomizer implements IBlockFactory{
 		return new MetaBlock(0);
 	}
 	
-	private class BlockChoice{
+	private class BlockChoice implements Comparable{
 		
-		private MetaBlock block;
+		private IBlockFactory block;
 		private int chance;
 		
-		public BlockChoice(MetaBlock block, int chance){
+		public BlockChoice(IBlockFactory block, int chance){
 			this.block = block;
 			this.chance = chance;
 		}
 		
-		public MetaBlock getBlock(){
+		public IBlockFactory getBlock(){
 			return block;
 		}
 		
@@ -65,5 +65,12 @@ public class BlockRandomizer implements IBlockFactory{
 			return chance;
 		}
 		
+		@Override
+		public int compareTo(Object o) {
+			BlockChoice other = (BlockChoice)o;
+			if(chance < other.chance) return -1;
+			if(chance > other.chance) return 1;
+			return 0;
+		}
 	}
 }

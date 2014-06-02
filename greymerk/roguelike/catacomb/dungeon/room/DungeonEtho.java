@@ -7,6 +7,7 @@ import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.World;
 import greymerk.roguelike.catacomb.dungeon.IDungeon;
+import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.treasure.ITreasureChest;
 import greymerk.roguelike.treasure.TreasureChestEmpty;
 import greymerk.roguelike.treasure.loot.Loot;
@@ -20,7 +21,7 @@ import greymerk.roguelike.worldgen.WorldGenPrimitive;
 public class DungeonEtho implements IDungeon {
 
 	@Override
-	public boolean generate(World world, Random rand, int x, int y, int z) {
+	public boolean generate(World world, Random rand, ITheme theme, int x, int y, int z) {
 
 		WorldGenPrimitive.fillRectSolid(world, x - 5, y, z - 5, x + 5, y + 3, z + 5, 0);
 		
