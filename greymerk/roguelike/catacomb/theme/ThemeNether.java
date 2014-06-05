@@ -12,23 +12,17 @@ import net.minecraft.src.Block;
 
 public class ThemeNether extends ThemeBase{
 
-	public ThemeNether(Random rand){
+	public ThemeNether(){
 	
-		BlockRandomizer walls = new BlockRandomizer(rand, new MetaBlock(Block.netherBrick.blockID));
+		BlockRandomizer walls = new BlockRandomizer(new MetaBlock(Block.netherBrick.blockID));
 		walls.addBlock(new MetaBlock(Block.netherrack.blockID), 10);
 		walls.addBlock(new MetaBlock(Block.oreNetherQuartz.blockID), 20);
 		walls.addBlock(new MetaBlock(Block.slowSand.blockID), 30);
 		walls.addBlock(new MetaBlock(Block.coalBlock.blockID), 100);
 
-		
-		BlockRandomizer bridge = new BlockRandomizer(rand, new MetaBlock(Block.netherrack.blockID));
-		bridge.addBlock(new MetaBlock(0), 3);
-		bridge.addBlock(new MetaBlock(Block.oreNetherQuartz.blockID), 20);
-		bridge.addBlock(new MetaBlock(Block.slowSand.blockID), 30);
-		
 		MetaBlock stair = new MetaBlock(Block.stairsNetherBrick.blockID);
 		
-		this.walls = new BlockSet(walls, bridge, stair, walls);
+		this.walls = new BlockSet(walls, stair, walls);
 		this.decor = this.walls;
 
 		this.segments = new ArrayList<Segment>();

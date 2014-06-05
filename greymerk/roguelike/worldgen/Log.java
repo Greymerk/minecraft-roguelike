@@ -4,12 +4,12 @@ public enum Log {
 
 	OAK, SPRUCE, BIRCH, JUNGLE, ACACIA, DARKOAK;
 	
-	public static MetaBlock getLog(Log type, Cardinal dir, boolean onSide){
-		return new MetaBlock(getBlockId(type), getMeta(type, dir, onSide));
+	public static MetaBlock getLog(Log type, Cardinal dir){
+		return new MetaBlock(getBlockId(type), getMeta(type, dir));
 	}
 	
 	public static MetaBlock getLog(Log type){
-		return new MetaBlock(getBlockId(type));
+		return getLog(type, Cardinal.UP);
 	}
 	
 	public static int getBlockId(Log type){
@@ -24,18 +24,16 @@ public enum Log {
 		}
 	}
 	
-	public static int getMeta(Log type, Cardinal dir, boolean onSide){
+	public static int getMeta(Log type, Cardinal dir){
 		
 		int orientation;
-		
-		if(onSide){
-			if(dir == Cardinal.NORTH || dir == Cardinal.SOUTH){
-				orientation = 8;
-			} else {
-				orientation = 4;
-			}
-		} else {
-			orientation = 0;
+
+		switch(dir){
+		case NORTH:
+		case SOUTH: orientation = 8;
+		case EAST:
+		case WEST: orientation = 4;
+		default: orientation = 0;
 		}
 		
 		switch(type){

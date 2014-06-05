@@ -23,20 +23,22 @@ public class DungeonLab implements IDungeon {
 	
 		IBlockFactory blocks = theme.getPrimaryWall();
 		
+		
+		MetaBlock air = new MetaBlock(0);
 		// Air
-		WorldGenPrimitive.fillRectSolid(inWorld, inOriginX - 7, inOriginY, inOriginZ - 7, inOriginX + 7, inOriginY + 3, inOriginZ + 7, 0);
+		WorldGenPrimitive.fillRectSolid(inWorld, inRandom, inOriginX - 7, inOriginY, inOriginZ - 7, inOriginX + 7, inOriginY + 3, inOriginZ + 7, air);
 
 		IBlockFactory roof = theme.getSecondaryWall();
 		// Wood upper Roof
-		WorldGenPrimitive.fillRectSolid(inWorld, inOriginX - 6, inOriginY + 5, inOriginZ - 6, inOriginX + 6, inOriginY + 5, inOriginZ + 6, roof, true, true);
-		WorldGenPrimitive.fillRectSolid(inWorld, inOriginX - 1, inOriginY + 4, inOriginZ - 1, inOriginX + 1, inOriginY + 4, inOriginZ + 1, 0);
-		WorldGenPrimitive.fillRectSolid(inWorld, inOriginX - 5, inOriginY + 4, inOriginZ - 1, inOriginX - 3, inOriginY + 4, inOriginZ + 1, 0);
-		WorldGenPrimitive.fillRectSolid(inWorld, inOriginX + 3, inOriginY + 4, inOriginZ - 1, inOriginX + 5, inOriginY + 4, inOriginZ + 1, 0);
-		WorldGenPrimitive.fillRectSolid(inWorld, inOriginX - 1, inOriginY + 4, inOriginZ - 5, inOriginX + 1, inOriginY + 4, inOriginZ - 3, 0);
-		WorldGenPrimitive.fillRectSolid(inWorld, inOriginX - 1, inOriginY + 4, inOriginZ + 3, inOriginX + 1, inOriginY + 4, inOriginZ + 5, 0);
+		WorldGenPrimitive.fillRectSolid(inWorld, inRandom, inOriginX - 6, inOriginY + 5, inOriginZ - 6, inOriginX + 6, inOriginY + 5, inOriginZ + 6, roof, true, true);
+		WorldGenPrimitive.fillRectSolid(inWorld, inRandom, inOriginX - 1, inOriginY + 4, inOriginZ - 1, inOriginX + 1, inOriginY + 4, inOriginZ + 1, air);
+		WorldGenPrimitive.fillRectSolid(inWorld, inRandom, inOriginX - 5, inOriginY + 4, inOriginZ - 1, inOriginX - 3, inOriginY + 4, inOriginZ + 1, air);
+		WorldGenPrimitive.fillRectSolid(inWorld, inRandom, inOriginX + 3, inOriginY + 4, inOriginZ - 1, inOriginX + 5, inOriginY + 4, inOriginZ + 1, air);
+		WorldGenPrimitive.fillRectSolid(inWorld, inRandom, inOriginX - 1, inOriginY + 4, inOriginZ - 5, inOriginX + 1, inOriginY + 4, inOriginZ - 3, air);
+		WorldGenPrimitive.fillRectSolid(inWorld, inRandom, inOriginX - 1, inOriginY + 4, inOriginZ + 3, inOriginX + 1, inOriginY + 4, inOriginZ + 5, air);
 		
 		// shell
-		WorldGenPrimitive.fillRectHollow(inWorld, inOriginX - 8, inOriginY - 1, inOriginZ - 8, inOriginX + 8, inOriginY + 4, inOriginZ + 8, blocks, false, true);
+		WorldGenPrimitive.fillRectHollow(inWorld, inRandom, inOriginX - 8, inOriginY - 1, inOriginZ - 8, inOriginX + 8, inOriginY + 4, inOriginZ + 8, blocks, false, true);
 		
 		// corner rooms
 		southWest(inWorld, inRandom, theme, inOriginX - 7, inOriginY, inOriginZ + 2);
@@ -45,42 +47,44 @@ public class DungeonLab implements IDungeon {
 		northEast(inWorld, inRandom, theme, inOriginX + 2, inOriginY, inOriginZ - 7);
 		
 		// outer walls
-		WorldGenPrimitive.fillRectSolid(inWorld, inOriginX - 8, inOriginY, inOriginZ - 7, inOriginX - 8, inOriginY + 3, inOriginZ - 7, blocks);
-		WorldGenPrimitive.fillRectSolid(inWorld, inOriginX + 8, inOriginY, inOriginZ - 7, inOriginX + 8, inOriginY + 3, inOriginZ - 7, blocks);
-		WorldGenPrimitive.fillRectSolid(inWorld, inOriginX + 8, inOriginY, inOriginZ - 7, inOriginX + 8, inOriginY + 3, inOriginZ - 7, blocks);
+		WorldGenPrimitive.fillRectSolid(inWorld, inRandom, inOriginX - 8, inOriginY, inOriginZ - 7, inOriginX - 8, inOriginY + 3, inOriginZ - 7, blocks);
+		WorldGenPrimitive.fillRectSolid(inWorld, inRandom, inOriginX + 8, inOriginY, inOriginZ - 7, inOriginX + 8, inOriginY + 3, inOriginZ - 7, blocks);
+		WorldGenPrimitive.fillRectSolid(inWorld, inRandom, inOriginX + 8, inOriginY, inOriginZ - 7, inOriginX + 8, inOriginY + 3, inOriginZ - 7, blocks);
 		
 		IBlockFactory backWalls = theme.getSecondaryWall();
 		
 		// wall planks
-		WorldGenPrimitive.fillRectSolid(inWorld, inOriginX - 8, inOriginY + 1, inOriginZ - 6, inOriginX - 8, inOriginY + 3, inOriginZ - 3, backWalls, true, true);
-		WorldGenPrimitive.fillRectSolid(inWorld, inOriginX - 8, inOriginY + 1, inOriginZ + 3, inOriginX - 8, inOriginY + 3, inOriginZ + 6, backWalls, true, true);
-		WorldGenPrimitive.fillRectSolid(inWorld, inOriginX + 8, inOriginY + 1, inOriginZ - 6, inOriginX + 8, inOriginY + 3, inOriginZ - 3, backWalls, true, true);
-		WorldGenPrimitive.fillRectSolid(inWorld, inOriginX + 8, inOriginY + 1, inOriginZ + 3, inOriginX + 8, inOriginY + 3, inOriginZ + 6, backWalls, true, true);
+		WorldGenPrimitive.fillRectSolid(inWorld, inRandom, inOriginX - 8, inOriginY + 1, inOriginZ - 6, inOriginX - 8, inOriginY + 3, inOriginZ - 3, backWalls, true, true);
+		WorldGenPrimitive.fillRectSolid(inWorld, inRandom, inOriginX - 8, inOriginY + 1, inOriginZ + 3, inOriginX - 8, inOriginY + 3, inOriginZ + 6, backWalls, true, true);
+		WorldGenPrimitive.fillRectSolid(inWorld, inRandom, inOriginX + 8, inOriginY + 1, inOriginZ - 6, inOriginX + 8, inOriginY + 3, inOriginZ - 3, backWalls, true, true);
+		WorldGenPrimitive.fillRectSolid(inWorld, inRandom, inOriginX + 8, inOriginY + 1, inOriginZ + 3, inOriginX + 8, inOriginY + 3, inOriginZ + 6, backWalls, true, true);
 		
-		WorldGenPrimitive.fillRectSolid(inWorld, inOriginX - 6, inOriginY + 1, inOriginZ - 8, inOriginX - 3, inOriginY + 3, inOriginZ - 8, backWalls, true, true);
-		WorldGenPrimitive.fillRectSolid(inWorld, inOriginX + 3, inOriginY + 1, inOriginZ - 8, inOriginX + 6, inOriginY + 3, inOriginZ - 8, backWalls, true, true);
-		WorldGenPrimitive.fillRectSolid(inWorld, inOriginX - 6, inOriginY + 1, inOriginZ + 8, inOriginX - 3, inOriginY + 3, inOriginZ + 8, backWalls, true, true);
-		WorldGenPrimitive.fillRectSolid(inWorld, inOriginX + 3, inOriginY + 1, inOriginZ + 8, inOriginX + 6, inOriginY + 3, inOriginZ + 8, backWalls, true, true);
+		WorldGenPrimitive.fillRectSolid(inWorld, inRandom, inOriginX - 6, inOriginY + 1, inOriginZ - 8, inOriginX - 3, inOriginY + 3, inOriginZ - 8, backWalls, true, true);
+		WorldGenPrimitive.fillRectSolid(inWorld, inRandom, inOriginX + 3, inOriginY + 1, inOriginZ - 8, inOriginX + 6, inOriginY + 3, inOriginZ - 8, backWalls, true, true);
+		WorldGenPrimitive.fillRectSolid(inWorld, inRandom, inOriginX - 6, inOriginY + 1, inOriginZ + 8, inOriginX - 3, inOriginY + 3, inOriginZ + 8, backWalls, true, true);
+		WorldGenPrimitive.fillRectSolid(inWorld, inRandom, inOriginX + 3, inOriginY + 1, inOriginZ + 8, inOriginX + 6, inOriginY + 3, inOriginZ + 8, backWalls, true, true);
 		
 		
 		return false;
 	}
 
-	private static void corner(World world, ITheme theme, int x, int y, int z){
+	private static void corner(World world, Random rand, ITheme theme, int x, int y, int z){
+		
+		MetaBlock air = new MetaBlock(0);
 		
 		// pillars
-		pillar(world, theme, x, y, z);
-		pillar(world, theme, x + 5, y, z);
-		pillar(world, theme, x, y, z + 5);
-		pillar(world, theme, x + 5, y, z + 5);
+		pillar(world, rand, theme, x, y, z);
+		pillar(world, rand, theme, x + 5, y, z);
+		pillar(world, rand, theme, x, y, z + 5);
+		pillar(world, rand, theme, x + 5, y, z + 5);
 		
 		// tile floor
-		WorldGenPrimitive.fillRectSolid(world, x, y - 1, z, x + 5, y - 1, z + 5, Block.stainedClay.blockID, 9, 2, true, true);
-		WorldGenPrimitive.fillRectSolid(world, x + 1, y - 1, z + 2, x + 4, y - 1, z + 3, 43, 8, 2, true, true);
-		WorldGenPrimitive.fillRectSolid(world, x + 2, y - 1, z + 1, x + 3, y - 1, z + 4, 43, 8, 2, true, true);
+		WorldGenPrimitive.fillRectSolid(world,  rand, x, y - 1, z, x + 5, y - 1, z + 5, Block.stainedClay.blockID, 9, 2, true, true);
+		WorldGenPrimitive.fillRectSolid(world,  rand, x + 1, y - 1, z + 2, x + 4, y - 1, z + 3, 43, 8, 2, true, true);
+		WorldGenPrimitive.fillRectSolid(world,  rand, x + 2, y - 1, z + 1, x + 3, y - 1, z + 4, 43, 8, 2, true, true);
 		
 		// ceiling dome
-		WorldGenPrimitive.fillRectSolid(world, x + 2, y + 4, z + 2, x + 3, y + 8, z + 3, 0);
+		WorldGenPrimitive.fillRectSolid(world,  rand, x + 2, y + 4, z + 2, x + 3, y + 8, z + 3, air);
 		WorldGenPrimitive.setBlock(world, x + 3, y + 4, z + 1, 0);
 		WorldGenPrimitive.setBlock(world, x + 4, y + 4, z + 1, 0);
 		WorldGenPrimitive.setBlock(world, x + 3, y + 4, z + 4, 0);
@@ -91,20 +95,20 @@ public class DungeonLab implements IDungeon {
 		WorldGenPrimitive.setBlock(world, x + 4, y + 4, z + 3, 0);
 		WorldGenPrimitive.setBlock(world, x + 4, y + 4, z + 4, 0);
 		
-		WorldGenPrimitive.fillRectHollow(world, x + 1, y + 4, z + 1, x + 4, y + 8, z + 4, Block.cobblestone.blockID, 0, 2, false, true);
-		WorldGenPrimitive.fillRectSolid(world, x + 2, y + 8, z + 2, x + 3, y + 8, z + 3, 0);
+		WorldGenPrimitive.fillRectHollow(world, rand, x + 1, y + 4, z + 1, x + 4, y + 8, z + 4, Block.cobblestone.blockID, 0, 2, false, true);
+		WorldGenPrimitive.fillRectSolid(world,  rand, x + 2, y + 8, z + 2, x + 3, y + 8, z + 3, air);
 	}
 	
 	
 	private static void southWest(World world, Random rand, ITheme theme, int x, int y, int z){
 		
-		corner(world, theme, x, y, z);
+		corner(world, rand, theme, x, y, z);
 		
 		MetaBlock stair = theme.getSecondaryStair();
 		stair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.NORTH, true));
-		WorldGenPrimitive.fillRectSolid(world, x + 1, y, z + 5, x + 4, y, z + 5, stair, true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, x + 1, y, z + 5, x + 4, y, z + 5, stair, true, true);
 		stair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.EAST, true));
-		WorldGenPrimitive.fillRectSolid(world, x, y, z + 1, x, y, z + 4, stair, true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, x, y, z + 1, x, y, z + 4, stair, true, true);
 		
 		if(RogueConfig.getBoolean(RogueConfig.GENEROUS)){
 			WorldGenPrimitive.setBlock(world, x, y + 1, z + 1, Block.brewingStand.blockID);
@@ -120,23 +124,25 @@ public class DungeonLab implements IDungeon {
 	// fountains
 	private static void southEast(World world, Random rand, ITheme theme, int x, int y, int z){
 		
-		corner(world, theme, x, y, z);
+		MetaBlock stone = new MetaBlock(Block.stoneBrick.blockID, 0, 2);
 		
-		WorldGenPrimitive.fillRectSolid(world, x + 1, y, z + 5, x + 4, y, z + 5, Block.stoneBrick.blockID, 0, 2, true, true);
+		corner(world, rand, theme, x, y, z);
+		
+		WorldGenPrimitive.fillRectSolid(world, rand, x + 1, y, z + 5, x + 4, y, z + 5, new MetaBlock(Block.stoneBrick.blockID, 0, 2), true, true);
 		WorldGenPrimitive.setBlock(world, x + 1, y + 1, z + 5, Block.stairsStoneBrick.blockID, Cardinal.getBlockMeta(Cardinal.WEST), 2, true, true);
 		WorldGenPrimitive.setBlock(world, x + 2, y + 1, z + 5, Block.waterMoving.blockID);
 		world.markBlockForUpdate(x + 2, y + 1, z + 5);
 		WorldGenPrimitive.setBlock(world, x + 2, y + 2, z + 5, Block.stoneSingleSlab.blockID);
 		WorldGenPrimitive.setBlock(world, x + 3, y + 1, z + 5, Block.stairsStoneBrick.blockID, Cardinal.getBlockMeta(Cardinal.EAST), 2, true, true);
 		
-		WorldGenPrimitive.fillRectSolid(world, x + 5, y, z + 1, x + 5, y, z + 4, Block.stoneBrick.blockID, 0, 2, true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, x + 5, y, z + 1, x + 5, y, z + 4, Block.stoneBrick.blockID, 0, 2, true, true);
 		WorldGenPrimitive.setBlock(world, x + 5, y + 1, z + 1, Block.stairsStoneBrick.blockID, Cardinal.getBlockMeta(Cardinal.NORTH), 2, true, true);
 		WorldGenPrimitive.setBlock(world, x + 5, y + 1, z + 2, Block.waterMoving.blockID);
 		world.markBlockForUpdate(x + 5, y + 1, z + 2);
 		WorldGenPrimitive.setBlock(world, x + 5, y + 2, z + 2, Block.stoneSingleSlab.blockID);
 		WorldGenPrimitive.setBlock(world, x + 5, y + 1, z + 3, Block.stairsStoneBrick.blockID, Cardinal.getBlockMeta(Cardinal.SOUTH), 2, true, true);
 		
-		WorldGenPrimitive.fillRectSolid(world, x + 3, y, z + 3, x + 4, y, z + 4, Block.stoneBrick.blockID);
+		WorldGenPrimitive.fillRectSolid(world, rand, x + 3, y, z + 3, x + 4, y, z + 4, stone);
 		WorldGenPrimitive.setBlock(world, x + 3, y + 1, x + 3, Block.torchWood.blockID);
 		
 		WorldGenPrimitive.setBlock(world, x + 4, y, z + 1, Block.stairsStoneBrick.blockID, Cardinal.getBlockMeta(Cardinal.NORTH), 2, true, true);
@@ -148,7 +154,10 @@ public class DungeonLab implements IDungeon {
 	}
 	
 	private static void northWest(World world, Random rand, ITheme theme, int x, int y, int z){
-		corner(world, theme, x, y, z);
+		
+		MetaBlock stone = new MetaBlock(Block.stoneBrick.blockID, 0, 2);
+		
+		corner(world, rand, theme, x, y, z);
 		
 		WorldGenPrimitive.setBlock(world, x + 1, y, z, Block.stoneBrick.blockID);
 		WorldGenPrimitive.setBlock(world, x + 1, y + 1, z, Block.flowerPot.blockID, rand.nextInt(11) + 1, 2, true, true);
@@ -170,8 +179,8 @@ public class DungeonLab implements IDungeon {
 		
 		WorldGenPrimitive.setBlock(world, x + 1, y, z + 1, Block.stoneBrick.blockID);
 		
-		WorldGenPrimitive.fillRectSolid(world, x + 2, y, z + 1, x + 4, y, z + 1, Block.stairsStoneBrick.blockID, Cardinal.getBlockMeta(Cardinal.SOUTH), 2, true, true);
-		WorldGenPrimitive.fillRectSolid(world, x + 1, y, z + 2, x + 1, y, z + 4, Block.stairsStoneBrick.blockID, Cardinal.getBlockMeta(Cardinal.EAST), 2, true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, x + 2, y, z + 1, x + 4, y, z + 1, new MetaBlock(Block.stairsStoneBrick.blockID, Cardinal.getBlockMeta(Cardinal.SOUTH), 2), true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, x + 1, y, z + 2, x + 1, y, z + 4, new MetaBlock(Block.stairsStoneBrick.blockID, Cardinal.getBlockMeta(Cardinal.EAST), 2), true, true);
 		
 		WorldGenPrimitive.setBlock(world, x + 2, y - 1, z + 2, Block.blockRedstone.blockID);
 		WorldGenPrimitive.setBlock(world, x + 3, y - 1, z + 2, Block.redstoneLampActive.blockID);
@@ -181,7 +190,9 @@ public class DungeonLab implements IDungeon {
 	}
 	
 	private static void northEast(World world, Random rand, ITheme theme, int x, int y, int z){
-		corner(world, theme, x, y, z);
+		
+		MetaBlock stone = new MetaBlock(Block.stoneBrick.blockID, 0, 2);
+		corner(world, rand, theme, x, y, z);
 		
 		WorldGenPrimitive.setBlock(world, x + 1, y, z, Block.stoneBrick.blockID);
 		WorldGenPrimitive.setBlock(world, x + 1, y + 1, z, Block.flowerPot.blockID, rand.nextInt(11) + 1, 2, true, true);
@@ -201,8 +212,8 @@ public class DungeonLab implements IDungeon {
 		
 		WorldGenPrimitive.setBlock(world, x + 4, y, z + 1, Block.stoneBrick.blockID);
 		
-		WorldGenPrimitive.fillRectSolid(world, x + 1, y, z + 1, x + 3, y, z + 1, Block.stairsStoneBrick.blockID, Cardinal.getBlockMeta(Cardinal.SOUTH), 2, true, true);
-		WorldGenPrimitive.fillRectSolid(world, x + 4, y, z + 2, x + 4, y, z + 4, Block.stairsStoneBrick.blockID, Cardinal.getBlockMeta(Cardinal.WEST), 2, true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, x + 1, y, z + 1, x + 3, y, z + 1, new MetaBlock (Block.stairsStoneBrick.blockID, Cardinal.getBlockMeta(Cardinal.SOUTH), 2), true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, x + 4, y, z + 2, x + 4, y, z + 4, new MetaBlock (Block.stairsStoneBrick.blockID, Cardinal.getBlockMeta(Cardinal.WEST), 2), true, true);
 		
 		WorldGenPrimitive.setBlock(world, x + 3, y - 1, z + 2, Block.blockRedstone.blockID);
 		WorldGenPrimitive.setBlock(world, x + 2, y - 1, z + 2, Block.redstoneLampActive.blockID);
@@ -211,9 +222,9 @@ public class DungeonLab implements IDungeon {
 		WorldGenPrimitive.setBlock(world, x + 5, y, z, Block.waterStill.blockID);
 	}
 	
-	private static void pillar(World world, ITheme theme, int x, int y, int z){
+	private static void pillar(World world, Random rand, ITheme theme, int x, int y, int z){
 		
-		WorldGenPrimitive.fillRectSolid(world, x, y, z, x, y + 3, z, theme.getSecondaryPillar(), true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, x, y, z, x, y + 3, z, theme.getSecondaryPillar(), true, true);
 		MetaBlock stair = theme.getSecondaryStair();
 		stair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.EAST, true));
 		WorldGenPrimitive.setBlock(world, x + 1, y + 3, z, stair, true, true);

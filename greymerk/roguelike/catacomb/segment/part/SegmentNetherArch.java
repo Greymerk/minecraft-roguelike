@@ -33,7 +33,7 @@ public class SegmentNetherArch extends SegmentBase {
 			cursor.add(dir, 1);
 			cursor.add(orth, 1);
 			cursor.add(Cardinal.UP, 2);
-			WorldGenPrimitive.setBlock(world, cursor, step, true, true);			
+			WorldGenPrimitive.setBlock(world, rand, cursor, step, true, true);			
 		}
 			
 		MetaBlock fence = new MetaBlock(Block.netherFence.blockID);
@@ -41,15 +41,15 @@ public class SegmentNetherArch extends SegmentBase {
 		
 		cursor = new Coord(x, y, z);
 		cursor.add(dir, 2);		
-		WorldGenPrimitive.setBlock(world, cursor, fence, true, true);
+		WorldGenPrimitive.setBlock(world, rand, cursor, fence, true, true);
 		cursor.add(Cardinal.UP, 1);		
-		WorldGenPrimitive.setBlock(world, cursor, fence, true, true);
+		WorldGenPrimitive.setBlock(world, rand, cursor, fence, true, true);
 		
 		if(hasLava){
 			cursor.add(dir, 1);
-			WorldGenPrimitive.setBlock(world, cursor, lava, true, true);
+			WorldGenPrimitive.setBlock(world, rand, cursor, lava, true, true);
 			cursor.add(Cardinal.DOWN, 1);		
-			WorldGenPrimitive.setBlock(world, cursor, lava, true, true);
+			WorldGenPrimitive.setBlock(world, rand, cursor, lava, true, true);
 		}
 	}
 }

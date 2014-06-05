@@ -43,13 +43,13 @@ public class DungeonsSlime implements IDungeon {
 		
 		
 		// fill air
-		WorldGenPrimitive.fillRectSolid(world, originX - 6, originY, originZ - 6, originX + 6, originY + 3, originZ + 6, 0);
+		WorldGenPrimitive.fillRectSolid(world, rand, originX - 6, originY, originZ - 6, originX + 6, originY + 3, originZ + 6, 0);
 		
 		// shell
-		WorldGenPrimitive.fillRectHollow(world, originX - 7, originY - 2, originZ - 7, originX + 7, originY + 4, originZ + 7, fillBlocks, false, true);
+		WorldGenPrimitive.fillRectHollow(world, rand, originX - 7, originY - 2, originZ - 7, originX + 7, originY + 4, originZ + 7, fillBlocks, false, true);
 		
 		// floor
-		WorldGenPrimitive.fillRectSolid(world, originX - 7, originY - 2, originZ - 7, originX + 7, originY - 1, originZ + 7, fillBlocks);
+		WorldGenPrimitive.fillRectSolid(world, rand, originX - 7, originY - 2, originZ - 7, originX + 7, originY - 1, originZ + 7, fillBlocks);
 		
 		pool(originX - 4, originZ - 4);
 		pool(originX - 4, originZ + 4);
@@ -57,10 +57,10 @@ public class DungeonsSlime implements IDungeon {
 		pool(originX + 4, originZ + 4);
 		
 		// centre top lip
-		WorldGenPrimitive.fillRectSolid(world, originX - 1, originY + 3, originZ - 2, originX + 1, originY + 3, originZ - 2, fillBlocks);
-		WorldGenPrimitive.fillRectSolid(world, originX - 1, originY + 3, originZ + 2, originX + 1, originY + 3, originZ + 2, fillBlocks);
-		WorldGenPrimitive.fillRectSolid(world, originX - 2, originY + 3, originZ - 1, originX - 2, originY + 3, originZ + 1, fillBlocks);
-		WorldGenPrimitive.fillRectSolid(world, originX + 2, originY + 3, originZ - 1, originX + 2, originY + 3, originZ + 1, fillBlocks);
+		WorldGenPrimitive.fillRectSolid(world, rand, originX - 1, originY + 3, originZ - 2, originX + 1, originY + 3, originZ - 2, fillBlocks);
+		WorldGenPrimitive.fillRectSolid(world, rand, originX - 1, originY + 3, originZ + 2, originX + 1, originY + 3, originZ + 2, fillBlocks);
+		WorldGenPrimitive.fillRectSolid(world, rand, originX - 2, originY + 3, originZ - 1, originX - 2, originY + 3, originZ + 1, fillBlocks);
+		WorldGenPrimitive.fillRectSolid(world, rand, originX + 2, originY + 3, originZ - 1, originX + 2, originY + 3, originZ + 1, fillBlocks);
 		
 		if(Catacomb.getLevel(originY) == 4){
 			Spawner.generate(world, rand, originX, originY + 5, originZ, Spawner.LAVASLIME);
@@ -73,32 +73,32 @@ public class DungeonsSlime implements IDungeon {
 	
 	private void pool(int inX, int inZ){
 		// water pool
-		WorldGenPrimitive.fillRectSolid(world, inX - 1, originY - 1, inZ - 1, inX + 1, originY - 1, inZ + 1, liquid);
+		WorldGenPrimitive.fillRectSolid(world, rand, inX - 1, originY - 1, inZ - 1, inX + 1, originY - 1, inZ + 1, liquid);
 		
 		// pillars
-		WorldGenPrimitive.fillRectSolid(world, inX - 2, originY - 1, inZ - 2, inX - 2, originY + 3, inZ - 2, fillBlocks);
-		WorldGenPrimitive.fillRectSolid(world, inX - 2, originY - 1, inZ + 2, inX - 2, originY + 3, inZ + 2, fillBlocks);
-		WorldGenPrimitive.fillRectSolid(world, inX + 2, originY - 1, inZ - 2, inX + 2, originY + 3, inZ - 2, fillBlocks);
-		WorldGenPrimitive.fillRectSolid(world, inX + 2, originY - 1, inZ + 2, inX + 2, originY + 3, inZ + 2, fillBlocks);
+		WorldGenPrimitive.fillRectSolid(world, rand, inX - 2, originY - 1, inZ - 2, inX - 2, originY + 3, inZ - 2, fillBlocks);
+		WorldGenPrimitive.fillRectSolid(world, rand, inX - 2, originY - 1, inZ + 2, inX - 2, originY + 3, inZ + 2, fillBlocks);
+		WorldGenPrimitive.fillRectSolid(world, rand, inX + 2, originY - 1, inZ - 2, inX + 2, originY + 3, inZ - 2, fillBlocks);
+		WorldGenPrimitive.fillRectSolid(world, rand, inX + 2, originY - 1, inZ + 2, inX + 2, originY + 3, inZ + 2, fillBlocks);
 		
 		// base lip
-		WorldGenPrimitive.fillRectSolid(world, inX - 1, originY - 1, inZ - 2, inX + 1, originY - 1, inZ - 2, fillBlocks);
-		WorldGenPrimitive.fillRectSolid(world, inX - 1, originY - 1, inZ + 2, inX + 1, originY - 1, inZ + 2, fillBlocks);
-		WorldGenPrimitive.fillRectSolid(world, inX - 2, originY - 1, inZ - 1, inX - 2, originY - 1, inZ + 1, fillBlocks);
-		WorldGenPrimitive.fillRectSolid(world, inX + 2, originY - 1, inZ - 1, inX + 2, originY - 1, inZ + 1, fillBlocks);
+		WorldGenPrimitive.fillRectSolid(world, rand, inX - 1, originY - 1, inZ - 2, inX + 1, originY - 1, inZ - 2, fillBlocks);
+		WorldGenPrimitive.fillRectSolid(world, rand, inX - 1, originY - 1, inZ + 2, inX + 1, originY - 1, inZ + 2, fillBlocks);
+		WorldGenPrimitive.fillRectSolid(world, rand, inX - 2, originY - 1, inZ - 1, inX - 2, originY - 1, inZ + 1, fillBlocks);
+		WorldGenPrimitive.fillRectSolid(world, rand, inX + 2, originY - 1, inZ - 1, inX + 2, originY - 1, inZ + 1, fillBlocks);
 		
 		// top lip
-		WorldGenPrimitive.fillRectSolid(world, inX - 1, originY + 3, inZ - 2, inX + 1, originY + 3, inZ - 2, fillBlocks);
-		WorldGenPrimitive.fillRectSolid(world, inX - 1, originY + 3, inZ + 2, inX + 1, originY + 3, inZ + 2, fillBlocks);
-		WorldGenPrimitive.fillRectSolid(world, inX - 2, originY + 3, inZ - 1, inX - 2, originY + 3, inZ + 1, fillBlocks);
-		WorldGenPrimitive.fillRectSolid(world, inX + 2, originY + 3, inZ - 1, inX + 2, originY + 3, inZ + 1, fillBlocks);
+		WorldGenPrimitive.fillRectSolid(world, rand, inX - 1, originY + 3, inZ - 2, inX + 1, originY + 3, inZ - 2, fillBlocks);
+		WorldGenPrimitive.fillRectSolid(world, rand, inX - 1, originY + 3, inZ + 2, inX + 1, originY + 3, inZ + 2, fillBlocks);
+		WorldGenPrimitive.fillRectSolid(world, rand, inX - 2, originY + 3, inZ - 1, inX - 2, originY + 3, inZ + 1, fillBlocks);
+		WorldGenPrimitive.fillRectSolid(world, rand, inX + 2, originY + 3, inZ - 1, inX + 2, originY + 3, inZ + 1, fillBlocks);
 
 		// carve ceiling air
-		WorldGenPrimitive.fillRectSolid(world, inX - 1, originY + 1, inZ - 1, inX + 1, originY + 6, inZ + 1, 0);
+		WorldGenPrimitive.fillRectSolid(world, rand, inX - 1, originY + 1, inZ - 1, inX + 1, originY + 6, inZ + 1, 0);
 		
 		// roof
-		WorldGenPrimitive.fillRectSolid(world, inX - 2, originY + 7, inZ - 2, inX + 2, originY + 8, inZ + 2, fillBlocks);
-		WorldGenPrimitive.fillRectSolid(world, inX - 1, originY + 8, inZ - 1, inX + 1, originY + 8, inZ + 1, liquid);
+		WorldGenPrimitive.fillRectSolid(world, rand, inX - 2, originY + 7, inZ - 2, inX + 2, originY + 8, inZ + 2, fillBlocks);
+		WorldGenPrimitive.fillRectSolid(world, rand, inX - 1, originY + 8, inZ - 1, inX + 1, originY + 8, inZ + 1, liquid);
 		
 		
 	}

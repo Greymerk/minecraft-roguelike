@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Random;
 
 import greymerk.roguelike.catacomb.segment.Segment;
+import greymerk.roguelike.worldgen.BlockJumble;
 import greymerk.roguelike.worldgen.BlockRandomizer;
 import greymerk.roguelike.worldgen.Log;
 import greymerk.roguelike.worldgen.MetaBlock;
@@ -12,26 +13,23 @@ import net.minecraft.src.Block;
 
 public class ThemeOak extends ThemeBase{
 
-	public ThemeOak(Random rand){
+	public ThemeOak(){
 	
-		BlockRandomizer walls = new BlockRandomizer(rand, new MetaBlock(Block.stoneBrick.blockID));
-		walls.addBlock(new MetaBlock(Block.stoneBrick.blockID, 1), 30);
-		walls.addBlock(new MetaBlock(Block.stoneBrick.blockID, 2), 30);
+		BlockJumble rubble = new BlockJumble(new MetaBlock(Block.stoneBrick.blockID, 2));
+		rubble.addBlock(new MetaBlock(Block.cobblestone.blockID));
 		
-		BlockRandomizer bridge = new BlockRandomizer(rand, new MetaBlock(Block.stoneBrick.blockID));
-		bridge.addBlock(new MetaBlock(0), 3);
-		bridge.addBlock(new MetaBlock(Block.stoneBrick.blockID, 1), 30);
-		bridge.addBlock(new MetaBlock(Block.stoneBrick.blockID, 2), 30);
+		BlockRandomizer walls = new BlockRandomizer(new MetaBlock(Block.stoneBrick.blockID));
+		walls.addBlock(rubble, 5);
 		
 		MetaBlock stair = new MetaBlock(Block.stairsStoneBrick.blockID);
 		MetaBlock pillar = Log.getLog(Log.OAK);
 		
-		this.walls = new BlockSet(walls, bridge, stair, pillar);
+		this.walls = new BlockSet(walls, stair, walls);
 		
 		MetaBlock SegmentWall = new MetaBlock(Block.planks.blockID);
 		MetaBlock SegmentStair = new MetaBlock(Block.stairsWoodOak.blockID);
 		
-		this.decor =  new BlockSet(SegmentWall, SegmentWall, SegmentStair, pillar);
+		this.decor =  new BlockSet(SegmentWall, SegmentStair, pillar);
 		
 		this.segments = new ArrayList<Segment>();
 		segments.addAll(Arrays.asList(Segment.FIRE, Segment.SHELF, Segment.INSET));

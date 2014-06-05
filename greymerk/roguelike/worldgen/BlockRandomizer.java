@@ -11,31 +11,31 @@ import net.minecraft.src.World;
 
 public class BlockRandomizer implements IBlockFactory{
 
-	Random rand;
 	LinkedList<BlockChoice> blocks;
 
-	public BlockRandomizer(Random rand, IBlockFactory defaultBlock){
-		this.rand = rand;
+	public BlockRandomizer(IBlockFactory defaultBlock){
 		this.blocks = new LinkedList<BlockChoice>();
 		blocks.add(new BlockChoice(defaultBlock, 1));
 	}
 	
-	public void addBlock(MetaBlock block, int chance){
+	public void addBlock(IBlockFactory block, int chance){
 		blocks.add(new BlockChoice(block, chance));
 		Collections.sort(blocks);
 		Collections.reverse(blocks);
 	}
 	
-	public void setBlock(World world, int x, int y, int z){
-		setBlock(world, x, y, z, true, true);
+	@Override
+	public void setBlock(World world, Random rand, int x, int y, int z){
+		setBlock(world, rand, x, y, z, true, true);
 	}
 	
-	public void setBlock(World world, int x, int y, int z, boolean fillAir, boolean replaceSolid){
-		IBlockFactory choice = getBlock();
-		choice.setBlock(world, x, y, z, fillAir, replaceSolid);
+	@Override
+	public void setBlock(World world, Random rand, int x, int y, int z, boolean fillAir, boolean replaceSolid){
+		IBlockFactory choice = getBlock(rand);
+		choice.setBlock(world, rand, x, y, z, fillAir, replaceSolid);
 	}
 	
-	private IBlockFactory getBlock(){
+	private IBlockFactory getBlock(Random rand){
 		
 		for(BlockChoice block : blocks){
 			if(rand.nextInt(block.getChance()) == 0){

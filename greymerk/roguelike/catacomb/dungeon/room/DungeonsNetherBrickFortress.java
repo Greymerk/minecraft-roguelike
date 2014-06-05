@@ -42,7 +42,7 @@ public class DungeonsNetherBrickFortress implements IDungeon {
 		originZ = inOriginZ;
 
 		// cut out air space
-		WorldGenPrimitive.fillRectSolid(world, originX - 5, originY, originZ - 5,
+		WorldGenPrimitive.fillRectSolid(world, rand, originX - 5, originY, originZ - 5,
 				originX + 5, originY + 3, originZ + 5, 0);
 
 		buildWalls();
@@ -65,7 +65,7 @@ public class DungeonsNetherBrickFortress implements IDungeon {
 	protected void buildRoof(){
 		
 		// top
-		WorldGenPrimitive.fillRectSolid(world, originX - 6, originY + 4, originZ - 6,
+		WorldGenPrimitive.fillRectSolid(world, rand, originX - 6, originY + 4, originZ - 6,
 				originX + 6, originY + 6, originZ + 6, Block.netherBrick.blockID);
 
 		List<Coord> lavaArea = WorldGenPrimitive.getRectSolid(	originX - 3, originY + 6, originZ - 3,
@@ -83,7 +83,7 @@ public class DungeonsNetherBrickFortress implements IDungeon {
 		
 		
 		// sub-ceiling air square
-		WorldGenPrimitive.fillRectSolid(world, originX - 3, originY + 4, originZ - 3,
+		WorldGenPrimitive.fillRectSolid(world, rand, originX - 3, originY + 4, originZ - 3,
 				originX + 3, originY + 4, originZ + 3, 0);
 		
 		// arches
@@ -173,7 +173,7 @@ public class DungeonsNetherBrickFortress implements IDungeon {
     protected void buildFloor(){
 
 		// base
-		WorldGenPrimitive.fillRectSolid(world, 	originX - 6, originY - 4, originZ - 6,
+		WorldGenPrimitive.fillRectSolid(world, 	rand, originX - 6, originY - 4, originZ - 6,
 												originX + 6, originY - 1, originZ + 6, Block.netherBrick.blockID);
     	
 		List<Coord> soulSand = WorldGenPrimitive.getRectSolid(	originX - 5, originY - 1, originZ - 5,

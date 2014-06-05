@@ -41,6 +41,11 @@ public enum TreasureChest {
 		generate(world, rand, posX, posY, posZ, type, Catacomb.getLevel(posY), false);
 	}
 	
+	public static void generate(World world, Random rand, Coord pos, TreasureChest type){
+		generate(world, rand, pos.getX(), pos.getY(), pos.getZ(), type);
+	}
+	
+	
 	public static void generate(World world, Random rand, int posX, int posY, int posZ, TreasureChest type, int level, boolean trapped){
 		ITreasureChest chest = getChest(type);
 		chest.generate(world, rand, posX, posY, posZ, level, trapped);

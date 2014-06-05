@@ -12,24 +12,17 @@ import net.minecraft.src.Block;
 
 public class ThemeMossy extends ThemeBase{
 
-	public ThemeMossy(Random rand){
+	public ThemeMossy(){
 	
-		BlockRandomizer walls = new BlockRandomizer(rand, new MetaBlock(Block.cobblestone.blockID));
+		BlockRandomizer walls = new BlockRandomizer(new MetaBlock(Block.cobblestone.blockID));
 		walls.addBlock(new MetaBlock(Block.cobblestoneMossy.blockID), 3);
 		walls.addBlock(new MetaBlock(Block.silverfish.blockID, 1), 5);
 		walls.addBlock(new MetaBlock(Block.stoneBrick.blockID, 2), 10);
 		walls.addBlock(new MetaBlock(Block.gravel.blockID), 60);
 		
-		BlockRandomizer bridge = new BlockRandomizer(rand, new MetaBlock(Block.cobblestone.blockID));
-		bridge.addBlock(new MetaBlock(Block.cobblestoneMossy.blockID), 3);
-		bridge.addBlock(new MetaBlock(0), 3);
-		bridge.addBlock(new MetaBlock(Block.silverfish.blockID, 1), 5);
-		bridge.addBlock(new MetaBlock(Block.stoneBrick.blockID, 2), 10);
-		bridge.addBlock(new MetaBlock(Block.gravel.blockID), 60);
-		
 		MetaBlock stair = new MetaBlock(Block.stairsCobblestone.blockID);
 		
-		this.walls = new BlockSet(walls, bridge, stair, walls);
+		this.walls = new BlockSet(walls, stair, walls);
 		this.decor = this.walls;
 
 		this.segments = new ArrayList<Segment>();

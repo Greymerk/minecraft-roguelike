@@ -15,7 +15,7 @@ import net.minecraft.src.Block;
 
 public class ThemeChecker extends ThemeBase{
 
-	public ThemeChecker(Random rand){
+	public ThemeChecker(){
 	
 		MetaBlock one = new MetaBlock(Block.obsidian.blockID);
 		MetaBlock two = new MetaBlock(Block.blockNetherQuartz.blockID);
@@ -24,7 +24,7 @@ public class ThemeChecker extends ThemeBase{
 		
 		MetaBlock stair = new MetaBlock(Block.stairsNetherQuartz.blockID);
 		
-		this.walls = new BlockSet(checks, checks, stair, checks);
+		this.walls = new BlockSet(checks, stair, checks);
 		
 		MetaBlock SegmentWall = new MetaBlock(Block.blockNetherQuartz.blockID, 1);
 		

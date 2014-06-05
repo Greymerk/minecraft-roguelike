@@ -5,9 +5,12 @@ import greymerk.roguelike.catacomb.segment.ISegment;
 import greymerk.roguelike.catacomb.segment.Segment;
 import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.catacomb.theme.Themes;
+import greymerk.roguelike.worldgen.BlockJumble;
+import greymerk.roguelike.worldgen.BlockRandomizer;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
+import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
 
 import java.util.ArrayList;
@@ -113,7 +116,8 @@ public class CatacombTunneler {
 		}
 		
 		IBlockFactory wallBlocks = theme.getPrimaryWall();
-		IBlockFactory bridgeBlocks = theme.getPrimaryBridge();
+		BlockJumble bridgeBlocks = new BlockJumble(wallBlocks);
+		bridgeBlocks.addBlock(new MetaBlock(0));
 		
 		for (Coord location : tunnel){
 			
@@ -121,13 +125,13 @@ public class CatacombTunneler {
 			int z = location.getZ();
 			
 			if(dir == Cardinal.NORTH || dir == Cardinal.SOUTH){
-				WorldGenPrimitive.fillRectSolid(world, x - 1, originY, z, x + 1, originY + 2, z, 0, 0, 0, false, true);
-				WorldGenPrimitive.fillRectSolid(world, x - 2, originY - 1, z, x + 2, originY + 4, z, wallBlocks, false, true);
-				WorldGenPrimitive.fillRectSolid(world, x - 1, originY - 1, z, x + 1, originY - 1, z, bridgeBlocks, true, false);
+				WorldGenPrimitive.fillRectSolid(world, rand, x - 1, originY, z, x + 1, originY + 2, z, 0, 0, 0, false, true);
+				WorldGenPrimitive.fillRectSolid(world, rand, x - 2, originY - 1, z, x + 2, originY + 4, z, wallBlocks, false, true);
+				WorldGenPrimitive.fillRectSolid(world, rand, x - 1, originY - 1, z, x + 1, originY - 1, z, bridgeBlocks, true, false);
 			} else {
-				WorldGenPrimitive.fillRectSolid(world, x, originY, z - 1, x, originY + 2, z + 1, 0, 0, 0, false, true);
-				WorldGenPrimitive.fillRectSolid(world, x, originY - 1, z - 2, x, originY + 4, z + 2, wallBlocks, false, true);
-				WorldGenPrimitive.fillRectSolid(world, x, originY - 1, z - 1, x, originY - 1, z + 1, bridgeBlocks, true, false);
+				WorldGenPrimitive.fillRectSolid(world, rand, x, originY, z - 1, x, originY + 2, z + 1, 0, 0, 0, false, true);
+				WorldGenPrimitive.fillRectSolid(world, rand, x, originY - 1, z - 2, x, originY + 4, z + 2, wallBlocks, false, true);
+				WorldGenPrimitive.fillRectSolid(world, rand, x, originY - 1, z - 1, x, originY - 1, z + 1, bridgeBlocks, true, false);
 			}
 		}
 		
@@ -143,7 +147,7 @@ public class CatacombTunneler {
 		end.add(orth[1], 2);
 		end.add(Cardinal.DOWN, 2);
 		
-		WorldGenPrimitive.fillRectSolid(world, start, end, wallBlocks, false, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, start, end, wallBlocks, false, true);
 	}
 	
 	public void addSegments(World world){

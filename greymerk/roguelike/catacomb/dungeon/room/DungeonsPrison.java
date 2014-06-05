@@ -30,26 +30,26 @@ public class DungeonsPrison implements IDungeon {
 		blocks = theme.getPrimaryWall();
 		
 		// clear air
-		WorldGenPrimitive.fillRectSolid(inWorld, inOriginX - 7, inOriginY, inOriginZ - 7, inOriginX + 7, inOriginY + 3, inOriginZ + 7, 0);
+		WorldGenPrimitive.fillRectSolid(inWorld, rand, inOriginX - 7, inOriginY, inOriginZ - 7, inOriginX + 7, inOriginY + 3, inOriginZ + 7, 0);
 		
 		// create outer walls
-		WorldGenPrimitive.fillRectHollow(world, inOriginX - 8, inOriginY - 1, inOriginZ - 8, inOriginX + 8, inOriginY + 5, inOriginZ + 8, blocks, false, true);
+		WorldGenPrimitive.fillRectHollow(world, rand, inOriginX - 8, inOriginY - 1, inOriginZ - 8, inOriginX + 8, inOriginY + 5, inOriginZ + 8, blocks, false, true);
 		
 		// fill hallway ceiling beams
-		WorldGenPrimitive.fillRectSolid(world, inOriginX - 7, inOriginY + 3, inOriginZ - 2, inOriginX + 7, inOriginY + 3, inOriginZ - 2, blocks);
-		WorldGenPrimitive.fillRectSolid(world, inOriginX - 7, inOriginY + 3, inOriginZ + 2, inOriginX + 7, inOriginY + 3, inOriginZ + 2, blocks);
+		WorldGenPrimitive.fillRectSolid(world, rand, inOriginX - 7, inOriginY + 3, inOriginZ - 2, inOriginX + 7, inOriginY + 3, inOriginZ - 2, blocks);
+		WorldGenPrimitive.fillRectSolid(world, rand, inOriginX - 7, inOriginY + 3, inOriginZ + 2, inOriginX + 7, inOriginY + 3, inOriginZ + 2, blocks);
 		
-		WorldGenPrimitive.fillRectSolid(world, inOriginX - 2, inOriginY + 3, inOriginZ - 7, inOriginX - 2, inOriginY + 3, inOriginZ + 7, blocks);
-		WorldGenPrimitive.fillRectSolid(world, inOriginX + 2, inOriginY + 3, inOriginZ - 7, inOriginX + 2, inOriginY + 3, inOriginZ + 7, blocks);
+		WorldGenPrimitive.fillRectSolid(world, rand, inOriginX - 2, inOriginY + 3, inOriginZ - 7, inOriginX - 2, inOriginY + 3, inOriginZ + 7, blocks);
+		WorldGenPrimitive.fillRectSolid(world, rand, inOriginX + 2, inOriginY + 3, inOriginZ - 7, inOriginX + 2, inOriginY + 3, inOriginZ + 7, blocks);
 		
 		// fill hallway roofs
-		WorldGenPrimitive.fillRectSolid(world, inOriginX - 7, inOriginY + 4, inOriginZ - 1, inOriginX - 2, inOriginY + 4, inOriginZ + 1, blocks);
-		WorldGenPrimitive.fillRectSolid(world, inOriginX + 2, inOriginY + 4, inOriginZ - 1, inOriginX + 7, inOriginY + 4, inOriginZ + 1, blocks);
+		WorldGenPrimitive.fillRectSolid(world, rand, inOriginX - 7, inOriginY + 4, inOriginZ - 1, inOriginX - 2, inOriginY + 4, inOriginZ + 1, blocks);
+		WorldGenPrimitive.fillRectSolid(world, rand, inOriginX + 2, inOriginY + 4, inOriginZ - 1, inOriginX + 7, inOriginY + 4, inOriginZ + 1, blocks);
 
-		WorldGenPrimitive.fillRectSolid(world, inOriginX - 1, inOriginY + 4, inOriginZ - 7, inOriginX + 1, inOriginY + 4, inOriginZ - 2, blocks);
-		WorldGenPrimitive.fillRectSolid(world, inOriginX - 1, inOriginY + 4, inOriginZ + 2, inOriginX + 1, inOriginY + 4, inOriginZ + 7, blocks);
+		WorldGenPrimitive.fillRectSolid(world, rand, inOriginX - 1, inOriginY + 4, inOriginZ - 7, inOriginX + 1, inOriginY + 4, inOriginZ - 2, blocks);
+		WorldGenPrimitive.fillRectSolid(world, rand, inOriginX - 1, inOriginY + 4, inOriginZ + 2, inOriginX + 1, inOriginY + 4, inOriginZ + 7, blocks);
 		
-		WorldGenPrimitive.fillRectSolid(world, inOriginX - 1, inOriginY + 4, inOriginZ - 1, inOriginX + 1, inOriginY + 4, inOriginZ + 1, blocks);
+		WorldGenPrimitive.fillRectSolid(world, rand, inOriginX - 1, inOriginY + 4, inOriginZ - 1, inOriginX + 1, inOriginY + 4, inOriginZ + 1, blocks);
 		
 
 		
@@ -66,49 +66,49 @@ public class DungeonsPrison implements IDungeon {
 	private void createCell(int inX, int inY, int inZ){
 		
 		// floor
-		WorldGenPrimitive.fillRectSolid(world, inX - 3, inY - 1, inZ - 3, inX + 3, inY - 1, inZ + 3, blocks);
-		WorldGenPrimitive.fillRectSolid(world, inX - 1, inY - 1, inZ - 1, inX + 1, inY - 1, inZ + 1, Block.cobblestoneMossy.blockID);
+		WorldGenPrimitive.fillRectSolid(world, rand, inX - 3, inY - 1, inZ - 3, inX + 3, inY - 1, inZ + 3, blocks);
+		WorldGenPrimitive.fillRectSolid(world, rand, inX - 1, inY - 1, inZ - 1, inX + 1, inY - 1, inZ + 1, Block.cobblestoneMossy.blockID);
 		
 		// pillars
-		WorldGenPrimitive.fillRectSolid(world, inX - 2, inY, inZ - 2, inX - 2, inY + 2, inZ - 2, blocks);
-		WorldGenPrimitive.fillRectSolid(world, inX - 2, inY, inZ + 2, inX - 2, inY + 2, inZ + 2, blocks);
-		WorldGenPrimitive.fillRectSolid(world, inX + 2, inY, inZ - 2, inX + 2, inY + 2, inZ - 2, blocks);
-		WorldGenPrimitive.fillRectSolid(world, inX + 2, inY, inZ + 2, inX + 2, inY + 2, inZ + 2, blocks);
+		WorldGenPrimitive.fillRectSolid(world, rand, inX - 2, inY, inZ - 2, inX - 2, inY + 2, inZ - 2, blocks);
+		WorldGenPrimitive.fillRectSolid(world, rand, inX - 2, inY, inZ + 2, inX - 2, inY + 2, inZ + 2, blocks);
+		WorldGenPrimitive.fillRectSolid(world, rand, inX + 2, inY, inZ - 2, inX + 2, inY + 2, inZ - 2, blocks);
+		WorldGenPrimitive.fillRectSolid(world, rand, inX + 2, inY, inZ + 2, inX + 2, inY + 2, inZ + 2, blocks);
 		
 		// roof
-		WorldGenPrimitive.fillRectSolid(world, inX - 3, inY + 3, inZ - 3, inX + 3, inY + 6, inZ + 3, blocks);
+		WorldGenPrimitive.fillRectSolid(world, rand, inX - 3, inY + 3, inZ - 3, inX + 3, inY + 6, inZ + 3, blocks);
 		
 		
 		// torches
-		WorldGenPrimitive.fillRectSolid(world, inX - 1, inY + 4, inZ - 2, inX + 1, inY + 4, inZ - 2, 0);
+		WorldGenPrimitive.fillRectSolid(world, rand, inX - 1, inY + 4, inZ - 2, inX + 1, inY + 4, inZ - 2, 0);
 		WorldGenPrimitive.setBlock(world, inX, inY + 4, inZ - 2, Block.torchRedstoneActive.blockID);
 		
-		WorldGenPrimitive.fillRectSolid(world, inX - 1, inY + 4, inZ + 2, inX + 1, inY + 4, inZ + 2, 0);
+		WorldGenPrimitive.fillRectSolid(world, rand, inX - 1, inY + 4, inZ + 2, inX + 1, inY + 4, inZ + 2, 0);
 		WorldGenPrimitive.setBlock(world, inX, inY + 4, inZ + 2, Block.torchRedstoneActive.blockID);
 		
-		WorldGenPrimitive.fillRectSolid(world, inX - 2, inY + 4, inZ - 1, inX - 2, inY + 4, inZ + 1, 0);
+		WorldGenPrimitive.fillRectSolid(world, rand, inX - 2, inY + 4, inZ - 1, inX - 2, inY + 4, inZ + 1, 0);
 		WorldGenPrimitive.setBlock(world, inX - 2, inY + 4, inZ, Block.torchRedstoneActive.blockID);
 
-		WorldGenPrimitive.fillRectSolid(world, inX + 2, inY + 4, inZ - 1, inX + 2, inY + 4, inZ + 1, 0);
+		WorldGenPrimitive.fillRectSolid(world, rand, inX + 2, inY + 4, inZ - 1, inX + 2, inY + 4, inZ + 1, 0);
 		WorldGenPrimitive.setBlock(world, inX + 2, inY + 4, inZ, Block.torchRedstoneActive.blockID);
 
 		// ceiling holes
-		WorldGenPrimitive.fillRectSolid(world, inX, inY + 3, inZ, inX, inY + 6, inZ, 0);
-		WorldGenPrimitive.fillRectSolid(world, inX - 1, inY + 3, inZ - 1, inX - 1, inY + 6, inZ - 1, 0);
-		WorldGenPrimitive.fillRectSolid(world, inX - 1, inY + 3, inZ + 1, inX - 1, inY + 6, inZ + 1, 0);
-		WorldGenPrimitive.fillRectSolid(world, inX + 1, inY + 3, inZ - 1, inX + 1, inY + 6, inZ - 1, 0);
-		WorldGenPrimitive.fillRectSolid(world, inX + 1, inY + 3, inZ + 1, inX + 1, inY + 6, inZ + 1, 0);
+		WorldGenPrimitive.fillRectSolid(world, rand, inX, inY + 3, inZ, inX, inY + 6, inZ, 0);
+		WorldGenPrimitive.fillRectSolid(world, rand, inX - 1, inY + 3, inZ - 1, inX - 1, inY + 6, inZ - 1, 0);
+		WorldGenPrimitive.fillRectSolid(world, rand, inX - 1, inY + 3, inZ + 1, inX - 1, inY + 6, inZ + 1, 0);
+		WorldGenPrimitive.fillRectSolid(world, rand, inX + 1, inY + 3, inZ - 1, inX + 1, inY + 6, inZ - 1, 0);
+		WorldGenPrimitive.fillRectSolid(world, rand, inX + 1, inY + 3, inZ + 1, inX + 1, inY + 6, inZ + 1, 0);
 		
 		// bars
-		WorldGenPrimitive.fillRectSolid(world, inX - 1, inY, inZ - 2, inX + 1, inY + 2, inZ - 2, Block.fenceIron.blockID);
-		WorldGenPrimitive.fillRectSolid(world, inX, inY, inZ - 2, inX, inY + 1, inZ - 2, 0);
-		WorldGenPrimitive.fillRectSolid(world, inX - 1, inY, inZ + 2, inX + 1, inY + 2, inZ + 2, Block.fenceIron.blockID);
-		WorldGenPrimitive.fillRectSolid(world, inX, inY, inZ + 2, inX, inY + 1, inZ + 2, 0);
+		WorldGenPrimitive.fillRectSolid(world, rand, inX - 1, inY, inZ - 2, inX + 1, inY + 2, inZ - 2, Block.fenceIron.blockID);
+		WorldGenPrimitive.fillRectSolid(world, rand, inX, inY, inZ - 2, inX, inY + 1, inZ - 2, 0);
+		WorldGenPrimitive.fillRectSolid(world, rand, inX - 1, inY, inZ + 2, inX + 1, inY + 2, inZ + 2, Block.fenceIron.blockID);
+		WorldGenPrimitive.fillRectSolid(world, rand, inX, inY, inZ + 2, inX, inY + 1, inZ + 2, 0);
 		
-		WorldGenPrimitive.fillRectSolid(world, inX - 2, inY, inZ - 1, inX - 2, inY + 2, inZ + 1, Block.fenceIron.blockID);
-		WorldGenPrimitive.fillRectSolid(world, inX - 2, inY, inZ, inX - 2, inY + 1, inZ, 0);
-		WorldGenPrimitive.fillRectSolid(world, inX + 2, inY, inZ - 1, inX + 2, inY + 2, inZ + 1, Block.fenceIron.blockID);
-		WorldGenPrimitive.fillRectSolid(world, inX + 2, inY, inZ, inX + 2, inY + 1, inZ, 0);
+		WorldGenPrimitive.fillRectSolid(world, rand, inX - 2, inY, inZ - 1, inX - 2, inY + 2, inZ + 1, Block.fenceIron.blockID);
+		WorldGenPrimitive.fillRectSolid(world, rand, inX - 2, inY, inZ, inX - 2, inY + 1, inZ, 0);
+		WorldGenPrimitive.fillRectSolid(world, rand, inX + 2, inY, inZ - 1, inX + 2, inY + 2, inZ + 1, Block.fenceIron.blockID);
+		WorldGenPrimitive.fillRectSolid(world, rand, inX + 2, inY, inZ, inX + 2, inY + 1, inZ, 0);
 		
 		if(rand.nextBoolean()){
 			switch(rand.nextInt(4)){

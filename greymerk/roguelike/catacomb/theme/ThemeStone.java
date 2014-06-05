@@ -12,25 +12,17 @@ import net.minecraft.src.Block;
 
 public class ThemeStone extends ThemeBase{
 
-	public ThemeStone(Random rand){
+	public ThemeStone(){
 	
-		BlockRandomizer walls = new BlockRandomizer(rand, new MetaBlock(Block.stoneBrick.blockID, 2));
+		BlockRandomizer walls = new BlockRandomizer(new MetaBlock(Block.stoneBrick.blockID, 2));
 		walls.addBlock(new MetaBlock(Block.stoneBrick.blockID, 1), 3);
 		walls.addBlock(new MetaBlock(Block.stoneBrick.blockID), 6);
 		walls.addBlock(new MetaBlock(Block.cobblestone.blockID), 10);
 		walls.addBlock(new MetaBlock(Block.gravel.blockID), 20);
-
-		
-		BlockRandomizer bridge = new BlockRandomizer(rand, new MetaBlock(Block.stoneBrick.blockID, 2));
-		bridge.addBlock(new MetaBlock(Block.stoneBrick.blockID, 1), 3);
-		bridge.addBlock(new MetaBlock(0), 3);
-		bridge.addBlock(new MetaBlock(Block.stoneBrick.blockID), 6);
-		bridge.addBlock(new MetaBlock(Block.cobblestone.blockID), 10);
-		bridge.addBlock(new MetaBlock(Block.gravel.blockID), 20);
 		
 		MetaBlock stair = new MetaBlock(Block.stairsStoneBrick.blockID);
 		
-		this.walls = new BlockSet(walls, bridge, stair, walls);
+		this.walls = new BlockSet(walls, stair, walls);
 		this.decor = this.walls;
 
 		this.segments = new ArrayList<Segment>();

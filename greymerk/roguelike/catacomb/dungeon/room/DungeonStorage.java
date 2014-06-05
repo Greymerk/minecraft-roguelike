@@ -27,7 +27,7 @@ public class DungeonStorage implements IDungeon {
 		HashSet<Coord> chestSpaces = new HashSet<Coord>();
 		
 		// space
-		WorldGenPrimitive.fillRectSolid(world, x - 6, y, z - 6, x + 6, y + 3, z + 6, 0);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 6, y, z - 6, x + 6, y + 3, z + 6, 0);
 		
 		Coord cursor;
 		Coord start;
@@ -35,8 +35,8 @@ public class DungeonStorage implements IDungeon {
 		
 		IBlockFactory blocks = theme.getPrimaryWall();
 		
-		WorldGenPrimitive.fillRectSolid(world, x - 6, y - 1, z - 6, x + 6, y - 1, z + 6, blocks, true, true);
-		WorldGenPrimitive.fillRectSolid(world, x - 5, y + 4, z - 5, x + 5, y + 4, z + 5, blocks, true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 6, y - 1, z - 6, x + 6, y - 1, z + 6, blocks, true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 5, y + 4, z - 5, x + 5, y + 4, z + 5, blocks, true, true);
 		
 		for(Cardinal dir : Cardinal.directions){			
 			for (Cardinal orth : Cardinal.getOrthogonal(dir)){
@@ -45,21 +45,21 @@ public class DungeonStorage implements IDungeon {
 				cursor.add(Cardinal.UP, 3);
 				cursor.add(dir, 2);
 				cursor.add(orth, 2);
-				pillarTop(world, theme, cursor);
+				pillarTop(world, rand, theme, cursor);
 				cursor.add(dir, 3);
 				cursor.add(orth, 3);
-				pillarTop(world, theme, cursor);
+				pillarTop(world, rand, theme, cursor);
 				start = new Coord(cursor);
 				
 				cursor.add(Cardinal.DOWN, 1);
 				cursor.add(dir, 1);
-				pillarTop(world, theme, cursor);
+				pillarTop(world, rand, theme, cursor);
 				
 				end = new Coord(cursor);
 				end.add(Cardinal.DOWN, 3);
 				end.add(dir, 1);
 				end.add(orth, 1);
-				WorldGenPrimitive.fillRectSolid(world, start, end, blocks, true, true);
+				WorldGenPrimitive.fillRectSolid(world, rand, start, end, blocks, true, true);
 				
 				cursor = new Coord(x, y, z);
 				cursor.add(dir, 2);
@@ -70,34 +70,34 @@ public class DungeonStorage implements IDungeon {
 
 				
 				cursor.add(Cardinal.UP, 2);
-				pillarTop(world, theme, cursor);
+				pillarTop(world, rand, theme, cursor);
 				
 				cursor.add(Cardinal.UP, 1);
 				cursor.add(Cardinal.reverse(dir), 1);
-				pillarTop(world, theme, cursor);
+				pillarTop(world, rand, theme, cursor);
 				
 				cursor.add(Cardinal.reverse(dir), 3);
-				pillarTop(world, theme, cursor);
+				pillarTop(world, rand, theme, cursor);
 				
 				start = new Coord(x, y, z);
 				start.add(dir, 6);
 				start.add(Cardinal.UP, 3);
 				end = new Coord(start);
 				end.add(orth, 5);
-				WorldGenPrimitive.fillRectSolid(world, start, end, blocks, true, true);
+				WorldGenPrimitive.fillRectSolid(world, rand, start, end, blocks, true, true);
 				start.add(dir, 1);
 				end.add(dir, 1);
 				end.add(Cardinal.DOWN, 3);
-				WorldGenPrimitive.fillRectSolid(world, start, end, blocks, false, true);				
+				WorldGenPrimitive.fillRectSolid(world, rand, start, end, blocks, false, true);				
 				
 				cursor = new Coord(x, y, z);
 				cursor.add(dir, 6);
 				cursor.add(orth, 3);
 				MetaBlock step = theme.getSecondaryStair();
 				step.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.reverse(dir), true));
-				WorldGenPrimitive.setBlock(world, cursor, step, true, true);
+				WorldGenPrimitive.setBlock(world, rand, cursor, step, true, true);
 				cursor.add(orth, 1);
-				WorldGenPrimitive.setBlock(world, cursor, step, true, true);
+				WorldGenPrimitive.setBlock(world, rand, cursor, step, true, true);
 				cursor.add(Cardinal.UP, 1);
 				chestSpaces.add(new Coord(cursor));
 				cursor.add(orth, 1);
@@ -110,7 +110,7 @@ public class DungeonStorage implements IDungeon {
 				end = new Coord(start);
 				end.add(dir, 3);
 				end.add(orth, 1);
-				WorldGenPrimitive.fillRectSolid(world, start, end, new MetaBlock(Block.hardenedClay.blockID), true, true);
+				WorldGenPrimitive.fillRectSolid(world, rand, start, end, new MetaBlock(Block.hardenedClay.blockID), true, true);
 				
 				cursor = new Coord(x, y, z);
 				cursor.add(dir, 5);
@@ -134,12 +134,12 @@ public class DungeonStorage implements IDungeon {
 		return 8;
 	}
 
-	private static void pillarTop(World world, ITheme theme, Coord cursor){
+	private static void pillarTop(World world, Random rand, ITheme theme, Coord cursor){
 		MetaBlock step = theme.getSecondaryStair();
 		for(Cardinal dir : Cardinal.directions){
 			step.setMeta(WorldGenPrimitive.blockOrientation(dir, true));
 			cursor.add(dir, 1);
-			WorldGenPrimitive.setBlock(world, cursor, step, true, false);
+			WorldGenPrimitive.setBlock(world, rand, cursor, step, true, false);
 			cursor.add(Cardinal.reverse(dir), 1);
 		}
 	}
@@ -147,6 +147,6 @@ public class DungeonStorage implements IDungeon {
 	private static void pillar(World world, Random rand, Coord base, ITheme theme, int height){
 		Coord top = new Coord(base);
 		top.add(Cardinal.UP, height);
-		WorldGenPrimitive.fillRectSolid(world, base, top, theme.getSecondaryPillar(), true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, base, top, theme.getSecondaryPillar(), true, true);
 	}	
 }

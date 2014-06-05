@@ -1,5 +1,7 @@
 package greymerk.roguelike.worldgen;
 
+import java.util.Random;
+
 import net.minecraft.src.World;
 
 public class MetaBlock implements IBlockFactory{
@@ -53,12 +55,12 @@ public class MetaBlock implements IBlockFactory{
 	}
 
 	@Override
-	public void setBlock(World world, int x, int y, int z) {
+	public void setBlock(World world, Random rand, int x, int y, int z) {
 		WorldGenPrimitive.setBlock(world, x, y, z, blockID, meta, flag, true, true);
 	}
 
 	@Override
-	public void setBlock(World world, int x, int y, int z, boolean fillAir, boolean replaceSolid) {
+	public void setBlock(World world, Random rand, int x, int y, int z, boolean fillAir, boolean replaceSolid) {
 		WorldGenPrimitive.setBlock(world, x, y, z, blockID, meta, flag, fillAir, replaceSolid);
 	}
 }

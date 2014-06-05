@@ -37,17 +37,17 @@ public class SegmentJungle extends SegmentBase {
 		start.add(orth[0], 1);
 		end.add(orth[1], 1);
 		end.add(Cardinal.UP, 1);
-		WorldGenPrimitive.fillRectSolid(world, start, end, new MetaBlock(0), true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, start, end, new MetaBlock(0), true, true);
 		start.add(Cardinal.DOWN, 1);
 		end.add(Cardinal.DOWN, 2);
 		
 		if(rand.nextInt(5) == 0){
-			WorldGenPrimitive.fillRectSolid(world, start, end, new MetaBlock(Block.waterMoving.blockID), true, true);
+			WorldGenPrimitive.fillRectSolid(world, rand, start, end, new MetaBlock(Block.waterMoving.blockID), true, true);
 		} else {
-			WorldGenPrimitive.fillRectSolid(world, start, end, new MetaBlock(Block.grass.blockID), true, true);
+			WorldGenPrimitive.fillRectSolid(world, rand, start, end, new MetaBlock(Block.grass.blockID), true, true);
 			start.add(Cardinal.UP, 1);
 			end.add(Cardinal.UP, 1);
-			if(rand.nextBoolean()) WorldGenPrimitive.fillRectSolid(world, start, end, leaves, true, true);
+			if(rand.nextBoolean()) WorldGenPrimitive.fillRectSolid(world, rand, start, end, leaves, true, true);
 		}
 		
 		for(Cardinal d : orth){
@@ -56,7 +56,7 @@ public class SegmentJungle extends SegmentBase {
 			cursor.add(d, 1);
 			cursor.add(Cardinal.UP, 1);
 			stair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.reverse(d), true));
-			WorldGenPrimitive.setBlock(world, cursor, stair, true, true);
+			WorldGenPrimitive.setBlock(world, rand, cursor, stair, true, true);
 		}
 
 	}

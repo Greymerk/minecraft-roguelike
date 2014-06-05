@@ -25,7 +25,7 @@ import greymerk.roguelike.worldgen.WorldGenPrimitive;
 
 public class DungeonAshlea implements IDungeon {
 
-	private static MetaBlock log = Log.getLog(Log.BIRCH, Cardinal.UP, false);
+	private static MetaBlock log = Log.getLog(Log.BIRCH, Cardinal.UP);
 	private static MetaBlock plank = new MetaBlock(Block.planks.blockID, 2);
 	private static int stairBrick = Block.stairsBrick.blockID;
 	private static int stairBirch = Block.stairsWoodBirch.blockID;
@@ -35,40 +35,40 @@ public class DungeonAshlea implements IDungeon {
 		
 		
 		// air		
-		WorldGenPrimitive.fillRectSolid(world, x - 6, y, z - 6, x + 6, y + 2, z + 6, 0);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 6, y, z - 6, x + 6, y + 2, z + 6, 0);
 
 		// ceiling
-		WorldGenPrimitive.fillRectSolid(world, x - 6, y + 3, z - 6, x + 6, y + 4, z + 6, plank, true, true);
-		WorldGenPrimitive.fillRectSolid(world, x - 4, y + 3, z - 2, x + 4, y + 3, z - 2, stairBirch, WorldGenPrimitive.blockOrientation(Cardinal.SOUTH, true), 2, true, true);
-		WorldGenPrimitive.fillRectSolid(world, x - 4, y + 3, z + 2, x + 4, y + 3, z + 2, stairBirch, WorldGenPrimitive.blockOrientation(Cardinal.NORTH, true), 2, true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 6, y + 3, z - 6, x + 6, y + 4, z + 6, plank, true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 4, y + 3, z - 2, x + 4, y + 3, z - 2, stairBirch, WorldGenPrimitive.blockOrientation(Cardinal.SOUTH, true), 2, true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 4, y + 3, z + 2, x + 4, y + 3, z + 2, stairBirch, WorldGenPrimitive.blockOrientation(Cardinal.NORTH, true), 2, true, true);
 		
-		WorldGenPrimitive.fillRectSolid(world, x - 2, y + 3, z - 4, x - 2, y + 3, z + 4, stairBirch, WorldGenPrimitive.blockOrientation(Cardinal.EAST, true), 2, true, true);
-		WorldGenPrimitive.fillRectSolid(world, x + 2, y + 3, z - 4, x + 2, y + 3, z + 4, stairBirch, WorldGenPrimitive.blockOrientation(Cardinal.WEST, true), 2, true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 2, y + 3, z - 4, x - 2, y + 3, z + 4, stairBirch, WorldGenPrimitive.blockOrientation(Cardinal.EAST, true), 2, true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, x + 2, y + 3, z - 4, x + 2, y + 3, z + 4, stairBirch, WorldGenPrimitive.blockOrientation(Cardinal.WEST, true), 2, true, true);
 		
-		WorldGenPrimitive.fillRectSolid(world, x - 1, y + 3, z - 4, x + 1, y + 3, z + 4, 0);
-		WorldGenPrimitive.fillRectSolid(world, x - 4, y + 3, z - 1, x + 4, y + 3, z + 1, 0);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 1, y + 3, z - 4, x + 1, y + 3, z + 4, 0);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 4, y + 3, z - 1, x + 4, y + 3, z + 1, 0);
 		
 		MetaBlock pinkClay = new MetaBlock(Block.stainedClay.blockID, 2);
 		
 		// floor
-		WorldGenPrimitive.fillRectSolid(world, x - 7, y - 1, z - 7, x + 7, y - 1, z + 7, pinkClay, true, true);
-		WorldGenPrimitive.fillRectSolid(world, x - 1, y - 1, z - 6, x + 1, y - 1, z + 6, log, true, true);
-		WorldGenPrimitive.fillRectSolid(world, x - 5, y - 1, z - 1, x - 2, y - 1, z + 1, log, true, true);
-		WorldGenPrimitive.fillRectSolid(world, x + 2, y - 1, z - 1, x + 5, y - 1, z + 1, log, true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 7, y - 1, z - 7, x + 7, y - 1, z + 7, pinkClay, true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 1, y - 1, z - 6, x + 1, y - 1, z + 6, log, true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 5, y - 1, z - 1, x - 2, y - 1, z + 1, log, true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, x + 2, y - 1, z - 1, x + 5, y - 1, z + 1, log, true, true);
 
 		
 		
 		// walls
-		WorldGenPrimitive.fillRectSolid(world, x + 7, y, z - 2, x + 7, y + 2, z + 6, plank, false, true);
-		WorldGenPrimitive.fillRectSolid(world, x - 7, y, z - 6, x - 7, y + 2, z + 6, plank, false, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, x + 7, y, z - 2, x + 7, y + 2, z + 6, plank, false, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 7, y, z - 6, x - 7, y + 2, z + 6, plank, false, true);
 		
-		WorldGenPrimitive.fillRectSolid(world, x - 6, y, z - 7, x + 2, y + 2, z - 7, plank, false, true);
-		WorldGenPrimitive.fillRectSolid(world, x - 6, y, z + 7, x + 6, y + 2, z + 7, plank, false, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 6, y, z - 7, x + 2, y + 2, z - 7, plank, false, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 6, y, z + 7, x + 6, y + 2, z + 7, plank, false, true);
 		
 		// pillars
 		for(int i = - 6; i <= 6; i = i += 4){
 			for(int j = - 6; j <= 6; j += 4){
-				pillar(world, x + i, y, z + j);
+				pillar(world, rand, x + i, y, z + j);
 			}
 		}
 				
@@ -94,36 +94,36 @@ public class DungeonAshlea implements IDungeon {
 		// floor
 		
 		// fire pit
-		WorldGenPrimitive.fillRectSolid(world, x - 1, y - 1, z - 4, x + 2, y - 1, z + 1, brick);
-		WorldGenPrimitive.fillRectSolid(world, x - 1, y, z - 4, x + 1, y + 2, z - 3, brick);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 1, y - 1, z - 4, x + 2, y - 1, z + 1, brick);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 1, y, z - 4, x + 1, y + 2, z - 3, brick);
 		WorldGenPrimitive.setBlock(world, x - 1, y, z - 2, stairBrick, WorldGenPrimitive.blockOrientation(Cardinal.EAST, false), 2, true, true);
 		WorldGenPrimitive.setBlock(world, x - 1, y + 1, z - 2, stairBrick, WorldGenPrimitive.blockOrientation(Cardinal.EAST, true), 2, true, true);
 		
 		WorldGenPrimitive.setBlock(world, x + 1, y, z - 2, stairBrick, WorldGenPrimitive.blockOrientation(Cardinal.WEST, false), 2, true, true);
 		WorldGenPrimitive.setBlock(world, x + 1, y + 1, z - 2, stairBrick, WorldGenPrimitive.blockOrientation(Cardinal.WEST, true), 2, true, true);
 		
-		WorldGenPrimitive.fillRectSolid(world, x - 1, y + 2, z - 2, x + 1, y + 2, z - 2, brick);
-		WorldGenPrimitive.fillRectSolid(world, x - 1, y + 2, z - 1, x + 2, y + 2, z - 1, stairBrick, WorldGenPrimitive.blockOrientation(Cardinal.SOUTH, true), 2, true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 1, y + 2, z - 2, x + 1, y + 2, z - 2, brick);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 1, y + 2, z - 1, x + 2, y + 2, z - 1, stairBrick, WorldGenPrimitive.blockOrientation(Cardinal.SOUTH, true), 2, true, true);
 		
 		WorldGenPrimitive.setBlock(world, x, y - 1, z - 3, Block.netherrack.blockID);
 		WorldGenPrimitive.setBlock(world, x, y, z - 3, Block.fire.blockID);
 		WorldGenPrimitive.setBlock(world, x, y + 1, z - 3, stairBrick, WorldGenPrimitive.blockOrientation(Cardinal.SOUTH, true), 2, true, true);
 
 		// furnace
-		WorldGenPrimitive.fillRectSolid(world, x + 2, y, z - 1, x + 2, y + 2, z + 1, brick);
-		WorldGenPrimitive.fillRectSolid(world, x + 1, y + 2, z - 1, x + 1, y + 2, z + 1, stairBrick, WorldGenPrimitive.blockOrientation(Cardinal.WEST, true), 2, true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, x + 2, y, z - 1, x + 2, y + 2, z + 1, brick);
+		WorldGenPrimitive.fillRectSolid(world, rand, x + 1, y + 2, z - 1, x + 1, y + 2, z + 1, stairBrick, WorldGenPrimitive.blockOrientation(Cardinal.WEST, true), 2, true, true);
 		
 		WorldGenPrimitive.setBlock(world, x + 2, y, z, Block.furnaceIdle.blockID);
 		WorldGenPrimitive.setBlock(world, x + 2, y + 1, z, stairBrick, WorldGenPrimitive.blockOrientation(Cardinal.WEST, true), 2, true, true);
 		
 		// ceiling
-		WorldGenPrimitive.fillRectSolid(world, x - 1, y + 3, z - 1, x + 1, y + 3, z + 1, brick);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 1, y + 3, z - 1, x + 1, y + 3, z + 1, brick);
 	}
 	
 	private void storage(World world, Random rand, int x, int y, int z){
 		
 		// floor
-		WorldGenPrimitive.fillRectSolid(world, x - 1, y - 1, z - 1, x + 1, y - 1, z + 1, plank, true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 1, y - 1, z - 1, x + 1, y - 1, z + 1, plank, true, true);
 		
 		// east shelf
 		WorldGenPrimitive.setBlock(world, x + 2, y, z - 1, stairBirch, WorldGenPrimitive.blockOrientation(Cardinal.SOUTH, true), 2, true, true);
@@ -142,11 +142,11 @@ public class DungeonAshlea implements IDungeon {
 	
 	private void northTable(World world, Random rand, int x, int y, int z){
 		// floor
-		WorldGenPrimitive.fillRectSolid(world, x - 1, y - 1, z - 1, x + 1, y - 1, z + 1, plank, true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 1, y - 1, z - 1, x + 1, y - 1, z + 1, plank, true, true);
 		
 		// benches
-		WorldGenPrimitive.fillRectSolid(world, x - 1, y, z - 2, x + 1, y, z - 2, stairBirch, WorldGenPrimitive.blockOrientation(Cardinal.SOUTH, false), 2, true, true);
-		WorldGenPrimitive.fillRectSolid(world, x - 2, y, z - 1, x - 2, y, z + 1, stairBirch, WorldGenPrimitive.blockOrientation(Cardinal.EAST, false), 2, true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 1, y, z - 2, x + 1, y, z - 2, stairBirch, WorldGenPrimitive.blockOrientation(Cardinal.SOUTH, false), 2, true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 2, y, z - 1, x - 2, y, z + 1, stairBirch, WorldGenPrimitive.blockOrientation(Cardinal.EAST, false), 2, true, true);
 		
 		// table
 		WorldGenPrimitive.setBlock(world, x, y, z, stairBirch, WorldGenPrimitive.blockOrientation(Cardinal.NORTH, true), 2, true, true);
@@ -158,11 +158,11 @@ public class DungeonAshlea implements IDungeon {
 
 	private void southTable(World world, Random rand, int x, int y, int z){
 		// floor
-		WorldGenPrimitive.fillRectSolid(world, x - 1, y - 1, z - 1, x + 1, y - 1, z + 1, plank, true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 1, y - 1, z - 1, x + 1, y - 1, z + 1, plank, true, true);
 		
 		// benches
-		WorldGenPrimitive.fillRectSolid(world, x - 1, y, z + 2, x + 1, y, z + 2, stairBirch, WorldGenPrimitive.blockOrientation(Cardinal.NORTH, false), 2, true, true);
-		WorldGenPrimitive.fillRectSolid(world, x - 2, y, z - 1, x - 2, y, z + 1, stairBirch, WorldGenPrimitive.blockOrientation(Cardinal.EAST, false), 2, true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 1, y, z + 2, x + 1, y, z + 2, stairBirch, WorldGenPrimitive.blockOrientation(Cardinal.NORTH, false), 2, true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 2, y, z - 1, x - 2, y, z + 1, stairBirch, WorldGenPrimitive.blockOrientation(Cardinal.EAST, false), 2, true, true);
 		
 		// table
 		WorldGenPrimitive.setBlock(world, x, y, z - 1, stairBirch, WorldGenPrimitive.blockOrientation(Cardinal.NORTH, true), 2, true, true);
@@ -173,14 +173,14 @@ public class DungeonAshlea implements IDungeon {
 				
 	}
 	
-	private static void pillar(World world, int x, int y, int z){
+	private static void pillar(World world, Random rand, int x, int y, int z){
 		
-		WorldGenPrimitive.fillRectSolid(world, x, y, z, x, y + 2, z, log, true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, x, y, z, x, y + 2, z, log, true, true);
 		WorldGenPrimitive.setBlock(world, x + 1, y + 2, z, stairBirch, WorldGenPrimitive.blockOrientation(Cardinal.EAST, true), 2, true, true);
 		WorldGenPrimitive.setBlock(world, x - 1, y + 2, z, stairBirch, WorldGenPrimitive.blockOrientation(Cardinal.WEST, true), 2, true, true);
 		WorldGenPrimitive.setBlock(world, x, y + 2, z + 1, stairBirch, WorldGenPrimitive.blockOrientation(Cardinal.SOUTH, true), 2, true, true);
 		WorldGenPrimitive.setBlock(world, x, y + 2, z - 1, stairBirch, WorldGenPrimitive.blockOrientation(Cardinal.NORTH, true), 2, true, true);
-		WorldGenPrimitive.fillRectSolid(world, x - 1, y + 3, z - 1, x + 1, y + 3, z + 1, plank, true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 1, y + 3, z - 1, x + 1, y + 3, z + 1, plank, true, true);
 		
 	}
 	

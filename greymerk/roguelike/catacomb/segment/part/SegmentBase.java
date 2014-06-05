@@ -83,35 +83,14 @@ public abstract class SegmentBase implements ISegment {
 		return true;
 	}
 	
-	protected int getStairType(int level){
-		switch(Catacomb.getLevel(y)){
-		case 0: return Block.stairsWoodOak.blockID;
-		case 1: return Block.stairsWoodSpruce.blockID;
-		case 2: return Block.stairsStoneBrick.blockID;
-		case 3: return Block.stairsCobblestone.blockID;
-		case 4: return Block.stairsNetherBrick.blockID;
-		default: return Block.stairsStoneBrick.blockID;
-		}
-	}
-	
 	private void addSupport(){
 		if(!world.isAirBlock(x, y - 2, z)) return;
 		
 		int level = Catacomb.getLevel(y);
 		
-		WorldGenPrimitive.fillDown(world, x, y - 2, z, theme.getPrimaryWall());
+		WorldGenPrimitive.fillDown(world, rand, x, y - 2, z, theme.getPrimaryPillar());
 		
-		int stairId;
-		switch(level){
-		case 0: 
-		case 1: 
-		case 2: stairId = Block.stairsStoneBrick.blockID; break;
-		case 3: stairId = Block.stairsCobblestone.blockID; break;
-		case 4: stairId = Block.stairsNetherBrick.blockID; break;
-		default: stairId = Block.stairsStoneBrick.blockID;
-		}
-		
-		MetaBlock stair = new MetaBlock(stairId);
+		MetaBlock stair = theme.getPrimaryStair();
 		stair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.WEST, true));
 		WorldGenPrimitive.setBlock(world, x - 1, y - 2, z, stair);
 		

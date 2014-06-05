@@ -41,7 +41,7 @@ public class SilverfishNest implements IAlcove{
 		end.add(Cardinal.UP, 1);
 		end.add(Cardinal.reverse(dir), 1);
 		
-		WorldGenPrimitive.fillRectSolid(world, start, end, new MetaBlock(0), true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, start, end, new MetaBlock(0), true, true);
 
 		Spawner type = rand.nextInt(5) == 0 ? Spawner.CAVESPIDER : Spawner.SILVERFISH;
 		
@@ -68,15 +68,15 @@ public class SilverfishNest implements IAlcove{
 	}
 	
 	private void nest(World world, Random rand, int x, int y, int z){
-		BlockRandomizer fish = new BlockRandomizer(rand, new MetaBlock(Block.silverfish.blockID, 1));
+		BlockRandomizer fish = new BlockRandomizer(new MetaBlock(Block.silverfish.blockID, 1));
 		fish.addBlock(new MetaBlock(Block.slowSand.blockID), 5);
-		WorldGenPrimitive.fillRectHollow(world, x - 2, y, z - 2, x + 2, y + 3, z + 2, fish, true, true);
+		WorldGenPrimitive.fillRectHollow(world, rand, x - 2, y, z - 2, x + 2, y + 3, z + 2, fish, true, true);
 		
-		fish.setBlock(world, x - 1, y + 2, z);
-		fish.setBlock(world, x + 1, y + 2, z);
-		fish.setBlock(world, x, y + 2, z - 1);
-		fish.setBlock(world, x, y + 2, z + 1);
-		fish.setBlock(world, x, y + 1, z);
+		fish.setBlock(world, rand, x - 1, y + 2, z);
+		fish.setBlock(world, rand, x + 1, y + 2, z);
+		fish.setBlock(world, rand, x, y + 2, z - 1);
+		fish.setBlock(world, rand, x, y + 2, z + 1);
+		fish.setBlock(world, rand, x, y + 1, z);
 		
 		WorldGenPrimitive.setBlock(world, x, y + 2, z, Block.waterMoving.blockID);
 	}

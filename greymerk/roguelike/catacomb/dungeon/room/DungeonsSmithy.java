@@ -57,7 +57,7 @@ public class DungeonsSmithy implements IDungeon{
 		originZ = inOriginZ;
 
 		// clear air space
-		WorldGenPrimitive.fillRectSolid(world,  originX - 2, originY, originZ - 2,
+		WorldGenPrimitive.fillRectSolid(world, inRandom, originX - 2, originY, originZ - 2,
 												originX + 2, originY + 4, originZ + 2, 0);
 		
 		buildWalls();
@@ -97,7 +97,7 @@ public class DungeonsSmithy implements IDungeon{
     
 	protected void buildFloor(){
 		
-		WorldGenPrimitive.fillRectSolid(world,
+		WorldGenPrimitive.fillRectSolid(world, rand, 
 				originX - dungeonLength - 1, originY - 1, originZ - dungeonWidth - 1,
 				originX + dungeonLength + 1, originY - 1, originZ + dungeonWidth + 1, Block.brick.blockID);
 	}

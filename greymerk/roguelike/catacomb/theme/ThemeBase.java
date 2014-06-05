@@ -37,11 +37,6 @@ public class ThemeBase implements ITheme {
 	public IBlockFactory getPrimaryWall() {
 		return walls.getFill();
 	}
-
-	@Override
-	public IBlockFactory getPrimaryBridge(){
-		return walls.getBridge();
-	}
 	
 	@Override
 	public MetaBlock getPrimaryStair() {

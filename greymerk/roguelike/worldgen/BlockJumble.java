@@ -9,10 +9,8 @@ import net.minecraft.src.World;
 public class BlockJumble implements IBlockFactory {
 
 	private List<IBlockFactory> blocks;
-	Random rand;
 	
-	public BlockJumble(Random rand, IBlockFactory defaultBlock){
-		this.rand = rand;
+	public BlockJumble(IBlockFactory defaultBlock){
 		blocks = new ArrayList<IBlockFactory>();
 		blocks.add(defaultBlock);
 	}
@@ -22,14 +20,14 @@ public class BlockJumble implements IBlockFactory {
 	}
 	
 	@Override
-	public void setBlock(World world, int x, int y, int z) {
-		setBlock(world, x, y, z, true, true);
+	public void setBlock(World world, Random rand, int x, int y, int z) {
+		setBlock(world, rand, x, y, z, true, true);
 	}
 
 	@Override
-	public void setBlock(World world, int x, int y, int z, boolean fillAir, boolean replaceSolid) {
+	public void setBlock(World world, Random rand, int x, int y, int z, boolean fillAir, boolean replaceSolid) {
 		IBlockFactory block = blocks.get(rand.nextInt(blocks.size()));
-		block.setBlock(world, x, y, z, fillAir, replaceSolid);
+		block.setBlock(world, rand, x, y, z, fillAir, replaceSolid);
 	}
 
 }

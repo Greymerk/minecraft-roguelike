@@ -42,22 +42,22 @@ public class DungeonCorner implements IDungeon {
 		IBlockFactory blocks = theme.getPrimaryWall();
 		
 		// fill air inside
-		WorldGenPrimitive.fillRectSolid(world, 	originX - 2, originY, originZ - 2, originX + 2, originY + 3, originZ + 2, 0);
+		WorldGenPrimitive.fillRectSolid(world, rand, originX - 2, originY, originZ - 2, originX + 2, originY + 3, originZ + 2, 0);
 		
 		// shell
-		WorldGenPrimitive.fillRectHollow(world, originX - 3, originY - 1, originZ - 3, originX + 3, originY + 4, originZ + 3, blocks, false, true);
+		WorldGenPrimitive.fillRectHollow(world, rand, originX - 3, originY - 1, originZ - 3, originX + 3, originY + 4, originZ + 3, blocks, false, true);
 		
 		// pillars
-		WorldGenPrimitive.fillRectSolid(world, originX - 2, originY, originZ - 2, originX - 2, originY + 3, originZ - 2, blocks, true, true);
-		WorldGenPrimitive.setBlock(world, originX - 2, originY + 3, originZ - 1, southStair, true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, originX - 2, originY, originZ - 2, originX - 2, originY + 3, originZ - 2, blocks, true, true);
+		WorldGenPrimitive.setBlock(world, rand, originX - 2, originY + 3, originZ - 1, southStair, true, true);
 		WorldGenPrimitive.setBlock(world, originX - 1, originY + 3, originZ - 2, eastStair, true, true);
-		WorldGenPrimitive.fillRectSolid(world, originX - 2, originY, originZ + 2, originX - 2, originY + 3, originZ + 2, blocks, true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, originX - 2, originY, originZ + 2, originX - 2, originY + 3, originZ + 2, blocks, true, true);
 		WorldGenPrimitive.setBlock(world, originX - 1, originY + 3, originZ + 2, eastStair, true, true);
 		WorldGenPrimitive.setBlock(world, originX - 2, originY + 3, originZ + 1, northStair, true, true);
-		WorldGenPrimitive.fillRectSolid(world, originX + 2, originY, originZ - 2, originX + 2, originY + 3, originZ - 2, blocks, true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, originX + 2, originY, originZ - 2, originX + 2, originY + 3, originZ - 2, blocks, true, true);
 		WorldGenPrimitive.setBlock(world, originX + 1, originY + 3, originZ - 2, westStair, true, true);
 		WorldGenPrimitive.setBlock(world, originX + 2, originY + 3, originZ - 1, southStair, true, true);
-		WorldGenPrimitive.fillRectSolid(world, originX + 2, originY, originZ + 2, originX + 2, originY + 3, originZ + 2, blocks, true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, originX + 2, originY, originZ + 2, originX + 2, originY + 3, originZ + 2, blocks, true, true);
 		WorldGenPrimitive.setBlock(world, originX + 1, originY + 3, originZ + 2, westStair, true, true);
 		WorldGenPrimitive.setBlock(world, originX + 2, originY + 3, originZ + 1, northStair, true, true);
 		
@@ -67,13 +67,13 @@ public class DungeonCorner implements IDungeon {
 		WorldGenPrimitive.setBlock(world, originX, originY + 4, originZ + 1, northStair, false, true);
 		
 		WorldGenPrimitive.setBlock(world, originX, originY + 4, originZ, 0);
-		blocks.setBlock(world, originX, originY + 5, originZ, false, true);
+		blocks.setBlock(world, rand, originX, originY + 5, originZ, false, true);
 		
 		return true;
 	}
 	
 	public int getSize(){
-		return 2;
+		return 4;
 	}
 
 }

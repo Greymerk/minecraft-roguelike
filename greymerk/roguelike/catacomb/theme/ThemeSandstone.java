@@ -12,22 +12,20 @@ import net.minecraft.src.Block;
 
 public class ThemeSandstone extends ThemeBase{
 
-	public ThemeSandstone(Random rand){
+	public ThemeSandstone(){
 	
-		BlockRandomizer walls = new BlockRandomizer(rand, new MetaBlock(Block.sandStone.blockID));
+		BlockRandomizer walls = new BlockRandomizer(new MetaBlock(Block.sandStone.blockID));
 		walls.addBlock(new MetaBlock(Block.sand.blockID), 30);
 		
-		BlockRandomizer bridge = new BlockRandomizer(rand, new MetaBlock(Block.sandStone.blockID));
-		bridge.addBlock(new MetaBlock(0), 3);
-		
 		MetaBlock stair = new MetaBlock(Block.stairsSandStone.blockID);
+		
 		MetaBlock pillar = new MetaBlock(Block.sandStone.blockID, 2);
 		
-		this.walls = new BlockSet(walls, bridge, stair, pillar);
+		this.walls = new BlockSet(walls, stair, pillar);
 		
 		MetaBlock SegmentWall = new MetaBlock(Block.sandStone.blockID, 1);
 		
-		this.decor =  new BlockSet(SegmentWall, SegmentWall, stair, pillar);
+		this.decor =  new BlockSet(SegmentWall, stair, pillar);
 		
 		this.segments = new ArrayList<Segment>();
 		segments.addAll(Arrays.asList(Segment.SHELF, Segment.INSET));

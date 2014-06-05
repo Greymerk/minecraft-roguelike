@@ -32,23 +32,23 @@ public class SegmentMossyArch extends SegmentBase {
 		
 		Coord cursor = new Coord(x, y, z);
 		cursor.add(wallDirection, 2);
-		WorldGenPrimitive.setBlock(world, cursor, air, true, true);
+		WorldGenPrimitive.setBlock(world, rand, cursor, air, true, true);
 		cursor.add(Cardinal.UP, 1);
-		WorldGenPrimitive.setBlock(world, cursor, air, true, true);
+		WorldGenPrimitive.setBlock(world, rand, cursor, air, true, true);
 		cursor.add(Cardinal.UP, 1);
-		WorldGenPrimitive.setBlock(world, cursor, stair, true, true);
+		WorldGenPrimitive.setBlock(world, rand, cursor, stair, true, true);
 		
 		for(Cardinal orth : Cardinal.getOrthogonal(wallDirection)){
 			cursor = new Coord(x, y, z);
 			cursor.add(orth, 1);
 			cursor.add(wallDirection, 2);
-			WorldGenPrimitive.setBlock(world, cursor, theme.getSecondaryPillar(), true, true);
+			WorldGenPrimitive.setBlock(world, rand, cursor, theme.getSecondaryPillar(), true, true);
 			cursor.add(Cardinal.UP, 1);
-			WorldGenPrimitive.setBlock(world, cursor, theme.getSecondaryPillar(), true, true);
+			WorldGenPrimitive.setBlock(world, rand, cursor, theme.getSecondaryPillar(), true, true);
 			cursor.add(Cardinal.UP, 1);
-			WorldGenPrimitive.setBlock(world, cursor, theme.getSecondaryWall(), true, true);
+			WorldGenPrimitive.setBlock(world, rand, cursor, theme.getSecondaryWall(), true, true);
 			cursor.add(Cardinal.reverse(wallDirection), 1);
-			WorldGenPrimitive.setBlock(world, cursor, stair, true, true);			
+			WorldGenPrimitive.setBlock(world, rand, cursor, stair, true, true);			
 		}
 		
 		cursor = new Coord(x, y, z);
@@ -59,7 +59,7 @@ public class SegmentMossyArch extends SegmentBase {
 		cursor = new Coord(x, y, z);
 		cursor.add(Cardinal.UP, 3);
 		cursor.add(wallDirection, 1);
-		WorldGenPrimitive.setBlock(world, cursor, new MetaBlock(Block.vine.blockID, rand.nextInt(15)), true, true);
+		WorldGenPrimitive.setBlock(world, rand, cursor, new MetaBlock(Block.vine.blockID, rand.nextInt(15)), true, true);
 		
 		if(!spawnHoleSet){
 			spawnHole();
@@ -68,7 +68,7 @@ public class SegmentMossyArch extends SegmentBase {
 	}
 	
 	private void spawnHole(){
-		WorldGenPrimitive.fillRectSolid(world, x, y + 2, z, x, y + 5, z, 0);
+		WorldGenPrimitive.fillRectSolid(world, rand, x, y + 2, z, x, y + 5, z, 0);
 		WorldGenPrimitive.randomVines(world, rand, x, y + 3, z, x, y + 5, z);
 		
 		if(!world.isAirBlock(x, y + 6, z)) WorldGenPrimitive.setBlock(world, x, y + 7, z, Block.waterMoving.blockID);

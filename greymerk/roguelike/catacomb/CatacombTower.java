@@ -66,9 +66,12 @@ public class CatacombTower {
 	
 	public void generate(World world, Random rand, int x, int y, int z){
 		
-		ITheme theme = getTheme(world.getBiomeGenForCoords(x, z), rand);
+		ITheme theme = Themes.getByLevel(world.getBiomeGenForCoords(x, z), 0);
 		
-		IBlockFactory blocks = theme.getPrimaryWall();
+		MetaBlock air = new MetaBlock(0);
+		
+		BlockRandomizer blocks = new BlockRandomizer(theme.getPrimaryWall());
+		blocks.addBlock(air, 10);
 		
 		MetaBlock stair = theme.getPrimaryStair();
 		
@@ -77,16 +80,14 @@ public class CatacombTower {
 		int main = floor.getY() + 4;
 		int roof = floor.getY() + 9;
 		
-		WorldGenPrimitive.fillRectSolid(world, x - 3, ground, z - 3, x + 3, floor.getY() + 12, z + 3, 0);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 3, ground, z - 3, x + 3, floor.getY() + 12, z + 3, 0);
 
 		Coord start;
 		Coord end;
 		Coord cursor;
 		
-		WorldGenPrimitive.fillRectSolid(world, x - 3, main, z - 3, x + 3, main, z + 3, new MetaBlock(Block.planks.blockID, 1), true, true);
-		WorldGenPrimitive.fillRectSolid(world, x - 3, roof, z - 3, x + 3, roof, z + 3, blocks, true, true);
-		
-		MetaBlock air = new MetaBlock(0);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 3, main, z - 3, x + 3, main, z + 3, new MetaBlock(Block.planks.blockID, 1), true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 3, roof, z - 3, x + 3, roof, z + 3, blocks, true, true);
 		
 		for(Cardinal dir : Cardinal.directions){
 			for (Cardinal orth : Cardinal.getOrthogonal(dir)){
@@ -97,11 +98,11 @@ public class CatacombTower {
 				end = new Coord(start);
 				end.add(dir, 3);
 				end.add(orth, 1);
-				WorldGenPrimitive.fillRectSolid(world, start, end, blocks, true, true);
+				WorldGenPrimitive.fillRectSolid(world, rand, start, end, blocks, true, true);
 				start.add(orth, 2);
 				end.add(Cardinal.reverse(dir), 2);
 				end.add(orth, 2);
-				WorldGenPrimitive.fillRectSolid(world, start, end, blocks, true, true);
+				WorldGenPrimitive.fillRectSolid(world, rand, start, end, blocks, true, true);
 				
 				cursor = new Coord(floor);
 				cursor.add(dir, 5);
@@ -110,167 +111,156 @@ public class CatacombTower {
 				end = new Coord(cursor);
 				end.add(Cardinal.reverse(dir), 1);
 				end.add(Cardinal.UP, 2);
-				WorldGenPrimitive.fillRectSolid(world, start, end, blocks, true, true);
+				WorldGenPrimitive.fillRectSolid(world, rand, start, end, blocks, true, true);
 				start = new Coord(end);
 				start.add(dir, 1);
 				start.add(Cardinal.reverse(orth), 1);
-				WorldGenPrimitive.fillRectSolid(world, start, end, blocks, true, true);
+				WorldGenPrimitive.fillRectSolid(world, rand, start, end, blocks, true, true);
 				cursor.add(Cardinal.UP, 2);
 				stair.setMeta(WorldGenPrimitive.blockOrientation(orth, false));
-				WorldGenPrimitive.setBlock(world, cursor, stair, true, true);
+				WorldGenPrimitive.setBlock(world, rand, cursor, stair, true, true);
 				
 				start = new Coord(floor);
 				start.add(dir, 4);
 				end = new Coord(start);
 				end.add(Cardinal.UP, 9);
 				end.add(orth, 2);
-				WorldGenPrimitive.fillRectSolid(world, start, end, blocks, true, true);
+				WorldGenPrimitive.fillRectSolid(world, rand, start, end, blocks, true, true);
 				
 				start = new Coord(floor);
 				start.add(dir, 3);
 				start.add(orth, 3);
 				end = new Coord(start);
 				end.add(Cardinal.UP, 9);
-				WorldGenPrimitive.fillRectSolid(world, start, end, blocks, true, true);
+				WorldGenPrimitive.fillRectSolid(world, rand, start, end, blocks, true, true);
 				
 				start = new Coord(floor);
 				start.add(dir, 4);
 				end = new Coord(start);
 				end.add(dir, 1);
 				end.add(Cardinal.UP, 1);
-				WorldGenPrimitive.fillRectSolid(world, start, end, air, true, true);
+				WorldGenPrimitive.fillRectSolid(world, rand, start, end, air, true, true);
 				
 				cursor = new Coord(floor);
 				cursor.add(dir, 3);
 				cursor.add(orth, 2);
 				cursor.add(Cardinal.UP, 3);
 				stair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.reverse(orth), true));
-				WorldGenPrimitive.setBlock(world, cursor, stair, true, true);
+				WorldGenPrimitive.setBlock(world, rand, cursor, stair, true, true);
 				cursor.add(Cardinal.UP, 5);
 				stair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.reverse(orth), true));
-				WorldGenPrimitive.setBlock(world, cursor, stair, true, true);
+				WorldGenPrimitive.setBlock(world, rand, cursor, stair, true, true);
 				
 				start = new Coord(floor);
 				start.add(dir, 4);
 				start.add(orth, 3);
 				start.add(Cardinal.UP, 4);
 				stair.setMeta(WorldGenPrimitive.blockOrientation(orth, true));
-				WorldGenPrimitive.setBlock(world, start, stair, true, true);
+				WorldGenPrimitive.setBlock(world, rand, start, stair, true, true);
 				
 				start.add(Cardinal.UP, 1);
 				end = new Coord(start);
 				end.add(Cardinal.UP, 4);
-				WorldGenPrimitive.fillRectSolid(world, start, end, blocks, true, true);
+				WorldGenPrimitive.fillRectSolid(world, rand, start, end, blocks, true, true);
 				
 				start = new Coord(floor);
 				start.add(dir, 5);
 				start.add(Cardinal.UP, 4);
 				stair.setMeta(WorldGenPrimitive.blockOrientation(dir, true));
-				WorldGenPrimitive.setBlock(world, start, stair, true, true);
+				WorldGenPrimitive.setBlock(world, rand, start, stair, true, true);
 				
 				cursor = new Coord(start);
 				cursor.add(orth, 1);
 				stair.setMeta(WorldGenPrimitive.blockOrientation(orth, true));
-				WorldGenPrimitive.setBlock(world, cursor, stair, true, true);
+				WorldGenPrimitive.setBlock(world, rand, cursor, stair, true, true);
 				
 				start.add(Cardinal.UP, 3);
 				stair.setMeta(WorldGenPrimitive.blockOrientation(dir, true));
-				WorldGenPrimitive.setBlock(world, start, stair, true, true);
+				WorldGenPrimitive.setBlock(world, rand, start, stair, true, true);
 				
 				cursor = new Coord(start);
 				cursor.add(orth, 1);
 				stair.setMeta(WorldGenPrimitive.blockOrientation(orth, true));
-				WorldGenPrimitive.setBlock(world, cursor, stair, true, true);
+				WorldGenPrimitive.setBlock(world, rand, cursor, stair, true, true);
 				
 				start.add(Cardinal.UP, 1);
 				end = new Coord(start);
 				end.add(orth, 1);
 				end.add(Cardinal.UP, 1);
-				WorldGenPrimitive.fillRectSolid(world, start, end, blocks, true, true);
+				WorldGenPrimitive.fillRectSolid(world, rand, start, end, blocks, true, true);
 				
 				cursor = new Coord(end);
 				cursor.add(orth, 1);
 				cursor.add(Cardinal.DOWN, 1);
 				stair.setMeta(WorldGenPrimitive.blockOrientation(orth, true));
-				WorldGenPrimitive.setBlock(world, cursor, stair, true, true);
+				WorldGenPrimitive.setBlock(world, rand, cursor, stair, true, true);
 				cursor.add(Cardinal.UP, 1);
 				cursor.add(orth, 1);
-				WorldGenPrimitive.setBlock(world, cursor, stair, true, true);
+				WorldGenPrimitive.setBlock(world, rand, cursor, stair, true, true);
 				
 				cursor.add(Cardinal.reverse(orth), 1);
-				WorldGenPrimitive.setBlock(world, cursor, blocks, true, true);
+				WorldGenPrimitive.setBlock(world, rand, cursor, blocks, true, true);
 				cursor.add(Cardinal.UP, 1);
-				WorldGenPrimitive.setBlock(world, cursor, blocks, true, true);
+				WorldGenPrimitive.setBlock(world, rand, cursor, blocks, true, true);
 				cursor.add(orth, 1);
-				WorldGenPrimitive.setBlock(world, cursor, blocks, true, true);
+				WorldGenPrimitive.setBlock(world, rand, cursor, blocks, true, true);
 				cursor.add(Cardinal.UP, 1);
-				this.addCrenellation(world, cursor, blocks);
+				this.addCrenellation(world, rand, cursor, blocks);
 				
 				cursor.add(Cardinal.DOWN, 2);
 				cursor.add(Cardinal.reverse(dir), 1);
 				cursor.add(orth, 1);
-				WorldGenPrimitive.setBlock(world, cursor, blocks, true, true);
+				WorldGenPrimitive.setBlock(world, rand, cursor, blocks, true, true);
 				cursor.add(Cardinal.DOWN, 1);
-				WorldGenPrimitive.setBlock(world, cursor, blocks, true, true);
+				WorldGenPrimitive.setBlock(world, rand, cursor, blocks, true, true);
 				
 				cursor = new Coord(floor);
 				cursor.add(dir, 6);
 				cursor.add(Cardinal.UP, 9);
 				
 				stair.setMeta(WorldGenPrimitive.blockOrientation(dir, true));
-				WorldGenPrimitive.setBlock(world, cursor, stair, true, true);
+				WorldGenPrimitive.setBlock(world, rand, cursor, stair, true, true);
 				
 				cursor.add(orth, 1);
 				stair.setMeta(WorldGenPrimitive.blockOrientation(orth, true));
-				WorldGenPrimitive.setBlock(world, cursor, stair, true, true);
+				WorldGenPrimitive.setBlock(world, rand, cursor, stair, true, true);
 				
 				cursor.add(Cardinal.reverse(orth), 1);
 				cursor.add(Cardinal.UP, 1);
-				WorldGenPrimitive.setBlock(world, cursor, blocks, true, true);
+				WorldGenPrimitive.setBlock(world, rand, cursor, blocks, true, true);
 				cursor.add(orth, 1);
-				WorldGenPrimitive.setBlock(world, cursor, blocks, true, true);
+				WorldGenPrimitive.setBlock(world, rand, cursor, blocks, true, true);
 				cursor.add(Cardinal.UP, 1);
-				this.addCrenellation(world, cursor, blocks);
+				this.addCrenellation(world, rand, cursor, blocks);
 				
 				cursor = new Coord(floor);
 				cursor.add(dir, 4);
 				cursor.add(Cardinal.UP, 5);
-				WorldGenPrimitive.setBlock(world, cursor, air, true, true);
+				WorldGenPrimitive.setBlock(world, rand, cursor, air, true, true);
 				cursor.add(Cardinal.UP, 1);
-				WorldGenPrimitive.setBlock(world, cursor, air, true, true);
+				WorldGenPrimitive.setBlock(world, rand, cursor, air, true, true);
 				cursor.add(orth, 2);
-				WorldGenPrimitive.setBlock(world, cursor, new MetaBlock(Block.fenceIron.blockID), true, true);
+				WorldGenPrimitive.setBlock(world, rand, cursor, new MetaBlock(Block.fenceIron.blockID), true, true);
 			}
 			
 
 			
 			for(int i = main; i > y; --i){
-				WorldGenPrimitive.spiralStairStep(world, x, i, z, stair, blocks);
+				WorldGenPrimitive.spiralStairStep(world, rand, x, i, z, stair, theme.getPrimaryPillar());
 			}
 		}
 	}
 	
 	
-	private void addCrenellation(World world, Coord cursor, IBlockFactory blocks){
+	private void addCrenellation(World world, Random rand, Coord cursor, IBlockFactory blocks){
 		
-		WorldGenPrimitive.setBlock(world, cursor, blocks, true, true);
+		WorldGenPrimitive.setBlock(world, rand, cursor, blocks, true, true);
 		
 		if(world.getBlockId(cursor.getX(), cursor.getY(), cursor.getZ()) == 0){
 			return;
 		}
 
 		cursor.add(Cardinal.UP, 1);
-		WorldGenPrimitive.setBlock(world, cursor, new MetaBlock(Block.torchWood.blockID), true, true);
-	}
-	
-	private ITheme getTheme(BiomeGenBase biome, Random rand){
-		boolean hot = biome.temperature >= 1.0F;
-		boolean cold = biome.temperature <= 0.1F;
-		boolean wet = biome.rainfall >= 0.85F;
-		boolean dry = biome.rainfall <= 0.1;
-		
-		if(hot && dry) return Themes.getTheme(Themes.SANDSTONE, rand);
-		if(hot && wet) return Themes.getTheme(Themes.JUNGLE, rand);
-		return Themes.getTheme(Themes.TOWER, rand);
+		WorldGenPrimitive.setBlock(world, rand, cursor, new MetaBlock(Block.torchWood.blockID), true, true);
 	}
 }

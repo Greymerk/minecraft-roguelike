@@ -1,5 +1,7 @@
 package greymerk.roguelike.worldgen;
 
+import java.util.Random;
+
 import net.minecraft.src.World;
 
 public class BlockFactoryCheckers implements IBlockFactory {
@@ -12,15 +14,14 @@ public class BlockFactoryCheckers implements IBlockFactory {
 		this.fillTwo = fillTwo;
 	}
 	
-	
 	@Override
-	public void setBlock(World world, int x, int y, int z) {
-		setBlock(world, x, y, z, true, true);
+	public void setBlock(World world, Random rand, int x, int y, int z) {
+		setBlock(world, rand, x, y, z, true, true);
 
 	}
 
 	@Override
-	public void setBlock(World world, int x, int y, int z, boolean fillAir, boolean replaceSolid) {
+	public void setBlock(World world, Random rand, int x, int y, int z, boolean fillAir, boolean replaceSolid) {
 		
 		if (x % 2 == 0) {
 			if(z % 2 == 0){

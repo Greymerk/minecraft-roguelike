@@ -12,18 +12,12 @@ import net.minecraft.src.Block;
 
 public class ThemeJungle extends ThemeBase{
 
-	public ThemeJungle(Random rand){
+	public ThemeJungle(){
 	
-		BlockRandomizer walls = new BlockRandomizer(rand, new MetaBlock(Block.cobblestoneMossy.blockID, 2));
+		BlockRandomizer walls = new BlockRandomizer(new MetaBlock(Block.cobblestoneMossy.blockID, 2));
 		walls.addBlock(new MetaBlock(Block.stoneBrick.blockID, 1), 3);
 		walls.addBlock(new MetaBlock(Block.stoneBrick.blockID, 2), 5);
 		walls.addBlock(new MetaBlock(Block.stoneBrick.blockID, 3), 20);
-
-		
-		BlockRandomizer bridge = new BlockRandomizer(rand, new MetaBlock(Block.cobblestone.blockID));
-		bridge.addBlock(new MetaBlock(Block.cobblestoneMossy.blockID), 3);
-		bridge.addBlock(new MetaBlock(0), 3);
-
 		
 		MetaBlock stair = new MetaBlock(Block.stairsCobblestone.blockID);
 		
@@ -31,8 +25,8 @@ public class ThemeJungle extends ThemeBase{
 		
 		
 		
-		this.walls = new BlockSet(walls, bridge, stair, pillar);
-		this.decor = new BlockSet(new MetaBlock(Block.stoneBrick.blockID, 3), bridge, stair, pillar);
+		this.walls = new BlockSet(walls, stair, pillar);
+		this.decor = new BlockSet(new MetaBlock(Block.stoneBrick.blockID, 3), stair, pillar);
 
 		this.segments = new ArrayList<Segment>();
 		segments.addAll(Arrays.asList(Segment.JUNGLE, Segment.SHELF, Segment.INSET));

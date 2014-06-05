@@ -15,9 +15,7 @@ import greymerk.roguelike.worldgen.MetaBlock;
 public interface ITheme {
 
 	public IBlockFactory getPrimaryWall();
-	
-	public IBlockFactory getPrimaryBridge();
-	
+		
 	public MetaBlock getPrimaryStair();
 	
 	public IBlockFactory getPrimaryPillar();

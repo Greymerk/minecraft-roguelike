@@ -4,19 +4,14 @@ import greymerk.roguelike.catacomb.dungeon.Dungeon;
 import greymerk.roguelike.catacomb.dungeon.DungeonFactory;
 import greymerk.roguelike.catacomb.dungeon.IDungeonFactory;
 import greymerk.roguelike.catacomb.theme.ITheme;
-import greymerk.roguelike.catacomb.theme.ThemeTower;
 import greymerk.roguelike.catacomb.theme.Themes;
-import greymerk.roguelike.config.ConfigFile;
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.src.BiomeGenBase;
-import net.minecraft.src.Block;
 import net.minecraft.src.World;
 
 public class Catacomb {
@@ -50,10 +45,10 @@ public class Catacomb {
 			
 			CatacombLevel level;
 			
-			ITheme theme = Themes.getByLevel(world.getBiomeGenForCoords(inX, inZ), getLevel(y), rand);
-			
+			ITheme theme = Themes.getByLevel(world.getBiomeGenForCoords(inX, inZ), getLevel(y));
+			rand = getRandom(world, x, z);
 			if(Catacomb.getLevel(y) == 0){
-				level = new CatacombLevel(world, rand, theme, x, y, z, 10, 40);
+				level = new CatacombLevel(world, rand, theme, x, y, z, 7, 40);
 			} else {
 				level = new CatacombLevel(world, rand, theme, x, y, z);
 			}
@@ -71,6 +66,7 @@ public class Catacomb {
 		} 
 		
 		CatacombTower tower = new CatacombTower();
+		rand = getRandom(world, inX, inZ);
 		tower.generate(world, rand, inX, TOPLEVEL, inZ);
 		
 		
@@ -124,11 +120,11 @@ public class Catacomb {
 		
 		switch(level){
 		case 0:
-			factory = new DungeonFactory(rand, Dungeon.CORNER);
+			factory = new DungeonFactory(rand, Dungeon.BRICK);
 			factory.addSingle(Dungeon.CAKE);
+			factory.addSingle(Dungeon.MESS);
 			factory.addSingle(Dungeon.SMITH);
 			factory.addSingle(Dungeon.FIRE);
-			factory.addRandom(Dungeon.BRICK, 3);
 			break;
 		case 1:
 			factory = new DungeonFactory(rand, Dungeon.CORNER);
@@ -268,10 +264,7 @@ public class Catacomb {
 	}
 	
 	public static Random getRandom(World world, int x, int z){
-		long seed = (long) (world.getSeed() ^ (world.getSeed() >>> 32));
-		seed = 31 * seed + (long) (x ^ (x >>> 32));
-		seed = 31 * seed + (long) (z ^ (z >>> 32));
-
+		long seed = world.getSeed() * x * z;
 		Random rand = new Random();
     	rand.setSeed(seed);
     	return rand;

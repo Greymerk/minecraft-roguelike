@@ -16,16 +16,16 @@ import net.minecraft.src.Block;
 
 public class ThemeRainbow extends ThemeBase{
 
-	public ThemeRainbow(Random rand){
+	public ThemeRainbow(){
 	
-		BlockStripes rainbow = new BlockStripes(rand, new MetaBlock(Block.stainedClay.blockID));
+		BlockStripes rainbow = new BlockStripes(new MetaBlock(Block.stainedClay.blockID));
 		for(int i = 1; i < 16; ++i){
 			rainbow.addBlock(new MetaBlock(Block.stainedClay.blockID, i));
 		}
 		
 		MetaBlock stair = new MetaBlock(Block.stairsNetherQuartz.blockID);
 		
-		this.walls = new BlockSet(rainbow, rainbow, stair, rainbow);
+		this.walls = new BlockSet(rainbow, stair, rainbow);
 		
 		MetaBlock SegmentWall = new MetaBlock(Block.blockNetherQuartz.blockID, 1);
 		

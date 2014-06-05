@@ -55,56 +55,56 @@ public class DungeonsBrick implements IDungeon {
 		IBlockFactory blocks = theme.getPrimaryWall();
 		
 		// fill air inside
-		WorldGenPrimitive.fillRectSolid(world, 	originX - 3, originY, originZ - 3, originX + 3, originY + 3, originZ + 3, 0);
+		WorldGenPrimitive.fillRectSolid(world, rand, originX - 3, originY, originZ - 3, originX + 3, originY + 3, originZ + 3, 0);
 		
 		// shell
-		WorldGenPrimitive.fillRectHollow(world, originX - 4, originY - 1, originZ - 4, originX + 4, originY + 4, originZ + 4, blocks, false, true);
+		WorldGenPrimitive.fillRectHollow(world, rand, originX - 4, originY - 1, originZ - 4, originX + 4, originY + 4, originZ + 4, blocks, false, true);
 
 		// pillars
-		WorldGenPrimitive.fillRectSolid(world, originX - 3, originY, originZ - 3, originX - 3, originY + 3, originZ - 3, blocks, true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, originX - 3, originY, originZ - 3, originX - 3, originY + 3, originZ - 3, blocks, true, true);
 		WorldGenPrimitive.setBlock(world, originX - 3, originY + 3, originZ - 2, southStair, true, true);
 		WorldGenPrimitive.setBlock(world, originX - 2, originY + 3, originZ - 3, eastStair, true, true);
-		WorldGenPrimitive.fillRectSolid(world, originX - 3, originY, originZ + 3, originX - 3, originY + 3, originZ + 3, blocks, true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, originX - 3, originY, originZ + 3, originX - 3, originY + 3, originZ + 3, blocks, true, true);
 		WorldGenPrimitive.setBlock(world, originX - 2, originY + 3, originZ + 3, eastStair, true, true);
 		WorldGenPrimitive.setBlock(world, originX - 3, originY + 3, originZ + 2, northStair, true, true);
-		WorldGenPrimitive.fillRectSolid(world, originX + 3, originY, originZ - 3, originX + 3, originY + 3, originZ - 3, blocks, true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, originX + 3, originY, originZ - 3, originX + 3, originY + 3, originZ - 3, blocks, true, true);
 		WorldGenPrimitive.setBlock(world, originX + 2, originY + 3, originZ - 3, westStair, true, true);
 		WorldGenPrimitive.setBlock(world, originX + 3, originY + 3, originZ - 2, southStair, true, true);
-		WorldGenPrimitive.fillRectSolid(world, originX + 3, originY, originZ + 3, originX + 3, originY + 3, originZ + 3, blocks, true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, originX + 3, originY, originZ + 3, originX + 3, originY + 3, originZ + 3, blocks, true, true);
 		WorldGenPrimitive.setBlock(world, originX + 2, originY + 3, originZ + 3, westStair, true, true);
 		WorldGenPrimitive.setBlock(world, originX + 3, originY + 3, originZ + 2, northStair, true, true);
 		
 		// roof
-		WorldGenPrimitive.fillRectSolid(world, originX - 2, originY + 4, originZ - 2, originX + 2, originY + 4, originZ + 2, 0);
+		WorldGenPrimitive.fillRectSolid(world, rand, originX - 2, originY + 4, originZ - 2, originX + 2, originY + 4, originZ + 2, 0);
 		
-		blocks.setBlock(world, originX - 2, originY + 4, originZ - 2);
+		blocks.setBlock(world, rand, originX - 2, originY + 4, originZ - 2);
 		WorldGenPrimitive.setBlock(world, originX - 2, originY + 4, originZ - 1, southStair, true, true);
 		WorldGenPrimitive.setBlock(world, originX - 1, originY + 4, originZ - 2, eastStair, true, true);
-		blocks.setBlock(world, originX - 2, originY + 4, originZ + 2, true, true);
+		blocks.setBlock(world, rand, originX - 2, originY + 4, originZ + 2, true, true);
 		WorldGenPrimitive.setBlock(world, originX - 1, originY + 4, originZ + 2, eastStair, true, true);
 		WorldGenPrimitive.setBlock(world, originX - 2, originY + 4, originZ + 1, northStair, true, true);
-		blocks.setBlock(world, originX + 2, originY + 4, originZ - 2, true, true);
+		blocks.setBlock(world, rand, originX + 2, originY + 4, originZ - 2, true, true);
 		WorldGenPrimitive.setBlock(world, originX + 1, originY + 4, originZ - 2, westStair, true, true);
 		WorldGenPrimitive.setBlock(world, originX + 2, originY + 4, originZ - 1, southStair, true, true);
-		blocks.setBlock(world, originX + 2, originY + 4, originZ + 2, true, true);
+		blocks.setBlock(world, rand, originX + 2, originY + 4, originZ + 2, true, true);
 		WorldGenPrimitive.setBlock(world, originX + 1, originY + 4, originZ + 2, westStair, true, true);
 		WorldGenPrimitive.setBlock(world, originX + 2, originY + 4, originZ + 1, northStair, true, true);
 		
 		
-		WorldGenPrimitive.fillRectSolid(world, originX - 2, originY + 5, originZ - 2, originX + 2, originY + 5, originZ + 2, blocks, false, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, originX - 2, originY + 5, originZ - 2, originX + 2, originY + 5, originZ + 2, blocks, false, true);
 		WorldGenPrimitive.setBlock(world, originX, originY + 5, originZ, 0);
 		
-		blocks.setBlock(world, originX - 1, originY + 5, originZ - 1, false, true);
-		blocks.setBlock(world, originX - 1, originY + 5, originZ + 1, false, true);
-		blocks.setBlock(world, originX + 1, originY + 5, originZ - 1, false, true);
-		blocks.setBlock(world, originX + 1, originY + 5, originZ + 1, false, true);
+		blocks.setBlock(world, rand, originX - 1, originY + 5, originZ - 1, false, true);
+		blocks.setBlock(world, rand, originX - 1, originY + 5, originZ + 1, false, true);
+		blocks.setBlock(world, rand, originX + 1, originY + 5, originZ - 1, false, true);
+		blocks.setBlock(world, rand, originX + 1, originY + 5, originZ + 1, false, true);
 		
 		WorldGenPrimitive.setBlock(world, originX - 1, originY + 5, originZ, eastStair, false, true);
 		WorldGenPrimitive.setBlock(world, originX + 1, originY + 5, originZ, westStair, false, true);
 		WorldGenPrimitive.setBlock(world, originX, originY + 5, originZ - 1, southStair, false, true);
 		WorldGenPrimitive.setBlock(world, originX, originY + 5, originZ + 1, northStair, false, true);
 		
-		blocks.setBlock(world, originX, originY + 6, originZ, false, true);
+		blocks.setBlock(world, rand, originX, originY + 6, originZ, false, true);
 		
 		
 		

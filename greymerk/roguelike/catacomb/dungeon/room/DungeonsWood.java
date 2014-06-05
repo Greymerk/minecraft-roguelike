@@ -39,14 +39,14 @@ public class DungeonsWood implements IDungeon{
 		originZ = inOriginZ;
 		woodType = inRandom.nextInt(4);
 		
-		WorldGenPrimitive.fillRectSolid(inWorld, originX - WIDTH, originY, originZ - LENGTH, originX + WIDTH, originY + HEIGHT, originZ + LENGTH, 0);
-		WorldGenPrimitive.fillRectHollow(inWorld, originX - WIDTH - 1, originY - 1, originZ - LENGTH - 1, originX + WIDTH + 1, originY + HEIGHT + 1, originZ + LENGTH + 1, Block.planks.blockID, woodType, 2, false, true);
+		WorldGenPrimitive.fillRectSolid(inWorld, inRandom, originX - WIDTH, originY, originZ - LENGTH, originX + WIDTH, originY + HEIGHT, originZ + LENGTH, 0);
+		WorldGenPrimitive.fillRectHollow(inWorld, inRandom, originX - WIDTH - 1, originY - 1, originZ - LENGTH - 1, originX + WIDTH + 1, originY + HEIGHT + 1, originZ + LENGTH + 1, Block.planks.blockID, woodType, 2, false, true);
 		
 		// log beams
-		WorldGenPrimitive.fillRectSolid(inWorld, originX - WIDTH, originY, originZ - LENGTH, originX - WIDTH, originY + HEIGHT, originZ - LENGTH, Block.wood.blockID, woodType, 2, true, true);
-		WorldGenPrimitive.fillRectSolid(inWorld, originX - WIDTH, originY, originZ + LENGTH, originX - WIDTH, originY + HEIGHT, originZ + LENGTH, Block.wood.blockID, woodType, 2, true, true);
-		WorldGenPrimitive.fillRectSolid(inWorld, originX + WIDTH, originY, originZ - LENGTH, originX + WIDTH, originY + HEIGHT, originZ - LENGTH, Block.wood.blockID, woodType, 2, true, true);
-		WorldGenPrimitive.fillRectSolid(inWorld, originX + WIDTH, originY, originZ + LENGTH, originX + WIDTH, originY + HEIGHT, originZ + LENGTH, Block.wood.blockID, woodType, 2, true, true);
+		WorldGenPrimitive.fillRectSolid(inWorld, inRandom, originX - WIDTH, originY, originZ - LENGTH, originX - WIDTH, originY + HEIGHT, originZ - LENGTH, Block.wood.blockID, woodType, 2, true, true);
+		WorldGenPrimitive.fillRectSolid(inWorld, inRandom, originX - WIDTH, originY, originZ + LENGTH, originX - WIDTH, originY + HEIGHT, originZ + LENGTH, Block.wood.blockID, woodType, 2, true, true);
+		WorldGenPrimitive.fillRectSolid(inWorld, inRandom, originX + WIDTH, originY, originZ - LENGTH, originX + WIDTH, originY + HEIGHT, originZ - LENGTH, Block.wood.blockID, woodType, 2, true, true);
+		WorldGenPrimitive.fillRectSolid(inWorld, inRandom, originX + WIDTH, originY, originZ + LENGTH, originX + WIDTH, originY + HEIGHT, originZ + LENGTH, Block.wood.blockID, woodType, 2, true, true);
 
 		// glowstone
 		WorldGenPrimitive.setBlock(inWorld, originX - WIDTH + 1, originY - 1, originZ - LENGTH + 1, Block.glowStone.blockID);

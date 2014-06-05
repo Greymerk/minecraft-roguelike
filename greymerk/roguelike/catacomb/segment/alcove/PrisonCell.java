@@ -67,12 +67,12 @@ public class PrisonCell implements IAlcove{
 		int z = centre.getZ();
 		
 		IBlockFactory walls = theme.getPrimaryWall();
-		WorldGenPrimitive.fillRectHollow(world, x - 2, y - 1, z - 2, x + 2, y + 3, z + 2, walls, true, true);
+		WorldGenPrimitive.fillRectHollow(world, rand, x - 2, y - 1, z - 2, x + 2, y + 3, z + 2, walls, true, true);
 		
 		Coord end = new Coord(centre);
 		end.add(Cardinal.UP, 1);
 		
-		WorldGenPrimitive.fillRectSolid(world, corridor, end, new MetaBlock(0), true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, corridor, end, new MetaBlock(0), true, true);
 
 		WorldGenPrimitive.setBlock(world, x, y, z + 2, Block.pressurePlateStone.blockID);
 		if(rand.nextBoolean()) Spawner.generate(world, rand, x, y - 1, z + 1, Spawner.ZOMBIE);
@@ -87,12 +87,12 @@ public class PrisonCell implements IAlcove{
 		int z = centre.getZ();
 		
 		IBlockFactory walls = theme.getPrimaryWall();
-		WorldGenPrimitive.fillRectHollow(world, x - 2, y - 1, z - 2, x + 2, y + 3, z + 2, walls, true, true);
+		WorldGenPrimitive.fillRectHollow(world, rand, x - 2, y - 1, z - 2, x + 2, y + 3, z + 2, walls, true, true);
 		
 		Coord end = new Coord(centre);
 		end.add(Cardinal.UP, 1);
 		
-		WorldGenPrimitive.fillRectSolid(world, corridor, end, new MetaBlock(0), true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, corridor, end, new MetaBlock(0), true, true);
 
 		WorldGenPrimitive.setBlock(world, x, y, z - 2, Block.pressurePlateStone.blockID);
 		if(rand.nextBoolean()) Spawner.generate(world, rand, x, y - 1, z - 1, Spawner.ZOMBIE);
@@ -106,12 +106,12 @@ public class PrisonCell implements IAlcove{
 		int z = centre.getZ();
 		
 		IBlockFactory walls = theme.getPrimaryWall();
-		WorldGenPrimitive.fillRectHollow(world, x - 2, y - 1, z - 2, x + 2, y + 3, z + 2, walls, true, true);
+		WorldGenPrimitive.fillRectHollow(world, rand, x - 2, y - 1, z - 2, x + 2, y + 3, z + 2, walls, true, true);
 		
 		Coord end = new Coord(centre);
 		end.add(Cardinal.UP, 1);
 		
-		WorldGenPrimitive.fillRectSolid(world, corridor, end, new MetaBlock(0), true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, corridor, end, new MetaBlock(0), true, true);
 
 		WorldGenPrimitive.setBlock(world, x - 2, y, z, Block.pressurePlateStone.blockID);
 		if(rand.nextBoolean()) Spawner.generate(world, rand, x - 1, y - 1, z, Spawner.ZOMBIE);
@@ -125,12 +125,12 @@ public class PrisonCell implements IAlcove{
 		int z = centre.getZ();
 		
 		IBlockFactory walls = theme.getPrimaryWall();
-		WorldGenPrimitive.fillRectHollow(world, x - 2, y - 1, z - 2, x + 2, y + 3, z + 2, walls, true, true);
+		WorldGenPrimitive.fillRectHollow(world, rand, x - 2, y - 1, z - 2, x + 2, y + 3, z + 2, walls, true, true);
 		
 		Coord end = new Coord(centre);
 		end.add(Cardinal.UP, 1);
 		
-		WorldGenPrimitive.fillRectSolid(world, corridor, end, new MetaBlock(0), true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, corridor, end, new MetaBlock(0), true, true);
 
 		WorldGenPrimitive.setBlock(world, x + 2, y, z, Block.pressurePlateStone.blockID);
 		if(rand.nextBoolean()) Spawner.generate(world, rand, x + 1, y - 1, z, Spawner.ZOMBIE);

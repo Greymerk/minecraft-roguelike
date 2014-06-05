@@ -12,22 +12,22 @@ import net.minecraft.src.Block;
 
 public class ThemeQuartz extends ThemeBase{
 
-	public ThemeQuartz(Random rand){
+	public ThemeQuartz(){
 	
 		MetaBlock walls = new MetaBlock(Block.blockNetherQuartz.blockID);
 		
 		
-		BlockRandomizer bridge = new BlockRandomizer(rand, new MetaBlock(Block.blockNetherQuartz.blockID));
+		BlockRandomizer bridge = new BlockRandomizer(new MetaBlock(Block.blockNetherQuartz.blockID));
 		bridge.addBlock(new MetaBlock(0), 3);
 		
 		MetaBlock stair = new MetaBlock(Block.stairsNetherQuartz.blockID);
 		MetaBlock pillar = new MetaBlock(Block.blockNetherQuartz.blockID, 2);
 		
-		this.walls = new BlockSet(walls, bridge, stair, pillar);
+		this.walls = new BlockSet(walls, stair, pillar);
 		
 		MetaBlock SegmentWall = new MetaBlock(Block.blockNetherQuartz.blockID, 1);
 		
-		this.decor =  new BlockSet(SegmentWall, SegmentWall, stair, pillar);
+		this.decor =  new BlockSet(SegmentWall, stair, pillar);
 		
 		this.segments = new ArrayList<Segment>();
 		segments.addAll(Arrays.asList(Segment.SHELF, Segment.INSET));

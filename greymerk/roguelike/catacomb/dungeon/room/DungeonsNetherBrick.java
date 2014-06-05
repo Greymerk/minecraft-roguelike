@@ -30,24 +30,24 @@ public class DungeonsNetherBrick implements IDungeon {
 		int width = 2 + rand.nextInt(3);
 		
 		IBlockFactory walls = theme.getPrimaryWall();
-		WorldGenPrimitive.fillRectHollow(world, x - length - 1, y - 1, z - width - 1, x + length + 1, y + height + 1, z + width + 1, walls, false, true);
+		WorldGenPrimitive.fillRectHollow(world, rand, x - length - 1, y - 1, z - width - 1, x + length + 1, y + height + 1, z + width + 1, walls, false, true);
 		
-		BlockRandomizer floor = new BlockRandomizer(rand, new MetaBlock(Block.netherBrick.blockID));
+		BlockRandomizer floor = new BlockRandomizer(new MetaBlock(Block.netherBrick.blockID));
 		floor.addBlock(new MetaBlock(Block.netherrack.blockID), 3);
 		floor.addBlock(new MetaBlock(Block.oreNetherQuartz.blockID), 5);
 		floor.addBlock(new MetaBlock(Block.blockRedstone.blockID), 10);
 		if (RogueConfig.getBoolean(RogueConfig.PRECIOUSBLOCKS)) floor.addBlock(new MetaBlock(Block.blockGold.blockID), 500);
 		if (RogueConfig.getBoolean(RogueConfig.PRECIOUSBLOCKS)) floor.addBlock(new MetaBlock(Block.blockDiamond.blockID), 1000);
-		WorldGenPrimitive.fillRectSolid(world, x - length - 1, y - 1, z - width - 1, x + length + 1, y - 1, z + width + 1, floor);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - length - 1, y - 1, z - width - 1, x + length + 1, y - 1, z + width + 1, floor);
 
 		// lava crap under the floor
-		BlockRandomizer subFloor = new BlockRandomizer(rand, new MetaBlock(Block.lavaStill.blockID));
+		BlockRandomizer subFloor = new BlockRandomizer(new MetaBlock(Block.lavaStill.blockID));
 		subFloor.addBlock(new MetaBlock(Block.obsidian.blockID), 3);
-		WorldGenPrimitive.fillRectSolid(world, x - length, y - 5, z - width, x + length, y - 2, z + width, subFloor);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - length, y - 5, z - width, x + length, y - 2, z + width, subFloor);
 		
-		BlockRandomizer ceiling = new BlockRandomizer(rand, new MetaBlock(Block.netherFence.blockID));
+		BlockRandomizer ceiling = new BlockRandomizer(new MetaBlock(Block.netherFence.blockID));
 		ceiling.addBlock(new MetaBlock(0), 2);
-		WorldGenPrimitive.fillRectSolid(world, x - length, y + height, z - width, x + length, y + height, z + width, ceiling);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - length, y + height, z - width, x + length, y + height, z + width, ceiling);
 		
 		TreasureChest.createChests(world, rand, 1, WorldGenPrimitive.getRectSolid(x - length, y, z - width, x + length, y, z + width));
 

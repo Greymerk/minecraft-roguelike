@@ -20,15 +20,15 @@ public class DungeonNebris implements IDungeon {
 	@Override
 	public boolean generate(World world, Random rand, ITheme theme, int x, int y, int z) {
 		
-		BlockRandomizer waterFloor = new BlockRandomizer(rand, new MetaBlock(Block.cobblestone.blockID));
+		BlockRandomizer waterFloor = new BlockRandomizer(new MetaBlock(Block.cobblestone.blockID));
 		waterFloor.addBlock(new MetaBlock(Block.glowStone.blockID), 7);
 		
 		
 		// space
-		WorldGenPrimitive.fillRectSolid(world, x - 8, y - 3, z - 8, x + 8, y + 5, z + 8, 0);
-		WorldGenPrimitive.fillRectSolid(world, x - 8, y - 3, z - 8, x + 8, y - 3, z + 8, waterFloor);
-		WorldGenPrimitive.fillRectSolid(world, x - 8, y - 2, z - 8, x + 8, y - 2, z + 8, Block.waterMoving.blockID);
-		WorldGenPrimitive.fillRectSolid(world, x - 8, y + 6, z - 8, x + 8, y + 6, z + 8, new MetaBlock(Block.cobblestone.blockID), false, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 8, y - 3, z - 8, x + 8, y + 5, z + 8, 0);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 8, y - 3, z - 8, x + 8, y - 3, z + 8, waterFloor);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 8, y - 2, z - 8, x + 8, y - 2, z + 8, Block.waterMoving.blockID);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 8, y + 6, z - 8, x + 8, y + 6, z + 8, new MetaBlock(Block.cobblestone.blockID), false, true);
 		
 		Coord cursor;
 		Coord start;
@@ -41,7 +41,7 @@ public class DungeonNebris implements IDungeon {
 				end = new Coord(start);
 				end.add(dir, 9);
 				end.add(orth, 1);
-				WorldGenPrimitive.fillRectSolid(world, start, end, new MetaBlock(Block.cobblestone.blockID), true, true);
+				WorldGenPrimitive.fillRectSolid(world, rand, start, end, new MetaBlock(Block.cobblestone.blockID), true, true);
 				
 				start = new Coord(x, y, z);
 				start.add(dir, 9);
@@ -50,7 +50,7 @@ public class DungeonNebris implements IDungeon {
 				start.add(orth, 2);
 				end.add(Cardinal.UP, 6);
 				end.add(orth, 6);
-				WorldGenPrimitive.fillRectSolid(world, start, end, new MetaBlock(Block.cobblestone.blockID), true, true);
+				WorldGenPrimitive.fillRectSolid(world, rand, start, end, new MetaBlock(Block.cobblestone.blockID), true, true);
 				
 				start = new Coord(x, y, z);
 				start.add(Cardinal.DOWN, 2);
@@ -58,22 +58,22 @@ public class DungeonNebris implements IDungeon {
 				start.add(dir, 8);
 				end = new Coord(start);
 				end.add(Cardinal.UP, 8);
-				WorldGenPrimitive.fillRectSolid(world, start, end, new MetaBlock(Block.cobblestone.blockID), true, true);
+				WorldGenPrimitive.fillRectSolid(world, rand, start, end, new MetaBlock(Block.cobblestone.blockID), true, true);
 				
 				start.add(orth, 5);
 				end = new Coord(start);
 				end.add(Cardinal.UP, 8);
-				WorldGenPrimitive.fillRectSolid(world, start, end, new MetaBlock(Block.cobblestone.blockID), true, true);
+				WorldGenPrimitive.fillRectSolid(world, rand, start, end, new MetaBlock(Block.cobblestone.blockID), true, true);
 				
 				start.add(orth, 1);
 				end = new Coord(start);
 				end.add(Cardinal.UP, 8);
-				WorldGenPrimitive.fillRectSolid(world, start, end, new MetaBlock(Block.cobblestone.blockID), true, true);
+				WorldGenPrimitive.fillRectSolid(world, rand, start, end, new MetaBlock(Block.cobblestone.blockID), true, true);
 				
 				start.add(Cardinal.reverse(dir), 1);
 				end = new Coord(start);
 				end.add(Cardinal.UP, 8);
-				WorldGenPrimitive.fillRectSolid(world, start, end, new MetaBlock(Block.cobblestone.blockID), true, true);
+				WorldGenPrimitive.fillRectSolid(world, rand, start, end, new MetaBlock(Block.cobblestone.blockID), true, true);
 				
 				cursor = new Coord(x, y, z);
 				cursor.add(Cardinal.DOWN, 1);
@@ -111,7 +111,7 @@ public class DungeonNebris implements IDungeon {
 				start.add(Cardinal.UP, 5);
 				end = new Coord(start);
 				end.add(orth, 6);
-				WorldGenPrimitive.fillRectSolid(world, start, end, new MetaBlock(Block.cobblestone.blockID), true, true);
+				WorldGenPrimitive.fillRectSolid(world, rand, start, end, new MetaBlock(Block.cobblestone.blockID), true, true);
 				
 				start = new Coord(x, y, z);
 				start.add(dir, 7);
@@ -119,7 +119,7 @@ public class DungeonNebris implements IDungeon {
 				end = new Coord(start);
 				start.add(orth, 2);
 				end.add(orth, 6);
-				WorldGenPrimitive.fillRectSolid(world, start, end, new MetaBlock(Block.cobblestone.blockID), true, true);
+				WorldGenPrimitive.fillRectSolid(world, rand, start, end, new MetaBlock(Block.cobblestone.blockID), true, true);
 				
 				start = new Coord(x, y, z);
 				start.add(dir, 6);
@@ -127,7 +127,7 @@ public class DungeonNebris implements IDungeon {
 				end = new Coord(start);
 				start.add(orth, 5);
 				end.add(orth, 6);
-				WorldGenPrimitive.fillRectSolid(world, start, end, new MetaBlock(Block.cobblestone.blockID), true, true);
+				WorldGenPrimitive.fillRectSolid(world, rand, start, end, new MetaBlock(Block.cobblestone.blockID), true, true);
 				
 				cursor = new Coord(x, y, z);
 				cursor.add(Cardinal.UP, 5);
@@ -138,7 +138,7 @@ public class DungeonNebris implements IDungeon {
 				cursor.add(Cardinal.DOWN, 1);
 				MetaBlock step = new MetaBlock(Block.stairsCobblestone.blockID);
 				step.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.reverse(orth), true));
-				WorldGenPrimitive.setBlock(world, cursor, step, true, true);
+				WorldGenPrimitive.setBlock(world, rand, cursor, step, true, true);
 			}
 		}
 		
@@ -153,11 +153,11 @@ public class DungeonNebris implements IDungeon {
 				end = new Coord(start);
 				end.add(Cardinal.UP, 3);
 				end.add(orth, 1);
-				WorldGenPrimitive.fillRectSolid(world, start, end, new MetaBlock(0), true, true);
+				WorldGenPrimitive.fillRectSolid(world, rand, start, end, new MetaBlock(0), true, true);
 				
 				start.add(dir, 1);
 				end.add(dir, 1);
-				WorldGenPrimitive.fillRectSolid(world, start, end, new MetaBlock(Block.cloth.blockID, 14), true, true);
+				WorldGenPrimitive.fillRectSolid(world, rand, start, end, new MetaBlock(Block.cloth.blockID, 14), true, true);
 				
 				start = new Coord(x, y, z);
 				start.add(dir, 8);
@@ -165,7 +165,7 @@ public class DungeonNebris implements IDungeon {
 				end = new Coord(start);
 				end.add(Cardinal.UP, 3);
 				
-				WorldGenPrimitive.fillRectSolid(world, start, end, new MetaBlock(Block.cloth.blockID, 11), true, true);
+				WorldGenPrimitive.fillRectSolid(world, rand, start, end, new MetaBlock(Block.cloth.blockID, 11), true, true);
 			}
 		}
 		

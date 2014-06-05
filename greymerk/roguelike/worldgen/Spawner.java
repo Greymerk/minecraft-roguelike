@@ -29,6 +29,10 @@ public enum Spawner {
 		generate(world, rand, posX, posY, posZ, type);
 	}
 	
+	public static void generate(World world, Random rand, Coord cursor, Spawner type){
+		generate(world, rand, cursor.getX(), cursor.getY(), cursor.getZ(), type);
+	}
+	
 	public static void generate(World world, Random rand, int posX, int posY, int posZ, Spawner type){
 		
 		if(!WorldGenPrimitive.setBlock(world, posX, posY, posZ, Block.mobSpawner.blockID)){

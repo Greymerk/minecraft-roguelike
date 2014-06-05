@@ -6,7 +6,6 @@ import greymerk.roguelike.worldgen.MetaBlock;
 public interface IBlockSet {
 
 	public IBlockFactory getFill();
-	public IBlockFactory getBridge();
 	public MetaBlock getStair();
 	public IBlockFactory getPillar();
 	

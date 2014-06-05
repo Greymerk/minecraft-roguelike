@@ -43,11 +43,11 @@ public class SegmentNetherStripes extends SegmentBase {
 				MetaBlock slab = new MetaBlock(Block.stoneSingleSlab.blockID, 14);
 				cursor = new Coord(x, y, z);
 				cursor.add(dir, 2);
-				WorldGenPrimitive.setBlock(world, cursor, slab, true, true);
+				WorldGenPrimitive.setBlock(world, rand, cursor, slab, true, true);
 				cursor.add(Cardinal.UP, 1);
-				WorldGenPrimitive.setBlock(world, cursor, slab, true, true);
+				WorldGenPrimitive.setBlock(world, rand, cursor, slab, true, true);
 				cursor.add(Cardinal.UP, 1);
-				WorldGenPrimitive.setBlock(world, cursor, slab, true, true);
+				WorldGenPrimitive.setBlock(world, rand, cursor, slab, true, true);
 				
 				for(Cardinal orth : Cardinal.getOrthogonal(dir)){
 					start = new Coord(x, y, z);
@@ -56,19 +56,19 @@ public class SegmentNetherStripes extends SegmentBase {
 					start.add(orth, 1);
 					start.add(Cardinal.UP, 3);
 					end.add(Cardinal.DOWN, 2);
-					if(lava && !air) WorldGenPrimitive.fillRectSolid(world, start, end, new MetaBlock(Block.lavaStill.blockID), false, true);
+					if(lava && !air) WorldGenPrimitive.fillRectSolid(world, rand, start, end, new MetaBlock(Block.lavaStill.blockID), false, true);
 					
 					step.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.reverse(orth), true));
 					cursor = new Coord(x, y, z);
 					cursor.add(dir, 2);
 					cursor.add(orth, 1);
-					WorldGenPrimitive.setBlock(world, cursor, step, true, true);
+					WorldGenPrimitive.setBlock(world, rand, cursor, step, true, true);
 					cursor.add(Cardinal.UP, 1);
-					WorldGenPrimitive.setBlock(world, cursor, step, true, true);
+					WorldGenPrimitive.setBlock(world, rand, cursor, step, true, true);
 					cursor.add(Cardinal.UP, 1);
-					WorldGenPrimitive.setBlock(world, cursor, step, true, true);
+					WorldGenPrimitive.setBlock(world, rand, cursor, step, true, true);
 					cursor.add(Cardinal.reverse(dir), 1);
-					WorldGenPrimitive.setBlock(world, cursor, step, true, true);
+					WorldGenPrimitive.setBlock(world, rand, cursor, step, true, true);
 				}
 				
 				return;
@@ -80,18 +80,18 @@ public class SegmentNetherStripes extends SegmentBase {
 					start.add(orth, 1);
 					start.add(Cardinal.UP, 1);
 					end.add(Cardinal.DOWN, 2);
-					if(lava && !air) WorldGenPrimitive.fillRectSolid(world, start, end, new MetaBlock(Block.lavaStill.blockID), false, true);
+					if(lava && !air) WorldGenPrimitive.fillRectSolid(world, rand, start, end, new MetaBlock(Block.lavaStill.blockID), false, true);
 					
 					cursor = new Coord(x, y, z);
 					cursor.add(dir, 2);
 					
 					step.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.reverse(orth), false));
 					cursor.add(orth, 1);
-					WorldGenPrimitive.setBlock(world, cursor, step, true, true);
+					WorldGenPrimitive.setBlock(world, rand, cursor, step, true, true);
 					
 					step.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.reverse(orth), true));
 					cursor.add(Cardinal.UP, 1);
-					WorldGenPrimitive.setBlock(world, cursor, step, true, true);
+					WorldGenPrimitive.setBlock(world, rand, cursor, step, true, true);
 					
 					cursor.add(Cardinal.UP, 1);
 					WorldGenPrimitive.setBlock(world, cursor, Block.netherBrick.blockID);
@@ -114,7 +114,7 @@ public class SegmentNetherStripes extends SegmentBase {
 					cursor.add(dir, 2);
 					cursor.add(orth, 1);
 					cursor.add(Cardinal.UP, 1);
-					WorldGenPrimitive.setBlock(world, cursor, step, true, true);
+					WorldGenPrimitive.setBlock(world, rand, cursor, step, true, true);
 					cursor.add(Cardinal.UP, 1);
 					WorldGenPrimitive.setBlock(world, cursor, Block.netherBrick.blockID);
 					cursor.add(Cardinal.reverse(orth), 1);

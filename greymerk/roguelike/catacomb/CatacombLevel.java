@@ -114,7 +114,7 @@ public class CatacombLevel {
 	private void generateLevelLink(World world, Random rand, int originX, int originY, int originZ) {
 		
 		// air in box
-		WorldGenPrimitive.fillRectSolid(world, originX - 3, originY, originZ - 3, originX + 3, originY + 15, originZ + 3, 0, 0, 2, true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, originX - 3, originY, originZ - 3, originX + 3, originY + 15, originZ + 3, 0, 0, 2, true, true);
 		
 		// shell
 		List<Coord> shell = WorldGenPrimitive.getRectHollow(originX - 4, originY - 1, originZ - 4, originX + 4, originY + 16, originZ + 4);
@@ -129,13 +129,13 @@ public class CatacombLevel {
 			
 			// floor & ceiling
 			if(y == originY - 1 || y == originY + 26){
-				blocks.setBlock(world, x, y, z, true, true);
+				blocks.setBlock(world, rand, x, y, z, true, true);
 			}
 			
 			if(world.isAirBlock(x, y, z) && y < originY + 9){
 				WorldGenPrimitive.setBlock(world, x, y, z, Block.fenceIron.blockID);
 			} else {
-				blocks.setBlock(world, x, y, z, false, true);
+				blocks.setBlock(world, rand, x, y, z, false, true);
 			}
 		
 			
@@ -143,27 +143,14 @@ public class CatacombLevel {
 		
 		
 		// middle floor
-		WorldGenPrimitive.fillRectHollow(world, originX - 4, originY + 9, originZ - 4, originX + 4, originY + 9, originZ + 4, blocks, true, true);
+		WorldGenPrimitive.fillRectHollow(world, rand, originX - 4, originY + 9, originZ - 4, originX + 4, originY + 9, originZ + 4, blocks, true, true);
 		
-		MetaBlock stair;
-		MetaBlock fill;
+		MetaBlock stair = theme.getPrimaryStair();
+		IBlockFactory fill = theme.getPrimaryWall();
 		
-		switch(Catacomb.getLevel(originY)){
-		case 3:
-			stair = new MetaBlock(Block.stairsCobblestone.blockID);
-			fill = new MetaBlock(Block.cobblestone.blockID);
-			break;
-		case 4:
-			stair = new MetaBlock(Block.stairsNetherBrick.blockID);
-			fill = new MetaBlock(Block.netherBrick.blockID);
-			break;
-		default:
-			stair = new MetaBlock(Block.stairsStoneBrick.blockID);
-			fill = new MetaBlock(Block.stoneBrick.blockID);
-		}
 		
 		for (int y = originY; y <= originY + 9; y++){
-			WorldGenPrimitive.spiralStairStep(world, originX, y, originZ, stair, fill);
+			WorldGenPrimitive.spiralStairStep(world, rand, originX, y, originZ, stair, theme.getPrimaryPillar());
 		}	
 	}
 

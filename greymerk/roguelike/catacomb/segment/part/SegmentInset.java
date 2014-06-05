@@ -39,10 +39,10 @@ public class SegmentInset extends SegmentBase {
 		start.add(orth[0], 1);
 		end.add(orth[1], 1);
 		end.add(Cardinal.UP, 2);
-		WorldGenPrimitive.fillRectSolid(world, start, end, air, true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, start, end, air, true, true);
 		start.add(wallDirection, 1);
 		end.add(wallDirection, 1);
-		WorldGenPrimitive.fillRectSolid(world, start, end, theme.getPrimaryWall(), true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, start, end, theme.getPrimaryWall(), true, true);
 		
 		for(Cardinal d : orth){
 			cursor = new Coord(x, y, z);
@@ -50,13 +50,13 @@ public class SegmentInset extends SegmentBase {
 			cursor.add(wallDirection, 2);
 			cursor.add(d, 1);
 			stair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.reverse(wallDirection), true));
-			WorldGenPrimitive.setBlock(world, cursor, stair, true, true);
+			WorldGenPrimitive.setBlock(world, rand, cursor, stair, true, true);
 			
 			cursor = new Coord(x, y, z);
 			cursor.add(wallDirection, 2);
 			cursor.add(d, 1);
 			stair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.reverse(d), false));
-			WorldGenPrimitive.setBlock(world, cursor, stair, true, true);
+			WorldGenPrimitive.setBlock(world, rand, cursor, stair, true, true);
 			
 			
 		}
@@ -64,10 +64,10 @@ public class SegmentInset extends SegmentBase {
 		cursor = new Coord(x, y, z);
 		cursor.add(Cardinal.UP, 1);
 		cursor.add(wallDirection, 3);
-		WorldGenPrimitive.setBlock(world, cursor, air, true, true);
+		WorldGenPrimitive.setBlock(world, rand, cursor, air, true, true);
 		cursor.add(Cardinal.UP, 1);
 		stair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.reverse(wallDirection), true));
-		WorldGenPrimitive.setBlock(world, cursor, stair, true, true);
+		WorldGenPrimitive.setBlock(world, rand, cursor, stair, true, true);
 		
 		bonus(x, y, z, wallDirection);
 	}

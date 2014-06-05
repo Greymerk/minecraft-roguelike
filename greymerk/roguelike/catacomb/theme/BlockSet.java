@@ -6,13 +6,11 @@ import greymerk.roguelike.worldgen.MetaBlock;
 public class BlockSet implements IBlockSet {
 
 	private IBlockFactory fill;
-	private IBlockFactory bridge;
 	private MetaBlock stair;
 	private IBlockFactory pillar;
 	
-	public BlockSet(IBlockFactory fill, IBlockFactory bridge, MetaBlock stair, IBlockFactory pillar){
-		this.fill = fill;
-		this.bridge = bridge;
+	public BlockSet(IBlockFactory fill, MetaBlock stair, IBlockFactory pillar){
+		this.fill = fill;		
 		this.stair = stair;
 		this.pillar = pillar;
 	}
@@ -20,11 +18,6 @@ public class BlockSet implements IBlockSet {
 	@Override
 	public IBlockFactory getFill() {
 		return fill;
-	}
-
-	@Override
-	public IBlockFactory getBridge() {
-		return bridge;
 	}
 
 	@Override

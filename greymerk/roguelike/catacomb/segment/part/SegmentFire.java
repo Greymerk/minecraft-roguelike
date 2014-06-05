@@ -32,7 +32,7 @@ public class SegmentFire extends SegmentBase {
 		MetaBlock stairUpper = new MetaBlock(stairType, WorldGenPrimitive.blockOrientation(Cardinal.SOUTH, true), 2);
 		MetaBlock stairLower = new MetaBlock(stairType, WorldGenPrimitive.blockOrientation(Cardinal.SOUTH, false), 2);
 		
-		WorldGenPrimitive.fillRectHollow(world, x - 1, y, z - 4, x + 1, y + 2, z - 2, Block.brick.blockID, 0, 2, false, true);
+		WorldGenPrimitive.fillRectHollow(world, rand, x - 1, y, z - 4, x + 1, y + 2, z - 2, Block.brick.blockID, 0, 2, false, true);
 		
 		WorldGenPrimitive.setBlock(world, x, y, z - 2, stairLower, true, true);
 		WorldGenPrimitive.setBlock(world, x, y + 1, z - 2, Block.fenceIron.blockID);
@@ -46,15 +46,15 @@ public class SegmentFire extends SegmentBase {
 			WorldGenPrimitive.setBlock(world, x, y + 1, z - 3, Block.fire.blockID);
 		}
 		
-		WorldGenPrimitive.fillRectSolid(world, x - 1, y, z - 2, x - 1, y + 2, z - 2, Block.brick.blockID);
-		WorldGenPrimitive.fillRectSolid(world, x + 1, y, z - 2, x + 1, y + 2, z - 2, Block.brick.blockID);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 1, y, z - 2, x - 1, y + 2, z - 2, Block.brick.blockID);
+		WorldGenPrimitive.fillRectSolid(world, rand, x + 1, y, z - 2, x + 1, y + 2, z - 2, Block.brick.blockID);
 	}
 	
 	private void south(){
 		MetaBlock stairUpper = new MetaBlock(stairType, WorldGenPrimitive.blockOrientation(Cardinal.NORTH, true), 2);
 		MetaBlock stairLower = new MetaBlock(stairType, WorldGenPrimitive.blockOrientation(Cardinal.NORTH, false), 2);
 		
-		WorldGenPrimitive.fillRectHollow(world, x - 1, y, z + 2, x + 1, y + 2, z + 4, Block.brick.blockID, 0, 2, false, true);
+		WorldGenPrimitive.fillRectHollow(world, rand, x - 1, y, z + 2, x + 1, y + 2, z + 4, Block.brick.blockID, 0, 2, false, true);
 		
 		WorldGenPrimitive.setBlock(world, x, y, z + 2, stairLower, true, true);
 		WorldGenPrimitive.setBlock(world, x, y + 1, z + 2, Block.fenceIron.blockID);
@@ -68,8 +68,8 @@ public class SegmentFire extends SegmentBase {
 			WorldGenPrimitive.setBlock(world, x, y + 1, z + 3, Block.fire.blockID);
 		}
 		
-		WorldGenPrimitive.fillRectSolid(world, x - 1, y, z + 2, x - 1, y + 2, z + 2, Block.brick.blockID);
-		WorldGenPrimitive.fillRectSolid(world, x + 1, y, z + 2, x + 1, y + 2, z + 2, Block.brick.blockID);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 1, y, z + 2, x - 1, y + 2, z + 2, Block.brick.blockID);
+		WorldGenPrimitive.fillRectSolid(world, rand, x + 1, y, z + 2, x + 1, y + 2, z + 2, Block.brick.blockID);
 	}
 	
 	private void east(){
@@ -77,7 +77,7 @@ public class SegmentFire extends SegmentBase {
 		MetaBlock stairUpper = new MetaBlock(stairType, WorldGenPrimitive.blockOrientation(Cardinal.WEST, true), 2);
 		MetaBlock stairLower = new MetaBlock(stairType, WorldGenPrimitive.blockOrientation(Cardinal.WEST, false), 2);
 		
-		WorldGenPrimitive.fillRectHollow(world, x + 2, y, z - 1, x + 4, y + 2, z + 1, Block.brick.blockID, 0, 2, false, true);
+		WorldGenPrimitive.fillRectHollow(world, rand, x + 2, y, z - 1, x + 4, y + 2, z + 1, Block.brick.blockID, 0, 2, false, true);
 		
 		WorldGenPrimitive.setBlock(world, x + 2, y, z, stairLower, true, true);
 		WorldGenPrimitive.setBlock(world, x + 2, y + 1, z, Block.fenceIron.blockID);
@@ -91,8 +91,8 @@ public class SegmentFire extends SegmentBase {
 			WorldGenPrimitive.setBlock(world, x + 3, y + 1, z, Block.fire.blockID);
 		}
 		
-		WorldGenPrimitive.fillRectSolid(world, x + 2, y, z - 1, x + 2, y + 2, z - 1, Block.brick.blockID);
-		WorldGenPrimitive.fillRectSolid(world, x + 2, y, z + 1, x + 2, y + 2, z + 1, Block.brick.blockID);
+		WorldGenPrimitive.fillRectSolid(world, rand, x + 2, y, z - 1, x + 2, y + 2, z - 1, Block.brick.blockID);
+		WorldGenPrimitive.fillRectSolid(world, rand, x + 2, y, z + 1, x + 2, y + 2, z + 1, Block.brick.blockID);
 	}
 	
 	private void west(){
@@ -100,7 +100,7 @@ public class SegmentFire extends SegmentBase {
 		MetaBlock stairUpper = new MetaBlock(stairType, WorldGenPrimitive.blockOrientation(Cardinal.EAST, true), 2);
 		MetaBlock stairLower = new MetaBlock(stairType, WorldGenPrimitive.blockOrientation(Cardinal.EAST, false), 2);
 		
-		WorldGenPrimitive.fillRectHollow(world, x - 4, y, z - 1, x - 2, y + 2, z + 1, Block.brick.blockID, 0, 2, false, true);
+		WorldGenPrimitive.fillRectHollow(world, rand, x - 4, y, z - 1, x - 2, y + 2, z + 1, Block.brick.blockID, 0, 2, false, true);
 		
 		WorldGenPrimitive.setBlock(world, x - 2, y, z, stairLower, true, true);
 		WorldGenPrimitive.setBlock(world, x - 2, y + 1, z, Block.fenceIron.blockID);
@@ -114,8 +114,8 @@ public class SegmentFire extends SegmentBase {
 			WorldGenPrimitive.setBlock(world, x - 3, y + 1, z, Block.fire.blockID);
 		}
 		
-		WorldGenPrimitive.fillRectSolid(world, x - 2, y, z - 1, x - 2, y + 2, z - 1, Block.brick.blockID);
-		WorldGenPrimitive.fillRectSolid(world, x - 2, y, z + 1, x - 2, y + 2, z + 1, Block.brick.blockID);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 2, y, z - 1, x - 2, y + 2, z - 1, Block.brick.blockID);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 2, y, z + 1, x - 2, y + 2, z + 1, Block.brick.blockID);
 	}
 	
 	private boolean isEnclosed(int x, int y, int z){

@@ -26,23 +26,23 @@ public class SegmentArch extends SegmentBase {
 		
 		Coord cursor = new Coord(x, y, z);
 		cursor.add(dir, 2);
-		WorldGenPrimitive.setBlock(world, cursor, air, true, true);
+		WorldGenPrimitive.setBlock(world, rand, cursor, air, true, true);
 		cursor.add(Cardinal.UP, 1);
-		WorldGenPrimitive.setBlock(world, cursor, air, true, true);
+		WorldGenPrimitive.setBlock(world, rand, cursor, air, true, true);
 		cursor.add(Cardinal.UP, 1);
-		WorldGenPrimitive.setBlock(world, cursor, stair, true, true);
+		WorldGenPrimitive.setBlock(world, rand, cursor, stair, true, true);
 		
 		for(Cardinal orth : Cardinal.getOrthogonal(dir)){
 			cursor = new Coord(x, y, z);
 			cursor.add(orth, 1);
 			cursor.add(dir, 2);
-			WorldGenPrimitive.setBlock(world, cursor, theme.getSecondaryPillar(), true, true);
+			WorldGenPrimitive.setBlock(world, rand, cursor, theme.getSecondaryPillar(), true, true);
 			cursor.add(Cardinal.UP, 1);
-			WorldGenPrimitive.setBlock(world, cursor, theme.getSecondaryPillar(), true, true);
+			WorldGenPrimitive.setBlock(world, rand, cursor, theme.getSecondaryPillar(), true, true);
 			cursor.add(Cardinal.UP, 1);
-			WorldGenPrimitive.setBlock(world, cursor, theme.getSecondaryWall(), true, true);
+			WorldGenPrimitive.setBlock(world, rand, cursor, theme.getSecondaryWall(), true, true);
 			cursor.add(Cardinal.reverse(dir), 1);
-			WorldGenPrimitive.setBlock(world, cursor, stair, true, true);			
+			WorldGenPrimitive.setBlock(world, rand, cursor, stair, true, true);			
 		}
 		
 		if(rand.nextInt(10) == 0 && Catacomb.getLevel(y) == 2){
