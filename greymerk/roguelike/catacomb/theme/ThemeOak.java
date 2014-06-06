@@ -18,8 +18,9 @@ public class ThemeOak extends ThemeBase{
 		BlockJumble rubble = new BlockJumble(new MetaBlock(Block.stoneBrick.blockID, 2));
 		rubble.addBlock(new MetaBlock(Block.cobblestone.blockID));
 		
-		BlockWeightedRandom walls = new BlockWeightedRandom(new MetaBlock(Block.stoneBrick.blockID));
-		walls.addBlock(rubble, 5);
+		BlockWeightedRandom walls = new BlockWeightedRandom();
+		walls.addBlock(new MetaBlock(Block.stoneBrick.blockID), 100);
+		walls.addBlock(rubble, 20);
 		
 		MetaBlock stair = new MetaBlock(Block.stairsStoneBrick.blockID);
 		MetaBlock pillar = Log.getLog(Log.OAK);

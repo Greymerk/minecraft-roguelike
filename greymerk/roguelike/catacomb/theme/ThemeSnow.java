@@ -14,9 +14,10 @@ public class ThemeSnow extends ThemeBase{
 
 	public ThemeSnow(){
 	
-		BlockWeightedRandom walls = new BlockWeightedRandom(new MetaBlock(Block.stoneBrick.blockID));
-		walls.addBlock(new MetaBlock(Block.stoneBrick.blockID, 1), 30);
-		walls.addBlock(new MetaBlock(Block.stoneBrick.blockID, 2), 30);
+		BlockWeightedRandom walls = new BlockWeightedRandom();
+		walls.addBlock(new MetaBlock(Block.stoneBrick.blockID), 100);
+		walls.addBlock(new MetaBlock(Block.stoneBrick.blockID, 1), 5);
+		walls.addBlock(new MetaBlock(Block.stoneBrick.blockID, 2), 5);
 		
 		MetaBlock stair = new MetaBlock(Block.stairsStoneBrick.blockID);
 		MetaBlock pillar = Log.getLog(Log.SPRUCE);

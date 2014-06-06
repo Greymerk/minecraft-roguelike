@@ -35,9 +35,10 @@ public class DungeonBaj implements IDungeon {
 		
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 3, y - 1, z - 3, x + 3, y - 1, z + 3, Block.waterMoving.blockID);
 		
-		BlockWeightedRandom walls = new BlockWeightedRandom(new MetaBlock(Block.stone.blockID));
-		walls.addBlock(new MetaBlock(Block.dirt.blockID), 5);
-		walls.addBlock(new MetaBlock(Block.gravel.blockID), 15);
+		BlockWeightedRandom walls = new BlockWeightedRandom();
+		walls.addBlock(new MetaBlock(Block.stone.blockID), 100);
+		walls.addBlock(new MetaBlock(Block.dirt.blockID), 20);
+		walls.addBlock(new MetaBlock(Block.gravel.blockID), 40);
 		
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 4, y - 1, z - 4, x + 4, y - 1, z - 4, walls);
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 4, y - 1, z - 4, x - 4, y - 1, z + 4, walls);
@@ -76,9 +77,10 @@ public class DungeonBaj implements IDungeon {
 		walls.setBlock(world, rand, x + 3, y - 1, z + 2);
 		walls.setBlock(world, rand, x + 2, y - 1, z + 3);
 		
-		BlockWeightedRandom roof = new BlockWeightedRandom(new MetaBlock(Block.stone.blockID));
-		roof.addBlock(new MetaBlock(0), 2);
-		roof.addBlock(new MetaBlock(Block.dirt.blockID), 5);
+		BlockWeightedRandom roof = new BlockWeightedRandom();
+		roof.addBlock(new MetaBlock(Block.stone.blockID), 100);
+		roof.addBlock(new MetaBlock(0), 50);
+		roof.addBlock(new MetaBlock(Block.dirt.blockID), 20);
 		
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 4, y + 3, z - 4, x + 4, y + 3, z + 4, roof, true, false);
 		

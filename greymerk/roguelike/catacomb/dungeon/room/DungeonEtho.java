@@ -25,9 +25,10 @@ public class DungeonEtho implements IDungeon {
 
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 5, y, z - 5, x + 5, y + 3, z + 5, 0);
 		
-		BlockWeightedRandom leafJumble = new BlockWeightedRandom(new MetaBlock(0));
-		leafJumble.addBlock(new MetaBlock(Block.leaves.blockID, 4), 2);
-		leafJumble.addBlock(new MetaBlock(Block.wood.blockID), 20);
+		BlockWeightedRandom leafJumble = new BlockWeightedRandom();
+		leafJumble.addBlock(new MetaBlock(0), 10);
+		leafJumble.addBlock(new MetaBlock(Block.leaves.blockID, 4), 50);
+		leafJumble.addBlock(new MetaBlock(Block.wood.blockID), 10);
 		
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 4, y + 6, z - 4, x + 4, y + 6, z + 4, Block.wood.blockID);
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 4, y + 4, z - 4, x + 4, y + 5, z + 4, leafJumble);
@@ -51,7 +52,8 @@ public class DungeonEtho implements IDungeon {
 		WorldGenPrimitive.setBlock(world, x - 5, y, z + 5, Block.waterMoving.blockID);
 		
 		// alcove walls with diamonds
-		BlockWeightedRandom ethoStone = new BlockWeightedRandom(new MetaBlock(Block.stone.blockID));
+		BlockWeightedRandom ethoStone = new BlockWeightedRandom();
+		ethoStone.addBlock(new MetaBlock(Block.stone.blockID), 100);
 		ethoStone.addBlock(new MetaBlock(Block.oreDiamond.blockID), 15);
 		
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 6, y, z - 5, x - 6, y + 4, z - 4, ethoStone);

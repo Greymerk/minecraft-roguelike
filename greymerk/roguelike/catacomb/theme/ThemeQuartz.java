@@ -16,10 +16,6 @@ public class ThemeQuartz extends ThemeBase{
 	
 		MetaBlock walls = new MetaBlock(Block.blockNetherQuartz.blockID);
 		
-		
-		BlockWeightedRandom bridge = new BlockWeightedRandom(new MetaBlock(Block.blockNetherQuartz.blockID));
-		bridge.addBlock(new MetaBlock(0), 3);
-		
 		MetaBlock stair = new MetaBlock(Block.stairsNetherQuartz.blockID);
 		MetaBlock pillar = new MetaBlock(Block.blockNetherQuartz.blockID, 2);
 		

@@ -70,7 +70,8 @@ public class CatacombTower {
 		
 		MetaBlock air = new MetaBlock(0);
 		
-		BlockWeightedRandom blocks = new BlockWeightedRandom(theme.getPrimaryWall());
+		BlockWeightedRandom blocks = new BlockWeightedRandom();
+		blocks.addBlock(theme.getPrimaryWall(), 100);
 		blocks.addBlock(air, 10);
 		
 		MetaBlock stair = theme.getPrimaryStair();

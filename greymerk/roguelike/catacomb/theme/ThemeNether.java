@@ -14,11 +14,12 @@ public class ThemeNether extends ThemeBase{
 
 	public ThemeNether(){
 	
-		BlockWeightedRandom walls = new BlockWeightedRandom(new MetaBlock(Block.netherBrick.blockID));
-		walls.addBlock(new MetaBlock(Block.netherrack.blockID), 10);
+		BlockWeightedRandom walls = new BlockWeightedRandom();
+		walls.addBlock(new MetaBlock(Block.netherBrick.blockID), 200);
+		walls.addBlock(new MetaBlock(Block.netherrack.blockID), 20);
 		walls.addBlock(new MetaBlock(Block.oreNetherQuartz.blockID), 20);
-		walls.addBlock(new MetaBlock(Block.slowSand.blockID), 30);
-		walls.addBlock(new MetaBlock(Block.coalBlock.blockID), 100);
+		walls.addBlock(new MetaBlock(Block.slowSand.blockID), 15);
+		walls.addBlock(new MetaBlock(Block.coalBlock.blockID), 10);
 
 		MetaBlock stair = new MetaBlock(Block.stairsNetherBrick.blockID);
 		

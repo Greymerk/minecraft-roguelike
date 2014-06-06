@@ -20,7 +20,8 @@ public class DungeonNebris implements IDungeon {
 	@Override
 	public boolean generate(World world, Random rand, ITheme theme, int x, int y, int z) {
 		
-		BlockWeightedRandom waterFloor = new BlockWeightedRandom(new MetaBlock(Block.cobblestone.blockID));
+		BlockWeightedRandom waterFloor = new BlockWeightedRandom();
+		waterFloor.addBlock(new MetaBlock(Block.cobblestone.blockID), 40);
 		waterFloor.addBlock(new MetaBlock(Block.glowStone.blockID), 7);
 		
 		

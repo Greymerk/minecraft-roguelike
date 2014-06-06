@@ -14,8 +14,9 @@ public class ThemeSandstone extends ThemeBase{
 
 	public ThemeSandstone(){
 	
-		BlockWeightedRandom walls = new BlockWeightedRandom(new MetaBlock(Block.sandStone.blockID));
-		walls.addBlock(new MetaBlock(Block.sand.blockID), 30);
+		BlockWeightedRandom walls = new BlockWeightedRandom();
+		walls.addBlock(new MetaBlock(Block.sandStone.blockID), 100);
+		walls.addBlock(new MetaBlock(Block.sand.blockID), 5);
 		
 		MetaBlock stair = new MetaBlock(Block.stairsSandStone.blockID);
 		

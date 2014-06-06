@@ -26,7 +26,8 @@ public class DungeonOssuary implements IDungeon {
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 7, y + 5, z - 7, x + 7, y + 5, z + 7, walls);
 		
 		// any missing floor
-		BlockWeightedRandom cracked = new BlockWeightedRandom(new MetaBlock(Block.stoneBrick.blockID, 2));
+		BlockWeightedRandom cracked = new BlockWeightedRandom();
+		cracked.addBlock(new MetaBlock(Block.stoneBrick.blockID, 2), 10);
 		cracked.addBlock(new MetaBlock(0), 3);
 		cracked.addBlock(new MetaBlock(Block.cobblestone.blockID), 5);
 		cracked.addBlock(new MetaBlock(Block.gravel.blockID), 5);

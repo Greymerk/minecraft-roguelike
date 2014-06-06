@@ -24,7 +24,8 @@ public class SegmentMossyMushrooms extends SegmentBase {
 		
 		MetaBlock stair = theme.getSecondaryStair();
 		
-		mushrooms = new BlockWeightedRandom(new MetaBlock(Block.mushroomBrown.blockID));
+		mushrooms = new BlockWeightedRandom();
+		mushrooms.addBlock(new MetaBlock(Block.mushroomBrown.blockID), 3);
 		mushrooms.addBlock(new MetaBlock(Block.mushroomRed.blockID), 3);
 		mushrooms.addBlock(new MetaBlock(0), 10);
 		

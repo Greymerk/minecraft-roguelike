@@ -14,7 +14,8 @@ public class ThemeBling extends ThemeBase{
 
 	public ThemeBling(){
 	
-		BlockWeightedRandom walls = new BlockWeightedRandom(new MetaBlock(Block.blockIron.blockID));
+		BlockWeightedRandom walls = new BlockWeightedRandom();
+		walls.addBlock(new MetaBlock(Block.blockIron.blockID), 10);
 		walls.addBlock(new MetaBlock(Block.blockGold.blockID), 3);
 		walls.addBlock(new MetaBlock(Block.blockEmerald.blockID), 10);
 		walls.addBlock(new MetaBlock(Block.blockDiamond.blockID), 20);

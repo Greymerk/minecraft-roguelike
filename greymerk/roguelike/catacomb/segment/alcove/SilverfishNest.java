@@ -68,7 +68,8 @@ public class SilverfishNest implements IAlcove{
 	}
 	
 	private void nest(World world, Random rand, int x, int y, int z){
-		BlockWeightedRandom fish = new BlockWeightedRandom(new MetaBlock(Block.silverfish.blockID, 1));
+		BlockWeightedRandom fish = new BlockWeightedRandom();
+		fish.addBlock(new MetaBlock(Block.silverfish.blockID, 1), 20);
 		fish.addBlock(new MetaBlock(Block.slowSand.blockID), 5);
 		WorldGenPrimitive.fillRectHollow(world, rand, x - 2, y, z - 2, x + 2, y + 3, z + 2, fish, true, true);
 		

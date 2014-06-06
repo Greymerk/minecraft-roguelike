@@ -14,7 +14,8 @@ public class ThemeJungle extends ThemeBase{
 
 	public ThemeJungle(){
 	
-		BlockWeightedRandom walls = new BlockWeightedRandom(new MetaBlock(Block.cobblestoneMossy.blockID, 2));
+		BlockWeightedRandom walls = new BlockWeightedRandom();
+		walls.addBlock(new MetaBlock(Block.cobblestoneMossy.blockID, 2), 10);
 		walls.addBlock(new MetaBlock(Block.stoneBrick.blockID, 1), 3);
 		walls.addBlock(new MetaBlock(Block.stoneBrick.blockID, 2), 5);
 		walls.addBlock(new MetaBlock(Block.stoneBrick.blockID, 3), 20);

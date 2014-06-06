@@ -19,8 +19,9 @@ public class ThemeSpruce extends ThemeBase{
 		rubble.addBlock(new MetaBlock(Block.cobblestone.blockID));
 		rubble.addBlock(new MetaBlock(Block.gravel.blockID));
 		
-		BlockWeightedRandom walls = new BlockWeightedRandom(new MetaBlock(Block.stoneBrick.blockID));
-		walls.addBlock(rubble, 3);
+		BlockWeightedRandom walls = new BlockWeightedRandom();
+		walls.addBlock(new MetaBlock(Block.stoneBrick.blockID), 100);
+		walls.addBlock(rubble, 10);
 		
 		MetaBlock stair = new MetaBlock(Block.stairsStoneBrick.blockID);
 		

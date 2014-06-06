@@ -14,8 +14,9 @@ public class ThemeMossy extends ThemeBase{
 
 	public ThemeMossy(){
 	
-		BlockWeightedRandom walls = new BlockWeightedRandom(new MetaBlock(Block.cobblestone.blockID));
-		walls.addBlock(new MetaBlock(Block.cobblestoneMossy.blockID), 3);
+		BlockWeightedRandom walls = new BlockWeightedRandom();
+		walls.addBlock(new MetaBlock(Block.cobblestone.blockID), 100);
+		walls.addBlock(new MetaBlock(Block.cobblestoneMossy.blockID), 30);
 		walls.addBlock(new MetaBlock(Block.silverfish.blockID, 1), 5);
 		walls.addBlock(new MetaBlock(Block.stoneBrick.blockID, 2), 10);
 		walls.addBlock(new MetaBlock(Block.gravel.blockID), 60);

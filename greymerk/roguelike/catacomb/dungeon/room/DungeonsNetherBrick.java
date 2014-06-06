@@ -32,7 +32,8 @@ public class DungeonsNetherBrick implements IDungeon {
 		IBlockFactory walls = theme.getPrimaryWall();
 		WorldGenPrimitive.fillRectHollow(world, rand, x - length - 1, y - 1, z - width - 1, x + length + 1, y + height + 1, z + width + 1, walls, false, true);
 		
-		BlockWeightedRandom floor = new BlockWeightedRandom(new MetaBlock(Block.netherBrick.blockID));
+		BlockWeightedRandom floor = new BlockWeightedRandom();
+		floor.addBlock(new MetaBlock(Block.netherBrick.blockID), 10);
 		floor.addBlock(new MetaBlock(Block.netherrack.blockID), 3);
 		floor.addBlock(new MetaBlock(Block.oreNetherQuartz.blockID), 5);
 		floor.addBlock(new MetaBlock(Block.blockRedstone.blockID), 10);
@@ -41,12 +42,14 @@ public class DungeonsNetherBrick implements IDungeon {
 		WorldGenPrimitive.fillRectSolid(world, rand, x - length - 1, y - 1, z - width - 1, x + length + 1, y - 1, z + width + 1, floor);
 
 		// lava crap under the floor
-		BlockWeightedRandom subFloor = new BlockWeightedRandom(new MetaBlock(Block.lavaStill.blockID));
+		BlockWeightedRandom subFloor = new BlockWeightedRandom();
+		subFloor.addBlock(new MetaBlock(Block.lavaStill.blockID), 8);
 		subFloor.addBlock(new MetaBlock(Block.obsidian.blockID), 3);
 		WorldGenPrimitive.fillRectSolid(world, rand, x - length, y - 5, z - width, x + length, y - 2, z + width, subFloor);
 		
-		BlockWeightedRandom ceiling = new BlockWeightedRandom(new MetaBlock(Block.netherFence.blockID));
-		ceiling.addBlock(new MetaBlock(0), 2);
+		BlockWeightedRandom ceiling = new BlockWeightedRandom();
+		ceiling.addBlock(new MetaBlock(Block.netherFence.blockID), 10);
+		ceiling.addBlock(new MetaBlock(0), 5);
 		WorldGenPrimitive.fillRectSolid(world, rand, x - length, y + height, z - width, x + length, y + height, z + width, ceiling);
 		
 		TreasureChest.createChests(world, rand, 1, WorldGenPrimitive.getRectSolid(x - length, y, z - width, x + length, y, z + width));
