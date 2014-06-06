@@ -14,7 +14,7 @@ public class DungeonFactory implements IDungeonFactory {
 	private List<Dungeon> singles;
 	private LinkedList<DungeonWeightedChoice> types;
 	private Random rand;
-	
+
 	public DungeonFactory(Random rand, Dungeon base){
 		singles = new ArrayList<Dungeon>();
 		types = new LinkedList<DungeonWeightedChoice>();

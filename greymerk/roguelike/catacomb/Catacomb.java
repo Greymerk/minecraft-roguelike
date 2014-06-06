@@ -48,7 +48,7 @@ public class Catacomb {
 			ITheme theme = Themes.getByLevel(world.getBiomeGenForCoords(inX, inZ), getLevel(y));
 			rand = getRandom(world, x, z);
 			if(Catacomb.getLevel(y) == 0){
-				level = new CatacombLevel(world, rand, theme, x, y, z, 7, 40);
+				level = new CatacombLevel(world, rand, theme, x, y, z, 8, 40);
 			} else {
 				level = new CatacombLevel(world, rand, theme, x, y, z);
 			}
@@ -124,6 +124,7 @@ public class Catacomb {
 			factory.addSingle(Dungeon.CAKE);
 			factory.addSingle(Dungeon.MESS);
 			factory.addSingle(Dungeon.SMITH);
+			factory.addSingle(Dungeon.CRYPT);
 			factory.addSingle(Dungeon.FIRE);
 			break;
 		case 1:
@@ -137,7 +138,6 @@ public class Catacomb {
 			factory.addSingle(Dungeon.PIT);
 			factory.addSingle(Dungeon.ENCHANT);
 			factory.addSingle(Dungeon.LAB);
-			factory.addSingle(Dungeon.BRICK);
 			factory.addByRatio(Dungeon.MESS, 30);
 			factory.addByRatio(Dungeon.STORAGE, 30);
 			factory.addRandom(Dungeon.BRICK, 3);

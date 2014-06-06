@@ -5,7 +5,7 @@ import greymerk.roguelike.catacomb.dungeon.IDungeon;
 import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.treasure.TreasureChest;
-import greymerk.roguelike.worldgen.BlockRandomizer;
+import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.Spawner;
@@ -32,7 +32,7 @@ public class DungeonsNetherBrick implements IDungeon {
 		IBlockFactory walls = theme.getPrimaryWall();
 		WorldGenPrimitive.fillRectHollow(world, rand, x - length - 1, y - 1, z - width - 1, x + length + 1, y + height + 1, z + width + 1, walls, false, true);
 		
-		BlockRandomizer floor = new BlockRandomizer(new MetaBlock(Block.netherBrick.blockID));
+		BlockWeightedRandom floor = new BlockWeightedRandom(new MetaBlock(Block.netherBrick.blockID));
 		floor.addBlock(new MetaBlock(Block.netherrack.blockID), 3);
 		floor.addBlock(new MetaBlock(Block.oreNetherQuartz.blockID), 5);
 		floor.addBlock(new MetaBlock(Block.blockRedstone.blockID), 10);
@@ -41,11 +41,11 @@ public class DungeonsNetherBrick implements IDungeon {
 		WorldGenPrimitive.fillRectSolid(world, rand, x - length - 1, y - 1, z - width - 1, x + length + 1, y - 1, z + width + 1, floor);
 
 		// lava crap under the floor
-		BlockRandomizer subFloor = new BlockRandomizer(new MetaBlock(Block.lavaStill.blockID));
+		BlockWeightedRandom subFloor = new BlockWeightedRandom(new MetaBlock(Block.lavaStill.blockID));
 		subFloor.addBlock(new MetaBlock(Block.obsidian.blockID), 3);
 		WorldGenPrimitive.fillRectSolid(world, rand, x - length, y - 5, z - width, x + length, y - 2, z + width, subFloor);
 		
-		BlockRandomizer ceiling = new BlockRandomizer(new MetaBlock(Block.netherFence.blockID));
+		BlockWeightedRandom ceiling = new BlockWeightedRandom(new MetaBlock(Block.netherFence.blockID));
 		ceiling.addBlock(new MetaBlock(0), 2);
 		WorldGenPrimitive.fillRectSolid(world, rand, x - length, y + height, z - width, x + length, y + height, z + width, ceiling);
 		

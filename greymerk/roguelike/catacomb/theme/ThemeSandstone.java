@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.Random;
 
 import greymerk.roguelike.catacomb.segment.Segment;
-import greymerk.roguelike.worldgen.BlockRandomizer;
+import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.Log;
 import greymerk.roguelike.worldgen.MetaBlock;
 import net.minecraft.src.Block;
@@ -14,7 +14,7 @@ public class ThemeSandstone extends ThemeBase{
 
 	public ThemeSandstone(){
 	
-		BlockRandomizer walls = new BlockRandomizer(new MetaBlock(Block.sandStone.blockID));
+		BlockWeightedRandom walls = new BlockWeightedRandom(new MetaBlock(Block.sandStone.blockID));
 		walls.addBlock(new MetaBlock(Block.sand.blockID), 30);
 		
 		MetaBlock stair = new MetaBlock(Block.stairsSandStone.blockID);

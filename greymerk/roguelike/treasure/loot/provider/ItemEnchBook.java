@@ -9,8 +9,8 @@ import net.minecraft.src.ItemStack;
 
 public class ItemEnchBook extends ItemBase{
 
-	public ItemEnchBook(int weight) {
-		super(weight);
+	public ItemEnchBook(int weight, int level) {
+		super(weight, level);
 	}
 
 	@Override

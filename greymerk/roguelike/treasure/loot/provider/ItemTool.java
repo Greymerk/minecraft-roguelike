@@ -12,9 +12,8 @@ import net.minecraft.src.ItemStack;
 public class ItemTool extends ItemBase {
 
 
-	public ItemTool(int weight) {
-		super(weight);
-		// TODO Auto-generated constructor stub
+	public ItemTool(int weight, int level) {
+		super(weight, level);
 	}
 	
 	@Override

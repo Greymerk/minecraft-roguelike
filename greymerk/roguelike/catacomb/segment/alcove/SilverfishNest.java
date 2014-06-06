@@ -9,7 +9,7 @@ import net.minecraft.src.World;
 import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.catacomb.segment.IAlcove;
 import greymerk.roguelike.catacomb.theme.ITheme;
-import greymerk.roguelike.worldgen.BlockRandomizer;
+import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.Door;
@@ -68,7 +68,7 @@ public class SilverfishNest implements IAlcove{
 	}
 	
 	private void nest(World world, Random rand, int x, int y, int z){
-		BlockRandomizer fish = new BlockRandomizer(new MetaBlock(Block.silverfish.blockID, 1));
+		BlockWeightedRandom fish = new BlockWeightedRandom(new MetaBlock(Block.silverfish.blockID, 1));
 		fish.addBlock(new MetaBlock(Block.slowSand.blockID), 5);
 		WorldGenPrimitive.fillRectHollow(world, rand, x - 2, y, z - 2, x + 2, y + 3, z + 2, fish, true, true);
 		

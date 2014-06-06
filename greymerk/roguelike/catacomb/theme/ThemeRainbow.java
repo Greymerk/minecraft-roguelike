@@ -7,7 +7,7 @@ import java.util.Random;
 import greymerk.roguelike.catacomb.segment.Segment;
 import greymerk.roguelike.worldgen.BlockFactoryCheckers;
 import greymerk.roguelike.worldgen.BlockJumble;
-import greymerk.roguelike.worldgen.BlockRandomizer;
+import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.BlockStripes;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.Log;
@@ -25,11 +25,13 @@ public class ThemeRainbow extends ThemeBase{
 		
 		MetaBlock stair = new MetaBlock(Block.stairsNetherQuartz.blockID);
 		
-		this.walls = new BlockSet(rainbow, stair, rainbow);
+		BlockFactoryCheckers pillar = new BlockFactoryCheckers(new MetaBlock(Block.obsidian.blockID), new MetaBlock(Block.blockNetherQuartz.blockID)); 
+		
+		this.walls = new BlockSet(rainbow, stair, pillar);
 		
 		MetaBlock SegmentWall = new MetaBlock(Block.blockNetherQuartz.blockID, 1);
 		
-		this.decor = walls;
+		this.decor = new BlockSet(new MetaBlock(Block.glowStone.blockID), stair, new MetaBlock(Block.blockEmerald.blockID));;
 		
 		this.segments = new ArrayList<Segment>();
 		segments.addAll(Arrays.asList(Segment.SHELF, Segment.INSET));

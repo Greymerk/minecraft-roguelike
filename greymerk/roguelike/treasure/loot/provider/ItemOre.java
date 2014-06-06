@@ -1,16 +1,14 @@
 package greymerk.roguelike.treasure.loot.provider;
 
-import greymerk.roguelike.treasure.loot.ILootProvider;
-
 import java.util.Random;
 
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 
-public class ItemOre extends ItemBase implements ILootProvider{
+public class ItemOre extends ItemBase{
 
-	public ItemOre(int weight) {
-		super(weight);
+	public ItemOre(int weight, int level) {
+		super(weight, level);
 	}
 
 	@Override

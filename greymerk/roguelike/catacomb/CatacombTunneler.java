@@ -6,7 +6,7 @@ import greymerk.roguelike.catacomb.segment.Segment;
 import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.catacomb.theme.Themes;
 import greymerk.roguelike.worldgen.BlockJumble;
-import greymerk.roguelike.worldgen.BlockRandomizer;
+import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;

@@ -2,7 +2,7 @@ package greymerk.roguelike.catacomb.segment.part;
 
 import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.catacomb.dungeon.Dungeon;
-import greymerk.roguelike.worldgen.BlockRandomizer;
+import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
@@ -16,7 +16,7 @@ import net.minecraft.src.World;
 public class SegmentMossyMushrooms extends SegmentBase {
 
 	private int stairType;
-	private BlockRandomizer mushrooms;
+	private BlockWeightedRandom mushrooms;
 	
 	
 	@Override
@@ -24,7 +24,7 @@ public class SegmentMossyMushrooms extends SegmentBase {
 		
 		MetaBlock stair = theme.getSecondaryStair();
 		
-		mushrooms = new BlockRandomizer(new MetaBlock(Block.mushroomBrown.blockID));
+		mushrooms = new BlockWeightedRandom(new MetaBlock(Block.mushroomBrown.blockID));
 		mushrooms.addBlock(new MetaBlock(Block.mushroomRed.blockID), 3);
 		mushrooms.addBlock(new MetaBlock(0), 10);
 		

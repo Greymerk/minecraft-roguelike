@@ -8,7 +8,7 @@ import net.minecraft.src.World;
 import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.catacomb.dungeon.IDungeon;
 import greymerk.roguelike.catacomb.theme.ITheme;
-import greymerk.roguelike.worldgen.BlockRandomizer;
+import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.MetaBlock;
@@ -26,7 +26,7 @@ public class DungeonOssuary implements IDungeon {
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 7, y + 5, z - 7, x + 7, y + 5, z + 7, walls);
 		
 		// any missing floor
-		BlockRandomizer cracked = new BlockRandomizer(new MetaBlock(Block.stoneBrick.blockID, 2));
+		BlockWeightedRandom cracked = new BlockWeightedRandom(new MetaBlock(Block.stoneBrick.blockID, 2));
 		cracked.addBlock(new MetaBlock(0), 3);
 		cracked.addBlock(new MetaBlock(Block.cobblestone.blockID), 5);
 		cracked.addBlock(new MetaBlock(Block.gravel.blockID), 5);

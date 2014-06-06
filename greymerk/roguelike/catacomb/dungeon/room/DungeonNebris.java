@@ -9,7 +9,7 @@ import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.treasure.ITreasureChest;
 import greymerk.roguelike.treasure.TreasureChestEmpty;
 import greymerk.roguelike.treasure.loot.provider.ItemNovelty;
-import greymerk.roguelike.worldgen.BlockRandomizer;
+import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
@@ -20,7 +20,7 @@ public class DungeonNebris implements IDungeon {
 	@Override
 	public boolean generate(World world, Random rand, ITheme theme, int x, int y, int z) {
 		
-		BlockRandomizer waterFloor = new BlockRandomizer(new MetaBlock(Block.cobblestone.blockID));
+		BlockWeightedRandom waterFloor = new BlockWeightedRandom(new MetaBlock(Block.cobblestone.blockID));
 		waterFloor.addBlock(new MetaBlock(Block.glowStone.blockID), 7);
 		
 		

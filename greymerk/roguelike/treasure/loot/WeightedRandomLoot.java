@@ -1,13 +1,15 @@
 package greymerk.roguelike.treasure.loot;
 
 
+import greymerk.roguelike.util.IWeighted;
+
 import java.util.Random;
 
 import com.google.gson.JsonObject;
 
 import net.minecraft.src.ItemStack;
 
-public class WeightedRandomLoot implements Comparable, ILootProvider{
+public class WeightedRandomLoot implements Comparable, IWeighted{
 	
 	private int id;
 	private int damage;
@@ -17,9 +19,6 @@ public class WeightedRandomLoot implements Comparable, ILootProvider{
 	
 	private int weight;
 	
-	
-
-	
 	public WeightedRandomLoot(int id, int damage, int minStackSize, int maxStackSize, int weight){
 		this.id = id;
 		this.damage = damage;
@@ -27,14 +26,25 @@ public class WeightedRandomLoot implements Comparable, ILootProvider{
 		this.max = maxStackSize;
 		this.weight = weight;
 	}
+
+	public WeightedRandomLoot(JsonObject json){
+		id = json.get("id").getAsInt();
+		damage = json.has("meta") ? json.get("meta").getAsInt() : 0;
+		weight = json.get("weight").getAsInt();
+
+		if(json.has("min") && json.has("max")){
+			min = json.get("min").getAsInt();
+			max = json.get("max").getAsInt();	
+		} else {
+			min = 1;
+			max = 1;
+		}		
+	}
+	
 	
 	public WeightedRandomLoot(int id, int damage, int weight){
 		this(id, damage, 1, 1, weight);
 	}	
-	
-	public ItemStack getLootItem(Random rand, int level) {
-		return new ItemStack(id, getStackSize(rand), damage);
-	}
 	
 	private int getStackSize(Random rand){
 		if (max == 1) return 1;
@@ -53,27 +63,14 @@ public class WeightedRandomLoot implements Comparable, ILootProvider{
 		return 0;
 	}
 	
-	public static WeightedRandomLoot decode(JsonObject item){
-		
-		int id = item.get("id").getAsInt();
-		int dam = item.has("meta") ? item.get("meta").getAsInt() : 0;
-		int min;
-		int max;
-		int weight = item.get("weight").getAsInt();
-
-		if(item.has("min") && item.has("max")){
-			min = item.get("min").getAsInt();
-			max = item.get("max").getAsInt();	
-		} else {
-			min = 1;
-			max = 1;
-		}
-		
-		return new WeightedRandomLoot(id, dam, min, max, weight);
-	}
-	
+	@Override
 	public int getWeight(){
 		return this.weight;
+	}
+
+	@Override
+	public ItemStack get(Random rand) {
+		return new ItemStack(id, damage, this.getStackSize(rand));
 	}
 
 

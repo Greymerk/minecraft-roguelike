@@ -8,8 +8,8 @@ import net.minecraft.src.ItemStack;
 
 public class ItemSupply extends ItemBase{
 
-	public ItemSupply(int weight) {
-		super(weight);
+	public ItemSupply(int weight, int level) {
+		super(weight, level);
 	}
 
 	@Override

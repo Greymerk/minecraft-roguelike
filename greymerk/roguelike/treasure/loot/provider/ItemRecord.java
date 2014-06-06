@@ -8,8 +8,8 @@ import net.minecraft.src.ItemStack;
 
 public class ItemRecord extends ItemBase{
 
-	public ItemRecord(int weight) {
-		super(weight);
+	public ItemRecord(int weight, int level) {
+		super(weight, level);
 	}
 
 	@Override

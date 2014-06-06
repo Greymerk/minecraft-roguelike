@@ -9,8 +9,8 @@ import net.minecraft.src.ItemStack;
 
 public class ItemPotion extends ItemBase{
 
-	public ItemPotion(int weight) {
-		super(weight);
+	public ItemPotion(int weight, int level) {
+		super(weight, level);
 	}
 
 	@Override

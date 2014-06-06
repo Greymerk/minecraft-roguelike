@@ -6,7 +6,7 @@ import java.util.Random;
 
 import greymerk.roguelike.catacomb.segment.Segment;
 import greymerk.roguelike.worldgen.BlockJumble;
-import greymerk.roguelike.worldgen.BlockRandomizer;
+import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.Log;
 import greymerk.roguelike.worldgen.MetaBlock;
 import net.minecraft.src.Block;
@@ -19,7 +19,7 @@ public class ThemeSpruce extends ThemeBase{
 		rubble.addBlock(new MetaBlock(Block.cobblestone.blockID));
 		rubble.addBlock(new MetaBlock(Block.gravel.blockID));
 		
-		BlockRandomizer walls = new BlockRandomizer(new MetaBlock(Block.stoneBrick.blockID));
+		BlockWeightedRandom walls = new BlockWeightedRandom(new MetaBlock(Block.stoneBrick.blockID));
 		walls.addBlock(rubble, 3);
 		
 		MetaBlock stair = new MetaBlock(Block.stairsStoneBrick.blockID);

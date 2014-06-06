@@ -11,7 +11,7 @@ import greymerk.roguelike.catacomb.dungeon.IDungeon;
 import greymerk.roguelike.catacomb.dungeon.IDungeonFactory;
 import greymerk.roguelike.catacomb.segment.ISegment;
 import greymerk.roguelike.catacomb.segment.Segment;
-import greymerk.roguelike.worldgen.BlockRandomizer;
+import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;

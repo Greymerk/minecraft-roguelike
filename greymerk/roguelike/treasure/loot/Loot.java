@@ -16,7 +16,10 @@ import greymerk.roguelike.treasure.loot.provider.ItemSmithy;
 import greymerk.roguelike.treasure.loot.provider.ItemSupply;
 import greymerk.roguelike.treasure.loot.provider.ItemTool;
 import greymerk.roguelike.treasure.loot.provider.ItemWeapon;
+import greymerk.roguelike.util.IWeighted;
 import greymerk.roguelike.util.TextFormat;
+import greymerk.roguelike.util.WeightedChoice;
+import greymerk.roguelike.util.WeightedRandomizer;
 
 import java.util.Dictionary;
 import java.util.HashMap;
@@ -43,7 +46,8 @@ public enum Loot {
 
 	WEAPON, ARMOUR, BLOCK, JUNK, ORE, TOOL, POTION, FOOD, ENCHANTBOOK, ENCHANTBONUS, SUPPLY, MUSIC, SMITHY;
 	
-	private static Map<String, ILootProvider> loot = new HashMap<String, ILootProvider>();
+	private static final int NUM_LEVELS = 5;
+	private static Map<String, LootProvider> loot = new HashMap<String, LootProvider>();
 	static{
 		init();
 	}
@@ -54,22 +58,24 @@ public enum Loot {
 		for(Loot type : Loot.values()){
 			LootProvider loots;
 			
-			loot.put(type.name(), loots = new LootProvider(0));
+			loot.put(type.name(), loots = new LootProvider());
 			
-			switch(type){
-			case WEAPON: loots.addAllLevels(new ItemWeapon(1000)); continue;
-			case ARMOUR: loots.addAllLevels(new ItemArmour(1000)); continue;
-			case BLOCK: loots.addAllLevels(new ItemBlock(1000)); continue;
-			case JUNK: loots.addAllLevels(new ItemJunk(1000)); continue;
-			case ORE: loots.addAllLevels(new ItemOre(1000)); continue;
-			case TOOL: loots.addAllLevels(new ItemTool(1000)); continue;
-			case POTION: loots.addAllLevels(new ItemPotion(1000)); continue;
-			case FOOD: loots.addAllLevels(new ItemFood(1000)); continue;
-			case ENCHANTBOOK: loots.addAllLevels(new ItemEnchBook(1000)); continue;
-			case ENCHANTBONUS: loots.addAllLevels(new ItemEnchBonus(1000)); continue;
-			case SUPPLY: loots.addAllLevels(new ItemSupply(1000)); continue;
-			case MUSIC: loots.addAllLevels(new ItemRecord(1000)); continue;
-			case SMITHY: loots.addAllLevels(new ItemSmithy(1000)); continue;
+			for(int i = 0; i < NUM_LEVELS; ++i){
+				switch(type){
+					case WEAPON: loots.add(i, new ItemWeapon(1000, i)); continue;
+					case ARMOUR: loots.add(i, new ItemArmour(1000, i)); continue;
+					case BLOCK: loots.add(i, new ItemBlock(1000, i)); continue;
+					case JUNK: loots.add(i, new ItemJunk(1000, i)); continue;
+					case ORE: loots.add(i, new ItemOre(1000, i)); continue;
+					case TOOL: loots.add(i, new ItemTool(1000, i)); continue;
+					case POTION: loots.add(i, new ItemPotion(1000, i)); continue;
+					case FOOD: loots.add(i, new ItemFood(1000, i)); continue;
+					case ENCHANTBOOK: loots.add(i, new ItemEnchBook(1000, i)); continue;
+					case ENCHANTBONUS: loots.add(i, new ItemEnchBonus(1000, i)); continue;
+					case SUPPLY: loots.add(i, new ItemSupply(1000, i)); continue;
+					case MUSIC: loots.add(i, new ItemRecord(1000, i)); continue;
+					case SMITHY: loots.add(i, new ItemSmithy(1000, i)); continue;
+				}
 			}
 		}
 
@@ -78,22 +84,23 @@ public enum Loot {
 	}
 	
 	public static void clear(Loot type){
-		LootProvider lootp = (LootProvider)loot.get(type.name());
+		LootProvider lootp = loot.get(type.name());
 		lootp.clear();
 	}
 	
-	public static void addAllLevels(Loot type, ILootProvider toAdd){
-		LootProvider lootp = (LootProvider)loot.get(type.name());
+	public static void addAllLevels(Loot type, IWeighted toAdd){
+		LootProvider lootp = loot.get(type.name());
 		lootp.addAllLevels(toAdd);
 	}
 	
-	public static void add(Loot type, ILootProvider toAdd, int level){
-		LootProvider lootp = (LootProvider)loot.get(type.name());
+	public static void add(Loot type, IWeighted toAdd, int level){
+		LootProvider lootp = loot.get(type.name());
 		lootp.add(level, toAdd);
 	}
 	
 	public static ItemStack getLoot(Loot type, Random rand, int level){
-		return loot.get(type.name()).getLootItem(rand, level);
+		LootProvider p =  loot.get(type.name());
+		return p.get(rand, level);		
 	}
 	
 	public static ItemStack getEquipmentBySlot(Random rand, Slot slot, int level, boolean enchant){

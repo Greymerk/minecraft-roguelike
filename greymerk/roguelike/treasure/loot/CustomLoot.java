@@ -70,12 +70,12 @@ public class CustomLoot{
 		JsonObject item = entry.get("add").getAsJsonObject();
 		String type = item.get("type").getAsString();
 		int level = item.get("level").getAsInt();
-		Loot.add(Loot.valueOf(type), WeightedRandomLoot.decode(item), level);
+		Loot.add(Loot.valueOf(type), new WeightedRandomLoot(item), level);
 	}
 	
 	public static void addAll(JsonObject entry){
 		JsonObject item = entry.get("addAll").getAsJsonObject();
 		String type = item.get("type").getAsString();
-		Loot.addAllLevels(Loot.valueOf(type), WeightedRandomLoot.decode(item));
+		Loot.addAllLevels(Loot.valueOf(type), new WeightedRandomLoot(item));
 	}
 }

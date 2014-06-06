@@ -4,7 +4,7 @@ import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.catacomb.theme.Themes;
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.treasure.TreasureChestStarter;
-import greymerk.roguelike.worldgen.BlockRandomizer;
+import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
@@ -70,7 +70,7 @@ public class CatacombTower {
 		
 		MetaBlock air = new MetaBlock(0);
 		
-		BlockRandomizer blocks = new BlockRandomizer(theme.getPrimaryWall());
+		BlockWeightedRandom blocks = new BlockWeightedRandom(theme.getPrimaryWall());
 		blocks.addBlock(air, 10);
 		
 		MetaBlock stair = theme.getPrimaryStair();

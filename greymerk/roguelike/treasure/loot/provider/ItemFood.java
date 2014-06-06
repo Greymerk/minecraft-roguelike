@@ -7,8 +7,8 @@ import net.minecraft.src.ItemStack;
 
 public class ItemFood extends ItemBase{
 
-	public ItemFood(int weight) {
-		super(weight);
+	public ItemFood(int weight, int level) {
+		super(weight, level);
 	}
 
 	@Override

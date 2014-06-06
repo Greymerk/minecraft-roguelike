@@ -13,7 +13,7 @@ import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.treasure.ITreasureChest;
 import greymerk.roguelike.treasure.TreasureChestEmpty;
 import greymerk.roguelike.treasure.loot.provider.ItemNovelty;
-import greymerk.roguelike.worldgen.BlockRandomizer;
+import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
@@ -35,7 +35,7 @@ public class DungeonBaj implements IDungeon {
 		
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 3, y - 1, z - 3, x + 3, y - 1, z + 3, Block.waterMoving.blockID);
 		
-		BlockRandomizer walls = new BlockRandomizer(new MetaBlock(Block.stone.blockID));
+		BlockWeightedRandom walls = new BlockWeightedRandom(new MetaBlock(Block.stone.blockID));
 		walls.addBlock(new MetaBlock(Block.dirt.blockID), 5);
 		walls.addBlock(new MetaBlock(Block.gravel.blockID), 15);
 		
@@ -76,7 +76,7 @@ public class DungeonBaj implements IDungeon {
 		walls.setBlock(world, rand, x + 3, y - 1, z + 2);
 		walls.setBlock(world, rand, x + 2, y - 1, z + 3);
 		
-		BlockRandomizer roof = new BlockRandomizer(new MetaBlock(Block.stone.blockID));
+		BlockWeightedRandom roof = new BlockWeightedRandom(new MetaBlock(Block.stone.blockID));
 		roof.addBlock(new MetaBlock(0), 2);
 		roof.addBlock(new MetaBlock(Block.dirt.blockID), 5);
 		

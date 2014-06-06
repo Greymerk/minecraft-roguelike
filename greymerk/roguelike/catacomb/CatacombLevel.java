@@ -1,6 +1,5 @@
 package greymerk.roguelike.catacomb;
 
-import greymerk.roguelike.catacomb.dungeon.Dungeon;
 import greymerk.roguelike.catacomb.dungeon.IDungeon;
 import greymerk.roguelike.catacomb.dungeon.IDungeonFactory;
 import greymerk.roguelike.catacomb.theme.ITheme;

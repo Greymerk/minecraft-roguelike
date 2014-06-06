@@ -9,11 +9,11 @@ import java.util.Stack;
 
 import net.minecraft.src.World;
 
-public class BlockRandomizer implements IBlockFactory{
+public class BlockWeightedRandom implements IBlockFactory{
 
 	LinkedList<BlockChoice> blocks;
-
-	public BlockRandomizer(IBlockFactory defaultBlock){
+	
+	public BlockWeightedRandom(IBlockFactory defaultBlock){
 		this.blocks = new LinkedList<BlockChoice>();
 		blocks.add(new BlockChoice(defaultBlock, 1));
 	}

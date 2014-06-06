@@ -7,8 +7,8 @@ import net.minecraft.src.ItemStack;
 
 public class ItemEnchBonus extends ItemBase{
 
-	public ItemEnchBonus(int weight) {
-		super(weight);
+	public ItemEnchBonus(int weight, int level) {
+		super(weight, level);
 	}
 
 	@Override

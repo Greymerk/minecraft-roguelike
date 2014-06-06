@@ -1,6 +1,5 @@
 package greymerk.roguelike.treasure.loot.provider;
 
-import greymerk.roguelike.treasure.loot.ILootProvider;
 import greymerk.roguelike.treasure.loot.PotionMixture;
 
 import java.util.Random;
@@ -9,10 +8,10 @@ import net.minecraft.src.Block;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 
-public class ItemJunk extends ItemBase implements ILootProvider{
+public class ItemJunk extends ItemBase{
 
-	public ItemJunk(int weight) {
-		super(weight);
+	public ItemJunk(int weight, int level) {
+		super(weight, level);
 	}
 
 	@Override

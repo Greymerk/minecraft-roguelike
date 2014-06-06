@@ -12,7 +12,7 @@ import greymerk.roguelike.treasure.ITreasureChest;
 import greymerk.roguelike.treasure.TreasureChestEmpty;
 import greymerk.roguelike.treasure.loot.Loot;
 import greymerk.roguelike.treasure.loot.provider.ItemNovelty;
-import greymerk.roguelike.worldgen.BlockRandomizer;
+import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.MetaBlock;
@@ -25,7 +25,7 @@ public class DungeonEtho implements IDungeon {
 
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 5, y, z - 5, x + 5, y + 3, z + 5, 0);
 		
-		BlockRandomizer leafJumble = new BlockRandomizer(new MetaBlock(0));
+		BlockWeightedRandom leafJumble = new BlockWeightedRandom(new MetaBlock(0));
 		leafJumble.addBlock(new MetaBlock(Block.leaves.blockID, 4), 2);
 		leafJumble.addBlock(new MetaBlock(Block.wood.blockID), 20);
 		
@@ -51,7 +51,7 @@ public class DungeonEtho implements IDungeon {
 		WorldGenPrimitive.setBlock(world, x - 5, y, z + 5, Block.waterMoving.blockID);
 		
 		// alcove walls with diamonds
-		BlockRandomizer ethoStone = new BlockRandomizer(new MetaBlock(Block.stone.blockID));
+		BlockWeightedRandom ethoStone = new BlockWeightedRandom(new MetaBlock(Block.stone.blockID));
 		ethoStone.addBlock(new MetaBlock(Block.oreDiamond.blockID), 15);
 		
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 6, y, z - 5, x - 6, y + 4, z - 4, ethoStone);

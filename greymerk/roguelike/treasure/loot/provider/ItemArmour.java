@@ -1,8 +1,6 @@
 package greymerk.roguelike.treasure.loot.provider;
 
-import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.treasure.loot.Equipment;
-import greymerk.roguelike.treasure.loot.ILootProvider;
 import greymerk.roguelike.treasure.loot.Loot;
 import greymerk.roguelike.treasure.loot.Quality;
 import greymerk.roguelike.treasure.loot.Slot;
@@ -13,10 +11,10 @@ import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.NBTTagCompound;
 
-public class ItemArmour extends ItemBase implements ILootProvider {
+public class ItemArmour extends ItemBase {
 
-	public ItemArmour(int weight) {
-		super(weight);
+	public ItemArmour(int weight, int level) {
+		super(weight, level);
 	}
 	
 	@Override

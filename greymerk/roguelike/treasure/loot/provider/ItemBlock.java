@@ -9,8 +9,8 @@ import net.minecraft.src.ItemStack;
 
 public class ItemBlock extends ItemBase{
 	
-	public ItemBlock(int weight) {
-		super(weight);
+	public ItemBlock(int weight, int level) {
+		super(weight, level);
 	}
 
 	@Override

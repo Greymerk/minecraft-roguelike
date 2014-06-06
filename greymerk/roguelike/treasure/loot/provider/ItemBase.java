@@ -1,24 +1,31 @@
 package greymerk.roguelike.treasure.loot.provider;
 
-import greymerk.roguelike.treasure.loot.ILootProvider;
+import greymerk.roguelike.util.IWeighted;
+import greymerk.roguelike.util.WeightedChoice;
 
 import java.util.Random;
 
 import net.minecraft.src.ItemStack;
 
-public abstract class ItemBase implements ILootProvider {
+public abstract class ItemBase implements IWeighted<ItemStack> {
 
 	private int weight;
+	int level;
 	
-	public ItemBase(int weight){
+	public ItemBase(int weight, int level){
 		this.weight = weight;
+		this.level = level;
 	}
 	
-	@Override
 	public abstract ItemStack getLootItem(Random rand, int level);
 
 	@Override
 	public int getWeight() {
 		return weight;
+	}
+	
+	@Override
+	public ItemStack get(Random rand) {
+		return getLootItem(rand, level);
 	}
 }

@@ -2,7 +2,7 @@ package greymerk.roguelike.catacomb.segment.part;
 
 import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.catacomb.dungeon.Dungeon;
-import greymerk.roguelike.worldgen.BlockRandomizer;
+import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
@@ -16,7 +16,7 @@ import net.minecraft.src.World;
 public class SegmentJungle extends SegmentBase {
 
 	private int stairType;
-	private BlockRandomizer mushrooms;
+	private BlockWeightedRandom mushrooms;
 	
 	
 	@Override

@@ -42,7 +42,6 @@ public enum Themes {
 		
 		switch(level){
 		case 0:
-			if(cold) return getTheme(SNOW);
 			if(hot && dry) return getTheme(SANDSTONE);
 			if(hot && wet) return getTheme(JUNGLE);
 			return getTheme(OAK);

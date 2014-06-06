@@ -1,7 +1,6 @@
 package greymerk.roguelike.treasure.loot.provider;
 
 import greymerk.roguelike.treasure.loot.Equipment;
-import greymerk.roguelike.treasure.loot.ILootProvider;
 import greymerk.roguelike.treasure.loot.Loot;
 import greymerk.roguelike.treasure.loot.Quality;
 
@@ -10,10 +9,10 @@ import java.util.Random;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 
-public class ItemWeapon extends ItemBase implements ILootProvider{
+public class ItemWeapon extends ItemBase{
 	
-	public ItemWeapon(int weight) {
-		super(weight);
+	public ItemWeapon(int weight, int level) {
+		super(weight, level);
 	}
 	
 	@Override
@@ -74,6 +73,8 @@ public class ItemWeapon extends ItemBase implements ILootProvider{
 		default: return new ItemStack(Item.swordWood);
 		}
 	}
+
+
 
 
 	

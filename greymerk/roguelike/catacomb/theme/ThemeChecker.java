@@ -6,7 +6,7 @@ import java.util.Random;
 
 import greymerk.roguelike.catacomb.segment.Segment;
 import greymerk.roguelike.worldgen.BlockFactoryCheckers;
-import greymerk.roguelike.worldgen.BlockRandomizer;
+import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.BlockStripes;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.Log;
