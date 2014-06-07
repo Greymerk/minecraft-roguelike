@@ -25,6 +25,10 @@ public class WeightedRandomizer<T> implements IWeighted<T>{
 		return weight;
 	}
 	
+	public boolean isEmpty(){
+		return items.isEmpty();
+	}
+	
 	public void add(IWeighted<T> toAdd){
 		this.weightSum += toAdd.getWeight();
 		this.items.add(toAdd);

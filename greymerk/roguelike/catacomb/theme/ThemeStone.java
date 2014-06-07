@@ -15,7 +15,8 @@ public class ThemeStone extends ThemeBase{
 
 	public ThemeStone(){
 	
-		BlockJumble stone = new BlockJumble(new MetaBlock(Block.stoneBrick.blockID));
+		BlockJumble stone = new BlockJumble();
+		stone.addBlock(new MetaBlock(Block.stoneBrick.blockID));
 		stone.addBlock(new MetaBlock(Block.stoneBrick.blockID, 1));
 		stone.addBlock(new MetaBlock(Block.stoneBrick.blockID, 2));
 		

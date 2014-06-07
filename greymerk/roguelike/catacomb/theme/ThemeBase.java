@@ -24,11 +24,18 @@ public class ThemeBase implements ITheme {
 	protected List<Segment> segments;
 	protected Segment arch;
 	
-	public ThemeBase(IBlockSet walls, IBlockSet decor, List<Segment> segments, Segment arch, IDungeonFactory rooms){
+	public ThemeBase(IBlockSet walls, IBlockSet decor, List<Segment> segments, Segment arch){
 		this.walls = walls;
 		this.decor = decor;
 		this.segments = segments;
 		this.arch = arch;
+	}
+	
+	public ThemeBase(ThemeBase base, IBlockSet walls, IBlockSet decor, List<Segment> segments, Segment arch){
+		this.walls = walls == null ? base.walls : walls;
+		this.decor = decor == null ? base.decor : decor;
+		this.segments = segments == null ? base.segments : segments;
+		this.arch = arch == null ? base.arch : arch;
 	}
 	
 	public ThemeBase(){}

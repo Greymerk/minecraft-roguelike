@@ -15,7 +15,8 @@ public class ThemeSpruce extends ThemeBase{
 
 	public ThemeSpruce(){
 	
-		BlockJumble rubble = new BlockJumble(new MetaBlock(Block.stoneBrick.blockID, 2));
+		BlockJumble rubble = new BlockJumble();
+		rubble.addBlock(new MetaBlock(Block.stoneBrick.blockID, 2));
 		rubble.addBlock(new MetaBlock(Block.cobblestone.blockID));
 		rubble.addBlock(new MetaBlock(Block.gravel.blockID));
 		

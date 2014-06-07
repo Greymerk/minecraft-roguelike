@@ -1,8 +1,16 @@
 package greymerk.roguelike.catacomb.theme;
 
+import greymerk.roguelike.catacomb.segment.Segment;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 import net.minecraft.src.BiomeGenBase;
 
@@ -31,6 +39,50 @@ public enum Themes {
 		}
 		
 		return theme;
+	}
+	
+	public static ITheme create(JsonObject json) throws Exception{
+				
+		ITheme theme;
+		BlockSet primary = null;
+		BlockSet secondary = null;
+		List<Segment> segments = null;
+		Segment arch = null;
+
+		// primary blocks
+		if(json.has("primary")){
+			JsonObject data = json.get("primary").getAsJsonObject();		
+			primary = new BlockSet(data);
+		}
+		
+		// secondary blocks
+		if(json.has("secondary")){
+			JsonObject data = json.get("secondary").getAsJsonObject();		
+			secondary = new BlockSet(data);
+		}
+	
+		if(json.has("segments")){
+			segments = new ArrayList<Segment>();
+			JsonArray data = json.get("segments").getAsJsonArray();
+			for(JsonElement e : data){
+				segments.add(Segment.valueOf(e.getAsString()));
+			}
+		}
+		
+		if(json.has("arch")){
+			String s = json.get("arch").getAsString();
+			arch = Segment.valueOf(s);
+		}
+		
+		if(json.has("base")){
+			theme = Themes.getTheme(Themes.valueOf(json.get("base").getAsString()));
+			return new ThemeBase((ThemeBase) theme, primary, secondary, segments, arch);
+		} else {
+			return new ThemeBase(primary, secondary, segments, arch);
+		}
+		
+		
+		
 	}
 	
 	public static ITheme getByLevel(BiomeGenBase biome, int level){

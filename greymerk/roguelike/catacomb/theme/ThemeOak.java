@@ -15,12 +15,13 @@ public class ThemeOak extends ThemeBase{
 
 	public ThemeOak(){
 	
-		BlockJumble rubble = new BlockJumble(new MetaBlock(Block.stoneBrick.blockID, 2));
+		BlockJumble rubble = new BlockJumble();
+		rubble.addBlock(new MetaBlock(Block.stoneBrick.blockID, 2));
 		rubble.addBlock(new MetaBlock(Block.cobblestone.blockID));
 		
 		BlockWeightedRandom walls = new BlockWeightedRandom();
-		walls.addBlock(new MetaBlock(Block.stoneBrick.blockID), 100);
-		walls.addBlock(rubble, 20);
+		walls.addBlock(new MetaBlock(Block.stoneBrick.blockID), 20);
+		walls.addBlock(rubble, 10);
 		
 		MetaBlock stair = new MetaBlock(Block.stairsStoneBrick.blockID);
 		MetaBlock pillar = Log.getLog(Log.OAK);

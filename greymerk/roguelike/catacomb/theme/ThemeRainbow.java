@@ -18,7 +18,7 @@ public class ThemeRainbow extends ThemeBase{
 
 	public ThemeRainbow(){
 	
-		BlockStripes rainbow = new BlockStripes(new MetaBlock(Block.stainedClay.blockID));
+		BlockStripes rainbow = new BlockStripes();
 		for(int i = 1; i < 16; ++i){
 			rainbow.addBlock(new MetaBlock(Block.stainedClay.blockID, i));
 		}

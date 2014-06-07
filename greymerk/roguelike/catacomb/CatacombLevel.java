@@ -1,5 +1,6 @@
 package greymerk.roguelike.catacomb;
 
+import greymerk.roguelike.catacomb.dungeon.DungeonFactoryProvider;
 import greymerk.roguelike.catacomb.dungeon.IDungeon;
 import greymerk.roguelike.catacomb.dungeon.IDungeonFactory;
 import greymerk.roguelike.catacomb.theme.ITheme;
@@ -32,14 +33,16 @@ public class CatacombLevel {
 	private boolean done;
 	private int maxNodes;
 	private int range;
+	private IDungeonFactory rooms;
 	private ITheme theme;
 	
 	
-	public CatacombLevel(World world, Random rand, ITheme theme, int originX, int originY, int originZ){
+	public CatacombLevel(World world, Random rand, IDungeonFactory rooms, ITheme theme, int originX, int originY, int originZ){
 		this.world = world;
 		this.nodes = new ArrayList<CatacombNode>();
 				
 		this.rand = rand;
+		this.rooms = rooms;
 		this.theme = theme;
 		this.originX = originX;
 		this.originY = originY;
@@ -53,11 +56,12 @@ public class CatacombLevel {
 		nodes.add(start);
 	}
 	
-	public CatacombLevel(World world, Random rand, ITheme theme, int originX, int originY, int originZ, int maxNodes, int range){
+	public CatacombLevel(World world, Random rand, IDungeonFactory rooms, ITheme theme, int originX, int originY, int originZ, int maxNodes, int range){
 		this.world = world;
 		this.nodes = new ArrayList<CatacombNode>();
 				
 		this.rand = rand;
+		this.rooms = rooms;
 		this.theme = theme;
 		this.originX = originX;
 		this.originY = originY;
@@ -78,8 +82,6 @@ public class CatacombLevel {
 			node.construct(world);
 		}
 
-		IDungeonFactory rooms = Catacomb.getFactory(rand, Catacomb.getLevel(originY));
-		
 		Collections.shuffle(nodes, rand);
 		
 		// node dungeons
@@ -97,7 +99,7 @@ public class CatacombLevel {
 				continue;
 			}
 
-			IDungeon toGenerate = rooms.get();
+			IDungeon toGenerate = rooms.get(rand);
 			node.setDungeon(toGenerate);
 			toGenerate.generate(world, rand, theme, x, y, z);
 		}

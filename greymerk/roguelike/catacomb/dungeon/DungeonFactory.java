@@ -2,6 +2,8 @@ package greymerk.roguelike.catacomb.dungeon;
 
 
 import greymerk.roguelike.config.RogueConfig;
+import greymerk.roguelike.util.WeightedChoice;
+import greymerk.roguelike.util.WeightedRandomizer;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,21 +11,45 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
 public class DungeonFactory implements IDungeonFactory {
 
+	private boolean secret;
+	private WeightedRandomizer<Dungeon> secrets;
 	private List<Dungeon> singles;
-	private LinkedList<DungeonWeightedChoice> types;
-	private Random rand;
+	private WeightedRandomizer<Dungeon> multiple;
 
-	public DungeonFactory(Random rand, Dungeon base){
+	public DungeonFactory(){
+		secrets = new WeightedRandomizer<Dungeon>();
 		singles = new ArrayList<Dungeon>();
-		types = new LinkedList<DungeonWeightedChoice>();
-		addRandom(base, 1);
-		this.rand = rand;
+		multiple = new WeightedRandomizer<Dungeon>();
 	}
 	
-	public void addSingle(Dungeon toAdd){
-		singles.add(toAdd);
+	public DungeonFactory(JsonArray json) {
+		this();
+		
+		for(JsonElement e : json){
+			JsonObject entry = e.getAsJsonObject();
+			String mode = entry.get("mode").getAsString();
+			if(mode.equals("single")){
+				this.addSingle(Dungeon.valueOf(entry.get("type").getAsString()));
+			}
+			
+			if(mode.equals("random")){
+				this.addRandom(Dungeon.valueOf(entry.get("type").getAsString()), entry.get("weight").getAsInt());
+			}
+		}
+	}
+
+	public void addSecret(Dungeon type, int weight){
+		secrets.add(new WeightedChoice<Dungeon>(type, weight));
+	}
+	
+	public void addSingle(Dungeon type){
+		singles.add(type);
 	}
 	
 	public void addByRatio(Dungeon toAdd, int rate){
@@ -41,25 +67,22 @@ public class DungeonFactory implements IDungeonFactory {
 		}
 	}
 	
-	public void addRandom(Dungeon type, int chance){
-		types.addFirst(new DungeonWeightedChoice(type, chance));
-		Collections.sort(types);
-		Collections.reverse(types);
+	public void addRandom(Dungeon type, int weight){
+		multiple.add(new WeightedChoice<Dungeon>(type, weight));
 	}
 	
 	@Override
-	public IDungeon get() {
+	public IDungeon get(Random rand) {
 		
-		if(!(singles.isEmpty())){
-			return Dungeon.getInstance(singles.remove(0));
+		if(secret && !secrets.isEmpty()){
+			secret = false;
+			return Dungeon.getInstance(secrets.get(rand));
 		}
 		
-		for(DungeonWeightedChoice choice : types){
-			if(choice.choose(rand)){
-				return choice.getInstance();
-			}
-		}
+		if(!singles.isEmpty()) return Dungeon.getInstance(singles.remove(0));
 		
-		return types.getLast().getInstance();
+		if(!multiple.isEmpty()) return Dungeon.getInstance(multiple.get(rand));
+		
+		return Dungeon.getInstance(Dungeon.CORNER);
 	}
 }

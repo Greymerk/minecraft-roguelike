@@ -2,6 +2,7 @@ package greymerk.roguelike.worldgen;
 
 import java.util.Random;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import net.minecraft.src.World;
@@ -26,8 +27,8 @@ public class MetaBlock implements IBlockFactory{
 		this.flag = flag;
 	}
 	
-	public MetaBlock(JsonObject json) throws Exception{
-		
+	public MetaBlock(JsonElement data) throws Exception{
+		JsonObject json = (JsonObject)data;
 		if(!json.has("id")) throw new Exception("MetaBlock JSON requires an id field");
 		
 		blockID = json.get("id").getAsInt();

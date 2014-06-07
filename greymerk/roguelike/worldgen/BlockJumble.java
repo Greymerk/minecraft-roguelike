@@ -4,17 +4,31 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
 import net.minecraft.src.World;
 
 public class BlockJumble implements IBlockFactory {
 
 	private List<IBlockFactory> blocks;
 	
-	public BlockJumble(IBlockFactory defaultBlock){
+	public BlockJumble(){
 		blocks = new ArrayList<IBlockFactory>();
-		blocks.add(defaultBlock);
 	}
 	
+	public BlockJumble(JsonElement data) throws Exception {
+		this();
+		for(JsonElement entry : (JsonArray)data){
+			JsonObject d = entry.getAsJsonObject();
+			String type = d.get("type").getAsString();
+			JsonElement blockJson = d.get("data");
+			IBlockFactory toAdd = BlockFactory.create(type, blockJson);
+			this.addBlock(toAdd);
+		}
+	}
+
 	public void addBlock(IBlockFactory toAdd){
 		blocks.add(toAdd);
 	}

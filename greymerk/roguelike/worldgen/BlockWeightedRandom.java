@@ -2,6 +2,10 @@ package greymerk.roguelike.worldgen;
 
 import java.util.Random;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
 import net.minecraft.src.World;
 
 import greymerk.roguelike.util.WeightedChoice;
@@ -15,14 +19,22 @@ public class BlockWeightedRandom implements IBlockFactory{
 		blocks = new WeightedRandomizer<IBlockFactory>();
 	}
 	
+	public BlockWeightedRandom(JsonElement data) throws Exception {
+		this();
+		for(JsonElement entry : (JsonArray)data){
+			JsonObject d = entry.getAsJsonObject();
+			String type = d.get("type").getAsString();
+			JsonElement blockJson = d.get("data");
+			int weight = d.get("weight").getAsInt();
+			IBlockFactory toAdd = BlockFactory.create(type, blockJson);
+			this.addBlock(toAdd, weight);
+		}
+	}
+
 	public void addBlock(IBlockFactory toAdd, int weight){
 		blocks.add(new WeightedChoice<IBlockFactory>(toAdd, weight));
 	}
 	
-	public IBlockFactory get(Random rand){
-		return blocks.get(rand);
-	}
-
 	@Override
 	public void setBlock(World world, Random rand, int x, int y, int z) {
 		setBlock(world, rand, x, y, z, true, true);
@@ -33,6 +45,4 @@ public class BlockWeightedRandom implements IBlockFactory{
 		IBlockFactory block = blocks.get(rand);
 		block.setBlock(world, rand, x, y, z, fillAir, replaceSolid);
 	}
-	
-	
 }

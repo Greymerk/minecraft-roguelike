@@ -116,7 +116,8 @@ public class CatacombTunneler {
 		}
 		
 		IBlockFactory wallBlocks = theme.getPrimaryWall();
-		BlockJumble bridgeBlocks = new BlockJumble(wallBlocks);
+		BlockJumble bridgeBlocks = new BlockJumble();
+		bridgeBlocks.addBlock(wallBlocks);
 		bridgeBlocks.addBlock(new MetaBlock(0));
 		
 		for (Coord location : tunnel){

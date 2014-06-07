@@ -1,8 +1,11 @@
 package greymerk.roguelike.catacomb;
 
 import greymerk.roguelike.catacomb.dungeon.Dungeon;
+import greymerk.roguelike.catacomb.dungeon.DungeonCustomization;
 import greymerk.roguelike.catacomb.dungeon.DungeonFactory;
+import greymerk.roguelike.catacomb.dungeon.DungeonFactoryProvider;
 import greymerk.roguelike.catacomb.dungeon.IDungeonFactory;
+import greymerk.roguelike.catacomb.dungeon.RoomSet;
 import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.catacomb.theme.Themes;
 import greymerk.roguelike.config.RogueConfig;
@@ -45,12 +48,16 @@ public class Catacomb {
 			
 			CatacombLevel level;
 			
-			ITheme theme = Themes.getByLevel(world.getBiomeGenForCoords(inX, inZ), getLevel(y));
+			ITheme theme = DungeonCustomization.getTheme(world.getBiomeGenForCoords(inX, inZ), getLevel(y)); 
+			if(theme == null) theme = Themes.getByLevel(world.getBiomeGenForCoords(inX, inZ), getLevel(y));
+			IDungeonFactory rooms = DungeonCustomization.getRooms(world.getBiomeGenForCoords(inX, inZ), getLevel(y)); 
+			if(rooms == null) rooms = DungeonFactoryProvider.getByLevel(Catacomb.getLevel(y));
+			
 			rand = getRandom(world, x, z);
 			if(Catacomb.getLevel(y) == 0){
-				level = new CatacombLevel(world, rand, theme, x, y, z, 8, 40);
+				level = new CatacombLevel(world, rand, rooms, theme, x, y, z, 8, 40);
 			} else {
-				level = new CatacombLevel(world, rand, theme, x, y, z);
+				level = new CatacombLevel(world, rand, rooms, theme, x, y, z);
 			}
 	
 			while(!level.isDone()){
@@ -111,85 +118,6 @@ public class Catacomb {
 		}
 		
 		return true;
-	}
-	
-	public static IDungeonFactory getFactory(Random rand, int level){
-		
-		DungeonFactory factory;
-		int choice = rand.nextInt(10);
-		
-		switch(level){
-		case 0:
-			factory = new DungeonFactory(rand, Dungeon.BRICK);
-			factory.addSingle(Dungeon.CAKE);
-			factory.addSingle(Dungeon.MESS);
-			factory.addSingle(Dungeon.SMITH);
-			factory.addSingle(Dungeon.CRYPT);
-			factory.addSingle(Dungeon.FIRE);
-			break;
-		case 1:
-			factory = new DungeonFactory(rand, Dungeon.CORNER);
-			choice = rand.nextInt(10);
-			if(choice == 0) factory.addSingle(Dungeon.ETHO);
-			if(choice == 1) factory.addSingle(Dungeon.BTEAM);
-			if(choice == 2) factory.addSingle(Dungeon.AVIDYA);
-			if(choice == 3) factory.addSingle(Dungeon.ASHLEA);
-			factory.addSingle(Dungeon.MUSIC);
-			factory.addSingle(Dungeon.PIT);
-			factory.addSingle(Dungeon.ENCHANT);
-			factory.addSingle(Dungeon.LAB);
-			factory.addByRatio(Dungeon.MESS, 30);
-			factory.addByRatio(Dungeon.STORAGE, 30);
-			factory.addRandom(Dungeon.BRICK, 3);
-			break;
-		case 2:
-			factory = new DungeonFactory(rand, Dungeon.CORNER);
-			choice = rand.nextInt(10);
-			if(choice == 0) factory.addSingle(Dungeon.ENIKO);
-			factory.addSingle(Dungeon.OSSUARY);
-			factory.addSingle(Dungeon.CREEPER);
-			factory.addSingle(Dungeon.FIRE);
-			factory.addByRatio(Dungeon.PRISON, 10);
-			factory.addByRatio(Dungeon.CRYPT, 10);
-			factory.addByRatio(Dungeon.PIT, 10);
-			factory.addByRatio(Dungeon.STORAGE, 30);
-			factory.addRandom(Dungeon.BRICK, 3);
-			break;	
-		case 3:
-			factory = new DungeonFactory(rand, Dungeon.CORNER);
-			if(choice == 0) factory.addSingle(Dungeon.BAJ);
-			if(choice == 1)factory.addSingle(Dungeon.NEBRIS);
-			factory.addSingle(Dungeon.OSSUARY);
-			factory.addSingle(Dungeon.ENDER);
-			factory.addByRatio(Dungeon.CRYPT, 15);
-			factory.addByRatio(Dungeon.PRISON, 15);
-			factory.addByRatio(Dungeon.SPIDER, 15);
-			factory.addByRatio(Dungeon.CREEPER, 15);
-			factory.addByRatio(Dungeon.FIRE, 20);
-			factory.addByRatio(Dungeon.STORAGE, 30);
-			factory.addRandom(Dungeon.BRICK, 3);
-			factory.addRandom(Dungeon.SPIDER, 20);
-			factory.addRandom(Dungeon.SLIME, 20);
-			factory.addRandom(Dungeon.PIT, 20);
-
-			break;
-		case 4:
-			factory = new DungeonFactory(rand, Dungeon.CORNER);
-			factory.addSingle(Dungeon.OBSIDIAN);
-			factory.addByRatio(Dungeon.FIRE, 30);
-			factory.addByRatio(Dungeon.NETHERFORT, 20);
-			factory.addByRatio(Dungeon.SLIME, 15);
-			factory.addByRatio(Dungeon.STORAGE, 30);
-			factory.addRandom(Dungeon.NETHER, 3);
-			factory.addRandom(Dungeon.SLIME, 20);
-			factory.addRandom(Dungeon.SPIDER, 20);
-
-			break;
-		default:
-			factory = new DungeonFactory(rand, Dungeon.CORNER);
-		}
-
-		return factory;
 	}
 	
 	public static void spawnInChunk(World world, Random rand, int chunkX, int chunkZ) {
