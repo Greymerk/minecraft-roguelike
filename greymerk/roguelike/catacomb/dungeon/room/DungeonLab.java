@@ -224,16 +224,17 @@ public class DungeonLab implements IDungeon {
 	
 	private static void pillar(World world, Random rand, ITheme theme, int x, int y, int z){
 		
-		WorldGenPrimitive.fillRectSolid(world, rand, x, y, z, x, y + 3, z, theme.getSecondaryPillar(), true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, x, y, z, x, y + 2, z, theme.getSecondaryPillar(), true, true);
+		WorldGenPrimitive.setBlock(world, rand, x, y + 3, z, theme.getPrimaryWall(), true, true);
 		MetaBlock stair = theme.getSecondaryStair();
 		stair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.EAST, true));
-		WorldGenPrimitive.setBlock(world, x + 1, y + 3, z, stair, true, true);
+		stair.setBlock(world, x + 1, y + 3, z);
 		stair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.WEST, true));
-		WorldGenPrimitive.setBlock(world, x - 1, y + 3, z, stair, true, true);
+		stair.setBlock(world, x - 1, y + 3, z);
 		stair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.SOUTH, true));
-		WorldGenPrimitive.setBlock(world, x, y + 3, z + 1, stair, true, true);
+		stair.setBlock(world, x, y + 3, z + 1);
 		stair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.NORTH, true));
-		WorldGenPrimitive.setBlock(world, x, y + 3, z - 1, stair, true, true);	
+		stair.setBlock(world, x, y + 3, z - 1);	
 	}
 	
 	public int getSize(){

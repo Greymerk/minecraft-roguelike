@@ -7,7 +7,7 @@ import greymerk.roguelike.catacomb.dungeon.DungeonFactoryProvider;
 import greymerk.roguelike.catacomb.dungeon.IDungeonFactory;
 import greymerk.roguelike.catacomb.dungeon.RoomSet;
 import greymerk.roguelike.catacomb.theme.ITheme;
-import greymerk.roguelike.catacomb.theme.Themes;
+import greymerk.roguelike.catacomb.theme.Theme;
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
@@ -22,6 +22,7 @@ public class Catacomb {
 	public static final int DEPTH = 5;
 	public static final int VERTICAL_SPACING = 10;
 	public static final int TOPLEVEL = 50;
+	public static final int NUM_LEVELS = 5;
 	
 	public static void generateNear(World world, Random rand, int x, int z){
 		int attempts = 50;
@@ -49,7 +50,7 @@ public class Catacomb {
 			CatacombLevel level;
 			
 			ITheme theme = DungeonCustomization.getTheme(world.getBiomeGenForCoords(inX, inZ), getLevel(y)); 
-			if(theme == null) theme = Themes.getByLevel(world.getBiomeGenForCoords(inX, inZ), getLevel(y));
+			if(theme == null) theme = Theme.getByLevel(world.getBiomeGenForCoords(inX, inZ), getLevel(y));
 			IDungeonFactory rooms = DungeonCustomization.getRooms(world.getBiomeGenForCoords(inX, inZ), getLevel(y)); 
 			if(rooms == null) rooms = DungeonFactoryProvider.getByLevel(Catacomb.getLevel(y));
 			

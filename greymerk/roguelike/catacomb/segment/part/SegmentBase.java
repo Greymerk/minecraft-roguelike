@@ -17,7 +17,7 @@ public abstract class SegmentBase implements ISegment {
 
 	protected World world;
 	protected Random rand;
-	protected Cardinal dir;
+	protected Cardinal corridorDirection;
 	
 	protected int x;
 	protected int y;
@@ -27,7 +27,7 @@ public abstract class SegmentBase implements ISegment {
 	ITheme theme;
 	
 	@Override
-	public void generate(World world, Random rand, CatacombLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
+	public void generate(World world, Random rand, CatacombLevel level, Cardinal corridorDirection, ITheme theme, int x, int y, int z) {
 		
 		if(level.hasNearbyNode(x, z)){
 			return;
@@ -35,7 +35,7 @@ public abstract class SegmentBase implements ISegment {
 		
 		this.world = world;
 		this.rand = rand;
-		this.dir = dir;
+		this.corridorDirection = corridorDirection;
 		this.theme = theme;
 		
 		this.x = x;
@@ -43,7 +43,7 @@ public abstract class SegmentBase implements ISegment {
 		this.z = z;
 		
 		
-		orth = Cardinal.getOrthogonal(dir);
+		orth = Cardinal.getOrthogonal(corridorDirection);
 		
 		for (Cardinal wall : orth){
 			if(isValidWall(wall)){

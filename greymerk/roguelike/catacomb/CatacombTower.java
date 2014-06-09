@@ -2,8 +2,9 @@ package greymerk.roguelike.catacomb;
 
 import greymerk.roguelike.catacomb.dungeon.DungeonCustomization;
 import greymerk.roguelike.catacomb.theme.ITheme;
-import greymerk.roguelike.catacomb.theme.Themes;
+import greymerk.roguelike.catacomb.theme.Theme;
 import greymerk.roguelike.config.RogueConfig;
+import greymerk.roguelike.treasure.TreasureChest;
 import greymerk.roguelike.treasure.TreasureChestStarter;
 import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.Cardinal;
@@ -68,7 +69,7 @@ public class CatacombTower {
 	public void generate(World world, Random rand, int x, int y, int z){
 		
 		ITheme theme = DungeonCustomization.getTheme(world.getBiomeGenForCoords(x, z), 0); 
-		if(theme == null) theme = Themes.getByLevel(world.getBiomeGenForCoords(x, z), 0);
+		if(theme == null) theme = Theme.getByLevel(world.getBiomeGenForCoords(x, z), 0);
 		
 		
 		MetaBlock air = new MetaBlock(0);
@@ -90,7 +91,7 @@ public class CatacombTower {
 		Coord end;
 		Coord cursor;
 		
-		WorldGenPrimitive.fillRectSolid(world, rand, x - 3, main, z - 3, x + 3, main, z + 3, new MetaBlock(Block.planks.blockID, 1), true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 3, main, z - 3, x + 3, main, z + 3, theme.getSecondaryWall(), true, true);
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 3, roof, z - 3, x + 3, roof, z + 3, blocks, true, true);
 		
 		for(Cardinal dir : Cardinal.directions){
@@ -246,13 +247,16 @@ public class CatacombTower {
 				cursor.add(orth, 2);
 				WorldGenPrimitive.setBlock(world, rand, cursor, new MetaBlock(Block.fenceIron.blockID), true, true);
 			}
-			
-
-			
-			for(int i = main; i > y; --i){
-				WorldGenPrimitive.spiralStairStep(world, rand, x, i, z, stair, theme.getPrimaryPillar());
-			}
 		}
+		
+		for(int i = main; i > y; --i){
+			WorldGenPrimitive.spiralStairStep(world, rand, x, i, z, stair, theme.getPrimaryPillar());
+		}
+		
+		cursor = new Coord(x, main + 1, z);
+		cursor.add(Cardinal.NORTH, 3);
+		cursor.add(Cardinal.EAST, 1);
+		TreasureChest.generate(world, rand, cursor, TreasureChest.STARTER);
 	}
 	
 	

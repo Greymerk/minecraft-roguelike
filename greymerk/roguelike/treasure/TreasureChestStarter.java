@@ -9,6 +9,7 @@ import greymerk.roguelike.treasure.loot.Quality;
 import greymerk.roguelike.treasure.loot.provider.ItemSpecialty;
 import greymerk.roguelike.config.RogueConfig;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
@@ -23,57 +24,53 @@ import net.minecraft.src.NBTTagList;
 import net.minecraft.src.NBTTagString;
 import net.minecraft.src.TileEntityChest;
 
-public class TreasureChestStarter extends TreasureChestBase{
+public class TreasureChestStarter extends TreasureChestBase implements Iterable{
+
 
 	
 	private ItemStack getStarterLoot(int choice){
-		
 		switch (choice){
 		case 4: return new ItemStack(Item.pickaxeStone);
 		case 3: return new ItemStack(Item.swordStone);
 		case 2: return Loot.getLoot(Loot.FOOD, rand, 0);
 		case 1: return ItemSpecialty.getRandomItem(Equipment.LEGS, rand, Quality.WOOD);
-		default: return new ItemStack(Block.torchWood, 3 + rand.nextInt(6));
+		default: return new ItemStack(Block.torchWood, 1 + rand.nextInt(RogueConfig.getBoolean(RogueConfig.GENEROUS) ? 7 : 3));
 		}
-		
 	}	
 	
 	@Override
 	protected void fillChest(TileEntityChest chest, int level) {
 
-		int size = chest.getSizeInventory();
-				
-		int quantity = RogueConfig.getBoolean(RogueConfig.GENEROUS) ? 18 : 3;
+		int quantity = RogueConfig.getBoolean(RogueConfig.GENEROUS) ? 15 : 5;
 
+		Iterator<InventorySlot> itr = this.iterator();
+		
 		for (int i = 0; i < quantity; i++) {
 			ItemStack item;
 			item = getStarterLoot(i % 5);
-			chest.setInventorySlotContents(rand.nextInt(size), item);
+			if(itr.hasNext()) itr.next().set(item);
 		}
-		
 
-		
-		chest.setInventorySlotContents(0, book());
+		if(itr.hasNext()) itr.next().set(book());
+
 	}
 	
 	private ItemStack book(){
 		ItemStack book = new ItemStack(Item.writableBook);
 		
 		book.setTagInfo("author", new NBTTagString("author", "greymerk"));
-		book.setTagInfo("title", new NBTTagString("title", "Journal"));
+		book.setTagInfo("title", new NBTTagString("title", "Memo"));
 		
 		String page1 = 
-				"Monsters invading from the depths, " +
-				"perhaps we dug too deeply. " +
-				"Our stuff is still down there, " +
-				"we're running out of food and " +
-				"have to leave soon before the tower " +
-				"is overtaken as well\n\n" +
+				"Dear Eniko,\n\n " +
+				"Please stop storing the TNT under the floor, it's not very safe." +
+				" One of these days there's going to be an accident and we'll be" + 
+				" left with a smoking crater in the middle of the base.\n\n" +
 				"-greymerk\n";
 		
 		String page2 = 
-				"Roguelike Dungeons v1.3.2\n" +
-				"May 21th 2014\n\n" + 
+				"Roguelike Dungeons v1.3.3\n" +
+				"June 8th 2014\n\n" + 
 				"Credits\n\n" +
 				"Author: Greymerk\n\n" +
 				"Bits: Drainedsoul\n\n" +

@@ -1,7 +1,8 @@
 package greymerk.roguelike.catacomb.dungeon;
 
+import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.catacomb.theme.ITheme;
-import greymerk.roguelike.catacomb.theme.Themes;
+import greymerk.roguelike.catacomb.theme.Theme;
 import greymerk.roguelike.config.RogueConfig;
 
 import java.io.File;
@@ -9,14 +10,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraft.src.BiomeGenBase;
+
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-
-import net.minecraft.src.BiomeGenBase;
 
 public class DungeonCustomization {
 
@@ -47,6 +48,7 @@ public class DungeonCustomization {
 		Customization toReturn;
 		
 		for(Customization custom : customizations){
+			if(custom.global) return custom;
 			if(custom.match(biome.biomeName)) return custom;
 		}
 		
@@ -79,6 +81,7 @@ public class DungeonCustomization {
 	
 	private static class Customization{
 		
+		private boolean global;
 		private List<String> biomes;
 		private List<ITheme> theme;
 		private List<IDungeonFactory> rooms; 
@@ -93,7 +96,13 @@ public class DungeonCustomization {
 				rooms.add(null);
 			}
 			
-			if(json.has("biomes")) parseBiomes(json.get("biomes").getAsJsonArray());
+			if(json.get("biomes") instanceof JsonArray){
+				global = false;
+				parseBiomes(json.get("biomes").getAsJsonArray());
+			} else if(json.get("biomes").getAsString().equals("all")){
+				global = true;
+			}
+
 			if(json.has("levels")) parseLevels(json.get("levels").getAsJsonObject());
 		}
 		
@@ -104,7 +113,13 @@ public class DungeonCustomization {
 		}
 		
 		private void parseLevels(JsonObject json) throws Exception{
-			for(int i = 0; i < 5; ++i){
+			if(json.has("all")){
+				for(int i = 0; i < Catacomb.NUM_LEVELS; ++i){
+					parseLevel(json.get("all").getAsJsonObject(), i);
+				}
+			}
+			
+			for(int i = 0; i < Catacomb.NUM_LEVELS; ++i){
 				String level = Integer.toString(i); 
 				if(json.has(level)) parseLevel(json.get(level).getAsJsonObject(), i);			
 			}
@@ -113,7 +128,7 @@ public class DungeonCustomization {
 		private void parseLevel(JsonObject json, int level) throws Exception{
 			if(json.has("theme")){
 				JsonObject themeData = json.get("theme").getAsJsonObject();
-				theme.set(level, Themes.create(themeData));
+				theme.set(level, Theme.create(themeData));
 			}
 			
 			if(json.has("rooms")){

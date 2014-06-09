@@ -14,9 +14,9 @@ public enum Door {
 	public static void generate(World world, int x, int y, int z, Cardinal dir, Door type, boolean open){
 		
 		MetaBlock doorBase = new MetaBlock(getBlockId(type), getMeta(false, dir, open, false));
-		WorldGenPrimitive.setBlock(world, x, y, z, doorBase, true, true);
+		doorBase.setBlock(world, x, y, z);
 		MetaBlock doorTop = new MetaBlock(getBlockId(type), getMeta(true, dir, open, false));
-		WorldGenPrimitive.setBlock(world, x, y + 1, z, doorTop, true, true);
+		doorTop.setBlock(world, x, y + 1, z);
 	}
 	
 	private static int getBlockId(Door type){

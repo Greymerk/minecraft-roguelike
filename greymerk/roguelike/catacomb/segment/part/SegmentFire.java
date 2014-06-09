@@ -34,12 +34,12 @@ public class SegmentFire extends SegmentBase {
 		
 		WorldGenPrimitive.fillRectHollow(world, rand, x - 1, y, z - 4, x + 1, y + 2, z - 2, Block.brick.blockID, 0, 2, false, true);
 		
-		WorldGenPrimitive.setBlock(world, x, y, z - 2, stairLower, true, true);
+		WorldGenPrimitive.setBlock(world, rand, x, y, z - 2, stairLower, true, true);
 		WorldGenPrimitive.setBlock(world, x, y + 1, z - 2, Block.fenceIron.blockID);
-		WorldGenPrimitive.setBlock(world, x, y + 2, z - 2, stairUpper, true, true);
+		WorldGenPrimitive.setBlock(world, rand, x, y + 2, z - 2, stairUpper, true, true);
 		
-		WorldGenPrimitive.setBlock(world, x - 1, y + 2, z - 1, stairUpper, true, true);
-		WorldGenPrimitive.setBlock(world, x + 1, y + 2, z - 1, stairUpper, true, true);
+		WorldGenPrimitive.setBlock(world, rand, x - 1, y + 2, z - 1, stairUpper, true, true);
+		WorldGenPrimitive.setBlock(world, rand, x + 1, y + 2, z - 1, stairUpper, true, true);
 		
 		if(isEnclosed(x, y + 1, z - 3)){
 			WorldGenPrimitive.setBlock(world, x, y, z - 3, Block.netherrack.blockID);
@@ -56,12 +56,12 @@ public class SegmentFire extends SegmentBase {
 		
 		WorldGenPrimitive.fillRectHollow(world, rand, x - 1, y, z + 2, x + 1, y + 2, z + 4, Block.brick.blockID, 0, 2, false, true);
 		
-		WorldGenPrimitive.setBlock(world, x, y, z + 2, stairLower, true, true);
+		WorldGenPrimitive.setBlock(world, rand, x, y, z + 2, stairLower, true, true);
 		WorldGenPrimitive.setBlock(world, x, y + 1, z + 2, Block.fenceIron.blockID);
-		WorldGenPrimitive.setBlock(world, x, y + 2, z + 2, stairUpper, true, true);
+		WorldGenPrimitive.setBlock(world, rand, x, y + 2, z + 2, stairUpper, true, true);
 		
-		WorldGenPrimitive.setBlock(world, x - 1, y + 2, z + 1, stairUpper, true, true);
-		WorldGenPrimitive.setBlock(world, x + 1, y + 2, z + 1, stairUpper, true, true);
+		WorldGenPrimitive.setBlock(world, rand, x - 1, y + 2, z + 1, stairUpper, true, true);
+		WorldGenPrimitive.setBlock(world, rand, x + 1, y + 2, z + 1, stairUpper, true, true);
 		
 		if(isEnclosed(x, y + 1, z + 3)){
 			WorldGenPrimitive.setBlock(world, x, y, z + 3, Block.netherrack.blockID);
@@ -79,12 +79,12 @@ public class SegmentFire extends SegmentBase {
 		
 		WorldGenPrimitive.fillRectHollow(world, rand, x + 2, y, z - 1, x + 4, y + 2, z + 1, Block.brick.blockID, 0, 2, false, true);
 		
-		WorldGenPrimitive.setBlock(world, x + 2, y, z, stairLower, true, true);
+		WorldGenPrimitive.setBlock(world, rand, x + 2, y, z, stairLower, true, true);
 		WorldGenPrimitive.setBlock(world, x + 2, y + 1, z, Block.fenceIron.blockID);
-		WorldGenPrimitive.setBlock(world, x + 2, y + 2, z, stairUpper, true, true);
+		WorldGenPrimitive.setBlock(world, rand, x + 2, y + 2, z, stairUpper, true, true);
 		
-		WorldGenPrimitive.setBlock(world, x + 1, y + 2, z - 1, stairUpper, true, true);
-		WorldGenPrimitive.setBlock(world, x + 1, y + 2, z + 1, stairUpper, true, true);
+		WorldGenPrimitive.setBlock(world, rand, x + 1, y + 2, z - 1, stairUpper, true, true);
+		WorldGenPrimitive.setBlock(world, rand, x + 1, y + 2, z + 1, stairUpper, true, true);
 		
 		if(isEnclosed(x + 3, y + 1, z)){
 			WorldGenPrimitive.setBlock(world, x + 3, y, z, Block.netherrack.blockID);
@@ -102,12 +102,12 @@ public class SegmentFire extends SegmentBase {
 		
 		WorldGenPrimitive.fillRectHollow(world, rand, x - 4, y, z - 1, x - 2, y + 2, z + 1, Block.brick.blockID, 0, 2, false, true);
 		
-		WorldGenPrimitive.setBlock(world, x - 2, y, z, stairLower, true, true);
+		WorldGenPrimitive.setBlock(world, rand, x - 2, y, z, stairLower, true, true);
 		WorldGenPrimitive.setBlock(world, x - 2, y + 1, z, Block.fenceIron.blockID);
-		WorldGenPrimitive.setBlock(world, x - 2, y + 2, z, stairUpper, true, true);
+		WorldGenPrimitive.setBlock(world, rand, x - 2, y + 2, z, stairUpper, true, true);
 		
-		WorldGenPrimitive.setBlock(world, x - 1, y + 2, z - 1, stairUpper, true, true);
-		WorldGenPrimitive.setBlock(world, x - 1, y + 2, z + 1, stairUpper, true, true);
+		WorldGenPrimitive.setBlock(world, rand, x - 1, y + 2, z - 1, stairUpper, true, true);
+		WorldGenPrimitive.setBlock(world, rand, x - 1, y + 2, z + 1, stairUpper, true, true);
 		
 		if(isEnclosed(x - 3, y + 1, z)){
 			WorldGenPrimitive.setBlock(world, x - 3, y, z, Block.netherrack.blockID);

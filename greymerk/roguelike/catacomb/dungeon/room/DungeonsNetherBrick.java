@@ -32,13 +32,12 @@ public class DungeonsNetherBrick implements IDungeon {
 		IBlockFactory walls = theme.getPrimaryWall();
 		WorldGenPrimitive.fillRectHollow(world, rand, x - length - 1, y - 1, z - width - 1, x + length + 1, y + height + 1, z + width + 1, walls, false, true);
 		
+		
 		BlockWeightedRandom floor = new BlockWeightedRandom();
-		floor.addBlock(new MetaBlock(Block.netherBrick.blockID), 10);
-		floor.addBlock(new MetaBlock(Block.netherrack.blockID), 3);
-		floor.addBlock(new MetaBlock(Block.oreNetherQuartz.blockID), 5);
-		floor.addBlock(new MetaBlock(Block.blockRedstone.blockID), 10);
-		if (RogueConfig.getBoolean(RogueConfig.PRECIOUSBLOCKS)) floor.addBlock(new MetaBlock(Block.blockGold.blockID), 500);
-		if (RogueConfig.getBoolean(RogueConfig.PRECIOUSBLOCKS)) floor.addBlock(new MetaBlock(Block.blockDiamond.blockID), 1000);
+		floor.addBlock(walls, 1000);
+		floor.addBlock(new MetaBlock(Block.blockRedstone.blockID), 50);
+		if (RogueConfig.getBoolean(RogueConfig.PRECIOUSBLOCKS)) floor.addBlock(new MetaBlock(Block.blockGold.blockID), 2);
+		if (RogueConfig.getBoolean(RogueConfig.PRECIOUSBLOCKS)) floor.addBlock(new MetaBlock(Block.blockDiamond.blockID), 1);
 		WorldGenPrimitive.fillRectSolid(world, rand, x - length - 1, y - 1, z - width - 1, x + length + 1, y - 1, z + width + 1, floor);
 
 		// lava crap under the floor

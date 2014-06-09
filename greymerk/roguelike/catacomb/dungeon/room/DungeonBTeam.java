@@ -66,9 +66,9 @@ public class DungeonBTeam implements IDungeon {
 		
 		MetaBlock cocao = new MetaBlock(Block.cocoaPlant.blockID, 9);
 		WorldGenPrimitive.setBlock(world, x - 5, y + 2, z - 2, Log.getLog(Log.JUNGLE, Cardinal.EAST));
-		WorldGenPrimitive.setBlock(world, x - 4, y + 2, z - 2, cocao, true, true);
+		cocao.setBlock(world, x - 4, y + 2, z - 2);
 		WorldGenPrimitive.setBlock(world, x - 5, y + 2, z + 3, Log.getLog(Log.JUNGLE, Cardinal.EAST));
-		WorldGenPrimitive.setBlock(world, x - 4, y + 2, z + 3, cocao, true, true);
+		cocao.setBlock(world, x - 4, y + 2, z + 3);
 		
 		lamp(world, x - 2, y, z - 4);
 		lamp(world, x + 2, y, z - 4);
@@ -83,10 +83,10 @@ public class DungeonBTeam implements IDungeon {
 		WorldGenPrimitive.fillRectSolid(world, rand, x + 5, y, z - 1, x + 5, y + 4, z - 1, greenBlock, true, true);
 		WorldGenPrimitive.fillRectSolid(world, rand, x + 5, y, z, x + 5, y, z + 1, greenBlock, true, true);
 		WorldGenPrimitive.fillRectSolid(world, rand, x + 5, y + 1, z, x + 5, y + 1, z + 1, 0);
-		WorldGenPrimitive.setBlock(world, x + 5, y + 1, z + 2, greenBlock, true, true);
+		greenBlock.setBlock(world, x + 5, y + 1, z + 2);
 		WorldGenPrimitive.fillRectSolid(world, rand, x + 5, y + 2, z, x + 5, y + 2, z + 1, greenBlock, true, true);
 		WorldGenPrimitive.fillRectSolid(world, rand, x + 5, y + 3, z, x + 5, y + 3, z + 1, 0);
-		WorldGenPrimitive.setBlock(world, x + 5, y + 3, z + 2, greenBlock, true, true);
+		greenBlock.setBlock(world, x + 5, y + 3, z + 2);
 		WorldGenPrimitive.fillRectSolid(world, rand, x + 5, y + 4, z, x + 5, y + 4, z + 1, greenBlock, true, true);
 		
 		// roof
@@ -111,11 +111,14 @@ public class DungeonBTeam implements IDungeon {
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 1, y, z, x + 1, y, z + 1, spruceSlabUpsideDown, true, true);
 		
 		// chairs
-		WorldGenPrimitive.setBlock(world, x - 1, y, z - 2, new MetaBlock(Block.stairsNetherBrick.blockID, WorldGenPrimitive.blockOrientation(Cardinal.SOUTH, false)), true, true);
-		WorldGenPrimitive.setBlock(world, x + 1, y, z - 2, new MetaBlock(Block.stairsNetherBrick.blockID, WorldGenPrimitive.blockOrientation(Cardinal.SOUTH, false)), true, true);
+		MetaBlock chair = new MetaBlock(Block.stairsNetherBrick.blockID);
+		chair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.SOUTH, false));
+		chair.setBlock(world, x - 1, y, z - 2);
+		chair.setBlock(world, x + 1, y, z - 2);
 		
-		WorldGenPrimitive.setBlock(world, x - 1, y, z + 3, new MetaBlock(Block.stairsNetherBrick.blockID, WorldGenPrimitive.blockOrientation(Cardinal.NORTH, false)), true, true);
-		WorldGenPrimitive.setBlock(world, x + 1, y, z + 3, new MetaBlock(Block.stairsNetherBrick.blockID, WorldGenPrimitive.blockOrientation(Cardinal.NORTH, false)), true, true);
+		chair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.NORTH, false));
+		chair.setBlock(world, x - 1, y, z + 3);
+		chair.setBlock(world, x + 1, y, z + 3);
 		
 		// wall entrances
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 7, y - 1, z - 4, x - 6, y + 4, z + 4, Block.stoneBrick.blockID);
@@ -163,21 +166,21 @@ public class DungeonBTeam implements IDungeon {
 
 	private static void lamp(World world, int x, int y, int z){
 		MetaBlock spruce = new MetaBlock(Block.planks.blockID, 1);
-		WorldGenPrimitive.setBlock(world, x, y + 4, z, spruce, true, true);
+		spruce.setBlock(world, x, y + 4, z);
 		WorldGenPrimitive.setBlock(world, x, y + 3, z, Block.fence.blockID);
 		
 		WorldGenPrimitive.setBlock(world, x, y + 2, z, Block.glowStone.blockID);
 		MetaBlock fence = new MetaBlock(Block.trapdoor.blockID, 4);
-		WorldGenPrimitive.setBlock(world, x, y + 2, z - 1, fence, true, false);
+		fence.setBlock(world, x, y + 2, z - 1);
 		fence.setMeta(5);
-		WorldGenPrimitive.setBlock(world, x, y + 2, z + 1, fence, true, false);
+		fence.setBlock(world, x, y + 2, z + 1);
 		fence.setMeta(6);
-		WorldGenPrimitive.setBlock(world, x - 1, y + 2, z, fence, true, false);
+		fence.setBlock(world, x - 1, y + 2, z);		
 		fence.setMeta(7);
-		WorldGenPrimitive.setBlock(world, x + 1, y + 2, z, fence, true, false);
+		fence.setBlock(world, x + 1, y + 2, z);
 		
 		WorldGenPrimitive.setBlock(world, x, y + 1, z, Block.fence.blockID);
-		WorldGenPrimitive.setBlock(world, x, y, z, spruce, true, true);
+		spruce.setBlock(world, x, y, z);
 	}
 	
 	public int getSize(){

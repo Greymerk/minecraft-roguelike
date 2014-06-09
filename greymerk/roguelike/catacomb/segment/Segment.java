@@ -9,7 +9,9 @@ import greymerk.roguelike.catacomb.segment.part.SegmentJungle;
 import greymerk.roguelike.catacomb.segment.part.SegmentMossyArch;
 import greymerk.roguelike.catacomb.segment.part.SegmentMossyMushrooms;
 import greymerk.roguelike.catacomb.segment.part.SegmentNetherArch;
+import greymerk.roguelike.catacomb.segment.part.SegmentNetherLava;
 import greymerk.roguelike.catacomb.segment.part.SegmentNetherStripes;
+import greymerk.roguelike.catacomb.segment.part.SegmentNetherWart;
 import greymerk.roguelike.catacomb.segment.part.SegmentShelf;
 import greymerk.roguelike.worldgen.Cardinal;
 
@@ -19,7 +21,7 @@ import net.minecraft.src.Tuple;
 
 public enum Segment {
 
-	ARCH, FIRE, SHELF, INSET, MOSSYARCH, MOSSYMUSHROOM, NETHERARCH, NETHERSTRIPE, JUNGLE;
+	ARCH, FIRE, SHELF, INSET, MOSSYARCH, MOSSYMUSHROOM, NETHERARCH, NETHERSTRIPE, NETHERWART, NETHERLAVA, JUNGLE;
 	
 	public static final Segment[] level0 = {FIRE, SHELF, INSET};
 	public static final Segment[] level1 = {SHELF, INSET};
@@ -38,6 +40,8 @@ public enum Segment {
 		case MOSSYMUSHROOM: return new SegmentMossyMushrooms();
 		case NETHERARCH: return new SegmentNetherArch();
 		case NETHERSTRIPE: return new SegmentNetherStripes();
+		case NETHERWART: return new SegmentNetherWart();
+		case NETHERLAVA: return new SegmentNetherLava();
 		case JUNGLE: return new SegmentJungle();
 		}
 		

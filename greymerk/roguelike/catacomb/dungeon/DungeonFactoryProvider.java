@@ -15,12 +15,13 @@ public enum DungeonFactoryProvider {
 			factory = new DungeonFactory();
 			factory.addSecret(Dungeon.SLIME, 5);
 			factory.addSecret(Dungeon.FIRE, 10);
-			factory.addRandom(Dungeon.BRICK, 1);
 			factory.addSingle(Dungeon.CAKE);
+			factory.addRandom(Dungeon.BRICK, 10);
+			factory.addRandom(Dungeon.CORNER, 3);
 			break;
 		case SPRUCE:
 			factory = new DungeonFactory();
-			factory.addSecret(Dungeon.CORNER, 50);
+			factory.addSecret(Dungeon.CORNER, 40);
 			factory.addSecret(Dungeon.ETHO, 10);
 			factory.addSecret(Dungeon.BTEAM, 10);
 			factory.addSecret(Dungeon.AVIDYA, 10);

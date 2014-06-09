@@ -8,6 +8,8 @@ import greymerk.roguelike.treasure.loot.Loot;
 import greymerk.roguelike.treasure.loot.WeightedRandomLoot;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
@@ -18,7 +20,7 @@ import net.minecraft.src.ItemStack;
 import net.minecraft.src.TileEntityChest;
 import net.minecraft.src.World;
 
-public abstract class TreasureChestBase implements ITreasureChest{
+public abstract class TreasureChestBase implements ITreasureChest, Iterable{
 
 	protected World world;
 	protected Random rand;
@@ -27,8 +29,15 @@ public abstract class TreasureChestBase implements ITreasureChest{
 	protected int posZ;
 	protected TileEntityChest chest;
 
+	private static final int CHEST_MAX = 27;
+	private List<InventorySlot> slots;
+
 	
 	public TreasureChestBase(){
+		slots = new ArrayList<InventorySlot>();
+		for(int i = 0; i < CHEST_MAX; ++i){
+			slots.add(new InventorySlot(i, this));
+		}
 	}
 		
 
@@ -39,6 +48,8 @@ public abstract class TreasureChestBase implements ITreasureChest{
 		this.posY = posY;
 		this.posZ = posZ;
 
+		Collections.shuffle(slots, rand);
+		
 		int type = trapped ? Block.chestTrapped.blockID : Block.chest.blockID;
 		
 		
@@ -50,18 +61,20 @@ public abstract class TreasureChestBase implements ITreasureChest{
 		
 		try{
 			
-			int amount = RogueConfig.getBoolean(RogueConfig.GENEROUS) ? 16 : 12;
-			
-			for (int i = 0; i < amount; i++) {
-								
-				ItemStack item;
-				
-				item = Loot.getLoot(Loot.JUNK, rand, level);
-				
-				chest.setInventorySlotContents(rand.nextInt(chest.getSizeInventory()), item);
-			}
-			
 			fillChest(chest, level);
+			
+			int amount = RogueConfig.getBoolean(RogueConfig.GENEROUS) ? 12 : 6;
+			
+			Iterator<InventorySlot> slots = this.iterator(); 
+			
+			while(slots.hasNext() && amount > 0){
+				InventorySlot slot = slots.next();
+				
+				if(!slot.empty()) continue;
+				
+				slot.set(Loot.getLoot(Loot.JUNK, rand, level));
+				--amount;
+			}
 			
 		} catch(NullPointerException e){
 			return null;
@@ -69,6 +82,8 @@ public abstract class TreasureChestBase implements ITreasureChest{
 		
 		return this;
 	}
+	
+	
 	
 	@Override
 	public ITreasureChest generate(World world, Random rand, int posX, int posY, int posZ) {
@@ -84,6 +99,10 @@ public abstract class TreasureChestBase implements ITreasureChest{
 		}
 	}
 	
+	public boolean slotEmpty(int slot){
+		return chest.getStackInSlot(slot) == null;
+	}
+	
 	public int getInventorySize(){
 		
 		if(chest == null){
@@ -97,9 +116,30 @@ public abstract class TreasureChestBase implements ITreasureChest{
 		}
 	}
 	
+	@Override
+	public Iterator iterator() {
+		return this.slots.iterator();
+	}
+	
 	protected abstract void fillChest(TileEntityChest chest, int level);
 	
-
 	
-
+	protected class InventorySlot{
+		
+		int slot;
+		ITreasureChest chest;
+		
+		public InventorySlot(int index, ITreasureChest chest){
+			this.slot = index;
+			this.chest = chest;
+		}
+		
+		public void set(ItemStack item){
+			chest.setInventorySlot(item, slot);
+		}
+		
+		public boolean empty(){
+			return chest.slotEmpty(slot);
+		}
+	}
 }

@@ -26,6 +26,6 @@ public interface ITheme {
 	
 	public IBlockFactory getSecondaryPillar();
 	
-	public void genSegment(World world, Random rand, CatacombLevel level, Cardinal dir, ITheme theme, Coord pos);
+	public void genSegment(World world, Random rand, CatacombLevel level, Cardinal dir, Coord pos);
 		
 }

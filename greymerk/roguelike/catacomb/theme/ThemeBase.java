@@ -71,7 +71,7 @@ public class ThemeBase implements ITheme {
 	}
 
 	@Override
-	public void genSegment(World world, Random rand, CatacombLevel level, Cardinal dir, ITheme theme, Coord pos) {
+	public void genSegment(World world, Random rand, CatacombLevel level, Cardinal dir, Coord pos) {
 		ISegment seg = pickSegment(world, rand, level, dir, pos);
 		
 		if(seg == null) return;
@@ -79,7 +79,7 @@ public class ThemeBase implements ITheme {
 		int x = pos.getX();
 		int y = pos.getY();
 		int z = pos.getZ();
-		seg.generate(world, rand, level, dir, theme, x, y, z);
+		seg.generate(world, rand, level, dir, this, x, y, z);
 	}
 	
 	private ISegment pickSegment(World world, Random rand, CatacombLevel level, Cardinal dir, Coord pos){

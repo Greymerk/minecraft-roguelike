@@ -18,6 +18,7 @@ public class DungeonsPrison implements IDungeon {
 	World world;
 	Random rand;
 	IBlockFactory blocks;
+	IBlockFactory pillar;
 	
 	public DungeonsPrison(){}
 	
@@ -28,6 +29,7 @@ public class DungeonsPrison implements IDungeon {
 		rand = inRandom;
 		
 		blocks = theme.getPrimaryWall();
+		pillar = theme.getPrimaryPillar();
 		
 		// clear air
 		WorldGenPrimitive.fillRectSolid(inWorld, rand, inOriginX - 7, inOriginY, inOriginZ - 7, inOriginX + 7, inOriginY + 3, inOriginZ + 7, 0);
@@ -70,10 +72,10 @@ public class DungeonsPrison implements IDungeon {
 		WorldGenPrimitive.fillRectSolid(world, rand, inX - 1, inY - 1, inZ - 1, inX + 1, inY - 1, inZ + 1, Block.cobblestoneMossy.blockID);
 		
 		// pillars
-		WorldGenPrimitive.fillRectSolid(world, rand, inX - 2, inY, inZ - 2, inX - 2, inY + 2, inZ - 2, blocks);
-		WorldGenPrimitive.fillRectSolid(world, rand, inX - 2, inY, inZ + 2, inX - 2, inY + 2, inZ + 2, blocks);
-		WorldGenPrimitive.fillRectSolid(world, rand, inX + 2, inY, inZ - 2, inX + 2, inY + 2, inZ - 2, blocks);
-		WorldGenPrimitive.fillRectSolid(world, rand, inX + 2, inY, inZ + 2, inX + 2, inY + 2, inZ + 2, blocks);
+		WorldGenPrimitive.fillRectSolid(world, rand, inX - 2, inY, inZ - 2, inX - 2, inY + 2, inZ - 2, pillar);
+		WorldGenPrimitive.fillRectSolid(world, rand, inX - 2, inY, inZ + 2, inX - 2, inY + 2, inZ + 2, pillar);
+		WorldGenPrimitive.fillRectSolid(world, rand, inX + 2, inY, inZ - 2, inX + 2, inY + 2, inZ - 2, pillar);
+		WorldGenPrimitive.fillRectSolid(world, rand, inX + 2, inY, inZ + 2, inX + 2, inY + 2, inZ + 2, pillar);
 		
 		// roof
 		WorldGenPrimitive.fillRectSolid(world, rand, inX - 3, inY + 3, inZ - 3, inX + 3, inY + 6, inZ + 3, blocks);

@@ -19,7 +19,7 @@ public class ThemeMossy extends ThemeBase{
 		walls.addBlock(new MetaBlock(Block.cobblestoneMossy.blockID), 30);
 		walls.addBlock(new MetaBlock(Block.silverfish.blockID, 1), 5);
 		walls.addBlock(new MetaBlock(Block.stoneBrick.blockID, 2), 10);
-		walls.addBlock(new MetaBlock(Block.gravel.blockID), 60);
+		walls.addBlock(new MetaBlock(Block.gravel.blockID), 15);
 		
 		MetaBlock stair = new MetaBlock(Block.stairsCobblestone.blockID);
 		

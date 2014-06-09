@@ -131,8 +131,7 @@ public class SegmentInset extends SegmentBase {
 		
 		MetaBlock skull = new MetaBlock(Block.skull.blockID, 1);
 		
-		if(!WorldGenPrimitive.setBlock(world, x, y, z, skull, true, true)) return;
-		
+		if(!skull.setBlock(world, x, y, z)) return;
 		
 		TileEntitySkull skullEntity;
 		

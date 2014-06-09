@@ -67,6 +67,10 @@ public class MetaBlock implements IBlockFactory{
 		flag = in;
 	}
 
+	public boolean setBlock(World world, int x, int y, int z){
+		return WorldGenPrimitive.setBlock(world, x, y, z, this);
+	}
+	
 	@Override
 	public void setBlock(World world, Random rand, int x, int y, int z) {
 		WorldGenPrimitive.setBlock(world, x, y, z, blockID, meta, flag, true, true);

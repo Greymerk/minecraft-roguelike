@@ -4,7 +4,7 @@ import greymerk.roguelike.catacomb.dungeon.Dungeon;
 import greymerk.roguelike.catacomb.segment.ISegment;
 import greymerk.roguelike.catacomb.segment.Segment;
 import greymerk.roguelike.catacomb.theme.ITheme;
-import greymerk.roguelike.catacomb.theme.Themes;
+import greymerk.roguelike.catacomb.theme.Theme;
 import greymerk.roguelike.worldgen.BlockJumble;
 import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.Cardinal;
@@ -154,7 +154,7 @@ public class CatacombTunneler {
 	public void addSegments(World world){
 		
 		for(Coord location : tunnel){
-			theme.genSegment(world, rand, level, dir, theme, location);
+			theme.genSegment(world, rand, level, dir, location);
 		}
 	}
 }

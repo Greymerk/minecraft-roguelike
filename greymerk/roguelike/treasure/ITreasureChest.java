@@ -16,4 +16,6 @@ public interface ITreasureChest {
 	
 	public int getInventorySize();
 	
+	public boolean slotEmpty(int slot);
+	
 }

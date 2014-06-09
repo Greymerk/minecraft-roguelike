@@ -70,7 +70,7 @@ public class WeightedRandomLoot implements Comparable, IWeighted{
 
 	@Override
 	public ItemStack get(Random rand) {
-		return new ItemStack(id, damage, this.getStackSize(rand));
+		return new ItemStack(id, this.getStackSize(rand), damage);
 	}
 
 

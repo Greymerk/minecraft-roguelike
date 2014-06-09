@@ -14,11 +14,11 @@ import com.google.gson.JsonObject;
 
 import net.minecraft.src.BiomeGenBase;
 
-public enum Themes {
+public enum Theme {
 
-	OAK, SPRUCE, STONE, MOSSY, NETHER, SANDSTONE, QUARTZ, BLING, CHECKER, RAINBOW, SNOW, JUNGLE;
+	OAK, SPRUCE, STONE, MOSSY, NETHER, SANDSTONE, QUARTZ, BLING, CHECKER, RAINBOW, SNOW, JUNGLE, BRICK;
 	
-	public static ITheme getTheme(Themes type){
+	public static ITheme getTheme(Theme type){
 		
 		ITheme theme;
 		
@@ -35,6 +35,7 @@ public enum Themes {
 		case RAINBOW: theme = new ThemeRainbow(); break;
 		case SNOW: theme = new ThemeSnow(); break;
 		case JUNGLE: theme = new ThemeJungle(); break;
+		case BRICK: theme = new ThemeBrick(); break;
 		default: return null;
 		}
 		
@@ -75,14 +76,11 @@ public enum Themes {
 		}
 		
 		if(json.has("base")){
-			theme = Themes.getTheme(Themes.valueOf(json.get("base").getAsString()));
+			theme = Theme.getTheme(Theme.valueOf(json.get("base").getAsString()));
 			return new ThemeBase((ThemeBase) theme, primary, secondary, segments, arch);
 		} else {
 			return new ThemeBase(primary, secondary, segments, arch);
 		}
-		
-		
-		
 	}
 	
 	public static ITheme getByLevel(BiomeGenBase biome, int level){
@@ -94,6 +92,7 @@ public enum Themes {
 		
 		switch(level){
 		case 0:
+			if(cold) return getTheme(SPRUCE);
 			if(hot && dry) return getTheme(SANDSTONE);
 			if(hot && wet) return getTheme(JUNGLE);
 			return getTheme(OAK);
@@ -101,8 +100,12 @@ public enum Themes {
 			if(hot && dry) return getTheme(SANDSTONE);
 			if(hot && wet) return getTheme(JUNGLE);
 			return getTheme(SPRUCE);
-		case 2: return getTheme(STONE);
-		case 3: return getTheme(MOSSY);
+		case 2:
+			if(hot && wet) return getTheme(MOSSY);
+			return getTheme(STONE);
+		case 3:
+			if(hot && dry) return getTheme(STONE);
+			return getTheme(MOSSY);
 		case 4: return getTheme(NETHER);
 		default: return null;
 		}
