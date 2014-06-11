@@ -4,10 +4,9 @@ import greymerk.roguelike.treasure.loot.provider.ItemNovelty;
 
 import java.util.Random;
 
-import net.minecraft.src.Item;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.NBTTagCompound;
-import net.minecraft.src.NBTTagList;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 
 public enum Potion {
 	
@@ -58,7 +57,7 @@ public enum Potion {
 			id = id | REGULAR;
 		}
 		
-		return new ItemStack(Item.potion, 1, id);
+		return new ItemStack(Items.potionitem, 1, id);
 		
 	}
 	

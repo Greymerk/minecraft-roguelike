@@ -1,6 +1,5 @@
 package greymerk.roguelike.catacomb;
 
-import greymerk.roguelike.catacomb.dungeon.DungeonFactoryProvider;
 import greymerk.roguelike.catacomb.dungeon.IDungeon;
 import greymerk.roguelike.catacomb.dungeon.IDungeonFactory;
 import greymerk.roguelike.catacomb.theme.ITheme;
@@ -15,8 +14,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.src.Block;
-import net.minecraft.src.World;
+import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
+import net.minecraft.world.World;
 
 public class CatacombLevel {
 
@@ -114,8 +114,10 @@ public class CatacombLevel {
 	
 	private void generateLevelLink(World world, Random rand, int originX, int originY, int originZ) {
 		
+		MetaBlock air = new MetaBlock(Blocks.air);
+		
 		// air in box
-		WorldGenPrimitive.fillRectSolid(world, rand, originX - 3, originY, originZ - 3, originX + 3, originY + 15, originZ + 3, 0, 0, 2, true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, originX - 3, originY, originZ - 3, originX + 3, originY + 15, originZ + 3, air, true, true);
 		
 		// shell
 		List<Coord> shell = WorldGenPrimitive.getRectHollow(originX - 4, originY - 1, originZ - 4, originX + 4, originY + 16, originZ + 4);
@@ -134,7 +136,7 @@ public class CatacombLevel {
 			}
 			
 			if(world.isAirBlock(x, y, z) && y < originY + 9){
-				WorldGenPrimitive.setBlock(world, x, y, z, Block.fenceIron.blockID);
+				WorldGenPrimitive.setBlock(world, x, y, z, Blocks.iron_bars);
 			} else {
 				blocks.setBlock(world, rand, x, y, z, false, true);
 			}

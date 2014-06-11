@@ -1,6 +1,5 @@
 package greymerk.roguelike.catacomb.dungeon.room;
 
-import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.catacomb.dungeon.IDungeon;
 import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.treasure.TreasureChest;
@@ -11,15 +10,10 @@ import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.Spawner;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
 
-import java.io.PrintStream;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Random;
 
-import net.minecraft.src.Block;
-import net.minecraft.src.World;
+import net.minecraft.init.Blocks;
+import net.minecraft.world.World;
 
 public class DungeonsCrypt implements IDungeon {
 
@@ -27,15 +21,15 @@ public class DungeonsCrypt implements IDungeon {
 
 		IBlockFactory walls = theme.getPrimaryWall();
 		MetaBlock stair = theme.getPrimaryStair();
-		MetaBlock air = new MetaBlock(0);
-		IBlockFactory tombStone = new MetaBlock(Block.blockNetherQuartz.blockID);
+		MetaBlock air = new MetaBlock(Blocks.air);
+		IBlockFactory tombStone = new MetaBlock(Blocks.quartz_block);
 		
 		// clear box;
-		WorldGenPrimitive.fillRectSolid(world, rand, x - 5, y, z - 5, x + 5, y + 3, z + 5, 0);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 5, y, z - 5, x + 5, y + 3, z + 5, air);
 		
 		// ceiling gaps
-		WorldGenPrimitive.fillRectSolid(world, rand, x - 3, y + 4, z - 3, x + 3, y + 4, z + 3, 0);
-		WorldGenPrimitive.fillRectSolid(world, rand, x - 2, y + 5, z - 2, x + 2, y + 5, z + 2, 0);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 3, y + 4, z - 3, x + 3, y + 4, z + 3, air);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 2, y + 5, z - 2, x + 2, y + 5, z + 2, air);
 
 		// replace roof blocks
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 8, y + 3, z - 8, x + 8, y + 7, z + 8, walls, false, true);

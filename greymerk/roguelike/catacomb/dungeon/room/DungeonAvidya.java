@@ -1,50 +1,51 @@
 package greymerk.roguelike.catacomb.dungeon.room;
 
-import java.util.Random;
-
-import net.minecraft.src.Block;
-import net.minecraft.src.Item;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.World;
 import greymerk.roguelike.catacomb.dungeon.IDungeon;
 import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.treasure.ITreasureChest;
 import greymerk.roguelike.treasure.TreasureChestEmpty;
-import greymerk.roguelike.treasure.loot.Loot;
 import greymerk.roguelike.treasure.loot.provider.ItemNovelty;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
 
+import java.util.Random;
+
+import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
+import net.minecraft.world.World;
+
 public class DungeonAvidya implements IDungeon {
 
 	@Override
 	public boolean generate(World world, Random rand, ITheme theme, int x, int y, int z) {
 		
-		MetaBlock redClay = new MetaBlock(Block.stainedClay.blockID, 14);
-		MetaBlock whiteClay = new MetaBlock(Block.stainedClay.blockID, 0);
-		MetaBlock pillarQuartz = new MetaBlock(Block.blockNetherQuartz.blockID, 2);
+		MetaBlock redClay = new MetaBlock(Blocks.stained_hardened_clay, 14);
+		MetaBlock whiteClay = new MetaBlock(Blocks.stained_hardened_clay, 0);
+		MetaBlock pillarQuartz = new MetaBlock(Blocks.quartz_block, 2);
+		MetaBlock glowstone = new MetaBlock(Blocks.glowstone);
+		MetaBlock air = new MetaBlock(Blocks.air);
 		
 		// clear space
-		WorldGenPrimitive.fillRectSolid(world, rand, x - 8, y, z - 8, x + 8, y + 5, z + 8, 0);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 8, y, z - 8, x + 8, y + 5, z + 8, air);
 				
 		// roof
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 6, y + 6, z - 6, x + 6, y + 6, z + 6, redClay, true, true);
-		WorldGenPrimitive.fillRectSolid(world, rand, x - 3, y + 6, z - 3, x + 3, y + 6, z + 3, Block.glowStone.blockID);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 3, y + 6, z - 3, x + 3, y + 6, z + 3, glowstone);
 		
-		WorldGenPrimitive.fillRectSolid(world, rand, x - 7, y - 1, z - 7, x + 7, y - 1, z + 7, 0);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 7, y - 1, z - 7, x + 7, y - 1, z + 7, air);
 		
 		
 		// floor
-		MetaBlock ying = new MetaBlock(Block.stainedClay.blockID, 15);
-		MetaBlock yang = new MetaBlock(Block.stainedClay.blockID, 0);
+		MetaBlock ying = new MetaBlock(Blocks.stained_hardened_clay, 15);
+		MetaBlock yang = new MetaBlock(Blocks.stained_hardened_clay, 0);
 		
 		// ying
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 8, y - 2, z - 8, x + 8, y - 2, z + 8, ying, true, true);
 		
 		// yang
-		MetaBlock quartz = new MetaBlock(Block.blockNetherQuartz.blockID);
+		MetaBlock quartz = new MetaBlock(Blocks.quartz_block);
 		Coord start = new Coord(x, y, z);
 		start.add(Cardinal.DOWN, 2);
 		start.add(Cardinal.WEST, 5);
@@ -106,7 +107,7 @@ public class DungeonAvidya implements IDungeon {
 				WorldGenPrimitive.fillRectSolid(world, rand, start, end, whiteClay, true, true);
 				start.add(Cardinal.DOWN, 5);
 				end.add(Cardinal.DOWN, 5);
-				WorldGenPrimitive.fillRectSolid(world, rand, start, end, new MetaBlock(Block.stoneBrick.blockID), true, true);
+				WorldGenPrimitive.fillRectSolid(world, rand, start, end, new MetaBlock(Blocks.stonebrick), true, true);
 				
 				start = new Coord(x, y, z);
 				start.add(dir, 7);
@@ -178,7 +179,7 @@ public class DungeonAvidya implements IDungeon {
 				cursor = new Coord(x, y, z);
 				cursor.add(dir, 7);
 				cursor.add(Cardinal.DOWN, 1);
-				MetaBlock step = new MetaBlock(Block.stairsStoneBrick.blockID);
+				MetaBlock step = new MetaBlock(Blocks.stone_brick_stairs);
 				step.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.reverse(dir), false));
 				WorldGenPrimitive.setBlock(world, rand, cursor, step, true, true);
 				
@@ -211,37 +212,37 @@ public class DungeonAvidya implements IDungeon {
 				cursor.add(Cardinal.DOWN, 1);
 				cursor.add(dir, 8);
 				cursor.add(orth, 3);
-				WorldGenPrimitive.setBlock(world, cursor, Block.grass.blockID);
-				MetaBlock leaves = new MetaBlock(Block.leaves.blockID, 7);
+				WorldGenPrimitive.setBlock(world, cursor, Blocks.grass);
+				MetaBlock leaves = new MetaBlock(Blocks.leaves, 7);
 				WorldGenPrimitive.setBlock(world, cursor.getX(), cursor.getY() + 1, cursor.getZ(), leaves);
 				cursor.add(orth, 1);
-				WorldGenPrimitive.setBlock(world, cursor, Block.grass.blockID);
+				WorldGenPrimitive.setBlock(world, cursor, Blocks.grass);
 				WorldGenPrimitive.setBlock(world, cursor.getX(), cursor.getY() + 1, cursor.getZ(), leaves);
 				cursor.add(orth, 1);
-				WorldGenPrimitive.setBlock(world, cursor, Block.grass.blockID);
+				WorldGenPrimitive.setBlock(world, cursor, Blocks.grass);
 				WorldGenPrimitive.setBlock(world, cursor.getX(), cursor.getY() + 1, cursor.getZ(), leaves);
 				cursor.add(Cardinal.reverse(dir), 1);
-				WorldGenPrimitive.setBlock(world, cursor, Block.cobblestone.blockID);
+				WorldGenPrimitive.setBlock(world, cursor, Blocks.cobblestone);
 				cursor.add(Cardinal.reverse(orth), 1);
-				WorldGenPrimitive.setBlock(world, cursor, Block.glowStone.blockID);
+				glowstone.setBlock(world, cursor);
 				cursor.add(orth, 2);
-				WorldGenPrimitive.setBlock(world, cursor, 0);
+				air.setBlock(world, cursor);
 				cursor.add(Cardinal.DOWN, 1);
-				WorldGenPrimitive.setBlock(world, cursor, Block.glowStone.blockID);
+				glowstone.setBlock(world, cursor);
 				cursor.add(Cardinal.UP, 1);
 				cursor.add(Cardinal.reverse(dir), 1);
-				WorldGenPrimitive.setBlock(world, cursor, Block.cobblestone.blockID);
+				WorldGenPrimitive.setBlock(world, cursor, Blocks.cobblestone);
 				cursor.add(dir, 1);
 				cursor.add(orth, 1);
-				WorldGenPrimitive.setBlock(world, cursor, Block.cobblestone.blockID);
+				WorldGenPrimitive.setBlock(world, cursor, Blocks.cobblestone);
 				cursor.add(dir, 1);
-				WorldGenPrimitive.setBlock(world, cursor, Block.cobblestone.blockID);
+				WorldGenPrimitive.setBlock(world, cursor, Blocks.cobblestone);
 				cursor.add(orth, 1);
-				WorldGenPrimitive.setBlock(world, cursor, Block.cobblestone.blockID);
+				WorldGenPrimitive.setBlock(world, cursor, Blocks.cobblestone);
 				cursor.add(Cardinal.UP, 1);
-				WorldGenPrimitive.setBlock(world, cursor, Block.cobblestone.blockID);
+				WorldGenPrimitive.setBlock(world, cursor, Blocks.cobblestone);
 				cursor.add(Cardinal.UP, 3);
-				WorldGenPrimitive.setBlock(world, cursor, Block.waterMoving.blockID);
+				WorldGenPrimitive.setBlock(world, cursor, Blocks.water);
 			}
 		}
 		
@@ -259,7 +260,7 @@ public class DungeonAvidya implements IDungeon {
 	}
 	
 	private static void pillarTop(World world, Random rand, Coord cursor){
-		MetaBlock step = new MetaBlock(Block.stairsNetherQuartz.blockID);
+		MetaBlock step = new MetaBlock(Blocks.quartz_stairs);
 		for(Cardinal dir : Cardinal.directions){
 			step.setMeta(WorldGenPrimitive.blockOrientation(dir, true));
 			cursor.add(dir, 1);

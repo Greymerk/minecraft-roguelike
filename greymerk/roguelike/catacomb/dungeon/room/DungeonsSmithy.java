@@ -1,6 +1,5 @@
 package greymerk.roguelike.catacomb.dungeon.room;
 
-import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.catacomb.dungeon.IDungeon;
 import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.config.RogueConfig;
@@ -9,19 +8,17 @@ import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
 
-import java.io.PrintStream;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.src.Block;
-import net.minecraft.src.Item;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.TileEntityFurnace;
-import net.minecraft.src.World;
+import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntityFurnace;
+import net.minecraft.world.World;
 
 public class DungeonsSmithy implements IDungeon{
 
@@ -56,15 +53,17 @@ public class DungeonsSmithy implements IDungeon{
 		originY = inOriginY;
 		originZ = inOriginZ;
 
+		
+		
 		// clear air space
 		WorldGenPrimitive.fillRectSolid(world, inRandom, originX - 2, originY, originZ - 2,
-												originX + 2, originY + 4, originZ + 2, 0);
+												originX + 2, originY + 4, originZ + 2, new MetaBlock(Blocks.air));
 		
 		buildWalls();
 		buildFloor();
 		buildRoof();
 		
-		MetaBlock anvil = new MetaBlock(Block.anvil.blockID, RogueConfig.getBoolean(RogueConfig.GENEROUS) ? 0 : 8);
+		MetaBlock anvil = new MetaBlock(Blocks.anvil, RogueConfig.getBoolean(RogueConfig.GENEROUS) ? 0 : 8);
 		
 		WorldGenPrimitive.setBlock(world, inOriginX, inOriginY, inOriginZ, anvil);
 		
@@ -91,7 +90,7 @@ public class DungeonsSmithy implements IDungeon{
 			int y = block.getY();
 			int z = block.getZ();
 			
-			WorldGenPrimitive.setBlock(world, x, y, z, Block.stoneBrick.blockID, rand.nextInt(3), 2, false, true);
+			WorldGenPrimitive.setBlock(world, x, y, z, Blocks.stonebrick, rand.nextInt(3), 2, false, true);
 		}
 	}
     
@@ -99,7 +98,7 @@ public class DungeonsSmithy implements IDungeon{
 		
 		WorldGenPrimitive.fillRectSolid(world, rand, 
 				originX - dungeonLength - 1, originY - 1, originZ - dungeonWidth - 1,
-				originX + dungeonLength + 1, originY - 1, originZ + dungeonWidth + 1, Block.brick.blockID);
+				originX + dungeonLength + 1, originY - 1, originZ + dungeonWidth + 1, new MetaBlock(Blocks.brick_block));
 	}
 
 	protected void buildWalls() {
@@ -114,32 +113,32 @@ public class DungeonsSmithy implements IDungeon{
 			int y = block.getY();
 			int z = block.getZ();
 			
-			int blockID;
+			Block blockID;
 			
-			blockID = Block.cobblestone.blockID;
+			blockID = Blocks.cobblestone;
 			
 			if(rand.nextInt(300) == 0){
-				blockID = Block.blockIron.blockID;
+				blockID = Blocks.iron_block;
 			}
 			
 			if(rand.nextInt(5) == 0){
-				blockID = Block.fenceIron.blockID;
+				blockID = Blocks.iron_bars;
 			}
 
 			if(y == (originY + dungeonHeight)){
-				blockID = Block.stoneBrick.blockID;
+				blockID = Blocks.stonebrick;
 			}
 			
 			if(y == originY && (z == originZ || x == originX)){
-				blockID = Block.glowStone.blockID;
+				blockID = Blocks.glowstone;
 			}
 			
 			if(y == originY + 1 && (z == originZ || x == originX) && !world.isAirBlock(x, y, z)){
-				blockID = Block.furnaceIdle.blockID;
+				blockID = Blocks.furnace;
 				if(WorldGenPrimitive.setBlock(world, x, y, z, blockID)){
-					TileEntityFurnace furnace = (TileEntityFurnace)world.getBlockTileEntity(x, y, z);
+					TileEntityFurnace furnace = (TileEntityFurnace)world.getTileEntity(x, y, z);
 					
-					ItemStack coal = new ItemStack(Item.coal, 5 + rand.nextInt(10));
+					ItemStack coal = new ItemStack(Items.coal, 5 + rand.nextInt(10));
 					furnace.setInventorySlotContents(1, coal);
 				}
 				continue;

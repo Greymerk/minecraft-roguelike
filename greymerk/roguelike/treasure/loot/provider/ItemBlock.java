@@ -1,11 +1,10 @@
 package greymerk.roguelike.treasure.loot.provider;
 
-import greymerk.roguelike.config.RogueConfig;
-
 import java.util.Random;
 
-import net.minecraft.src.Block;
-import net.minecraft.src.ItemStack;
+import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
 
 public class ItemBlock extends ItemBase{
 	
@@ -38,41 +37,41 @@ public class ItemBlock extends ItemBase{
 		switch(level){
 		case 0:
 		case 1:
-			if(rand.nextInt(10) == 0) return new ItemStack(Block.cloth, 16, rand.nextInt(16));
-			if(rand.nextInt(10) == 0) return new ItemStack(Block.wood, 16, rand.nextInt(4));
+			if(rand.nextInt(10) == 0) return new ItemStack(Blocks.wool, 16, rand.nextInt(16));
+			if(rand.nextInt(10) == 0) return new ItemStack(Blocks.log, 16, rand.nextInt(4));
 			
 			switch(rand.nextInt(3)){
-			case 0: return new ItemStack(Block.stoneBrick, size, rand.nextInt(3));
-			case 1: return new ItemStack(Block.planks, size, rand.nextInt(4));
-			case 2: return new ItemStack(Block.dirt, size);
+			case 0: return new ItemStack(Blocks.stonebrick, size, rand.nextInt(3));
+			case 1: return new ItemStack(Blocks.planks, size, rand.nextInt(4));
+			case 2: return new ItemStack(Blocks.dirt, size);
 			}
 		case 2:
-			if(rand.nextInt(10) == 0) return new ItemStack(Block.brick, size, rand.nextInt(16));
+			if(rand.nextInt(10) == 0) return new ItemStack(Blocks.brick_block, size, rand.nextInt(16));
 			
 			switch(rand.nextInt(3)){
-			case 0: return new ItemStack(Block.stoneBrick, size, rand.nextInt(3));
-			case 1: return new ItemStack(Block.gravel, size, rand.nextInt(4));
-			case 2: return new ItemStack(Block.stainedClay, 16, rand.nextInt(16));
+			case 0: return new ItemStack(Blocks.stonebrick, size, rand.nextInt(3));
+			case 1: return new ItemStack(Blocks.gravel, size, rand.nextInt(4));
+			case 2: return new ItemStack(Blocks.stained_hardened_clay, 16, rand.nextInt(16));
 			}
 		case 3:
 			switch(rand.nextInt(5)){
-			case 0: return new ItemStack(Block.cobblestoneMossy, size);
-			case 1: return new ItemStack(Block.cobblestone, size);
-			case 2: return new ItemStack(Block.gravel, 16);
-			case 3: return new ItemStack(Block.blockClay, 16);
-			case 4: return new ItemStack(Block.stone, size);
+			case 0: return new ItemStack(Blocks.mossy_cobblestone, size);
+			case 1: return new ItemStack(Blocks.cobblestone, size);
+			case 2: return new ItemStack(Blocks.gravel, 16);
+			case 3: return new ItemStack(Blocks.clay, 16);
+			case 4: return new ItemStack(Blocks.stone, size);
 			}
 		case 4:
-			if(rand.nextInt(10) == 0) return new ItemStack(Block.glowStone, 8);
-			if(rand.nextInt(10) == 0) return new ItemStack(Block.blockNetherQuartz, 8);
+			if(rand.nextInt(10) == 0) return new ItemStack(Blocks.glowstone, 8);
+			if(rand.nextInt(10) == 0) return new ItemStack(Blocks.quartz_block, 8);
 			
 			switch(rand.nextInt(4)){
-			case 0: return new ItemStack(Block.netherrack, size);
-			case 1: return new ItemStack(Block.netherBrick, size);
-			case 2: return new ItemStack(Block.slowSand, 16);
-			case 3: return new ItemStack(Block.obsidian, 16);
+			case 0: return new ItemStack(Blocks.netherrack, size);
+			case 1: return new ItemStack(Blocks.nether_brick, size);
+			case 2: return new ItemStack(Blocks.soul_sand, 16);
+			case 3: return new ItemStack(Blocks.obsidian, 16);
 			}
-		default: return new ItemStack(Block.dirt, size);
+		default: return new ItemStack(Blocks.dirt, size);
 		}
 		
 		

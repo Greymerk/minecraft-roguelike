@@ -1,19 +1,12 @@
 package greymerk.roguelike.catacomb.segment.part;
 
-import greymerk.roguelike.catacomb.Catacomb;
-import greymerk.roguelike.catacomb.dungeon.Dungeon;
-import greymerk.roguelike.catacomb.segment.IAlcove;
-import greymerk.roguelike.catacomb.segment.alcove.PrisonCell;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
-
-import java.util.Random;
-
-import net.minecraft.src.Block;
-import net.minecraft.src.World;
+import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
 
 public class SegmentNetherArch extends SegmentBase {
 
@@ -45,8 +38,8 @@ public class SegmentNetherArch extends SegmentBase {
 			WorldGenPrimitive.setBlock(world, rand, cursor, pillar, true, true);
 		}
 			
-		MetaBlock fence = new MetaBlock(Block.netherFence.blockID);
-		MetaBlock lava = new MetaBlock(Block.lavaMoving.blockID);
+		MetaBlock fence = new MetaBlock(Blocks.nether_brick_fence);
+		MetaBlock lava = new MetaBlock(Blocks.lava);
 		
 		cursor = new Coord(x, y, z);
 		cursor.add(dir, 2);		

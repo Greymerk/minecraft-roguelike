@@ -1,17 +1,12 @@
 package greymerk.roguelike.catacomb.segment.part;
 
-import greymerk.roguelike.catacomb.Catacomb;
-import greymerk.roguelike.catacomb.dungeon.Dungeon;
 import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
-
-import java.util.Random;
-
-import net.minecraft.src.Block;
-import net.minecraft.src.World;
+import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
 
 public class SegmentJungle extends SegmentBase {
 
@@ -24,7 +19,7 @@ public class SegmentJungle extends SegmentBase {
 		
 		MetaBlock stair = theme.getSecondaryStair();
 		
-		MetaBlock leaves = new MetaBlock(Block.leaves.blockID, 15);
+		MetaBlock leaves = new MetaBlock(Blocks.leaves, 15);
 		
 		Coord cursor;
 		Coord start;
@@ -37,14 +32,14 @@ public class SegmentJungle extends SegmentBase {
 		start.add(orth[0], 1);
 		end.add(orth[1], 1);
 		end.add(Cardinal.UP, 1);
-		WorldGenPrimitive.fillRectSolid(world, rand, start, end, new MetaBlock(0), true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, start, end, new MetaBlock(Blocks.air), true, true);
 		start.add(Cardinal.DOWN, 1);
 		end.add(Cardinal.DOWN, 2);
 		
 		if(rand.nextInt(5) == 0){
-			WorldGenPrimitive.fillRectSolid(world, rand, start, end, new MetaBlock(Block.waterMoving.blockID), true, true);
+			WorldGenPrimitive.fillRectSolid(world, rand, start, end, new MetaBlock(Blocks.water), true, true);
 		} else {
-			WorldGenPrimitive.fillRectSolid(world, rand, start, end, new MetaBlock(Block.grass.blockID), true, true);
+			WorldGenPrimitive.fillRectSolid(world, rand, start, end, new MetaBlock(Blocks.grass), true, true);
 			start.add(Cardinal.UP, 1);
 			end.add(Cardinal.UP, 1);
 			if(rand.nextBoolean()) WorldGenPrimitive.fillRectSolid(world, rand, start, end, leaves, true, true);

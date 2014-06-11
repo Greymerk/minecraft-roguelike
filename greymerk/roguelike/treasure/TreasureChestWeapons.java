@@ -1,13 +1,8 @@
 package greymerk.roguelike.treasure;
 
-import greymerk.roguelike.catacomb.Catacomb;
-import greymerk.roguelike.catacomb.dungeon.Dungeon;
 import greymerk.roguelike.treasure.loot.Loot;
-import greymerk.roguelike.treasure.loot.Slot;
-import greymerk.roguelike.treasure.loot.provider.ItemFood;
-import net.minecraft.src.Item;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.TileEntityChest;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntityChest;
 
 public class TreasureChestWeapons extends TreasureChestBase{
 	

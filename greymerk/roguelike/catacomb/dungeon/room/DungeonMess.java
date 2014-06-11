@@ -1,22 +1,22 @@
 package greymerk.roguelike.catacomb.dungeon.room;
 
-import java.util.Random;
-
-import net.minecraft.src.Block;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.TileEntityChest;
-import net.minecraft.src.World;
-import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.catacomb.dungeon.IDungeon;
 import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.config.RogueConfig;
-import greymerk.roguelike.treasure.TreasureChest;
 import greymerk.roguelike.treasure.TreasureChestBase;
 import greymerk.roguelike.treasure.loot.Loot;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
+
+import java.util.Random;
+
+import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntityChest;
+import net.minecraft.world.World;
 
 
 
@@ -33,8 +33,10 @@ public class DungeonMess implements IDungeon {
 		stairSpruce = theme.getSecondaryStair();
 		log = theme.getSecondaryPillar();
 		
+		MetaBlock air = new MetaBlock(Blocks.air);
+		
 		// air		
-		WorldGenPrimitive.fillRectSolid(world, rand, x - 6, y, z - 6, x + 6, y + 2, z + 6, 0);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 6, y, z - 6, x + 6, y + 2, z + 6, air);
 
 		// ceiling
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 6, y + 3, z - 6, x + 6, y + 4, z + 6, plank, true, true);
@@ -44,10 +46,10 @@ public class DungeonMess implements IDungeon {
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 2, y + 3, z - 4, x - 2, y + 3, z + 4, WorldGenPrimitive.blockOrientation(stairSpruce, Cardinal.EAST, true), true, true);
 		WorldGenPrimitive.fillRectSolid(world, rand, x + 2, y + 3, z - 4, x + 2, y + 3, z + 4, WorldGenPrimitive.blockOrientation(stairSpruce, Cardinal.WEST, true), true, true);
 		
-		WorldGenPrimitive.fillRectSolid(world, rand, x - 1, y + 3, z - 4, x + 1, y + 3, z + 4, 0);
-		WorldGenPrimitive.fillRectSolid(world, rand, x - 4, y + 3, z - 1, x + 4, y + 3, z + 1, 0);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 1, y + 3, z - 4, x + 1, y + 3, z + 4, air);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 4, y + 3, z - 1, x + 4, y + 3, z + 1, air);
 		
-		MetaBlock brownClay = new MetaBlock(Block.stainedClay.blockID, 12);
+		MetaBlock brownClay = new MetaBlock(Blocks.stained_hardened_clay, 12);
 		
 		// floor
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 7, y - 1, z - 7, x + 7, y - 1, z + 7, brownClay, true, true);
@@ -89,8 +91,8 @@ public class DungeonMess implements IDungeon {
 
 	private void stove(World world, Random rand, int x, int y, int z){
 		
-		MetaBlock brick = new MetaBlock(Block.brick.blockID);
-		MetaBlock stair = new MetaBlock(Block.stairsBrick.blockID);
+		MetaBlock brick = new MetaBlock(Blocks.brick_block);
+		MetaBlock stair = new MetaBlock(Blocks.brick_stairs);
 		
 		// floor
 		
@@ -106,15 +108,15 @@ public class DungeonMess implements IDungeon {
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 1, y + 2, z - 2, x + 1, y + 2, z - 2, brick);
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 1, y + 2, z - 1, x + 2, y + 2, z - 1, WorldGenPrimitive.blockOrientation(stair, Cardinal.SOUTH, true), true, true);
 		
-		WorldGenPrimitive.setBlock(world, x, y - 1, z - 3, Block.netherrack.blockID);
-		WorldGenPrimitive.setBlock(world, x, y, z - 3, Block.fire.blockID);
+		WorldGenPrimitive.setBlock(world, x, y - 1, z - 3, Blocks.netherrack);
+		WorldGenPrimitive.setBlock(world, x, y, z - 3, Blocks.fire);
 		WorldGenPrimitive.setBlock(world, rand, x, y + 1, z - 3, WorldGenPrimitive.blockOrientation(stair, Cardinal.SOUTH, true), true, true);
 
 		// furnace
 		WorldGenPrimitive.fillRectSolid(world, rand, x + 2, y, z - 1, x + 2, y + 2, z + 1, brick);
 		WorldGenPrimitive.fillRectSolid(world, rand, x + 1, y + 2, z - 1, x + 1, y + 2, z + 1, WorldGenPrimitive.blockOrientation(stair, Cardinal.WEST, true), true, true);
 		
-		WorldGenPrimitive.setBlock(world, x + 2, y, z, Block.furnaceIdle.blockID);
+		WorldGenPrimitive.setBlock(world, x + 2, y, z, Blocks.furnace);
 		WorldGenPrimitive.setBlock(world, rand, x + 2, y + 1, z, WorldGenPrimitive.blockOrientation(stair, Cardinal.WEST, true), true, true);
 		
 		// ceiling
@@ -152,7 +154,7 @@ public class DungeonMess implements IDungeon {
 		WorldGenPrimitive.setBlock(world, rand, x + 1, y, z, WorldGenPrimitive.blockOrientation(stairSpruce, Cardinal.EAST, true), true, true);
 		WorldGenPrimitive.setBlock(world, rand, x + 1, y, z + 1, WorldGenPrimitive.blockOrientation(stairSpruce, Cardinal.SOUTH, true), true, true);
 		WorldGenPrimitive.setBlock(world, rand, x, y, z + 1, WorldGenPrimitive.blockOrientation(stairSpruce, Cardinal.WEST, true), true, true);
-		WorldGenPrimitive.setBlock(world, x, y + 1, z, Block.torchWood.blockID);
+		WorldGenPrimitive.setBlock(world, x, y + 1, z, Blocks.torch);
 	}
 
 	private void southTable(World world, Random rand, int x, int y, int z){
@@ -168,7 +170,7 @@ public class DungeonMess implements IDungeon {
 		WorldGenPrimitive.setBlock(world, rand, x + 1, y, z - 1, WorldGenPrimitive.blockOrientation(stairSpruce, Cardinal.EAST, true), true, true);
 		WorldGenPrimitive.setBlock(world, rand, x + 1, y, z, WorldGenPrimitive.blockOrientation(stairSpruce, Cardinal.SOUTH, true), true, true);
 		WorldGenPrimitive.setBlock(world, rand, x, y, z, WorldGenPrimitive.blockOrientation(stairSpruce, Cardinal.WEST, true), true, true);
-		WorldGenPrimitive.setBlock(world, x, y + 1, z, Block.torchWood.blockID);
+		WorldGenPrimitive.setBlock(world, x, y + 1, z, Blocks.torch);
 				
 	}
 	

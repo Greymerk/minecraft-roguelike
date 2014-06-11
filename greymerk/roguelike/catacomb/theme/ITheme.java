@@ -1,16 +1,14 @@
 package greymerk.roguelike.catacomb.theme;
 
-import java.util.Random;
-
-import net.minecraft.src.World;
-
 import greymerk.roguelike.catacomb.CatacombLevel;
-import greymerk.roguelike.catacomb.dungeon.IDungeon;
-import greymerk.roguelike.catacomb.dungeon.IDungeonFactory;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.MetaBlock;
+
+import java.util.Random;
+
+import net.minecraft.world.World;
 
 public interface ITheme {
 

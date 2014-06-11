@@ -5,7 +5,7 @@ import greymerk.roguelike.worldgen.Cardinal;
 
 import java.util.Random;
 
-import net.minecraft.src.World;
+import net.minecraft.world.World;
 
 public interface IAlcove {
 	

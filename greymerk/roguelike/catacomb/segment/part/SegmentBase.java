@@ -10,8 +10,7 @@ import greymerk.roguelike.worldgen.WorldGenPrimitive;
 
 import java.util.Random;
 
-import net.minecraft.src.Block;
-import net.minecraft.src.World;
+import net.minecraft.world.World;
 
 public abstract class SegmentBase implements ISegment {
 

@@ -2,7 +2,6 @@ package greymerk.roguelike.treasure;
 
 
 import greymerk.roguelike.catacomb.Catacomb;
-import greymerk.roguelike.catacomb.dungeon.Dungeon;
 import greymerk.roguelike.worldgen.Coord;
 
 import java.util.ArrayList;
@@ -11,8 +10,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.src.Block;
-import net.minecraft.src.World;
+import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
+import net.minecraft.world.World;
 
 public enum TreasureChest {
 
@@ -184,25 +184,11 @@ public enum TreasureChest {
 			return false;
 		}
 		
-		if (!world.getBlockMaterial(x, y - 1, z).isSolid()) {
-			return false;
-		}
-				
-		if(world.getBlockId(x - 1, y, z) == Block.chest.blockID){
-			return false;
-		}
-		
-		if(world.getBlockId(x + 1, y, z) == Block.chest.blockID){
-			return false;
-		}
-		
-		if(world.getBlockId(x, y, z - 1) == Block.chest.blockID){
-			return false;
-		}
-
-		if(world.getBlockId(x, y, z + 1) == Block.chest.blockID){
-			return false;
-		}
+		if (!world.getBlock(x, y - 1, z).getMaterial().isSolid()) return false;
+		if(world.getBlock(x - 1, y, z) == Blocks.chest) return false;
+		if(world.getBlock(x + 1, y, z) == Blocks.chest) return false;
+		if(world.getBlock(x, y, z - 1) == Blocks.chest) return false;
+		if(world.getBlock(x, y, z + 1) == Blocks.chest) return false;
 		
 		return true;
 	}

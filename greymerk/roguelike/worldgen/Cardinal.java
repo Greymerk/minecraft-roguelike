@@ -1,6 +1,5 @@
 package greymerk.roguelike.worldgen;
 
-import net.minecraft.src.Tuple;
 
 public enum Cardinal {
 

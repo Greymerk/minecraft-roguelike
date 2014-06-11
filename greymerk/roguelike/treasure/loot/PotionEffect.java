@@ -1,14 +1,8 @@
 package greymerk.roguelike.treasure.loot;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
-
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.NBTTagCompound;
-import net.minecraft.src.NBTTagList;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 
 public enum PotionEffect {
 	
@@ -58,13 +52,13 @@ public enum PotionEffect {
 		final String CUSTOM = "CustomPotionEffects";
 		NBTTagList effects;
 		
-		effects = tag.getTagList(CUSTOM);
+		effects = tag.getTagList(CUSTOM, 0);
 		if (effects == null){
 			effects = new NBTTagList();
 			tag.setTag(CUSTOM, effects);
 		}
 		
-		effects = tag.getTagList(CUSTOM);
+		effects = tag.getTagList(CUSTOM, 0);
 		
 		int effectID = PotionEffect.getEffectID(type);
 		NBTTagCompound toAdd = new NBTTagCompound();

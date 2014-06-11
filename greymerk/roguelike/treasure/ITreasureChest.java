@@ -2,9 +2,8 @@ package greymerk.roguelike.treasure;
 
 import java.util.Random;
 
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.TileEntityChest;
-import net.minecraft.src.World;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 
 public interface ITreasureChest {
 		

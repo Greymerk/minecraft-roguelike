@@ -4,8 +4,9 @@ import greymerk.roguelike.treasure.loot.Loot;
 
 import java.util.Random;
 
-import net.minecraft.src.Item;
-import net.minecraft.src.ItemStack;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 
 public class ItemEnchBook extends ItemBase{
 
@@ -15,7 +16,7 @@ public class ItemEnchBook extends ItemBase{
 
 	@Override
 	public ItemStack getLootItem(Random rand, int level) {
-		ItemStack book = new ItemStack(Item.book);
+		ItemStack book = new ItemStack(Items.book);
 		Loot.enchantItem(book, rand, Loot.getEnchantLevel(rand, level));
 		return book;
 	}

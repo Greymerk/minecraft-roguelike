@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.src.ItemStack;
+import net.minecraft.item.ItemStack;
 
 public enum PotionMixture {
 
@@ -21,7 +21,7 @@ public enum PotionMixture {
 			duration = 1000 + rand.nextInt(2000);
 			PotionEffect.addCustomEffect(potion, PotionEffect.STRENGTH, 3, duration);
 			PotionEffect.addCustomEffect(potion, PotionEffect.FATIGUE, 1, duration);
-			potion.setItemName("Tequila");
+			Loot.setItemName(potion, "Tequila");
 			return potion;
 		case LAUDANUM:
 			potion = Potion.getSpecific(rand, Potion.STRENGTH, false, false, false);
@@ -31,7 +31,7 @@ public enum PotionMixture {
 			PotionEffect.addCustomEffect(potion, PotionEffect.SLOWNESS, 2, duration);
 			PotionEffect.addCustomEffect(potion, PotionEffect.FATIGUE, 2, duration);
 			PotionEffect.addCustomEffect(potion, PotionEffect.NAUSIA, 0, duration);
-			potion.setItemName("Laudanum");
+			Loot.setItemName(potion, "Laudanum");
 			return potion;
 		case MOONSHINE:
 			potion = Potion.getSpecific(rand, Potion.WEAKNESS, false, false, false);
@@ -39,7 +39,7 @@ public enum PotionMixture {
 			PotionEffect.addCustomEffect(potion, PotionEffect.DAMAGE, 2, 1);
 			PotionEffect.addCustomEffect(potion, PotionEffect.BLINDNESS, 1, duration);
 			PotionEffect.addCustomEffect(potion, PotionEffect.RESISTANCE, 2, duration);
-			potion.setItemName("Moonshine");
+			Loot.setItemName(potion, "Moonshine");
 			return potion;
 		case ABSINTHE:
 			potion = Potion.getSpecific(rand, Potion.POISON, false, false, false);
@@ -47,7 +47,7 @@ public enum PotionMixture {
 			PotionEffect.addCustomEffect(potion, PotionEffect.POISON, 1, 200 + rand.nextInt(300));
 			PotionEffect.addCustomEffect(potion, PotionEffect.NIGHTVISION, 1, duration);
 			PotionEffect.addCustomEffect(potion, PotionEffect.JUMP, 2, duration);
-			potion.setItemName("Absinthe");
+			Loot.setItemName(potion, "Absinthe");
 			return potion;
 		case STOUT:
 			potion = Potion.getSpecific(rand, Potion.HARM, false, false, false);
@@ -55,12 +55,12 @@ public enum PotionMixture {
 			PotionEffect.addCustomEffect(potion, PotionEffect.SATURATION, 4, 1);
 			PotionEffect.addCustomEffect(potion, PotionEffect.FATIGUE, 1, duration);
 			PotionEffect.addCustomEffect(potion, PotionEffect.HEALTHBOOST, 2, duration);
-			potion.setItemName("Stout");
+			Loot.setItemName(potion, "Stout");
 			return potion;
 		case VILE:
 			potion = Potion.getSpecific(rand, Potion.HARM);
 			addRandomEffects(rand, potion, 2 + rand.nextInt(2));
-			potion.setItemName("Vile Mixture");
+			Loot.setItemName(potion, "Vile Mixture");
 			return potion;
 		}
 		

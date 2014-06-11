@@ -4,7 +4,7 @@ import greymerk.roguelike.catacomb.theme.ITheme;
 
 import java.util.Random;
 
-import net.minecraft.src.World;
+import net.minecraft.world.World;
 
 public interface IDungeon {
 

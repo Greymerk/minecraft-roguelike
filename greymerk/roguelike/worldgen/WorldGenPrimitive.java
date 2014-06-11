@@ -5,50 +5,39 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.src.Block;
-import net.minecraft.src.Direction;
-import net.minecraft.src.Facing;
-import net.minecraft.src.World;
+import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
+import net.minecraft.tileentity.TileEntitySkull;
+import net.minecraft.util.Direction;
+import net.minecraft.util.Facing;
+import net.minecraft.world.World;
 
 public class WorldGenPrimitive {
 	
-	public static boolean setBlock(World world, int x, int y, int z, int blockID, int meta, int flags, boolean fillAir, boolean replaceSolid){
+	public static boolean setBlock(World world, int x, int y, int z, Block block, int meta, int flags, boolean fillAir, boolean replaceSolid){
 		
-		if(world.blockHasTileEntity(x, y, z)){
-			return false;
-		}
+		Block currentBlock = world.getBlock(x, y, z);
 		
-		int currentBlock = world.getBlockId(x, y, z);
-		
-		if(currentBlock == Block.chest.blockID){
-			return false;
-		}
-		
-		if(currentBlock == Block.mobSpawner.blockID){
-			return false;
-		}
+		if(currentBlock.hasTileEntity()) return false;
+		if(currentBlock == Blocks.chest) return false;
+		if(currentBlock == Blocks.mob_spawner) return false;
 		
 		boolean isAir = world.isAirBlock(x, y, z);
 		
-		if(!fillAir && isAir){
-			return false;
-		}
+		if(!fillAir && isAir) return false;
+		if(!replaceSolid && !isAir)	return false;
 		
-		if(!replaceSolid && !isAir){
-			return false;
-		}
-		
-		world.setBlock(x, y, z, blockID, meta, flags);
+		world.setBlock(x, y, z, block, meta, flags);
 		return true;
 		
 	}
 	
-	public static boolean setBlock(World world, int x, int y, int z, int blockID){
-		return setBlock(world, x, y, z, blockID, 0, 2, true, true);
+	public static boolean setBlock(World world, int x, int y, int z, Block block){
+		return setBlock(world, x, y, z, block, 0, 2, true, true);
 	}
 	
-	public static boolean setBlock(World world, Coord coord, int blockID) {
-		return setBlock(world, coord.getX(), coord.getY(), coord.getZ(), blockID);
+	public static boolean setBlock(World world, Coord coord, Block block) {
+		return setBlock(world, coord.getX(), coord.getY(), coord.getZ(), block);
 	}
 	
 	public static boolean setBlock(World world, int x, int y, int z, MetaBlock block){
@@ -61,17 +50,6 @@ public class WorldGenPrimitive {
 	
 	public static void setBlock(World world, Random rand, Coord coord, IBlockFactory blocks, boolean fillAir, boolean replaceSolid) {
 		blocks.setBlock(world, rand, coord.getX(), coord.getY(), coord.getZ(), fillAir, replaceSolid);
-	}
-	
-	
-	
-	
-	public static void fillRectSolid(World world, Random rand, int x1, int y1, int z1, int x2, int y2, int z2, int blockID){
-		fillRectSolid(world, rand, x1, y1, z1, x2, y2, z2, new MetaBlock(blockID), true, true);
-	}
-	
-	public static void fillRectSolid(World world, Random rand, int x1, int y1, int z1, int x2, int y2, int z2, int blockID, int meta, int flag, boolean fillAir, boolean replaceSolid){
-		fillRectSolid(world, rand, x1, y1, z1, x2, y2, z2, new MetaBlock(blockID, meta, flag), fillAir, replaceSolid);
 	}
 	
 	public static void fillRectSolid(World world, Random rand, int x1, int y1, int z1, int x2, int y2, int z2, IBlockFactory blocks){
@@ -106,8 +84,8 @@ public class WorldGenPrimitive {
 	
 	
 	
-	public static void fillRectHollow(World world, Random rand, int x1, int y1, int z1, int x2, int y2, int z2, int blockID, int meta, int flag, boolean fillAir, boolean replaceSolid){
-		fillRectHollow(world, rand, x1, y1, z1, x2, y2, z2, new MetaBlock(blockID, meta, flag), fillAir, replaceSolid);
+	public static void fillRectHollow(World world, Random rand, int x1, int y1, int z1, int x2, int y2, int z2, Block block, int meta, int flag, boolean fillAir, boolean replaceSolid){
+		fillRectHollow(world, rand, x1, y1, z1, x2, y2, z2, new MetaBlock(block, meta, flag), fillAir, replaceSolid);
 	}
 	
 	public static void fillRectHollow(World world, Random rand, Coord c1, Coord c2, IBlockFactory blocks, boolean fillAir, boolean replaceSolid){
@@ -130,7 +108,7 @@ public class WorldGenPrimitive {
 					if(x == x1 || x == x2 || y == y1 || y == y2 || z == z1 || z == z2){
 						blocks.setBlock(world, rand, x, y, z, fillAir, replaceSolid);
 					} else {					
-						setBlock(world, x, y, z, 0);
+						setBlock(world, x, y, z, Blocks.air);
 					}	
 				}
 			}
@@ -188,7 +166,7 @@ public class WorldGenPrimitive {
 
 	public static void spiralStairStep(World world, Random rand, int inX, int inY, int inZ, MetaBlock stair, IBlockFactory fill){
 		
-		MetaBlock air = new MetaBlock(0);
+		MetaBlock air = new MetaBlock(Blocks.air);
 		
 		// air
 		fillRectSolid(world, rand, inX - 1, inY, inZ - 1, inX + 1, inY, inZ + 1, air, true, true);
@@ -240,9 +218,9 @@ public class WorldGenPrimitive {
 	        					continue;
 	        				}
 	        				
-	            		    if (Block.vine.canPlaceBlockOnSide(world, x, y, z, dir))
+	            		    if (Blocks.vine.canPlaceBlockOnSide(world, x, y, z, dir))
 	                        {
-	            		    	setBlock(world, x, y, z, Block.vine.blockID, 1 << Direction.facingToDirection[Facing.oppositeSide[dir]], 2, true, true);
+	            		    	setBlock(world, x, y, z, Blocks.vine, 1 << Direction.facingToDirection[Facing.oppositeSide[dir]], 2, true, true);
 	                            break;
 	                        }
 	        			}
@@ -263,12 +241,47 @@ public class WorldGenPrimitive {
 	}
 	
 	public static void fillDown(World world, Random rand, int x, int y, int z, IBlockFactory blocks){
-		while(!world.isBlockOpaqueCube(x, y, z) && y > 1){
+		while(!world.getBlock(x, y, z).getMaterial().isOpaque() && y > 1){
 			blocks.setBlock(world, rand, x, y, z);
 			--y;
 		}
 	}
 
+	public static void skull(World world, Random rand, int x, int y, int z, Cardinal dir){
+		
+		if(rand.nextBoolean()){
+			return;
+		}
+		
+		MetaBlock skull = new MetaBlock(Blocks.skull, 1);
+		
+		if(!skull.setBlock(world, x, y, z)) return;
+		
+		TileEntitySkull skullEntity;
+		
+		try{
+			skullEntity = (TileEntitySkull) world.getTileEntity(x, y, z);
+		} catch (Exception e){
+			return;
+		}
+		
+		if(rand.nextInt(10) == 0){
+			// TODO: Make sure this works for skulls
+			skullEntity.func_145905_a(1, "");
+		}
+		
+		switch(dir){
+		case SOUTH: skullEntity.func_145903_a(8);
+		break;
+		case NORTH: skullEntity.func_145903_a(0);
+		break;
+		case WEST: skullEntity.func_145903_a(12);
+		break;
+		case EAST: skullEntity.func_145903_a(4);
+		break;
+		}
+		
+	}
 
 }
 

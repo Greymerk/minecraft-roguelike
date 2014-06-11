@@ -1,15 +1,13 @@
 package greymerk.roguelike.treasure;
 
-import greymerk.roguelike.catacomb.Catacomb;
-import greymerk.roguelike.treasure.loot.Loot;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
 
 import java.util.Random;
 
-import net.minecraft.src.Block;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.TileEntityChest;
-import net.minecraft.src.World;
+import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
+import net.minecraft.tileentity.TileEntityChest;
+import net.minecraft.world.World;
 
 public class TreasureChestEmpty extends TreasureChestBase implements ITreasureChest {
 
@@ -22,14 +20,14 @@ public class TreasureChestEmpty extends TreasureChestBase implements ITreasureCh
 		posY = y;
 		posZ = z;
 
-		int type = trapped ? Block.chestTrapped.blockID : Block.chest.blockID;
+		Block type = trapped ? Blocks.trapped_chest : Blocks.chest;
 		
 		
 		if(!WorldGenPrimitive.setBlock(world, x, y, z, type)){
 			return null;
 		}
 		
-		chest = (TileEntityChest) world.getBlockTileEntity(x, y, z);
+		chest = (TileEntityChest) world.getTileEntity(x, y, z);
 		
 		return this;
 

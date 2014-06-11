@@ -1,6 +1,5 @@
 package greymerk.roguelike.catacomb.dungeon.room;
 
-import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.catacomb.dungeon.IDungeon;
 import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
@@ -11,8 +10,8 @@ import greymerk.roguelike.worldgen.WorldGenPrimitive;
 
 import java.util.Random;
 
-import net.minecraft.src.Block;
-import net.minecraft.src.World;
+import net.minecraft.init.Blocks;
+import net.minecraft.world.World;
 
 public class DungeonCorner implements IDungeon {
 
@@ -22,9 +21,10 @@ public class DungeonCorner implements IDungeon {
 		MetaBlock stair = theme.getPrimaryStair();
 		IBlockFactory blocks = theme.getPrimaryWall();
 		IBlockFactory pillar = theme.getPrimaryPillar();
+		MetaBlock air = new MetaBlock(Blocks.air);
 		
 		// fill air inside
-		WorldGenPrimitive.fillRectSolid(world, rand, x - 2, y, z - 2, x + 2, y + 3, z + 2, 0);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 2, y, z - 2, x + 2, y + 3, z + 2, air);
 		
 		// shell
 		WorldGenPrimitive.fillRectHollow(world, rand, x - 3, y - 1, z - 3, x + 3, y + 4, z + 3, blocks, false, true);
@@ -35,7 +35,7 @@ public class DungeonCorner implements IDungeon {
 		
 		cursor = new Coord(x, y, z);
 		cursor.add(Cardinal.UP, 4);
-		WorldGenPrimitive.setBlock(world, cursor, 0);
+		air.setBlock(world, cursor);
 		cursor.add(Cardinal.UP, 1);
 		WorldGenPrimitive.setBlock(world, rand, cursor, blocks, true, true);
 		

@@ -5,13 +5,14 @@ import greymerk.roguelike.util.IWeighted;
 
 import java.util.Random;
 
-import com.google.gson.JsonObject;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 
-import net.minecraft.src.ItemStack;
+import com.google.gson.JsonObject;
 
 public class WeightedRandomLoot implements Comparable, IWeighted{
 	
-	private int id;
+	private Item id;
 	private int damage;
 	
 	private int min;
@@ -19,7 +20,7 @@ public class WeightedRandomLoot implements Comparable, IWeighted{
 	
 	private int weight;
 	
-	public WeightedRandomLoot(int id, int damage, int minStackSize, int maxStackSize, int weight){
+	public WeightedRandomLoot(Item id, int damage, int minStackSize, int maxStackSize, int weight){
 		this.id = id;
 		this.damage = damage;
 		this.min = minStackSize;
@@ -28,7 +29,7 @@ public class WeightedRandomLoot implements Comparable, IWeighted{
 	}
 
 	public WeightedRandomLoot(JsonObject json){
-		id = json.get("id").getAsInt();
+		id = Item.getItemById(json.get("id").getAsInt());
 		damage = json.has("meta") ? json.get("meta").getAsInt() : 0;
 		weight = json.get("weight").getAsInt();
 
@@ -42,7 +43,7 @@ public class WeightedRandomLoot implements Comparable, IWeighted{
 	}
 	
 	
-	public WeightedRandomLoot(int id, int damage, int weight){
+	public WeightedRandomLoot(Item id, int damage, int weight){
 		this(id, damage, 1, 1, weight);
 	}	
 	

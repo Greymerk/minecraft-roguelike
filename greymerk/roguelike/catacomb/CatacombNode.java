@@ -8,8 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.src.Tuple;
-import net.minecraft.src.World;
+import net.minecraft.world.World;
 
 public class CatacombNode {
 

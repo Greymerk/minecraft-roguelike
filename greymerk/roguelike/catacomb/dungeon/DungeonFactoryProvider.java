@@ -1,6 +1,5 @@
 package greymerk.roguelike.catacomb.dungeon;
 
-import java.util.Random;
 
 public enum DungeonFactoryProvider {
 

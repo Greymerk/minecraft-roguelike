@@ -1,6 +1,5 @@
 package greymerk.roguelike.treasure.loot;
 
-import greymerk.roguelike.config.ConfigFile;
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.treasure.loot.provider.ItemArmour;
 import greymerk.roguelike.treasure.loot.provider.ItemBlock;
@@ -18,29 +17,28 @@ import greymerk.roguelike.treasure.loot.provider.ItemTool;
 import greymerk.roguelike.treasure.loot.provider.ItemWeapon;
 import greymerk.roguelike.util.IWeighted;
 import greymerk.roguelike.util.TextFormat;
-import greymerk.roguelike.util.WeightedChoice;
-import greymerk.roguelike.util.WeightedRandomizer;
 
-import java.util.Dictionary;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import net.minecraft.src.Block;
-import net.minecraft.src.EnchantmentData;
-import net.minecraft.src.EnchantmentHelper;
-import net.minecraft.src.Entity;
-import net.minecraft.src.EntityLiving;
-import net.minecraft.src.EntitySkeleton;
-import net.minecraft.src.EntityZombie;
-import net.minecraft.src.Item;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.NBTTagCompound;
-import net.minecraft.src.NBTTagList;
-import net.minecraft.src.NBTTagString;
-import net.minecraft.src.World;
+import net.minecraft.block.Block;
+import net.minecraft.enchantment.EnchantmentData;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.monster.EntitySkeleton;
+import net.minecraft.entity.monster.EntityZombie;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.NBTTagString;
+import net.minecraft.world.EnumDifficulty;
+import net.minecraft.world.World;
 
 public enum Loot {
 
@@ -136,19 +134,19 @@ public enum Loot {
 	
 	private static ItemStack pickSupplyItem(Random rand) {
 
-		if(rand.nextInt(20) == 0) return new ItemStack(Item.carrot, 1);
-		if(rand.nextInt(20) == 0) return new ItemStack(Item.potato, 1);
+		if(rand.nextInt(20) == 0) return new ItemStack(Items.carrot, 1);
+		if(rand.nextInt(20) == 0) return new ItemStack(Items.potato, 1);
 		
 		switch(rand.nextInt(8)){
-		case 0: return new ItemStack(Item.seeds, rand.nextInt(8) + 1);
-		case 1: return new ItemStack(Item.pumpkinSeeds, rand.nextInt(8) + 1);
-		case 2: return new ItemStack(Item.melonSeeds, rand.nextInt(8) + 1);		
-		case 3: return new ItemStack(Item.wheat, rand.nextInt(8) + 1);
-		case 4: return new ItemStack(Block.torchWood, 10 + rand.nextInt(10));
-		case 5: return new ItemStack(Item.paper, rand.nextInt(8) + 1);
-		case 6:	return new ItemStack(Item.book, rand.nextInt(4) + 1);
-		case 7:	return new ItemStack(Block.sapling, rand.nextInt(4) + 1, rand.nextInt(4));
-		default: return new ItemStack(Item.stick, 1);
+		case 0: return new ItemStack(Items.wheat_seeds, rand.nextInt(8) + 1);
+		case 1: return new ItemStack(Items.pumpkin_seeds, rand.nextInt(8) + 1);
+		case 2: return new ItemStack(Items.melon_seeds, rand.nextInt(8) + 1);		
+		case 3: return new ItemStack(Items.wheat, rand.nextInt(8) + 1);
+		case 4: return new ItemStack(Blocks.torch, 10 + rand.nextInt(10));
+		case 5: return new ItemStack(Items.paper, rand.nextInt(8) + 1);
+		case 6:	return new ItemStack(Items.book, rand.nextInt(4) + 1);
+		case 7:	return new ItemStack(Blocks.sapling, rand.nextInt(4) + 1, rand.nextInt(4));
+		default: return new ItemStack(Items.stick, 1);
 		}
 	}
 
@@ -167,92 +165,97 @@ public enum Loot {
 	public static void enchantItemChance(ItemStack item, Random rand, int level){
 		if(rand.nextInt(7 - level) == 0) enchantItem(item, rand, getEnchantLevel(rand, level));
 	}
+
+
 	
-	public static void enchantItem(ItemStack item, Random rand, int enchantLevel) {
+	public static void enchantItem(ItemStack item, Random rand, int level) {
+
+		int enchantLevel = Loot.getEnchantLevel(rand, level);
 		
-        List enchants = EnchantmentHelper.buildEnchantmentList(rand, item, enchantLevel);
-        boolean canEnchant = enchants != null;
-        boolean isABook = item.itemID == Item.book.itemID;
+		if (item == null ) return;
 
-        if (!canEnchant){
-        	return;
-        }
-        
-        if (isABook){
-            item.itemID = Item.enchantedBook.itemID;
-        }
+		List ench = EnchantmentHelper.buildEnchantmentList(rand, item, enchantLevel);
+		
+		boolean isBook = item.getItem() == Items.book;
 
-        int var6 = isABook ? rand.nextInt(enchants.size()) : -1;
+		if (isBook){
+			item.func_150996_a(Items.enchanted_book);
+		}
 
-        for (int i = 0; i < enchants.size(); ++i)
-        {
-            EnchantmentData enchantData = (EnchantmentData)enchants.get(i);
+		int var6 = isBook && ench.size() > 1 ? rand.nextInt(ench.size()) : -1;
 
-            if (!isABook || i == var6)
-            {
-                if (isABook)
-                {
-                    Item.enchantedBook.addEnchantment(item, enchantData);
-                }
-                else
-                {
-                    item.addEnchantment(enchantData.enchantmentobj, enchantData.enchantmentLevel);
-                }
-            }
-        }
+		for (int i = 0; i < ench.size(); ++i){
+			EnchantmentData var8 = (EnchantmentData)ench.get(i);
+
+			if (!isBook || i != var6){
+				if (isBook){
+					Items.enchanted_book.addEnchantment(item, var8);
+				} else {
+					item.addEnchantment(var8.enchantmentobj, var8.enchantmentLevel);
+				}
+			}
+		}
 	}
 	
-
 	
-    public static void setItemLore(ItemStack item, String loreText){
-    	
-        if (item.stackTagCompound == null)
-        {
-            item.stackTagCompound = new NBTTagCompound("tag");
-        }
+	public static void setItemLore(ItemStack item, String loreText){
+		
+		if (item.stackTagCompound == null){
+			item.stackTagCompound.setTag("tag", new NBTTagCompound());
+		}
 
-        if (!item.stackTagCompound.hasKey("display"))
-        {
-            item.stackTagCompound.setCompoundTag("display", new NBTTagCompound());
-        }
-        
-        NBTTagCompound display = item.stackTagCompound.getCompoundTag("display");
-        
-        if (!(display.hasKey("Lore")))
-        {
-        	display.setTag("Lore", new NBTTagList());
-        }
-        
-        NBTTagList lore = display.getTagList("Lore");
-        
-        NBTTagString toAdd = new NBTTagString("", loreText);
-        
-        lore.appendTag(toAdd);
-        
-        display.setTag("Lore", lore);   
-    }
-    
-    public static void setItemLore(ItemStack item, String loreText, TextFormat option){
-    	setItemLore(item, TextFormat.apply(loreText, option));
-    }
-    
-    public static void setItemName(ItemStack item, String name, TextFormat option){
-    	
-    	if(option == null){
-    		item.setItemName(name);
-    		return;
-    	}
-    	
-    	item.setItemName(TextFormat.apply(name, option));
-    }
-    
-    public static void addEquipment(World world, int rank, Entity mob){
+		if (!item.stackTagCompound.hasKey("display")){
+			item.stackTagCompound.setTag("display", new NBTTagCompound());
+		}
+		
+		NBTTagCompound display = item.stackTagCompound.getCompoundTag("display");
+		
+		if (!(display.hasKey("Lore")))
+		{
+			display.setTag("Lore", new NBTTagList());
+		}
+		
+		NBTTagList lore = display.getTagList("Lore", 0);
+		
+		NBTTagString toAdd = new NBTTagString(loreText);
+		
+		lore.appendTag(toAdd);
+		
+		display.setTag("Lore", lore);   
+	}
+	
+	public static void setItemLore(ItemStack item, String loreText, TextFormat option){
+		setItemLore(item, TextFormat.apply(loreText, option));
+	}
+	
+	public static void setItemName(ItemStack item, String name, TextFormat option){
+		
+		if(option == null){
+			item.setStackDisplayName(name);
+			return;
+		}
+		
+		item.setStackDisplayName(TextFormat.apply(name, option));
+	}
+	
+	public static void setItemName(ItemStack item, String name){
+		setItemName(item, name, null);
+	}
+	
+	public static void addEquipment(World world, int rank, Entity mob){
 			
 		Random rand = world.rand;
 				
-		int difficulty = world.difficultySetting;
+		EnumDifficulty difficulty = world.difficultySetting;
 		
-		boolean enchant = difficulty == 3 ? true : false;
+		boolean enchant;
+		
+		switch(difficulty){
+		case EASY: enchant = rand.nextInt(5) == 0; break;
+		case NORMAL: enchant = rank == 3 || rand.nextBoolean(); break;
+		case HARD: enchant = true; break;
+		default: enchant = true;
+		}
 		
 		ItemStack weapon;
 		
@@ -287,9 +290,7 @@ public enum Loot {
 		
 		// put on some armour
 		for(int i = 1; i < 5; i++){
-			
-			int chance = 5 - rank + ((3 - difficulty) * 2);
-			if (difficulty == 3 || rank == 3 || rand.nextInt(chance) == 0){
+			if (enchant){
 				ItemStack item = Loot.getEquipmentBySlot(rand, Slot.getSlotByNumber(i), rank, enchant);
 				mob.setCurrentItemOrArmor(i, item);
 			}
@@ -300,5 +301,5 @@ public enum Loot {
 		for(int s = 0; s < 5; s++){
 			((EntityLiving)mob).setEquipmentDropChance(s, (float) RogueConfig.getDouble(RogueConfig.LOOTING));
 		}
-    }
+	}
 }

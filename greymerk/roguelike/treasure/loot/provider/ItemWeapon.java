@@ -6,8 +6,9 @@ import greymerk.roguelike.treasure.loot.Quality;
 
 import java.util.Random;
 
-import net.minecraft.src.Item;
-import net.minecraft.src.ItemStack;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 
 public class ItemWeapon extends ItemBase{
 	
@@ -35,7 +36,7 @@ public class ItemWeapon extends ItemBase{
 			return ItemSpecialty.getRandomItem(Equipment.BOW, rand, level);
 		}
 		
-		ItemStack bow = new ItemStack(Item.bow);
+		ItemStack bow = new ItemStack(Items.bow);
 		
 		if(enchant && rand.nextInt(6 - level) == 0){
 			Loot.enchantItem(bow, rand, Loot.getEnchantLevel(rand, level));
@@ -66,11 +67,11 @@ public class ItemWeapon extends ItemBase{
 		Quality quality = Quality.getWeaponQuality(rand, rank);
 		
 		switch (quality) {
-		case DIAMOND: return new ItemStack(Item.swordDiamond);
-		case GOLD: return new ItemStack(Item.swordGold);
-		case IRON: return new ItemStack(Item.swordIron);
-		case STONE: return new ItemStack(Item.swordStone);
-		default: return new ItemStack(Item.swordWood);
+		case DIAMOND: return new ItemStack(Items.diamond_sword);
+		case GOLD: return new ItemStack(Items.golden_sword);
+		case IRON: return new ItemStack(Items.iron_sword);
+		case STONE: return new ItemStack(Items.stone_sword);
+		default: return new ItemStack(Items.wooden_sword);
 		}
 	}
 

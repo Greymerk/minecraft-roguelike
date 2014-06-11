@@ -1,21 +1,14 @@
 package greymerk.roguelike.worldgen;
 
-import greymerk.roguelike.treasure.loot.Loot;
-import greymerk.roguelike.treasure.loot.provider.ItemNovelty;
-
 import java.util.Random;
 
-import net.minecraft.src.Block;
-import net.minecraft.src.Entity;
-import net.minecraft.src.EntitySkeleton;
-import net.minecraft.src.EntityZombie;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.MobSpawnerBaseLogic;
-import net.minecraft.src.NBTTagCompound;
-import net.minecraft.src.NBTTagList;
-import net.minecraft.src.TileEntityMobSpawner;
-import net.minecraft.src.WeightedRandomMinecart;
-import net.minecraft.src.World;
+import net.minecraft.init.Blocks;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.tileentity.MobSpawnerBaseLogic;
+import net.minecraft.tileentity.MobSpawnerBaseLogic.WeightedRandomMinecart;
+import net.minecraft.tileentity.TileEntityMobSpawner;
+import net.minecraft.world.World;
 
 public enum Spawner {
 	
@@ -35,17 +28,17 @@ public enum Spawner {
 	
 	public static void generate(World world, Random rand, int posX, int posY, int posZ, Spawner type){
 		
-		if(!WorldGenPrimitive.setBlock(world, posX, posY, posZ, Block.mobSpawner.blockID)){
+		if(!WorldGenPrimitive.setBlock(world, posX, posY, posZ, Blocks.mob_spawner)){
 			return;
 		}
 		
-		TileEntityMobSpawner spawner = (TileEntityMobSpawner) world.getBlockTileEntity(posX, posY, posZ);
+		TileEntityMobSpawner spawner = (TileEntityMobSpawner) world.getTileEntity(posX, posY, posZ);
 
         if (spawner != null)
         {
         	String name = getSpawnerName(type);
-        	MobSpawnerBaseLogic logic = spawner.getSpawnerLogic();
-        	logic.setMobID(name);
+        	MobSpawnerBaseLogic logic = spawner.func_145881_a();
+        	logic.setEntityName(name);
         	
         	setRoguelike(logic);
         }
@@ -100,7 +93,7 @@ public enum Spawner {
     	nbt.setInteger("Weight", 1);
     	
     	NBTTagCompound properties = new NBTTagCompound();
-    	nbt.setCompoundTag("Properties", properties);
+    	nbt.setTag("Properties", properties);
     	    	
     	NBTTagList activeEffects = new NBTTagList();
     	properties.setTag("ActiveEffects", activeEffects);
@@ -113,8 +106,9 @@ public enum Spawner {
     	buff.setInteger("Duration", 10);
     	buff.setByte("Ambient", (byte) 0);
     	
-    	WeightedRandomMinecart cart = new WeightedRandomMinecart(logic, nbt);
-    	logic.setRandomMinecart(cart);
+    	
+    	MobSpawnerBaseLogic.WeightedRandomMinecart cart = logic.new WeightedRandomMinecart(nbt);
+    	logic.setRandomEntity(cart);
     	logic.updateSpawner();
     }
 }

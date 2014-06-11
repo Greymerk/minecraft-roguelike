@@ -1,23 +1,20 @@
 package greymerk.roguelike.catacomb.dungeon.room;
 
-import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.catacomb.dungeon.IDungeon;
 import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.treasure.TreasureChest;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
+import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
 
-import java.io.PrintStream;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.src.Block;
-import net.minecraft.src.Material;
-import net.minecraft.src.World;
+import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
+import net.minecraft.world.World;
 
 public class DungeonsPit implements IDungeon {
 	World world;
@@ -73,33 +70,22 @@ public class DungeonsPit implements IDungeon {
 		for (int blockX = originX - dungeonLength - 1; blockX <= originX + dungeonLength + 1; blockX++) {
 			for (int blockY = originY + dungeonHeight; blockY >= originY - 1; blockY--) {
 				for (int blockZ = originZ - dungeonWidth - 1; blockZ <= originZ + dungeonWidth + 1; blockZ++) {
+					if (blockX == originX - dungeonLength - 1
+							|| blockZ == originZ - dungeonWidth - 1
+							|| blockX == originX + dungeonLength + 1
+							|| blockZ == originZ + dungeonWidth + 1){
 
-					// This prevents overlapping dungeons from overwriting
-					// spawners
-					if (world.getBlockId(blockX, blockY, blockZ) == Block.mobSpawner.blockID) {
-						continue;
-					}
-
-					// this prevents overlapping dungeons from breaking chests
-					if (world.getBlockId(blockX, blockY, blockZ) == Block.chest.blockID) {
-						continue;
-					}
-
-					if (blockX == originX - dungeonLength - 1 || blockZ == originZ - dungeonWidth - 1 || blockX == originX + dungeonLength + 1 || blockZ == originZ + dungeonWidth + 1) {
-
-						if (blockY >= 0 && !world.getBlockMaterial(blockX, blockY - 1, blockZ).isSolid()) {
-							WorldGenPrimitive.setBlock(world, blockX, blockY, blockZ, 0);
+						if (blockY >= 0 && !world.getBlock(blockX, blockY - 1, blockZ).getMaterial().isSolid()) {
+							WorldGenPrimitive.setBlock(world, blockX, blockY, blockZ, Blocks.air);
 							continue;
 						}
-						if (!world.getBlockMaterial(blockX, blockY, blockZ)
-								.isSolid()) {
-							continue;
-						}
+						
+						if (!world.getBlock(blockX, blockY, blockZ).getMaterial().isSolid()) continue;
 						
 						blocks.setBlock(world, rand, blockX, blockY, blockZ);
 						
 					} else {
-						WorldGenPrimitive.setBlock(world, blockX, blockY, blockZ, 0);
+						WorldGenPrimitive.setBlock(world, blockX, blockY, blockZ, new MetaBlock(Blocks.air));
 					}
 				}
 			}
@@ -129,15 +115,11 @@ public class DungeonsPit implements IDungeon {
 			for(int z = originZ - 2; z <= originZ + 2; z++){
 				for(int y = originY - 1; y > 0; y--){
 					
-					if(world.getBlockId(x, y, z) == 0){
+					if(world.getBlock(x, y, z) == Blocks.air){
 						continue;
 					}
 					
-					if(y < 0 + rand.nextInt(5) && world.getBlockId(x, y, z) == Block.bedrock.blockID){
-						continue;
-					}
-					
-					if(world.getBlockId(x, y, z) == Block.mobSpawner.blockID){
+					if(y < 0 + rand.nextInt(5) && world.getBlock(x, y, z) == Blocks.bedrock){
 						continue;
 					}
 					
@@ -152,11 +134,11 @@ public class DungeonsPit implements IDungeon {
 					}
 					
 					if(y < 10){
-						WorldGenPrimitive.setBlock(world, x, y, z, Block.waterStill.blockID);
+						WorldGenPrimitive.setBlock(world, x, y, z, Blocks.water);
 						continue;
 					}
 					
-					WorldGenPrimitive.setBlock(world, x, y, z, 0);
+					WorldGenPrimitive.setBlock(world, x, y, z, Blocks.air);
 				}
 			}
 		}
@@ -173,18 +155,18 @@ public class DungeonsPit implements IDungeon {
 			for (int x = originX - 1; x <= originX + 1; x++){
 				for (int z = originZ + 6; z >= originZ + 3; z--){
 					for (int y = originY - 2; y <= originY + 3; y++){
-						if(world.isAirBlock(x, y, z)){
+						if(world.getBlock(x, y, z) == Blocks.air){
 							return;
 						}
 					}
 				}
 			}
 			
-			WorldGenPrimitive.setBlock(world, originX, originY, originZ + 2, Block.pressurePlateStone.blockID);
-			WorldGenPrimitive.setBlock(world, originX, originY - 1, originZ + 3, Block.torchRedstoneActive.blockID, 3, 2, true, true);
-			WorldGenPrimitive.setBlock(world, originX, originY - 1, originZ + 4, Block.redstoneWire.blockID);
-			WorldGenPrimitive.setBlock(world, originX, originY, originZ + 5, Block.torchRedstoneIdle.blockID, 5, 2, true, true);
-			WorldGenPrimitive.setBlock(world, originX, originY + 1, originZ + 4, Block.pistonStickyBase.blockID, 2, 2, true, true);
+			WorldGenPrimitive.setBlock(world, originX, originY, originZ + 2, Blocks.stone_pressure_plate);
+			WorldGenPrimitive.setBlock(world, originX, originY - 1, originZ + 3, Blocks.redstone_torch, 3, 2, true, true);
+			WorldGenPrimitive.setBlock(world, originX, originY - 1, originZ + 4, Blocks.redstone_wire);
+			WorldGenPrimitive.setBlock(world, originX, originY, originZ + 5, Blocks.unlit_redstone_torch, 5, 2, true, true);
+			WorldGenPrimitive.setBlock(world, originX, originY + 1, originZ + 4, Blocks.sticky_piston, 2, 2, true, true);
 			break;
 			
 			
@@ -194,18 +176,18 @@ public class DungeonsPit implements IDungeon {
 			for (int x = originX - 6; x <= originX - 3; x++){
 				for (int z = originZ - 1; z <= originZ + 1; z++){
 					for (int y = originY - 2; y <= originY + 3; y++){
-						if(world.isAirBlock(x, y, z)){
+						if(world.getBlock(x, y, z) == Blocks.air){
 							return;
 						}
 					}
 				}
 			}
 			
-			WorldGenPrimitive.setBlock(world, originX - 2, originY, originZ, Block.pressurePlateStone.blockID);
-			WorldGenPrimitive.setBlock(world, originX - 3, originY - 1, originZ, Block.torchRedstoneActive.blockID, 2, 2, true, true);
-			WorldGenPrimitive.setBlock(world, originX - 4, originY - 1, originZ, Block.redstoneWire.blockID);
-			WorldGenPrimitive.setBlock(world, originX - 5, originY, originZ, Block.torchRedstoneIdle.blockID, 5, 2, true, true);
-			WorldGenPrimitive.setBlock(world, originX - 4, originY + 1, originZ, Block.pistonStickyBase.blockID, 5, 2, true, true);
+			WorldGenPrimitive.setBlock(world, originX - 2, originY, originZ, Blocks.stone_pressure_plate);
+			WorldGenPrimitive.setBlock(world, originX - 3, originY - 1, originZ, Blocks.redstone_torch, 2, 2, true, true);
+			WorldGenPrimitive.setBlock(world, originX - 4, originY - 1, originZ, Blocks.redstone_wire);
+			WorldGenPrimitive.setBlock(world, originX - 5, originY, originZ, Blocks.unlit_redstone_torch, 5, 2, true, true);
+			WorldGenPrimitive.setBlock(world, originX - 4, originY + 1, originZ, Blocks.sticky_piston, 5, 2, true, true);
 			break;
 			
 		// North
@@ -214,18 +196,18 @@ public class DungeonsPit implements IDungeon {
 			for (int x = originX - 1; x <= originX + 1; x++){
 				for (int z = originZ - 6; z <= originZ - 3; z++){
 					for (int y = originY - 2; y <= originY + 3; y++){
-						if(world.isAirBlock(x, y, z)){
+						if(world.getBlock(x, y, z) == Blocks.air){
 							return;
 						}
 					}
 				}
 			}
 			
-			WorldGenPrimitive.setBlock(world, originX, originY, originZ - 2, Block.pressurePlateStone.blockID);
-			WorldGenPrimitive.setBlock(world, originX, originY - 1, originZ - 3, Block.torchRedstoneActive.blockID, 4, 2, true, true);
-			WorldGenPrimitive.setBlock(world, originX, originY - 1, originZ - 4, Block.redstoneWire.blockID);
-			WorldGenPrimitive.setBlock(world, originX, originY, originZ - 5, Block.torchRedstoneIdle.blockID, 5, 2, true, true);
-			WorldGenPrimitive.setBlock(world, originX, originY + 1, originZ - 4, Block.pistonStickyBase.blockID, 3, 2, true, true);
+			WorldGenPrimitive.setBlock(world, originX, originY, originZ - 2, Blocks.stone_pressure_plate);
+			WorldGenPrimitive.setBlock(world, originX, originY - 1, originZ - 3, Blocks.redstone_torch, 4, 2, true, true);
+			WorldGenPrimitive.setBlock(world, originX, originY - 1, originZ - 4, Blocks.redstone_wire);
+			WorldGenPrimitive.setBlock(world, originX, originY, originZ - 5, Blocks.unlit_redstone_torch, 5, 2, true, true);
+			WorldGenPrimitive.setBlock(world, originX, originY + 1, originZ - 4, Blocks.sticky_piston, 3, 2, true, true);
 			break;
 			
 		// East 
@@ -234,18 +216,18 @@ public class DungeonsPit implements IDungeon {
 			for (int x = originX + 6; x >= originX + 3; x--){
 				for (int z = originZ - 1; z <= originZ + 1; z++){
 					for (int y = originY - 2; y <= originY + 3; y++){
-						if(world.isAirBlock(x, y, z)){
+						if(world.getBlock(x, y, z) == Blocks.air){
 							return;
 						}
 					}
 				}
 			}
 			
-			WorldGenPrimitive.setBlock(world, originX + 2, originY, originZ, Block.pressurePlateStone.blockID);
-			WorldGenPrimitive.setBlock(world, originX + 3, originY - 1, originZ, Block.torchRedstoneActive.blockID, 1, 2, true, true);
-			WorldGenPrimitive.setBlock(world, originX + 4, originY - 1, originZ, Block.redstoneWire.blockID);
-			WorldGenPrimitive.setBlock(world, originX + 5, originY, originZ, Block.torchRedstoneIdle.blockID, 5, 2, true, true);
-			WorldGenPrimitive.setBlock(world, originX + 4, originY + 1, originZ, Block.pistonStickyBase.blockID, 4, 2, true, true);
+			WorldGenPrimitive.setBlock(world, originX + 2, originY, originZ, Blocks.stone_pressure_plate);
+			WorldGenPrimitive.setBlock(world, originX + 3, originY - 1, originZ, Blocks.redstone_torch, 1, 2, true, true);
+			WorldGenPrimitive.setBlock(world, originX + 4, originY - 1, originZ, Blocks.redstone_wire);
+			WorldGenPrimitive.setBlock(world, originX + 5, originY, originZ, Blocks.unlit_redstone_torch, 5, 2, true, true);
+			WorldGenPrimitive.setBlock(world, originX + 4, originY + 1, originZ, Blocks.sticky_piston, 4, 2, true, true);
 			break;
 		}
 	}

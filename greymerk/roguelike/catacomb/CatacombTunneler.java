@@ -1,12 +1,7 @@
 package greymerk.roguelike.catacomb;
 
-import greymerk.roguelike.catacomb.dungeon.Dungeon;
-import greymerk.roguelike.catacomb.segment.ISegment;
-import greymerk.roguelike.catacomb.segment.Segment;
 import greymerk.roguelike.catacomb.theme.ITheme;
-import greymerk.roguelike.catacomb.theme.Theme;
 import greymerk.roguelike.worldgen.BlockJumble;
-import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
@@ -14,13 +9,11 @@ import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.src.Block;
-import net.minecraft.src.Tuple;
-import net.minecraft.src.World;
+import net.minecraft.init.Blocks;
+import net.minecraft.world.World;
 
 public class CatacombTunneler {
 
@@ -115,10 +108,12 @@ public class CatacombTunneler {
 			return;
 		}
 		
+		MetaBlock air = new MetaBlock(Blocks.air);
+		
 		IBlockFactory wallBlocks = theme.getPrimaryWall();
 		BlockJumble bridgeBlocks = new BlockJumble();
 		bridgeBlocks.addBlock(wallBlocks);
-		bridgeBlocks.addBlock(new MetaBlock(0));
+		bridgeBlocks.addBlock(air);
 		
 		for (Coord location : tunnel){
 			
@@ -126,11 +121,11 @@ public class CatacombTunneler {
 			int z = location.getZ();
 			
 			if(dir == Cardinal.NORTH || dir == Cardinal.SOUTH){
-				WorldGenPrimitive.fillRectSolid(world, rand, x - 1, originY, z, x + 1, originY + 2, z, 0, 0, 0, false, true);
+				WorldGenPrimitive.fillRectSolid(world, rand, x - 1, originY, z, x + 1, originY + 2, z, air, false, true);
 				WorldGenPrimitive.fillRectSolid(world, rand, x - 2, originY - 1, z, x + 2, originY + 4, z, wallBlocks, false, true);
 				WorldGenPrimitive.fillRectSolid(world, rand, x - 1, originY - 1, z, x + 1, originY - 1, z, bridgeBlocks, true, false);
 			} else {
-				WorldGenPrimitive.fillRectSolid(world, rand, x, originY, z - 1, x, originY + 2, z + 1, 0, 0, 0, false, true);
+				WorldGenPrimitive.fillRectSolid(world, rand, x, originY, z - 1, x, originY + 2, z + 1, air, false, true);
 				WorldGenPrimitive.fillRectSolid(world, rand, x, originY - 1, z - 2, x, originY + 4, z + 2, wallBlocks, false, true);
 				WorldGenPrimitive.fillRectSolid(world, rand, x, originY - 1, z - 1, x, originY - 1, z + 1, bridgeBlocks, true, false);
 			}

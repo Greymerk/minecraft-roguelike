@@ -1,17 +1,8 @@
 package greymerk.roguelike.treasure;
 
-import greymerk.roguelike.catacomb.Catacomb;
-import greymerk.roguelike.catacomb.dungeon.Dungeon;
-import greymerk.roguelike.treasure.loot.Record;
 import greymerk.roguelike.treasure.loot.Loot;
-import greymerk.roguelike.treasure.loot.provider.ItemNovelty;
-
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
-
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.TileEntityChest;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntityChest;
 
 public class TreasureChestMusic extends TreasureChestBase{
 	

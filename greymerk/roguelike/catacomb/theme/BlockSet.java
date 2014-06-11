@@ -1,11 +1,11 @@
 package greymerk.roguelike.catacomb.theme;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-
 import greymerk.roguelike.worldgen.BlockFactory;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.MetaBlock;
+
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 public class BlockSet implements IBlockSet {
 

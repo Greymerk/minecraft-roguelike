@@ -1,22 +1,23 @@
 package greymerk.roguelike.catacomb.dungeon.room;
 
-import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.catacomb.dungeon.IDungeon;
 import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.treasure.TreasureChest;
+import greymerk.roguelike.worldgen.BlockJumble;
 import greymerk.roguelike.worldgen.Coord;
+import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.Spawner;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.src.Block;
-import net.minecraft.src.World;
+import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
+import net.minecraft.world.World;
 
 public class DungeonsNetherBrickFortress implements IDungeon {
 	
@@ -40,10 +41,12 @@ public class DungeonsNetherBrickFortress implements IDungeon {
 		originX = inOriginX;
 		originY = inOriginY;
 		originZ = inOriginZ;
+		
+		MetaBlock air = new MetaBlock(Blocks.air);
 
 		// cut out air space
 		WorldGenPrimitive.fillRectSolid(world, rand, originX - 5, originY, originZ - 5,
-				originX + 5, originY + 3, originZ + 5, 0);
+				originX + 5, originY + 3, originZ + 5, air);
 
 		buildWalls();
 		buildFloor();
@@ -64,9 +67,11 @@ public class DungeonsNetherBrickFortress implements IDungeon {
 	
 	protected void buildRoof(){
 		
+		MetaBlock air = new MetaBlock(Blocks.air);
+		
 		// top
 		WorldGenPrimitive.fillRectSolid(world, rand, originX - 6, originY + 4, originZ - 6,
-				originX + 6, originY + 6, originZ + 6, Block.netherBrick.blockID);
+				originX + 6, originY + 6, originZ + 6, new MetaBlock(Blocks.nether_brick));
 
 		List<Coord> lavaArea = WorldGenPrimitive.getRectSolid(	originX - 3, originY + 6, originZ - 3,
 																originX + 3, originY + 6, originZ + 3);
@@ -77,46 +82,26 @@ public class DungeonsNetherBrickFortress implements IDungeon {
 			int z = block.getZ();
 			
 			if(rand.nextBoolean()){
-				WorldGenPrimitive.setBlock(world, x, y, z, Block.lavaStill.blockID);
+				WorldGenPrimitive.setBlock(world, x, y, z, Blocks.lava);
 			}
 		}
 		
 		
 		// sub-ceiling air square
 		WorldGenPrimitive.fillRectSolid(world, rand, originX - 3, originY + 4, originZ - 3,
-				originX + 3, originY + 4, originZ + 3, 0);
+				originX + 3, originY + 4, originZ + 3, air);
+		
 		
 		// arches
-		List<Coord> arch1 = WorldGenPrimitive.getRectSolid(	originX - 5, originY + 4, originZ - 3,
-															originX - 4, originY + 4, originZ + 3);
+		BlockJumble fenceRandom = new BlockJumble();
+		fenceRandom.addBlock(new MetaBlock(Blocks.nether_brick));
+		fenceRandom.addBlock(new MetaBlock(Blocks.nether_brick_fence));
 		
-		List<Coord> arch2 = WorldGenPrimitive.getRectSolid(	originX + 4, originY + 4, originZ - 3,
-															originX + 5, originY + 4, originZ + 3);	
-		
-		List<Coord> arch3 = WorldGenPrimitive.getRectSolid(	originX - 3, originY + 4, originZ - 5,
-															originX + 3, originY + 4, originZ - 4);	
+		WorldGenPrimitive.fillRectSolid(world, rand, originX - 5, originY + 4, originZ - 3, originX - 4, originY + 4, originZ + 3, fenceRandom);
+		WorldGenPrimitive.fillRectSolid(world, rand, originX + 4, originY + 4, originZ - 3, originX + 5, originY + 4, originZ + 3, fenceRandom);
+		WorldGenPrimitive.fillRectSolid(world, rand, originX - 3, originY + 4, originZ - 5, originX + 3, originY + 4, originZ - 4, fenceRandom);
+		WorldGenPrimitive.fillRectSolid(world, rand, originX - 3, originY + 4, originZ + 4, originX + 3, originY + 4, originZ + 5, fenceRandom);
 
-		List<Coord> arch4 = WorldGenPrimitive.getRectSolid(	originX - 3, originY + 4, originZ + 4,
-															originX + 3, originY + 4, originZ + 5);	
-
-		
-		HashSet<Coord> arches = new HashSet<Coord>();
-		arches.addAll(arch1);
-		arches.addAll(arch2);
-		arches.addAll(arch3);
-		arches.addAll(arch4);
-		
-		for (Coord block : arches){
-			int x = block.getX();
-			int y = block.getY();
-			int z = block.getZ();
-			
-			if(rand.nextBoolean()){
-				WorldGenPrimitive.setBlock(world, x, y, z, Block.netherFence.blockID);
-			} else {
-				WorldGenPrimitive.setBlock(world, x, y, z, Block.netherBrick.blockID);
-			}
-		}
 	}
 	
     protected void buildWalls(){
@@ -130,7 +115,7 @@ public class DungeonsNetherBrickFortress implements IDungeon {
 			int z = block.getZ();
 			
 			if(y >= originY && y <= originY + 4){
-				WorldGenPrimitive.setBlock(world, x, y, z, Block.netherBrick.blockID, 0, 2, false, true);
+				WorldGenPrimitive.setBlock(world, rand, x, y, z, new MetaBlock(Blocks.nether_brick), false, true);
 			}
 		}
 		
@@ -164,7 +149,7 @@ public class DungeonsNetherBrickFortress implements IDungeon {
 				continue;
 			}
 			
-			WorldGenPrimitive.setBlock(world, x, y, z, Block.netherBrick.blockID);
+			WorldGenPrimitive.setBlock(world, x, y, z, Blocks.nether_brick);
 		}
 	}
     	
@@ -173,21 +158,23 @@ public class DungeonsNetherBrickFortress implements IDungeon {
     protected void buildFloor(){
 
 		// base
-		WorldGenPrimitive.fillRectSolid(world, 	rand, originX - 6, originY - 4, originZ - 6,
-												originX + 6, originY - 1, originZ + 6, Block.netherBrick.blockID);
+		WorldGenPrimitive.fillRectSolid(world, rand, originX - 6, originY - 4, originZ - 6, originX + 6, originY - 1, originZ + 6, new MetaBlock(Blocks.nether_brick));
     	
 		List<Coord> soulSand = WorldGenPrimitive.getRectSolid(	originX - 5, originY - 1, originZ - 5,
 																originX + 5, originY - 1, originZ + 5);
 
+		MetaBlock sand = new MetaBlock(Blocks.soul_sand);
+		MetaBlock wart = new MetaBlock(Blocks.nether_wart);
+		
 		for (Coord block : soulSand){
 			int x = block.getX();
 			int y = block.getY();
 			int z = block.getZ();
 			
 			if(rand.nextBoolean() && world.isAirBlock(x, y + 1, z)){
-				WorldGenPrimitive.setBlock(world, x, y, z, Block.slowSand.blockID);
+				WorldGenPrimitive.setBlock(world, x, y, z, sand);
 				if(rand.nextBoolean()){
-					WorldGenPrimitive.setBlock(world, x, y + 1, z, Block.netherStalk.blockID);
+					WorldGenPrimitive.setBlock(world, x, y + 1, z, wart);
 				}
 			}
 		}

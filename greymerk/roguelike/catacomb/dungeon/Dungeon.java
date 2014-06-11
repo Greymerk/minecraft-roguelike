@@ -1,6 +1,5 @@
 package greymerk.roguelike.catacomb.dungeon;
 
-import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.catacomb.dungeon.room.DungeonAshlea;
 import greymerk.roguelike.catacomb.dungeon.room.DungeonAvidya;
 import greymerk.roguelike.catacomb.dungeon.room.DungeonBTeam;
@@ -29,11 +28,6 @@ import greymerk.roguelike.catacomb.dungeon.room.DungeonsSlime;
 import greymerk.roguelike.catacomb.dungeon.room.DungeonsSmithy;
 import greymerk.roguelike.catacomb.dungeon.room.DungeonsSpiderNest;
 import greymerk.roguelike.catacomb.dungeon.room.DungeonsWood;
-
-import java.util.Random;
-
-import net.minecraft.src.BiomeGenBase;
-import net.minecraft.src.World;
 
 public enum Dungeon {
 	

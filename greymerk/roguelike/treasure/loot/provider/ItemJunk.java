@@ -4,9 +4,12 @@ import greymerk.roguelike.treasure.loot.PotionMixture;
 
 import java.util.Random;
 
-import net.minecraft.src.Block;
-import net.minecraft.src.Item;
-import net.minecraft.src.ItemStack;
+import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.ChestGenHooks;
 
 public class ItemJunk extends ItemBase{
 
@@ -29,28 +32,27 @@ public class ItemJunk extends ItemBase{
 		}
 
 		if(level > 0 && rand.nextInt(200) == 0){
-			if(level > 2 && rand.nextInt(10) == 0) return new ItemStack(Item.horseArmorDiamond.itemID, 1, 0);
-			if(level > 1 && rand.nextInt(5) == 0) return new ItemStack(Item.horseArmorGold, 1, 0);
-			if(rand.nextInt(3) == 0) return new ItemStack(Item.horseArmorIron, 1, 0);
-			return new ItemStack(Item.saddle);
+			if(level > 2 && rand.nextInt(10) == 0) return new ItemStack(Items.diamond_horse_armor, 1, 0);
+			if(level > 1 && rand.nextInt(5) == 0) return new ItemStack(Items.golden_horse_armor, 1, 0);
+			if(rand.nextInt(3) == 0) return new ItemStack(Items.iron_horse_armor, 1, 0);
+			return new ItemStack(Items.saddle);
 		}
 
-		if(level > 1 && rand.nextInt(100) == 0) return new ItemStack(Item.ghastTear);
+		if(level > 1 && rand.nextInt(100) == 0) return new ItemStack(Items.ghast_tear);
 
 		if(level > 1 && rand.nextInt(50) == 0){			
 			switch(rand.nextInt(6)){
-			case 0: return new ItemStack(Item.gunpowder, 1 + rand.nextInt(3));
-			case 1: return new ItemStack(Item.blazePowder, 1 + rand.nextInt(3));
-			case 2: return new ItemStack(Item.goldNugget, 1 + rand.nextInt(3));
-			case 3: return new ItemStack(Item.redstone, 1 + rand.nextInt(3));
-			case 4: return new ItemStack(Item.glowstone, 1 + rand.nextInt(3));
-			case 5: return new ItemStack(Item.dyePowder, 1 + rand.nextInt(3));
+			case 0: return new ItemStack(Items.gunpowder, 1 + rand.nextInt(3));
+			case 1: return new ItemStack(Items.blaze_powder, 1 + rand.nextInt(3));
+			case 2: return new ItemStack(Items.gold_nugget, 1 + rand.nextInt(3));
+			case 3: return new ItemStack(Items.redstone, 1 + rand.nextInt(3));
+			case 4: return new ItemStack(Items.glowstone_dust, 1 + rand.nextInt(3));
+			case 5: return new ItemStack(Items.dye, 1 + rand.nextInt(3));
 			}
 		}
 
-		if(level < 3 && rand.nextInt(10 + ((1 + level) * 5)) == 0) return new ItemStack(Item.book);
+		if(level < 3 && rand.nextInt(10 + ((1 + level) * 5)) == 0) return new ItemStack(Items.book);
 
-		/*
 		if(level > 0 && rand.nextInt(20 / (1 + level)) == 0){
 			
 			if(level == 4 && rand.nextInt(10) == 0){
@@ -65,7 +67,6 @@ public class ItemJunk extends ItemBase{
 			ItemStack toReturn = hook.getOneItem(rand);
 			if(toReturn != null) return toReturn;
 		}
-		*/
 
 		if(rand.nextInt(30) == 0){
 			if(level > 2 && rand.nextBoolean()) return PotionMixture.getPotion(rand, PotionMixture.VILE);
@@ -73,29 +74,29 @@ public class ItemJunk extends ItemBase{
 		}
 		
 		if(rand.nextInt(20) == 0){
-			return new ItemStack(Block.torchWood, 3 + rand.nextInt(3 + level));
+			return new ItemStack(Blocks.torch, 3 + rand.nextInt(3 + level));
 		}
 
 		if(level > 0 && rand.nextInt(10) == 0){
 			switch(rand.nextInt(7)){
-			case 0: return new ItemStack(Item.slimeBall, 1 + rand.nextInt(3));
-			case 1: return new ItemStack(Item.snowball, 1 + rand.nextInt(3));
-			case 2: return new ItemStack(Item.bowlEmpty);
-			case 3: return new ItemStack(Item.clay, 1 + rand.nextInt(3));
-			case 4: return new ItemStack(Item.flint);
-			case 5: return new ItemStack(Item.feather, 1 + rand.nextInt(3));
-			case 6: return new ItemStack(Item.glassBottle, 1 + rand.nextInt(3));
+			case 0: return new ItemStack(Items.slime_ball, 1 + rand.nextInt(3));
+			case 1: return new ItemStack(Items.snowball, 1 + rand.nextInt(3));
+			case 2: return new ItemStack(Items.mushroom_stew);
+			case 3: return new ItemStack(Items.clay_ball, 1 + rand.nextInt(3));
+			case 4: return new ItemStack(Items.flint);
+			case 5: return new ItemStack(Items.feather, 1 + rand.nextInt(3));
+			case 6: return new ItemStack(Items.glass_bottle, 1 + rand.nextInt(3));
 			}
 		}
 
 		switch(rand.nextInt(6)){
-		case 0: return new ItemStack(Item.bone);
-		case 1: return new ItemStack(Item.rottenFlesh);
-		case 2: return new ItemStack(Item.spiderEye);
-		case 3: return new ItemStack(Item.stick);
-		case 4: return new ItemStack(Item.silk);
-		case 5: return new ItemStack(Item.stick);
-		default: return new ItemStack(Item.stick);
+		case 0: return new ItemStack(Items.bone);
+		case 1: return new ItemStack(Items.rotten_flesh);
+		case 2: return new ItemStack(Items.spider_eye);
+		case 3: return new ItemStack(Items.stick);
+		case 4: return new ItemStack(Items.string);
+		case 5: return new ItemStack(Items.stick);
+		default: return new ItemStack(Items.stick);
 		}
 	}
 }

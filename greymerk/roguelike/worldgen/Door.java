@@ -1,7 +1,8 @@
 package greymerk.roguelike.worldgen;
 
-import net.minecraft.src.Block;
-import net.minecraft.src.World;
+import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
+import net.minecraft.world.World;
 
 public enum Door {
 
@@ -19,9 +20,9 @@ public enum Door {
 		doorTop.setBlock(world, x, y + 1, z);
 	}
 	
-	private static int getBlockId(Door type){
-		if(type == Door.IRON) return Block.doorIron.blockID; 
-		return Block.doorWood.blockID;
+	private static Block getBlockId(Door type){
+		if(type == Door.IRON) return Blocks.iron_door; 
+		return Blocks.wooden_door;
 	}
 	
 	private static int getMeta(boolean top, Cardinal dir){

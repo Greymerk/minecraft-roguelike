@@ -4,18 +4,15 @@ import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.catacomb.dungeon.IDungeon;
 import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.worldgen.IBlockFactory;
+import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.Spawner;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
 
-import java.io.PrintStream;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Random;
 
-import net.minecraft.src.Block;
-import net.minecraft.src.World;
+import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
+import net.minecraft.world.World;
 
 public class DungeonsSlime implements IDungeon {
 	World world;
@@ -25,7 +22,7 @@ public class DungeonsSlime implements IDungeon {
 	int originZ;
 
 	IBlockFactory fillBlocks;
-	int liquid;
+	MetaBlock liquid;
 	
 	public DungeonsSlime() {
 	}
@@ -37,13 +34,14 @@ public class DungeonsSlime implements IDungeon {
 		originY = inOriginY;
 		originZ = inOriginZ;
 
-		liquid = Catacomb.getLevel(originY) == 4 ? Block.lavaStill.blockID : Block.waterStill.blockID;
+		liquid = new MetaBlock(Catacomb.getLevel(originY) == 4 ? Blocks.lava : Blocks.water);
 
 		fillBlocks = theme.getPrimaryWall();
 		
+		MetaBlock air = new MetaBlock(Blocks.air);
 		
 		// fill air
-		WorldGenPrimitive.fillRectSolid(world, rand, originX - 6, originY, originZ - 6, originX + 6, originY + 3, originZ + 6, 0);
+		WorldGenPrimitive.fillRectSolid(world, rand, originX - 6, originY, originZ - 6, originX + 6, originY + 3, originZ + 6, air);
 		
 		// shell
 		WorldGenPrimitive.fillRectHollow(world, rand, originX - 7, originY - 2, originZ - 7, originX + 7, originY + 4, originZ + 7, fillBlocks, false, true);
@@ -94,7 +92,7 @@ public class DungeonsSlime implements IDungeon {
 		WorldGenPrimitive.fillRectSolid(world, rand, inX + 2, originY + 3, inZ - 1, inX + 2, originY + 3, inZ + 1, fillBlocks);
 
 		// carve ceiling air
-		WorldGenPrimitive.fillRectSolid(world, rand, inX - 1, originY + 1, inZ - 1, inX + 1, originY + 6, inZ + 1, 0);
+		WorldGenPrimitive.fillRectSolid(world, rand, inX - 1, originY + 1, inZ - 1, inX + 1, originY + 6, inZ + 1, new MetaBlock(Blocks.air));
 		
 		// roof
 		WorldGenPrimitive.fillRectSolid(world, rand, inX - 2, originY + 7, inZ - 2, inX + 2, originY + 8, inZ + 2, fillBlocks);

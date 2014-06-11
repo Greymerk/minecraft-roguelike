@@ -1,6 +1,5 @@
 package greymerk.roguelike.catacomb.dungeon.room;
 
-import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.catacomb.dungeon.IDungeon;
 import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.treasure.TreasureChest;
@@ -16,9 +15,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.src.Block;
-import net.minecraft.src.Material;
-import net.minecraft.src.World;
+import net.minecraft.init.Blocks;
+import net.minecraft.world.World;
 
 public class DungeonsBrick implements IDungeon {
 
@@ -31,10 +29,11 @@ public class DungeonsBrick implements IDungeon {
 		MetaBlock stair = theme.getPrimaryStair();
 		IBlockFactory blocks = theme.getPrimaryWall();
 		IBlockFactory pillar = theme.getPrimaryPillar();
+		MetaBlock air = new MetaBlock(Blocks.air);
 		
 		// fill air inside
-		WorldGenPrimitive.fillRectSolid(world, rand, x - 3, y, z - 3, x + 3, y + 3, z + 3, 0);
-		WorldGenPrimitive.fillRectSolid(world, rand, x - 1, y + 4, z - 1, x + 1, y + 4, z + 1, 0);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 3, y, z - 3, x + 3, y + 3, z + 3, air);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 1, y + 4, z - 1, x + 1, y + 4, z + 1, air);
 		
 		// shell
 		WorldGenPrimitive.fillRectHollow(world, rand, x - 4, y - 1, z - 4, x + 4, y + 4, z + 4, blocks, false, true);
@@ -46,7 +45,7 @@ public class DungeonsBrick implements IDungeon {
 		
 		cursor = new Coord(x, y, z);
 		cursor.add(Cardinal.UP, 5);
-		WorldGenPrimitive.setBlock(world, cursor, 0);
+		air.setBlock(world, cursor);
 		cursor.add(Cardinal.UP, 1);
 		WorldGenPrimitive.setBlock(world, rand, cursor, blocks, true, true);
 		
@@ -67,7 +66,7 @@ public class DungeonsBrick implements IDungeon {
 			cursor = new Coord(x, y, z);
 			cursor.add(dir, 2);
 			cursor.add(Cardinal.UP, 4);
-			WorldGenPrimitive.setBlock(world, cursor, 0);
+			air.setBlock(world, cursor);
 			cursor.add(Cardinal.UP, 1);
 			WorldGenPrimitive.setBlock(world, rand, cursor, blocks, false, true);
 			

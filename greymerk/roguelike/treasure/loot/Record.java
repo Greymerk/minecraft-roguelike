@@ -2,7 +2,9 @@ package greymerk.roguelike.treasure.loot;
 
 import java.util.Random;
 
-import net.minecraft.src.ItemStack;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 
 public enum Record{
 
@@ -17,24 +19,24 @@ public enum Record{
 		return getRecord(Record.values()[rand.nextInt(Record.values().length)]);
 	}
 	
-	public static int getId(Record type){
+	public static Item getId(Record type){
 		
 		int base = 2256;
 		
 		switch(type){
-		case THIRTEEN: return base + 0;
-		case CAT: return base + 1;
-		case BLOCKS: return base + 2;
-		case CHIRP: return base + 3;
-		case FAR: return base + 4;
-		case MALL: return base + 5;
-		case MELLOHI: return base + 6;
-		case STAL: return base + 7;
-		case STRAD: return base + 8;
-		case WARD: return base + 9;
-		case ELEVEN: return base + 10;
-		case WAIT: return base + 11;
-		default: return base;
+		case THIRTEEN: return Items.record_13;
+		case CAT: return Items.record_cat;
+		case BLOCKS: return Items.record_blocks;
+		case CHIRP: return Items.record_chirp;
+		case FAR: return Items.record_far;
+		case MALL: return Items.record_mall;
+		case MELLOHI: return Items.record_mellohi;
+		case STAL: return Items.record_stal;
+		case STRAD: return Items.record_strad;
+		case WARD: return Items.record_ward;
+		case ELEVEN: return Items.record_11;
+		case WAIT: return Items.record_wait;
+		default: return Items.record_cat;
 		}
 	}
 	

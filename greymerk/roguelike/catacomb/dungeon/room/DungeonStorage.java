@@ -1,23 +1,23 @@
 package greymerk.roguelike.catacomb.dungeon.room;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Random;
-
-import net.minecraft.src.Block;
-import net.minecraft.src.World;
-import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.catacomb.dungeon.IDungeon;
 import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.treasure.TreasureChest;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
-import greymerk.roguelike.worldgen.Log;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Random;
+
+import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
+import net.minecraft.world.World;
 
 public class DungeonStorage implements IDungeon {
 
@@ -25,9 +25,10 @@ public class DungeonStorage implements IDungeon {
 	public boolean generate(World world, Random rand, ITheme theme, int x, int y, int z) {
 
 		HashSet<Coord> chestSpaces = new HashSet<Coord>();
+		MetaBlock air = new MetaBlock(Blocks.air);
 		
 		// space
-		WorldGenPrimitive.fillRectSolid(world, rand, x - 6, y, z - 6, x + 6, y + 3, z + 6, 0);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 6, y, z - 6, x + 6, y + 3, z + 6, air);
 		
 		Coord cursor;
 		Coord start;
@@ -110,7 +111,7 @@ public class DungeonStorage implements IDungeon {
 				end = new Coord(start);
 				end.add(dir, 3);
 				end.add(orth, 1);
-				WorldGenPrimitive.fillRectSolid(world, rand, start, end, new MetaBlock(Block.hardenedClay.blockID), true, true);
+				WorldGenPrimitive.fillRectSolid(world, rand, start, end, new MetaBlock(Blocks.hardened_clay), true, true);
 				
 				cursor = new Coord(x, y, z);
 				cursor.add(dir, 5);
@@ -119,9 +120,11 @@ public class DungeonStorage implements IDungeon {
 				
 			}
 		}
-			
-		List<TreasureChest> types = new ArrayList<TreasureChest>(Arrays.asList(TreasureChest.BLOCKS, TreasureChest.SUPPLIES));
-
+		
+		// TODO: change this back
+		//List<TreasureChest> types = new ArrayList<TreasureChest>(Arrays.asList(TreasureChest.BLOCKS, TreasureChest.SUPPLIES));
+		List<TreasureChest> types = new ArrayList<TreasureChest>(Arrays.asList(TreasureChest.ENCHANTING));
+		
 		List<Coord> spaces = new ArrayList<Coord>(chestSpaces);
 		
 		TreasureChest.createChests(world, rand, 6, spaces, types);

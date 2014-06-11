@@ -1,28 +1,21 @@
 package greymerk.roguelike.treasure;
 
+import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.treasure.loot.Equipment;
 import greymerk.roguelike.treasure.loot.Loot;
-import greymerk.roguelike.treasure.loot.Potion;
-import greymerk.roguelike.treasure.loot.PotionEffect;
-import greymerk.roguelike.treasure.loot.PotionMixture;
 import greymerk.roguelike.treasure.loot.Quality;
 import greymerk.roguelike.treasure.loot.provider.ItemSpecialty;
-import greymerk.roguelike.config.RogueConfig;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
 
-import net.minecraft.src.Block;
-import net.minecraft.src.Item;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.ItemWritableBook;
-import net.minecraft.src.NBTTagList;
-import net.minecraft.src.NBTTagString;
-import net.minecraft.src.TileEntityChest;
+import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.NBTTagString;
+import net.minecraft.tileentity.TileEntityChest;
 
 public class TreasureChestStarter extends TreasureChestBase implements Iterable{
 
@@ -30,11 +23,11 @@ public class TreasureChestStarter extends TreasureChestBase implements Iterable{
 	
 	private ItemStack getStarterLoot(int choice){
 		switch (choice){
-		case 4: return new ItemStack(Item.pickaxeStone);
-		case 3: return new ItemStack(Item.swordStone);
+		case 4: return new ItemStack(Items.stone_pickaxe);
+		case 3: return new ItemStack(Items.stone_sword);
 		case 2: return Loot.getLoot(Loot.FOOD, rand, 0);
 		case 1: return ItemSpecialty.getRandomItem(Equipment.LEGS, rand, Quality.WOOD);
-		default: return new ItemStack(Block.torchWood, 1 + rand.nextInt(RogueConfig.getBoolean(RogueConfig.GENEROUS) ? 7 : 3));
+		default: return new ItemStack(Blocks.torch, 1 + rand.nextInt(RogueConfig.getBoolean(RogueConfig.GENEROUS) ? 7 : 3));
 		}
 	}	
 	
@@ -56,10 +49,10 @@ public class TreasureChestStarter extends TreasureChestBase implements Iterable{
 	}
 	
 	private ItemStack book(){
-		ItemStack book = new ItemStack(Item.writableBook);
+		ItemStack book = new ItemStack(Items.written_book);
 		
-		book.setTagInfo("author", new NBTTagString("author", "greymerk"));
-		book.setTagInfo("title", new NBTTagString("title", "Memo"));
+		book.setTagInfo("author", new NBTTagString("greymerk"));
+		book.setTagInfo("title", new NBTTagString("Memo"));
 		
 		String page1 = 
 				"Dear Eniko,\n\n " +
@@ -78,11 +71,10 @@ public class TreasureChestStarter extends TreasureChestBase implements Iterable{
 	
 		
 		NBTTagList pages = new NBTTagList();
-		pages.appendTag(new NBTTagString("1", page1));
-		pages.appendTag(new NBTTagString("2", page2));
+		pages.appendTag(new NBTTagString(page1));
+		pages.appendTag(new NBTTagString(page2));
 		
 		book.setTagInfo("pages", pages);
-		book.itemID = Item.writtenBook.itemID;
 		
 		return book;
 	}

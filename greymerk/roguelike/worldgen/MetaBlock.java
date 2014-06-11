@@ -2,27 +2,28 @@ package greymerk.roguelike.worldgen;
 
 import java.util.Random;
 
+import net.minecraft.block.Block;
+import net.minecraft.world.World;
+
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import net.minecraft.src.World;
-
 public class MetaBlock implements IBlockFactory{
 
-	private int blockID;
+	private Block block;
 	private int meta;
 	private int flag;
 	
-	public MetaBlock(int blockID){
-		this(blockID, 0, 2);		
+	public MetaBlock(Block block){
+		this(block, 0, 2);		
 	}
 	
-	public MetaBlock(int blockID, int meta){
-		this(blockID, meta, 2);
+	public MetaBlock(Block block, int meta){
+		this(block, meta, 2);
 	}
 	
-	public MetaBlock(int blockID, int meta, int flag){
-		this.blockID = blockID;
+	public MetaBlock(Block block, int meta, int flag){
+		this.block = block;
 		this.meta = meta;
 		this.flag = flag;
 	}
@@ -31,20 +32,21 @@ public class MetaBlock implements IBlockFactory{
 		JsonObject json = (JsonObject)data;
 		if(!json.has("id")) throw new Exception("MetaBlock JSON requires an id field");
 		
-		blockID = json.get("id").getAsInt();
+
+		block = Block.getBlockFromName(json.get("id").getAsString());
 		meta = json.has("meta") ? json.get("meta").getAsInt() : 0;
 		flag = json.has("flag") ? json.get("flag").getAsInt() : 2;
 		
 	}
 	
 	public MetaBlock(MetaBlock toCopy){
-		this.blockID = toCopy.blockID;
+		this.block = toCopy.block;
 		this.meta = toCopy.meta;
 		this.flag = toCopy.flag;
 	}
 	
-	public int getBlockID(){
-		return blockID;
+	public Block getBlockID(){
+		return block;
 	}
 	
 	public int getMeta(){
@@ -55,8 +57,8 @@ public class MetaBlock implements IBlockFactory{
 		return flag;
 	}
 	
-	public void setBlockID(int in){
-		blockID = in;
+	public void setBlockID(Block in){
+		block = in;
 	}
 	
 	public void setMeta(int in){
@@ -67,17 +69,21 @@ public class MetaBlock implements IBlockFactory{
 		flag = in;
 	}
 
+	public boolean setBlock(World world, Coord coord){
+		return this.setBlock(world, coord.getX(), coord.getY(), coord.getZ());
+	}
+	
 	public boolean setBlock(World world, int x, int y, int z){
 		return WorldGenPrimitive.setBlock(world, x, y, z, this);
 	}
 	
 	@Override
 	public void setBlock(World world, Random rand, int x, int y, int z) {
-		WorldGenPrimitive.setBlock(world, x, y, z, blockID, meta, flag, true, true);
+		WorldGenPrimitive.setBlock(world, x, y, z, block, meta, flag, true, true);
 	}
 
 	@Override
 	public void setBlock(World world, Random rand, int x, int y, int z, boolean fillAir, boolean replaceSolid) {
-		WorldGenPrimitive.setBlock(world, x, y, z, blockID, meta, flag, fillAir, replaceSolid);
+		WorldGenPrimitive.setBlock(world, x, y, z, block, meta, flag, fillAir, replaceSolid);
 	}
 }

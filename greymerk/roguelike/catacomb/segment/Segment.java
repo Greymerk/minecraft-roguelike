@@ -1,10 +1,8 @@
 package greymerk.roguelike.catacomb.segment;
 
-import greymerk.roguelike.catacomb.Catacomb;
-import greymerk.roguelike.catacomb.dungeon.Dungeon;
 import greymerk.roguelike.catacomb.segment.part.SegmentArch;
-import greymerk.roguelike.catacomb.segment.part.SegmentInset;
 import greymerk.roguelike.catacomb.segment.part.SegmentFire;
+import greymerk.roguelike.catacomb.segment.part.SegmentInset;
 import greymerk.roguelike.catacomb.segment.part.SegmentJungle;
 import greymerk.roguelike.catacomb.segment.part.SegmentMossyArch;
 import greymerk.roguelike.catacomb.segment.part.SegmentMossyMushrooms;
@@ -13,11 +11,6 @@ import greymerk.roguelike.catacomb.segment.part.SegmentNetherLava;
 import greymerk.roguelike.catacomb.segment.part.SegmentNetherStripes;
 import greymerk.roguelike.catacomb.segment.part.SegmentNetherWart;
 import greymerk.roguelike.catacomb.segment.part.SegmentShelf;
-import greymerk.roguelike.worldgen.Cardinal;
-
-import java.util.Random;
-
-import net.minecraft.src.Tuple;
 
 public enum Segment {
 

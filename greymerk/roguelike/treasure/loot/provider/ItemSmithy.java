@@ -5,7 +5,7 @@ import greymerk.roguelike.treasure.loot.Quality;
 
 import java.util.Random;
 
-import net.minecraft.src.ItemStack;
+import net.minecraft.item.ItemStack;
 
 public class ItemSmithy extends ItemBase{
 

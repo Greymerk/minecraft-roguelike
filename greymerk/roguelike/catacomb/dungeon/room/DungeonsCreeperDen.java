@@ -4,19 +4,16 @@ import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.catacomb.dungeon.IDungeon;
 import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.treasure.TreasureChest;
+import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.Spawner;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
 
-import java.io.PrintStream;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Random;
 
-import net.minecraft.src.Block;
-import net.minecraft.src.Material;
-import net.minecraft.src.World;
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
+import net.minecraft.init.Blocks;
+import net.minecraft.world.World;
 
 public class DungeonsCreeperDen implements IDungeon {
 	World world;
@@ -30,16 +27,14 @@ public class DungeonsCreeperDen implements IDungeon {
 	int woolColor;
 	int numChests;
 	
-	int floorBlock;
-	int wallBlock;
+	MetaBlock floorBlock;
+	MetaBlock wallBlock;
 	
 	public DungeonsCreeperDen() {
 		dungeonHeight = 3;
 		dungeonLength = 2;
 		dungeonWidth = 2;
 		numChests = 2;
-		floorBlock = Block.gravel.blockID;
-		wallBlock = Block.cobblestoneMossy.blockID;
 	}
 
 	public boolean generate(World inWorld, Random inRandom, ITheme theme, int inOriginX, int inOriginY, int inOriginZ) {
@@ -49,6 +44,9 @@ public class DungeonsCreeperDen implements IDungeon {
 		originY = inOriginY;
 		originZ = inOriginZ;
 
+		floorBlock = new MetaBlock(Blocks.gravel);
+		wallBlock = new MetaBlock(Blocks.mossy_cobblestone);
+		
 		buildWalls();
 		buildFloor();
 		buildRoof();
@@ -65,7 +63,7 @@ public class DungeonsCreeperDen implements IDungeon {
 		for (int x = originX - dungeonLength - 1; x <= originX + dungeonLength + 1; x++) {
 			for (int y = originY - 1; y <= originY + dungeonHeight + 1; y++) {
 				for (int z = originZ - dungeonWidth - 1; z <= originZ + dungeonWidth + 1; z++) {
-					Material material = world.getBlockMaterial(x, y, z);
+					Material material = world.getBlock(x, y, z).getMaterial();
 
 					if (y == originY - 1 && !material.isSolid()) {
 						return false;
@@ -99,26 +97,14 @@ public class DungeonsCreeperDen implements IDungeon {
 		for (int blockX = originX - dungeonLength - 1; blockX <= originX + dungeonLength + 1; blockX++) {
 			for (int blockY = originY + dungeonHeight; blockY >= originY - 3; blockY--) {
 				for (int blockZ = originZ - dungeonWidth - 1; blockZ <= originZ + dungeonWidth + 1; blockZ++) {
-
-					// This prevents overlapping dungeons from overwriting
-					// spawners
-					if (world.getBlockId(blockX, blockY, blockZ) == Block.mobSpawner.blockID) {
-						continue;
-					}
-
-					// this prevents overlapping dungeons from breaking chests
-					if (world.getBlockId(blockX, blockY, blockZ) == Block.chest.blockID) {
-						continue;
-					}
 					
 					if (blockX == originX - dungeonLength - 1 || blockZ == originZ - dungeonWidth - 1 || blockX == originX + dungeonLength + 1 || blockZ == originZ + dungeonWidth + 1) {
 
-						if (blockY >= 0 && !world.getBlockMaterial(blockX, blockY - 1, blockZ).isSolid()) {
-							WorldGenPrimitive.setBlock(world, blockX, blockY, blockZ, 0);
+						if (blockY >= 0 && !world.getBlock(blockX, blockY - 1, blockZ).getMaterial().isSolid()) {
+							WorldGenPrimitive.setBlock(world, blockX, blockY, blockZ, Blocks.air);
 							continue;
 						}
-						if (!world.getBlockMaterial(blockX, blockY, blockZ)
-								.isSolid()) {
+						if (!world.getBlock(blockX, blockY, blockZ).getMaterial().isSolid()) {
 							continue;
 						}
 						
@@ -135,7 +121,7 @@ public class DungeonsCreeperDen implements IDungeon {
 						}
 						
 					} else {
-						WorldGenPrimitive.setBlock(world, blockX, blockY, blockZ, 0);
+						WorldGenPrimitive.setBlock(world, blockX, blockY, blockZ, Blocks.air);
 					}
 				}
 			}
@@ -148,7 +134,7 @@ public class DungeonsCreeperDen implements IDungeon {
 			for (int blockZ = originZ - dungeonWidth - 1; blockZ <= originZ + dungeonWidth + 1; blockZ++){
 				for(int blockY = originY - 1; blockY > originY - 4; blockY--){
 					if (blockY < originY - 1 && rand.nextInt(12) == 0) {
-						WorldGenPrimitive.setBlock(world, blockX, blockY, blockZ, Block.tnt.blockID);
+						WorldGenPrimitive.setBlock(world, blockX, blockY, blockZ, Blocks.tnt);
 					}
 					else if(rand.nextBoolean()){
 						WorldGenPrimitive.setBlock(world, blockX, blockY, blockZ, floorBlock);
@@ -184,7 +170,7 @@ public class DungeonsCreeperDen implements IDungeon {
 					TreasureChest.generate(world, rand, chestPosX, chestPosY, chestPosZ, Catacomb.getLevel(chestPosY), true);
 					
 					if(rand.nextBoolean()){
-						WorldGenPrimitive.setBlock(world, chestPosX, chestPosY - 2, chestPosZ, Block.tnt.blockID);
+						WorldGenPrimitive.setBlock(world, chestPosX, chestPosY - 2, chestPosZ, Blocks.tnt);
 					}
 					
 					break;

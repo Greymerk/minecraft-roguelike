@@ -1,7 +1,6 @@
 package greymerk.roguelike.worldgen;
 
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 
 public enum BlockFactory {
 	

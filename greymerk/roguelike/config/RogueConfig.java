@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.src.Tuple;
+import net.minecraft.util.Tuple;
 
 public enum RogueConfig {
 

@@ -7,9 +7,10 @@ import greymerk.roguelike.treasure.loot.Slot;
 
 import java.util.Random;
 
-import net.minecraft.src.Item;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.NBTTagCompound;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 
 public class ItemArmour extends ItemBase {
 
@@ -58,12 +59,12 @@ public class ItemArmour extends ItemBase {
 		case HEAD:
 			switch (quality) {
 
-			case DIAMOND: return new ItemStack(Item.helmetDiamond);
-			case GOLD: return new ItemStack(Item.helmetGold);
-			case IRON: return new ItemStack(Item.helmetIron);
-			case STONE: return new ItemStack(Item.helmetChain);
+			case DIAMOND: return new ItemStack(Items.diamond_helmet);
+			case GOLD: return new ItemStack(Items.golden_helmet);
+			case IRON: return new ItemStack(Items.iron_helmet);
+			case STONE: return new ItemStack(Items.chainmail_helmet);
 			default:
-				ItemStack item = new ItemStack(Item.helmetLeather);
+				ItemStack item = new ItemStack(Items.leather_helmet);
 				dyeArmor(item, rand.nextInt(256), rand.nextInt(255), rand.nextInt(255));
 				return item;
 			}
@@ -71,12 +72,12 @@ public class ItemArmour extends ItemBase {
 		case FEET:
 			switch (quality) {
 
-			case DIAMOND: return new ItemStack(Item.bootsDiamond);
-			case GOLD: return new ItemStack(Item.bootsGold);
-			case IRON: return new ItemStack(Item.bootsIron);
-			case STONE: return new ItemStack(Item.bootsChain);
+			case DIAMOND: return new ItemStack(Items.diamond_helmet);
+			case GOLD: return new ItemStack(Items.golden_helmet);
+			case IRON: return new ItemStack(Items.iron_helmet);
+			case STONE: return new ItemStack(Items.chainmail_helmet);
 			default:
-				ItemStack item = new ItemStack(Item.bootsLeather);
+				ItemStack item = new ItemStack(Items.leather_boots);
 				dyeArmor(item, rand.nextInt(256), rand.nextInt(255), rand.nextInt(255));
 				return item;
 			}
@@ -84,24 +85,24 @@ public class ItemArmour extends ItemBase {
 		case CHEST:
 			switch (quality) {
 
-			case DIAMOND: return new ItemStack(Item.plateDiamond);
-			case GOLD: return new ItemStack(Item.plateGold);
-			case IRON: return new ItemStack(Item.plateIron);
-			case STONE: return new ItemStack(Item.plateChain);
+			case DIAMOND: return new ItemStack(Items.diamond_chestplate);
+			case GOLD: return new ItemStack(Items.golden_chestplate);
+			case IRON: return new ItemStack(Items.iron_chestplate);
+			case STONE: return new ItemStack(Items.chainmail_chestplate);
 			default:
-				ItemStack item = new ItemStack(Item.plateLeather);
+				ItemStack item = new ItemStack(Items.leather_chestplate);
 				dyeArmor(item, rand.nextInt(256), rand.nextInt(255), rand.nextInt(255));
 				return item;
 			}
 		case LEGS:
 			switch (quality) {
 	
-			case DIAMOND: return new ItemStack(Item.legsDiamond);
-			case GOLD: return new ItemStack(Item.legsGold);
-			case IRON: return new ItemStack(Item.legsIron);
-			case STONE: return new ItemStack(Item.legsChain);
+			case DIAMOND: return new ItemStack(Items.diamond_leggings);
+			case GOLD: return new ItemStack(Items.golden_leggings);
+			case IRON: return new ItemStack(Items.iron_leggings);
+			case STONE: return new ItemStack(Items.chainmail_leggings);
 			default:
-				ItemStack item = new ItemStack(Item.legsLeather);
+				ItemStack item = new ItemStack(Items.leather_leggings);
 				dyeArmor(item, rand.nextInt(256), rand.nextInt(255), rand.nextInt(255));
 				return item;
 			}
@@ -125,7 +126,7 @@ public class ItemArmour extends ItemBase {
 
         if (!nbtdata.hasKey("display"))
         {
-            nbtdata.setCompoundTag("display", nbtDisplay);
+            nbtdata.setTag("display", nbtDisplay);
         }
 
         nbtDisplay.setInteger("color", color);

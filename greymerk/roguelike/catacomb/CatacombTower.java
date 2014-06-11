@@ -3,9 +3,7 @@ package greymerk.roguelike.catacomb;
 import greymerk.roguelike.catacomb.dungeon.DungeonCustomization;
 import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.catacomb.theme.Theme;
-import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.treasure.TreasureChest;
-import greymerk.roguelike.treasure.TreasureChestStarter;
 import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
@@ -17,12 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.src.BiomeGenBase;
-import net.minecraft.src.Block;
-import net.minecraft.src.Item;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.TileEntityFurnace;
-import net.minecraft.src.World;
+import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
+import net.minecraft.world.World;
 
 public class CatacombTower {
 
@@ -31,18 +26,21 @@ public class CatacombTower {
 
 	private Coord getBaseCoord(World world, int x, int y, int z){
 		
-		List<Integer> invalidBlocks = new ArrayList<Integer>();
-		invalidBlocks.add(0); // Air
-		invalidBlocks.add(Block.wood.blockID);
-		invalidBlocks.add(Block.leaves.blockID);
-		invalidBlocks.add(Block.cactus.blockID);
-		invalidBlocks.add(Block.reed.blockID);
-		invalidBlocks.add(Block.vine.blockID);
-		invalidBlocks.add(Block.snow.blockID);
-		invalidBlocks.add(Block.cocoaPlant.blockID);
+		List<Block> invalidBlocks = new ArrayList<Block>();
+		invalidBlocks.add(Blocks.air); // Air
+		invalidBlocks.add(Blocks.log);
+		invalidBlocks.add(Blocks.log2);
+		invalidBlocks.add(Blocks.leaves);
+		invalidBlocks.add(Blocks.leaves2);
+		invalidBlocks.add(Blocks.cactus);
+		invalidBlocks.add(Blocks.reeds);
+		invalidBlocks.add(Blocks.vine);
+		invalidBlocks.add(Blocks.snow);
+		invalidBlocks.add(Blocks.snow_layer);
+		invalidBlocks.add(Blocks.cocoa);
 		
 		int tempY = 128;
-		int block = world.getBlockId(x, tempY, z);
+		Block block = world.getBlock(x, tempY, z);
 
 		while(tempY > 60){
 
@@ -52,7 +50,7 @@ public class CatacombTower {
 
 			tempY = tempY - 1;
 
-			block = world.getBlockId(x, tempY, z);
+			block = world.getBlock(x, tempY, z);
 
 		}
 
@@ -72,7 +70,7 @@ public class CatacombTower {
 		if(theme == null) theme = Theme.getByLevel(world.getBiomeGenForCoords(x, z), 0);
 		
 		
-		MetaBlock air = new MetaBlock(0);
+		MetaBlock air = new MetaBlock(Blocks.air);
 		
 		BlockWeightedRandom blocks = new BlockWeightedRandom();
 		blocks.addBlock(theme.getPrimaryWall(), 100);
@@ -85,7 +83,7 @@ public class CatacombTower {
 		int main = floor.getY() + 4;
 		int roof = floor.getY() + 9;
 		
-		WorldGenPrimitive.fillRectSolid(world, rand, x - 3, ground, z - 3, x + 3, floor.getY() + 12, z + 3, 0);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 3, ground, z - 3, x + 3, floor.getY() + 12, z + 3, air);
 
 		Coord start;
 		Coord end;
@@ -245,7 +243,7 @@ public class CatacombTower {
 				cursor.add(Cardinal.UP, 1);
 				WorldGenPrimitive.setBlock(world, rand, cursor, air, true, true);
 				cursor.add(orth, 2);
-				WorldGenPrimitive.setBlock(world, rand, cursor, new MetaBlock(Block.fenceIron.blockID), true, true);
+				WorldGenPrimitive.setBlock(world, rand, cursor, new MetaBlock(Blocks.iron_bars), true, true);
 			}
 		}
 		
@@ -264,11 +262,9 @@ public class CatacombTower {
 		
 		WorldGenPrimitive.setBlock(world, rand, cursor, blocks, true, true);
 		
-		if(world.getBlockId(cursor.getX(), cursor.getY(), cursor.getZ()) == 0){
-			return;
-		}
+		if(world.getBlock(cursor.getX(), cursor.getY(), cursor.getZ()) == Blocks.air) return;
 
 		cursor.add(Cardinal.UP, 1);
-		WorldGenPrimitive.setBlock(world, rand, cursor, new MetaBlock(Block.torchWood.blockID), true, true);
+		WorldGenPrimitive.setBlock(world, rand, cursor, new MetaBlock(Blocks.torch), true, true);
 	}
 }

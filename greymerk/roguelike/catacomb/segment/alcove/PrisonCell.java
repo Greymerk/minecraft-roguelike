@@ -1,12 +1,5 @@
 package greymerk.roguelike.catacomb.segment.alcove;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
-import net.minecraft.src.Block;
-import net.minecraft.src.World;
-import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.catacomb.segment.IAlcove;
 import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
@@ -16,6 +9,13 @@ import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.Spawner;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
+
+import java.util.List;
+import java.util.Random;
+
+import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
+import net.minecraft.world.World;
 
 public class PrisonCell implements IAlcove{
 
@@ -72,9 +72,9 @@ public class PrisonCell implements IAlcove{
 		Coord end = new Coord(centre);
 		end.add(Cardinal.UP, 1);
 		
-		WorldGenPrimitive.fillRectSolid(world, rand, corridor, end, new MetaBlock(0), true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, corridor, end, new MetaBlock(Blocks.air), true, true);
 
-		WorldGenPrimitive.setBlock(world, x, y, z + 2, Block.pressurePlateStone.blockID);
+		WorldGenPrimitive.setBlock(world, x, y, z + 2, Blocks.stone_pressure_plate);
 		if(rand.nextBoolean()) Spawner.generate(world, rand, x, y - 1, z + 1, Spawner.ZOMBIE);
 		Door.generate(world, x, y, z + 3, Cardinal.NORTH, Door.IRON);
 	}
@@ -92,9 +92,9 @@ public class PrisonCell implements IAlcove{
 		Coord end = new Coord(centre);
 		end.add(Cardinal.UP, 1);
 		
-		WorldGenPrimitive.fillRectSolid(world, rand, corridor, end, new MetaBlock(0), true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, corridor, end, new MetaBlock(Blocks.air), true, true);
 
-		WorldGenPrimitive.setBlock(world, x, y, z - 2, Block.pressurePlateStone.blockID);
+		WorldGenPrimitive.setBlock(world, x, y, z - 2, Blocks.stone_pressure_plate);
 		if(rand.nextBoolean()) Spawner.generate(world, rand, x, y - 1, z - 1, Spawner.ZOMBIE);
 		Door.generate(world, x, y, z - 3, Cardinal.SOUTH, Door.IRON);		
 	}
@@ -111,9 +111,9 @@ public class PrisonCell implements IAlcove{
 		Coord end = new Coord(centre);
 		end.add(Cardinal.UP, 1);
 		
-		WorldGenPrimitive.fillRectSolid(world, rand, corridor, end, new MetaBlock(0), true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, corridor, end, new MetaBlock(Blocks.air), true, true);
 
-		WorldGenPrimitive.setBlock(world, x - 2, y, z, Block.pressurePlateStone.blockID);
+		WorldGenPrimitive.setBlock(world, x - 2, y, z, Blocks.stone_pressure_plate);
 		if(rand.nextBoolean()) Spawner.generate(world, rand, x - 1, y - 1, z, Spawner.ZOMBIE);
 		Door.generate(world, x - 3, y, z, Cardinal.EAST, Door.IRON);
 	}	
@@ -130,9 +130,9 @@ public class PrisonCell implements IAlcove{
 		Coord end = new Coord(centre);
 		end.add(Cardinal.UP, 1);
 		
-		WorldGenPrimitive.fillRectSolid(world, rand, corridor, end, new MetaBlock(0), true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, corridor, end, new MetaBlock(Blocks.air), true, true);
 
-		WorldGenPrimitive.setBlock(world, x + 2, y, z, Block.pressurePlateStone.blockID);
+		WorldGenPrimitive.setBlock(world, x + 2, y, z, Blocks.stone_pressure_plate);
 		if(rand.nextBoolean()) Spawner.generate(world, rand, x + 1, y - 1, z, Spawner.ZOMBIE);
 		Door.generate(world, x + 3, y, z, Cardinal.WEST, Door.IRON);
 	}	

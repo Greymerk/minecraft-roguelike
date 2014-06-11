@@ -1,5 +1,8 @@
 package greymerk.roguelike.worldgen;
 
+import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
+
 public enum Log {
 
 	OAK, SPRUCE, BIRCH, JUNGLE, ACACIA, DARKOAK;
@@ -12,15 +15,15 @@ public enum Log {
 		return getLog(type, Cardinal.UP);
 	}
 	
-	public static int getBlockId(Log type){
+	public static Block getBlockId(Log type){
 		switch(type){
-		case OAK: return 17;
-		case SPRUCE: return 17;
-		case BIRCH: return 17;
-		case JUNGLE: return 17;
-		case ACACIA: return 162;
-		case DARKOAK: return 162;
-		default: return 0;
+		case OAK: return Blocks.log;
+		case SPRUCE: return Blocks.log;
+		case BIRCH: return Blocks.log;
+		case JUNGLE: return Blocks.log;
+		case ACACIA: return Blocks.log2;
+		case DARKOAK: return Blocks.log2;
+		default: return Blocks.log;
 		}
 	}
 	

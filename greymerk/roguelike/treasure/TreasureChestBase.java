@@ -1,11 +1,8 @@
 package greymerk.roguelike.treasure;
 
 import greymerk.roguelike.catacomb.Catacomb;
-import greymerk.roguelike.catacomb.dungeon.Dungeon;
 import greymerk.roguelike.config.RogueConfig;
-import greymerk.roguelike.treasure.loot.CustomLoot;
 import greymerk.roguelike.treasure.loot.Loot;
-import greymerk.roguelike.treasure.loot.WeightedRandomLoot;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
 
 import java.util.ArrayList;
@@ -14,11 +11,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.src.Block;
-import net.minecraft.src.Item;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.TileEntityChest;
-import net.minecraft.src.World;
+import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntityChest;
+import net.minecraft.world.World;
 
 public abstract class TreasureChestBase implements ITreasureChest, Iterable{
 
@@ -50,14 +47,14 @@ public abstract class TreasureChestBase implements ITreasureChest, Iterable{
 
 		Collections.shuffle(slots, rand);
 		
-		int type = trapped ? Block.chestTrapped.blockID : Block.chest.blockID;
+		Block type = trapped ? Blocks.trapped_chest : Blocks.chest;
 		
 		
 		if(!WorldGenPrimitive.setBlock(world, posX, posY, posZ, type)){
 			return null;
 		}
 		
-		chest = (TileEntityChest) world.getBlockTileEntity(posX, posY, posZ);
+		chest = (TileEntityChest) world.getTileEntity(posX, posY, posZ);
 		
 		try{
 			

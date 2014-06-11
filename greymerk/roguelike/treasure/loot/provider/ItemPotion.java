@@ -5,7 +5,7 @@ import greymerk.roguelike.treasure.loot.PotionMixture;
 
 import java.util.Random;
 
-import net.minecraft.src.ItemStack;
+import net.minecraft.item.ItemStack;
 
 public class ItemPotion extends ItemBase{
 

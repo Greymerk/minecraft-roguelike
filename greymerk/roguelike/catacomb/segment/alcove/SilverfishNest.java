@@ -1,22 +1,20 @@
 package greymerk.roguelike.catacomb.segment.alcove;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
-import net.minecraft.src.Block;
-import net.minecraft.src.World;
-import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.catacomb.segment.IAlcove;
 import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
-import greymerk.roguelike.worldgen.Door;
-import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.Spawner;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
+
+import java.util.List;
+import java.util.Random;
+
+import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
+import net.minecraft.world.World;
 
 public class SilverfishNest implements IAlcove{
 
@@ -41,7 +39,7 @@ public class SilverfishNest implements IAlcove{
 		end.add(Cardinal.UP, 1);
 		end.add(Cardinal.reverse(dir), 1);
 		
-		WorldGenPrimitive.fillRectSolid(world, rand, start, end, new MetaBlock(0), true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, start, end, new MetaBlock(Blocks.air), true, true);
 
 		Spawner type = rand.nextInt(5) == 0 ? Spawner.CAVESPIDER : Spawner.SILVERFISH;
 		
@@ -69,8 +67,8 @@ public class SilverfishNest implements IAlcove{
 	
 	private void nest(World world, Random rand, int x, int y, int z){
 		BlockWeightedRandom fish = new BlockWeightedRandom();
-		fish.addBlock(new MetaBlock(Block.silverfish.blockID, 1), 20);
-		fish.addBlock(new MetaBlock(Block.slowSand.blockID), 5);
+		fish.addBlock(new MetaBlock(Blocks.monster_egg, 1), 20);
+		fish.addBlock(new MetaBlock(Blocks.soul_sand), 5);
 		WorldGenPrimitive.fillRectHollow(world, rand, x - 2, y, z - 2, x + 2, y + 3, z + 2, fish, true, true);
 		
 		fish.setBlock(world, rand, x - 1, y + 2, z);
@@ -79,6 +77,6 @@ public class SilverfishNest implements IAlcove{
 		fish.setBlock(world, rand, x, y + 2, z + 1);
 		fish.setBlock(world, rand, x, y + 1, z);
 		
-		WorldGenPrimitive.setBlock(world, x, y + 2, z, Block.waterMoving.blockID);
+		WorldGenPrimitive.setBlock(world, x, y + 2, z, Blocks.water);
 	}
 }

@@ -1,8 +1,9 @@
 package greymerk.roguelike.config;
 
 
-import java.nio.channels.FileChannel;
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
 
 
 /**

@@ -1,7 +1,8 @@
 package greymerk.roguelike.config;
 
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.Writer;
 
 
 /**

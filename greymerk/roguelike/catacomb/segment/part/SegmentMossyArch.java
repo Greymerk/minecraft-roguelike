@@ -1,19 +1,11 @@
 package greymerk.roguelike.catacomb.segment.part;
 
-import greymerk.roguelike.catacomb.Catacomb;
-import greymerk.roguelike.catacomb.dungeon.Dungeon;
-import greymerk.roguelike.catacomb.segment.IAlcove;
-import greymerk.roguelike.catacomb.segment.alcove.PrisonCell;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
-import greymerk.roguelike.worldgen.Spawner;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
-
-import java.util.Random;
-
-import net.minecraft.src.Block;
-import net.minecraft.src.World;
+import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
 
 public class SegmentMossyArch extends SegmentBase {
 
@@ -28,7 +20,7 @@ public class SegmentMossyArch extends SegmentBase {
 		MetaBlock stair = theme.getSecondaryStair(); 
 		stair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.reverse(wallDirection), true));
 		
-		MetaBlock air = new MetaBlock(0);
+		MetaBlock air = new MetaBlock(Blocks.air);
 		
 		Coord cursor = new Coord(x, y, z);
 		cursor.add(wallDirection, 2);
@@ -54,12 +46,12 @@ public class SegmentMossyArch extends SegmentBase {
 		cursor = new Coord(x, y, z);
 		cursor.add(wallDirection, 2);
 		cursor.add(Cardinal.DOWN, 1);
-		WorldGenPrimitive.setBlock(world, cursor, Block.waterMoving.blockID);
+		WorldGenPrimitive.setBlock(world, cursor, Blocks.water);
 		
 		cursor = new Coord(x, y, z);
 		cursor.add(Cardinal.UP, 3);
 		cursor.add(wallDirection, 1);
-		WorldGenPrimitive.setBlock(world, rand, cursor, new MetaBlock(Block.vine.blockID, rand.nextInt(15)), true, true);
+		WorldGenPrimitive.setBlock(world, rand, cursor, new MetaBlock(Blocks.vine, rand.nextInt(15)), true, true);
 		
 		if(!spawnHoleSet){
 			spawnHole();
@@ -68,9 +60,9 @@ public class SegmentMossyArch extends SegmentBase {
 	}
 	
 	private void spawnHole(){
-		WorldGenPrimitive.fillRectSolid(world, rand, x, y + 2, z, x, y + 5, z, 0);
+		WorldGenPrimitive.fillRectSolid(world, rand, x, y + 2, z, x, y + 5, z, new MetaBlock(Blocks.air));
 		WorldGenPrimitive.randomVines(world, rand, x, y + 3, z, x, y + 5, z);
 		
-		if(!world.isAirBlock(x, y + 6, z)) WorldGenPrimitive.setBlock(world, x, y + 7, z, Block.waterMoving.blockID);
+		if(!world.isAirBlock(x, y + 6, z)) WorldGenPrimitive.setBlock(world, x, y + 7, z, Blocks.water);
 	}
 }

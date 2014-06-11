@@ -4,7 +4,7 @@ import greymerk.roguelike.treasure.loot.Record;
 
 import java.util.Random;
 
-import net.minecraft.src.ItemStack;
+import net.minecraft.item.ItemStack;
 
 public class ItemRecord extends ItemBase{
 

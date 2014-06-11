@@ -1,11 +1,8 @@
 package greymerk.roguelike.catacomb;
 
-import greymerk.roguelike.catacomb.dungeon.Dungeon;
 import greymerk.roguelike.catacomb.dungeon.DungeonCustomization;
-import greymerk.roguelike.catacomb.dungeon.DungeonFactory;
 import greymerk.roguelike.catacomb.dungeon.DungeonFactoryProvider;
 import greymerk.roguelike.catacomb.dungeon.IDungeonFactory;
-import greymerk.roguelike.catacomb.dungeon.RoomSet;
 import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.catacomb.theme.Theme;
 import greymerk.roguelike.config.RogueConfig;
@@ -15,7 +12,7 @@ import greymerk.roguelike.worldgen.WorldGenPrimitive;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.src.World;
+import net.minecraft.world.World;
 
 public class Catacomb {
 		
@@ -148,7 +145,7 @@ public class Catacomb {
 		
 		int y = 100;
 		
-		while(!world.isBlockOpaqueCube(x, y, z) && y > 50){
+		while(!world.getBlock(x, y, z).getMaterial().isOpaque() && y > 50){
 			--y;
 		}
 		
@@ -159,7 +156,7 @@ public class Catacomb {
 		List<Coord> above = WorldGenPrimitive.getRectSolid(x - 4, y + 4, z - 4, x + 4, y + 4, z + 4);
 
 		for (Coord c : above){
-			if(world.isBlockOpaqueCube(c.getX(), c.getY(), c.getZ())){
+			if(world.getBlock(c.getX(), c.getY(), c.getZ()).getMaterial().isOpaque()){
 				return false;
 			}
 		}
@@ -168,7 +165,7 @@ public class Catacomb {
 		
 		int airCount = 0;
 		for (Coord c : below){
-			if(!world.isBlockOpaqueCube(c.getX(), c.getY(), c.getZ())){
+			if(!world.getBlock(c.getX(), c.getY(), c.getZ()).getMaterial().isOpaque()){
 				airCount++;
 			}
 			if(airCount > 8){

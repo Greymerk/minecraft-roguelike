@@ -2,17 +2,13 @@ package greymerk.roguelike.treasure.loot;
 
 
 import greymerk.roguelike.util.IWeighted;
-import greymerk.roguelike.util.WeightedChoice;
 import greymerk.roguelike.util.WeightedRandomizer;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import net.minecraft.src.Item;
-import net.minecraft.src.ItemStack;
+import net.minecraft.item.ItemStack;
 
 public class LootProvider{
 
