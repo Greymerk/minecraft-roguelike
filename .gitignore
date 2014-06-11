@@ -1,1 +1,13 @@
 *.class
+
+.gradle/
+.settings/
+bin/
+build/
+config/
+logs/
+mods/
+resourcepacks/
+saves/
+.classpath
+.project
