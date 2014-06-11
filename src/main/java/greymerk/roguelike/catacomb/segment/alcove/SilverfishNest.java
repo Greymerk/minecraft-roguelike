@@ -12,19 +12,15 @@ import greymerk.roguelike.worldgen.WorldGenPrimitive;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 
 public class SilverfishNest implements IAlcove{
 
 	private static int RECESSED = 6;
-	private ITheme theme;
 	
 	@Override
 	public void generate(World world, Random rand, ITheme theme, int x, int y, int z, Cardinal dir) {
-		
-		this.theme = theme;
 		
 		Coord corridor = new Coord(x, y, z);
 		Coord centre = new Coord(x, y, z);

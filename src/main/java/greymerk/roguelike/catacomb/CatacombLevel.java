@@ -14,7 +14,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 
@@ -28,7 +27,6 @@ public class CatacombLevel {
 	private CatacombNode end;
 	private List<CatacombNode> nodes;
 	private int originX;
-	private int originY;
 	private int originZ;
 	private boolean done;
 	private int maxNodes;
@@ -45,7 +43,7 @@ public class CatacombLevel {
 		this.rooms = rooms;
 		this.theme = theme;
 		this.originX = originX;
-		this.originY = originY;
+
 		this.originZ = originZ;
 		
 		SCATTER = RogueConfig.getInt(RogueConfig.LEVELSCATTER);
@@ -64,7 +62,7 @@ public class CatacombLevel {
 		this.rooms = rooms;
 		this.theme = theme;
 		this.originX = originX;
-		this.originY = originY;
+
 		this.originZ = originZ;
 		
 		SCATTER = RogueConfig.getInt(RogueConfig.LEVELSCATTER);
@@ -149,8 +147,6 @@ public class CatacombLevel {
 		WorldGenPrimitive.fillRectHollow(world, rand, originX - 4, originY + 9, originZ - 4, originX + 4, originY + 9, originZ + 4, blocks, true, true);
 		
 		MetaBlock stair = theme.getPrimaryStair();
-		IBlockFactory fill = theme.getPrimaryWall();
-		
 		
 		for (int y = originY; y <= originY + 9; y++){
 			WorldGenPrimitive.spiralStairStep(world, rand, originX, y, originZ, stair, theme.getPrimaryPillar());

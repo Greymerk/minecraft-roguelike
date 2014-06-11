@@ -17,7 +17,7 @@ import net.minecraft.world.World;
 
 public class CatacombTunneler {
 
-	private World world;
+
 	private Random rand;
 	private CatacombLevel level;
 	private List<Coord> tunnel;
@@ -31,7 +31,7 @@ public class CatacombTunneler {
 	
 	public CatacombTunneler(World world, Random rand, CatacombLevel level, Cardinal direction, ITheme theme, int x, int y, int z){
 
-		this.world = world;
+
 		this.rand = rand;
 		this.level = level;
 		this.dir = direction;

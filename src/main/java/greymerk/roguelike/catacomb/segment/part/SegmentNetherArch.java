@@ -5,7 +5,6 @@ import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
-import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 
 public class SegmentNetherArch extends SegmentBase {
@@ -17,8 +16,7 @@ public class SegmentNetherArch extends SegmentBase {
 		step.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.reverse(dir), true));
 		IBlockFactory pillar = theme.getSecondaryPillar();
 		
-		Coord start;
-		Coord end;
+
 		Coord cursor;
 		
 		boolean hasLava = rand.nextInt(5) == 0;

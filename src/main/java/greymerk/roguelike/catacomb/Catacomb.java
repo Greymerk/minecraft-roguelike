@@ -87,8 +87,6 @@ public class Catacomb {
 			return false;
 		}
 
-		int x = chunkX * 16;
-		int z = chunkZ * 16;
 		
 		int frequency = RogueConfig.getInt(RogueConfig.SPAWNFREQUENCY);
 		int min = 8 * frequency / 10;

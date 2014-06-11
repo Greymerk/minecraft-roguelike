@@ -17,7 +17,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.world.World;
 
-public abstract class TreasureChestBase implements ITreasureChest, Iterable{
+public abstract class TreasureChestBase implements ITreasureChest, Iterable<InventorySlot>{
 
 	protected World world;
 	protected Random rand;
@@ -114,29 +114,12 @@ public abstract class TreasureChestBase implements ITreasureChest, Iterable{
 	}
 	
 	@Override
-	public Iterator iterator() {
+	public Iterator<InventorySlot> iterator() {
 		return this.slots.iterator();
 	}
 	
 	protected abstract void fillChest(TileEntityChest chest, int level);
 	
 	
-	protected class InventorySlot{
-		
-		int slot;
-		ITreasureChest chest;
-		
-		public InventorySlot(int index, ITreasureChest chest){
-			this.slot = index;
-			this.chest = chest;
-		}
-		
-		public void set(ItemStack item){
-			chest.setInventorySlot(item, slot);
-		}
-		
-		public boolean empty(){
-			return chest.slotEmpty(slot);
-		}
-	}
+
 }

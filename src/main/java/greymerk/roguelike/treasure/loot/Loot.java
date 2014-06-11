@@ -23,7 +23,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import net.minecraft.block.Block;
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -32,7 +31,6 @@ import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -86,12 +84,12 @@ public enum Loot {
 		lootp.clear();
 	}
 	
-	public static void addAllLevels(Loot type, IWeighted toAdd){
+	public static void addAllLevels(Loot type, IWeighted<ItemStack> toAdd){
 		LootProvider lootp = loot.get(type.name());
 		lootp.addAllLevels(toAdd);
 	}
 	
-	public static void add(Loot type, IWeighted toAdd, int level){
+	public static void add(Loot type, IWeighted<ItemStack> toAdd, int level){
 		LootProvider lootp = loot.get(type.name());
 		lootp.add(level, toAdd);
 	}
@@ -102,8 +100,6 @@ public enum Loot {
 	}
 	
 	public static ItemStack getEquipmentBySlot(Random rand, Slot slot, int level, boolean enchant){
-		
-		ItemStack item;
 		
 		if(slot == Slot.WEAPON){
 			return ItemWeapon.getRandom(rand, level, enchant);
@@ -174,7 +170,8 @@ public enum Loot {
 		
 		if (item == null ) return;
 
-		List ench = EnchantmentHelper.buildEnchantmentList(rand, item, enchantLevel);
+		@SuppressWarnings("unchecked")
+		List<EnchantmentData> ench = EnchantmentHelper.buildEnchantmentList(rand, item, enchantLevel);
 		
 		boolean isBook = item.getItem() == Items.book;
 

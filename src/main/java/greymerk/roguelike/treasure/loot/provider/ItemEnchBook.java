@@ -5,7 +5,6 @@ import greymerk.roguelike.treasure.loot.Loot;
 import java.util.Random;
 
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class ItemEnchBook extends ItemBase{

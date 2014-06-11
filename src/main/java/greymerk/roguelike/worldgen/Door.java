@@ -25,10 +25,6 @@ public enum Door {
 		return Blocks.wooden_door;
 	}
 	
-	private static int getMeta(boolean top, Cardinal dir){
-		return getMeta(top, dir, false, false);
-	}
-	
 	private static int getMeta(boolean top, Cardinal dir, boolean open, boolean hingeLeft){
 		int meta = 0;
 

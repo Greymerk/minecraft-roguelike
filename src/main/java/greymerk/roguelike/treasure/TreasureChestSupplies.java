@@ -9,8 +9,7 @@ public class TreasureChestSupplies extends TreasureChestBase{
 	@Override
 	protected void fillChest(TileEntityChest chest, int level) {
 
-		int middle = chest.getSizeInventory()/2;
-				
+
 		ItemStack item;
 		
 		for (int i = 0; i < 10; i++) {

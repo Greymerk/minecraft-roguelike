@@ -53,6 +53,7 @@ public enum RogueConfig {
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	private static void setDefaults(){
 		if(!instance.ContainsKey(getName(DONATURALSPAWN))) setBoolean(DONATURALSPAWN, (Boolean)getDefault(DONATURALSPAWN).getSecond());
 		if(!instance.ContainsKey(getName(LEVELRANGE)))setInt(LEVELRANGE, (Integer)getDefault(LEVELRANGE).getSecond());
@@ -74,7 +75,6 @@ public enum RogueConfig {
 	
 	public static void setDouble(RogueConfig option, double value){
 		reload(false);
-		Tuple def = getDefault(option);
 		instance.Set(getName(option), value);
 	}
 	
@@ -86,7 +86,6 @@ public enum RogueConfig {
 	
 	public static void setBoolean(RogueConfig option, Boolean value){
 		reload(false);
-		Tuple def = getDefault(option);
 		instance.Set(getName(option), value);
 	}
 	
@@ -102,6 +101,7 @@ public enum RogueConfig {
 		instance.Set((String)def.getFirst(), value);
 	}
 	
+	@SuppressWarnings("unchecked")
 	public static List<Integer> getIntList(RogueConfig option){
 		reload(false);
 		Tuple def = getDefault(option);

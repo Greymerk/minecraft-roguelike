@@ -8,7 +8,6 @@ import greymerk.roguelike.worldgen.MetaBlock;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 
 public class ThemeRainbow extends ThemeBase{
@@ -25,8 +24,6 @@ public class ThemeRainbow extends ThemeBase{
 		BlockFactoryCheckers pillar = new BlockFactoryCheckers(new MetaBlock(Blocks.obsidian), new MetaBlock(Blocks.quartz_block)); 
 		
 		this.walls = new BlockSet(rainbow, stair, pillar);
-		
-		MetaBlock SegmentWall = new MetaBlock(Blocks.quartz_block, 1);
 		
 		this.decor = new BlockSet(new MetaBlock(Blocks.glowstone), stair, new MetaBlock(Blocks.emerald_block));;
 		

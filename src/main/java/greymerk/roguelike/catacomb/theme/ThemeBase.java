@@ -80,10 +80,9 @@ public class ThemeBase implements ITheme {
 	
 	private ISegment pickSegment(World world, Random rand, CatacombLevel level, Cardinal dir, Coord pos){
 		int x = pos.getX();
-		int y = pos.getY();
 		int z = pos.getZ();
 		
-		ISegment seg = null;
+
 		
 		if((dir == Cardinal.NORTH || dir == Cardinal.SOUTH) && z % 3 == 0){
 			if(z % 6 == 0){

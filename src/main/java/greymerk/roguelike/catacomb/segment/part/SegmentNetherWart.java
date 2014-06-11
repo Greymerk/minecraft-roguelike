@@ -5,7 +5,6 @@ import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
-import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 
 public class SegmentNetherWart extends SegmentBase{
@@ -17,8 +16,6 @@ public class SegmentNetherWart extends SegmentBase{
 		IBlockFactory wall = theme.getSecondaryWall();
 		MetaBlock air = new MetaBlock(Blocks.air);
 
-		Coord start;
-		Coord end;
 		Coord cursor;
 		
 		cursor = new Coord(x, y, z);
@@ -28,8 +25,7 @@ public class SegmentNetherWart extends SegmentBase{
 		WorldGenPrimitive.setBlock(world, rand, cursor, air, true, true);
 		cursor = new Coord(x, y, z);
 		cursor.add(dir, 5);
-		boolean isAir = world.isAirBlock(cursor.getX(), cursor.getY(), cursor.getZ());
-		boolean lava = rand.nextInt(5) == 0;
+
 		
 		cursor = new Coord(x, y, z);
 		cursor.add(dir, 3);

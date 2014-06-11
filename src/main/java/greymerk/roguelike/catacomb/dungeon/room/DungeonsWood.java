@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 
@@ -21,7 +20,7 @@ public class DungeonsWood implements IDungeon{
 	private static final int HEIGHT = 3;
 	private static final int WIDTH = 2;
 	private static final int LENGTH = 3;
-	private static final int NUM_CHESTS = 2;
+
 	
 	private int originX;
 	private int originY;

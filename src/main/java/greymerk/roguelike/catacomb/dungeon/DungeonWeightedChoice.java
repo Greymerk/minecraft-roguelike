@@ -1,9 +1,10 @@
 package greymerk.roguelike.catacomb.dungeon;
-
+import greymerk.roguelike.util.IWeighted;
 
 import java.util.Random;
 
-public class DungeonWeightedChoice implements Comparable{
+
+public class DungeonWeightedChoice implements IWeighted<Dungeon>, Comparable<IWeighted<?>>{
 
 	Dungeon type;
 	int chance;
@@ -21,12 +22,22 @@ public class DungeonWeightedChoice implements Comparable{
 		return Dungeon.getInstance(type);
 	}
 
+
 	@Override
-	public int compareTo(Object o) {
-		DungeonWeightedChoice other = (DungeonWeightedChoice)o;
-		if(chance < other.chance) return -1;
-		if(chance > other.chance) return 1;
+	public int compareTo(IWeighted<?> other) {
+		if(chance < other.getWeight()) return -1;
+		if(chance > other.getWeight()) return 1;
 		return 0;
+	}
+
+	@Override
+	public int getWeight() {
+		return chance;
+	}
+
+	@Override
+	public Dungeon get(Random rand) {
+		return type;
 	}
 	
 }

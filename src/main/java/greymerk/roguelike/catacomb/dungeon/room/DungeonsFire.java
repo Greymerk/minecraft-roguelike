@@ -3,16 +3,13 @@ package greymerk.roguelike.catacomb.dungeon.room;
 import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.catacomb.dungeon.IDungeon;
 import greymerk.roguelike.catacomb.theme.ITheme;
-import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.Spawner;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
 
-import java.util.List;
 import java.util.Random;
 
-import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 
@@ -130,8 +127,6 @@ public class DungeonsFire implements IDungeon{
 			WorldGenPrimitive.setBlock(inWorld, inOriginX, inOriginY + 5, inOriginZ, air);	
 		}
 		
-		List<Coord> chestSpace = WorldGenPrimitive.getRectSolid(inOriginX - 3, inOriginY, inOriginZ - 3, inOriginX + 3, inOriginY, inOriginZ + 3);
-				
 		return false;
 	}
 	

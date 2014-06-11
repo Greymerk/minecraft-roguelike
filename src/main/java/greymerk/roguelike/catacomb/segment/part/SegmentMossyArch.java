@@ -4,14 +4,10 @@ import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
-import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 
 public class SegmentMossyArch extends SegmentBase {
 
-	private int stairType;
-	private static final int SPRUCE = 1;
-	
 	private boolean spawnHoleSet = false;
 	
 	@Override

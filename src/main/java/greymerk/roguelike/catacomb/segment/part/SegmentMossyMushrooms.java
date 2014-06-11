@@ -5,12 +5,10 @@ import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
-import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 
 public class SegmentMossyMushrooms extends SegmentBase {
 
-	private int stairType;
 	private BlockWeightedRandom mushrooms;
 	
 	

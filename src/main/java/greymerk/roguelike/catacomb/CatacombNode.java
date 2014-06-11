@@ -20,7 +20,6 @@ public class CatacombNode {
 	private int x;
 	private int y;
 	private int z;
-	private boolean done;
 	private IDungeon toGenerate;
 	
 	
@@ -34,7 +33,6 @@ public class CatacombNode {
 		this.x = x;
 		this.y = y;
 		this.z = z;
-		this.done = false;
 		this.tunnelers = new ArrayList<CatacombTunneler>();
 		
 		this.direction = Cardinal.directions[rand.nextInt(Cardinal.directions.length)];
@@ -56,7 +54,6 @@ public class CatacombNode {
 		
 		this.rand = rand;
 		
-		this.done = false;
 		this.tunnelers = new ArrayList<CatacombTunneler>();
 		
 		this.direction = Cardinal.reverse(tunneler.getDirection());

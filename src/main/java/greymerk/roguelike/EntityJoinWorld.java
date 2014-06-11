@@ -33,7 +33,7 @@ public class EntityJoinWorld {
 			return;
 		}
 		
-		Collection effects = mob.getActivePotionEffects();
+		Collection<?> effects = mob.getActivePotionEffects();
 		for(Object buff : effects){
 			if(((PotionEffect) buff).getPotionID() == 4){
 				Loot.addEquipment(event.world, Catacomb.getLevel((int)event.entity.posY), event.entity);

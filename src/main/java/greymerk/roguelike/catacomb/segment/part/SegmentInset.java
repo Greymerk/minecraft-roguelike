@@ -9,13 +9,7 @@ import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.Spawner;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
-
-import java.util.Random;
-
-import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
-import net.minecraft.tileentity.TileEntitySkull;
-import net.minecraft.world.World;
 
 public class SegmentInset extends SegmentBase {
 

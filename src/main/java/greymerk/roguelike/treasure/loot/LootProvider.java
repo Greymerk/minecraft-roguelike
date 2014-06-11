@@ -29,11 +29,11 @@ public class LootProvider{
 		
 	}
 	
-	public void add(int level, IWeighted toAdd){
+	public void add(int level, IWeighted<ItemStack> toAdd){
 		this.loot.get(level).add(toAdd);
 	}
 	
-	public void addAllLevels(IWeighted toAdd){
+	public void addAllLevels(IWeighted<ItemStack> toAdd){
 		for(int i = 0; i < NUM_LEVELS; ++i){
 			this.loot.get(i).add(toAdd);
 		}

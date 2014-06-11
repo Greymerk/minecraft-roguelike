@@ -1,6 +1,5 @@
 package greymerk.roguelike.catacomb.segment.part;
 
-import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.catacomb.CatacombLevel;
 import greymerk.roguelike.catacomb.segment.ISegment;
 import greymerk.roguelike.catacomb.theme.ITheme;
@@ -84,8 +83,6 @@ public abstract class SegmentBase implements ISegment {
 	
 	private void addSupport(){
 		if(!world.isAirBlock(x, y - 2, z)) return;
-		
-		int level = Catacomb.getLevel(y);
 		
 		WorldGenPrimitive.fillDown(world, rand, x, y - 2, z, theme.getPrimaryPillar());
 		

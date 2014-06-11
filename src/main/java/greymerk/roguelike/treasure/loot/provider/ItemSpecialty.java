@@ -9,7 +9,6 @@ import java.util.Random;
 
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class ItemSpecialty {
@@ -28,8 +27,6 @@ public class ItemSpecialty {
 	
 	public static ItemStack getRandomItem(Equipment type, Random rand, Quality quality){
 		
-		ItemStack item;
-				
 		switch(type){
 		
 		case SWORD: return getSword(rand, quality);
@@ -305,7 +302,7 @@ public class ItemSpecialty {
 			suffix = "of Warding";
 		} else if(rand.nextInt(5) == 0){
 			item.addEnchantment(Enchantment.protection, getProtectionLevel(quality, rand));
-			item.addEnchantment(Enchantment.featherFalling, quality == quality.DIAMOND ? 4 : 1 + rand.nextInt(3));
+			item.addEnchantment(Enchantment.featherFalling, quality == Quality.DIAMOND ? 4 : 1 + rand.nextInt(3));
 			suffix = "of Lightness";
 		} else if(rand.nextInt(3) == 0){
 			item.addEnchantment(Enchantment.projectileProtection, getProtectionLevel(quality, rand));

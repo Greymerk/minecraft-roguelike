@@ -2,7 +2,7 @@ package greymerk.roguelike.util;
 
 import java.util.Random;
 
-public class WeightedChoice<T> implements IWeighted{
+public class WeightedChoice<T> implements IWeighted<T>{
 
 	private T item;
 	private int weight;

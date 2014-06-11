@@ -60,7 +60,8 @@ public class CommandSpawnDungeon extends CommandBase
     /**
      * Adds the strings available in this command to the given list of tab completion options.
      */
-    public List addTabCompletionOptions(ICommandSender par1ICommandSender, String[] par2ArrayOfStr){
+    @SuppressWarnings("rawtypes")
+	public List addTabCompletionOptions(ICommandSender par1ICommandSender, String[] par2ArrayOfStr){
         return null;
     }
 

@@ -11,7 +11,6 @@ import greymerk.roguelike.worldgen.WorldGenPrimitive;
 
 import java.util.Random;
 
-import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 
@@ -158,8 +157,6 @@ public class DungeonLab implements IDungeon {
 	
 	private static void northWest(World world, Random rand, ITheme theme, int x, int y, int z){
 		
-		MetaBlock stone = new MetaBlock(Blocks.stonebrick, 0, 2);
-		
 		corner(world, rand, theme, x, y, z);
 		
 		WorldGenPrimitive.setBlock(world, x + 1, y, z, Blocks.stonebrick);
@@ -194,7 +191,6 @@ public class DungeonLab implements IDungeon {
 	
 	private static void northEast(World world, Random rand, ITheme theme, int x, int y, int z){
 		
-		MetaBlock stone = new MetaBlock(Blocks.stonebrick, 0, 2);
 		corner(world, rand, theme, x, y, z);
 		
 		WorldGenPrimitive.setBlock(world, x + 1, y, z, Blocks.stonebrick);

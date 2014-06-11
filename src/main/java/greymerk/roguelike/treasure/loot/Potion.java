@@ -5,7 +5,6 @@ import greymerk.roguelike.treasure.loot.provider.ItemNovelty;
 import java.util.Random;
 
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public enum Potion {

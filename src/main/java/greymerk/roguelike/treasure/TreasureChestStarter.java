@@ -8,16 +8,14 @@ import greymerk.roguelike.treasure.loot.provider.ItemSpecialty;
 
 import java.util.Iterator;
 
-import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
 import net.minecraft.tileentity.TileEntityChest;
 
-public class TreasureChestStarter extends TreasureChestBase implements Iterable{
+public class TreasureChestStarter extends TreasureChestBase{
 
 
 	

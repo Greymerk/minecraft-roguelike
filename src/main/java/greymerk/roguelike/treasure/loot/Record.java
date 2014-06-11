@@ -21,8 +21,6 @@ public enum Record{
 	
 	public static Item getId(Record type){
 		
-		int base = 2256;
-		
 		switch(type){
 		case THIRTEEN: return Items.record_13;
 		case CAT: return Items.record_cat;

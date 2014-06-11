@@ -8,7 +8,6 @@ import greymerk.roguelike.worldgen.MetaBlock;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 
 public class ThemeSpruce extends ThemeBase{

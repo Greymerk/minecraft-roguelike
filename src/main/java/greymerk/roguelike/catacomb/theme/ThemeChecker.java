@@ -8,7 +8,6 @@ import greymerk.roguelike.worldgen.MetaBlock;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 
 public class ThemeChecker extends ThemeBase{
@@ -23,8 +22,6 @@ public class ThemeChecker extends ThemeBase{
 		MetaBlock stair = new MetaBlock(Blocks.quartz_stairs);
 		
 		this.walls = new BlockSet(checks, stair, checks);
-		
-		MetaBlock SegmentWall = new MetaBlock(Blocks.quartz_block, 1);
 		
 		this.decor = walls;
 		

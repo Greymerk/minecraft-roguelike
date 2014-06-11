@@ -10,7 +10,7 @@ import net.minecraft.item.ItemStack;
 
 import com.google.gson.JsonObject;
 
-public class WeightedRandomLoot implements Comparable, IWeighted{
+public class WeightedRandomLoot implements Comparable<WeightedRandomLoot>, IWeighted<ItemStack>{
 	
 	private Item id;
 	private int damage;
@@ -53,16 +53,6 @@ public class WeightedRandomLoot implements Comparable, IWeighted{
 		return rand.nextInt(max - min) + min;
 	}
 
-	@Override
-	public int compareTo(Object o) {
-		
-		WeightedRandomLoot other = (WeightedRandomLoot)o;
-		
-		if (this.weight > other.weight) return -1;
-		if (this.weight < other.weight) return 1;
-		
-		return 0;
-	}
 	
 	@Override
 	public int getWeight(){
@@ -75,4 +65,11 @@ public class WeightedRandomLoot implements Comparable, IWeighted{
 	}
 
 
+	@Override
+	public int compareTo(WeightedRandomLoot other) {
+		if (this.weight > other.weight) return -1;
+		if (this.weight < other.weight) return 1;
+		
+		return 0;
+	}
 }

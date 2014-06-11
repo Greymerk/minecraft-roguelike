@@ -45,8 +45,6 @@ public class DungeonCustomization {
 	
 	private static Customization getCustomization(BiomeGenBase biome){
 		
-		Customization toReturn;
-		
 		for(Customization custom : customizations){
 			if(custom.global) return custom;
 			if(custom.match(biome.biomeName)) return custom;

@@ -18,7 +18,7 @@ public class WorldGenPrimitive {
 		
 		Block currentBlock = world.getBlock(x, y, z);
 		
-		if(currentBlock.hasTileEntity()) return false;
+		if(world.getTileEntity(x, y, z) != null) return false;
 		if(currentBlock == Blocks.chest) return false;
 		if(currentBlock == Blocks.mob_spawner) return false;
 		
