@@ -164,32 +164,27 @@ public enum Loot {
 
 
 	
-	public static void enchantItem(ItemStack item, Random rand, int level) {
+	public static void enchantItem(ItemStack item, Random rand, int enchantLevel) {
 
-		int enchantLevel = Loot.getEnchantLevel(rand, level);
-		
 		if (item == null ) return;
 
 		@SuppressWarnings("unchecked")
-		List<EnchantmentData> ench = EnchantmentHelper.buildEnchantmentList(rand, item, enchantLevel);
+		List<EnchantmentData> enchants = EnchantmentHelper.buildEnchantmentList(rand, item, enchantLevel);
 		
 		boolean isBook = item.getItem() == Items.book;
 
 		if (isBook){
 			item.func_150996_a(Items.enchanted_book);
+			if(enchants.size() > 1){
+				enchants.remove(rand.nextInt(enchants.size()));
+			}
 		}
 
-		int var6 = isBook && ench.size() > 1 ? rand.nextInt(ench.size()) : -1;
-
-		for (int i = 0; i < ench.size(); ++i){
-			EnchantmentData var8 = (EnchantmentData)ench.get(i);
-
-			if (!isBook || i != var6){
-				if (isBook){
-					Items.enchanted_book.addEnchantment(item, var8);
-				} else {
-					item.addEnchantment(var8.enchantmentobj, var8.enchantmentLevel);
-				}
+		for (EnchantmentData toAdd : enchants){
+			if (isBook){
+				Items.enchanted_book.addEnchantment(item, toAdd);
+			} else {
+				item.addEnchantment(toAdd.enchantmentobj, toAdd.enchantmentLevel);
 			}
 		}
 	}

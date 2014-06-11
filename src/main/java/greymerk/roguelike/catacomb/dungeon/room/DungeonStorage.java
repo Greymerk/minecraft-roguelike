@@ -120,9 +120,8 @@ public class DungeonStorage implements IDungeon {
 			}
 		}
 		
-		// TODO: change this back
-		//List<TreasureChest> types = new ArrayList<TreasureChest>(Arrays.asList(TreasureChest.BLOCKS, TreasureChest.SUPPLIES));
-		List<TreasureChest> types = new ArrayList<TreasureChest>(Arrays.asList(TreasureChest.ENCHANTING));
+
+		List<TreasureChest> types = new ArrayList<TreasureChest>(Arrays.asList(TreasureChest.BLOCKS, TreasureChest.SUPPLIES));
 		
 		List<Coord> spaces = new ArrayList<Coord>(chestSpaces);
 		

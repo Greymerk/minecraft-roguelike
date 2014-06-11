@@ -2,6 +2,7 @@
 
 /.gradle/
 /.settings/
+/assets/
 /bin/
 /build/
 /config/
@@ -11,3 +12,4 @@
 /saves/
 /.classpath
 /.project
+/options.txt
