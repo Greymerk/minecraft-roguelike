@@ -1,6 +1,10 @@
 package greymerk.roguelike.catacomb.segment.part;
 
+import java.util.Random;
+
 import net.minecraft.init.Blocks;
+import net.minecraft.world.World;
+import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
@@ -9,7 +13,7 @@ import greymerk.roguelike.worldgen.WorldGenPrimitive;
 public class SegmentShelf extends SegmentBase {
 	
 	@Override
-	protected void genWall(Cardinal dir) {
+	protected void genWall(World world, Random rand, Cardinal dir, ITheme theme, int x, int y, int z) {
 		
 		MetaBlock air = new MetaBlock(Blocks.air);
 		MetaBlock stair = theme.getSecondaryStair();

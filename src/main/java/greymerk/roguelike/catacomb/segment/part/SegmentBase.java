@@ -13,16 +13,7 @@ import net.minecraft.world.World;
 
 public abstract class SegmentBase implements ISegment {
 
-	protected World world;
-	protected Random rand;
-	protected Cardinal corridorDirection;
-	
-	protected int x;
-	protected int y;
-	protected int z;
-	
-	protected Cardinal[] orth;
-	ITheme theme;
+
 	
 	@Override
 	public void generate(World world, Random rand, CatacombLevel level, Cardinal corridorDirection, ITheme theme, int x, int y, int z) {
@@ -31,33 +22,23 @@ public abstract class SegmentBase implements ISegment {
 			return;
 		}
 		
-		this.world = world;
-		this.rand = rand;
-		this.corridorDirection = corridorDirection;
-		this.theme = theme;
+		Cardinal[] orth = Cardinal.getOrthogonal(corridorDirection);
 		
-		this.x = x;
-		this.y = y;
-		this.z = z;
-		
-		
-		orth = Cardinal.getOrthogonal(corridorDirection);
-		
-		for (Cardinal wall : orth){
-			if(isValidWall(wall)){
-				genWall(wall);
+		for (Cardinal dir : orth){
+			if(isValidWall(world, dir, x, y, z)){
+				genWall(world, rand, dir, theme, x, y, z);
 			}
 		}
 		
 		if(this instanceof SegmentArch || this instanceof SegmentMossyArch){
-			addSupport();
+			addSupport(world, rand, theme, x, y, z);
 		}
 		
 	}
 	
-	protected abstract void genWall(Cardinal wallDirection);
+	protected abstract void genWall(World world, Random rand, Cardinal dir, ITheme theme, int x, int y, int z);
 
-	protected boolean isValidWall(Cardinal wallDirection) {
+	protected boolean isValidWall(World world, Cardinal wallDirection, int x, int y, int z) {
 		
 		switch(wallDirection){
 		case NORTH:
@@ -81,7 +62,7 @@ public abstract class SegmentBase implements ISegment {
 		return true;
 	}
 	
-	private void addSupport(){
+	private void addSupport(World world, Random rand, ITheme theme, int x, int y, int z){
 		if(!world.isAirBlock(x, y - 2, z)) return;
 		
 		WorldGenPrimitive.fillDown(world, rand, x, y - 2, z, theme.getPrimaryPillar());

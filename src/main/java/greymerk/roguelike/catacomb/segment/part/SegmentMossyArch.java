@@ -1,17 +1,22 @@
 package greymerk.roguelike.catacomb.segment.part;
 
+import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
+
+import java.util.Random;
+
 import net.minecraft.init.Blocks;
+import net.minecraft.world.World;
 
 public class SegmentMossyArch extends SegmentBase {
 
 	private boolean spawnHoleSet = false;
 	
 	@Override
-	protected void genWall(Cardinal wallDirection) {
+	protected void genWall(World world, Random rand, Cardinal wallDirection, ITheme theme, int x, int y, int z) {
 		
 		MetaBlock stair = theme.getSecondaryStair(); 
 		stair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.reverse(wallDirection), true));
@@ -50,15 +55,12 @@ public class SegmentMossyArch extends SegmentBase {
 		WorldGenPrimitive.setBlock(world, rand, cursor, new MetaBlock(Blocks.vine, rand.nextInt(15)), true, true);
 		
 		if(!spawnHoleSet){
-			spawnHole();
+			WorldGenPrimitive.fillRectSolid(world, rand, x, y + 2, z, x, y + 5, z, new MetaBlock(Blocks.air));
+			WorldGenPrimitive.randomVines(world, rand, x, y + 3, z, x, y + 5, z);
+			
+			if(!world.isAirBlock(x, y + 6, z)) WorldGenPrimitive.setBlock(world, x, y + 7, z, Blocks.water);
 			spawnHoleSet = true;
 		}
 	}
-	
-	private void spawnHole(){
-		WorldGenPrimitive.fillRectSolid(world, rand, x, y + 2, z, x, y + 5, z, new MetaBlock(Blocks.air));
-		WorldGenPrimitive.randomVines(world, rand, x, y + 3, z, x, y + 5, z);
-		
-		if(!world.isAirBlock(x, y + 6, z)) WorldGenPrimitive.setBlock(world, x, y + 7, z, Blocks.water);
-	}
+
 }

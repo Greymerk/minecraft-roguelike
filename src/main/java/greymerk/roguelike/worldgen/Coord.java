@@ -44,6 +44,10 @@ public class Coord{
 
 		}		
 	}
+	
+	public void add(Cardinal dir){
+		add(dir, 1);
+	}
 
 	// Arranges two coords so that the they create a positive cube.
 	// used in fill routines.

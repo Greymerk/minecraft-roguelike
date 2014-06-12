@@ -1,18 +1,23 @@
 package greymerk.roguelike.catacomb.segment.part;
 
-import net.minecraft.init.Blocks;
 import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.catacomb.segment.IAlcove;
 import greymerk.roguelike.catacomb.segment.alcove.PrisonCell;
+import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
 
+import java.util.Random;
+
+import net.minecraft.init.Blocks;
+import net.minecraft.world.World;
+
 public class SegmentArch extends SegmentBase {
 
 	@Override
-	protected void genWall(Cardinal dir) {
+	protected void genWall(World world, Random rand, Cardinal dir, ITheme theme, int x, int y, int z) {
 			
 		MetaBlock stair = theme.getSecondaryStair(); 
 		stair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.reverse(dir), true));

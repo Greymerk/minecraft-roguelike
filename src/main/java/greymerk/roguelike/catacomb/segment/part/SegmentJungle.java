@@ -1,16 +1,21 @@
 package greymerk.roguelike.catacomb.segment.part;
 
+import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
+
+import java.util.Random;
+
 import net.minecraft.init.Blocks;
+import net.minecraft.world.World;
 
 public class SegmentJungle extends SegmentBase {
 
 
 	@Override
-	protected void genWall(Cardinal wallDirection) {
+	protected void genWall(World world, Random rand, Cardinal wallDirection, ITheme theme, int x, int y, int z) {
 		
 		MetaBlock stair = theme.getSecondaryStair();
 		

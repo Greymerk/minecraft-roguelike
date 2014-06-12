@@ -1,16 +1,20 @@
 package greymerk.roguelike.catacomb.segment.part;
 
+import java.util.Random;
+
+import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
 import net.minecraft.init.Blocks;
+import net.minecraft.world.World;
 
 public class SegmentNetherLava extends SegmentBase {
 
 	@Override
-	protected void genWall(Cardinal dir) {
+	protected void genWall(World world, Random rand, Cardinal dir, ITheme theme, int x, int y, int z) {
 		
 		MetaBlock step = theme.getSecondaryStair();
 		MetaBlock air = new MetaBlock(Blocks.air);
