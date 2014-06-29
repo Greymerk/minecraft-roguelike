@@ -7,7 +7,6 @@ import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
-import net.minecraft.tileentity.TileEntitySkull;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Facing;
 import net.minecraft.world.World;
@@ -247,43 +246,7 @@ public class WorldGenPrimitive {
 		}
 	}
 
-	public static void skull(World world, Random rand, int x, int y, int z, Cardinal dir){
-		
-		if(rand.nextBoolean()){
-			return;
-		}
-		
-		MetaBlock skull = new MetaBlock(Blocks.skull, 1);
-		
-		if(!skull.setBlock(world, x, y, z)) return;
-		
-		TileEntitySkull skullEntity;
-		
-		try{
-			skullEntity = (TileEntitySkull) world.getTileEntity(x, y, z);
-		} catch (Exception e){
-			return;
-		}
-		
-		/*
-		if(rand.nextInt(10) == 0){
-			// TODO: Make sure this works for skulls
-			skullEntity.func_145905_a(1, "");
-		}
-		*/
-		
-		switch(dir){
-		case SOUTH: skullEntity.func_145903_a(8);
-		break;
-		case NORTH: skullEntity.func_145903_a(0);
-		break;
-		case WEST: skullEntity.func_145903_a(12);
-		break;
-		case EAST: skullEntity.func_145903_a(4);
-		break;
-		}
-		
-	}
+
 
 }
 

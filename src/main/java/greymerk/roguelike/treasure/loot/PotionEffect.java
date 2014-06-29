@@ -43,22 +43,21 @@ public enum PotionEffect {
 	
 	public static void addCustomEffect(ItemStack potion, PotionEffect type, int amplifier, int duration){
 		
+		final String CUSTOM = "CustomPotionEffects";
+		
 		NBTTagCompound tag = potion.getTagCompound();
 		if(tag == null){
 			tag = new NBTTagCompound();
 			potion.setTagCompound(tag);
 		}
 		
-		final String CUSTOM = "CustomPotionEffects";
-		NBTTagList effects;
 		
-		effects = tag.getTagList(CUSTOM, 0);
+		NBTTagList effects;
+		effects = tag.getTagList(CUSTOM, 10);
 		if (effects == null){
 			effects = new NBTTagList();
 			tag.setTag(CUSTOM, effects);
 		}
-		
-		effects = tag.getTagList(CUSTOM, 0);
 		
 		int effectID = PotionEffect.getEffectID(type);
 		NBTTagCompound toAdd = new NBTTagCompound();
@@ -66,8 +65,7 @@ public enum PotionEffect {
 		toAdd.setByte("Id", (byte)effectID);
 		toAdd.setByte("Amplifier", (byte)amplifier);
 		toAdd.setInteger("Duration", duration);
-		toAdd.setByte("Ambient", (byte)1);
-		toAdd.setByte("ShowParticles", (byte)1);
+		toAdd.setBoolean("Ambient", true);
 		
 		effects.appendTag(toAdd);
 		tag.setTag(CUSTOM, effects);

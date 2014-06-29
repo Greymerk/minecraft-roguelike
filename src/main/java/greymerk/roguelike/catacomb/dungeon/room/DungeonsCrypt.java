@@ -147,7 +147,6 @@ public class DungeonsCrypt implements IDungeon {
 				
 				if(rand.nextInt(3) == 0){
 					
-					cursor.add(orth, 1);
 					Spawner spawnerType = rand.nextBoolean() ? Spawner.SKELETON : Spawner.ZOMBIE;
 					Spawner.generate(world, rand, cursor, spawnerType);
 					

@@ -8,6 +8,7 @@ import greymerk.roguelike.treasure.TreasureChest;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
+import greymerk.roguelike.worldgen.Skull;
 import greymerk.roguelike.worldgen.Spawner;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
 
@@ -84,9 +85,7 @@ public class SegmentInset extends SegmentBase {
 			return;
 		}
 		
-		if(rand.nextInt(5) != 0) return;
-		
-		if(Catacomb.getLevel(y) == 3 && rand.nextBoolean()){
+		if(Catacomb.getLevel(y) == 3 && rand.nextInt(10) == 0){
 			IAlcove nest = new SilverfishNest();
 			if(nest.isValidLocation(world, x, y, z, dir)){
 				nest.generate(world, rand, theme, x, y, z, dir);
@@ -96,7 +95,7 @@ public class SegmentInset extends SegmentBase {
 		
 
 		
-		if(rand.nextBoolean()){
+		if(rand.nextInt(5) == 0){
 			
 			if(Catacomb.getLevel(y) == 1){
 				WorldGenPrimitive.setBlock(world, shelf.getX(), shelf.getY(), shelf.getZ(), Blocks.bookshelf);
@@ -104,21 +103,28 @@ public class SegmentInset extends SegmentBase {
 			}
 			
 			if(Catacomb.getLevel(y) == 2 || Catacomb.getLevel(y) == 3){
-				WorldGenPrimitive.skull(world, rand, shelf.getX(), shelf.getY(), shelf.getZ(), Cardinal.reverse(dir));
+				Skull type;
+				if(rand.nextInt(5) == 0){
+					type = Skull.ZOMBIE;
+				} else {
+					type = rand.nextInt(10) == 0 ? Skull.WITHER : Skull.SKELETON;				
+					Skull.set(world, rand, shelf, Cardinal.reverse(dir), type);
+				}
 				return;
 			}
 		}
 		
-		if(rand.nextBoolean()){
+		if(rand.nextInt(5) == 0){
 			boolean trapped = Catacomb.getLevel(y) == 3 && rand.nextInt(3) == 0;
 			TreasureChest.generate(world, rand, shelf.getX(), shelf.getY(), shelf.getZ(), Catacomb.getLevel(y), trapped);
 			if(trapped){
 				WorldGenPrimitive.setBlock(world, shelf.getX(), shelf.getY() - 2, shelf.getZ(), Blocks.tnt);
 				if(rand.nextBoolean()) WorldGenPrimitive.setBlock(world, shelf.getX(), shelf.getY() - 3, shelf.getZ(), Blocks.tnt);
 			}
+			return;
 		}
 		
-		if(Catacomb.getLevel(y) > 0){
+		if(Catacomb.getLevel(y) > 0 && rand.nextInt(5) == 0){
 			Spawner.generate(world, rand, shelf.getX(), shelf.getY(), shelf.getZ());
 			return;
 		}

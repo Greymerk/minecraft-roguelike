@@ -23,7 +23,6 @@ chatColors:true
 chatLinks:true
 chatLinksPrompt:true
 chatOpacity:1.0
-serverTextures:true
 snooperEnabled:true
 fullscreen:false
 enableVsync:true
@@ -42,6 +41,17 @@ chatWidth:1.0
 showInventoryAchievementHint:false
 mipmapLevels:4
 anisotropicFiltering:1
+streamBytesPerPixel:0.5
+streamMicVolume:1.0
+streamSystemVolume:1.0
+streamKbps:0.5412844
+streamFps:0.31690142
+streamCompression:1
+streamSendMetadata:true
+streamPreferredServer:
+streamChatEnabled:0
+streamChatUserFilter:0
+streamMicToggleBehavior:0
 forceUnicodeFont:false
 key_key.attack:-100
 key_key.use:-99
@@ -61,6 +71,11 @@ key_key.screenshot:60
 key_key.togglePerspective:63
 key_key.smoothCamera:0
 key_key.sprint:29
+key_key.streamStartStop:64
+key_key.streamPauseUnpause:65
+key_key.streamCommercial:0
+key_key.streamToggleMic:0
+key_key.fullscreen:87
 key_key.hotbar.1:2
 key_key.hotbar.2:3
 key_key.hotbar.3:4

@@ -6,6 +6,7 @@ import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.MetaBlock;
+import greymerk.roguelike.worldgen.Skull;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
 
 import java.util.Random;
@@ -236,77 +237,77 @@ public class DungeonOssuary implements IDungeon {
 		stairCeiling(world, rand, theme, x + 4, y + 5, z + 4);
 		stairArch(world, rand, theme, x + 6, y + 4, z + 4, Cardinal.EAST);
 		stairArch(world, rand, theme, x + 4, y + 4, z + 6, Cardinal.NORTH);
-		
+				
 		// shelves
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 5, y, z - 7, x - 3, y, z - 7, walls);
-		WorldGenPrimitive.skull(world, rand, x - 5, y + 1, z - 7, Cardinal.SOUTH);
-		WorldGenPrimitive.skull(world, rand, x - 3, y + 1, z - 7, Cardinal.SOUTH);
+		placeSkull(world, rand, x - 5, y + 1, z - 7, Cardinal.SOUTH);
+		placeSkull(world, rand, x - 3, y + 1, z - 7, Cardinal.SOUTH);
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 5, y + 2, z - 7, x - 3, y + 2, z - 7, walls);
-		WorldGenPrimitive.skull(world, rand, x - 5, y + 3, z - 7, Cardinal.SOUTH);
-		WorldGenPrimitive.skull(world, rand, x - 3, y + 3, z - 7, Cardinal.SOUTH);
+		placeSkull(world, rand, x - 5, y + 3, z - 7, Cardinal.SOUTH);
+		placeSkull(world, rand, x - 3, y + 3, z - 7, Cardinal.SOUTH);
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 5, y + 4, z - 7, x - 3, y + 5, z - 7, walls);
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 4, y, z - 7, x - 4, y + 4, z - 7, walls);
 		
 		WorldGenPrimitive.fillRectSolid(world, rand, x + 3, y, z - 7, x + 5, y, z - 7, walls);
-		WorldGenPrimitive.skull(world, rand, x + 5, y + 1, z - 7, Cardinal.SOUTH);
-		WorldGenPrimitive.skull(world, rand, x + 3, y + 1, z - 7, Cardinal.SOUTH);
+		placeSkull(world, rand, x + 5, y + 1, z - 7, Cardinal.SOUTH);
+		placeSkull(world, rand, x + 3, y + 1, z - 7, Cardinal.SOUTH);
 		WorldGenPrimitive.fillRectSolid(world, rand, x + 3, y + 2, z - 7, x + 5, y + 2, z - 7, walls);
-		WorldGenPrimitive.skull(world, rand, x + 5, y + 3, z - 7, Cardinal.SOUTH);
-		WorldGenPrimitive.skull(world, rand, x + 3, y + 3, z - 7, Cardinal.SOUTH);
+		placeSkull(world, rand, x + 5, y + 3, z - 7, Cardinal.SOUTH);
+		placeSkull(world, rand, x + 3, y + 3, z - 7, Cardinal.SOUTH);
 		WorldGenPrimitive.fillRectSolid(world, rand, x + 3, y + 4, z - 7, x + 5, y + 5, z - 7, walls);
 		WorldGenPrimitive.fillRectSolid(world, rand, x + 4, y, z - 7, x + 4, y + 4, z - 7, walls);
 		
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 5, y, z + 7, x - 3, y, z + 7, walls);
-		WorldGenPrimitive.skull(world, rand, x - 5, y + 1, z + 7, Cardinal.NORTH);
-		WorldGenPrimitive.skull(world, rand, x - 3, y + 1, z + 7, Cardinal.NORTH);
+		placeSkull(world, rand, x - 5, y + 1, z + 7, Cardinal.NORTH);
+		placeSkull(world, rand, x - 3, y + 1, z + 7, Cardinal.NORTH);
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 5, y + 2, z + 7, x - 3, y + 2, z + 7, walls);
-		WorldGenPrimitive.skull(world, rand, x - 5, y + 3, z + 7, Cardinal.NORTH);
-		WorldGenPrimitive.skull(world, rand, x - 3, y + 3, z + 7, Cardinal.NORTH);
+		placeSkull(world, rand, x - 5, y + 3, z + 7, Cardinal.NORTH);
+		placeSkull(world, rand, x - 3, y + 3, z + 7, Cardinal.NORTH);
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 5, y + 4, z + 7, x - 3, y + 5, z + 7, walls);
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 4, y, z + 7, x - 4, y + 4, z + 7, walls);
 		
 		WorldGenPrimitive.fillRectSolid(world, rand, x + 3, y, z + 7, x + 5, y, z + 7, walls);
-		WorldGenPrimitive.skull(world, rand, x + 5, y + 1, z + 7, Cardinal.NORTH);
-		WorldGenPrimitive.skull(world, rand, x + 3, y + 1, z + 7, Cardinal.NORTH);
+		placeSkull(world, rand, x + 5, y + 1, z + 7, Cardinal.NORTH);
+		placeSkull(world, rand, x + 3, y + 1, z + 7, Cardinal.NORTH);
 		WorldGenPrimitive.fillRectSolid(world, rand, x + 3, y + 2, z + 7, x + 5, y + 2, z + 7, walls);
-		WorldGenPrimitive.skull(world, rand, x + 5, y + 3, z + 7, Cardinal.NORTH);
-		WorldGenPrimitive.skull(world, rand, x + 3, y + 3, z + 7, Cardinal.NORTH);
+		placeSkull(world, rand, x + 5, y + 3, z + 7, Cardinal.NORTH);
+		placeSkull(world, rand, x + 3, y + 3, z + 7, Cardinal.NORTH);
 		WorldGenPrimitive.fillRectSolid(world, rand, x + 3, y + 4, z + 7, x + 5, y + 5, z + 7, walls);
 		WorldGenPrimitive.fillRectSolid(world, rand, x + 4, y, z + 7, x + 4, y + 4, z + 7, walls);
 		
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 7, y, z - 5, x - 7, y, z - 3, walls);
-		WorldGenPrimitive.skull(world, rand, x - 7, y + 1, z - 5, Cardinal.EAST);
-		WorldGenPrimitive.skull(world, rand, x - 7, y + 1, z - 3, Cardinal.EAST);
+		placeSkull(world, rand, x - 7, y + 1, z - 5, Cardinal.EAST);
+		placeSkull(world, rand, x - 7, y + 1, z - 3, Cardinal.EAST);
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 7, y + 2, z - 5, x - 7, y + 2, z - 3, walls);
-		WorldGenPrimitive.skull(world, rand, x - 7, y + 3, z - 5, Cardinal.EAST);
-		WorldGenPrimitive.skull(world, rand, x - 7, y + 3, z - 3, Cardinal.EAST);
+		placeSkull(world, rand, x - 7, y + 3, z - 5, Cardinal.EAST);
+		placeSkull(world, rand, x - 7, y + 3, z - 3, Cardinal.EAST);
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 7, y + 4, z - 5, x - 7, y + 5, z - 3, walls);
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 7, y, z - 4, x - 7, y + 4, z - 4, walls);
 		
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 7, y, z + 3, x - 7, y, z + 5, walls);
-		WorldGenPrimitive.skull(world, rand, x - 7, y + 1, z + 5, Cardinal.EAST);
-		WorldGenPrimitive.skull(world, rand, x - 7, y + 1, z + 3, Cardinal.EAST);
+		placeSkull(world, rand, x - 7, y + 1, z + 5, Cardinal.EAST);
+		placeSkull(world, rand, x - 7, y + 1, z + 3, Cardinal.EAST);
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 7, y + 2, z + 3, x - 7, y + 2, z + 5, walls);
-		WorldGenPrimitive.skull(world, rand, x - 7, y + 3, z + 5, Cardinal.EAST);
-		WorldGenPrimitive.skull(world, rand, x - 7, y + 3, z + 3, Cardinal.EAST);
+		placeSkull(world, rand, x - 7, y + 3, z + 5, Cardinal.EAST);
+		placeSkull(world, rand, x - 7, y + 3, z + 3, Cardinal.EAST);
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 7, y + 4, z + 3, x - 7, y + 5, z + 5, walls);
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 7, y, z + 4, x - 7, y + 4, z + 4, walls);
 		
 		WorldGenPrimitive.fillRectSolid(world, rand, x + 7, y, z - 5, x + 7, y, z - 3, walls);
-		WorldGenPrimitive.skull(world, rand, x + 7, y + 1, z - 5, Cardinal.WEST);
-		WorldGenPrimitive.skull(world, rand, x + 7, y + 1, z - 3, Cardinal.WEST);
+		placeSkull(world, rand, x + 7, y + 1, z - 5, Cardinal.WEST);
+		placeSkull(world, rand, x + 7, y + 1, z - 3, Cardinal.WEST);
 		WorldGenPrimitive.fillRectSolid(world, rand, x + 7, y + 2, z - 5, x + 7, y + 2, z - 3, walls);
-		WorldGenPrimitive.skull(world, rand, x + 7, y + 3, z - 5, Cardinal.WEST);
-		WorldGenPrimitive.skull(world, rand, x + 7, y + 3, z - 3, Cardinal.WEST);
+		placeSkull(world, rand, x + 7, y + 3, z - 5, Cardinal.WEST);
+		placeSkull(world, rand, x + 7, y + 3, z - 3, Cardinal.WEST);
 		WorldGenPrimitive.fillRectSolid(world, rand, x + 7, y + 4, z - 5, x + 7, y + 5, z - 3, walls);
 		WorldGenPrimitive.fillRectSolid(world, rand, x + 7, y, z - 4, x + 7, y + 4, z - 4, walls);
 		
 		WorldGenPrimitive.fillRectSolid(world, rand, x + 7, y, z + 3, x + 7, y, z + 5, walls);
-		WorldGenPrimitive.skull(world, rand, x + 7, y + 1, z + 5, Cardinal.WEST);
-		WorldGenPrimitive.skull(world, rand, x + 7, y + 1, z + 3, Cardinal.WEST);
+		placeSkull(world, rand, x + 7, y + 1, z + 5, Cardinal.WEST);
+		placeSkull(world, rand, x + 7, y + 1, z + 3, Cardinal.WEST);
 		WorldGenPrimitive.fillRectSolid(world, rand, x + 7, y + 2, z + 3, x + 7, y + 2, z + 5, walls);
-		WorldGenPrimitive.skull(world, rand, x + 7, y + 3, z + 5, Cardinal.WEST);
-		WorldGenPrimitive.skull(world, rand, x + 7, y + 3, z + 3, Cardinal.WEST);
+		placeSkull(world, rand, x + 7, y + 3, z + 5, Cardinal.WEST);
+		placeSkull(world, rand, x + 7, y + 3, z + 3, Cardinal.WEST);
 		WorldGenPrimitive.fillRectSolid(world, rand, x + 7, y + 4, z + 3, x + 7, y + 5, z + 5, walls);
 		WorldGenPrimitive.fillRectSolid(world, rand, x + 7, y, z + 4, x + 7, y + 4, z + 4, walls);
 		
@@ -352,5 +353,9 @@ public class DungeonOssuary implements IDungeon {
 		}
 	}
 	
-
+	private void placeSkull(World world, Random rand, int x, int y, int z, Cardinal dir){
+		if(rand.nextBoolean()) return;
+		Skull type = rand.nextInt(10) == 0 ? Skull.WITHER : Skull.SKELETON;
+		Skull.set(world, rand, x, y, z, dir, type);
+	}
 }

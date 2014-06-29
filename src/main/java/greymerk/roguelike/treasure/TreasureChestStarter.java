@@ -3,6 +3,7 @@ package greymerk.roguelike.treasure;
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.treasure.loot.Equipment;
 import greymerk.roguelike.treasure.loot.Loot;
+import greymerk.roguelike.treasure.loot.PotionMixture;
 import greymerk.roguelike.treasure.loot.Quality;
 import greymerk.roguelike.treasure.loot.provider.ItemSpecialty;
 

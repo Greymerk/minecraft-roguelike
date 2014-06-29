@@ -13,3 +13,7 @@
 /.classpath
 /.project
 /options.txt
+/screenshots
+/*.txt
+/server.properties
+/world

@@ -23,12 +23,7 @@ archivesBaseName = "roguelike"
 
 minecraft {
     version = "1.7.10-10.13.0.1152"
-	if(file('../run').exists()){
-		assetDir = "../run/assets"	
-	} else {
-		assetDir = "assets"	
-	}
-    
+	assetDir = "assets"	
 }
 
 dependencies {
