@@ -265,10 +265,12 @@ public class WorldGenPrimitive {
 			return;
 		}
 		
+		/*
 		if(rand.nextInt(10) == 0){
 			// TODO: Make sure this works for skulls
 			skullEntity.func_145905_a(1, "");
 		}
+		*/
 		
 		switch(dir){
 		case SOUTH: skullEntity.func_145903_a(8);

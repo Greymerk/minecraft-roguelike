@@ -45,7 +45,7 @@ public class CommandSpawnDungeon extends CommandBase
     		ItemStack item = ItemNovelty.getItemByName(args[1]);
     		EntityItem drop = player.entityDropItem(item, 0);
     		drop.delayBeforeCanPickup = 0;
-    		notifyAdmins(sender, "commands.give.success", new Object[] {item.getDisplayName(), item.getItem(), 1, player.getDisplayName()});
+    		// TODO: fix give announcement
     		return;
     	}
     	
