@@ -5,6 +5,7 @@ import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.treasure.TreasureChest;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
+import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.Spawner;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
@@ -24,23 +25,24 @@ public class DungeonObsidian implements IDungeon {
 
 		HashSet<Coord> spawners = new HashSet<Coord>();
 		MetaBlock air = new MetaBlock(Blocks.air);
-		MetaBlock obsidian = new MetaBlock(Blocks.obsidian);
-		MetaBlock brick = new MetaBlock(Blocks.nether_brick);
+		IBlockFactory primaryWall = theme.getPrimaryWall();
+		IBlockFactory secondaryWall = theme.getSecondaryWall();
+		
 		// space
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 10, y - 3, z - 10, x + 10, y + 3, z + 10, air);
 		
 		
 		// roof
-		WorldGenPrimitive.fillRectSolid(world, rand, x - 7, y + 6, z - 7, x + 7, y + 6, z + 7, obsidian);
-		WorldGenPrimitive.fillRectSolid(world, rand, x - 8, y + 5, z - 8, x + 8, y + 5, z + 8, obsidian);
-		WorldGenPrimitive.fillRectSolid(world, rand, x - 9, y + 4, z - 9, x + 9, y + 4, z + 9, obsidian);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 7, y + 6, z - 7, x + 7, y + 6, z + 7, secondaryWall);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 8, y + 5, z - 8, x + 8, y + 5, z + 8, secondaryWall);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 9, y + 4, z - 9, x + 9, y + 4, z + 9, secondaryWall);
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 1, y + 3, z - 1, x + 1, y + 5, z + 1, air);
-		WorldGenPrimitive.setBlock(world, x, y + 5, z, obsidian);
+		WorldGenPrimitive.setBlock(world, rand, x, y + 5, z, secondaryWall, true, true);
 		spawners.add(new Coord(x, y + 4, z));
 		
 		
 		// foundation
-		WorldGenPrimitive.fillRectSolid(world, rand, x - 10, y - 4, z - 10, x + 10, y - 4, z + 10, obsidian);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 10, y - 4, z - 10, x + 10, y - 4, z + 10, secondaryWall);
 		
 		// ceiling holes
 		for(Cardinal dir : Cardinal.directions){
@@ -74,9 +76,9 @@ public class DungeonObsidian implements IDungeon {
 				cursor = new Coord(x, y, z);
 				cursor.add(Cardinal.UP, 5);
 				cursor.add(dir, 4);
-				WorldGenPrimitive.setBlock(world, rand, cursor, obsidian, true, true);
+				WorldGenPrimitive.setBlock(world, rand, cursor, secondaryWall, true, true);
 				cursor.add(orth, 4);
-				WorldGenPrimitive.setBlock(world, rand, cursor, obsidian, true, true);
+				WorldGenPrimitive.setBlock(world, rand, cursor, secondaryWall, true, true);
 			}
 		}
 
@@ -94,11 +96,11 @@ public class DungeonObsidian implements IDungeon {
 			
 			start.add(Cardinal.DOWN, 4);
 			end.add(Cardinal.DOWN, 1);
-			WorldGenPrimitive.fillRectSolid(world, rand, start, end, obsidian, true, true);
+			WorldGenPrimitive.fillRectSolid(world, rand, start, end, secondaryWall, true, true);
 			
 			start.add(Cardinal.UP, 4 + 3);
 			end.add(Cardinal.UP, 1 + 3);
-			WorldGenPrimitive.fillRectSolid(world, rand, start, end, obsidian, true, true);
+			WorldGenPrimitive.fillRectSolid(world, rand, start, end, secondaryWall, true, true);
 			
 			// mid
 			start = new Coord(x, y, z);
@@ -107,7 +109,7 @@ public class DungeonObsidian implements IDungeon {
 			end = new Coord(start);
 			start.add(orth[0], 9);
 			end.add(orth[1], 9);
-			WorldGenPrimitive.fillRectSolid(world, rand, start, end, obsidian, true, true);
+			WorldGenPrimitive.fillRectSolid(world, rand, start, end, secondaryWall, true, true);
 			
 			// inner
 			start = new Coord(x, y, z);
@@ -116,7 +118,7 @@ public class DungeonObsidian implements IDungeon {
 			end = new Coord(start);
 			start.add(orth[0], 9);
 			end.add(orth[1], 9);
-			WorldGenPrimitive.fillRectSolid(world, rand, start, end, obsidian, true, true);
+			WorldGenPrimitive.fillRectSolid(world, rand, start, end, secondaryWall, true, true);
 			
 			// outer shell
 			start = new Coord(x, y, z);
@@ -126,10 +128,10 @@ public class DungeonObsidian implements IDungeon {
 			end.add(Cardinal.UP, 3);
 			start.add(orth[0], 11);
 			end.add(orth[1], 11);
-			WorldGenPrimitive.fillRectSolid(world, rand, start, end, obsidian, false, true);
+			WorldGenPrimitive.fillRectSolid(world, rand, start, end, secondaryWall, false, true);
 		}
 				
-		outerPillars(world, rand, x, y, z);
+		outerPillars(world, rand, theme, x, y, z);
 		
 		// upper mid floor
 		for(Cardinal dir : Cardinal.directions){
@@ -141,7 +143,7 @@ public class DungeonObsidian implements IDungeon {
 			start.add(dir, 9);
 			start.add(orth[0], 1);
 			end.add(orth[1], 1);
-			WorldGenPrimitive.fillRectSolid(world, rand, start, end, brick, true, true);
+			WorldGenPrimitive.fillRectSolid(world, rand, start, end, primaryWall, true, true);
 		}
 		
 		// mid outer floors
@@ -156,7 +158,7 @@ public class DungeonObsidian implements IDungeon {
 				end.add(orth, 9);
 				end.add(Cardinal.DOWN, 2);
 				
-				WorldGenPrimitive.fillRectSolid(world, rand, start, end, brick, true, true);
+				WorldGenPrimitive.fillRectSolid(world, rand, start, end, primaryWall, true, true);
 				MetaBlock step = new MetaBlock(Blocks.nether_brick_stairs);
 				Coord stepSpot = new Coord(x, y, z);
 				stepSpot.add(dir, 8);
@@ -181,17 +183,17 @@ public class DungeonObsidian implements IDungeon {
 				stepSpot.add(Cardinal.reverse(orth), 1);
 				WorldGenPrimitive.setBlock(world, rand, stepSpot, step, true, true);
 				stepSpot.add(dir, 1);
-				WorldGenPrimitive.setBlock(world, rand, stepSpot, brick, true, true);
+				WorldGenPrimitive.setBlock(world, rand, stepSpot, primaryWall, true, true);
 				stepSpot.add(orth, 1);
-				WorldGenPrimitive.setBlock(world, rand, stepSpot, brick, true, true);
+				WorldGenPrimitive.setBlock(world, rand, stepSpot, primaryWall, true, true);
 				
 				Coord corner = new Coord(x, y, z);
 				corner.add(dir, 7);
 				corner.add(orth, 7);
 				corner.add(Cardinal.DOWN, 2);
-				WorldGenPrimitive.setBlock(world, rand, corner, brick, true, true);
+				WorldGenPrimitive.setBlock(world, rand, corner, primaryWall, true, true);
 				corner.add(Cardinal.DOWN, 1);
-				WorldGenPrimitive.setBlock(world, rand, corner, brick, true, true);
+				WorldGenPrimitive.setBlock(world, rand, corner, primaryWall, true, true);
 
 				corner = new Coord(x, y, z);
 				corner.add(dir, 6);
@@ -220,7 +222,7 @@ public class DungeonObsidian implements IDungeon {
 			}
 		}
 		
-		innerPillars(world, rand, x, y, z);
+		innerPillars(world, rand, theme, x, y, z);
 		
 		for(Coord space : spawners){
 			Spawner.generate(world, rand, space.getX(), space.getY(), space.getZ());
@@ -234,59 +236,59 @@ public class DungeonObsidian implements IDungeon {
 		return 10;
 	}
 	
-	private static void outerPillars(World world, Random rand, int x, int y, int z){
+	private static void outerPillars(World world, Random rand, ITheme theme, int x, int y, int z){
 		for(Cardinal dir : Cardinal.directions){
 			for (Cardinal orth : Cardinal.getOrthogonal(dir)){
 				Coord pillarLocation = new Coord(x, y, z);
 				pillarLocation.add(dir, 10);
 
 				pillarLocation.add(orth, 2);
-				outerPillar(world, rand, pillarLocation, dir);
+				outerPillar(world, rand, theme, pillarLocation, dir);
 
 				pillarLocation.add(orth, 3);
-				outerPillar(world, rand, pillarLocation, dir);
+				outerPillar(world, rand, theme, pillarLocation, dir);
 				
 				pillarLocation.add(orth, 3);
-				outerPillar(world, rand, pillarLocation, dir);
+				outerPillar(world, rand, theme, pillarLocation, dir);
 			}
 		}		
 	}
 	
-	private static void outerPillar(World world, Random rand, Coord pillarLocation, Cardinal dir){
+	private static void outerPillar(World world, Random rand, ITheme theme, Coord pillarLocation, Cardinal dir){
 		
-		MetaBlock obsidian = new MetaBlock(Blocks.obsidian);
+		IBlockFactory secondaryWall = theme.getSecondaryPillar();
 		
 		int x = pillarLocation.getX();
 		int y = pillarLocation.getY();
 		int z = pillarLocation.getZ();
 		
-		WorldGenPrimitive.fillRectSolid(world, rand, x, y - 2, z, x, y + 3, z, obsidian);
+		WorldGenPrimitive.fillRectSolid(world, rand, x, y - 2, z, x, y + 3, z, secondaryWall);
 		Coord blockLocation = new Coord(x, y + 3, z);
 		
 		blockLocation.add(dir, 1);
-		WorldGenPrimitive.setBlock(world, rand, blockLocation, obsidian, true, true);
+		WorldGenPrimitive.setBlock(world, rand, blockLocation, secondaryWall, true, true);
 		
 		for(int i = 0; i < 3; ++i){
 			blockLocation.add(Cardinal.reverse(dir), 1);
 			blockLocation.add(Cardinal.UP, 1);
-			WorldGenPrimitive.setBlock(world, rand, blockLocation, obsidian, true, true);
+			WorldGenPrimitive.setBlock(world, rand, blockLocation, secondaryWall, true, true);
 		}
 	}
 	
-	private static void innerPillars(World world, Random rand, int x, int y, int z){
+	private static void innerPillars(World world, Random rand, ITheme theme, int x, int y, int z){
 		
-		MetaBlock obsidian = new MetaBlock(Blocks.obsidian);
+		IBlockFactory secondaryWall = theme.getSecondaryPillar();
 		
 		for(Cardinal dir : Cardinal.directions){			
 			for (Cardinal orth : Cardinal.getOrthogonal(dir)){
 				Coord pillar = new Coord(x, y, z);
 				pillar.add(dir, 2);
 				pillar.add(orth, 2);
-				WorldGenPrimitive.fillRectSolid(world, rand, pillar.getX(), y - 4, pillar.getZ(), pillar.getX(), y + 4, pillar.getZ(), obsidian, true, true);
+				WorldGenPrimitive.fillRectSolid(world, rand, pillar.getX(), y - 4, pillar.getZ(), pillar.getX(), y + 4, pillar.getZ(), secondaryWall, true, true);
 				pillar.add(dir, 4);
-				WorldGenPrimitive.fillRectSolid(world, rand, pillar.getX(), y - 4, pillar.getZ(), pillar.getX(), y + 4, pillar.getZ(), obsidian, true, true);
+				WorldGenPrimitive.fillRectSolid(world, rand, pillar.getX(), y - 4, pillar.getZ(), pillar.getX(), y + 4, pillar.getZ(), secondaryWall, true, true);
 				pillar.add(orth, 3);
-				WorldGenPrimitive.fillRectSolid(world, rand, pillar.getX(), y - 4, pillar.getZ(), pillar.getX(), y + 4, pillar.getZ(), obsidian, true, true);
+				WorldGenPrimitive.fillRectSolid(world, rand, pillar.getX(), y - 4, pillar.getZ(), pillar.getX(), y + 4, pillar.getZ(), secondaryWall, true, true);
 				
 				Coord start = new Coord(x, y, z);
 				start.add(Cardinal.DOWN, 1);
@@ -294,19 +296,19 @@ public class DungeonObsidian implements IDungeon {
 				start.add(dir, 2);
 				Coord end = new Coord(start);
 				end.add(dir, 5);
-				WorldGenPrimitive.fillRectSolid(world, rand, start, end, obsidian, true, true);
+				WorldGenPrimitive.fillRectSolid(world, rand, start, end, secondaryWall, true, true);
 
 				start = new Coord(x, y, z);
 				start.add(Cardinal.DOWN, 1);
 				start.add(dir, 7);
 				start.add(orth, 5);
-				WorldGenPrimitive.setBlock(world, rand, start, obsidian, true, true);
+				WorldGenPrimitive.setBlock(world, rand, start, secondaryWall, true, true);
 				start.add(Cardinal.DOWN, 1);
 				end = new Coord(start);
 				end.add(Cardinal.reverse(dir), 1);
 				end.add(orth, 1);
 				end.add(Cardinal.DOWN, 1);
-				WorldGenPrimitive.fillRectSolid(world, rand, start, end, obsidian, true, true);
+				WorldGenPrimitive.fillRectSolid(world, rand, start, end, secondaryWall, true, true);
 			}
 		}
 	}

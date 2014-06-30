@@ -3,7 +3,6 @@ package greymerk.roguelike.treasure;
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.treasure.loot.Equipment;
 import greymerk.roguelike.treasure.loot.Loot;
-import greymerk.roguelike.treasure.loot.PotionMixture;
 import greymerk.roguelike.treasure.loot.Quality;
 import greymerk.roguelike.treasure.loot.provider.ItemSpecialty;
 
@@ -61,8 +60,8 @@ public class TreasureChestStarter extends TreasureChestBase{
 				"-greymerk\n";
 		
 		String page2 = 
-				"Roguelike Dungeons v1.3.3\n" +
-				"June 8th 2014\n\n" + 
+				"Roguelike Dungeons v1.3.4\n" +
+				"June 29th 2014\n\n" + 
 				"Credits\n\n" +
 				"Author: Greymerk\n\n" +
 				"Bits: Drainedsoul\n\n" +

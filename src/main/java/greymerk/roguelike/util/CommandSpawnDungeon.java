@@ -17,7 +17,7 @@ import net.minecraft.world.World;
 public class CommandSpawnDungeon extends CommandBase
 {
     public String getCommandName(){
-        return "dungeon";
+        return "roguelike";
     }
 
     /**
@@ -45,16 +45,16 @@ public class CommandSpawnDungeon extends CommandBase
     		ItemStack item = ItemNovelty.getItemByName(args[1]);
     		EntityItem drop = player.entityDropItem(item, 0);
     		drop.delayBeforeCanPickup = 0;
-    		// TODO: fix give announcement
     		return;
     	}
     	
-    	
-    	int x = parseInt(sender, args[0]);
-    	int z = parseInt(sender, args[1]);
-    	
-    	World world = sender.getEntityWorld();    	
-    	Catacomb.generate(world, x, z);
+    	if(args[0].equals("dungeon")){
+        	int x = parseInt(sender, args[1]);
+        	int z = parseInt(sender, args[2]);
+        	
+        	World world = sender.getEntityWorld();
+        	Catacomb.generate(world, x, z);
+    	}
     }
 
     /**

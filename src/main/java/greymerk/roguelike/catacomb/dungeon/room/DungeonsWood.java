@@ -17,58 +17,51 @@ import net.minecraft.world.World;
 
 public class DungeonsWood implements IDungeon{
 	
-	private static final int HEIGHT = 3;
-	private static final int WIDTH = 2;
-	private static final int LENGTH = 3;
 
-	
-	private int originX;
-	private int originY;
-	private int originZ;
 
-	private int woodType;
-	
-	public DungeonsWood() {
-	}
 
 	@Override
-	public boolean generate(World inWorld, Random inRandom, ITheme theme, int inOriginX, int inOriginY, int inOriginZ) {
+	public boolean generate(World world, Random rand, ITheme theme, int x, int y, int z) {
 		
-		originX = inOriginX;
-		originY = inOriginY;
-		originZ = inOriginZ;
-		woodType = inRandom.nextInt(6);
-		Log type = Log.values()[inRandom.nextInt(Log.values().length)];
+		final int HEIGHT = 3;
+		final int WIDTH = rand.nextInt(2) + 2;
+		final int LENGTH = rand.nextInt(2) + 3;
+		
+		int woodType = rand.nextInt(Log.values().length);
+		Log type = Log.values()[woodType];
+		
 		MetaBlock pillar = Log.getLog(type);
-		MetaBlock glowstone = new MetaBlock(Blocks.glowstone);
-		MetaBlock air = new MetaBlock(Blocks.air);
 		MetaBlock planks = new MetaBlock(Blocks.planks, woodType);
 		
-		WorldGenPrimitive.fillRectSolid(inWorld, inRandom, originX - WIDTH, originY, originZ - LENGTH, originX + WIDTH, originY + HEIGHT, originZ + LENGTH, air);
-		WorldGenPrimitive.fillRectHollow(inWorld, inRandom, originX - WIDTH - 1, originY - 1, originZ - LENGTH - 1, originX + WIDTH + 1, originY + HEIGHT + 1, originZ + LENGTH + 1, planks, false, true);
+		MetaBlock glowstone = new MetaBlock(Blocks.glowstone);
+		MetaBlock air = new MetaBlock(Blocks.air);
+		
+		
+		WorldGenPrimitive.fillRectSolid(world, rand, x - WIDTH, y, z - LENGTH, x + WIDTH, y + HEIGHT, z + LENGTH, air);
+		WorldGenPrimitive.fillRectHollow(world, rand, x - WIDTH - 1, y - 1, z - LENGTH - 1, x + WIDTH + 1, y + HEIGHT + 1, z + LENGTH + 1, planks, false, true);
 		
 		// log beams
-		WorldGenPrimitive.fillRectSolid(inWorld, inRandom, originX - WIDTH, originY, originZ - LENGTH, originX - WIDTH, originY + HEIGHT, originZ - LENGTH, pillar, true, true);
-		WorldGenPrimitive.fillRectSolid(inWorld, inRandom, originX - WIDTH, originY, originZ + LENGTH, originX - WIDTH, originY + HEIGHT, originZ + LENGTH, pillar, true, true);
-		WorldGenPrimitive.fillRectSolid(inWorld, inRandom, originX + WIDTH, originY, originZ - LENGTH, originX + WIDTH, originY + HEIGHT, originZ - LENGTH, pillar, true, true);
-		WorldGenPrimitive.fillRectSolid(inWorld, inRandom, originX + WIDTH, originY, originZ + LENGTH, originX + WIDTH, originY + HEIGHT, originZ + LENGTH, pillar, true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - WIDTH, y, z - LENGTH, x - WIDTH, y + HEIGHT, z - LENGTH, pillar, true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - WIDTH, y, z + LENGTH, x - WIDTH, y + HEIGHT, z + LENGTH, pillar, true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, x + WIDTH, y, z - LENGTH, x + WIDTH, y + HEIGHT, z - LENGTH, pillar, true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, x + WIDTH, y, z + LENGTH, x + WIDTH, y + HEIGHT, z + LENGTH, pillar, true, true);
 
 		// glowstone
-		WorldGenPrimitive.setBlock(inWorld, originX - WIDTH + 1, originY - 1, originZ - LENGTH + 1, glowstone);
-		WorldGenPrimitive.setBlock(inWorld, originX - WIDTH + 1, originY - 1, originZ + LENGTH - 1, glowstone);
-		WorldGenPrimitive.setBlock(inWorld, originX + WIDTH - 1, originY - 1, originZ - LENGTH + 1, glowstone);
-		WorldGenPrimitive.setBlock(inWorld, originX + WIDTH - 1, originY - 1, originZ + LENGTH - 1, glowstone);
+		WorldGenPrimitive.setBlock(world, x - WIDTH + 1, y - 1, z - LENGTH + 1, glowstone);
+		WorldGenPrimitive.setBlock(world, x - WIDTH + 1, y - 1, z + LENGTH - 1, glowstone);
+		WorldGenPrimitive.setBlock(world, x + WIDTH - 1, y - 1, z - LENGTH + 1, glowstone);
+		WorldGenPrimitive.setBlock(world, x + WIDTH - 1, y - 1, z + LENGTH - 1, glowstone);
 		
-		WorldGenPrimitive.setBlock(inWorld, inRandom, originX, originY, originZ, planks, true, true);
-		WorldGenPrimitive.setBlock(inWorld, originX, originY + 1, originZ, Blocks.cake);
+		WorldGenPrimitive.setBlock(world, rand, x, y, z, planks, true, true);
+		WorldGenPrimitive.setBlock(world, x, y + 1, z, Blocks.cake);
 		
 		List<Coord> space = new ArrayList<Coord>();
-		space.add(new Coord(originX - WIDTH, originY, originZ - LENGTH + 1));
-		space.add(new Coord(originX - WIDTH, originY, originZ + LENGTH - 1));
-		space.add(new Coord(originX + WIDTH, originY, originZ - LENGTH + 1));
-		space.add(new Coord(originX + WIDTH, originY, originZ + LENGTH - 1));
+		space.add(new Coord(x - WIDTH, y, z - LENGTH + 1));
+		space.add(new Coord(x - WIDTH, y, z + LENGTH - 1));
+		space.add(new Coord(x + WIDTH, y, z - LENGTH + 1));
+		space.add(new Coord(x + WIDTH, y, z + LENGTH - 1));
 		
-		TreasureChest.generate(inWorld, inRandom, space, TreasureChest.FOOD);
+		TreasureChest.generate(world, rand, space, TreasureChest.FOOD);
 		
 		return true;
 	}

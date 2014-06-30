@@ -137,7 +137,6 @@ public class DungeonMess implements IDungeon {
 		WorldGenPrimitive.setBlock(world, rand, x - 1, y, z + 2, WorldGenPrimitive.blockOrientation(stairSpruce, Cardinal.EAST, true), true, true);
 		WorldGenPrimitive.setBlock(world, rand, x, y, z + 2, WorldGenPrimitive.blockOrientation(stairSpruce, Cardinal.NORTH, true), true, true);
 		WorldGenPrimitive.setBlock(world, rand, x + 1, y, z + 2, WorldGenPrimitive.blockOrientation(stairSpruce, Cardinal.WEST, true), true, true);
-		new TreasureChestFoodStore().generate(world, rand, x, y + 1, z + 2, 1, false);
 	}
 	
 	private void northTable(World world, Random rand, int x, int y, int z){

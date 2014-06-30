@@ -66,7 +66,7 @@ public class ItemJunk extends ItemBase{
 			if(toReturn != null) return toReturn;
 		}
 
-		if(rand.nextInt(30) == 0){
+		if(rand.nextInt(60) == 0){
 			if(level > 2 && rand.nextBoolean()) return PotionMixture.getPotion(rand, PotionMixture.VILE);
 			return PotionMixture.getPotion(rand, PotionMixture.LAUDANUM);	
 		}

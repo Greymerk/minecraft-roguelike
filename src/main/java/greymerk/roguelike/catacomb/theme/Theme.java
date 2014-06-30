@@ -82,9 +82,9 @@ public enum Theme {
 	
 	public static ITheme getByLevel(BiomeGenBase biome, int level){
 		
-		boolean hot = biome.temperature >= 1.0F;
+		boolean hot = biome.temperature >= 0.91F;
 		boolean cold = biome.temperature <= 0.1F;
-		boolean wet = biome.rainfall >= 0.85F;
+		boolean wet = biome.rainfall >= 0.8F;
 		boolean dry = biome.rainfall <= 0.1;
 		
 		switch(level){

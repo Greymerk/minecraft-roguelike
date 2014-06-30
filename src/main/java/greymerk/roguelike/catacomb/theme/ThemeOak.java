@@ -1,7 +1,6 @@
 package greymerk.roguelike.catacomb.theme;
 
 import greymerk.roguelike.catacomb.segment.Segment;
-import greymerk.roguelike.worldgen.BlockJumble;
 import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.Log;
 import greymerk.roguelike.worldgen.MetaBlock;
@@ -15,13 +14,12 @@ public class ThemeOak extends ThemeBase{
 
 	public ThemeOak(){
 	
-		BlockJumble rubble = new BlockJumble();
-		rubble.addBlock(new MetaBlock(Blocks.stonebrick, 1));
-		rubble.addBlock(new MetaBlock(Blocks.cobblestone));
-		
 		BlockWeightedRandom walls = new BlockWeightedRandom();
-		walls.addBlock(new MetaBlock(Blocks.stonebrick), 20);
-		walls.addBlock(rubble, 10);
+		walls.addBlock(new MetaBlock(Blocks.stonebrick, 0), 30);
+		walls.addBlock(new MetaBlock(Blocks.stonebrick, 2), 20);
+		walls.addBlock(new MetaBlock(Blocks.cobblestone), 5);
+		walls.addBlock(new MetaBlock(Blocks.gravel), 1);
+		
 		
 		MetaBlock stair = new MetaBlock(Blocks.stone_brick_stairs);
 		MetaBlock pillar = Log.getLog(Log.OAK);
