@@ -91,7 +91,7 @@ public class WorldGenPrimitive {
 		Coord first = new Coord(c1);
 		Coord second = new Coord(c2);
 		Coord.correct(first, second);
-		fillRectHollow(world, rand, first.getX(), first.getY(), first.getZ(), second.getX(), second.getY(), second.getZ(), blocks, true, true);
+		fillRectHollow(world, rand, first.getX(), first.getY(), first.getZ(), second.getX(), second.getY(), second.getZ(), blocks, fillAir, replaceSolid);
 	}
 	
 	public static void fillRectHollow(World world, Random rand, int x1, int y1, int z1, int x2, int y2, int z2, IBlockFactory blocks, boolean fillAir, boolean replaceSolid){
