@@ -30,10 +30,8 @@ public class MetaBlock implements IBlockFactory{
 	
 	public MetaBlock(JsonElement data) throws Exception{
 		JsonObject json = (JsonObject)data;
-		if(!json.has("id")) throw new Exception("MetaBlock JSON requires an id field");
-		
-
-		block = Block.getBlockFromName(json.get("id").getAsString());
+		String name = json.get("name").getAsString();
+		this.block = (Block) Block.blockRegistry.getObject(name);
 		meta = json.has("meta") ? json.get("meta").getAsInt() : 0;
 		flag = json.has("flag") ? json.get("flag").getAsInt() : 2;
 		
