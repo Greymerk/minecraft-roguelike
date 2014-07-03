@@ -13,7 +13,7 @@ public enum RogueConfig {
 	DONATURALSPAWN, LEVELRANGE, LEVELMAXROOMS, LEVELSCATTER, SPAWNFREQUENCY, GENEROUS, MOBDROPS, DIMENSION, 
 	PRECIOUSBLOCKS, LOOTING, OVERRIDELOOT;
 	
-	public static final String configDirName = "config";
+	public static final String configDirName = "config/roguelike_dungeons";
 	public static final String configFileName = "roguelike.cfg";
 	
 	private static ConfigFile instance = null;
