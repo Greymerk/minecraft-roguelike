@@ -18,7 +18,7 @@ public class SegmentNetherLava extends SegmentBase {
 		
 		MetaBlock step = theme.getSecondaryStair();
 		MetaBlock air = new MetaBlock(Blocks.air);
-		MetaBlock lava = new MetaBlock(Blocks.lava);
+		MetaBlock lava = new MetaBlock(Blocks.flowing_lava);
 		
 		Coord start;
 		Coord end;

@@ -12,7 +12,7 @@ import com.google.gson.JsonObject;
 
 public class WeightedRandomLoot implements Comparable<WeightedRandomLoot>, IWeighted<ItemStack>{
 	
-	private Item id;
+	private Item item;
 	private int damage;
 	
 	private int min;
@@ -20,8 +20,8 @@ public class WeightedRandomLoot implements Comparable<WeightedRandomLoot>, IWeig
 	
 	private int weight;
 	
-	public WeightedRandomLoot(Item id, int damage, int minStackSize, int maxStackSize, int weight){
-		this.id = id;
+	public WeightedRandomLoot(Item item, int damage, int minStackSize, int maxStackSize, int weight){
+		this.item = item;
 		this.damage = damage;
 		this.min = minStackSize;
 		this.max = maxStackSize;
@@ -29,9 +29,10 @@ public class WeightedRandomLoot implements Comparable<WeightedRandomLoot>, IWeig
 	}
 
 	public WeightedRandomLoot(JsonObject json){
-		id = Item.getItemById(json.get("id").getAsInt());
-		damage = json.has("meta") ? json.get("meta").getAsInt() : 0;
-		weight = json.get("weight").getAsInt();
+		String name = json.get("name").getAsString();
+		this.item = (Item) Item.itemRegistry.getObject(name);
+		this.damage = json.has("meta") ? json.get("meta").getAsInt() : 0;
+		this.weight = json.get("weight").getAsInt();
 
 		if(json.has("min") && json.has("max")){
 			min = json.get("min").getAsInt();
@@ -61,9 +62,8 @@ public class WeightedRandomLoot implements Comparable<WeightedRandomLoot>, IWeig
 
 	@Override
 	public ItemStack get(Random rand) {
-		return new ItemStack(id, this.getStackSize(rand), damage);
+		return new ItemStack(this.item, this.getStackSize(rand), damage);
 	}
-
 
 	@Override
 	public int compareTo(WeightedRandomLoot other) {

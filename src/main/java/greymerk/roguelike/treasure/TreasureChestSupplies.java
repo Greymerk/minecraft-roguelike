@@ -13,7 +13,7 @@ public class TreasureChestSupplies extends TreasureChestBase{
 		ItemStack item;
 		
 		for (int i = 0; i < 10; i++) {
-			item = Loot.getSupplyItem(rand, level);
+			item = Loot.getLoot(Loot.SUPPLY, rand, level);
 			chest.setInventorySlotContents(rand.nextInt(chest.getSizeInventory()), item);
 		}
 	}

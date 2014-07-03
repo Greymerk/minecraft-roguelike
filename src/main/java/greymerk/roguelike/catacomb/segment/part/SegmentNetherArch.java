@@ -41,7 +41,7 @@ public class SegmentNetherArch extends SegmentBase {
 		}
 			
 		MetaBlock fence = new MetaBlock(Blocks.nether_brick_fence);
-		MetaBlock lava = new MetaBlock(Blocks.lava);
+		MetaBlock lava = new MetaBlock(Blocks.flowing_lava);
 		
 		cursor = new Coord(x, y, z);
 		cursor.add(dir, 2);		
