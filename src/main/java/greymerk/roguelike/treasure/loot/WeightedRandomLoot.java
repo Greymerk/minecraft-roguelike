@@ -2,12 +2,16 @@ package greymerk.roguelike.treasure.loot;
 
 
 import greymerk.roguelike.util.IWeighted;
+import greymerk.roguelike.util.nbt.JsonNBT;
 
 import java.util.Random;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.JsonToNBT;
+import net.minecraft.nbt.NBTTagCompound;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 public class WeightedRandomLoot implements Comparable<WeightedRandomLoot>, IWeighted<ItemStack>{
@@ -19,6 +23,8 @@ public class WeightedRandomLoot implements Comparable<WeightedRandomLoot>, IWeig
 	private int max;
 	
 	private int weight;
+	
+	private NBTTagCompound nbt; 
 	
 	public WeightedRandomLoot(Item item, int damage, int minStackSize, int maxStackSize, int weight){
 		this.item = item;
@@ -40,7 +46,12 @@ public class WeightedRandomLoot implements Comparable<WeightedRandomLoot>, IWeig
 		} else {
 			min = 1;
 			max = 1;
-		}		
+		}
+		
+		if(json.has("nbt")){
+			JsonObject nbtdata = json.get("nbt").getAsJsonObject();
+			this.nbt = JsonNBT.jsonToCompound(nbtdata);
+		}
 	}
 	
 	
@@ -62,7 +73,9 @@ public class WeightedRandomLoot implements Comparable<WeightedRandomLoot>, IWeig
 
 	@Override
 	public ItemStack get(Random rand) {
-		return new ItemStack(this.item, this.getStackSize(rand), damage);
+		ItemStack item = new ItemStack(this.item, this.getStackSize(rand), damage);
+		if(this.nbt != null) item.setTagCompound(this.nbt);
+		return item;
 	}
 
 	@Override
