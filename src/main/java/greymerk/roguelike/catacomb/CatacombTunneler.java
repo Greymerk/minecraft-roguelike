@@ -46,10 +46,6 @@ public class CatacombTunneler {
 	}
 	
 	public void update(){
-		if(level.full()){
-			return;
-		}
-		
 		if(done){
 			return;
 		}
@@ -79,10 +75,6 @@ public class CatacombTunneler {
 	}
 		
 	public boolean isDone(){
-		if(level.full()){
-			return true;
-		}
-		
 		return done;
 	}
 	

@@ -12,13 +12,12 @@ import net.minecraft.init.Blocks;
 public class ThemeSpruce extends ThemeBase{
 
 	public ThemeSpruce(){
-	
+		
 		BlockWeightedRandom walls = new BlockWeightedRandom();
 		walls.addBlock(new MetaBlock(Blocks.stonebrick, 0), 20);
 		walls.addBlock(new MetaBlock(Blocks.stonebrick, 2), 10);
 		walls.addBlock(new MetaBlock(Blocks.cobblestone), 5);
 		walls.addBlock(new MetaBlock(Blocks.gravel), 1);
-
 		
 		MetaBlock stair = new MetaBlock(Blocks.stone_brick_stairs);
 		

@@ -93,7 +93,7 @@ public enum ItemNovelty {
 		case NEBRISSWORD:
 			item = new ItemStack(Items.diamond_sword);
 			Loot.setItemName(item, "Nebrian Null Pointer", null);
-			Loot.setItemLore(item, "\"Sword of pointy Justice\"", TextFormat.DARKGREEN);
+			Loot.setItemLore(item, "Exceptional", TextFormat.DARKGREEN);
 			item.addEnchantment(Enchantment.sharpness, 5);
 			item.addEnchantment(Enchantment.knockback, 2);
 			item.addEnchantment(Enchantment.unbreaking, 3);

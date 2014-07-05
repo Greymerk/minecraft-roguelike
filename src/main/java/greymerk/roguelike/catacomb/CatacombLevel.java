@@ -28,7 +28,6 @@ public class CatacombLevel {
 	private List<CatacombNode> nodes;
 	private int originX;
 	private int originZ;
-	private boolean done;
 	private int maxNodes;
 	private int range;
 	private IDungeonFactory rooms;
@@ -154,36 +153,26 @@ public class CatacombLevel {
 	}
 
 	public void update(){
-				
-		for (int i = 0; i < nodes.size(); i++){
-			nodes.get(i).update();
+		
+		if(!this.full()){
+			for (int i = 0; i < nodes.size(); i++){
+				nodes.get(i).update();
+			}
 		}
 		
-		if (this.end == null){
-			boolean done = true;
-			for (CatacombNode node : nodes){
-				if(!node.isDone()){
-					done = false;
-				}
-			}
+		if (this.full() && this.end == null){
+
+			CatacombNode choice;
+				
+			int attempts = 0;
 			
-			if(done){
-				CatacombNode choice;
-				
-				int attempts = 0;
-				
-				do{
-					choice = this.nodes.get(rand.nextInt(this.nodes.size()));
-					attempts++;
-				} while(choice == start || distance(choice, start) > (16 + attempts * 2));
-				
-				this.end = choice;
-				this.done = true;
-			}
+			do{
+				choice = this.nodes.get(rand.nextInt(this.nodes.size()));
+				attempts++;
+			} while(choice == start || distance(choice, start) > (16 + attempts * 2));
 			
+			this.end = choice;
 		}
-		
-		
 	}
 	
 
@@ -255,11 +244,10 @@ public class CatacombLevel {
 			}
 		}
 		return false;
-		
 	}
 	
 	public boolean isDone(){
-		return done;
+		return this.full();
 	}
 	
 	public boolean full(){

@@ -8,10 +8,8 @@ import java.util.Random;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.JsonToNBT;
 import net.minecraft.nbt.NBTTagCompound;
 
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 public class WeightedRandomLoot implements Comparable<WeightedRandomLoot>, IWeighted<ItemStack>{

@@ -110,14 +110,14 @@ public class CatacombNode {
 	public void construct(World world){
 
 		for (CatacombTunneler tunneler : tunnelers){
-			tunneler.construct(world);
+			if(tunneler.isDone()) tunneler.construct(world);
 		}
 	}
 	
 	public void segments(){
 
 		for (CatacombTunneler tunneler : tunnelers){
-			tunneler.addSegments(world);
+			if(tunneler.isDone()) tunneler.addSegments(world);
 		}
 	}
 	

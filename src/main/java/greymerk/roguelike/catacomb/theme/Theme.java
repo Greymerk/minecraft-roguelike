@@ -13,7 +13,7 @@ import com.google.gson.JsonObject;
 
 public enum Theme {
 
-	OAK, SPRUCE, STONE, MOSSY, NETHER, SANDSTONE, QUARTZ, BLING, CHECKER, RAINBOW, SNOW, JUNGLE, BRICK;
+	OAK, SPRUCE, STONE, MOSSY, NETHER, SANDSTONE, QUARTZ, BLING, CHECKER, RAINBOW, SNOW, JUNGLE, BRICK, DARKOAK;
 	
 	public static ITheme getTheme(Theme type){
 		
@@ -33,6 +33,7 @@ public enum Theme {
 		case SNOW: theme = new ThemeSnow(); break;
 		case JUNGLE: theme = new ThemeJungle(); break;
 		case BRICK: theme = new ThemeBrick(); break;
+		case DARKOAK: theme = new ThemeDarkOak(); break;
 		default: return null;
 		}
 		
@@ -96,7 +97,7 @@ public enum Theme {
 		case 1:
 			if(hot && dry) return getTheme(SANDSTONE);
 			if(hot && wet) return getTheme(JUNGLE);
-			return getTheme(SPRUCE);
+			return getTheme(DARKOAK);
 		case 2:
 			if(hot && wet) return getTheme(MOSSY);
 			return getTheme(STONE);
