@@ -42,7 +42,7 @@ public class SegmentInset extends SegmentBase {
 		WorldGenPrimitive.fillRectSolid(world, rand, start, end, air, true, true);
 		start.add(dir, 1);
 		end.add(dir, 1);
-		WorldGenPrimitive.fillRectSolid(world, rand, start, end, theme.getPrimaryWall(), true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, start, end, theme.getSecondaryWall(), true, true);
 		
 		for(Cardinal d : orth){
 			cursor = new Coord(x, y, z);
@@ -57,8 +57,6 @@ public class SegmentInset extends SegmentBase {
 			cursor.add(d, 1);
 			stair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.reverse(d), false));
 			WorldGenPrimitive.setBlock(world, rand, cursor, stair, true, true);
-			
-			
 		}
 	
 		cursor = new Coord(x, y, z);

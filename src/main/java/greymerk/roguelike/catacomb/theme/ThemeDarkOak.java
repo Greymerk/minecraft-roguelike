@@ -18,7 +18,12 @@ public class ThemeDarkOak extends ThemeBase{
 		MetaBlock pillar = Log.getLog(Log.DARKOAK);
 		
 		this.walls = new BlockSet(walls, stair, pillar);
-		this.decor = this.walls;
+		
+		MetaBlock secondaryWalls = new MetaBlock(Blocks.planks, 2);
+		//MetaBlock secondaryStair = new MetaBlock(Blocks.birch_stairs);
+		//MetaBlock secondaryPillar = Log.getLog(Log.DARKOAK);
+		
+		this.decor = new BlockSet(secondaryWalls, stair, pillar);
 		
 		this.segments = new ArrayList<Segment>();
 		segments.addAll(Arrays.asList(Segment.SHELF, Segment.INSET));

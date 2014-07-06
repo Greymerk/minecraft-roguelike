@@ -100,7 +100,7 @@ public class DungeonCustomization {
 			} else if(json.get("biomes").getAsString().equals("all")){
 				global = true;
 			}
-
+			
 			if(json.has("levels")) parseLevels(json.get("levels").getAsJsonObject());
 		}
 		

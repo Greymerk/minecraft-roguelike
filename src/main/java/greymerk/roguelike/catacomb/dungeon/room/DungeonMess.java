@@ -68,7 +68,12 @@ public class DungeonMess implements IDungeon {
 		// pillars
 		for(int i = - 6; i <= 6; i = i += 4){
 			for(int j = - 6; j <= 6; j += 4){
-				pillar(world, rand, theme, x + i, y, z + j);
+				if(i % 6 == 0 || j % 6 == 0){
+					pillar(world, rand, theme, 2, x + i, y, z + j);	
+				} else {
+					pillar(world, rand, theme, 3, x + i, y, z + j);
+				}
+				
 			}
 		}
 				
@@ -172,20 +177,18 @@ public class DungeonMess implements IDungeon {
 				
 	}
 	
-	private static void pillar(World world, Random rand, ITheme theme, int x, int y, int z){
+	private static void pillar(World world, Random rand, ITheme theme, int height, int x, int y, int z){
 		
 		MetaBlock stair = theme.getSecondaryStair();
 		IBlockFactory pillar = theme.getSecondaryPillar();
 		IBlockFactory wall = theme.getSecondaryWall();
 		
-		WorldGenPrimitive.fillRectSolid(world, rand, x, y, z, x, y + 1, z, pillar, true, true);
-		WorldGenPrimitive.setBlock(world, rand, x, y + 2, z, wall, true, true);
-		WorldGenPrimitive.setBlock(world, rand, x + 1, y + 2, z, WorldGenPrimitive.blockOrientation(stair, Cardinal.EAST, true), true, true);
-		WorldGenPrimitive.setBlock(world, rand, x - 1, y + 2, z, WorldGenPrimitive.blockOrientation(stair, Cardinal.WEST, true), true, true);
-		WorldGenPrimitive.setBlock(world, rand, x, y + 2, z + 1, WorldGenPrimitive.blockOrientation(stair, Cardinal.SOUTH, true), true, true);
-		WorldGenPrimitive.setBlock(world, rand, x, y + 2, z - 1, WorldGenPrimitive.blockOrientation(stair, Cardinal.NORTH, true), true, true);
-		WorldGenPrimitive.fillRectSolid(world, rand, x - 1, y + 3, z - 1, x + 1, y + 3, z + 1, wall, true, true);
-		
+		WorldGenPrimitive.fillRectSolid(world, rand, x, y, z, x, y + height - 1, z, pillar, true, true);
+		WorldGenPrimitive.setBlock(world, rand, x, y + height, z, wall, true, true);
+		WorldGenPrimitive.setBlock(world, rand, x + 1, y + height, z, WorldGenPrimitive.blockOrientation(stair, Cardinal.EAST, true), true, true);
+		WorldGenPrimitive.setBlock(world, rand, x - 1, y + height, z, WorldGenPrimitive.blockOrientation(stair, Cardinal.WEST, true), true, true);
+		WorldGenPrimitive.setBlock(world, rand, x, y + height, z + 1, WorldGenPrimitive.blockOrientation(stair, Cardinal.SOUTH, true), true, true);
+		WorldGenPrimitive.setBlock(world, rand, x, y + height, z - 1, WorldGenPrimitive.blockOrientation(stair, Cardinal.NORTH, true), true, true);
 	}
 	
 	private class TreasureChestFoodStore extends TreasureChestBase{

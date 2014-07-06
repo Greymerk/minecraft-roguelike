@@ -40,7 +40,7 @@ public class SegmentArch extends SegmentBase {
 			cursor.add(Cardinal.UP, 1);
 			WorldGenPrimitive.setBlock(world, rand, cursor, theme.getSecondaryPillar(), true, true);
 			cursor.add(Cardinal.UP, 1);
-			WorldGenPrimitive.setBlock(world, rand, cursor, theme.getSecondaryWall(), true, true);
+			WorldGenPrimitive.setBlock(world, rand, cursor, theme.getPrimaryWall(), true, true);
 			cursor.add(Cardinal.reverse(dir), 1);
 			WorldGenPrimitive.setBlock(world, rand, cursor, stair, true, true);			
 		}

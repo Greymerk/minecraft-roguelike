@@ -25,7 +25,7 @@ public enum Skull {
 		TileEntitySkull skull = (TileEntitySkull)skullEntity;
 		
 		setType(skull, type);
-		setRotation(skull, dir);
+		setRotation(rand, skull, dir);
 	}
 	
 	public static void set(World world, Random rand, Coord cursor, Cardinal dir, Skull type){
@@ -40,8 +40,13 @@ public enum Skull {
 		skull.func_152107_a(getSkullId(type));
 	}
 	
-	public static void setRotation(TileEntitySkull skull, Cardinal dir){
-		skull.func_145903_a(getDirectionValue(dir));
+	public static void setRotation(Random rand, TileEntitySkull skull, Cardinal dir){
+		int directionValue = getDirectionValue(dir);
+		
+		directionValue += -1 + rand.nextInt(3);
+		directionValue = directionValue % 16;
+		
+		skull.func_145903_a(directionValue);
 	}
 	
 	public static int getSkullId(Skull type){
@@ -63,5 +68,5 @@ public enum Skull {
 		case WEST: return 12;
 		default: return 0;
 		}
-	}
+	}	
 }
