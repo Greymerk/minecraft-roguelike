@@ -5,6 +5,7 @@ import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.treasure.TreasureChest;
 import greymerk.roguelike.worldgen.BlockWeightedRandom;
+import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.Spawner;
@@ -21,7 +22,7 @@ public class DungeonsNetherBrick extends DungeonBase {
 	public DungeonsNetherBrick() {
 	}
 
-	public boolean generate(World world, Random rand, ITheme theme, int x, int y, int z) {
+	public boolean generate(World world, Random rand, ITheme theme, Cardinal[] entrances, int x, int y, int z) {
 		
 		int height = 3;
 		int length = 2 + rand.nextInt(3);

@@ -21,8 +21,6 @@ public class CatacombNode {
 	private int y;
 	private int z;
 	private IDungeon toGenerate;
-	
-	
 	private Cardinal direction;
 	
 	public CatacombNode (World world, Random rand, CatacombLevel level, ITheme theme, int x, int y, int z){
@@ -135,4 +133,12 @@ public class CatacombNode {
 		
 	}
 	
+	public Cardinal[] getEntrances(){
+		List<Cardinal> dirs = new ArrayList<Cardinal>();
+		for(CatacombTunneler tunneler : tunnelers){
+			if(tunneler.isDone()) dirs.add(tunneler.getDirection());
+		}
+		
+		return dirs.toArray(new Cardinal[dirs.size()]);
+	}
 }

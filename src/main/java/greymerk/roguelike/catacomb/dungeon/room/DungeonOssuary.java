@@ -17,7 +17,7 @@ import net.minecraft.world.World;
 public class DungeonOssuary extends DungeonBase {
 
 	@Override
-	public boolean generate(World world, Random rand, ITheme theme, int x, int y, int z) {
+	public boolean generate(World world, Random rand, ITheme theme, Cardinal[] entrances, int x, int y, int z) {
 			
 		MetaBlock stair = theme.getPrimaryStair();
 		MetaBlock air = new MetaBlock(Blocks.air);

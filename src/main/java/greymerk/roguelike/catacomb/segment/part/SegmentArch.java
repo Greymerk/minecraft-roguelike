@@ -25,6 +25,8 @@ public class SegmentArch extends SegmentBase {
 		
 		MetaBlock air = new MetaBlock(Blocks.air);
 		
+		level.genSecret(dir, new Coord(x, y, z));
+		
 		Coord cursor = new Coord(x, y, z);
 		cursor.add(dir, 2);
 		WorldGenPrimitive.setBlock(world, rand, cursor, air, true, true);
@@ -45,8 +47,6 @@ public class SegmentArch extends SegmentBase {
 			cursor.add(Cardinal.reverse(dir), 1);
 			WorldGenPrimitive.setBlock(world, rand, cursor, stair, true, true);			
 		}
-		
-		level.genSecret(dir, new Coord(x, y, z));
 		
 		if(rand.nextInt(10) == 0 && Catacomb.getLevel(y) == 2){
 			IAlcove cell = new PrisonCell();

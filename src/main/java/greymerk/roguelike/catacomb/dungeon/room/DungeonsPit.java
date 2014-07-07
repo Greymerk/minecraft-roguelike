@@ -3,6 +3,7 @@ package greymerk.roguelike.catacomb.dungeon.room;
 import greymerk.roguelike.catacomb.dungeon.DungeonBase;
 import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.treasure.TreasureChest;
+import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.MetaBlock;
@@ -34,7 +35,7 @@ public class DungeonsPit extends DungeonBase {
 		dungeonWidth = 2;
 	}
 
-	public boolean generate(World inWorld, Random inRandom, ITheme theme, int inOriginX, int inOriginY, int inOriginZ) {
+	public boolean generate(World inWorld, Random inRandom, ITheme theme, Cardinal[] entrances, int inOriginX, int inOriginY, int inOriginZ) {
 		world = inWorld;
 		rand = inRandom;
 		originX = inOriginX;

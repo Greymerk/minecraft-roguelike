@@ -56,12 +56,24 @@ public class SecretFactory {
 		
 		public void genRoom(World world, Random rand, ITheme theme, Cardinal dir, Coord pos){
 			int size = prototype.getSize();
+			
+			Coord start = new Coord(pos);
 			Coord end = new Coord(pos);
+			start.add(Cardinal.getOrthogonal(dir)[0]);
+			start.add(Cardinal.DOWN);
+			end.add(Cardinal.getOrthogonal(dir)[1]);
+			end.add(dir, size + 5);
+			end.add(Cardinal.UP, 2);
+			WorldGenPrimitive.fillRectSolid(world, rand, start, end, theme.getPrimaryWall(), false, true);
+			
+			start = new Coord(pos);
+			end = new Coord(pos);
 			end.add(dir, size + 5);
 			end.add(Cardinal.UP);
 			WorldGenPrimitive.fillRectSolid(world, rand, pos, end, new MetaBlock(Blocks.air), true, true);
+			
 			end.add(Cardinal.DOWN);
-			this.prototype.generate(world, rand, theme, end.getX(), end.getY(), end.getZ());
+			this.prototype.generate(world, rand, theme, new Cardinal[]{dir}, end.getX(), end.getY(), end.getZ());
 			count -= 1;
 		}
 	}

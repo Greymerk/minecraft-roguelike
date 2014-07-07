@@ -8,18 +8,21 @@ import greymerk.roguelike.treasure.TreasureChestEmpty;
 import greymerk.roguelike.treasure.loot.provider.ItemNovelty;
 import greymerk.roguelike.worldgen.BlockFactoryCheckers;
 import greymerk.roguelike.worldgen.Cardinal;
+import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
 
+import java.util.List;
 import java.util.Random;
 
+import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 
 public class DungeonEniko extends DungeonBase {
 
 	@Override
-	public boolean generate(World world, Random rand, ITheme theme, int x, int y, int z) {
+	public boolean generate(World world, Random rand, ITheme theme, Cardinal[] entrances, int x, int y, int z) {
 		
 		MetaBlock air = new MetaBlock(Blocks.air);
 		MetaBlock coal = new MetaBlock(Blocks.coal_block);
@@ -77,7 +80,7 @@ public class DungeonEniko extends DungeonBase {
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 5, y - 1, z - 5, x + 5, y - 1, z + 5, new MetaBlock(Blocks.stonebrick));
 				
 		MetaBlock blockOne = RogueConfig.getBoolean(RogueConfig.PRECIOUSBLOCKS) ? new MetaBlock(Blocks.lapis_block) : new MetaBlock(Blocks.stained_hardened_clay, 11);
-		MetaBlock blockTwo = new MetaBlock(Blocks.lapis_block);
+		MetaBlock blockTwo = new MetaBlock(Blocks.quartz_block);
 		BlockFactoryCheckers checkers = new BlockFactoryCheckers(blockOne, blockTwo);
 		
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 3, y - 1, z - 3, x + 3, y - 1, z + 3, checkers);
@@ -128,6 +131,20 @@ public class DungeonEniko extends DungeonBase {
 	
 	public int getSize(){
 		return 7;
+	}
+	
+	@Override
+	public boolean validLocation(World world, Cardinal dir, int x, int y, int z){
+		
+		int size = getSize();
+		List<Coord> box = WorldGenPrimitive.getRectHollow(x - size, y - 2, z - size, x + size, y + 5, z + size);
+		
+		for(Coord pos : box){
+			Block b = world.getBlock(pos.getX(), pos.getY(), pos.getZ());
+			if(!b.getMaterial().isSolid()) return false;
+		}
+		
+		return true;
 	}
 	
 }

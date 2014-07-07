@@ -24,6 +24,8 @@ public class SegmentMossyArch extends SegmentBase {
 		
 		MetaBlock air = new MetaBlock(Blocks.air);
 		
+		level.genSecret(wallDirection, new Coord(x, y, z));
+		
 		Coord cursor = new Coord(x, y, z);
 		cursor.add(wallDirection, 2);
 		WorldGenPrimitive.setBlock(world, rand, cursor, air, true, true);

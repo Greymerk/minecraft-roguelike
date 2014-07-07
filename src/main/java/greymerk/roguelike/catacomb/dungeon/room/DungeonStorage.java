@@ -21,7 +21,7 @@ import net.minecraft.world.World;
 public class DungeonStorage extends DungeonBase {
 
 	@Override
-	public boolean generate(World world, Random rand, ITheme theme, int x, int y, int z) {
+	public boolean generate(World world, Random rand, ITheme theme, Cardinal[] entrances, int x, int y, int z) {
 
 		HashSet<Coord> chestSpaces = new HashSet<Coord>();
 		MetaBlock air = new MetaBlock(Blocks.air);

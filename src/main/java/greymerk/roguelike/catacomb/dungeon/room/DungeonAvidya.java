@@ -20,7 +20,7 @@ import net.minecraft.world.World;
 public class DungeonAvidya extends DungeonBase {
 
 	@Override
-	public boolean generate(World world, Random rand, ITheme theme, int x, int y, int z) {
+	public boolean generate(World world, Random rand, ITheme theme, Cardinal[] entrances, int x, int y, int z) {
 		
 		MetaBlock redClay = new MetaBlock(Blocks.stained_hardened_clay, 14);
 		MetaBlock whiteClay = new MetaBlock(Blocks.stained_hardened_clay, 0);

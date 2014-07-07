@@ -3,6 +3,7 @@ package greymerk.roguelike.catacomb.dungeon.room;
 import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.catacomb.dungeon.DungeonBase;
 import greymerk.roguelike.catacomb.theme.ITheme;
+import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.Spawner;
@@ -18,7 +19,7 @@ public class DungeonsFire extends DungeonBase {
 	
 	
 	@Override
-	public boolean generate(World inWorld, Random inRandom, ITheme theme, int inOriginX, int inOriginY, int inOriginZ) {
+	public boolean generate(World inWorld, Random inRandom, ITheme theme, Cardinal[] entrances, int inOriginX, int inOriginY, int inOriginZ) {
 
 		IBlockFactory fillBlocks = theme.getPrimaryWall();
 		MetaBlock air = new MetaBlock(Blocks.air);

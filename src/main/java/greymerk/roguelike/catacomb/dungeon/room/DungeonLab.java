@@ -17,7 +17,7 @@ import net.minecraft.world.World;
 public class DungeonLab extends DungeonBase {
 
 	@Override
-	public boolean generate(World inWorld, Random inRandom, ITheme theme, int inOriginX, int inOriginY, int inOriginZ) {
+	public boolean generate(World inWorld, Random inRandom, ITheme theme, Cardinal[] entrances, int inOriginX, int inOriginY, int inOriginZ) {
 	
 		IBlockFactory blocks = theme.getPrimaryWall();
 		
@@ -123,8 +123,8 @@ public class DungeonLab extends DungeonBase {
 	private static void southEast(World world, Random rand, ITheme theme, int x, int y, int z){
 		
 		MetaBlock stone = new MetaBlock(Blocks.stonebrick);
-		MetaBlock stair = theme.getPrimaryStair();
-		MetaBlock slab = new MetaBlock(Blocks.stone_slab);
+		MetaBlock stair = new MetaBlock(Blocks.stone_brick_stairs);
+		MetaBlock slab = new MetaBlock(Blocks.stone_slab, 5);
 		
 		corner(world, rand, theme, x, y, z);
 		

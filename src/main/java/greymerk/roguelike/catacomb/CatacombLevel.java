@@ -48,7 +48,7 @@ public class CatacombLevel {
 		this.originX = originX;
 
 		this.originZ = originZ;
-		this.secrets = SecretFactoryProvider.getFactory(Catacomb.getLevel(originY));
+		this.secrets = SecretFactoryProvider.getFactory(rand, Catacomb.getLevel(originY));
 		
 		SCATTER = RogueConfig.getInt(RogueConfig.LEVELSCATTER);
 		maxNodes = RogueConfig.getInt(RogueConfig.LEVELMAXROOMS);
@@ -64,7 +64,7 @@ public class CatacombLevel {
 				
 		this.rand = rand;
 		this.rooms = rooms;
-		this.secrets = SecretFactoryProvider.getFactory(Catacomb.getLevel(originY));
+		this.secrets = SecretFactoryProvider.getFactory(rand, Catacomb.getLevel(originY));
 		this.theme = theme;
 		this.originX = originX;
 		this.originZ = originZ;
@@ -103,7 +103,7 @@ public class CatacombLevel {
 
 			IDungeon toGenerate = rooms.get(rand);
 			node.setDungeon(toGenerate);
-			toGenerate.generate(world, rand, theme, x, y, z);
+			toGenerate.generate(world, rand, theme, node.getEntrances(), x, y, z);
 		}
 		
 		// tunnel segment features

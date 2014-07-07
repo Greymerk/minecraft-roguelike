@@ -6,6 +6,7 @@ import greymerk.roguelike.treasure.ITreasureChest;
 import greymerk.roguelike.treasure.TreasureChestEmpty;
 import greymerk.roguelike.treasure.loot.provider.ItemNovelty;
 import greymerk.roguelike.worldgen.BlockWeightedRandom;
+import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
 
@@ -17,19 +18,19 @@ import net.minecraft.world.World;
 public class DungeonBaj extends DungeonBase {
 
 	@Override
-	public boolean generate(World world, Random rand, ITheme theme, int x, int y, int z) {
+	public boolean generate(World world, Random rand, ITheme theme, Cardinal[] entrances, int x, int y, int z) {
 
 		
 		
-		WorldGenPrimitive.fillRectHollow(world, rand, x - 5, y - 2, z - 5, x + 5, y + 4, z + 5, new MetaBlock(Blocks.stone), true, true);
-		WorldGenPrimitive.setBlock(world, x - 5, y + 1, z, Blocks.air);
-		WorldGenPrimitive.setBlock(world, x - 5, y, z, Blocks.dirt);
-		WorldGenPrimitive.setBlock(world, x + 5, y + 1, z, Blocks.air);
-		WorldGenPrimitive.setBlock(world, x + 5, y, z, Blocks.dirt);
-		WorldGenPrimitive.setBlock(world, x, y + 1, z - 5, Blocks.air);
-		WorldGenPrimitive.setBlock(world, x, y, z - 5, Blocks.dirt);
-		WorldGenPrimitive.setBlock(world, x, y + 1, z + 5, Blocks.air);
-		WorldGenPrimitive.setBlock(world, x, y, z + 5, Blocks.dirt);
+		//WorldGenPrimitive.fillRectHollow(world, rand, x - 5, y - 2, z - 5, x + 5, y + 4, z + 5, new MetaBlock(Blocks.stone), true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 4, y - 1, z - 4, x + 4, y + 3, z + 4, new MetaBlock(Blocks.air), true, true);
+		
+		MetaBlock dirt = new MetaBlock(Blocks.dirt);
+		
+		WorldGenPrimitive.setBlock(world, rand, x - 5, y, z, dirt, true, false);
+		WorldGenPrimitive.setBlock(world, rand, x + 5, y, z, dirt, true, false);
+		WorldGenPrimitive.setBlock(world, rand, x, y, z - 5, dirt, true, false);
+		WorldGenPrimitive.setBlock(world, rand, x, y, z + 5, dirt, true, false);
 		
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 3, y - 1, z - 3, x + 3, y - 1, z + 3, new MetaBlock(Blocks.water));
 		

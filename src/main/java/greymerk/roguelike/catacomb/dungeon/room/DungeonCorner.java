@@ -16,7 +16,7 @@ import net.minecraft.world.World;
 public class DungeonCorner extends DungeonBase {
 
 	@Override
-	public boolean generate(World world, Random rand, ITheme theme, int x, int y, int z) {
+	public boolean generate(World world, Random rand, ITheme theme, Cardinal[] entrances, int x, int y, int z) {
 		
 		MetaBlock stair = theme.getPrimaryStair();
 		IBlockFactory blocks = theme.getPrimaryWall();
