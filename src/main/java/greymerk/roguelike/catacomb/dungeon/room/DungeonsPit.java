@@ -1,6 +1,6 @@
 package greymerk.roguelike.catacomb.dungeon.room;
 
-import greymerk.roguelike.catacomb.dungeon.IDungeon;
+import greymerk.roguelike.catacomb.dungeon.DungeonBase;
 import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.treasure.TreasureChest;
 import greymerk.roguelike.worldgen.Coord;
@@ -15,7 +15,7 @@ import java.util.Random;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 
-public class DungeonsPit implements IDungeon {
+public class DungeonsPit extends DungeonBase {
 	World world;
 	Random rand;
 	int originX;
@@ -133,7 +133,7 @@ public class DungeonsPit implements IDungeon {
 					}
 					
 					if(y < 10){
-						WorldGenPrimitive.setBlock(world, x, y, z, Blocks.water);
+						WorldGenPrimitive.setBlock(world, x, y, z, Blocks.flowing_water);
 						continue;
 					}
 					

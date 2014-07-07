@@ -1,6 +1,6 @@
 package greymerk.roguelike.catacomb.dungeon.room;
 
-import greymerk.roguelike.catacomb.dungeon.IDungeon;
+import greymerk.roguelike.catacomb.dungeon.DungeonBase;
 import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.treasure.TreasureChestBase;
@@ -19,7 +19,7 @@ import net.minecraft.world.World;
 
 
 
-public class DungeonAshlea implements IDungeon {
+public class DungeonAshlea extends DungeonBase {
 
 	IBlockFactory plank;
 	MetaBlock stairSpruce;

@@ -2,8 +2,11 @@ package greymerk.roguelike.catacomb;
 
 import greymerk.roguelike.catacomb.dungeon.IDungeon;
 import greymerk.roguelike.catacomb.dungeon.IDungeonFactory;
+import greymerk.roguelike.catacomb.dungeon.SecretFactory;
+import greymerk.roguelike.catacomb.dungeon.SecretFactoryProvider;
 import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.config.RogueConfig;
+import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.MetaBlock;
@@ -31,6 +34,7 @@ public class CatacombLevel {
 	private int maxNodes;
 	private int range;
 	private IDungeonFactory rooms;
+	private SecretFactory secrets;
 	private ITheme theme;
 	
 	
@@ -44,6 +48,7 @@ public class CatacombLevel {
 		this.originX = originX;
 
 		this.originZ = originZ;
+		this.secrets = SecretFactoryProvider.getFactory(Catacomb.getLevel(originY));
 		
 		SCATTER = RogueConfig.getInt(RogueConfig.LEVELSCATTER);
 		maxNodes = RogueConfig.getInt(RogueConfig.LEVELMAXROOMS);
@@ -59,9 +64,9 @@ public class CatacombLevel {
 				
 		this.rand = rand;
 		this.rooms = rooms;
+		this.secrets = SecretFactoryProvider.getFactory(Catacomb.getLevel(originY));
 		this.theme = theme;
 		this.originX = originX;
-
 		this.originZ = originZ;
 		
 		SCATTER = RogueConfig.getInt(RogueConfig.LEVELSCATTER);
@@ -256,5 +261,9 @@ public class CatacombLevel {
 	
 	public int nodeCount(){
 		return this.nodes.size();
+	}
+	
+	public void genSecret(Cardinal dir, Coord pos){
+		this.secrets.genRoom(world, rand, theme, dir, pos);
 	}
 }

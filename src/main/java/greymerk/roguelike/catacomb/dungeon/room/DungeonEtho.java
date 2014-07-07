@@ -1,6 +1,6 @@
 package greymerk.roguelike.catacomb.dungeon.room;
 
-import greymerk.roguelike.catacomb.dungeon.IDungeon;
+import greymerk.roguelike.catacomb.dungeon.DungeonBase;
 import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.treasure.ITreasureChest;
 import greymerk.roguelike.treasure.TreasureChestEmpty;
@@ -19,7 +19,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-public class DungeonEtho implements IDungeon {
+public class DungeonEtho extends DungeonBase {
 
 	@Override
 	public boolean generate(World world, Random rand, ITheme theme, int x, int y, int z) {
@@ -29,7 +29,7 @@ public class DungeonEtho implements IDungeon {
 		MetaBlock grass = new MetaBlock(Blocks.grass);
 		MetaBlock planks = new MetaBlock(Blocks.planks);
 		MetaBlock log = Log.getLog(Log.OAK);
-		MetaBlock water = new MetaBlock(Blocks.water);
+		MetaBlock water = new MetaBlock(Blocks.flowing_water);
 		
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 5, y, z - 5, x + 5, y + 3, z + 5, air);
 		

@@ -1,6 +1,6 @@
 package greymerk.roguelike.catacomb.dungeon.room;
 
-import greymerk.roguelike.catacomb.dungeon.IDungeon;
+import greymerk.roguelike.catacomb.dungeon.DungeonBase;
 import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.treasure.ITreasureChest;
 import greymerk.roguelike.treasure.TreasureChestEmpty;
@@ -16,7 +16,7 @@ import java.util.Random;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 
-public class DungeonNebris implements IDungeon {
+public class DungeonNebris extends DungeonBase {
 
 	@Override
 	public boolean generate(World world, Random rand, ITheme theme, int x, int y, int z) {
@@ -29,7 +29,7 @@ public class DungeonNebris implements IDungeon {
 		
 		
 		MetaBlock step = new MetaBlock(Blocks.stone_stairs);
-		MetaBlock water = new MetaBlock(Blocks.water);
+		MetaBlock water = new MetaBlock(Blocks.flowing_water);
 		
 		// space
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 8, y - 3, z - 8, x + 8, y + 5, z + 8, air);

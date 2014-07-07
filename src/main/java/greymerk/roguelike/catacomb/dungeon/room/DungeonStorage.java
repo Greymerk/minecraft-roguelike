@@ -1,6 +1,6 @@
 package greymerk.roguelike.catacomb.dungeon.room;
 
-import greymerk.roguelike.catacomb.dungeon.IDungeon;
+import greymerk.roguelike.catacomb.dungeon.DungeonBase;
 import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.treasure.TreasureChest;
 import greymerk.roguelike.worldgen.Cardinal;
@@ -18,7 +18,7 @@ import java.util.Random;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 
-public class DungeonStorage implements IDungeon {
+public class DungeonStorage extends DungeonBase {
 
 	@Override
 	public boolean generate(World world, Random rand, ITheme theme, int x, int y, int z) {

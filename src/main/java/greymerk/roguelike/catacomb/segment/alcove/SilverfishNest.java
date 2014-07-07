@@ -73,6 +73,6 @@ public class SilverfishNest implements IAlcove{
 		fish.setBlock(world, rand, x, y + 2, z + 1);
 		fish.setBlock(world, rand, x, y + 1, z);
 		
-		WorldGenPrimitive.setBlock(world, x, y + 2, z, Blocks.water);
+		WorldGenPrimitive.setBlock(world, x, y + 2, z, Blocks.flowing_water);
 	}
 }

@@ -1,6 +1,7 @@
 package greymerk.roguelike.catacomb.dungeon;
 
 import greymerk.roguelike.catacomb.theme.ITheme;
+import greymerk.roguelike.worldgen.Cardinal;
 
 import java.util.Random;
 
@@ -12,4 +13,5 @@ public interface IDungeon {
 		
 	public int getSize();
 	
+	public boolean validLocation(World world, Cardinal dir, int x, int y, int z);
 }

@@ -196,7 +196,7 @@ public enum Loot {
 		setItemName(item, name, null);
 	}
 	
-	public static void addEquipment(World world, int rank, Entity mob){
+	public static void addEquipment(World world, int level, Entity mob){
 			
 		Random rand = world.rand;
 				
@@ -206,7 +206,7 @@ public enum Loot {
 		
 		switch(difficulty){
 		case EASY: enchant = rand.nextInt(5) == 0; break;
-		case NORMAL: enchant = rank == 3 || rand.nextBoolean(); break;
+		case NORMAL: enchant = level == 3 || rand.nextBoolean(); break;
 		case HARD: enchant = true; break;
 		default: enchant = true;
 		}
@@ -215,29 +215,32 @@ public enum Loot {
 		
 		// zombie gets a sword
 		if(mob instanceof EntityZombie){
-			
-			if(((EntityZombie)mob).isChild() && enchant && rand.nextInt(100) == 0){
-				weapon = ItemNovelty.getItem(ItemNovelty.ASHLEA);
-			} else if(rand.nextInt(5) == 0){
-				weapon = ItemWeapon.getSword(rand, rank, enchant);
+			if(rand.nextInt(20) == 0){
+				((EntityZombie)mob).setChild(true);
+				if(rand.nextInt(20) == 0){
+					weapon = ItemNovelty.getItem(ItemNovelty.ASHLEA);
+				} else if(rand.nextInt(5) == 0){
+					weapon = new ItemStack(Items.cookie);
+				} else {
+					weapon = ItemTool.getRandom(rand, level, enchant);
+				}
 			} else {
-				weapon = ItemTool.getRandom(rand, rank, enchant);
+				weapon = ItemTool.getRandom(rand, level, enchant);
 			}
-			
 			mob.setCurrentItemOrArmor(0, weapon);
 		}
 		
 		// skelly gets a bow
 		if(mob instanceof EntitySkeleton){
 			
-			if(rand.nextInt(10) == 0 && rank > 1){
+			if(rand.nextInt(10) == 0 && level > 1){
 				((EntitySkeleton) mob).setSkeletonType(1);
-				mob.setCurrentItemOrArmor(0, ItemWeapon.getSword(rand, rank, enchant));
+				mob.setCurrentItemOrArmor(0, ItemWeapon.getSword(rand, level, enchant));
 			} else {
 				if(rand.nextInt(20) == 0){
-					mob.setCurrentItemOrArmor(0, ItemWeapon.getSword(rand, rank, enchant));
+					mob.setCurrentItemOrArmor(0, ItemWeapon.getSword(rand, level, enchant));
 				} else {
-					mob.setCurrentItemOrArmor(0, ItemWeapon.getBow(rand, rank, enchant));
+					mob.setCurrentItemOrArmor(0, ItemWeapon.getBow(rand, level, enchant));
 				}
 			}
 		}
@@ -245,7 +248,7 @@ public enum Loot {
 		// put on some armour
 		for(int i = 1; i < 5; i++){
 			if (enchant){
-				ItemStack item = Loot.getEquipmentBySlot(rand, Slot.getSlotByNumber(i), rank, enchant);
+				ItemStack item = Loot.getEquipmentBySlot(rand, Slot.getSlotByNumber(i), level, enchant);
 				mob.setCurrentItemOrArmor(i, item);
 			}
 		}

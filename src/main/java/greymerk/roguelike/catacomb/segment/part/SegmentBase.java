@@ -26,7 +26,7 @@ public abstract class SegmentBase implements ISegment {
 		
 		for (Cardinal dir : orth){
 			if(isValidWall(world, dir, x, y, z)){
-				genWall(world, rand, dir, theme, x, y, z);
+				genWall(world, rand, level, dir, theme, x, y, z);
 			}
 		}
 		
@@ -36,7 +36,7 @@ public abstract class SegmentBase implements ISegment {
 		
 	}
 	
-	protected abstract void genWall(World world, Random rand, Cardinal dir, ITheme theme, int x, int y, int z);
+	protected abstract void genWall(World world, Random rand, CatacombLevel level, Cardinal dir, ITheme theme, int x, int y, int z);
 
 	protected boolean isValidWall(World world, Cardinal wallDirection, int x, int y, int z) {
 		

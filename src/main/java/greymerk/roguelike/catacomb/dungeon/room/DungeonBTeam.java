@@ -1,6 +1,6 @@
 package greymerk.roguelike.catacomb.dungeon.room;
 
-import greymerk.roguelike.catacomb.dungeon.IDungeon;
+import greymerk.roguelike.catacomb.dungeon.DungeonBase;
 import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.treasure.ITreasureChest;
@@ -12,18 +12,21 @@ import greymerk.roguelike.treasure.loot.provider.ItemArmour;
 import greymerk.roguelike.treasure.loot.provider.ItemNovelty;
 import greymerk.roguelike.worldgen.BlockFactoryCheckers;
 import greymerk.roguelike.worldgen.Cardinal;
+import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.Log;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
 
+import java.util.List;
 import java.util.Random;
 
+import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-public class DungeonBTeam implements IDungeon {
+public class DungeonBTeam extends DungeonBase {
 
 	@Override
 	public boolean generate(World world, Random rand, ITheme theme, int x, int y, int z) {
@@ -128,15 +131,6 @@ public class DungeonBTeam implements IDungeon {
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 7, y - 1, z - 4, x - 6, y + 4, z + 4, stonebrick);
 		WorldGenPrimitive.fillRectSolid(world, rand, x + 6, y - 1, z - 4, x + 7, y + 4, z + 4, stonebrick);
 		
-		WorldGenPrimitive.fillRectSolid(world, rand, x - 7, y, z - 3, x + 7, y + 1, z - 3, air);
-		WorldGenPrimitive.fillRectSolid(world, rand, x - 7, y, z + 4, x + 7, y + 1, z + 4, air);
-		WorldGenPrimitive.fillRectSolid(world, rand, x - 7, y, z - 3, x - 7, y + 1, z + 4, air);
-		WorldGenPrimitive.fillRectSolid(world, rand, x + 7, y, z - 3, x + 7, y + 1, z + 4, air);
-		
-		WorldGenPrimitive.fillRectSolid(world, rand, x - 8, y - 1, z - 4, x - 8, y + 4, z + 4, new MetaBlock(Blocks.stonebrick), false, true);
-		WorldGenPrimitive.fillRectSolid(world, rand, x + 8, y - 1, z - 4, x + 8, y + 4, z + 4, new MetaBlock(Blocks.stonebrick), false, true);
-		
-		
 		ITreasureChest recordChest = new TreasureChestEmpty().generate(world, rand, x - 4, y, z - 4);
 		recordChest.setInventorySlot(Record.getRecord(Record.STAL), recordChest.getInventorySize() / 2);
 		WorldGenPrimitive.setBlock(world, x - 3, y, z - 4, Blocks.jukebox);
@@ -191,4 +185,17 @@ public class DungeonBTeam implements IDungeon {
 		return 8;
 	}
 	
+	public boolean validLocation(World world, Cardinal dir, int x, int y, int z){
+		
+		if(!(dir == Cardinal.NORTH || dir == Cardinal.SOUTH)) return false;
+		
+		List<Coord> box = WorldGenPrimitive.getRectHollow(x - 7, y - 2, z - 7, x + 7, y + 5, z + 7);
+		
+		for(Coord pos : box){
+			Block b = world.getBlock(pos.getX(), pos.getY(), pos.getZ());
+			if(!b.getMaterial().isSolid()) return false;
+		}
+		
+		return true;
+	}
 }

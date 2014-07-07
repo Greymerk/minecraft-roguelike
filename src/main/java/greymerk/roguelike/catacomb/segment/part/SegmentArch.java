@@ -1,6 +1,7 @@
 package greymerk.roguelike.catacomb.segment.part;
 
 import greymerk.roguelike.catacomb.Catacomb;
+import greymerk.roguelike.catacomb.CatacombLevel;
 import greymerk.roguelike.catacomb.segment.IAlcove;
 import greymerk.roguelike.catacomb.segment.alcove.PrisonCell;
 import greymerk.roguelike.catacomb.theme.ITheme;
@@ -17,7 +18,7 @@ import net.minecraft.world.World;
 public class SegmentArch extends SegmentBase {
 
 	@Override
-	protected void genWall(World world, Random rand, Cardinal dir, ITheme theme, int x, int y, int z) {
+	protected void genWall(World world, Random rand, CatacombLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
 			
 		MetaBlock stair = theme.getSecondaryStair(); 
 		stair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.reverse(dir), true));
@@ -44,6 +45,8 @@ public class SegmentArch extends SegmentBase {
 			cursor.add(Cardinal.reverse(dir), 1);
 			WorldGenPrimitive.setBlock(world, rand, cursor, stair, true, true);			
 		}
+		
+		level.genSecret(dir, new Coord(x, y, z));
 		
 		if(rand.nextInt(10) == 0 && Catacomb.getLevel(y) == 2){
 			IAlcove cell = new PrisonCell();

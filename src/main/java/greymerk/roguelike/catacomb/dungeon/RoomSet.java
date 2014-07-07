@@ -12,7 +12,7 @@ public class RoomSet {
 		levels = new ArrayList<IDungeonFactory>();
 		
 		for(int i = 0; i < NUM_LEVELS; ++i){
-			levels.add(DungeonFactoryProvider.getByLevel(i));
+			levels.add(RoomFactoryProvider.getByLevel(i));
 		}
 	}
 	

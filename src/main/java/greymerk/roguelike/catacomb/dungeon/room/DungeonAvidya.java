@@ -1,6 +1,6 @@
 package greymerk.roguelike.catacomb.dungeon.room;
 
-import greymerk.roguelike.catacomb.dungeon.IDungeon;
+import greymerk.roguelike.catacomb.dungeon.DungeonBase;
 import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.treasure.ITreasureChest;
 import greymerk.roguelike.treasure.TreasureChestEmpty;
@@ -10,12 +10,14 @@ import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
 
+import java.util.List;
 import java.util.Random;
 
+import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 
-public class DungeonAvidya implements IDungeon {
+public class DungeonAvidya extends DungeonBase {
 
 	@Override
 	public boolean generate(World world, Random rand, ITheme theme, int x, int y, int z) {
@@ -241,7 +243,7 @@ public class DungeonAvidya implements IDungeon {
 				cursor.add(Cardinal.UP, 1);
 				WorldGenPrimitive.setBlock(world, cursor, Blocks.cobblestone);
 				cursor.add(Cardinal.UP, 3);
-				WorldGenPrimitive.setBlock(world, cursor, Blocks.water);
+				WorldGenPrimitive.setBlock(world, cursor, Blocks.flowing_water);
 			}
 		}
 		
@@ -266,6 +268,18 @@ public class DungeonAvidya implements IDungeon {
 			WorldGenPrimitive.setBlock(world, rand, cursor, step, true, false);
 			cursor.add(Cardinal.reverse(dir), 1);
 		}
+	}
+	
+	public boolean validLocation(World world, Cardinal dir, int x, int y, int z){
+		
+		List<Coord> box = WorldGenPrimitive.getRectHollow(x - 10, y - 2, z - 10, x + 10, y + 5, z + 10);
+		
+		for(Coord pos : box){
+			Block b = world.getBlock(pos.getX(), pos.getY(), pos.getZ());
+			if(!b.getMaterial().isSolid()) return false;
+		}
+		
+		return true;
 	}
 
 }

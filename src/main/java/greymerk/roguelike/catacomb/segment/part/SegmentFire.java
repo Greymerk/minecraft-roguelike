@@ -4,6 +4,7 @@ import java.util.Random;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
+import greymerk.roguelike.catacomb.CatacombLevel;
 import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
@@ -16,7 +17,7 @@ public class SegmentFire extends SegmentBase {
 
 	
 	@Override
-	protected void genWall(World world, Random rand, Cardinal dir, ITheme theme, int x, int y, int z) {
+	protected void genWall(World world, Random rand, CatacombLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
 		
 		MetaBlock stair = theme.getPrimaryStair();
 		IBlockFactory walls = theme.getPrimaryWall();

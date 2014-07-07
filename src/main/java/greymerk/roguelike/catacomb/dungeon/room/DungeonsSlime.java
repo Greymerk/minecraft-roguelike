@@ -1,7 +1,7 @@
 package greymerk.roguelike.catacomb.dungeon.room;
 
 import greymerk.roguelike.catacomb.Catacomb;
-import greymerk.roguelike.catacomb.dungeon.IDungeon;
+import greymerk.roguelike.catacomb.dungeon.DungeonBase;
 import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.MetaBlock;
@@ -13,7 +13,7 @@ import java.util.Random;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 
-public class DungeonsSlime implements IDungeon {
+public class DungeonsSlime extends DungeonBase {
 	World world;
 	Random rand;
 	int originX;
@@ -33,7 +33,7 @@ public class DungeonsSlime implements IDungeon {
 		originY = inOriginY;
 		originZ = inOriginZ;
 
-		liquid = new MetaBlock(Catacomb.getLevel(originY) == 4 ? Blocks.lava : Blocks.water);
+		liquid = new MetaBlock(Catacomb.getLevel(originY) == 4 ? Blocks.lava : Blocks.flowing_water);
 
 		fillBlocks = theme.getPrimaryWall();
 		

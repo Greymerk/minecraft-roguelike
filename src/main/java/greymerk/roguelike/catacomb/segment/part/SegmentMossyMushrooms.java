@@ -2,6 +2,7 @@ package greymerk.roguelike.catacomb.segment.part;
 
 import java.util.Random;
 
+import greymerk.roguelike.catacomb.CatacombLevel;
 import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.Cardinal;
@@ -17,7 +18,7 @@ public class SegmentMossyMushrooms extends SegmentBase {
 	
 	
 	@Override
-	protected void genWall(World world, Random rand, Cardinal wallDirection, ITheme theme, int x, int y, int z) {
+	protected void genWall(World world, Random rand, CatacombLevel level, Cardinal wallDirection, ITheme theme, int x, int y, int z) {
 		
 		MetaBlock stair = theme.getSecondaryStair();
 		MetaBlock air = new MetaBlock(Blocks.air);
@@ -43,7 +44,7 @@ public class SegmentMossyMushrooms extends SegmentBase {
 		end.add(Cardinal.DOWN, 2);
 		
 		if(rand.nextInt(5) == 0){
-			WorldGenPrimitive.fillRectSolid(world, rand, start, end, new MetaBlock(Blocks.water), true, true);
+			WorldGenPrimitive.fillRectSolid(world, rand, start, end, new MetaBlock(Blocks.flowing_water), true, true);
 		} else {
 			WorldGenPrimitive.fillRectSolid(world, rand, start, end, new MetaBlock(Blocks.mycelium), true, true);
 			start.add(Cardinal.UP, 1);

@@ -1,7 +1,7 @@
 package greymerk.roguelike.catacomb;
 
 import greymerk.roguelike.catacomb.dungeon.DungeonCustomization;
-import greymerk.roguelike.catacomb.dungeon.DungeonFactoryProvider;
+import greymerk.roguelike.catacomb.dungeon.RoomFactoryProvider;
 import greymerk.roguelike.catacomb.dungeon.IDungeonFactory;
 import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.catacomb.theme.Theme;
@@ -49,7 +49,7 @@ public class Catacomb {
 			ITheme theme = DungeonCustomization.getTheme(world.getBiomeGenForCoords(inX, inZ), getLevel(y)); 
 			if(theme == null) theme = Theme.getByLevel(world.getBiomeGenForCoords(inX, inZ), getLevel(y));
 			IDungeonFactory rooms = DungeonCustomization.getRooms(world.getBiomeGenForCoords(inX, inZ), getLevel(y)); 
-			if(rooms == null) rooms = DungeonFactoryProvider.getByLevel(Catacomb.getLevel(y));
+			if(rooms == null) rooms = RoomFactoryProvider.getByLevel(Catacomb.getLevel(y));
 			
 			rand = getRandom(world, x, z);
 			if(Catacomb.getLevel(y) == 0){

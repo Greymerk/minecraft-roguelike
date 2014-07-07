@@ -1,30 +1,24 @@
 package greymerk.roguelike.catacomb.dungeon;
 
 
-public enum DungeonFactoryProvider {
+public enum RoomFactoryProvider {
 
 	STARTOAK, SPRUCE, DESERT, JUNGLE, STONE, MOSSY, NETHER;
 	
-	public static IDungeonFactory getFactory(DungeonFactoryProvider type){
+	public static IDungeonFactory getFactory(RoomFactoryProvider type){
 		
 		DungeonFactory factory;
 		
 		switch(type){
 		case STARTOAK:
 			factory = new DungeonFactory();
-			factory.addSecret(Dungeon.SLIME, 5);
-			factory.addSecret(Dungeon.FIRE, 10);
 			factory.addSingle(Dungeon.CAKE);
+			factory.addSingle(Dungeon.FIRE);
 			factory.addRandom(Dungeon.BRICK, 10);
 			factory.addRandom(Dungeon.CORNER, 3);
 			break;
 		case SPRUCE:
 			factory = new DungeonFactory();
-			factory.addSecret(Dungeon.CORNER, 40);
-			factory.addSecret(Dungeon.ETHO, 10);
-			factory.addSecret(Dungeon.BTEAM, 10);
-			factory.addSecret(Dungeon.AVIDYA, 10);
-			factory.addSecret(Dungeon.ASHLEA, 10);
 			factory.addSingle(Dungeon.MUSIC);
 			factory.addSingle(Dungeon.SMITH);
 			factory.addSingle(Dungeon.PIT);
@@ -37,8 +31,6 @@ public enum DungeonFactoryProvider {
 			break;
 		case STONE:
 			factory = new DungeonFactory();
-			factory.addSecret(Dungeon.CORNER, 50);
-			factory.addSecret(Dungeon.ENIKO, 10);
 			factory.addSingle(Dungeon.OSSUARY);
 			factory.addSingle(Dungeon.CREEPER);
 			factory.addSingle(Dungeon.FIRE);
@@ -51,9 +43,6 @@ public enum DungeonFactoryProvider {
 			break;	
 		case MOSSY:
 			factory = new DungeonFactory();
-			factory.addSecret(Dungeon.CORNER, 50);
-			factory.addSecret(Dungeon.BAJ, 10);
-			factory.addSecret(Dungeon.NEBRIS, 10);
 			factory.addSingle(Dungeon.OSSUARY);
 			factory.addSingle(Dungeon.ENDER);
 			factory.addByRatio(Dungeon.CRYPT, 15);

@@ -15,13 +15,10 @@ import com.google.gson.JsonObject;
 
 public class DungeonFactory implements IDungeonFactory {
 
-	private boolean secret;
-	private WeightedRandomizer<Dungeon> secrets;
 	private List<Dungeon> singles;
 	private WeightedRandomizer<Dungeon> multiple;
 
 	public DungeonFactory(){
-		secrets = new WeightedRandomizer<Dungeon>();
 		singles = new ArrayList<Dungeon>();
 		multiple = new WeightedRandomizer<Dungeon>();
 	}
@@ -42,10 +39,6 @@ public class DungeonFactory implements IDungeonFactory {
 		}
 	}
 
-	public void addSecret(Dungeon type, int weight){
-		secrets.add(new WeightedChoice<Dungeon>(type, weight));
-	}
-	
 	public void addSingle(Dungeon type){
 		singles.add(type);
 	}
@@ -71,16 +64,8 @@ public class DungeonFactory implements IDungeonFactory {
 	
 	@Override
 	public IDungeon get(Random rand) {
-		
-		if(secret && !secrets.isEmpty()){
-			secret = false;
-			return Dungeon.getInstance(secrets.get(rand));
-		}
-		
 		if(!singles.isEmpty()) return Dungeon.getInstance(singles.remove(0));
-		
 		if(!multiple.isEmpty()) return Dungeon.getInstance(multiple.get(rand));
-		
 		return Dungeon.getInstance(Dungeon.CORNER);
 	}
 }
