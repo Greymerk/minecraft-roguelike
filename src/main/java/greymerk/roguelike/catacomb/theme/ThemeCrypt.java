@@ -1,18 +1,16 @@
 package greymerk.roguelike.catacomb.theme;
 
 import greymerk.roguelike.catacomb.segment.Segment;
+import greymerk.roguelike.util.WeightedChoice;
+import greymerk.roguelike.util.WeightedRandomizer;
 import greymerk.roguelike.worldgen.BlockJumble;
 import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.MetaBlock;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import net.minecraft.init.Blocks;
 
-public class ThemeStone extends ThemeBase{
+public class ThemeCrypt extends ThemeBase{
 
-	public ThemeStone(){
+	public ThemeCrypt(){
 	
 		BlockJumble stone = new BlockJumble();
 		stone.addBlock(new MetaBlock(Blocks.stonebrick));
@@ -29,8 +27,11 @@ public class ThemeStone extends ThemeBase{
 		this.walls = new BlockSet(walls, stair, walls);
 		this.decor = this.walls;
 
-		this.segments = new ArrayList<Segment>();
-		segments.addAll(Arrays.asList(Segment.SHELF, Segment.INSET));
+		this.segments = new WeightedRandomizer<Segment>();
+		this.segments.add(new WeightedChoice<Segment>((Segment.SHELF), 8));
+		this.segments.add(new WeightedChoice<Segment>((Segment.INSET), 8));
+		this.segments.add(new WeightedChoice<Segment>((Segment.TOMB), 4));
+		this.segments.add(new WeightedChoice<Segment>((Segment.FIREPLACE), 1));
 		
 		this.arch = Segment.ARCH;
 	}

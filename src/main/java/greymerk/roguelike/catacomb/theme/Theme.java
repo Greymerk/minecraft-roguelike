@@ -1,10 +1,8 @@
 package greymerk.roguelike.catacomb.theme;
 
 import greymerk.roguelike.catacomb.segment.Segment;
-
-import java.util.ArrayList;
-import java.util.List;
-
+import greymerk.roguelike.util.WeightedChoice;
+import greymerk.roguelike.util.WeightedRandomizer;
 import net.minecraft.world.biome.BiomeGenBase;
 
 import com.google.gson.JsonArray;
@@ -13,7 +11,7 @@ import com.google.gson.JsonObject;
 
 public enum Theme {
 
-	OAK, SPRUCE, STONE, MOSSY, NETHER, SANDSTONE, QUARTZ, BLING, CHECKER, RAINBOW, SNOW, JUNGLE, BRICK, DARKOAK;
+	OAK, SPRUCE, CRYPT, MOSSY, NETHER, SANDSTONE, QUARTZ, BLING, CHECKER, RAINBOW, SNOW, JUNGLE, BRICK, DARKOAK;
 	
 	public static ITheme getTheme(Theme type){
 		
@@ -22,7 +20,7 @@ public enum Theme {
 		switch(type){
 		case OAK: theme = new ThemeOak(); break;
 		case SPRUCE: theme = new ThemeSpruce(); break;
-		case STONE: theme = new ThemeStone(); break;
+		case CRYPT: theme = new ThemeCrypt(); break;
 		case MOSSY: theme = new ThemeMossy(); break;
 		case NETHER: theme = new ThemeNether(); break;
 		case SANDSTONE: theme = new ThemeSandstone(); break;
@@ -45,7 +43,7 @@ public enum Theme {
 		ITheme theme;
 		BlockSet primary = null;
 		BlockSet secondary = null;
-		List<Segment> segments = null;
+		WeightedRandomizer<Segment> segments = null;
 		Segment arch = null;
 
 		// primary blocks
@@ -61,10 +59,13 @@ public enum Theme {
 		}
 	
 		if(json.has("segments")){
-			segments = new ArrayList<Segment>();
+			segments = new WeightedRandomizer<Segment>();
 			JsonArray data = json.get("segments").getAsJsonArray();
 			for(JsonElement e : data){
-				segments.add(Segment.valueOf(e.getAsString()));
+				JsonObject weighted = e.getAsJsonObject();
+				String type = weighted.get("type").getAsString();
+				int weight = weighted.get("weight").getAsInt();
+				segments.add(new WeightedChoice<Segment>(Segment.valueOf(type), weight));
 			}
 		}
 		
@@ -100,9 +101,9 @@ public enum Theme {
 			return getTheme(DARKOAK);
 		case 2:
 			if(hot && wet) return getTheme(MOSSY);
-			return getTheme(STONE);
+			return getTheme(CRYPT);
 		case 3:
-			if(hot && dry) return getTheme(STONE);
+			if(hot && dry) return getTheme(CRYPT);
 			return getTheme(MOSSY);
 		case 4: return getTheme(NETHER);
 		default: return null;

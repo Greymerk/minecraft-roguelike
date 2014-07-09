@@ -135,6 +135,9 @@ public class CatacombNode {
 	
 	public Cardinal[] getEntrances(){
 		List<Cardinal> dirs = new ArrayList<Cardinal>();
+		
+		dirs.add(this.direction);
+		
 		for(CatacombTunneler tunneler : tunnelers){
 			if(tunneler.isDone()) dirs.add(tunneler.getDirection());
 		}

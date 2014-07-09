@@ -1,12 +1,10 @@
 package greymerk.roguelike.catacomb.theme;
 
 import greymerk.roguelike.catacomb.segment.Segment;
+import greymerk.roguelike.util.WeightedChoice;
+import greymerk.roguelike.util.WeightedRandomizer;
 import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.MetaBlock;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import net.minecraft.init.Blocks;
 
 public class ThemeMossy extends ThemeBase{
@@ -25,8 +23,13 @@ public class ThemeMossy extends ThemeBase{
 		this.walls = new BlockSet(walls, stair, walls);
 		this.decor = this.walls;
 
-		this.segments = new ArrayList<Segment>();
-		segments.addAll(Arrays.asList(Segment.MOSSYMUSHROOM, Segment.SHELF, Segment.INSET));
+		this.segments = new WeightedRandomizer<Segment>();
+		this.segments.add(new WeightedChoice<Segment>((Segment.SILVERFISH), 3));
+		this.segments.add(new WeightedChoice<Segment>((Segment.MUSHROOM), 2));
+		this.segments.add(new WeightedChoice<Segment>((Segment.SHELF), 3));
+		this.segments.add(new WeightedChoice<Segment>((Segment.INSET), 5));
+		this.segments.add(new WeightedChoice<Segment>((Segment.SKULL), 2));
+		this.segments.add(new WeightedChoice<Segment>((Segment.CHEST), 1));
 		
 		this.arch = Segment.MOSSYARCH;
 	}

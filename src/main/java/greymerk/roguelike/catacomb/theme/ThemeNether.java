@@ -1,12 +1,10 @@
 package greymerk.roguelike.catacomb.theme;
 
 import greymerk.roguelike.catacomb.segment.Segment;
+import greymerk.roguelike.util.WeightedChoice;
+import greymerk.roguelike.util.WeightedRandomizer;
 import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.MetaBlock;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import net.minecraft.init.Blocks;
 
 public class ThemeNether extends ThemeBase{
@@ -27,8 +25,11 @@ public class ThemeNether extends ThemeBase{
 		this.walls = new BlockSet(walls, stair, pillar);
 		this.decor = this.walls;
 
-		this.segments = new ArrayList<Segment>();
-		segments.addAll(Arrays.asList(Segment.INSET, Segment.NETHERSTRIPE, Segment.NETHERWART, Segment.NETHERLAVA));
+		this.segments = new WeightedRandomizer<Segment>();
+		this.segments.add(new WeightedChoice<Segment>((Segment.NETHERSTRIPE), 1));
+		this.segments.add(new WeightedChoice<Segment>((Segment.NETHERWART), 1));
+		this.segments.add(new WeightedChoice<Segment>((Segment.INSET), 1));
+		this.segments.add(new WeightedChoice<Segment>((Segment.NETHERLAVA), 1));
 		
 		this.arch = Segment.NETHERARCH;
 	}

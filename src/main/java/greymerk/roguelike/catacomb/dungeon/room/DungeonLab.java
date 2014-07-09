@@ -5,6 +5,8 @@ import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.treasure.TreasureChest;
 import greymerk.roguelike.worldgen.Cardinal;
+import greymerk.roguelike.worldgen.Coord;
+import greymerk.roguelike.worldgen.FlowerPot;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
@@ -158,22 +160,22 @@ public class DungeonLab extends DungeonBase {
 		corner(world, rand, theme, x, y, z);
 		
 		WorldGenPrimitive.setBlock(world, x + 1, y, z, Blocks.stonebrick);
-		WorldGenPrimitive.setBlock(world, x + 1, y + 1, z, Blocks.flower_pot, rand.nextInt(11) + 1, 2, true, true);
+		FlowerPot.generate(world, rand, new Coord(x + 1, y + 1, z));
 		WorldGenPrimitive.setBlock(world, x + 2, y, z, Blocks.farmland);
 		WorldGenPrimitive.setBlock(world, x + 2, y + 1, z, Blocks.carrots);
 		WorldGenPrimitive.setBlock(world, x + 3, y, z, Blocks.farmland);
 		WorldGenPrimitive.setBlock(world, x + 3, y + 1, z, Blocks.carrots);
 		WorldGenPrimitive.setBlock(world, x + 4, y, z, Blocks.stonebrick);
-		WorldGenPrimitive.setBlock(world, x + 4, y + 1, z, Blocks.flower_pot, rand.nextInt(11) + 1, 2, true, true);
+		FlowerPot.generate(world, rand, new Coord(x + 4, y + 1, z));
 		
 		WorldGenPrimitive.setBlock(world, x, y, z + 1, Blocks.stonebrick);
-		WorldGenPrimitive.setBlock(world, x, y + 1, z + 1, Blocks.flower_pot, rand.nextInt(11) + 1, 2, true, true);
+		FlowerPot.generate(world, rand, new Coord(x, y + 1, z + 1));
 		WorldGenPrimitive.setBlock(world, x, y, z + 2, Blocks.soul_sand);
 		WorldGenPrimitive.setBlock(world, x, y + 1, z + 2, Blocks.nether_wart);
 		WorldGenPrimitive.setBlock(world, x, y, z + 3, Blocks.soul_sand);
 		WorldGenPrimitive.setBlock(world, x, y + 1, z + 3, Blocks.nether_wart);
 		WorldGenPrimitive.setBlock(world, x, y, z + 4, Blocks.stonebrick);
-		WorldGenPrimitive.setBlock(world, x, y + 1, z + 4, Blocks.flower_pot, rand.nextInt(11) + 1, 2, true, true);
+		FlowerPot.generate(world, rand, new Coord(x, y + 1, z + 4));
 		
 		WorldGenPrimitive.setBlock(world, x + 1, y, z + 1, Blocks.stonebrick);
 		
@@ -192,20 +194,21 @@ public class DungeonLab extends DungeonBase {
 		corner(world, rand, theme, x, y, z);
 		
 		WorldGenPrimitive.setBlock(world, x + 1, y, z, Blocks.stonebrick);
-		WorldGenPrimitive.setBlock(world, x + 1, y + 1, z, Blocks.flower_pot, rand.nextInt(11) + 1, 2, true, true);
+		FlowerPot.generate(world, rand, new Coord(x + 1, y + 1, z));
 		WorldGenPrimitive.setBlock(world, x + 2, y, z, Blocks.farmland);
 		WorldGenPrimitive.setBlock(world, x + 2, y + 1, z, Blocks.melon_stem);
 		WorldGenPrimitive.setBlock(world, x + 3, y, z, Blocks.farmland);
 		WorldGenPrimitive.setBlock(world, x + 4, y, z, Blocks.stonebrick);
-		WorldGenPrimitive.setBlock(world, x + 4, y + 1, z, Blocks.flower_pot, rand.nextInt(11) + 1, 2, true, true);
+		FlowerPot.generate(world, rand, new Coord(x + 4, y + 1, z));
 		
 		WorldGenPrimitive.setBlock(world, x + 5, y, z + 1, Blocks.stonebrick);
-		WorldGenPrimitive.setBlock(world, x + 5, y + 1, z + 1, Blocks.flower_pot, rand.nextInt(11) + 1, 2, true, true);
+		FlowerPot.generate(world, rand, new Coord(x + 5, y + 1, z + 1));
 		WorldGenPrimitive.setBlock(world, x + 5, y, z + 2, Blocks.farmland);
 		WorldGenPrimitive.setBlock(world, x + 5, y + 1, z + 2, Blocks.pumpkin_stem);
 		WorldGenPrimitive.setBlock(world, x + 5, y, z + 3, Blocks.farmland);
 		WorldGenPrimitive.setBlock(world, x + 5, y, z + 4, Blocks.stonebrick);
 		WorldGenPrimitive.setBlock(world, x + 5, y + 1, z + 4, Blocks.flower_pot, rand.nextInt(11) + 1, 2, true, true);
+		FlowerPot.generate(world, rand, new Coord(x + 5, y + 1, z + 4));
 		
 		WorldGenPrimitive.setBlock(world, x + 4, y, z + 1, Blocks.stonebrick);
 		

@@ -31,13 +31,13 @@ public class ItemBlock extends ItemBase{
 	
 	private static ItemStack pickBlocks(Random rand, int level) {
 
-		int size = 64;
+		int size = rand.nextInt(24) + 8;
 		
 		switch(level){
 		case 0:
 		case 1:
-			if(rand.nextInt(10) == 0) return new ItemStack(Blocks.wool, 16, rand.nextInt(16));
-			if(rand.nextInt(10) == 0) return new ItemStack(Blocks.log, 16, rand.nextInt(4));
+			if(rand.nextInt(10) == 0) return new ItemStack(Blocks.wool, size / 2, rand.nextInt(16));
+			if(rand.nextInt(10) == 0) return new ItemStack(Blocks.log, size / 2, rand.nextInt(4));
 			
 			switch(rand.nextInt(3)){
 			case 0: return new ItemStack(Blocks.stonebrick, size, rand.nextInt(3));
@@ -50,25 +50,25 @@ public class ItemBlock extends ItemBase{
 			switch(rand.nextInt(3)){
 			case 0: return new ItemStack(Blocks.stonebrick, size, rand.nextInt(3));
 			case 1: return new ItemStack(Blocks.gravel, size, rand.nextInt(4));
-			case 2: return new ItemStack(Blocks.stained_hardened_clay, 16, rand.nextInt(16));
+			case 2: return new ItemStack(Blocks.stained_hardened_clay, size / 2, rand.nextInt(16));
 			}
 		case 3:
 			switch(rand.nextInt(5)){
 			case 0: return new ItemStack(Blocks.mossy_cobblestone, size);
 			case 1: return new ItemStack(Blocks.cobblestone, size);
-			case 2: return new ItemStack(Blocks.gravel, 16);
-			case 3: return new ItemStack(Blocks.clay, 16);
+			case 2: return new ItemStack(Blocks.gravel, size / 2);
+			case 3: return new ItemStack(Blocks.clay, size / 2);
 			case 4: return new ItemStack(Blocks.stone, size);
 			}
 		case 4:
-			if(rand.nextInt(10) == 0) return new ItemStack(Blocks.glowstone, 8);
-			if(rand.nextInt(10) == 0) return new ItemStack(Blocks.quartz_block, 8);
+			if(rand.nextInt(10) == 0) return new ItemStack(Blocks.glowstone, size / 4);
+			if(rand.nextInt(10) == 0) return new ItemStack(Blocks.quartz_block, size / 4);
 			
 			switch(rand.nextInt(4)){
 			case 0: return new ItemStack(Blocks.netherrack, size);
 			case 1: return new ItemStack(Blocks.nether_brick, size);
-			case 2: return new ItemStack(Blocks.soul_sand, 16);
-			case 3: return new ItemStack(Blocks.obsidian, 16);
+			case 2: return new ItemStack(Blocks.soul_sand, size / 2);
+			case 3: return new ItemStack(Blocks.obsidian, size / 2);
 			}
 		default: return new ItemStack(Blocks.dirt, size);
 		}

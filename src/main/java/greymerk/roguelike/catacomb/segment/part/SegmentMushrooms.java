@@ -12,7 +12,7 @@ import greymerk.roguelike.worldgen.WorldGenPrimitive;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 
-public class SegmentMossyMushrooms extends SegmentBase {
+public class SegmentMushrooms extends SegmentBase {
 
 	private BlockWeightedRandom mushrooms;
 	
@@ -43,14 +43,10 @@ public class SegmentMossyMushrooms extends SegmentBase {
 		start.add(Cardinal.DOWN, 1);
 		end.add(Cardinal.DOWN, 2);
 		
-		if(rand.nextInt(5) == 0){
-			WorldGenPrimitive.fillRectSolid(world, rand, start, end, new MetaBlock(Blocks.flowing_water), true, true);
-		} else {
-			WorldGenPrimitive.fillRectSolid(world, rand, start, end, new MetaBlock(Blocks.mycelium), true, true);
-			start.add(Cardinal.UP, 1);
-			end.add(Cardinal.UP, 1);
-			WorldGenPrimitive.fillRectSolid(world, rand, start, end, mushrooms, true, true);
-		}
+		WorldGenPrimitive.fillRectSolid(world, rand, start, end, new MetaBlock(Blocks.mycelium), true, true);
+		start.add(Cardinal.UP, 1);
+		end.add(Cardinal.UP, 1);
+		WorldGenPrimitive.fillRectSolid(world, rand, start, end, mushrooms, true, true);
 		
 		for(Cardinal d : orth){
 			cursor = new Coord(x, y, z);

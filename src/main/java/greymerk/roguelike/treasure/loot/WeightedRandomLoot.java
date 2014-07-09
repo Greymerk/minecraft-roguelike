@@ -2,7 +2,7 @@ package greymerk.roguelike.treasure.loot;
 
 
 import greymerk.roguelike.util.IWeighted;
-import greymerk.roguelike.util.nbt.JsonNBT;
+import greymerk.roguelike.util.JsonNBT;
 
 import java.util.Random;
 

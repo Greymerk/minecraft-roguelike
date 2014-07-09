@@ -5,6 +5,7 @@ import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
+import greymerk.roguelike.worldgen.Spawner;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
 
 import java.util.Random;
@@ -12,7 +13,7 @@ import java.util.Random;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 
-public class SegmentInset extends SegmentBase {
+public class SegmentSpawner extends SegmentBase {
 
 	
 	@Override
@@ -61,5 +62,11 @@ public class SegmentInset extends SegmentBase {
 		cursor.add(Cardinal.UP, 1);
 		stair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.reverse(dir), true));
 		WorldGenPrimitive.setBlock(world, rand, cursor, stair, true, true);
+		
+		Coord shelf = new Coord(x, y, z);
+		shelf.add(dir, 3);
+		shelf.add(Cardinal.UP, 1);
+		
+		Spawner.generate(world, rand, shelf.getX(), shelf.getY(), shelf.getZ());
 	}
 }

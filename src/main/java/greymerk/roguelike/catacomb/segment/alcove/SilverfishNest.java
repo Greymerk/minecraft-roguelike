@@ -29,17 +29,14 @@ public class SilverfishNest implements IAlcove{
 		nest(world, rand, centre.getX(), centre.getY(), centre.getZ());
 		
 		Coord start = new Coord(corridor);
-		start.add(Cardinal.UP, 1);
+		start.add(Cardinal.UP);
 		
 		Coord end = new Coord(centre);
-		end.add(Cardinal.UP, 1);
+		end.add(Cardinal.UP);
 		end.add(Cardinal.reverse(dir), 1);
 		
 		WorldGenPrimitive.fillRectSolid(world, rand, start, end, new MetaBlock(Blocks.air), true, true);
-
-		Spawner type = rand.nextInt(5) == 0 ? Spawner.CAVESPIDER : Spawner.SILVERFISH;
-		
-		if(rand.nextBoolean()) Spawner.generate(world, rand, centre.getX(), centre.getY(), centre.getZ(), type);
+		Spawner.generate(world, rand, centre.getX(), centre.getY(), centre.getZ(), Spawner.SILVERFISH);
 		
 	}
 

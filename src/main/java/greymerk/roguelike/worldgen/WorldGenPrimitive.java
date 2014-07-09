@@ -115,7 +115,9 @@ public class WorldGenPrimitive {
 	}
 	
 
-	
+	public static List<Coord> getRectSolid(Coord start, Coord end){
+		return getRectSolid(start.getX(), start.getY(), start.getZ(), end.getX(), end.getY(), end.getZ());
+	}
 	
 	public static List<Coord> getRectSolid(int x1, int y1, int z1, int x2, int y2, int z2){
 		
@@ -135,6 +137,10 @@ public class WorldGenPrimitive {
 		}	
 		
 		return points;
+	}
+	
+	public static List<Coord> getRectHollow(Coord start, Coord end){
+		return getRectHollow(start.getX(), start.getY(), start.getZ(), end.getX(), end.getY(), end.getZ());
 	}
 	
 	public static List<Coord> getRectHollow(int x1, int y1, int z1, int x2, int y2, int z2){

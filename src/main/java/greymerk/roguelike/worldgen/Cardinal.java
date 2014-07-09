@@ -7,8 +7,8 @@ public enum Cardinal {
 	
 	public static Cardinal[] directions = {NORTH, SOUTH, EAST, WEST};
 	
-	public static int getBlockMeta(Cardinal in){
-		switch(in){
+	public static int getBlockMeta(Cardinal dir){
+		switch(dir){
 		case NORTH: return 2;
 		case EAST: return 1;
 		case WEST: return 0;
@@ -18,8 +18,8 @@ public enum Cardinal {
 	}
 	
 	
-	public static Cardinal reverse(Cardinal in){
-		switch(in){
+	public static Cardinal reverse(Cardinal dir){
+		switch(dir){
 		case NORTH: return SOUTH;
 		case EAST: return WEST;
 		case WEST: return EAST;

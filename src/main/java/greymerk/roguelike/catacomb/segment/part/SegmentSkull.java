@@ -5,6 +5,7 @@ import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
+import greymerk.roguelike.worldgen.Skull;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
 
 import java.util.Random;
@@ -12,7 +13,7 @@ import java.util.Random;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 
-public class SegmentInset extends SegmentBase {
+public class SegmentSkull extends SegmentBase {
 
 	
 	@Override
@@ -61,5 +62,20 @@ public class SegmentInset extends SegmentBase {
 		cursor.add(Cardinal.UP, 1);
 		stair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.reverse(dir), true));
 		WorldGenPrimitive.setBlock(world, rand, cursor, stair, true, true);
+		
+		
+		Coord shelf = new Coord(x, y, z);
+		shelf.add(dir, 3);
+		shelf.add(Cardinal.UP, 1);
+
+		if(world.isAirBlock(shelf.getX(), shelf.getY() - 1, shelf.getZ())) return;
+		
+		Skull type;
+		if(rand.nextInt(5) == 0){
+			type = Skull.ZOMBIE;
+		} else {
+			type = rand.nextInt(10) == 0 ? Skull.WITHER : Skull.SKELETON;				
+			Skull.set(world, rand, shelf, Cardinal.reverse(dir), type);
+		}
 	}
 }

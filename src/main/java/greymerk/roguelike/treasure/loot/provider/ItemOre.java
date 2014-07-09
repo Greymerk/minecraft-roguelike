@@ -40,7 +40,7 @@ public class ItemOre extends ItemBase{
 		case 1:			
 		case 0:
 			if(rand.nextInt(10) == 0) return new ItemStack(Items.iron_ingot, 1);
-			if(rand.nextInt(5) == 0) return new ItemStack(Items.leather, 3 + (rand.nextInt(8) * (1 + level)));
+			if(rand.nextInt(5) == 0) return new ItemStack(Items.leather, 2 + ((rand.nextInt(4) * (1 + level))));
 			return new ItemStack(Items.coal, 1 + level + rand.nextInt(2 + level));
 		default:
 			return new ItemStack(Items.coal, 1);

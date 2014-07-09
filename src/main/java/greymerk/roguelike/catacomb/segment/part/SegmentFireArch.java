@@ -12,7 +12,7 @@ import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
 
-public class SegmentFire extends SegmentBase {
+public class SegmentFireArch extends SegmentBase {
 
 
 	
