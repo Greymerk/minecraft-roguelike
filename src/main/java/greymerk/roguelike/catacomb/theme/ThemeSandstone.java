@@ -26,8 +26,10 @@ public class ThemeSandstone extends ThemeBase{
 		this.decor =  new BlockSet(SegmentWall, stair, pillar);
 		
 		this.segments = new WeightedRandomizer<Segment>();
-		this.segments.add(new WeightedChoice<Segment>((Segment.SHELF), 1));
-		this.segments.add(new WeightedChoice<Segment>((Segment.INSET), 1));
+		this.segments.add(new WeightedChoice<Segment>((Segment.SHELF), 6));
+		this.segments.add(new WeightedChoice<Segment>((Segment.INSET), 6));
+		this.segments.add(new WeightedChoice<Segment>((Segment.CHEST), 1));
+		this.segments.add(new WeightedChoice<Segment>((Segment.SPAWNER), 1));
 		
 		this.arch = Segment.ARCH;
 	}

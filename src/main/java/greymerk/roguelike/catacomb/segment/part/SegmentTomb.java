@@ -73,6 +73,7 @@ public class SegmentTomb extends SegmentBase {
 		end.add(dir, 3);
 		List<Coord> box = WorldGenPrimitive.getRectHollow(start, end);
 		
+		// make sure the box is solid wall
 		for(Coord c : box){
 			if(!world.getBlock(c.getX(), c.getY(), c.getZ()).getMaterial().isSolid()) return;
 		}

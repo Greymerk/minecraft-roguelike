@@ -24,12 +24,14 @@ public class ThemeMossy extends ThemeBase{
 		this.decor = this.walls;
 
 		this.segments = new WeightedRandomizer<Segment>();
-		this.segments.add(new WeightedChoice<Segment>((Segment.SILVERFISH), 3));
+		this.segments.add(new WeightedChoice<Segment>((Segment.SILVERFISH), 1));
 		this.segments.add(new WeightedChoice<Segment>((Segment.MUSHROOM), 2));
 		this.segments.add(new WeightedChoice<Segment>((Segment.SHELF), 3));
 		this.segments.add(new WeightedChoice<Segment>((Segment.INSET), 5));
 		this.segments.add(new WeightedChoice<Segment>((Segment.SKULL), 2));
+		this.segments.add(new WeightedChoice<Segment>((Segment.SPAWNER), 2));
 		this.segments.add(new WeightedChoice<Segment>((Segment.CHEST), 1));
+		this.segments.add(new WeightedChoice<Segment>((Segment.TOMB), 1));
 		
 		this.arch = Segment.MOSSYARCH;
 	}

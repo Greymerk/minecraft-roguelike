@@ -24,9 +24,11 @@ public class ThemeBrick extends ThemeBase{
 		this.decor =  new BlockSet(SegmentWall, SegmentStair, pillar);
 		
 		this.segments = new WeightedRandomizer<Segment>();
-		this.segments.add(new WeightedChoice<Segment>((Segment.FIREARCH), 1));
-		this.segments.add(new WeightedChoice<Segment>((Segment.SHELF), 1));
-		this.segments.add(new WeightedChoice<Segment>((Segment.INSET), 1));
+		this.segments.add(new WeightedChoice<Segment>((Segment.INSET), 3));
+		this.segments.add(new WeightedChoice<Segment>((Segment.FLOWERS), 4));
+		this.segments.add(new WeightedChoice<Segment>((Segment.BOOKS), 1));
+		this.segments.add(new WeightedChoice<Segment>((Segment.WHEAT), 2));
+		this.segments.add(new WeightedChoice<Segment>((Segment.FIREPLACE), 2));
 		
 		this.arch = Segment.ARCH;
 	}

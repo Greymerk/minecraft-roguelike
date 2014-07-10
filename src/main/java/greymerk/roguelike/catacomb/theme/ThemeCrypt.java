@@ -28,9 +28,12 @@ public class ThemeCrypt extends ThemeBase{
 		this.decor = this.walls;
 
 		this.segments = new WeightedRandomizer<Segment>();
-		this.segments.add(new WeightedChoice<Segment>((Segment.SHELF), 8));
-		this.segments.add(new WeightedChoice<Segment>((Segment.INSET), 8));
-		this.segments.add(new WeightedChoice<Segment>((Segment.TOMB), 4));
+		this.segments.add(new WeightedChoice<Segment>((Segment.SHELF), 16));
+		this.segments.add(new WeightedChoice<Segment>((Segment.INSET), 16));
+		this.segments.add(new WeightedChoice<Segment>((Segment.TOMB), 8));
+		this.segments.add(new WeightedChoice<Segment>((Segment.SKULL), 4));
+		this.segments.add(new WeightedChoice<Segment>((Segment.CHEST), 2));
+		this.segments.add(new WeightedChoice<Segment>((Segment.BOOKS), 1));
 		this.segments.add(new WeightedChoice<Segment>((Segment.FIREPLACE), 1));
 		
 		this.arch = Segment.ARCH;

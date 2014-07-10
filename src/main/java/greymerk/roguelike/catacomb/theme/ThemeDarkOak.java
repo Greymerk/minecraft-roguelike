@@ -24,10 +24,10 @@ public class ThemeDarkOak extends ThemeBase{
 		this.segments = new WeightedRandomizer<Segment>();
 		this.segments.add(new WeightedChoice<Segment>((Segment.BOOKS), 1));
 		this.segments.add(new WeightedChoice<Segment>((Segment.CHEST), 1));
-		this.segments.add(new WeightedChoice<Segment>((Segment.SPAWNER), 1));
-		this.segments.add(new WeightedChoice<Segment>((Segment.FLOWERS), 2));
+		this.segments.add(new WeightedChoice<Segment>((Segment.SPAWNER), 2));
+		this.segments.add(new WeightedChoice<Segment>((Segment.FLOWERS), 1));
 		this.segments.add(new WeightedChoice<Segment>((Segment.INSET), 4));
-		this.segments.add(new WeightedChoice<Segment>((Segment.SHELF), 5));
+		this.segments.add(new WeightedChoice<Segment>((Segment.SHELF), 4));
 		
 		this.arch = Segment.ARCH;
 	}

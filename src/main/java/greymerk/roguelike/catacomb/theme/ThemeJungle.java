@@ -27,9 +27,13 @@ public class ThemeJungle extends ThemeBase{
 		this.decor = new BlockSet(new MetaBlock(Blocks.stonebrick, 3), stair, pillar);
 
 		this.segments = new WeightedRandomizer<Segment>();
-		this.segments.add(new WeightedChoice<Segment>((Segment.JUNGLE), 1));
-		this.segments.add(new WeightedChoice<Segment>((Segment.SHELF), 1));
-		this.segments.add(new WeightedChoice<Segment>((Segment.INSET), 1));
+		this.segments.add(new WeightedChoice<Segment>((Segment.JUNGLE), 6));
+		this.segments.add(new WeightedChoice<Segment>((Segment.SHELF), 4));
+		this.segments.add(new WeightedChoice<Segment>((Segment.INSET), 4));
+		this.segments.add(new WeightedChoice<Segment>((Segment.FIREPLACE), 1));
+		this.segments.add(new WeightedChoice<Segment>((Segment.CHEST), 2));
+		this.segments.add(new WeightedChoice<Segment>((Segment.SKULL), 1));
+		this.segments.add(new WeightedChoice<Segment>((Segment.SPAWNER), 1));
 		
 		this.arch = Segment.MOSSYARCH;
 	}

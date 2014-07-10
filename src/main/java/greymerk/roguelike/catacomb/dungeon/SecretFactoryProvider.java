@@ -14,7 +14,7 @@ public class SecretFactoryProvider {
 			break;
 		case 1:
 			if(rand.nextInt(10) == 0) factory.addRoom(Dungeon.AVIDYA);
-			if(rand.nextInt(10) == 0) factory.addRoom(Dungeon.ETHO);
+			factory.addRoom(Dungeon.ETHO);
 			break;
 		case 2:
 			if(rand.nextInt(10) == 0) factory.addRoom(Dungeon.ENIKO);

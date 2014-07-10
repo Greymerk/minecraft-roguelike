@@ -20,8 +20,6 @@ public class SegmentWheat extends SegmentBase {
 	@Override
 	protected void genWall(World world, Random rand, CatacombLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
 		
-		MetaBlock stair = theme.getPrimaryStair();
-		
 		Coord cursor;
 		Coord start;
 		Coord end;
@@ -35,13 +33,21 @@ public class SegmentWheat extends SegmentBase {
 		start = new Coord(x, y, z);
 		start.add(dir, 2);
 		end = new Coord(start);
+		start.add(orth[0]);
+		end.add(orth[1]);
+		start.add(Cardinal.UP, 2);
+		end.add(dir);
+		WorldGenPrimitive.fillRectSolid(world, rand, start, end, theme.getSecondaryWall(), true, true);
+		
+		start = new Coord(x, y, z);
+		start.add(dir, 2);
+		end = new Coord(start);
 		start.add(orth[0], 1);
 		end.add(orth[1], 1);
 		end.add(Cardinal.UP, 1);
 		WorldGenPrimitive.fillRectSolid(world, rand, start, end, new MetaBlock(Blocks.air), true, true);
 		start.add(Cardinal.DOWN, 1);
 		end.add(Cardinal.DOWN, 2);
-		
 
 		WorldGenPrimitive.fillRectSolid(world, rand, start, end, new MetaBlock(Blocks.farmland), true, true);
 		start.add(Cardinal.UP, 1);
@@ -65,6 +71,7 @@ public class SegmentWheat extends SegmentBase {
 			cursor.add(dir, 2);
 			cursor.add(d, 1);
 			cursor.add(Cardinal.UP, 1);
+			MetaBlock stair = theme.getSecondaryStair();
 			stair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.reverse(d), true));
 			WorldGenPrimitive.setBlock(world, rand, cursor, stair, true, true);
 		}
