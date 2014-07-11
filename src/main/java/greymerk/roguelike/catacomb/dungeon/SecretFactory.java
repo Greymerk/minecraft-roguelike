@@ -28,12 +28,14 @@ public class SecretFactory {
 		secrets.add(new SecretRoom(type, count));
 	}
 	
-	public void genRoom(World world, Random rand, ITheme theme, Cardinal dir, Coord pos){
+	public boolean genRoom(World world, Random rand, ITheme theme, Cardinal dir, Coord pos){
 		for(SecretRoom room : secrets){
 			if(room.isValid(world, rand, dir, pos)){
 				room.genRoom(world, rand, theme, dir, pos);
+				return true;
 			}
 		}
+		return false;
 	}
 	
 	private class SecretRoom{

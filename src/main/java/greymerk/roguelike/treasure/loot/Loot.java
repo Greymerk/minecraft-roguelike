@@ -12,6 +12,7 @@ import greymerk.roguelike.treasure.loot.provider.ItemOre;
 import greymerk.roguelike.treasure.loot.provider.ItemPotion;
 import greymerk.roguelike.treasure.loot.provider.ItemRecord;
 import greymerk.roguelike.treasure.loot.provider.ItemSmithy;
+import greymerk.roguelike.treasure.loot.provider.ItemSpecialty;
 import greymerk.roguelike.treasure.loot.provider.ItemSupply;
 import greymerk.roguelike.treasure.loot.provider.ItemTool;
 import greymerk.roguelike.treasure.loot.provider.ItemWeapon;
@@ -39,7 +40,7 @@ import net.minecraft.world.World;
 
 public enum Loot {
 
-	WEAPON, ARMOUR, BLOCK, JUNK, ORE, TOOL, POTION, FOOD, ENCHANTBOOK, ENCHANTBONUS, SUPPLY, MUSIC, SMITHY;
+	WEAPON, ARMOUR, BLOCK, JUNK, ORE, TOOL, POTION, FOOD, ENCHANTBOOK, ENCHANTBONUS, SUPPLY, MUSIC, SMITHY, SPECIAL;
 	
 	private static final int NUM_LEVELS = 5;
 	private static Map<String, LootProvider> loot = new HashMap<String, LootProvider>();
@@ -70,6 +71,7 @@ public enum Loot {
 					case SUPPLY: loots.add(i, new ItemSupply(1000, i)); continue;
 					case MUSIC: loots.add(i, new ItemRecord(1000, i)); continue;
 					case SMITHY: loots.add(i, new ItemSmithy(1000, i)); continue;
+					case SPECIAL: loots.add(i, new ItemSpecialty(1000, i)); continue;
 				}
 			}
 		}

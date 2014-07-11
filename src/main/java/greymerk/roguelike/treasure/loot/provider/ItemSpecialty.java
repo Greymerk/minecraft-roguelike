@@ -11,11 +11,12 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
-public class ItemSpecialty {
-
+public class ItemSpecialty extends ItemBase {
 	
-
-	
+	public ItemSpecialty(int weight, int level){
+		super(weight, level);
+	}
+		
 	public static ItemStack getRandomItem(Random rand, int level){
 		return getRandomItem(Equipment.values()[rand.nextInt(Equipment.values().length)], rand, level);
 	}
@@ -249,10 +250,10 @@ public class ItemSpecialty {
 			item.addEnchantment(Enchantment.protection, getProtectionLevel(quality, rand));
 			item.addEnchantment(Enchantment.respiration, 3);
 			item.addEnchantment(Enchantment.aquaAffinity, 1);
-			suffix = "of diving";
+			suffix = "of Diving";
 		} else if(rand.nextInt(3) == 0){
 			item.addEnchantment(Enchantment.projectileProtection, getProtectionLevel(quality, rand));
-			suffix = "of the archer";
+			suffix = "of Deflection";
 		} else {		
 			item.addEnchantment(Enchantment.protection, getProtectionLevel(quality, rand));
 			suffix = "of Defense";
@@ -306,7 +307,7 @@ public class ItemSpecialty {
 			suffix = "of Lightness";
 		} else if(rand.nextInt(3) == 0){
 			item.addEnchantment(Enchantment.projectileProtection, getProtectionLevel(quality, rand));
-			suffix = "of Archery";
+			suffix = "of Deflection";
 		} else {
 			item.addEnchantment(Enchantment.protection, getProtectionLevel(quality, rand));
 			suffix = "of Defense";
@@ -358,7 +359,7 @@ public class ItemSpecialty {
 			suffix = "of Integrity";
 		} else if(rand.nextInt(3) == 0){
 			item.addEnchantment(Enchantment.projectileProtection, getProtectionLevel(quality, rand));
-			suffix = "of Archery";
+			suffix = "of Deflection";
 		} else {
 			item.addEnchantment(Enchantment.protection, getProtectionLevel(quality, rand));
 			suffix = "of Defense";
@@ -393,7 +394,7 @@ public class ItemSpecialty {
 			break;
 		case DIAMOND:
 			item = new ItemStack(Items.diamond_chestplate);
-			canonical = "Armour";
+			canonical = "Plate";
 			break;
 		default:
 			item = new ItemStack(Items.leather_chestplate);
@@ -410,7 +411,7 @@ public class ItemSpecialty {
 			suffix = "of Integrity";
 		} else if(rand.nextInt(3) == 0){
 			item.addEnchantment(Enchantment.projectileProtection, getProtectionLevel(quality, rand));
-			suffix = "of Archery";
+			suffix = "of Deflection";
 		} else {
 			item.addEnchantment(Enchantment.protection, getProtectionLevel(quality, rand));
 			suffix = "of Defense";
@@ -461,8 +462,24 @@ public class ItemSpecialty {
 		case STONE: return "Riveted";
 		case IRON: return "Gothic";
 		case GOLD: return "Jewelled";
-		case DIAMOND: return "Magic";
+		case DIAMOND: return "Shiny";
 		default: return "Strange";
 		}
+	}
+
+	@Override
+	public ItemStack getLootItem(Random rand, int level) {
+		
+		Quality q;
+		switch(level){
+		case 0: q = Quality.WOOD; break;
+		case 1: q = Quality.STONE; break;
+		case 2: q = Quality.IRON; break;
+		case 3:	q = Quality.GOLD; break;
+		case 4: q = Quality.DIAMOND; break;
+		default: q = Quality.WOOD; break;
+		}
+		
+		return getRandomItem(Equipment.values()[rand.nextInt(Equipment.values().length)], rand, q);
 	}		
 }

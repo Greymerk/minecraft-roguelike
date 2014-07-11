@@ -151,7 +151,7 @@ public class DungeonsCrypt extends DungeonBase {
 					Spawner.generate(world, rand, cursor, spawnerType);
 					
 					cursor.add(orth, 1);
-					TreasureChest[] types = {TreasureChest.ARMOUR, TreasureChest.WEAPONS};
+					TreasureChest[] types = {TreasureChest.ARMOUR, TreasureChest.WEAPONS, TreasureChest.SPECIAL};
 					TreasureChest chestType = types[rand.nextInt(types.length)];
 					TreasureChest.generate(world, rand, cursor, chestType);
 				}

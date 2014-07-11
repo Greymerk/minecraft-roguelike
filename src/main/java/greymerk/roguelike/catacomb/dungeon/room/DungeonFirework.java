@@ -41,7 +41,7 @@ public class DungeonFirework implements IDungeon {
 		end.add(orth[1], 4);
 		start.add(Cardinal.DOWN);
 		end.add(Cardinal.UP, 3);
-		WorldGenPrimitive.fillRectHollow(world, rand, start, end, new MetaBlock(Blocks.cobblestone), true, true);
+		WorldGenPrimitive.fillRectHollow(world, rand, start, end, new MetaBlock(Blocks.cobblestone), false, true);
 		
 		start = new Coord(x, y, z);
 		start.add(orth[0], 2);
@@ -139,32 +139,6 @@ public class DungeonFirework implements IDungeon {
 		return false;
 	}
 
-	@Override
-	public int getSize() {
-		return 8;
-	}
-
-	@Override
-	public boolean validLocation(World world, Cardinal dir, int x, int y, int z) {
-		Coord start;
-		Coord end;
-		
-		start = new Coord(x, y, z);
-		end = new Coord(start);
-		start.add(Cardinal.reverse(dir), 9);
-		end.add(dir, 9);
-		Cardinal[] orth = Cardinal.getOrthogonal(dir);
-		start.add(orth[0], 4);
-		end.add(orth[1], 4);
-		start.add(Cardinal.DOWN);
-		end.add(Cardinal.UP, 3);
-		
-		for(Coord c : WorldGenPrimitive.getRectHollow(start, end)){
-			if(world.isAirBlock(c.getX(), c.getY(), c.getZ())) return false;
-		}
-		
-		return true;
-	}
 
 	private void launcher(World world, Random rand, Cardinal dir, Coord pos){
 		Coord cursor = new Coord(pos);
@@ -199,7 +173,7 @@ public class DungeonFirework implements IDungeon {
 			if(world.getBlock(top.getX(), top.getY(), top.getZ()).getMaterial().isSolid()) break;
 		}
 		
-		if(top.getY() >= 80) return;
+		if(top.getY() >= 100) return;
 		
 		Coord start = new Coord(cursor);
 		start.add(Cardinal.UP);
@@ -258,4 +232,33 @@ public class DungeonFirework implements IDungeon {
 		end.add(orth[1], 2);
 		WorldGenPrimitive.fillRectSolid(world, rand, start, end, cob, true, true);
 	}
+	
+	
+	@Override
+	public int getSize() {
+		return 10;
+	}
+
+	@Override
+	public boolean validLocation(World world, Cardinal dir, int x, int y, int z) {
+		Coord start;
+		Coord end;
+		
+		start = new Coord(x, y, z);
+		end = new Coord(start);
+		start.add(Cardinal.reverse(dir), 9);
+		end.add(dir, 9);
+		Cardinal[] orth = Cardinal.getOrthogonal(dir);
+		start.add(orth[0], 5);
+		end.add(orth[1], 5);
+		start.add(Cardinal.DOWN);
+		end.add(Cardinal.UP, 3);
+		
+		for(Coord c : WorldGenPrimitive.getRectHollow(start, end)){
+			if(world.isAirBlock(c.getX(), c.getY(), c.getZ())) return false;
+		}
+		
+		return true;
+	}
+
 }

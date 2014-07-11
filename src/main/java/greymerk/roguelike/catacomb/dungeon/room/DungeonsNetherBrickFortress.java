@@ -50,7 +50,7 @@ public class DungeonsNetherBrickFortress extends DungeonBase {
 		buildFloor();
 		buildRoof();
 		
-		ArrayList<TreasureChest> types = new ArrayList<TreasureChest>(Arrays.asList(TreasureChest.WEAPONS));		
+		ArrayList<TreasureChest> types = new ArrayList<TreasureChest>(Arrays.asList(TreasureChest.SPECIAL));		
 		TreasureChest.createChests(world, rand, 2, WorldGenPrimitive.getRectSolid(
 				originX - 6, originY, originZ - 6,
 				originX + 6, originY, originZ + 6),
@@ -141,7 +141,7 @@ public class DungeonsNetherBrickFortress extends DungeonBase {
 			int y = block.getY();
 			int z = block.getZ();
 			
-			if(rand.nextInt(15) == 0){
+			if(rand.nextInt(20) == 0){
 				Spawner type = this.pickMobSpawner(rand);
 				Spawner.generate(world, rand, x, y, z, type);
 				continue;

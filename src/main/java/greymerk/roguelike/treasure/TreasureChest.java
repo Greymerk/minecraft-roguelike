@@ -15,13 +15,33 @@ import net.minecraft.world.World;
 
 public enum TreasureChest {
 
-	ARMOUR, WEAPONS, BLOCKS, ENCHANTING, FOOD, ORE, POTIONS, STARTER, TOOLS, SUPPLIES, SMITH, MUSIC;
+	ARMOUR, WEAPONS, BLOCKS, ENCHANTING, FOOD, ORE, POTIONS, STARTER, TOOLS, SUPPLIES, SMITH, MUSIC, SPECIAL;
 	
 	public static final List<TreasureChest> level0 = new ArrayList<TreasureChest>(Arrays.asList(ORE, TOOLS, ARMOUR, WEAPONS, FOOD));
 	public static final List<TreasureChest> level1 = new ArrayList<TreasureChest>(Arrays.asList(ORE, TOOLS, ARMOUR, WEAPONS, FOOD));
 	public static final List<TreasureChest> level2 = new ArrayList<TreasureChest>(Arrays.asList(ORE, TOOLS, ARMOUR, WEAPONS));
 	public static final List<TreasureChest> level3 = new ArrayList<TreasureChest>(Arrays.asList(ORE, TOOLS, ARMOUR, WEAPONS));
 	public static final List<TreasureChest> level4 = new ArrayList<TreasureChest>(Arrays.asList(ORE, TOOLS, ARMOUR, WEAPONS));
+	
+	private static ITreasureChest getChest(TreasureChest type) {
+		
+		switch(type){
+		case ARMOUR: return new TreasureChestArmour();
+		case WEAPONS: return new TreasureChestWeapons();
+		case BLOCKS: return new TreasureChestBlocks();
+		case ENCHANTING: return new TreasureChestEnchanting();
+		case FOOD: return new TreasureChestFood();
+		case ORE: return new TreasureChestOre();
+		case POTIONS: return new TreasureChestPotions();
+		case STARTER: return new TreasureChestStarter();
+		case TOOLS: return new TreasureChestTools();
+		case SUPPLIES: return new TreasureChestSupplies();
+		case SMITH: return new TreasureChestSmithy();
+		case MUSIC: return new TreasureChestMusic();
+		case SPECIAL: return new TreasureChestSpecialty();
+		default: return new TreasureChestFood();
+		}
+	}
 	
 	public static void generate(World world, Random rand, int posX, int posY, int posZ){
 		generate(world, rand, posX, posY, posZ, Catacomb.getLevel(posY), false);
@@ -104,24 +124,7 @@ public enum TreasureChest {
 		}
 	}
 	
-	private static ITreasureChest getChest(TreasureChest type) {
-		
-		switch(type){
-		case ARMOUR: return new TreasureChestArmour();
-		case WEAPONS: return new TreasureChestWeapons();
-		case BLOCKS: return new TreasureChestBlocks();
-		case ENCHANTING: return new TreasureChestEnchanting();
-		case FOOD: return new TreasureChestFood();
-		case ORE: return new TreasureChestOre();
-		case POTIONS: return new TreasureChestPotions();
-		case STARTER: return new TreasureChestStarter();
-		case TOOLS: return new TreasureChestTools();
-		case SUPPLIES: return new TreasureChestSupplies();
-		case SMITH: return new TreasureChestSmithy();
-		case MUSIC: return new TreasureChestMusic();
-		default: return new TreasureChestFood();
-		}
-	}
+
 
 	private static TreasureChest getChestType(Random rand, int level){		
 		

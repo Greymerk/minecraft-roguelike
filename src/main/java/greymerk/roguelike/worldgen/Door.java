@@ -8,11 +8,15 @@ public enum Door {
 
 	IRON, WOOD;
 	
-	public static void generate(World world, int x, int y, int z, Cardinal dir, Door type){
-		generate(world, x, y, z, dir, type, false);
+	public static void generate(World world, Coord pos, Cardinal dir, Door type){
+		generate(world, pos, dir, type, false);
 	}
 	
-	public static void generate(World world, int x, int y, int z, Cardinal dir, Door type, boolean open){
+	public static void generate(World world, Coord pos, Cardinal dir, Door type, boolean open){
+		
+		int x = pos.getX();
+		int y = pos.getY();
+		int z = pos.getZ();
 		
 		MetaBlock doorBase = new MetaBlock(getBlockId(type), getMeta(false, dir, open, false));
 		doorBase.setBlock(world, x, y, z);

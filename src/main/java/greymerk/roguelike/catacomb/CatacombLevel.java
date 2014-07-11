@@ -106,12 +106,14 @@ public class CatacombLevel {
 			toGenerate.generate(world, rand, theme, node.getEntrances(), x, y, z);
 		}
 		
+		generateLevelLink(world, rand, start.getX(), start.getY(), start.getZ());
+		
 		// tunnel segment features
 		for (CatacombNode node : nodes){
 			node.segments();
 		}
 		
-		generateLevelLink(world, rand, start.getX(), start.getY(), start.getZ());
+
 	}
 	
 	private void generateLevelLink(World world, Random rand, int originX, int originY, int originZ) {
@@ -263,7 +265,7 @@ public class CatacombLevel {
 		return this.nodes.size();
 	}
 	
-	public void genSecret(Cardinal dir, Coord pos){
-		this.secrets.genRoom(world, rand, theme, dir, pos);
+	public boolean genSecret(Cardinal dir, Coord pos){
+		return this.secrets.genRoom(world, rand, theme, dir, pos);
 	}
 }

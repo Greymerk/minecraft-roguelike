@@ -31,6 +31,7 @@ public class Repeater {
 		
 		MetaBlock repeater = new MetaBlock(Blocks.unpowered_repeater, meta);
 		repeater.setBlock(world, pos);
+		world.scheduleBlockUpdate(pos.getX(), pos.getY(), pos.getZ(), Blocks.unpowered_repeater, 1);
 	}
 	
 }

@@ -75,7 +75,7 @@ public class PrisonCell implements IAlcove{
 
 		WorldGenPrimitive.setBlock(world, x, y, z + 2, Blocks.stone_pressure_plate);
 		if(rand.nextBoolean()) Spawner.generate(world, rand, x, y - 1, z + 1, Spawner.ZOMBIE);
-		Door.generate(world, x, y, z + 3, Cardinal.NORTH, Door.IRON);
+		Door.generate(world, new Coord(x, y, z + 3), Cardinal.NORTH, Door.IRON);
 	}
 
 	
@@ -95,7 +95,7 @@ public class PrisonCell implements IAlcove{
 
 		WorldGenPrimitive.setBlock(world, x, y, z - 2, Blocks.stone_pressure_plate);
 		if(rand.nextBoolean()) Spawner.generate(world, rand, x, y - 1, z - 1, Spawner.ZOMBIE);
-		Door.generate(world, x, y, z - 3, Cardinal.SOUTH, Door.IRON);		
+		Door.generate(world, new Coord(x, y, z - 3), Cardinal.SOUTH, Door.IRON);		
 	}
 	
 	private void east(World world, Random rand, Coord corridor, Coord centre){
@@ -114,7 +114,7 @@ public class PrisonCell implements IAlcove{
 
 		WorldGenPrimitive.setBlock(world, x - 2, y, z, Blocks.stone_pressure_plate);
 		if(rand.nextBoolean()) Spawner.generate(world, rand, x - 1, y - 1, z, Spawner.ZOMBIE);
-		Door.generate(world, x - 3, y, z, Cardinal.EAST, Door.IRON);
+		Door.generate(world, new Coord(x - 3, y, z), Cardinal.EAST, Door.IRON);
 	}	
 
 	private void west(World world, Random rand, Coord corridor, Coord centre){
@@ -133,7 +133,7 @@ public class PrisonCell implements IAlcove{
 
 		WorldGenPrimitive.setBlock(world, x + 2, y, z, Blocks.stone_pressure_plate);
 		if(rand.nextBoolean()) Spawner.generate(world, rand, x + 1, y - 1, z, Spawner.ZOMBIE);
-		Door.generate(world, x + 3, y, z, Cardinal.WEST, Door.IRON);
+		Door.generate(world, new Coord(x + 3, y, z), Cardinal.WEST, Door.IRON);
 	}	
 	
 	
