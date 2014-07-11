@@ -26,7 +26,7 @@ public class ThemeNether extends ThemeBase{
 		this.decor = this.walls;
 
 		this.segments = new WeightedRandomizer<Segment>();
-		this.segments.add(new WeightedChoice<Segment>((Segment.SPAWNER), 1));
+		this.segments.add(new WeightedChoice<Segment>((Segment.SPAWNER), 2));
 		this.segments.add(new WeightedChoice<Segment>((Segment.CHEST), 1));
 		this.segments.add(new WeightedChoice<Segment>((Segment.NETHERSTRIPE), 2));
 		this.segments.add(new WeightedChoice<Segment>((Segment.NETHERWART), 2));
