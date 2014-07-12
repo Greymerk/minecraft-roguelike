@@ -3,7 +3,6 @@ package greymerk.roguelike.catacomb;
 import greymerk.roguelike.catacomb.dungeon.DungeonCustomization;
 import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.catacomb.theme.Theme;
-import greymerk.roguelike.treasure.TreasureChest;
 import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
@@ -250,11 +249,6 @@ public class CatacombTower {
 		for(int i = main; i > y; --i){
 			WorldGenPrimitive.spiralStairStep(world, rand, x, i, z, stair, theme.getPrimaryPillar());
 		}
-		
-		cursor = new Coord(x, main + 1, z);
-		cursor.add(Cardinal.NORTH, 3);
-		cursor.add(Cardinal.EAST, 1);
-		TreasureChest.generate(world, rand, cursor, TreasureChest.STARTER);
 	}
 	
 	

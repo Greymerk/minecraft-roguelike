@@ -27,7 +27,7 @@ public class TreasureChestStarter extends TreasureChestBase{
 		case 4: return Loot.getLoot(Loot.TOOL, rand, 0);
 		case 3: return Loot.getLoot(Loot.WEAPON, rand, 0);
 		case 2: return Loot.getLoot(Loot.FOOD, rand, 0);
-		case 1: return ItemSpecialty.getRandomItem(Equipment.LEGS, rand, Quality.WOOD);
+		case 1: if(RogueConfig.getBoolean(RogueConfig.GENEROUS)) return ItemSpecialty.getRandomItem(Equipment.LEGS, rand, Quality.WOOD);
 		default: return new ItemStack(Blocks.torch, 1 + rand.nextInt(RogueConfig.getBoolean(RogueConfig.GENEROUS) ? 7 : 3));
 		}
 	}	
@@ -35,7 +35,7 @@ public class TreasureChestStarter extends TreasureChestBase{
 	@Override
 	protected void fillChest(TileEntityChest chest, int level) {
 
-		int quantity = RogueConfig.getBoolean(RogueConfig.GENEROUS) ? 10 : 5;
+		int quantity = RogueConfig.getBoolean(RogueConfig.GENEROUS) ? 8 : 4;
 
 		Iterator<InventorySlot> itr = this.iterator();
 		

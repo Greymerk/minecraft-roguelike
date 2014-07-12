@@ -11,6 +11,7 @@ public class SecretFactoryProvider {
 		switch(level){
 		case 0:
 			factory.addRoom(Dungeon.FIREWORK);
+			factory.addRoom(Dungeon.BEDROOM, 2);
 			break;
 		case 1:
 			if(rand.nextInt(10) == 0) factory.addRoom(Dungeon.AVIDYA);
