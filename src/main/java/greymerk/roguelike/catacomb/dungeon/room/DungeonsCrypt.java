@@ -145,8 +145,7 @@ public class DungeonsCrypt extends DungeonBase {
 				end.add(orth, 1);
 				WorldGenPrimitive.fillRectSolid(world, rand, start, end, air, true, true);
 				
-				if(rand.nextInt(3) == 0){
-					
+				if(rand.nextBoolean()){
 					Spawner spawnerType = rand.nextBoolean() ? Spawner.SKELETON : Spawner.ZOMBIE;
 					Spawner.generate(world, rand, cursor, spawnerType);
 					
