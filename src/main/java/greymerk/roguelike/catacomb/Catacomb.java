@@ -34,13 +34,13 @@ public class Catacomb {
 	}
 	
 	public static void generate(World world, int inX, int inZ){
-				
+		
 		int x = inX;
 		int y = TOPLEVEL;
 		int z = inZ;
 		
-    	Random rand = getRandom(world, inX, inZ);
-    	
+		Random rand = getRandom(world, inX, inZ);
+		
 		// generate levels
 		while(y > DEPTH){
 			
@@ -190,7 +190,7 @@ public class Catacomb {
 	public static Random getRandom(World world, int x, int z){
 		long seed = world.getSeed() * x * z;
 		Random rand = new Random();
-    	rand.setSeed(seed);
-    	return rand;
+		rand.setSeed(seed);
+		return rand;
 	}
 }

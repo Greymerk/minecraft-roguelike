@@ -2,6 +2,7 @@ package greymerk.roguelike.util;
 
 
 import greymerk.roguelike.catacomb.Catacomb;
+import greymerk.roguelike.citadel.Citadel;
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.treasure.loot.provider.ItemNovelty;
 
@@ -54,6 +55,14 @@ public class CommandSpawnDungeon extends CommandBase
         	
         	World world = sender.getEntityWorld();
         	Catacomb.generate(world, x, z);
+    	}
+    	
+    	if(args[0].equals("citadel")){
+        	int x = parseInt(sender, args[1]);
+        	int z = parseInt(sender, args[2]);
+        	
+        	World world = sender.getEntityWorld();
+        	Citadel.generate(world, x, z);
     	}
     }
 

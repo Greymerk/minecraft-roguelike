@@ -45,6 +45,12 @@ public class Coord{
 		}		
 	}
 	
+	public void add(Coord other){
+		x += other.x;
+		y += other.y;
+		z += other.z;
+	}
+	
 	public void add(Cardinal dir){
 		add(dir, 1);
 	}
@@ -81,5 +87,14 @@ public class Coord{
 		 .append(y)
 		 .append(z)
 		 .toHashCode();
+	}
+	
+	@Override
+	public String toString(){
+		String toReturn = "";
+		toReturn += "x: " + x + " ";
+		toReturn += "y: " + y + " ";
+		toReturn += "z: " + z;
+		return toReturn;
 	}
 }
