@@ -2,8 +2,9 @@ package greymerk.roguelike.catacomb.dungeon.room;
 
 import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.catacomb.dungeon.DungeonBase;
-import greymerk.roguelike.catacomb.theme.ITheme;
+import greymerk.roguelike.catacomb.settings.CatacombLevelSettings;
 import greymerk.roguelike.treasure.TreasureChest;
+import greymerk.roguelike.treasure.loot.LootSettings;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.Spawner;
@@ -37,7 +38,8 @@ public class DungeonsCreeperDen extends DungeonBase {
 		numChests = 2;
 	}
 
-	public boolean generate(World inWorld, Random inRandom, ITheme theme, Cardinal[] entrances, int inOriginX, int inOriginY, int inOriginZ) {
+	public boolean generate(World inWorld, Random inRandom, CatacombLevelSettings settings, Cardinal[] entrances, int inOriginX, int inOriginY, int inOriginZ) {
+		
 		world = inWorld;
 		rand = inRandom;
 		originX = inOriginX;
@@ -51,7 +53,7 @@ public class DungeonsCreeperDen extends DungeonBase {
 		buildFloor();
 		buildRoof();
 		placeMobSpawner();
-		createChests(numChests);
+		createChests(settings.getLoot(), numChests);
 
 
 		return true;
@@ -157,7 +159,7 @@ public class DungeonsCreeperDen extends DungeonBase {
 
 
 
-	protected void createChests(int numChests) {
+	protected void createChests(LootSettings loot, int numChests) {
 
 		for (int chestCount = 0; chestCount < numChests; chestCount++) {
 
@@ -167,7 +169,7 @@ public class DungeonsCreeperDen extends DungeonBase {
 				int chestPosZ = (originZ + rand.nextInt(dungeonWidth * 2 + 1)) - dungeonWidth;
 
 				if (TreasureChest.isValidChestSpace(world, chestPosX, chestPosY, chestPosZ)) {
-					TreasureChest.generate(world, rand, chestPosX, chestPosY, chestPosZ, Catacomb.getLevel(chestPosY), true);
+					TreasureChest.generate(world, rand, loot, chestPosX, chestPosY, chestPosZ, Catacomb.getLevel(chestPosY), true);
 					
 					if(rand.nextBoolean()){
 						WorldGenPrimitive.setBlock(world, chestPosX, chestPosY - 2, chestPosZ, Blocks.tnt);

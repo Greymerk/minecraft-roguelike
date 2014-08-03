@@ -1,7 +1,7 @@
 package greymerk.roguelike.catacomb.dungeon.room;
 
 import greymerk.roguelike.catacomb.dungeon.DungeonBase;
-import greymerk.roguelike.catacomb.theme.ITheme;
+import greymerk.roguelike.catacomb.settings.CatacombLevelSettings;
 import greymerk.roguelike.treasure.ITreasureChest;
 import greymerk.roguelike.treasure.TreasureChestEmpty;
 import greymerk.roguelike.treasure.loot.Loot;
@@ -22,8 +22,9 @@ import net.minecraft.world.World;
 public class DungeonEtho extends DungeonBase {
 
 	@Override
-	public boolean generate(World world, Random rand, ITheme theme, Cardinal[] entrances, int x, int y, int z) {
+	public boolean generate(World world, Random rand, CatacombLevelSettings settings, Cardinal[] entrances, int x, int y, int z) {
 
+		
 		MetaBlock air = new MetaBlock(Blocks.air);
 		
 		MetaBlock grass = new MetaBlock(Blocks.grass);
@@ -223,7 +224,7 @@ public class DungeonEtho extends DungeonBase {
 		WorldGenPrimitive.fillRectSolid(world, rand, x + 5, y - 1, z + 2, x + 5, y, z + 2, jungleLeaf, true, true);
 		
 		ITreasureChest chest = new TreasureChestEmpty();
-		chest.generate(world, rand, x - 4, y - 2, z - 4);
+		chest.generate(world, rand, settings.getLoot(), x - 4, y - 2, z - 4);
 		
 		ItemStack yourMum = new ItemStack(Items.wooden_hoe);
 		Loot.setItemName(yourMum, "Your Mum", null);

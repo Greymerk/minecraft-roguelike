@@ -1,5 +1,6 @@
 package greymerk.roguelike.treasure;
 
+import greymerk.roguelike.treasure.loot.LootSettings;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
 
 import java.util.Random;
@@ -12,7 +13,7 @@ import net.minecraft.world.World;
 public class TreasureChestEmpty extends TreasureChestBase implements ITreasureChest {
 
 	@Override
-	public ITreasureChest generate(World inWorld, Random inRand, int x, int y, int z, int level, boolean trapped) {
+	public ITreasureChest generate(World inWorld, Random inRand, LootSettings loot, int x, int y, int z, int level, boolean trapped) {
 		
 		world = inWorld;
 		rand = inRand;
@@ -34,6 +35,6 @@ public class TreasureChestEmpty extends TreasureChestBase implements ITreasureCh
 	}
 
 	@Override
-	protected void fillChest(TileEntityChest chest, int level) {
+	protected void fillChest(TileEntityChest chest, LootSettings loot, int level) {
 	}
 }

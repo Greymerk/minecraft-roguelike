@@ -38,6 +38,15 @@ public class DungeonFactory implements IDungeonFactory {
 			}
 		}
 	}
+	
+	public DungeonFactory(DungeonFactory toCopy){
+		singles = new ArrayList<Dungeon>();
+		multiple = new WeightedRandomizer<Dungeon>(toCopy.multiple);
+		
+		for(Dungeon d : toCopy.singles){
+			singles.add(d);
+		}
+	}
 
 	public void addSingle(Dungeon type){
 		singles.add(type);

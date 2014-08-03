@@ -1,7 +1,7 @@
 package greymerk.roguelike.catacomb.dungeon.room;
 
 import greymerk.roguelike.catacomb.dungeon.DungeonBase;
-import greymerk.roguelike.catacomb.theme.ITheme;
+import greymerk.roguelike.catacomb.settings.CatacombLevelSettings;
 import greymerk.roguelike.worldgen.BlockFactoryCheckers;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.MetaBlock;
@@ -27,7 +27,7 @@ public class DungeonsEnder extends DungeonBase {
 		dungeonWidth = 4;
 	}
 
-	public boolean generate(World inWorld, Random inRandom, ITheme theme, Cardinal[] entrances, int x, int y, int z) {
+	public boolean generate(World inWorld, Random inRandom, CatacombLevelSettings settings, Cardinal[] entrances, int x, int y, int z) {
 		world = inWorld;
 		rand = inRandom;
 

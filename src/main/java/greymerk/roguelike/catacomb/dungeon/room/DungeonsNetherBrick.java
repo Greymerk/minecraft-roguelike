@@ -1,6 +1,7 @@
 package greymerk.roguelike.catacomb.dungeon.room;
 
 import greymerk.roguelike.catacomb.dungeon.DungeonBase;
+import greymerk.roguelike.catacomb.settings.CatacombLevelSettings;
 import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.treasure.TreasureChest;
@@ -22,7 +23,9 @@ public class DungeonsNetherBrick extends DungeonBase {
 	public DungeonsNetherBrick() {
 	}
 
-	public boolean generate(World world, Random rand, ITheme theme, Cardinal[] entrances, int x, int y, int z) {
+	public boolean generate(World world, Random rand, CatacombLevelSettings settings, Cardinal[] entrances, int x, int y, int z) {
+		
+		ITheme theme = settings.getTheme();
 		
 		int height = 3;
 		int length = 2 + rand.nextInt(3);
@@ -50,7 +53,7 @@ public class DungeonsNetherBrick extends DungeonBase {
 		ceiling.addBlock(new MetaBlock(Blocks.air), 5);
 		WorldGenPrimitive.fillRectSolid(world, rand, x - length, y + height, z - width, x + length, y + height, z + width, ceiling);
 		
-		TreasureChest.createChests(world, rand, 1, WorldGenPrimitive.getRectSolid(x - length, y, z - width, x + length, y, z + width));
+		TreasureChest.createChests(world, rand, settings.getLoot(), 1, WorldGenPrimitive.getRectSolid(x - length, y, z - width, x + length, y, z + width));
 
 		Spawner.generate(world, rand, x - length - 1, y + rand.nextInt(2), z - width - 1);
 		Spawner.generate(world, rand, x - length - 1, y + rand.nextInt(2), z + width + 1);

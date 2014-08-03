@@ -33,7 +33,7 @@ public class SegmentBooks extends SegmentBase {
 		end.add(Cardinal.UP, 2);
 		WorldGenPrimitive.fillRectSolid(world, rand, start, end, air, true, true);
 		
-		level.genSecret(dir, new Coord(x, y, z));
+		level.getSettings().getSecrets().genRoom(world, rand, level.getSettings(), dir, new Coord(x, y, z));
 		
 		start.add(dir, 1);
 		end.add(dir, 1);

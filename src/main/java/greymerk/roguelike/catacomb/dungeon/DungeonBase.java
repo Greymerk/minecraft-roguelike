@@ -1,6 +1,6 @@
 package greymerk.roguelike.catacomb.dungeon;
 
-import greymerk.roguelike.catacomb.theme.ITheme;
+import greymerk.roguelike.catacomb.settings.CatacombLevelSettings;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
@@ -14,7 +14,7 @@ import net.minecraft.world.World;
 public abstract class DungeonBase implements IDungeon{
 
 	@Override
-	public abstract boolean generate(World world, Random rand, ITheme theme, Cardinal[] entrances, int x, int y, int z);
+	public abstract boolean generate(World world, Random rand, CatacombLevelSettings settings, Cardinal[] entrances, int x, int y, int z);
 	
 	@Override
 	public abstract int getSize();

@@ -19,12 +19,10 @@ public class MinimumSpanningTree extends Graph{
 	
 	public MinimumSpanningTree(Random rand, int size, int edgeLength){
 		super(rand, size, edgeLength);
-		System.out.println("finished Graph");
 		
 		mstEdges = new HashSet<Edge>();
 
 		Collections.sort(edges);
-		System.out.println("finished sorting");
 		
 		for(Edge e : edges){
 			Point start = e.getPoints()[0];
@@ -34,8 +32,6 @@ public class MinimumSpanningTree extends Graph{
 			union(start, end);
 			mstEdges.add(e);
 		}
-		
-		System.out.println("finished finding tunnels");
 	}
 	
 	
@@ -62,8 +58,6 @@ public class MinimumSpanningTree extends Graph{
 	
 	public void generate(World world, Random rand, IBlockFactory blocks, Coord pos){
 		
-		System.out.println("starting to generate");
-		
 		for(Edge e : this.mstEdges){
 			Coord start = e.getPoints()[0].getPosition(pos);
 			Coord end = e.getPoints()[1].getPosition(pos);
@@ -72,8 +66,6 @@ public class MinimumSpanningTree extends Graph{
 			
 			WorldGenPrimitive.fillRectSolid(world, rand, start, end, blocks, true, true);
 		}
-		
-		System.out.println("finished generating");
 	}
 	
 	public List<Edge> getEdges(){

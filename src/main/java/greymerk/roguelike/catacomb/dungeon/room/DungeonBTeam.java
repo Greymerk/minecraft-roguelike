@@ -1,7 +1,7 @@
 package greymerk.roguelike.catacomb.dungeon.room;
 
 import greymerk.roguelike.catacomb.dungeon.DungeonBase;
-import greymerk.roguelike.catacomb.theme.ITheme;
+import greymerk.roguelike.catacomb.settings.CatacombLevelSettings;
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.treasure.ITreasureChest;
 import greymerk.roguelike.treasure.TreasureChestEmpty;
@@ -29,7 +29,8 @@ import net.minecraft.world.World;
 public class DungeonBTeam extends DungeonBase {
 
 	@Override
-	public boolean generate(World world, Random rand, ITheme theme, Cardinal[] entrances, int x, int y, int z) {
+	public boolean generate(World world, Random rand, CatacombLevelSettings settings, Cardinal[] entrances, int x, int y, int z) {
+		
 		
 		MetaBlock air = new MetaBlock(Blocks.air);
 		MetaBlock oakLog = Log.getLog(Log.OAK);
@@ -131,11 +132,11 @@ public class DungeonBTeam extends DungeonBase {
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 7, y - 1, z - 4, x - 6, y + 4, z + 4, stonebrick);
 		WorldGenPrimitive.fillRectSolid(world, rand, x + 6, y - 1, z - 4, x + 7, y + 4, z + 4, stonebrick);
 		
-		ITreasureChest recordChest = new TreasureChestEmpty().generate(world, rand, x - 4, y, z - 4);
+		ITreasureChest recordChest = new TreasureChestEmpty().generate(world, rand, settings.getLoot(), x - 4, y, z - 4);
 		recordChest.setInventorySlot(Record.getRecord(Record.STAL), recordChest.getInventorySize() / 2);
 		WorldGenPrimitive.setBlock(world, x - 3, y, z - 4, Blocks.jukebox);
 		
-		ITreasureChest bdubsChest = new TreasureChestEmpty().generate(world, rand, x - 3, y, z + 5);
+		ITreasureChest bdubsChest = new TreasureChestEmpty().generate(world, rand, settings.getLoot(), x - 3, y, z + 5);
 		bdubsChest.setInventorySlot(ItemNovelty.getItem(ItemNovelty.BDOUBLEO), (bdubsChest.getInventorySize() / 2) - 2);
 		
 		ItemStack shirt = new ItemStack(Items.leather_chestplate);
@@ -145,14 +146,14 @@ public class DungeonBTeam extends DungeonBase {
 		
 		bdubsChest.setInventorySlot(shirt, (bdubsChest.getInventorySize() / 2) + 2);
 		
-		ITreasureChest gennybChest = new TreasureChestEmpty().generate(world, rand, x + 3, y, z + 5);
+		ITreasureChest gennybChest = new TreasureChestEmpty().generate(world, rand, settings.getLoot(), x + 3, y, z + 5);
 		gennybChest.setInventorySlot(ItemNovelty.getItem(ItemNovelty.GENERIKB), gennybChest.getInventorySize() / 2);
 		
 		
 		WorldGenPrimitive.setBlock(world, x + 4, y, z - 4, Blocks.bookshelf);
 		WorldGenPrimitive.setBlock(world, x + 4, y + 1, z - 4, Blocks.brewing_stand);
 		
-		ITreasureChest contraband = new TreasureChestEmpty().generate(world, rand, x + 3, y, z - 4);
+		ITreasureChest contraband = new TreasureChestEmpty().generate(world, rand, settings.getLoot(), x + 3, y, z - 4);
 		
 		for(int i = 0; i < 8; ++i){
 			ItemStack booze = PotionMixture.getBooze(rand);

@@ -1,8 +1,5 @@
 package greymerk.roguelike.catacomb.theme;
 
-import greymerk.roguelike.catacomb.segment.Segment;
-import greymerk.roguelike.util.WeightedChoice;
-import greymerk.roguelike.util.WeightedRandomizer;
 import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.Log;
 import greymerk.roguelike.worldgen.MetaBlock;
@@ -26,12 +23,6 @@ public class ThemeSnow extends ThemeBase{
 		MetaBlock SegmentStair = new MetaBlock(Blocks.stone_stairs);
 		
 		this.decor =  new BlockSet(SegmentWall, SegmentStair, pillar);
-		
-		this.segments = new WeightedRandomizer<Segment>();
-		this.segments.add(new WeightedChoice<Segment>((Segment.FIREARCH), 1));
-		this.segments.add(new WeightedChoice<Segment>((Segment.SHELF), 1));
-		this.segments.add(new WeightedChoice<Segment>((Segment.INSET), 1));
-		
-		this.arch = Segment.ARCH;
+
 	}
 }

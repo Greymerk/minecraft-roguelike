@@ -1,14 +1,7 @@
 package greymerk.roguelike.catacomb.dungeon.room;
 
-import java.util.List;
-import java.util.Random;
-
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
 import greymerk.roguelike.catacomb.dungeon.IDungeon;
-import greymerk.roguelike.catacomb.theme.ITheme;
+import greymerk.roguelike.catacomb.settings.CatacombLevelSettings;
 import greymerk.roguelike.treasure.loot.Firework;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
@@ -20,10 +13,18 @@ import greymerk.roguelike.worldgen.redstone.Dropper;
 import greymerk.roguelike.worldgen.redstone.Repeater;
 import greymerk.roguelike.worldgen.redstone.Torch;
 
+import java.util.List;
+import java.util.Random;
+
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
+
 public class DungeonFirework implements IDungeon {
 
 	@Override
-	public boolean generate(World world, Random rand, ITheme theme, Cardinal[] entrances, int x, int y, int z){
+	public boolean generate(World world, Random rand, CatacombLevelSettings settings, Cardinal[] entrances, int x, int y, int z){
 		
 		MetaBlock breadboard = new MetaBlock(Blocks.planks);
 		

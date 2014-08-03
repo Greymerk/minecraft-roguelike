@@ -20,7 +20,7 @@ public class BlockFactoryCheckers implements IBlockFactory {
 		this.fillTwo = fillTwo;
 	}
 	
-	public BlockFactoryCheckers(JsonElement json) throws Exception{
+	public BlockFactoryCheckers(JsonElement json) {
 		JsonArray arr = (JsonArray)json;
 		List<IBlockFactory> blocks = new ArrayList<IBlockFactory>(); 
 		

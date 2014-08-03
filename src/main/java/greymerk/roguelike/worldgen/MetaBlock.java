@@ -28,7 +28,7 @@ public class MetaBlock implements IBlockFactory{
 		this.flag = flag;
 	}
 	
-	public MetaBlock(JsonElement data) throws Exception{
+	public MetaBlock(JsonElement data){
 		JsonObject json = (JsonObject)data;
 		String name = json.get("name").getAsString();
 		this.block = (Block) Block.blockRegistry.getObject(name);

@@ -3,6 +3,7 @@ package greymerk.roguelike.treasure;
 import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.treasure.loot.Loot;
+import greymerk.roguelike.treasure.loot.LootSettings;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
 
 import java.util.ArrayList;
@@ -38,7 +39,7 @@ public abstract class TreasureChestBase implements ITreasureChest, Iterable<Inve
 	}
 		
 
-	public ITreasureChest generate(World world, Random rand, int posX, int posY, int posZ, int level, boolean trapped) {
+	public ITreasureChest generate(World world, Random rand, LootSettings loot, int posX, int posY, int posZ, int level, boolean trapped) {
 		this.world = world;
 		this.rand = rand;
 		this.posX = posX;
@@ -58,7 +59,7 @@ public abstract class TreasureChestBase implements ITreasureChest, Iterable<Inve
 		
 		try{
 			
-			fillChest(chest, level);
+			fillChest(chest, loot, level);
 			
 			int amount = RogueConfig.getBoolean(RogueConfig.GENEROUS) ? 12 : 6;
 			
@@ -69,7 +70,7 @@ public abstract class TreasureChestBase implements ITreasureChest, Iterable<Inve
 				
 				if(!slot.empty()) continue;
 				
-				slot.set(Loot.getLoot(Loot.JUNK, rand, level));
+				slot.set(loot.get(Loot.JUNK, rand));
 				--amount;
 			}
 			
@@ -83,8 +84,8 @@ public abstract class TreasureChestBase implements ITreasureChest, Iterable<Inve
 	
 	
 	@Override
-	public ITreasureChest generate(World world, Random rand, int posX, int posY, int posZ) {
-		return generate(world, rand, posX, posY, posZ, Catacomb.getLevel(posY), false);
+	public ITreasureChest generate(World world, Random rand, LootSettings loot, int posX, int posY, int posZ) {
+		return generate(world, rand, loot, posX, posY, posZ, Catacomb.getLevel(posY), false);
 	}
 	
 	public boolean setInventorySlot(ItemStack item, int slot){
@@ -118,7 +119,8 @@ public abstract class TreasureChestBase implements ITreasureChest, Iterable<Inve
 		return this.slots.iterator();
 	}
 	
-	protected abstract void fillChest(TileEntityChest chest, int level);
+	
+	protected abstract void fillChest(TileEntityChest chest, LootSettings loot, int level);
 	
 	
 

@@ -1,6 +1,7 @@
 package greymerk.roguelike.catacomb.dungeon.room;
 
 import greymerk.roguelike.catacomb.dungeon.DungeonBase;
+import greymerk.roguelike.catacomb.settings.CatacombLevelSettings;
 import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.treasure.TreasureChest;
 import greymerk.roguelike.worldgen.Cardinal;
@@ -20,11 +21,17 @@ public class DungeonsPrison extends DungeonBase {
 	Random rand;
 	IBlockFactory blocks;
 	IBlockFactory pillar;
+	CatacombLevelSettings settings;
+	
 	
 	public DungeonsPrison(){}
 	
 	@Override
-	public boolean generate(World inWorld, Random inRandom, ITheme theme, Cardinal[] entrances, int inOriginX, int inOriginY, int inOriginZ) {
+	public boolean generate(World inWorld, Random inRandom, CatacombLevelSettings settings, Cardinal[] entrances, int inOriginX, int inOriginY, int inOriginZ) {
+		
+		
+		ITheme theme = settings.getTheme();
+		this.settings = settings;
 		
 		world = inWorld;
 		rand = inRandom;
@@ -137,7 +144,7 @@ public class DungeonsPrison extends DungeonBase {
 		}
 		
 		if(rand.nextBoolean()){
-			TreasureChest.generate(world, rand, inX, inY, inZ);	
+			TreasureChest.generate(world, rand, settings.getLoot(), inX, inY, inZ);	
 		}
 		
 	}

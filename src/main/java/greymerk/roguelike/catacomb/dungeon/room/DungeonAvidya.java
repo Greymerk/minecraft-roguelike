@@ -1,7 +1,7 @@
 package greymerk.roguelike.catacomb.dungeon.room;
 
 import greymerk.roguelike.catacomb.dungeon.DungeonBase;
-import greymerk.roguelike.catacomb.theme.ITheme;
+import greymerk.roguelike.catacomb.settings.CatacombLevelSettings;
 import greymerk.roguelike.treasure.ITreasureChest;
 import greymerk.roguelike.treasure.TreasureChestEmpty;
 import greymerk.roguelike.treasure.loot.provider.ItemNovelty;
@@ -20,7 +20,8 @@ import net.minecraft.world.World;
 public class DungeonAvidya extends DungeonBase {
 
 	@Override
-	public boolean generate(World world, Random rand, ITheme theme, Cardinal[] entrances, int x, int y, int z) {
+	public boolean generate(World world, Random rand, CatacombLevelSettings settings, Cardinal[] entrances, int x, int y, int z) {
+		
 		
 		MetaBlock redClay = new MetaBlock(Blocks.stained_hardened_clay, 14);
 		MetaBlock whiteClay = new MetaBlock(Blocks.stained_hardened_clay, 0);
@@ -248,7 +249,7 @@ public class DungeonAvidya extends DungeonBase {
 		}
 		
 		ITreasureChest chest = new TreasureChestEmpty();
-		chest.generate(world, rand, x, y - 1, z);
+		chest.generate(world, rand, settings.getLoot(), x, y - 1, z);
 		int middle = chest.getInventorySize() / 2;
 		chest.setInventorySlot(ItemNovelty.getItem(ItemNovelty.AVIDYA), middle);
 		

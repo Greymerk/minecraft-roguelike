@@ -71,7 +71,7 @@ public class SegmentChest extends SegmentBase {
 		if(world.isAirBlock(shelf.getX(), shelf.getY() - 1, shelf.getZ())) return;	
 		
 		boolean trapped = Catacomb.getLevel(y) == 3 && rand.nextInt(3) == 0;
-		TreasureChest.generate(world, rand, shelf.getX(), shelf.getY(), shelf.getZ(), Catacomb.getLevel(y), trapped);
+		TreasureChest.generate(world, rand, level.getSettings().getLoot(), shelf.getX(), shelf.getY(), shelf.getZ(), Catacomb.getLevel(y), trapped);
 		if(trapped){
 			WorldGenPrimitive.setBlock(world, shelf.getX(), shelf.getY() - 2, shelf.getZ(), Blocks.tnt);
 			if(rand.nextBoolean()) WorldGenPrimitive.setBlock(world, shelf.getX(), shelf.getY() - 3, shelf.getZ(), Blocks.tnt);

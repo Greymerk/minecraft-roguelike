@@ -18,7 +18,7 @@ public class BlockStripes implements IBlockFactory {
 		blocks = new ArrayList<IBlockFactory>();
 	}
 	
-	public BlockStripes(JsonElement data) throws Exception {
+	public BlockStripes(JsonElement data) {
 		this();
 		for(JsonElement entry : (JsonArray)data){
 			JsonObject d = entry.getAsJsonObject();

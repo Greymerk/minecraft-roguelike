@@ -19,7 +19,7 @@ public class BlockSet implements IBlockSet {
 		this.pillar = pillar;
 	}
 	
-	public BlockSet(JsonObject json) throws Exception{
+	public BlockSet(JsonObject json){
 		
 		JsonObject walls = json.get("walls").getAsJsonObject();
 		String type = walls.get("type").getAsString();
@@ -28,7 +28,7 @@ public class BlockSet implements IBlockSet {
 				
 		JsonObject stair = json.get("stair").getAsJsonObject();
 		type = stair.get("type").getAsString();
-		if(!type.equals(BlockFactory.METABLOCK.name())) throw new Exception("BlockSet stair must be a METABLOCK");
+		if(!type.equals(BlockFactory.METABLOCK.name()));
 		data = stair.get("data").getAsJsonObject();
 		this.stair = new MetaBlock(data);
 		

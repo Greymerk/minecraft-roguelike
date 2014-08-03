@@ -16,7 +16,6 @@ public class CatacombNode {
 	private Random rand;
 	private CatacombLevel level;
 	private List<CatacombTunneler> tunnelers;
-	private ITheme theme;
 	private int x;
 	private int y;
 	private int z;
@@ -27,7 +26,6 @@ public class CatacombNode {
 		this.world = world;
 		this.rand = rand;
 		this.level = level;
-		this.theme = theme;
 		this.x = x;
 		this.y = y;
 		this.z = z;
@@ -45,7 +43,6 @@ public class CatacombNode {
 		this.world = world;
 
 		this.level = level;
-		this.theme = theme;
 		this.x = tunneler.getX();
 		this.y = tunneler.getY();
 		this.z = tunneler.getZ();
@@ -70,7 +67,7 @@ public class CatacombNode {
 			}
 			
 			if(level.nodeCount() == 0 || tunnelers.isEmpty() || rand.nextBoolean()){
-				this.tunnelers.add(new CatacombTunneler(world, rand, this.level, dir, theme, x, y, z));
+				this.tunnelers.add(new CatacombTunneler(world, rand, this.level, dir, x, y, z));
 			}
 		}
 	}

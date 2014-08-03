@@ -1,7 +1,7 @@
 package greymerk.roguelike.catacomb.dungeon.room;
 
 import greymerk.roguelike.catacomb.dungeon.DungeonBase;
-import greymerk.roguelike.catacomb.theme.ITheme;
+import greymerk.roguelike.catacomb.settings.CatacombLevelSettings;
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.treasure.TreasureChest;
 import greymerk.roguelike.worldgen.Cardinal;
@@ -46,7 +46,7 @@ public class DungeonsSmithy extends DungeonBase {
 				
 	}
 
-	public boolean generate(World inWorld, Random inRandom, ITheme theme, Cardinal[] entrances, int inOriginX, int inOriginY, int inOriginZ) {
+	public boolean generate(World inWorld, Random inRandom, CatacombLevelSettings settings, Cardinal[] entrances, int inOriginX, int inOriginY, int inOriginZ) {
 		world = inWorld;
 		rand = inRandom;
 		originX = inOriginX;
@@ -73,7 +73,7 @@ public class DungeonsSmithy extends DungeonBase {
 		space.add(new Coord(originX + 2, originY, originZ - 2));
 		space.add(new Coord(originX + 2, originY, originZ + 2));
 		
-		TreasureChest.generate(inWorld, rand, space, TreasureChest.SMITH);
+		TreasureChest.generate(inWorld, rand, settings.getLoot(), space, TreasureChest.SMITH);
 		
 		return true;
 	}

@@ -1,12 +1,7 @@
 package greymerk.roguelike.catacomb.theme;
 
-import greymerk.roguelike.catacomb.segment.Segment;
-import greymerk.roguelike.util.WeightedChoice;
-import greymerk.roguelike.util.WeightedRandomizer;
 import net.minecraft.world.biome.BiomeGenBase;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 public enum Theme {
@@ -38,13 +33,11 @@ public enum Theme {
 		return theme;
 	}
 	
-	public static ITheme create(JsonObject json) throws Exception{
+	public static ITheme create(JsonObject json){
 				
 		ITheme theme;
 		BlockSet primary = null;
 		BlockSet secondary = null;
-		WeightedRandomizer<Segment> segments = null;
-		Segment arch = null;
 
 		// primary blocks
 		if(json.has("primary")){
@@ -58,27 +51,13 @@ public enum Theme {
 			secondary = new BlockSet(data);
 		}
 	
-		if(json.has("segments")){
-			segments = new WeightedRandomizer<Segment>();
-			JsonArray data = json.get("segments").getAsJsonArray();
-			for(JsonElement e : data){
-				JsonObject weighted = e.getAsJsonObject();
-				String type = weighted.get("type").getAsString();
-				int weight = weighted.get("weight").getAsInt();
-				segments.add(new WeightedChoice<Segment>(Segment.valueOf(type), weight));
-			}
-		}
-		
-		if(json.has("arch")){
-			String s = json.get("arch").getAsString();
-			arch = Segment.valueOf(s);
-		}
+
 		
 		if(json.has("base")){
 			theme = Theme.getTheme(Theme.valueOf(json.get("base").getAsString()));
-			return new ThemeBase((ThemeBase) theme, primary, secondary, segments, arch);
+			return new ThemeBase((ThemeBase) theme, primary, secondary);
 		} else {
-			return new ThemeBase(primary, secondary, segments, arch);
+			return new ThemeBase(primary, secondary);
 		}
 	}
 	

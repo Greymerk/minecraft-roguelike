@@ -1,6 +1,7 @@
 package greymerk.roguelike.catacomb.dungeon.room;
 
 import greymerk.roguelike.catacomb.dungeon.DungeonBase;
+import greymerk.roguelike.catacomb.settings.CatacombLevelSettings;
 import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.treasure.TreasureChest;
 import greymerk.roguelike.worldgen.Cardinal;
@@ -21,8 +22,10 @@ public class DungeonObsidian extends DungeonBase {
 
 	
 	@Override
-	public boolean generate(World world, Random rand, ITheme theme, Cardinal[] entrances, int x, int y, int z) {
+	public boolean generate(World world, Random rand, CatacombLevelSettings settings, Cardinal[] entrances, int x, int y, int z) {
 
+		ITheme theme = settings.getTheme();
+		
 		HashSet<Coord> spawners = new HashSet<Coord>();
 		MetaBlock air = new MetaBlock(Blocks.air);
 		IBlockFactory primaryWall = theme.getPrimaryWall();
@@ -218,7 +221,7 @@ public class DungeonObsidian extends DungeonBase {
 				chestPos.add(dir, 4);
 				chestPos.add(orth, 2);
 				chestPos.add(Cardinal.DOWN, 3);
-				TreasureChest.generate(world, rand, chestPos.getX(), chestPos.getY(), chestPos.getZ(), TreasureChest.ORE);
+				TreasureChest.generate(world, rand, settings.getLoot(), chestPos.getX(), chestPos.getY(), chestPos.getZ(), TreasureChest.ORE);
 			}
 		}
 		

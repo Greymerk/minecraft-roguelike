@@ -1,10 +1,8 @@
 package greymerk.roguelike.catacomb;
 
-import greymerk.roguelike.catacomb.dungeon.DungeonCustomization;
-import greymerk.roguelike.catacomb.dungeon.RoomFactoryProvider;
-import greymerk.roguelike.catacomb.dungeon.IDungeonFactory;
-import greymerk.roguelike.catacomb.theme.ITheme;
-import greymerk.roguelike.catacomb.theme.Theme;
+import greymerk.roguelike.catacomb.settings.CatacombLevelSettings;
+import greymerk.roguelike.catacomb.settings.CatacombSettings;
+import greymerk.roguelike.catacomb.settings.CatacombSettingsResolver;
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
@@ -21,19 +19,25 @@ public class Catacomb {
 	public static final int TOPLEVEL = 50;
 	public static final int NUM_LEVELS = 5;
 	
+	public static CatacombSettingsResolver settingsResolver;
+	
+	static{
+		settingsResolver = new CatacombSettingsResolver();
+	}
+	
 	public static void generateNear(World world, Random rand, int x, int z){
 		int attempts = 50;
 		
 		for(int i = 0;i < attempts;i++){
 			Coord location = getNearbyCoord(rand, x, z, 40, 100);
 			if(validLocation(world, rand, location.getX(), location.getZ())){
-				Catacomb.generate(world, location.getX(), location.getZ());
+				Catacomb.generate(world, settingsResolver.getSettings(), location.getX(), location.getZ());
 				return;
 			}
 		}
 	}
 	
-	public static void generate(World world, int inX, int inZ){
+	public static void generate(World world, CatacombSettings settings, int inX, int inZ){
 		
 		int x = inX;
 		int y = TOPLEVEL;
@@ -41,22 +45,17 @@ public class Catacomb {
 		
 		Random rand = getRandom(world, inX, inZ);
 		
+		
 		// generate levels
 		while(y > DEPTH){
 			
+			CatacombLevelSettings levelSettings = settings.getLevelSettings(Catacomb.getLevel(y));
+			
 			CatacombLevel level;
 			
-			ITheme theme = DungeonCustomization.getTheme(world.getBiomeGenForCoords(inX, inZ), getLevel(y)); 
-			if(theme == null) theme = Theme.getByLevel(world.getBiomeGenForCoords(inX, inZ), getLevel(y));
-			IDungeonFactory rooms = DungeonCustomization.getRooms(world.getBiomeGenForCoords(inX, inZ), getLevel(y)); 
-			if(rooms == null) rooms = RoomFactoryProvider.getByLevel(Catacomb.getLevel(y));
 			
 			rand = getRandom(world, x, z);
-			if(Catacomb.getLevel(y) == 0){
-				level = new CatacombLevel(world, rand, rooms, theme, x, y, z, 8, 40);
-			} else {
-				level = new CatacombLevel(world, rand, rooms, theme, x, y, z);
-			}
+			level = new CatacombLevel(world, rand, levelSettings, x, y, z, levelSettings.getNumRooms(), levelSettings.getRange());
 	
 			while(!level.isDone()){
 				level.update();
@@ -72,7 +71,7 @@ public class Catacomb {
 		
 		CatacombTower tower = new CatacombTower();
 		rand = getRandom(world, inX, inZ);
-		tower.generate(world, rand, inX, TOPLEVEL, inZ);
+		tower.generate(world, rand, settings.getLevelSettings(0), inX, TOPLEVEL, inZ);
 		
 		
 	}

@@ -1,6 +1,7 @@
 package greymerk.roguelike.catacomb.dungeon.room;
 
 import greymerk.roguelike.catacomb.dungeon.DungeonBase;
+import greymerk.roguelike.catacomb.settings.CatacombLevelSettings;
 import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.treasure.TreasureChest;
 import greymerk.roguelike.worldgen.Cardinal;
@@ -21,8 +22,10 @@ import net.minecraft.world.World;
 public class DungeonStorage extends DungeonBase {
 
 	@Override
-	public boolean generate(World world, Random rand, ITheme theme, Cardinal[] entrances, int x, int y, int z) {
+	public boolean generate(World world, Random rand, CatacombLevelSettings settings, Cardinal[] entrances, int x, int y, int z) {
 
+		ITheme theme = settings.getTheme();
+		
 		HashSet<Coord> chestSpaces = new HashSet<Coord>();
 		MetaBlock air = new MetaBlock(Blocks.air);
 		
@@ -125,7 +128,7 @@ public class DungeonStorage extends DungeonBase {
 		
 		List<Coord> spaces = new ArrayList<Coord>(chestSpaces);
 		
-		TreasureChest.createChests(world, rand, 3, spaces, types);
+		TreasureChest.createChests(world, rand, settings.getLoot(), 3, spaces, types);
 		
 		return true;
 	}

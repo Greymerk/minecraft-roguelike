@@ -1,8 +1,5 @@
 package greymerk.roguelike.catacomb.theme;
 
-import greymerk.roguelike.catacomb.segment.Segment;
-import greymerk.roguelike.util.WeightedChoice;
-import greymerk.roguelike.util.WeightedRandomizer;
 import greymerk.roguelike.worldgen.BlockJumble;
 import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.MetaBlock;
@@ -27,15 +24,5 @@ public class ThemeCrypt extends ThemeBase{
 		this.walls = new BlockSet(walls, stair, walls);
 		this.decor = this.walls;
 
-		this.segments = new WeightedRandomizer<Segment>();
-		this.segments.add(new WeightedChoice<Segment>((Segment.SHELF), 16));
-		this.segments.add(new WeightedChoice<Segment>((Segment.INSET), 16));
-		this.segments.add(new WeightedChoice<Segment>((Segment.TOMB), 8));
-		this.segments.add(new WeightedChoice<Segment>((Segment.SKULL), 4));
-		this.segments.add(new WeightedChoice<Segment>((Segment.CHEST), 2));
-		this.segments.add(new WeightedChoice<Segment>((Segment.BOOKS), 1));
-		this.segments.add(new WeightedChoice<Segment>((Segment.FIREPLACE), 1));
-		
-		this.arch = Segment.ARCH;
 	}
 }

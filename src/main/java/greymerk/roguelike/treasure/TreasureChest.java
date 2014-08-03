@@ -2,6 +2,7 @@ package greymerk.roguelike.treasure;
 
 
 import greymerk.roguelike.catacomb.Catacomb;
+import greymerk.roguelike.treasure.loot.LootSettings;
 import greymerk.roguelike.worldgen.Coord;
 
 import java.util.ArrayList;
@@ -43,42 +44,40 @@ public enum TreasureChest {
 		}
 	}
 	
-	public static void generate(World world, Random rand, int posX, int posY, int posZ){
-		generate(world, rand, posX, posY, posZ, Catacomb.getLevel(posY), false);
-	}
-	
-	public static void generate(World world, Random rand, int posX, int posY, int posZ, int level, boolean trapped){
+	public static void generate(World world, Random rand, LootSettings loot, int posX, int posY, int posZ, int level, boolean trapped){
 		
 		TreasureChest type = getChestType(rand, level);
 		ITreasureChest chest = getChest(type);
 		
-		chest.generate(world, rand, posX, posY, posZ, level, trapped);
+		chest.generate(world, rand, loot, posX, posY, posZ, level, trapped);
 	}
 
-	
-	public static void generate(World world, Random rand, int posX, int posY, int posZ, TreasureChest type){
-		generate(world, rand, posX, posY, posZ, type, Catacomb.getLevel(posY), false);
+	public static void generate(World world, Random rand, LootSettings loot, int x, int y, int z){
+		generate(world, rand, loot, x, y, z, 0, false);		
 	}
 	
-	public static void generate(World world, Random rand, Coord pos, TreasureChest type){
-		generate(world, rand, pos.getX(), pos.getY(), pos.getZ(), type);
+	public static void generate(World world, Random rand, LootSettings loot, int posX, int posY, int posZ, TreasureChest type){
+		generate(world, rand, loot, posX, posY, posZ, type, Catacomb.getLevel(posY), false);
 	}
 	
+	public static void generate(World world, Random rand, LootSettings loot, Coord pos, TreasureChest type){
+		generate(world, rand, loot, pos.getX(), pos.getY(), pos.getZ(), type);
+	}
 	
-	public static void generate(World world, Random rand, int posX, int posY, int posZ, TreasureChest type, int level, boolean trapped){
+	public static void generate(World world, Random rand, LootSettings loot, int posX, int posY, int posZ, TreasureChest type, int level, boolean trapped){
 		ITreasureChest chest = getChest(type);
-		chest.generate(world, rand, posX, posY, posZ, level, trapped);
+		chest.generate(world, rand, loot, posX, posY, posZ, level, trapped);
 	}
 	
-	public static void generate(World world, Random rand, List<Coord> space, TreasureChest type){
-		createChests(world, rand, 1, space, new ArrayList<TreasureChest>(Arrays.asList(type)));
-	}
-
-	public static void createChests(World world, Random rand, int numChests, List<Coord> space){
-		createChests(world, rand, numChests, space, false);
+	public static void generate(World world, Random rand, LootSettings loot, List<Coord> space, TreasureChest type){
+		createChests(world, rand, loot, 1, space, new ArrayList<TreasureChest>(Arrays.asList(type)));
 	}
 	
-	public static void createChests(World world, Random rand, int numChests, List<Coord> space, boolean trapped){
+	public static void createChests(World world, Random rand, LootSettings loot, int numChests, List<Coord> space){
+		createChests(world, rand, loot, numChests, space, false);
+	}
+	
+	public static void createChests(World world, Random rand, LootSettings loot, int numChests, List<Coord> space, boolean trapped){
 		
 		Collections.shuffle(space, rand);
 		
@@ -95,13 +94,13 @@ public enum TreasureChest {
 			int z = block.getZ();
 			
 			if (isValidChestSpace(world, x, y, z)) {
-				generate(world, rand, x, y, z, getChestType(rand, Catacomb.getLevel(y)));
+				generate(world, rand, loot, x, y, z, getChestType(rand, Catacomb.getLevel(y)));
 				count++;
 			}
 		}
 	}
 	
-	public static void createChests(World world, Random rand, int numChests, List<Coord> space, List<TreasureChest> types){
+	public static void createChests(World world, Random rand, LootSettings loot, int numChests, List<Coord> space, List<TreasureChest> types){
 		
 		Collections.shuffle(space, rand);
 		
@@ -118,14 +117,12 @@ public enum TreasureChest {
 			int z = block.getZ();
 			
 			if (isValidChestSpace(world, x, y, z)) {
-				generate(world, rand, x, y, z, types.get(rand.nextInt(types.size())));
+				generate(world, rand, loot, x, y, z, types.get(rand.nextInt(types.size())));
 				count++;
 			}
 		}
 	}
 	
-
-
 	private static TreasureChest getChestType(Random rand, int level){		
 		
 		switch(level){

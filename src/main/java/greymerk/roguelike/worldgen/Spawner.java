@@ -1,5 +1,7 @@
 package greymerk.roguelike.worldgen;
 
+import greymerk.roguelike.catacomb.Catacomb;
+
 import java.util.Random;
 
 import net.minecraft.init.Blocks;
@@ -16,16 +18,27 @@ public enum Spawner {
 	
 	private static final Spawner[] common = {SPIDER, SKELETON, ZOMBIE};
 	
-	public static void generate(World world, Random rand, int posX, int posY, int posZ){
-		Spawner type = common[rand.nextInt(common.length)];
-		generate(world, rand, posX, posY, posZ, type);
-	}
+
 	
 	public static void generate(World world, Random rand, Coord cursor, Spawner type){
 		generate(world, rand, cursor.getX(), cursor.getY(), cursor.getZ(), type);
 	}
 	
+	public static void generate(World world, Random rand, int posX, int posY, int posZ, int level){
+		Spawner type = common[rand.nextInt(common.length)];
+		generate(world, rand, posX, posY, posZ, level, type);
+	}
+	
+	public static void generate(World world, Random rand, int posX, int posY, int posZ){
+		Spawner type = common[rand.nextInt(common.length)];
+		generate(world, rand, posX, posY, posZ, Catacomb.getLevel(posY), type);
+	}
+	
 	public static void generate(World world, Random rand, int posX, int posY, int posZ, Spawner type){
+		generate(world, rand, posX, posY, posZ, Catacomb.getLevel(posY), type);
+	}
+	
+	public static void generate(World world, Random rand, int posX, int posY, int posZ, int level, Spawner type){
 		
 		if(!WorldGenPrimitive.setBlock(world, posX, posY, posZ, Blocks.mob_spawner)){
 			return;
@@ -39,7 +52,7 @@ public enum Spawner {
         	MobSpawnerBaseLogic logic = spawner.func_145881_a();
         	logic.setEntityName(name);
         	
-        	setRoguelike(logic);
+        	setRoguelike(logic, level);
         }
         else
         {
@@ -86,7 +99,7 @@ public enum Spawner {
 	}
 
 	
-	private static void setRoguelike(MobSpawnerBaseLogic logic){
+	private static void setRoguelike(MobSpawnerBaseLogic logic, int level){
     	NBTTagCompound nbt = new NBTTagCompound();
     	nbt.setString("Type", logic.getEntityNameToSpawn());
     	nbt.setInteger("Weight", 1);
@@ -101,7 +114,7 @@ public enum Spawner {
     	activeEffects.appendTag(buff);
     	
     	buff.setByte("Id", (byte) 4);
-    	buff.setByte("Amplifier", (byte) 1);
+    	buff.setByte("Amplifier", (byte) level);
     	buff.setInteger("Duration", 10);
     	buff.setByte("Ambient", (byte) 0);
     	

@@ -1,7 +1,7 @@
 package greymerk.roguelike.catacomb.dungeon.room;
 
 import greymerk.roguelike.catacomb.dungeon.DungeonBase;
-import greymerk.roguelike.catacomb.theme.ITheme;
+import greymerk.roguelike.catacomb.settings.CatacombLevelSettings;
 import greymerk.roguelike.treasure.TreasureChest;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
@@ -22,7 +22,7 @@ public class DungeonsWood extends DungeonBase {
 
 
 	@Override
-	public boolean generate(World world, Random rand, ITheme theme, Cardinal[] entrances, int x, int y, int z) {
+	public boolean generate(World world, Random rand, CatacombLevelSettings settings, Cardinal[] entrances, int x, int y, int z) {
 		
 		final int HEIGHT = 3;
 		final int WIDTH = rand.nextInt(2) + 2;
@@ -62,7 +62,7 @@ public class DungeonsWood extends DungeonBase {
 		space.add(new Coord(x + WIDTH, y, z - LENGTH + 1));
 		space.add(new Coord(x + WIDTH, y, z + LENGTH - 1));
 		
-		TreasureChest.generate(world, rand, space, TreasureChest.FOOD);
+		TreasureChest.generate(world, rand, settings.getLoot(), space, TreasureChest.FOOD);
 		
 		return true;
 	}

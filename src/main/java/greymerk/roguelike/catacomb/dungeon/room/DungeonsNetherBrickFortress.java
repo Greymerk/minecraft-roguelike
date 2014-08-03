@@ -1,7 +1,7 @@
 package greymerk.roguelike.catacomb.dungeon.room;
 
 import greymerk.roguelike.catacomb.dungeon.DungeonBase;
-import greymerk.roguelike.catacomb.theme.ITheme;
+import greymerk.roguelike.catacomb.settings.CatacombLevelSettings;
 import greymerk.roguelike.treasure.TreasureChest;
 import greymerk.roguelike.worldgen.BlockJumble;
 import greymerk.roguelike.worldgen.Cardinal;
@@ -33,7 +33,9 @@ public class DungeonsNetherBrickFortress extends DungeonBase {
 	}
 	
 	
-	public boolean generate(World inWorld, Random inRandom, ITheme theme, Cardinal[] entrances, int inOriginX, int inOriginY, int inOriginZ) {
+	public boolean generate(World inWorld, Random inRandom, CatacombLevelSettings settings, Cardinal[] entrances, int inOriginX, int inOriginY, int inOriginZ) {
+		
+		
 		world = inWorld;
 		rand = inRandom;
 		originX = inOriginX;
@@ -51,7 +53,7 @@ public class DungeonsNetherBrickFortress extends DungeonBase {
 		buildRoof();
 		
 		ArrayList<TreasureChest> types = new ArrayList<TreasureChest>(Arrays.asList(TreasureChest.SPECIAL));		
-		TreasureChest.createChests(world, rand, 2, WorldGenPrimitive.getRectSolid(
+		TreasureChest.createChests(world, rand, settings.getLoot(), 2, WorldGenPrimitive.getRectSolid(
 				originX - 6, originY, originZ - 6,
 				originX + 6, originY, originZ + 6),
 				types);

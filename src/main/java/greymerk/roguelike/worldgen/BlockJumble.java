@@ -18,7 +18,7 @@ public class BlockJumble implements IBlockFactory {
 		blocks = new ArrayList<IBlockFactory>();
 	}
 	
-	public BlockJumble(JsonElement data) throws Exception {
+	public BlockJumble(JsonElement data) {
 		this();
 		for(JsonElement entry : (JsonArray)data){
 			JsonObject d = entry.getAsJsonObject();

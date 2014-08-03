@@ -54,7 +54,7 @@ public class CommandSpawnDungeon extends CommandBase
         	int z = parseInt(sender, args[2]);
         	
         	World world = sender.getEntityWorld();
-        	Catacomb.generate(world, x, z);
+        	Catacomb.generate(world, Catacomb.settingsResolver.getSettings(), x, z);
     	}
     	
     	if(args[0].equals("citadel")){

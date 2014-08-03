@@ -1,7 +1,7 @@
 package greymerk.roguelike.catacomb.dungeon.room;
 
 import greymerk.roguelike.catacomb.dungeon.DungeonBase;
-import greymerk.roguelike.catacomb.theme.ITheme;
+import greymerk.roguelike.catacomb.settings.CatacombLevelSettings;
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.treasure.TreasureChest;
 import greymerk.roguelike.worldgen.Cardinal;
@@ -16,7 +16,9 @@ import net.minecraft.world.World;
 public class DungeonsEnchant extends DungeonBase {
 
 	@Override
-	public boolean generate(World world, Random rand, ITheme theme, Cardinal[] entrances, int x, int y, int z) {
+	public boolean generate(World world, Random rand, CatacombLevelSettings settings, Cardinal[] entrances, int x, int y, int z) {
+		
+		
 		
 		MetaBlock air = new MetaBlock(Blocks.air);
 		MetaBlock chiselQuartz = new MetaBlock(Blocks.quartz_block, 2);
@@ -134,7 +136,7 @@ public class DungeonsEnchant extends DungeonBase {
 		if(RogueConfig.getBoolean(RogueConfig.GENEROUS)){
 			WorldGenPrimitive.setBlock(world, x, y, z, Blocks.enchanting_table);
 		} else {
-			TreasureChest.generate(world, rand, x, y, z, TreasureChest.ENCHANTING, 4, false);
+			TreasureChest.generate(world, rand, settings.getLoot(), x, y, z, TreasureChest.ENCHANTING, 4, false);
 		}
 		return false;
 	}	

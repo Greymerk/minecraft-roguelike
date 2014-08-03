@@ -1,8 +1,5 @@
 package greymerk.roguelike.catacomb.theme;
 
-import greymerk.roguelike.catacomb.segment.Segment;
-import greymerk.roguelike.util.WeightedChoice;
-import greymerk.roguelike.util.WeightedRandomizer;
 import greymerk.roguelike.worldgen.BlockFactoryCheckers;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.MetaBlock;
@@ -22,11 +19,6 @@ public class ThemeChecker extends ThemeBase{
 		this.walls = new BlockSet(checks, stair, checks);
 		
 		this.decor = walls;
-		
-		this.segments = new WeightedRandomizer<Segment>();
-		this.segments.add(new WeightedChoice<Segment>((Segment.SHELF), 1));
-		this.segments.add(new WeightedChoice<Segment>((Segment.INSET), 1));
-		
-		this.arch = Segment.ARCH;
+
 	}
 }

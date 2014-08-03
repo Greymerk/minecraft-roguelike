@@ -1,6 +1,5 @@
 package greymerk.roguelike.catacomb;
 
-import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.worldgen.BlockJumble;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
@@ -27,15 +26,14 @@ public class CatacombTunneler {
 	private int originZ;
 	private boolean done;
 	private int extend;
-	private ITheme theme;
+
 	
-	public CatacombTunneler(World world, Random rand, CatacombLevel level, Cardinal direction, ITheme theme, int x, int y, int z){
+	public CatacombTunneler(World world, Random rand, CatacombLevel level, Cardinal direction, int x, int y, int z){
 
 
 		this.rand = rand;
 		this.level = level;
 		this.dir = direction;
-		this.theme = theme;
 		this.originX = x;
 		this.originY = y;
 		this.originZ = z;
@@ -102,7 +100,7 @@ public class CatacombTunneler {
 		
 		MetaBlock air = new MetaBlock(Blocks.air);
 		
-		IBlockFactory wallBlocks = theme.getPrimaryWall();
+		IBlockFactory wallBlocks = this.level.getSettings().getTheme().getPrimaryWall();
 		BlockJumble bridgeBlocks = new BlockJumble();
 		bridgeBlocks.addBlock(wallBlocks);
 		bridgeBlocks.addBlock(air);
@@ -139,9 +137,8 @@ public class CatacombTunneler {
 	}
 	
 	public void addSegments(World world){
-		
 		for(Coord location : tunnel){
-			theme.genSegment(world, rand, level, dir, location);
+			level.getSettings().getSegments().genSegment(world, rand, level, dir, location);
 		}
 	}
 }

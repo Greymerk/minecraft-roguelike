@@ -1,8 +1,7 @@
 package greymerk.roguelike.catacomb;
 
-import greymerk.roguelike.catacomb.dungeon.DungeonCustomization;
+import greymerk.roguelike.catacomb.settings.CatacombLevelSettings;
 import greymerk.roguelike.catacomb.theme.ITheme;
-import greymerk.roguelike.catacomb.theme.Theme;
 import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
@@ -63,10 +62,9 @@ public class CatacombTower {
 
 	}
 	
-	public void generate(World world, Random rand, int x, int y, int z){
+	public void generate(World world, Random rand, CatacombLevelSettings settings, int x, int y, int z){
 		
-		ITheme theme = DungeonCustomization.getTheme(world.getBiomeGenForCoords(x, z), 0); 
-		if(theme == null) theme = Theme.getByLevel(world.getBiomeGenForCoords(x, z), 0);
+		ITheme theme = settings.getTheme();
 		
 		
 		MetaBlock air = new MetaBlock(Blocks.air);

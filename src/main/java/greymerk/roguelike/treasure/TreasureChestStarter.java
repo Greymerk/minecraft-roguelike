@@ -3,6 +3,7 @@ package greymerk.roguelike.treasure;
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.treasure.loot.Equipment;
 import greymerk.roguelike.treasure.loot.Loot;
+import greymerk.roguelike.treasure.loot.LootSettings;
 import greymerk.roguelike.treasure.loot.Quality;
 import greymerk.roguelike.treasure.loot.provider.ItemSpecialty;
 
@@ -19,21 +20,21 @@ public class TreasureChestStarter extends TreasureChestBase{
 
 
 	
-	private ItemStack getStarterLoot(int choice){
+	private ItemStack getStarterLoot(LootSettings loot, int choice){
 		
-		if(!RogueConfig.getBoolean(RogueConfig.GENEROUS)) return Loot.getLoot(Loot.JUNK, rand, 0);
+		if(!RogueConfig.getBoolean(RogueConfig.GENEROUS)) return loot.get(Loot.JUNK, rand);
 		
 		switch (choice){
-		case 4: return Loot.getLoot(Loot.TOOL, rand, 0);
-		case 3: return Loot.getLoot(Loot.WEAPON, rand, 0);
-		case 2: return Loot.getLoot(Loot.FOOD, rand, 0);
+		case 4: return loot.get(Loot.TOOL, rand);
+		case 3: return loot.get(Loot.WEAPON, rand);
+		case 2: return loot.get(Loot.FOOD, rand);
 		case 1: if(RogueConfig.getBoolean(RogueConfig.GENEROUS)) return ItemSpecialty.getRandomItem(Equipment.LEGS, rand, Quality.WOOD);
 		default: return new ItemStack(Blocks.torch, 1 + rand.nextInt(RogueConfig.getBoolean(RogueConfig.GENEROUS) ? 7 : 3));
 		}
 	}	
 	
 	@Override
-	protected void fillChest(TileEntityChest chest, int level) {
+	protected void fillChest(TileEntityChest chest, LootSettings loot, int level) {
 
 		int quantity = RogueConfig.getBoolean(RogueConfig.GENEROUS) ? 8 : 4;
 
@@ -41,7 +42,7 @@ public class TreasureChestStarter extends TreasureChestBase{
 		
 		for (int i = 0; i < quantity; i++) {
 			ItemStack item;
-			item = getStarterLoot(i % 5);
+			item = getStarterLoot(loot, i % 5);
 			if(itr.hasNext()) itr.next().set(item);
 		}
 

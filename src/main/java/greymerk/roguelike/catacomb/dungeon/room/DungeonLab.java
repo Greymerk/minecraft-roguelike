@@ -1,9 +1,11 @@
 package greymerk.roguelike.catacomb.dungeon.room;
 
 import greymerk.roguelike.catacomb.dungeon.DungeonBase;
+import greymerk.roguelike.catacomb.settings.CatacombLevelSettings;
 import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.treasure.TreasureChest;
+import greymerk.roguelike.treasure.loot.LootSettings;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.FlowerPot;
@@ -19,8 +21,10 @@ import net.minecraft.world.World;
 public class DungeonLab extends DungeonBase {
 
 	@Override
-	public boolean generate(World inWorld, Random inRandom, ITheme theme, Cardinal[] entrances, int inOriginX, int inOriginY, int inOriginZ) {
+	public boolean generate(World inWorld, Random inRandom, CatacombLevelSettings settings, Cardinal[] entrances, int inOriginX, int inOriginY, int inOriginZ) {
 	
+		ITheme theme = settings.getTheme();
+		
 		IBlockFactory blocks = theme.getPrimaryWall();
 		
 		
@@ -41,7 +45,7 @@ public class DungeonLab extends DungeonBase {
 		WorldGenPrimitive.fillRectHollow(inWorld, inRandom, inOriginX - 8, inOriginY - 1, inOriginZ - 8, inOriginX + 8, inOriginY + 4, inOriginZ + 8, blocks, false, true);
 		
 		// corner rooms
-		southWest(inWorld, inRandom, theme, inOriginX - 7, inOriginY, inOriginZ + 2);
+		southWest(inWorld, inRandom, settings.getLoot(), theme, inOriginX - 7, inOriginY, inOriginZ + 2);
 		southEast(inWorld, inRandom, theme, inOriginX + 2, inOriginY, inOriginZ + 2);
 		northWest(inWorld, inRandom, theme, inOriginX - 7, inOriginY, inOriginZ - 7);
 		northEast(inWorld, inRandom, theme, inOriginX + 2, inOriginY, inOriginZ - 7);
@@ -102,7 +106,7 @@ public class DungeonLab extends DungeonBase {
 	}
 	
 	
-	private static void southWest(World world, Random rand, ITheme theme, int x, int y, int z){
+	private static void southWest(World world, Random rand, LootSettings loot, ITheme theme, int x, int y, int z){
 		
 		corner(world, rand, theme, x, y, z);
 		
@@ -116,7 +120,7 @@ public class DungeonLab extends DungeonBase {
 			WorldGenPrimitive.setBlock(world, x + 1, y + 1, z + 5, Blocks.brewing_stand);
 		}
 		
-		TreasureChest.generate(world, rand, x, y + 1, z + 4, TreasureChest.POTIONS);
+		TreasureChest.generate(world, rand, loot, x, y + 1, z + 4, TreasureChest.POTIONS);
 		
 		
 	}

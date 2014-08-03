@@ -1,8 +1,5 @@
 package greymerk.roguelike.catacomb.theme;
 
-import greymerk.roguelike.catacomb.segment.Segment;
-import greymerk.roguelike.util.WeightedChoice;
-import greymerk.roguelike.util.WeightedRandomizer;
 import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.Log;
 import greymerk.roguelike.worldgen.MetaBlock;
@@ -28,13 +25,5 @@ public class ThemeOak extends ThemeBase{
 		MetaBlock SegmentStair = new MetaBlock(Blocks.oak_stairs);
 		
 		this.decor =  new BlockSet(SegmentWall, SegmentStair, pillar);
-		
-		this.segments = new WeightedRandomizer<Segment>();
-		this.segments.add(new WeightedChoice<Segment>((Segment.FLOWERS), 2));
-		this.segments.add(new WeightedChoice<Segment>((Segment.DOOR), 6));
-		this.segments.add(new WeightedChoice<Segment>((Segment.WHEAT), 1));
-		this.segments.add(new WeightedChoice<Segment>((Segment.FIREPLACE), 2));
-		
-		this.arch = Segment.ARCH;
 	}
 }

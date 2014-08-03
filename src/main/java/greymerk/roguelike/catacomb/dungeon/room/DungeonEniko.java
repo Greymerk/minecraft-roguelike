@@ -1,7 +1,7 @@
 package greymerk.roguelike.catacomb.dungeon.room;
 
 import greymerk.roguelike.catacomb.dungeon.DungeonBase;
-import greymerk.roguelike.catacomb.theme.ITheme;
+import greymerk.roguelike.catacomb.settings.CatacombLevelSettings;
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.treasure.ITreasureChest;
 import greymerk.roguelike.treasure.TreasureChestEmpty;
@@ -22,7 +22,8 @@ import net.minecraft.world.World;
 public class DungeonEniko extends DungeonBase {
 
 	@Override
-	public boolean generate(World world, Random rand, ITheme theme, Cardinal[] entrances, int x, int y, int z) {
+	public boolean generate(World world, Random rand, CatacombLevelSettings settings, Cardinal[] entrances, int x, int y, int z) {
+		
 		
 		MetaBlock air = new MetaBlock(Blocks.air);
 		MetaBlock coal = new MetaBlock(Blocks.coal_block);
@@ -69,7 +70,7 @@ public class DungeonEniko extends DungeonBase {
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 4, y, z + 5, x - 3, y, z + 5, shelf, true, true);
 		WorldGenPrimitive.fillRectSolid(world, rand, x + 3, y + 1, z + 6, x + 4, y + 3, z + 6, coal);
 		WorldGenPrimitive.fillRectSolid(world, rand, x + 3, y, z + 5, x + 4, y, z + 5, shelf, true, true);
-		ITreasureChest eniChest = new TreasureChestEmpty().generate(world, rand, x + 3, y + 1, z + 5);
+		ITreasureChest eniChest = new TreasureChestEmpty().generate(world, rand, settings.getLoot(), x + 3, y + 1, z + 5);
 		if(rand.nextBoolean()){
 			eniChest.setInventorySlot(ItemNovelty.getItem(ItemNovelty.ENIKOBOW), eniChest.getInventorySize() / 2);
 		} else {

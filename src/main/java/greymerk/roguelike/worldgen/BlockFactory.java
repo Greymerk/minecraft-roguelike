@@ -6,7 +6,7 @@ public enum BlockFactory {
 	
 	METABLOCK, WEIGHTED, CHECKERS, JUMBLE, STRIPES;
 
-	public static IBlockFactory create(String type, JsonElement blockJson) throws Exception {
+	public static IBlockFactory create(String type, JsonElement blockJson) {
 		switch(BlockFactory.valueOf(type)){
 		case METABLOCK: return new MetaBlock(blockJson);
 		case WEIGHTED: return new BlockWeightedRandom(blockJson);

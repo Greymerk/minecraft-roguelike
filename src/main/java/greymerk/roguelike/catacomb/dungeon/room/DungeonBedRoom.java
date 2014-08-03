@@ -1,12 +1,7 @@
 package greymerk.roguelike.catacomb.dungeon.room;
 
-import java.util.Random;
-
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
 import greymerk.roguelike.catacomb.dungeon.IDungeon;
+import greymerk.roguelike.catacomb.settings.CatacombLevelSettings;
 import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.treasure.TreasureChest;
 import greymerk.roguelike.worldgen.Bed;
@@ -18,10 +13,19 @@ import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
 import greymerk.roguelike.worldgen.redstone.Torch;
 
+import java.util.Random;
+
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
+
 public class DungeonBedRoom implements IDungeon {
 
 	@Override
-	public boolean generate(World world, Random rand, ITheme theme, Cardinal[] entrances, int x, int y, int z) {
+	public boolean generate(World world, Random rand, CatacombLevelSettings settings, Cardinal[] entrances, int x, int y, int z) {
+		
+		ITheme theme = settings.getTheme();
 		
 		Coord cursor;
 		Coord start;
@@ -119,7 +123,7 @@ public class DungeonBedRoom implements IDungeon {
 		cursor = new Coord(x, y, z);
 		cursor.add(dir);
 		cursor.add(side, 3);
-		TreasureChest.generate(world, rand, cursor, TreasureChest.STARTER);
+		TreasureChest.generate(world, rand, settings.getLoot(), cursor, TreasureChest.STARTER);
 		cursor.add(Cardinal.reverse(side), 6);
 		if(rand.nextBoolean()){
 			cursor.add(Cardinal.UP);

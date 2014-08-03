@@ -2,26 +2,12 @@ package greymerk.roguelike.treasure.loot;
 
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.treasure.loot.provider.ItemArmour;
-import greymerk.roguelike.treasure.loot.provider.ItemBlock;
-import greymerk.roguelike.treasure.loot.provider.ItemEnchBonus;
-import greymerk.roguelike.treasure.loot.provider.ItemEnchBook;
-import greymerk.roguelike.treasure.loot.provider.ItemFood;
-import greymerk.roguelike.treasure.loot.provider.ItemJunk;
 import greymerk.roguelike.treasure.loot.provider.ItemNovelty;
-import greymerk.roguelike.treasure.loot.provider.ItemOre;
-import greymerk.roguelike.treasure.loot.provider.ItemPotion;
-import greymerk.roguelike.treasure.loot.provider.ItemRecord;
-import greymerk.roguelike.treasure.loot.provider.ItemSmithy;
-import greymerk.roguelike.treasure.loot.provider.ItemSpecialty;
-import greymerk.roguelike.treasure.loot.provider.ItemSupply;
 import greymerk.roguelike.treasure.loot.provider.ItemTool;
 import greymerk.roguelike.treasure.loot.provider.ItemWeapon;
-import greymerk.roguelike.util.IWeighted;
 import greymerk.roguelike.util.TextFormat;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 import net.minecraft.enchantment.EnchantmentData;
@@ -39,66 +25,9 @@ import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 
 public enum Loot {
-
+	
 	WEAPON, ARMOUR, BLOCK, JUNK, ORE, TOOL, POTION, FOOD, ENCHANTBOOK, ENCHANTBONUS, SUPPLY, MUSIC, SMITHY, SPECIAL;
-	
-	private static final int NUM_LEVELS = 5;
-	private static Map<String, LootProvider> loot = new HashMap<String, LootProvider>();
-	static{
-		init();
-	}
-	
-	
-	public static void init(){
-	
-		for(Loot type : Loot.values()){
-			LootProvider loots;
-			
-			loot.put(type.name(), loots = new LootProvider());
-			
-			for(int i = 0; i < NUM_LEVELS; ++i){
-				switch(type){
-					case WEAPON: loots.add(i, new ItemWeapon(1000, i)); continue;
-					case ARMOUR: loots.add(i, new ItemArmour(1000, i)); continue;
-					case BLOCK: loots.add(i, new ItemBlock(1000, i)); continue;
-					case JUNK: loots.add(i, new ItemJunk(1000, i)); continue;
-					case ORE: loots.add(i, new ItemOre(1000, i)); continue;
-					case TOOL: loots.add(i, new ItemTool(1000, i)); continue;
-					case POTION: loots.add(i, new ItemPotion(1000, i)); continue;
-					case FOOD: loots.add(i, new ItemFood(1000, i)); continue;
-					case ENCHANTBOOK: loots.add(i, new ItemEnchBook(1000, i)); continue;
-					case ENCHANTBONUS: loots.add(i, new ItemEnchBonus(1000, i)); continue;
-					case SUPPLY: loots.add(i, new ItemSupply(1000, i)); continue;
-					case MUSIC: loots.add(i, new ItemRecord(1000, i)); continue;
-					case SMITHY: loots.add(i, new ItemSmithy(1000, i)); continue;
-					case SPECIAL: loots.add(i, new ItemSpecialty(1000, i)); continue;
-				}
-			}
-		}
 
-		CustomLoot.parseLoot();
-		
-	}
-	
-	public static void clear(Loot type){
-		LootProvider lootp = loot.get(type.name());
-		lootp.clear();
-	}
-	
-	public static void addAllLevels(Loot type, IWeighted<ItemStack> toAdd){
-		LootProvider lootp = loot.get(type.name());
-		lootp.addAllLevels(toAdd);
-	}
-	
-	public static void add(Loot type, IWeighted<ItemStack> toAdd, int level){
-		LootProvider lootp = loot.get(type.name());
-		lootp.add(level, toAdd);
-	}
-	
-	public static ItemStack getLoot(Loot type, Random rand, int level){
-		LootProvider p =  loot.get(type.name());
-		return p.get(rand, level);		
-	}
 	
 	public static ItemStack getEquipmentBySlot(Random rand, Slot slot, int level, boolean enchant){
 		
@@ -200,6 +129,8 @@ public enum Loot {
 	
 	public static void addEquipment(World world, int level, Entity mob){
 			
+		if(level > 4) level = 4;
+		
 		Random rand = world.rand;
 				
 		EnumDifficulty difficulty = world.difficultySetting;
@@ -261,4 +192,5 @@ public enum Loot {
 			((EntityLiving)mob).setEquipmentDropChance(s, (float) RogueConfig.getDouble(RogueConfig.LOOTING));
 		}
 	}
+	
 }

@@ -1,18 +1,20 @@
 package greymerk.roguelike.catacomb.segment.part;
 
-import java.util.List;
-import java.util.Random;
-
-import net.minecraft.init.Blocks;
-import net.minecraft.world.World;
 import greymerk.roguelike.catacomb.CatacombLevel;
 import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.treasure.TreasureChest;
+import greymerk.roguelike.treasure.loot.LootSettings;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.Spawner;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
+
+import java.util.List;
+import java.util.Random;
+
+import net.minecraft.init.Blocks;
+import net.minecraft.world.World;
 
 public class SegmentTomb extends SegmentBase {
 	
@@ -48,7 +50,7 @@ public class SegmentTomb extends SegmentBase {
 			WorldGenPrimitive.setBlock(world, rand, c, stair, true, true);
 		}
 		
-		tomb(world, rand, theme, dir, new Coord(x, y, z));
+		tomb(world, rand, level.getSettings().getLoot(), theme, dir, new Coord(x, y, z));
 		
 		cursor = new Coord(x, y, z);
 		cursor.add(Cardinal.UP);
@@ -57,7 +59,7 @@ public class SegmentTomb extends SegmentBase {
 		
 	}
 	
-	private static void tomb(World world, Random rand, ITheme theme, Cardinal dir, Coord pos){
+	private static void tomb(World world, Random rand, LootSettings loot, ITheme theme, Cardinal dir, Coord pos){
 		
 		Coord cursor;
 		Coord start;
@@ -85,7 +87,7 @@ public class SegmentTomb extends SegmentBase {
 		cursor.add(dir, 4);
 		Spawner.generate(world, rand, cursor, rand.nextBoolean() ? Spawner.SKELETON : Spawner.ZOMBIE);
 		cursor.add(dir);
-		TreasureChest.generate(world, rand, cursor, rand.nextBoolean() ? TreasureChest.ARMOUR : TreasureChest.WEAPONS);
+		TreasureChest.generate(world, rand, loot, cursor, rand.nextBoolean() ? TreasureChest.ARMOUR : TreasureChest.WEAPONS);
 		
 	}
 }

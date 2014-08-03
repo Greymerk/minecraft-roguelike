@@ -1,6 +1,7 @@
 package greymerk.roguelike.catacomb.dungeon.room;
 
 import greymerk.roguelike.catacomb.dungeon.DungeonBase;
+import greymerk.roguelike.catacomb.settings.CatacombLevelSettings;
 import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.treasure.TreasureChest;
 import greymerk.roguelike.worldgen.Cardinal;
@@ -17,8 +18,10 @@ import net.minecraft.world.World;
 
 public class DungeonsCrypt extends DungeonBase {
 
-	public boolean generate(World world, Random rand, ITheme theme, Cardinal[] entrances, int x, int y, int z) {
+	public boolean generate(World world, Random rand, CatacombLevelSettings settings, Cardinal[] entrances, int x, int y, int z) {
 
+		ITheme theme = settings.getTheme();
+		
 		IBlockFactory walls = theme.getPrimaryWall();
 		MetaBlock stair = theme.getPrimaryStair();
 		MetaBlock air = new MetaBlock(Blocks.air);
@@ -152,7 +155,7 @@ public class DungeonsCrypt extends DungeonBase {
 					cursor.add(orth, 1);
 					TreasureChest[] types = {TreasureChest.ARMOUR, TreasureChest.WEAPONS, TreasureChest.SPECIAL};
 					TreasureChest chestType = types[rand.nextInt(types.length)];
-					TreasureChest.generate(world, rand, cursor, chestType);
+					TreasureChest.generate(world, rand, settings.getLoot(), cursor, chestType);
 				}
 			}
 		}

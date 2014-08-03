@@ -1,7 +1,7 @@
 package greymerk.roguelike.catacomb.dungeon.room;
 
 import greymerk.roguelike.catacomb.dungeon.DungeonBase;
-import greymerk.roguelike.catacomb.theme.ITheme;
+import greymerk.roguelike.catacomb.settings.CatacombLevelSettings;
 import greymerk.roguelike.treasure.ITreasureChest;
 import greymerk.roguelike.treasure.TreasureChestEmpty;
 import greymerk.roguelike.treasure.loot.provider.ItemNovelty;
@@ -18,9 +18,8 @@ import net.minecraft.world.World;
 public class DungeonBaj extends DungeonBase {
 
 	@Override
-	public boolean generate(World world, Random rand, ITheme theme, Cardinal[] entrances, int x, int y, int z) {
+	public boolean generate(World world, Random rand, CatacombLevelSettings settings, Cardinal[] entrances, int x, int y, int z) {
 
-		
 		
 		//WorldGenPrimitive.fillRectHollow(world, rand, x - 5, y - 2, z - 5, x + 5, y + 4, z + 5, new MetaBlock(Blocks.stone), true, true);
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 4, y - 1, z - 4, x + 4, y + 3, z + 4, new MetaBlock(Blocks.air), true, true);
@@ -100,7 +99,7 @@ public class DungeonBaj extends DungeonBase {
 		crops(world, rand, x + 1, y - 1, z + 3);
 		
 		WorldGenPrimitive.setBlock(world, x, y - 1, z, Blocks.dirt);
-		ITreasureChest chest = new TreasureChestEmpty().generate(world, rand, x, y, z);
+		ITreasureChest chest = new TreasureChestEmpty().generate(world, rand, settings.getLoot(), x, y, z);
 		chest.setInventorySlot(ItemNovelty.getItem(ItemNovelty.BAJ), chest.getInventorySize() / 2);
 		
 		

@@ -1,7 +1,7 @@
 package greymerk.roguelike.catacomb.dungeon.room;
 
 import greymerk.roguelike.catacomb.dungeon.DungeonBase;
-import greymerk.roguelike.catacomb.theme.ITheme;
+import greymerk.roguelike.catacomb.settings.CatacombLevelSettings;
 import greymerk.roguelike.treasure.ITreasureChest;
 import greymerk.roguelike.treasure.TreasureChestEmpty;
 import greymerk.roguelike.treasure.loot.provider.ItemNovelty;
@@ -19,7 +19,8 @@ import net.minecraft.world.World;
 public class DungeonNebris extends DungeonBase {
 
 	@Override
-	public boolean generate(World world, Random rand, ITheme theme, Cardinal[] entrances, int x, int y, int z) {
+	public boolean generate(World world, Random rand, CatacombLevelSettings settings, Cardinal[] entrances, int x, int y, int z) {
+		
 		
 		MetaBlock air = new MetaBlock(Blocks.air);
 		MetaBlock cobble = new MetaBlock(Blocks.cobblestone);
@@ -179,7 +180,7 @@ public class DungeonNebris extends DungeonBase {
 		
 		
 		ITreasureChest chest = new TreasureChestEmpty();
-		chest.generate(world, rand, x, y, z);
+		chest.generate(world, rand, settings.getLoot(), x, y, z);
 		int middle = chest.getInventorySize() / 2;
 		if(rand.nextBoolean()){
 			chest.setInventorySlot(ItemNovelty.getItem(ItemNovelty.NEBRISCROWN), middle);	
