@@ -19,6 +19,7 @@ public class WeightedRandomizer<T> implements IWeighted<T>{
 	public WeightedRandomizer(WeightedRandomizer<T> toCopy){
 		this.weight = toCopy.weight;
 		this.weightSum = toCopy.weightSum;
+		this.items = new ArrayList<IWeighted<T>>();
 		for(IWeighted<T> e : toCopy.items){
 			items.add(e);
 		}

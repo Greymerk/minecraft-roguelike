@@ -32,11 +32,11 @@ public class WeightedRandomLoot implements Comparable<WeightedRandomLoot>, IWeig
 		this.weight = weight;
 	}
 
-	public WeightedRandomLoot(JsonObject json){
+	public WeightedRandomLoot(JsonObject json, int weight){
 		String name = json.get("name").getAsString();
 		this.item = (Item) Item.itemRegistry.getObject(name);
 		this.damage = json.has("meta") ? json.get("meta").getAsInt() : 0;
-		this.weight = json.get("weight").getAsInt();
+		this.weight = weight;
 
 		if(json.has("min") && json.has("max")){
 			min = json.get("min").getAsInt();

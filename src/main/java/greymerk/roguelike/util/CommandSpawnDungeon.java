@@ -54,6 +54,13 @@ public class CommandSpawnDungeon extends CommandBase
         	int z = parseInt(sender, args[2]);
         	
         	World world = sender.getEntityWorld();
+        	
+        	if(args.length == 4){
+        		String name = args[3];
+        		Catacomb.generate(world, Catacomb.settingsResolver.getByName(name), x, z);
+        		return;
+        	}
+        	
         	Catacomb.generate(world, Catacomb.settingsResolver.getSettings(), x, z);
     	}
     	

@@ -4,6 +4,7 @@ import greymerk.roguelike.config.RogueConfig;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,16 +17,17 @@ public class CatacombSettingsResolver {
 
 	private static final String SETTINGS_DIRECTORY = RogueConfig.configDirName + "/settings";
 	Map<String, CatacombSettings> settings;
-	CatacombSettings base;
 	
 	public CatacombSettingsResolver(){
 		settings = new HashMap<String, CatacombSettings>();
-		base = new CatacombSettings();
+		settings.put("default", new CatacombSettingsDefault());
 		File settingsDir = new File(SETTINGS_DIRECTORY);
 		if(!settingsDir.exists() || !settingsDir.isDirectory()) return;
 		File[] settingsFiles = settingsDir.listFiles();
+		Arrays.sort(settingsFiles);
 		for(int i = 0; i < settingsFiles.length; ++i){
 			File toParse = settingsFiles[i];
+			System.out.println(toParse.getName());
 			CatacombSettings toAdd = parseFile(toParse); 
 			settings.put(toAdd.getName(), toAdd);
 		}
@@ -47,10 +49,10 @@ public class CatacombSettingsResolver {
 	}
 	
 	public CatacombSettings getByName(String name){
-		return new CatacombSettings(base, this.settings.get(name));
+		return new CatacombSettings(settings.get("default"), this.settings.get(name));
 	}
 	
 	public CatacombSettings getSettings(){
-		return base;
+		return new CatacombSettings(settings.get("default"));
 	}
 }

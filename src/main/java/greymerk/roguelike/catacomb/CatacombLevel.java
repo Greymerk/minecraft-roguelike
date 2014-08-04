@@ -43,8 +43,6 @@ public class CatacombLevel {
 		this.originX = originX;
 		this.originZ = originZ;
 		
-		
-		
 		SCATTER = RogueConfig.getInt(RogueConfig.LEVELSCATTER);
 		maxNodes = RogueConfig.getInt(RogueConfig.LEVELMAXROOMS);
 		range = RogueConfig.getInt(RogueConfig.LEVELRANGE);

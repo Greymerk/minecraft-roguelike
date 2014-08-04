@@ -56,10 +56,8 @@ public class LootSettings {
 	
 	public LootSettings(LootSettings base, LootSettings override){
 		this.loot = new HashMap<Loot, IWeighted<ItemStack>>();
-		for(Loot type : Loot.values()){
-			IWeighted<ItemStack> toAdd = override.loot.containsKey(type) ? override.loot.get(type) : base.loot.get(type);
-			loot.put(type, toAdd);
-		}
+		if(base != null) this.loot.putAll(base.loot);
+		if(override != null) this.loot.putAll(override.loot);
 	}
 	
 	public LootSettings(JsonObject data){
@@ -67,23 +65,27 @@ public class LootSettings {
 		for(Loot type : Loot.values()){
 			if(data.has(type.toString())){
 				JsonElement providerData = data.get(type.toString());
-				IWeighted<ItemStack> provider = parseProvider(providerData);
+				IWeighted<ItemStack> provider = parseProvider(providerData.getAsJsonObject());
 				loot.put(type, provider);
 			}
 		}
 	}
 	
-	private IWeighted<ItemStack> parseProvider(JsonElement data) {
+	private IWeighted<ItemStack> parseProvider(JsonObject data) {
 		
-		if(data.isJsonObject()){
-			return new WeightedRandomLoot(data.getAsJsonObject());
+		int weight = data.get("weight").getAsInt();
+		JsonElement loot = data.get("loot");
+		
+		if(loot.isJsonObject()){
+			return new WeightedRandomLoot(loot.getAsJsonObject(), weight);
 		}
 		
-		JsonArray lootList = data.getAsJsonArray();
+		JsonArray lootList = loot.getAsJsonArray();
 		
-		WeightedRandomizer<ItemStack> items = new WeightedRandomizer<ItemStack>();
+		WeightedRandomizer<ItemStack> items = new WeightedRandomizer<ItemStack>(weight);
+		
 		for(JsonElement e : lootList){
-			items.add(parseProvider(e));
+			items.add(parseProvider(e.getAsJsonObject()));
 		}
 		
 		return items;

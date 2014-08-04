@@ -1,6 +1,7 @@
 *.class
 
 /.gradle/
+/.metadata/
 /.settings/
 /assets/
 /bin/

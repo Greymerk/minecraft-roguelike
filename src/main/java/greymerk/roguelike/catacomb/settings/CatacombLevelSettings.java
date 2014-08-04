@@ -1,11 +1,9 @@
 package greymerk.roguelike.catacomb.settings;
 
-import greymerk.roguelike.catacomb.dungeon.Dungeon;
 import greymerk.roguelike.catacomb.dungeon.DungeonFactory;
 import greymerk.roguelike.catacomb.dungeon.IDungeonFactory;
 import greymerk.roguelike.catacomb.dungeon.SecretFactory;
 import greymerk.roguelike.catacomb.segment.ISegmentGenerator;
-import greymerk.roguelike.catacomb.segment.Segment;
 import greymerk.roguelike.catacomb.segment.SegmentGenerator;
 import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.catacomb.theme.Theme;
@@ -26,51 +24,42 @@ public class CatacombLevelSettings {
 	public CatacombLevelSettings(){
 		numRooms = 10;
 		range = 40;
-		
-		DungeonFactory dungeons;
-		dungeons = new DungeonFactory();
-		dungeons.addSingle(Dungeon.CAKE);
-		dungeons.addSingle(Dungeon.FIRE);
-		dungeons.addSingle(Dungeon.SMITH);
-		dungeons.addRandom(Dungeon.BRICK, 10);
-		dungeons.addRandom(Dungeon.CORNER, 3);
-		rooms = dungeons;
-		
-		secrets = new SecretFactory();
-		secrets.addRoom(Dungeon.ENIKO);
-		
-		theme = Theme.getTheme(Theme.CHECKER);
-		
-		segments = new SegmentGenerator(Segment.ARCH);
-		segments.add(Segment.INSET, 1);
-		segments.add(Segment.FIREPLACE, 1);
-		loot = new LootSettings(0);
-
 	}
 	
 	public CatacombLevelSettings(CatacombLevelSettings toCopy){
 		this.numRooms = toCopy.numRooms;
-		this.range = toCopy.numRooms;
-		this.rooms = new DungeonFactory(toCopy.rooms);
-		this.secrets = new SecretFactory(toCopy.secrets);
-		this.theme = toCopy.theme;
-		this.segments = new SegmentGenerator(toCopy.segments);
-		this.loot = new LootSettings(toCopy.loot);
+		this.range = toCopy.range;
+		this.rooms = toCopy.rooms != null ? new DungeonFactory(toCopy.rooms) : null;
+		this.secrets = toCopy.secrets != null ? new SecretFactory(toCopy.secrets) : null;
+		this.theme = toCopy.theme != null ? toCopy.theme : null;
+		this.segments = toCopy.segments != null ? new SegmentGenerator(toCopy.segments) : null;
+		this.loot = toCopy.loot != null ? new LootSettings(toCopy.loot) : null;
 	}
 	
 	public CatacombLevelSettings(CatacombLevelSettings base, CatacombLevelSettings override){
-		this.numRooms = override.numRooms;
-		this.range = override.range;
-		this.rooms = override.rooms == null ? base.rooms : override.rooms;
-		this.secrets = override.secrets == null ? base.secrets : override.secrets;
+		this.numRooms = override.numRooms != base.numRooms ? override.numRooms : base.numRooms;
+		this.range = override.range != base.range ? override.range : base.range;
+		
+		if(base.rooms != null || override.rooms != null){
+			this.rooms = override.rooms == null ? new DungeonFactory(base.rooms) : new DungeonFactory(override.rooms);
+		}
+		
+		if(base.secrets != null || override.rooms != null){
+			this.secrets = override.secrets == null ? new SecretFactory(base.secrets) : new SecretFactory(override.secrets);
+		}
+		
 		this.theme = override.theme == null ? base.theme : override.theme;
-		this.segments = override.segments == null ? base.segments : override.segments;
+		
+		if(base.segments != null || override.segments != null){
+			this.segments = override.segments == null ? new SegmentGenerator(base.segments) : new SegmentGenerator(override.segments);
+		}
+		
 		this.loot = new LootSettings(base.loot, override.loot);
 	}
 	
 	public CatacombLevelSettings(JsonObject data){
-		this.numRooms = data.has("numRooms") ? data.get("numRooms").getAsInt() : null;
-		this.range = data.has("range") ? data.get("range").getAsInt() : null;
+		this.numRooms = data.has("numRooms") ? data.get("numRooms").getAsInt() : 10;
+		this.range = data.has("range") ? data.get("range").getAsInt() : 40;
 		this.rooms = data.has("rooms") ? new DungeonFactory(data.get("rooms").getAsJsonArray()) : null;
 		this.secrets = data.has("secrets") ? new SecretFactory(data.get("secrets").getAsJsonArray()) : null;
 		this.theme = data.has("theme") ? Theme.create(data.get("theme").getAsJsonObject()) : null;
