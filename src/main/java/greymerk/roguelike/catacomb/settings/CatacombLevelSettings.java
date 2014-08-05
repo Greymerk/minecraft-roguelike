@@ -7,6 +7,7 @@ import greymerk.roguelike.catacomb.segment.ISegmentGenerator;
 import greymerk.roguelike.catacomb.segment.SegmentGenerator;
 import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.catacomb.theme.Theme;
+import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.treasure.loot.LootSettings;
 
 import com.google.gson.JsonObject;
@@ -21,9 +22,12 @@ public class CatacombLevelSettings {
 	SegmentGenerator segments;
 	LootSettings loot;
 
+	private static final int NUM_ROOMS = 10;
+	private static final int RANGE = 40;
+	
 	public CatacombLevelSettings(){
-		numRooms = 10;
-		range = 40;
+		numRooms = NUM_ROOMS;
+		range = RANGE;
 	}
 	
 	public CatacombLevelSettings(CatacombLevelSettings toCopy){
@@ -37,14 +41,14 @@ public class CatacombLevelSettings {
 	}
 	
 	public CatacombLevelSettings(CatacombLevelSettings base, CatacombLevelSettings override){
-		this.numRooms = override.numRooms != base.numRooms ? override.numRooms : base.numRooms;
-		this.range = override.range != base.range ? override.range : base.range;
+		this.numRooms = override.numRooms != base.numRooms && base.numRooms == NUM_ROOMS ? override.numRooms : base.numRooms;
+		this.range = override.range != base.range && base.range == RANGE ? override.range : base.range;
 		
 		if(base.rooms != null || override.rooms != null){
 			this.rooms = override.rooms == null ? new DungeonFactory(base.rooms) : new DungeonFactory(override.rooms);
 		}
 		
-		if(base.secrets != null || override.rooms != null){
+		if(base.secrets != null || override.secrets != null){
 			this.secrets = override.secrets == null ? new SecretFactory(base.secrets) : new SecretFactory(override.secrets);
 		}
 		

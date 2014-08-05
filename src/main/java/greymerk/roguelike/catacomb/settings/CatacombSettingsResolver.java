@@ -1,5 +1,11 @@
 package greymerk.roguelike.catacomb.settings;
 
+import greymerk.roguelike.catacomb.settings.builtin.CatacombSettingsBasicLoot;
+import greymerk.roguelike.catacomb.settings.builtin.CatacombSettingsRooms;
+import greymerk.roguelike.catacomb.settings.builtin.CatacombSettingsSecrets;
+import greymerk.roguelike.catacomb.settings.builtin.CatacombSettingsSegments;
+import greymerk.roguelike.catacomb.settings.builtin.CatacombSettingsSize;
+import greymerk.roguelike.catacomb.settings.builtin.CatacombSettingsTheme;
 import greymerk.roguelike.config.RogueConfig;
 
 import java.io.File;
@@ -20,7 +26,13 @@ public class CatacombSettingsResolver {
 	
 	public CatacombSettingsResolver(){
 		settings = new HashMap<String, CatacombSettings>();
-		settings.put("default", new CatacombSettingsDefault());
+		CatacombSettings base = new CatacombSettingsBasicLoot();
+		base = new CatacombSettings(base, new CatacombSettingsRooms());
+		base = new CatacombSettings(base, new CatacombSettingsSecrets());
+		base = new CatacombSettings(base, new CatacombSettingsSegments());
+		base = new CatacombSettings(base, new CatacombSettingsSize());
+		base = new CatacombSettings(base, new CatacombSettingsTheme());
+		settings.put("default", base);
 		File settingsDir = new File(SETTINGS_DIRECTORY);
 		if(!settingsDir.exists() || !settingsDir.isDirectory()) return;
 		File[] settingsFiles = settingsDir.listFiles();

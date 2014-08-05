@@ -17,6 +17,7 @@ public class CatacombSettings implements ICatacombSettings{
 	protected Map<Integer, CatacombLevelSettings> levels;
 	
 	public CatacombSettings(){
+		this.levels = new HashMap<Integer, CatacombLevelSettings>();
 	}
 	
 	public CatacombSettings(Map<String, CatacombSettings> settings, JsonObject root){
