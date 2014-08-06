@@ -1,5 +1,6 @@
 package greymerk.roguelike.catacomb.settings;
 
+import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.worldgen.Coord;
 
 import java.util.ArrayList;
@@ -74,13 +75,25 @@ public class SpawnCriteria {
 		
 		Integer dimID = world.getWorldInfo().getVanillaDimension();
 		
+		List<Integer> dimBL = new ArrayList<Integer>();
+		
 		if(this.dimensionBlackList != null){
-			if(this.dimensionBlackList.contains(dimID)) return false;
+			this.dimensionBlackList.addAll(this.dimensionBlackList);
 		}
 		
+		dimBL.addAll(RogueConfig.getIntList(RogueConfig.DIMENSIONBL));
+		
+		if(dimBL.contains(dimID)) return false;
+		
+		List<Integer> dimWL = new ArrayList<Integer>();
+		
 		if(this.dimensionWhiteList != null){
-			if(!this.dimensionWhiteList.contains(dimID)) return false;
+			dimWL.addAll(this.dimensionWhiteList);
 		}
+		
+		dimWL.addAll(RogueConfig.getIntList(RogueConfig.DIMENSIONWL));
+		
+		if(!dimWL.isEmpty() && !dimWL.contains(dimID)) return false;
 		
 		if(this.biomes != null){
 			BiomeGenBase biome = world.getBiomeGenForCoords(pos.getX(), pos.getZ());

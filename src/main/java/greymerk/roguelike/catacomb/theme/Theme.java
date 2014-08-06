@@ -1,7 +1,5 @@
 package greymerk.roguelike.catacomb.theme;
 
-import net.minecraft.world.biome.BiomeGenBase;
-
 import com.google.gson.JsonObject;
 
 public enum Theme {
@@ -58,34 +56,6 @@ public enum Theme {
 			return new ThemeBase((ThemeBase) theme, primary, secondary);
 		} else {
 			return new ThemeBase(primary, secondary);
-		}
-	}
-	
-	public static ITheme getByLevel(BiomeGenBase biome, int level){
-		
-		boolean hot = biome.temperature >= 0.91F;
-		boolean cold = biome.temperature <= 0.1F;
-		boolean wet = biome.rainfall >= 0.8F;
-		boolean dry = biome.rainfall <= 0.1;
-		
-		switch(level){
-		case 0:
-			if(cold) return getTheme(SPRUCE);
-			if(hot && dry) return getTheme(SANDSTONE);
-			if(hot && wet) return getTheme(JUNGLE);
-			return getTheme(OAK);
-		case 1:
-			if(hot && dry) return getTheme(SANDSTONE);
-			if(hot && wet) return getTheme(JUNGLE);
-			return getTheme(DARKOAK);
-		case 2:
-			if(hot && wet) return getTheme(MOSSY);
-			return getTheme(CRYPT);
-		case 3:
-			if(hot && dry) return getTheme(CRYPT);
-			return getTheme(MOSSY);
-		case 4: return getTheme(NETHER);
-		default: return null;
 		}
 	}
 }

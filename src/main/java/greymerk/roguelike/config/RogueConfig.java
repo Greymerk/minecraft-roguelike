@@ -10,13 +10,17 @@ import net.minecraft.util.Tuple;
 
 public enum RogueConfig {
 
-	DONATURALSPAWN, LEVELRANGE, LEVELMAXROOMS, LEVELSCATTER, SPAWNFREQUENCY, GENEROUS, MOBDROPS, DIMENSION, 
-	PRECIOUSBLOCKS, LOOTING, OVERRIDELOOT;
+	DONATURALSPAWN, LEVELRANGE, LEVELMAXROOMS, LEVELSCATTER, SPAWNFREQUENCY, GENEROUS, MOBDROPS, DIMENSIONWL, DIMENSIONBL, 
+	PRECIOUSBLOCKS, LOOTING;
 	
 	public static final String configDirName = "config/roguelike_dungeons";
 	public static final String configFileName = "roguelike.cfg";
 	
 	private static ConfigFile instance = null;
+	
+	static{
+		init();
+	}
 	
 	public static String getName(RogueConfig option){
 		switch(option){
@@ -26,10 +30,10 @@ public enum RogueConfig {
 		case LEVELSCATTER: return "levelScatter";
 		case SPAWNFREQUENCY: return "spawnFrequency";
 		case GENEROUS: return "generous";
-		case DIMENSION: return "dimension";
+		case DIMENSIONWL: return "dimensionWL";
+		case DIMENSIONBL: return "dimensionBL";
 		case PRECIOUSBLOCKS: return "preciousBlocks";
 		case LOOTING: return "looting";
-		case OVERRIDELOOT: return "overrideLoot";
 		default: return null;
 		}
 	}
@@ -42,13 +46,14 @@ public enum RogueConfig {
 		case LEVELSCATTER: return new Tuple(getName(option), 10);
 		case SPAWNFREQUENCY: return new Tuple(getName(option), 10);
 		case GENEROUS: return new Tuple(getName(option), true);
-		case DIMENSION:
+		case DIMENSIONWL:
 			List<Integer> ints = new ArrayList<Integer>();
 			ints.add(0);
 			return new Tuple(getName(option), ints);
+		case DIMENSIONBL:
+			return new Tuple(getName(option), new ArrayList<Integer>());
 		case PRECIOUSBLOCKS: return new Tuple(getName(option), true);
 		case LOOTING: return new Tuple(getName(option), 0.085D);
-		case OVERRIDELOOT: return new Tuple(getName(option), false);
 		default: return null;
 		}
 	}
@@ -61,10 +66,10 @@ public enum RogueConfig {
 		if(!instance.ContainsKey(getName(LEVELSCATTER)))setInt(LEVELSCATTER, (Integer)getDefault(LEVELSCATTER).getSecond());
 		if(!instance.ContainsKey(getName(SPAWNFREQUENCY)))setInt(SPAWNFREQUENCY, (Integer)getDefault(SPAWNFREQUENCY).getSecond());
 		if(!instance.ContainsKey(getName(GENEROUS))) setBoolean(GENEROUS, (Boolean)getDefault(GENEROUS).getSecond());
-		if(!instance.ContainsKey(getName(DIMENSION)))setIntList(DIMENSION, (List<Integer>)getDefault(DIMENSION).getSecond());
+		if(!instance.ContainsKey(getName(DIMENSIONWL)))setIntList(DIMENSIONWL, (List<Integer>)getDefault(DIMENSIONWL).getSecond());
+		if(!instance.ContainsKey(getName(DIMENSIONBL)))setIntList(DIMENSIONBL, (List<Integer>)getDefault(DIMENSIONBL).getSecond());
 		if(!instance.ContainsKey(getName(PRECIOUSBLOCKS)))setBoolean(PRECIOUSBLOCKS, (Boolean)getDefault(PRECIOUSBLOCKS).getSecond());
 		if(!instance.ContainsKey(getName(LOOTING)))setDouble(LOOTING, (Double) getDefault(LOOTING).getSecond());
-		//if(!instance.ContainsKey(getName(OVERRIDELOOT)))setBoolean(OVERRIDELOOT, (Boolean)getDefault(OVERRIDELOOT).getSecond());
 	}
 	
 	public static double getDouble(RogueConfig option){

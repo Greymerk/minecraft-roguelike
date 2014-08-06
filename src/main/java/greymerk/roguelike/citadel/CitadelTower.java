@@ -1,6 +1,5 @@
 package greymerk.roguelike.citadel;
 
-import greymerk.roguelike.catacomb.dungeon.DungeonCustomization;
 import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.catacomb.theme.Theme;
 import greymerk.roguelike.worldgen.BlockWeightedRandom;
@@ -65,8 +64,7 @@ public class CitadelTower {
 	
 	public void generate(World world, Random rand, int x, int y, int z){
 		
-		ITheme theme = DungeonCustomization.getTheme(world.getBiomeGenForCoords(x, z), 0); 
-		if(theme == null) theme = Theme.getByLevel(world.getBiomeGenForCoords(x, z), 0);
+		ITheme theme = Theme.getTheme(Theme.OAK);
 		
 		
 		MetaBlock air = new MetaBlock(Blocks.air);

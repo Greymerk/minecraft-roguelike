@@ -59,7 +59,6 @@ public class CatacombSettingsResolver {
 		Arrays.sort(settingsFiles);
 		for(int i = 0; i < settingsFiles.length; ++i){
 			File toParse = settingsFiles[i];
-			System.out.println(toParse.getName());
 			CatacombSettings toAdd = parseFile(toParse); 
 			settings.put(toAdd.getName(), toAdd);
 		}
