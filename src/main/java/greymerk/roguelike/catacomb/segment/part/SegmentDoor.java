@@ -1,16 +1,18 @@
 package greymerk.roguelike.catacomb.segment.part;
 
-import java.util.Random;
-
-import net.minecraft.init.Blocks;
-import net.minecraft.world.World;
 import greymerk.roguelike.catacomb.CatacombLevel;
+import greymerk.roguelike.catacomb.dungeon.SecretFactory;
 import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.Door;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
+
+import java.util.Random;
+
+import net.minecraft.init.Blocks;
+import net.minecraft.world.World;
 
 public class SegmentDoor extends SegmentBase {
 	
@@ -34,7 +36,8 @@ public class SegmentDoor extends SegmentBase {
 		end.add(Cardinal.UP, 2);
 		WorldGenPrimitive.fillRectSolid(world, rand, start, end, air, true, true);
 		
-		boolean room = level.getSettings().getSecrets().genRoom(world, rand, level.getSettings(), dir, new Coord(x, y, z));
+		SecretFactory secrets = level.getSettings().getSecrets();
+		boolean room = secrets.genRoom(world, rand, level.getSettings(), dir, new Coord(x, y, z));
 		
 		start.add(dir, 1);
 		end.add(dir, 1);

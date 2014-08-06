@@ -5,6 +5,7 @@ import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -21,13 +22,8 @@ public class SecretFactory implements ISecretRoom{
 
 	
 	public SecretFactory(){
-		secrets = new ArrayList<ISecretRoom>();
 		count = 0;
-	}
-	
-	public SecretFactory(int count){
 		secrets = new ArrayList<ISecretRoom>();
-		this.count = count;
 	}
 	
 	public SecretFactory(SecretFactory toCopy){
@@ -63,37 +59,33 @@ public class SecretFactory implements ISecretRoom{
 	
 	public void addRoom(Dungeon type, int count){
 		secrets.add(new SecretRoom(type, count));
-	}
-	
-	public void addRoom(ISecretRoom toAdd, int count){
-		this.secrets.add(toAdd);
+		this.count += count;
 	}
 	
 	public void addRoom(List<Dungeon> rooms, int count){
 		
-		SecretFactory toAdd = new SecretFactory(1);
+		SecretFactory toAdd = new SecretFactory();
 		
 		for(Dungeon type : rooms){
 			toAdd.addRoom(type);
 		}
 		
-		this.addRoom(toAdd, count);
+		this.secrets.add(toAdd);
+		this.count += count;
 	}
 	
 	public boolean genRoom(World world, Random rand, CatacombLevelSettings settings, Cardinal dir, Coord pos){
+		if(count <= 0) return false;
+		
+		Collections.shuffle(this.secrets, rand);
+		
 		for(ISecretRoom room : secrets){
-			if(room.isValid(world, rand, dir, pos)){
-				room.genRoom(world, rand, settings, dir, pos);
-				if(this.count > 0) this.count--;
+			if(room.genRoom(world, rand, settings, dir, pos)){
+				this.count--;
 				return true;
 			}
 		}
+		
 		return false;
-	}
-	
-	@Override
-	public boolean isValid(World world, Random rand, Cardinal dir, Coord pos) {
-		if(count <= 0) return false;
-		return true;
 	}
 }

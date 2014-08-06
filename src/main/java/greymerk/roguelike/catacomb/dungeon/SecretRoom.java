@@ -26,8 +26,7 @@ public class SecretRoom implements ISecretRoom {
 		this.prototype = toCopy.prototype;
 	}
 	
-	@Override
-	public boolean isValid(World world, Random rand, Cardinal dir, Coord pos){
+	private boolean isValid(World world, Random rand, Cardinal dir, Coord pos){
 		if(count <= 0) return false;
 		Coord cursor = new Coord(pos);
 		cursor.add(dir, prototype.getSize() + 5);
@@ -37,6 +36,8 @@ public class SecretRoom implements ISecretRoom {
 	
 	@Override
 	public boolean genRoom(World world, Random rand, CatacombLevelSettings settings, Cardinal dir, Coord pos){
+		if(!isValid(world, rand, dir, pos)) return false;
+		
 		int size = prototype.getSize();
 		
 		Coord start = new Coord(pos);

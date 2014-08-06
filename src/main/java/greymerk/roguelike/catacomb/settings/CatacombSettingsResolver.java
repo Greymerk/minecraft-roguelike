@@ -1,10 +1,13 @@
 package greymerk.roguelike.catacomb.settings;
 
 import greymerk.roguelike.catacomb.settings.builtin.CatacombSettingsBasicLoot;
+import greymerk.roguelike.catacomb.settings.builtin.CatacombSettingsDesertTheme;
+import greymerk.roguelike.catacomb.settings.builtin.CatacombSettingsJungleTheme;
 import greymerk.roguelike.catacomb.settings.builtin.CatacombSettingsRooms;
 import greymerk.roguelike.catacomb.settings.builtin.CatacombSettingsSecrets;
 import greymerk.roguelike.catacomb.settings.builtin.CatacombSettingsSegments;
 import greymerk.roguelike.catacomb.settings.builtin.CatacombSettingsSize;
+import greymerk.roguelike.catacomb.settings.builtin.CatacombSettingsSwampTheme;
 import greymerk.roguelike.catacomb.settings.builtin.CatacombSettingsTheme;
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.util.WeightedChoice;
@@ -13,8 +16,10 @@ import greymerk.roguelike.worldgen.Coord;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -28,7 +33,8 @@ import com.google.gson.JsonParser;
 public class CatacombSettingsResolver {
 
 	private static final String SETTINGS_DIRECTORY = RogueConfig.configDirName + "/settings";
-	Map<String, CatacombSettings> settings;
+	private Map<String, CatacombSettings> settings;
+	private List<CatacombSettings> builtin;
 	private CatacombSettings base;
 	
 	public CatacombSettingsResolver(){
@@ -41,6 +47,12 @@ public class CatacombSettingsResolver {
 		base = new CatacombSettings(base, new CatacombSettingsTheme());
 		base.setCriteria(new SpawnCriteria());
 		this.base = base;
+
+		this.builtin = new ArrayList<CatacombSettings>();
+		this.builtin.add(new CatacombSettingsDesertTheme());
+		this.builtin.add(new CatacombSettingsJungleTheme());
+		this.builtin.add(new CatacombSettingsSwampTheme());
+		
 		File settingsDir = new File(SETTINGS_DIRECTORY);
 		if(!settingsDir.exists() || !settingsDir.isDirectory()) return;
 		File[] settingsFiles = settingsDir.listFiles();
@@ -77,6 +89,20 @@ public class CatacombSettingsResolver {
 		WeightedRandomizer<CatacombSettings> settingsRandomizer = new WeightedRandomizer<CatacombSettings>();
 		
 		for(CatacombSettings setting : this.settings.values()){
+			if(setting.isValid(world, pos)){
+				int weight = setting.criteria.weight;
+				settingsRandomizer.add(new WeightedChoice<CatacombSettings>(setting, weight));
+			}
+		}
+		
+		if(!settingsRandomizer.isEmpty()){
+			CatacombSettings setting = settingsRandomizer.get(rand);
+			return new CatacombSettings(this.base, setting);
+		}
+		
+		settingsRandomizer = new WeightedRandomizer<CatacombSettings>();
+		
+		for(CatacombSettings setting : this.builtin){
 			if(setting.isValid(world, pos)){
 				int weight = setting.criteria.weight;
 				settingsRandomizer.add(new WeightedChoice<CatacombSettings>(setting, weight));

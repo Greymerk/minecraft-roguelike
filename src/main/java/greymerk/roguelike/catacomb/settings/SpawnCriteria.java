@@ -4,7 +4,6 @@ import greymerk.roguelike.worldgen.Coord;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
@@ -82,7 +81,6 @@ public class SpawnCriteria {
 		if(this.dimensionWhiteList != null){
 			if(!this.dimensionWhiteList.contains(dimID)) return false;
 		}
-		
 		
 		if(this.biomes != null){
 			BiomeGenBase biome = world.getBiomeGenForCoords(pos.getX(), pos.getZ());

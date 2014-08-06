@@ -15,11 +15,9 @@ public class CatacombSettingsSegments extends CatacombSettings{
 			switch(i){
 			case 0:
 				segments = new SegmentGenerator(Segment.ARCH);
-				segments.add(Segment.BOOKS, 1);
-				segments.add(Segment.DOOR, 3);
+				segments.add(Segment.DOOR, 5);
 				segments.add(Segment.FIREPLACE, 2);
 				segments.add(Segment.FLOWERS, 2);
-				segments.add(Segment.SHELF, 3);
 				segments.add(Segment.WHEAT, 1);
 				break;
 			case 1:

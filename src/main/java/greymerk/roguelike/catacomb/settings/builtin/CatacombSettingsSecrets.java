@@ -22,13 +22,13 @@ public class CatacombSettingsSecrets extends CatacombSettings{
 				break;
 			case 1:
 				rooms = new ArrayList<Dungeon>();
+				rooms.add(Dungeon.BTEAM);
 				rooms.add(Dungeon.AVIDYA);
 				rooms.add(Dungeon.ETHO);
-				rooms.add(Dungeon.BTEAM);
+				rooms.add(Dungeon.ENIKO);
 				factory.addRoom(rooms, 1);
 				break;
 			case 2:
-				factory.addRoom(Dungeon.ENIKO);
 				break;
 			case 3:
 				rooms = new ArrayList<Dungeon>();
