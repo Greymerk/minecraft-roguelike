@@ -7,12 +7,18 @@ import greymerk.roguelike.catacomb.settings.builtin.CatacombSettingsSegments;
 import greymerk.roguelike.catacomb.settings.builtin.CatacombSettingsSize;
 import greymerk.roguelike.catacomb.settings.builtin.CatacombSettingsTheme;
 import greymerk.roguelike.config.RogueConfig;
+import greymerk.roguelike.util.WeightedChoice;
+import greymerk.roguelike.util.WeightedRandomizer;
+import greymerk.roguelike.worldgen.Coord;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
+
+import net.minecraft.world.World;
 
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
@@ -23,6 +29,7 @@ public class CatacombSettingsResolver {
 
 	private static final String SETTINGS_DIRECTORY = RogueConfig.configDirName + "/settings";
 	Map<String, CatacombSettings> settings;
+	private CatacombSettings base;
 	
 	public CatacombSettingsResolver(){
 		settings = new HashMap<String, CatacombSettings>();
@@ -32,7 +39,8 @@ public class CatacombSettingsResolver {
 		base = new CatacombSettings(base, new CatacombSettingsSegments());
 		base = new CatacombSettings(base, new CatacombSettingsSize());
 		base = new CatacombSettings(base, new CatacombSettingsTheme());
-		settings.put("default", base);
+		base.setCriteria(new SpawnCriteria());
+		this.base = base;
 		File settingsDir = new File(SETTINGS_DIRECTORY);
 		if(!settingsDir.exists() || !settingsDir.isDirectory()) return;
 		File[] settingsFiles = settingsDir.listFiles();
@@ -61,10 +69,31 @@ public class CatacombSettingsResolver {
 	}
 	
 	public CatacombSettings getByName(String name){
-		return new CatacombSettings(settings.get("default"), this.settings.get(name));
+		return new CatacombSettings(this.base, this.settings.get(name));
 	}
 	
-	public CatacombSettings getSettings(){
-		return new CatacombSettings(settings.get("default"));
+	public ICatacombSettings getSettings(World world, Random rand, Coord pos){
+		
+		WeightedRandomizer<CatacombSettings> settingsRandomizer = new WeightedRandomizer<CatacombSettings>();
+		
+		for(CatacombSettings setting : this.settings.values()){
+			if(setting.isValid(world, pos)){
+				int weight = setting.criteria.weight;
+				settingsRandomizer.add(new WeightedChoice<CatacombSettings>(setting, weight));
+			}
+		}
+		
+		if(!settingsRandomizer.isEmpty()){
+			CatacombSettings setting = settingsRandomizer.get(rand);
+			return new CatacombSettings(this.base, setting);
+		}
+		
+		if(base.isValid(world, pos)) return new CatacombSettings(base);
+		
+		return null;
+	}
+	
+	public ICatacombSettings getDefaultSettings(){
+		return new CatacombSettings(base);
 	}
 }

@@ -1,8 +1,8 @@
 package greymerk.roguelike.catacomb;
 
 import greymerk.roguelike.catacomb.settings.CatacombLevelSettings;
-import greymerk.roguelike.catacomb.settings.CatacombSettings;
 import greymerk.roguelike.catacomb.settings.CatacombSettingsResolver;
+import greymerk.roguelike.catacomb.settings.ICatacombSettings;
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
@@ -30,14 +30,19 @@ public class Catacomb {
 		
 		for(int i = 0;i < attempts;i++){
 			Coord location = getNearbyCoord(rand, x, z, 40, 100);
-			if(validLocation(world, rand, location.getX(), location.getZ())){
-				Catacomb.generate(world, settingsResolver.getSettings(), location.getX(), location.getZ());
-				return;
-			}
+			
+			if(!validLocation(world, rand, location.getX(), location.getZ())) continue;
+			
+			ICatacombSettings setting = settingsResolver.getSettings(world, rand, location);
+			
+			if(setting == null) return;
+			
+			Catacomb.generate(world, setting, location.getX(), location.getZ());
+			return;
 		}
 	}
 	
-	public static void generate(World world, CatacombSettings settings, int inX, int inZ){
+	public static void generate(World world, ICatacombSettings settings, int inX, int inZ){
 		
 		int x = inX;
 		int y = TOPLEVEL;

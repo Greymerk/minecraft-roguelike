@@ -3,32 +3,48 @@ package greymerk.roguelike.catacomb.dungeon;
 import greymerk.roguelike.catacomb.settings.CatacombLevelSettings;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
-import greymerk.roguelike.worldgen.MetaBlock;
-import greymerk.roguelike.worldgen.WorldGenPrimitive;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
+
+import net.minecraft.world.World;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import net.minecraft.init.Blocks;
-import net.minecraft.world.World;
+public class SecretFactory implements ISecretRoom{
 
-public class SecretFactory {
+	private int count;
+	private List<ISecretRoom> secrets;
 
-	private ArrayList<SecretRoom> secrets;
 	
 	public SecretFactory(){
-		secrets = new ArrayList<SecretRoom>();
+		secrets = new ArrayList<ISecretRoom>();
+		count = 0;
+	}
+	
+	public SecretFactory(int count){
+		secrets = new ArrayList<ISecretRoom>();
+		this.count = count;
 	}
 	
 	public SecretFactory(SecretFactory toCopy){
-		secrets = new ArrayList<SecretRoom>();
+		secrets = new ArrayList<ISecretRoom>();
+		this.count = toCopy.count;
 		
-		for(SecretRoom room : toCopy.secrets){
-			this.secrets.add(room);
+		for(ISecretRoom room : toCopy.secrets){
+			
+			ISecretRoom toAdd;
+			
+			if(room instanceof SecretFactory){
+				toAdd = new SecretFactory((SecretFactory)room);
+			} else {
+				toAdd = new SecretRoom((SecretRoom)room);
+			}
+			
+			this.secrets.add(toAdd);
 		}
 	}
 	
@@ -49,55 +65,35 @@ public class SecretFactory {
 		secrets.add(new SecretRoom(type, count));
 	}
 	
+	public void addRoom(ISecretRoom toAdd, int count){
+		this.secrets.add(toAdd);
+	}
+	
+	public void addRoom(List<Dungeon> rooms, int count){
+		
+		SecretFactory toAdd = new SecretFactory(1);
+		
+		for(Dungeon type : rooms){
+			toAdd.addRoom(type);
+		}
+		
+		this.addRoom(toAdd, count);
+	}
+	
 	public boolean genRoom(World world, Random rand, CatacombLevelSettings settings, Cardinal dir, Coord pos){
-		for(SecretRoom room : secrets){
+		for(ISecretRoom room : secrets){
 			if(room.isValid(world, rand, dir, pos)){
 				room.genRoom(world, rand, settings, dir, pos);
+				if(this.count > 0) this.count--;
 				return true;
 			}
 		}
 		return false;
 	}
 	
-	private class SecretRoom{
-		
-		private int count;
-		private IDungeon prototype;
-		
-		public SecretRoom(Dungeon type, int count){
-			this.count = count;
-			this.prototype = Dungeon.getInstance(type);
-		}
-		
-		public boolean isValid(World world, Random rand, Cardinal dir, Coord pos){
-			if(count <= 0) return false;
-			Coord cursor = new Coord(pos);
-			cursor.add(dir, prototype.getSize() + 5);
-			
-			return prototype.validLocation(world, dir, cursor.getX(), cursor.getY(), cursor.getZ());
-		}
-		
-		public void genRoom(World world, Random rand, CatacombLevelSettings settings, Cardinal dir, Coord pos){
-			int size = prototype.getSize();
-			
-			Coord start = new Coord(pos);
-			Coord end = new Coord(pos);
-			start.add(Cardinal.getOrthogonal(dir)[0]);
-			start.add(Cardinal.DOWN);
-			end.add(Cardinal.getOrthogonal(dir)[1]);
-			end.add(dir, size + 5);
-			end.add(Cardinal.UP, 2);
-			WorldGenPrimitive.fillRectSolid(world, rand, start, end, settings.getTheme().getPrimaryWall(), false, true);
-			
-			start = new Coord(pos);
-			end = new Coord(pos);
-			end.add(dir, size + 5);
-			end.add(Cardinal.UP);
-			WorldGenPrimitive.fillRectSolid(world, rand, pos, end, new MetaBlock(Blocks.air), true, true);
-			
-			end.add(Cardinal.DOWN);
-			this.prototype.generate(world, rand, settings, new Cardinal[]{dir}, end.getX(), end.getY(), end.getZ());
-			count -= 1;
-		}
+	@Override
+	public boolean isValid(World world, Random rand, Cardinal dir, Coord pos) {
+		if(count <= 0) return false;
+		return true;
 	}
 }

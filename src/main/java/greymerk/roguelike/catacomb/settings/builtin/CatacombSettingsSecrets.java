@@ -1,5 +1,8 @@
 package greymerk.roguelike.catacomb.settings.builtin;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import greymerk.roguelike.catacomb.dungeon.Dungeon;
 import greymerk.roguelike.catacomb.dungeon.SecretFactory;
 import greymerk.roguelike.catacomb.settings.CatacombLevelSettings;
@@ -11,23 +14,27 @@ public class CatacombSettingsSecrets extends CatacombSettings{
 		for(int i = 0; i < 5; ++i){
 			
 			SecretFactory factory = new SecretFactory();
-			
+			List<Dungeon> rooms;
 			switch(i){
 			case 0:
 				factory.addRoom(Dungeon.FIREWORK);
 				factory.addRoom(Dungeon.BEDROOM, 2);
 				break;
 			case 1:
-				factory.addRoom(Dungeon.AVIDYA);
-				factory.addRoom(Dungeon.ETHO);
-				factory.addRoom(Dungeon.BTEAM);
+				rooms = new ArrayList<Dungeon>();
+				rooms.add(Dungeon.AVIDYA);
+				rooms.add(Dungeon.ETHO);
+				rooms.add(Dungeon.BTEAM);
+				factory.addRoom(rooms, 1);
 				break;
 			case 2:
 				factory.addRoom(Dungeon.ENIKO);
 				break;
 			case 3:
-				factory.addRoom(Dungeon.BAJ);
-				factory.addRoom(Dungeon.NEBRIS);
+				rooms = new ArrayList<Dungeon>();
+				rooms.add(Dungeon.BAJ);
+				rooms.add(Dungeon.NEBRIS);
+				factory.addRoom(rooms, 1);
 				break;
 			case 4:
 				break;

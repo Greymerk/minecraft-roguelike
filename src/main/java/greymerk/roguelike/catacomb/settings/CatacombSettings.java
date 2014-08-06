@@ -1,9 +1,14 @@
 package greymerk.roguelike.catacomb.settings;
 
+import greymerk.roguelike.worldgen.Coord;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
+
+import net.minecraft.world.World;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -12,9 +17,11 @@ import com.google.gson.JsonObject;
 
 public class CatacombSettings implements ICatacombSettings{
 
+	
 	private static final int NUM_LEVELS = 5;
 	private String name;
 	protected Map<Integer, CatacombLevelSettings> levels;
+	protected SpawnCriteria criteria;
 	
 	public CatacombSettings(){
 		this.levels = new HashMap<Integer, CatacombLevelSettings>();
@@ -23,6 +30,10 @@ public class CatacombSettings implements ICatacombSettings{
 	public CatacombSettings(Map<String, CatacombSettings> settings, JsonObject root){
 		
 		this.name = root.get("name").getAsString();
+		
+		if(root.has("criteria")){
+			this.criteria = new SpawnCriteria(root.get("criteria").getAsJsonObject());
+		}
 		
 		levels = new HashMap<Integer, CatacombLevelSettings>();
 		
@@ -54,7 +65,6 @@ public class CatacombSettings implements ICatacombSettings{
 		
 		JsonObject levelSet = root.get("levels").getAsJsonObject();
 		
-
 		for(int i = 0; i < 5; ++i){
 			if(levelSet.has(Integer.toString(i))){
 				JsonObject data = levelSet.get(Integer.toString(i)).getAsJsonObject();
@@ -91,9 +101,16 @@ public class CatacombSettings implements ICatacombSettings{
 		return this.name;
 	}
 	
+	public void setCriteria(SpawnCriteria criteria){
+		this.criteria = criteria;
+	}
+	
 	@Override
-	public boolean isValid() {
-		return true;
+	public boolean isValid(World world, Coord pos) {
+		
+		if(this.criteria == null) return false;
+		
+		return this.criteria.isValid(world, pos);
 	}
 
 	@Override

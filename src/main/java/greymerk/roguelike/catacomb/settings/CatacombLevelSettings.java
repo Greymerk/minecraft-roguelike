@@ -7,7 +7,6 @@ import greymerk.roguelike.catacomb.segment.ISegmentGenerator;
 import greymerk.roguelike.catacomb.segment.SegmentGenerator;
 import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.catacomb.theme.Theme;
-import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.treasure.loot.LootSettings;
 
 import com.google.gson.JsonObject;

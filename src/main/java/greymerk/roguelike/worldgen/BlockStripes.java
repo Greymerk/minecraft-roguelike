@@ -45,5 +45,4 @@ public class BlockStripes implements IBlockFactory {
 		IBlockFactory block = blocks.get(choice);
 		block.setBlock(world, rand, x, y, z, fillAir, replaceSolid);
 	}
-
 }

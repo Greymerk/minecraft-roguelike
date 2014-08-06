@@ -20,7 +20,6 @@ public class ItemFood extends ItemBase{
 		
 		ItemNovelty[] items = {
 				ItemNovelty.GINGER,
-				ItemNovelty.GENERIKB,
 				ItemNovelty.CLEO
 		};
 		
