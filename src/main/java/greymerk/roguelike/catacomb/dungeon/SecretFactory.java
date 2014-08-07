@@ -45,6 +45,7 @@ public class SecretFactory implements ISecretRoom{
 	}
 	
 	public SecretFactory(JsonArray data){
+		secrets = new ArrayList<ISecretRoom>();
 		for(JsonElement e : data){
 			JsonObject room = e.getAsJsonObject();
 			String type = room.get("type").getAsString();

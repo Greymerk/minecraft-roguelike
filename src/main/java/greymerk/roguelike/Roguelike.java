@@ -14,7 +14,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 
-@Mod(modid="Roguelike", name="Roguelike Dungeons", version="1.3.4.2")
+@Mod(modid="Roguelike", name="Roguelike Dungeons", version="1.3.4.3")
 
 public class Roguelike {
 

@@ -36,6 +36,7 @@ public class SegmentGenerator implements ISegmentGenerator{
 		String archType = json.get("arch").getAsString();
 		arch = Segment.valueOf(archType);
 		
+		this.segments = new WeightedRandomizer<Segment>();
 		JsonArray segmentList = json.get("segments").getAsJsonArray();
 		for(JsonElement e : segmentList){
 			JsonObject segData = e.getAsJsonObject();

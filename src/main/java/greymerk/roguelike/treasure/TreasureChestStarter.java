@@ -66,7 +66,7 @@ public class TreasureChestStarter extends TreasureChestBase{
 				"-greymerk\n";
 		
 		String page2 = 
-				"Roguelike Dungeons v1.3.4.2\n" +
+				"Roguelike Dungeons v1.3.4.3\n" +
 				"Aug 6th 2014\n\n" + 
 				"Credits\n\n" +
 				"Author: Greymerk\n\n" +

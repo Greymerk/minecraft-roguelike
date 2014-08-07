@@ -41,7 +41,7 @@ public class BlockStripes implements IBlockFactory {
 	@Override
 	public void setBlock(World world, Random rand, int x, int y, int z, boolean fillAir, boolean replaceSolid) {
 		int size = blocks.size();
-		int choice = (x % size + y % size + z % size) % size;
+		int choice = Math.abs((x % size + y % size + z % size)) % size;
 		IBlockFactory block = blocks.get(choice);
 		block.setBlock(world, rand, x, y, z, fillAir, replaceSolid);
 	}
