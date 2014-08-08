@@ -50,6 +50,7 @@ public class SecretFactory implements ISecretRoom{
 			JsonObject room = e.getAsJsonObject();
 			String type = room.get("type").getAsString();
 			int num = room.get("num").getAsInt();
+			this.count += num;
 			secrets.add(new SecretRoom(Dungeon.valueOf(type), num));
 		}
 	}

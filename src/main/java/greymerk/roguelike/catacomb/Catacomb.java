@@ -22,6 +22,10 @@ public class Catacomb {
 	public static CatacombSettingsResolver settingsResolver;
 	
 	static{
+		initResolver();
+	}
+	
+	public static void initResolver(){
 		settingsResolver = new CatacombSettingsResolver();
 	}
 	

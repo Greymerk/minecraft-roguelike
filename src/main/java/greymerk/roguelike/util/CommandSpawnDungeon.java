@@ -2,6 +2,7 @@ package greymerk.roguelike.util;
 
 
 import greymerk.roguelike.catacomb.Catacomb;
+import greymerk.roguelike.catacomb.settings.CatacombSettings;
 import greymerk.roguelike.catacomb.settings.ICatacombSettings;
 import greymerk.roguelike.citadel.Citadel;
 import greymerk.roguelike.config.RogueConfig;
@@ -60,7 +61,13 @@ public class CommandSpawnDungeon extends CommandBase
 			
 			if(args.length == 4){
 				String name = args[3];
-				Catacomb.generate(world, Catacomb.settingsResolver.getByName(name), x, z);
+				Catacomb.initResolver();
+				CatacombSettings setting = Catacomb.settingsResolver.getByName(name);
+				if(setting == null){
+					System.err.println(name + " not found.");
+					return;
+				}
+				Catacomb.generate(world, setting, x, z);
 				return;
 			}
 			
