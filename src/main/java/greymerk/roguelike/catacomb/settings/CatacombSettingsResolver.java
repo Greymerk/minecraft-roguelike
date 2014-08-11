@@ -28,9 +28,7 @@ import net.minecraft.world.World;
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
-import com.google.gson.JsonSyntaxException;
 
 public class CatacombSettingsResolver {
 
@@ -67,14 +65,19 @@ public class CatacombSettingsResolver {
 				toAdd = parseFile(toParse);
 			} catch (Exception e){
 				System.err.println("Error found in file " + toParse.getName());
-				System.err.println(e.getCause().getMessage());
+				Throwable cause = e.getCause();
+				if(cause != null){
+					System.err.println(cause.getMessage());
+				} else {
+					System.err.println(e.getMessage());
+				}
 				return;
 			}
 			settings.put(toAdd.getName(), toAdd);
 		}
 	}
 	
-	private CatacombSettings parseFile(File toParse) throws JsonParseException, JsonSyntaxException{
+	private CatacombSettings parseFile(File toParse) throws Exception{
 		String content;
 		
 		try {
@@ -85,20 +88,21 @@ public class CatacombSettingsResolver {
 		
 		JsonParser jParser = new JsonParser();
 		JsonObject root = null;
+		CatacombSettings toAdd = null;
 		
 		try {
 			root = (JsonObject)jParser.parse(content);
 		} catch (Exception e){
-			if(e instanceof JsonParseException){
-				throw (JsonParseException) e;
-			}
-			
-			if(e instanceof JsonSyntaxException){
-				throw (JsonSyntaxException) e;
-			}
+			throw e;
 		}
 		
-		return new CatacombSettings(settings, root);
+		try {
+			toAdd = new CatacombSettings(settings, root);
+		} catch (Exception e){
+			throw e;
+		}
+		
+		return toAdd;
 	}
 	
 	public CatacombSettings getByName(String name){

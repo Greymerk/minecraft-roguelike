@@ -26,7 +26,7 @@ public class CatacombSettings implements ICatacombSettings{
 		this.levels = new HashMap<Integer, CatacombLevelSettings>();
 	}
 	
-	public CatacombSettings(Map<String, CatacombSettings> settings, JsonObject root){
+	public CatacombSettings(Map<String, CatacombSettings> settings, JsonObject root) throws Exception{
 		
 		this.name = root.get("name").getAsString();
 		
@@ -49,6 +49,8 @@ public class CatacombSettings implements ICatacombSettings{
 		for(String name : inheritList){
 			if(settings.containsKey(name)){
 				base = new CatacombSettings(base, settings.get(name));
+			} else {
+				throw new Exception(name + " must be previously defined in order to be inherited");
 			}
 		}
 		

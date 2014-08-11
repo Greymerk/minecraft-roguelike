@@ -8,6 +8,7 @@ import java.util.List;
 
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraftforge.common.BiomeDictionary;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -17,6 +18,7 @@ public class SpawnCriteria {
 
 	int weight;
 	List<String> biomes;
+	List<BiomeDictionary.Type> biomeTypes;
 	List<Integer> dimensionBlackList;
 	List<Integer> dimensionWhiteList;
 	
@@ -33,6 +35,15 @@ public class SpawnCriteria {
 			for(JsonElement e : biomeList){
 				String name = e.getAsString();
 				this.biomes.add(name);
+			}
+		}
+		
+		if(data.has("biomeTypes")){
+			JsonArray biomeTypeList = data.get("biomeTypes").getAsJsonArray();
+			this.biomeTypes = new ArrayList<BiomeDictionary.Type>();
+			for(JsonElement e : biomeTypeList){
+				String type = e.getAsString();
+				this.biomeTypes.add(BiomeDictionary.Type.valueOf(type));
 			}
 		}
 		
@@ -61,6 +72,10 @@ public class SpawnCriteria {
 	
 	public void setbiomes(List<String> biomes){
 		this.biomes = biomes;
+	}
+	
+	public void setBiomeTypes(List<BiomeDictionary.Type> biomeTypes){
+		this.biomeTypes = biomeTypes;
 	}
 	
 	public void setDimBlackList(List<Integer> blackList){
@@ -95,12 +110,23 @@ public class SpawnCriteria {
 		
 		if(!dimWL.isEmpty() && !dimWL.contains(dimID)) return false;
 		
+		if(this.biomes == null && this.biomeTypes == null) return true;
+		
+		boolean biomeFound = false;
+		
+		BiomeGenBase biome = world.getBiomeGenForCoords(pos.getX(), pos.getZ());
+		
 		if(this.biomes != null){
-			BiomeGenBase biome = world.getBiomeGenForCoords(pos.getX(), pos.getZ());
-			if(!this.biomes.contains(biome.biomeName)) return false;
+			if(this.biomes.contains(biome.biomeName)) biomeFound = true;
 		}
 		
-		return true;
+		if(this.biomeTypes != null){
+			for(BiomeDictionary.Type type : this.biomeTypes){
+				if(BiomeDictionary.isBiomeOfType(biome, type)) biomeFound = true;
+			}
+		}
+		
+		return biomeFound;
 	}
 	
 }

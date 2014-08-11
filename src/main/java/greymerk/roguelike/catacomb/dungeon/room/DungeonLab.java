@@ -149,7 +149,7 @@ public class DungeonLab extends DungeonBase {
 		WorldGenPrimitive.setBlock(world, x + 5, y + 1, z + 3, WorldGenPrimitive.blockOrientation(stair, Cardinal.SOUTH, false));
 		
 		WorldGenPrimitive.fillRectSolid(world, rand, x + 3, y, z + 3, x + 4, y, z + 4, stone);
-		WorldGenPrimitive.setBlock(world, x + 3, y + 1, x + 3, Blocks.torch);
+		WorldGenPrimitive.setBlock(world, x + 3, y + 1, z + 3, Blocks.torch);
 		
 		WorldGenPrimitive.setBlock(world, rand, x + 4, y, z + 1, WorldGenPrimitive.blockOrientation(stair, Cardinal.NORTH, false), true, true);
 		WorldGenPrimitive.setBlock(world, rand, x + 3, y, z + 2, WorldGenPrimitive.blockOrientation(stair, Cardinal.WEST, false), true, true);

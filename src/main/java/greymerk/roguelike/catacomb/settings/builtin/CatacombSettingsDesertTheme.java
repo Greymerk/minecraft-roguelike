@@ -8,15 +8,16 @@ import greymerk.roguelike.catacomb.theme.Theme;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraftforge.common.BiomeDictionary;
+
 public class CatacombSettingsDesertTheme extends CatacombSettings{
 	
 	public CatacombSettingsDesertTheme(){
 		
 		this.criteria = new SpawnCriteria();
-		List<String> biomes = new ArrayList<String>();
-		biomes.add("Desert");
-		biomes.add("Desert Hills");
-		this.criteria.setbiomes(biomes);
+		List<BiomeDictionary.Type> biomes = new ArrayList<BiomeDictionary.Type>();
+		biomes.add(BiomeDictionary.Type.DESERT);
+		this.criteria.setBiomeTypes(biomes);
 		
 		Theme[] themes = {Theme.SANDSTONE, Theme.SANDSTONE, Theme.CRYPT, Theme.CRYPT, Theme.NETHER};
 		
