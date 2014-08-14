@@ -40,24 +40,18 @@ public enum Spawner {
 	
 	public static void generate(World world, Random rand, int posX, int posY, int posZ, int level, Spawner type){
 		
-		if(!WorldGenPrimitive.setBlock(world, posX, posY, posZ, Blocks.mob_spawner)){
-			return;
-		}
+		if(!WorldGenPrimitive.setBlock(world, posX, posY, posZ, Blocks.mob_spawner)) return;
 		
 		TileEntityMobSpawner spawner = (TileEntityMobSpawner) world.getTileEntity(posX, posY, posZ);
 
-        if (spawner != null)
-        {
-        	String name = getSpawnerName(type);
-        	MobSpawnerBaseLogic logic = spawner.func_145881_a();
-        	logic.setEntityName(name);
-        	
-        	setRoguelike(logic, level);
-        }
-        else
-        {
-            System.err.println("Failed to fetch mob spawner entity at (" + posX + ", " + posY + ", " + posZ + ")");
-        }
+		if (spawner == null) return;
+		
+		String name = getSpawnerName(type);
+		MobSpawnerBaseLogic logic = spawner.func_145881_a();
+		logic.setEntityName(name);
+		
+		setRoguelike(logic, level);
+
 	}	
 	
 	public static String getSpawnerName(Spawner type) {

@@ -40,8 +40,8 @@ public class CatacombLevelSettings {
 	}
 	
 	public CatacombLevelSettings(CatacombLevelSettings base, CatacombLevelSettings override){
-		this.numRooms = override.numRooms != base.numRooms && base.numRooms == NUM_ROOMS ? override.numRooms : base.numRooms;
-		this.range = override.range != base.range && base.range == RANGE ? override.range : base.range;
+		this.numRooms = override.numRooms != base.numRooms ? override.numRooms : base.numRooms;
+		this.range = override.range != base.range ? override.range : base.range;
 		
 		if(base.rooms != null || override.rooms != null){
 			this.rooms = override.rooms == null ? new DungeonFactory(base.rooms) : new DungeonFactory(override.rooms);
