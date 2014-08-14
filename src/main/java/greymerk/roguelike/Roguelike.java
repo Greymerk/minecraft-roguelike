@@ -14,13 +14,16 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 
-@Mod(modid="Roguelike", name="Roguelike Dungeons", version="1.3.4.4")
+
+
+@Mod(modid="Roguelike", name="Roguelike Dungeons", version=Roguelike.version)
 
 public class Roguelike {
 
     // The instance of your mod that Forge uses.
     @Instance("Roguelike")
     public static Roguelike instance;
+    public static final String version = "1.3.4.4";
     
     // Says where the client and server 'proxy' code is loaded.
     @SidedProxy(clientSide="greymerk.roguelike.ClientProxy", serverSide="greymerk.roguelike.CommonProxy")

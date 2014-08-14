@@ -73,7 +73,7 @@ public class LootSettings {
 	
 	private IWeighted<ItemStack> parseProvider(JsonObject data) {
 		
-		int weight = data.get("weight").getAsInt();
+		int weight = data.has("weight") ? data.get("weight").getAsInt() : 1;
 		JsonElement loot = data.get("loot");
 		
 		if(loot.isJsonObject()){

@@ -1,5 +1,6 @@
 package greymerk.roguelike.treasure;
 
+import greymerk.roguelike.Roguelike;
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.treasure.loot.Equipment;
 import greymerk.roguelike.treasure.loot.Loot;
@@ -66,7 +67,7 @@ public class TreasureChestStarter extends TreasureChestBase{
 				"-greymerk\n";
 		
 		String page2 = 
-				"Roguelike Dungeons v1.3.4.4\n" +
+				"Roguelike Dungeons v" + Roguelike.version + "\n" +
 				"Aug 6th 2014\n\n" + 
 				"Credits\n\n" +
 				"Author: Greymerk\n\n" +

@@ -67,14 +67,20 @@ public class CatacombSettings implements ICatacombSettings{
 		JsonObject levelSet = root.get("levels").getAsJsonObject();
 		
 		for(int i = 0; i < 5; ++i){
+			
+			CatacombLevelSettings setting = new CatacombLevelSettings();
+			
+			if(levelSet.has("all")){
+				JsonObject data = levelSet.get("all").getAsJsonObject();
+				setting = new CatacombLevelSettings(setting, new CatacombLevelSettings(data));
+			}
+			
 			if(levelSet.has(Integer.toString(i))){
 				JsonObject data = levelSet.get(Integer.toString(i)).getAsJsonObject();
-				CatacombLevelSettings override = new CatacombLevelSettings(data);
-				CatacombLevelSettings setting = new CatacombLevelSettings(base.getLevelSettings(i), override);
-				this.levels.put(i, setting);
-			} else {
-				this.levels.put(i, base.getLevelSettings(i));
+				setting = new CatacombLevelSettings(setting, new CatacombLevelSettings(data));
 			}
+			
+			this.levels.put(i, setting);
 		}
 	}
 	
