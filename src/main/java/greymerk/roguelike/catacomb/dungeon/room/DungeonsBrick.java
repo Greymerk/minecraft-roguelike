@@ -127,7 +127,7 @@ public class DungeonsBrick extends DungeonBase {
 		List<TreasureChest> types = new ArrayList<TreasureChest>(Arrays.asList(TreasureChest.ARMOUR, TreasureChest.WEAPONS, TreasureChest.TOOLS));
 		TreasureChest.createChests(world, rand, settings.getLoot(), 1, space, types);
 		
-		Spawner.generate(world, rand, x, y, z);
+		Spawner.generate(world, rand, settings.getSpawners(), x, y, z);
 
 		return true;
 	}

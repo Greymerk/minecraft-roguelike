@@ -2,6 +2,8 @@ package greymerk.roguelike.worldgen;
 
 import greymerk.roguelike.catacomb.Catacomb;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import net.minecraft.init.Blocks;
@@ -18,8 +20,6 @@ public enum Spawner {
 	
 	private static final Spawner[] common = {SPIDER, SKELETON, ZOMBIE};
 	
-
-	
 	public static void generate(World world, Random rand, Coord cursor, Spawner type){
 		generate(world, rand, cursor.getX(), cursor.getY(), cursor.getZ(), type);
 	}
@@ -32,6 +32,20 @@ public enum Spawner {
 	public static void generate(World world, Random rand, int posX, int posY, int posZ){
 		Spawner type = common[rand.nextInt(common.length)];
 		generate(world, rand, posX, posY, posZ, Catacomb.getLevel(posY), type);
+	}
+	
+	public static void generate(World world, Random rand, SpawnerSettings settings, int x, int y, int z){
+		Spawner type = common[rand.nextInt(common.length)];
+		generate(world, rand, settings, x, y, z, Catacomb.getLevel(y), type);
+	}
+	
+	public static void generate(World world, Random rand, SpawnerSettings settings, int x, int y, int z, int level, Spawner type){
+		if(settings == null){
+			generate(world, rand, x, y, z, type);
+			return;
+		}
+		
+		settings.generate(world, rand, new Coord(x, y, z), type, level);
 	}
 	
 	public static void generate(World world, Random rand, int posX, int posY, int posZ, Spawner type){
@@ -92,8 +106,13 @@ public enum Spawner {
 
 	}
 
+	public static void setMeta(MobSpawnerBaseLogic logic, NBTTagCompound meta){
+		MobSpawnerBaseLogic.WeightedRandomMinecart cart = logic.new WeightedRandomMinecart(meta);
+    	logic.setRandomEntity(cart);
+    	logic.updateSpawner();
+	}
 	
-	private static void setRoguelike(MobSpawnerBaseLogic logic, int level){
+	public static void setRoguelike(MobSpawnerBaseLogic logic, int level){
     	NBTTagCompound nbt = new NBTTagCompound();
     	nbt.setString("Type", logic.getEntityNameToSpawn());
     	nbt.setInteger("Weight", 1);

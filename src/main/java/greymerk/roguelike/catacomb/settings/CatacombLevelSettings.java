@@ -8,6 +8,7 @@ import greymerk.roguelike.catacomb.segment.SegmentGenerator;
 import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.catacomb.theme.Theme;
 import greymerk.roguelike.treasure.loot.LootSettings;
+import greymerk.roguelike.worldgen.SpawnerSettings;
 
 import com.google.gson.JsonObject;
 
@@ -20,6 +21,7 @@ public class CatacombLevelSettings {
 	ITheme theme;
 	SegmentGenerator segments;
 	LootSettings loot;
+	SpawnerSettings spawners;
 
 	private static final int NUM_ROOMS = 10;
 	private static final int RANGE = 40;
@@ -37,6 +39,7 @@ public class CatacombLevelSettings {
 		this.theme = toCopy.theme != null ? toCopy.theme : null;
 		this.segments = toCopy.segments != null ? new SegmentGenerator(toCopy.segments) : null;
 		this.loot = toCopy.loot != null ? new LootSettings(toCopy.loot) : null;
+		this.spawners = toCopy.spawners != null ? new SpawnerSettings(toCopy.spawners) : null;
 	}
 	
 	public CatacombLevelSettings(CatacombLevelSettings base, CatacombLevelSettings override){
@@ -58,6 +61,8 @@ public class CatacombLevelSettings {
 		}
 		
 		this.loot = new LootSettings(base.loot, override.loot);
+		
+		this.spawners = new SpawnerSettings(base.spawners, override.spawners);
 	}
 	
 	public CatacombLevelSettings(JsonObject data){
@@ -68,6 +73,7 @@ public class CatacombLevelSettings {
 		this.theme = data.has("theme") ? Theme.create(data.get("theme").getAsJsonObject()) : null;
 		this.segments = data.has("segments") ? new SegmentGenerator(data.get("segments").getAsJsonObject()) : null;
 		this.loot = data.has("loot") ? new LootSettings(data.get("loot").getAsJsonObject()) : null;
+		this.spawners = data.has("spawners") ? new SpawnerSettings(data.get("spawners").getAsJsonObject()) : null;
 	}
 	
 	public int getNumRooms(){
@@ -116,6 +122,14 @@ public class CatacombLevelSettings {
 	
 	public void setLoot(LootSettings loot){
 		this.loot = loot;
+	}
+	
+	public SpawnerSettings getSpawners(){
+		return this.spawners;
+	}
+	
+	public void setSpawners(SpawnerSettings spawners){
+		this.spawners = spawners;
 	}
 
 	public int getRange() {

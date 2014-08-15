@@ -27,6 +27,4 @@ public class CatacombSettingsSwampTheme extends CatacombSettings{
 			levels.put(i, level);
 		}
 	}
-
-	
 }
