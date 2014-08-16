@@ -67,6 +67,6 @@ public class SegmentSpawner extends SegmentBase {
 		shelf.add(dir, 3);
 		shelf.add(Cardinal.UP, 1);
 		
-		Spawner.generate(world, rand, shelf.getX(), shelf.getY(), shelf.getZ());
+		Spawner.generate(world, rand, level.getSettings().getSpawners(), shelf.getX(), shelf.getY(), shelf.getZ());
 	}
 }

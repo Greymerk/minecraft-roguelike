@@ -228,7 +228,7 @@ public class DungeonObsidian extends DungeonBase {
 		innerPillars(world, rand, theme, x, y, z);
 		
 		for(Coord space : spawners){
-			Spawner.generate(world, rand, space.getX(), space.getY(), space.getZ());
+			Spawner.generate(world, rand, settings.getSpawners(), space.getX(), space.getY(), space.getZ());
 		}
 		
 		return true;

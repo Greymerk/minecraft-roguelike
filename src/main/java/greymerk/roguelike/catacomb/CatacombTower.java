@@ -244,6 +244,27 @@ public class CatacombTower {
 			}
 		}
 		
+		for(Cardinal dir : Cardinal.directions){
+			for (Cardinal orth : Cardinal.getOrthogonal(dir)){
+				start = new Coord(x, ground, z);
+				start.add(dir, 4);
+				end = new Coord(x, 60, z);
+				end.add(dir, 4);
+				start.add(Cardinal.reverse(orth), 2);
+				end.add(orth, 2);
+				
+				WorldGenPrimitive.fillRectSolid(world, rand, start, end, blocks, true, true);
+				start = new Coord(x, ground, z);
+				start.add(dir, 3);
+				start.add(orth, 3);
+				end = new Coord(x, 60, z);
+				end.add(dir, 3);
+				end.add(orth, 3);
+				WorldGenPrimitive.fillRectSolid(world, rand, start, end, blocks, true, true);
+				
+			}
+		}
+		
 		for(int i = main; i > y; --i){
 			WorldGenPrimitive.spiralStairStep(world, rand, x, i, z, stair, theme.getPrimaryPillar());
 		}

@@ -124,7 +124,7 @@ public class DungeonsFire extends DungeonBase {
 		WorldGenPrimitive.fillRectSolid(inWorld, inRandom, inOriginX - 1, inOriginY + 5, inOriginZ - 1, inOriginX + 1, inOriginY + 5, inOriginZ + 1, fillBlocks);
 		
 		if(Catacomb.getLevel(inOriginY) == 4){
-			Spawner.generate(inWorld, inRandom, inOriginX, inOriginY + 5, inOriginZ, Spawner.BLAZE);
+			Spawner.generate(inWorld, inRandom, settings.getSpawners(), inOriginX, inOriginY + 5, inOriginZ, 4, Spawner.BLAZE);
 			WorldGenPrimitive.fillRectSolid(inWorld, inRandom, inOriginX - 1, inOriginY + 6, inOriginZ - 1, inOriginX + 1, inOriginY + 6, inOriginZ + 1, new MetaBlock(Blocks.stone_slab, 6), true, true);
 			WorldGenPrimitive.fillRectSolid(inWorld, inRandom, inOriginX - 1, inOriginY + 4, inOriginZ - 1, inOriginX + 1, inOriginY + 4, inOriginZ + 1, new MetaBlock(Blocks.stone_slab, 14), true, true);
 		} else {

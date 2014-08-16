@@ -1,7 +1,7 @@
 package greymerk.roguelike.catacomb.theme;
 
-import greymerk.roguelike.worldgen.BlockFactoryCheckers;
 import greymerk.roguelike.worldgen.BlockStripes;
+import greymerk.roguelike.worldgen.Log;
 import greymerk.roguelike.worldgen.MetaBlock;
 import net.minecraft.init.Blocks;
 
@@ -14,13 +14,15 @@ public class ThemeRainbow extends ThemeBase{
 			rainbow.addBlock(new MetaBlock(Blocks.stained_hardened_clay, i));
 		}
 		
-		MetaBlock stair = new MetaBlock(Blocks.quartz_stairs);
+		MetaBlock stair = new MetaBlock(Blocks.acacia_stairs);
 		
-		BlockFactoryCheckers pillar = new BlockFactoryCheckers(new MetaBlock(Blocks.obsidian), new MetaBlock(Blocks.quartz_block)); 
+		MetaBlock pillar = Log.getLog(Log.ACACIA); 
+		
+		MetaBlock planks = new MetaBlock(Blocks.planks, 4);
 		
 		this.walls = new BlockSet(rainbow, stair, pillar);
 		
-		this.decor = new BlockSet(new MetaBlock(Blocks.glowstone), stair, new MetaBlock(Blocks.emerald_block));;
+		this.decor = new BlockSet(planks, stair, pillar);;
 		
 
 	}

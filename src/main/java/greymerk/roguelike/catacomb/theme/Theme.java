@@ -4,7 +4,7 @@ import com.google.gson.JsonObject;
 
 public enum Theme {
 
-	OAK, SPRUCE, CRYPT, MOSSY, NETHER, SANDSTONE, QUARTZ, BLING, CHECKER, RAINBOW, SNOW, JUNGLE, BRICK, DARKOAK;
+	OAK, SPRUCE, CRYPT, MOSSY, MUDDY, NETHER, SANDSTONE, QUARTZ, BLING, CHECKER, RAINBOW, SNOW, JUNGLE, BRICK, DARKOAK, ICE;
 	
 	public static ITheme getTheme(Theme type){
 		
@@ -15,6 +15,7 @@ public enum Theme {
 		case SPRUCE: theme = new ThemeSpruce(); break;
 		case CRYPT: theme = new ThemeCrypt(); break;
 		case MOSSY: theme = new ThemeMossy(); break;
+		case MUDDY: theme = new ThemeMuddy(); break;
 		case NETHER: theme = new ThemeNether(); break;
 		case SANDSTONE: theme = new ThemeSandstone(); break;
 		case QUARTZ: theme = new ThemeQuartz(); break;
@@ -25,6 +26,7 @@ public enum Theme {
 		case JUNGLE: theme = new ThemeJungle(); break;
 		case BRICK: theme = new ThemeBrick(); break;
 		case DARKOAK: theme = new ThemeDarkOak(); break;
+		case ICE: theme = new ThemeIce(); break;
 		default: return null;
 		}
 		

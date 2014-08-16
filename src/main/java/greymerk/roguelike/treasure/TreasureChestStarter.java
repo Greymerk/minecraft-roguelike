@@ -55,20 +55,20 @@ public class TreasureChestStarter extends TreasureChestBase{
 		ItemStack book = new ItemStack(Items.written_book);
 		
 		book.setTagInfo("author", new NBTTagString("greymerk"));
-		book.setTagInfo("title", new NBTTagString("Dev notes"));
+		book.setTagInfo("title", new NBTTagString("Diary"));
 		
 		String page1 = 
-				"TODO:\n\n " +
-				"- Witty start chest book\n" +
-				"- Trap the chests\n" + 
-				"- Nerf the loot\n" +
-				"- Buff the mobs\n" +
-				"- Tweet @Eyamaz\n" +
-				"-greymerk\n";
+				"Day 63\n\n " +
+				"Restoration on " +
+				"level " + (rand.nextInt(5) + 1) + " is " + 
+				"proceeding. Needed more chests to " +
+				"store rations and equipment. " +
+				"Reported bug sightings go unsubstantiated.\n" +
+				" - greymerk\n";
 		
 		String page2 = 
 				"Roguelike Dungeons v" + Roguelike.version + "\n" +
-				"Aug 6th 2014\n\n" + 
+				"Aug 15th 2014\n\n" + 
 				"Credits\n\n" +
 				"Author: Greymerk\n\n" +
 				"Bits: Drainedsoul\n\n" +

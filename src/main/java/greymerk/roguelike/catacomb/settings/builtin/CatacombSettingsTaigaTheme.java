@@ -10,16 +10,16 @@ import java.util.List;
 
 import net.minecraftforge.common.BiomeDictionary;
 
-public class CatacombSettingsSwampTheme extends CatacombSettings{
+public class CatacombSettingsTaigaTheme extends CatacombSettings{
 	
-	public CatacombSettingsSwampTheme(){
+	public CatacombSettingsTaigaTheme(){
 		
 		this.criteria = new SpawnCriteria();
 		List<BiomeDictionary.Type> biomes = new ArrayList<BiomeDictionary.Type>();
-		biomes.add(BiomeDictionary.Type.SWAMP);
+		biomes.add(BiomeDictionary.Type.CONIFEROUS);
 		this.criteria.setBiomeTypes(biomes);
 		
-		Theme[] themes = {Theme.MUDDY, Theme.MUDDY, Theme.MOSSY, Theme.MOSSY, Theme.NETHER};
+		Theme[] themes = {Theme.SNOW, Theme.SPRUCE, Theme.CRYPT, Theme.MOSSY, Theme.NETHER};
 		
 		for(int i = 0; i < 5; ++i){
 			CatacombLevelSettings level = new CatacombLevelSettings();

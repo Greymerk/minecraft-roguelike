@@ -1,5 +1,6 @@
 package greymerk.roguelike.catacomb.dungeon.room;
 
+import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.catacomb.dungeon.DungeonBase;
 import greymerk.roguelike.catacomb.settings.CatacombLevelSettings;
 import greymerk.roguelike.catacomb.theme.ITheme;
@@ -129,16 +130,16 @@ public class DungeonsPrison extends DungeonBase {
 		if(rand.nextBoolean()){
 			switch(rand.nextInt(4)){
 			case 0:
-				Spawner.generate(world, rand, inX - 2, inY + 4, inZ - 2, Spawner.ZOMBIE);
+				Spawner.generate(world, rand, settings.getSpawners(), inX - 2, inY + 4, inZ - 2, Catacomb.getLevel(inY), Spawner.ZOMBIE);
 				break;
 			case 1:
-				Spawner.generate(world, rand, inX - 2, inY + 4, inZ + 2, Spawner.ZOMBIE);
+				Spawner.generate(world, rand, settings.getSpawners(), inX - 2, inY + 4, inZ + 2, Catacomb.getLevel(inY), Spawner.ZOMBIE);
 				break;
 			case 2:
-				Spawner.generate(world, rand, inX + 2, inY + 4, inZ - 2, Spawner.ZOMBIE);
+				Spawner.generate(world, rand, settings.getSpawners(), inX + 2, inY + 4, inZ - 2, Catacomb.getLevel(inY), Spawner.ZOMBIE);
 				break;
 			case 3:
-				Spawner.generate(world, rand, inX + 2, inY + 4, inZ + 2, Spawner.ZOMBIE);
+				Spawner.generate(world, rand, settings.getSpawners(), inX + 2, inY + 4, inZ + 2, Catacomb.getLevel(inY), Spawner.ZOMBIE);
 				break;
 			}
 		}

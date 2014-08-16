@@ -8,7 +8,7 @@ public class CatacombSettingsTheme extends CatacombSettings{
 	
 	public CatacombSettingsTheme(){
 		
-		Theme[] themes = {Theme.OAK, Theme.SPRUCE, Theme.CRYPT, Theme.MOSSY, Theme.NETHER};
+		Theme[] themes = {Theme.OAK, Theme.OAK, Theme.CRYPT, Theme.MOSSY, Theme.NETHER};
 		
 		for(int i = 0; i < 5; ++i){
 			CatacombLevelSettings level = new CatacombLevelSettings();

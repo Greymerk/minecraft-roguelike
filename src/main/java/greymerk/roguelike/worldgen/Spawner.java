@@ -2,8 +2,6 @@ package greymerk.roguelike.worldgen;
 
 import greymerk.roguelike.catacomb.Catacomb;
 
-import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 import net.minecraft.init.Blocks;
@@ -37,6 +35,10 @@ public enum Spawner {
 	public static void generate(World world, Random rand, SpawnerSettings settings, int x, int y, int z){
 		Spawner type = common[rand.nextInt(common.length)];
 		generate(world, rand, settings, x, y, z, Catacomb.getLevel(y), type);
+	}
+	
+	public static void generate(World world, Random rand, SpawnerSettings settings, Coord cursor, int level, Spawner type){
+		generate(world, rand, settings, cursor.getX(), cursor.getY(), cursor.getZ(), level, type);
 	}
 	
 	public static void generate(World world, Random rand, SpawnerSettings settings, int x, int y, int z, int level, Spawner type){

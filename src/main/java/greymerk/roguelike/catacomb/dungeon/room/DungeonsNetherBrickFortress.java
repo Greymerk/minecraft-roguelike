@@ -12,7 +12,7 @@ import greymerk.roguelike.worldgen.WorldGenPrimitive;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -48,7 +48,7 @@ public class DungeonsNetherBrickFortress extends DungeonBase {
 		WorldGenPrimitive.fillRectSolid(world, rand, originX - 5, originY, originZ - 5,
 				originX + 5, originY + 3, originZ + 5, air);
 
-		buildWalls();
+		buildWalls(settings);
 		buildFloor();
 		buildRoof();
 		
@@ -104,7 +104,7 @@ public class DungeonsNetherBrickFortress extends DungeonBase {
 
 	}
 	
-    protected void buildWalls(){
+    protected void buildWalls(CatacombLevelSettings settings){
     	
     	// door walls
 		List<Coord> outerWall = WorldGenPrimitive.getRectHollow(originX - 6, originY - 1, originZ - 6, 
@@ -132,24 +132,24 @@ public class DungeonsNetherBrickFortress extends DungeonBase {
 		List<Coord> arch4 = WorldGenPrimitive.getRectSolid(	originX + 4, originY, originZ + 4,
 															originX + 5, originY + 4, originZ + 5);	
 		
-		HashSet<Coord> pillars = new HashSet<Coord>();
+		List<Coord> pillars = new ArrayList<Coord>();
 		pillars.addAll(arch1);
 		pillars.addAll(arch2);
 		pillars.addAll(arch3);
 		pillars.addAll(arch4);
 		
+		Collections.shuffle(pillars, rand);
+		
 		for (Coord block : pillars){
 			int x = block.getX();
 			int y = block.getY();
 			int z = block.getZ();
-			
-			if(rand.nextInt(20) == 0){
-				Spawner type = this.pickMobSpawner(rand);
-				Spawner.generate(world, rand, x, y, z, type);
-				continue;
-			}
-			
 			WorldGenPrimitive.setBlock(world, x, y, z, Blocks.nether_brick);
+		}
+		
+		for(int i = 0; i < rand.nextInt(5) + 5; ++i){
+			Spawner toSpawn = this.pickMobSpawner(rand);
+			Spawner.generate(world, rand, settings.getSpawners(), pillars.get(i), 4, toSpawn);
 		}
 	}
     	
