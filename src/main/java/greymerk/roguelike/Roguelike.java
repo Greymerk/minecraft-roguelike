@@ -20,31 +20,31 @@ import cpw.mods.fml.common.registry.GameRegistry;
 
 public class Roguelike {
 
-    // The instance of your mod that Forge uses.
-    @Instance("Roguelike")
-    public static Roguelike instance;
-    public static final String version = "1.3.4.6";
-    
-    // Says where the client and server 'proxy' code is loaded.
-    @SidedProxy(clientSide="greymerk.roguelike.ClientProxy", serverSide="greymerk.roguelike.CommonProxy")
-    public static CommonProxy proxy;
-    public static DungeonGenerator worldGen = new DungeonGenerator();
-    
-    @EventHandler
-    public void preInit(FMLPreInitializationEvent event) {
-    	GameRegistry.registerWorldGenerator(worldGen, 0);
-    }
-    
-    @EventHandler
-    public void modInit(FMLInitializationEvent event) {
-    	MinecraftForge.EVENT_BUS.register(new EntityJoinWorld()); 
-    }
-    
-    @EventHandler
-    public void serverStart(FMLServerStartingEvent event){
-    	MinecraftServer server = MinecraftServer.getServer();
-    	ICommandManager command = server.getCommandManager();
-    	ServerCommandManager serverCommand = ((ServerCommandManager) command);
-    	serverCommand.registerCommand(new CommandSpawnDungeon());
-    }    
+	// The instance of your mod that Forge uses.
+	@Instance("Roguelike")
+	public static Roguelike instance;
+	public static final String version = "1.3.4.6";
+	
+	// Says where the client and server 'proxy' code is loaded.
+	@SidedProxy(clientSide="greymerk.roguelike.ClientProxy", serverSide="greymerk.roguelike.CommonProxy")
+	public static CommonProxy proxy;
+	public static DungeonGenerator worldGen = new DungeonGenerator();
+	
+	@EventHandler
+	public void preInit(FMLPreInitializationEvent event) {
+		GameRegistry.registerWorldGenerator(worldGen, 0);
+	}
+	
+	@EventHandler
+	public void modInit(FMLInitializationEvent event) {
+		MinecraftForge.EVENT_BUS.register(new EntityJoinWorld()); 
+	}
+	
+	@EventHandler
+	public void serverStart(FMLServerStartingEvent event){
+		MinecraftServer server = MinecraftServer.getServer();
+		ICommandManager command = server.getCommandManager();
+		ServerCommandManager serverCommand = ((ServerCommandManager) command);
+		serverCommand.registerCommand(new CommandSpawnDungeon());
+	}
 }

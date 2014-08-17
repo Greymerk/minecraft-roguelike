@@ -25,6 +25,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
 public class LootSettings {
@@ -47,6 +48,7 @@ public class LootSettings {
 		loot.put(Loot.MUSIC, new ItemRecord(0, level));
 		loot.put(Loot.SMITHY, new ItemSmithy(0, level));
 		loot.put(Loot.SPECIAL, new ItemSpecialty(0, level));
+		loot.put(Loot.REWARD, new WeightedRandomLoot(Items.stick, 0, 1));
 	}
 	
 	public LootSettings(LootSettings toCopy){
