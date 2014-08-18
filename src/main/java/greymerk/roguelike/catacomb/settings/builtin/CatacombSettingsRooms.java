@@ -15,7 +15,7 @@ public class CatacombSettingsRooms extends CatacombSettings{
 			switch(i){
 			case 0:
 				factory = new DungeonFactory();
-				factory.addSingle(Dungeon.REWARD);
+				factory.addSingle(Dungeon.CAKE);
 				factory.addSingle(Dungeon.FIRE);
 				factory.addRandom(Dungeon.BRICK, 10);
 				factory.addRandom(Dungeon.CORNER, 3);

@@ -81,7 +81,7 @@ public class DungeonReward implements IDungeon {
 				cursor.add(dir, 8);
 				cursor.add(Cardinal.UP, 2);
 				cursor.add(orth);
-				WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(orth), true).setBlock(world, cursor);
+				WorldGenPrimitive.setBlock(world, rand, cursor, WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(orth), true), true, false);
 				cursor.add(Cardinal.reverse(dir));
 				WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(orth), true).setBlock(world, cursor);
 				cursor.add(Cardinal.reverse(dir));

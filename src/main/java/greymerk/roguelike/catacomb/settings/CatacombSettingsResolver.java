@@ -119,6 +119,41 @@ public class CatacombSettingsResolver {
 	
 	public ICatacombSettings getSettings(World world, Random rand, Coord pos){
 		
+		CatacombSettings builtin = this.getBuiltin(world, rand, pos);
+		CatacombSettings custom = this.getCustom(world, rand, pos);
+		
+		if(custom != null && builtin != null){
+			return new CatacombSettings(this.base, new CatacombSettings(builtin, custom));
+		}
+		
+		if(custom != null){
+			return new CatacombSettings(this.base, custom);
+		}
+		
+		if(builtin != null){
+			return new CatacombSettings(this.base, builtin);
+		}
+		
+		if(this.base.isValid(world, pos)) return new CatacombSettings(this.base);
+		
+		return null;
+		
+	}
+	
+	private CatacombSettings getBuiltin(World world, Random rand, Coord pos){
+		WeightedRandomizer<CatacombSettings> settingsRandomizer = new WeightedRandomizer<CatacombSettings>();
+
+		for(CatacombSettings setting : this.builtin){
+			if(setting.isValid(world, pos)){
+				int weight = setting.criteria.weight;
+				settingsRandomizer.add(new WeightedChoice<CatacombSettings>(setting, weight));
+			}
+		}
+		
+		return settingsRandomizer.get(rand);
+	}
+	
+	private CatacombSettings getCustom(World world, Random rand, Coord pos){
 		WeightedRandomizer<CatacombSettings> settingsRandomizer = new WeightedRandomizer<CatacombSettings>();
 		
 		for(CatacombSettings setting : this.settings.values()){
@@ -128,28 +163,7 @@ public class CatacombSettingsResolver {
 			}
 		}
 		
-		if(!settingsRandomizer.isEmpty()){
-			CatacombSettings setting = settingsRandomizer.get(rand);
-			return new CatacombSettings(this.base, setting);
-		}
-		
-		settingsRandomizer = new WeightedRandomizer<CatacombSettings>();
-		
-		for(CatacombSettings setting : this.builtin){
-			if(setting.isValid(world, pos)){
-				int weight = setting.criteria.weight;
-				settingsRandomizer.add(new WeightedChoice<CatacombSettings>(setting, weight));
-			}
-		}
-		
-		if(!settingsRandomizer.isEmpty()){
-			CatacombSettings setting = settingsRandomizer.get(rand);
-			return new CatacombSettings(this.base, setting);
-		}
-		
-		if(base.isValid(world, pos)) return new CatacombSettings(base);
-		
-		return null;
+		return settingsRandomizer.get(rand);
 	}
 	
 	public ICatacombSettings getDefaultSettings(){
