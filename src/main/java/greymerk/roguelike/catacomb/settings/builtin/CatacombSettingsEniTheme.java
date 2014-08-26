@@ -2,14 +2,25 @@ package greymerk.roguelike.catacomb.settings.builtin;
 
 import greymerk.roguelike.catacomb.settings.CatacombLevelSettings;
 import greymerk.roguelike.catacomb.settings.CatacombSettings;
+import greymerk.roguelike.catacomb.settings.SpawnCriteria;
 import greymerk.roguelike.catacomb.theme.Theme;
 import greymerk.roguelike.catacomb.tower.Tower;
 
-public class CatacombSettingsTheme extends CatacombSettings{
+import java.util.ArrayList;
+import java.util.List;
+
+import net.minecraftforge.common.BiomeDictionary;
+
+public class CatacombSettingsEniTheme extends CatacombSettings{
 	
-	public CatacombSettingsTheme(){
+	public CatacombSettingsEniTheme(){
 		
-		this.tower = Tower.ROGUE;
+		this.criteria = new SpawnCriteria();
+		List<BiomeDictionary.Type> biomes = new ArrayList<BiomeDictionary.Type>();
+		biomes.add(BiomeDictionary.Type.MOUNTAIN);
+		this.criteria.setBiomeTypes(biomes);
+		
+		this.tower = Tower.ENIKO;
 		
 		Theme[] themes = {Theme.OAK, Theme.OAK, Theme.CRYPT, Theme.MOSSY, Theme.NETHER};
 		
@@ -19,6 +30,4 @@ public class CatacombSettingsTheme extends CatacombSettings{
 			levels.put(i, level);
 		}
 	}
-
-	
 }

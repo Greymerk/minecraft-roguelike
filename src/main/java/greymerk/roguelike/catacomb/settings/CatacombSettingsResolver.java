@@ -3,6 +3,7 @@ package greymerk.roguelike.catacomb.settings;
 import greymerk.roguelike.catacomb.settings.builtin.CatacombSettingsBasicLoot;
 import greymerk.roguelike.catacomb.settings.builtin.CatacombSettingsColdTheme;
 import greymerk.roguelike.catacomb.settings.builtin.CatacombSettingsDesertTheme;
+import greymerk.roguelike.catacomb.settings.builtin.CatacombSettingsEniTheme;
 import greymerk.roguelike.catacomb.settings.builtin.CatacombSettingsJungleTheme;
 import greymerk.roguelike.catacomb.settings.builtin.CatacombSettingsMesaTheme;
 import greymerk.roguelike.catacomb.settings.builtin.CatacombSettingsRooms;
@@ -58,6 +59,7 @@ public class CatacombSettingsResolver {
 		this.builtin.add(new CatacombSettingsMesaTheme());
 		this.builtin.add(new CatacombSettingsTaigaTheme());
 		this.builtin.add(new CatacombSettingsColdTheme());
+		this.builtin.add(new CatacombSettingsEniTheme());
 		
 		File settingsDir = new File(SETTINGS_DIRECTORY);
 		if(!settingsDir.exists() || !settingsDir.isDirectory()) return;

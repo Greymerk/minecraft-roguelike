@@ -1,5 +1,7 @@
 package greymerk.roguelike.catacomb.settings;
 
+import greymerk.roguelike.catacomb.tower.ITower;
+import greymerk.roguelike.catacomb.tower.Tower;
 import greymerk.roguelike.worldgen.Coord;
 
 import java.util.ArrayList;
@@ -19,6 +21,7 @@ public class CatacombSettings implements ICatacombSettings{
 	
 	private static final int NUM_LEVELS = 5;
 	private String name;
+	protected Tower tower;
 	protected Map<Integer, CatacombLevelSettings> levels;
 	protected SpawnCriteria criteria;
 	
@@ -85,6 +88,13 @@ public class CatacombSettings implements ICatacombSettings{
 	}
 	
 	public CatacombSettings(CatacombSettings base, CatacombSettings override){
+		
+		if(override.tower == null){
+			this.tower = base.tower;
+		} else {
+			this.tower = override.tower;
+		}
+		
 		levels = new HashMap<Integer, CatacombLevelSettings>();
 		
 		for(int i = 0; i < NUM_LEVELS; ++i){
@@ -123,5 +133,12 @@ public class CatacombSettings implements ICatacombSettings{
 	@Override
 	public CatacombLevelSettings getLevelSettings(int level) {
 		return levels.get(level);
+	}
+	
+	@Override
+	public ITower getTower(){
+		if(this.tower == null) return Tower.get(Tower.ROGUE);
+		
+		return Tower.get(this.tower);
 	}
 }
