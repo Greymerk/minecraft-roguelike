@@ -17,12 +17,12 @@ public class ThemeSnow extends ThemeBase{
 		MetaBlock stair = new MetaBlock(Blocks.stone_brick_stairs);
 		MetaBlock pillar = Log.getLog(Log.SPRUCE);
 		
-		this.walls = new BlockSet(walls, stair, pillar);
+		this.primary = new BlockSet(walls, stair, pillar);
 		
 		MetaBlock SegmentWall = new MetaBlock(Blocks.snow);
 		MetaBlock SegmentStair = new MetaBlock(Blocks.brick_stairs);
 		MetaBlock pillar2 = new MetaBlock(Blocks.brick_block);
 		
-		this.decor =  new BlockSet(SegmentWall, SegmentStair, pillar2);
+		this.secondary =  new BlockSet(SegmentWall, SegmentStair, pillar2);
 	}
 }

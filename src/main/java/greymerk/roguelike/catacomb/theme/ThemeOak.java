@@ -8,7 +8,7 @@ import net.minecraft.init.Blocks;
 public class ThemeOak extends ThemeBase{
 
 	public ThemeOak(){
-	
+		
 		BlockWeightedRandom walls = new BlockWeightedRandom();
 		walls.addBlock(new MetaBlock(Blocks.stonebrick, 0), 30);
 		walls.addBlock(new MetaBlock(Blocks.stonebrick, 2), 20);
@@ -19,11 +19,11 @@ public class ThemeOak extends ThemeBase{
 		MetaBlock stair = new MetaBlock(Blocks.stone_brick_stairs);
 		MetaBlock pillar = Log.getLog(Log.OAK);
 		
-		this.walls = new BlockSet(walls, stair, walls);
+		this.primary = new BlockSet(walls, stair, walls);
 		
 		MetaBlock SegmentWall = new MetaBlock(Blocks.planks);
 		MetaBlock SegmentStair = new MetaBlock(Blocks.oak_stairs);
 		
-		this.decor =  new BlockSet(SegmentWall, SegmentStair, pillar);
+		this.secondary =  new BlockSet(SegmentWall, SegmentStair, pillar);
 	}
 }

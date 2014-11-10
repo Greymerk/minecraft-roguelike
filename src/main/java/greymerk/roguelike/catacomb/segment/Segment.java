@@ -1,7 +1,9 @@
 package greymerk.roguelike.catacomb.segment;
 
+import greymerk.roguelike.catacomb.segment.part.SegmentAnkh;
 import greymerk.roguelike.catacomb.segment.part.SegmentArch;
 import greymerk.roguelike.catacomb.segment.part.SegmentBooks;
+import greymerk.roguelike.catacomb.segment.part.SegmentCave;
 import greymerk.roguelike.catacomb.segment.part.SegmentChest;
 import greymerk.roguelike.catacomb.segment.part.SegmentDoor;
 import greymerk.roguelike.catacomb.segment.part.SegmentFireArch;
@@ -15,6 +17,10 @@ import greymerk.roguelike.catacomb.segment.part.SegmentNetherArch;
 import greymerk.roguelike.catacomb.segment.part.SegmentNetherLava;
 import greymerk.roguelike.catacomb.segment.part.SegmentNetherStripes;
 import greymerk.roguelike.catacomb.segment.part.SegmentNetherWart;
+import greymerk.roguelike.catacomb.segment.part.SegmentSewer;
+import greymerk.roguelike.catacomb.segment.part.SegmentSewerArch;
+import greymerk.roguelike.catacomb.segment.part.SegmentSewerDoor;
+import greymerk.roguelike.catacomb.segment.part.SegmentSewerDrain;
 import greymerk.roguelike.catacomb.segment.part.SegmentShelf;
 import greymerk.roguelike.catacomb.segment.part.SegmentSilverfish;
 import greymerk.roguelike.catacomb.segment.part.SegmentSkull;
@@ -26,7 +32,8 @@ public enum Segment {
 
 	ARCH, FIREARCH, FIREPLACE, SHELF, INSET, MOSSYARCH, MUSHROOM, NETHERARCH,
 	NETHERSTRIPE, NETHERWART, NETHERLAVA, JUNGLE, BOOKS, SPAWNER, 
-	WHEAT, TOMB, CHEST, SILVERFISH, SKULL, FLOWERS, DOOR;
+	WHEAT, TOMB, CHEST, SILVERFISH, SKULL, FLOWERS, DOOR, ANKH, CAVE,
+	SEWER, SEWERARCH, SEWERDOOR, SEWERDRAIN;
 	
 	
 	public static ISegment getSegment(Segment choice){
@@ -53,6 +60,12 @@ public enum Segment {
 		case SKULL: return new SegmentSkull();
 		case FLOWERS: return new SegmentFlowers();
 		case DOOR: return new SegmentDoor();
+		case ANKH: return new SegmentAnkh();
+		case CAVE: return new SegmentCave();
+		case SEWER: return new SegmentSewer();
+		case SEWERARCH: return new SegmentSewerArch();
+		case SEWERDOOR: return new SegmentSewerDoor();
+		case SEWERDRAIN: return new SegmentSewerDrain();
 		}
 		
 		return null;

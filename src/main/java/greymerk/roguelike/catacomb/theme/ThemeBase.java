@@ -5,48 +5,58 @@ import greymerk.roguelike.worldgen.MetaBlock;
 
 public class ThemeBase implements ITheme {
 	
-	protected IBlockSet walls;
-	protected IBlockSet decor;
+	protected IBlockSet primary;
+	protected IBlockSet secondary;
 	
 	public ThemeBase(IBlockSet walls, IBlockSet decor){
-		this.walls = walls;
-		this.decor = decor;
+		this.primary = walls;
+		this.secondary = decor;
 	}
 	
 	public ThemeBase(ThemeBase base, IBlockSet walls, IBlockSet decor){
-		this.walls = walls == null ? base.walls : walls;
-		this.decor = decor == null ? base.decor : decor;
+		this.primary = walls == null ? base.primary : walls;
+		this.secondary = decor == null ? base.secondary : decor;
 	}
 	
 	public ThemeBase(){}
 	
 	@Override
 	public IBlockFactory getPrimaryWall() {
-		return walls.getFill();
+		return primary.getFill();
 	}
 	
 	@Override
 	public MetaBlock getPrimaryStair() {
-		return walls.getStair();
+		return primary.getStair();
 	}
 
 	@Override
 	public IBlockFactory getPrimaryPillar() {
-		return walls.getPillar();
+		return primary.getPillar();
 	}
 	
 	@Override
 	public IBlockFactory getSecondaryPillar() {
-		return decor.getPillar();
+		return secondary.getPillar();
 	}
 	
 	@Override
 	public IBlockFactory getSecondaryWall() {
-		return decor.getFill();
+		return secondary.getFill();
 	}
 
 	@Override
 	public MetaBlock getSecondaryStair() {
-		return decor.getStair();
+		return secondary.getStair();
+	}
+
+	@Override
+	public IBlockFactory getPrimaryFloor() {
+		return primary.getFloor();
+	}
+
+	@Override
+	public IBlockFactory getSecondaryFloor() {
+		return secondary.getFloor();
 	}
 }

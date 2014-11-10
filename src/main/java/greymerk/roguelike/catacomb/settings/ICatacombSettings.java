@@ -1,6 +1,5 @@
 package greymerk.roguelike.catacomb.settings;
 
-import greymerk.roguelike.catacomb.tower.ITower;
 import greymerk.roguelike.worldgen.Coord;
 import net.minecraft.world.World;
 
@@ -11,5 +10,5 @@ public interface ICatacombSettings {
 	
 	public CatacombLevelSettings getLevelSettings(int level);
 	
-	public ITower getTower();
+	public CatacombTowerSettings getTower();
 }

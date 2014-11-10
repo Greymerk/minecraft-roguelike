@@ -20,9 +20,9 @@ public class ThemeRainbow extends ThemeBase{
 		
 		MetaBlock planks = new MetaBlock(Blocks.planks, 4);
 		
-		this.walls = new BlockSet(rainbow, stair, pillar);
+		this.primary = new BlockSet(rainbow, stair, pillar);
 		
-		this.decor = new BlockSet(planks, stair, pillar);;
+		this.secondary = new BlockSet(planks, stair, pillar);;
 		
 
 	}

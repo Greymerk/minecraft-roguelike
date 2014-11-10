@@ -17,7 +17,7 @@ public class ThemeMossy extends ThemeBase{
 		
 		MetaBlock stair = new MetaBlock(Blocks.stone_stairs);
 		
-		this.walls = new BlockSet(walls, stair, walls);
-		this.decor = this.walls;
+		this.primary = new BlockSet(walls, stair, walls);
+		this.secondary = this.primary;
 	}
 }

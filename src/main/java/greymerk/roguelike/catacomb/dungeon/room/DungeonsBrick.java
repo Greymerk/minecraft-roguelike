@@ -41,6 +41,8 @@ public class DungeonsBrick extends DungeonBase {
 		// shell
 		WorldGenPrimitive.fillRectHollow(world, rand, x - 4, y - 1, z - 4, x + 4, y + 4, z + 4, blocks, false, true);
 
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 4, y - 1, z - 4, x + 4, y - 1, z + 4, theme.getPrimaryFloor(), false, true);
+		
 		Coord start;
 		Coord end;
 		Coord cursor;

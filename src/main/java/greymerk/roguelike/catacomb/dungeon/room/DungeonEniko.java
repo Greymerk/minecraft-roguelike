@@ -86,7 +86,7 @@ public class DungeonEniko extends DungeonBase {
 		
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 3, y - 1, z - 3, x + 3, y - 1, z + 3, checkers);
 		
-		MetaBlock lamp = new MetaBlock(Blocks.redstone_lamp);
+		MetaBlock lamp = new MetaBlock(Blocks.lit_redstone_lamp);
 		
 		WorldGenPrimitive.setBlock(world, x - 2, y - 1, z - 2, lamp);
 		WorldGenPrimitive.setBlock(world, x - 2, y - 2, z - 2, Blocks.redstone_block);

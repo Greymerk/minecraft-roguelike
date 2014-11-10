@@ -3,8 +3,7 @@ package greymerk.roguelike.catacomb;
 import greymerk.roguelike.catacomb.settings.CatacombLevelSettings;
 import greymerk.roguelike.catacomb.settings.CatacombSettingsResolver;
 import greymerk.roguelike.catacomb.settings.ICatacombSettings;
-import greymerk.roguelike.catacomb.tower.EniTower;
-import greymerk.roguelike.catacomb.tower.ITower;
+import greymerk.roguelike.catacomb.tower.Tower;
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
@@ -80,9 +79,9 @@ public class Catacomb {
 
 		} 
 		
-		ITower tower = settings.getTower();
+		Tower tower = settings.getTower().getTower();
 		rand = getRandom(world, inX, inZ);
-		tower.generate(world, rand, settings.getLevelSettings(0), inX, TOPLEVEL, inZ);
+		Tower.get(tower).generate(world, rand, settings.getTower().getTheme(), inX, TOPLEVEL, inZ);
 		
 		
 	}

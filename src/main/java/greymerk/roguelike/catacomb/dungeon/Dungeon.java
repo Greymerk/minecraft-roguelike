@@ -11,6 +11,7 @@ import greymerk.roguelike.catacomb.dungeon.room.DungeonEniko;
 import greymerk.roguelike.catacomb.dungeon.room.DungeonEtho;
 import greymerk.roguelike.catacomb.dungeon.room.DungeonFirework;
 import greymerk.roguelike.catacomb.dungeon.room.DungeonLab;
+import greymerk.roguelike.catacomb.dungeon.room.DungeonLibrary;
 import greymerk.roguelike.catacomb.dungeon.room.DungeonMess;
 import greymerk.roguelike.catacomb.dungeon.room.DungeonNebris;
 import greymerk.roguelike.catacomb.dungeon.room.DungeonObsidian;
@@ -38,7 +39,7 @@ public enum Dungeon {
 	
 	BRICK, CREEPER, CRYPT, ENCHANT, ENDER, FIRE, MUSIC, NETHER, NETHERFORT, PIT, PRISON,
 	SLIME, SMITH, SPIDER, CAKE, LAB, CORNER, MESS, ETHO, ENIKO, BTEAM, BAJ, OSSUARY, OBSIDIAN,
-	AVIDYA, STORAGE, NEBRIS, ASHLEA, FIREWORK, BEDROOM, REWARD;
+	AVIDYA, STORAGE, NEBRIS, ASHLEA, FIREWORK, BEDROOM, REWARD, LIBRARY;
 	
 	public static IDungeon getInstance(Dungeon choice){
 		switch(choice){
@@ -73,6 +74,7 @@ public enum Dungeon {
 		case FIREWORK: return new DungeonFirework();
 		case BEDROOM: return new DungeonBedRoom();
 		case REWARD: return new DungeonReward();
+		case LIBRARY: return new DungeonLibrary();
 		default: return null;
 		}
 	}

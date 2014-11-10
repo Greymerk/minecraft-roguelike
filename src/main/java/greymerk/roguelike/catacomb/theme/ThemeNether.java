@@ -19,8 +19,8 @@ public class ThemeNether extends ThemeBase{
 		
 		MetaBlock pillar = new MetaBlock(Blocks.obsidian);
 		
-		this.walls = new BlockSet(walls, stair, pillar);
-		this.decor = this.walls;
+		this.primary = new BlockSet(walls, stair, pillar);
+		this.secondary = this.primary;
 
 	}
 }

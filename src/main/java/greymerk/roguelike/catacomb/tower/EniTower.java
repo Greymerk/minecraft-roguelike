@@ -1,6 +1,5 @@
 package greymerk.roguelike.catacomb.tower;
 
-import greymerk.roguelike.catacomb.settings.CatacombLevelSettings;
 import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
@@ -22,8 +21,7 @@ public class EniTower implements ITower {
 	public EniTower(){}
 	
 	@Override
-	public void generate(World world, Random rand, CatacombLevelSettings settings, int x, int y, int z) {
-		ITheme theme = settings.getTheme();
+	public void generate(World world, Random rand, ITheme theme, int x, int y, int z) {
 		
 		MetaBlock air = new MetaBlock(Blocks.air);
 		

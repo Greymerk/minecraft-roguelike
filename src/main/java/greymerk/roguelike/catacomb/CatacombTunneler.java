@@ -38,7 +38,7 @@ public class CatacombTunneler {
 		this.originY = y;
 		this.originZ = z;
 		done = false;
-		this.extend = CatacombLevel.SCATTER * 2;
+		this.extend = level.getSettings().getScatter() * 2;
 		tunnel = new ArrayList<Coord>();
 		tunnel.add(new Coord(x, y, z));
 	}
@@ -48,7 +48,7 @@ public class CatacombTunneler {
 			return;
 		}
 		
-		if(level.hasNearbyNode(originX, originZ, CatacombLevel.SCATTER)){
+		if(level.hasNearbyNode(originX, originZ, level.getSettings().getScatter())){
 			advance();
 		} else {
 			if(rand.nextInt(extend) == 0){
@@ -101,8 +101,9 @@ public class CatacombTunneler {
 		MetaBlock air = new MetaBlock(Blocks.air);
 		
 		IBlockFactory wallBlocks = this.level.getSettings().getTheme().getPrimaryWall();
+		IBlockFactory floor = this.level.getSettings().getTheme().getPrimaryFloor();
 		BlockJumble bridgeBlocks = new BlockJumble();
-		bridgeBlocks.addBlock(wallBlocks);
+		bridgeBlocks.addBlock(floor);
 		bridgeBlocks.addBlock(air);
 		
 		for (Coord location : tunnel){
@@ -113,10 +114,12 @@ public class CatacombTunneler {
 			if(dir == Cardinal.NORTH || dir == Cardinal.SOUTH){
 				WorldGenPrimitive.fillRectSolid(world, rand, x - 1, originY, z, x + 1, originY + 2, z, air, false, true);
 				WorldGenPrimitive.fillRectSolid(world, rand, x - 2, originY - 1, z, x + 2, originY + 4, z, wallBlocks, false, true);
+				WorldGenPrimitive.fillRectSolid(world, rand, x - 1, originY - 1, z, x + 1, originY - 1, z, floor, false, true);
 				WorldGenPrimitive.fillRectSolid(world, rand, x - 1, originY - 1, z, x + 1, originY - 1, z, bridgeBlocks, true, false);
 			} else {
 				WorldGenPrimitive.fillRectSolid(world, rand, x, originY, z - 1, x, originY + 2, z + 1, air, false, true);
 				WorldGenPrimitive.fillRectSolid(world, rand, x, originY - 1, z - 2, x, originY + 4, z + 2, wallBlocks, false, true);
+				WorldGenPrimitive.fillRectSolid(world, rand, x, originY - 1, z - 1, x, originY - 1, z + 1, floor, false, true);
 				WorldGenPrimitive.fillRectSolid(world, rand, x, originY - 1, z - 1, x, originY - 1, z + 1, bridgeBlocks, true, false);
 			}
 		}

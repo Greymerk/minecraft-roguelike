@@ -25,8 +25,6 @@ public class CatacombSettingsSecrets extends CatacombSettings{
 				rooms = new ArrayList<Dungeon>();
 				rooms.add(Dungeon.BTEAM);
 				rooms.add(Dungeon.AVIDYA);
-				rooms.add(Dungeon.ETHO);
-				rooms.add(Dungeon.ENIKO);
 				factory.addRoom(rooms, 1);
 				break;
 			case 2:

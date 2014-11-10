@@ -12,11 +12,11 @@ public class ThemeDarkOak extends ThemeBase{
 		MetaBlock stair = new MetaBlock(Blocks.dark_oak_stairs);
 		MetaBlock pillar = Log.getLog(Log.DARKOAK);
 		
-		this.walls = new BlockSet(walls, stair, pillar);
+		this.primary = new BlockSet(walls, stair, pillar);
 		
 		MetaBlock secondaryWalls = new MetaBlock(Blocks.planks, 2);
 		
-		this.decor = new BlockSet(secondaryWalls, stair, pillar);
+		this.secondary = new BlockSet(secondaryWalls, stair, pillar);
 
 	}
 }

@@ -20,7 +20,7 @@ public class ThemeJungle extends ThemeBase{
 		
 		
 		
-		this.walls = new BlockSet(walls, stair, pillar);
-		this.decor = new BlockSet(new MetaBlock(Blocks.stonebrick, 3), stair, pillar);
+		this.primary = new BlockSet(walls, stair, pillar);
+		this.secondary = new BlockSet(new MetaBlock(Blocks.stonebrick, 3), stair, pillar);
 	}
 }

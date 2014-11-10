@@ -16,9 +16,9 @@ public class ThemeChecker extends ThemeBase{
 		
 		MetaBlock stair = new MetaBlock(Blocks.quartz_stairs);
 		
-		this.walls = new BlockSet(checks, stair, checks);
+		this.primary = new BlockSet(checks, stair, checks);
 		
-		this.decor = walls;
+		this.secondary = primary;
 
 	}
 }

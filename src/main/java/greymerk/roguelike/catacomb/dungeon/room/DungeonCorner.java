@@ -32,6 +32,9 @@ public class DungeonCorner extends DungeonBase {
 		// shell
 		WorldGenPrimitive.fillRectHollow(world, rand, x - 3, y - 1, z - 3, x + 3, y + 4, z + 3, blocks, false, true);
 		
+		// floor
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 3, y - 1, z - 3, x + 3, y - 1, z + 3, theme.getPrimaryFloor(), false, true);
+		
 		Coord start;
 		Coord end;
 		Coord cursor;

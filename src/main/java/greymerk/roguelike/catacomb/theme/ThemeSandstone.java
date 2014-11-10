@@ -16,11 +16,11 @@ public class ThemeSandstone extends ThemeBase{
 		
 		MetaBlock pillar = new MetaBlock(Blocks.sandstone, 2);
 		
-		this.walls = new BlockSet(walls, stair, pillar);
+		this.primary = new BlockSet(walls, stair, pillar);
 		
 		MetaBlock SegmentWall = new MetaBlock(Blocks.sandstone, 1);
 		
-		this.decor =  new BlockSet(SegmentWall, stair, pillar);
+		this.secondary =  new BlockSet(SegmentWall, stair, pillar);
 
 	}
 }

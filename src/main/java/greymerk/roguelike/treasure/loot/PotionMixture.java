@@ -51,8 +51,8 @@ public enum PotionMixture {
 			return potion;
 		case STOUT:
 			potion = Potion.getSpecific(rand, Potion.HARM, false, false, false);
-			duration = 300 + rand.nextInt(300);
-			PotionEffect.addCustomEffect(potion, PotionEffect.SATURATION, 4, 1);
+			duration = 2000 + rand.nextInt(2000);
+			PotionEffect.addCustomEffect(potion, PotionEffect.REGEN, 1, duration);
 			PotionEffect.addCustomEffect(potion, PotionEffect.FATIGUE, 1, duration);
 			PotionEffect.addCustomEffect(potion, PotionEffect.HEALTHBOOST, 2, duration);
 			Loot.setItemName(potion, "Stout");

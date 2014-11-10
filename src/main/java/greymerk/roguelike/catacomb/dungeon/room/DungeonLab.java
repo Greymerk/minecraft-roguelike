@@ -21,7 +21,7 @@ import net.minecraft.world.World;
 public class DungeonLab extends DungeonBase {
 
 	@Override
-	public boolean generate(World inWorld, Random inRandom, CatacombLevelSettings settings, Cardinal[] entrances, int inOriginX, int inOriginY, int inOriginZ) {
+	public boolean generate(World world, Random rand, CatacombLevelSettings settings, Cardinal[] entrances, int x, int y, int z) {
 	
 		ITheme theme = settings.getTheme();
 		
@@ -30,43 +30,45 @@ public class DungeonLab extends DungeonBase {
 		
 		MetaBlock air = new MetaBlock(Blocks.air);
 		// Air
-		WorldGenPrimitive.fillRectSolid(inWorld, inRandom, inOriginX - 7, inOriginY, inOriginZ - 7, inOriginX + 7, inOriginY + 3, inOriginZ + 7, air);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 7, y, z - 7, x + 7, y + 3, z + 7, air);
 
 		IBlockFactory roof = theme.getSecondaryWall();
 		// Wood upper Roof
-		WorldGenPrimitive.fillRectSolid(inWorld, inRandom, inOriginX - 6, inOriginY + 5, inOriginZ - 6, inOriginX + 6, inOriginY + 5, inOriginZ + 6, roof, true, true);
-		WorldGenPrimitive.fillRectSolid(inWorld, inRandom, inOriginX - 1, inOriginY + 4, inOriginZ - 1, inOriginX + 1, inOriginY + 4, inOriginZ + 1, air);
-		WorldGenPrimitive.fillRectSolid(inWorld, inRandom, inOriginX - 5, inOriginY + 4, inOriginZ - 1, inOriginX - 3, inOriginY + 4, inOriginZ + 1, air);
-		WorldGenPrimitive.fillRectSolid(inWorld, inRandom, inOriginX + 3, inOriginY + 4, inOriginZ - 1, inOriginX + 5, inOriginY + 4, inOriginZ + 1, air);
-		WorldGenPrimitive.fillRectSolid(inWorld, inRandom, inOriginX - 1, inOriginY + 4, inOriginZ - 5, inOriginX + 1, inOriginY + 4, inOriginZ - 3, air);
-		WorldGenPrimitive.fillRectSolid(inWorld, inRandom, inOriginX - 1, inOriginY + 4, inOriginZ + 3, inOriginX + 1, inOriginY + 4, inOriginZ + 5, air);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 6, y + 5, z - 6, x + 6, y + 5, z + 6, roof, true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 1, y + 4, z - 1, x + 1, y + 4, z + 1, air);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 5, y + 4, z - 1, x - 3, y + 4, z + 1, air);
+		WorldGenPrimitive.fillRectSolid(world, rand, x + 3, y + 4, z - 1, x + 5, y + 4, z + 1, air);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 1, y + 4, z - 5, x + 1, y + 4, z - 3, air);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 1, y + 4, z + 3, x + 1, y + 4, z + 5, air);
 		
 		// shell
-		WorldGenPrimitive.fillRectHollow(inWorld, inRandom, inOriginX - 8, inOriginY - 1, inOriginZ - 8, inOriginX + 8, inOriginY + 4, inOriginZ + 8, blocks, false, true);
+		WorldGenPrimitive.fillRectHollow(world, rand, x - 8, y - 1, z - 8, x + 8, y + 4, z + 8, blocks, false, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 8, y - 1, z - 8, x + 8, y - 1, z + 8, theme.getPrimaryFloor(), false, true);
+		
 		
 		// corner rooms
-		southWest(inWorld, inRandom, settings.getLoot(), theme, inOriginX - 7, inOriginY, inOriginZ + 2);
-		southEast(inWorld, inRandom, theme, inOriginX + 2, inOriginY, inOriginZ + 2);
-		northWest(inWorld, inRandom, theme, inOriginX - 7, inOriginY, inOriginZ - 7);
-		northEast(inWorld, inRandom, theme, inOriginX + 2, inOriginY, inOriginZ - 7);
+		southWest(world, rand, settings.getLoot(), theme, x - 7, y, z + 2);
+		southEast(world, rand, theme, x + 2, y, z + 2);
+		northWest(world, rand, theme, x - 7, y, z - 7);
+		northEast(world, rand, theme, x + 2, y, z - 7);
 		
 		// outer walls
-		WorldGenPrimitive.fillRectSolid(inWorld, inRandom, inOriginX - 8, inOriginY, inOriginZ - 7, inOriginX - 8, inOriginY + 3, inOriginZ - 7, blocks);
-		WorldGenPrimitive.fillRectSolid(inWorld, inRandom, inOriginX + 8, inOriginY, inOriginZ - 7, inOriginX + 8, inOriginY + 3, inOriginZ - 7, blocks);
-		WorldGenPrimitive.fillRectSolid(inWorld, inRandom, inOriginX + 8, inOriginY, inOriginZ - 7, inOriginX + 8, inOriginY + 3, inOriginZ - 7, blocks);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 8, y, z - 7, x - 8, y + 3, z - 7, blocks);
+		WorldGenPrimitive.fillRectSolid(world, rand, x + 8, y, z - 7, x + 8, y + 3, z - 7, blocks);
+		WorldGenPrimitive.fillRectSolid(world, rand, x + 8, y, z - 7, x + 8, y + 3, z - 7, blocks);
 		
 		IBlockFactory backWalls = theme.getSecondaryWall();
 		
 		// wall planks
-		WorldGenPrimitive.fillRectSolid(inWorld, inRandom, inOriginX - 8, inOriginY + 1, inOriginZ - 6, inOriginX - 8, inOriginY + 3, inOriginZ - 3, backWalls, true, true);
-		WorldGenPrimitive.fillRectSolid(inWorld, inRandom, inOriginX - 8, inOriginY + 1, inOriginZ + 3, inOriginX - 8, inOriginY + 3, inOriginZ + 6, backWalls, true, true);
-		WorldGenPrimitive.fillRectSolid(inWorld, inRandom, inOriginX + 8, inOriginY + 1, inOriginZ - 6, inOriginX + 8, inOriginY + 3, inOriginZ - 3, backWalls, true, true);
-		WorldGenPrimitive.fillRectSolid(inWorld, inRandom, inOriginX + 8, inOriginY + 1, inOriginZ + 3, inOriginX + 8, inOriginY + 3, inOriginZ + 6, backWalls, true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 8, y + 1, z - 6, x - 8, y + 3, z - 3, backWalls, true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 8, y + 1, z + 3, x - 8, y + 3, z + 6, backWalls, true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, x + 8, y + 1, z - 6, x + 8, y + 3, z - 3, backWalls, true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, x + 8, y + 1, z + 3, x + 8, y + 3, z + 6, backWalls, true, true);
 		
-		WorldGenPrimitive.fillRectSolid(inWorld, inRandom, inOriginX - 6, inOriginY + 1, inOriginZ - 8, inOriginX - 3, inOriginY + 3, inOriginZ - 8, backWalls, true, true);
-		WorldGenPrimitive.fillRectSolid(inWorld, inRandom, inOriginX + 3, inOriginY + 1, inOriginZ - 8, inOriginX + 6, inOriginY + 3, inOriginZ - 8, backWalls, true, true);
-		WorldGenPrimitive.fillRectSolid(inWorld, inRandom, inOriginX - 6, inOriginY + 1, inOriginZ + 8, inOriginX - 3, inOriginY + 3, inOriginZ + 8, backWalls, true, true);
-		WorldGenPrimitive.fillRectSolid(inWorld, inRandom, inOriginX + 3, inOriginY + 1, inOriginZ + 8, inOriginX + 6, inOriginY + 3, inOriginZ + 8, backWalls, true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 6, y + 1, z - 8, x - 3, y + 3, z - 8, backWalls, true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, x + 3, y + 1, z - 8, x + 6, y + 3, z - 8, backWalls, true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 6, y + 1, z + 8, x - 3, y + 3, z + 8, backWalls, true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, x + 3, y + 1, z + 8, x + 6, y + 3, z + 8, backWalls, true, true);
 		
 		
 		return false;

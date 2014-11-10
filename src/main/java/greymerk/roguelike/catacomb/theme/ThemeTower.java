@@ -5,9 +5,9 @@ import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.MetaBlock;
 import net.minecraft.init.Blocks;
 
-public class ThemeCrypt extends ThemeBase{
+public class ThemeTower extends ThemeBase{
 
-	public ThemeCrypt(){
+	public ThemeTower(){
 	
 		BlockJumble stone = new BlockJumble();
 		stone.addBlock(new MetaBlock(Blocks.stonebrick));
@@ -15,7 +15,8 @@ public class ThemeCrypt extends ThemeBase{
 		stone.addBlock(new MetaBlock(Blocks.stonebrick, 2));
 		
 		BlockWeightedRandom walls = new BlockWeightedRandom();
-		walls.addBlock(stone, 100);
+		walls.addBlock(new MetaBlock(Blocks.air), 20);
+		walls.addBlock(stone, 30);
 		walls.addBlock(new MetaBlock(Blocks.cobblestone), 10);
 		walls.addBlock(new MetaBlock(Blocks.gravel), 5);
 		

@@ -12,11 +12,11 @@ public class ThemeQuartz extends ThemeBase{
 		MetaBlock stair = new MetaBlock(Blocks.quartz_stairs);
 		MetaBlock pillar = new MetaBlock(Blocks.quartz_block, 2);
 		
-		this.walls = new BlockSet(walls, stair, pillar);
+		this.primary = new BlockSet(walls, stair, pillar);
 		
 		MetaBlock SegmentWall = new MetaBlock(Blocks.quartz_block, 1);
 		
-		this.decor =  new BlockSet(SegmentWall, stair, pillar);
+		this.secondary =  new BlockSet(SegmentWall, stair, pillar);
 
 	}
 }

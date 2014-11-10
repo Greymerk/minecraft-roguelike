@@ -3,7 +3,6 @@ package greymerk.roguelike.catacomb;
 import greymerk.roguelike.catacomb.dungeon.IDungeon;
 import greymerk.roguelike.catacomb.settings.CatacombLevelSettings;
 import greymerk.roguelike.catacomb.theme.ITheme;
-import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.MetaBlock;
@@ -19,8 +18,6 @@ import net.minecraft.world.World;
 
 public class CatacombLevel {
 
-	public static int SCATTER = 12;
-	
 	private World world;
 	private Random rand;
 	private CatacombNode start;
@@ -28,8 +25,6 @@ public class CatacombLevel {
 	private List<CatacombNode> nodes;
 	private int originX;
 	private int originZ;
-	private int maxNodes;
-	private int range;
 
 	private ITheme theme;
 	private CatacombLevelSettings settings;
@@ -43,10 +38,6 @@ public class CatacombLevel {
 		this.originX = originX;
 		this.originZ = originZ;
 		
-		SCATTER = RogueConfig.getInt(RogueConfig.LEVELSCATTER);
-		maxNodes = RogueConfig.getInt(RogueConfig.LEVELMAXROOMS);
-		range = RogueConfig.getInt(RogueConfig.LEVELRANGE);
-		
 		start = new CatacombNode(world, rand, this, theme, originX, originY, originZ);
 		nodes.add(start);
 	}
@@ -59,10 +50,6 @@ public class CatacombLevel {
 		this.settings = settings;
 		this.originX = originX;
 		this.originZ = originZ;
-		
-		SCATTER = RogueConfig.getInt(RogueConfig.LEVELSCATTER);
-		this.maxNodes = maxNodes;
-		this.range = range;
 		
 		start = new CatacombNode(world, rand, this, theme, originX, originY, originZ);
 		nodes.add(start);
@@ -156,7 +143,7 @@ public class CatacombLevel {
 			}
 		}
 		
-		if (this.full() && this.end == null){
+		if (this.isDone() && this.end == null){
 
 			CatacombNode choice;
 				
@@ -191,7 +178,7 @@ public class CatacombLevel {
 		int zrel = Math.abs(this.originZ - z);
 		
 		int dist = (int) Math.sqrt((float)(xrel * xrel + zrel * zrel));
-		return dist < this.range;
+		return dist < settings.getRange();
 	}
 	
 	public int distance(CatacombNode aNode, CatacombNode other){
@@ -243,11 +230,20 @@ public class CatacombLevel {
 	}
 	
 	public boolean isDone(){
-		return this.full();
+		
+		boolean allDone = true;
+		
+		for(CatacombNode node : this.nodes){
+			if(!node.isDone()){
+				allDone = false;
+			}
+		}
+		
+		return allDone || this.full();
 	}
 	
 	public boolean full(){
-		return this.nodes.size() >= this.maxNodes;
+		return this.nodes.size() >= settings.getNumRooms();
 	}
 	
 	public int nodeCount(){

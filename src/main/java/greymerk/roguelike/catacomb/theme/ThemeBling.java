@@ -16,7 +16,7 @@ public class ThemeBling extends ThemeBase{
 		
 		MetaBlock stair = new MetaBlock(Blocks.quartz_stairs);
 		MetaBlock pillar = new MetaBlock(Blocks.lapis_block);
-		this.walls = new BlockSet(walls, stair, pillar);
-		this.decor = this.walls;
+		this.primary = new BlockSet(walls, stair, pillar);
+		this.secondary = this.primary;
 	}
 }

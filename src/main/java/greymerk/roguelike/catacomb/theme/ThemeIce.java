@@ -11,7 +11,7 @@ public class ThemeIce extends ThemeBase{
 		MetaBlock stair = new MetaBlock(Blocks.quartz_stairs);
 		MetaBlock pillar = new MetaBlock(Blocks.packed_ice);
 		
-		this.walls = new BlockSet(walls, stair, pillar);
-		this.decor =  this.walls;
+		this.primary = new BlockSet(walls, stair, pillar);
+		this.secondary =  this.primary;
 	}
 }

@@ -13,12 +13,12 @@ public class ThemeBrick extends ThemeBase{
 		MetaBlock stair = new MetaBlock(Blocks.brick_stairs);
 		MetaBlock pillar = Log.getLog(Log.SPRUCE);
 		
-		this.walls = new BlockSet(walls, stair, walls);
+		this.primary = new BlockSet(walls, stair, walls);
 		
 		MetaBlock SegmentWall = new MetaBlock(Blocks.planks, 1);
 		MetaBlock SegmentStair = new MetaBlock(Blocks.brick_stairs);
 		
-		this.decor =  new BlockSet(SegmentWall, SegmentStair, pillar);
+		this.secondary =  new BlockSet(SegmentWall, SegmentStair, pillar);
 
 	}
 }

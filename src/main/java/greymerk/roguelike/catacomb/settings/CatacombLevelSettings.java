@@ -7,6 +7,7 @@ import greymerk.roguelike.catacomb.segment.ISegmentGenerator;
 import greymerk.roguelike.catacomb.segment.SegmentGenerator;
 import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.catacomb.theme.Theme;
+import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.treasure.loot.LootSettings;
 import greymerk.roguelike.worldgen.SpawnerSettings;
 
@@ -16,24 +17,24 @@ public class CatacombLevelSettings {
 
 	int numRooms;
 	int range;
+	int scatter;
 	DungeonFactory rooms;
 	SecretFactory secrets;
 	ITheme theme;
 	SegmentGenerator segments;
 	LootSettings loot;
 	SpawnerSettings spawners;
-
-	private static final int NUM_ROOMS = 10;
-	private static final int RANGE = 40;
 	
 	public CatacombLevelSettings(){
-		numRooms = NUM_ROOMS;
-		range = RANGE;
+		numRooms = RogueConfig.getInt(RogueConfig.LEVELMAXROOMS);
+		range = RogueConfig.getInt(RogueConfig.LEVELRANGE);
+		scatter = RogueConfig.getInt(RogueConfig.LEVELSCATTER);
 	}
 	
 	public CatacombLevelSettings(CatacombLevelSettings toCopy){
 		this.numRooms = toCopy.numRooms;
 		this.range = toCopy.range;
+		this.scatter = toCopy.scatter;
 		this.rooms = toCopy.rooms != null ? new DungeonFactory(toCopy.rooms) : null;
 		this.secrets = toCopy.secrets != null ? new SecretFactory(toCopy.secrets) : null;
 		this.theme = toCopy.theme != null ? toCopy.theme : null;
@@ -43,9 +44,9 @@ public class CatacombLevelSettings {
 	}
 	
 	public CatacombLevelSettings(CatacombLevelSettings base, CatacombLevelSettings override){
-		this.numRooms = override.numRooms != base.numRooms ? override.numRooms : base.numRooms;
-		this.range = override.range != base.range ? override.range : base.range;
-		
+		this.numRooms = override.numRooms != base.numRooms && override.numRooms != RogueConfig.getInt(RogueConfig.LEVELMAXROOMS) ? override.numRooms : base.numRooms;
+		this.range = override.range != base.range && override.range != RogueConfig.getInt(RogueConfig.LEVELRANGE) ? override.range : base.range;
+		this.scatter = override.scatter != base.scatter && override.scatter != RogueConfig.getInt(RogueConfig.LEVELSCATTER) ? override.scatter : base.scatter;
 		if(base.rooms != null || override.rooms != null){
 			this.rooms = override.rooms == null ? new DungeonFactory(base.rooms) : new DungeonFactory(override.rooms);
 		}
@@ -66,14 +67,23 @@ public class CatacombLevelSettings {
 	}
 	
 	public CatacombLevelSettings(JsonObject data){
-		this.numRooms = data.has("numRooms") ? data.get("numRooms").getAsInt() : 10;
-		this.range = data.has("range") ? data.get("range").getAsInt() : 40;
+		this.numRooms = data.has("numRooms") ? data.get("numRooms").getAsInt() : RogueConfig.getInt(RogueConfig.LEVELMAXROOMS);
+		this.range = data.has("range") ? data.get("range").getAsInt() : RogueConfig.getInt(RogueConfig.LEVELRANGE);
+		this.scatter = data.has("scatter") ? data.get("scatter").getAsInt() : RogueConfig.getInt(RogueConfig.LEVELSCATTER);
 		this.rooms = data.has("rooms") ? new DungeonFactory(data.get("rooms").getAsJsonArray()) : null;
 		this.secrets = data.has("secrets") ? new SecretFactory(data.get("secrets").getAsJsonArray()) : null;
 		this.theme = data.has("theme") ? Theme.create(data.get("theme").getAsJsonObject()) : null;
 		this.segments = data.has("segments") ? new SegmentGenerator(data.get("segments").getAsJsonObject()) : null;
 		this.loot = data.has("loot") ? new LootSettings(data.get("loot").getAsJsonObject()) : null;
 		this.spawners = data.has("spawners") ? new SpawnerSettings(data.get("spawners").getAsJsonObject()) : null;
+	}
+	
+	public int getScatter(){
+		return this.scatter;
+	}
+	
+	public void setScatter(int scatter){
+		this.scatter = scatter;
 	}
 	
 	public int getNumRooms(){

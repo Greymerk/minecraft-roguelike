@@ -1,8 +1,6 @@
 package greymerk.roguelike.catacomb.tower;
 
-import greymerk.roguelike.catacomb.settings.CatacombLevelSettings;
 import greymerk.roguelike.catacomb.theme.ITheme;
-import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
@@ -24,16 +22,11 @@ public class RogueTower implements ITower{
 
 
 	
-	public void generate(World world, Random rand, CatacombLevelSettings settings, int x, int y, int z){
-		
-		ITheme theme = settings.getTheme();
-		
+	public void generate(World world, Random rand, ITheme theme, int x, int y, int z){
 		
 		MetaBlock air = new MetaBlock(Blocks.air);
 		
-		BlockWeightedRandom blocks = new BlockWeightedRandom();
-		blocks.addBlock(theme.getPrimaryWall(), 100);
-		blocks.addBlock(air, 10);
+		IBlockFactory blocks = theme.getPrimaryWall();
 		
 		MetaBlock stair = theme.getPrimaryStair();
 		
