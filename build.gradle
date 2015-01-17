@@ -22,7 +22,7 @@ group= "ca.rivas.roguelike" // http://maven.apache.org/guides/mini/guide-naming-
 archivesBaseName = "roguelike"
 
 minecraft {
-    version = "1.7.10-10.13.0.1180"
+    version = "1.7.10-10.13.2.1230"
 	assetDir = "assets"	
 }
 

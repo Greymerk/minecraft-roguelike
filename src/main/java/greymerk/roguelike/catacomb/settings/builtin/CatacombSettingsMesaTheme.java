@@ -4,8 +4,10 @@ import greymerk.roguelike.catacomb.segment.Segment;
 import greymerk.roguelike.catacomb.segment.SegmentGenerator;
 import greymerk.roguelike.catacomb.settings.CatacombLevelSettings;
 import greymerk.roguelike.catacomb.settings.CatacombSettings;
+import greymerk.roguelike.catacomb.settings.CatacombTowerSettings;
 import greymerk.roguelike.catacomb.settings.SpawnCriteria;
 import greymerk.roguelike.catacomb.theme.Theme;
+import greymerk.roguelike.catacomb.tower.Tower;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +22,8 @@ public class CatacombSettingsMesaTheme extends CatacombSettings{
 		List<BiomeDictionary.Type> biomes = new ArrayList<BiomeDictionary.Type>();
 		biomes.add(BiomeDictionary.Type.MESA);
 		this.criteria.setBiomeTypes(biomes);
+		
+		this.towerSettings = new CatacombTowerSettings(Tower.ENIKO, Theme.getTheme(Theme.RAINBOW));
 		
 		Theme[] themes = {Theme.RAINBOW, Theme.RAINBOW, Theme.CRYPT, Theme.CRYPT, Theme.NETHER};
 		

@@ -25,9 +25,9 @@ public class CatacombSettingsEthoTheme extends CatacombSettings{
 		biomes.add(BiomeDictionary.Type.FOREST);
 		this.criteria.setBiomeTypes(biomes);
 		
-		this.towerSettings = new CatacombTowerSettings(Tower.ROGUE, Theme.getTheme(Theme.ETHO));
+		this.towerSettings = new CatacombTowerSettings(Tower.ETHO, Theme.getTheme(Theme.ETHOTOWER));
 		
-		Theme[] themes = {Theme.ETHO, Theme.ETHO, Theme.CAVE, Theme.MOSSY, Theme.NETHER};
+		Theme[] themes = {Theme.ETHO, Theme.ETHO, Theme.MINESHAFT, Theme.MINESHAFT, Theme.CAVE};
 		
 		for(int i = 0; i < 5; ++i){
 			CatacombLevelSettings level = new CatacombLevelSettings();
@@ -74,10 +74,28 @@ public class CatacombSettingsEthoTheme extends CatacombSettings{
 				level.setSegments(segments);
 			}
 			
-			if(i == 2){
+			if(i == 2 || i == 3){
+				SegmentGenerator segments = new SegmentGenerator(Segment.MINESHAFT);
+				segments.add(Segment.MINESHAFT, 1);
+				level.setSegments(segments);
+				
+				DungeonFactory factory;
+				factory = new DungeonFactory();
+				factory.addRandom(Dungeon.BRICK, 10);
+				factory.addRandom(Dungeon.CORNER, 3);
+				level.setRooms(factory);
+			}
+			
+			if(i == 4){
 				SegmentGenerator segments = new SegmentGenerator(Segment.CAVE);
 				segments.add(Segment.CAVE, 1);
 				level.setSegments(segments);
+				
+				DungeonFactory factory;
+				factory = new DungeonFactory();
+				factory.addRandom(Dungeon.BRICK, 10);
+				factory.addRandom(Dungeon.CORNER, 3);
+				level.setRooms(factory);
 			}
 			
 			levels.put(i, level);

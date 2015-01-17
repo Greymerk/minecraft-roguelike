@@ -17,8 +17,8 @@ public class WorldGenPrimitive {
 		
 		Block currentBlock = world.getBlock(x, y, z);
 		
-		if(world.getTileEntity(x, y, z) != null) return false;
 		if(currentBlock == Blocks.chest) return false;
+		if(currentBlock == Blocks.trapped_chest) return false;
 		if(currentBlock == Blocks.mob_spawner) return false;
 		
 		boolean isAir = world.isAirBlock(x, y, z);

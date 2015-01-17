@@ -22,6 +22,9 @@ public class DungeonLibrary extends DungeonBase{
 	public boolean generate(World world, Random rand, CatacombLevelSettings settings, Cardinal[] entrances, int x, int y, int z) {
 		
 		IBlockFactory walls = settings.getTheme().getPrimaryWall();
+		
+		MetaBlock stair = settings.getTheme().getPrimaryStair();
+		
 		MetaBlock air = new MetaBlock(Blocks.air);
 		Coord origin = new Coord(x, y, z);
 		Coord cursor;
@@ -38,6 +41,18 @@ public class DungeonLibrary extends DungeonBase{
 		WorldGenPrimitive.fillRectHollow(world, rand, x - 3, y + 6, z - 3, x + 3, y + 8, z + 3, walls, false, true);
 		
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 5, y - 1, z - 5, x + 5, y - 1, z + 5, settings.getTheme().getPrimaryFloor(), true, true);
+		
+		start = new Coord(origin);
+		start.add(Cardinal.UP, 4);
+		WorldGenPrimitive.setBlock(world, start, Blocks.lit_redstone_lamp);
+		start.add(Cardinal.UP);
+		WorldGenPrimitive.setBlock(world, start, Blocks.redstone_block);
+		start.add(Cardinal.UP);
+		end = new Coord(start);
+		end.add(Cardinal.UP);
+		WorldGenPrimitive.fillRectSolid(world, rand, start, end, settings.getTheme().getPrimaryPillar(), true, true);
+		
+		
 		
 		for(Cardinal dir : Cardinal.directions){
 			
@@ -75,7 +90,7 @@ public class DungeonLibrary extends DungeonBase{
 				cursor.add(dir, 4);
 				cursor.add(o, 3);
 				cursor.add(Cardinal.UP, 2);
-				MetaBlock stair = settings.getTheme().getPrimaryStair();
+				
 				WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(o), true).setBlock(world, cursor);
 				cursor.add(Cardinal.UP);
 				WorldGenPrimitive.setBlock(world, rand, cursor, walls, true, true);
@@ -86,6 +101,26 @@ public class DungeonLibrary extends DungeonBase{
 				WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(o), true).setBlock(world, cursor);
 				
 			}
+			
+			// Light fixture related stuff
+			cursor = new Coord(origin);
+			cursor.add(Cardinal.UP, 4);
+			cursor.add(dir);
+			WorldGenPrimitive.blockOrientation(stair, dir, true).setBlock(world, cursor);
+			cursor.add(dir, 2);
+			WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(dir), true).setBlock(world, cursor);
+			cursor.add(Cardinal.UP);
+			start = new Coord(cursor);
+			end = new Coord(cursor);
+			start.add(Cardinal.reverse(dir), 2);
+			WorldGenPrimitive.fillRectSolid(world, rand, start, end, walls, true, true);
+			cursor.add(Cardinal.UP);
+			WorldGenPrimitive.setBlock(world, rand, cursor, walls, true, true);
+			cursor.add(Cardinal.UP);
+			cursor.add(Cardinal.reverse(dir));
+			WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(dir), true).setBlock(world, cursor);
+			cursor.add(Cardinal.reverse(dir));
+			WorldGenPrimitive.blockOrientation(stair, dir, true).setBlock(world, cursor);
 		}
 		
 		

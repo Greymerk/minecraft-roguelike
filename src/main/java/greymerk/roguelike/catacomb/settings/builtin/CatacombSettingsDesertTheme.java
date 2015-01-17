@@ -4,8 +4,10 @@ import greymerk.roguelike.catacomb.segment.Segment;
 import greymerk.roguelike.catacomb.segment.SegmentGenerator;
 import greymerk.roguelike.catacomb.settings.CatacombLevelSettings;
 import greymerk.roguelike.catacomb.settings.CatacombSettings;
+import greymerk.roguelike.catacomb.settings.CatacombTowerSettings;
 import greymerk.roguelike.catacomb.settings.SpawnCriteria;
 import greymerk.roguelike.catacomb.theme.Theme;
+import greymerk.roguelike.catacomb.tower.Tower;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +23,9 @@ public class CatacombSettingsDesertTheme extends CatacombSettings{
 		biomes.add(BiomeDictionary.Type.SANDY);
 		this.criteria.setBiomeTypes(biomes);
 		
-		Theme[] themes = {Theme.SANDSTONE, Theme.SANDSTONE, Theme.CRYPT, Theme.CRYPT, Theme.NETHER};
+		this.towerSettings = new CatacombTowerSettings(Tower.ROGUE, Theme.getTheme(Theme.SANDSTONE));
+		
+		Theme[] themes = {Theme.SANDSTONE, Theme.SANDSTONE, Theme.CRYPT, Theme.CRYPT, Theme.ENDER};
 		
 		for(int i = 0; i < 5; ++i){
 			CatacombLevelSettings level = new CatacombLevelSettings();

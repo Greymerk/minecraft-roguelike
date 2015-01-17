@@ -14,9 +14,9 @@ public class ThemeEniko extends ThemeBase{
 		floor.addBlock(new MetaBlock(Blocks.stained_hardened_clay, 3));
 		
 		BlockWeightedRandom walls = new BlockWeightedRandom();
-		walls.addBlock(new MetaBlock(Blocks.stonebrick), 50);
-		walls.addBlock(new MetaBlock(Blocks.stonebrick, 1), 5);
-		walls.addBlock(new MetaBlock(Blocks.stonebrick, 2), 10);
+		walls.addBlock(new MetaBlock(Blocks.stonebrick), 100);
+		walls.addBlock(new MetaBlock(Blocks.stonebrick, 1), 1);
+		walls.addBlock(new MetaBlock(Blocks.stonebrick, 2), 5);
 		
 		MetaBlock stair = new MetaBlock(Blocks.stone_brick_stairs);
 		MetaBlock pillar = new MetaBlock(Blocks.double_stone_slab, 8);

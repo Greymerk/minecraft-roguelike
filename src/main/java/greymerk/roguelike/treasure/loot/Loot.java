@@ -135,11 +135,16 @@ public enum Loot {
 				
 		EnumDifficulty difficulty = world.difficultySetting;
 		
+		if(difficulty == null){
+			difficulty = EnumDifficulty.NORMAL;
+		}
+		
 		boolean enchant;
 		
 		switch(difficulty){
+		case PEACEFUL: enchant = false; break;
 		case EASY: enchant = rand.nextInt(5) == 0; break;
-		case NORMAL: enchant = level == 3 || rand.nextBoolean(); break;
+		case NORMAL: enchant = level >= 3 || rand.nextBoolean(); break;
 		case HARD: enchant = true; break;
 		default: enchant = true;
 		}
@@ -192,5 +197,4 @@ public enum Loot {
 			((EntityLiving)mob).setEquipmentDropChance(s, (float) RogueConfig.getDouble(RogueConfig.LOOTING));
 		}
 	}
-	
 }

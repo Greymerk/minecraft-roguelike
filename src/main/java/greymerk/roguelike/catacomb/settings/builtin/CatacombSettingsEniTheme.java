@@ -27,7 +27,7 @@ public class CatacombSettingsEniTheme extends CatacombSettings{
 		
 		this.towerSettings = new CatacombTowerSettings(Tower.ENIKO, Theme.getTheme(Theme.OAK));
 		
-		Theme[] themes = {Theme.ENIKO, Theme.ENIKO2, Theme.SEWER, Theme.SEWER, Theme.ENIQUARTZ};
+		Theme[] themes = {Theme.ENIKO, Theme.ENIKO2, Theme.SEWER, Theme.MOSSY, Theme.ENIICE};
 		
 		for(int i = 0; i < 5; ++i){
 			CatacombLevelSettings level = new CatacombLevelSettings();
@@ -107,21 +107,18 @@ public class CatacombSettingsEniTheme extends CatacombSettings{
 			}
 			
 			if(i == 4){
+				
+				level.setScatter(16);
+				level.setRange(60);
+				level.setNumRooms(8);
+				
 				SegmentGenerator segments = new SegmentGenerator(Segment.ARCH);
-				segments.add(Segment.SHELF, 3);
-				segments.add(Segment.INSET, 3);
 				segments.add(Segment.DOOR, 3);
 				segments.add(Segment.BOOKS, 1);
-				segments.add(Segment.CHEST, 1);
-				segments.add(Segment.SPAWNER, 1);
 				level.setSegments(segments);
 				
 				DungeonFactory factory = new DungeonFactory();
-				factory.addSingle(Dungeon.OSSUARY);
 				factory.addSingle(Dungeon.LAB);
-				factory.addSingle(Dungeon.SPIDER);
-				factory.addSingle(Dungeon.OBSIDIAN);
-				factory.addRandom(Dungeon.PRISON, 5);
 				factory.addRandom(Dungeon.BRICK, 10);
 				factory.addRandom(Dungeon.CORNER, 3);
 				level.setRooms(factory);

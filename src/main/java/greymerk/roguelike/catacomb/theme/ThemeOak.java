@@ -17,10 +17,12 @@ public class ThemeOak extends ThemeBase{
 		
 		
 		MetaBlock stair = new MetaBlock(Blocks.stone_brick_stairs);
-		MetaBlock pillar = Log.getLog(Log.OAK);
+
 		
 		this.primary = new BlockSet(walls, stair, walls);
 		
+		
+		MetaBlock pillar = Log.getLog(Log.OAK);
 		MetaBlock SegmentWall = new MetaBlock(Blocks.planks);
 		MetaBlock SegmentStair = new MetaBlock(Blocks.oak_stairs);
 		
