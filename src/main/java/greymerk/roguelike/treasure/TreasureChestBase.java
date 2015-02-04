@@ -4,6 +4,7 @@ import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.treasure.loot.Loot;
 import greymerk.roguelike.treasure.loot.LootSettings;
+import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
 
 import java.util.ArrayList;
@@ -86,6 +87,11 @@ public abstract class TreasureChestBase implements ITreasureChest, Iterable<Inve
 	@Override
 	public ITreasureChest generate(World world, Random rand, LootSettings loot, int posX, int posY, int posZ) {
 		return generate(world, rand, loot, posX, posY, posZ, Catacomb.getLevel(posY), false);
+	}
+	
+	@Override
+	public ITreasureChest generate(World world, Random rand, LootSettings loot, Coord pos){
+		return generate(world, rand, loot, pos.getX(), pos.getY(), pos.getZ());
 	}
 	
 	public boolean setInventorySlot(ItemStack item, int slot){

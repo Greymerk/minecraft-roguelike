@@ -10,6 +10,7 @@ import greymerk.roguelike.worldgen.WorldGenPrimitive;
 import greymerk.roguelike.worldgen.redstone.Comparator;
 import greymerk.roguelike.worldgen.redstone.Dispenser;
 import greymerk.roguelike.worldgen.redstone.Dropper;
+import greymerk.roguelike.worldgen.redstone.Lever;
 import greymerk.roguelike.worldgen.redstone.Repeater;
 import greymerk.roguelike.worldgen.redstone.Torch;
 
@@ -134,8 +135,7 @@ public class DungeonFirework implements IDungeon {
 		cursor.add(Cardinal.reverse(dir));
 		breadboard.setBlock(world, cursor);
 		cursor.add(Cardinal.UP);
-		MetaBlock lever = new MetaBlock(Blocks.lever, 5 + 8);
-		lever.setBlock(world, cursor);
+		Lever.generate(world, Cardinal.UP, cursor, false);
 		
 		return false;
 	}

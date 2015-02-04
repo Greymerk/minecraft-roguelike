@@ -11,7 +11,7 @@ import net.minecraft.world.World;
 
 public class Dispenser {
 	
-	public boolean generate(World world, Cardinal dir, Coord pos){
+	public static boolean generate(World world, Cardinal dir, Coord pos){
 		int meta = 0;
 		switch(dir){
 		case DOWN: meta = 0; break;
@@ -28,7 +28,7 @@ public class Dispenser {
 		return true;
 	}
 	
-	public void add(World world, Coord pos, int slot, ItemStack item){
+	public static void add(World world, Coord pos, int slot, ItemStack item){
 		
 		TileEntity te = world.getTileEntity(pos.getX(), pos.getY(), pos.getZ());
 		if(te == null) return;

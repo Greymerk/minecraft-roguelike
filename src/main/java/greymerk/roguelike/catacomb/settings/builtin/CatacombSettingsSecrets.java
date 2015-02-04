@@ -19,7 +19,7 @@ public class CatacombSettingsSecrets extends CatacombSettings{
 			switch(i){
 			case 0:
 				if(RogueConfig.getBoolean(RogueConfig.GENEROUS)) factory.addRoom(Dungeon.FIREWORK);
-				factory.addRoom(Dungeon.BEDROOM, 2);
+				factory.addRoom(Dungeon.SMITH, 2);
 				break;
 			case 1:
 				rooms = new ArrayList<Dungeon>();
