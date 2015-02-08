@@ -15,7 +15,7 @@ public class ThemeTower extends ThemeBase{
 		stone.addBlock(new MetaBlock(Blocks.stonebrick, 2));
 		
 		BlockWeightedRandom walls = new BlockWeightedRandom();
-		walls.addBlock(new MetaBlock(Blocks.air), 20);
+		walls.addBlock(new MetaBlock(Blocks.air), 5);
 		walls.addBlock(stone, 30);
 		walls.addBlock(new MetaBlock(Blocks.cobblestone), 10);
 		walls.addBlock(new MetaBlock(Blocks.gravel), 5);

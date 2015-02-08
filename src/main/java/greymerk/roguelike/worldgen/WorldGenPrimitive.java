@@ -166,7 +166,30 @@ public class WorldGenPrimitive {
 		return points;
 	}
 	
-	
+	public static void fillPyramidSolid(World world, Random rand, Coord base, int height, IBlockFactory blocks, boolean fillAir, boolean replaceSolid){
+		
+		if(height == 0){
+			setBlock(world, rand, base, blocks, fillAir, replaceSolid);
+			return;
+		}
+		
+		Coord start;
+		Coord end;
+		
+		start = new Coord(base);
+		end = new Coord(base);
+		start.add(Cardinal.NORTH, height);
+		start.add(Cardinal.WEST, height);
+		end.add(Cardinal.SOUTH, height);
+		end.add(Cardinal.EAST, height);
+		
+		fillRectSolid(world, rand, start, end, blocks, fillAir, replaceSolid);
+		
+		base.add(Cardinal.UP);
+		
+		fillPyramidSolid(world, rand, base, (height - 1), blocks, fillAir, replaceSolid);
+		
+	}
 	
 
 	public static void spiralStairStep(World world, Random rand, int inX, int inY, int inZ, MetaBlock stair, IBlockFactory fill){

@@ -18,14 +18,16 @@ import com.google.gson.JsonObject;
 
 public class CatacombSettings implements ICatacombSettings{
 	
-	private static final int NUM_LEVELS = 5;
+	public static final int MAX_NUM_LEVELS = 5;
 	private String name;
 	protected CatacombTowerSettings towerSettings;
 	protected Map<Integer, CatacombLevelSettings> levels;
 	protected SpawnCriteria criteria;
+	protected int numLevels;
 	
 	public CatacombSettings(){
 		this.levels = new HashMap<Integer, CatacombLevelSettings>();
+		this.numLevels = 0;
 	}
 	
 	public CatacombSettings(Map<String, CatacombSettings> settings, JsonObject root) throws Exception{
@@ -88,6 +90,12 @@ public class CatacombSettings implements ICatacombSettings{
 	
 	public CatacombSettings(CatacombSettings base, CatacombSettings override){
 		
+		if(override.numLevels != 0){
+			numLevels = override.numLevels;
+		} else {
+			numLevels = base.numLevels;
+		}
+		
 		if(override.towerSettings == null){
 			this.towerSettings = base.towerSettings;
 		} else {
@@ -96,7 +104,7 @@ public class CatacombSettings implements ICatacombSettings{
 		
 		levels = new HashMap<Integer, CatacombLevelSettings>();
 		
-		for(int i = 0; i < NUM_LEVELS; ++i){
+		for(int i = 0; i < MAX_NUM_LEVELS; ++i){
 			if(override.levels.get(i) == null){
 				levels.put(i, new CatacombLevelSettings(base.levels.get(i)));
 			} else {
@@ -106,9 +114,12 @@ public class CatacombSettings implements ICatacombSettings{
 	}
 	
 	public CatacombSettings(CatacombSettings toCopy){
+		
+		this.numLevels = toCopy.numLevels;
+		
 		this.levels = new HashMap<Integer, CatacombLevelSettings>();
 		
-		for(int i = 0; i < NUM_LEVELS; ++i){
+		for(int i = 0; i < MAX_NUM_LEVELS; ++i){
 			this.levels.put(i, new CatacombLevelSettings(toCopy.levels.get(i)));
 		}
 	}
@@ -139,5 +150,14 @@ public class CatacombSettings implements ICatacombSettings{
 		if(this.towerSettings == null) return new CatacombTowerSettings(Tower.ROGUE, Theme.getTheme(Theme.TOWER));
 		
 		return this.towerSettings;
+	}
+
+	@Override
+	public int getNumLevels() {
+		
+		if(numLevels < 0) return 0;
+		if(numLevels > MAX_NUM_LEVELS) return MAX_NUM_LEVELS;
+		
+		return numLevels;
 	}
 }

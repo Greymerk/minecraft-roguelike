@@ -61,6 +61,7 @@ public class EthoTower implements ITower {
 				start.add(o, 4);
 				end = new Coord(start);
 				end.add(Cardinal.UP, 4);
+				start.add(Cardinal.DOWN, 10);
 				WorldGenPrimitive.fillRectSolid(world, rand, start, end, pillar, true, true);
 				
 				end.add(Cardinal.UP);

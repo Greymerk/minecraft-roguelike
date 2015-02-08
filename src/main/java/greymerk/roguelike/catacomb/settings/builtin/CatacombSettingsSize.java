@@ -7,8 +7,8 @@ public class CatacombSettingsSize extends CatacombSettings{
 	
 	public CatacombSettingsSize(){
 		
-		int[] numRooms = {10, 20, 30, 20, 15};
-		int[] range = {40, 60, 80, 60, 50};
+		int[] numRooms = {15, 20, 30, 20, 10};
+		int[] range = {50, 60, 80, 60, 40};
 		
 		for(int i = 0; i < 5; ++i){
 			CatacombLevelSettings level = new CatacombLevelSettings();

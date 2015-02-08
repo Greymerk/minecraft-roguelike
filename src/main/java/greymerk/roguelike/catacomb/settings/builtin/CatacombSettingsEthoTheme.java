@@ -2,6 +2,7 @@ package greymerk.roguelike.catacomb.settings.builtin;
 
 import greymerk.roguelike.catacomb.dungeon.Dungeon;
 import greymerk.roguelike.catacomb.dungeon.DungeonFactory;
+import greymerk.roguelike.catacomb.dungeon.SecretFactory;
 import greymerk.roguelike.catacomb.segment.Segment;
 import greymerk.roguelike.catacomb.segment.SegmentGenerator;
 import greymerk.roguelike.catacomb.settings.CatacombLevelSettings;
@@ -19,6 +20,8 @@ import net.minecraftforge.common.BiomeDictionary;
 public class CatacombSettingsEthoTheme extends CatacombSettings{
 	
 	public CatacombSettingsEthoTheme(){
+		
+		this.numLevels = 1;
 		
 		this.criteria = new SpawnCriteria();
 		List<BiomeDictionary.Type> biomes = new ArrayList<BiomeDictionary.Type>();
@@ -51,6 +54,15 @@ public class CatacombSettingsEthoTheme extends CatacombSettings{
 				segments.add(Segment.WHEAT, 3);
 				segments.add(Segment.FLOWERS, 2);
 				level.setSegments(segments);
+				
+				SecretFactory secrets = new SecretFactory();
+				List<Dungeon> rooms;
+				rooms = new ArrayList<Dungeon>();
+				rooms.add(Dungeon.BTEAM);
+				rooms.add(Dungeon.AVIDYA);
+				secrets.addRoom(rooms, 1);
+				secrets.addRoom(Dungeon.FIREWORK);
+				level.setSecrets(secrets);
 			}
 			
 			if(i == 1){
@@ -99,6 +111,7 @@ public class CatacombSettingsEthoTheme extends CatacombSettings{
 			}
 			
 			levels.put(i, level);
+			
 		}
 	}
 }

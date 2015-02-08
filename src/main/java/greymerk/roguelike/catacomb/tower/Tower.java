@@ -11,7 +11,7 @@ import net.minecraft.world.World;
 
 public enum Tower {
 
-	ROGUE, ENIKO, ETHO;
+	ROGUE, ENIKO, ETHO, PYRAMID;
 	
 	public static ITower get(Tower type){
 		
@@ -19,6 +19,7 @@ public enum Tower {
 		case ROGUE: return new RogueTower();
 		case ENIKO: return new EniTower();
 		case ETHO: return new EthoTower();
+		case PYRAMID: return new PyramidTower();
 		default: return new RogueTower();
 		}
 	}

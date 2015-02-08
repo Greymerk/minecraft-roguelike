@@ -25,7 +25,9 @@ public class Lever {
 		default: meta = 5; break;
 		}
 		
-		meta = active ? meta + 8 : meta;
+		if(active){
+			meta += 8;
+		}
 		
 		lever.setMeta(meta);
 		

@@ -11,4 +11,6 @@ public interface ICatacombSettings {
 	public CatacombLevelSettings getLevelSettings(int level);
 	
 	public CatacombTowerSettings getTower();
+	
+	public int getNumLevels();
 }

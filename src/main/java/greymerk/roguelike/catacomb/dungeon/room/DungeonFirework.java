@@ -135,7 +135,7 @@ public class DungeonFirework implements IDungeon {
 		cursor.add(Cardinal.reverse(dir));
 		breadboard.setBlock(world, cursor);
 		cursor.add(Cardinal.UP);
-		Lever.generate(world, Cardinal.UP, cursor, false);
+		Lever.generate(world, Cardinal.UP, cursor, true);
 		
 		return false;
 	}
@@ -202,10 +202,9 @@ public class DungeonFirework implements IDungeon {
 			cursor.add(Cardinal.DOWN);
 		}
 		
-		Dispenser d = new Dispenser();
-		d.generate(world, Cardinal.UP, cursor);
+		Dispenser.generate(world, Cardinal.UP, cursor);
 		for(int i = 0; i < 9; i++){
-			d.add(world, cursor, i, Firework.get(rand, 16 + rand.nextInt(16)));
+			Dispenser.add(world, cursor, i, Firework.get(rand, 16 + rand.nextInt(16)));
 		}
 		
 		cursor.add(Cardinal.UP);

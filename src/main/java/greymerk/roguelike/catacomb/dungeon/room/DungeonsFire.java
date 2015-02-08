@@ -24,7 +24,6 @@ public class DungeonsFire extends DungeonBase {
 		ITheme theme = settings.getTheme();
 
 		IBlockFactory wall = theme.getPrimaryWall();
-		MetaBlock air = new MetaBlock(Blocks.air);
 		MetaBlock stair = theme.getPrimaryStair();
 		IBlockFactory pillar = theme.getPrimaryPillar();
 		

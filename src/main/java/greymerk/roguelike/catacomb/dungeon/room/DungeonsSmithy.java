@@ -21,24 +21,14 @@ import net.minecraft.world.World;
 
 public class DungeonsSmithy extends DungeonBase {
 
-	
-
-	
-
-
 	public boolean generate(World world, Random rand, CatacombLevelSettings settings, Cardinal[] entrances, int x, int y, int z) {
 		
 		ITheme theme = settings.getTheme();
-		IBlockFactory wall = theme.getPrimaryWall();
 		
 		Coord origin = new Coord(x, y, z);
 		Coord cursor;
-		Coord start;
-		Coord end;
 		
 		Cardinal dir = entrances[0];
-		
-		Cardinal[] orth = Cardinal.getOrthogonal(dir);
 		
 		clearBoxes(world, rand, theme, dir, origin);
 		
@@ -46,10 +36,17 @@ public class DungeonsSmithy extends DungeonBase {
 		cursor.add(dir, 6);
 		sideRoom(world, rand, settings, dir, cursor);
 		anvilRoom(world, rand, settings, dir, cursor);
+		
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.reverse(dir), 6);
 		sideRoom(world, rand, settings, dir, cursor);
 		
+		cursor = new Coord(origin);
+		cursor.add(Cardinal.reverse(dir), 9);
+		MetaBlock air = new MetaBlock(Blocks.air);
+		air.setBlock(world, cursor);
+		cursor.add(Cardinal.UP);
+		air.setBlock(world, cursor);
 		
 		mainRoom(world, rand, settings, dir, origin);
 		
@@ -173,8 +170,6 @@ public class DungeonsSmithy extends DungeonBase {
 		
 		ITheme theme = settings.getTheme();
 		IBlockFactory wall = theme.getPrimaryWall();
-		IBlockFactory pillar = theme.getPrimaryPillar();
-		MetaBlock stair = theme.getPrimaryStair();
 		Cardinal[] orth = Cardinal.getOrthogonal(dir);
 		Coord cursor;
 		Coord start;
@@ -324,7 +319,6 @@ public class DungeonsSmithy extends DungeonBase {
 	
 	private void fireplace(World world, Random rand, CatacombLevelSettings settings, Cardinal dir, Coord origin){
 		
-		ITheme theme = settings.getTheme();
 		MetaBlock stair = new MetaBlock(Blocks.brick_stairs);
 		MetaBlock brick = new MetaBlock(Blocks.brick_block);
 		MetaBlock brickSlab = new MetaBlock(Blocks.stone_slab, 4);

@@ -1,7 +1,6 @@
 package greymerk.roguelike.catacomb.segment.part;
 
 import greymerk.roguelike.catacomb.CatacombLevel;
-import greymerk.roguelike.catacomb.settings.CatacombLevelSettings;
 import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;

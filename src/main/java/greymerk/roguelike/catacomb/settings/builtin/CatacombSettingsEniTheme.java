@@ -20,12 +20,14 @@ public class CatacombSettingsEniTheme extends CatacombSettings{
 	
 	public CatacombSettingsEniTheme(){
 		
+		this.numLevels = 3;
+		
 		this.criteria = new SpawnCriteria();
 		List<BiomeDictionary.Type> biomes = new ArrayList<BiomeDictionary.Type>();
 		biomes.add(BiomeDictionary.Type.MOUNTAIN);
 		this.criteria.setBiomeTypes(biomes);
 		
-		this.towerSettings = new CatacombTowerSettings(Tower.ENIKO, Theme.getTheme(Theme.QUARTZ));
+		this.towerSettings = new CatacombTowerSettings(Tower.ENIKO, Theme.getTheme(Theme.OAK));
 		
 		Theme[] themes = {Theme.ENIKO, Theme.ENIKO2, Theme.SEWER, Theme.MOSSY, Theme.ENIICE};
 		

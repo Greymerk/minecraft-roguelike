@@ -44,7 +44,8 @@ public class CatacombSettingsResolver {
 	
 	public CatacombSettingsResolver(){
 		settings = new HashMap<String, CatacombSettings>();
-		CatacombSettings base = new CatacombSettingsBasicLoot();
+		CatacombSettings base = new CatacombSettingsBlank();
+		base = new CatacombSettings(base, new CatacombSettingsBasicLoot());
 		base = new CatacombSettings(base, new CatacombSettingsRooms());
 		base = new CatacombSettings(base, new CatacombSettingsSecrets());
 		base = new CatacombSettings(base, new CatacombSettingsSegments());

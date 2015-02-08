@@ -15,10 +15,8 @@ import net.minecraft.world.World;
 
 public class Catacomb {
 		
-	public static final int DEPTH = 5;
 	public static final int VERTICAL_SPACING = 10;
 	public static final int TOPLEVEL = 50;
-	public static final int NUM_LEVELS = 5;
 	
 	public static CatacombSettingsResolver settingsResolver;
 	
@@ -54,30 +52,28 @@ public class Catacomb {
 		int z = inZ;
 		
 		Random rand = getRandom(world, inX, inZ);
+
+		int numLevels = settings.getNumLevels();
 		
-		
-		// generate levels
-		while(y > DEPTH){
-			
-			CatacombLevelSettings levelSettings = settings.getLevelSettings(Catacomb.getLevel(y));
+		for (int i = 0; i < numLevels; ++i){
+			CatacombLevelSettings levelSettings = settings.getLevelSettings(i);
 			
 			CatacombLevel level;
 			
-			
 			rand = getRandom(world, x, z);
+			
 			level = new CatacombLevel(world, rand, levelSettings, x, y, z, levelSettings.getNumRooms(), levelSettings.getRange());
-	
+			
 			while(!level.isDone()){
 				level.update();
-			}			
-
+			}
+			
 			level.generate();
 			CatacombNode end = level.getEnd();
 			x = end.getX();
 			y = y - VERTICAL_SPACING;
 			z = end.getZ();
-
-		} 
+		}
 		
 		Tower tower = settings.getTower().getTower();
 		rand = getRandom(world, inX, inZ);
