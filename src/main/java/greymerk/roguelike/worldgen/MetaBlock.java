@@ -8,7 +8,7 @@ import net.minecraft.world.World;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-public class MetaBlock implements IBlockFactory{
+public class MetaBlock extends BlockFactoryBase {
 
 	private Block block;
 	private int meta;
@@ -75,11 +75,6 @@ public class MetaBlock implements IBlockFactory{
 		return WorldGenPrimitive.setBlock(world, x, y, z, this);
 	}
 	
-	@Override
-	public void setBlock(World world, Random rand, int x, int y, int z) {
-		WorldGenPrimitive.setBlock(world, x, y, z, block, meta, flag, true, true);
-	}
-
 	@Override
 	public void setBlock(World world, Random rand, int x, int y, int z, boolean fillAir, boolean replaceSolid) {
 		WorldGenPrimitive.setBlock(world, x, y, z, block, meta, flag, fillAir, replaceSolid);

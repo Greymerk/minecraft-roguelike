@@ -10,7 +10,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-public class BlockStripes implements IBlockFactory {
+public class BlockStripes extends BlockFactoryBase {
 
 	private List<IBlockFactory> blocks;
 	
@@ -31,11 +31,6 @@ public class BlockStripes implements IBlockFactory {
 
 	public void addBlock(IBlockFactory toAdd){
 		blocks.add(toAdd);
-	}
-	
-	@Override
-	public void setBlock(World world, Random rand, int x, int y, int z) {		
-		setBlock(world, rand, x, y, z, true, true);
 	}
 
 	@Override

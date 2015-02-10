@@ -1,13 +1,12 @@
 package greymerk.roguelike.catacomb.settings.builtin;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import greymerk.roguelike.catacomb.dungeon.Dungeon;
 import greymerk.roguelike.catacomb.dungeon.SecretFactory;
 import greymerk.roguelike.catacomb.settings.CatacombLevelSettings;
 import greymerk.roguelike.catacomb.settings.CatacombSettings;
-import greymerk.roguelike.config.RogueConfig;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CatacombSettingsSecrets extends CatacombSettings{
 

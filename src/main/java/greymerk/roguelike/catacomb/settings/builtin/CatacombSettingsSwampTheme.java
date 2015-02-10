@@ -16,12 +16,14 @@ public class CatacombSettingsSwampTheme extends CatacombSettings{
 	
 	public CatacombSettingsSwampTheme(){
 		
+		this.numLevels = 2;
+		
 		this.criteria = new SpawnCriteria();
 		List<BiomeDictionary.Type> biomes = new ArrayList<BiomeDictionary.Type>();
 		biomes.add(BiomeDictionary.Type.SWAMP);
 		this.criteria.setBiomeTypes(biomes);
 		
-		this.towerSettings = new CatacombTowerSettings(Tower.ROGUE, Theme.getTheme(Theme.MUDDY));
+		this.towerSettings = new CatacombTowerSettings(Tower.WITCH, Theme.getTheme(Theme.DARKOAK));
 		
 		Theme[] themes = {Theme.MUDDY, Theme.MUDDY, Theme.MOSSY, Theme.MOSSY, Theme.NETHER};
 		

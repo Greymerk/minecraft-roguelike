@@ -10,7 +10,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-public class BlockFactoryCheckers implements IBlockFactory {
+public class BlockFactoryCheckers extends BlockFactoryBase {
 
 	private IBlockFactory fillOne;
 	private IBlockFactory fillTwo;
@@ -33,12 +33,6 @@ public class BlockFactoryCheckers implements IBlockFactory {
 		
 		this.fillOne = blocks.get(0);
 		this.fillTwo = blocks.get(1);
-	}
-	
-	@Override
-	public void setBlock(World world, Random rand, int x, int y, int z) {
-		setBlock(world, rand, x, y, z, true, true);
-
 	}
 
 	@Override

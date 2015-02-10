@@ -27,22 +27,21 @@ public class CatacombSettingsDesertTheme extends CatacombSettings{
 		
 		this.towerSettings = new CatacombTowerSettings(Tower.PYRAMID, Theme.getTheme(Theme.PYRAMID));
 		
-		Theme[] themes = {Theme.SANDSTONE, Theme.SANDSTONE, Theme.CRYPT, Theme.CRYPT, Theme.ENDER};
+		SegmentGenerator segments;
+		segments = new SegmentGenerator(Segment.ARCH);
+		segments.add(Segment.INSET, 6);
+		segments.add(Segment.SHELF, 6);
+		segments.add(Segment.ANKH, 2);
+		segments.add(Segment.CHEST, 1);
+		segments.add(Segment.SKULL, 2);
+		segments.add(Segment.TOMB, 3);
+		
+		CatacombLevelSettings level = new CatacombLevelSettings();
+		level.setTheme(Theme.getTheme(Theme.SANDSTONE));
+		level.setSegments(segments);
 		
 		for(int i = 0; i < 5; ++i){
-			CatacombLevelSettings level = new CatacombLevelSettings();
-			level.setTheme(Theme.getTheme(themes[i]));
 			levels.put(i, level);
 		}
-		
-		SegmentGenerator segments = new SegmentGenerator(Segment.ARCH);
-		segments.add(Segment.SHELF, 5);
-		segments.add(Segment.INSET, 5);
-		segments.add(Segment.SKULL, 1);
-		segments.add(Segment.CHEST, 1);
-		segments.add(Segment.SPAWNER, 1);
-		
-		CatacombLevelSettings level3 = levels.get(3);
-		level3.setSegments(segments);
 	}
 }

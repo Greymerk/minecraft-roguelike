@@ -11,7 +11,7 @@ import net.minecraft.world.World;
 
 public enum Tower {
 
-	ROGUE, ENIKO, ETHO, PYRAMID;
+	ROGUE, ENIKO, ETHO, PYRAMID, JUNGLE, WITCH;
 	
 	public static ITower get(Tower type){
 		
@@ -20,6 +20,8 @@ public enum Tower {
 		case ENIKO: return new EniTower();
 		case ETHO: return new EthoTower();
 		case PYRAMID: return new PyramidTower();
+		case JUNGLE: return new JungleTower();
+		case WITCH: return new WitchTower();
 		default: return new RogueTower();
 		}
 	}
@@ -27,7 +29,7 @@ public enum Tower {
 	public static Coord getBaseCoord(World world, int x, int y, int z){
 		
 		List<Block> invalidBlocks = new ArrayList<Block>();
-		invalidBlocks.add(Blocks.air); // Air
+		invalidBlocks.add(Blocks.air);
 		invalidBlocks.add(Blocks.log);
 		invalidBlocks.add(Blocks.log2);
 		invalidBlocks.add(Blocks.leaves);

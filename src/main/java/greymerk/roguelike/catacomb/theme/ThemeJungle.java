@@ -16,11 +16,12 @@ public class ThemeJungle extends ThemeBase{
 		
 		MetaBlock stair = new MetaBlock(Blocks.stone_stairs);
 		
-		MetaBlock pillar = new MetaBlock(Blocks.log, 3);
+		MetaBlock pillar = new MetaBlock(Blocks.stonebrick, 3);
+		MetaBlock pillar2 = new MetaBlock(Blocks.log, 3);
 		
 		
 		
 		this.primary = new BlockSet(walls, stair, pillar);
-		this.secondary = new BlockSet(new MetaBlock(Blocks.stonebrick, 3), stair, pillar);
+		this.secondary = new BlockSet(new MetaBlock(Blocks.stonebrick, 3), stair, pillar2);
 	}
 }

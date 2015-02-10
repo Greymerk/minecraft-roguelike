@@ -11,7 +11,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-public class BlockWeightedRandom implements IBlockFactory{
+public class BlockWeightedRandom extends BlockFactoryBase {
 
 	private WeightedRandomizer<IBlockFactory> blocks;
 	
@@ -33,11 +33,6 @@ public class BlockWeightedRandom implements IBlockFactory{
 
 	public void addBlock(IBlockFactory toAdd, int weight){
 		blocks.add(new WeightedChoice<IBlockFactory>(toAdd, weight));
-	}
-	
-	@Override
-	public void setBlock(World world, Random rand, int x, int y, int z) {
-		setBlock(world, rand, x, y, z, true, true);
 	}
 
 	@Override
