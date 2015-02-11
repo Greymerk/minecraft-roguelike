@@ -1,6 +1,7 @@
 package greymerk.roguelike.worldgen;
 
 import greymerk.roguelike.catacomb.Catacomb;
+import greymerk.roguelike.catacomb.settings.CatacombLevelSettings;
 
 import java.util.Random;
 
@@ -18,47 +19,30 @@ public enum Spawner {
 	
 	private static final Spawner[] common = {SPIDER, SKELETON, ZOMBIE};
 	
-	public static void generate(World world, Random rand, Coord cursor, Spawner type){
-		generate(world, rand, cursor.getX(), cursor.getY(), cursor.getZ(), type);
-	}
-	
-	public static void generate(World world, Random rand, int posX, int posY, int posZ, int level){
+	public static void generate(World world, Random rand, CatacombLevelSettings level, Coord pos){
 		Spawner type = common[rand.nextInt(common.length)];
-		generate(world, rand, posX, posY, posZ, level, type);
+		generate(world, rand, level, pos, type);
 	}
 	
-	public static void generate(World world, Random rand, int posX, int posY, int posZ){
-		Spawner type = common[rand.nextInt(common.length)];
-		generate(world, rand, posX, posY, posZ, Catacomb.getLevel(posY), type);
-	}
-	
-	public static void generate(World world, Random rand, SpawnerSettings settings, int x, int y, int z){
-		Spawner type = common[rand.nextInt(common.length)];
-		generate(world, rand, settings, x, y, z, Catacomb.getLevel(y), type);
-	}
-	
-	public static void generate(World world, Random rand, SpawnerSettings settings, Coord cursor, int level, Spawner type){
-		generate(world, rand, settings, cursor.getX(), cursor.getY(), cursor.getZ(), level, type);
-	}
-	
-	public static void generate(World world, Random rand, SpawnerSettings settings, int x, int y, int z, int level, Spawner type){
-		if(settings == null){
-			generate(world, rand, x, y, z, type);
+	public static void generate(World world, Random rand, CatacombLevelSettings level, Coord pos, Spawner type){
+		
+		if(level.getSpawners() != null){
+			level.getSpawners().generate(world, rand, pos, type, getDifficulty(level, pos));
 			return;
 		}
 		
-		settings.generate(world, rand, new Coord(x, y, z), type, level);
+		generate(world, rand, getDifficulty(level, pos), pos, type);
 	}
 	
-	public static void generate(World world, Random rand, int posX, int posY, int posZ, Spawner type){
-		generate(world, rand, posX, posY, posZ, Catacomb.getLevel(posY), type);
-	}
-	
-	public static void generate(World world, Random rand, int posX, int posY, int posZ, int level, Spawner type){
+	public static void generate(World world, Random rand, int level, Coord pos, Spawner type){
 		
-		if(!WorldGenPrimitive.setBlock(world, posX, posY, posZ, Blocks.mob_spawner)) return;
+		int x = pos.getX();
+		int y = pos.getY();
+		int z = pos.getZ();
 		
-		TileEntityMobSpawner spawner = (TileEntityMobSpawner) world.getTileEntity(posX, posY, posZ);
+		if(!WorldGenPrimitive.setBlock(world, x, y, z, Blocks.mob_spawner)) return;
+		
+		TileEntityMobSpawner spawner = (TileEntityMobSpawner) world.getTileEntity(x, y, z);
 
 		if (spawner == null) return;
 		
@@ -138,4 +122,15 @@ public enum Spawner {
     	logic.setRandomEntity(cart);
     	logic.updateSpawner();
     }
+	
+	public static int getDifficulty(CatacombLevelSettings level, Coord pos){
+		
+		int levelDifficulty = level.getDifficulty();
+		
+		if(levelDifficulty == -1){
+			return Catacomb.getLevel(pos.getY());
+		}
+		
+		return levelDifficulty;
+	}
 }

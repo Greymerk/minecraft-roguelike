@@ -1,11 +1,11 @@
 package greymerk.roguelike.catacomb.dungeon.room;
 
-import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.catacomb.dungeon.DungeonBase;
 import greymerk.roguelike.catacomb.settings.CatacombLevelSettings;
 import greymerk.roguelike.treasure.TreasureChest;
 import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.Cardinal;
+import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.Spawner;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
@@ -65,7 +65,7 @@ public class DungeonsSpiderNest extends DungeonBase {
 			}
 		}
 		
-		Spawner.generate(world, rand, settings.getSpawners(), originX, originY, originZ, Catacomb.getLevel(originY), Spawner.CAVESPIDER);
+		Spawner.generate(world, rand, settings, new Coord(originX, originY, originZ), Spawner.CAVESPIDER);
 		
 		TreasureChest.createChests(world, rand, settings.getLoot(), 1 + rand.nextInt(3), WorldGenPrimitive.getRectSolid(
 				originX - dungeonLength, originY - 1, originZ - dungeonWidth,

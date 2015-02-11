@@ -27,18 +27,27 @@ public class PyramidTower implements ITower{
 		
 		Coord start = new Coord(chamber);
 		Coord end = new Coord(chamber);
-		
 		start.add(Cardinal.NORTH, 5);
 		start.add(Cardinal.WEST, 5);
 		end.add(Cardinal.UP, 5);
 		end.add(Cardinal.SOUTH, 5);
 		end.add(Cardinal.EAST, 5);
+		WorldGenPrimitive.fillRectSolid(world, rand, start, end, air, true, true);
+		
+		start = new Coord(chamber);
+		start.add(Cardinal.DOWN);
+		end = new Coord(start);
+		start.add(Cardinal.NORTH, 5);
+		start.add(Cardinal.WEST, 5);
+		end.add(Cardinal.SOUTH, 5);
+		end.add(Cardinal.EAST, 5);
+		WorldGenPrimitive.fillRectSolid(world, rand, start, end, theme.getPrimaryWall(), true, true);
 		
 		Coord passage = chamber;
 		passage.add(Cardinal.UP);
 		passage.add(Cardinal.WEST, 5);
 		
-		WorldGenPrimitive.fillRectSolid(world, rand, start, end, air, true, true);
+		
 		
 		for(int i = 0; i < height; ++i){
 			passageCell(world, rand, theme, passage);

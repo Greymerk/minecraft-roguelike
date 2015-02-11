@@ -35,6 +35,7 @@ public class CatacombSettingsEthoTheme extends CatacombSettings{
 		for(int i = 0; i < 5; ++i){
 			CatacombLevelSettings level = new CatacombLevelSettings();
 			level.setTheme(Theme.getTheme(themes[i]));
+			level.setDifficulty(3);
 			
 			if(i == 0){
 				level.setScatter(16);

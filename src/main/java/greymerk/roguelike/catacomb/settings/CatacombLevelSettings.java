@@ -18,6 +18,7 @@ public class CatacombLevelSettings {
 	int numRooms;
 	int range;
 	int scatter;
+	int levelDifficulty;
 	DungeonFactory rooms;
 	SecretFactory secrets;
 	ITheme theme;
@@ -29,12 +30,14 @@ public class CatacombLevelSettings {
 		numRooms = RogueConfig.getInt(RogueConfig.LEVELMAXROOMS);
 		range = RogueConfig.getInt(RogueConfig.LEVELRANGE);
 		scatter = RogueConfig.getInt(RogueConfig.LEVELSCATTER);
+		levelDifficulty = -1;
 	}
 	
 	public CatacombLevelSettings(CatacombLevelSettings toCopy){
 		this.numRooms = toCopy.numRooms;
 		this.range = toCopy.range;
 		this.scatter = toCopy.scatter;
+		this.levelDifficulty = toCopy.levelDifficulty;
 		this.rooms = toCopy.rooms != null ? new DungeonFactory(toCopy.rooms) : null;
 		this.secrets = toCopy.secrets != null ? new SecretFactory(toCopy.secrets) : null;
 		this.theme = toCopy.theme != null ? toCopy.theme : null;
@@ -44,9 +47,13 @@ public class CatacombLevelSettings {
 	}
 	
 	public CatacombLevelSettings(CatacombLevelSettings base, CatacombLevelSettings override){
+		
 		this.numRooms = override.numRooms != base.numRooms && override.numRooms != RogueConfig.getInt(RogueConfig.LEVELMAXROOMS) ? override.numRooms : base.numRooms;
 		this.range = override.range != base.range && override.range != RogueConfig.getInt(RogueConfig.LEVELRANGE) ? override.range : base.range;
 		this.scatter = override.scatter != base.scatter && override.scatter != RogueConfig.getInt(RogueConfig.LEVELSCATTER) ? override.scatter : base.scatter;
+		
+		this.levelDifficulty = (base.levelDifficulty != override.levelDifficulty && override.levelDifficulty != -1) || base.levelDifficulty == -1 ? override.levelDifficulty : base.levelDifficulty;
+		
 		if(base.rooms != null || override.rooms != null){
 			this.rooms = override.rooms == null ? new DungeonFactory(base.rooms) : new DungeonFactory(override.rooms);
 		}
@@ -70,6 +77,7 @@ public class CatacombLevelSettings {
 		this.numRooms = data.has("numRooms") ? data.get("numRooms").getAsInt() : RogueConfig.getInt(RogueConfig.LEVELMAXROOMS);
 		this.range = data.has("range") ? data.get("range").getAsInt() : RogueConfig.getInt(RogueConfig.LEVELRANGE);
 		this.scatter = data.has("scatter") ? data.get("scatter").getAsInt() : RogueConfig.getInt(RogueConfig.LEVELSCATTER);
+		this.levelDifficulty = data.has("diff") ? data.get("diff").getAsInt() : -1;
 		this.rooms = data.has("rooms") ? new DungeonFactory(data.get("rooms").getAsJsonArray()) : null;
 		this.secrets = data.has("secrets") ? new SecretFactory(data.get("secrets").getAsJsonArray()) : null;
 		this.theme = data.has("theme") ? Theme.create(data.get("theme").getAsJsonObject()) : null;
@@ -92,6 +100,14 @@ public class CatacombLevelSettings {
 	
 	public void setNumRooms(int num){
 		numRooms = num;
+	}
+	
+	public int getDifficulty(){
+		return this.levelDifficulty;
+	}
+	
+	public void setDifficulty(int num){
+		this.levelDifficulty = num;
 	}
 	
 	public IDungeonFactory getRooms(){

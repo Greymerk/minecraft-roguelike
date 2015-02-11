@@ -149,7 +149,7 @@ public class DungeonsNetherBrickFortress extends DungeonBase {
 		
 		for(int i = 0; i < rand.nextInt(5) + 5; ++i){
 			Spawner toSpawn = this.pickMobSpawner(rand);
-			Spawner.generate(world, rand, settings.getSpawners(), pillars.get(i), 4, toSpawn);
+			Spawner.generate(world, rand, settings, pillars.get(i), toSpawn);
 		}
 	}
     	

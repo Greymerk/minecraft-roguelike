@@ -52,6 +52,7 @@ public class DungeonFactory implements IDungeonFactory {
 	
 	public void addByRatio(Dungeon toAdd, int rate){
 		if(rate <= 0) return;
+		// this needs to pull from level settings
 		int max = RogueConfig.getInt(RogueConfig.LEVELMAXROOMS);
 		int numRooms = max / rate;
 		

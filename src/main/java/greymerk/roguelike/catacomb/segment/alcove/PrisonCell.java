@@ -1,6 +1,7 @@
 package greymerk.roguelike.catacomb.segment.alcove;
 
 import greymerk.roguelike.catacomb.segment.IAlcove;
+import greymerk.roguelike.catacomb.settings.CatacombLevelSettings;
 import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
@@ -22,19 +23,19 @@ public class PrisonCell implements IAlcove{
 	private ITheme theme;
 	
 	@Override
-	public void generate(World world, Random rand, ITheme theme, int x, int y, int z, Cardinal dir) {
+	public void generate(World world, Random rand, CatacombLevelSettings settings, int x, int y, int z, Cardinal dir) {
 		
-		this.theme = theme;
+		this.theme = settings.getTheme();
 		
 		Coord corridor = new Coord(x, y, z);
 		Coord centre = new Coord(x, y, z);
 		centre.add(dir, RECESSED);
 		
 		switch(dir){
-		case NORTH: north(world, rand, corridor, centre); return;
-		case SOUTH: south(world, rand, corridor, centre); return;
-		case EAST: east(world, rand, corridor, centre); return;
-		case WEST: west(world, rand, corridor, centre); return;
+		case NORTH: north(world, rand, settings, corridor, centre); return;
+		case SOUTH: south(world, rand, settings, corridor, centre); return;
+		case EAST: east(world, rand, settings, corridor, centre); return;
+		case WEST: west(world, rand, settings, corridor, centre); return;
 		}
 		
 		
@@ -59,7 +60,7 @@ public class PrisonCell implements IAlcove{
 		return true;
 	}
 
-	private void north(World world, Random rand, Coord corridor, Coord centre){
+	private void north(World world, Random rand, CatacombLevelSettings level, Coord corridor, Coord centre){
 
 		int x = centre.getX();
 		int y = centre.getY();
@@ -74,12 +75,12 @@ public class PrisonCell implements IAlcove{
 		WorldGenPrimitive.fillRectSolid(world, rand, corridor, end, new MetaBlock(Blocks.air), true, true);
 
 		WorldGenPrimitive.setBlock(world, x, y, z + 2, Blocks.stone_pressure_plate);
-		if(rand.nextBoolean()) Spawner.generate(world, rand, x, y - 1, z + 1, Spawner.ZOMBIE);
+		if(rand.nextBoolean()) Spawner.generate(world, rand, level, new Coord(x, y - 1, z + 1), Spawner.ZOMBIE);
 		Door.generate(world, new Coord(x, y, z + 3), Cardinal.NORTH, Door.IRON);
 	}
 
 	
-	private void south(World world, Random rand, Coord corridor, Coord centre){
+	private void south(World world, Random rand, CatacombLevelSettings level, Coord corridor, Coord centre){
 
 		int x = centre.getX();
 		int y = centre.getY();
@@ -94,11 +95,11 @@ public class PrisonCell implements IAlcove{
 		WorldGenPrimitive.fillRectSolid(world, rand, corridor, end, new MetaBlock(Blocks.air), true, true);
 
 		WorldGenPrimitive.setBlock(world, x, y, z - 2, Blocks.stone_pressure_plate);
-		if(rand.nextBoolean()) Spawner.generate(world, rand, x, y - 1, z - 1, Spawner.ZOMBIE);
+		if(rand.nextBoolean()) Spawner.generate(world, rand, level, new Coord(x, y - 1, z - 1), Spawner.ZOMBIE);
 		Door.generate(world, new Coord(x, y, z - 3), Cardinal.SOUTH, Door.IRON);		
 	}
 	
-	private void east(World world, Random rand, Coord corridor, Coord centre){
+	private void east(World world, Random rand, CatacombLevelSettings level, Coord corridor, Coord centre){
 
 		int x = centre.getX();
 		int y = centre.getY();
@@ -113,11 +114,11 @@ public class PrisonCell implements IAlcove{
 		WorldGenPrimitive.fillRectSolid(world, rand, corridor, end, new MetaBlock(Blocks.air), true, true);
 
 		WorldGenPrimitive.setBlock(world, x - 2, y, z, Blocks.stone_pressure_plate);
-		if(rand.nextBoolean()) Spawner.generate(world, rand, x - 1, y - 1, z, Spawner.ZOMBIE);
+		if(rand.nextBoolean()) Spawner.generate(world, rand, level, new Coord(x - 1, y - 1, z), Spawner.ZOMBIE);
 		Door.generate(world, new Coord(x - 3, y, z), Cardinal.EAST, Door.IRON);
 	}	
 
-	private void west(World world, Random rand, Coord corridor, Coord centre){
+	private void west(World world, Random rand, CatacombLevelSettings level, Coord corridor, Coord centre){
 
 		int x = centre.getX();
 		int y = centre.getY();
@@ -132,7 +133,7 @@ public class PrisonCell implements IAlcove{
 		WorldGenPrimitive.fillRectSolid(world, rand, corridor, end, new MetaBlock(Blocks.air), true, true);
 
 		WorldGenPrimitive.setBlock(world, x + 2, y, z, Blocks.stone_pressure_plate);
-		if(rand.nextBoolean()) Spawner.generate(world, rand, x + 1, y - 1, z, Spawner.ZOMBIE);
+		if(rand.nextBoolean()) Spawner.generate(world, rand, level, new Coord(x + 1, y - 1, z), Spawner.ZOMBIE);
 		Door.generate(world, new Coord(x + 3, y, z), Cardinal.WEST, Door.IRON);
 	}	
 	

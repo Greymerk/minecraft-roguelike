@@ -49,7 +49,7 @@ public class SegmentArch extends SegmentBase {
 		if(rand.nextInt(10) == 0 && Catacomb.getLevel(y) == 2){
 			IAlcove cell = new PrisonCell();
 			if(cell.isValidLocation(world, x, y, z, dir)){
-				cell.generate(world, rand, theme, x, y, z, dir);
+				cell.generate(world, rand, level.getSettings(), x, y, z, dir);
 			}
 		}
 	}

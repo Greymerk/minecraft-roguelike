@@ -1,10 +1,10 @@
 package greymerk.roguelike.catacomb.dungeon.room;
 
-import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.catacomb.dungeon.DungeonBase;
 import greymerk.roguelike.catacomb.settings.CatacombLevelSettings;
 import greymerk.roguelike.worldgen.BlockFactoryCheckers;
 import greymerk.roguelike.worldgen.Cardinal;
+import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.Spawner;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
@@ -67,7 +67,7 @@ public class DungeonsEnder extends DungeonBase {
 		BlockFactoryCheckers checkers = new BlockFactoryCheckers(black, white);
 		WorldGenPrimitive.fillRectSolid(inWorld, inRandom, x - 4, y - 1, z - 4, x + 4, y - 1, z + 4, checkers, true, true);
 		// TODO: add ender chest
-		Spawner.generate(world, rand, settings.getSpawners(), x, y, z, Catacomb.getLevel(y), Spawner.ENDERMAN);
+		Spawner.generate(world, rand, settings, new Coord(x, y, z), Spawner.ENDERMAN);
 
 		return true;
 	}

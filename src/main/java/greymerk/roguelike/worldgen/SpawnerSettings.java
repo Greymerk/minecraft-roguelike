@@ -49,7 +49,7 @@ public class SpawnerSettings {
 	public void generate(World world, Random rand, Coord cursor, Spawner type, int level){
 		
 		if(!spawners.containsKey(type)){
-			Spawner.generate(world, rand, cursor, type);
+			Spawner.generate(world, rand, level, cursor, type);
 			return;
 		}
 		

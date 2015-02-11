@@ -9,6 +9,7 @@ import greymerk.roguelike.worldgen.WorldGenPrimitive;
 
 import java.util.Random;
 
+import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 
 public class EthoTower implements ITower {
@@ -129,6 +130,15 @@ public class EthoTower implements ITower {
 		Cardinal front = Cardinal.NORTH;
 		
 		for(Cardinal dir : Cardinal.directions){
+			cursor = new Coord(floor);
+			cursor.add(dir, 6);
+			if(world.isAirBlock(cursor.getX(), cursor.getY(), cursor.getZ())){
+				front = dir;
+				break;
+			}
+		}
+		
+		for(Cardinal dir : Cardinal.directions){
 			
 			if(dir == front){
 
@@ -164,6 +174,22 @@ public class EthoTower implements ITower {
 					WorldGenPrimitive.blockOrientation(stair, o, false).setBlock(world, cursor);
 				}
 				
+				// carve doorway
+				Cardinal[] orth = Cardinal.getOrthogonal(dir);
+				cursor = new Coord(floor);
+				cursor.add(dir, 4);
+				start = new Coord(cursor);
+				end = new Coord(start);
+				start.add(orth[0]);
+				end.add(Cardinal.UP, 2);
+				end.add(orth[1]);
+				WorldGenPrimitive.fillRectSolid(world, rand, start, end, new MetaBlock(Blocks.air), true, true);
+				
+				cursor = new Coord(floor);
+				cursor.add(dir, 6);
+				cursor.add(Cardinal.DOWN);
+				step(world, rand, theme, dir, cursor);
+				
 				continue;
 			}
 			
@@ -187,7 +213,37 @@ public class EthoTower implements ITower {
 		for(int i = floor.getY() - 1; i > 50; --i){
 			WorldGenPrimitive.spiralStairStep(world, rand, x, i, z, stair, theme.getPrimaryPillar());
 		}
+	}
+	
+	private void step(World world, Random rand, ITheme theme, Cardinal dir, Coord origin){
 		
+		if(world.getBlock(origin.getX(), origin.getY(), origin.getZ()).isOpaqueCube()) return;
+		
+		Coord start;
+		Coord end;
+		
+		MetaBlock stair = theme.getPrimaryStair();
+		IBlockFactory blocks = theme.getPrimaryWall();
+		
+		Cardinal[] orth = Cardinal.getOrthogonal(dir);
+		
+		start = new Coord(origin);
+		end = new Coord(origin);
+		start.add(orth[0]);
+		end.add(orth[1]);
+		end = new Coord(end.getX(), 60, end.getZ());
+		WorldGenPrimitive.fillRectSolid(world, rand, start, end, blocks, true, true);
+		
+		start = new Coord(origin);
+		end = new Coord(origin);
+		start.add(orth[0]);
+		end.add(orth[1]);
+		WorldGenPrimitive.blockOrientation(stair, dir, false);
+		WorldGenPrimitive.fillRectSolid(world, rand, start, end, stair, true, true);
+		
+		origin.add(Cardinal.DOWN);
+		origin.add(dir);
+		step(world, rand, theme, dir, origin);
 	}
 
 }

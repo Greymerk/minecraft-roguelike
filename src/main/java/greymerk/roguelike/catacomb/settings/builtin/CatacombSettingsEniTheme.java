@@ -39,6 +39,7 @@ public class CatacombSettingsEniTheme extends CatacombSettings{
 				level.setScatter(16);
 				level.setRange(60);
 				level.setNumRooms(10);
+				level.setDifficulty(3);
 				
 				DungeonFactory factory;
 			
@@ -60,6 +61,7 @@ public class CatacombSettingsEniTheme extends CatacombSettings{
 				level.setScatter(16);
 				level.setRange(80);
 				level.setNumRooms(20);
+				level.setDifficulty(3);
 				
 				DungeonFactory factory;
 				factory = new DungeonFactory();
@@ -76,6 +78,8 @@ public class CatacombSettingsEniTheme extends CatacombSettings{
 			}
 			
 			if(i == 2){
+				level.setDifficulty(4);
+				
 				SegmentGenerator segments = new SegmentGenerator(Segment.SEWERARCH);
 				segments.add(Segment.SEWER, 7);
 				segments.add(Segment.SEWERDRAIN, 4);
@@ -86,41 +90,6 @@ public class CatacombSettingsEniTheme extends CatacombSettings{
 				factory = new DungeonFactory();
 				factory.addSingle(Dungeon.SPIDER);
 				factory.addRandom(Dungeon.SLIME, 2);
-				factory.addRandom(Dungeon.BRICK, 10);
-				factory.addRandom(Dungeon.CORNER, 3);
-				level.setRooms(factory);
-			}
-			
-			if(i == 3){
-				SegmentGenerator segments = new SegmentGenerator(Segment.SEWERARCH);
-				segments.add(Segment.SEWER, 7);
-				segments.add(Segment.SEWERDRAIN, 4);
-				segments.add(Segment.SEWERDOOR, 2);
-				level.setSegments(segments);
-				
-				DungeonFactory factory;
-				factory = new DungeonFactory();
-				factory.addSingle(Dungeon.SPIDER);
-				factory.addSingle(Dungeon.CREEPER);
-				factory.addRandom(Dungeon.SLIME, 2);
-				factory.addRandom(Dungeon.BRICK, 10);
-				factory.addRandom(Dungeon.CORNER, 3);
-				level.setRooms(factory);
-			}
-			
-			if(i == 4){
-				
-				level.setScatter(16);
-				level.setRange(60);
-				level.setNumRooms(8);
-				
-				SegmentGenerator segments = new SegmentGenerator(Segment.ARCH);
-				segments.add(Segment.DOOR, 3);
-				segments.add(Segment.BOOKS, 1);
-				level.setSegments(segments);
-				
-				DungeonFactory factory = new DungeonFactory();
-				factory.addSingle(Dungeon.LAB);
 				factory.addRandom(Dungeon.BRICK, 10);
 				factory.addRandom(Dungeon.CORNER, 3);
 				level.setRooms(factory);

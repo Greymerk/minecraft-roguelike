@@ -1,6 +1,5 @@
 package greymerk.roguelike.catacomb.dungeon.room;
 
-import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.catacomb.dungeon.DungeonBase;
 import greymerk.roguelike.catacomb.settings.CatacombLevelSettings;
 import greymerk.roguelike.catacomb.theme.ITheme;
@@ -151,7 +150,7 @@ public class DungeonsCrypt extends DungeonBase {
 				
 				if(rand.nextBoolean()){
 					Spawner spawnerType = rand.nextBoolean() ? Spawner.SKELETON : Spawner.ZOMBIE;
-					Spawner.generate(world, rand, settings.getSpawners(), cursor, Catacomb.getLevel(y), spawnerType);
+					Spawner.generate(world, rand, settings, cursor, spawnerType);
 					
 					cursor.add(orth, 1);
 					TreasureChest[] types = {TreasureChest.ARMOUR, TreasureChest.WEAPONS, TreasureChest.SPECIAL};

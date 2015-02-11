@@ -64,7 +64,7 @@ public class SegmentSilverfish extends SegmentBase {
 		
 		IAlcove nest = new SilverfishNest();
 		if(nest.isValidLocation(world, x, y, z, dir)){
-			nest.generate(world, rand, theme, x, y, z, dir);
+			nest.generate(world, rand, level.getSettings(), x, y, z, dir);
 			return;
 		}
 	}	

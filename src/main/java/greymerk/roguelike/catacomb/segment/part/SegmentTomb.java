@@ -1,9 +1,9 @@
 package greymerk.roguelike.catacomb.segment.part;
 
 import greymerk.roguelike.catacomb.CatacombLevel;
+import greymerk.roguelike.catacomb.settings.CatacombLevelSettings;
 import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.treasure.TreasureChest;
-import greymerk.roguelike.treasure.loot.LootSettings;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
@@ -50,7 +50,7 @@ public class SegmentTomb extends SegmentBase {
 			WorldGenPrimitive.setBlock(world, rand, c, stair, true, true);
 		}
 		
-		tomb(world, rand, level.getSettings().getLoot(), theme, dir, new Coord(x, y, z));
+		tomb(world, rand, level.getSettings(), theme, dir, new Coord(x, y, z));
 		
 		cursor = new Coord(x, y, z);
 		cursor.add(Cardinal.UP);
@@ -59,7 +59,7 @@ public class SegmentTomb extends SegmentBase {
 		
 	}
 	
-	private static void tomb(World world, Random rand, LootSettings loot, ITheme theme, Cardinal dir, Coord pos){
+	private static void tomb(World world, Random rand, CatacombLevelSettings level, ITheme theme, Cardinal dir, Coord pos){
 		
 		Coord cursor;
 		Coord start;
@@ -85,9 +85,9 @@ public class SegmentTomb extends SegmentBase {
 		cursor = new Coord(pos);
 		cursor.add(Cardinal.UP);
 		cursor.add(dir, 4);
-		Spawner.generate(world, rand, cursor, rand.nextBoolean() ? Spawner.SKELETON : Spawner.ZOMBIE);
+		Spawner.generate(world, rand, level, cursor, rand.nextBoolean() ? Spawner.SKELETON : Spawner.ZOMBIE);
 		cursor.add(dir);
-		TreasureChest.generate(world, rand, loot, cursor, rand.nextBoolean() ? TreasureChest.ARMOUR : TreasureChest.WEAPONS);
+		TreasureChest.generate(world, rand, level.getLoot(), cursor, rand.nextBoolean() ? TreasureChest.ARMOUR : TreasureChest.WEAPONS);
 		
 	}
 }

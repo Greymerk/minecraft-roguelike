@@ -5,6 +5,7 @@ import greymerk.roguelike.catacomb.dungeon.DungeonBase;
 import greymerk.roguelike.catacomb.settings.CatacombLevelSettings;
 import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
+import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.Spawner;
@@ -65,7 +66,7 @@ public class DungeonsSlime extends DungeonBase {
 		WorldGenPrimitive.fillRectSolid(world, rand, originX + 2, originY + 3, originZ - 1, originX + 2, originY + 3, originZ + 1, fillBlocks);
 		
 		if(Catacomb.getLevel(originY) == 4){
-			Spawner.generate(world, rand, originX, originY + 5, originZ, Spawner.LAVASLIME);
+			Spawner.generate(world, rand, settings, new Coord(originX, originY + 5, originZ), Spawner.LAVASLIME);
 		} else {
 			WorldGenPrimitive.randomVines(world, rand, originX - 7, originY + 2, originZ - 7, originX + 7, originY + 5, originZ + 7);			
 		}

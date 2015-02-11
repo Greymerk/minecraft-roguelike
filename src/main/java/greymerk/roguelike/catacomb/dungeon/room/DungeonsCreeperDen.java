@@ -6,9 +6,9 @@ import greymerk.roguelike.catacomb.settings.CatacombLevelSettings;
 import greymerk.roguelike.treasure.TreasureChest;
 import greymerk.roguelike.treasure.loot.LootSettings;
 import greymerk.roguelike.worldgen.Cardinal;
+import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.Spawner;
-import greymerk.roguelike.worldgen.SpawnerSettings;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
 
 import java.util.Random;
@@ -53,7 +53,7 @@ public class DungeonsCreeperDen extends DungeonBase {
 		buildWalls();
 		buildFloor();
 		buildRoof();
-		placeMobSpawner(settings.getSpawners());
+		Spawner.generate(world, rand, settings, new Coord(originX, originY, originZ), Spawner.CREEPER);
 		createChests(settings.getLoot(), numChests);
 
 
@@ -182,10 +182,6 @@ public class DungeonsCreeperDen extends DungeonBase {
 
 			}
 		}
-	}
-
-	protected void placeMobSpawner(SpawnerSettings settings) {
-		Spawner.generate(world, rand, settings, originX, originY, originZ, Catacomb.getLevel(originY), Spawner.CREEPER);
 	}
 	
 	public int getSize(){

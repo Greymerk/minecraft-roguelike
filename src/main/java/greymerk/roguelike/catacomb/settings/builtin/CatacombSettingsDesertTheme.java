@@ -1,5 +1,7 @@
 package greymerk.roguelike.catacomb.settings.builtin;
 
+import greymerk.roguelike.catacomb.dungeon.Dungeon;
+import greymerk.roguelike.catacomb.dungeon.DungeonFactory;
 import greymerk.roguelike.catacomb.segment.Segment;
 import greymerk.roguelike.catacomb.segment.SegmentGenerator;
 import greymerk.roguelike.catacomb.settings.CatacombLevelSettings;
@@ -28,7 +30,7 @@ public class CatacombSettingsDesertTheme extends CatacombSettings{
 		this.towerSettings = new CatacombTowerSettings(Tower.PYRAMID, Theme.getTheme(Theme.PYRAMID));
 		
 		SegmentGenerator segments;
-		segments = new SegmentGenerator(Segment.ARCH);
+		segments = new SegmentGenerator(Segment.SQUAREARCH);
 		segments.add(Segment.INSET, 6);
 		segments.add(Segment.SHELF, 6);
 		segments.add(Segment.ANKH, 2);
@@ -36,9 +38,18 @@ public class CatacombSettingsDesertTheme extends CatacombSettings{
 		segments.add(Segment.SKULL, 2);
 		segments.add(Segment.TOMB, 3);
 		
+		
+		DungeonFactory factory;
+		factory = new DungeonFactory();
+		factory.addByRatio(Dungeon.PYRAMIDTOMB, 5);
+		factory.addRandom(Dungeon.BRICK, 3);
+		factory.addRandom(Dungeon.CORNER, 3);
+		
 		CatacombLevelSettings level = new CatacombLevelSettings();
 		level.setTheme(Theme.getTheme(Theme.SANDSTONE));
 		level.setSegments(segments);
+		level.setRooms(factory);
+		level.setDifficulty(4);
 		
 		for(int i = 0; i < 5; ++i){
 			levels.put(i, level);

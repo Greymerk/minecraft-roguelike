@@ -1,7 +1,7 @@
 package greymerk.roguelike.catacomb.segment.alcove;
 
 import greymerk.roguelike.catacomb.segment.IAlcove;
-import greymerk.roguelike.catacomb.theme.ITheme;
+import greymerk.roguelike.catacomb.settings.CatacombLevelSettings;
 import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
@@ -20,7 +20,7 @@ public class SilverfishNest implements IAlcove{
 	private static int RECESSED = 6;
 	
 	@Override
-	public void generate(World world, Random rand, ITheme theme, int x, int y, int z, Cardinal dir) {
+	public void generate(World world, Random rand, CatacombLevelSettings settings, int x, int y, int z, Cardinal dir) {
 		
 		Coord corridor = new Coord(x, y, z);
 		Coord centre = new Coord(x, y, z);
@@ -36,7 +36,7 @@ public class SilverfishNest implements IAlcove{
 		end.add(Cardinal.reverse(dir), 1);
 		
 		WorldGenPrimitive.fillRectSolid(world, rand, start, end, new MetaBlock(Blocks.air), true, true);
-		Spawner.generate(world, rand, centre.getX(), centre.getY(), centre.getZ(), Spawner.SILVERFISH);
+		Spawner.generate(world, rand, settings, centre, Spawner.SILVERFISH);
 		
 	}
 

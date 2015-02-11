@@ -10,7 +10,8 @@ public class CatacombSettingsBlank extends CatacombSettings{
 		levels = new HashMap<Integer, CatacombLevelSettings>();
 		
 		for(int i = 0; i < 5; ++i){
-			levels.put(i, new CatacombLevelSettings());
+			CatacombLevelSettings level = new CatacombLevelSettings();
+			levels.put(i, level);
 		}
 	}
 	

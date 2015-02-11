@@ -7,6 +7,7 @@ import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.treasure.TreasureChest;
 import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.Cardinal;
+import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.Spawner;
@@ -55,10 +56,10 @@ public class DungeonsNetherBrick extends DungeonBase {
 		
 		TreasureChest.createChests(world, rand, settings.getLoot(), 1, WorldGenPrimitive.getRectSolid(x - length, y, z - width, x + length, y, z + width));
 
-		Spawner.generate(world, rand, settings.getSpawners(), x - length - 1, y + rand.nextInt(2), z - width - 1);
-		Spawner.generate(world, rand, settings.getSpawners(), x - length - 1, y + rand.nextInt(2), z + width + 1);
-		Spawner.generate(world, rand, settings.getSpawners(), x + length + 1, y + rand.nextInt(2), z - width - 1);
-		Spawner.generate(world, rand, settings.getSpawners(), x + length + 1, y + rand.nextInt(2), z + width + 1);
+		Spawner.generate(world, rand, settings, new Coord(x - length - 1, y + rand.nextInt(2), z - width - 1));
+		Spawner.generate(world, rand, settings, new Coord(x - length - 1, y + rand.nextInt(2), z + width + 1));
+		Spawner.generate(world, rand, settings, new Coord(x + length + 1, y + rand.nextInt(2), z - width - 1));
+		Spawner.generate(world, rand, settings, new Coord(x + length + 1, y + rand.nextInt(2), z + width + 1));
 
 		return true;
 	}
