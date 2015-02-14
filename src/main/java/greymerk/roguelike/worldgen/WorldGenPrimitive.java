@@ -274,8 +274,5 @@ public class WorldGenPrimitive {
 			--y;
 		}
 	}
-
-
-
 }
 

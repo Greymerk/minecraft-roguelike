@@ -1,5 +1,7 @@
 package greymerk.roguelike.catacomb.settings.builtin;
 
+import greymerk.roguelike.catacomb.dungeon.Dungeon;
+import greymerk.roguelike.catacomb.dungeon.DungeonFactory;
 import greymerk.roguelike.catacomb.settings.CatacombLevelSettings;
 import greymerk.roguelike.catacomb.settings.CatacombSettings;
 import greymerk.roguelike.catacomb.settings.CatacombTowerSettings;
@@ -25,11 +27,22 @@ public class CatacombSettingsSwampTheme extends CatacombSettings{
 		
 		this.towerSettings = new CatacombTowerSettings(Tower.WITCH, Theme.getTheme(Theme.DARKOAK));
 		
-		Theme[] themes = {Theme.MUDDY, Theme.MUDDY, Theme.MOSSY, Theme.MOSSY, Theme.NETHER};
+		Theme[] themes = {Theme.DARKHALL, Theme.MUDDY, Theme.MOSSY, Theme.MOSSY, Theme.NETHER};
 		
 		for(int i = 0; i < 5; ++i){
+			
 			CatacombLevelSettings level = new CatacombLevelSettings();
 			level.setTheme(Theme.getTheme(themes[i]));
+			
+			if(i == 0){
+				DungeonFactory factory;
+				factory = new DungeonFactory();
+				factory.addRandom(Dungeon.BRICK, 3);
+				factory.addRandom(Dungeon.CORNER, 3);
+				factory.addRandom(Dungeon.DARKHALL, 1);
+				level.setRooms(factory);
+			}
+
 			levels.put(i, level);
 		}
 	}

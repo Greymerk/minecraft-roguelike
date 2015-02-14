@@ -38,10 +38,10 @@ public class CatacombSettingsDesertTheme extends CatacombSettings{
 		segments.add(Segment.SKULL, 2);
 		segments.add(Segment.TOMB, 3);
 		
-		
 		DungeonFactory factory;
 		factory = new DungeonFactory();
-		factory.addByRatio(Dungeon.PYRAMIDTOMB, 5);
+		factory.addSingle(Dungeon.PYRAMIDTOMB);
+		factory.addSingle(Dungeon.PYRAMIDTOMB);
 		factory.addRandom(Dungeon.BRICK, 3);
 		factory.addRandom(Dungeon.CORNER, 3);
 		

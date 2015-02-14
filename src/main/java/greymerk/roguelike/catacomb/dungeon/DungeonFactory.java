@@ -17,10 +17,16 @@ public class DungeonFactory implements IDungeonFactory {
 
 	private List<Dungeon> singles;
 	private WeightedRandomizer<Dungeon> multiple;
-
-	public DungeonFactory(){
+	private Dungeon base;
+	
+	public DungeonFactory(Dungeon base){
 		singles = new ArrayList<Dungeon>();
 		multiple = new WeightedRandomizer<Dungeon>();
+		this.base = base;
+	}
+	
+	public DungeonFactory(){
+		this(Dungeon.CORNER);
 	}
 	
 	public DungeonFactory(JsonArray json) {
@@ -74,6 +80,6 @@ public class DungeonFactory implements IDungeonFactory {
 	public IDungeon get(Random rand) {
 		if(!singles.isEmpty()) return Dungeon.getInstance(singles.remove(0));
 		if(!multiple.isEmpty()) return Dungeon.getInstance(multiple.get(rand));
-		return Dungeon.getInstance(Dungeon.CORNER);
+		return Dungeon.getInstance(base);
 	}
 }
