@@ -1,6 +1,7 @@
 package greymerk.roguelike.catacomb;
 
 import greymerk.roguelike.catacomb.dungeon.IDungeon;
+import greymerk.roguelike.catacomb.dungeon.room.DungeonLinker;
 import greymerk.roguelike.catacomb.dungeon.room.DungeonsBrick;
 import greymerk.roguelike.catacomb.settings.CatacombLevelSettings;
 import greymerk.roguelike.catacomb.theme.ITheme;
@@ -94,7 +95,7 @@ public class CatacombLevel {
 	
 	private void generateLevelLink(World world, Random rand, ITheme theme, CatacombNode start, CatacombNode oldEnd) {
 		
-		IDungeon downstairs = new DungeonsBrick();
+		IDungeon downstairs = new DungeonLinker();
 		downstairs.generate(world, rand, settings, start.getEntrances(), start.getPosition());
 		
 		if(oldEnd == null) return;

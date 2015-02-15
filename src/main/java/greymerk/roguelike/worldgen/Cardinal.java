@@ -5,7 +5,7 @@ public enum Cardinal {
 
 	NORTH, EAST, WEST, SOUTH, UP, DOWN;
 	
-	public static Cardinal[] directions = {NORTH, WEST, SOUTH, EAST};
+	public static Cardinal[] directions = {NORTH, EAST, SOUTH, WEST};
 	
 	public static int getBlockMeta(Cardinal dir){
 		switch(dir){

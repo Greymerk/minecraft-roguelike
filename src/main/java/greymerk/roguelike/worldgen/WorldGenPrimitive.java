@@ -212,9 +212,9 @@ public class WorldGenPrimitive {
 		Cardinal[] orth = Cardinal.getOrthogonal(dir);
 		cursor = new Coord(origin);
 		cursor.add(dir);
-		blockOrientation(stair, orth[1], false).setBlock(world, cursor);
-		cursor.add(orth[0]);
-		blockOrientation(stair, orth[0], true).setBlock(world, cursor);
+		blockOrientation(stair, orth[0], false).setBlock(world, cursor);
+		cursor.add(orth[1]);
+		blockOrientation(stair, orth[1], true).setBlock(world, cursor);
 		cursor.add(Cardinal.reverse(dir));
 		blockOrientation(stair, Cardinal.reverse(dir), true).setBlock(world, cursor);
 		

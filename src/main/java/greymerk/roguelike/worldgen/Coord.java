@@ -45,6 +45,12 @@ public class Coord{
 		}		
 	}
 	
+	public void add(int x, int y, int z){
+		this.x += x;
+		this.y += y;
+		this.z += z;
+	}
+	
 	public void add(Coord other){
 		x += other.x;
 		y += other.y;

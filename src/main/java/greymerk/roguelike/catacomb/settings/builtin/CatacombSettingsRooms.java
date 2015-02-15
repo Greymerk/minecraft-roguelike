@@ -23,11 +23,9 @@ public class CatacombSettingsRooms extends CatacombSettings{
 			case 1:
 				factory = new DungeonFactory();
 				factory.addSingle(Dungeon.MUSIC);
-				factory.addSingle(Dungeon.SMITH);
 				factory.addSingle(Dungeon.PIT);
-				factory.addSingle(Dungeon.ENCHANT);
 				factory.addSingle(Dungeon.LAB);
-				factory.addByRatio(Dungeon.MESS, 30);
+				factory.addSingle(Dungeon.MESS);
 				factory.addByRatio(Dungeon.STORAGE, 30);
 				factory.addRandom(Dungeon.CORNER, 10);
 				factory.addRandom(Dungeon.BRICK, 3);
