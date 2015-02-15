@@ -25,6 +25,7 @@ public class DungeonsCrypt extends DungeonBase {
 		ITheme theme = settings.getTheme();
 		MetaBlock air = new MetaBlock(Blocks.air);
 		MetaBlock stair = theme.getPrimaryStair();
+		IBlockFactory walls = theme.getPrimaryWall();
 		IBlockFactory floor = theme.getPrimaryFloor();
 		
 		Coord cursor;
@@ -47,7 +48,7 @@ public class DungeonsCrypt extends DungeonBase {
 		end = new Coord(origin);
 		start.add(-9, 5, -9);
 		end.add(9, 6, 9);
-		floor.fillRectSolid(world, rand, start, end, false, true);
+		walls.fillRectSolid(world, rand, start, end, false, true);
 		
 		for(Cardinal dir : Cardinal.directions){
 			
@@ -268,7 +269,7 @@ public class DungeonsCrypt extends DungeonBase {
 			end = new Coord(start);
 			end.add(dir, 7);
 			WorldGenPrimitive.blockOrientation(stair, o, true);
-			stair.fillRectSolid(world, rand, start, end, true, true);
+			stair.fillRectSolid(world, rand, start, end, true, false);
 		}
 		
 		start = new Coord(origin);

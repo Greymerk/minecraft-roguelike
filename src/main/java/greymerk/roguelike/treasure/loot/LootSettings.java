@@ -67,8 +67,22 @@ public class LootSettings {
 		for(Loot type : Loot.values()){
 			if(data.has(type.toString())){
 				JsonElement providerData = data.get(type.toString());
-				IWeighted<ItemStack> provider = parseProvider(providerData.getAsJsonObject());
-				loot.put(type, provider);
+				
+				if(providerData.isJsonObject()){
+					loot.put(type, new WeightedRandomLoot(providerData.getAsJsonObject(), 0));
+				}
+				
+				if(providerData.isJsonArray()){
+					
+					WeightedRandomizer<ItemStack> items = new WeightedRandomizer<ItemStack>(0);
+					JsonArray lootList = providerData.getAsJsonArray();
+					
+					for(JsonElement e : lootList){
+						items.add(parseProvider(e.getAsJsonObject()));
+					}
+					
+					loot.put(type, items);
+				}
 			}
 		}
 	}
@@ -76,7 +90,7 @@ public class LootSettings {
 	private IWeighted<ItemStack> parseProvider(JsonObject data) {
 		
 		int weight = data.has("weight") ? data.get("weight").getAsInt() : 1;
-		JsonElement loot = data.get("loot");
+		JsonElement loot = data.get("data");
 		
 		if(loot.isJsonObject()){
 			return new WeightedRandomLoot(loot.getAsJsonObject(), weight);
