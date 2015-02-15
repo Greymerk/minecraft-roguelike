@@ -45,6 +45,8 @@ public class CatacombSettingsEthoTheme extends CatacombSettings{
 				DungeonFactory factory;
 			
 				factory = new DungeonFactory();
+				factory.addSingle(Dungeon.TREETHO);
+				factory.addSingle(Dungeon.TREETHO);
 				factory.addRandom(Dungeon.BRICK, 20);
 				factory.addRandom(Dungeon.ETHO, 10);
 				factory.addRandom(Dungeon.CORNER, 3);

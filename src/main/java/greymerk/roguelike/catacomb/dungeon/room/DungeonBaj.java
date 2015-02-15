@@ -7,6 +7,7 @@ import greymerk.roguelike.treasure.TreasureChestEmpty;
 import greymerk.roguelike.treasure.loot.provider.ItemNovelty;
 import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.Cardinal;
+import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
 
@@ -48,32 +49,32 @@ public class DungeonBaj extends DungeonBase {
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 4, y, z - 3, x - 4, y + 3, z - 3, walls);
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 3, y - 1, z - 3, x - 3, y, z - 3, walls);
 		WorldGenPrimitive.setBlock(world, x - 3, y + 1, z - 3, Blocks.torch);
-		walls.setBlock(world, rand, x - 3, y - 1, z - 2);
-		walls.setBlock(world, rand, x - 2, y - 1, z - 3);
+		walls.setBlock(world, rand, new Coord(x - 3, y - 1, z - 2));
+		walls.setBlock(world, rand, new Coord(x - 2, y - 1, z - 3));
 
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 4, y, z + 4, x - 4, y + 3, z + 4, walls);
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 3, y, z + 4, x - 3, y + 3, z + 4, walls);
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 4, y, z + 3, x - 4, y + 3, z + 3, walls);
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 3, y - 1, z + 3, x - 3, y, z + 3, walls);
 		WorldGenPrimitive.setBlock(world, x - 3, y + 1, z + 3, Blocks.torch);
-		walls.setBlock(world, rand, x - 3, y - 1, z + 2);
-		walls.setBlock(world, rand, x - 2, y - 1, z + 3);
+		walls.setBlock(world, rand, new Coord(x - 3, y - 1, z + 2));
+		walls.setBlock(world, rand, new Coord(x - 2, y - 1, z + 3));
 		
 		WorldGenPrimitive.fillRectSolid(world, rand, x + 4, y, z - 4, x + 4, y + 3, z - 4, walls);
 		WorldGenPrimitive.fillRectSolid(world, rand, x + 3, y, z - 4, x + 3, y + 3, z - 4, walls);
 		WorldGenPrimitive.fillRectSolid(world, rand, x + 4, y, z - 3, x + 4, y + 3, z - 3, walls);
 		WorldGenPrimitive.fillRectSolid(world, rand, x + 3, y - 1, z - 3, x + 3, y, z - 3, walls);
 		WorldGenPrimitive.setBlock(world, x + 3, y + 1, z - 3, Blocks.torch);
-		walls.setBlock(world, rand, x + 3, y - 1, z - 2);
-		walls.setBlock(world, rand, x + 2, y - 1, z - 3);
+		walls.setBlock(world, rand, new Coord(x + 3, y - 1, z - 2));
+		walls.setBlock(world, rand, new Coord(x + 2, y - 1, z - 3));
 		
 		WorldGenPrimitive.fillRectSolid(world, rand, x + 4, y, z + 4, x + 4, y + 3, z + 4, walls);
 		WorldGenPrimitive.fillRectSolid(world, rand, x + 3, y, z + 4, x + 3, y + 3, z + 4, walls);
 		WorldGenPrimitive.fillRectSolid(world, rand, x + 4, y, z + 3, x + 4, y + 3, z + 3, walls);
 		WorldGenPrimitive.fillRectSolid(world, rand, x + 3, y - 1, z + 3, x + 3, y, z + 3, walls);
 		WorldGenPrimitive.setBlock(world, x + 3, y + 1, z + 3, Blocks.torch);
-		walls.setBlock(world, rand, x + 3, y - 1, z + 2);
-		walls.setBlock(world, rand, x + 2, y - 1, z + 3);
+		walls.setBlock(world, rand, new Coord(x + 3, y - 1, z + 2));
+		walls.setBlock(world, rand, new Coord(x + 2, y - 1, z + 3));
 		
 		BlockWeightedRandom roof = new BlockWeightedRandom();
 		roof.addBlock(new MetaBlock(Blocks.stone), 100);

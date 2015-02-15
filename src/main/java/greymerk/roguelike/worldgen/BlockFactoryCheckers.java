@@ -36,34 +36,38 @@ public class BlockFactoryCheckers extends BlockFactoryBase {
 	}
 
 	@Override
-	public void setBlock(World world, Random rand, int x, int y, int z, boolean fillAir, boolean replaceSolid) {
+	public boolean setBlock(World world, Random rand, Coord origin, boolean fillAir, boolean replaceSolid) {
+		
+		int x = origin.getX();
+		int y = origin.getY();
+		int z = origin.getZ();
 		
 		if (x % 2 == 0) {
 			if(z % 2 == 0){
 				if(y % 2 == 0){
-					WorldGenPrimitive.setBlock(world, rand, x, y, z, fillOne, fillAir, replaceSolid);
+					return WorldGenPrimitive.setBlock(world, rand, x, y, z, fillOne, fillAir, replaceSolid);
 				} else {
-					WorldGenPrimitive.setBlock(world, rand, x, y, z, fillTwo, fillAir, replaceSolid);
+					return WorldGenPrimitive.setBlock(world, rand, x, y, z, fillTwo, fillAir, replaceSolid);
 				}
 			} else {
 				if(y % 2 == 0){
-					WorldGenPrimitive.setBlock(world, rand, x, y, z, fillTwo, fillAir, replaceSolid);
+					return WorldGenPrimitive.setBlock(world, rand, x, y, z, fillTwo, fillAir, replaceSolid);
 				} else {
-					WorldGenPrimitive.setBlock(world, rand, x, y, z, fillOne, fillAir, replaceSolid);
+					return WorldGenPrimitive.setBlock(world, rand, x, y, z, fillOne, fillAir, replaceSolid);
 				}
 			}
 		} else {
 			if(z % 2 == 0){
 				if(y % 2 == 0){
-					WorldGenPrimitive.setBlock(world, rand, x, y, z, fillTwo, fillAir, replaceSolid);
+					return WorldGenPrimitive.setBlock(world, rand, x, y, z, fillTwo, fillAir, replaceSolid);
 				} else {
-					WorldGenPrimitive.setBlock(world, rand, x, y, z, fillOne, fillAir, replaceSolid);
+					return WorldGenPrimitive.setBlock(world, rand, x, y, z, fillOne, fillAir, replaceSolid);
 				}
 			} else {
 				if(y % 2 == 0){
-					WorldGenPrimitive.setBlock(world, rand, x, y, z, fillOne, fillAir, replaceSolid);
+					return WorldGenPrimitive.setBlock(world, rand, x, y, z, fillOne, fillAir, replaceSolid);
 				} else {
-					WorldGenPrimitive.setBlock(world, rand, x, y, z, fillTwo, fillAir, replaceSolid);
+					return WorldGenPrimitive.setBlock(world, rand, x, y, z, fillTwo, fillAir, replaceSolid);
 				}
 			}
 		}

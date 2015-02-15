@@ -86,7 +86,7 @@ public class DungeonsPit extends DungeonBase {
 						
 						if (!world.getBlock(blockX, blockY, blockZ).getMaterial().isSolid()) continue;
 						
-						blocks.setBlock(world, rand, blockX, blockY, blockZ);
+						blocks.setBlock(world, rand, new Coord(blockX, blockY, blockZ));
 						
 					} else {
 						WorldGenPrimitive.setBlock(world, blockX, blockY, blockZ, new MetaBlock(Blocks.air));
@@ -100,7 +100,7 @@ public class DungeonsPit extends DungeonBase {
 		
 		for (int blockX = originX - dungeonLength - 1; blockX <= originX + dungeonLength + 1; blockX++){
 			for (int blockZ = originZ - dungeonWidth - 1; blockZ <= originZ + dungeonWidth + 1; blockZ++){
-				blocks.setBlock(world, rand, blockX, originY - 1, blockZ);				
+				blocks.setBlock(world, rand, new Coord(blockX, originY - 1, blockZ));				
 			}
 		}
 	}
@@ -108,7 +108,7 @@ public class DungeonsPit extends DungeonBase {
 	protected void buildRoof(){
 		for (int blockX = originX - dungeonLength - 1; blockX <= originX + dungeonLength + 1; blockX++){
 			for (int blockZ = originZ - dungeonWidth - 1; blockZ <= originZ + dungeonWidth + 1; blockZ++){
-				blocks.setBlock(world, rand, blockX, dungeonHeight + 1, blockZ);
+				blocks.setBlock(world, rand, new Coord(blockX, dungeonHeight + 1, blockZ));
 			}
 		}
 	}
@@ -132,7 +132,7 @@ public class DungeonsPit extends DungeonBase {
 						|| z == originZ -2
 						|| z == originZ +2){
 						
-						blocks.setBlock(world, rand, x, y, z, true, true);
+						blocks.setBlock(world, rand, new Coord(x, y, z), true, true);
 						continue;
 						
 					}

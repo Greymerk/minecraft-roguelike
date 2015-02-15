@@ -234,13 +234,13 @@ public class DungeonLab extends DungeonBase {
 		WorldGenPrimitive.setBlock(world, rand, x, y + 3, z, theme.getPrimaryWall(), true, true);
 		MetaBlock stair = theme.getSecondaryStair();
 		stair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.EAST, true));
-		stair.setBlock(world, x + 1, y + 3, z);
+		stair.setBlock(world, new Coord(x + 1, y + 3, z));
 		stair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.WEST, true));
-		stair.setBlock(world, x - 1, y + 3, z);
+		stair.setBlock(world, new Coord(x - 1, y + 3, z));
 		stair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.SOUTH, true));
-		stair.setBlock(world, x, y + 3, z + 1);
+		stair.setBlock(world, new Coord(x, y + 3, z + 1));
 		stair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.NORTH, true));
-		stair.setBlock(world, x, y + 3, z - 1);	
+		stair.setBlock(world, new Coord(x, y + 3, z - 1));	
 	}
 	
 	public int getSize(){

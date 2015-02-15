@@ -64,11 +64,11 @@ public class SilverfishNest implements IAlcove{
 		fish.addBlock(new MetaBlock(Blocks.soul_sand), 5);
 		WorldGenPrimitive.fillRectHollow(world, rand, x - 2, y, z - 2, x + 2, y + 3, z + 2, fish, true, true);
 		
-		fish.setBlock(world, rand, x - 1, y + 2, z);
-		fish.setBlock(world, rand, x + 1, y + 2, z);
-		fish.setBlock(world, rand, x, y + 2, z - 1);
-		fish.setBlock(world, rand, x, y + 2, z + 1);
-		fish.setBlock(world, rand, x, y + 1, z);
+		fish.setBlock(world, rand, new Coord(x - 1, y + 2, z));
+		fish.setBlock(world, rand, new Coord(x + 1, y + 2, z));
+		fish.setBlock(world, rand, new Coord(x, y + 2, z - 1));
+		fish.setBlock(world, rand, new Coord(x, y + 2, z + 1));
+		fish.setBlock(world, rand, new Coord(x, y + 1, z));
 		
 		WorldGenPrimitive.setBlock(world, x, y + 2, z, Blocks.flowing_water);
 	}

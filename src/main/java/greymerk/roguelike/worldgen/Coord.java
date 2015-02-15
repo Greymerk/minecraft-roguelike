@@ -55,6 +55,13 @@ public class Coord{
 		add(dir, 1);
 	}
 
+	public double distance(Coord other){
+		double side1 = Math.abs(this.getX() - other.getX());
+		double side2 = Math.abs(this.getZ() - other.getZ());
+		
+		return Math.sqrt((side1 * side1) + (side2 * side2));
+	}
+	
 	// Arranges two coords so that the they create a positive cube.
 	// used in fill routines.
 	public static void correct(Coord one, Coord two){

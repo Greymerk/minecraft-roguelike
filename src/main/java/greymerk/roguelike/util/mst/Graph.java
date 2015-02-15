@@ -35,17 +35,17 @@ public class Graph {
 		for(Point p : points){
 			for(Point o : points){
 				if(p.equals(o)) continue;
-				edges.add(new Edge(p, o));
+				edges.add(new Edge(p,o));
 			}
 		}
 	}
 	
-	public List<Coord> getPointPositions(Coord absolute){
+	public List<Coord> getPointPositions(){
 		
 		List<Coord> positions = new ArrayList<Coord>();
 		
 		for(Point p : points){
-			Coord toAdd = p.getPosition(absolute);
+			Coord toAdd = p.getPosition();
 			positions.add(toAdd);
 		}
 		

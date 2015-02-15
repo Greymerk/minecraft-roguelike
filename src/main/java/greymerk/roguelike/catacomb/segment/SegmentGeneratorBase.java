@@ -73,7 +73,7 @@ public class SegmentGeneratorBase implements ISegmentGenerator{
 	private void addSupport(World world, Random rand, ITheme theme, int x, int y, int z){
 		if(!world.isAirBlock(x, y - 2, z)) return;
 		
-		WorldGenPrimitive.fillDown(world, rand, x, y - 2, z, theme.getPrimaryPillar());
+		WorldGenPrimitive.fillDown(world, rand, new Coord(x, y - 2, z), theme.getPrimaryPillar());
 		
 		MetaBlock stair = theme.getPrimaryStair();
 		stair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.WEST, true));

@@ -14,14 +14,13 @@ public enum Door {
 	
 	public static void generate(World world, Coord pos, Cardinal dir, Door type, boolean open){
 		
-		int x = pos.getX();
-		int y = pos.getY();
-		int z = pos.getZ();
+		Coord cursor = new Coord(pos);
 		
 		MetaBlock doorBase = new MetaBlock(getBlockId(type), getMeta(false, dir, open, false));
-		doorBase.setBlock(world, x, y, z);
+		doorBase.setBlock(world, cursor);
+		cursor.add(Cardinal.UP);
 		MetaBlock doorTop = new MetaBlock(getBlockId(type), getMeta(true, dir, open, false));
-		doorTop.setBlock(world, x, y + 1, z);
+		doorTop.setBlock(world, cursor);
 	}
 	
 	private static Block getBlockId(Door type){

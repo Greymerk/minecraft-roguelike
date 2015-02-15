@@ -1,5 +1,6 @@
 package greymerk.roguelike.util.mst;
 
+
 public class Edge implements Comparable<Edge>{
 
 	private Point start;

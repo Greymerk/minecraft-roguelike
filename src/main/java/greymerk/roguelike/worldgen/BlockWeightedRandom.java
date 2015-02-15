@@ -36,8 +36,8 @@ public class BlockWeightedRandom extends BlockFactoryBase {
 	}
 
 	@Override
-	public void setBlock(World world, Random rand, int x, int y, int z, boolean fillAir, boolean replaceSolid) {
+	public boolean setBlock(World world, Random rand, Coord origin, boolean fillAir, boolean replaceSolid) {
 		IBlockFactory block = blocks.get(rand);
-		block.setBlock(world, rand, x, y, z, fillAir, replaceSolid);
+		return block.setBlock(world, rand, origin, fillAir, replaceSolid);
 	}
 }

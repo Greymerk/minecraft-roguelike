@@ -15,7 +15,7 @@ public enum Skull {
 		
 		MetaBlock skullBlock = new MetaBlock(Blocks.skull, 1);
 		
-		if(!skullBlock.setBlock(world, x, y, z)) return;
+		if(!skullBlock.setBlock(world, new Coord(x, y, z))) return;
 		
 		TileEntity skullEntity = world.getTileEntity(x, y, z);
 		

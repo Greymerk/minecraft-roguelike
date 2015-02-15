@@ -34,10 +34,10 @@ public class BlockStripes extends BlockFactoryBase {
 	}
 
 	@Override
-	public void setBlock(World world, Random rand, int x, int y, int z, boolean fillAir, boolean replaceSolid) {
+	public boolean setBlock(World world, Random rand, Coord origin, boolean fillAir, boolean replaceSolid) {
 		int size = blocks.size();
-		int choice = Math.abs((x % size + y % size + z % size)) % size;
+		int choice = Math.abs((origin.getX() % size + origin.getY() % size + origin.getZ() % size)) % size;
 		IBlockFactory block = blocks.get(choice);
-		block.setBlock(world, rand, x, y, z, fillAir, replaceSolid);
+		return block.setBlock(world, rand, origin, fillAir, replaceSolid);
 	}
 }

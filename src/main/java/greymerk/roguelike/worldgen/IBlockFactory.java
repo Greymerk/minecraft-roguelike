@@ -6,12 +6,8 @@ import net.minecraft.world.World;
 
 public interface IBlockFactory {
 	
-	public void setBlock(World world, Random rand, Coord pos);
+	public boolean setBlock(World world, Random rand, Coord pos);
 	
-	public void setBlock(World world, Random rand, Coord pos, boolean fillAir, boolean replaceSolid);
-	
-	public void setBlock(World world, Random rand, int x, int y, int z);
-	
-	public void setBlock(World world, Random rand, int x, int y, int z, boolean fillAir, boolean replaceSolid);
+	public boolean setBlock(World world, Random rand, Coord pos, boolean fillAir, boolean replaceSolid);
 	
 }

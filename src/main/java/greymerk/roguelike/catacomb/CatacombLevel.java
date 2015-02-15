@@ -112,13 +112,13 @@ public class CatacombLevel {
 			
 			// floor & ceiling
 			if(y == originY - 1 || y == originY + 26){
-				blocks.setBlock(world, rand, x, y, z, true, true);
+				blocks.setBlock(world, rand, new Coord(x, y, z), true, true);
 			}
 			
 			if(world.isAirBlock(x, y, z) && y < originY + 9){
 				WorldGenPrimitive.setBlock(world, x, y, z, Blocks.iron_bars);
 			} else {
-				blocks.setBlock(world, rand, x, y, z, false, true);
+				blocks.setBlock(world, rand, new Coord(x, y, z), false, true);
 			}
 		
 			

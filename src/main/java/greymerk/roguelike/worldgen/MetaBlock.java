@@ -67,16 +67,14 @@ public class MetaBlock extends BlockFactoryBase {
 		flag = in;
 	}
 
-	public boolean setBlock(World world, Coord coord){
-		return this.setBlock(world, coord.getX(), coord.getY(), coord.getZ());
-	}
-	
-	public boolean setBlock(World world, int x, int y, int z){
-		return WorldGenPrimitive.setBlock(world, x, y, z, this);
+	public boolean setBlock(World world, Coord pos){
+		return WorldGenPrimitive.setBlock(world, pos.getX(), pos.getY(), pos.getZ(), this.block, this.meta, this.flag, true, true);
 	}
 	
 	@Override
-	public void setBlock(World world, Random rand, int x, int y, int z, boolean fillAir, boolean replaceSolid) {
-		WorldGenPrimitive.setBlock(world, x, y, z, block, meta, flag, fillAir, replaceSolid);
+	public boolean setBlock(World world, Random rand, Coord pos, boolean fillAir, boolean replaceSolid) {
+		return WorldGenPrimitive.setBlock(world, pos.getX(), pos.getY(), pos.getZ(), this.block, this.meta, this.flag, fillAir, replaceSolid);
 	}
+
+	
 }

@@ -51,15 +51,18 @@ public class CityGrounds {
 		cursor.add(Cardinal.UP, 20);
 		
 		for(Edge e : mst.getEdges()){
-			start = e.getPoints()[0].getPosition(cursor);
-			end = e.getPoints()[1].getPosition(cursor);
+			start = e.getPoints()[0].getPosition();
+			start.add(cursor);
+			end = e.getPoints()[1].getPosition();
+			end.add(cursor);
 			end.add(Cardinal.DOWN, 20);
 			WorldGenPrimitive.fillRectSolid(world, rand, start, end, theme.getPrimaryWall(), true, true);
 		}
 		
 		
-		List<Coord> towers = mst.getPointPositions(pos);
+		List<Coord> towers = mst.getPointPositions();
 		for(Coord c : towers){
+			c.add(pos);
 			rand = Citadel.getRandom(world, c.getX(), c.getZ());
 			tower.generate(world, rand, c.getX(), 50, c.getZ());
 		}

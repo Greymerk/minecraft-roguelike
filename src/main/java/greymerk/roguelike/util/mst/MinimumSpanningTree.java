@@ -32,6 +32,7 @@ public class MinimumSpanningTree extends Graph{
 			union(start, end);
 			mstEdges.add(e);
 		}
+		
 	}
 	
 	
@@ -59,12 +60,13 @@ public class MinimumSpanningTree extends Graph{
 	public void generate(World world, Random rand, IBlockFactory blocks, Coord pos){
 		
 		for(Edge e : this.mstEdges){
-			Coord start = e.getPoints()[0].getPosition(pos);
-			Coord end = e.getPoints()[1].getPosition(pos);
 			
-			System.out.println(start.toString() + ' ' + end.toString());
+			Coord start = e.getPoints()[0].getPosition();
+			start.add(pos);
+			Coord end = e.getPoints()[1].getPosition();
+			end.add(pos);
 			
-			WorldGenPrimitive.fillRectSolid(world, rand, start, end, blocks, true, true);
+			WorldGenPrimitive.fillRectHollow(world, rand, start, end, blocks, true, true);
 		}
 	}
 	
