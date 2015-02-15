@@ -11,7 +11,7 @@ anaglyph3d:false
 advancedOpengl:false
 maxFps:120
 fboEnable:true
-difficulty:3
+difficulty:0
 fancyGraphics:true
 ao:2
 clouds:true
