@@ -8,6 +8,7 @@ import greymerk.roguelike.treasure.TreasureChestBase;
 import greymerk.roguelike.treasure.loot.LootSettings;
 import greymerk.roguelike.treasure.loot.provider.ItemFood;
 import greymerk.roguelike.worldgen.Cardinal;
+import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
@@ -29,7 +30,11 @@ public class DungeonAshlea extends DungeonBase {
 	
 	
 	@Override
-	public boolean generate(World world, Random rand, CatacombLevelSettings settings, Cardinal[] entrances, int x, int y, int z) {
+	public boolean generate(World world, Random rand, CatacombLevelSettings settings, Cardinal[] entrances, Coord origin) {
+		
+		int x = origin.getX();
+		int y = origin.getY();
+		int z = origin.getZ();
 		
 		ITheme theme = settings.getTheme();
 		

@@ -19,7 +19,7 @@ import net.minecraft.world.World;
 public class DungeonDarkHall extends DungeonBase{
 
 	@Override
-	public boolean generate(World world, Random rand, CatacombLevelSettings settings, Cardinal[] entrances, int x, int y, int z) {
+	public boolean generate(World world, Random rand, CatacombLevelSettings settings, Cardinal[] entrances, Coord origin) {
 		
 		ITheme theme = settings.getTheme();
 		
@@ -29,7 +29,6 @@ public class DungeonDarkHall extends DungeonBase{
 		MetaBlock stair = theme.getSecondaryStair();
 		MetaBlock air = new MetaBlock(Blocks.air);
 		
-		Coord origin = new Coord(x, y, z);
 		Coord cursor;
 		Coord start;
 		Coord end;

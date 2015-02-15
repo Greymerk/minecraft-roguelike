@@ -21,14 +21,15 @@ import net.minecraft.world.World;
 public class DungeonPyramidTomb extends DungeonBase{
 
 	@Override
-	public boolean generate(World world, Random rand, CatacombLevelSettings settings, Cardinal[] entrances, int x, int y, int z) {
+	public boolean generate(World world, Random rand, CatacombLevelSettings settings, Cardinal[] entrances, Coord origin) {
 		
+
 		ITheme theme = settings.getTheme();
 		IBlockFactory pillar = theme.getPrimaryPillar();
 		IBlockFactory blocks = theme.getPrimaryWall();
 		MetaBlock air = new MetaBlock(Blocks.air);
 		
-		Coord origin = new Coord(x, y, z);
+
 		Coord start;
 		Coord end;
 		Coord cursor;

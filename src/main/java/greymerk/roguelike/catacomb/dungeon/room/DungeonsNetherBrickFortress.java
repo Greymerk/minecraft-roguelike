@@ -33,14 +33,13 @@ public class DungeonsNetherBrickFortress extends DungeonBase {
 	}
 	
 	
-	public boolean generate(World inWorld, Random inRandom, CatacombLevelSettings settings, Cardinal[] entrances, int inOriginX, int inOriginY, int inOriginZ) {
-		
+	public boolean generate(World inWorld, Random inRandom, CatacombLevelSettings settings, Cardinal[] entrances, Coord origin) {
 		
 		world = inWorld;
 		rand = inRandom;
-		originX = inOriginX;
-		originY = inOriginY;
-		originZ = inOriginZ;
+		originX = origin.getX();
+		originY = origin.getY();
+		originZ = origin.getZ();
 		
 		MetaBlock air = new MetaBlock(Blocks.air);
 

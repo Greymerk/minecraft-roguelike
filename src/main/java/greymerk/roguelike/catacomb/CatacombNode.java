@@ -3,6 +3,7 @@ package greymerk.roguelike.catacomb;
 import greymerk.roguelike.catacomb.dungeon.IDungeon;
 import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
+import greymerk.roguelike.worldgen.Coord;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,24 +17,20 @@ public class CatacombNode {
 	private Random rand;
 	private CatacombLevel level;
 	private List<CatacombTunneler> tunnelers;
-	private int x;
-	private int y;
-	private int z;
+	private Coord pos;
 	private IDungeon toGenerate;
 	private Cardinal direction;
 	
-	public CatacombNode (World world, Random rand, CatacombLevel level, ITheme theme, int x, int y, int z){
+	public CatacombNode (World world, Random rand, CatacombLevel level, ITheme theme, Coord origin){
 		this.world = world;
 		this.rand = rand;
 		this.level = level;
-		this.x = x;
-		this.y = y;
-		this.z = z;
+		this.pos = new Coord(origin);
 		this.tunnelers = new ArrayList<CatacombTunneler>();
 		
 		this.direction = Cardinal.directions[rand.nextInt(Cardinal.directions.length)];
 		
-		if(this.level.inRange(x, z)){
+		if(this.level.inRange(origin.getX(), origin.getZ())){
 			spawnTunnelers();
 		}
 	}
@@ -43,9 +40,7 @@ public class CatacombNode {
 		this.world = world;
 
 		this.level = level;
-		this.x = tunneler.getX();
-		this.y = tunneler.getY();
-		this.z = tunneler.getZ();
+		this.pos = tunneler.getPosition();
 		
 		this.rand = rand;
 		
@@ -53,7 +48,7 @@ public class CatacombNode {
 		
 		this.direction = Cardinal.reverse(tunneler.getDirection());
 		
-		if(this.level.inRange(x, z)){
+		if(this.level.inRange(pos.getX(), pos.getZ())){
 			spawnTunnelers();
 		}
 	}
@@ -67,7 +62,7 @@ public class CatacombNode {
 			}
 			
 			if(level.nodeCount() == 0 || tunnelers.isEmpty() || rand.nextBoolean()){
-				this.tunnelers.add(new CatacombTunneler(world, rand, this.level, dir, x, y, z));
+				this.tunnelers.add(new CatacombTunneler(world, rand, this.level, dir, pos));
 			}
 		}
 	}
@@ -87,19 +82,6 @@ public class CatacombNode {
 		}
 	
 		return true;
-	}
-	
-	
-	public int getX(){
-		return x;
-	}
-	
-	public int getY(){
-		return y;
-	}
-	
-	public int getZ(){
-		return z;
 	}
 	
 	public void construct(World world){
@@ -140,5 +122,9 @@ public class CatacombNode {
 		}
 		
 		return dirs.toArray(new Cardinal[dirs.size()]);
+	}
+	
+	public Coord getPosition(){
+		return new Coord(this.pos);
 	}
 }

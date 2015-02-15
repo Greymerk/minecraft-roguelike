@@ -18,12 +18,10 @@ import net.minecraft.world.World;
 public class DungeonTreetho extends DungeonBase{
 
 	@Override
-	public boolean generate(World world, Random rand, CatacombLevelSettings settings, Cardinal[] entrances, int x, int y, int z) {
-		
+	public boolean generate(World world, Random rand, CatacombLevelSettings settings, Cardinal[] entrances, Coord origin) {
+
 		ITheme theme = settings.getTheme();
 		IBlockFactory wall = theme.getPrimaryWall();
-		
-		Coord origin = new Coord(x, y, z);
 		
 		Coord cursor;
 		Coord start;

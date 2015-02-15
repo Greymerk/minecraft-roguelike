@@ -28,8 +28,11 @@ public class DungeonsPrison extends DungeonBase {
 	public DungeonsPrison(){}
 	
 	@Override
-	public boolean generate(World inWorld, Random inRandom, CatacombLevelSettings settings, Cardinal[] entrances, int inOriginX, int inOriginY, int inOriginZ) {
+	public boolean generate(World inWorld, Random inRandom, CatacombLevelSettings settings, Cardinal[] entrances, Coord origin) {
 		
+		int x = origin.getX();
+		int y = origin.getY();
+		int z = origin.getZ();
 		
 		ITheme theme = settings.getTheme();
 		this.settings = settings;
@@ -43,34 +46,34 @@ public class DungeonsPrison extends DungeonBase {
 		MetaBlock air = new MetaBlock(Blocks.air);
 		
 		// clear air
-		WorldGenPrimitive.fillRectSolid(inWorld, rand, inOriginX - 7, inOriginY, inOriginZ - 7, inOriginX + 7, inOriginY + 3, inOriginZ + 7, air);
+		WorldGenPrimitive.fillRectSolid(inWorld, rand, x - 7, y, z - 7, x + 7, y + 3, z + 7, air);
 		
 		// create outer walls
-		WorldGenPrimitive.fillRectHollow(world, rand, inOriginX - 8, inOriginY - 1, inOriginZ - 8, inOriginX + 8, inOriginY + 5, inOriginZ + 8, blocks, false, true);
+		WorldGenPrimitive.fillRectHollow(world, rand, x - 8, y - 1, z - 8, x + 8, y + 5, z + 8, blocks, false, true);
 		
 		// fill hallway ceiling beams
-		WorldGenPrimitive.fillRectSolid(world, rand, inOriginX - 7, inOriginY + 3, inOriginZ - 2, inOriginX + 7, inOriginY + 3, inOriginZ - 2, blocks);
-		WorldGenPrimitive.fillRectSolid(world, rand, inOriginX - 7, inOriginY + 3, inOriginZ + 2, inOriginX + 7, inOriginY + 3, inOriginZ + 2, blocks);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 7, y + 3, z - 2, x + 7, y + 3, z - 2, blocks);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 7, y + 3, z + 2, x + 7, y + 3, z + 2, blocks);
 		
-		WorldGenPrimitive.fillRectSolid(world, rand, inOriginX - 2, inOriginY + 3, inOriginZ - 7, inOriginX - 2, inOriginY + 3, inOriginZ + 7, blocks);
-		WorldGenPrimitive.fillRectSolid(world, rand, inOriginX + 2, inOriginY + 3, inOriginZ - 7, inOriginX + 2, inOriginY + 3, inOriginZ + 7, blocks);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 2, y + 3, z - 7, x - 2, y + 3, z + 7, blocks);
+		WorldGenPrimitive.fillRectSolid(world, rand, x + 2, y + 3, z - 7, x + 2, y + 3, z + 7, blocks);
 		
 		// fill hallway roofs
-		WorldGenPrimitive.fillRectSolid(world, rand, inOriginX - 7, inOriginY + 4, inOriginZ - 1, inOriginX - 2, inOriginY + 4, inOriginZ + 1, blocks);
-		WorldGenPrimitive.fillRectSolid(world, rand, inOriginX + 2, inOriginY + 4, inOriginZ - 1, inOriginX + 7, inOriginY + 4, inOriginZ + 1, blocks);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 7, y + 4, z - 1, x - 2, y + 4, z + 1, blocks);
+		WorldGenPrimitive.fillRectSolid(world, rand, x + 2, y + 4, z - 1, x + 7, y + 4, z + 1, blocks);
 
-		WorldGenPrimitive.fillRectSolid(world, rand, inOriginX - 1, inOriginY + 4, inOriginZ - 7, inOriginX + 1, inOriginY + 4, inOriginZ - 2, blocks);
-		WorldGenPrimitive.fillRectSolid(world, rand, inOriginX - 1, inOriginY + 4, inOriginZ + 2, inOriginX + 1, inOriginY + 4, inOriginZ + 7, blocks);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 1, y + 4, z - 7, x + 1, y + 4, z - 2, blocks);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 1, y + 4, z + 2, x + 1, y + 4, z + 7, blocks);
 		
-		WorldGenPrimitive.fillRectSolid(world, rand, inOriginX - 1, inOriginY + 4, inOriginZ - 1, inOriginX + 1, inOriginY + 4, inOriginZ + 1, blocks);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 1, y + 4, z - 1, x + 1, y + 4, z + 1, blocks);
 		
 
 		
 		// create cells
-		createCell(inOriginX - 5, inOriginY, inOriginZ - 5);
-		createCell(inOriginX - 5, inOriginY, inOriginZ + 5);
-		createCell(inOriginX + 5, inOriginY, inOriginZ - 5);
-		createCell(inOriginX + 5, inOriginY, inOriginZ + 5);
+		createCell(x - 5, y, z - 5);
+		createCell(x - 5, y, z + 5);
+		createCell(x + 5, y, z - 5);
+		createCell(x + 5, y, z + 5);
 		
 		return false;
 	}

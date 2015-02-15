@@ -1,10 +1,11 @@
 package greymerk.roguelike.catacomb;
 
 import greymerk.roguelike.catacomb.dungeon.IDungeon;
+import greymerk.roguelike.catacomb.dungeon.room.DungeonsBrick;
 import greymerk.roguelike.catacomb.settings.CatacombLevelSettings;
 import greymerk.roguelike.catacomb.theme.ITheme;
+import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
-import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
 
@@ -13,7 +14,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 
 public class CatacombLevel {
@@ -29,33 +29,33 @@ public class CatacombLevel {
 	private ITheme theme;
 	private CatacombLevelSettings settings;
 	
-	public CatacombLevel(World world, Random rand, CatacombLevelSettings settings, int originX, int originY, int originZ){
+	public CatacombLevel(World world, Random rand, CatacombLevelSettings settings, Coord origin){
 		this.world = world;
 		this.nodes = new ArrayList<CatacombNode>();
 
 		this.rand = rand;
 		this.settings = settings;
-		this.originX = originX;
-		this.originZ = originZ;
+		this.originX = origin.getX();
+		this.originZ = origin.getZ();
 		
-		start = new CatacombNode(world, rand, this, theme, originX, originY, originZ);
+		start = new CatacombNode(world, rand, this, theme, new Coord(origin));
 		nodes.add(start);
 	}
 	
-	public CatacombLevel(World world, Random rand, CatacombLevelSettings settings, int originX, int originY, int originZ, int maxNodes, int range){
+	public CatacombLevel(World world, Random rand, CatacombLevelSettings settings, Coord origin, int maxNodes, int range){
 		this.world = world;
 		this.nodes = new ArrayList<CatacombNode>();
 		
 		this.rand = rand;
 		this.settings = settings;
-		this.originX = originX;
-		this.originZ = originZ;
+		this.originX = origin.getX();
+		this.originZ = origin.getZ();
 		
-		start = new CatacombNode(world, rand, this, theme, originX, originY, originZ);
+		start = new CatacombNode(world, rand, this, theme, new Coord(origin));
 		nodes.add(start);
 	}
 	
-	public void generate(){
+	public void generate(CatacombNode oldEnd){
 		
 		// node tunnels
 		for (CatacombNode node : nodes){
@@ -67,9 +67,9 @@ public class CatacombLevel {
 		// node dungeons
 		for (CatacombNode node : nodes){
 			
-			int x = node.getX();
-			int y = node.getY();
-			int z = node.getZ();
+			int x = node.getPosition().getX();
+			int y = node.getPosition().getY();
+			int z = node.getPosition().getZ();
 			
 			if(node == this.end){
 				continue;
@@ -81,10 +81,10 @@ public class CatacombLevel {
 
 			IDungeon toGenerate = this.settings.getRooms().get(rand);
 			node.setDungeon(toGenerate);
-			toGenerate.generate(world, rand, this.settings, node.getEntrances(), x, y, z);
+			toGenerate.generate(world, rand, this.settings, node.getEntrances(), new Coord(x, y, z));
 		}
 		
-		generateLevelLink(world, rand, settings.getTheme(), start.getX(), start.getY(), start.getZ());
+		generateLevelLink(world, rand, settings.getTheme(), this.start, oldEnd);
 		
 		// tunnel segment features
 		for (CatacombNode node : nodes){
@@ -92,46 +92,22 @@ public class CatacombLevel {
 		}
 	}
 	
-	private void generateLevelLink(World world, Random rand, ITheme theme, int originX, int originY, int originZ) {
+	private void generateLevelLink(World world, Random rand, ITheme theme, CatacombNode start, CatacombNode oldEnd) {
 		
-		MetaBlock air = new MetaBlock(Blocks.air);
+		IDungeon downstairs = new DungeonsBrick();
+		downstairs.generate(world, rand, settings, start.getEntrances(), start.getPosition());
 		
-		// air in box
-		WorldGenPrimitive.fillRectSolid(world, rand, originX - 3, originY, originZ - 3, originX + 3, originY + 15, originZ + 3, air, true, true);
+		if(oldEnd == null) return;
 		
-		// shell
-		List<Coord> shell = WorldGenPrimitive.getRectHollow(originX - 4, originY - 1, originZ - 4, originX + 4, originY + 16, originZ + 4);
-
-		IBlockFactory blocks = theme.getPrimaryWall();
-		
-		for (Coord block : shell){
-			
-			int x = block.getX();
-			int y = block.getY();
-			int z = block.getZ();
-			
-			// floor & ceiling
-			if(y == originY - 1 || y == originY + 26){
-				blocks.setBlock(world, rand, new Coord(x, y, z), true, true);
-			}
-			
-			if(world.isAirBlock(x, y, z) && y < originY + 9){
-				WorldGenPrimitive.setBlock(world, x, y, z, Blocks.iron_bars);
-			} else {
-				blocks.setBlock(world, rand, new Coord(x, y, z), false, true);
-			}
-		
-			
-		}
-		
-		
-		// middle floor
-		WorldGenPrimitive.fillRectHollow(world, rand, originX - 4, originY + 9, originZ - 4, originX + 4, originY + 9, originZ + 4, blocks, true, true);
+		IDungeon upstairs = new DungeonsBrick();
+		upstairs.generate(world, rand, settings, oldEnd.getEntrances(), oldEnd.getPosition());
 		
 		MetaBlock stair = theme.getPrimaryStair();
 		
-		for (int y = originY; y <= originY + 9; y++){
-			WorldGenPrimitive.spiralStairStep(world, rand, originX, y, originZ, stair, theme.getPrimaryPillar());
+		Coord cursor = new Coord(start.getPosition());
+		for (int i = 0; i < oldEnd.getPosition().getY() - start.getPosition().getY(); i++){
+			WorldGenPrimitive.spiralStairStep(world, rand, cursor, stair, theme.getPrimaryPillar());
+			cursor.add(Cardinal.UP);
 		}	
 	}
 
@@ -183,8 +159,8 @@ public class CatacombLevel {
 	
 	public int distance(CatacombNode aNode, CatacombNode other){
 		
-		int xrel = Math.abs(aNode.getX() - other.getX());
-		int zrel = Math.abs(aNode.getZ() - other.getZ());
+		int xrel = Math.abs(aNode.getPosition().getX() - other.getPosition().getX());
+		int zrel = Math.abs(aNode.getPosition().getZ() - other.getPosition().getZ());
 		
 		int dist = (int) Math.sqrt((float)(xrel * xrel + zrel * zrel));		
 		
@@ -194,8 +170,8 @@ public class CatacombLevel {
 	public boolean hasNearbyNode(int x, int z, int min){
 		for (CatacombNode node : nodes){
 			
-			int otherX = node.getX();
-			int otherZ = node.getZ();
+			int otherX = node.getPosition().getX();
+			int otherZ = node.getPosition().getZ();
 			
 			int xrel = Math.abs(otherX - x);
 			int zrel = Math.abs(otherZ - z);
@@ -213,8 +189,8 @@ public class CatacombLevel {
 		
 		for (CatacombNode node : nodes){
 			
-			int otherX = node.getX();
-			int otherZ = node.getZ();
+			int otherX = node.getPosition().getX();
+			int otherZ = node.getPosition().getZ();
 			
 			int xrel = Math.abs(otherX - x);
 			int zrel = Math.abs(otherZ - z);

@@ -252,7 +252,7 @@ public class WitchTower implements ITower {
 		
 		
 		for(int i = thirdFloor.getY() - 1; i >= 50; --i){
-			WorldGenPrimitive.spiralStairStep(world, rand, origin.getX(), i, origin.getZ(), theme.getPrimaryStair(), theme.getPrimaryPillar());
+			WorldGenPrimitive.spiralStairStep(world, rand, new Coord(origin.getX(), i, origin.getZ()), theme.getPrimaryStair(), theme.getPrimaryPillar());
 		}
 		
 		// attic

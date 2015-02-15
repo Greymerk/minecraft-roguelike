@@ -3,6 +3,7 @@ package greymerk.roguelike.treasure;
 
 import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.treasure.loot.LootSettings;
+import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 
 import java.util.ArrayList;
@@ -90,12 +91,8 @@ public enum TreasureChest {
 				break;
 			}
 			
-			int x = block.getX();
-			int y = block.getY();
-			int z = block.getZ();
-			
-			if (isValidChestSpace(world, x, y, z)) {
-				generate(world, rand, loot, x, y, z, getChestType(rand, Catacomb.getLevel(y)));
+			if (isValidChestSpace(world, block)) {
+				generate(world, rand, loot, block, getChestType(rand, Catacomb.getLevel(block.getY())));
 				count++;
 			}
 		}
@@ -113,12 +110,8 @@ public enum TreasureChest {
 				break;
 			}
 			
-			int x = block.getX();
-			int y = block.getY();
-			int z = block.getZ();
-			
-			if (isValidChestSpace(world, x, y, z)) {
-				generate(world, rand, loot, x, y, z, types.get(rand.nextInt(types.size())));
+			if (isValidChestSpace(world, block)) {
+				generate(world, rand, loot, block, types.get(rand.nextInt(types.size())));
 				count++;
 			}
 		}
@@ -178,17 +171,23 @@ public enum TreasureChest {
 		
 	}
 
-	public static boolean isValidChestSpace(World world, int x, int y, int z) {
+	public static boolean isValidChestSpace(World world, Coord pos) {
 
-		if (!world.isAirBlock(x, y, z)) {
+		if (!world.isAirBlock(pos.getX(), pos.getY(), pos.getZ())) {
 			return false;
 		}
 		
-		if (!world.getBlock(x, y - 1, z).getMaterial().isSolid()) return false;
-		if(world.getBlock(x - 1, y, z) == Blocks.chest) return false;
-		if(world.getBlock(x + 1, y, z) == Blocks.chest) return false;
-		if(world.getBlock(x, y, z - 1) == Blocks.chest) return false;
-		if(world.getBlock(x, y, z + 1) == Blocks.chest) return false;
+		Coord cursor;
+		cursor = new Coord(pos);
+		cursor.add(Cardinal.DOWN);
+		
+		if (!world.getBlock(cursor.getX(), cursor.getY(), cursor.getZ()).getMaterial().isSolid()) return false;
+		
+		for(Cardinal dir : Cardinal.directions){
+			cursor = new Coord(pos);
+			cursor.add(dir);
+			if(world.getBlock(cursor.getX(), cursor.getY(), cursor.getZ()) == Blocks.chest) return false;
+		}
 		
 		return true;
 	}

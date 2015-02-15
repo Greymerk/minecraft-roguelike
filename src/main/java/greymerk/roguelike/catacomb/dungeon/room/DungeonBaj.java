@@ -19,8 +19,12 @@ import net.minecraft.world.World;
 public class DungeonBaj extends DungeonBase {
 
 	@Override
-	public boolean generate(World world, Random rand, CatacombLevelSettings settings, Cardinal[] entrances, int x, int y, int z) {
+	public boolean generate(World world, Random rand, CatacombLevelSettings settings, Cardinal[] entrances, Coord origin) {
 
+		
+		int x = origin.getX();
+		int y = origin.getY();
+		int z = origin.getZ();
 		
 		//WorldGenPrimitive.fillRectHollow(world, rand, x - 5, y - 2, z - 5, x + 5, y + 4, z + 5, new MetaBlock(Blocks.stone), true, true);
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 4, y - 1, z - 4, x + 4, y + 3, z + 4, new MetaBlock(Blocks.air), true, true);

@@ -31,12 +31,13 @@ public class DungeonsSpiderNest extends DungeonBase {
 		dungeonWidth = 3;
 	}
 
-	public boolean generate(World inWorld, Random inRandom, CatacombLevelSettings settings, Cardinal[] entrances, int inOriginX, int inOriginY, int inOriginZ) {
+	public boolean generate(World inWorld, Random inRandom, CatacombLevelSettings settings, Cardinal[] entrances, Coord origin) {
+
 		world = inWorld;
 		rand = inRandom;
-		originX = inOriginX;
-		originY = inOriginY;
-		originZ = inOriginZ;
+		originX = origin.getX();
+		originY = origin.getY();
+		originZ = origin.getZ();
 
 		BlockWeightedRandom webs = new BlockWeightedRandom();
 		webs.addBlock(new MetaBlock(Blocks.web), 3);

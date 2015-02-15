@@ -20,8 +20,11 @@ import net.minecraft.world.World;
 public class DungeonAvidya extends DungeonBase {
 
 	@Override
-	public boolean generate(World world, Random rand, CatacombLevelSettings settings, Cardinal[] entrances, int x, int y, int z) {
+	public boolean generate(World world, Random rand, CatacombLevelSettings settings, Cardinal[] entrances, Coord origin) {
 		
+		int x = origin.getX();
+		int y = origin.getY();
+		int z = origin.getZ();
 		
 		MetaBlock redClay = new MetaBlock(Blocks.stained_hardened_clay, 14);
 		MetaBlock whiteClay = new MetaBlock(Blocks.stained_hardened_clay, 0);

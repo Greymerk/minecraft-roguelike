@@ -211,7 +211,7 @@ public class EthoTower implements ITower {
 		
 		
 		for(int i = floor.getY() - 1; i > 50; --i){
-			WorldGenPrimitive.spiralStairStep(world, rand, x, i, z, stair, theme.getPrimaryPillar());
+			WorldGenPrimitive.spiralStairStep(world, rand, new Coord(x, i, z), stair, theme.getPrimaryPillar());
 		}
 	}
 	

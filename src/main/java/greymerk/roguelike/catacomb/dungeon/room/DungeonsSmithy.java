@@ -21,11 +21,10 @@ import net.minecraft.world.World;
 
 public class DungeonsSmithy extends DungeonBase {
 
-	public boolean generate(World world, Random rand, CatacombLevelSettings settings, Cardinal[] entrances, int x, int y, int z) {
-		
+	public boolean generate(World world, Random rand, CatacombLevelSettings settings, Cardinal[] entrances, Coord origin) {
+
 		ITheme theme = settings.getTheme();
-		
-		Coord origin = new Coord(x, y, z);
+
 		Coord cursor;
 		
 		Cardinal dir = entrances[0];

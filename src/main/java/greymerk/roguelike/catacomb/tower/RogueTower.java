@@ -217,8 +217,8 @@ public class RogueTower implements ITower{
 			}
 		}
 		
-		for(int i = main; i > y; --i){
-			WorldGenPrimitive.spiralStairStep(world, rand, x, i, z, stair, theme.getPrimaryPillar());
+		for(int i = main; i >= y; --i){
+			WorldGenPrimitive.spiralStairStep(world, rand, new Coord(x, i, z), stair, theme.getPrimaryPillar());
 		}
 	}
 	

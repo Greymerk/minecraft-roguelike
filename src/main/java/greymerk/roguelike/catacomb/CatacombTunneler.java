@@ -21,26 +21,22 @@ public class CatacombTunneler {
 	private CatacombLevel level;
 	private List<Coord> tunnel;
 	private Cardinal dir;
-	private int originX;
-	private int originY;
-	private int originZ;
+	private Coord pos;
 	private boolean done;
 	private int extend;
 
 	
-	public CatacombTunneler(World world, Random rand, CatacombLevel level, Cardinal direction, int x, int y, int z){
+	public CatacombTunneler(World world, Random rand, CatacombLevel level, Cardinal direction, Coord origin){
 
 
 		this.rand = rand;
 		this.level = level;
 		this.dir = direction;
-		this.originX = x;
-		this.originY = y;
-		this.originZ = z;
+		this.pos = new Coord(origin);
 		done = false;
 		this.extend = level.getSettings().getScatter() * 2;
 		tunnel = new ArrayList<Coord>();
-		tunnel.add(new Coord(x, y, z));
+		tunnel.add(new Coord(origin));
 	}
 	
 	public void update(){
@@ -48,7 +44,7 @@ public class CatacombTunneler {
 			return;
 		}
 		
-		if(level.hasNearbyNode(originX, originZ, level.getSettings().getScatter())){
+		if(level.hasNearbyNode(pos.getX(), pos.getZ(), level.getSettings().getScatter())){
 			advance();
 		} else {
 			if(rand.nextInt(extend) == 0){
@@ -63,12 +59,10 @@ public class CatacombTunneler {
 	
 	public void advance(){
 
-		Coord toAdd = new Coord(originX, originY, originZ);
+		Coord toAdd = new Coord(this.pos);
 		tunnel.add(new Coord(toAdd));
 		toAdd.add(dir, 1);
-		
-		originX = toAdd.getX();
-		originZ = toAdd.getZ();
+		this.pos.add(dir);
 		
 	}
 		
@@ -80,16 +74,8 @@ public class CatacombTunneler {
 		return this.dir;
 	}
 	
-	public int getX(){
-		return originX;
-	}
-	
-	public int getY(){
-		return originY;
-	}
-	
-	public int getZ(){
-		return originZ;
+	public Coord getPosition(){
+		return new Coord(this.pos);
 	}
 	
 	public void construct(World world){
@@ -112,15 +98,15 @@ public class CatacombTunneler {
 			int z = location.getZ();
 			
 			if(dir == Cardinal.NORTH || dir == Cardinal.SOUTH){
-				WorldGenPrimitive.fillRectSolid(world, rand, x - 1, originY, z, x + 1, originY + 2, z, air, false, true);
-				WorldGenPrimitive.fillRectSolid(world, rand, x - 2, originY - 1, z, x + 2, originY + 4, z, wallBlocks, false, true);
-				WorldGenPrimitive.fillRectSolid(world, rand, x - 1, originY - 1, z, x + 1, originY - 1, z, floor, false, true);
-				WorldGenPrimitive.fillRectSolid(world, rand, x - 1, originY - 1, z, x + 1, originY - 1, z, bridgeBlocks, true, false);
+				WorldGenPrimitive.fillRectSolid(world, rand, x - 1, pos.getY(), z, x + 1, pos.getY() + 2, z, air, false, true);
+				WorldGenPrimitive.fillRectSolid(world, rand, x - 2, pos.getY() - 1, z, x + 2, pos.getY() + 4, z, wallBlocks, false, true);
+				WorldGenPrimitive.fillRectSolid(world, rand, x - 1, pos.getY() - 1, z, x + 1, pos.getY() - 1, z, floor, false, true);
+				WorldGenPrimitive.fillRectSolid(world, rand, x - 1, pos.getY() - 1, z, x + 1, pos.getY() - 1, z, bridgeBlocks, true, false);
 			} else {
-				WorldGenPrimitive.fillRectSolid(world, rand, x, originY, z - 1, x, originY + 2, z + 1, air, false, true);
-				WorldGenPrimitive.fillRectSolid(world, rand, x, originY - 1, z - 2, x, originY + 4, z + 2, wallBlocks, false, true);
-				WorldGenPrimitive.fillRectSolid(world, rand, x, originY - 1, z - 1, x, originY - 1, z + 1, floor, false, true);
-				WorldGenPrimitive.fillRectSolid(world, rand, x, originY - 1, z - 1, x, originY - 1, z + 1, bridgeBlocks, true, false);
+				WorldGenPrimitive.fillRectSolid(world, rand, x, pos.getY(), z - 1, x, pos.getY() + 2, z + 1, air, false, true);
+				WorldGenPrimitive.fillRectSolid(world, rand, x, pos.getY() - 1, z - 2, x, pos.getY() + 4, z + 2, wallBlocks, false, true);
+				WorldGenPrimitive.fillRectSolid(world, rand, x, pos.getY() - 1, z - 1, x, pos.getY() - 1, z + 1, floor, false, true);
+				WorldGenPrimitive.fillRectSolid(world, rand, x, pos.getY() - 1, z - 1, x, pos.getY() - 1, z + 1, bridgeBlocks, true, false);
 			}
 		}
 		

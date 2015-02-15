@@ -17,8 +17,11 @@ import net.minecraft.world.World;
 public class DungeonReward implements IDungeon {
 
 	@Override
-	public boolean generate(World world, Random rand, CatacombLevelSettings settings, Cardinal[] entrances, int x, int y, int z) {
-
+	public boolean generate(World world, Random rand, CatacombLevelSettings settings, Cardinal[] entrances, Coord origin) {
+		
+		int x = origin.getX();
+		int y = origin.getY();
+		int z = origin.getZ();
 		ITheme theme = settings.getTheme();
 		
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 7, y, z - 7, x + 7, y + 5, z + 7, new MetaBlock(Blocks.air), true, true);

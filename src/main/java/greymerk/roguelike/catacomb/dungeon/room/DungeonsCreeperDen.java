@@ -1,190 +1,93 @@
 package greymerk.roguelike.catacomb.dungeon.room;
 
-import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.catacomb.dungeon.DungeonBase;
 import greymerk.roguelike.catacomb.settings.CatacombLevelSettings;
+import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.treasure.TreasureChest;
-import greymerk.roguelike.treasure.loot.LootSettings;
+import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.Spawner;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
-import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 
 public class DungeonsCreeperDen extends DungeonBase {
-	World world;
-	Random rand;
-	int originX;
-	int originY;
-	int originZ;
-	byte dungeonHeight;
-	int dungeonLength;
-	int dungeonWidth;
-	int woolColor;
-	int numChests;
-	
-	MetaBlock floorBlock;
-	MetaBlock wallBlock;
-	
-	public DungeonsCreeperDen() {
-		dungeonHeight = 3;
-		dungeonLength = 2;
-		dungeonWidth = 2;
-		numChests = 2;
-	}
 
-	public boolean generate(World inWorld, Random inRandom, CatacombLevelSettings settings, Cardinal[] entrances, int inOriginX, int inOriginY, int inOriginZ) {
+	public boolean generate(World world, Random rand, CatacombLevelSettings settings, Cardinal[] entrances, Coord origin) {
+
+		ITheme theme = settings.getTheme();
 		
-		world = inWorld;
-		rand = inRandom;
-		originX = inOriginX;
-		originY = inOriginY;
-		originZ = inOriginZ;
-
-		floorBlock = new MetaBlock(Blocks.gravel);
-		wallBlock = new MetaBlock(Blocks.mossy_cobblestone);
+		Coord start;
+		Coord end;
 		
-		buildWalls();
-		buildFloor();
-		buildRoof();
-		Spawner.generate(world, rand, settings, new Coord(originX, originY, originZ), Spawner.CREEPER);
-		createChests(settings.getLoot(), numChests);
-
-
-		return true;
-	}
-	
-	public boolean isValidDungeonLocation(World world, int originX, int originY, int originZ) {
-
-		int dungeonClearance = 0;
-		for (int x = originX - dungeonLength - 1; x <= originX + dungeonLength + 1; x++) {
-			for (int y = originY - 1; y <= originY + dungeonHeight + 1; y++) {
-				for (int z = originZ - dungeonWidth - 1; z <= originZ + dungeonWidth + 1; z++) {
-					Material material = world.getBlock(x, y, z).getMaterial();
-
-					if (y == originY - 1 && !material.isSolid()) {
-						return false;
-					}
-
-					if (y == originY + dungeonHeight + 1 && !material.isSolid()) {
-						return false;
-					}
-
-					if ((      x == originX - dungeonLength - 1
-							|| x == originX + dungeonLength + 1
-							|| z == originZ - dungeonWidth - 1
-							|| z == originZ + dungeonWidth + 1)
-							&& y == originY
-							&& world.isAirBlock(x, y, z)
-							&& world.isAirBlock(x, y + 1, z)){
-						dungeonClearance++;
-					}
-				}
+		MetaBlock tnt = new MetaBlock(Blocks.tnt);
+		
+		BlockWeightedRandom mossy = new BlockWeightedRandom();
+		mossy.addBlock(theme.getPrimaryWall(), 3);
+		mossy.addBlock(new MetaBlock(Blocks.mossy_cobblestone), 1);
+		
+		BlockWeightedRandom floor = new BlockWeightedRandom();
+		floor.addBlock(theme.getPrimaryFloor(), 1);
+		mossy.addBlock(new MetaBlock(Blocks.mossy_cobblestone), 1);
+		floor.addBlock(new MetaBlock(Blocks.gravel), 3);
+		
+		BlockWeightedRandom subfloor = new BlockWeightedRandom();
+		subfloor.addBlock(floor, 3);
+		subfloor.addBlock(tnt, 1);
+		
+		start = new Coord(origin);
+		end = new Coord(origin);
+		start.add(new Coord(-5, -1, -5));
+		end.add(new Coord(5, 5, 5));
+		
+		mossy.fillRectHollow(world, rand, start, end, false, true);
+		
+		start = new Coord(origin);
+		end = new Coord(origin);
+		start.add(new Coord(-4, -1, -4));
+		end.add(new Coord(4, -1, 4));
+		floor.fillRectSolid(world, rand, start, end, true, true);
+		
+		start = new Coord(origin);
+		end = new Coord(origin);
+		start.add(new Coord(-4, -4, -4));
+		end.add(new Coord(4, -2, 4));
+		subfloor.fillRectSolid(world, rand, start, end, true, true);
+		
+		start = new Coord(origin);
+		end = new Coord(origin);
+		start.add(new Coord(-4, 0, -4));
+		end.add(new Coord(4, 0, 4));
+		
+		List<Coord> chestSpaces = WorldGenPrimitive.getRectSolid(start, end);
+		Collections.shuffle(chestSpaces);
+		
+		int counter = 0;
+		for(Coord spot : chestSpaces){
+			if(TreasureChest.isValidChestSpace(world, spot)){
+				TreasureChest.generate(world, rand, settings.getLoot(), spot, TreasureChest.ORE);
+				Coord cursor = new Coord(spot);
+				cursor.add(Cardinal.DOWN, 2);
+				tnt.setBlock(world, cursor);
+				++counter;
 			}
-		}
-
-		if (dungeonClearance < 1 || dungeonClearance > 5) {
-			return false;
-		}
-
-		return true;
-	}
-
-	protected void buildWalls() {
-		for (int blockX = originX - dungeonLength - 1; blockX <= originX + dungeonLength + 1; blockX++) {
-			for (int blockY = originY + dungeonHeight; blockY >= originY - 3; blockY--) {
-				for (int blockZ = originZ - dungeonWidth - 1; blockZ <= originZ + dungeonWidth + 1; blockZ++) {
-					
-					if (blockX == originX - dungeonLength - 1 || blockZ == originZ - dungeonWidth - 1 || blockX == originX + dungeonLength + 1 || blockZ == originZ + dungeonWidth + 1) {
-
-						if (blockY >= 0 && !world.getBlock(blockX, blockY - 1, blockZ).getMaterial().isSolid()) {
-							WorldGenPrimitive.setBlock(world, blockX, blockY, blockZ, Blocks.air);
-							continue;
-						}
-						if (!world.getBlock(blockX, blockY, blockZ).getMaterial().isSolid()) {
-							continue;
-						}
-						
-						int mossyChance = 2 * (1 + (blockY - originY));
-						
-						if(mossyChance < 2){
-							mossyChance = 2;
-						}
-						
-						if(rand.nextInt(mossyChance) == 0){
-							WorldGenPrimitive.setBlock(world, blockX, blockY, blockZ, floorBlock);
-						} else {
-							WorldGenPrimitive.setBlock(world, blockX, blockY, blockZ, wallBlock);
-						}
-						
-					} else {
-						WorldGenPrimitive.setBlock(world, blockX, blockY, blockZ, Blocks.air);
-					}
-				}
-			}
-		}
-	}
-	
-	protected void buildFloor(){
-		
-		for (int blockX = originX - dungeonLength - 1; blockX <= originX + dungeonLength + 1; blockX++){
-			for (int blockZ = originZ - dungeonWidth - 1; blockZ <= originZ + dungeonWidth + 1; blockZ++){
-				for(int blockY = originY - 1; blockY > originY - 4; blockY--){
-					if (blockY < originY - 1 && rand.nextInt(12) == 0) {
-						WorldGenPrimitive.setBlock(world, blockX, blockY, blockZ, Blocks.tnt);
-					}
-					else if(rand.nextBoolean()){
-						WorldGenPrimitive.setBlock(world, blockX, blockY, blockZ, floorBlock);
-					} else {
-						WorldGenPrimitive.setBlock(world, blockX, blockY, blockZ, wallBlock);
-					}
-				}
 			
-			}
+			if(counter >= 2) break;
 		}
-	}
-	
-	protected void buildRoof(){
-		for (int blockX = originX - dungeonLength - 1; blockX <= originX + dungeonLength + 1; blockX++){
-			for (int blockZ = originZ - dungeonWidth - 1; blockZ <= originZ + dungeonWidth + 1; blockZ++){
-				WorldGenPrimitive.setBlock(world, blockX, originY + dungeonHeight + 1, blockZ, wallBlock);
-			}
-		}
-	}
-
-
-
-	protected void createChests(LootSettings loot, int numChests) {
-
-		for (int chestCount = 0; chestCount < numChests; chestCount++) {
-
-			for (int attempts = 0; attempts < 3; attempts++) {
-				int chestPosX = (originX + rand.nextInt(dungeonLength * 2 + 1)) - dungeonLength;
-				int chestPosY = originY;
-				int chestPosZ = (originZ + rand.nextInt(dungeonWidth * 2 + 1)) - dungeonWidth;
-
-				if (TreasureChest.isValidChestSpace(world, chestPosX, chestPosY, chestPosZ)) {
-					TreasureChest.generate(world, rand, loot, chestPosX, chestPosY, chestPosZ, Catacomb.getLevel(chestPosY), true);
-					
-					if(rand.nextBoolean()){
-						WorldGenPrimitive.setBlock(world, chestPosX, chestPosY - 2, chestPosZ, Blocks.tnt);
-					}
-					
-					break;
-				}
-				
-
-			}
-		}
+		
+		Spawner.generate(world, rand, settings, new Coord(origin), Spawner.CREEPER);
+		
+		return true;
 	}
 	
 	public int getSize(){
-		return 6;
+		return 7;
 	}
 }

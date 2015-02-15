@@ -14,7 +14,7 @@ import net.minecraft.world.World;
 public abstract class DungeonBase implements IDungeon{
 
 	@Override
-	public abstract boolean generate(World world, Random rand, CatacombLevelSettings settings, Cardinal[] entrances, int x, int y, int z);
+	public abstract boolean generate(World world, Random rand, CatacombLevelSettings settings, Cardinal[] entrances, Coord origin);
 	
 	@Override
 	public abstract int getSize();

@@ -18,8 +18,12 @@ import net.minecraft.world.World;
 
 public class DungeonsCrypt extends DungeonBase {
 
-	public boolean generate(World world, Random rand, CatacombLevelSettings settings, Cardinal[] entrances, int x, int y, int z) {
+	public boolean generate(World world, Random rand, CatacombLevelSettings settings, Cardinal[] entrances, Coord origin) {
 
+		int x = origin.getX();
+		int y = origin.getY();
+		int z = origin.getZ();
+		
 		ITheme theme = settings.getTheme();
 		
 		IBlockFactory walls = theme.getPrimaryWall();

@@ -22,8 +22,11 @@ import net.minecraft.world.World;
 public class DungeonStorage extends DungeonBase {
 
 	@Override
-	public boolean generate(World world, Random rand, CatacombLevelSettings settings, Cardinal[] entrances, int x, int y, int z) {
-
+	public boolean generate(World world, Random rand, CatacombLevelSettings settings, Cardinal[] entrances, Coord origin) {
+		
+		int x = origin.getX();
+		int y = origin.getY();
+		int z = origin.getZ();
 		ITheme theme = settings.getTheme();
 		
 		HashSet<Coord> chestSpaces = new HashSet<Coord>();

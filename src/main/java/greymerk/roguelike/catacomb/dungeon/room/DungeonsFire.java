@@ -19,7 +19,7 @@ public class DungeonsFire extends DungeonBase {
 	
 	
 	@Override
-	public boolean generate(World world, Random rand, CatacombLevelSettings settings, Cardinal[] entrances, int x, int y, int z) {
+	public boolean generate(World world, Random rand, CatacombLevelSettings settings, Cardinal[] entrances, Coord origin) {
 		
 		ITheme theme = settings.getTheme();
 
@@ -27,7 +27,6 @@ public class DungeonsFire extends DungeonBase {
 		MetaBlock stair = theme.getPrimaryStair();
 		IBlockFactory pillar = theme.getPrimaryPillar();
 		
-		final Coord origin = new Coord(x, y, z); 
 		Coord cursor;
 		Coord start;
 		Coord end;

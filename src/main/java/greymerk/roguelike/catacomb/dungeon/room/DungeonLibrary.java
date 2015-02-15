@@ -19,14 +19,17 @@ import scala.actors.threadpool.Arrays;
 public class DungeonLibrary extends DungeonBase{
 
 	@Override
-	public boolean generate(World world, Random rand, CatacombLevelSettings settings, Cardinal[] entrances, int x, int y, int z) {
+	public boolean generate(World world, Random rand, CatacombLevelSettings settings, Cardinal[] entrances, Coord origin) {
 		
+		int x = origin.getX();
+		int y = origin.getY();
+		int z = origin.getZ();
 		IBlockFactory walls = settings.getTheme().getPrimaryWall();
 		
 		MetaBlock stair = settings.getTheme().getPrimaryStair();
 		
 		MetaBlock air = new MetaBlock(Blocks.air);
-		Coord origin = new Coord(x, y, z);
+
 		Coord cursor;
 		Coord start;
 		Coord end;

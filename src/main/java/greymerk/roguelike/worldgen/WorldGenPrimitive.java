@@ -189,41 +189,36 @@ public class WorldGenPrimitive {
 	}
 	
 
-	public static void spiralStairStep(World world, Random rand, int inX, int inY, int inZ, MetaBlock stair, IBlockFactory fill){
+	public static void spiralStairStep(World world, Random rand, Coord origin, MetaBlock stair, IBlockFactory fill){
 		
 		MetaBlock air = new MetaBlock(Blocks.air);
+		Coord cursor;
+		Coord start;
+		Coord end;
+		
+		start = new Coord(origin);
+		start.add(new Coord(-1, 0, -1));
+		end = new Coord(origin);
+		end.add(new Coord(1, 0, 1));
 		
 		// air
-		fillRectSolid(world, rand, new Coord(inX - 1, inY, inZ - 1), new Coord(inX + 1, inY, inZ + 1), air, true, true);
+		fillRectSolid(world, rand, start, end, air, true, true);
 		
 		// core
-		setBlock(world, rand, inX, inY, inZ, fill, true, true);
+		setBlock(world, rand, origin, fill, true, true);
 		
-		switch (inY % 4){
-		case 0: // north
-			// stairs
-			setBlock(world, inX, inY, inZ - 1, stair.getBlockID(), blockOrientation(Cardinal.WEST, false), stair.getFlag(), true, true);
-			setBlock(world, inX + 1, inY, inZ - 1, stair.getBlockID(), blockOrientation(Cardinal.EAST, true), stair.getFlag(), true, true);
-			setBlock(world, inX + 1, inY, inZ, stair.getBlockID(), blockOrientation(Cardinal.SOUTH, true), stair.getFlag(), true, true);
-			return;
-		case 1: // east
-			setBlock(world, inX + 1, inY, inZ, stair.getBlockID(), blockOrientation(Cardinal.NORTH, false), stair.getFlag(), true, true);
-			setBlock(world, inX + 1, inY, inZ + 1, stair.getBlockID(), blockOrientation(Cardinal.SOUTH, true), stair.getFlag(), true, true);
-			setBlock(world, inX, inY, inZ + 1, stair.getBlockID(), blockOrientation(Cardinal.WEST, true), stair.getFlag(), true, true);
-			return;
-		case 2: // south
-			setBlock(world, inX, inY, inZ + 1, stair.getBlockID(), blockOrientation(Cardinal.EAST, false), stair.getFlag(), true, true);
-			setBlock(world, inX - 1, inY, inZ + 1, stair.getBlockID(), blockOrientation(Cardinal.WEST, true), stair.getFlag(), true, true);
-			setBlock(world, inX - 1, inY, inZ, stair.getBlockID(), blockOrientation(Cardinal.NORTH, true), stair.getFlag(), true, true);
-			return;
-		case 3: // west
-			setBlock(world, inX - 1, inY, inZ, stair.getBlockID(), blockOrientation(Cardinal.SOUTH, false), stair.getFlag(), true, true);
-			setBlock(world, inX - 1, inY, inZ - 1, stair.getBlockID(), blockOrientation(Cardinal.NORTH, true), stair.getFlag(), true, true);
-			setBlock(world, inX, inY, inZ - 1, stair.getBlockID(), blockOrientation(Cardinal.EAST, true), stair.getFlag(), true, true);
-			return;
-		default:
-			return;
-		}
+		Cardinal dir = Cardinal.directions[origin.getY() % 4];
+		
+		Cardinal[] orth = Cardinal.getOrthogonal(dir);
+		cursor = new Coord(origin);
+		cursor.add(dir);
+		blockOrientation(stair, orth[1], false).setBlock(world, cursor);
+		cursor.add(orth[0]);
+		blockOrientation(stair, orth[0], true).setBlock(world, cursor);
+		cursor.add(Cardinal.reverse(dir));
+		blockOrientation(stair, Cardinal.reverse(dir), true).setBlock(world, cursor);
+		
+		
 	}
 	
 	public static void randomVines(World world, Random rand, int x1, int y1, int z1, int x2, int y2, int z2){

@@ -8,6 +8,7 @@ import greymerk.roguelike.treasure.loot.Loot;
 import greymerk.roguelike.treasure.loot.provider.ItemNovelty;
 import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.Cardinal;
+import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.Log;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
@@ -22,8 +23,11 @@ import net.minecraft.world.World;
 public class DungeonEtho extends DungeonBase {
 
 	@Override
-	public boolean generate(World world, Random rand, CatacombLevelSettings settings, Cardinal[] entrances, int x, int y, int z) {
-
+	public boolean generate(World world, Random rand, CatacombLevelSettings settings, Cardinal[] entrances, Coord origin) {
+		
+		int x = origin.getX();
+		int y = origin.getY();
+		int z = origin.getZ();
 		
 		MetaBlock air = new MetaBlock(Blocks.air);
 		

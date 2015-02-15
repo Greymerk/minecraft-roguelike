@@ -25,7 +25,11 @@ public class DungeonsBrick extends DungeonBase {
 	public DungeonsBrick(){
 	}
 	
-	public boolean generate(World world, Random rand, CatacombLevelSettings settings, Cardinal[] entrances, int x, int y, int z) {
+	public boolean generate(World world, Random rand, CatacombLevelSettings settings, Cardinal[] entrances, Coord origin) {
+		
+		int x = origin.getX();
+		int y = origin.getY();
+		int z = origin.getZ();
 		
 		ITheme theme = settings.getTheme();
 		
@@ -41,7 +45,7 @@ public class DungeonsBrick extends DungeonBase {
 		// shell
 		WorldGenPrimitive.fillRectHollow(world, rand, x - 4, y - 1, z - 4, x + 4, y + 4, z + 4, blocks, false, true);
 
-		WorldGenPrimitive.fillRectSolid(world, rand, x - 4, y - 1, z - 4, x + 4, y - 1, z + 4, theme.getPrimaryFloor(), false, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, new Coord(x - 4, y - 1, z - 4), new Coord(x + 4, y - 1, z + 4), theme.getPrimaryFloor(), false, true);
 		
 		Coord start;
 		Coord end;

@@ -57,7 +57,7 @@ public class SecretRoom implements ISecretRoom {
 		WorldGenPrimitive.fillRectSolid(world, rand, pos, end, new MetaBlock(Blocks.air), true, true);
 		
 		end.add(Cardinal.DOWN);
-		this.prototype.generate(world, rand, settings, new Cardinal[]{dir}, end.getX(), end.getY(), end.getZ());
+		this.prototype.generate(world, rand, settings, new Cardinal[]{dir}, end);
 		count -= 1;
 		
 		return true;

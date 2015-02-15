@@ -55,6 +55,8 @@ public class Catacomb {
 
 		int numLevels = settings.getNumLevels();
 		
+		CatacombNode oldEnd = null;
+		
 		for (int i = 0; i < numLevels; ++i){
 			CatacombLevelSettings levelSettings = settings.getLevelSettings(i);
 			
@@ -62,17 +64,17 @@ public class Catacomb {
 			
 			rand = getRandom(world, x, z);
 			
-			level = new CatacombLevel(world, rand, levelSettings, x, y, z, levelSettings.getNumRooms(), levelSettings.getRange());
+			level = new CatacombLevel(world, rand, levelSettings, new Coord(x, y, z), levelSettings.getNumRooms(), levelSettings.getRange());
 			
 			while(!level.isDone()){
 				level.update();
 			}
 			
-			level.generate();
-			CatacombNode end = level.getEnd();
-			x = end.getX();
+			level.generate(oldEnd);
+			oldEnd = level.getEnd();
+			x = oldEnd.getPosition().getX();
 			y = y - VERTICAL_SPACING;
-			z = end.getZ();
+			z = oldEnd.getPosition().getZ();
 		}
 		
 		Tower tower = settings.getTower().getTower();
