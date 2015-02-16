@@ -10,11 +10,12 @@ import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
 
+import java.util.Arrays;
 import java.util.Random;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
-import scala.actors.threadpool.Arrays;
+
 
 public class DungeonLibrary extends DungeonBase{
 
