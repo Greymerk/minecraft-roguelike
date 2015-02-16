@@ -131,7 +131,7 @@ public class DungeonStorage extends DungeonBase {
 		
 		List<Coord> spaces = new ArrayList<Coord>(chestSpaces);
 		
-		TreasureChest.createChests(world, rand, settings.getLoot(), 3, spaces, types);
+		TreasureChest.createChests(world, rand, settings, 3, spaces, types);
 		
 		return true;
 	}

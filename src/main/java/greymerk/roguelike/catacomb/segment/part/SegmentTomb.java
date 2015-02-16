@@ -87,7 +87,7 @@ public class SegmentTomb extends SegmentBase {
 		cursor.add(dir, 4);
 		Spawner.generate(world, rand, level, cursor, rand.nextBoolean() ? Spawner.SKELETON : Spawner.ZOMBIE);
 		cursor.add(dir);
-		TreasureChest.generate(world, rand, level.getLoot(), cursor, rand.nextBoolean() ? TreasureChest.ARMOUR : TreasureChest.WEAPONS);
+		TreasureChest.generate(world, rand, level, cursor, rand.nextBoolean() ? TreasureChest.ARMOUR : TreasureChest.WEAPONS);
 		
 	}
 }

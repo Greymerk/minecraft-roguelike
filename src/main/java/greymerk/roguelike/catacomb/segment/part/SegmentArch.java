@@ -1,9 +1,6 @@
 package greymerk.roguelike.catacomb.segment.part;
 
-import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.catacomb.CatacombLevel;
-import greymerk.roguelike.catacomb.segment.IAlcove;
-import greymerk.roguelike.catacomb.segment.alcove.PrisonCell;
 import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
@@ -44,13 +41,6 @@ public class SegmentArch extends SegmentBase {
 			WorldGenPrimitive.setBlock(world, rand, cursor, theme.getPrimaryWall(), true, true);
 			cursor.add(Cardinal.reverse(dir), 1);
 			WorldGenPrimitive.setBlock(world, rand, cursor, stair, true, true);			
-		}
-		
-		if(rand.nextInt(10) == 0 && Catacomb.getLevel(y) == 2){
-			IAlcove cell = new PrisonCell();
-			if(cell.isValidLocation(world, x, y, z, dir)){
-				cell.generate(world, rand, level.getSettings(), x, y, z, dir);
-			}
 		}
 	}
 }

@@ -10,6 +10,7 @@ import greymerk.roguelike.catacomb.settings.CatacombTowerSettings;
 import greymerk.roguelike.catacomb.settings.SpawnCriteria;
 import greymerk.roguelike.catacomb.theme.Theme;
 import greymerk.roguelike.catacomb.tower.Tower;
+import greymerk.roguelike.treasure.loot.LootSettings;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +50,8 @@ public class CatacombSettingsDesertTheme extends CatacombSettings{
 		level.setTheme(Theme.getTheme(Theme.SANDSTONE));
 		level.setSegments(segments);
 		level.setRooms(factory);
-		level.setDifficulty(4);
+		level.setDifficulty(3);
+		level.setLoot(new LootSettings(3));
 		
 		for(int i = 0; i < 5; ++i){
 			levels.put(i, level);

@@ -57,7 +57,7 @@ public class DungeonsNetherBrick extends DungeonBase {
 		ceiling.addBlock(new MetaBlock(Blocks.air), 5);
 		WorldGenPrimitive.fillRectSolid(world, rand, x - length, y + height, z - width, x + length, y + height, z + width, ceiling);
 		
-		TreasureChest.createChests(world, rand, settings.getLoot(), 1, WorldGenPrimitive.getRectSolid(x - length, y, z - width, x + length, y, z + width));
+		TreasureChest.createChests(world, rand, settings, 1, WorldGenPrimitive.getRectSolid(x - length, y, z - width, x + length, y, z + width));
 
 		Spawner.generate(world, rand, settings, new Coord(x - length - 1, y + rand.nextInt(2), z - width - 1));
 		Spawner.generate(world, rand, settings, new Coord(x - length - 1, y + rand.nextInt(2), z + width + 1));

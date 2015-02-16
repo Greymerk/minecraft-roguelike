@@ -8,10 +8,17 @@ import greymerk.roguelike.catacomb.settings.CatacombTowerSettings;
 import greymerk.roguelike.catacomb.settings.SpawnCriteria;
 import greymerk.roguelike.catacomb.theme.Theme;
 import greymerk.roguelike.catacomb.tower.Tower;
+import greymerk.roguelike.treasure.loot.Loot;
+import greymerk.roguelike.treasure.loot.LootSettings;
+import greymerk.roguelike.treasure.loot.WeightedRandomLoot;
+import greymerk.roguelike.treasure.loot.provider.ItemOre;
+import greymerk.roguelike.util.WeightedRandomizer;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.BiomeDictionary;
 
 public class CatacombSettingsJungleTheme extends CatacombSettings{
@@ -31,6 +38,8 @@ public class CatacombSettingsJungleTheme extends CatacombSettings{
 		
 		for(int i = 0; i < 5; ++i){
 			CatacombLevelSettings level = new CatacombLevelSettings();
+			level.setDifficulty(3);
+
 			
 			SegmentGenerator segments;
 			segments = new SegmentGenerator(Segment.ARCH);
@@ -45,6 +54,15 @@ public class CatacombSettingsJungleTheme extends CatacombSettings{
 			level.setSegments(segments);
 			
 			level.setTheme(Theme.getTheme(themes[i]));
+			
+			LootSettings loot = new LootSettings(3);
+			WeightedRandomizer<ItemStack> ore = new WeightedRandomizer<ItemStack>();
+			ore.add(new ItemOre(2, 3));
+			ore.add(new WeightedRandomLoot(Items.emerald, 0, 1, 3, 1));
+			ore.add(new WeightedRandomLoot(Items.gold_ingot, 0, 1, 3, 2));
+			loot.set(Loot.ORE, ore);
+			level.setLoot(loot);
+			
 			levels.put(i, level);
 		}
 	}

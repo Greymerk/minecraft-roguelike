@@ -8,6 +8,7 @@ import greymerk.roguelike.catacomb.settings.CatacombTowerSettings;
 import greymerk.roguelike.catacomb.settings.SpawnCriteria;
 import greymerk.roguelike.catacomb.theme.Theme;
 import greymerk.roguelike.catacomb.tower.Tower;
+import greymerk.roguelike.treasure.loot.LootSettings;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,11 +36,16 @@ public class CatacombSettingsSwampTheme extends CatacombSettings{
 			level.setTheme(Theme.getTheme(themes[i]));
 			
 			if(i == 0){
+				level.setDifficulty(4);
+				level.setLoot(new LootSettings(4));
+				
 				DungeonFactory factory;
 				factory = new DungeonFactory();
-				factory.addRandom(Dungeon.BRICK, 3);
-				factory.addRandom(Dungeon.CORNER, 3);
+				factory.addRandom(Dungeon.BRICK, 5);
+				factory.addRandom(Dungeon.CORNER, 5);
 				factory.addRandom(Dungeon.DARKHALL, 1);
+				factory.addSingle(Dungeon.LIBRARY);
+				factory.addSingle(Dungeon.FIRE);
 				level.setRooms(factory);
 			}
 

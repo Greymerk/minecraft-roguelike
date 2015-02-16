@@ -1,18 +1,15 @@
 package greymerk.roguelike.catacomb.settings;
 
 import greymerk.roguelike.catacomb.settings.builtin.CatacombSettingsBasicLoot;
-import greymerk.roguelike.catacomb.settings.builtin.CatacombSettingsColdTheme;
 import greymerk.roguelike.catacomb.settings.builtin.CatacombSettingsDesertTheme;
 import greymerk.roguelike.catacomb.settings.builtin.CatacombSettingsEniTheme;
 import greymerk.roguelike.catacomb.settings.builtin.CatacombSettingsEthoTheme;
 import greymerk.roguelike.catacomb.settings.builtin.CatacombSettingsJungleTheme;
-import greymerk.roguelike.catacomb.settings.builtin.CatacombSettingsMesaTheme;
 import greymerk.roguelike.catacomb.settings.builtin.CatacombSettingsRooms;
 import greymerk.roguelike.catacomb.settings.builtin.CatacombSettingsSecrets;
 import greymerk.roguelike.catacomb.settings.builtin.CatacombSettingsSegments;
 import greymerk.roguelike.catacomb.settings.builtin.CatacombSettingsSize;
 import greymerk.roguelike.catacomb.settings.builtin.CatacombSettingsSwampTheme;
-import greymerk.roguelike.catacomb.settings.builtin.CatacombSettingsTaigaTheme;
 import greymerk.roguelike.catacomb.settings.builtin.CatacombSettingsTheme;
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.util.WeightedChoice;
@@ -58,9 +55,6 @@ public class CatacombSettingsResolver {
 		this.builtin.add(new CatacombSettingsDesertTheme());
 		this.builtin.add(new CatacombSettingsJungleTheme());
 		this.builtin.add(new CatacombSettingsSwampTheme());
-		this.builtin.add(new CatacombSettingsMesaTheme());
-		this.builtin.add(new CatacombSettingsTaigaTheme());
-		this.builtin.add(new CatacombSettingsColdTheme());
 		this.builtin.add(new CatacombSettingsEniTheme());
 		this.builtin.add(new CatacombSettingsEthoTheme());
 		

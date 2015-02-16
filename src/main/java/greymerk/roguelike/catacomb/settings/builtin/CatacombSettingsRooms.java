@@ -26,7 +26,6 @@ public class CatacombSettingsRooms extends CatacombSettings{
 				factory.addSingle(Dungeon.PIT);
 				factory.addSingle(Dungeon.LAB);
 				factory.addSingle(Dungeon.MESS);
-				factory.addByRatio(Dungeon.STORAGE, 30);
 				factory.addRandom(Dungeon.CORNER, 10);
 				factory.addRandom(Dungeon.BRICK, 3);
 				break;
@@ -35,10 +34,9 @@ public class CatacombSettingsRooms extends CatacombSettings{
 				factory.addSingle(Dungeon.OSSUARY);
 				factory.addSingle(Dungeon.CREEPER);
 				factory.addSingle(Dungeon.FIRE);
-				factory.addByRatio(Dungeon.PRISON, 10);
+				factory.addByRatio(Dungeon.PRISON, 5);
 				factory.addByRatio(Dungeon.CRYPT, 10);
-				factory.addByRatio(Dungeon.PIT, 10);
-				factory.addByRatio(Dungeon.STORAGE, 30);
+				factory.addByRatio(Dungeon.PIT, 7);
 				factory.addRandom(Dungeon.CORNER, 10);
 				factory.addRandom(Dungeon.BRICK, 3);
 				break;	
@@ -51,7 +49,6 @@ public class CatacombSettingsRooms extends CatacombSettings{
 				factory.addByRatio(Dungeon.SPIDER, 15);
 				factory.addByRatio(Dungeon.CREEPER, 15);
 				factory.addByRatio(Dungeon.FIRE, 20);
-				factory.addByRatio(Dungeon.STORAGE, 30);
 				factory.addRandom(Dungeon.CORNER, 100);
 				factory.addRandom(Dungeon.BRICK, 30);
 				factory.addRandom(Dungeon.SPIDER, 10);
@@ -64,7 +61,6 @@ public class CatacombSettingsRooms extends CatacombSettings{
 				factory.addByRatio(Dungeon.FIRE, 30);
 				factory.addByRatio(Dungeon.NETHERFORT, 20);
 				factory.addByRatio(Dungeon.SLIME, 15);
-				factory.addByRatio(Dungeon.STORAGE, 30);
 				factory.addRandom(Dungeon.CORNER, 100);
 				factory.addRandom(Dungeon.NETHER, 30);
 				factory.addRandom(Dungeon.SLIME, 10);

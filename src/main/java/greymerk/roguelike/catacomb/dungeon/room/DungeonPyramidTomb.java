@@ -4,7 +4,6 @@ import greymerk.roguelike.catacomb.dungeon.DungeonBase;
 import greymerk.roguelike.catacomb.settings.CatacombLevelSettings;
 import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.treasure.TreasureChest;
-import greymerk.roguelike.treasure.loot.LootSettings;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
@@ -194,7 +193,6 @@ public class DungeonPyramidTomb extends DungeonBase{
 	
 	
 	private void sarcophagus(World world, Random rand, CatacombLevelSettings settings, Cardinal dir, Coord origin){
-		LootSettings loot = settings.getLoot();
 		SpawnerSettings spawners = settings.getSpawners();
 		
 		MetaBlock stair = new MetaBlock(Blocks.quartz_stairs);
@@ -205,7 +203,7 @@ public class DungeonPyramidTomb extends DungeonBase{
 		cursor = new Coord(origin);
 		blocks.setBlock(world, cursor);
 		cursor.add(Cardinal.UP);
-		TreasureChest.generate(world, rand, loot, cursor, TreasureChest.ORE);
+		TreasureChest.generate(world, rand, settings, cursor, TreasureChest.ORE);
 		cursor.add(Cardinal.UP);
 		blocks.setBlock(world, cursor);
 		

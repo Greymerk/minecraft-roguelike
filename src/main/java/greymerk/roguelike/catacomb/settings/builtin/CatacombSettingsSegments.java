@@ -23,9 +23,9 @@ public class CatacombSettingsSegments extends CatacombSettings{
 				break;
 			case 1:
 				segments = new SegmentGenerator(Segment.ARCH);
-				segments.add(Segment.SHELF, 3);
+				segments.add(Segment.SHELF, 1);
 				segments.add(Segment.INSET, 3);
-				segments.add(Segment.DOOR, 3);
+				segments.add(Segment.DOOR, 5);
 				segments.add(Segment.BOOKS, 1);
 				segments.add(Segment.CHEST, 1);
 				segments.add(Segment.SPAWNER, 1);
@@ -36,6 +36,7 @@ public class CatacombSettingsSegments extends CatacombSettings{
 				segments.add(Segment.INSET, 6);
 				segments.add(Segment.SKULL, 1);
 				segments.add(Segment.TOMB, 3);
+				segments.add(Segment.CELL, 1);
 				segments.add(Segment.CHEST, 1);
 				segments.add(Segment.SPAWNER, 1);
 				segments.add(Segment.FIREPLACE, 1);
@@ -48,6 +49,7 @@ public class CatacombSettingsSegments extends CatacombSettings{
 				segments.add(Segment.ARROW, 5);
 				segments.add(Segment.SKULL, 2);
 				segments.add(Segment.CHEST, 1);
+				segments.add(Segment.CELL, 2);
 				segments.add(Segment.SPAWNER, 1);
 				segments.add(Segment.TOMB, 1);
 				break;

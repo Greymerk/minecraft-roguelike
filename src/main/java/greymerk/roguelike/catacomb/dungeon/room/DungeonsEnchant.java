@@ -140,7 +140,7 @@ public class DungeonsEnchant extends DungeonBase {
 		if(RogueConfig.getBoolean(RogueConfig.GENEROUS)){
 			WorldGenPrimitive.setBlock(world, x, y, z, Blocks.enchanting_table);
 		} else {
-			TreasureChest.generate(world, rand, settings.getLoot(), x, y, z, TreasureChest.ENCHANTING, 4, false);
+			TreasureChest.generate(world, rand, settings, new Coord(x, y, z), TreasureChest.ENCHANTING, 4, false);
 		}
 		return false;
 	}	

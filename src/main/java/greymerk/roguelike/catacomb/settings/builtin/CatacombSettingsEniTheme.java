@@ -10,6 +10,7 @@ import greymerk.roguelike.catacomb.settings.CatacombTowerSettings;
 import greymerk.roguelike.catacomb.settings.SpawnCriteria;
 import greymerk.roguelike.catacomb.theme.Theme;
 import greymerk.roguelike.catacomb.tower.Tower;
+import greymerk.roguelike.treasure.loot.LootSettings;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +41,7 @@ public class CatacombSettingsEniTheme extends CatacombSettings{
 				level.setRange(60);
 				level.setNumRooms(10);
 				level.setDifficulty(3);
+				level.setLoot(new LootSettings(3));
 				
 				DungeonFactory factory;
 			
@@ -62,6 +64,7 @@ public class CatacombSettingsEniTheme extends CatacombSettings{
 				level.setRange(80);
 				level.setNumRooms(20);
 				level.setDifficulty(3);
+				level.setLoot(new LootSettings(3));
 				
 				DungeonFactory factory;
 				factory = new DungeonFactory();
@@ -79,6 +82,7 @@ public class CatacombSettingsEniTheme extends CatacombSettings{
 			
 			if(i == 2){
 				level.setDifficulty(4);
+				level.setLoot(new LootSettings(4));
 				
 				SegmentGenerator segments = new SegmentGenerator(Segment.SEWERARCH);
 				segments.add(Segment.SEWER, 7);

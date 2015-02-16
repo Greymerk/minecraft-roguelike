@@ -20,6 +20,7 @@ import greymerk.roguelike.catacomb.segment.part.SegmentNetherArch;
 import greymerk.roguelike.catacomb.segment.part.SegmentNetherLava;
 import greymerk.roguelike.catacomb.segment.part.SegmentNetherStripes;
 import greymerk.roguelike.catacomb.segment.part.SegmentNetherWart;
+import greymerk.roguelike.catacomb.segment.part.SegmentPrisonCell;
 import greymerk.roguelike.catacomb.segment.part.SegmentSewer;
 import greymerk.roguelike.catacomb.segment.part.SegmentSewerArch;
 import greymerk.roguelike.catacomb.segment.part.SegmentSewerDoor;
@@ -37,7 +38,8 @@ public enum Segment {
 	ARCH, FIREARCH, FIREPLACE, SHELF, INSET, MOSSYARCH, MUSHROOM, NETHERARCH,
 	NETHERSTRIPE, NETHERWART, NETHERLAVA, JUNGLE, BOOKS, SPAWNER, 
 	WHEAT, TOMB, CHEST, SILVERFISH, SKULL, FLOWERS, DOOR, ANKH, CAVE,
-	SEWER, SEWERARCH, SEWERDOOR, SEWERDRAIN, MINESHAFT, LAMP, ARROW, SQUAREARCH;
+	SEWER, SEWERARCH, SEWERDOOR, SEWERDRAIN, MINESHAFT, LAMP, ARROW, SQUAREARCH,
+	CELL;
 	
 	
 	public static ISegment getSegment(Segment choice){
@@ -74,6 +76,7 @@ public enum Segment {
 		case LAMP: return new SegmentLamp();
 		case ARROW: return new SegmentArrowTrap();
 		case SQUAREARCH: return new SegmentSquareArch();
+		case CELL: return new SegmentPrisonCell();
 		}
 		
 		return null;

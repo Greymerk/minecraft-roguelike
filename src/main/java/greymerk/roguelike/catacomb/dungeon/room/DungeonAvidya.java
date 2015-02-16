@@ -252,7 +252,7 @@ public class DungeonAvidya extends DungeonBase {
 		}
 		
 		ITreasureChest chest = new TreasureChestEmpty();
-		chest.generate(world, rand, settings.getLoot(), x, y - 1, z);
+		chest.generate(world, rand, settings.getLoot(), new Coord(x, y - 1, z), 0, false);
 		int middle = chest.getInventorySize() / 2;
 		chest.setInventorySlot(ItemNovelty.getItem(ItemNovelty.AVIDYA), middle);
 		

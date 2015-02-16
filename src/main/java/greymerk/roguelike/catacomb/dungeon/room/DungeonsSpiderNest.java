@@ -68,7 +68,7 @@ public class DungeonsSpiderNest extends DungeonBase {
 		
 		Spawner.generate(world, rand, settings, new Coord(originX, originY, originZ), Spawner.CAVESPIDER);
 		
-		TreasureChest.createChests(world, rand, settings.getLoot(), 1 + rand.nextInt(3), WorldGenPrimitive.getRectSolid(
+		TreasureChest.createChests(world, rand, settings, 1 + rand.nextInt(3), WorldGenPrimitive.getRectSolid(
 				originX - dungeonLength, originY - 1, originZ - dungeonWidth,
 				originX + dungeonLength, originY + 1, originZ + dungeonWidth));
 

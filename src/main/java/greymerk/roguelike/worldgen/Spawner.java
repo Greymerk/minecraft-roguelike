@@ -1,6 +1,5 @@
 package greymerk.roguelike.worldgen;
 
-import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.catacomb.settings.CatacombLevelSettings;
 
 import java.util.Random;
@@ -27,11 +26,11 @@ public enum Spawner {
 	public static void generate(World world, Random rand, CatacombLevelSettings level, Coord pos, Spawner type){
 		
 		if(level.getSpawners() != null){
-			level.getSpawners().generate(world, rand, pos, type, getDifficulty(level, pos));
+			level.getSpawners().generate(world, rand, pos, type, level.getDifficulty(pos));
 			return;
 		}
 		
-		generate(world, rand, getDifficulty(level, pos), pos, type);
+		generate(world, rand, level.getDifficulty(pos), pos, type);
 	}
 	
 	public static void generate(World world, Random rand, int level, Coord pos, Spawner type){
@@ -122,15 +121,4 @@ public enum Spawner {
     	logic.setRandomEntity(cart);
     	logic.updateSpawner();
     }
-	
-	public static int getDifficulty(CatacombLevelSettings level, Coord pos){
-		
-		int levelDifficulty = level.getDifficulty();
-		
-		if(levelDifficulty == -1){
-			return Catacomb.getLevel(pos.getY());
-		}
-		
-		return levelDifficulty;
-	}
 }

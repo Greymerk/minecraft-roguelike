@@ -1,11 +1,10 @@
 package greymerk.roguelike.treasure;
 
-import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.treasure.loot.Loot;
 import greymerk.roguelike.treasure.loot.LootSettings;
 import greymerk.roguelike.worldgen.Coord;
-import greymerk.roguelike.worldgen.WorldGenPrimitive;
+import greymerk.roguelike.worldgen.MetaBlock;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,7 +12,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityChest;
@@ -23,9 +21,6 @@ public abstract class TreasureChestBase implements ITreasureChest, Iterable<Inve
 
 	protected World world;
 	protected Random rand;
-	protected int posX;
-	protected int posY;
-	protected int posZ;
 	protected TileEntityChest chest;
 
 	private static final int CHEST_MAX = 27;
@@ -40,23 +35,20 @@ public abstract class TreasureChestBase implements ITreasureChest, Iterable<Inve
 	}
 		
 
-	public ITreasureChest generate(World world, Random rand, LootSettings loot, int posX, int posY, int posZ, int level, boolean trapped) {
+	public ITreasureChest generate(World world, Random rand, LootSettings loot, Coord pos, int level, boolean trapped) {
 		this.world = world;
 		this.rand = rand;
-		this.posX = posX;
-		this.posY = posY;
-		this.posZ = posZ;
 
 		Collections.shuffle(slots, rand);
 		
-		Block type = trapped ? Blocks.trapped_chest : Blocks.chest;
+		MetaBlock chestType = new MetaBlock(trapped ? Blocks.trapped_chest : Blocks.chest);
 		
 		
-		if(!WorldGenPrimitive.setBlock(world, posX, posY, posZ, type)){
+		if(!chestType.setBlock(world, pos)){
 			return null;
 		}
 		
-		chest = (TileEntityChest) world.getTileEntity(posX, posY, posZ);
+		chest = (TileEntityChest) world.getTileEntity(pos.getX(), pos.getY(), pos.getZ());
 		
 		try{
 			
@@ -80,18 +72,6 @@ public abstract class TreasureChestBase implements ITreasureChest, Iterable<Inve
 		}
 		
 		return this;
-	}
-	
-	
-	
-	@Override
-	public ITreasureChest generate(World world, Random rand, LootSettings loot, int posX, int posY, int posZ) {
-		return generate(world, rand, loot, posX, posY, posZ, Catacomb.getLevel(posY), false);
-	}
-	
-	@Override
-	public ITreasureChest generate(World world, Random rand, LootSettings loot, Coord pos){
-		return generate(world, rand, loot, pos.getX(), pos.getY(), pos.getZ());
 	}
 	
 	public boolean setInventorySlot(ItemStack item, int slot){

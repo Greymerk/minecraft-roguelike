@@ -1,5 +1,6 @@
 package greymerk.roguelike.catacomb.settings;
 
+import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.catacomb.dungeon.DungeonFactory;
 import greymerk.roguelike.catacomb.dungeon.IDungeonFactory;
 import greymerk.roguelike.catacomb.dungeon.SecretFactory;
@@ -9,6 +10,7 @@ import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.catacomb.theme.Theme;
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.treasure.loot.LootSettings;
+import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.SpawnerSettings;
 
 import com.google.gson.JsonObject;
@@ -102,8 +104,13 @@ public class CatacombLevelSettings {
 		numRooms = num;
 	}
 	
-	public int getDifficulty(){
-		return this.levelDifficulty;
+	public int getDifficulty(Coord pos){
+		
+		if(this.levelDifficulty == -1){
+			return Catacomb.getLevel(pos.getY());
+		}
+		
+		return levelDifficulty;
 	}
 	
 	public void setDifficulty(int num){

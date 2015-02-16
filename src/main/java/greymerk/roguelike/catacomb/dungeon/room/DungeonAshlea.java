@@ -173,13 +173,13 @@ public class DungeonAshlea extends DungeonBase {
 		WorldGenPrimitive.setBlock(world, rand, x + 2, y, z - 1, WorldGenPrimitive.blockOrientation(stairSpruce, Cardinal.SOUTH, true), true, true);
 		WorldGenPrimitive.setBlock(world, rand, x + 2, y, z, WorldGenPrimitive.blockOrientation(stairSpruce, Cardinal.WEST, true), true, true);
 		WorldGenPrimitive.setBlock(world, rand, x + 2, y, z + 1, WorldGenPrimitive.blockOrientation(stairSpruce, Cardinal.NORTH, true), true, true);
-		new TreasureChestAshlea().generate(world, rand, loot, x + 2, y + 1, z, 1, false);
+		new TreasureChestAshlea().generate(world, rand, loot, new Coord(x + 2, y + 1, z), 1, false);
 		
 		// south shelf
 		WorldGenPrimitive.setBlock(world, rand, x - 1, y, z + 2, WorldGenPrimitive.blockOrientation(stairSpruce, Cardinal.EAST, true), true, true);
 		WorldGenPrimitive.setBlock(world, rand, x, y, z + 2, WorldGenPrimitive.blockOrientation(stairSpruce, Cardinal.NORTH, true), true, true);
 		WorldGenPrimitive.setBlock(world, rand, x + 1, y, z + 2, WorldGenPrimitive.blockOrientation(stairSpruce, Cardinal.WEST, true), true, true);
-		new TreasureChestAshlea().generate(world, rand, loot, x, y + 1, z + 2, 1, false);
+		new TreasureChestAshlea().generate(world, rand, loot, new Coord(x, y + 1, z + 2), 1, false);
 	}
 	
 	private static void pillar(World world, Random rand, ITheme theme, int x, int y, int z){

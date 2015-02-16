@@ -228,7 +228,7 @@ public class DungeonEtho extends DungeonBase {
 		WorldGenPrimitive.fillRectSolid(world, rand, x + 5, y - 1, z + 2, x + 5, y, z + 2, jungleLeaf, true, true);
 		
 		ITreasureChest chest = new TreasureChestEmpty();
-		chest.generate(world, rand, settings.getLoot(), x - 4, y - 2, z - 4);
+		chest.generate(world, rand, settings.getLoot(), new Coord(x - 4, y - 2, z - 4), 0, false);
 		
 		ItemStack yourMum = new ItemStack(Items.wooden_hoe);
 		Loot.setItemName(yourMum, "Your Mum", null);

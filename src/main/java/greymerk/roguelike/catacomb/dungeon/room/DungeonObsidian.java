@@ -224,7 +224,7 @@ public class DungeonObsidian extends DungeonBase {
 				chestPos.add(dir, 4);
 				chestPos.add(orth, 2);
 				chestPos.add(Cardinal.DOWN, 3);
-				TreasureChest.generate(world, rand, settings.getLoot(), chestPos.getX(), chestPos.getY(), chestPos.getZ(), TreasureChest.ORE);
+				TreasureChest.generate(world, rand, settings, chestPos, TreasureChest.ORE);
 			}
 		}
 		

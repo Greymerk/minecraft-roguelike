@@ -11,6 +11,7 @@ import greymerk.roguelike.catacomb.settings.CatacombTowerSettings;
 import greymerk.roguelike.catacomb.settings.SpawnCriteria;
 import greymerk.roguelike.catacomb.theme.Theme;
 import greymerk.roguelike.catacomb.tower.Tower;
+import greymerk.roguelike.treasure.loot.LootSettings;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +42,8 @@ public class CatacombSettingsEthoTheme extends CatacombSettings{
 				level.setScatter(16);
 				level.setRange(60);
 				level.setNumRooms(10);
+				level.setDifficulty(4);
+				level.setLoot(new LootSettings(4));
 				
 				DungeonFactory factory;
 			
@@ -66,51 +69,6 @@ public class CatacombSettingsEthoTheme extends CatacombSettings{
 				secrets.addRoom(rooms, 1);
 				secrets.addRoom(Dungeon.FIREWORK);
 				level.setSecrets(secrets);
-			}
-			
-			if(i == 1){
-				level.setScatter(16);
-				level.setRange(80);
-				level.setNumRooms(20);
-				
-				DungeonFactory factory;
-				factory = new DungeonFactory();
-				factory.addSingle(Dungeon.MESS);
-				factory.addRandom(Dungeon.ETHO, 10);
-				factory.addRandom(Dungeon.BRICK, 5);
-				factory.addRandom(Dungeon.CORNER, 3);
-				level.setRooms(factory);
-				
-				SegmentGenerator segments = new SegmentGenerator(Segment.ARCH);
-				segments.add(Segment.DOOR, 5);
-				segments.add(Segment.WHEAT, 3);
-				segments.add(Segment.FLOWERS, 2);
-				segments.add(Segment.CHEST, 1);
-				level.setSegments(segments);
-			}
-			
-			if(i == 2 || i == 3){
-				SegmentGenerator segments = new SegmentGenerator(Segment.MINESHAFT);
-				segments.add(Segment.MINESHAFT, 1);
-				level.setSegments(segments);
-				
-				DungeonFactory factory;
-				factory = new DungeonFactory();
-				factory.addRandom(Dungeon.BRICK, 10);
-				factory.addRandom(Dungeon.CORNER, 3);
-				level.setRooms(factory);
-			}
-			
-			if(i == 4){
-				SegmentGenerator segments = new SegmentGenerator(Segment.CAVE);
-				segments.add(Segment.CAVE, 1);
-				level.setSegments(segments);
-				
-				DungeonFactory factory;
-				factory = new DungeonFactory();
-				factory.addRandom(Dungeon.BRICK, 10);
-				factory.addRandom(Dungeon.CORNER, 3);
-				level.setRooms(factory);
 			}
 			
 			levels.put(i, level);

@@ -5,7 +5,6 @@ import greymerk.roguelike.catacomb.settings.CatacombLevelSettings;
 import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.treasure.TreasureChest;
-import greymerk.roguelike.treasure.loot.LootSettings;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.FlowerPot;
@@ -50,7 +49,7 @@ public class DungeonLab extends DungeonBase {
 		
 		
 		// corner rooms
-		southWest(world, rand, settings.getLoot(), theme, x - 7, y, z + 2);
+		southWest(world, rand, settings, theme, x - 7, y, z + 2);
 		southEast(world, rand, theme, x + 2, y, z + 2);
 		northWest(world, rand, theme, x - 7, y, z - 7);
 		northEast(world, rand, theme, x + 2, y, z - 7);
@@ -111,7 +110,7 @@ public class DungeonLab extends DungeonBase {
 	}
 	
 	
-	private static void southWest(World world, Random rand, LootSettings loot, ITheme theme, int x, int y, int z){
+	private static void southWest(World world, Random rand, CatacombLevelSettings settings, ITheme theme, int x, int y, int z){
 		
 		corner(world, rand, theme, x, y, z);
 		
@@ -125,7 +124,7 @@ public class DungeonLab extends DungeonBase {
 			WorldGenPrimitive.setBlock(world, x + 1, y + 1, z + 5, Blocks.brewing_stand);
 		}
 		
-		TreasureChest.generate(world, rand, loot, x, y + 1, z + 4, TreasureChest.POTIONS);
+		TreasureChest.generate(world, rand, settings, new Coord(x, y + 1, z + 4), TreasureChest.POTIONS);
 		
 		
 	}

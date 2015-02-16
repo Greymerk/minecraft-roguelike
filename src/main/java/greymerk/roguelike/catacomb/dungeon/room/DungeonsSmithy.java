@@ -287,16 +287,16 @@ public class DungeonsSmithy extends DungeonBase {
 	private void smelter(World world, Random rand, CatacombLevelSettings settings, Cardinal dir, Coord origin){
 		Coord cursor;
 		ITreasureChest input = new TreasureChestEmpty();
-		input.generate(world, rand, settings.getLoot(), origin);
+		input.generate(world, rand, settings.getLoot(), origin, 0, false);
 		cursor = new Coord(origin);
 		cursor.add(dir, 2);
 		cursor.add(Cardinal.UP, 2);
 		ITreasureChest output = new TreasureChestEmpty();
-		output.generate(world, rand, settings.getLoot(), cursor);
+		output.generate(world, rand, settings.getLoot(), cursor, 0, false);
 		cursor.add(Cardinal.UP);
 		cursor.add(Cardinal.reverse(dir));
 		ITreasureChest fuel = new TreasureChestEmpty();
-		fuel.generate(world, rand, settings.getLoot(), cursor);
+		fuel.generate(world, rand, settings.getLoot(), cursor, 0, false);
 		
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.UP);
@@ -469,7 +469,7 @@ public class DungeonsSmithy extends DungeonBase {
 		WorldGenPrimitive.blockOrientation(stair, orth[1], true);
 		WorldGenPrimitive.fillRectSolid(world, rand, start, end, stair, true, true);
 		cursor.add(Cardinal.UP);
-		TreasureChest.generate(world, rand, settings.getLoot(), cursor, TreasureChest.SMITH);
+		TreasureChest.generate(world, rand, settings, cursor, TreasureChest.SMITH);
 		
 		cursor = new Coord(origin);
 	}

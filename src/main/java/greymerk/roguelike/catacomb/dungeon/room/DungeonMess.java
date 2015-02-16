@@ -144,7 +144,7 @@ public class DungeonMess extends DungeonBase {
 		WorldGenPrimitive.setBlock(world, rand, x + 2, y, z - 1, WorldGenPrimitive.blockOrientation(stairSpruce, Cardinal.SOUTH, true), true, true);
 		WorldGenPrimitive.setBlock(world, rand, x + 2, y, z, WorldGenPrimitive.blockOrientation(stairSpruce, Cardinal.WEST, true), true, true);
 		WorldGenPrimitive.setBlock(world, rand, x + 2, y, z + 1, WorldGenPrimitive.blockOrientation(stairSpruce, Cardinal.NORTH, true), true, true);
-		new TreasureChestFoodStore().generate(world, rand, loot, x + 2, y + 1, z, 1, false);
+		new TreasureChestFoodStore().generate(world, rand, loot, new Coord(x + 2, y + 1, z), 1, false);
 		
 		// south shelf
 		WorldGenPrimitive.setBlock(world, rand, x - 1, y, z + 2, WorldGenPrimitive.blockOrientation(stairSpruce, Cardinal.EAST, true), true, true);

@@ -64,7 +64,7 @@ public class DungeonsPit extends DungeonBase {
 		space.add(new Coord(originX + 2, originY, originZ - 2));
 		space.add(new Coord(originX + 2, originY, originZ + 2));
 		
-		TreasureChest.createChests(inWorld, inRandom, settings.getLoot(), 1, space);
+		TreasureChest.createChests(inWorld, inRandom, settings, 1, space);
 		
 		return true;
 	}

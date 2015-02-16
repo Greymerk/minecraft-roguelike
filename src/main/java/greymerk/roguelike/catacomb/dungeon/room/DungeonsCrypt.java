@@ -349,14 +349,31 @@ public class DungeonsCrypt extends DungeonBase {
 	private void tomb(World world, Random rand, CatacombLevelSettings settings, Coord origin, Cardinal dir){
 		
 		ITheme theme = settings.getTheme();
-
+		Coord cursor;
+		
 		MetaBlock stair = theme.getPrimaryStair();
 		MetaBlock tombStone = new MetaBlock(Blocks.quartz_block);
+		MetaBlock air = new MetaBlock(Blocks.air);
 		
+		cursor = new Coord(origin);
+		cursor.add(dir, 2);
+		cursor.add(Cardinal.UP);
+		WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(dir), true).setBlock(world, cursor);
 		
-		Coord cursor = new Coord(origin);
+		cursor.add(Cardinal.reverse(dir));
+		WorldGenPrimitive.blockOrientation(stair, dir, true).setBlock(world, cursor);
+		
+		cursor = new Coord(origin);
+		cursor.add(dir, 2);
+		air.fillRectSolid(world, rand, origin, cursor, true, true);
+		
+		if(rand.nextInt(3) == 0) return;
 
+		cursor = new Coord(origin);
 		tombStone.setBlock(world, cursor);
+		
+		if(rand.nextInt(4) != 0) return;
+		
 		cursor.add(dir);
 		Spawner spawnerType = rand.nextBoolean() ? Spawner.SKELETON : Spawner.ZOMBIE;
 		Spawner.generate(world, rand, settings, cursor, spawnerType);
@@ -364,13 +381,7 @@ public class DungeonsCrypt extends DungeonBase {
 		cursor.add(dir);
 		TreasureChest[] types = {TreasureChest.ARMOUR, TreasureChest.WEAPONS, TreasureChest.SPECIAL};
 		TreasureChest chestType = types[rand.nextInt(types.length)];
-		TreasureChest.generate(world, rand, settings.getLoot(), cursor, chestType);
-		
-		cursor.add(Cardinal.UP);
-		WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(dir), true).setBlock(world, cursor);
-		
-		cursor.add(Cardinal.reverse(dir));
-		WorldGenPrimitive.blockOrientation(stair, dir, true).setBlock(world, cursor);
+		TreasureChest.generate(world, rand, settings, cursor, chestType);
 		
 	}
 	

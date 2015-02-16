@@ -104,7 +104,7 @@ public class DungeonBaj extends DungeonBase {
 		crops(world, rand, x + 1, y - 1, z + 3);
 		
 		WorldGenPrimitive.setBlock(world, x, y - 1, z, Blocks.dirt);
-		ITreasureChest chest = new TreasureChestEmpty().generate(world, rand, settings.getLoot(), x, y, z);
+		ITreasureChest chest = new TreasureChestEmpty().generate(world, rand, settings.getLoot(), new Coord(x, y, z), 0, false);
 		chest.setInventorySlot(ItemNovelty.getItem(ItemNovelty.BAJ), chest.getInventorySize() / 2);
 		
 		

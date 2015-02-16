@@ -177,7 +177,7 @@ public class DungeonReward implements IDungeon {
 		
 		cursor = new Coord(x, y, z);
 		cursor.add(Cardinal.UP);
-		TreasureChest.generate(world, rand, settings.getLoot(), cursor, TreasureChest.REWARD);
+		TreasureChest.generate(world, rand, settings, cursor, TreasureChest.REWARD);
 		
 		return true;
 	}

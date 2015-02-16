@@ -136,11 +136,11 @@ public class DungeonBTeam extends DungeonBase {
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 7, y - 1, z - 4, x - 6, y + 4, z + 4, stonebrick);
 		WorldGenPrimitive.fillRectSolid(world, rand, x + 6, y - 1, z - 4, x + 7, y + 4, z + 4, stonebrick);
 		
-		ITreasureChest recordChest = new TreasureChestEmpty().generate(world, rand, settings.getLoot(), x - 4, y, z - 4);
+		ITreasureChest recordChest = new TreasureChestEmpty().generate(world, rand, settings.getLoot(), new Coord(x - 4, y, z - 4), 0, false);
 		recordChest.setInventorySlot(Record.getRecord(Record.STAL), recordChest.getInventorySize() / 2);
 		WorldGenPrimitive.setBlock(world, x - 3, y, z - 4, Blocks.jukebox);
 		
-		ITreasureChest bdubsChest = new TreasureChestEmpty().generate(world, rand, settings.getLoot(), x - 3, y, z + 5);
+		ITreasureChest bdubsChest = new TreasureChestEmpty().generate(world, rand, settings.getLoot(), new Coord(x - 3, y, z + 5), 0, false);
 		bdubsChest.setInventorySlot(ItemNovelty.getItem(ItemNovelty.BDOUBLEO), (bdubsChest.getInventorySize() / 2) - 2);
 		
 		ItemStack shirt = new ItemStack(Items.leather_chestplate);
@@ -150,14 +150,14 @@ public class DungeonBTeam extends DungeonBase {
 		
 		bdubsChest.setInventorySlot(shirt, (bdubsChest.getInventorySize() / 2) + 2);
 		
-		ITreasureChest gennybChest = new TreasureChestEmpty().generate(world, rand, settings.getLoot(), x + 3, y, z + 5);
+		ITreasureChest gennybChest = new TreasureChestEmpty().generate(world, rand, settings.getLoot(), new Coord(x + 3, y, z + 5), 0, false);
 		gennybChest.setInventorySlot(ItemNovelty.getItem(ItemNovelty.GENERIKB), gennybChest.getInventorySize() / 2);
 		
 		
 		WorldGenPrimitive.setBlock(world, x + 4, y, z - 4, Blocks.bookshelf);
 		WorldGenPrimitive.setBlock(world, x + 4, y + 1, z - 4, Blocks.brewing_stand);
 		
-		ITreasureChest contraband = new TreasureChestEmpty().generate(world, rand, settings.getLoot(), x + 3, y, z - 4);
+		ITreasureChest contraband = new TreasureChestEmpty().generate(world, rand, settings.getLoot(), new Coord(x + 3, y, z - 4), 0, false);
 		
 		for(int i = 0; i < 8; ++i){
 			ItemStack booze = PotionMixture.getBooze(rand);

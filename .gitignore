@@ -10,6 +10,7 @@
 /crash-reports/
 /logs/
 /mods/
+/debug/
 /resourcepacks/
 /saves/
 /.classpath

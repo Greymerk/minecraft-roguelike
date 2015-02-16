@@ -148,7 +148,7 @@ public class DungeonsPrison extends DungeonBase {
 		}
 		
 		if(rand.nextBoolean()){
-			TreasureChest.generate(world, rand, settings.getLoot(), inX, inY, inZ);	
+			TreasureChest.generate(world, rand, settings, new Coord(inX, inY, inZ));	
 		}
 		
 	}

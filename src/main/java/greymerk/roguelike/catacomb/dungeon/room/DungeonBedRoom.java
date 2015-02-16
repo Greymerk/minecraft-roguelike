@@ -127,7 +127,7 @@ public class DungeonBedRoom implements IDungeon {
 		cursor = new Coord(x, y, z);
 		cursor.add(dir);
 		cursor.add(side, 3);
-		TreasureChest.generate(world, rand, settings.getLoot(), cursor, TreasureChest.STARTER);
+		TreasureChest.generate(world, rand, settings, cursor, TreasureChest.STARTER);
 		cursor.add(Cardinal.reverse(side), 6);
 		if(rand.nextBoolean()){
 			cursor.add(Cardinal.UP);

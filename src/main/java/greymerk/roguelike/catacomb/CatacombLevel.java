@@ -1,8 +1,8 @@
 package greymerk.roguelike.catacomb;
 
 import greymerk.roguelike.catacomb.dungeon.IDungeon;
+import greymerk.roguelike.catacomb.dungeon.room.DungeonCorner;
 import greymerk.roguelike.catacomb.dungeon.room.DungeonLinker;
-import greymerk.roguelike.catacomb.dungeon.room.DungeonsBrick;
 import greymerk.roguelike.catacomb.settings.CatacombLevelSettings;
 import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
@@ -100,7 +100,7 @@ public class CatacombLevel {
 		
 		if(oldEnd == null) return;
 		
-		IDungeon upstairs = new DungeonsBrick();
+		IDungeon upstairs = new DungeonCorner();
 		upstairs.generate(world, rand, settings, oldEnd.getEntrances(), oldEnd.getPosition());
 		
 		MetaBlock stair = theme.getPrimaryStair();
