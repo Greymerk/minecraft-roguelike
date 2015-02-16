@@ -261,14 +261,10 @@ public class WorldGenPrimitive {
 	}
 	
 	public static void fillDown(World world, Random rand, Coord origin, IBlockFactory blocks){
-		
-		int x = origin.getX();
-		int y = origin.getY();
-		int z = origin.getZ();
+
 		Coord cursor = new Coord(origin);
 		
-		while(!world.getBlock(x, y, z).getMaterial().isOpaque() && y > 1){
-			
+		while(!world.getBlock(cursor.getX(), cursor.getY(), cursor.getZ()).getMaterial().isOpaque() && cursor.getY() > 1){
 			blocks.setBlock(world, rand, cursor);
 			cursor.add(Cardinal.DOWN);
 		}

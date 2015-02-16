@@ -176,6 +176,9 @@ public enum Loot {
 				mob.setCurrentItemOrArmor(0, ItemWeapon.getSword(rand, level, enchant));
 			} else {
 				if(rand.nextInt(20) == 0){
+					if(level > 0 && rand.nextInt(5) == 0){
+						mob.setCurrentItemOrArmor(0, ItemNovelty.getItem(ItemNovelty.VALANDRAH));
+					}
 					mob.setCurrentItemOrArmor(0, ItemWeapon.getSword(rand, level, enchant));
 				} else {
 					mob.setCurrentItemOrArmor(0, ItemWeapon.getBow(rand, level, enchant));

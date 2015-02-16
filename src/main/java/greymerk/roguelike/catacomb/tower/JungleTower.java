@@ -111,7 +111,7 @@ public class JungleTower implements ITower{
 		
 		WorldGenPrimitive.fillRectHollow(world, rand, start, end, theme.getPrimaryWall(), true, true);
 		
-		for(int i = origin.getY() - 1; i > 55; --i){
+		for(int i = origin.getY() - 1; i >= 50; --i){
 			WorldGenPrimitive.spiralStairStep(world, rand, new Coord(origin.getX(), i, origin.getZ()), theme.getPrimaryStair(), theme.getPrimaryPillar());
 		}
 		

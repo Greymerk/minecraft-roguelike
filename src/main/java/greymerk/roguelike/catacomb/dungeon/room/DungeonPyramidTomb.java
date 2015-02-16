@@ -213,7 +213,7 @@ public class DungeonPyramidTomb extends DungeonBase{
 			cursor.add(end);
 			blocks.setBlock(world, cursor);
 			cursor.add(Cardinal.UP);
-			spawners.generate(world, rand, cursor, Spawner.PIGZOMBIE, 4);
+			spawners.generate(world, rand, cursor, Spawner.ZOMBIE, 4);
 			cursor.add(Cardinal.UP);
 			blocks.setBlock(world, cursor);
 			

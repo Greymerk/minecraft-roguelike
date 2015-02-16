@@ -17,7 +17,7 @@ public enum ItemNovelty {
 	GREYMERK, ANDERZEL, NEBRISCROWN, NEBRISSWORD, ZISTEAUPANTS, ZISTEAUSIGN, AVIDYA, ASHLEA, KURT, AMLP,
 	CLEO, ENIKOSWORD, ENIKOBOW, BDOUBLEO, GUUDE, RLEAHY, ETHO, BAJ, DOCM, GINGER, VECHS,
 	NOTCH, JOHNNYRAGGOT, QUANTUMLEAP, MCGAMER, GENERIKB, PAUSE, PAULSOARESJR, FOURLES,
-	DINNERBONE, GRIM, MMILLSS, MILLBEE, VINTAGEBEEF;
+	DINNERBONE, GRIM, MMILLSS, MILLBEE, VINTAGEBEEF, VALANDRAH;
 		
 	public static final Map<String, ItemNovelty> names;
 	static {
@@ -56,6 +56,7 @@ public enum ItemNovelty {
 		names.put("mmillss", ItemNovelty.MMILLSS);
 		names.put("millbee", ItemNovelty.MILLBEE);
 		names.put("vintagebeef", ItemNovelty.VINTAGEBEEF);
+		names.put("valandrah", ItemNovelty.VALANDRAH);
 	};
 		
 	public static ItemStack getItemByName(String name){
@@ -323,6 +324,15 @@ public enum ItemNovelty {
 			Loot.setItemLore(item, "It never seems to go bad...",  TextFormat.DARKGREEN);
 			item.addEnchantment(Enchantment.fortune, 2);
 			item.addEnchantment(Enchantment.looting, 2);
+			return item;
+		case VALANDRAH:
+			item = new ItemStack(Items.iron_sword);
+			Loot.setItemName(item, "Valandrah's Kiss", null);
+			Loot.setItemLore(item, "\"Feel the kiss of my blade\"",  TextFormat.DARKGREEN);
+			item.addEnchantment(Enchantment.sharpness, 4);
+			item.addEnchantment(Enchantment.fireAspect, 1);
+			item.addEnchantment(Enchantment.knockback, 1);
+			item.addEnchantment(Enchantment.unbreaking, 2);
 			return item;
 		default:
 			return null;

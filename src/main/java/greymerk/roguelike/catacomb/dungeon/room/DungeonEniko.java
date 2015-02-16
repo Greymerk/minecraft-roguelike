@@ -73,6 +73,7 @@ public class DungeonEniko extends DungeonBase {
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 4, y, z + 5, x - 3, y, z + 5, shelf, true, true);
 		WorldGenPrimitive.fillRectSolid(world, rand, x + 3, y + 1, z + 6, x + 4, y + 3, z + 6, coal);
 		WorldGenPrimitive.fillRectSolid(world, rand, x + 3, y, z + 5, x + 4, y, z + 5, shelf, true, true);
+		
 		ITreasureChest eniChest = new TreasureChestEmpty().generate(world, rand, settings.getLoot(), new Coord(x + 3, y + 1, z + 5), 0, false);
 		if(rand.nextBoolean()){
 			eniChest.setInventorySlot(ItemNovelty.getItem(ItemNovelty.ENIKOBOW), eniChest.getInventorySize() / 2);

@@ -6,6 +6,7 @@ import greymerk.roguelike.util.JsonNBT;
 
 import java.util.Random;
 
+import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -32,6 +33,14 @@ public class WeightedRandomLoot implements Comparable<WeightedRandomLoot>, IWeig
 		this.weight = weight;
 	}
 
+	public WeightedRandomLoot(Item id, int damage, int weight){
+		this(id, damage, 1, 1, weight);
+	}
+	
+	public WeightedRandomLoot(Item id, int weight){
+		this(id, 0, 1, 1, weight);
+	}
+	
 	public WeightedRandomLoot(JsonObject json, int weight){
 		String name = json.get("name").getAsString();
 		this.item = (Item) Item.itemRegistry.getObject(name);
@@ -51,12 +60,11 @@ public class WeightedRandomLoot implements Comparable<WeightedRandomLoot>, IWeig
 			this.nbt = JsonNBT.jsonToCompound(nbtdata);
 		}
 	}
-	
-	
-	public WeightedRandomLoot(Item id, int damage, int weight){
-		this(id, damage, 1, 1, weight);
-	}	
-	
+
+	public WeightedRandomLoot(Block block, int i) {
+		this(Item.getItemById(Block.getIdFromBlock(block)), i);
+	}
+
 	private int getStackSize(Random rand){
 		if (max == 1) return 1;
 		

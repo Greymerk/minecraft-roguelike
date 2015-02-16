@@ -362,7 +362,7 @@ public class EniTower implements ITower {
 		end = new Coord(x + 4, floor.getY(), z + 4);
 		WorldGenPrimitive.fillRectSolid(world, rand, start, end, blocks, true, true);
 		
-		for(int i = (floor.getY() + 22); i > y; --i){
+		for(int i = (floor.getY() + 22); i >= 50; --i){
 			WorldGenPrimitive.spiralStairStep(world, rand, new Coord(x, i, z), stair, theme.getPrimaryPillar());
 		}
 		

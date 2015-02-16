@@ -44,27 +44,26 @@ public class DungeonsCreeperDen extends DungeonBase {
 		
 		start = new Coord(origin);
 		end = new Coord(origin);
-		start.add(new Coord(-5, -1, -5));
-		end.add(new Coord(5, 5, 5));
-		
+		start.add(new Coord(-4, -4, -4));
+		end.add(new Coord(4, 5, 4));
 		mossy.fillRectHollow(world, rand, start, end, false, true);
 		
 		start = new Coord(origin);
 		end = new Coord(origin);
-		start.add(new Coord(-4, -1, -4));
-		end.add(new Coord(4, -1, 4));
+		start.add(new Coord(-3, -1, -3));
+		end.add(new Coord(3, -1, 3));
 		floor.fillRectSolid(world, rand, start, end, true, true);
 		
 		start = new Coord(origin);
 		end = new Coord(origin);
-		start.add(new Coord(-4, -4, -4));
-		end.add(new Coord(4, -2, 4));
+		start.add(new Coord(-3, -3, -3));
+		end.add(new Coord(3, -2, 3));
 		subfloor.fillRectSolid(world, rand, start, end, true, true);
 		
 		start = new Coord(origin);
 		end = new Coord(origin);
-		start.add(new Coord(-4, 0, -4));
-		end.add(new Coord(4, 0, 4));
+		start.add(new Coord(-3, 0, -3));
+		end.add(new Coord(3, 0, 3));
 		
 		List<Coord> chestSpaces = WorldGenPrimitive.getRectSolid(start, end);
 		Collections.shuffle(chestSpaces);

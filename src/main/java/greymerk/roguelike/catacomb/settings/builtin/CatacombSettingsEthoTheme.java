@@ -11,11 +11,17 @@ import greymerk.roguelike.catacomb.settings.CatacombTowerSettings;
 import greymerk.roguelike.catacomb.settings.SpawnCriteria;
 import greymerk.roguelike.catacomb.theme.Theme;
 import greymerk.roguelike.catacomb.tower.Tower;
+import greymerk.roguelike.treasure.loot.Loot;
 import greymerk.roguelike.treasure.loot.LootSettings;
+import greymerk.roguelike.treasure.loot.WeightedRandomLoot;
+import greymerk.roguelike.treasure.loot.provider.ItemJunk;
+import greymerk.roguelike.util.WeightedRandomizer;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.BiomeDictionary;
 
 public class CatacombSettingsEthoTheme extends CatacombSettings{
@@ -31,11 +37,9 @@ public class CatacombSettingsEthoTheme extends CatacombSettings{
 		
 		this.towerSettings = new CatacombTowerSettings(Tower.ETHO, Theme.getTheme(Theme.ETHOTOWER));
 		
-		Theme[] themes = {Theme.ETHO, Theme.ETHO, Theme.MINESHAFT, Theme.MINESHAFT, Theme.CAVE};
-		
 		for(int i = 0; i < 5; ++i){
 			CatacombLevelSettings level = new CatacombLevelSettings();
-			level.setTheme(Theme.getTheme(themes[i]));
+			level.setTheme(Theme.getTheme(Theme.ETHO));
 			level.setDifficulty(3);
 			
 			if(i == 0){
@@ -69,6 +73,16 @@ public class CatacombSettingsEthoTheme extends CatacombSettings{
 				secrets.addRoom(rooms, 1);
 				secrets.addRoom(Dungeon.FIREWORK);
 				level.setSecrets(secrets);
+				
+				LootSettings loot = new LootSettings(3);
+				WeightedRandomizer<ItemStack> junk = new WeightedRandomizer<ItemStack>();
+				junk.add(new ItemJunk(5, 3));
+				junk.add(new WeightedRandomLoot(Items.repeater, 1));
+				junk.add(new WeightedRandomLoot(Items.redstone, 1));
+				junk.add(new WeightedRandomLoot(Items.gunpowder, 1));
+				junk.add(new WeightedRandomLoot(Items.comparator, 1));
+				loot.set(Loot.JUNK, junk);
+				level.setLoot(loot);
 			}
 			
 			levels.put(i, level);

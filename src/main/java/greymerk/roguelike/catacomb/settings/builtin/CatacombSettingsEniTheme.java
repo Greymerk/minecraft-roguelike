@@ -48,6 +48,7 @@ public class CatacombSettingsEniTheme extends CatacombSettings{
 				factory = new DungeonFactory();
 				factory.addSingle(Dungeon.LIBRARY);
 				factory.addSingle(Dungeon.MESS);
+				factory.addSingle(Dungeon.ENCHANT);
 				factory.addRandom(Dungeon.BRICK, 10);
 				factory.addRandom(Dungeon.CORNER, 3);
 				level.setRooms(factory);
