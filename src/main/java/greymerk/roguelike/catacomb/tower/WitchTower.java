@@ -3,14 +3,16 @@ package greymerk.roguelike.catacomb.tower;
 import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
-import greymerk.roguelike.worldgen.Door;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
+import greymerk.roguelike.worldgen.blocks.ColorBlock;
+import greymerk.roguelike.worldgen.blocks.Door;
 
 import java.util.Random;
 
 import net.minecraft.init.Blocks;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.world.World;
 
 public class WitchTower implements ITower {
@@ -22,7 +24,7 @@ public class WitchTower implements ITower {
 		IBlockFactory pillar = theme.getPrimaryPillar();
 		MetaBlock stair = theme.getPrimaryStair();
 		MetaBlock air = new MetaBlock(Blocks.air);
-		MetaBlock glass = new MetaBlock(Blocks.stained_glass_pane, 15);
+		MetaBlock glass = ColorBlock.get(Blocks.stained_glass_pane, EnumDyeColor.BLACK);
 		
 		Coord origin = new Coord(x, y, z);
 		
@@ -337,10 +339,10 @@ public class WitchTower implements ITower {
 		for(Cardinal dir : Cardinal.directions){
 			cursor = new Coord(main);
 			cursor.add(dir, 4);
-			if(world.isAirBlock(cursor.getX(), cursor.getY(), cursor.getZ())){
+			if(WorldGenPrimitive.isAirBlock(world, cursor)){
 				cursor = new Coord(main);
 				cursor.add(dir, 3);
-				Door.generate(world, cursor, dir, Door.WOOD);
+				Door.generate(world, cursor, dir, Door.OAK);
 				cursor.add(dir);
 				start = new Coord(cursor);
 				end = new Coord(start);
@@ -382,7 +384,7 @@ public class WitchTower implements ITower {
 	
 	private void step(World world, Random rand, ITheme theme, Cardinal dir, Coord origin){
 		
-		if(world.getBlock(origin.getX(), origin.getY(), origin.getZ()).isOpaqueCube()) return;
+		if(WorldGenPrimitive.getBlock(world, origin).getBlock().isOpaqueCube()) return;
 		
 		Coord start;
 		Coord end;

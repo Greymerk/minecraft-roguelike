@@ -45,29 +45,29 @@ public class BlockFactoryCheckers extends BlockFactoryBase {
 		if (x % 2 == 0) {
 			if(z % 2 == 0){
 				if(y % 2 == 0){
-					return WorldGenPrimitive.setBlock(world, rand, x, y, z, fillOne, fillAir, replaceSolid);
+					return WorldGenPrimitive.setBlock(world, rand, new Coord(x, y, z), fillOne, fillAir, replaceSolid);
 				} else {
-					return WorldGenPrimitive.setBlock(world, rand, x, y, z, fillTwo, fillAir, replaceSolid);
+					return WorldGenPrimitive.setBlock(world, rand, new Coord(x, y, z), fillTwo, fillAir, replaceSolid);
 				}
 			} else {
 				if(y % 2 == 0){
-					return WorldGenPrimitive.setBlock(world, rand, x, y, z, fillTwo, fillAir, replaceSolid);
+					return WorldGenPrimitive.setBlock(world, rand, new Coord(x, y, z), fillTwo, fillAir, replaceSolid);
 				} else {
-					return WorldGenPrimitive.setBlock(world, rand, x, y, z, fillOne, fillAir, replaceSolid);
+					return WorldGenPrimitive.setBlock(world, rand, new Coord(x, y, z), fillOne, fillAir, replaceSolid);
 				}
 			}
 		} else {
 			if(z % 2 == 0){
 				if(y % 2 == 0){
-					return WorldGenPrimitive.setBlock(world, rand, x, y, z, fillTwo, fillAir, replaceSolid);
+					return WorldGenPrimitive.setBlock(world, rand, new Coord(x, y, z), fillTwo, fillAir, replaceSolid);
 				} else {
-					return WorldGenPrimitive.setBlock(world, rand, x, y, z, fillOne, fillAir, replaceSolid);
+					return WorldGenPrimitive.setBlock(world, rand, new Coord(x, y, z), fillOne, fillAir, replaceSolid);
 				}
 			} else {
 				if(y % 2 == 0){
-					return WorldGenPrimitive.setBlock(world, rand, x, y, z, fillOne, fillAir, replaceSolid);
+					return WorldGenPrimitive.setBlock(world, rand, new Coord(x, y, z), fillOne, fillAir, replaceSolid);
 				} else {
-					return WorldGenPrimitive.setBlock(world, rand, x, y, z, fillTwo, fillAir, replaceSolid);
+					return WorldGenPrimitive.setBlock(world, rand, new Coord(x, y, z), fillTwo, fillAir, replaceSolid);
 				}
 			}
 		}

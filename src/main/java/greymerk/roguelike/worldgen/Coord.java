@@ -1,5 +1,7 @@
 package greymerk.roguelike.worldgen;
 
+import net.minecraft.util.BlockPos;
+
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 public class Coord{
@@ -109,5 +111,9 @@ public class Coord{
 		toReturn += "y: " + y + " ";
 		toReturn += "z: " + z;
 		return toReturn;
+	}
+
+	public BlockPos getBlockPos() {
+		return new BlockPos(x, y, z);
 	}
 }

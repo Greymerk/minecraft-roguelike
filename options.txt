@@ -8,13 +8,12 @@ guiScale:2
 particles:0
 bobView:true
 anaglyph3d:false
-advancedOpengl:false
 maxFps:120
 fboEnable:true
-difficulty:3
+difficulty:2
 fancyGraphics:true
 ao:2
-clouds:true
+renderClouds:true
 resourcePacks:[]
 lastServer:
 lang:en_US
@@ -26,10 +25,10 @@ chatOpacity:1.0
 snooperEnabled:true
 fullscreen:false
 enableVsync:true
+useVbo:false
 hideServerAddress:false
 advancedItemTooltips:false
 pauseOnLostFocus:true
-showCape:true
 touchscreen:false
 overrideWidth:0
 overrideHeight:0
@@ -40,7 +39,6 @@ chatScale:1.0
 chatWidth:1.0
 showInventoryAchievementHint:false
 mipmapLevels:4
-anisotropicFiltering:1
 streamBytesPerPixel:0.5
 streamMicVolume:1.0
 streamSystemVolume:1.0
@@ -53,6 +51,8 @@ streamChatEnabled:0
 streamChatUserFilter:0
 streamMicToggleBehavior:0
 forceUnicodeFont:false
+allowBlockAlternatives:true
+reducedDebugInfo:false
 key_key.attack:-100
 key_key.use:-99
 key_key.forward:17
@@ -76,6 +76,7 @@ key_key.streamPauseUnpause:65
 key_key.streamCommercial:0
 key_key.streamToggleMic:0
 key_key.fullscreen:87
+key_key.spectatorOutlines:0
 key_key.hotbar.1:2
 key_key.hotbar.2:3
 key_key.hotbar.3:4
@@ -94,3 +95,10 @@ soundCategory_hostile:1.0
 soundCategory_neutral:1.0
 soundCategory_player:1.0
 soundCategory_ambient:1.0
+modelPart_cape:true
+modelPart_jacket:true
+modelPart_left_sleeve:true
+modelPart_right_sleeve:true
+modelPart_left_pants_leg:true
+modelPart_right_pants_leg:true
+modelPart_hat:true

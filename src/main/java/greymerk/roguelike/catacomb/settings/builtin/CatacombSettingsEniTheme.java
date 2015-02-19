@@ -21,7 +21,7 @@ public class CatacombSettingsEniTheme extends CatacombSettings{
 	
 	public CatacombSettingsEniTheme(){
 		
-		this.numLevels = 3;
+		this.depth = 3;
 		
 		this.criteria = new SpawnCriteria();
 		List<BiomeDictionary.Type> biomes = new ArrayList<BiomeDictionary.Type>();

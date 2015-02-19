@@ -12,6 +12,7 @@ import greymerk.roguelike.worldgen.WorldGenPrimitive;
 import java.util.List;
 import java.util.Random;
 
+import net.minecraft.block.BlockSilverfish;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 
@@ -52,7 +53,7 @@ public class SilverfishNest implements IAlcove{
 		List<Coord> toCheck = WorldGenPrimitive.getRectSolid(x - 2, y + 1, z - 2, x + 2, y + 1, z + 2);
 
 		for(Coord c : toCheck){
-			if (world.isAirBlock(c.getX(), c.getY(), c.getZ())) return false;
+			if (WorldGenPrimitive.isAirBlock(world, c)) return false;
 		}
 		
 		return true;
@@ -60,9 +61,11 @@ public class SilverfishNest implements IAlcove{
 	
 	private void nest(World world, Random rand, int x, int y, int z){
 		BlockWeightedRandom fish = new BlockWeightedRandom();
-		fish.addBlock(new MetaBlock(Blocks.monster_egg, 1), 20);
+		MetaBlock egg = new MetaBlock(Blocks.monster_egg);
+		egg.withProperty(BlockSilverfish.VARIANT_PROP, BlockSilverfish.EnumType.COBBLESTONE);
+		fish.addBlock(egg, 20);
 		fish.addBlock(new MetaBlock(Blocks.soul_sand), 5);
-		WorldGenPrimitive.fillRectHollow(world, rand, x - 2, y, z - 2, x + 2, y + 3, z + 2, fish, true, true);
+		WorldGenPrimitive.fillRectHollow(world, rand, new Coord(x - 2, y, z - 2), new Coord(x + 2, y + 3, z + 2), fish, true, true);
 		
 		fish.setBlock(world, rand, new Coord(x - 1, y + 2, z));
 		fish.setBlock(world, rand, new Coord(x + 1, y + 2, z));

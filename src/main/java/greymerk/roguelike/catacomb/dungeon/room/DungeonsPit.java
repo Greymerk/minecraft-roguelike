@@ -55,7 +55,7 @@ public class DungeonsPit extends DungeonBase {
 		
 
 		for(int dir = 0; dir < 4; dir++){
-			setTrap(dir);
+			// @TODO: redo the traps
 		}
 		
 		List<Coord> space = new ArrayList<Coord>();
@@ -79,12 +79,12 @@ public class DungeonsPit extends DungeonBase {
 							|| blockX == originX + dungeonLength + 1
 							|| blockZ == originZ + dungeonWidth + 1){
 
-						if (blockY >= 0 && !world.getBlock(blockX, blockY - 1, blockZ).getMaterial().isSolid()) {
+						if (blockY >= 0 && !WorldGenPrimitive.getBlock(world, new Coord(blockX, blockY - 1, blockZ)).getBlock().getMaterial().isSolid()) {
 							WorldGenPrimitive.setBlock(world, blockX, blockY, blockZ, Blocks.air);
 							continue;
 						}
 						
-						if (!world.getBlock(blockX, blockY, blockZ).getMaterial().isSolid()) continue;
+						if (!WorldGenPrimitive.getBlock(world, new Coord(blockX, blockY, blockZ)).getBlock().getMaterial().isSolid()) continue;
 						
 						blocks.setBlock(world, rand, new Coord(blockX, blockY, blockZ));
 						
@@ -119,11 +119,11 @@ public class DungeonsPit extends DungeonBase {
 			for(int z = originZ - 2; z <= originZ + 2; z++){
 				for(int y = originY - 1; y > 0; y--){
 					
-					if(world.getBlock(x, y, z) == Blocks.air){
+					if(WorldGenPrimitive.isAirBlock(world, new Coord(x, y, z))){
 						continue;
 					}
 					
-					if(y < 0 + rand.nextInt(5) && world.getBlock(x, y, z) == Blocks.bedrock){
+					if(y < 0 + rand.nextInt(5) && WorldGenPrimitive.getBlock(world, new Coord(x, y, z)).getBlock() == Blocks.bedrock){
 						continue;
 					}
 					
@@ -145,94 +145,6 @@ public class DungeonsPit extends DungeonBase {
 					WorldGenPrimitive.setBlock(world, x, y, z, Blocks.air);
 				}
 			}
-		}
-	}
-	
-	private void setTrap(int dir){
-		
-		switch(dir){
-		
-		// South
-		case 0: 
-			
-
-			for (int x = originX - 1; x <= originX + 1; x++){
-				for (int z = originZ + 6; z >= originZ + 3; z--){
-					for (int y = originY - 2; y <= originY + 3; y++){
-						if(world.getBlock(x, y, z) == Blocks.air){
-							return;
-						}
-					}
-				}
-			}
-			
-			WorldGenPrimitive.setBlock(world, originX, originY, originZ + 2, Blocks.stone_pressure_plate);
-			WorldGenPrimitive.setBlock(world, originX, originY - 1, originZ + 3, Blocks.redstone_torch, 3, 2, true, true);
-			WorldGenPrimitive.setBlock(world, originX, originY - 1, originZ + 4, Blocks.redstone_wire);
-			WorldGenPrimitive.setBlock(world, originX, originY, originZ + 5, Blocks.unlit_redstone_torch, 5, 2, true, true);
-			WorldGenPrimitive.setBlock(world, originX, originY + 1, originZ + 4, Blocks.sticky_piston, 2, 2, true, true);
-			break;
-			
-			
-		// West
-		case 1:
-			
-			for (int x = originX - 6; x <= originX - 3; x++){
-				for (int z = originZ - 1; z <= originZ + 1; z++){
-					for (int y = originY - 2; y <= originY + 3; y++){
-						if(world.getBlock(x, y, z) == Blocks.air){
-							return;
-						}
-					}
-				}
-			}
-			
-			WorldGenPrimitive.setBlock(world, originX - 2, originY, originZ, Blocks.stone_pressure_plate);
-			WorldGenPrimitive.setBlock(world, originX - 3, originY - 1, originZ, Blocks.redstone_torch, 2, 2, true, true);
-			WorldGenPrimitive.setBlock(world, originX - 4, originY - 1, originZ, Blocks.redstone_wire);
-			WorldGenPrimitive.setBlock(world, originX - 5, originY, originZ, Blocks.unlit_redstone_torch, 5, 2, true, true);
-			WorldGenPrimitive.setBlock(world, originX - 4, originY + 1, originZ, Blocks.sticky_piston, 5, 2, true, true);
-			break;
-			
-		// North
-		case 2:
-
-			for (int x = originX - 1; x <= originX + 1; x++){
-				for (int z = originZ - 6; z <= originZ - 3; z++){
-					for (int y = originY - 2; y <= originY + 3; y++){
-						if(world.getBlock(x, y, z) == Blocks.air){
-							return;
-						}
-					}
-				}
-			}
-			
-			WorldGenPrimitive.setBlock(world, originX, originY, originZ - 2, Blocks.stone_pressure_plate);
-			WorldGenPrimitive.setBlock(world, originX, originY - 1, originZ - 3, Blocks.redstone_torch, 4, 2, true, true);
-			WorldGenPrimitive.setBlock(world, originX, originY - 1, originZ - 4, Blocks.redstone_wire);
-			WorldGenPrimitive.setBlock(world, originX, originY, originZ - 5, Blocks.unlit_redstone_torch, 5, 2, true, true);
-			WorldGenPrimitive.setBlock(world, originX, originY + 1, originZ - 4, Blocks.sticky_piston, 3, 2, true, true);
-			break;
-			
-		// East 
-		case 3:
-
-			for (int x = originX + 6; x >= originX + 3; x--){
-				for (int z = originZ - 1; z <= originZ + 1; z++){
-					for (int y = originY - 2; y <= originY + 3; y++){
-						if(world.getBlock(x, y, z) == Blocks.air){
-							return;
-						}
-					}
-				}
-			}
-			
-			WorldGenPrimitive.setBlock(world, originX + 2, originY, originZ, Blocks.stone_pressure_plate);
-			WorldGenPrimitive.setBlock(world, originX + 3, originY - 1, originZ, Blocks.redstone_torch, 1, 2, true, true);
-			WorldGenPrimitive.setBlock(world, originX + 4, originY - 1, originZ, Blocks.redstone_wire);
-			WorldGenPrimitive.setBlock(world, originX + 5, originY, originZ, Blocks.unlit_redstone_torch, 5, 2, true, true);
-			WorldGenPrimitive.setBlock(world, originX + 4, originY + 1, originZ, Blocks.sticky_piston, 4, 2, true, true);
-			break;
 		}
 	}
 	

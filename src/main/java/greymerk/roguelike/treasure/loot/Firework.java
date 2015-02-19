@@ -39,7 +39,7 @@ public class Firework {
 		fireworks.setTag("Explosions", explosion);
 		tag.setTag("Fireworks", fireworks);
 		
-		rocket.stackTagCompound = tag;
+		rocket.setTagCompound(tag);
 		
 		return rocket;
 	}

@@ -1,7 +1,8 @@
 package greymerk.roguelike.catacomb.theme;
 
-import greymerk.roguelike.worldgen.Log;
 import greymerk.roguelike.worldgen.MetaBlock;
+import greymerk.roguelike.worldgen.blocks.Log;
+import net.minecraft.block.BlockPlanks;
 import net.minecraft.init.Blocks;
 
 public class ThemeBrick extends ThemeBase{
@@ -15,10 +16,11 @@ public class ThemeBrick extends ThemeBase{
 		
 		this.primary = new BlockSet(walls, stair, walls);
 		
-		MetaBlock SegmentWall = new MetaBlock(Blocks.planks, 1);
+		MetaBlock segmentWall = new MetaBlock(Blocks.planks);
+		segmentWall.withProperty(BlockPlanks.VARIANT_PROP, BlockPlanks.EnumType.SPRUCE);
 		MetaBlock SegmentStair = new MetaBlock(Blocks.brick_stairs);
 		
-		this.secondary =  new BlockSet(SegmentWall, SegmentStair, pillar);
+		this.secondary =  new BlockSet(segmentWall, SegmentStair, pillar);
 
 	}
 }

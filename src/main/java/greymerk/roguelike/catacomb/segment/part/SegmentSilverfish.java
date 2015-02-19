@@ -46,7 +46,7 @@ public class SegmentSilverfish extends SegmentBase {
 		for(Cardinal d : orth){
 			Coord c = new Coord(cursor);
 			c.add(d, 1);
-			stair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.reverse(d), true));
+			WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(d), true);
 			WorldGenPrimitive.setBlock(world, rand, c, stair, true, true);
 		}
 		
@@ -54,12 +54,12 @@ public class SegmentSilverfish extends SegmentBase {
 		
 		cursor = new Coord(x, y, z);
 		cursor.add(dir, 3);
-		stair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.reverse(dir), false));
+		WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(dir), false);
 		stair.setBlock(world, cursor);
 		cursor.add(Cardinal.UP);
 		air.setBlock(world, cursor);
 		cursor.add(Cardinal.UP);
-		stair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.reverse(dir), true));
+		WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(dir), true);
 		stair.setBlock(world, cursor);
 		
 		IAlcove nest = new SilverfishNest();

@@ -7,9 +7,9 @@ import greymerk.roguelike.catacomb.segment.alcove.PrisonCell;
 import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
-import greymerk.roguelike.worldgen.Door;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
+import greymerk.roguelike.worldgen.blocks.Door;
 
 import java.util.Random;
 
@@ -49,14 +49,14 @@ public class SegmentPrisonCell extends SegmentBase {
 		for(Cardinal d : orth){
 			Coord c = new Coord(cursor);
 			c.add(d, 1);
-			stair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.reverse(d), true));
+			WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(d), true);
 			WorldGenPrimitive.setBlock(world, rand, c, stair, true, true);
 		}
 		
 		if(room){
 			cursor = new Coord(x, y, z);
 			cursor.add(dir, 3);
-			Door.generate(world, cursor, Cardinal.reverse(dir), Door.WOOD);
+			Door.generate(world, cursor, Cardinal.reverse(dir), Door.OAK);
 		} else {
 			IAlcove cell = new PrisonCell();
 			if(cell.isValidLocation(world, x, y, z, dir)){

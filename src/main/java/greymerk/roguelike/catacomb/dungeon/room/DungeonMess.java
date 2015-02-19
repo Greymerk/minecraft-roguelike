@@ -12,10 +12,12 @@ import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
+import greymerk.roguelike.worldgen.blocks.ColorBlock;
 
 import java.util.Random;
 
 import net.minecraft.init.Blocks;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.world.World;
@@ -56,7 +58,7 @@ public class DungeonMess extends DungeonBase {
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 1, y + 3, z - 4, x + 1, y + 3, z + 4, air);
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 4, y + 3, z - 1, x + 4, y + 3, z + 1, air);
 		
-		MetaBlock brownClay = new MetaBlock(Blocks.stained_hardened_clay, 12);
+		MetaBlock brownClay = ColorBlock.get(Blocks.stained_hardened_clay, EnumDyeColor.BROWN);
 		
 		// floor
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 7, y - 1, z - 7, x + 7, y - 1, z + 7, brownClay, true, true);

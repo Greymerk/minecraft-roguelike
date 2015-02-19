@@ -45,13 +45,13 @@ public class SegmentSpawner extends SegmentBase {
 			cursor.add(Cardinal.UP, 2);
 			cursor.add(dir, 2);
 			cursor.add(d, 1);
-			stair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.reverse(dir), true));
+			WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(dir), true);
 			WorldGenPrimitive.setBlock(world, rand, cursor, stair, true, true);
 			
 			cursor = new Coord(x, y, z);
 			cursor.add(dir, 2);
 			cursor.add(d, 1);
-			stair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.reverse(d), false));
+			WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(d), false);
 			WorldGenPrimitive.setBlock(world, rand, cursor, stair, true, true);
 		}
 	
@@ -60,7 +60,7 @@ public class SegmentSpawner extends SegmentBase {
 		cursor.add(dir, 3);
 		WorldGenPrimitive.setBlock(world, rand, cursor, air, true, true);
 		cursor.add(Cardinal.UP, 1);
-		stair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.reverse(dir), true));
+		WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(dir), true);
 		WorldGenPrimitive.setBlock(world, rand, cursor, stair, true, true);
 		
 		Coord shelf = new Coord(x, y, z);

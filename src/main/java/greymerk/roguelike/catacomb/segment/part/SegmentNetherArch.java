@@ -18,7 +18,7 @@ public class SegmentNetherArch extends SegmentBase {
 	protected void genWall(World world, Random rand, CatacombLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
 		
 		MetaBlock step = theme.getSecondaryStair();
-		step.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.reverse(dir), true));
+		WorldGenPrimitive.blockOrientation(step, Cardinal.reverse(dir), true);
 		IBlockFactory pillar = theme.getSecondaryPillar();
 		
 

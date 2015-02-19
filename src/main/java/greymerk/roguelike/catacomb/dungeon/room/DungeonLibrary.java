@@ -5,10 +5,10 @@ import greymerk.roguelike.catacomb.settings.CatacombLevelSettings;
 import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
-import greymerk.roguelike.worldgen.Door;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
+import greymerk.roguelike.worldgen.blocks.Door;
 
 import java.util.Arrays;
 import java.util.Random;
@@ -149,7 +149,7 @@ public class DungeonLibrary extends DungeonBase{
 		
 		Coord cursor = new Coord(pos);
 		cursor.add(dir, 7);
-		Door.generate(world, cursor, dir, Door.WOOD);
+		Door.generate(world, cursor, dir, Door.OAK);
 		
 		for(Cardinal o : orth){
 			

@@ -20,7 +20,7 @@ public class SegmentMossyArch extends SegmentBase {
 	protected void genWall(World world, Random rand, CatacombLevel level, Cardinal wallDirection, ITheme theme, int x, int y, int z) {
 		
 		MetaBlock stair = theme.getSecondaryStair(); 
-		stair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.reverse(wallDirection), true));
+		WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(wallDirection), true);
 		
 		MetaBlock air = new MetaBlock(Blocks.air);
 		
@@ -55,13 +55,13 @@ public class SegmentMossyArch extends SegmentBase {
 		cursor = new Coord(x, y, z);
 		cursor.add(Cardinal.UP, 3);
 		cursor.add(wallDirection, 1);
-		WorldGenPrimitive.setBlock(world, rand, cursor, new MetaBlock(Blocks.vine, rand.nextInt(15)), true, true);
+		WorldGenPrimitive.setBlock(world, rand, cursor, new MetaBlock(Blocks.vine), true, true);
 		
 		if(!spawnHoleSet){
 			WorldGenPrimitive.fillRectSolid(world, rand, x, y + 2, z, x, y + 5, z, new MetaBlock(Blocks.air));
 			WorldGenPrimitive.randomVines(world, rand, x, y + 3, z, x, y + 5, z);
 			
-			if(!world.isAirBlock(x, y + 6, z)) WorldGenPrimitive.setBlock(world, x, y + 7, z, Blocks.flowing_water);
+			if(!WorldGenPrimitive.isAirBlock(world, new Coord(x, y + 6, z))) WorldGenPrimitive.setBlock(world, x, y + 7, z, Blocks.flowing_water);
 			spawnHoleSet = true;
 		}
 	}

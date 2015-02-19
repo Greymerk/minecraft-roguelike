@@ -26,7 +26,7 @@ public class CatacombSettingsJungleTheme extends CatacombSettings{
 	
 	public CatacombSettingsJungleTheme(){
 		
-		this.numLevels = 2;
+		this.depth = 2;
 		
 		this.criteria = new SpawnCriteria();
 		List<BiomeDictionary.Type> biomes = new ArrayList<BiomeDictionary.Type>();

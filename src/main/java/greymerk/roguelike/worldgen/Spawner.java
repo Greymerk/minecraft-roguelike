@@ -34,61 +34,40 @@ public enum Spawner {
 	}
 	
 	public static void generate(World world, Random rand, int level, Coord pos, Spawner type){
+				
+		if(!WorldGenPrimitive.setBlock(world, pos, new MetaBlock(Blocks.mob_spawner))) return;
 		
-		int x = pos.getX();
-		int y = pos.getY();
-		int z = pos.getZ();
-		
-		if(!WorldGenPrimitive.setBlock(world, x, y, z, Blocks.mob_spawner)) return;
-		
-		TileEntityMobSpawner spawner = (TileEntityMobSpawner) world.getTileEntity(x, y, z);
+		TileEntityMobSpawner spawner = (TileEntityMobSpawner) WorldGenPrimitive.getTileEntity(world, pos);
 
 		if (spawner == null) return;
 		
 		String name = getSpawnerName(type);
-		MobSpawnerBaseLogic logic = spawner.func_145881_a();
+		MobSpawnerBaseLogic logic = spawner.getSpawnerBaseLogic();
 		logic.setEntityName(name);
 		
-		setRoguelike(logic, level);
+		setRoguelike(logic, level, name);
 
 	}	
 	
 	public static String getSpawnerName(Spawner type) {
 		switch(type){
-		case CREEPER:
-			return "Creeper";
-		case CAVESPIDER:
-			return "CaveSpider";
-		case SPIDER:
-			return "Spider";
-		case SKELETON:
-			return "Skeleton";
-		case ZOMBIE:
-			return "Zombie";
-		case SILVERFISH:
-			return "Silverfish";
-		case ENDERMAN:
-			return "Enderman";
-		case WITCH:
-			return "Witch";
-		case WITHERBOSS:
-			return "WitherBoss";
-		case BAT:
-			return "Bat";
-		case LAVASLIME:
-			return "LavaSlime";
-		case BLAZE:
-			return "Blaze";
-		case SLIME:
-			return "Slime";
-		case PRIMEDTNT:
-			return "PrimedTnt";
-		case PIGZOMBIE:
-			return "PigZombie";
-		default:
-			return "pig";
+		case CREEPER: return "Creeper";
+		case CAVESPIDER: return "CaveSpider";
+		case SPIDER: return "Spider";
+		case SKELETON: return "Skeleton";
+		case ZOMBIE: return "Zombie";
+		case SILVERFISH: return "Silverfish";
+		case ENDERMAN: return "Enderman";
+		case WITCH:	return "Witch";
+		case WITHERBOSS: return "WitherBoss";
+		case BAT: return "Bat";
+		case LAVASLIME:	return "LavaSlime";
+		case BLAZE:	return "Blaze";
+		case SLIME:	return "Slime";
+		case PRIMEDTNT:	return "PrimedTnt";
+		case PIGZOMBIE:	return "PigZombie";
+		default: return "pig";
 		}
-
 	}
 
 	public static void setMeta(MobSpawnerBaseLogic logic, NBTTagCompound meta){
@@ -97,9 +76,9 @@ public enum Spawner {
     	logic.updateSpawner();
 	}
 	
-	public static void setRoguelike(MobSpawnerBaseLogic logic, int level){
+	public static void setRoguelike(MobSpawnerBaseLogic logic, int level, String type){
     	NBTTagCompound nbt = new NBTTagCompound();
-    	nbt.setString("Type", logic.getEntityNameToSpawn());
+    	nbt.setString("Type", type);
     	nbt.setInteger("Weight", 1);
     	
     	NBTTagCompound properties = new NBTTagCompound();

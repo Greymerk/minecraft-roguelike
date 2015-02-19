@@ -17,6 +17,7 @@ import greymerk.roguelike.worldgen.redstone.Torch;
 import java.util.List;
 import java.util.Random;
 
+import net.minecraft.block.BlockRedstoneDiode;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -174,7 +175,7 @@ public class DungeonFirework implements IDungeon {
 		Coord top = new Coord(pos.getX(), 80, pos.getZ());
 		while(top.getY() > pos.getY()){
 			top.add(Cardinal.DOWN);
-			if(world.getBlock(top.getX(), top.getY(), top.getZ()).getMaterial().isSolid()) break;
+			if(WorldGenPrimitive.getBlock(world, top).getBlock().getMaterial().isSolid()) break;
 		}
 		
 		if(top.getY() >= 100) return;
@@ -187,7 +188,8 @@ public class DungeonFirework implements IDungeon {
 		Coord end = new Coord(start);
 		
 		MetaBlock breadboard = new MetaBlock(Blocks.planks);
-		MetaBlock red = new MetaBlock(Blocks.redstone_torch, 5);
+		MetaBlock red = new MetaBlock(Blocks.redstone_torch);
+		red.withProperty(BlockRedstoneDiode.FACING, Cardinal.getFacing(Cardinal.UP));
 		
 		boolean torch = false;
 		while(end.getY() < top.getY()){
@@ -224,7 +226,7 @@ public class DungeonFirework implements IDungeon {
 		List<Coord> tubeEnd = WorldGenPrimitive.getRectSolid(cursor, above);
 		MetaBlock air = new MetaBlock(Blocks.air);
 		for(Coord c : tubeEnd){
-			if(world.getBlock(c.getX(), c.getY(), c.getZ()).getMaterial().isSolid()){
+			if(WorldGenPrimitive.getBlock(world, c).getBlock().getMaterial().isSolid()){
 				air.setBlock(world, c);
 			}
 		}
@@ -258,7 +260,7 @@ public class DungeonFirework implements IDungeon {
 		end.add(Cardinal.UP, 3);
 		
 		for(Coord c : WorldGenPrimitive.getRectHollow(start, end)){
-			if(world.isAirBlock(c.getX(), c.getY(), c.getZ())) return false;
+			if(WorldGenPrimitive.isAirBlock(world, c)) return false;
 		}
 		
 		return true;

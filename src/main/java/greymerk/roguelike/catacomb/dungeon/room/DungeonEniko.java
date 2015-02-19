@@ -11,12 +11,15 @@ import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
+import greymerk.roguelike.worldgen.blocks.ColorBlock;
 
 import java.util.List;
 import java.util.Random;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockSlab;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.world.World;
 
 public class DungeonEniko extends DungeonBase {
@@ -50,25 +53,26 @@ public class DungeonEniko extends DungeonBase {
 		pillar(world, rand, x + 5, y, z + 2);
 		pillar(world, rand, x + 5, y, z + 5);
 
-		MetaBlock shelf = new MetaBlock(Blocks.stone_brick_stairs, WorldGenPrimitive.blockOrientation(Cardinal.EAST, true));
+		MetaBlock shelf = new MetaBlock(Blocks.stone_brick_stairs);
+		WorldGenPrimitive.blockOrientation(shelf, Cardinal.EAST, true);
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 6, y + 1, z - 4, x - 6, y + 3, z - 3, coal);
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 5, y, z - 4, x - 5, y, z - 3, shelf, true, true);
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 6, y + 1, z + 3, x - 6, y + 3, z + 4, coal);
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 5, y, z + 3, x - 5, y, z + 4, shelf, true, true);
 		
-		shelf.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.WEST, true));
+		WorldGenPrimitive.blockOrientation(shelf, Cardinal.WEST, true);
 		WorldGenPrimitive.fillRectSolid(world, rand, x + 6, y + 1, z - 4, x + 6, y + 3, z - 3, coal);
 		WorldGenPrimitive.fillRectSolid(world, rand, x + 5, y, z - 4, x + 5, y, z - 3, shelf, true, true);
 		WorldGenPrimitive.fillRectSolid(world, rand, x + 6, y + 1, z + 3, x + 6, y + 3, z + 4, coal);
 		WorldGenPrimitive.fillRectSolid(world, rand, x + 5, y, z + 3, x + 5, y, z + 4, shelf, true, true);
 		
-		shelf.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.SOUTH, true));
+		WorldGenPrimitive.blockOrientation(shelf, Cardinal.SOUTH, true);
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 4, y + 1, z - 6, x - 3, y + 3, z - 6, coal);
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 4, y, z - 5, x - 3, y, z - 5, shelf, true, true);
 		WorldGenPrimitive.fillRectSolid(world, rand, x + 3, y + 1, z - 6, x + 4, y + 3, z - 6, coal);
 		WorldGenPrimitive.fillRectSolid(world, rand, x + 3, y, z - 5, x + 4, y, z - 5, shelf, true, true);
 		
-		shelf.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.NORTH, true));
+		WorldGenPrimitive.blockOrientation(shelf, Cardinal.NORTH, true);
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 4, y + 1, z + 6, x - 3, y + 3, z + 6, coal);
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 4, y, z + 5, x - 3, y, z + 5, shelf, true, true);
 		WorldGenPrimitive.fillRectSolid(world, rand, x + 3, y + 1, z + 6, x + 4, y + 3, z + 6, coal);
@@ -83,8 +87,7 @@ public class DungeonEniko extends DungeonBase {
 		
 		// floor
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 5, y - 1, z - 5, x + 5, y - 1, z + 5, new MetaBlock(Blocks.stonebrick));
-				
-		MetaBlock blockOne = RogueConfig.getBoolean(RogueConfig.PRECIOUSBLOCKS) ? new MetaBlock(Blocks.lapis_block) : new MetaBlock(Blocks.stained_hardened_clay, 11);
+		MetaBlock blockOne = RogueConfig.getBoolean(RogueConfig.PRECIOUSBLOCKS) ? new MetaBlock(Blocks.lapis_block) : ColorBlock.get(Blocks.stained_hardened_clay, EnumDyeColor.BLUE);
 		MetaBlock blockTwo = new MetaBlock(Blocks.quartz_block);
 		BlockFactoryCheckers checkers = new BlockFactoryCheckers(blockOne, blockTwo);
 		
@@ -112,7 +115,8 @@ public class DungeonEniko extends DungeonBase {
 		
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 4, y + 5, z - 4, x + 4, y + 5, z + 4, netherBrick);
 		
-		MetaBlock upsideDownNetherSlab = new MetaBlock(Blocks.stone_slab, 6 | 8);
+		MetaBlock upsideDownNetherSlab = new MetaBlock(Blocks.stone_slab);
+		upsideDownNetherSlab.withProperty(BlockSlab.HALF_PROP, BlockSlab.EnumBlockHalf.TOP);
 		
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 3, y + 4, z - 3, x - 3, y + 4, z + 3, upsideDownNetherSlab, true, true);
 		WorldGenPrimitive.fillRectSolid(world, rand, x + 3, y + 4, z - 3, x + 3, y + 4, z + 3, upsideDownNetherSlab, true, true);
@@ -126,11 +130,12 @@ public class DungeonEniko extends DungeonBase {
 	
 	private static void pillar(World world, Random rand, int x, int y, int z){
 		
+		MetaBlock stair = new MetaBlock(Blocks.stone_brick_stairs);
 		WorldGenPrimitive.fillRectSolid(world, rand, x, y, z, x, y + 3, z, new MetaBlock(Blocks.stonebrick));
-		WorldGenPrimitive.setBlock(world, x + 1, y + 3, z, Blocks.stone_brick_stairs, WorldGenPrimitive.blockOrientation(Cardinal.EAST, true), 2, true, false);
-		WorldGenPrimitive.setBlock(world, x - 1, y + 3, z, Blocks.stone_brick_stairs, WorldGenPrimitive.blockOrientation(Cardinal.WEST, true), 2, true, false);
-		WorldGenPrimitive.setBlock(world, x, y + 3, z + 1, Blocks.stone_brick_stairs, WorldGenPrimitive.blockOrientation(Cardinal.SOUTH, true), 2, true, false);
-		WorldGenPrimitive.setBlock(world, x, y + 3, z - 1, Blocks.stone_brick_stairs, WorldGenPrimitive.blockOrientation(Cardinal.NORTH, true), 2, true, false);
+		WorldGenPrimitive.setBlock(world, rand, x + 1, y + 3, z, WorldGenPrimitive.blockOrientation(stair, Cardinal.EAST, true), true, false);
+		WorldGenPrimitive.setBlock(world, rand, x - 1, y + 3, z, WorldGenPrimitive.blockOrientation(stair, Cardinal.WEST, true), true, false);
+		WorldGenPrimitive.setBlock(world, rand, x, y + 3, z + 1, WorldGenPrimitive.blockOrientation(stair, Cardinal.SOUTH, true), true, false);
+		WorldGenPrimitive.setBlock(world, rand, x, y + 3, z - 1, WorldGenPrimitive.blockOrientation(stair, Cardinal.NORTH, true), true, false);
 		
 	}
 	
@@ -145,7 +150,7 @@ public class DungeonEniko extends DungeonBase {
 		List<Coord> box = WorldGenPrimitive.getRectHollow(x - size, y - 2, z - size, x + size, y + 5, z + size);
 		
 		for(Coord pos : box){
-			Block b = world.getBlock(pos.getX(), pos.getY(), pos.getZ());
+			Block b = WorldGenPrimitive.getBlock(world, pos).getBlock();
 			if(!b.getMaterial().isSolid()) return false;
 		}
 		

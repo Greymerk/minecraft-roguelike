@@ -1,4 +1,9 @@
-package greymerk.roguelike.worldgen;
+package greymerk.roguelike.worldgen.blocks;
+
+import greymerk.roguelike.worldgen.Cardinal;
+import greymerk.roguelike.worldgen.Coord;
+import greymerk.roguelike.worldgen.MetaBlock;
+import greymerk.roguelike.worldgen.WorldGenPrimitive;
 
 import java.util.Random;
 
@@ -13,11 +18,12 @@ public enum Skull {
 	
 	public static void set(World world, Random rand, int x, int y, int z, Cardinal dir, Skull type){
 		
-		MetaBlock skullBlock = new MetaBlock(Blocks.skull, 1);
+		MetaBlock skullBlock = new MetaBlock(Blocks.skull);
+		Coord pos = new Coord(x, y, z);
 		
-		if(!skullBlock.setBlock(world, new Coord(x, y, z))) return;
+		if(!skullBlock.setBlock(world, pos)) return;
 		
-		TileEntity skullEntity = world.getTileEntity(x, y, z);
+		TileEntity skullEntity = WorldGenPrimitive.getTileEntity(world, pos);
 		
 		if(skullEntity == null) return;
 		if(!(skullEntity instanceof TileEntitySkull)) return;
@@ -37,7 +43,7 @@ public enum Skull {
 	}
 	
 	public static void setType(TileEntitySkull skull, Skull type){		
-		skull.func_152107_a(getSkullId(type));
+		skull.setType(getSkullId(type));
 	}
 	
 	public static void setRotation(Random rand, TileEntitySkull skull, Cardinal dir){
@@ -46,7 +52,7 @@ public enum Skull {
 		directionValue += -1 + rand.nextInt(3);
 		directionValue = directionValue % 16;
 		
-		skull.func_145903_a(directionValue);
+		skull.setSkullRotation(directionValue);
 	}
 	
 	public static int getSkullId(Skull type){

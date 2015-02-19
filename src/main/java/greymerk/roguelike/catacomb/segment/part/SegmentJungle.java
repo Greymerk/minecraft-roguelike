@@ -6,6 +6,7 @@ import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
+import greymerk.roguelike.worldgen.blocks.Leaves;
 
 import java.util.Random;
 
@@ -20,7 +21,7 @@ public class SegmentJungle extends SegmentBase {
 		
 		MetaBlock stair = theme.getSecondaryStair();
 		
-		MetaBlock leaves = new MetaBlock(Blocks.leaves, 15);
+		MetaBlock leaves = Leaves.get(Leaves.JUNGLE, false);
 		
 		Coord cursor;
 		Coord start;
@@ -51,7 +52,7 @@ public class SegmentJungle extends SegmentBase {
 			cursor.add(wallDirection, 2);
 			cursor.add(d, 1);
 			cursor.add(Cardinal.UP, 1);
-			stair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.reverse(d), true));
+			WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(d), true);
 			WorldGenPrimitive.setBlock(world, rand, cursor, stair, true, true);
 		}
 

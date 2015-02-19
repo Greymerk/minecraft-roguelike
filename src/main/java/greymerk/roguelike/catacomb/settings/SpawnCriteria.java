@@ -88,7 +88,8 @@ public class SpawnCriteria {
 	
 	public boolean isValid(World world, Coord pos){
 		
-		Integer dimID = world.getWorldInfo().getVanillaDimension();
+		// @TODO : figure out dimension thing
+		Integer dimID = 0;
 		
 		List<Integer> dimBL = new ArrayList<Integer>();
 		
@@ -114,7 +115,7 @@ public class SpawnCriteria {
 		
 		boolean biomeFound = false;
 		
-		BiomeGenBase biome = world.getBiomeGenForCoords(pos.getX(), pos.getZ());
+		BiomeGenBase biome = world.getBiomeGenForCoords(pos.getBlockPos());
 		
 		if(this.biomes != null){
 			if(this.biomes.contains(biome.biomeName)) biomeFound = true;

@@ -5,22 +5,30 @@ import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
+import greymerk.roguelike.worldgen.blocks.Log;
+import net.minecraft.block.BlockStoneBrick;
 import net.minecraft.init.Blocks;
 
 public class ThemeJungle extends ThemeBase{
 
 	public ThemeJungle(){
-	
+		MetaBlock cracked = new MetaBlock(Blocks.stonebrick);
+		cracked.withProperty(BlockStoneBrick.VARIANT_PROP, BlockStoneBrick.EnumType.CRACKED);
+		MetaBlock mossy = new MetaBlock(Blocks.stonebrick);
+		mossy.withProperty(BlockStoneBrick.VARIANT_PROP, BlockStoneBrick.EnumType.MOSSY);
+		MetaBlock chisel = new MetaBlock(Blocks.stonebrick);
+		chisel.withProperty(BlockStoneBrick.VARIANT_PROP, BlockStoneBrick.EnumType.CHISELED);
+		
 		BlockWeightedRandom walls = new BlockWeightedRandom();
 		walls.addBlock(new MetaBlock(Blocks.mossy_cobblestone), 50);
-		walls.addBlock(new MetaBlock(Blocks.stonebrick, 1), 30);
-		walls.addBlock(new MetaBlock(Blocks.stonebrick, 2), 20);
-		walls.addBlock(new MetaBlock(Blocks.stonebrick, 3), 15);
+		walls.addBlock(mossy, 30);
+		walls.addBlock(cracked, 20);
+		walls.addBlock(chisel, 15);
 		
 		MetaBlock stair = new MetaBlock(Blocks.stone_stairs);
 		
-		MetaBlock pillar = new MetaBlock(Blocks.stonebrick, 3);
-		MetaBlock pillar2 = new MetaBlock(Blocks.log, 3);
+		MetaBlock pillar = chisel;
+		MetaBlock pillar2 = Log.getLog(Log.JUNGLE);
 		
 		BlockJumble stairJumble = new BlockJumble();
 		stairJumble.addBlock(new MetaBlock(WorldGenPrimitive.blockOrientation(stair, Cardinal.NORTH, false)));
@@ -34,6 +42,6 @@ public class ThemeJungle extends ThemeBase{
 		
 		
 		this.primary = new BlockSet(floor, walls, stair, pillar);
-		this.secondary = new BlockSet(new MetaBlock(Blocks.stonebrick, 3), stair, pillar2);
+		this.secondary = new BlockSet(chisel, stair, pillar2);
 	}
 }

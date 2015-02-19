@@ -1,4 +1,8 @@
-package greymerk.roguelike.worldgen;
+package greymerk.roguelike.worldgen.blocks;
+
+import greymerk.roguelike.worldgen.Coord;
+import greymerk.roguelike.worldgen.MetaBlock;
+import greymerk.roguelike.worldgen.WorldGenPrimitive;
 
 import java.util.Random;
 
@@ -19,7 +23,7 @@ public enum FlowerPot {
 		MetaBlock pot = new MetaBlock(Blocks.flower_pot);
 		if(!pot.setBlock(world, pos)) return;
 		
-		TileEntity potEntity = world.getTileEntity(pos.getX(), pos.getY(), pos.getZ());
+		TileEntity potEntity = WorldGenPrimitive.getTileEntity(world, pos);
 		
 		if(potEntity == null) return;
 		if(!(potEntity instanceof TileEntityFlowerPot)) return;

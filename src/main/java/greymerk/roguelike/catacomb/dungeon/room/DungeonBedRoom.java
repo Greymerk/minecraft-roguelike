@@ -4,13 +4,13 @@ import greymerk.roguelike.catacomb.dungeon.IDungeon;
 import greymerk.roguelike.catacomb.settings.CatacombLevelSettings;
 import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.treasure.TreasureChest;
-import greymerk.roguelike.worldgen.Bed;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
-import greymerk.roguelike.worldgen.FlowerPot;
-import greymerk.roguelike.worldgen.Furnace;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
+import greymerk.roguelike.worldgen.blocks.Bed;
+import greymerk.roguelike.worldgen.blocks.FlowerPot;
+import greymerk.roguelike.worldgen.blocks.Furnace;
 import greymerk.roguelike.worldgen.redstone.Torch;
 
 import java.util.Random;
@@ -62,7 +62,7 @@ public class DungeonBedRoom implements IDungeon {
 		
 		for(Cardinal o : orth){
 			MetaBlock stair = theme.getSecondaryStair();
-			stair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.reverse(o), true));
+			WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(o), true);
 			
 			start = new Coord(x, y, z);
 			start.add(o, 3);
@@ -120,7 +120,7 @@ public class DungeonBedRoom implements IDungeon {
 		Torch.generate(world, Torch.WOODEN, Cardinal.UP, cursor);
 		cursor.add(Cardinal.DOWN);
 		MetaBlock stair = theme.getSecondaryStair();
-		stair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.reverse(dir), true));
+		WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(dir), true);
 		stair.setBlock(world, cursor);
 		
 		side = orth[rand.nextInt(orth.length)];
@@ -161,7 +161,7 @@ public class DungeonBedRoom implements IDungeon {
 		end.add(Cardinal.UP, 2);
 		WorldGenPrimitive.fillRectSolid(world, rand, start, end, theme.getSecondaryPillar(), true, true);
 		MetaBlock stair = theme.getSecondaryStair();
-		stair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.reverse(dir), true));
+		WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(dir), true);
 		end.add(Cardinal.reverse(dir));
 		stair.setBlock(world, end);
 	}
@@ -188,7 +188,7 @@ public class DungeonBedRoom implements IDungeon {
 		end.add(Cardinal.UP, 3);
 		
 		for(Coord c : WorldGenPrimitive.getRectHollow(start, end)){
-			if(world.isAirBlock(c.getX(), c.getY(), c.getZ())) return false;
+			if(WorldGenPrimitive.isAirBlock(world, c)) return false;
 		}
 		
 		return true;

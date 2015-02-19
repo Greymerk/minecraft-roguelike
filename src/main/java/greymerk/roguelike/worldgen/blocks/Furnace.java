@@ -1,5 +1,10 @@
-package greymerk.roguelike.worldgen;
+package greymerk.roguelike.worldgen.blocks;
 
+import greymerk.roguelike.worldgen.Cardinal;
+import greymerk.roguelike.worldgen.Coord;
+import greymerk.roguelike.worldgen.MetaBlock;
+import greymerk.roguelike.worldgen.WorldGenPrimitive;
+import net.minecraft.block.BlockFurnace;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -20,28 +25,25 @@ public class Furnace {
 	}
 	
 	public static void generate(World world, ItemStack fuel, boolean lit, Cardinal dir, Coord pos){
+
+		MetaBlock furnace;
+		
 		if(lit){
-			if(!WorldGenPrimitive.setBlock(world, pos, Blocks.lit_furnace)) return;
+			furnace = new MetaBlock(Blocks.lit_furnace);
 		} else {
-			if(!WorldGenPrimitive.setBlock(world, pos, Blocks.furnace)) return;
+			furnace = new MetaBlock(Blocks.furnace);
 		}
 		
-		int meta = 0;
-		switch(dir){
-		case NORTH: meta = 2; break;
-		case SOUTH: meta = 3; break;
-		case WEST: meta = 4; break;
-		case EAST: meta = 5; break;
-		}
+		furnace.withProperty(BlockFurnace.FACING, Cardinal.getFacing(dir));
 		
-		world.setBlockMetadataWithNotify(pos.getX(), pos.getY(), pos.getZ(), meta, 2);
+		furnace.setBlock(world, pos);
 		
 		if(fuel == null) return;
 		
-		TileEntity te = world.getTileEntity(pos.getX(), pos.getY(), pos.getZ());
+		TileEntity te = WorldGenPrimitive.getTileEntity(world, pos);
 		if(te == null) return;
 		if(!(te instanceof TileEntityFurnace)) return;
-		TileEntityFurnace furnace = (TileEntityFurnace)te;
-		furnace.setInventorySlotContents(FUEL_SLOT, fuel);
+		TileEntityFurnace teFurnace = (TileEntityFurnace)te;
+		teFurnace.setInventorySlotContents(FUEL_SLOT, fuel);
 	}
 }

@@ -14,9 +14,12 @@ import java.util.Random;
 
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
+import net.minecraft.command.NumberInvalidException;
+import net.minecraft.command.PlayerNotFoundException;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 
 public class CommandSpawnDungeon extends CommandBase
@@ -46,16 +49,30 @@ public class CommandSpawnDungeon extends CommandBase
 		}
 		
 		if(args[0].equals("give")){
-			EntityPlayerMP player = getCommandSenderAsPlayer(sender);
+			EntityPlayerMP player = null;
+			try {
+				player = getCommandSenderAsPlayer(sender);
+			} catch (PlayerNotFoundException e) {
+				sender.addChatMessage(new ChatComponentText("No such player"));
+				return;
+			}
 			ItemStack item = ItemNovelty.getItemByName(args[1]);
 			EntityItem drop = player.entityDropItem(item, 0);
-			drop.delayBeforeCanPickup = 0;
+			drop.setNoPickupDelay();
 			return;
 		}
 		
 		if(args[0].equals("dungeon")){
-			int x = parseInt(sender, args[1]);
-			int z = parseInt(sender, args[2]);
+			int x;
+			int z;
+			try {
+				x = parseInt(args[1]);
+				z = parseInt(args[2]);
+			} catch (NumberInvalidException e) {
+				sender.addChatMessage(new ChatComponentText("Numeric error"));
+				return;
+			}
+			
 			
 			World world = sender.getEntityWorld();
 			
@@ -82,8 +99,15 @@ public class CommandSpawnDungeon extends CommandBase
 		}
 		
 		if(args[0].equals("citadel")){
-			int x = parseInt(sender, args[1]);
-			int z = parseInt(sender, args[2]);
+			int x;
+			int z;
+			try {
+				x = parseInt(args[1]);
+				z = parseInt(args[2]);
+			} catch (NumberInvalidException e) {
+				sender.addChatMessage(new ChatComponentText("Numeric error"));
+				return;
+			}
 			
 			World world = sender.getEntityWorld();
 			Citadel.generate(world, x, z);

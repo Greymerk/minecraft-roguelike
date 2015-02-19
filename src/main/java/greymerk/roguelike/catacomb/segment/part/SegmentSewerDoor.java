@@ -5,9 +5,10 @@ import greymerk.roguelike.catacomb.dungeon.SecretFactory;
 import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
-import greymerk.roguelike.worldgen.Door;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
+import greymerk.roguelike.worldgen.blocks.Door;
+import greymerk.roguelike.worldgen.blocks.Leaves;
 
 import java.util.Random;
 
@@ -23,7 +24,7 @@ public class SegmentSewerDoor extends SegmentBase {
 		MetaBlock stair = theme.getSecondaryStair();
 		MetaBlock bars = new MetaBlock(Blocks.iron_bars);
 		MetaBlock water = new MetaBlock(Blocks.flowing_water);
-		MetaBlock leaves = new MetaBlock(Blocks.leaves, 4);
+		MetaBlock leaves = Leaves.get(Leaves.SPRUCE, false);
 		MetaBlock glowstone = new MetaBlock(Blocks.glowstone);
 		
 		Coord cursor;
@@ -78,7 +79,7 @@ public class SegmentSewerDoor extends SegmentBase {
 		for(Cardinal d : orth){
 			Coord c = new Coord(cursor);
 			c.add(d, 1);
-			stair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.reverse(d), true));
+			WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(d), true);
 			WorldGenPrimitive.setBlock(world, rand, c, stair, true, true);
 		}
 		

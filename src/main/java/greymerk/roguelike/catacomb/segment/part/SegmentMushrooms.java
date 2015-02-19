@@ -53,7 +53,7 @@ public class SegmentMushrooms extends SegmentBase {
 			cursor.add(wallDirection, 2);
 			cursor.add(d, 1);
 			cursor.add(Cardinal.UP, 1);
-			stair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.reverse(d), true));
+			WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(d), true);
 			WorldGenPrimitive.setBlock(world, rand, cursor, stair, true, true);
 		}
 

@@ -29,17 +29,17 @@ public class Spawnable {
 		
 	public void generate(World world, Random rand, Coord cursor, int level){
 		
-		if(!WorldGenPrimitive.setBlock(world, cursor.getX(), cursor.getY(), cursor.getZ(), Blocks.mob_spawner)) return;
+		if(!WorldGenPrimitive.setBlock(world, cursor, new MetaBlock(Blocks.mob_spawner))) return;
 		
-		TileEntityMobSpawner spawner = (TileEntityMobSpawner) world.getTileEntity(cursor.getX(), cursor.getY(), cursor.getZ());
+		TileEntityMobSpawner spawner = (TileEntityMobSpawner) WorldGenPrimitive.getTileEntity(world, cursor);
 
 		if (spawner == null) return;
 		
-		MobSpawnerBaseLogic logic = spawner.func_145881_a();
+		MobSpawnerBaseLogic logic = spawner.getSpawnerBaseLogic();
 		logic.setEntityName(this.name);
 		
 		if (meta == null){
-			if (equip) Spawner.setRoguelike(logic, level);
+			if (equip) Spawner.setRoguelike(logic, level, this.name);
 			return;
 		}
 		

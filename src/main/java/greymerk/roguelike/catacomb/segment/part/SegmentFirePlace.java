@@ -44,7 +44,7 @@ public class SegmentFirePlace extends SegmentBase {
 		for(Cardinal d : orth){
 			Coord c = new Coord(cursor);
 			c.add(d, 1);
-			stair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.reverse(d), true));
+			WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(d), true);
 			WorldGenPrimitive.setBlock(world, rand, c, stair, true, true);
 		}
 		
@@ -52,12 +52,12 @@ public class SegmentFirePlace extends SegmentBase {
 		
 		cursor = new Coord(x, y, z);
 		cursor.add(dir, 3);
-		stair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.reverse(dir), false));
+		WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(dir), false);
 		stair.setBlock(world, cursor);
 		cursor.add(Cardinal.UP);
 		WorldGenPrimitive.setBlock(world, cursor, Blocks.iron_bars);
 		cursor.add(Cardinal.UP);
-		stair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.reverse(dir), true));
+		WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(dir), true);
 		stair.setBlock(world, cursor);
 		
 		start = new Coord(x, y, z);
@@ -70,7 +70,7 @@ public class SegmentFirePlace extends SegmentBase {
 		end.add(dir, 2);
 		List<Coord> box = WorldGenPrimitive.getRectHollow(start, end);
 		for(Coord c : box){
-			if(!world.getBlock(c.getX(), c.getY(), c.getZ()).getMaterial().isSolid()) return;
+			if(!WorldGenPrimitive.getBlock(world, c).getBlock().getMaterial().isSolid()) return;
 		}
 		
 		WorldGenPrimitive.fillRectSolid(world, rand, start, end, theme.getPrimaryWall(), true, true);

@@ -67,7 +67,7 @@ public enum Loot {
 		boolean isBook = item.getItem() == Items.book;
 
 		if (isBook){
-			item.func_150996_a(Items.enchanted_book);
+			item.setItem(Items.enchanted_book);
 			if(enchants.size() > 1){
 				enchants.remove(rand.nextInt(enchants.size()));
 			}
@@ -85,15 +85,18 @@ public enum Loot {
 	
 	public static void setItemLore(ItemStack item, String loreText){
 		
-		if (item.stackTagCompound == null){
-			item.stackTagCompound.setTag("tag", new NBTTagCompound());
+		NBTTagCompound tag = item.getTagCompound(); 
+		
+		if (tag == null){
+			tag = new NBTTagCompound();
+			item.setTagCompound(tag);
 		}
 
-		if (!item.stackTagCompound.hasKey("display")){
-			item.stackTagCompound.setTag("display", new NBTTagCompound());
+		if (!tag.hasKey("display")){
+			tag.setTag("display", new NBTTagCompound());
 		}
 		
-		NBTTagCompound display = item.stackTagCompound.getCompoundTag("display");
+		NBTTagCompound display = tag.getCompoundTag("display");
 		
 		if (!(display.hasKey("Lore")))
 		{
@@ -133,7 +136,7 @@ public enum Loot {
 		
 		Random rand = world.rand;
 				
-		EnumDifficulty difficulty = world.difficultySetting;
+		EnumDifficulty difficulty = world.getDifficulty();
 		
 		if(difficulty == null){
 			difficulty = EnumDifficulty.NORMAL;

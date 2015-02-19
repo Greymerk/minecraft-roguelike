@@ -170,12 +170,12 @@ public class DungeonObsidian extends DungeonBase {
 				stepSpot.add(dir, 8);
 				stepSpot.add(Cardinal.DOWN, 1);
 				stepSpot.add(orth, 2);
-				step.setMeta(WorldGenPrimitive.blockOrientation(orth, false));
+				WorldGenPrimitive.blockOrientation(step, orth, false);
 				WorldGenPrimitive.setBlock(world, rand, stepSpot, step, true, true);
 				stepSpot.add(dir, 1);
 				WorldGenPrimitive.setBlock(world, rand, stepSpot, step, true, true);
 				
-				step.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.reverse(dir), false));
+				WorldGenPrimitive.blockOrientation(step, Cardinal.reverse(dir), false);
 				stepSpot = new Coord(x, y, z);
 				stepSpot.add(Cardinal.DOWN, 2);
 				stepSpot.add(dir, 7);

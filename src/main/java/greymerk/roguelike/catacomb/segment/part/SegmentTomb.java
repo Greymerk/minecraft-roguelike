@@ -46,7 +46,7 @@ public class SegmentTomb extends SegmentBase {
 		for(Cardinal d : orth){
 			Coord c = new Coord(cursor);
 			c.add(d, 1);
-			stair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.reverse(d), true));
+			WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(d), true);
 			WorldGenPrimitive.setBlock(world, rand, c, stair, true, true);
 		}
 		
@@ -77,7 +77,7 @@ public class SegmentTomb extends SegmentBase {
 		
 		// make sure the box is solid wall
 		for(Coord c : box){
-			if(!world.getBlock(c.getX(), c.getY(), c.getZ()).getMaterial().isSolid()) return;
+			if(!WorldGenPrimitive.getBlock(world, c).getBlock().getMaterial().isSolid()) return;
 		}
 		
 		WorldGenPrimitive.fillRectHollow(world, rand, start, end, theme.getPrimaryWall(), true, true);

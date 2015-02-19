@@ -8,6 +8,7 @@ import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
+import net.minecraft.block.BlockStoneSlab;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 
@@ -31,11 +32,12 @@ public class SegmentNetherStripes extends SegmentBase {
 		WorldGenPrimitive.setBlock(world, rand, cursor, air, true, true);
 		cursor = new Coord(x, y, z);
 		cursor.add(dir, 5);
-		boolean isAir = world.isAirBlock(cursor.getX(), cursor.getY(), cursor.getZ());
+		boolean isAir = WorldGenPrimitive.isAirBlock(world, cursor);
 		boolean isLava = rand.nextInt(5) == 0;
 
 		
-		MetaBlock slab = new MetaBlock(Blocks.stone_slab, 14);
+		MetaBlock slab = new MetaBlock(Blocks.stone_slab);
+		slab.withProperty(BlockStoneSlab.VARIANT_PROP, BlockStoneSlab.EnumType.NETHERBRICK);
 		cursor = new Coord(x, y, z);
 		cursor.add(dir, 2);
 		WorldGenPrimitive.setBlock(world, rand, cursor, slab, true, true);
@@ -53,7 +55,7 @@ public class SegmentNetherStripes extends SegmentBase {
 			end.add(Cardinal.DOWN, 2);
 			if(isLava && !isAir) WorldGenPrimitive.fillRectSolid(world, rand, start, end, new MetaBlock(Blocks.lava), false, true);
 			
-			step.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.reverse(orth), true));
+			WorldGenPrimitive.blockOrientation(step, Cardinal.reverse(orth), true);
 			cursor = new Coord(x, y, z);
 			cursor.add(dir, 2);
 			cursor.add(orth, 1);

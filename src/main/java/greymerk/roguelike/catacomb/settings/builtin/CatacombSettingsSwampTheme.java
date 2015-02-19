@@ -18,7 +18,6 @@ import java.util.List;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.BiomeDictionary;
 
@@ -26,7 +25,7 @@ public class CatacombSettingsSwampTheme extends CatacombSettings{
 	
 	public CatacombSettingsSwampTheme(){
 		
-		this.numLevels = 2;
+		this.depth = 2;
 		
 		this.criteria = new SpawnCriteria();
 		List<BiomeDictionary.Type> biomes = new ArrayList<BiomeDictionary.Type>();

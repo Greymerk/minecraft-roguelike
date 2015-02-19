@@ -100,7 +100,7 @@ public class DungeonStorage extends DungeonBase {
 				cursor.add(dir, 6);
 				cursor.add(orth, 3);
 				MetaBlock step = theme.getSecondaryStair();
-				step.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.reverse(dir), true));
+				WorldGenPrimitive.blockOrientation(step, Cardinal.reverse(dir), true);
 				WorldGenPrimitive.setBlock(world, rand, cursor, step, true, true);
 				cursor.add(orth, 1);
 				WorldGenPrimitive.setBlock(world, rand, cursor, step, true, true);
@@ -144,7 +144,7 @@ public class DungeonStorage extends DungeonBase {
 	private static void pillarTop(World world, Random rand, ITheme theme, Coord cursor){
 		MetaBlock step = theme.getSecondaryStair();
 		for(Cardinal dir : Cardinal.directions){
-			step.setMeta(WorldGenPrimitive.blockOrientation(dir, true));
+			WorldGenPrimitive.blockOrientation(step, dir, true);
 			cursor.add(dir, 1);
 			WorldGenPrimitive.setBlock(world, rand, cursor, step, true, false);
 			cursor.add(Cardinal.reverse(dir), 1);

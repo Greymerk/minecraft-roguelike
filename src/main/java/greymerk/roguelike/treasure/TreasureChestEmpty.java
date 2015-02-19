@@ -3,6 +3,7 @@ package greymerk.roguelike.treasure;
 import greymerk.roguelike.treasure.loot.LootSettings;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
+import greymerk.roguelike.worldgen.WorldGenPrimitive;
 
 import java.util.Random;
 
@@ -25,7 +26,7 @@ public class TreasureChestEmpty extends TreasureChestBase implements ITreasureCh
 			return null;
 		}
 		
-		chest = (TileEntityChest) world.getTileEntity(pos.getX(), pos.getY(), pos.getZ());
+		chest = (TileEntityChest) WorldGenPrimitive.getTileEntity(world, pos);
 		
 		return this;
 

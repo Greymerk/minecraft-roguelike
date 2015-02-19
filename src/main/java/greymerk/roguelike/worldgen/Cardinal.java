@@ -1,5 +1,8 @@
 package greymerk.roguelike.worldgen;
 
+import net.minecraft.block.BlockLever.EnumOrientation;
+import net.minecraft.util.EnumFacing;
+
 
 public enum Cardinal {
 
@@ -38,5 +41,31 @@ public enum Cardinal {
 		}
 		
 		return null;
+	}
+	
+	public static EnumFacing getFacing(Cardinal dir){
+		
+		switch(dir){
+		case NORTH: return EnumFacing.SOUTH;
+		case EAST: return EnumFacing.WEST;
+		case WEST: return EnumFacing.EAST;
+		case SOUTH: return EnumFacing.NORTH;
+		case UP: return EnumFacing.UP;
+		case DOWN: return EnumFacing.DOWN;
+		default: return null;
+		}
+	}
+	
+	public static EnumOrientation getOrientation(Cardinal dir){
+		
+		switch(dir){
+		case NORTH: return EnumOrientation.SOUTH;
+		case EAST: return EnumOrientation.WEST;
+		case WEST: return EnumOrientation.EAST;
+		case SOUTH: return EnumOrientation.NORTH;
+		case UP: return EnumOrientation.UP_X;
+		case DOWN: return EnumOrientation.DOWN_X;
+		default: return null;
+		}
 	}
 }

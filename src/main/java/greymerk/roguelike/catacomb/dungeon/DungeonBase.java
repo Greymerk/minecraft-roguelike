@@ -3,12 +3,12 @@ package greymerk.roguelike.catacomb.dungeon;
 import greymerk.roguelike.catacomb.settings.CatacombLevelSettings;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
+import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
 
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.block.Block;
 import net.minecraft.world.World;
 
 public abstract class DungeonBase implements IDungeon{
@@ -26,8 +26,8 @@ public abstract class DungeonBase implements IDungeon{
 		List<Coord> box = WorldGenPrimitive.getRectHollow(x - size, y - 2, z - size, x + size, y + 5, z + size);
 		
 		for(Coord pos : box){
-			Block b = world.getBlock(pos.getX(), pos.getY(), pos.getZ());
-			if(!b.getMaterial().isSolid()) return false;
+			MetaBlock b = WorldGenPrimitive.getBlock(world, pos);
+			if(!b.getBlock().getMaterial().isSolid()) return false;
 		}
 		
 		return true;

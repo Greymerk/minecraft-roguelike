@@ -7,9 +7,10 @@ import greymerk.roguelike.treasure.TreasureChest;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
-import greymerk.roguelike.worldgen.Log;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
+import greymerk.roguelike.worldgen.blocks.ColorBlock;
+import greymerk.roguelike.worldgen.blocks.Log;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -41,15 +42,15 @@ public class DungeonsMusic extends DungeonBase {
 		MetaBlock air = new MetaBlock(Blocks.air);
 		IBlockFactory wall = theme.getPrimaryWall();
 		IBlockFactory deco = theme.getSecondaryWall();
-		MetaBlock rug1 = new MetaBlock(Blocks.carpet, rand.nextInt(16));
-		MetaBlock rug2 = new MetaBlock(Blocks.carpet, rand.nextInt(16));
-		MetaBlock rug3 = new MetaBlock(Blocks.carpet, rand.nextInt(16));
+		MetaBlock rug1 = ColorBlock.get(Blocks.carpet, rand);
+		MetaBlock rug2 = ColorBlock.get(Blocks.carpet, rand);
+		MetaBlock rug3 = ColorBlock.get(Blocks.carpet, rand);
 		
 		// fill air
 		WorldGenPrimitive.fillRectSolid(world, inRandom, originX - 5, originY, originZ - 5, originX + 5, originY + 3, originZ + 5, air);
 		
 		// shell
-		WorldGenPrimitive.fillRectHollow(world, rand, originX - 6, originY - 2, originZ - 6, originX + 6, originY + 5, originZ + 6, wall, false, true);
+		WorldGenPrimitive.fillRectHollow(world, rand, new Coord(originX - 6, originY - 2, originZ - 6), new Coord(originX + 6, originY + 5, originZ + 6), wall, false, true);
 		
 		// floor
 		WorldGenPrimitive.fillRectSolid(world, rand, originX - 5, originY - 1, originZ - 5, originX + 5, originY - 1, originZ + 5, deco, true, true);

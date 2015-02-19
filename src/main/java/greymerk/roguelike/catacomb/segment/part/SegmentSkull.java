@@ -5,8 +5,8 @@ import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
-import greymerk.roguelike.worldgen.Skull;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
+import greymerk.roguelike.worldgen.blocks.Skull;
 
 import java.util.Random;
 
@@ -45,13 +45,13 @@ public class SegmentSkull extends SegmentBase {
 			cursor.add(Cardinal.UP, 2);
 			cursor.add(dir, 2);
 			cursor.add(d, 1);
-			stair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.reverse(dir), true));
+			WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(dir), true);
 			WorldGenPrimitive.setBlock(world, rand, cursor, stair, true, true);
 			
 			cursor = new Coord(x, y, z);
 			cursor.add(dir, 2);
 			cursor.add(d, 1);
-			stair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.reverse(d), false));
+			WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(d), false);
 			WorldGenPrimitive.setBlock(world, rand, cursor, stair, true, true);
 		}
 	
@@ -60,15 +60,16 @@ public class SegmentSkull extends SegmentBase {
 		cursor.add(dir, 3);
 		WorldGenPrimitive.setBlock(world, rand, cursor, air, true, true);
 		cursor.add(Cardinal.UP, 1);
-		stair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.reverse(dir), true));
+		WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(dir), true);
 		WorldGenPrimitive.setBlock(world, rand, cursor, stair, true, true);
 		
 		
 		Coord shelf = new Coord(x, y, z);
 		shelf.add(dir, 3);
+		Coord below = new Coord(shelf);
 		shelf.add(Cardinal.UP, 1);
 
-		if(world.isAirBlock(shelf.getX(), shelf.getY() - 1, shelf.getZ())) return;
+		if(WorldGenPrimitive.isAirBlock(world, below)) return;
 		
 		Skull type;
 		if(rand.nextInt(5) == 0){

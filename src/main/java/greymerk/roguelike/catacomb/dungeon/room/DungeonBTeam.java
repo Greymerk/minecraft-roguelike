@@ -13,17 +13,26 @@ import greymerk.roguelike.treasure.loot.provider.ItemNovelty;
 import greymerk.roguelike.worldgen.BlockFactoryCheckers;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
-import greymerk.roguelike.worldgen.Log;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
+import greymerk.roguelike.worldgen.blocks.Log;
 
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.block.Block;
+import net.minecraft.block.BlockCocoa;
+import net.minecraft.block.BlockColored;
+import net.minecraft.block.BlockDoubleStoneSlab;
+import net.minecraft.block.BlockPlanks;
+import net.minecraft.block.BlockSlab;
+import net.minecraft.block.BlockStairs;
+import net.minecraft.block.BlockStoneSlab;
+import net.minecraft.block.BlockTrapDoor;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
 public class DungeonBTeam extends DungeonBase {
@@ -40,12 +49,17 @@ public class DungeonBTeam extends DungeonBase {
 		MetaBlock oakLog = Log.getLog(Log.OAK);
 		MetaBlock stair = new MetaBlock(Blocks.spruce_stairs);
 		MetaBlock stonebrick = new MetaBlock(Blocks.stonebrick);
+		MetaBlock cyan = new MetaBlock(Blocks.stained_hardened_clay);
+		cyan.withProperty(BlockColored.COLOR, EnumDyeColor.CYAN);
+		MetaBlock doubleSlab = new MetaBlock(Blocks.double_stone_slab);
+		doubleSlab.withProperty(BlockDoubleStoneSlab.VARIANT_PROP, BlockStoneSlab.EnumType.STONE);
+		MetaBlock sprucePlank = new MetaBlock(Blocks.planks);
+		sprucePlank.withProperty(BlockPlanks.VARIANT_PROP, BlockPlanks.EnumType.SPRUCE);
 		
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 4, y, z - 4, x + 4, y + 4, z + 5, air);
-		
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 4, y - 1, z - 4, x + 4, y - 1, z + 5, new MetaBlock(Blocks.cobblestone));
-		WorldGenPrimitive.fillRectSolid(world, rand, x - 3, y - 1, z - 2, x + 3, y - 1, z + 3, new MetaBlock(Blocks.stained_hardened_clay, 9), true, true);
-		WorldGenPrimitive.fillRectSolid(world, rand, x - 2, y - 1, z - 1, x + 2, y - 1, z + 2, new MetaBlock(Blocks.double_stone_slab, 8), true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 3, y - 1, z - 2, x + 3, y - 1, z + 3, cyan, true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 2, y - 1, z - 1, x + 2, y - 1, z + 2, doubleSlab, true, true);
 		
 		// wood panel walls
 		
@@ -53,15 +67,16 @@ public class DungeonBTeam extends DungeonBase {
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 4, y + 1, z + 6, x + 4, y + 3, z + 6, panels, true, true);
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 4, y + 1, z - 5, x + 4, y + 3, z - 5, panels, true, true);
 	
-		MetaBlock spruce = new MetaBlock(Blocks.planks, 1); 
-		WorldGenPrimitive.fillRectSolid(world, rand, x - 4, y, z + 6, x + 4, y, z + 6, spruce, true, true);
-		WorldGenPrimitive.fillRectSolid(world, rand, x - 4, y, z - 5, x + 4, y, z - 5, spruce, true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 4, y, z + 6, x + 4, y, z + 6, sprucePlank, true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 4, y, z - 5, x + 4, y, z - 5, sprucePlank, true, true);
 		
-		WorldGenPrimitive.fillRectSolid(world, rand, x - 5, y - 1, z - 4, x - 5, y, z + 5, spruce, true, true);
-		WorldGenPrimitive.fillRectSolid(world, rand, x + 5, y - 1, z - 4, x + 5, y, z + 5, spruce, true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 5, y - 1, z - 4, x - 5, y, z + 5, sprucePlank, true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, x + 5, y - 1, z - 4, x + 5, y, z + 5, sprucePlank, true, true);
 		
-		WorldGenPrimitive.fillRectSolid(world, rand, x - 4, y + 4, z - 4, x + 4, y + 4, z - 4, new MetaBlock(Blocks.spruce_stairs, WorldGenPrimitive.blockOrientation(Cardinal.SOUTH, true)), true, true);
-		WorldGenPrimitive.fillRectSolid(world, rand, x - 4, y + 4, z + 5, x + 4, y + 4, z + 5, new MetaBlock(Blocks.spruce_stairs, WorldGenPrimitive.blockOrientation(Cardinal.NORTH, true)), true, true);
+		stair.withProperty(BlockStairs.FACING, EnumFacing.SOUTH);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 4, y + 4, z - 4, x + 4, y + 4, z - 4, stair, true, true);
+		stair.withProperty(BlockStairs.FACING, EnumFacing.NORTH);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 4, y + 4, z + 5, x + 4, y + 4, z + 5, stair, true, true);
 		
 		// doors
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 1, y, z - 5, x + 1, y + 2, z - 5, new MetaBlock(Blocks.cobblestone));
@@ -71,26 +86,31 @@ public class DungeonBTeam extends DungeonBase {
 		WorldGenPrimitive.fillRectSolid(world, rand, x, y, z + 6, x, y + 1, z + 6, air);
 		
 		// west wall
-		WorldGenPrimitive.fillRectSolid(world, rand, x - 5, y, z - 5, x - 5, y + 4, z + 6, spruce, true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 5, y, z - 5, x - 5, y + 4, z + 6, sprucePlank, true, true);
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 5, y, z - 1, x - 5, y, z + 2, new MetaBlock(Blocks.noteblock));
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 5, y + 1, z - 3, x - 5, y + 3, z + 4, new MetaBlock(Blocks.bookshelf));
-		WorldGenPrimitive.fillRectSolid(world, rand, x - 5, y + 1, z - 1, x - 5, y + 3, z + 2, new MetaBlock(Blocks.wool, 15), true, true);
+		MetaBlock black = new MetaBlock(Blocks.wool);
+		black.withProperty(BlockColored.COLOR, EnumDyeColor.BLACK);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 5, y + 1, z - 1, x - 5, y + 3, z + 2, black, true, true);
 		
-		MetaBlock cocao = new MetaBlock(Blocks.cocoa, 9);
+		MetaBlock cocao = new MetaBlock(Blocks.cocoa);
+		cocao.withProperty(BlockCocoa.FACING, EnumFacing.EAST);
 		WorldGenPrimitive.setBlock(world, x - 5, y + 2, z - 2, Log.getLog(Log.JUNGLE, Cardinal.EAST));
 		cocao.setBlock(world, new Coord(x - 4, y + 2, z - 2));
 		WorldGenPrimitive.setBlock(world, x - 5, y + 2, z + 3, Log.getLog(Log.JUNGLE, Cardinal.EAST));
 		cocao.setBlock(world, new Coord(x - 4, y + 2, z + 3));
 		
-		lamp(world, x - 2, y, z - 4);
-		lamp(world, x + 2, y, z - 4);
-		lamp(world, x - 2, y, z + 5);
-		lamp(world, x + 2, y, z + 5);
+		lamp(world, new Coord(x - 2, y, z - 4));
+		lamp(world, new Coord(x + 2, y, z - 4));
+		lamp(world, new Coord(x - 2, y, z + 5));
+		lamp(world, new Coord(x + 2, y, z + 5));
 		
 		// east wall
 		WorldGenPrimitive.fillRectSolid(world, rand, x + 5, y + 1, z - 4, x + 5, y + 4, z + 5, stonebrick);
 		
-		MetaBlock greenBlock = RogueConfig.getBoolean(RogueConfig.PRECIOUSBLOCKS) ? new MetaBlock(Blocks.emerald_block) : new MetaBlock(Blocks.wool, 5);
+		MetaBlock lime = new MetaBlock(Blocks.wool);
+		lime.withProperty(BlockColored.COLOR, EnumDyeColor.LIME);
+		MetaBlock greenBlock = RogueConfig.getBoolean(RogueConfig.PRECIOUSBLOCKS) ? new MetaBlock(Blocks.emerald_block) : lime;
 		
 		WorldGenPrimitive.fillRectSolid(world, rand, x + 5, y, z - 1, x + 5, y + 4, z - 1, greenBlock, true, true);
 		WorldGenPrimitive.fillRectSolid(world, rand, x + 5, y, z, x + 5, y, z + 1, greenBlock, true, true);
@@ -119,7 +139,9 @@ public class DungeonBTeam extends DungeonBase {
 		// table
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 2, y, z, x - 2, y, z + 1, WorldGenPrimitive.blockOrientation(stair, Cardinal.WEST, true), true, true);
 		WorldGenPrimitive.fillRectSolid(world, rand, x + 2, y, z, x + 2, y, z + 1, WorldGenPrimitive.blockOrientation(stair, Cardinal.EAST, true), true, true);
-		MetaBlock spruceSlabUpsideDown = new MetaBlock(Blocks.wooden_slab, 9);
+		MetaBlock spruceSlabUpsideDown = new MetaBlock(Blocks.wooden_slab);
+		spruceSlabUpsideDown.withProperty(BlockPlanks.VARIANT_PROP, BlockPlanks.EnumType.SPRUCE);
+		spruceSlabUpsideDown.withProperty(BlockSlab.HALF_PROP, BlockSlab.EnumBlockHalf.TOP);
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 1, y, z, x + 1, y, z + 1, spruceSlabUpsideDown, true, true);
 		
 		// chairs
@@ -167,23 +189,32 @@ public class DungeonBTeam extends DungeonBase {
 		return true;
 	}
 
-	private static void lamp(World world, int x, int y, int z){
-		MetaBlock spruce = new MetaBlock(Blocks.planks, 1);
-		spruce.setBlock(world, new Coord(x, y + 4, z));
-		WorldGenPrimitive.setBlock(world, x, y + 3, z, Blocks.fence);
+	private static void lamp(World world, Coord pos){
 		
-		WorldGenPrimitive.setBlock(world, x, y + 2, z, Blocks.glowstone);
-		MetaBlock fence = new MetaBlock(Blocks.trapdoor, 4);
-		fence.setBlock(world, new Coord(x, y + 2, z - 1));
-		fence.setMeta(5);
-		fence.setBlock(world, new Coord(x, y + 2, z + 1));
-		fence.setMeta(6);
-		fence.setBlock(world, new Coord(x - 1, y + 2, z));		
-		fence.setMeta(7);
-		fence.setBlock(world, new Coord(x + 1, y + 2, z));
+		MetaBlock spruce = new MetaBlock(Blocks.planks);
+		MetaBlock fence = new MetaBlock(Blocks.oak_fence);
+		spruce.withProperty(BlockPlanks.VARIANT_PROP, BlockPlanks.EnumType.SPRUCE);
+		Coord cursor = new Coord(pos);
+		cursor.add(Cardinal.UP, 4);
+		spruce.setBlock(world, new Coord(cursor));
+		cursor.add(Cardinal.DOWN);
+		WorldGenPrimitive.setBlock(world, cursor, Blocks.oak_fence);
+		cursor.add(Cardinal.DOWN);
+		WorldGenPrimitive.setBlock(world, cursor, Blocks.glowstone);
 		
-		WorldGenPrimitive.setBlock(world, x, y + 1, z, Blocks.fence);
-		spruce.setBlock(world, new Coord(x, y, z));
+		for(Cardinal dir : Cardinal.directions){
+			MetaBlock trapdoor = new MetaBlock(Blocks.trapdoor);
+			trapdoor.withProperty(BlockTrapDoor.FACING_PROP, Cardinal.getFacing(dir));
+			trapdoor.withProperty(BlockTrapDoor.OPEN_PROP, true);
+			Coord p = new Coord(cursor);
+			trapdoor.setBlock(world, p);
+			
+		}
+		
+		cursor.add(Cardinal.DOWN);
+		fence.setBlock(world, cursor);
+		cursor.add(Cardinal.DOWN);
+		spruce.setBlock(world, cursor);
 	}
 	
 	public int getSize(){
@@ -197,8 +228,8 @@ public class DungeonBTeam extends DungeonBase {
 		List<Coord> box = WorldGenPrimitive.getRectHollow(x - 7, y - 2, z - 7, x + 7, y + 5, z + 7);
 		
 		for(Coord pos : box){
-			Block b = world.getBlock(pos.getX(), pos.getY(), pos.getZ());
-			if(!b.getMaterial().isSolid()) return false;
+			MetaBlock b = WorldGenPrimitive.getBlock(world, pos);
+			if(!b.getBlock().getMaterial().isSolid()) return false;
 		}
 		
 		return true;

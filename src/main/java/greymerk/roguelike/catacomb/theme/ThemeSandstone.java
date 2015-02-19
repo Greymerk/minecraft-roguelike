@@ -2,6 +2,7 @@ package greymerk.roguelike.catacomb.theme;
 
 import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.MetaBlock;
+import net.minecraft.block.BlockSandStone;
 import net.minecraft.init.Blocks;
 
 public class ThemeSandstone extends ThemeBase{
@@ -14,13 +15,15 @@ public class ThemeSandstone extends ThemeBase{
 		
 		MetaBlock stair = new MetaBlock(Blocks.sandstone_stairs);
 		
-		MetaBlock pillar = new MetaBlock(Blocks.sandstone, 2);
+		MetaBlock pillar = new MetaBlock(Blocks.sandstone);
+		pillar.withProperty(BlockSandStone.field_176297_a, BlockSandStone.EnumType.SMOOTH);
 		
 		this.primary = new BlockSet(walls, stair, pillar);
 		
-		MetaBlock SegmentWall = new MetaBlock(Blocks.sandstone, 1);
+		MetaBlock segmentWall = new MetaBlock(Blocks.sandstone);
+		segmentWall.withProperty(BlockSandStone.field_176297_a, BlockSandStone.EnumType.CHISELED);
 		
-		this.secondary =  new BlockSet(SegmentWall, stair, pillar);
+		this.secondary =  new BlockSet(segmentWall, stair, pillar);
 
 	}
 }

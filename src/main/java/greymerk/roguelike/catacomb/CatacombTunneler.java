@@ -98,15 +98,15 @@ public class CatacombTunneler {
 			int z = location.getZ();
 			
 			if(dir == Cardinal.NORTH || dir == Cardinal.SOUTH){
-				WorldGenPrimitive.fillRectSolid(world, rand, x - 1, pos.getY(), z, x + 1, pos.getY() + 2, z, air, false, true);
-				WorldGenPrimitive.fillRectSolid(world, rand, x - 2, pos.getY() - 1, z, x + 2, pos.getY() + 4, z, wallBlocks, false, true);
-				WorldGenPrimitive.fillRectSolid(world, rand, x - 1, pos.getY() - 1, z, x + 1, pos.getY() - 1, z, floor, false, true);
-				WorldGenPrimitive.fillRectSolid(world, rand, x - 1, pos.getY() - 1, z, x + 1, pos.getY() - 1, z, bridgeBlocks, true, false);
+				WorldGenPrimitive.fillRectSolid(world, rand, new Coord(x - 1, pos.getY(), z), new Coord(x + 1, pos.getY() + 2, z), air, false, true);
+				WorldGenPrimitive.fillRectSolid(world, rand, new Coord(x - 2, pos.getY() - 1, z), new Coord(x + 2, pos.getY() + 4, z), wallBlocks, false, true);
+				WorldGenPrimitive.fillRectSolid(world, rand, new Coord(x - 1, pos.getY() - 1, z), new Coord(x + 1, pos.getY() - 1, z), floor, false, true);
+				WorldGenPrimitive.fillRectSolid(world, rand, new Coord(x - 1, pos.getY() - 1, z), new Coord(x + 1, pos.getY() - 1, z), bridgeBlocks, true, false);
 			} else {
-				WorldGenPrimitive.fillRectSolid(world, rand, x, pos.getY(), z - 1, x, pos.getY() + 2, z + 1, air, false, true);
-				WorldGenPrimitive.fillRectSolid(world, rand, x, pos.getY() - 1, z - 2, x, pos.getY() + 4, z + 2, wallBlocks, false, true);
-				WorldGenPrimitive.fillRectSolid(world, rand, x, pos.getY() - 1, z - 1, x, pos.getY() - 1, z + 1, floor, false, true);
-				WorldGenPrimitive.fillRectSolid(world, rand, x, pos.getY() - 1, z - 1, x, pos.getY() - 1, z + 1, bridgeBlocks, true, false);
+				WorldGenPrimitive.fillRectSolid(world, rand, new Coord(x, pos.getY(), z - 1), new Coord(x, pos.getY() + 2, z + 1), air, false, true);
+				WorldGenPrimitive.fillRectSolid(world, rand, new Coord(x, pos.getY() - 1, z - 2), new Coord(x, pos.getY() + 4, z + 2), wallBlocks, false, true);
+				WorldGenPrimitive.fillRectSolid(world, rand, new Coord(x, pos.getY() - 1, z - 1), new Coord(x, pos.getY() - 1, z + 1), floor, false, true);
+				WorldGenPrimitive.fillRectSolid(world, rand, new Coord(x, pos.getY() - 1, z - 1), new Coord(x, pos.getY() - 1, z + 1), bridgeBlocks, true, false);
 			}
 		}
 		

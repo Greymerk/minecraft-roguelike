@@ -69,7 +69,7 @@ public class RogueTower implements ITower{
 				start.add(Cardinal.reverse(orth), 1);
 				WorldGenPrimitive.fillRectSolid(world, rand, start, end, blocks, true, true);
 				cursor.add(Cardinal.UP, 2);
-				stair.setMeta(WorldGenPrimitive.blockOrientation(orth, false));
+				WorldGenPrimitive.blockOrientation(stair, orth, false);
 				WorldGenPrimitive.setBlock(world, rand, cursor, stair, true, true);
 				
 				start = new Coord(floor);
@@ -97,17 +97,17 @@ public class RogueTower implements ITower{
 				cursor.add(dir, 3);
 				cursor.add(orth, 2);
 				cursor.add(Cardinal.UP, 3);
-				stair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.reverse(orth), true));
+				WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(orth), true);
 				WorldGenPrimitive.setBlock(world, rand, cursor, stair, true, true);
 				cursor.add(Cardinal.UP, 5);
-				stair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.reverse(orth), true));
+				WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(orth), true);
 				WorldGenPrimitive.setBlock(world, rand, cursor, stair, true, true);
 				
 				start = new Coord(floor);
 				start.add(dir, 4);
 				start.add(orth, 3);
 				start.add(Cardinal.UP, 4);
-				stair.setMeta(WorldGenPrimitive.blockOrientation(orth, true));
+				WorldGenPrimitive.blockOrientation(stair, orth, true);
 				WorldGenPrimitive.setBlock(world, rand, start, stair, true, true);
 				
 				start.add(Cardinal.UP, 1);
@@ -118,21 +118,21 @@ public class RogueTower implements ITower{
 				start = new Coord(floor);
 				start.add(dir, 5);
 				start.add(Cardinal.UP, 4);
-				stair.setMeta(WorldGenPrimitive.blockOrientation(dir, true));
+				WorldGenPrimitive.blockOrientation(stair, dir, true);
 				WorldGenPrimitive.setBlock(world, rand, start, stair, true, true);
 				
 				cursor = new Coord(start);
 				cursor.add(orth, 1);
-				stair.setMeta(WorldGenPrimitive.blockOrientation(orth, true));
+				WorldGenPrimitive.blockOrientation(stair, orth, true);
 				WorldGenPrimitive.setBlock(world, rand, cursor, stair, true, true);
 				
 				start.add(Cardinal.UP, 3);
-				stair.setMeta(WorldGenPrimitive.blockOrientation(dir, true));
+				WorldGenPrimitive.blockOrientation(stair, dir, true);
 				WorldGenPrimitive.setBlock(world, rand, start, stair, true, true);
 				
 				cursor = new Coord(start);
 				cursor.add(orth, 1);
-				stair.setMeta(WorldGenPrimitive.blockOrientation(orth, true));
+				WorldGenPrimitive.blockOrientation(stair, orth, true);
 				WorldGenPrimitive.setBlock(world, rand, cursor, stair, true, true);
 				
 				start.add(Cardinal.UP, 1);
@@ -144,7 +144,7 @@ public class RogueTower implements ITower{
 				cursor = new Coord(end);
 				cursor.add(orth, 1);
 				cursor.add(Cardinal.DOWN, 1);
-				stair.setMeta(WorldGenPrimitive.blockOrientation(orth, true));
+				WorldGenPrimitive.blockOrientation(stair, orth, true);
 				WorldGenPrimitive.setBlock(world, rand, cursor, stair, true, true);
 				cursor.add(Cardinal.UP, 1);
 				cursor.add(orth, 1);
@@ -170,11 +170,11 @@ public class RogueTower implements ITower{
 				cursor.add(dir, 6);
 				cursor.add(Cardinal.UP, 9);
 				
-				stair.setMeta(WorldGenPrimitive.blockOrientation(dir, true));
+				WorldGenPrimitive.blockOrientation(stair, dir, true);
 				WorldGenPrimitive.setBlock(world, rand, cursor, stair, true, true);
 				
 				cursor.add(orth, 1);
-				stair.setMeta(WorldGenPrimitive.blockOrientation(orth, true));
+				WorldGenPrimitive.blockOrientation(stair, orth, true);
 				WorldGenPrimitive.setBlock(world, rand, cursor, stair, true, true);
 				
 				cursor.add(Cardinal.reverse(orth), 1);
@@ -227,7 +227,7 @@ public class RogueTower implements ITower{
 		
 		WorldGenPrimitive.setBlock(world, rand, cursor, blocks, true, true);
 		
-		if(world.getBlock(cursor.getX(), cursor.getY(), cursor.getZ()) == Blocks.air) return;
+		if(WorldGenPrimitive.isAirBlock(world, cursor)) return;
 
 		cursor.add(Cardinal.UP, 1);
 		WorldGenPrimitive.setBlock(world, rand, cursor, new MetaBlock(Blocks.torch), true, true);

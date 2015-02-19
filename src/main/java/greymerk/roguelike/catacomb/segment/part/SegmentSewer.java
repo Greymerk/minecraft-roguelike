@@ -33,7 +33,7 @@ public class SegmentSewer extends SegmentBase {
 		end = new Coord(start);
 		start.add(orth[0]);
 		end.add(orth[1]);
-		stair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.reverse(dir), true));
+		WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(dir), true);
 		WorldGenPrimitive.fillRectSolid(world, rand, start, end, stair, true, true);
 		
 		start = new Coord(x, y, z);

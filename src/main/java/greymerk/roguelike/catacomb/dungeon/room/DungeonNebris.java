@@ -10,6 +10,7 @@ import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
+import greymerk.roguelike.worldgen.blocks.ColorBlock;
 
 import java.util.Random;
 
@@ -149,7 +150,7 @@ public class DungeonNebris extends DungeonBase {
 				cursor.add(Cardinal.DOWN, 1);
 				
 				
-				step.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.reverse(orth), true));
+				WorldGenPrimitive.blockOrientation(step, Cardinal.reverse(orth), true);
 				WorldGenPrimitive.setBlock(world, rand, cursor, step, true, true);
 			}
 		}
@@ -169,7 +170,7 @@ public class DungeonNebris extends DungeonBase {
 				
 				start.add(dir, 1);
 				end.add(dir, 1);
-				WorldGenPrimitive.fillRectSolid(world, rand, start, end, new MetaBlock(Blocks.wool, 14), true, true);
+				WorldGenPrimitive.fillRectSolid(world, rand, start, end, ColorBlock.get(Blocks.wool, rand), true, true);
 				
 				start = new Coord(x, y, z);
 				start.add(dir, 8);
@@ -177,7 +178,7 @@ public class DungeonNebris extends DungeonBase {
 				end = new Coord(start);
 				end.add(Cardinal.UP, 3);
 				
-				WorldGenPrimitive.fillRectSolid(world, rand, start, end, new MetaBlock(Blocks.wool, 11), true, true);
+				WorldGenPrimitive.fillRectSolid(world, rand, start, end, ColorBlock.get(Blocks.wool, rand), true, true);
 			}
 		}
 		

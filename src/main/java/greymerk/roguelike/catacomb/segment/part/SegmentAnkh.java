@@ -6,6 +6,7 @@ import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
+import greymerk.roguelike.worldgen.blocks.ColorBlock;
 
 import java.util.Random;
 
@@ -22,7 +23,7 @@ public class SegmentAnkh extends SegmentBase{
 		
 		MetaBlock air = new MetaBlock(Blocks.air);
 		MetaBlock stair = theme.getSecondaryStair();
-		MetaBlock glass = new MetaBlock(Blocks.stained_glass, rand.nextInt(5) + 1);
+		MetaBlock glass = ColorBlock.get(Blocks.glass, rand);
 		MetaBlock white = new MetaBlock(Blocks.stained_hardened_clay);
 		MetaBlock glowstone = new MetaBlock(Blocks.glowstone);
 		

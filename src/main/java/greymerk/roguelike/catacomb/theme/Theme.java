@@ -6,7 +6,7 @@ public enum Theme {
 
 	OAK, SPRUCE, CRYPT, MOSSY, MUDDY, NETHER, SANDSTONE, QUARTZ, BLING, CHECKER,
 	RAINBOW, SNOW, JUNGLE, BRICK, DARKOAK, ICE, ENIKO, ENIKO2, ENIQUARTZ, ENIICE, TOWER,
-	ETHO, CAVE, SEWER, ENDER, MINESHAFT, ETHOTOWER, PYRAMID, DARKHALL;
+	ETHO, CAVE, SEWER, ENDER, MINESHAFT, ETHOTOWER, PYRAMID, DARKHALL, TEMPLE;
 	
 	public static ITheme getTheme(Theme type){
 		
@@ -42,6 +42,7 @@ public enum Theme {
 		case ETHOTOWER: theme = new ThemeEthoTower(); break;
 		case PYRAMID: theme = new ThemePyramid(); break;
 		case DARKHALL: theme = new ThemeDarkHall(); break;
+		case TEMPLE: theme = new ThemeTemple(); break;
 		default: return null;
 		}
 		
@@ -72,7 +73,7 @@ public enum Theme {
 			theme = Theme.getTheme(Theme.valueOf(json.get("base").getAsString()));
 			return new ThemeBase((ThemeBase) theme, primary, secondary);
 		} else {
-			theme = new ThemeOak();
+			theme = Theme.getTheme(Theme.OAK);
 			return new ThemeBase((ThemeBase) theme, primary, secondary);
 		}
 	}

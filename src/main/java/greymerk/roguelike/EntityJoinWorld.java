@@ -9,7 +9,7 @@ import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.monster.EntitySlime;
 import net.minecraft.potion.PotionEffect;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EntityJoinWorld {
 	

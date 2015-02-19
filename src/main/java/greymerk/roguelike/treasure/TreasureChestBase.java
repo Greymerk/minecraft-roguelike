@@ -5,6 +5,7 @@ import greymerk.roguelike.treasure.loot.Loot;
 import greymerk.roguelike.treasure.loot.LootSettings;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
+import greymerk.roguelike.worldgen.WorldGenPrimitive;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -48,7 +49,7 @@ public abstract class TreasureChestBase implements ITreasureChest, Iterable<Inve
 			return null;
 		}
 		
-		chest = (TileEntityChest) world.getTileEntity(pos.getX(), pos.getY(), pos.getZ());
+		chest = (TileEntityChest) WorldGenPrimitive.getTileEntity(world, pos);
 		
 		try{
 			

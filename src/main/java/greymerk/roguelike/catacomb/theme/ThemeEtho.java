@@ -1,7 +1,7 @@
 package greymerk.roguelike.catacomb.theme;
 
-import greymerk.roguelike.worldgen.Log;
 import greymerk.roguelike.worldgen.MetaBlock;
+import greymerk.roguelike.worldgen.blocks.Log;
 import net.minecraft.init.Blocks;
 
 public class ThemeEtho extends ThemeBase{

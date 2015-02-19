@@ -1,8 +1,9 @@
 package greymerk.roguelike.catacomb.theme;
 
 import greymerk.roguelike.worldgen.BlockWeightedRandom;
-import greymerk.roguelike.worldgen.Log;
 import greymerk.roguelike.worldgen.MetaBlock;
+import greymerk.roguelike.worldgen.blocks.Log;
+import net.minecraft.block.BlockStoneBrick;
 import net.minecraft.init.Blocks;
 
 public class ThemeOak extends ThemeBase{
@@ -10,8 +11,10 @@ public class ThemeOak extends ThemeBase{
 	public ThemeOak(){
 		
 		BlockWeightedRandom walls = new BlockWeightedRandom();
-		walls.addBlock(new MetaBlock(Blocks.stonebrick, 0), 30);
-		walls.addBlock(new MetaBlock(Blocks.stonebrick, 2), 20);
+		walls.addBlock(new MetaBlock(Blocks.stonebrick), 30);
+		MetaBlock cracked = new MetaBlock(Blocks.stonebrick);
+		cracked.withProperty(BlockStoneBrick.VARIANT_PROP, BlockStoneBrick.EnumType.CRACKED);
+		walls.addBlock(cracked, 20);
 		walls.addBlock(new MetaBlock(Blocks.cobblestone), 5);
 		walls.addBlock(new MetaBlock(Blocks.gravel), 1);
 		

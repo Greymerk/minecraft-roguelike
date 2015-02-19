@@ -8,14 +8,15 @@ import greymerk.roguelike.treasure.TreasureChest;
 import greymerk.roguelike.treasure.TreasureChestEmpty;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
-import greymerk.roguelike.worldgen.Furnace;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
+import greymerk.roguelike.worldgen.blocks.Furnace;
 import greymerk.roguelike.worldgen.redstone.Hopper;
 
 import java.util.Random;
 
+import net.minecraft.block.BlockStoneSlab;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 
@@ -320,7 +321,8 @@ public class DungeonsSmithy extends DungeonBase {
 		
 		MetaBlock stair = new MetaBlock(Blocks.brick_stairs);
 		MetaBlock brick = new MetaBlock(Blocks.brick_block);
-		MetaBlock brickSlab = new MetaBlock(Blocks.stone_slab, 4);
+		MetaBlock brickSlab = new MetaBlock(Blocks.stone_slab);
+		brickSlab.withProperty(BlockStoneSlab.VARIANT_PROP, BlockStoneSlab.EnumType.BRICK);
 		MetaBlock bars = new MetaBlock(Blocks.iron_bars);
 		MetaBlock air = new MetaBlock(Blocks.air);
 		Cardinal[] orth = Cardinal.getOrthogonal(dir);

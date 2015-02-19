@@ -192,7 +192,7 @@ public class DungeonsFire extends DungeonBase {
 			cursor.add(Cardinal.UP);
 			cursor.add(dir, 2);
 			
-			if(!world.isAirBlock(cursor.getX(), cursor.getY(), cursor.getZ())){
+			if(!WorldGenPrimitive.isAirBlock(world, cursor)){
 				continue;
 			}
 			

@@ -1,6 +1,7 @@
 package greymerk.roguelike.catacomb.tower;
 
 import greymerk.roguelike.worldgen.Coord;
+import greymerk.roguelike.worldgen.WorldGenPrimitive;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +43,7 @@ public enum Tower {
 		invalidBlocks.add(Blocks.cocoa);
 		
 		int tempY = 128;
-		Block block = world.getBlock(x, tempY, z);
+		Block block = WorldGenPrimitive.getBlock(world, new Coord(x, tempY, z)).getBlock();
 
 		while(tempY > 60){
 
@@ -52,7 +53,7 @@ public enum Tower {
 
 			tempY = tempY - 1;
 
-			block = world.getBlock(x, tempY, z);
+			block = WorldGenPrimitive.getBlock(world, new Coord(x, tempY, z)).getBlock();
 
 		}
 

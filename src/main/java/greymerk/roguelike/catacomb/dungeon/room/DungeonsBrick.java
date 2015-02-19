@@ -67,7 +67,7 @@ public class DungeonsBrick extends DungeonBase {
 			cursor = new Coord(x, y, z);
 			cursor.add(dir, 1);
 			cursor.add(Cardinal.UP, 5);
-			stair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.reverse(dir), true));
+			WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(dir), true);
 			WorldGenPrimitive.setBlock(world, rand, cursor, stair, false, true);
 			cursor.add(Cardinal.getOrthogonal(dir)[0], 1);
 			WorldGenPrimitive.setBlock(world, rand, cursor, blocks, false, true);
@@ -96,7 +96,7 @@ public class DungeonsBrick extends DungeonBase {
 				cursor.add(dir, 3);
 				cursor.add(orth, 2);
 				cursor.add(Cardinal.UP, 3);
-				stair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.reverse(orth), true));
+				WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(orth), true);
 				WorldGenPrimitive.setBlock(world, rand, cursor, stair, true, true);
 			}
 
@@ -112,7 +112,7 @@ public class DungeonsBrick extends DungeonBase {
 				cursor.add(Cardinal.UP, 4);
 				cursor.add(dir, 2);
 				cursor.add(orth, 1);
-				stair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.reverse(orth), true));
+				WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(orth), true);
 				WorldGenPrimitive.setBlock(world, rand, cursor, stair, false, true);
 			}
 			

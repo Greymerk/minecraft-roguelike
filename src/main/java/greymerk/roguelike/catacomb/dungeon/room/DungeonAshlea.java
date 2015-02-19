@@ -15,7 +15,9 @@ import greymerk.roguelike.worldgen.WorldGenPrimitive;
 
 import java.util.Random;
 
+import net.minecraft.block.BlockColored;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.world.World;
@@ -57,10 +59,11 @@ public class DungeonAshlea extends DungeonBase {
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 1, y + 3, z - 4, x + 1, y + 3, z + 4, air);
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 4, y + 3, z - 1, x + 4, y + 3, z + 1, air);
 		
-		MetaBlock pinkClay = new MetaBlock(Blocks.stained_hardened_clay, 2);
+		MetaBlock clay = new MetaBlock(Blocks.stained_hardened_clay.getDefaultState());
+		clay.withProperty(BlockColored.COLOR, EnumDyeColor.PINK);
 		
 		// floor
-		WorldGenPrimitive.fillRectSolid(world, rand, x - 7, y - 1, z - 7, x + 7, y - 1, z + 7, pinkClay, true, true);
+		WorldGenPrimitive.fillRectSolid(world, rand, x - 7, y - 1, z - 7, x + 7, y - 1, z + 7, clay, true, true);
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 1, y - 1, z - 6, x + 1, y - 1, z + 6, log, true, true);
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 5, y - 1, z - 1, x - 2, y - 1, z + 1, log, true, true);
 		WorldGenPrimitive.fillRectSolid(world, rand, x + 2, y - 1, z - 1, x + 5, y - 1, z + 1, log, true, true);

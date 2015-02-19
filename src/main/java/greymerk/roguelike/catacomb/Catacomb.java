@@ -90,7 +90,7 @@ public class Catacomb {
 			return false;
 		}
 		
-		if(!RogueConfig.getIntList(RogueConfig.DIMENSIONWL).contains((Integer)world.provider.dimensionId)){
+		if(!RogueConfig.getIntList(RogueConfig.DIMENSIONWL).contains((Integer)world.provider.getDimensionId())){
 			return false;
 		}
 
@@ -144,13 +144,13 @@ public class Catacomb {
 	
 	public static boolean validLocation(World world, Random rand, int x, int z){
 		
-		if(!world.isAirBlock(x, 100, z)){
+		if(!WorldGenPrimitive.isAirBlock(world, new Coord(x, 100, z))){
 			return false;
 		}
 		
 		int y = 100;
 		
-		while(!world.getBlock(x, y, z).getMaterial().isOpaque() && y > 50){
+		while(!WorldGenPrimitive.getBlock(world, new Coord(x, y, z)).getBlock().getMaterial().isOpaque() && y > 50){
 			--y;
 		}
 		
@@ -161,7 +161,7 @@ public class Catacomb {
 		List<Coord> above = WorldGenPrimitive.getRectSolid(x - 4, y + 4, z - 4, x + 4, y + 4, z + 4);
 
 		for (Coord c : above){
-			if(world.getBlock(c.getX(), c.getY(), c.getZ()).getMaterial().isOpaque()){
+			if(WorldGenPrimitive.getBlock(world, c).getBlock().getMaterial().isOpaque()){
 				return false;
 			}
 		}
@@ -170,7 +170,7 @@ public class Catacomb {
 		
 		int airCount = 0;
 		for (Coord c : below){
-			if(!world.getBlock(c.getX(), c.getY(), c.getZ()).getMaterial().isOpaque()){
+			if(!WorldGenPrimitive.getBlock(world, c).getBlock().getMaterial().isOpaque()){
 				airCount++;
 			}
 			if(airCount > 8){

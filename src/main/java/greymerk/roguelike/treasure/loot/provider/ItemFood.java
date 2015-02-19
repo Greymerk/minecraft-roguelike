@@ -73,7 +73,7 @@ public class ItemFood extends ItemBase{
 			
 			if(rand.nextInt(10) == 0) return new ItemStack(Items.mushroom_stew);
 			
-			if(rand.nextInt(5) == 0) return new ItemStack(Items.cooked_fished, quantity);
+			if(rand.nextInt(5) == 0) return new ItemStack(Items.cooked_fish, quantity);
 		default:
 			return new ItemStack(Items.bread, quantity);
 		

@@ -33,7 +33,7 @@ public class DungeonCorner extends DungeonBase {
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 2, y, z - 2, x + 2, y + 3, z + 2, air);
 		
 		// shell
-		WorldGenPrimitive.fillRectHollow(world, rand, x - 3, y - 1, z - 3, x + 3, y + 4, z + 3, blocks, false, true);
+		WorldGenPrimitive.fillRectHollow(world, rand, new Coord(x - 3, y - 1, z - 3), new Coord(x + 3, y + 4, z + 3), blocks, false, true);
 		
 		// floor
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 3, y - 1, z - 3, x + 3, y - 1, z + 3, theme.getPrimaryFloor(), false, true);
@@ -63,7 +63,7 @@ public class DungeonCorner extends DungeonBase {
 			cursor = new Coord(x, y, z);
 			cursor.add(dir, 1);
 			cursor.add(Cardinal.UP, 4);
-			stair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.reverse(dir), true));
+			WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(dir), true);
 			WorldGenPrimitive.setBlock(world, rand, cursor, stair, true, true);
 			
 			for(Cardinal orth : Cardinal.getOrthogonal(dir)){
@@ -71,7 +71,7 @@ public class DungeonCorner extends DungeonBase {
 				cursor.add(dir, 2);
 				cursor.add(orth, 1);
 				cursor.add(Cardinal.UP, 3);
-				stair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.reverse(orth), true));
+				WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(orth), true);
 				WorldGenPrimitive.setBlock(world, rand, cursor, stair, true, true);
 			}
 		}

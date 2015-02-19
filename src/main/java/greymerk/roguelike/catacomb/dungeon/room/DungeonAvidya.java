@@ -14,7 +14,11 @@ import java.util.List;
 import java.util.Random;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockColored;
+import net.minecraft.block.BlockPlanks;
+import net.minecraft.block.BlockQuartz;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.world.World;
 
 public class DungeonAvidya extends DungeonBase {
@@ -26,9 +30,12 @@ public class DungeonAvidya extends DungeonBase {
 		int y = origin.getY();
 		int z = origin.getZ();
 		
-		MetaBlock redClay = new MetaBlock(Blocks.stained_hardened_clay, 14);
-		MetaBlock whiteClay = new MetaBlock(Blocks.stained_hardened_clay, 0);
-		MetaBlock pillarQuartz = new MetaBlock(Blocks.quartz_block, 2);
+		MetaBlock redClay = new MetaBlock(Blocks.stained_hardened_clay);
+		redClay.withProperty(BlockColored.COLOR, EnumDyeColor.RED);
+		MetaBlock whiteClay = new MetaBlock(Blocks.stained_hardened_clay);
+		whiteClay.withProperty(BlockColored.COLOR, EnumDyeColor.WHITE);
+		MetaBlock pillarQuartz = new MetaBlock(Blocks.quartz_block);
+		pillarQuartz.withProperty(BlockQuartz.VARIANT_PROP, BlockQuartz.EnumType.LINES_Y);
 		MetaBlock glowstone = new MetaBlock(Blocks.glowstone);
 		MetaBlock air = new MetaBlock(Blocks.air);
 		
@@ -43,8 +50,10 @@ public class DungeonAvidya extends DungeonBase {
 		
 		
 		// floor
-		MetaBlock ying = new MetaBlock(Blocks.stained_hardened_clay, 15);
-		MetaBlock yang = new MetaBlock(Blocks.stained_hardened_clay, 0);
+		MetaBlock ying = new MetaBlock(Blocks.stained_hardened_clay);
+		ying.withProperty(BlockColored.COLOR, EnumDyeColor.BLACK);
+		MetaBlock yang = new MetaBlock(Blocks.stained_hardened_clay);
+		yang.withProperty(BlockColored.COLOR, EnumDyeColor.WHITE);
 		
 		// ying
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 8, y - 2, z - 8, x + 8, y - 2, z + 8, ying, true, true);
@@ -185,7 +194,7 @@ public class DungeonAvidya extends DungeonBase {
 				cursor.add(dir, 7);
 				cursor.add(Cardinal.DOWN, 1);
 				MetaBlock step = new MetaBlock(Blocks.stone_brick_stairs);
-				step.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.reverse(dir), false));
+				WorldGenPrimitive.blockOrientation(step, Cardinal.reverse(dir), false);
 				WorldGenPrimitive.setBlock(world, rand, cursor, step, true, true);
 				
 				cursor.add(orth, 1);
@@ -194,18 +203,18 @@ public class DungeonAvidya extends DungeonBase {
 				cursor.add(orth, 1);
 				WorldGenPrimitive.setBlock(world, rand, cursor, step, true, true);
 				
-				step.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.reverse(orth), false));
+				WorldGenPrimitive.blockOrientation(step, Cardinal.reverse(orth), false);
 				cursor.add(orth, 1);
 				WorldGenPrimitive.setBlock(world, rand, cursor, step, true, true);
 				
 				cursor.add(Cardinal.reverse(dir), 1);
 				WorldGenPrimitive.setBlock(world, rand, cursor, step, true, true);
 				
-				step.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.reverse(dir), false));
+				WorldGenPrimitive.blockOrientation(step, Cardinal.reverse(dir), false);
 				cursor.add(orth, 1);
 				WorldGenPrimitive.setBlock(world, rand, cursor, step, true, true);
 				
-				step.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.reverse(orth), false));
+				WorldGenPrimitive.blockOrientation(step, Cardinal.reverse(orth), false);
 				cursor.add(orth, 1);
 				WorldGenPrimitive.setBlock(world, rand, cursor, step, true, true);
 				
@@ -218,7 +227,9 @@ public class DungeonAvidya extends DungeonBase {
 				cursor.add(dir, 8);
 				cursor.add(orth, 3);
 				WorldGenPrimitive.setBlock(world, cursor, Blocks.grass);
-				MetaBlock leaves = new MetaBlock(Blocks.leaves, 7);
+				MetaBlock leaves = new MetaBlock(Blocks.leaves);
+				leaves.withProperty(BlockPlanks.VARIANT_PROP, BlockPlanks.EnumType.OAK);
+				
 				WorldGenPrimitive.setBlock(world, cursor.getX(), cursor.getY() + 1, cursor.getZ(), leaves);
 				cursor.add(orth, 1);
 				WorldGenPrimitive.setBlock(world, cursor, Blocks.grass);
@@ -267,7 +278,7 @@ public class DungeonAvidya extends DungeonBase {
 	private static void pillarTop(World world, Random rand, Coord cursor){
 		MetaBlock step = new MetaBlock(Blocks.quartz_stairs);
 		for(Cardinal dir : Cardinal.directions){
-			step.setMeta(WorldGenPrimitive.blockOrientation(dir, true));
+			WorldGenPrimitive.blockOrientation(step, dir, true);
 			cursor.add(dir, 1);
 			WorldGenPrimitive.setBlock(world, rand, cursor, step, true, false);
 			cursor.add(Cardinal.reverse(dir), 1);
@@ -279,7 +290,7 @@ public class DungeonAvidya extends DungeonBase {
 		List<Coord> box = WorldGenPrimitive.getRectHollow(x - 10, y - 2, z - 10, x + 10, y + 5, z + 10);
 		
 		for(Coord pos : box){
-			Block b = world.getBlock(pos.getX(), pos.getY(), pos.getZ());
+			Block b = WorldGenPrimitive.getBlock(world, pos).getBlock();
 			if(!b.getMaterial().isSolid()) return false;
 		}
 		

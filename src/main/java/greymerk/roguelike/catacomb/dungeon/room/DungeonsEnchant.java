@@ -8,9 +8,11 @@ import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
+import greymerk.roguelike.worldgen.blocks.ColorBlock;
 
 import java.util.Random;
 
+import net.minecraft.block.BlockQuartz;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 
@@ -25,8 +27,10 @@ public class DungeonsEnchant extends DungeonBase {
 		
 		
 		MetaBlock air = new MetaBlock(Blocks.air);
-		MetaBlock chiselQuartz = new MetaBlock(Blocks.quartz_block, 2);
-		MetaBlock pillar = new MetaBlock(Blocks.quartz_block, 1);
+		MetaBlock chiselQuartz = new MetaBlock(Blocks.quartz_block);
+		chiselQuartz.withProperty(BlockQuartz.VARIANT_PROP, BlockQuartz.EnumType.CHISELED);
+		MetaBlock pillar = new MetaBlock(Blocks.quartz_block);
+		pillar.withProperty(BlockQuartz.VARIANT_PROP, BlockQuartz.EnumType.LINES_Y);
 		MetaBlock glowstone = new MetaBlock(Blocks.glowstone);
 		
 		// clear space
@@ -60,8 +64,8 @@ public class DungeonsEnchant extends DungeonBase {
 		WorldGenPrimitive.fillRectSolid(world, rand, x + 4, y, z - 4, x + 4, y + 4, z - 4, chiselQuartz, true, true);
 		WorldGenPrimitive.fillRectSolid(world, rand, x + 4, y, z + 4, x + 4, y + 4, z + 4, chiselQuartz, true, true);
 		
-		MetaBlock decor = new MetaBlock(Blocks.stained_hardened_clay, rand.nextInt(16));
-		MetaBlock lining = new MetaBlock(Blocks.stained_hardened_clay, rand.nextInt(16));
+		MetaBlock decor = ColorBlock.get(Blocks.stained_hardened_clay, rand);
+		MetaBlock lining = ColorBlock.get(Blocks.stained_hardened_clay, rand);
 		
 		//lapis shell
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 5, y, z - 3, x - 5, y + 4, z - 3, decor, true, true);

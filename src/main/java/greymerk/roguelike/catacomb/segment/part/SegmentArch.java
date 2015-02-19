@@ -18,7 +18,7 @@ public class SegmentArch extends SegmentBase {
 	protected void genWall(World world, Random rand, CatacombLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
 			
 		MetaBlock stair = theme.getSecondaryStair(); 
-		stair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.reverse(dir), true));
+		WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(dir), true);
 		
 		MetaBlock air = new MetaBlock(Blocks.air);
 		

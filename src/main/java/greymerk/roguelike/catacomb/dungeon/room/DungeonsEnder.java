@@ -52,11 +52,11 @@ public class DungeonsEnder extends DungeonBase {
 					
 					if (blockX == x - dungeonLength - 1 || blockZ == z - dungeonWidth - 1 || blockX == x + dungeonLength + 1 || blockZ == z + dungeonWidth + 1) {
 
-						if (blockY >= 0 && !world.getBlock(blockX, blockY - 1, blockZ).getMaterial().isSolid()) {
+						if (blockY >= 0 && !WorldGenPrimitive.getBlock(world, new Coord(blockX, blockY - 1, blockZ)).getBlock().getMaterial().isSolid()) {
 							WorldGenPrimitive.setBlock(world, blockX, blockY, blockZ, air);
 							continue;
 						}
-						if (!world.getBlock(blockX, blockY, blockZ).getMaterial().isSolid()) {
+						if (!WorldGenPrimitive.getBlock(world, new Coord(blockX, blockY, blockZ)).getBlock().getMaterial().isSolid()) {
 							continue;
 						}
 

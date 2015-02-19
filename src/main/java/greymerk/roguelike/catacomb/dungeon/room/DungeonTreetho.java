@@ -9,10 +9,17 @@ import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
+import greymerk.roguelike.worldgen.blocks.ColorBlock;
 
 import java.util.Random;
 
+import net.minecraft.block.BlockPlanks;
+import net.minecraft.block.BlockSapling;
+import net.minecraft.block.BlockSlab;
+import net.minecraft.block.BlockStoneSlab;
+import net.minecraft.block.BlockWoodSlab;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.world.World;
 
 public class DungeonTreetho extends DungeonBase{
@@ -34,7 +41,9 @@ public class DungeonTreetho extends DungeonBase{
 		
 		WorldGenPrimitive.fillRectHollow(world, rand, start, end, wall, false, true);
 		
-		MetaBlock birchSlab = new MetaBlock(Blocks.wooden_slab, 10);
+		MetaBlock birchSlab = new MetaBlock(Blocks.wooden_slab);
+		birchSlab.withProperty(BlockWoodSlab.VARIANT_PROP, BlockPlanks.EnumType.BIRCH);
+		birchSlab.withProperty(BlockWoodSlab.HALF_PROP, BlockSlab.EnumBlockHalf.TOP);
 		MetaBlock pumpkin = new MetaBlock(Blocks.lit_pumpkin);
 		start = new Coord(origin);
 		end = new Coord(origin);
@@ -68,10 +77,12 @@ public class DungeonTreetho extends DungeonBase{
 		Coord start;
 		Coord end;
 		
-		MetaBlock slab = new MetaBlock(Blocks.stone_slab, 1);
+		MetaBlock slab = new MetaBlock(Blocks.stone_slab);
+		slab.withProperty(BlockStoneSlab.VARIANT_PROP, BlockStoneSlab.EnumType.SAND);
 		MetaBlock light = new MetaBlock(Blocks.lit_pumpkin);
-		MetaBlock sapling = new MetaBlock(Blocks.sapling, 2);
-		MetaBlock glass = new MetaBlock(Blocks.glass, 4);
+		MetaBlock sapling = new MetaBlock(Blocks.sapling);
+		sapling.withProperty(BlockSapling.TYPE_PROP, BlockPlanks.EnumType.BIRCH);
+		MetaBlock glass = ColorBlock.get(Blocks.glass, EnumDyeColor.YELLOW);
 		MetaBlock dirt = new MetaBlock(Blocks.dirt);
 		
 		Cardinal[] orth = Cardinal.getOrthogonal(dir);
@@ -112,7 +123,8 @@ public class DungeonTreetho extends DungeonBase{
 	
 	private void ceiling(World world, Random rand, CatacombLevelSettings settings, Coord origin){
 		
-		MetaBlock fill = new MetaBlock(Blocks.planks, 5);
+		MetaBlock fill = new MetaBlock(Blocks.planks);
+		fill.withProperty(BlockPlanks.VARIANT_PROP, BlockPlanks.EnumType.DARK_OAK);
 		
 		MinimumSpanningTree tree = new MinimumSpanningTree(rand, 7, 3);
 		tree.generate(world, rand, fill, origin);
@@ -152,7 +164,7 @@ public class DungeonTreetho extends DungeonBase{
 		for (Cardinal dir : Cardinal.directions){
 			cursor = new Coord(origin);
 			cursor.add(dir);
-			if(world.isAirBlock(cursor.getX(), cursor.getY(), cursor.getZ())){
+			if(WorldGenPrimitive.isAirBlock(world, cursor)){
 				WorldGenPrimitive.blockOrientation(stair, dir, true).setBlock(world, cursor);
 			}
 		}

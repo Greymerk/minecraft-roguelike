@@ -4,7 +4,7 @@ import greymerk.roguelike.catacomb.Catacomb;
 
 import java.util.Random;
 
-import cpw.mods.fml.common.IWorldGenerator;
+import net.minecraftforge.fml.common.IWorldGenerator;
 
 public class DungeonGenerator implements IWorldGenerator { 
 

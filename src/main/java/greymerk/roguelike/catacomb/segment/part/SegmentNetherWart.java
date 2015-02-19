@@ -39,7 +39,7 @@ public class SegmentNetherWart extends SegmentBase{
 		WorldGenPrimitive.setBlock(world, cursor, Blocks.nether_brick_fence);
 		
 		for(Cardinal orth : Cardinal.getOrthogonal(dir)){
-			step.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.reverse(orth), true));
+			WorldGenPrimitive.blockOrientation(step, Cardinal.reverse(orth), true);
 			cursor = new Coord(x, y, z);
 			cursor.add(dir, 2);
 			cursor.add(orth, 1);

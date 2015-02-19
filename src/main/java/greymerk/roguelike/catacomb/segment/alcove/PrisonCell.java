@@ -5,11 +5,11 @@ import greymerk.roguelike.catacomb.settings.CatacombLevelSettings;
 import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
-import greymerk.roguelike.worldgen.Door;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.Spawner;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
+import greymerk.roguelike.worldgen.blocks.Door;
 
 import java.util.List;
 import java.util.Random;
@@ -69,7 +69,7 @@ public class PrisonCell implements IAlcove{
 		List<Coord> toCheck = WorldGenPrimitive.getRectSolid(x - 2, y, z - 2, x + 2, y, z + 2);
 
 		for(Coord c : toCheck){
-			if (world.isAirBlock(c.getX(), c.getY(), c.getZ())) return false;
+			if (WorldGenPrimitive.isAirBlock(world, c)) return false;
 		}
 		
 		return true;

@@ -5,9 +5,11 @@ import greymerk.roguelike.catacomb.settings.CatacombLevelSettings;
 import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
-import greymerk.roguelike.worldgen.Log;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
+import greymerk.roguelike.worldgen.blocks.Leaves;
+import greymerk.roguelike.worldgen.blocks.Log;
+import greymerk.roguelike.worldgen.blocks.Stair;
 
 import java.util.Random;
 
@@ -34,7 +36,7 @@ public class DungeonEtho extends DungeonBase {
 		
 		BlockWeightedRandom leafJumble = new BlockWeightedRandom();
 		leafJumble.addBlock(air, 10);
-		leafJumble.addBlock(new MetaBlock(Blocks.leaves, 4), 50);
+		leafJumble.addBlock(Leaves.get(Leaves.OAK, false), 50);
 		leafJumble.addBlock(new MetaBlock(Blocks.log), 10);
 		
 		
@@ -80,7 +82,7 @@ public class DungeonEtho extends DungeonBase {
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 5, y - 1, z - 1, x + 5, y - 1, z + 1, grass);
 		
 		
-		MetaBlock jungleLeaf = new MetaBlock(Blocks.leaves, 3);
+		MetaBlock jungleLeaf = Leaves.get(Leaves.JUNGLE, false);
 		
 		// north
 
@@ -94,20 +96,20 @@ public class DungeonEtho extends DungeonBase {
 		
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 2, y + 3, z - 6, x + 2, y + 3, z - 6, planks);
 		WorldGenPrimitive.setBlock(world, x - 2, y + 2, z - 6, Blocks.planks);
-		WorldGenPrimitive.setBlock(world, x - 1, y + 2, z - 6, new MetaBlock(Blocks.oak_stairs, WorldGenPrimitive.blockOrientation(Cardinal.EAST, true)));
-		WorldGenPrimitive.setBlock(world, x + 1, y + 2, z - 6, new MetaBlock(Blocks.oak_stairs, WorldGenPrimitive.blockOrientation(Cardinal.WEST, true)));
+		WorldGenPrimitive.setBlock(world, x - 1, y + 2, z - 6, Stair.get(Blocks.oak_stairs, Cardinal.EAST, true));
+		WorldGenPrimitive.setBlock(world, x + 1, y + 2, z - 6, Stair.get(Blocks.oak_stairs, Cardinal.WEST, true));
 		WorldGenPrimitive.setBlock(world, x + 2, y + 2, z - 6, Blocks.planks);
 		
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 2, y + 4, z - 5, x + 2, y + 4, z - 5, planks);
-		WorldGenPrimitive.setBlock(world, x - 2, y + 3, z - 5, new MetaBlock(Blocks.oak_stairs, WorldGenPrimitive.blockOrientation(Cardinal.EAST, true)));
-		WorldGenPrimitive.setBlock(world, x + 2, y + 3, z - 5, new MetaBlock(Blocks.oak_stairs, WorldGenPrimitive.blockOrientation(Cardinal.WEST, true)));
+		WorldGenPrimitive.setBlock(world, x - 2, y + 3, z - 5, Stair.get(Blocks.oak_stairs, Cardinal.EAST, true));
+		WorldGenPrimitive.setBlock(world, x + 2, y + 3, z - 5, Stair.get(Blocks.oak_stairs, Cardinal.WEST, true));
 
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 2, y + 5, z - 4, x + 2, y + 5, z - 4, planks);
-		WorldGenPrimitive.setBlock(world, x - 2, y + 4, z - 4, new MetaBlock(Blocks.oak_stairs, WorldGenPrimitive.blockOrientation(Cardinal.EAST, true)));
-		WorldGenPrimitive.setBlock(world, x + 2, y + 4, z - 4, new MetaBlock(Blocks.oak_stairs, WorldGenPrimitive.blockOrientation(Cardinal.WEST, true)));
+		WorldGenPrimitive.setBlock(world, x - 2, y + 4, z - 4, Stair.get(Blocks.oak_stairs, Cardinal.EAST, true));
+		WorldGenPrimitive.setBlock(world, x + 2, y + 4, z - 4, Stair.get(Blocks.oak_stairs, Cardinal.WEST, true));
 		
-		WorldGenPrimitive.setBlock(world, x - 3, y + 3, z - 4, new MetaBlock(Blocks.oak_stairs, WorldGenPrimitive.blockOrientation(Cardinal.SOUTH, true)));
-		WorldGenPrimitive.setBlock(world, x + 3, y + 3, z - 4, new MetaBlock(Blocks.oak_stairs, WorldGenPrimitive.blockOrientation(Cardinal.SOUTH, true)));
+		WorldGenPrimitive.setBlock(world, x - 3, y + 3, z - 4, Stair.get(Blocks.oak_stairs, Cardinal.SOUTH, true));
+		WorldGenPrimitive.setBlock(world, x + 3, y + 3, z - 4, Stair.get(Blocks.oak_stairs, Cardinal.SOUTH, true));
 		
 		WorldGenPrimitive.setBlock(world, x - 2, y - 2, z - 5, Blocks.glowstone);
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 2, y - 1, z - 5, x - 2, y, z - 5, jungleLeaf, true, true);
@@ -127,20 +129,20 @@ public class DungeonEtho extends DungeonBase {
 
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 2, y + 3, z + 6, x + 2, y + 3, z + 6, planks);
 		WorldGenPrimitive.setBlock(world, x - 2, y + 2, z + 6, Blocks.planks);
-		WorldGenPrimitive.setBlock(world, x - 1, y + 2, z + 6, new MetaBlock(Blocks.oak_stairs, WorldGenPrimitive.blockOrientation(Cardinal.EAST, true)));
-		WorldGenPrimitive.setBlock(world, x + 1, y + 2, z + 6, new MetaBlock(Blocks.oak_stairs, WorldGenPrimitive.blockOrientation(Cardinal.WEST, true)));
+		WorldGenPrimitive.setBlock(world, x - 1, y + 2, z + 6, Stair.get(Blocks.oak_stairs, Cardinal.EAST, true));
+		WorldGenPrimitive.setBlock(world, x + 1, y + 2, z + 6, Stair.get(Blocks.oak_stairs, Cardinal.WEST, true));
 		WorldGenPrimitive.setBlock(world, x + 2, y + 2, z + 6, Blocks.planks);
 		
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 2, y + 4, z + 5, x + 2, y + 4, z + 5, planks);
-		WorldGenPrimitive.setBlock(world, x - 2, y + 3, z + 5, new MetaBlock(Blocks.oak_stairs, WorldGenPrimitive.blockOrientation(Cardinal.EAST, true)));
-		WorldGenPrimitive.setBlock(world, x + 2, y + 3, z + 5, new MetaBlock(Blocks.oak_stairs, WorldGenPrimitive.blockOrientation(Cardinal.WEST, true)));
+		WorldGenPrimitive.setBlock(world, x - 2, y + 3, z + 5, Stair.get(Blocks.oak_stairs, Cardinal.EAST, true));
+		WorldGenPrimitive.setBlock(world, x + 2, y + 3, z + 5, Stair.get(Blocks.oak_stairs, Cardinal.WEST, true));
 
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 2, y + 5, z + 4, x + 2, y + 5, z + 4, planks);
-		WorldGenPrimitive.setBlock(world, x - 2, y + 4, z + 4, new MetaBlock(Blocks.oak_stairs, WorldGenPrimitive.blockOrientation(Cardinal.EAST, true)));
-		WorldGenPrimitive.setBlock(world, x + 2, y + 4, z + 4, new MetaBlock(Blocks.oak_stairs, WorldGenPrimitive.blockOrientation(Cardinal.WEST, true)));
+		WorldGenPrimitive.setBlock(world, x - 2, y + 4, z + 4, Stair.get(Blocks.oak_stairs, Cardinal.EAST, true));
+		WorldGenPrimitive.setBlock(world, x + 2, y + 4, z + 4, Stair.get(Blocks.oak_stairs, Cardinal.WEST, true));
 
-		WorldGenPrimitive.setBlock(world, x - 3, y + 3, z + 4, new MetaBlock(Blocks.oak_stairs, WorldGenPrimitive.blockOrientation(Cardinal.NORTH, true)));
-		WorldGenPrimitive.setBlock(world, x + 3, y + 3, z + 4, new MetaBlock(Blocks.oak_stairs, WorldGenPrimitive.blockOrientation(Cardinal.NORTH, true)));
+		WorldGenPrimitive.setBlock(world, x - 3, y + 3, z + 4, Stair.get(Blocks.oak_stairs, Cardinal.NORTH, true));
+		WorldGenPrimitive.setBlock(world, x + 3, y + 3, z + 4, Stair.get(Blocks.oak_stairs, Cardinal.NORTH, true));
 		
 		WorldGenPrimitive.setBlock(world, x - 2, y - 2, z + 5, Blocks.glowstone);
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 2, y - 1, z + 5, x - 2, y, z + 5, jungleLeaf, true, true);
@@ -161,20 +163,20 @@ public class DungeonEtho extends DungeonBase {
 		
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 6, y + 3, z - 2, x - 6, y + 3, z + 2, planks);
 		WorldGenPrimitive.setBlock(world, x - 6, y + 2, z - 2, Blocks.planks);
-		WorldGenPrimitive.setBlock(world, x - 6, y + 2, z - 1, new MetaBlock(Blocks.oak_stairs, WorldGenPrimitive.blockOrientation(Cardinal.SOUTH, true)));
-		WorldGenPrimitive.setBlock(world, x - 6, y + 2, z + 1, new MetaBlock(Blocks.oak_stairs, WorldGenPrimitive.blockOrientation(Cardinal.NORTH, true)));
+		WorldGenPrimitive.setBlock(world, x - 6, y + 2, z - 1, Stair.get(Blocks.oak_stairs, Cardinal.SOUTH, true));
+		WorldGenPrimitive.setBlock(world, x - 6, y + 2, z + 1, Stair.get(Blocks.oak_stairs, Cardinal.NORTH, true));
 		WorldGenPrimitive.setBlock(world, x - 6, y + 2, z + 2, Blocks.planks);
 		
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 5, y + 4, z - 2, x - 5, y + 4, z + 2, planks);
-		WorldGenPrimitive.setBlock(world, x - 5, y + 3, z - 2, new MetaBlock(Blocks.oak_stairs, WorldGenPrimitive.blockOrientation(Cardinal.SOUTH, true)));
-		WorldGenPrimitive.setBlock(world, x - 5, y + 3, z + 2, new MetaBlock(Blocks.oak_stairs, WorldGenPrimitive.blockOrientation(Cardinal.NORTH, true)));
+		WorldGenPrimitive.setBlock(world, x - 5, y + 3, z - 2, Stair.get(Blocks.oak_stairs, Cardinal.SOUTH, true));
+		WorldGenPrimitive.setBlock(world, x - 5, y + 3, z + 2, Stair.get(Blocks.oak_stairs, Cardinal.NORTH, true));
 
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 4, y + 5, z - 2, x - 4, y + 5, z + 2, planks);
-		WorldGenPrimitive.setBlock(world, x - 4, y + 4, z - 2, new MetaBlock(Blocks.oak_stairs, WorldGenPrimitive.blockOrientation(Cardinal.SOUTH, true)));
-		WorldGenPrimitive.setBlock(world, x - 4, y + 4, z + 2, new MetaBlock(Blocks.oak_stairs, WorldGenPrimitive.blockOrientation(Cardinal.NORTH, true)));
+		WorldGenPrimitive.setBlock(world, x - 4, y + 4, z - 2, Stair.get(Blocks.oak_stairs, Cardinal.SOUTH, true));
+		WorldGenPrimitive.setBlock(world, x - 4, y + 4, z + 2, Stair.get(Blocks.oak_stairs, Cardinal.NORTH, true));
 
-		WorldGenPrimitive.setBlock(world, x - 4, y + 3, z - 3, new MetaBlock(Blocks.oak_stairs, WorldGenPrimitive.blockOrientation(Cardinal.EAST, true)));
-		WorldGenPrimitive.setBlock(world, x - 4, y + 3, z + 3, new MetaBlock(Blocks.oak_stairs, WorldGenPrimitive.blockOrientation(Cardinal.EAST, true)));
+		WorldGenPrimitive.setBlock(world, x - 4, y + 3, z - 3, Stair.get(Blocks.oak_stairs, Cardinal.EAST, true));
+		WorldGenPrimitive.setBlock(world, x - 4, y + 3, z + 3, Stair.get(Blocks.oak_stairs, Cardinal.EAST, true));
 
 		WorldGenPrimitive.setBlock(world, x - 5, y - 2, z - 2, Blocks.glowstone);
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 5, y - 1, z - 2, x - 5, y, z - 2, jungleLeaf, true, true);
@@ -195,20 +197,20 @@ public class DungeonEtho extends DungeonBase {
 		
 		WorldGenPrimitive.fillRectSolid(world, rand, x + 6, y + 3, z - 2, x + 6, y + 3, z + 2, planks);
 		WorldGenPrimitive.setBlock(world, x + 6, y + 2, z - 2, Blocks.planks);
-		WorldGenPrimitive.setBlock(world, x + 6, y + 2, z - 1, new MetaBlock(Blocks.oak_stairs, WorldGenPrimitive.blockOrientation(Cardinal.SOUTH, true)));
-		WorldGenPrimitive.setBlock(world, x + 6, y + 2, z + 1, new MetaBlock(Blocks.oak_stairs, WorldGenPrimitive.blockOrientation(Cardinal.NORTH, true)));
+		WorldGenPrimitive.setBlock(world, x + 6, y + 2, z - 1, Stair.get(Blocks.oak_stairs, Cardinal.SOUTH, true));
+		WorldGenPrimitive.setBlock(world, x + 6, y + 2, z + 1, Stair.get(Blocks.oak_stairs, Cardinal.NORTH, true));
 		WorldGenPrimitive.setBlock(world, x + 6, y + 2, z + 2, Blocks.planks);
 		
 		WorldGenPrimitive.fillRectSolid(world, rand, x + 5, y + 4, z - 2, x + 5, y + 4, z + 2, planks);
-		WorldGenPrimitive.setBlock(world, x + 5, y + 3, z - 2, new MetaBlock(Blocks.oak_stairs, WorldGenPrimitive.blockOrientation(Cardinal.SOUTH, true)));
-		WorldGenPrimitive.setBlock(world, x + 5, y + 3, z + 2, new MetaBlock(Blocks.oak_stairs, WorldGenPrimitive.blockOrientation(Cardinal.NORTH, true)));
+		WorldGenPrimitive.setBlock(world, x + 5, y + 3, z - 2, Stair.get(Blocks.oak_stairs, Cardinal.SOUTH, true));
+		WorldGenPrimitive.setBlock(world, x + 5, y + 3, z + 2, Stair.get(Blocks.oak_stairs, Cardinal.NORTH, true));
 
 		WorldGenPrimitive.fillRectSolid(world, rand, x + 4, y + 5, z - 2, x + 4, y + 5, z + 2, planks);
-		WorldGenPrimitive.setBlock(world, x + 4, y + 4, z - 2, new MetaBlock(Blocks.oak_stairs, WorldGenPrimitive.blockOrientation(Cardinal.SOUTH, true)));
-		WorldGenPrimitive.setBlock(world, x + 4, y + 4, z + 2, new MetaBlock(Blocks.oak_stairs, WorldGenPrimitive.blockOrientation(Cardinal.NORTH, true)));
+		WorldGenPrimitive.setBlock(world, x + 4, y + 4, z - 2, Stair.get(Blocks.oak_stairs, Cardinal.SOUTH, true));
+		WorldGenPrimitive.setBlock(world, x + 4, y + 4, z + 2, Stair.get(Blocks.oak_stairs, Cardinal.NORTH, true));
 
-		WorldGenPrimitive.setBlock(world, x + 4, y + 3, z - 3, new MetaBlock(Blocks.oak_stairs, WorldGenPrimitive.blockOrientation(Cardinal.WEST, true)));
-		WorldGenPrimitive.setBlock(world, x + 4, y + 3, z + 3, new MetaBlock(Blocks.oak_stairs, WorldGenPrimitive.blockOrientation(Cardinal.WEST, true)));
+		WorldGenPrimitive.setBlock(world, x + 4, y + 3, z - 3, Stair.get(Blocks.oak_stairs, Cardinal.WEST, true));
+		WorldGenPrimitive.setBlock(world, x + 4, y + 3, z + 3, Stair.get(Blocks.oak_stairs, Cardinal.WEST, true));
 
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 3, y + 4, z - 3, x - 3, y + 5, z - 3, planks);
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 3, y + 4, z + 3, x - 3, y + 5, z + 3, planks);

@@ -6,57 +6,45 @@ import java.util.List;
 import java.util.Random;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockStairs;
+import net.minecraft.block.BlockStairs.EnumHalf;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Facing;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 
 public class WorldGenPrimitive {
 	
-	public static boolean setBlock(World world, int x, int y, int z, Block block, int meta, int flags, boolean fillAir, boolean replaceSolid){
+	public static boolean setBlock(World world, Coord pos, IBlockState block, int flags, boolean fillAir, boolean replaceSolid){
 		
-		Block currentBlock = world.getBlock(x, y, z);
+		MetaBlock currentBlock = WorldGenPrimitive.getBlock(world, pos);
 		
-		if(currentBlock == Blocks.chest) return false;
-		if(currentBlock == Blocks.trapped_chest) return false;
-		if(currentBlock == Blocks.mob_spawner) return false;
+		if(currentBlock.getBlock() == Blocks.chest) return false;
+		if(currentBlock.getBlock() == Blocks.trapped_chest) return false;
+		if(currentBlock.getBlock() == Blocks.mob_spawner) return false;
 		
-		boolean isAir = world.isAirBlock(x, y, z);
+		boolean isAir = WorldGenPrimitive.isAirBlock(world, pos);
 		
 		if(!fillAir && isAir) return false;
 		if(!replaceSolid && !isAir)	return false;
 		
-		world.setBlock(x, y, z, block, meta, flags);
+		BlockPos p = pos.getBlockPos();
+		world.setBlockState(p, block, flags);
 		return true;
 		
 	}
 	
-	public static boolean setBlock(World world, int x, int y, int z, Block block){
-		return setBlock(world, x, y, z, block, 0, 2, true, true);
+	public static boolean setBlock(World world, Coord pos, MetaBlock block){
+		return setBlock(world, pos, block, 2, true, true);
 	}
 	
-	public static boolean setBlock(World world, Coord coord, Block block) {
-		return setBlock(world, coord.getX(), coord.getY(), coord.getZ(), block);
-	}
-	
-	public static boolean setBlock(World world, int x, int y, int z, MetaBlock block){
-		return setBlock(world, x, y, z, block.getBlockID(), block.getMeta(), block.getFlag(), true, true);
-	}
-	
-	public static boolean setBlock(World world, Random rand, int x, int y, int z, IBlockFactory block, boolean fillAir, boolean replaceSolid){
-		return block.setBlock(world, rand, new Coord(x, y, z), fillAir, replaceSolid);
+	public static boolean setBlock(World world, Coord pos, Block block){
+		return setBlock(world, pos, new MetaBlock(block));
 	}
 	
 	public static boolean setBlock(World world, Random rand, Coord coord, IBlockFactory blocks, boolean fillAir, boolean replaceSolid) {
 		return blocks.setBlock(world, rand, coord, fillAir, replaceSolid);
-	}
-	
-	public static void fillRectSolid(World world, Random rand, int x1, int y1, int z1, int x2, int y2, int z2, IBlockFactory blocks, boolean fillAir, boolean replaceSolid){
-		fillRectSolid(world, rand, new Coord(x1, y1, z1), new Coord(x2, y2, z2), blocks, fillAir, replaceSolid);
-	}
-	
-	public static void fillRectSolid(World world, Random rand, int x1, int y1, int z1, int x2, int y2, int z2, IBlockFactory blocks){
-		fillRectSolid(world, rand, new Coord(x1, y1, z1), new Coord(x2, y2, z2), blocks, true, true);
 	}
 	
 	public static void fillRectSolid(World world, Random rand, Coord start, Coord end, IBlockFactory blocks, boolean fillAir, boolean replaceSolid){
@@ -69,41 +57,26 @@ public class WorldGenPrimitive {
 		for(int x = c1.getX(); x <= c2.getX(); x++){
 			for(int y = c1.getY(); y <= c2.getY(); y++){
 				for(int z = c1.getZ(); z <= c2.getZ(); z++){
-					setBlock(world, rand, x, y, z, blocks, fillAir, replaceSolid);
+					setBlock(world, rand, new Coord(x, y, z), blocks, fillAir, replaceSolid);
 				}
 			}
 		}
 	}
 	
-
-	
-	
-	
-	public static void fillRectHollow(World world, Random rand, int x1, int y1, int z1, int x2, int y2, int z2, Block block, int meta, int flag, boolean fillAir, boolean replaceSolid){
-		fillRectHollow(world, rand, x1, y1, z1, x2, y2, z2, new MetaBlock(block, meta, flag), fillAir, replaceSolid);
-	}
-	
-	public static void fillRectHollow(World world, Random rand, Coord c1, Coord c2, IBlockFactory blocks, boolean fillAir, boolean replaceSolid){
-		Coord first = new Coord(c1);
-		Coord second = new Coord(c2);
-		Coord.correct(first, second);
-		fillRectHollow(world, rand, first.getX(), first.getY(), first.getZ(), second.getX(), second.getY(), second.getZ(), blocks, fillAir, replaceSolid);
-	}
-	
-	public static void fillRectHollow(World world, Random rand, int x1, int y1, int z1, int x2, int y2, int z2, IBlockFactory blocks, boolean fillAir, boolean replaceSolid){
+	public static void fillRectHollow(World world, Random rand, Coord start, Coord end, IBlockFactory blocks, boolean fillAir, boolean replaceSolid){
 		
-		Coord c1 = new Coord(x1, y1, z1);
-		Coord c2 = new Coord(x2, y2, z2);
+		Coord c1 = new Coord(start);
+		Coord c2 = new Coord(end);
 		
 		Coord.correct(c1, c2);
 		
 		for(int x = c1.getX(); x <= c2.getX(); x++){
 			for(int y = c1.getY(); y <= c2.getY(); y++){
 				for(int z = c1.getZ(); z <= c2.getZ(); z++){
-					if(x == x1 || x == x2 || y == y1 || y == y2 || z == z1 || z == z2){
-						setBlock(world, rand, x, y, z, blocks, fillAir, replaceSolid);
+					if(x == c1.getX() || x == c2.getX() || y == c1.getY() || y == c2.getY() || z == c1.getZ() || z == c2.getZ()){
+						setBlock(world, rand, new Coord(x, y, z), blocks, fillAir, replaceSolid);
 					} else {					
-						setBlock(world, x, y, z, Blocks.air);
+						setBlock(world, new Coord(x, y, z), new MetaBlock(Blocks.air));
 					}	
 				}
 			}
@@ -221,6 +194,7 @@ public class WorldGenPrimitive {
 		
 	}
 	
+
 	public static void randomVines(World world, Random rand, int x1, int y1, int z1, int x2, int y2, int z2){
 
 		Coord c1 = new Coord(x1, y1, z1);
@@ -228,19 +202,24 @@ public class WorldGenPrimitive {
 		
 		Coord.correct(c1, c2);
 		
+		MetaBlock vine = new MetaBlock(Blocks.vine);
+		
 		for(int x = c1.getX(); x <= c2.getX(); x++){
 			for(int y = c1.getY(); y <= c2.getY(); y++){
 				for(int z = c1.getZ(); z <= c2.getZ(); z++){
-        			for (int dir = 2; dir <= 5; ++dir){
-	        			if(world.isAirBlock(x, y, z)){
+        			for (Cardinal dir : Cardinal.directions){
+        				Coord pos = new Coord(x, y, z);
+        				
+	        			if(WorldGenPrimitive.isAirBlock(world, pos)){
 	        				
 	        				if(rand.nextBoolean()){
 	        					continue;
 	        				}
 	        				
-	            		    if (Blocks.vine.canPlaceBlockOnSide(world, x, y, z, dir))
+	            		    if (Blocks.vine.canPlaceBlockOnSide(world, new BlockPos(x, y, z), Cardinal.getFacing(dir)));
 	                        {
-	            		    	setBlock(world, x, y, z, Blocks.vine, 1 << Direction.facingToDirection[Facing.oppositeSide[dir]], 2, true, true);
+	                        	
+	            		    	setBlock(world, rand, pos, vine, true, true);
 	                            break;
 	                        }
 	        			}
@@ -250,13 +229,12 @@ public class WorldGenPrimitive {
         }
 
 	}
-
-	public static int blockOrientation(Cardinal dir, Boolean upsideDown){
-		return Cardinal.getBlockMeta(dir) + (upsideDown ? 4 : 0);
-	}
 	
 	public static MetaBlock blockOrientation(MetaBlock block, Cardinal dir, Boolean upsideDown){
-		block.setMeta(blockOrientation(dir, upsideDown));
+		IBlockState stair = block.getBlock().getDefaultState();
+		stair = stair.withProperty(BlockStairs.FACING, Cardinal.getFacing(dir));
+		stair = stair.withProperty(BlockStairs.HALF, upsideDown ? EnumHalf.TOP : EnumHalf.BOTTOM);
+		block.setState(stair);
 		return block;
 	}
 	
@@ -264,10 +242,49 @@ public class WorldGenPrimitive {
 
 		Coord cursor = new Coord(origin);
 		
-		while(!world.getBlock(cursor.getX(), cursor.getY(), cursor.getZ()).getMaterial().isOpaque() && cursor.getY() > 1){
+		while(!WorldGenPrimitive.getBlock(world, cursor).getBlock().getMaterial().isOpaque() && cursor.getY() > 1){
 			blocks.setBlock(world, rand, cursor);
 			cursor.add(Cardinal.DOWN);
 		}
+	}
+	
+	public static MetaBlock getBlock(World world, Coord pos){
+		BlockPos p = pos.getBlockPos();
+		return new MetaBlock(world.getBlockState(p));
+	}
+	
+	public static TileEntity getTileEntity(World world, Coord pos){
+		BlockPos p = pos.getBlockPos();
+		return world.getTileEntity(p);
+	}
+	
+	public static boolean isAirBlock(World world, Coord pos){
+		BlockPos p = pos.getBlockPos();
+		return world.isAirBlock(p);
+	}
+	
+	public static void setBlock(World world, int x, int y, int z, Block block){
+		world.setBlockState(new BlockPos(x, y, z), new MetaBlock(block));
+	}
+	
+	public static void setBlock(World world, int x, int y, int z, MetaBlock block){
+		world.setBlockState(new BlockPos(x, y, z), block);
+	}
+	
+	public static void fillRectSolid(World world, Random rand, int x, int y, int z, int x2, int y2, int z2, IBlockFactory blocks){
+		fillRectSolid(world, rand, new Coord(x, y, z), new Coord(x2, y2, z2), blocks, true, true);
+	}
+	
+	public static void fillRectSolid(World world, Random rand, int x, int y, int z, int x2, int y2, int z2, IBlockFactory blocks, boolean fillAir, boolean replaceSolid){
+		fillRectSolid(world, rand, new Coord(x, y, z), new Coord(x2, y2, z2), blocks, fillAir, replaceSolid);
+	}
+	
+	public static void setBlock(World world, Random rand, int x, int y, int z, IBlockFactory block, boolean fillAir, boolean replaceSolid){
+		setBlock(world, rand, new Coord(x, y, z), block, true, true);
+	}
+	
+	public static void fillRectHollow(World world, Random rand, int x, int y, int z, int x2, int y2, int z2, IBlockFactory blocks, boolean fillAir, boolean replaceSolid){
+		fillRectHollow(world, rand, new Coord(x, y, z), new Coord(x2, y2, z2), blocks, fillAir, replaceSolid);
 	}
 }
 

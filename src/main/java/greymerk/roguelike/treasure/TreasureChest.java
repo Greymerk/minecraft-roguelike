@@ -5,6 +5,7 @@ import greymerk.roguelike.catacomb.Catacomb;
 import greymerk.roguelike.catacomb.settings.CatacombLevelSettings;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
+import greymerk.roguelike.worldgen.WorldGenPrimitive;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -169,7 +170,7 @@ public enum TreasureChest {
 
 	public static boolean isValidChestSpace(World world, Coord pos) {
 
-		if (!world.isAirBlock(pos.getX(), pos.getY(), pos.getZ())) {
+		if (!WorldGenPrimitive.isAirBlock(world, pos)) {
 			return false;
 		}
 		
@@ -177,12 +178,12 @@ public enum TreasureChest {
 		cursor = new Coord(pos);
 		cursor.add(Cardinal.DOWN);
 		
-		if (!world.getBlock(cursor.getX(), cursor.getY(), cursor.getZ()).getMaterial().isSolid()) return false;
+		if (!WorldGenPrimitive.getBlock(world, cursor).getBlock().getMaterial().isSolid()) return false;
 		
 		for(Cardinal dir : Cardinal.directions){
 			cursor = new Coord(pos);
 			cursor.add(dir);
-			if(world.getBlock(cursor.getX(), cursor.getY(), cursor.getZ()) == Blocks.chest) return false;
+			if(WorldGenPrimitive.getBlock(world, cursor).getBlock() == Blocks.chest) return false;
 		}
 		
 		return true;

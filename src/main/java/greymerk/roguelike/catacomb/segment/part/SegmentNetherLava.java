@@ -33,7 +33,7 @@ public class SegmentNetherLava extends SegmentBase {
 		air.setBlock(world, cursor);
 		cursor = new Coord(x, y, z);
 		cursor.add(dir, 5);
-		boolean isAir = world.isAirBlock(cursor.getX(), cursor.getY(), cursor.getZ());
+		boolean isAir = WorldGenPrimitive.isAirBlock(world, cursor);
 		boolean isLava = true; //rand.nextInt(5) == 0;
 		IBlockFactory wall = theme.getSecondaryWall();
 		
@@ -54,11 +54,11 @@ public class SegmentNetherLava extends SegmentBase {
 			cursor = new Coord(x, y, z);
 			cursor.add(dir, 2);
 			
-			step.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.reverse(orth), false));
+			WorldGenPrimitive.blockOrientation(step, Cardinal.reverse(orth), false);
 			cursor.add(orth, 1);
 			WorldGenPrimitive.setBlock(world, rand, cursor, step, true, true);
 			
-			step.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.reverse(orth), true));
+			WorldGenPrimitive.blockOrientation(step, Cardinal.reverse(orth), true);
 			cursor.add(Cardinal.UP, 1);
 			WorldGenPrimitive.setBlock(world, rand, cursor, step, true, true);
 			

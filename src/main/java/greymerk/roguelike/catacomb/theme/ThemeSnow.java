@@ -1,18 +1,24 @@
 package greymerk.roguelike.catacomb.theme;
 
 import greymerk.roguelike.worldgen.BlockWeightedRandom;
-import greymerk.roguelike.worldgen.Log;
 import greymerk.roguelike.worldgen.MetaBlock;
+import greymerk.roguelike.worldgen.blocks.Log;
+import net.minecraft.block.BlockStoneBrick;
 import net.minecraft.init.Blocks;
 
 public class ThemeSnow extends ThemeBase{
 
 	public ThemeSnow(){
 	
+		MetaBlock cracked = new MetaBlock(Blocks.stonebrick);
+		cracked.withProperty(BlockStoneBrick.VARIANT_PROP, BlockStoneBrick.EnumType.CRACKED);
+		MetaBlock mossy = new MetaBlock(Blocks.stonebrick);
+		mossy.withProperty(BlockStoneBrick.VARIANT_PROP, BlockStoneBrick.EnumType.MOSSY);
+		
 		BlockWeightedRandom walls = new BlockWeightedRandom();
 		walls.addBlock(new MetaBlock(Blocks.stonebrick), 10);
-		walls.addBlock(new MetaBlock(Blocks.stonebrick, 1), 1);
-		walls.addBlock(new MetaBlock(Blocks.stonebrick, 2), 1);
+		walls.addBlock(cracked, 1);
+		walls.addBlock(mossy, 1);
 		
 		MetaBlock stair = new MetaBlock(Blocks.stone_brick_stairs);
 		MetaBlock pillar = Log.getLog(Log.SPRUCE);

@@ -23,11 +23,11 @@ public class CatacombSettings implements ICatacombSettings{
 	protected CatacombTowerSettings towerSettings;
 	protected Map<Integer, CatacombLevelSettings> levels;
 	protected SpawnCriteria criteria;
-	protected int numLevels;
+	protected int depth;
 	
 	public CatacombSettings(){
 		this.levels = new HashMap<Integer, CatacombLevelSettings>();
-		this.numLevels = 0;
+		this.depth = 0;
 	}
 	
 	public CatacombSettings(Map<String, CatacombSettings> settings, JsonObject root) throws Exception{
@@ -36,6 +36,17 @@ public class CatacombSettings implements ICatacombSettings{
 		
 		if(root.has("criteria")){
 			this.criteria = new SpawnCriteria(root.get("criteria").getAsJsonObject());
+		}
+		
+		if(root.has("depth")){
+			int depth = root.get("depth").getAsInt();
+			if(depth < 1) this.depth = 1;
+			if(depth > 5) this.depth = 5;
+			this.depth = depth;
+		}
+		
+		if(root.has("tower")){
+			this.towerSettings = new CatacombTowerSettings(root.get("tower"));
 		}
 		
 		levels = new HashMap<Integer, CatacombLevelSettings>();
@@ -62,6 +73,14 @@ public class CatacombSettings implements ICatacombSettings{
 	}
 	
 	private void parseJson(CatacombSettings base, JsonObject root){
+		
+		if(!root.has("tower")){
+			this.towerSettings = base.towerSettings;
+		}
+		
+		if(!root.has("depth")){
+			this.depth = base.depth;
+		}
 		
 		if(!root.has("levels")){
 			this.levels.putAll(base.levels);
@@ -90,10 +109,10 @@ public class CatacombSettings implements ICatacombSettings{
 	
 	public CatacombSettings(CatacombSettings base, CatacombSettings override){
 		
-		if(override.numLevels != 0){
-			numLevels = override.numLevels;
+		if(override.depth != 0){
+			depth = override.depth;
 		} else {
-			numLevels = base.numLevels;
+			depth = base.depth;
 		}
 		
 		if(override.towerSettings == null){
@@ -115,7 +134,7 @@ public class CatacombSettings implements ICatacombSettings{
 	
 	public CatacombSettings(CatacombSettings toCopy){
 		
-		this.numLevels = toCopy.numLevels;
+		this.depth = toCopy.depth;
 		
 		this.levels = new HashMap<Integer, CatacombLevelSettings>();
 		
@@ -155,9 +174,9 @@ public class CatacombSettings implements ICatacombSettings{
 	@Override
 	public int getNumLevels() {
 		
-		if(numLevels < 0) return 0;
-		if(numLevels > MAX_NUM_LEVELS) return MAX_NUM_LEVELS;
+		if(depth < 0) return 0;
+		if(depth > MAX_NUM_LEVELS) return MAX_NUM_LEVELS;
 		
-		return numLevels;
+		return depth;
 	}
 }

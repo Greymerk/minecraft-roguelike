@@ -195,7 +195,7 @@ public class JungleTower implements ITower{
 	
 	private void step(World world, Random rand, ITheme theme, Cardinal dir, Coord origin){
 		
-		if(world.getBlock(origin.getX(), origin.getY(), origin.getZ()).isOpaqueCube()) return;
+		if(WorldGenPrimitive.getBlock(world, origin).getBlock().isOpaqueCube()) return;
 		
 		Coord start;
 		Coord end;

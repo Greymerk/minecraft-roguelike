@@ -4,9 +4,9 @@ import greymerk.roguelike.catacomb.CatacombLevel;
 import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
-import greymerk.roguelike.worldgen.FlowerPot;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
+import greymerk.roguelike.worldgen.blocks.FlowerPot;
 
 import java.util.List;
 import java.util.Random;
@@ -46,7 +46,7 @@ public class SegmentFlowers extends SegmentBase {
 		for(Cardinal d : orth){
 			Coord c = new Coord(cursor);
 			c.add(d, 1);
-			stair.setMeta(WorldGenPrimitive.blockOrientation(Cardinal.reverse(d), true));
+			WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(d), true);
 			WorldGenPrimitive.setBlock(world, rand, c, stair, true, true);
 		}
 		
@@ -58,7 +58,7 @@ public class SegmentFlowers extends SegmentBase {
 		end.add(orth[1]);
 		List<Coord> pots = WorldGenPrimitive.getRectSolid(start, end);
 		for(Coord c : pots){
-			if(rand.nextInt(3) == 0 && world.getBlock(c.getX(), c.getY() - 1, c.getZ()).getMaterial().isSolid()){
+			if(rand.nextInt(3) == 0 && WorldGenPrimitive.getBlock(world, c).getBlock().getMaterial().isSolid()){
 				FlowerPot.generate(world, rand, c);
 			}
 		}

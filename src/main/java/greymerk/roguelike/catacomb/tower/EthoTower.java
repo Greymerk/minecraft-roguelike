@@ -132,7 +132,7 @@ public class EthoTower implements ITower {
 		for(Cardinal dir : Cardinal.directions){
 			cursor = new Coord(floor);
 			cursor.add(dir, 6);
-			if(world.isAirBlock(cursor.getX(), cursor.getY(), cursor.getZ())){
+			if(WorldGenPrimitive.isAirBlock(world, cursor)){
 				front = dir;
 				break;
 			}
@@ -217,7 +217,7 @@ public class EthoTower implements ITower {
 	
 	private void step(World world, Random rand, ITheme theme, Cardinal dir, Coord origin){
 		
-		if(world.getBlock(origin.getX(), origin.getY(), origin.getZ()).isOpaqueCube()) return;
+		if(WorldGenPrimitive.getBlock(world, origin).getBlock().isOpaqueCube()) return;
 		
 		Coord start;
 		Coord end;

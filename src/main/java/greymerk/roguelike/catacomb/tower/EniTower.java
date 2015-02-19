@@ -3,10 +3,11 @@ package greymerk.roguelike.catacomb.tower;
 import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
-import greymerk.roguelike.worldgen.Door;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
+import greymerk.roguelike.worldgen.blocks.ColorBlock;
+import greymerk.roguelike.worldgen.blocks.Door;
 
 import java.util.Random;
 
@@ -278,7 +279,7 @@ public class EniTower implements ITower {
 			cursor = new Coord(floor);
 			cursor.add(dir, 4);
 			cursor.add(Cardinal.UP, 4);
-			MetaBlock window = new MetaBlock(Blocks.stained_glass_pane, rand.nextInt(16));
+			MetaBlock window = ColorBlock.get(Blocks.stained_glass_pane, rand);
 			for(int i = 0; i < 3; i++){
 				WorldGenPrimitive.blockOrientation(stair, dir, false).setBlock(world, cursor);
 				cursor.add(Cardinal.UP);
@@ -371,11 +372,11 @@ public class EniTower implements ITower {
 			cursor = new Coord(floor);
 			cursor.add(Cardinal.UP);
 			cursor.add(dir, 6);
-			if(world.isAirBlock(cursor.getX(), cursor.getY(), cursor.getZ())){
+			if(WorldGenPrimitive.isAirBlock(world, cursor)){
 				cursor = new Coord(floor);
 				cursor.add(Cardinal.UP);
 				cursor.add(dir, 5);
-				Door.generate(world, cursor, dir, Door.WOOD);
+				Door.generate(world, cursor, dir, Door.OAK);
 				cursor.add(dir);
 				start = new Coord(cursor);
 				end = new Coord(start);
