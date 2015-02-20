@@ -15,6 +15,7 @@ import greymerk.roguelike.worldgen.blocks.FlowerPot;
 import java.util.Random;
 
 import net.minecraft.block.BlockColored;
+import net.minecraft.block.BlockSlab.EnumBlockHalf;
 import net.minecraft.block.BlockStoneSlab;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumDyeColor;
@@ -82,7 +83,7 @@ public class DungeonLab extends DungeonBase {
 	private static void corner(World world, Random rand, ITheme theme, int x, int y, int z){
 		
 		MetaBlock air = new MetaBlock(Blocks.air);
-		MetaBlock doubleSlab = new MetaBlock(Blocks.double_stone_slab.getDefaultState().withProperty(BlockStoneSlab.SEAMLESS_PROP, BlockStoneSlab.EnumType.SMOOTHBRICK));
+		MetaBlock doubleSlab = new MetaBlock(Blocks.double_stone_slab.getDefaultState().withProperty(BlockStoneSlab.SEAMLESS_PROP, true));
 		MetaBlock cobble = new MetaBlock(Blocks.cobblestone);
 		
 		// pillars
@@ -137,7 +138,7 @@ public class DungeonLab extends DungeonBase {
 		
 		MetaBlock stone = new MetaBlock(Blocks.stonebrick);
 		MetaBlock stair = new MetaBlock(Blocks.stone_brick_stairs);
-		MetaBlock slab = new MetaBlock(Blocks.stone_slab.getDefaultState().withProperty(BlockStoneSlab.HALF_PROP, BlockStoneSlab.EnumType.SMOOTHBRICK));
+		MetaBlock slab = new MetaBlock(Blocks.stone_slab.getDefaultState().withProperty(BlockStoneSlab.HALF_PROP, EnumBlockHalf.BOTTOM));
 		
 		corner(world, rand, theme, x, y, z);
 		

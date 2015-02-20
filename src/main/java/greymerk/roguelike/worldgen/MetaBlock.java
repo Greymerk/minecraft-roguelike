@@ -18,7 +18,8 @@ public class MetaBlock extends BlockFactoryBase implements IBlockState{
 	private int flag;
     
 	public MetaBlock(Block block){
-		this(block.getDefaultState());
+		this.state = block.getDefaultState();
+		flag = 2;
 	}
 	
 	public MetaBlock(IBlockState state){
@@ -35,16 +36,8 @@ public class MetaBlock extends BlockFactoryBase implements IBlockState{
 		
 	}
 	
-	public int getFlag(){
-		return flag;
-	}
-	
 	public void setState(IBlockState state){
 		this.state = state;
-	}
-	
-	public void setFlag(int in){
-		flag = in;
 	}
 
 	public boolean setBlock(World world, Coord pos){
@@ -68,7 +61,8 @@ public class MetaBlock extends BlockFactoryBase implements IBlockState{
 
 	@Override
 	public IBlockState withProperty(IProperty property, Comparable value) {
-		return this.state.withProperty(property, value);
+		this.state = this.state.withProperty(property, value);
+		return this.state;
 	}
 
 	@Override

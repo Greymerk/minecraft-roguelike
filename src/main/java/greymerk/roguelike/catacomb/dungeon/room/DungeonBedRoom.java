@@ -117,11 +117,12 @@ public class DungeonBedRoom implements IDungeon {
 		cursor.add(Cardinal.UP);
 		FlowerPot.generate(world, rand, cursor);
 		cursor.add(Cardinal.reverse(side), 3);
-		Torch.generate(world, Torch.WOODEN, Cardinal.UP, cursor);
 		cursor.add(Cardinal.DOWN);
 		MetaBlock stair = theme.getSecondaryStair();
 		WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(dir), true);
 		stair.setBlock(world, cursor);
+		cursor.add(Cardinal.UP);
+		Torch.generate(world, Torch.WOODEN, Cardinal.UP, cursor);
 		
 		side = orth[rand.nextInt(orth.length)];
 		cursor = new Coord(x, y, z);

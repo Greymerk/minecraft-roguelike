@@ -16,7 +16,7 @@ public class Repeater {
 		
 		MetaBlock repeater = new MetaBlock(Blocks.unpowered_repeater);
 		repeater.withProperty(BlockRedstoneRepeater.FACING, Cardinal.getFacing(dir));
-		repeater.withProperty(BlockRedstoneRepeater.field_176410_b, delay);
+		if (delay > 0 && delay <= 4) repeater.withProperty(BlockRedstoneRepeater.field_176410_b, delay);
 		repeater.setBlock(world, pos);
 	}
 	

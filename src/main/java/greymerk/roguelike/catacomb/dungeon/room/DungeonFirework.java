@@ -17,7 +17,6 @@ import greymerk.roguelike.worldgen.redstone.Torch;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.block.BlockRedstoneDiode;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -188,13 +187,12 @@ public class DungeonFirework implements IDungeon {
 		Coord end = new Coord(start);
 		
 		MetaBlock breadboard = new MetaBlock(Blocks.planks);
-		MetaBlock red = new MetaBlock(Blocks.redstone_torch);
-		red.withProperty(BlockRedstoneDiode.FACING, Cardinal.getFacing(Cardinal.UP));
+		
 		
 		boolean torch = false;
 		while(end.getY() < top.getY()){
 			if(torch){
-				red.setBlock(world, cursor);
+				Torch.generate(world, Torch.REDSTONE, Cardinal.UP, cursor);
 			} else {
 				breadboard.setBlock(world, cursor);
 			}

@@ -23,7 +23,7 @@ public class SegmentAnkh extends SegmentBase{
 		
 		MetaBlock air = new MetaBlock(Blocks.air);
 		MetaBlock stair = theme.getSecondaryStair();
-		MetaBlock glass = ColorBlock.get(Blocks.glass, rand);
+		MetaBlock glass = ColorBlock.get(Blocks.stained_glass, rand);
 		MetaBlock white = new MetaBlock(Blocks.stained_hardened_clay);
 		MetaBlock glowstone = new MetaBlock(Blocks.glowstone);
 		

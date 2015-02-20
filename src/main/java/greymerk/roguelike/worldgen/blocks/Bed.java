@@ -13,14 +13,20 @@ public class Bed {
 		
 		Coord cursor = new Coord(pos);
 		
-		MetaBlock head = new MetaBlock(Blocks.bed.getDefaultState()
-				.withProperty(BlockBed.PART_PROP, BlockBed.EnumPartType.HEAD)
-				.withProperty(BlockBed.FACING, Cardinal.getFacing(Cardinal.reverse(dir))));
+		int meta;
 		
+		switch(Cardinal.reverse(dir)){
+		case SOUTH: meta = 0; break;
+		case WEST: meta = 1; break;
+		case NORTH: meta = 2; break;
+		case EAST: meta = 3; break;
+		default: meta = 0; break;
+		}
+		
+		MetaBlock head = new MetaBlock(Blocks.bed.getStateFromMeta(meta + 8));
 		head.setBlock(world, cursor);
 		
-		MetaBlock foot = new MetaBlock(Blocks.bed.getDefaultState()
-				.withProperty(BlockBed.PART_PROP, BlockBed.EnumPartType.FOOT));
+		MetaBlock foot = new MetaBlock(Blocks.bed.getStateFromMeta(meta));
 		cursor.add(dir);
 		foot.setBlock(world, cursor);
 	}

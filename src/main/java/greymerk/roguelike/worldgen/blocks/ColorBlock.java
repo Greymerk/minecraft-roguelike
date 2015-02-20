@@ -11,8 +11,7 @@ import net.minecraft.item.EnumDyeColor;
 public class ColorBlock {
 
 	public static MetaBlock get(Block type, EnumDyeColor color){
-		MetaBlock block = new MetaBlock(type);
-		block.withProperty(BlockColored.COLOR, color);
+		MetaBlock block = new MetaBlock(type.getDefaultState().withProperty(BlockColored.COLOR, color));
 		return block;
 	}
 	

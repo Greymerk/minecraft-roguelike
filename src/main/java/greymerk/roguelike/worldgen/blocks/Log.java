@@ -13,7 +13,7 @@ public enum Log {
 	
 	public static MetaBlock getLog(Log type, Cardinal dir){
 		
-		MetaBlock log =  new MetaBlock(getBlockId(type));
+		MetaBlock log = new MetaBlock(getBlockId(type));
 		setType(log, type);
 
 		switch(dir){
@@ -48,13 +48,13 @@ public enum Log {
 	
 	public static void setType(MetaBlock log, Log type){
 		switch(type){
-		case OAK: log.withProperty(BlockPlanks.VARIANT_PROP, BlockPlanks.EnumType.OAK);
-		case SPRUCE: log.withProperty(BlockPlanks.VARIANT_PROP, BlockPlanks.EnumType.SPRUCE);
-		case BIRCH: log.withProperty(BlockPlanks.VARIANT_PROP, BlockPlanks.EnumType.BIRCH);
-		case JUNGLE: log.withProperty(BlockPlanks.VARIANT_PROP, BlockPlanks.EnumType.JUNGLE);
-		case ACACIA: log.withProperty(BlockPlanks.VARIANT_PROP, BlockPlanks.EnumType.ACACIA);
-		case DARKOAK: log.withProperty(BlockPlanks.VARIANT_PROP, BlockPlanks.EnumType.DARK_OAK);
-		default: log.withProperty(BlockPlanks.VARIANT_PROP, BlockPlanks.EnumType.OAK);
+		case OAK: log.withProperty(BlockPlanks.VARIANT_PROP, BlockPlanks.EnumType.OAK); return;
+		case SPRUCE: log.withProperty(BlockPlanks.VARIANT_PROP, BlockPlanks.EnumType.SPRUCE); return;
+		case BIRCH: log.withProperty(BlockPlanks.VARIANT_PROP, BlockPlanks.EnumType.BIRCH); return;
+		case JUNGLE: log.withProperty(BlockPlanks.VARIANT_PROP, BlockPlanks.EnumType.JUNGLE); return;
+		case ACACIA: log.withProperty(BlockPlanks.VARIANT_PROP, BlockPlanks.EnumType.ACACIA); return;
+		case DARKOAK: log.withProperty(BlockPlanks.VARIANT_PROP, BlockPlanks.EnumType.DARK_OAK); return;
+		default: log.withProperty(BlockPlanks.VARIANT_PROP, BlockPlanks.EnumType.OAK); return;
 		}
 	}
 }

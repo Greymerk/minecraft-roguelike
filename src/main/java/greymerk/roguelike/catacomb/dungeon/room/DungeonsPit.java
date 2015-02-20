@@ -69,7 +69,7 @@ public class DungeonsPit extends DungeonBase {
 		return true;
 	}
 
-
+	MetaBlock air = new MetaBlock(Blocks.air);
 	protected void buildWalls() {
 		for (int blockX = originX - dungeonLength - 1; blockX <= originX + dungeonLength + 1; blockX++) {
 			for (int blockY = originY + dungeonHeight; blockY >= originY - 1; blockY--) {
@@ -89,7 +89,7 @@ public class DungeonsPit extends DungeonBase {
 						blocks.setBlock(world, rand, new Coord(blockX, blockY, blockZ));
 						
 					} else {
-						WorldGenPrimitive.setBlock(world, blockX, blockY, blockZ, new MetaBlock(Blocks.air));
+						WorldGenPrimitive.setBlock(world, blockX, blockY, blockZ, air);
 					}
 				}
 			}

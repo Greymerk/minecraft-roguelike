@@ -36,7 +36,7 @@ public class WorldGenPrimitive {
 	}
 	
 	public static boolean setBlock(World world, Coord pos, MetaBlock block){
-		return setBlock(world, pos, block, 2, true, true);
+		return block.setBlock(world, pos);
 	}
 	
 	public static boolean setBlock(World world, Coord pos, Block block){
@@ -264,11 +264,11 @@ public class WorldGenPrimitive {
 	}
 	
 	public static void setBlock(World world, int x, int y, int z, Block block){
-		world.setBlockState(new BlockPos(x, y, z), new MetaBlock(block));
+		new MetaBlock(block).setBlock(world, new Coord(x, y, z));
 	}
 	
 	public static void setBlock(World world, int x, int y, int z, MetaBlock block){
-		world.setBlockState(new BlockPos(x, y, z), block);
+		block.setBlock(world, new Coord(x, y, z));
 	}
 	
 	public static void fillRectSolid(World world, Random rand, int x, int y, int z, int x2, int y2, int z2, IBlockFactory blocks){

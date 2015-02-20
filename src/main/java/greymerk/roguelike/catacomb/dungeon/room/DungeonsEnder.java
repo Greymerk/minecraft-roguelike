@@ -9,6 +9,7 @@ import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.Spawner;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
 
+import java.util.List;
 import java.util.Random;
 
 import net.minecraft.init.Blocks;
@@ -30,9 +31,6 @@ public class DungeonsEnder extends DungeonBase {
 
 	public boolean generate(World inWorld, Random inRandom, CatacombLevelSettings settings, Cardinal[] entrances, Coord origin) {
 
-		int x = origin.getX();
-		int y = origin.getY();
-		int z = origin.getZ();
 		world = inWorld;
 		rand = inRandom;
 
@@ -40,38 +38,50 @@ public class DungeonsEnder extends DungeonBase {
 		MetaBlock white = new MetaBlock(Blocks.quartz_block);
 		MetaBlock air = new MetaBlock(Blocks.air);
 
-		for (int blockX = x - dungeonLength - 1; blockX <= x + dungeonLength + 1; blockX++) {
-			for (int blockZ = z - dungeonWidth - 1; blockZ <= z + dungeonWidth + 1; blockZ++){
-				for (int blockY = y - 1; blockY <= y + dungeonHeight; blockY++) {
-
-					int height = y + rand.nextInt(8) + 2;
-
-					if(blockY > height){
-						continue;
-					}
-					
-					if (blockX == x - dungeonLength - 1 || blockZ == z - dungeonWidth - 1 || blockX == x + dungeonLength + 1 || blockZ == z + dungeonWidth + 1) {
-
-						if (blockY >= 0 && !WorldGenPrimitive.getBlock(world, new Coord(blockX, blockY - 1, blockZ)).getBlock().getMaterial().isSolid()) {
-							WorldGenPrimitive.setBlock(world, blockX, blockY, blockZ, air);
-							continue;
-						}
-						if (!WorldGenPrimitive.getBlock(world, new Coord(blockX, blockY, blockZ)).getBlock().getMaterial().isSolid()) {
-							continue;
-						}
-
-						WorldGenPrimitive.setBlock(world, blockX, blockY, blockZ, black);
-					} else {
-						WorldGenPrimitive.setBlock(world, blockX, blockY, blockZ, air);
-					}
-				}
-			}
+		Coord start;
+		Coord end;
+		start = new Coord(origin);
+		end = new Coord(origin);
+		start.add(-3, 0, -3);
+		end.add(3, 2, 3);
+		air.fillRectSolid(inWorld, inRandom, start, end, true, true);
+		for (Cardinal dir : Cardinal.directions){
+			
+			Cardinal[] orth = Cardinal.getOrthogonal(dir);
+			
+			start = new Coord(origin);
+			start.add(dir, 4);
+			end = new Coord(start);
+			start.add(orth[0], 4);
+			start.add(Cardinal.DOWN, 1);
+			end.add(orth[1], 4);
+			end.add(Cardinal.UP, 5);
+			black.fillRectSolid(inWorld, inRandom, start, end, false, true);
+			
 		}
 		
+		start = new Coord(origin);
+		end = new Coord(origin);
+		start.add(-3, 2, -3);
+		end.add(3, 10, 3);
+		List<Coord> box = WorldGenPrimitive.getRectSolid(start, end);
+		
+		int top = end.getY() - start.getY() + 1;
+		for(Coord cell : box){
+			boolean disolve = rand.nextInt((cell.getY() - start.getY()) + 1) < 2;
+			air.setBlock(inWorld, inRandom, cell, false, disolve);
+			black.setBlock(inWorld, rand, cell, false, rand.nextInt(top - (cell.getY() - start.getY())) == 0 && !disolve);
+		}
+		
+		start = new Coord(origin);
+		end = new Coord(origin);
+		start.add(-4, -1, -4);
+		end.add(4, -1, 4);
+		
 		BlockFactoryCheckers checkers = new BlockFactoryCheckers(black, white);
-		WorldGenPrimitive.fillRectSolid(inWorld, inRandom, x - 4, y - 1, z - 4, x + 4, y - 1, z + 4, checkers, true, true);
+		WorldGenPrimitive.fillRectSolid(inWorld, inRandom, start, end, checkers, true, true);
 		// TODO: add ender chest
-		Spawner.generate(world, rand, settings, new Coord(x, y, z), Spawner.ENDERMAN);
+		Spawner.generate(world, rand, settings, origin, Spawner.ENDERMAN);
 
 		return true;
 	}

@@ -80,10 +80,11 @@ public class SegmentLamp extends SegmentBase{
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.UP);
 		cursor.add(dir, 2);
-		Lever.generate(world, Cardinal.reverse(dir), cursor, false);
 		
+		Coord lever = new Coord(cursor);
 		cursor.add(dir);
 		WorldGenPrimitive.setBlock(world, cursor, Blocks.hardened_clay);
+		Lever.generate(world, Cardinal.reverse(dir), lever, false);
 		cursor.add(dir);
 		Torch.generate(world, Torch.REDSTONE, dir, cursor);
 		cursor.add(Cardinal.UP, 2);

@@ -50,13 +50,13 @@ public class DungeonsWood extends DungeonBase {
 		WorldGenPrimitive.fillRectSolid(world, rand, x + WIDTH, y, z + LENGTH, x + WIDTH, y + HEIGHT, z + LENGTH, pillar, true, true);
 
 		// glowstone
-		WorldGenPrimitive.setBlock(world, x - WIDTH + 1, y - 1, z - LENGTH + 1, glowstone);
-		WorldGenPrimitive.setBlock(world, x - WIDTH + 1, y - 1, z + LENGTH - 1, glowstone);
-		WorldGenPrimitive.setBlock(world, x + WIDTH - 1, y - 1, z - LENGTH + 1, glowstone);
-		WorldGenPrimitive.setBlock(world, x + WIDTH - 1, y - 1, z + LENGTH - 1, glowstone);
+		glowstone.setBlock(world, new Coord(x - WIDTH + 1, y - 1, z - LENGTH + 1));
+		glowstone.setBlock(world, new Coord(x - WIDTH + 1, y - 1, z + LENGTH - 1));
+		glowstone.setBlock(world, new Coord(x + WIDTH - 1, y - 1, z - LENGTH + 1));
+		glowstone.setBlock(world, new Coord(x + WIDTH - 1, y - 1, z + LENGTH - 1));
 		
 		WorldGenPrimitive.setBlock(world, rand, x, y, z, planks, true, true);
-		WorldGenPrimitive.setBlock(world, x, y + 1, z, Blocks.cake);
+		new MetaBlock(Blocks.cake).setBlock(world, new Coord(x, y + 1, z));
 		
 		List<Coord> space = new ArrayList<Coord>();
 		space.add(new Coord(x - WIDTH, y, z - LENGTH + 1));

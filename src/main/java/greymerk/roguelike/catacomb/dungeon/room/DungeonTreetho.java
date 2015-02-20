@@ -82,7 +82,7 @@ public class DungeonTreetho extends DungeonBase{
 		MetaBlock light = new MetaBlock(Blocks.lit_pumpkin);
 		MetaBlock sapling = new MetaBlock(Blocks.sapling);
 		sapling.withProperty(BlockSapling.TYPE_PROP, BlockPlanks.EnumType.BIRCH);
-		MetaBlock glass = ColorBlock.get(Blocks.glass, EnumDyeColor.YELLOW);
+		MetaBlock glass = ColorBlock.get(Blocks.stained_glass, EnumDyeColor.YELLOW);
 		MetaBlock dirt = new MetaBlock(Blocks.dirt);
 		
 		Cardinal[] orth = Cardinal.getOrthogonal(dir);
