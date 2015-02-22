@@ -9,6 +9,8 @@ import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
+import greymerk.roguelike.worldgen.redstone.Piston;
+import greymerk.roguelike.worldgen.redstone.Torch;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,8 +56,8 @@ public class DungeonsPit extends DungeonBase {
 		buildPit();
 		
 
-		for(int dir = 0; dir < 4; dir++){
-			// @TODO: redo the traps
+		for (Cardinal dir : Cardinal.directions){
+			setTrap(world, rand, settings, dir, origin);
 		}
 		
 		List<Coord> space = new ArrayList<Coord>();
@@ -146,6 +148,53 @@ public class DungeonsPit extends DungeonBase {
 				}
 			}
 		}
+	}
+	
+	private void setTrap(World world, Random rand, CatacombLevelSettings settings, Cardinal dir, Coord origin){
+		ITheme theme = settings.getTheme();
+		IBlockFactory walls = theme.getPrimaryWall();
+		MetaBlock plate = new MetaBlock(Blocks.stone_pressure_plate);
+		MetaBlock wire = new MetaBlock(Blocks.redstone_wire);
+		Coord start;
+		Coord end;
+		Coord cursor;
+		
+		Cardinal[] orth = Cardinal.getOrthogonal(dir);
+		
+		start = new Coord(origin);
+		start.add(dir, 3);
+		start.add(Cardinal.DOWN);
+		start.add(orth[0]);
+		end = new Coord(origin);
+		end.add(dir, 6);
+		end.add(Cardinal.UP, 3);
+		end.add(orth[1]);
+		
+		
+		
+		List<Coord> box = WorldGenPrimitive.getRectHollow(start, end);
+		
+		for(Coord cell : box){
+			if(WorldGenPrimitive.isAirBlock(world, cell)) return;
+			walls.setBlock(world, rand, cell);
+		}
+		
+		cursor = new Coord(origin);
+		cursor.add(dir, 2);
+		plate.setBlock(world, cursor);
+		
+		cursor = new Coord(origin);
+		cursor.add(Cardinal.DOWN);
+		cursor.add(dir, 3);
+		Torch.generate(world, Torch.REDSTONE, dir, cursor);
+		cursor.add(dir);
+		wire.setBlock(world, cursor);
+		cursor.add(Cardinal.UP);
+		cursor.add(dir);
+		Torch.generate(world, Torch.REDSTONE_UNLIT, Cardinal.UP, cursor);
+		cursor.add(Cardinal.reverse(dir));
+		cursor.add(Cardinal.UP);
+		Piston.generate(world, cursor, Cardinal.reverse(dir), true);
 	}
 	
 	public int getSize(){

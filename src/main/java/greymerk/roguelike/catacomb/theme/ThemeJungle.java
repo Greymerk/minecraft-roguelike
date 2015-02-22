@@ -4,8 +4,8 @@ import greymerk.roguelike.worldgen.BlockJumble;
 import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.MetaBlock;
-import greymerk.roguelike.worldgen.WorldGenPrimitive;
 import greymerk.roguelike.worldgen.blocks.Log;
+import net.minecraft.block.BlockStairs;
 import net.minecraft.block.BlockStoneBrick;
 import net.minecraft.init.Blocks;
 
@@ -31,10 +31,10 @@ public class ThemeJungle extends ThemeBase{
 		MetaBlock pillar2 = Log.getLog(Log.JUNGLE);
 		
 		BlockJumble stairJumble = new BlockJumble();
-		stairJumble.addBlock(new MetaBlock(WorldGenPrimitive.blockOrientation(stair, Cardinal.NORTH, false)));
-		stairJumble.addBlock(new MetaBlock(WorldGenPrimitive.blockOrientation(stair, Cardinal.SOUTH, false)));
-		stairJumble.addBlock(new MetaBlock(WorldGenPrimitive.blockOrientation(stair, Cardinal.WEST, false)));
-		stairJumble.addBlock(new MetaBlock(WorldGenPrimitive.blockOrientation(stair, Cardinal.EAST, false)));
+		stairJumble.addBlock(new MetaBlock(Blocks.stone_stairs.getDefaultState().withProperty(BlockStairs.FACING, Cardinal.getFacing(Cardinal.NORTH))));
+		stairJumble.addBlock(new MetaBlock(Blocks.stone_stairs.getDefaultState().withProperty(BlockStairs.FACING, Cardinal.getFacing(Cardinal.SOUTH))));
+		stairJumble.addBlock(new MetaBlock(Blocks.stone_stairs.getDefaultState().withProperty(BlockStairs.FACING, Cardinal.getFacing(Cardinal.EAST))));
+		stairJumble.addBlock(new MetaBlock(Blocks.stone_stairs.getDefaultState().withProperty(BlockStairs.FACING, Cardinal.getFacing(Cardinal.WEST))));
 		
 		BlockWeightedRandom floor = new BlockWeightedRandom();
 		floor.addBlock(stairJumble, 1);

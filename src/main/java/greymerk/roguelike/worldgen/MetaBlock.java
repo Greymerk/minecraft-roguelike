@@ -11,6 +11,7 @@ import net.minecraft.world.World;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 public class MetaBlock extends BlockFactoryBase implements IBlockState{
 
@@ -33,7 +34,12 @@ public class MetaBlock extends BlockFactoryBase implements IBlockState{
 	}
 	
 	public MetaBlock(JsonElement e){
-		
+		JsonObject json = (JsonObject)e;
+		String name = json.get("name").getAsString();
+		Block block = (Block) Block.blockRegistry.getObject(name);
+		int meta = json.has("meta") ? json.get("meta").getAsInt() : 0;
+		this.state = new MetaBlock(block.getStateFromMeta(meta));
+		flag = json.has("flag") ? json.get("flag").getAsInt() : 2;
 	}
 	
 	public void setState(IBlockState state){

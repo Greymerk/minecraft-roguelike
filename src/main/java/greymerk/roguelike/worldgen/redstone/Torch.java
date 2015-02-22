@@ -10,13 +10,18 @@ import net.minecraft.world.World;
 
 public enum Torch {
 
-	REDSTONE, WOODEN;
+	REDSTONE, WOODEN, REDSTONE_UNLIT;
 	
 	public static void generate(World world, Torch type, Cardinal dir, Coord pos){
 		
-		Block name = type == REDSTONE ? Blocks.redstone_torch : Blocks.torch; 
+		Block name;
 		
-		
+		switch(type){
+		case WOODEN: name = Blocks.torch; break;
+		case REDSTONE: name = Blocks.redstone_torch; break;
+		case REDSTONE_UNLIT: name = Blocks.unlit_redstone_torch; break;
+		default: name = Blocks.torch; break;
+		}		
 		
 		int meta;
 		switch(dir){

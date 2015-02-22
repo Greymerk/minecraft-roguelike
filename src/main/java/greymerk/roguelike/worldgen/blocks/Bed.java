@@ -3,7 +3,6 @@ package greymerk.roguelike.worldgen.blocks;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
-import net.minecraft.block.BlockBed;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 
