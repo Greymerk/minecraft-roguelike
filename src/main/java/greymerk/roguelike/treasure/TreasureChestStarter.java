@@ -63,7 +63,7 @@ public class TreasureChestStarter extends TreasureChestBase{
 		
 		String page2 = 
 				"Roguelike Dungeons v" + Roguelike.version + "\n" +
-				"Feb 16th 2015\n\n" + 
+				"Mar 7th 2015\n\n" + 
 				"Credits\n\n" +
 				"Author: Greymerk\n\n" +
 				"Bits: Drainedsoul\n\n" +
