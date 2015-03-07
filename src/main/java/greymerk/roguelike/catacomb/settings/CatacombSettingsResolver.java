@@ -121,15 +121,11 @@ public class CatacombSettingsResolver {
 		CatacombSettings builtin = this.getBuiltin(world, rand, pos);
 		CatacombSettings custom = this.getCustom(world, rand, pos);
 		
-		if(custom != null && builtin != null){
-			return new CatacombSettings(this.base, new CatacombSettings(builtin, custom));
-		}
-		
 		if(custom != null){
 			return new CatacombSettings(this.base, custom);
 		}
 		
-		if(builtin != null){
+		if(builtin != null && RogueConfig.getBoolean(RogueConfig.DONOVELTYSPAWN)){
 			return new CatacombSettings(this.base, builtin);
 		}
 		
@@ -144,8 +140,7 @@ public class CatacombSettingsResolver {
 
 		for(CatacombSettings setting : this.builtin){
 			if(setting.isValid(world, pos)){
-				int weight = setting.criteria.weight;
-				settingsRandomizer.add(new WeightedChoice<CatacombSettings>(setting, weight));
+				settingsRandomizer.add(new WeightedChoice<CatacombSettings>(setting, setting.criteria.weight));
 			}
 		}
 		

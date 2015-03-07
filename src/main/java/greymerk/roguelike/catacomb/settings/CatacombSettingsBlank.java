@@ -5,7 +5,7 @@ import java.util.HashMap;
 public class CatacombSettingsBlank extends CatacombSettings{
 	
 	public CatacombSettingsBlank(){
-		this.numLevels = CatacombSettings.MAX_NUM_LEVELS;
+		this.depth = CatacombSettings.MAX_NUM_LEVELS;
 		
 		levels = new HashMap<Integer, CatacombLevelSettings>();
 		

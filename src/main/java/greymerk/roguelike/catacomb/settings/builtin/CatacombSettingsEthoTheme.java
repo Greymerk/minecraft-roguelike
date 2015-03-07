@@ -28,7 +28,7 @@ public class CatacombSettingsEthoTheme extends CatacombSettings{
 	
 	public CatacombSettingsEthoTheme(){
 		
-		this.numLevels = 1;
+		this.depth = 1;
 		
 		this.criteria = new SpawnCriteria();
 		List<BiomeDictionary.Type> biomes = new ArrayList<BiomeDictionary.Type>();

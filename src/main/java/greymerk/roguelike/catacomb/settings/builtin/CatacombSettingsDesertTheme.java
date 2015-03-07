@@ -27,7 +27,7 @@ public class CatacombSettingsDesertTheme extends CatacombSettings{
 	
 	public CatacombSettingsDesertTheme(){
 		
-		this.numLevels = 1;
+		this.depth = 1;
 		
 		this.criteria = new SpawnCriteria();
 		List<BiomeDictionary.Type> biomes = new ArrayList<BiomeDictionary.Type>();

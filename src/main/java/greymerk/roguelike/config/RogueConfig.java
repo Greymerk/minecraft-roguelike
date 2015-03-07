@@ -11,7 +11,7 @@ import net.minecraft.util.Tuple;
 public enum RogueConfig {
 
 	DONATURALSPAWN, LEVELRANGE, LEVELMAXROOMS, LEVELSCATTER, SPAWNFREQUENCY, GENEROUS, MOBDROPS, DIMENSIONWL, DIMENSIONBL, 
-	PRECIOUSBLOCKS, LOOTING;
+	PRECIOUSBLOCKS, LOOTING, DONOVELTYSPAWN;
 	
 	public static final String configDirName = "config/roguelike_dungeons";
 	public static final String configFileName = "roguelike.cfg";
@@ -25,6 +25,7 @@ public enum RogueConfig {
 	public static String getName(RogueConfig option){
 		switch(option){
 		case DONATURALSPAWN: return "doNaturalSpawn";
+		case DONOVELTYSPAWN: return "doNoveltySpawn";
 		case LEVELRANGE: return "levelRange";
 		case LEVELMAXROOMS: return "levelMaxRooms";
 		case LEVELSCATTER: return "levelScatter";
@@ -41,6 +42,7 @@ public enum RogueConfig {
 	public static Tuple getDefault(RogueConfig option){
 		switch(option){
 		case DONATURALSPAWN: return new Tuple(getName(option), true);
+		case DONOVELTYSPAWN: return new Tuple(getName(option), true);
 		case LEVELRANGE: return new Tuple(getName(option), 80);
 		case LEVELMAXROOMS: return new Tuple(getName(option), 30);
 		case LEVELSCATTER: return new Tuple(getName(option), 10);
@@ -61,6 +63,7 @@ public enum RogueConfig {
 	@SuppressWarnings("unchecked")
 	private static void setDefaults(){
 		if(!instance.ContainsKey(getName(DONATURALSPAWN))) setBoolean(DONATURALSPAWN, (Boolean)getDefault(DONATURALSPAWN).getSecond());
+		if(!instance.ContainsKey(getName(DONOVELTYSPAWN))) setBoolean(DONOVELTYSPAWN, (Boolean)getDefault(DONOVELTYSPAWN).getSecond());
 		if(!instance.ContainsKey(getName(LEVELRANGE)))setInt(LEVELRANGE, (Integer)getDefault(LEVELRANGE).getSecond());
 		if(!instance.ContainsKey(getName(LEVELMAXROOMS)))setInt(LEVELMAXROOMS, (Integer)getDefault(LEVELMAXROOMS).getSecond());
 		if(!instance.ContainsKey(getName(LEVELSCATTER)))setInt(LEVELSCATTER, (Integer)getDefault(LEVELSCATTER).getSecond());
