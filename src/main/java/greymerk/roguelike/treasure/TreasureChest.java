@@ -58,6 +58,10 @@ public enum TreasureChest {
 		generate(world, rand, settings, pos, settings.getDifficulty(pos), false);
 	}
 	
+	public static void generate(World world, Random rand, CatacombLevelSettings settings, Coord pos, TreasureChest type, boolean trapped){
+		generate(world, rand, settings, pos, settings.getDifficulty(pos), trapped);
+	}
+	
 	public static void generate(World world, Random rand, CatacombLevelSettings settings, Coord pos, TreasureChest type){
 		generate(world, rand, settings, pos, type, Catacomb.getLevel(pos.getY()), false);
 	}

@@ -12,19 +12,21 @@ import java.util.List;
 
 import net.minecraftforge.common.BiomeDictionary;
 
-public class CatacombSettingsJungleTheme extends CatacombSettings{
+public class CatacombSettingsMountainTheme extends CatacombSettings{
 	
-	public CatacombSettingsJungleTheme(){
+	public CatacombSettingsMountainTheme(){
+		
+		this.depth = 3;
 		
 		this.criteria = new SpawnCriteria();
 		List<BiomeDictionary.Type> biomes = new ArrayList<BiomeDictionary.Type>();
-		biomes.add(BiomeDictionary.Type.JUNGLE);
-		this.criteria.setWeight(3);
+		biomes.add(BiomeDictionary.Type.MOUNTAIN);
+		this.criteria.setWeight(7);
 		this.criteria.setBiomeTypes(biomes);
 		
-		this.towerSettings = new CatacombTowerSettings(Tower.ROGUE, Theme.getTheme(Theme.JUNGLE));
+		this.towerSettings = new CatacombTowerSettings(Tower.ROGUE, Theme.getTheme(Theme.OAK));
 		
-		Theme[] themes = {Theme.JUNGLE, Theme.JUNGLE, Theme.MOSSY, Theme.MOSSY, Theme.NETHER};
+		Theme[] themes = {Theme.ENIKO, Theme.ENIKO2, Theme.CRYPT, Theme.MOSSY, Theme.NETHER};
 		
 		for(int i = 0; i < 5; ++i){
 			CatacombLevelSettings level = new CatacombLevelSettings();
@@ -32,6 +34,4 @@ public class CatacombSettingsJungleTheme extends CatacombSettings{
 			levels.put(i, level);
 		}
 	}
-
-	
 }
