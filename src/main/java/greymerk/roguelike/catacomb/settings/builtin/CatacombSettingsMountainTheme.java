@@ -16,12 +16,10 @@ public class CatacombSettingsMountainTheme extends CatacombSettings{
 	
 	public CatacombSettingsMountainTheme(){
 		
-		this.depth = 3;
-		
 		this.criteria = new SpawnCriteria();
 		List<BiomeDictionary.Type> biomes = new ArrayList<BiomeDictionary.Type>();
 		biomes.add(BiomeDictionary.Type.MOUNTAIN);
-		this.criteria.setWeight(7);
+		this.criteria.setWeight(5);
 		this.criteria.setBiomeTypes(biomes);
 		
 		this.towerSettings = new CatacombTowerSettings(Tower.ROGUE, Theme.getTheme(Theme.OAK));

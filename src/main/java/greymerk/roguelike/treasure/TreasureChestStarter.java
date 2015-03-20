@@ -55,15 +55,18 @@ public class TreasureChestStarter extends TreasureChestBase{
 		ItemStack book = new ItemStack(Items.written_book);
 		
 		book.setTagInfo("author", new NBTTagString("Greymerk"));
-		book.setTagInfo("title", new NBTTagString("Versions"));
+		book.setTagInfo("title", new NBTTagString("Collective Nouns"));
 		
 		String page1 = 
-				"Just when you thought it was safe to upgrade to 1.8\n\n" +
-				"- Greymerk\n\n";
+				"Stumble of Zombies\n" +
+				"Rattle of Skeletons\n" +
+				"Clutter of Spiders\n" +
+				"Grief of Creepers\n\n" +
+				"- Greymerk\n";
 		
 		String page2 = 
 				"Roguelike Dungeons v" + Roguelike.version + "\n" +
-				"Mar 16th 2015\n\n" + 
+				"Mar 17th 2015\n\n" + 
 				"Credits\n\n" +
 				"Author: Greymerk\n\n" +
 				"Bits: Drainedsoul\n\n" +

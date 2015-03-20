@@ -10,9 +10,11 @@ public class ThemeMuddy extends ThemeBase{
 	public ThemeMuddy(){
 	
 		BlockWeightedRandom floor = new BlockWeightedRandom();
-		floor.addBlock(new MetaBlock(Blocks.flowing_water), 10);
+		floor.addBlock(new MetaBlock(Blocks.dirt), 4);
+		floor.addBlock(new MetaBlock(Blocks.gravel), 4);
 		floor.addBlock(new MetaBlock(Blocks.clay), 3);
-		floor.addBlock(new MetaBlock(Blocks.dirt), 1);
+		floor.addBlock(new MetaBlock(Blocks.soul_sand), 1);
+		floor.addBlock(new MetaBlock(Blocks.flowing_water), 1);
 		
 		BlockWeightedRandom walls = new BlockWeightedRandom();
 		walls.addBlock(new MetaBlock(Blocks.cobblestone), 50);
