@@ -143,18 +143,20 @@ public class Catacomb {
 	}
 	
 	public static boolean validLocation(World world, Random rand, int x, int z){
+		int upperLimit = RogueConfig.getInt(RogueConfig.UPPERLIMIT);
+		int lowerLimit = RogueConfig.getInt(RogueConfig.LOWERLIMIT);
 		
-		if(!WorldGenPrimitive.isAirBlock(world, new Coord(x, 100, z))){
+		if(!WorldGenPrimitive.isAirBlock(world, new Coord(x, upperLimit, z))){
 			return false;
 		}
 		
-		int y = 100;
+		int y = upperLimit;
 		
-		while(!WorldGenPrimitive.getBlock(world, new Coord(x, y, z)).getBlock().getMaterial().isOpaque() && y > 50){
+		while(!WorldGenPrimitive.getBlock(world, new Coord(x, y, z)).getBlock().getMaterial().isOpaque() && y > lowerLimit){
 			--y;
 		}
 		
-		if(y < 60){
+		if(y < lowerLimit){
 			return false;
 		}
 		
