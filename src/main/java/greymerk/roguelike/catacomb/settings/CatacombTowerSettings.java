@@ -25,7 +25,7 @@ public class CatacombTowerSettings {
 		this.theme = data.has("theme") ? Theme.create(data.get("theme").getAsJsonObject()) : new ThemeOak();
 
 	}
-
+	
 	public ITheme getTheme(){
 		return this.theme;
 	}

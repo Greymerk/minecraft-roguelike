@@ -4,13 +4,18 @@ import greymerk.roguelike.catacomb.settings.builtin.CatacombSettingsBasicLoot;
 import greymerk.roguelike.catacomb.settings.builtin.CatacombSettingsDesertTheme;
 import greymerk.roguelike.catacomb.settings.builtin.CatacombSettingsEniTheme;
 import greymerk.roguelike.catacomb.settings.builtin.CatacombSettingsEthoTheme;
+import greymerk.roguelike.catacomb.settings.builtin.CatacombSettingsForestTheme;
 import greymerk.roguelike.catacomb.settings.builtin.CatacombSettingsJungleTheme;
+import greymerk.roguelike.catacomb.settings.builtin.CatacombSettingsMountainTheme;
+import greymerk.roguelike.catacomb.settings.builtin.CatacombSettingsPyramidTheme;
 import greymerk.roguelike.catacomb.settings.builtin.CatacombSettingsRooms;
 import greymerk.roguelike.catacomb.settings.builtin.CatacombSettingsSecrets;
 import greymerk.roguelike.catacomb.settings.builtin.CatacombSettingsSegments;
 import greymerk.roguelike.catacomb.settings.builtin.CatacombSettingsSize;
 import greymerk.roguelike.catacomb.settings.builtin.CatacombSettingsSwampTheme;
+import greymerk.roguelike.catacomb.settings.builtin.CatacombSettingsTempleTheme;
 import greymerk.roguelike.catacomb.settings.builtin.CatacombSettingsTheme;
+import greymerk.roguelike.catacomb.settings.builtin.CatacombSettingsWitchTheme;
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.util.WeightedChoice;
 import greymerk.roguelike.util.WeightedRandomizer;
@@ -53,10 +58,15 @@ public class CatacombSettingsResolver {
 
 		this.builtin = new ArrayList<CatacombSettings>();
 		this.builtin.add(new CatacombSettingsDesertTheme());
+		this.builtin.add(new CatacombSettingsPyramidTheme());
 		this.builtin.add(new CatacombSettingsJungleTheme());
+		this.builtin.add(new CatacombSettingsTempleTheme());
 		this.builtin.add(new CatacombSettingsSwampTheme());
+		this.builtin.add(new CatacombSettingsWitchTheme());
 		this.builtin.add(new CatacombSettingsEniTheme());
+		this.builtin.add(new CatacombSettingsMountainTheme());
 		this.builtin.add(new CatacombSettingsEthoTheme());
+		this.builtin.add(new CatacombSettingsForestTheme());
 		
 		File settingsDir = new File(SETTINGS_DIRECTORY);
 		if(!settingsDir.exists() || !settingsDir.isDirectory()) return;
@@ -121,15 +131,11 @@ public class CatacombSettingsResolver {
 		CatacombSettings builtin = this.getBuiltin(world, rand, pos);
 		CatacombSettings custom = this.getCustom(world, rand, pos);
 		
-		if(custom != null && builtin != null){
-			return new CatacombSettings(this.base, new CatacombSettings(builtin, custom));
-		}
-		
 		if(custom != null){
 			return new CatacombSettings(this.base, custom);
 		}
 		
-		if(builtin != null){
+		if(builtin != null && RogueConfig.getBoolean(RogueConfig.DONOVELTYSPAWN)){
 			return new CatacombSettings(this.base, builtin);
 		}
 		
@@ -144,8 +150,7 @@ public class CatacombSettingsResolver {
 
 		for(CatacombSettings setting : this.builtin){
 			if(setting.isValid(world, pos)){
-				int weight = setting.criteria.weight;
-				settingsRandomizer.add(new WeightedChoice<CatacombSettings>(setting, weight));
+				settingsRandomizer.add(new WeightedChoice<CatacombSettings>(setting, setting.criteria.weight));
 			}
 		}
 		
