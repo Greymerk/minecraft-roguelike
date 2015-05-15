@@ -69,7 +69,7 @@ public class SegmentChest extends SegmentBase {
 		Coord below = new Coord(shelf);
 		shelf.add(Cardinal.UP, 1);
 		
-		if(WorldGenPrimitive.isAirBlock(world, below)) return;	
+		if(world.isAirBlock(below)) return;	
 		
 		boolean trapped = Catacomb.getLevel(y) == 3 && rand.nextInt(3) == 0;
 		TreasureChest.generate(world, rand, level.getSettings(), shelf, Catacomb.getLevel(y), trapped);

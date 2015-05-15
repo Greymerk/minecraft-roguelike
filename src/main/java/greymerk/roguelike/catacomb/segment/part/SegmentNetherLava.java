@@ -33,7 +33,7 @@ public class SegmentNetherLava extends SegmentBase {
 		air.setBlock(world, cursor);
 		cursor = new Coord(x, y, z);
 		cursor.add(dir, 5);
-		boolean isAir = WorldGenPrimitive.isAirBlock(world, cursor);
+		boolean isAir = world.isAirBlock(cursor);
 		boolean isLava = true; //rand.nextInt(5) == 0;
 		IBlockFactory wall = theme.getSecondaryWall();
 		

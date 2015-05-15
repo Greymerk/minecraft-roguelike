@@ -5,7 +5,6 @@ import greymerk.roguelike.catacomb.segment.ISegment;
 import greymerk.roguelike.catacomb.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
-import greymerk.roguelike.worldgen.WorldGenPrimitive;
 
 import java.util.Random;
 
@@ -31,20 +30,20 @@ public abstract class SegmentBase implements ISegment {
 		
 		switch(wallDirection){
 		case NORTH:
-			if(WorldGenPrimitive.isAirBlock(world, new Coord(x - 1, y + 1, z - 2))) return false;
-			if(WorldGenPrimitive.isAirBlock(world, new Coord(x + 1, y + 1, z - 2))) return false;
+			if(world.isAirBlock(new Coord(x - 1, y + 1, z - 2))) return false;
+			if(world.isAirBlock(new Coord(x + 1, y + 1, z - 2))) return false;
 			break;
 		case SOUTH:
-			if(WorldGenPrimitive.isAirBlock(world, new Coord(x - 1, y + 1, z + 2))) return false;
-			if(WorldGenPrimitive.isAirBlock(world, new Coord(x + 1, y + 1, z + 2))) return false;
+			if(world.isAirBlock(new Coord(x - 1, y + 1, z + 2))) return false;
+			if(world.isAirBlock(new Coord(x + 1, y + 1, z + 2))) return false;
 			break;
 		case EAST:
-			if(WorldGenPrimitive.isAirBlock(world, new Coord(x + 2, y + 1, z - 1))) return false;
-			if(WorldGenPrimitive.isAirBlock(world, new Coord(x + 2, y + 1, z + 1))) return false;
+			if(world.isAirBlock(new Coord(x + 2, y + 1, z - 1))) return false;
+			if(world.isAirBlock(new Coord(x + 2, y + 1, z + 1))) return false;
 			break;
 		case WEST:
-			if(WorldGenPrimitive.isAirBlock(world, new Coord(x - 2, y + 1, z - 1))) return false;
-			if(WorldGenPrimitive.isAirBlock(world, new Coord(x - 2, y + 1, z + 1))) return false;
+			if(world.isAirBlock(new Coord(x - 2, y + 1, z - 1))) return false;
+			if(world.isAirBlock(new Coord(x - 2, y + 1, z + 1))) return false;
 			break;
 		}
 		

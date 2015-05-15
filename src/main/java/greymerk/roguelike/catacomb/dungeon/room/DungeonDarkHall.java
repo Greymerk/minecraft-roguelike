@@ -208,7 +208,7 @@ public class DungeonDarkHall extends DungeonBase{
 		cursor.add(Cardinal.UP);
 		WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(dir), false).setBlock(world, cursor);
 		cursor.add(dir);
-		if(WorldGenPrimitive.isAirBlock(world, cursor)){
+		if(world.isAirBlock(cursor)){
 			WorldGenPrimitive.blockOrientation(stair, dir, true).setBlock(world, cursor);	
 		} else {
 			wall.setBlock(world, rand, cursor);

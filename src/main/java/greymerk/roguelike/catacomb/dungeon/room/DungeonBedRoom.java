@@ -189,7 +189,7 @@ public class DungeonBedRoom implements IDungeon {
 		end.add(Cardinal.UP, 3);
 		
 		for(Coord c : WorldGenPrimitive.getRectHollow(start, end)){
-			if(WorldGenPrimitive.isAirBlock(world, c)) return false;
+			if(world.isAirBlock(c)) return false;
 		}
 		
 		return true;

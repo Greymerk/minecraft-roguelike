@@ -227,7 +227,7 @@ public class RogueTower implements ITower{
 		
 		WorldGenPrimitive.setBlock(world, rand, cursor, blocks, true, true);
 		
-		if(WorldGenPrimitive.isAirBlock(world, cursor)) return;
+		if(world.isAirBlock(cursor)) return;
 
 		cursor.add(Cardinal.UP, 1);
 		WorldGenPrimitive.setBlock(world, rand, cursor, new MetaBlock(Blocks.torch), true, true);

@@ -24,13 +24,12 @@ public class WorldGenPrimitive {
 		if(currentBlock.getBlock() == Blocks.trapped_chest) return false;
 		if(currentBlock.getBlock() == Blocks.mob_spawner) return false;
 		
-		boolean isAir = WorldGenPrimitive.isAirBlock(world, pos);
+		boolean isAir = world.isAirBlock(pos);
 		
 		if(!fillAir && isAir) return false;
 		if(!replaceSolid && !isAir)	return false;
 		
-		BlockPos p = pos.getBlockPos();
-		world.setBlockState(p, block, flags);
+		world.setBlockState(pos, block, flags);
 		return true;
 		
 	}
@@ -210,7 +209,7 @@ public class WorldGenPrimitive {
         			for (Cardinal dir : Cardinal.directions){
         				Coord pos = new Coord(x, y, z);
         				
-	        			if(WorldGenPrimitive.isAirBlock(world, pos)){
+	        			if(world.isAirBlock(pos)){
 	        				
 	        				if(rand.nextBoolean()){
 	        					continue;
@@ -249,18 +248,11 @@ public class WorldGenPrimitive {
 	}
 	
 	public static MetaBlock getBlock(World world, Coord pos){
-		BlockPos p = pos.getBlockPos();
-		return new MetaBlock(world.getBlockState(p));
+		return new MetaBlock(world.getBlockState(pos));
 	}
 	
 	public static TileEntity getTileEntity(World world, Coord pos){
-		BlockPos p = pos.getBlockPos();
-		return world.getTileEntity(p);
-	}
-	
-	public static boolean isAirBlock(World world, Coord pos){
-		BlockPos p = pos.getBlockPos();
-		return world.isAirBlock(p);
+		return world.getTileEntity(pos);
 	}
 	
 	public static void setBlock(World world, int x, int y, int z, Block block){

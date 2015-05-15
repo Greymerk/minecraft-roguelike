@@ -32,7 +32,7 @@ public class SegmentNetherStripes extends SegmentBase {
 		WorldGenPrimitive.setBlock(world, rand, cursor, air, true, true);
 		cursor = new Coord(x, y, z);
 		cursor.add(dir, 5);
-		boolean isAir = WorldGenPrimitive.isAirBlock(world, cursor);
+		boolean isAir = world.isAirBlock(cursor);
 		boolean isLava = rand.nextInt(5) == 0;
 
 		

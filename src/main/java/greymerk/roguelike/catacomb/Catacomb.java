@@ -146,7 +146,7 @@ public class Catacomb {
 		int upperLimit = RogueConfig.getInt(RogueConfig.UPPERLIMIT);
 		int lowerLimit = RogueConfig.getInt(RogueConfig.LOWERLIMIT);
 		
-		if(!WorldGenPrimitive.isAirBlock(world, new Coord(x, upperLimit, z))){
+		if(!world.isAirBlock(new Coord(x, upperLimit, z))){
 			return false;
 		}
 		

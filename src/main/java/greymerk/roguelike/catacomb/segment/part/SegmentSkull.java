@@ -69,7 +69,7 @@ public class SegmentSkull extends SegmentBase {
 		Coord below = new Coord(shelf);
 		shelf.add(Cardinal.UP, 1);
 
-		if(WorldGenPrimitive.isAirBlock(world, below)) return;
+		if(world.isAirBlock(below)) return;
 		
 		Skull type;
 		if(rand.nextInt(5) == 0){

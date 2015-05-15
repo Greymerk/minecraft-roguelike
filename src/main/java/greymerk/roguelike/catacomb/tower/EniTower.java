@@ -372,7 +372,7 @@ public class EniTower implements ITower {
 			cursor = new Coord(floor);
 			cursor.add(Cardinal.UP);
 			cursor.add(dir, 6);
-			if(WorldGenPrimitive.isAirBlock(world, cursor)){
+			if(world.isAirBlock(cursor)){
 				cursor = new Coord(floor);
 				cursor.add(Cardinal.UP);
 				cursor.add(dir, 5);

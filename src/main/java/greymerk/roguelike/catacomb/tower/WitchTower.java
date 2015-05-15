@@ -339,7 +339,7 @@ public class WitchTower implements ITower {
 		for(Cardinal dir : Cardinal.directions){
 			cursor = new Coord(main);
 			cursor.add(dir, 4);
-			if(WorldGenPrimitive.isAirBlock(world, cursor)){
+			if(world.isAirBlock(cursor)){
 				cursor = new Coord(main);
 				cursor.add(dir, 3);
 				Door.generate(world, cursor, dir, Door.OAK);
