@@ -115,7 +115,7 @@ public class SpawnCriteria {
 		
 		boolean biomeFound = false;
 		
-		BiomeGenBase biome = world.getBiomeGenForCoords(pos);
+		BiomeGenBase biome = world.getBiomeGenForCoords(pos.getBlockPos());
 		
 		if(this.biomes != null){
 			if(this.biomes.contains(biome.biomeName)) biomeFound = true;

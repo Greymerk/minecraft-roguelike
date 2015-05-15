@@ -53,7 +53,7 @@ public class SilverfishNest implements IAlcove{
 		List<Coord> toCheck = WorldGenPrimitive.getRectSolid(x - 2, y + 1, z - 2, x + 2, y + 1, z + 2);
 
 		for(Coord c : toCheck){
-			if (world.isAirBlock(c)) return false;
+			if (world.isAirBlock(c.getBlockPos())) return false;
 		}
 		
 		return true;

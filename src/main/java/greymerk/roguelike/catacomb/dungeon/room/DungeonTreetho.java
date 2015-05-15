@@ -164,7 +164,7 @@ public class DungeonTreetho extends DungeonBase{
 		for (Cardinal dir : Cardinal.directions){
 			cursor = new Coord(origin);
 			cursor.add(dir);
-			if(world.isAirBlock(cursor)){
+			if(world.isAirBlock(cursor.getBlockPos())){
 				WorldGenPrimitive.blockOrientation(stair, dir, true).setBlock(world, cursor);
 			}
 		}

@@ -121,7 +121,7 @@ public class DungeonsPit extends DungeonBase {
 			for(int z = originZ - 2; z <= originZ + 2; z++){
 				for(int y = originY - 1; y > 0; y--){
 					
-					if(world.isAirBlock(new Coord(x, y, z))){
+					if(world.isAirBlock(new Coord(x, y, z).getBlockPos())){
 						continue;
 					}
 					
@@ -175,7 +175,7 @@ public class DungeonsPit extends DungeonBase {
 		List<Coord> box = WorldGenPrimitive.getRectHollow(start, end);
 		
 		for(Coord cell : box){
-			if(world.isAirBlock(cell)) return;
+			if(world.isAirBlock(cell.getBlockPos())) return;
 			walls.setBlock(world, rand, cell);
 		}
 		

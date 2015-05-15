@@ -61,7 +61,7 @@ public class SegmentMossyArch extends SegmentBase {
 			WorldGenPrimitive.fillRectSolid(world, rand, x, y + 2, z, x, y + 5, z, new MetaBlock(Blocks.air));
 			WorldGenPrimitive.randomVines(world, rand, x, y + 3, z, x, y + 5, z);
 			
-			if(!world.isAirBlock(new Coord(x, y + 6, z))) WorldGenPrimitive.setBlock(world, x, y + 7, z, Blocks.flowing_water);
+			if(!world.isAirBlock(new Coord(x, y + 6, z).getBlockPos())) WorldGenPrimitive.setBlock(world, x, y + 7, z, Blocks.flowing_water);
 			spawnHoleSet = true;
 		}
 	}

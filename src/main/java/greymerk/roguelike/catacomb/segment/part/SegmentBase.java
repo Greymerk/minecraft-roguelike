@@ -30,20 +30,20 @@ public abstract class SegmentBase implements ISegment {
 		
 		switch(wallDirection){
 		case NORTH:
-			if(world.isAirBlock(new Coord(x - 1, y + 1, z - 2))) return false;
-			if(world.isAirBlock(new Coord(x + 1, y + 1, z - 2))) return false;
+			if(world.isAirBlock(new Coord(x - 1, y + 1, z - 2).getBlockPos())) return false;
+			if(world.isAirBlock(new Coord(x + 1, y + 1, z - 2).getBlockPos())) return false;
 			break;
 		case SOUTH:
-			if(world.isAirBlock(new Coord(x - 1, y + 1, z + 2))) return false;
-			if(world.isAirBlock(new Coord(x + 1, y + 1, z + 2))) return false;
+			if(world.isAirBlock(new Coord(x - 1, y + 1, z + 2).getBlockPos())) return false;
+			if(world.isAirBlock(new Coord(x + 1, y + 1, z + 2).getBlockPos())) return false;
 			break;
 		case EAST:
-			if(world.isAirBlock(new Coord(x + 2, y + 1, z - 1))) return false;
-			if(world.isAirBlock(new Coord(x + 2, y + 1, z + 1))) return false;
+			if(world.isAirBlock(new Coord(x + 2, y + 1, z - 1).getBlockPos())) return false;
+			if(world.isAirBlock(new Coord(x + 2, y + 1, z + 1).getBlockPos())) return false;
 			break;
 		case WEST:
-			if(world.isAirBlock(new Coord(x - 2, y + 1, z - 1))) return false;
-			if(world.isAirBlock(new Coord(x - 2, y + 1, z + 1))) return false;
+			if(world.isAirBlock(new Coord(x - 2, y + 1, z - 1).getBlockPos())) return false;
+			if(world.isAirBlock(new Coord(x - 2, y + 1, z + 1).getBlockPos())) return false;
 			break;
 		}
 		

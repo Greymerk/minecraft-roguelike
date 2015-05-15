@@ -71,7 +71,7 @@ public class SegmentGeneratorBase implements ISegmentGenerator{
 	}
 	
 	private void addSupport(World world, Random rand, ITheme theme, int x, int y, int z){
-		if(!world.isAirBlock(new Coord(x, y - 2, z))) return;
+		if(!world.isAirBlock(new Coord(x, y - 2, z).getBlockPos())) return;
 		
 		WorldGenPrimitive.fillDown(world, rand, new Coord(x, y - 2, z), theme.getPrimaryPillar());
 		

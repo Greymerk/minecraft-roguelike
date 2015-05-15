@@ -258,7 +258,7 @@ public class DungeonFirework implements IDungeon {
 		end.add(Cardinal.UP, 3);
 		
 		for(Coord c : WorldGenPrimitive.getRectHollow(start, end)){
-			if(world.isAirBlock(c)) return false;
+			if(world.isAirBlock(c.getBlockPos())) return false;
 		}
 		
 		return true;

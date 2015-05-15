@@ -132,7 +132,7 @@ public class EthoTower implements ITower {
 		for(Cardinal dir : Cardinal.directions){
 			cursor = new Coord(floor);
 			cursor.add(dir, 6);
-			if(world.isAirBlock(cursor)){
+			if(world.isAirBlock(cursor.getBlockPos())){
 				front = dir;
 				break;
 			}

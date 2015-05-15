@@ -4,21 +4,19 @@ import net.minecraft.util.BlockPos;
 
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-public class Coord extends BlockPos{
+public class Coord{
 
 	private int x;
 	private int y;
 	private int z;
 	
 	public Coord(int x, int y, int z){
-		super(x, y, z);
 		this.x = x;
 		this.y = y;
 		this.z = z;
 	}
 	
 	public Coord(Coord toClone){
-		super(toClone.x, toClone.y, toClone.z);
 		this.x = toClone.x;
 		this.y = toClone.y;
 		this.z = toClone.z;
@@ -114,5 +112,9 @@ public class Coord extends BlockPos{
 		toReturn += "y: " + y + " ";
 		toReturn += "z: " + z;
 		return toReturn;
+	}
+	
+	public BlockPos getBlockPos(){
+		return new BlockPos(this.x, this.y, this.z);
 	}
 }

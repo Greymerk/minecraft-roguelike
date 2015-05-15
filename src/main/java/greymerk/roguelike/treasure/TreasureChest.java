@@ -170,7 +170,7 @@ public enum TreasureChest {
 
 	public static boolean isValidChestSpace(World world, Coord pos) {
 
-		if (!world.isAirBlock(pos)) {
+		if (!world.isAirBlock(pos.getBlockPos())) {
 			return false;
 		}
 		

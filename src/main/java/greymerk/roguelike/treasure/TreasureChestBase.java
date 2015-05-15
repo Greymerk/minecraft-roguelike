@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Random;
 
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.world.World;
@@ -50,7 +51,7 @@ public abstract class TreasureChestBase implements ITreasureChest, Iterable<Inve
 		}
 		
 		chest = (TileEntityChest) WorldGenPrimitive.getTileEntity(world, pos);
-		
+
 		try{
 			
 			fillChest(chest, loot, level);

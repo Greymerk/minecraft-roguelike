@@ -170,7 +170,7 @@ public class DungeonsNetherBrickFortress extends DungeonBase {
 			int y = block.getY();
 			int z = block.getZ();
 			
-			if(rand.nextBoolean() && world.isAirBlock(new Coord(x, y + 1, z))){
+			if(rand.nextBoolean() && world.isAirBlock(new Coord(x, y + 1, z).getBlockPos())){
 				WorldGenPrimitive.setBlock(world, x, y, z, sand);
 				if(rand.nextBoolean()){
 					WorldGenPrimitive.setBlock(world, x, y + 1, z, wart);
