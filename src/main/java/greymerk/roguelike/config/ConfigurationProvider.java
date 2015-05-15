@@ -3,9 +3,14 @@ package greymerk.roguelike.config;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
@@ -337,16 +342,23 @@ public abstract class ConfigurationProvider implements Iterable<Configuration> {
 	/**
 	 *	Fetches an iterator which may be used
 	 *	to traverse the configurations in this
-	 *	provider in an unspecified order.
+	 *	provider in alphabetical order.
 	 *
 	 *	\return
 	 *		An iterator.
 	 */
 	public Iterator<Configuration> iterator () {
-	
-		return new ConfigurationProviderIterator(kvp.entrySet().iterator());
+		Set<Map.Entry<String, String>> entries = new TreeSet<Map.Entry<String, String>>(new EntryAlphabetical());
+		entries.addAll(kvp.entrySet());
+		return new ConfigurationProviderIterator(entries.iterator());
 	
 	}
 
+	private class EntryAlphabetical implements Comparator<Map.Entry<String, String>>{
 
+		@Override
+		public int compare(Entry<String, String> thing, Entry<String, String> other) {
+			return thing.getKey().compareTo(other.getKey());
+		}		
+	}
 }

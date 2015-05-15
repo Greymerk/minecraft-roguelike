@@ -47,11 +47,10 @@ public class Coord{
 		}		
 	}
 	
-	public BlockPos add(int x, int y, int z){
+	public void add(int x, int y, int z){
 		this.x += x;
 		this.y += y;
 		this.z += z;
-		return new BlockPos(x, y, z);
 	}
 	
 	public void add(Coord other){
