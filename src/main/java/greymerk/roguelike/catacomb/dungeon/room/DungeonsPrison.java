@@ -11,6 +11,8 @@ import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.Spawner;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import net.minecraft.init.Blocks;
@@ -67,19 +69,32 @@ public class DungeonsPrison extends DungeonBase {
 		
 		WorldGenPrimitive.fillRectSolid(world, rand, x - 1, y + 4, z - 1, x + 1, y + 4, z + 1, blocks);
 		
-
+		List<Coord> cells = new ArrayList<Coord>();
+		cells.add(new Coord(x - 5, y, z - 5));
+		cells.add(new Coord(x - 5, y, z + 5));
+		cells.add(new Coord(x + 5, y, z - 5));
+		cells.add(new Coord(x + 5, y, z + 5));
 		
-		// create cells
-		createCell(x - 5, y, z - 5);
-		createCell(x - 5, y, z + 5);
-		createCell(x + 5, y, z - 5);
-		createCell(x + 5, y, z + 5);
+		for (Coord cell : cells){
+			createCell(cell);
+		}
+		
+		int numChests = 1;
+		if(rand.nextInt(5) == 0){
+			numChests += 1;
+		}
+		
+		TreasureChest.createChests(inWorld, inRandom, settings, numChests, cells);
 		
 		return false;
 	}
 	
 	
-	private void createCell(int inX, int inY, int inZ){
+	private void createCell(Coord cell){
+		
+		int inX = cell.getX();
+		int inY = cell.getY();
+		int inZ = cell.getZ();
 		
 		MetaBlock air = new MetaBlock(Blocks.air);
 		
@@ -146,11 +161,6 @@ public class DungeonsPrison extends DungeonBase {
 				break;
 			}
 		}
-		
-		if(rand.nextBoolean()){
-			TreasureChest.generate(world, rand, settings, new Coord(inX, inY, inZ));	
-		}
-		
 	}
 	
 	public int getSize(){

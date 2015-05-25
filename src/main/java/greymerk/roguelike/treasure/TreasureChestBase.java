@@ -56,7 +56,7 @@ public abstract class TreasureChestBase implements ITreasureChest, Iterable<Inve
 			
 			fillChest(chest, loot, level);
 			
-			int amount = RogueConfig.getBoolean(RogueConfig.GENEROUS) ? 12 : 6;
+			int amount = RogueConfig.getBoolean(RogueConfig.GENEROUS) ? 9 : 4;
 			
 			Iterator<InventorySlot> slots = this.iterator(); 
 			

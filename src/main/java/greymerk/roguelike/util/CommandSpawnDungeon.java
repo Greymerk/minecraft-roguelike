@@ -41,6 +41,8 @@ public class CommandSpawnDungeon extends CommandBase
 
 	public void processCommand(ICommandSender sender, String[] args){
 		
+		if(args.length == 0) return;
+		
 		if(args[0].equals("config")){
 			if(args[1].equals("reload")){
 				RogueConfig.reload(true);

@@ -20,7 +20,8 @@ public class ItemFood extends ItemBase{
 		
 		ItemNovelty[] items = {
 				ItemNovelty.GINGER,
-				ItemNovelty.CLEO
+				ItemNovelty.CLEO,
+				ItemNovelty.RLEAHY
 		};
 		
 		if(rank > 0 && rand.nextInt(500) == 0){
@@ -62,9 +63,11 @@ public class ItemFood extends ItemBase{
 			}
 			
 		case 1:
-			if(rand.nextInt(10) == 0) return new ItemStack(Items.melon, quantity);
+			if(rand.nextInt(20) == 0) return new ItemStack(Items.melon, quantity);
 			
 			if(rand.nextInt(5) == 0){
+				if(rand.nextInt(5) == 0) return new ItemStack(Items.cooked_mutton, quantity);
+				if(rand.nextInt(3) == 0) return new ItemStack(Items.rabbit_stew, quantity);
 				if(rand.nextBoolean()) return new ItemStack(Items.cooked_chicken, quantity);
 				return new ItemStack(Items.baked_potato, quantity);
 			}
