@@ -65,6 +65,7 @@ public class MetaBlock extends BlockFactoryBase implements IBlockState{
 		return this.state.getValue(property);
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public IBlockState withProperty(IProperty property, Comparable value) {
 		this.state = this.state.withProperty(property, value);
@@ -76,6 +77,7 @@ public class MetaBlock extends BlockFactoryBase implements IBlockState{
 		return this.state.cycleProperty(property);
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public ImmutableMap getProperties() {
 		return this.state.getProperties();
