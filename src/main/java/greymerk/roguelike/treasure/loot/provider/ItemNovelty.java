@@ -61,6 +61,7 @@ public enum ItemNovelty {
 	};
 		
 	public static ItemStack getItemByName(String name){
+		if(!names.containsKey(name)) return null;
 		return getItem(names.get(name));
 	}
 	
