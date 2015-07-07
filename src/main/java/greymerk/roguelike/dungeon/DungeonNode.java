@@ -11,22 +11,22 @@ import java.util.Random;
 
 import net.minecraft.world.World;
 
-public class CatacombNode {
+public class DungeonNode {
 
 	private World world;
 	private Random rand;
-	private CatacombLevel level;
-	private List<CatacombTunneler> tunnelers;
+	private DungeonLevel level;
+	private List<DungeonTunneler> tunnelers;
 	private Coord pos;
 	private IDungeonRoom toGenerate;
 	private Cardinal direction;
 	
-	public CatacombNode (World world, Random rand, CatacombLevel level, ITheme theme, Coord origin){
+	public DungeonNode (World world, Random rand, DungeonLevel level, ITheme theme, Coord origin){
 		this.world = world;
 		this.rand = rand;
 		this.level = level;
 		this.pos = new Coord(origin);
-		this.tunnelers = new ArrayList<CatacombTunneler>();
+		this.tunnelers = new ArrayList<DungeonTunneler>();
 		
 		this.direction = Cardinal.directions[rand.nextInt(Cardinal.directions.length)];
 		
@@ -36,7 +36,7 @@ public class CatacombNode {
 	}
 	
 
-	public CatacombNode (World world, Random rand, CatacombLevel level, ITheme theme, CatacombTunneler tunneler){
+	public DungeonNode (World world, Random rand, DungeonLevel level, ITheme theme, DungeonTunneler tunneler){
 		this.world = world;
 
 		this.level = level;
@@ -44,7 +44,7 @@ public class CatacombNode {
 		
 		this.rand = rand;
 		
-		this.tunnelers = new ArrayList<CatacombTunneler>();
+		this.tunnelers = new ArrayList<DungeonTunneler>();
 		
 		this.direction = Cardinal.reverse(tunneler.getDirection());
 		
@@ -62,20 +62,20 @@ public class CatacombNode {
 			}
 			
 			if(level.nodeCount() == 0 || tunnelers.isEmpty() || rand.nextBoolean()){
-				this.tunnelers.add(new CatacombTunneler(world, rand, this.level, dir, pos));
+				this.tunnelers.add(new DungeonTunneler(world, rand, this.level, dir, pos));
 			}
 		}
 	}
 	
 	public void update(){
-		for (CatacombTunneler tunneler : tunnelers){
+		for (DungeonTunneler tunneler : tunnelers){
 			tunneler.update();
 		}
 	}
 	
 	
 	public boolean isDone(){
-		for (CatacombTunneler tunneler : tunnelers){
+		for (DungeonTunneler tunneler : tunnelers){
 			if(!tunneler.isDone()){
 				return false;
 			}
@@ -86,14 +86,14 @@ public class CatacombNode {
 	
 	public void construct(World world){
 
-		for (CatacombTunneler tunneler : tunnelers){
+		for (DungeonTunneler tunneler : tunnelers){
 			if(tunneler.isDone()) tunneler.construct(world);
 		}
 	}
 	
 	public void segments(){
 
-		for (CatacombTunneler tunneler : tunnelers){
+		for (DungeonTunneler tunneler : tunnelers){
 			if(tunneler.isDone()) tunneler.addSegments(world);
 		}
 	}
@@ -117,7 +117,7 @@ public class CatacombNode {
 		
 		dirs.add(this.direction);
 		
-		for(CatacombTunneler tunneler : tunnelers){
+		for(DungeonTunneler tunneler : tunnelers){
 			if(tunneler.isDone()) dirs.add(tunneler.getDirection());
 		}
 		

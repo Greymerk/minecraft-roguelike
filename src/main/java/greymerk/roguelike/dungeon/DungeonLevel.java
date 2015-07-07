@@ -17,56 +17,47 @@ import java.util.Random;
 
 import net.minecraft.world.World;
 
-public class CatacombLevel {
+public class DungeonLevel implements IDungeonLevel{
 
 	private World world;
 	private Random rand;
-	private CatacombNode start;
-	private CatacombNode end;
-	private List<CatacombNode> nodes;
+	private DungeonNode start;
+	private DungeonNode end;
+	private List<DungeonNode> nodes;
 	private int originX;
 	private int originZ;
 
 	private ITheme theme;
 	private CatacombLevelSettings settings;
 	
-	public CatacombLevel(World world, Random rand, CatacombLevelSettings settings, Coord origin){
+	public DungeonLevel(World world, Random rand, CatacombLevelSettings settings, Coord origin){
 		this.world = world;
-		this.nodes = new ArrayList<CatacombNode>();
+		this.nodes = new ArrayList<DungeonNode>();
 
 		this.rand = rand;
 		this.settings = settings;
 		this.originX = origin.getX();
 		this.originZ = origin.getZ();
 		
-		start = new CatacombNode(world, rand, this, theme, new Coord(origin));
+		start = new DungeonNode(world, rand, this, theme, new Coord(origin));
 		nodes.add(start);
+		
+		while(!this.isDone()){
+			this.update();
+		}
 	}
 	
-	public CatacombLevel(World world, Random rand, CatacombLevelSettings settings, Coord origin, int maxNodes, int range){
-		this.world = world;
-		this.nodes = new ArrayList<CatacombNode>();
-		
-		this.rand = rand;
-		this.settings = settings;
-		this.originX = origin.getX();
-		this.originZ = origin.getZ();
-		
-		start = new CatacombNode(world, rand, this, theme, new Coord(origin));
-		nodes.add(start);
-	}
-	
-	public void generate(CatacombNode oldEnd){
+	public void generate(DungeonNode oldEnd){
 		
 		// node tunnels
-		for (CatacombNode node : nodes){
+		for (DungeonNode node : nodes){
 			node.construct(world);
 		}
 
 		Collections.shuffle(nodes, rand);
 		
 		// node dungeons
-		for (CatacombNode node : nodes){
+		for (DungeonNode node : nodes){
 			
 			int x = node.getPosition().getX();
 			int y = node.getPosition().getY();
@@ -88,12 +79,12 @@ public class CatacombLevel {
 		generateLevelLink(world, rand, settings.getTheme(), this.start, oldEnd);
 		
 		// tunnel segment features
-		for (CatacombNode node : nodes){
+		for (DungeonNode node : nodes){
 			node.segments();
 		}
 	}
 	
-	private void generateLevelLink(World world, Random rand, ITheme theme, CatacombNode start, CatacombNode oldEnd) {
+	private void generateLevelLink(World world, Random rand, ITheme theme, DungeonNode start, DungeonNode oldEnd) {
 		
 		IDungeonRoom downstairs = new DungeonLinker();
 		downstairs.generate(world, rand, settings, start.getEntrances(), start.getPosition());
@@ -122,7 +113,7 @@ public class CatacombLevel {
 		
 		if (this.isDone() && this.end == null){
 
-			CatacombNode choice;
+			DungeonNode choice;
 				
 			int attempts = 0;
 			
@@ -136,12 +127,12 @@ public class CatacombLevel {
 	}
 	
 
-	public CatacombNode getEnd(){
+	public DungeonNode getEnd(){
 		return this.end;
 	}
 	
-	public void spawnNode(CatacombTunneler tunneler){		
-		CatacombNode toAdd = new CatacombNode(world, rand, this, theme, tunneler);
+	public void spawnNode(DungeonTunneler tunneler){		
+		DungeonNode toAdd = new DungeonNode(world, rand, this, theme, tunneler);
 		this.nodes.add(toAdd);
 	}
 	
@@ -158,7 +149,7 @@ public class CatacombLevel {
 		return dist < settings.getRange();
 	}
 	
-	public int distance(CatacombNode aNode, CatacombNode other){
+	public int distance(DungeonNode aNode, DungeonNode other){
 		
 		int xrel = Math.abs(aNode.getPosition().getX() - other.getPosition().getX());
 		int zrel = Math.abs(aNode.getPosition().getZ() - other.getPosition().getZ());
@@ -169,7 +160,7 @@ public class CatacombLevel {
 	}
 	
 	public boolean hasNearbyNode(int x, int z, int min){
-		for (CatacombNode node : nodes){
+		for (DungeonNode node : nodes){
 			
 			int otherX = node.getPosition().getX();
 			int otherZ = node.getPosition().getZ();
@@ -188,7 +179,7 @@ public class CatacombLevel {
 	
 	public boolean hasNearbyNode(int x, int z){
 		
-		for (CatacombNode node : nodes){
+		for (DungeonNode node : nodes){
 			
 			int otherX = node.getPosition().getX();
 			int otherZ = node.getPosition().getZ();
@@ -210,7 +201,7 @@ public class CatacombLevel {
 		
 		boolean allDone = true;
 		
-		for(CatacombNode node : this.nodes){
+		for(DungeonNode node : this.nodes){
 			if(!node.isDone()){
 				allDone = false;
 			}
@@ -219,7 +210,7 @@ public class CatacombLevel {
 		return allDone || this.full();
 	}
 	
-	public boolean full(){
+	private boolean full(){
 		return this.nodes.size() >= settings.getNumRooms();
 	}
 	

@@ -2,7 +2,7 @@ package greymerk.roguelike.dungeon.segment.part;
 
 import java.util.Random;
 
-import greymerk.roguelike.dungeon.CatacombLevel;
+import greymerk.roguelike.dungeon.DungeonLevel;
 import greymerk.roguelike.dungeon.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
@@ -15,7 +15,7 @@ import net.minecraft.world.World;
 public class SegmentNetherWart extends SegmentBase{
 
 	@Override
-	protected void genWall(World world, Random rand, CatacombLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
+	protected void genWall(World world, Random rand, DungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
 		
 		MetaBlock step = theme.getSecondaryStair();
 		IBlockFactory wall = theme.getSecondaryWall();

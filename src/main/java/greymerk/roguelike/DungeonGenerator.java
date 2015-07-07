@@ -1,6 +1,6 @@
 package greymerk.roguelike;
 
-import greymerk.roguelike.dungeon.Catacomb;
+import greymerk.roguelike.dungeon.Dungeon;
 
 import java.util.Random;
 
@@ -10,7 +10,7 @@ public class DungeonGenerator implements IWorldGenerator {
 
 	@Override
 	public void generate(Random random, int chunkX, int chunkZ, net.minecraft.world.World world, net.minecraft.world.chunk.IChunkProvider chunkGenerator, net.minecraft.world.chunk.IChunkProvider chunkProvider) {
-		Catacomb.spawnInChunk(world, random, chunkX, chunkZ);
+		Dungeon.spawnInChunk(world, random, chunkX, chunkZ);
 	}
 
 }

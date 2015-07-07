@@ -1,6 +1,6 @@
 package greymerk.roguelike.dungeon.segment.part;
 
-import greymerk.roguelike.dungeon.CatacombLevel;
+import greymerk.roguelike.dungeon.DungeonLevel;
 import greymerk.roguelike.dungeon.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
@@ -20,7 +20,7 @@ import net.minecraft.world.World;
 public class SegmentArrowTrap extends SegmentBase{
 
 	@Override
-	protected void genWall(World world, Random rand, CatacombLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
+	protected void genWall(World world, Random rand, DungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
 		
 		MetaBlock plate = new MetaBlock(Blocks.stone_pressure_plate);
 		MetaBlock wire = new MetaBlock(Blocks.redstone_wire);

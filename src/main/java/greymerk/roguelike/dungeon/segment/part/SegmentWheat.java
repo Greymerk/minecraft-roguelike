@@ -1,6 +1,6 @@
 package greymerk.roguelike.dungeon.segment.part;
 
-import greymerk.roguelike.dungeon.CatacombLevel;
+import greymerk.roguelike.dungeon.DungeonLevel;
 import greymerk.roguelike.dungeon.theme.ITheme;
 import greymerk.roguelike.worldgen.BlockJumble;
 import greymerk.roguelike.worldgen.Cardinal;
@@ -18,7 +18,7 @@ public class SegmentWheat extends SegmentBase {
 
 
 	@Override
-	protected void genWall(World world, Random rand, CatacombLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
+	protected void genWall(World world, Random rand, DungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
 		
 		Coord cursor;
 		Coord start;

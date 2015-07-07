@@ -3,7 +3,7 @@ package greymerk.roguelike.util;
 
 import greymerk.roguelike.citadel.Citadel;
 import greymerk.roguelike.config.RogueConfig;
-import greymerk.roguelike.dungeon.Catacomb;
+import greymerk.roguelike.dungeon.Dungeon;
 import greymerk.roguelike.dungeon.settings.CatacombSettings;
 import greymerk.roguelike.dungeon.settings.ICatacombSettings;
 import greymerk.roguelike.treasure.loot.provider.ItemNovelty;
@@ -131,25 +131,25 @@ public class CommandSpawnDungeon extends CommandBase
 			World world = sender.getEntityWorld();
 		
 			if(settingName != null){
-				Catacomb.initResolver();
-				CatacombSettings setting = Catacomb.settingsResolver.getByName(settingName);
+				Dungeon.initResolver();
+				CatacombSettings setting = Dungeon.settingsResolver.getByName(settingName);
 				if(setting == null){
 					sender.addChatMessage(new ChatComponentText(TextFormat.apply("Failed: " + settingName + " not found.", TextFormat.RED)));
 					return;
 				}
-				Catacomb.generate(world, setting, x, z);
+				Dungeon.generate(world, setting, x, z);
 				return;
 			}
 			
-			Random rand = Catacomb.getRandom(world, x, z);
-			ICatacombSettings settings = Catacomb.settingsResolver.getSettings(world, rand, new Coord(x, 0, z));
+			Random rand = Dungeon.getRandom(world, x, z);
+			ICatacombSettings settings = Dungeon.settingsResolver.getSettings(world, rand, new Coord(x, 0, z));
 			if(settings != null){
-				Catacomb.generate(world, settings, x, z);
+				Dungeon.generate(world, settings, x, z);
 				sender.addChatMessage(new ChatComponentText(TextFormat.apply("Success: Dungeon generated at " + Integer.toString(x) + " " + Integer.toString(z), TextFormat.GREEN)));
 				return;
 			}
 			
-			Catacomb.generate(world, Catacomb.settingsResolver.getDefaultSettings(), x, z);
+			Dungeon.generate(world, Dungeon.settingsResolver.getDefaultSettings(), x, z);
 			sender.addChatMessage(new ChatComponentText(TextFormat.apply("Success: Dungeon generated at " + Integer.toString(x) + " " + Integer.toString(z), TextFormat.GREEN)));
 			return;
 		}

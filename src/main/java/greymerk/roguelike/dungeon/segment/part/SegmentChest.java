@@ -1,7 +1,7 @@
 package greymerk.roguelike.dungeon.segment.part;
 
-import greymerk.roguelike.dungeon.Catacomb;
-import greymerk.roguelike.dungeon.CatacombLevel;
+import greymerk.roguelike.dungeon.Dungeon;
+import greymerk.roguelike.dungeon.DungeonLevel;
 import greymerk.roguelike.dungeon.theme.ITheme;
 import greymerk.roguelike.treasure.TreasureChest;
 import greymerk.roguelike.worldgen.Cardinal;
@@ -18,7 +18,7 @@ public class SegmentChest extends SegmentBase {
 
 	
 	@Override
-	protected void genWall(World world, Random rand, CatacombLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
+	protected void genWall(World world, Random rand, DungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
 		
 		MetaBlock air = new MetaBlock(Blocks.air);
 		MetaBlock stair = theme.getSecondaryStair();
@@ -71,8 +71,8 @@ public class SegmentChest extends SegmentBase {
 		
 		if(world.isAirBlock(below.getBlockPos())) return;	
 		
-		boolean trapped = Catacomb.getLevel(y) == 3 && rand.nextInt(3) == 0;
-		TreasureChest.generate(world, rand, level.getSettings(), shelf, Catacomb.getLevel(y), trapped);
+		boolean trapped = Dungeon.getLevel(y) == 3 && rand.nextInt(3) == 0;
+		TreasureChest.generate(world, rand, level.getSettings(), shelf, Dungeon.getLevel(y), trapped);
 		if(trapped){
 			WorldGenPrimitive.setBlock(world, shelf.getX(), shelf.getY() - 2, shelf.getZ(), Blocks.tnt);
 			if(rand.nextBoolean()) WorldGenPrimitive.setBlock(world, shelf.getX(), shelf.getY() - 3, shelf.getZ(), Blocks.tnt);

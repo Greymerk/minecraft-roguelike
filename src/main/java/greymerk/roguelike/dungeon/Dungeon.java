@@ -13,11 +13,10 @@ import java.util.Random;
 
 import net.minecraft.world.World;
 
-public class Catacomb {
+public class Dungeon {
 		
 	public static final int VERTICAL_SPACING = 10;
 	public static final int TOPLEVEL = 50;
-	
 	public static CatacombSettingsResolver settingsResolver;
 	
 	static{
@@ -27,7 +26,7 @@ public class Catacomb {
 	public static void initResolver(){
 		settingsResolver = new CatacombSettingsResolver();
 	}
-	
+		
 	public static void generateNear(World world, Random rand, int x, int z){
 		int attempts = 50;
 		
@@ -40,7 +39,7 @@ public class Catacomb {
 			
 			if(setting == null) return;
 			
-			Catacomb.generate(world, setting, location.getX(), location.getZ());
+			Dungeon.generate(world, setting, location.getX(), location.getZ());
 			return;
 		}
 	}
@@ -55,20 +54,16 @@ public class Catacomb {
 
 		int numLevels = settings.getNumLevels();
 		
-		CatacombNode oldEnd = null;
+		DungeonNode oldEnd = null;
 		
 		for (int i = 0; i < numLevels; ++i){
 			CatacombLevelSettings levelSettings = settings.getLevelSettings(i);
 			
-			CatacombLevel level;
+			IDungeonLevel level;
 			
 			rand = getRandom(world, x, z);
 			
-			level = new CatacombLevel(world, rand, levelSettings, new Coord(x, y, z), levelSettings.getNumRooms(), levelSettings.getRange());
-			
-			while(!level.isDone()){
-				level.update();
-			}
+			level = new DungeonLevel(world, rand, levelSettings, new Coord(x, y, z));
 			
 			level.generate(oldEnd);
 			oldEnd = level.getEnd();
@@ -125,11 +120,11 @@ public class Catacomb {
 	
 	public static void spawnInChunk(World world, Random rand, int chunkX, int chunkZ) {
 		
-		if(Catacomb.canSpawnInChunk(chunkX, chunkZ, world)){
+		if(Dungeon.canSpawnInChunk(chunkX, chunkZ, world)){
 			int x = chunkX * 16 + 4;
 			int z = chunkZ * 16 + 4;
 			
-			Catacomb.generateNear(world, rand, x, z);
+			Dungeon.generateNear(world, rand, x, z);
 		}
 	}
 	

@@ -14,11 +14,11 @@ import java.util.Random;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 
-public class CatacombTunneler {
+public class DungeonTunneler {
 
 
 	private Random rand;
-	private CatacombLevel level;
+	private DungeonLevel level;
 	private List<Coord> tunnel;
 	private Cardinal dir;
 	private Coord pos;
@@ -26,7 +26,7 @@ public class CatacombTunneler {
 	private int extend;
 
 	
-	public CatacombTunneler(World world, Random rand, CatacombLevel level, Cardinal direction, Coord origin){
+	public DungeonTunneler(World world, Random rand, DungeonLevel level, Cardinal direction, Coord origin){
 
 
 		this.rand = rand;

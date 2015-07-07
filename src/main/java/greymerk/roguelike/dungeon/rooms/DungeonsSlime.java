@@ -1,6 +1,6 @@
 package greymerk.roguelike.dungeon.rooms;
 
-import greymerk.roguelike.dungeon.Catacomb;
+import greymerk.roguelike.dungeon.Dungeon;
 import greymerk.roguelike.dungeon.base.DungeonBase;
 import greymerk.roguelike.dungeon.settings.CatacombLevelSettings;
 import greymerk.roguelike.dungeon.theme.ITheme;
@@ -39,7 +39,7 @@ public class DungeonsSlime extends DungeonBase {
 		originY = origin.getY();
 		originZ = origin.getZ();
 
-		liquid = new MetaBlock(Catacomb.getLevel(originY) == 4 ? Blocks.lava : Blocks.flowing_water);
+		liquid = new MetaBlock(Dungeon.getLevel(originY) == 4 ? Blocks.lava : Blocks.flowing_water);
 
 		fillBlocks = theme.getPrimaryWall();
 		
@@ -65,7 +65,7 @@ public class DungeonsSlime extends DungeonBase {
 		WorldGenPrimitive.fillRectSolid(world, rand, originX - 2, originY + 3, originZ - 1, originX - 2, originY + 3, originZ + 1, fillBlocks);
 		WorldGenPrimitive.fillRectSolid(world, rand, originX + 2, originY + 3, originZ - 1, originX + 2, originY + 3, originZ + 1, fillBlocks);
 		
-		if(Catacomb.getLevel(originY) == 4){
+		if(Dungeon.getLevel(originY) == 4){
 			Spawner.generate(world, rand, settings, new Coord(originX, originY + 5, originZ), Spawner.LAVASLIME);
 		} else {
 			WorldGenPrimitive.randomVines(world, rand, originX - 7, originY + 2, originZ - 7, originX + 7, originY + 5, originZ + 7);			

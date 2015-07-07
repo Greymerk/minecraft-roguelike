@@ -2,7 +2,7 @@ package greymerk.roguelike.dungeon.segment.part;
 
 import java.util.Random;
 
-import greymerk.roguelike.dungeon.CatacombLevel;
+import greymerk.roguelike.dungeon.DungeonLevel;
 import greymerk.roguelike.dungeon.theme.ITheme;
 import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.Cardinal;
@@ -18,7 +18,7 @@ public class SegmentMushrooms extends SegmentBase {
 	
 	
 	@Override
-	protected void genWall(World world, Random rand, CatacombLevel level, Cardinal wallDirection, ITheme theme, int x, int y, int z) {
+	protected void genWall(World world, Random rand, DungeonLevel level, Cardinal wallDirection, ITheme theme, int x, int y, int z) {
 		
 		MetaBlock stair = theme.getSecondaryStair();
 		MetaBlock air = new MetaBlock(Blocks.air);

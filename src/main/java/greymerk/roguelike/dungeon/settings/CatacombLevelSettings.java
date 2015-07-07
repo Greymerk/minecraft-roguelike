@@ -1,7 +1,7 @@
 package greymerk.roguelike.dungeon.settings;
 
 import greymerk.roguelike.config.RogueConfig;
-import greymerk.roguelike.dungeon.Catacomb;
+import greymerk.roguelike.dungeon.Dungeon;
 import greymerk.roguelike.dungeon.base.DungeonFactory;
 import greymerk.roguelike.dungeon.base.IDungeonFactory;
 import greymerk.roguelike.dungeon.base.SecretFactory;
@@ -107,7 +107,7 @@ public class CatacombLevelSettings {
 	public int getDifficulty(Coord pos){
 		
 		if(this.levelDifficulty == -1){
-			return Catacomb.getLevel(pos.getY());
+			return Dungeon.getLevel(pos.getY());
 		}
 		
 		return levelDifficulty;

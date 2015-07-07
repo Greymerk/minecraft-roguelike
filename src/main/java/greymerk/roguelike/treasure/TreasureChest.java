@@ -1,7 +1,7 @@
 package greymerk.roguelike.treasure;
 
 
-import greymerk.roguelike.dungeon.Catacomb;
+import greymerk.roguelike.dungeon.Dungeon;
 import greymerk.roguelike.dungeon.settings.CatacombLevelSettings;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
@@ -60,7 +60,7 @@ public enum TreasureChest {
 	}
 	
 	public static void generate(World world, Random rand, CatacombLevelSettings settings, Coord pos, TreasureChest type){
-		generate(world, rand, settings, pos, type, Catacomb.getLevel(pos.getY()), false);
+		generate(world, rand, settings, pos, type, Dungeon.getLevel(pos.getY()), false);
 	}
 	
 	public static void generate(World world, Random rand, CatacombLevelSettings settings, Coord pos, TreasureChest type, int level, boolean trapped){
@@ -89,7 +89,7 @@ public enum TreasureChest {
 			}
 			
 			if (isValidChestSpace(world, block)) {
-				generate(world, rand, settings, block, getChestType(rand, Catacomb.getLevel(block.getY())));
+				generate(world, rand, settings, block, getChestType(rand, Dungeon.getLevel(block.getY())));
 				count++;
 			}
 		}

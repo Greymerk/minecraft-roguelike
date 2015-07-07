@@ -1,6 +1,6 @@
 package greymerk.roguelike.dungeon.segment.part;
 
-import greymerk.roguelike.dungeon.CatacombLevel;
+import greymerk.roguelike.dungeon.DungeonLevel;
 import greymerk.roguelike.dungeon.segment.ISegment;
 import greymerk.roguelike.dungeon.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
@@ -15,7 +15,7 @@ public abstract class SegmentBase implements ISegment {
 
 	
 	@Override
-	public void generate(World world, Random rand, CatacombLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
+	public void generate(World world, Random rand, DungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
 		
 		if(level.hasNearbyNode(x, z)) return;
 		
@@ -24,7 +24,7 @@ public abstract class SegmentBase implements ISegment {
 		}
 	}
 	
-	protected abstract void genWall(World world, Random rand, CatacombLevel level, Cardinal dir, ITheme theme, int x, int y, int z);
+	protected abstract void genWall(World world, Random rand, DungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z);
 
 	protected boolean isValidWall(World world, Cardinal wallDirection, int x, int y, int z) {
 		
