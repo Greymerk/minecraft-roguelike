@@ -1,6 +1,6 @@
 package greymerk.roguelike.dungeon.segment.part;
 
-import greymerk.roguelike.dungeon.DungeonLevel;
+import greymerk.roguelike.dungeon.IDungeonLevel;
 import greymerk.roguelike.dungeon.base.SecretFactory;
 import greymerk.roguelike.dungeon.segment.IAlcove;
 import greymerk.roguelike.dungeon.segment.alcove.PrisonCell;
@@ -19,7 +19,7 @@ import net.minecraft.world.World;
 public class SegmentPrisonCell extends SegmentBase {
 	
 	@Override
-	protected void genWall(World world, Random rand, DungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
+	protected void genWall(World world, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
 		
 		MetaBlock air = new MetaBlock(Blocks.air);
 		MetaBlock stair = theme.getSecondaryStair();

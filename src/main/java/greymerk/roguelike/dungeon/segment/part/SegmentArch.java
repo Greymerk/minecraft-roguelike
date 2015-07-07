@@ -1,6 +1,6 @@
 package greymerk.roguelike.dungeon.segment.part;
 
-import greymerk.roguelike.dungeon.DungeonLevel;
+import greymerk.roguelike.dungeon.IDungeonLevel;
 import greymerk.roguelike.dungeon.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
@@ -15,7 +15,7 @@ import net.minecraft.world.World;
 public class SegmentArch extends SegmentBase {
 
 	@Override
-	protected void genWall(World world, Random rand, DungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
+	protected void genWall(World world, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
 			
 		MetaBlock stair = theme.getSecondaryStair(); 
 		WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(dir), true);

@@ -5,6 +5,7 @@ import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.dungeon.settings.SettingsResolver;
 import greymerk.roguelike.dungeon.settings.ISettings;
 import greymerk.roguelike.dungeon.towers.Tower;
+import greymerk.roguelike.treasure.ITreasureChest;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
 
@@ -13,7 +14,7 @@ import java.util.Random;
 
 import net.minecraft.world.World;
 
-public class Dungeon {
+public class Dungeon implements IDungeon{
 		
 	public static final int VERTICAL_SPACING = 10;
 	public static final int TOPLEVEL = 50;
@@ -27,7 +28,12 @@ public class Dungeon {
 		settingsResolver = new SettingsResolver();
 	}
 		
-	public static void generateNear(World world, Random rand, int x, int z){
+	
+	public Dungeon(){
+		
+	}
+	
+	public void generateNear(World world, Random rand, int x, int z){
 		int attempts = 50;
 		
 		for(int i = 0;i < attempts;i++){
@@ -39,12 +45,12 @@ public class Dungeon {
 			
 			if(setting == null) return;
 			
-			Dungeon.generate(world, setting, location.getX(), location.getZ());
+			generate(world, setting, location.getX(), location.getZ());
 			return;
 		}
 	}
 	
-	public static void generate(World world, ISettings settings, int inX, int inZ){
+	public void generate(World world, ISettings settings, int inX, int inZ){
 		
 		int x = inX;
 		int y = TOPLEVEL;
@@ -53,6 +59,8 @@ public class Dungeon {
 		Random rand = getRandom(world, inX, inZ);
 
 		int numLevels = settings.getNumLevels();
+		
+		Coord start = new Coord(x, y, z);
 		
 		DungeonNode oldEnd = null;
 		
@@ -63,13 +71,14 @@ public class Dungeon {
 			
 			rand = getRandom(world, x, z);
 			
-			level = new DungeonLevel(world, rand, levelSettings, new Coord(x, y, z));
-			
-			level.generate(oldEnd);
+			level = new DungeonLevel(world, rand, levelSettings, start);
+			level.generate(start, oldEnd);
 			oldEnd = level.getEnd();
+			
 			x = oldEnd.getPosition().getX();
 			y = y - VERTICAL_SPACING;
 			z = oldEnd.getPosition().getZ();
+			start = new Coord(x, y, z);
 		}
 		
 		Tower tower = settings.getTower().getTower();
@@ -118,13 +127,13 @@ public class Dungeon {
 		return true;
 	}
 	
-	public static void spawnInChunk(World world, Random rand, int chunkX, int chunkZ) {
+	public void spawnInChunk(World world, Random rand, int chunkX, int chunkZ) {
 		
 		if(Dungeon.canSpawnInChunk(chunkX, chunkZ, world)){
 			int x = chunkX * 16 + 4;
 			int z = chunkZ * 16 + 4;
 			
-			Dungeon.generateNear(world, rand, x, z);
+			generateNear(world, rand, x, z);
 		}
 	}
 	
@@ -196,5 +205,35 @@ public class Dungeon {
 		Random rand = new Random();
 		rand.setSeed(seed);
 		return rand;
+	}
+
+	@Override
+	public List<DungeonNode> getNodes() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<IDungeonLevel> getLevels() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<ITreasureChest> getChests() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Coord> getChestLocations() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Coord> getSpawnerLocations() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

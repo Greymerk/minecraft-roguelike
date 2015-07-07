@@ -4,6 +4,7 @@ package greymerk.roguelike.util;
 import greymerk.roguelike.citadel.Citadel;
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.dungeon.Dungeon;
+import greymerk.roguelike.dungeon.IDungeon;
 import greymerk.roguelike.dungeon.settings.DungeonSettings;
 import greymerk.roguelike.dungeon.settings.ISettings;
 import greymerk.roguelike.treasure.loot.provider.ItemNovelty;
@@ -137,19 +138,23 @@ public class CommandSpawnDungeon extends CommandBase
 					sender.addChatMessage(new ChatComponentText(TextFormat.apply("Failed: " + settingName + " not found.", TextFormat.RED)));
 					return;
 				}
-				Dungeon.generate(world, setting, x, z);
+				
+				IDungeon dungeon = new Dungeon();
+				dungeon.generate(world, setting, x, z);
 				return;
 			}
 			
 			Random rand = Dungeon.getRandom(world, x, z);
 			ISettings settings = Dungeon.settingsResolver.getSettings(world, rand, new Coord(x, 0, z));
 			if(settings != null){
-				Dungeon.generate(world, settings, x, z);
+				IDungeon dungeon = new Dungeon();
+				dungeon.generate(world, settings, x, z);
 				sender.addChatMessage(new ChatComponentText(TextFormat.apply("Success: Dungeon generated at " + Integer.toString(x) + " " + Integer.toString(z), TextFormat.GREEN)));
 				return;
 			}
 			
-			Dungeon.generate(world, Dungeon.settingsResolver.getDefaultSettings(), x, z);
+			IDungeon dungeon = new Dungeon();
+			dungeon.generate(world, Dungeon.settingsResolver.getDefaultSettings(), x, z);
 			sender.addChatMessage(new ChatComponentText(TextFormat.apply("Success: Dungeon generated at " + Integer.toString(x) + " " + Integer.toString(z), TextFormat.GREEN)));
 			return;
 		}

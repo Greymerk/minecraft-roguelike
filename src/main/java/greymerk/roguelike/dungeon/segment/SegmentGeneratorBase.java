@@ -1,6 +1,6 @@
 package greymerk.roguelike.dungeon.segment;
 
-import greymerk.roguelike.dungeon.DungeonLevel;
+import greymerk.roguelike.dungeon.IDungeonLevel;
 import greymerk.roguelike.dungeon.theme.ITheme;
 import greymerk.roguelike.util.WeightedChoice;
 import greymerk.roguelike.util.WeightedRandomizer;
@@ -33,7 +33,7 @@ public class SegmentGeneratorBase implements ISegmentGenerator{
 	}
 	
 	@Override
-	public void genSegment(World world, Random rand, DungeonLevel level, Cardinal dir, Coord pos) {
+	public void genSegment(World world, Random rand, IDungeonLevel level, Cardinal dir, Coord pos) {
 		
 		int x = pos.getX();
 		int y = pos.getY();
@@ -45,11 +45,11 @@ public class SegmentGeneratorBase implements ISegmentGenerator{
 			seg.generate(world, rand, level, orth, level.getSettings().getTheme(), x, y, z);
 		}
 		
-		if(!level.hasNearbyNode(x, z) && rand.nextInt(3) == 0) addSupport(world, rand, level.getSettings().getTheme(), x, y, z);
+		if(!level.hasNearbyNode(pos) && rand.nextInt(3) == 0) addSupport(world, rand, level.getSettings().getTheme(), x, y, z);
 		
 	}
 	
-	private ISegment pickSegment(World world, Random rand, DungeonLevel level, Cardinal dir, Coord pos){
+	private ISegment pickSegment(World world, Random rand, IDungeonLevel level, Cardinal dir, Coord pos){
 		int x = pos.getX();
 		int z = pos.getZ();
 		
