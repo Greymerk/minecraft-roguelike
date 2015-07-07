@@ -1,6 +1,6 @@
 package greymerk.roguelike.dungeon;
 
-import greymerk.roguelike.dungeon.settings.CatacombLevelSettings;
+import greymerk.roguelike.dungeon.settings.LevelSettings;
 
 public interface IDungeonLevel {
 
@@ -8,6 +8,6 @@ public interface IDungeonLevel {
 	
 	public DungeonNode getEnd();
 	
-	public CatacombLevelSettings getSettings();
+	public LevelSettings getSettings();
 	
 }

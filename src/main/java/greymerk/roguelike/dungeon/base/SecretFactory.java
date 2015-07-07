@@ -1,6 +1,6 @@
 package greymerk.roguelike.dungeon.base;
 
-import greymerk.roguelike.dungeon.settings.CatacombLevelSettings;
+import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 
@@ -76,7 +76,7 @@ public class SecretFactory implements ISecretRoom{
 		this.count += count;
 	}
 	
-	public boolean genRoom(World world, Random rand, CatacombLevelSettings settings, Cardinal dir, Coord pos){
+	public boolean genRoom(World world, Random rand, LevelSettings settings, Cardinal dir, Coord pos){
 		if(count <= 0) return false;
 		
 		Collections.shuffle(this.secrets, rand);

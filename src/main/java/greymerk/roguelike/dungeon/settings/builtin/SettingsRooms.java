@@ -2,12 +2,12 @@ package greymerk.roguelike.dungeon.settings.builtin;
 
 import greymerk.roguelike.dungeon.base.DungeonFactory;
 import greymerk.roguelike.dungeon.base.DungeonRoom;
-import greymerk.roguelike.dungeon.settings.CatacombLevelSettings;
-import greymerk.roguelike.dungeon.settings.CatacombSettings;
+import greymerk.roguelike.dungeon.settings.LevelSettings;
+import greymerk.roguelike.dungeon.settings.DungeonSettings;
 
-public class CatacombSettingsRooms extends CatacombSettings{
+public class SettingsRooms extends DungeonSettings{
 
-	public CatacombSettingsRooms(){
+	public SettingsRooms(){
 		for(int i = 0; i < 5; ++i){
 			
 			DungeonFactory factory;
@@ -70,7 +70,7 @@ public class CatacombSettingsRooms extends CatacombSettings{
 				break;
 			}
 			
-			CatacombLevelSettings level = new CatacombLevelSettings();
+			LevelSettings level = new LevelSettings();
 			level.setRooms(factory);
 			levels.put(i, level);
 		}

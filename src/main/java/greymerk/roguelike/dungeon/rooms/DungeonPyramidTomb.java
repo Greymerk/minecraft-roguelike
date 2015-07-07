@@ -1,7 +1,7 @@
 package greymerk.roguelike.dungeon.rooms;
 
 import greymerk.roguelike.dungeon.base.DungeonBase;
-import greymerk.roguelike.dungeon.settings.CatacombLevelSettings;
+import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.dungeon.theme.ITheme;
 import greymerk.roguelike.treasure.TreasureChest;
 import greymerk.roguelike.worldgen.Cardinal;
@@ -20,7 +20,7 @@ import net.minecraft.world.World;
 public class DungeonPyramidTomb extends DungeonBase{
 
 	@Override
-	public boolean generate(World world, Random rand, CatacombLevelSettings settings, Cardinal[] entrances, Coord origin) {
+	public boolean generate(World world, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
 		
 
 		ITheme theme = settings.getTheme();
@@ -192,7 +192,7 @@ public class DungeonPyramidTomb extends DungeonBase{
 	}
 	
 	
-	private void sarcophagus(World world, Random rand, CatacombLevelSettings settings, Cardinal dir, Coord origin){
+	private void sarcophagus(World world, Random rand, LevelSettings settings, Cardinal dir, Coord origin){
 		SpawnerSettings spawners = settings.getSpawners();
 		
 		MetaBlock stair = new MetaBlock(Blocks.quartz_stairs);

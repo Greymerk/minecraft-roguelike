@@ -2,9 +2,9 @@ package greymerk.roguelike.dungeon.settings.builtin;
 
 import greymerk.roguelike.dungeon.segment.Segment;
 import greymerk.roguelike.dungeon.segment.SegmentGenerator;
-import greymerk.roguelike.dungeon.settings.CatacombLevelSettings;
-import greymerk.roguelike.dungeon.settings.CatacombSettings;
-import greymerk.roguelike.dungeon.settings.CatacombTowerSettings;
+import greymerk.roguelike.dungeon.settings.LevelSettings;
+import greymerk.roguelike.dungeon.settings.DungeonSettings;
+import greymerk.roguelike.dungeon.settings.TowerSettings;
 import greymerk.roguelike.dungeon.settings.SpawnCriteria;
 import greymerk.roguelike.dungeon.theme.Theme;
 import greymerk.roguelike.dungeon.towers.Tower;
@@ -14,21 +14,21 @@ import java.util.List;
 
 import net.minecraftforge.common.BiomeDictionary;
 
-public class CatacombSettingsColdTheme extends CatacombSettings{
+public class SettingsColdTheme extends DungeonSettings{
 	
-	public CatacombSettingsColdTheme(){
+	public SettingsColdTheme(){
 		
 		this.criteria = new SpawnCriteria();
 		List<BiomeDictionary.Type> biomes = new ArrayList<BiomeDictionary.Type>();
 		biomes.add(BiomeDictionary.Type.SNOWY);
 		this.criteria.setBiomeTypes(biomes);
 		
-		this.towerSettings = new CatacombTowerSettings(Tower.ROGUE, Theme.getTheme(Theme.ICE));
+		this.towerSettings = new TowerSettings(Tower.ROGUE, Theme.getTheme(Theme.ICE));
 		
 		Theme[] themes = {Theme.ICE, Theme.ICE, Theme.CRYPT, Theme.CRYPT, Theme.NETHER};
 		
 		for(int i = 0; i < 5; ++i){
-			CatacombLevelSettings level = new CatacombLevelSettings();
+			LevelSettings level = new LevelSettings();
 			level.setTheme(Theme.getTheme(themes[i]));
 			levels.put(i, level);
 		}
@@ -42,7 +42,7 @@ public class CatacombSettingsColdTheme extends CatacombSettings{
 			segments.add(Segment.CHEST, 1);
 			segments.add(Segment.SPAWNER, 1);
 			
-			CatacombLevelSettings level = levels.get(0);
+			LevelSettings level = levels.get(0);
 			level.setSegments(segments);
 		}
 
@@ -54,7 +54,7 @@ public class CatacombSettingsColdTheme extends CatacombSettings{
 			segments.add(Segment.CHEST, 1);
 			segments.add(Segment.SPAWNER, 1);
 			
-			CatacombLevelSettings level = levels.get(3);
+			LevelSettings level = levels.get(3);
 			level.setSegments(segments);
 		}
 	}

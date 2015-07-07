@@ -3,7 +3,7 @@ package greymerk.roguelike.dungeon;
 import greymerk.roguelike.dungeon.base.IDungeonRoom;
 import greymerk.roguelike.dungeon.rooms.DungeonCorner;
 import greymerk.roguelike.dungeon.rooms.DungeonLinker;
-import greymerk.roguelike.dungeon.settings.CatacombLevelSettings;
+import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.dungeon.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
@@ -28,9 +28,9 @@ public class DungeonLevel implements IDungeonLevel{
 	private int originZ;
 
 	private ITheme theme;
-	private CatacombLevelSettings settings;
+	private LevelSettings settings;
 	
-	public DungeonLevel(World world, Random rand, CatacombLevelSettings settings, Coord origin){
+	public DungeonLevel(World world, Random rand, LevelSettings settings, Coord origin){
 		this.world = world;
 		this.nodes = new ArrayList<DungeonNode>();
 
@@ -126,7 +126,7 @@ public class DungeonLevel implements IDungeonLevel{
 		}
 	}
 	
-
+	@Override
 	public DungeonNode getEnd(){
 		return this.end;
 	}
@@ -149,7 +149,7 @@ public class DungeonLevel implements IDungeonLevel{
 		return dist < settings.getRange();
 	}
 	
-	public int distance(DungeonNode aNode, DungeonNode other){
+	private int distance(DungeonNode aNode, DungeonNode other){
 		
 		int xrel = Math.abs(aNode.getPosition().getX() - other.getPosition().getX());
 		int zrel = Math.abs(aNode.getPosition().getZ() - other.getPosition().getZ());
@@ -197,7 +197,7 @@ public class DungeonLevel implements IDungeonLevel{
 		return false;
 	}
 	
-	public boolean isDone(){
+	private boolean isDone(){
 		
 		boolean allDone = true;
 		
@@ -218,7 +218,8 @@ public class DungeonLevel implements IDungeonLevel{
 		return this.nodes.size();
 	}
 
-	public CatacombLevelSettings getSettings(){
+	@Override
+	public LevelSettings getSettings(){
 		return this.settings;
 	}
 

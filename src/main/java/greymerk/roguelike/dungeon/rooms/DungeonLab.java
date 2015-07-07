@@ -2,7 +2,7 @@ package greymerk.roguelike.dungeon.rooms;
 
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.dungeon.base.DungeonBase;
-import greymerk.roguelike.dungeon.settings.CatacombLevelSettings;
+import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.dungeon.theme.ITheme;
 import greymerk.roguelike.treasure.TreasureChest;
 import greymerk.roguelike.worldgen.Cardinal;
@@ -24,7 +24,7 @@ import net.minecraft.world.World;
 public class DungeonLab extends DungeonBase {
 
 	@Override
-	public boolean generate(World world, Random rand, CatacombLevelSettings settings, Cardinal[] entrances, Coord origin) {
+	public boolean generate(World world, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
 		
 		int x = origin.getX();
 		int y = origin.getY();
@@ -114,7 +114,7 @@ public class DungeonLab extends DungeonBase {
 	}
 	
 	
-	private static void southWest(World world, Random rand, CatacombLevelSettings settings, ITheme theme, int x, int y, int z){
+	private static void southWest(World world, Random rand, LevelSettings settings, ITheme theme, int x, int y, int z){
 		
 		corner(world, rand, theme, x, y, z);
 		

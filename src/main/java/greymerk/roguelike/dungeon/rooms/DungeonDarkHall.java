@@ -1,7 +1,7 @@
 package greymerk.roguelike.dungeon.rooms;
 
 import greymerk.roguelike.dungeon.base.DungeonBase;
-import greymerk.roguelike.dungeon.settings.CatacombLevelSettings;
+import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.dungeon.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
@@ -18,7 +18,7 @@ import net.minecraft.world.World;
 public class DungeonDarkHall extends DungeonBase{
 
 	@Override
-	public boolean generate(World world, Random rand, CatacombLevelSettings settings, Cardinal[] entrances, Coord origin) {
+	public boolean generate(World world, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
 		
 		ITheme theme = settings.getTheme();
 		
@@ -180,7 +180,7 @@ public class DungeonDarkHall extends DungeonBase{
 		return false;
 	}
 
-	private void pillar(World world, Random rand, CatacombLevelSettings settings, Cardinal dir, Coord origin){
+	private void pillar(World world, Random rand, LevelSettings settings, Cardinal dir, Coord origin){
 		
 		ITheme theme = settings.getTheme();
 

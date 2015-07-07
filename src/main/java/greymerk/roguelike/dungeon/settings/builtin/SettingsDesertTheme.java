@@ -4,9 +4,9 @@ import greymerk.roguelike.dungeon.base.DungeonFactory;
 import greymerk.roguelike.dungeon.base.DungeonRoom;
 import greymerk.roguelike.dungeon.segment.Segment;
 import greymerk.roguelike.dungeon.segment.SegmentGenerator;
-import greymerk.roguelike.dungeon.settings.CatacombLevelSettings;
-import greymerk.roguelike.dungeon.settings.CatacombSettings;
-import greymerk.roguelike.dungeon.settings.CatacombTowerSettings;
+import greymerk.roguelike.dungeon.settings.LevelSettings;
+import greymerk.roguelike.dungeon.settings.DungeonSettings;
+import greymerk.roguelike.dungeon.settings.TowerSettings;
 import greymerk.roguelike.dungeon.settings.SpawnCriteria;
 import greymerk.roguelike.dungeon.theme.Theme;
 import greymerk.roguelike.dungeon.towers.Tower;
@@ -16,9 +16,9 @@ import java.util.List;
 
 import net.minecraftforge.common.BiomeDictionary;
 
-public class CatacombSettingsDesertTheme extends CatacombSettings{
+public class SettingsDesertTheme extends DungeonSettings{
 	
-	public CatacombSettingsDesertTheme(){
+	public SettingsDesertTheme(){
 		
 		this.criteria = new SpawnCriteria();
 		List<BiomeDictionary.Type> biomes = new ArrayList<BiomeDictionary.Type>();
@@ -26,13 +26,13 @@ public class CatacombSettingsDesertTheme extends CatacombSettings{
 		this.criteria.setBiomeTypes(biomes);
 		this.criteria.setWeight(8);
 		
-		this.towerSettings = new CatacombTowerSettings(Tower.ROGUE, Theme.getTheme(Theme.PYRAMID));
+		this.towerSettings = new TowerSettings(Tower.ROGUE, Theme.getTheme(Theme.PYRAMID));
 		
 		Theme[] themes = {Theme.SANDSTONE, Theme.SANDSTONE, Theme.CRYPT, Theme.CRYPT, Theme.NETHER};
 		
 		for(int i = 0; i < 5; ++i){
 			
-			CatacombLevelSettings level = new CatacombLevelSettings();
+			LevelSettings level = new LevelSettings();
 			level.setTheme(Theme.getTheme(themes[i]));
 			
 			if(i == 0){

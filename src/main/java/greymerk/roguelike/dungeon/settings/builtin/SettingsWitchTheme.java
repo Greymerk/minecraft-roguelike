@@ -2,9 +2,9 @@ package greymerk.roguelike.dungeon.settings.builtin;
 
 import greymerk.roguelike.dungeon.base.DungeonFactory;
 import greymerk.roguelike.dungeon.base.DungeonRoom;
-import greymerk.roguelike.dungeon.settings.CatacombLevelSettings;
-import greymerk.roguelike.dungeon.settings.CatacombSettings;
-import greymerk.roguelike.dungeon.settings.CatacombTowerSettings;
+import greymerk.roguelike.dungeon.settings.LevelSettings;
+import greymerk.roguelike.dungeon.settings.DungeonSettings;
+import greymerk.roguelike.dungeon.settings.TowerSettings;
 import greymerk.roguelike.dungeon.settings.SpawnCriteria;
 import greymerk.roguelike.dungeon.theme.Theme;
 import greymerk.roguelike.dungeon.towers.Tower;
@@ -21,9 +21,9 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.BiomeDictionary;
 
-public class CatacombSettingsWitchTheme extends CatacombSettings{
+public class SettingsWitchTheme extends DungeonSettings{
 	
-	public CatacombSettingsWitchTheme(){
+	public SettingsWitchTheme(){
 		
 		this.depth = 2;
 		
@@ -32,13 +32,13 @@ public class CatacombSettingsWitchTheme extends CatacombSettings{
 		biomes.add(BiomeDictionary.Type.SWAMP);
 		this.criteria.setBiomeTypes(biomes);
 		
-		this.towerSettings = new CatacombTowerSettings(Tower.WITCH, Theme.getTheme(Theme.DARKOAK));
+		this.towerSettings = new TowerSettings(Tower.WITCH, Theme.getTheme(Theme.DARKOAK));
 		
 		Theme[] themes = {Theme.DARKHALL, Theme.MUDDY, Theme.MOSSY, Theme.MOSSY, Theme.NETHER};
 		
 		for(int i = 0; i < 5; ++i){
 			
-			CatacombLevelSettings level = new CatacombLevelSettings();
+			LevelSettings level = new LevelSettings();
 			level.setTheme(Theme.getTheme(themes[i]));
 			
 			if(i == 0){

@@ -1,7 +1,7 @@
 package greymerk.roguelike.dungeon.rooms;
 
 import greymerk.roguelike.dungeon.base.IDungeonRoom;
-import greymerk.roguelike.dungeon.settings.CatacombLevelSettings;
+import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.treasure.loot.Firework;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
@@ -25,7 +25,7 @@ import net.minecraft.world.World;
 public class DungeonFirework implements IDungeonRoom {
 
 	@Override
-	public boolean generate(World world, Random rand, CatacombLevelSettings settings, Cardinal[] entrances, Coord origin) {
+	public boolean generate(World world, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
 		
 		int x = origin.getX();
 		int y = origin.getY();

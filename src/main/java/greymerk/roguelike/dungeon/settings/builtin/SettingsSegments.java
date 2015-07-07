@@ -2,12 +2,12 @@ package greymerk.roguelike.dungeon.settings.builtin;
 
 import greymerk.roguelike.dungeon.segment.Segment;
 import greymerk.roguelike.dungeon.segment.SegmentGenerator;
-import greymerk.roguelike.dungeon.settings.CatacombLevelSettings;
-import greymerk.roguelike.dungeon.settings.CatacombSettings;
+import greymerk.roguelike.dungeon.settings.LevelSettings;
+import greymerk.roguelike.dungeon.settings.DungeonSettings;
 
-public class CatacombSettingsSegments extends CatacombSettings{
+public class SettingsSegments extends DungeonSettings{
 
-	public CatacombSettingsSegments(){
+	public SettingsSegments(){
 		for(int i = 0; i < 5; ++i){
 			
 			SegmentGenerator segments;
@@ -66,7 +66,7 @@ public class CatacombSettingsSegments extends CatacombSettings{
 				break;
 			}
 			
-			CatacombLevelSettings level = new CatacombLevelSettings();
+			LevelSettings level = new LevelSettings();
 			level.setSegments(segments);
 			levels.put(i, level);
 			

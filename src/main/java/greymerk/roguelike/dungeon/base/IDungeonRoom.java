@@ -1,6 +1,6 @@
 package greymerk.roguelike.dungeon.base;
 
-import greymerk.roguelike.dungeon.settings.CatacombLevelSettings;
+import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 
@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 
 public interface IDungeonRoom {
 
-	public boolean generate(World world, Random rand, CatacombLevelSettings settings, Cardinal[] entrances, Coord origin);
+	public boolean generate(World world, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin);
 		
 	public int getSize();
 	

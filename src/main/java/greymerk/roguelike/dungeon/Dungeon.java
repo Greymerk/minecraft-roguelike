@@ -1,9 +1,9 @@
 package greymerk.roguelike.dungeon;
 
 import greymerk.roguelike.config.RogueConfig;
-import greymerk.roguelike.dungeon.settings.CatacombLevelSettings;
-import greymerk.roguelike.dungeon.settings.CatacombSettingsResolver;
-import greymerk.roguelike.dungeon.settings.ICatacombSettings;
+import greymerk.roguelike.dungeon.settings.LevelSettings;
+import greymerk.roguelike.dungeon.settings.SettingsResolver;
+import greymerk.roguelike.dungeon.settings.ISettings;
 import greymerk.roguelike.dungeon.towers.Tower;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;
@@ -17,14 +17,14 @@ public class Dungeon {
 		
 	public static final int VERTICAL_SPACING = 10;
 	public static final int TOPLEVEL = 50;
-	public static CatacombSettingsResolver settingsResolver;
+	public static SettingsResolver settingsResolver;
 	
 	static{
 		initResolver();
 	}
 	
 	public static void initResolver(){
-		settingsResolver = new CatacombSettingsResolver();
+		settingsResolver = new SettingsResolver();
 	}
 		
 	public static void generateNear(World world, Random rand, int x, int z){
@@ -35,7 +35,7 @@ public class Dungeon {
 			
 			if(!validLocation(world, rand, location.getX(), location.getZ())) continue;
 			
-			ICatacombSettings setting = settingsResolver.getSettings(world, rand, location);
+			ISettings setting = settingsResolver.getSettings(world, rand, location);
 			
 			if(setting == null) return;
 			
@@ -44,7 +44,7 @@ public class Dungeon {
 		}
 	}
 	
-	public static void generate(World world, ICatacombSettings settings, int inX, int inZ){
+	public static void generate(World world, ISettings settings, int inX, int inZ){
 		
 		int x = inX;
 		int y = TOPLEVEL;
@@ -57,7 +57,7 @@ public class Dungeon {
 		DungeonNode oldEnd = null;
 		
 		for (int i = 0; i < numLevels; ++i){
-			CatacombLevelSettings levelSettings = settings.getLevelSettings(i);
+			LevelSettings levelSettings = settings.getLevelSettings(i);
 			
 			IDungeonLevel level;
 			

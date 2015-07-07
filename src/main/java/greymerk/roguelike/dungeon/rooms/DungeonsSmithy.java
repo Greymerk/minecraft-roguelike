@@ -1,7 +1,7 @@
 package greymerk.roguelike.dungeon.rooms;
 
 import greymerk.roguelike.dungeon.base.DungeonBase;
-import greymerk.roguelike.dungeon.settings.CatacombLevelSettings;
+import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.dungeon.theme.ITheme;
 import greymerk.roguelike.treasure.ITreasureChest;
 import greymerk.roguelike.treasure.TreasureChest;
@@ -22,7 +22,7 @@ import net.minecraft.world.World;
 
 public class DungeonsSmithy extends DungeonBase {
 
-	public boolean generate(World world, Random rand, CatacombLevelSettings settings, Cardinal[] entrances, Coord origin) {
+	public boolean generate(World world, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
 
 		ITheme theme = settings.getTheme();
 
@@ -54,7 +54,7 @@ public class DungeonsSmithy extends DungeonBase {
 		return true;
 	}
 	
-	private void sideRoom(World world, Random rand, CatacombLevelSettings settings, Cardinal dir, Coord origin){
+	private void sideRoom(World world, Random rand, LevelSettings settings, Cardinal dir, Coord origin){
 		
 		ITheme theme = settings.getTheme();
 		
@@ -166,7 +166,7 @@ public class DungeonsSmithy extends DungeonBase {
 		
 	}
 	
-	private void mainRoom(World world, Random rand, CatacombLevelSettings settings, Cardinal dir, Coord origin){
+	private void mainRoom(World world, Random rand, LevelSettings settings, Cardinal dir, Coord origin){
 		
 		ITheme theme = settings.getTheme();
 		IBlockFactory wall = theme.getPrimaryWall();
@@ -249,7 +249,7 @@ public class DungeonsSmithy extends DungeonBase {
 	}
 	
 	
-	private void smelterSide(World world, Random rand, CatacombLevelSettings settings, Cardinal dir, Coord origin){
+	private void smelterSide(World world, Random rand, LevelSettings settings, Cardinal dir, Coord origin){
 		
 		ITheme theme = settings.getTheme();
 		IBlockFactory wall = theme.getPrimaryWall();
@@ -285,7 +285,7 @@ public class DungeonsSmithy extends DungeonBase {
 		}
 	}
 	
-	private void smelter(World world, Random rand, CatacombLevelSettings settings, Cardinal dir, Coord origin){
+	private void smelter(World world, Random rand, LevelSettings settings, Cardinal dir, Coord origin){
 		Coord cursor;
 		ITreasureChest input = new TreasureChestEmpty();
 		input.generate(world, rand, settings.getLoot(), origin, 0, false);
@@ -317,7 +317,7 @@ public class DungeonsSmithy extends DungeonBase {
 		Hopper.generate(world, Cardinal.DOWN, cursor);
 	}
 	
-	private void fireplace(World world, Random rand, CatacombLevelSettings settings, Cardinal dir, Coord origin){
+	private void fireplace(World world, Random rand, LevelSettings settings, Cardinal dir, Coord origin){
 		
 		MetaBlock stair = new MetaBlock(Blocks.brick_stairs);
 		MetaBlock brick = new MetaBlock(Blocks.brick_block);
@@ -428,7 +428,7 @@ public class DungeonsSmithy extends DungeonBase {
 		
 	}
 	
-	private void anvilRoom(World world, Random rand, CatacombLevelSettings settings, Cardinal dir, Coord origin){
+	private void anvilRoom(World world, Random rand, LevelSettings settings, Cardinal dir, Coord origin){
 		
 		ITheme theme = settings.getTheme();
 		MetaBlock stair = theme.getPrimaryStair();
@@ -477,7 +477,7 @@ public class DungeonsSmithy extends DungeonBase {
 	}
 	
 	
-	private void overheadLight(World world, Random rand, CatacombLevelSettings settings, Coord origin){
+	private void overheadLight(World world, Random rand, LevelSettings settings, Coord origin){
 		
 		ITheme theme = settings.getTheme();
 		MetaBlock stair = theme.getPrimaryStair();

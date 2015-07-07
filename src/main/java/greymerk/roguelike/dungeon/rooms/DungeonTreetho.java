@@ -1,7 +1,7 @@
 package greymerk.roguelike.dungeon.rooms;
 
 import greymerk.roguelike.dungeon.base.DungeonBase;
-import greymerk.roguelike.dungeon.settings.CatacombLevelSettings;
+import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.dungeon.theme.ITheme;
 import greymerk.roguelike.util.mst.MinimumSpanningTree;
 import greymerk.roguelike.worldgen.Cardinal;
@@ -25,7 +25,7 @@ import net.minecraft.world.World;
 public class DungeonTreetho extends DungeonBase{
 
 	@Override
-	public boolean generate(World world, Random rand, CatacombLevelSettings settings, Cardinal[] entrances, Coord origin) {
+	public boolean generate(World world, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
 
 		ITheme theme = settings.getTheme();
 		IBlockFactory wall = theme.getPrimaryWall();
@@ -72,7 +72,7 @@ public class DungeonTreetho extends DungeonBase{
 		return true;
 	}
 	
-	private void treeFarm(World world, Random rand, CatacombLevelSettings settings, Coord origin, Cardinal dir){
+	private void treeFarm(World world, Random rand, LevelSettings settings, Coord origin, Cardinal dir){
 		Coord cursor;
 		Coord start;
 		Coord end;
@@ -121,7 +121,7 @@ public class DungeonTreetho extends DungeonBase{
 		
 	}
 	
-	private void ceiling(World world, Random rand, CatacombLevelSettings settings, Coord origin){
+	private void ceiling(World world, Random rand, LevelSettings settings, Coord origin){
 		
 		MetaBlock fill = new MetaBlock(Blocks.planks);
 		fill.withProperty(BlockPlanks.VARIANT_PROP, BlockPlanks.EnumType.DARK_OAK);
@@ -152,7 +152,7 @@ public class DungeonTreetho extends DungeonBase{
 		
 	}
 	
-	private void pillar(World world, Random rand, CatacombLevelSettings settings, Coord origin){
+	private void pillar(World world, Random rand, LevelSettings settings, Coord origin){
 		
 		ITheme theme = settings.getTheme();
 		IBlockFactory pillar = theme.getPrimaryPillar();

@@ -1,6 +1,6 @@
 package greymerk.roguelike.worldgen;
 
-import greymerk.roguelike.dungeon.settings.CatacombLevelSettings;
+import greymerk.roguelike.dungeon.settings.LevelSettings;
 
 import java.util.Random;
 
@@ -18,12 +18,12 @@ public enum Spawner {
 	
 	private static final Spawner[] common = {SPIDER, SKELETON, ZOMBIE};
 	
-	public static void generate(World world, Random rand, CatacombLevelSettings level, Coord pos){
+	public static void generate(World world, Random rand, LevelSettings level, Coord pos){
 		Spawner type = common[rand.nextInt(common.length)];
 		generate(world, rand, level, pos, type);
 	}
 	
-	public static void generate(World world, Random rand, CatacombLevelSettings level, Coord pos, Spawner type){
+	public static void generate(World world, Random rand, LevelSettings level, Coord pos, Spawner type){
 		
 		if(level.getSpawners() != null){
 			level.getSpawners().generate(world, rand, pos, type, level.getDifficulty(pos));

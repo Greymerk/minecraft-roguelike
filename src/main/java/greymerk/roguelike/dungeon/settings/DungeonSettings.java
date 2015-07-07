@@ -16,21 +16,21 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 
-public class CatacombSettings implements ICatacombSettings{
+public class DungeonSettings implements ISettings{
 	
 	public static final int MAX_NUM_LEVELS = 5;
 	private String name;
-	protected CatacombTowerSettings towerSettings;
-	protected Map<Integer, CatacombLevelSettings> levels;
+	protected TowerSettings towerSettings;
+	protected Map<Integer, LevelSettings> levels;
 	protected SpawnCriteria criteria;
 	protected int depth;
 	
-	public CatacombSettings(){
-		this.levels = new HashMap<Integer, CatacombLevelSettings>();
+	public DungeonSettings(){
+		this.levels = new HashMap<Integer, LevelSettings>();
 		this.depth = 0;
 	}
 	
-	public CatacombSettings(Map<String, CatacombSettings> settings, JsonObject root) throws Exception{
+	public DungeonSettings(Map<String, DungeonSettings> settings, JsonObject root) throws Exception{
 		
 		this.name = root.get("name").getAsString();
 		
@@ -46,10 +46,10 @@ public class CatacombSettings implements ICatacombSettings{
 		}
 		
 		if(root.has("tower")){
-			this.towerSettings = new CatacombTowerSettings(root.get("tower"));
+			this.towerSettings = new TowerSettings(root.get("tower"));
 		}
 		
-		levels = new HashMap<Integer, CatacombLevelSettings>();
+		levels = new HashMap<Integer, LevelSettings>();
 		
 		List<String> inheritList = new ArrayList<String>();
 		if(root.has("inherit")){
@@ -59,11 +59,11 @@ public class CatacombSettings implements ICatacombSettings{
 			}
 		}
 		
-		CatacombSettings base = new CatacombSettingsBlank();
+		DungeonSettings base = new SettingsBlank();
 		
 		for(String name : inheritList){
 			if(settings.containsKey(name)){
-				base = new CatacombSettings(base, settings.get(name));
+				base = new DungeonSettings(base, settings.get(name));
 			} else {
 				throw new Exception(name + " must be previously defined in order to be inherited");
 			}
@@ -72,7 +72,7 @@ public class CatacombSettings implements ICatacombSettings{
 		parseJson(base, root);
 	}
 	
-	private void parseJson(CatacombSettings base, JsonObject root){
+	private void parseJson(DungeonSettings base, JsonObject root){
 		
 		if(!root.has("tower")){
 			this.towerSettings = base.towerSettings;
@@ -91,23 +91,23 @@ public class CatacombSettings implements ICatacombSettings{
 		
 		for(int i = 0; i < 5; ++i){
 			
-			CatacombLevelSettings setting = new CatacombLevelSettings();
+			LevelSettings setting = new LevelSettings();
 			
 			if(levelSet.has("all")){
 				JsonObject data = levelSet.get("all").getAsJsonObject();
-				setting = new CatacombLevelSettings(setting, new CatacombLevelSettings(data));
+				setting = new LevelSettings(setting, new LevelSettings(data));
 			}
 			
 			if(levelSet.has(Integer.toString(i))){
 				JsonObject data = levelSet.get(Integer.toString(i)).getAsJsonObject();
-				setting = new CatacombLevelSettings(setting, new CatacombLevelSettings(data));
+				setting = new LevelSettings(setting, new LevelSettings(data));
 			}
 			
 			this.levels.put(i, setting);
 		}
 	}
 	
-	public CatacombSettings(CatacombSettings base, CatacombSettings override){
+	public DungeonSettings(DungeonSettings base, DungeonSettings override){
 		
 		if(override.depth != 0){
 			depth = override.depth;
@@ -121,25 +121,25 @@ public class CatacombSettings implements ICatacombSettings{
 			this.towerSettings = override.towerSettings;
 		}
 		
-		levels = new HashMap<Integer, CatacombLevelSettings>();
+		levels = new HashMap<Integer, LevelSettings>();
 		
 		for(int i = 0; i < MAX_NUM_LEVELS; ++i){
 			if(override.levels.get(i) == null){
-				levels.put(i, new CatacombLevelSettings(base.levels.get(i)));
+				levels.put(i, new LevelSettings(base.levels.get(i)));
 			} else {
-				levels.put(i, new CatacombLevelSettings(base.levels.get(i), override.levels.get(i)));
+				levels.put(i, new LevelSettings(base.levels.get(i), override.levels.get(i)));
 			}
 		}
 	}
 	
-	public CatacombSettings(CatacombSettings toCopy){
+	public DungeonSettings(DungeonSettings toCopy){
 		
 		this.depth = toCopy.depth;
 		
-		this.levels = new HashMap<Integer, CatacombLevelSettings>();
+		this.levels = new HashMap<Integer, LevelSettings>();
 		
 		for(int i = 0; i < MAX_NUM_LEVELS; ++i){
-			this.levels.put(i, new CatacombLevelSettings(toCopy.levels.get(i)));
+			this.levels.put(i, new LevelSettings(toCopy.levels.get(i)));
 		}
 	}
 
@@ -160,13 +160,13 @@ public class CatacombSettings implements ICatacombSettings{
 	}
 
 	@Override
-	public CatacombLevelSettings getLevelSettings(int level) {
+	public LevelSettings getLevelSettings(int level) {
 		return levels.get(level);
 	}
 	
 	@Override
-	public CatacombTowerSettings getTower(){
-		if(this.towerSettings == null) return new CatacombTowerSettings(Tower.ROGUE, Theme.getTheme(Theme.TOWER));
+	public TowerSettings getTower(){
+		if(this.towerSettings == null) return new TowerSettings(Tower.ROGUE, Theme.getTheme(Theme.TOWER));
 		
 		return this.towerSettings;
 	}

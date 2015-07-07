@@ -8,17 +8,17 @@ import greymerk.roguelike.dungeon.towers.Tower;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-public class CatacombTowerSettings {
+public class TowerSettings {
 
 	private Tower tower;
 	private ITheme theme;
 	
-	public CatacombTowerSettings(Tower tower, ITheme theme){
+	public TowerSettings(Tower tower, ITheme theme){
 		this.tower = tower;
 		this.theme = theme;
 	}
 	
-	public CatacombTowerSettings(JsonElement e) {
+	public TowerSettings(JsonElement e) {
 
 		JsonObject data = e.getAsJsonObject();
 		this.tower = data.has("type") ? Tower.valueOf(data.get("type").getAsString()) : Tower.ROGUE;

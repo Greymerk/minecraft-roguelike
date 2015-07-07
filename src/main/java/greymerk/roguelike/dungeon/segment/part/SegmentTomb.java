@@ -1,7 +1,7 @@
 package greymerk.roguelike.dungeon.segment.part;
 
 import greymerk.roguelike.dungeon.DungeonLevel;
-import greymerk.roguelike.dungeon.settings.CatacombLevelSettings;
+import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.dungeon.theme.ITheme;
 import greymerk.roguelike.treasure.TreasureChest;
 import greymerk.roguelike.worldgen.Cardinal;
@@ -59,7 +59,7 @@ public class SegmentTomb extends SegmentBase {
 		
 	}
 	
-	private static void tomb(World world, Random rand, CatacombLevelSettings level, ITheme theme, Cardinal dir, Coord pos){
+	private static void tomb(World world, Random rand, LevelSettings level, ITheme theme, Cardinal dir, Coord pos){
 		
 		Coord cursor;
 		Coord start;

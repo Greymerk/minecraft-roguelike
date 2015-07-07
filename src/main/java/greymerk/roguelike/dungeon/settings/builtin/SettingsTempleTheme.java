@@ -3,9 +3,9 @@ package greymerk.roguelike.dungeon.settings.builtin;
 import greymerk.roguelike.dungeon.base.SecretFactory;
 import greymerk.roguelike.dungeon.segment.Segment;
 import greymerk.roguelike.dungeon.segment.SegmentGenerator;
-import greymerk.roguelike.dungeon.settings.CatacombLevelSettings;
-import greymerk.roguelike.dungeon.settings.CatacombSettings;
-import greymerk.roguelike.dungeon.settings.CatacombTowerSettings;
+import greymerk.roguelike.dungeon.settings.LevelSettings;
+import greymerk.roguelike.dungeon.settings.DungeonSettings;
+import greymerk.roguelike.dungeon.settings.TowerSettings;
 import greymerk.roguelike.dungeon.settings.SpawnCriteria;
 import greymerk.roguelike.dungeon.theme.Theme;
 import greymerk.roguelike.dungeon.towers.Tower;
@@ -22,9 +22,9 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.BiomeDictionary;
 
-public class CatacombSettingsTempleTheme extends CatacombSettings{
+public class SettingsTempleTheme extends DungeonSettings{
 	
-	public CatacombSettingsTempleTheme(){
+	public SettingsTempleTheme(){
 		
 		this.depth = 2;
 		
@@ -33,12 +33,12 @@ public class CatacombSettingsTempleTheme extends CatacombSettings{
 		biomes.add(BiomeDictionary.Type.JUNGLE);
 		this.criteria.setBiomeTypes(biomes);
 		
-		this.towerSettings = new CatacombTowerSettings(Tower.JUNGLE, Theme.getTheme(Theme.JUNGLE));
+		this.towerSettings = new TowerSettings(Tower.JUNGLE, Theme.getTheme(Theme.JUNGLE));
 		
 		Theme[] themes = {Theme.JUNGLE, Theme.MOSSY, Theme.MOSSY, Theme.MOSSY, Theme.NETHER};
 		
 		for(int i = 0; i < 5; ++i){
-			CatacombLevelSettings level = new CatacombLevelSettings();
+			LevelSettings level = new LevelSettings();
 			level.setDifficulty(3);
 			
 			SegmentGenerator segments;

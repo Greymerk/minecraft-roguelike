@@ -5,9 +5,9 @@ import greymerk.roguelike.dungeon.base.DungeonRoom;
 import greymerk.roguelike.dungeon.base.SecretFactory;
 import greymerk.roguelike.dungeon.segment.Segment;
 import greymerk.roguelike.dungeon.segment.SegmentGenerator;
-import greymerk.roguelike.dungeon.settings.CatacombLevelSettings;
-import greymerk.roguelike.dungeon.settings.CatacombSettings;
-import greymerk.roguelike.dungeon.settings.CatacombTowerSettings;
+import greymerk.roguelike.dungeon.settings.LevelSettings;
+import greymerk.roguelike.dungeon.settings.DungeonSettings;
+import greymerk.roguelike.dungeon.settings.TowerSettings;
 import greymerk.roguelike.dungeon.settings.SpawnCriteria;
 import greymerk.roguelike.dungeon.theme.Theme;
 import greymerk.roguelike.dungeon.towers.Tower;
@@ -24,9 +24,9 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.BiomeDictionary;
 
-public class CatacombSettingsEthoTheme extends CatacombSettings{
+public class SettingsEthoTheme extends DungeonSettings{
 	
-	public CatacombSettingsEthoTheme(){
+	public SettingsEthoTheme(){
 		
 		this.depth = 1;
 		
@@ -35,10 +35,10 @@ public class CatacombSettingsEthoTheme extends CatacombSettings{
 		biomes.add(BiomeDictionary.Type.FOREST);
 		this.criteria.setBiomeTypes(biomes);
 		
-		this.towerSettings = new CatacombTowerSettings(Tower.ETHO, Theme.getTheme(Theme.ETHOTOWER));
+		this.towerSettings = new TowerSettings(Tower.ETHO, Theme.getTheme(Theme.ETHOTOWER));
 		
 		for(int i = 0; i < 5; ++i){
-			CatacombLevelSettings level = new CatacombLevelSettings();
+			LevelSettings level = new LevelSettings();
 			level.setTheme(Theme.getTheme(Theme.ETHO));
 			level.setDifficulty(3);
 			

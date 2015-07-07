@@ -1,6 +1,6 @@
 package greymerk.roguelike.dungeon.base;
 
-import greymerk.roguelike.dungeon.settings.CatacombLevelSettings;
+import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
@@ -35,7 +35,7 @@ public class SecretRoom implements ISecretRoom {
 	}
 	
 	@Override
-	public boolean genRoom(World world, Random rand, CatacombLevelSettings settings, Cardinal dir, Coord pos){
+	public boolean genRoom(World world, Random rand, LevelSettings settings, Cardinal dir, Coord pos){
 		if(!isValid(world, rand, dir, pos)) return false;
 		
 		int size = prototype.getSize();

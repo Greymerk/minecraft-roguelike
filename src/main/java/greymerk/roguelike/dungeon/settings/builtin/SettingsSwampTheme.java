@@ -4,9 +4,9 @@ import greymerk.roguelike.dungeon.base.DungeonFactory;
 import greymerk.roguelike.dungeon.base.DungeonRoom;
 import greymerk.roguelike.dungeon.segment.Segment;
 import greymerk.roguelike.dungeon.segment.SegmentGenerator;
-import greymerk.roguelike.dungeon.settings.CatacombLevelSettings;
-import greymerk.roguelike.dungeon.settings.CatacombSettings;
-import greymerk.roguelike.dungeon.settings.CatacombTowerSettings;
+import greymerk.roguelike.dungeon.settings.LevelSettings;
+import greymerk.roguelike.dungeon.settings.DungeonSettings;
+import greymerk.roguelike.dungeon.settings.TowerSettings;
 import greymerk.roguelike.dungeon.settings.SpawnCriteria;
 import greymerk.roguelike.dungeon.theme.Theme;
 import greymerk.roguelike.dungeon.towers.Tower;
@@ -16,30 +16,32 @@ import java.util.List;
 
 import net.minecraftforge.common.BiomeDictionary;
 
-public class CatacombSettingsForestTheme extends CatacombSettings{
+public class SettingsSwampTheme extends DungeonSettings{
 	
-	public CatacombSettingsForestTheme(){
+	public SettingsSwampTheme(){
 		
 		this.criteria = new SpawnCriteria();
 		List<BiomeDictionary.Type> biomes = new ArrayList<BiomeDictionary.Type>();
-		biomes.add(BiomeDictionary.Type.FOREST);
-		this.criteria.setWeight(6);
+		biomes.add(BiomeDictionary.Type.SWAMP);
+		this.criteria.setWeight(5);
 		this.criteria.setBiomeTypes(biomes);
 		
-		this.towerSettings = new CatacombTowerSettings(Tower.ROGUE, Theme.getTheme(Theme.ETHO));
+		this.towerSettings = new TowerSettings(Tower.ROGUE, Theme.getTheme(Theme.MUDDY));
 		
-		Theme[] themes = {Theme.ETHO, Theme.OAK, Theme.CRYPT, Theme.MOSSY, Theme.NETHER};
+		Theme[] themes = {Theme.MUDDY, Theme.DARKHALL, Theme.CRYPT, Theme.MOSSY, Theme.NETHER};
 		
 		for(int i = 0; i < 5; ++i){
-			CatacombLevelSettings level = new CatacombLevelSettings();
+			
+			LevelSettings level = new LevelSettings();
+			level.setTheme(Theme.getTheme(themes[i]));
 			
 			if(i == 0){
-				
+
 				SegmentGenerator segments = new SegmentGenerator(Segment.ARCH);
 				segments.add(Segment.DOOR, 8);
 				segments.add(Segment.LAMP, 2);
 				segments.add(Segment.FLOWERS, 1);
-				segments.add(Segment.WHEAT, 2);
+				segments.add(Segment.MUSHROOM, 2);
 				level.setSegments(segments);
 				
 				DungeonFactory factory = new DungeonFactory();
@@ -50,7 +52,6 @@ public class CatacombSettingsForestTheme extends CatacombSettings{
 				level.setRooms(factory);
 			}
 			
-			level.setTheme(Theme.getTheme(themes[i]));
 			levels.put(i, level);
 		}
 	}

@@ -1,8 +1,8 @@
 package greymerk.roguelike.dungeon.settings.builtin;
 
-import greymerk.roguelike.dungeon.settings.CatacombLevelSettings;
-import greymerk.roguelike.dungeon.settings.CatacombSettings;
-import greymerk.roguelike.dungeon.settings.CatacombTowerSettings;
+import greymerk.roguelike.dungeon.settings.LevelSettings;
+import greymerk.roguelike.dungeon.settings.DungeonSettings;
+import greymerk.roguelike.dungeon.settings.TowerSettings;
 import greymerk.roguelike.dungeon.settings.SpawnCriteria;
 import greymerk.roguelike.dungeon.theme.Theme;
 import greymerk.roguelike.dungeon.towers.Tower;
@@ -12,21 +12,22 @@ import java.util.List;
 
 import net.minecraftforge.common.BiomeDictionary;
 
-public class CatacombSettingsTaigaTheme extends CatacombSettings{
+public class SettingsMountainTheme extends DungeonSettings{
 	
-	public CatacombSettingsTaigaTheme(){
+	public SettingsMountainTheme(){
 		
 		this.criteria = new SpawnCriteria();
 		List<BiomeDictionary.Type> biomes = new ArrayList<BiomeDictionary.Type>();
-		biomes.add(BiomeDictionary.Type.CONIFEROUS);
+		biomes.add(BiomeDictionary.Type.MOUNTAIN);
+		this.criteria.setWeight(5);
 		this.criteria.setBiomeTypes(biomes);
 		
-		this.towerSettings = new CatacombTowerSettings(Tower.ROGUE, Theme.getTheme(Theme.SPRUCE));
+		this.towerSettings = new TowerSettings(Tower.ROGUE, Theme.getTheme(Theme.OAK));
 		
-		Theme[] themes = {Theme.SNOW, Theme.SPRUCE, Theme.CRYPT, Theme.MOSSY, Theme.NETHER};
+		Theme[] themes = {Theme.ENIKO, Theme.ENIKO2, Theme.CRYPT, Theme.MOSSY, Theme.NETHER};
 		
 		for(int i = 0; i < 5; ++i){
-			CatacombLevelSettings level = new CatacombLevelSettings();
+			LevelSettings level = new LevelSettings();
 			level.setTheme(Theme.getTheme(themes[i]));
 			levels.put(i, level);
 		}

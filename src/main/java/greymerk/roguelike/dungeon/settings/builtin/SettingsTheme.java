@@ -1,17 +1,17 @@
 package greymerk.roguelike.dungeon.settings.builtin;
 
-import greymerk.roguelike.dungeon.settings.CatacombLevelSettings;
-import greymerk.roguelike.dungeon.settings.CatacombSettings;
+import greymerk.roguelike.dungeon.settings.LevelSettings;
+import greymerk.roguelike.dungeon.settings.DungeonSettings;
 import greymerk.roguelike.dungeon.theme.Theme;
 
-public class CatacombSettingsTheme extends CatacombSettings{
+public class SettingsTheme extends DungeonSettings{
 	
-	public CatacombSettingsTheme(){
+	public SettingsTheme(){
 		
 		Theme[] themes = {Theme.OAK, Theme.OAK, Theme.CRYPT, Theme.MOSSY, Theme.NETHER};
 		
 		for(int i = 0; i < 5; ++i){
-			CatacombLevelSettings level = new CatacombLevelSettings();
+			LevelSettings level = new LevelSettings();
 			level.setTheme(Theme.getTheme(themes[i]));
 			levels.put(i, level);
 		}

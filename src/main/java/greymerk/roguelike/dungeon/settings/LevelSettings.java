@@ -15,7 +15,7 @@ import greymerk.roguelike.worldgen.SpawnerSettings;
 
 import com.google.gson.JsonObject;
 
-public class CatacombLevelSettings {
+public class LevelSettings {
 
 	int numRooms;
 	int range;
@@ -28,14 +28,14 @@ public class CatacombLevelSettings {
 	LootSettings loot;
 	SpawnerSettings spawners;
 	
-	public CatacombLevelSettings(){
+	public LevelSettings(){
 		numRooms = RogueConfig.getInt(RogueConfig.LEVELMAXROOMS);
 		range = RogueConfig.getInt(RogueConfig.LEVELRANGE);
 		scatter = RogueConfig.getInt(RogueConfig.LEVELSCATTER);
 		levelDifficulty = -1;
 	}
 	
-	public CatacombLevelSettings(CatacombLevelSettings toCopy){
+	public LevelSettings(LevelSettings toCopy){
 		this.numRooms = toCopy.numRooms;
 		this.range = toCopy.range;
 		this.scatter = toCopy.scatter;
@@ -48,7 +48,7 @@ public class CatacombLevelSettings {
 		this.spawners = toCopy.spawners != null ? new SpawnerSettings(toCopy.spawners) : null;
 	}
 	
-	public CatacombLevelSettings(CatacombLevelSettings base, CatacombLevelSettings override){
+	public LevelSettings(LevelSettings base, LevelSettings override){
 		
 		this.numRooms = override.numRooms != base.numRooms && override.numRooms != RogueConfig.getInt(RogueConfig.LEVELMAXROOMS) ? override.numRooms : base.numRooms;
 		this.range = override.range != base.range && override.range != RogueConfig.getInt(RogueConfig.LEVELRANGE) ? override.range : base.range;
@@ -75,7 +75,7 @@ public class CatacombLevelSettings {
 		this.spawners = new SpawnerSettings(base.spawners, override.spawners);
 	}
 	
-	public CatacombLevelSettings(JsonObject data){
+	public LevelSettings(JsonObject data){
 		this.numRooms = data.has("numRooms") ? data.get("numRooms").getAsInt() : RogueConfig.getInt(RogueConfig.LEVELMAXROOMS);
 		this.range = data.has("range") ? data.get("range").getAsInt() : RogueConfig.getInt(RogueConfig.LEVELRANGE);
 		this.scatter = data.has("scatter") ? data.get("scatter").getAsInt() : RogueConfig.getInt(RogueConfig.LEVELSCATTER);

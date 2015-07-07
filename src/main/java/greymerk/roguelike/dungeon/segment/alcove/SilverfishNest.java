@@ -1,7 +1,7 @@
 package greymerk.roguelike.dungeon.segment.alcove;
 
 import greymerk.roguelike.dungeon.segment.IAlcove;
-import greymerk.roguelike.dungeon.settings.CatacombLevelSettings;
+import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
@@ -21,7 +21,7 @@ public class SilverfishNest implements IAlcove{
 	private static int RECESSED = 6;
 	
 	@Override
-	public void generate(World world, Random rand, CatacombLevelSettings settings, int x, int y, int z, Cardinal dir) {
+	public void generate(World world, Random rand, LevelSettings settings, int x, int y, int z, Cardinal dir) {
 		
 		Coord corridor = new Coord(x, y, z);
 		Coord centre = new Coord(x, y, z);

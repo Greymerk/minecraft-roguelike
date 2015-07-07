@@ -1,7 +1,7 @@
 package greymerk.roguelike.dungeon.rooms;
 
 import greymerk.roguelike.dungeon.base.DungeonBase;
-import greymerk.roguelike.dungeon.settings.CatacombLevelSettings;
+import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.treasure.ITreasureChest;
 import greymerk.roguelike.treasure.TreasureChestEmpty;
 import greymerk.roguelike.treasure.loot.provider.ItemNovelty;
@@ -19,7 +19,7 @@ import net.minecraft.world.World;
 public class DungeonBaj extends DungeonBase {
 
 	@Override
-	public boolean generate(World world, Random rand, CatacombLevelSettings settings, Cardinal[] entrances, Coord origin) {
+	public boolean generate(World world, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
 
 		
 		int x = origin.getX();

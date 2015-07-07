@@ -4,13 +4,13 @@ import greymerk.roguelike.worldgen.Coord;
 import net.minecraft.world.World;
 
 
-public interface ICatacombSettings {
+public interface ISettings {
 
 	public boolean isValid(World world, Coord pos);
 	
-	public CatacombLevelSettings getLevelSettings(int level);
+	public LevelSettings getLevelSettings(int level);
 	
-	public CatacombTowerSettings getTower();
+	public TowerSettings getTower();
 	
 	public int getNumLevels();
 }

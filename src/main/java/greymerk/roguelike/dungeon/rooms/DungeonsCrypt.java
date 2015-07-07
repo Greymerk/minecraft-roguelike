@@ -1,7 +1,7 @@
 package greymerk.roguelike.dungeon.rooms;
 
 import greymerk.roguelike.dungeon.base.DungeonBase;
-import greymerk.roguelike.dungeon.settings.CatacombLevelSettings;
+import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.dungeon.theme.ITheme;
 import greymerk.roguelike.treasure.TreasureChest;
 import greymerk.roguelike.worldgen.Cardinal;
@@ -21,7 +21,7 @@ import net.minecraft.world.World;
 
 public class DungeonsCrypt extends DungeonBase {
 
-	public boolean generate(World world, Random rand, CatacombLevelSettings settings, Cardinal[] entrances, Coord origin) {
+	public boolean generate(World world, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
 		
 		ITheme theme = settings.getTheme();
 		MetaBlock air = new MetaBlock(Blocks.air);
@@ -130,7 +130,7 @@ public class DungeonsCrypt extends DungeonBase {
 		return true;
 	}
 	
-	private void sarcophagus(World world, Random rand, CatacombLevelSettings settings, Coord origin, Cardinal dir){
+	private void sarcophagus(World world, Random rand, LevelSettings settings, Coord origin, Cardinal dir){
 		
 		ITheme theme = settings.getTheme();
 		
@@ -222,7 +222,7 @@ public class DungeonsCrypt extends DungeonBase {
 		
 	}
 	
-	private void crypt(World world, Random rand, CatacombLevelSettings settings, Coord origin, Cardinal dir){
+	private void crypt(World world, Random rand, LevelSettings settings, Coord origin, Cardinal dir){
 		
 		ITheme theme = settings.getTheme();
 		
@@ -285,7 +285,7 @@ public class DungeonsCrypt extends DungeonBase {
 		tomb(world, rand, settings, origin, dir);
 	}
 	
-	private void mausoleumWall(World world, Random rand, CatacombLevelSettings settings, Coord origin, Cardinal dir){
+	private void mausoleumWall(World world, Random rand, LevelSettings settings, Coord origin, Cardinal dir){
 		
 		ITheme theme = settings.getTheme();
 		IBlockFactory walls = theme.getPrimaryWall();
@@ -323,7 +323,7 @@ public class DungeonsCrypt extends DungeonBase {
 		
 	}
 	
-	private void pillar(World world, Random rand, CatacombLevelSettings settings, Coord origin){
+	private void pillar(World world, Random rand, LevelSettings settings, Coord origin){
 		
 		ITheme theme = settings.getTheme();
 		
@@ -347,7 +347,7 @@ public class DungeonsCrypt extends DungeonBase {
 		}
 	}
 	
-	private void tomb(World world, Random rand, CatacombLevelSettings settings, Coord origin, Cardinal dir){
+	private void tomb(World world, Random rand, LevelSettings settings, Coord origin, Cardinal dir){
 		
 		ITheme theme = settings.getTheme();
 		Coord cursor;

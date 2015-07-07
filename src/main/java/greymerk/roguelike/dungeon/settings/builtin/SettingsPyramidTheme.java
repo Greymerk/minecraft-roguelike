@@ -5,9 +5,9 @@ import greymerk.roguelike.dungeon.base.DungeonRoom;
 import greymerk.roguelike.dungeon.base.SecretFactory;
 import greymerk.roguelike.dungeon.segment.Segment;
 import greymerk.roguelike.dungeon.segment.SegmentGenerator;
-import greymerk.roguelike.dungeon.settings.CatacombLevelSettings;
-import greymerk.roguelike.dungeon.settings.CatacombSettings;
-import greymerk.roguelike.dungeon.settings.CatacombTowerSettings;
+import greymerk.roguelike.dungeon.settings.LevelSettings;
+import greymerk.roguelike.dungeon.settings.DungeonSettings;
+import greymerk.roguelike.dungeon.settings.TowerSettings;
 import greymerk.roguelike.dungeon.settings.SpawnCriteria;
 import greymerk.roguelike.dungeon.theme.Theme;
 import greymerk.roguelike.dungeon.towers.Tower;
@@ -23,9 +23,9 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.BiomeDictionary;
 
-public class CatacombSettingsPyramidTheme extends CatacombSettings{
+public class SettingsPyramidTheme extends DungeonSettings{
 	
-	public CatacombSettingsPyramidTheme(){
+	public SettingsPyramidTheme(){
 		
 		this.depth = 1;
 		
@@ -34,7 +34,7 @@ public class CatacombSettingsPyramidTheme extends CatacombSettings{
 		biomes.add(BiomeDictionary.Type.SANDY);
 		this.criteria.setBiomeTypes(biomes);
 		
-		this.towerSettings = new CatacombTowerSettings(Tower.PYRAMID, Theme.getTheme(Theme.PYRAMID));
+		this.towerSettings = new TowerSettings(Tower.PYRAMID, Theme.getTheme(Theme.PYRAMID));
 		
 		SegmentGenerator segments;
 		segments = new SegmentGenerator(Segment.SQUAREARCH);
@@ -52,7 +52,7 @@ public class CatacombSettingsPyramidTheme extends CatacombSettings{
 		factory.addRandom(DungeonRoom.BRICK, 3);
 		factory.addRandom(DungeonRoom.CORNER, 3);
 		
-		CatacombLevelSettings level = new CatacombLevelSettings();
+		LevelSettings level = new LevelSettings();
 		level.setTheme(Theme.getTheme(Theme.SANDSTONE));
 		level.setSegments(segments);
 		level.setRooms(factory);

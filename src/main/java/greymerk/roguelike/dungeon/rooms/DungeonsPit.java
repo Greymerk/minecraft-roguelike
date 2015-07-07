@@ -1,7 +1,7 @@
 package greymerk.roguelike.dungeon.rooms;
 
 import greymerk.roguelike.dungeon.base.DungeonBase;
-import greymerk.roguelike.dungeon.settings.CatacombLevelSettings;
+import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.dungeon.theme.ITheme;
 import greymerk.roguelike.treasure.TreasureChest;
 import greymerk.roguelike.worldgen.Cardinal;
@@ -38,7 +38,7 @@ public class DungeonsPit extends DungeonBase {
 		dungeonWidth = 2;
 	}
 
-	public boolean generate(World inWorld, Random inRandom, CatacombLevelSettings settings, Cardinal[] entrances, Coord origin) {
+	public boolean generate(World inWorld, Random inRandom, LevelSettings settings, Cardinal[] entrances, Coord origin) {
 
 		ITheme theme = settings.getTheme();
 		
@@ -150,7 +150,7 @@ public class DungeonsPit extends DungeonBase {
 		}
 	}
 	
-	private void setTrap(World world, Random rand, CatacombLevelSettings settings, Cardinal dir, Coord origin){
+	private void setTrap(World world, Random rand, LevelSettings settings, Cardinal dir, Coord origin){
 		ITheme theme = settings.getTheme();
 		IBlockFactory walls = theme.getPrimaryWall();
 		MetaBlock plate = new MetaBlock(Blocks.stone_pressure_plate);
