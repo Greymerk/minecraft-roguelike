@@ -1,11 +1,11 @@
 package greymerk.roguelike.util;
 
 
-import greymerk.roguelike.catacomb.Catacomb;
-import greymerk.roguelike.catacomb.settings.CatacombSettings;
-import greymerk.roguelike.catacomb.settings.ICatacombSettings;
 import greymerk.roguelike.citadel.Citadel;
 import greymerk.roguelike.config.RogueConfig;
+import greymerk.roguelike.dungeon.Catacomb;
+import greymerk.roguelike.dungeon.settings.CatacombSettings;
+import greymerk.roguelike.dungeon.settings.ICatacombSettings;
 import greymerk.roguelike.treasure.loot.provider.ItemNovelty;
 import greymerk.roguelike.worldgen.Coord;
 

@@ -1,9 +1,9 @@
 package greymerk.roguelike.citadel;
 
-import greymerk.roguelike.catacomb.theme.ITheme;
-import greymerk.roguelike.catacomb.theme.Theme;
-import greymerk.roguelike.catacomb.tower.ITower;
-import greymerk.roguelike.catacomb.tower.RogueTower;
+import greymerk.roguelike.dungeon.theme.ITheme;
+import greymerk.roguelike.dungeon.theme.Theme;
+import greymerk.roguelike.dungeon.towers.ITower;
+import greymerk.roguelike.dungeon.towers.RogueTower;
 import greymerk.roguelike.util.mst.Edge;
 import greymerk.roguelike.util.mst.MinimumSpanningTree;
 import greymerk.roguelike.worldgen.Cardinal;

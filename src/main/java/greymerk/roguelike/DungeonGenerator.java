@@ -1,6 +1,6 @@
 package greymerk.roguelike;
 
-import greymerk.roguelike.catacomb.Catacomb;
+import greymerk.roguelike.dungeon.Catacomb;
 
 import java.util.Random;
 

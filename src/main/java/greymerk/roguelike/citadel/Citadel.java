@@ -1,6 +1,6 @@
 package greymerk.roguelike.citadel;
 
-import greymerk.roguelike.catacomb.theme.Theme;
+import greymerk.roguelike.dungeon.theme.Theme;
 import greymerk.roguelike.util.mst.MinimumSpanningTree;
 import greymerk.roguelike.worldgen.Coord;
 

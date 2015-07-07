@@ -1,8 +1,8 @@
 package greymerk.roguelike.treasure;
 
 
-import greymerk.roguelike.catacomb.Catacomb;
-import greymerk.roguelike.catacomb.settings.CatacombLevelSettings;
+import greymerk.roguelike.dungeon.Catacomb;
+import greymerk.roguelike.dungeon.settings.CatacombLevelSettings;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.WorldGenPrimitive;

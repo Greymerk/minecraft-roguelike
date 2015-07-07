@@ -1,6 +1,6 @@
 package greymerk.roguelike.worldgen;
 
-import greymerk.roguelike.catacomb.settings.CatacombLevelSettings;
+import greymerk.roguelike.dungeon.settings.CatacombLevelSettings;
 
 import java.util.Random;
 
