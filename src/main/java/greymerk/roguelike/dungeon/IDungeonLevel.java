@@ -7,10 +7,6 @@ import greymerk.roguelike.worldgen.Coord;
 
 public interface IDungeonLevel {
 
-	public void generate(Coord start, DungeonNode oldEnd);
-	
-	public DungeonNode getEnd();
-	
 	public LevelSettings getSettings();
 	
 	public List<DungeonNode> getNodes();

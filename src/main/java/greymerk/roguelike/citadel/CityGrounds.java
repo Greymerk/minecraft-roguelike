@@ -3,7 +3,7 @@ package greymerk.roguelike.citadel;
 import greymerk.roguelike.dungeon.theme.ITheme;
 import greymerk.roguelike.dungeon.theme.Theme;
 import greymerk.roguelike.dungeon.towers.ITower;
-import greymerk.roguelike.dungeon.towers.RogueTower;
+import greymerk.roguelike.dungeon.towers.Tower;
 import greymerk.roguelike.util.mst.Edge;
 import greymerk.roguelike.util.mst.MinimumSpanningTree;
 import greymerk.roguelike.worldgen.Cardinal;
@@ -48,8 +48,6 @@ public class CityGrounds {
 		end.add(new Coord(Citadel.EDGE_LENGTH, 40, Citadel.EDGE_LENGTH));
 		WorldGenPrimitive.fillRectSolid(world, rand, start, end, theme.getPrimaryWall(), true, true);
 		
-		
-		ITower tower = new RogueTower();
 		Coord cursor = new Coord(pos);
 		cursor.add(Cardinal.UP, 20);
 		
@@ -67,7 +65,8 @@ public class CityGrounds {
 		for(Coord c : towers){
 			c.add(pos);
 			rand = Citadel.getRandom(world, c.getX(), c.getZ());
-			tower.generate(world, rand, Theme.getTheme(Theme.CRYPT), c.getX(), 50, c.getZ());
+			ITower tower = Tower.get(Tower.values()[rand.nextInt(Tower.values().length)]);
+			tower.generate(world, rand, Theme.getTheme(Theme.values()[rand.nextInt(Theme.values().length)]), c.getX(), 50, c.getZ());
 		}
 		
 	}

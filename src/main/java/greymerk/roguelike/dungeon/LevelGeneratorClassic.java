@@ -1,10 +1,17 @@
 package greymerk.roguelike.dungeon;
 
+import greymerk.roguelike.dungeon.base.IDungeonRoom;
+import greymerk.roguelike.dungeon.rooms.DungeonCorner;
+import greymerk.roguelike.dungeon.rooms.DungeonLinker;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
+import greymerk.roguelike.dungeon.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
+import greymerk.roguelike.worldgen.MetaBlock;
+import greymerk.roguelike.worldgen.WorldGenPrimitive;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -12,50 +19,91 @@ import net.minecraft.world.World;
 
 public class LevelGeneratorClassic implements ILevelGenerator{
 
+	private World world;
+	private Random rand;
+	private IDungeonLevel level;
+	private Coord start;
+	private DungeonNode oldEnd;
 	private List<DungeonNode> nodes;
 	private List<DungeonTunnel> tunnels;
-	private IDungeonLevel level;
 	private DungeonNode end;
-	private Random rand;
+	
 	
 	public LevelGeneratorClassic(World world, Random rand, IDungeonLevel level, Coord start, DungeonNode oldEnd){
-		
+		this.world = world;
 		this.rand = rand;
 		this.level = level;
+		this.start = start;
+		this.oldEnd = oldEnd;
+		
 		nodes = new ArrayList<DungeonNode>();
 		tunnels = new ArrayList<DungeonTunnel>();
+	}	
 		
+	public void generate(){
 		List<Node> gNodes = new ArrayList<Node>();
-		gNodes.add(new Node(this, level.getSettings(), Cardinal.directions[rand.nextInt(Cardinal.directions.length)], start));
+		Node startNode = new Node(this, level.getSettings(), Cardinal.directions[rand.nextInt(Cardinal.directions.length)], start);
+		gNodes.add(startNode);
 		
 		while(!this.isDone(gNodes)){
 			this.update(gNodes);
 		}
 		
 		for(Node n : gNodes){
-			this.nodes.add(n.createNode());
-			this.tunnels.addAll(n.createTunnels());
+			n.cull();
+			
 		}
 		
-		DungeonNode choice;
-			
+		DungeonNode startDungeonNode = null;
+		
+		for(Node n : gNodes){
+			DungeonNode nToAdd = n.createNode();
+			if(n == startNode){
+				startDungeonNode = nToAdd;
+			}
+			this.nodes.add(nToAdd);
+			this.tunnels.addAll(n.createTunnels());
+		}
+					
 		int attempts = 0;
 		
 		do{
-			choice = this.nodes.get(rand.nextInt(this.nodes.size()));
+			end = this.nodes.get(rand.nextInt(this.nodes.size()));
 			attempts++;
-		} while(choice.getPosition() == start || choice.getPosition().distance(start) > (16 + attempts * 2));
+		} while(end == startDungeonNode || end.getPosition().distance(start) > (16 + attempts * 2));
 		
-		this.end = choice;
+		for(DungeonTunnel t : this.getTunnels()){
+			t.construct(world, rand, this.level.getSettings());
+		}
+		
+		List<DungeonNode> nodes = this.getNodes();
+		Collections.shuffle(nodes, rand);
+		
+		// node dungeons
+		for (DungeonNode node : nodes){
+			
+			if(node == end){
+				continue;
+			}
+			
+			if(node == startDungeonNode){
+				continue;
+			}
+
+			IDungeonRoom toGenerate = this.level.getSettings().getRooms().get(rand);
+			node.setDungeon(toGenerate);
+			toGenerate.generate(world, rand, this.level.getSettings(), node.getEntrances(), node.getPosition());
+		}
+		
+		for(DungeonTunnel tunnel : this.getTunnels()){			
+			for(Coord c : tunnel){
+				this.level.getSettings().getSegments().genSegment(world, rand, this.level, tunnel.getDirection(), c);
+			}
+		}
+		
+		generateLevelLink(world, rand, this.level.getSettings().getTheme(), start, oldEnd);
 
 	}
-	
-	public void generate(World world, Random rand){
-
-
-	}
-	
-
 	
 	public void update(List<Node> nodes){
 		
@@ -115,9 +163,27 @@ public class LevelGeneratorClassic implements ILevelGenerator{
 	public List<DungeonTunnel> getTunnels() {
 		return this.tunnels;
 	}
-
-	@Override
-	public DungeonNode getEnd() {
+	
+	private void generateLevelLink(World world, Random rand, ITheme theme, Coord start, DungeonNode oldEnd) {
+		
+		IDungeonRoom downstairs = new DungeonLinker();
+		downstairs.generate(world, rand, this.level.getSettings(), Cardinal.directions, start);
+		
+		if(oldEnd == null) return;
+		
+		IDungeonRoom upstairs = new DungeonCorner();
+		upstairs.generate(world, rand, this.level.getSettings(), oldEnd.getEntrances(), oldEnd.getPosition());
+		
+		MetaBlock stair = theme.getPrimaryStair();
+		
+		Coord cursor = new Coord(start);
+		for (int i = 0; i < oldEnd.getPosition().getY() - start.getY(); i++){
+			WorldGenPrimitive.spiralStairStep(world, rand, cursor, stair, theme.getPrimaryPillar());
+			cursor.add(Cardinal.UP);
+		}	
+	}
+	
+	public DungeonNode getEnd(){
 		return this.end;
 	}
 
@@ -244,6 +310,16 @@ public class LevelGeneratorClassic implements ILevelGenerator{
 		
 		public DungeonNode createNode(){
 			return new DungeonNode(level.getLevel(), this.getEntrances(), this.pos);
+		}
+		
+		public void cull(){
+			List<Tunneler> toKeep = new ArrayList<Tunneler>();
+			for(Tunneler t : this.tunnelers){
+				if(t.done){
+					toKeep.add(t);
+				}
+			}
+			this.tunnelers = toKeep;
 		}
 	}
 }
