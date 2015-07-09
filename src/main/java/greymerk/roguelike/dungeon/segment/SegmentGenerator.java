@@ -1,7 +1,7 @@
 package greymerk.roguelike.dungeon.segment;
 
 import greymerk.roguelike.dungeon.IDungeonLevel;
-import greymerk.roguelike.dungeon.theme.ITheme;
+import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.util.WeightedChoice;
 import greymerk.roguelike.util.WeightedRandomizer;
 import greymerk.roguelike.worldgen.Cardinal;

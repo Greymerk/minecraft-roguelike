@@ -1,6 +1,6 @@
 package greymerk.roguelike.dungeon.towers;
 
-import greymerk.roguelike.dungeon.theme.ITheme;
+import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.worldgen.BlockStripes;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;

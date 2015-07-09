@@ -3,7 +3,7 @@ package greymerk.roguelike.dungeon;
 import greymerk.roguelike.dungeon.base.IDungeonRoom;
 import greymerk.roguelike.dungeon.rooms.DungeonCorner;
 import greymerk.roguelike.dungeon.rooms.DungeonLinker;
-import greymerk.roguelike.dungeon.theme.ITheme;
+import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.util.mst.Edge;
 import greymerk.roguelike.util.mst.MinimumSpanningTree;
 import greymerk.roguelike.util.mst.Point;

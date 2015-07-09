@@ -1,6 +1,6 @@
 package greymerk.roguelike.dungeon.towers;
 
-import greymerk.roguelike.dungeon.theme.ITheme;
+import greymerk.roguelike.theme.ITheme;
 
 import java.util.Random;
 

@@ -1,7 +1,7 @@
 package greymerk.roguelike.dungeon.segment;
 
 import greymerk.roguelike.dungeon.IDungeonLevel;
-import greymerk.roguelike.dungeon.theme.ITheme;
+import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 
 import java.util.Random;

@@ -1,9 +1,9 @@
 package greymerk.roguelike.dungeon.settings;
 
-import greymerk.roguelike.dungeon.theme.ITheme;
-import greymerk.roguelike.dungeon.theme.Theme;
-import greymerk.roguelike.dungeon.theme.ThemeOak;
 import greymerk.roguelike.dungeon.towers.Tower;
+import greymerk.roguelike.theme.ITheme;
+import greymerk.roguelike.theme.Theme;
+import greymerk.roguelike.theme.ThemeOak;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;

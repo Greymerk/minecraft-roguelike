@@ -3,7 +3,7 @@ package greymerk.roguelike.dungeon.rooms;
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.dungeon.base.DungeonBase;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
-import greymerk.roguelike.dungeon.theme.ITheme;
+import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.treasure.TreasureChestBase;
 import greymerk.roguelike.treasure.loot.LootSettings;
 import greymerk.roguelike.treasure.loot.provider.ItemFood;

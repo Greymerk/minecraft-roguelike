@@ -2,7 +2,7 @@ package greymerk.roguelike.dungeon.settings.builtin;
 
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.dungeon.settings.DungeonSettings;
-import greymerk.roguelike.dungeon.theme.Theme;
+import greymerk.roguelike.theme.Theme;
 
 public class SettingsTheme extends DungeonSettings{
 	
