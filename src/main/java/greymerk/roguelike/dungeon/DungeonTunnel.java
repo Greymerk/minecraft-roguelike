@@ -85,6 +85,13 @@ public class DungeonTunnel implements Iterable<Coord>{
 		WorldGenPrimitive.fillRectSolid(world, rand, start, end, wallBlocks, false, true);
 	}
 	
+	public Coord[] getEnds(){
+		Coord[] toReturn = new Coord[2];
+		toReturn[0] = new Coord(start);
+		toReturn[1] = new Coord(end);
+		return toReturn;
+	}
+	
 	public Cardinal getDirection(){
 		return this.dir;
 	}

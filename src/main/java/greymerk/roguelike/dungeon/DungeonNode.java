@@ -11,7 +11,7 @@ public class DungeonNode {
 	private IDungeonRoom toGenerate;
 	private Cardinal[] entrances;
 	
-	public DungeonNode (IDungeonLevel level, Cardinal[] entrances, Coord origin){
+	public DungeonNode (Cardinal[] entrances, Coord origin){
 		this.entrances = entrances;
 		this.pos = new Coord(origin);
 	}
@@ -26,7 +26,6 @@ public class DungeonNode {
 		}
 		
 		return toGenerate.getSize();
-		
 	}
 	
 	public Cardinal[] getEntrances(){

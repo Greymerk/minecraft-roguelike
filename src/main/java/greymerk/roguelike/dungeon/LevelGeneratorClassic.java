@@ -180,7 +180,7 @@ public class LevelGeneratorClassic implements ILevelGenerator{
 		for (int i = 0; i < oldEnd.getPosition().getY() - start.getY(); i++){
 			WorldGenPrimitive.spiralStairStep(world, rand, cursor, stair, theme.getPrimaryPillar());
 			cursor.add(Cardinal.UP);
-		}	
+		}
 	}
 	
 	public DungeonNode getEnd(){
@@ -309,7 +309,7 @@ public class LevelGeneratorClassic implements ILevelGenerator{
 		}
 		
 		public DungeonNode createNode(){
-			return new DungeonNode(level.getLevel(), this.getEntrances(), this.pos);
+			return new DungeonNode(this.getEntrances(), this.pos);
 		}
 		
 		public void cull(){

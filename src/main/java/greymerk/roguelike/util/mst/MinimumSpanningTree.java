@@ -18,7 +18,11 @@ public class MinimumSpanningTree extends Graph{
 	Set<Edge> mstEdges;
 	
 	public MinimumSpanningTree(Random rand, int size, int edgeLength){
-		super(rand, size, edgeLength);
+		this(rand, size, edgeLength, new Coord(0, 0, 0));
+	}
+	
+	public MinimumSpanningTree(Random rand, int size, int edgeLength, Coord origin){
+		super(rand, size, edgeLength, origin);
 		
 		mstEdges = new HashSet<Edge>();
 

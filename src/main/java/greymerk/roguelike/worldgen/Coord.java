@@ -113,6 +113,17 @@ public class Coord{
 		return toReturn;
 	}
 	
+	@Override
+	public boolean equals(Object o){
+		Coord other = (Coord)o;
+		
+		if(x != other.x) return false;
+		if(y != other.y) return false;
+		if(z != other.z) return false;
+		
+		return true;
+	}
+	
 	public BlockPos getBlockPos(){
 		return new BlockPos(this.x, this.y, this.z);
 	}
