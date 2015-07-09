@@ -48,7 +48,7 @@ public class Dungeon implements IDungeon{
 	}
 	
 	public void generate(World world, ISettings settings, int inX, int inZ){
-		DungeonGeneratorClassic generator = new DungeonGeneratorClassic();
+		DungeonGenerator generator = new DungeonGenerator();
 		generator.generate(world, settings, inX, inZ);
 	}
 	

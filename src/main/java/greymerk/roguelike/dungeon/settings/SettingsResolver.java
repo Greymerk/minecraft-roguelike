@@ -6,6 +6,7 @@ import greymerk.roguelike.dungeon.settings.builtin.SettingsDesertTheme;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsEniTheme;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsEthoTheme;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsForestTheme;
+import greymerk.roguelike.dungeon.settings.builtin.SettingsGenerator;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsJungleTheme;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsMountainTheme;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsPyramidTheme;
@@ -53,6 +54,7 @@ public class SettingsResolver {
 		base = new DungeonSettings(base, new SettingsSegments());
 		base = new DungeonSettings(base, new SettingsSize());
 		base = new DungeonSettings(base, new SettingsTheme());
+		base = new DungeonSettings(base, new SettingsGenerator());
 		base.setCriteria(new SpawnCriteria());
 		this.base = base;
 

@@ -22,25 +22,23 @@ public class LevelGeneratorClassic implements ILevelGenerator{
 	private World world;
 	private Random rand;
 	private IDungeonLevel level;
-	private Coord start;
-	private DungeonNode oldEnd;
+
 	private List<DungeonNode> nodes;
 	private List<DungeonTunnel> tunnels;
 	private DungeonNode end;
 	
 	
-	public LevelGeneratorClassic(World world, Random rand, IDungeonLevel level, Coord start, DungeonNode oldEnd){
+	public LevelGeneratorClassic(World world, Random rand, IDungeonLevel level){
 		this.world = world;
 		this.rand = rand;
 		this.level = level;
-		this.start = start;
-		this.oldEnd = oldEnd;
+	
 		
 		nodes = new ArrayList<DungeonNode>();
 		tunnels = new ArrayList<DungeonTunnel>();
 	}	
 		
-	public void generate(){
+	public void generate(Coord start, DungeonNode oldEnd){
 		List<Node> gNodes = new ArrayList<Node>();
 		Node startNode = new Node(this, level.getSettings(), Cardinal.directions[rand.nextInt(Cardinal.directions.length)], start);
 		gNodes.add(startNode);

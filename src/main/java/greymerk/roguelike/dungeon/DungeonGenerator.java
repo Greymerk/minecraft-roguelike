@@ -9,11 +9,11 @@ import java.util.Random;
 
 import net.minecraft.world.World;
 
-public class DungeonGeneratorClassic {
+public class DungeonGenerator {
 	public static final int VERTICAL_SPACING = 10;
 	public static final int TOPLEVEL = 50;
 	
-	public DungeonGeneratorClassic(){
+	public DungeonGenerator(){
 		
 	}
 	
@@ -36,8 +36,8 @@ public class DungeonGeneratorClassic {
 			DungeonLevel level = new DungeonLevel(world, rand, levelSettings, new Coord(start));
 			
 			//LevelGeneratorClassic generator = new LevelGeneratorClassic(world, rand, level, new Coord(start), oldEnd);
-			LevelGeneratorMST generator = new LevelGeneratorMST(world, rand, level, new Coord(start), oldEnd);
-			level.generate(generator);
+			ILevelGenerator generator = LevelGenerator.getGenerator(world, rand, levelSettings.getGenerator(), level);
+			level.generate(generator, new Coord(start), oldEnd);
 			
 			rand = Dungeon.getRandom(world, start.getX(), start.getZ());
 			oldEnd = generator.getEnd();			

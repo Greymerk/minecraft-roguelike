@@ -24,26 +24,22 @@ public class LevelGeneratorMST implements ILevelGenerator{
 	World world;
 	Random rand;
 	IDungeonLevel level;
-	Coord start;
-	DungeonNode oldEnd;
 	private DungeonNode end;
 	
 	private List<DungeonNode> nodes;
 	private List<DungeonTunnel> tunnels;
 	
-	public LevelGeneratorMST(World world, Random rand, IDungeonLevel level, Coord start, DungeonNode oldEnd){
+	public LevelGeneratorMST(World world, Random rand, IDungeonLevel level){
 		this.world = world;
 		this.rand = rand;
 		this.level = level;
-		this.start = start;
-		this.oldEnd = oldEnd;
 		
 		nodes = new ArrayList<DungeonNode>();
 		tunnels = new ArrayList<DungeonTunnel>();
 	}	
 	
 	@Override
-	public void generate() {
+	public void generate(Coord start, DungeonNode oldEnd) {
 		MinimumSpanningTree mst = new MinimumSpanningTree(rand, 7, 17, new Coord(start));
 		List<Edge> edges = mst.getEdges();
 		List<Coord> points = mst.getPointPositions();

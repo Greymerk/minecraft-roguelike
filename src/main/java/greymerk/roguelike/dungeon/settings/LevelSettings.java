@@ -2,6 +2,7 @@ package greymerk.roguelike.dungeon.settings;
 
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.dungeon.Dungeon;
+import greymerk.roguelike.dungeon.LevelGenerator;
 import greymerk.roguelike.dungeon.base.DungeonFactory;
 import greymerk.roguelike.dungeon.base.IDungeonFactory;
 import greymerk.roguelike.dungeon.base.SecretFactory;
@@ -17,16 +18,17 @@ import com.google.gson.JsonObject;
 
 public class LevelSettings {
 
-	int numRooms;
-	int range;
-	int scatter;
-	int levelDifficulty;
-	DungeonFactory rooms;
-	SecretFactory secrets;
-	ITheme theme;
-	SegmentGenerator segments;
-	LootSettings loot;
-	SpawnerSettings spawners;
+	private int numRooms;
+	private int range;
+	private int scatter;
+	private int levelDifficulty;
+	private DungeonFactory rooms;
+	private SecretFactory secrets;
+	private ITheme theme;
+	private SegmentGenerator segments;
+	private LootSettings loot;
+	private SpawnerSettings spawners;
+	private LevelGenerator generator;
 	
 	public LevelSettings(){
 		numRooms = RogueConfig.getInt(RogueConfig.LEVELMAXROOMS);
@@ -46,6 +48,7 @@ public class LevelSettings {
 		this.segments = toCopy.segments != null ? new SegmentGenerator(toCopy.segments) : null;
 		this.loot = toCopy.loot != null ? new LootSettings(toCopy.loot) : null;
 		this.spawners = toCopy.spawners != null ? new SpawnerSettings(toCopy.spawners) : null;
+		this.generator = toCopy.generator;
 	}
 	
 	public LevelSettings(LevelSettings base, LevelSettings override){
@@ -73,6 +76,8 @@ public class LevelSettings {
 		this.loot = new LootSettings(base.loot, override.loot);
 		
 		this.spawners = new SpawnerSettings(base.spawners, override.spawners);
+		
+		this.generator = override.generator == null? base.generator : override.generator;
 	}
 	
 	public LevelSettings(JsonObject data){
@@ -86,6 +91,20 @@ public class LevelSettings {
 		this.segments = data.has("segments") ? new SegmentGenerator(data.get("segments").getAsJsonObject()) : null;
 		this.loot = data.has("loot") ? new LootSettings(data.get("loot").getAsJsonObject()) : null;
 		this.spawners = data.has("spawners") ? new SpawnerSettings(data.get("spawners").getAsJsonObject()) : null;
+		this.generator = data.has("generator") ? LevelGenerator.valueOf(data.get("generator").getAsString()) : null;
+	}
+	
+	public LevelGenerator getGenerator(){
+		
+		if(this.generator == null){
+			return LevelGenerator.CLASSIC;
+		}
+		
+		return this.generator;
+	}
+	
+	public void setGenerator(LevelGenerator type){
+		this.generator = type;
 	}
 	
 	public int getScatter(){

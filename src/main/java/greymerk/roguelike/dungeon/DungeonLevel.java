@@ -19,9 +19,9 @@ public class DungeonLevel implements IDungeonLevel{
 		this.origin = origin;
 	}
 	
-	public void generate(ILevelGenerator generator){
+	public void generate(ILevelGenerator generator, Coord start, DungeonNode oldEnd){
 		this.generator = generator;
-		generator.generate();
+		generator.generate(start, oldEnd);
 	}
 	
 	public int nodeCount(){
