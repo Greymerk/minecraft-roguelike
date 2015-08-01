@@ -71,7 +71,7 @@ public class DungeonsCreeperDen extends DungeonBase {
 		int counter = 0;
 		for(Coord spot : chestSpaces){
 			if(TreasureChest.isValidChestSpace(world, spot)){
-				TreasureChest.generate(world, rand, settings, spot, TreasureChest.ORE);
+				TreasureChest.generate(world, rand, settings, spot, TreasureChest.ORE, settings.getDifficulty(spot), true);
 				Coord cursor = new Coord(spot);
 				cursor.add(Cardinal.DOWN, 2);
 				tnt.setBlock(world, cursor);

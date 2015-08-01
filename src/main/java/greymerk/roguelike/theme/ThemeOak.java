@@ -18,10 +18,8 @@ public class ThemeOak extends ThemeBase{
 		walls.addBlock(new MetaBlock(Blocks.cobblestone), 5);
 		walls.addBlock(new MetaBlock(Blocks.gravel), 1);
 		
-		
 		MetaBlock stair = new MetaBlock(Blocks.stone_brick_stairs);
 
-		
 		this.primary = new BlockSet(walls, stair, walls);
 		
 		

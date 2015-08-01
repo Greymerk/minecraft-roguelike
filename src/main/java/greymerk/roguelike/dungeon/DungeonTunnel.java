@@ -68,6 +68,7 @@ public class DungeonTunnel implements Iterable<Coord>{
 		e.add(Cardinal.SOUTH);
 		e.add(Cardinal.WEST);
 		e.add(Cardinal.DOWN);
+		WorldGenPrimitive.fillRectSolid(world, rand, s, e, floor, false, true);
 		WorldGenPrimitive.fillRectSolid(world, rand, s, e, bridgeBlocks, true, false);
 		
 		// end of the tunnel;
@@ -83,6 +84,7 @@ public class DungeonTunnel implements Iterable<Coord>{
 		end.add(Cardinal.DOWN, 2);
 		
 		WorldGenPrimitive.fillRectSolid(world, rand, start, end, wallBlocks, false, true);
+		
 	}
 	
 	public Coord[] getEnds(){

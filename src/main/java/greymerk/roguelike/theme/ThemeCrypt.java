@@ -4,6 +4,7 @@ import greymerk.roguelike.worldgen.BlockFactoryCheckers;
 import greymerk.roguelike.worldgen.BlockJumble;
 import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.MetaBlock;
+import net.minecraft.block.BlockStone;
 import net.minecraft.block.BlockStoneBrick;
 import net.minecraft.init.Blocks;
 
@@ -25,9 +26,11 @@ public class ThemeCrypt extends ThemeBase{
 		walls.addBlock(new MetaBlock(Blocks.cobblestone), 10);
 		walls.addBlock(new MetaBlock(Blocks.gravel), 5);
 		
-		MetaBlock p = new MetaBlock(Blocks.stone.getStateFromMeta(5));
-		MetaBlock p2 = new MetaBlock(Blocks.stone.getStateFromMeta(6));
-		BlockFactoryCheckers pillar = new BlockFactoryCheckers(p, p2);
+		MetaBlock andesite = new MetaBlock(Blocks.stone);
+		andesite.withProperty(BlockStone.VARIANT_PROP, BlockStone.EnumType.ANDESITE);
+		MetaBlock smoothAndesite = new MetaBlock(Blocks.stone);
+		smoothAndesite.withProperty(BlockStone.VARIANT_PROP, BlockStone.EnumType.ANDESITE_SMOOTH);
+		BlockFactoryCheckers pillar = new BlockFactoryCheckers(andesite, smoothAndesite);
 
 		MetaBlock stair = new MetaBlock(Blocks.stone_brick_stairs);
 		

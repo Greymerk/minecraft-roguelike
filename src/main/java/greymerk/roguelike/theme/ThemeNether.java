@@ -1,5 +1,6 @@
 package greymerk.roguelike.theme;
 
+import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.MetaBlock;
 import net.minecraft.init.Blocks;
@@ -15,11 +16,17 @@ public class ThemeNether extends ThemeBase{
 		walls.addBlock(new MetaBlock(Blocks.soul_sand), 15);
 		walls.addBlock(new MetaBlock(Blocks.coal_block), 5);
 
+		BlockWeightedRandom floor = new BlockWeightedRandom();
+		floor.addBlock(walls, 2000);
+		floor.addBlock(new MetaBlock(Blocks.redstone_block), 50);
+		if (RogueConfig.getBoolean(RogueConfig.PRECIOUSBLOCKS)) floor.addBlock(new MetaBlock(Blocks.gold_block), 2);
+		if (RogueConfig.getBoolean(RogueConfig.PRECIOUSBLOCKS)) floor.addBlock(new MetaBlock(Blocks.diamond_block), 1);
+		
 		MetaBlock stair = new MetaBlock(Blocks.nether_brick_stairs);
 		
 		MetaBlock pillar = new MetaBlock(Blocks.obsidian);
 		
-		this.primary = new BlockSet(walls, stair, pillar);
+		this.primary = new BlockSet(floor, walls, stair, pillar);
 		this.secondary = this.primary;
 
 	}

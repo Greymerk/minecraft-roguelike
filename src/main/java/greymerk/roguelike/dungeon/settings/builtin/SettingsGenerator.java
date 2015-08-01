@@ -9,7 +9,7 @@ public class SettingsGenerator extends DungeonSettings {
 	public SettingsGenerator(){
 		LevelGenerator[] generator = {
 				LevelGenerator.CLASSIC,
-				LevelGenerator.MST,
+				LevelGenerator.CLASSIC,
 				LevelGenerator.MST,
 				LevelGenerator.CLASSIC,
 				LevelGenerator.CLASSIC

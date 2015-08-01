@@ -43,6 +43,15 @@ public class DungeonsFire extends DungeonBase {
 		
 		WorldGenPrimitive.fillRectHollow(world, rand, start, end, wall, false, true);
 		
+		start = new Coord(origin);
+		start.add(Cardinal.DOWN);
+		end = new Coord(start);
+		start.add(Cardinal.NORTH, 8);
+		start.add(Cardinal.WEST, 8);
+		end.add(Cardinal.SOUTH, 8);
+		end.add(Cardinal.EAST, 8);
+		WorldGenPrimitive.fillRectSolid(world, rand, start, end, theme.getPrimaryFloor(), false, true);
+		
 		for(Cardinal dir : Cardinal.directions){
 			for(Cardinal orth : Cardinal.getOrthogonal(dir)){
 				start = new Coord(origin);

@@ -60,7 +60,7 @@ public enum TreasureChest {
 	}
 	
 	public static void generate(World world, Random rand, LevelSettings settings, Coord pos, TreasureChest type){
-		generate(world, rand, settings, pos, type, Dungeon.getLevel(pos.getY()), false);
+		generate(world, rand, settings, pos, type, settings.getDifficulty(pos), false);
 	}
 	
 	public static void generate(World world, Random rand, LevelSettings settings, Coord pos, TreasureChest type, int level, boolean trapped){

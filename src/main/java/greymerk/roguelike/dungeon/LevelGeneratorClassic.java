@@ -1,20 +1,14 @@
 package greymerk.roguelike.dungeon;
 
-import greymerk.roguelike.dungeon.base.IDungeonRoom;
-import greymerk.roguelike.dungeon.rooms.DungeonCorner;
-import greymerk.roguelike.dungeon.rooms.DungeonLinker;
-import greymerk.roguelike.dungeon.settings.LevelSettings;
-import greymerk.roguelike.theme.ITheme;
-import greymerk.roguelike.worldgen.Cardinal;
-import greymerk.roguelike.worldgen.Coord;
-import greymerk.roguelike.worldgen.MetaBlock;
-import greymerk.roguelike.worldgen.WorldGenPrimitive;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import greymerk.roguelike.dungeon.base.IDungeonRoom;
+import greymerk.roguelike.dungeon.settings.LevelSettings;
+import greymerk.roguelike.worldgen.Cardinal;
+import greymerk.roguelike.worldgen.Coord;
 import net.minecraft.world.World;
 
 public class LevelGeneratorClassic implements ILevelGenerator{
@@ -99,7 +93,7 @@ public class LevelGeneratorClassic implements ILevelGenerator{
 			}
 		}
 		
-		generateLevelLink(world, rand, this.level.getSettings().getTheme(), start, oldEnd);
+		LevelGenerator.generateLevelLink(world, rand, this.level.getSettings(), start, oldEnd);
 
 	}
 	
@@ -160,25 +154,6 @@ public class LevelGeneratorClassic implements ILevelGenerator{
 	@Override
 	public List<DungeonTunnel> getTunnels() {
 		return this.tunnels;
-	}
-	
-	private void generateLevelLink(World world, Random rand, ITheme theme, Coord start, DungeonNode oldEnd) {
-		
-		IDungeonRoom downstairs = new DungeonLinker();
-		downstairs.generate(world, rand, this.level.getSettings(), Cardinal.directions, start);
-		
-		if(oldEnd == null) return;
-		
-		IDungeonRoom upstairs = new DungeonCorner();
-		upstairs.generate(world, rand, this.level.getSettings(), oldEnd.getEntrances(), oldEnd.getPosition());
-		
-		MetaBlock stair = theme.getPrimaryStair();
-		
-		Coord cursor = new Coord(start);
-		for (int i = 0; i < oldEnd.getPosition().getY() - start.getY(); i++){
-			WorldGenPrimitive.spiralStairStep(world, rand, cursor, stair, theme.getPrimaryPillar());
-			cursor.add(Cardinal.UP);
-		}
 	}
 	
 	public DungeonNode getEnd(){

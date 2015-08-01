@@ -35,7 +35,6 @@ public class DungeonGenerator {
 			LevelSettings levelSettings = settings.getLevelSettings(i);
 			DungeonLevel level = new DungeonLevel(world, rand, levelSettings, new Coord(start));
 			
-			//LevelGeneratorClassic generator = new LevelGeneratorClassic(world, rand, level, new Coord(start), oldEnd);
 			ILevelGenerator generator = LevelGenerator.getGenerator(world, rand, levelSettings.getGenerator(), level);
 			level.generate(generator, new Coord(start), oldEnd);
 			

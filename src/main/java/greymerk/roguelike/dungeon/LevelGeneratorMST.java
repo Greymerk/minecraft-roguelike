@@ -1,22 +1,16 @@
 package greymerk.roguelike.dungeon;
 
-import greymerk.roguelike.dungeon.base.IDungeonRoom;
-import greymerk.roguelike.dungeon.rooms.DungeonCorner;
-import greymerk.roguelike.dungeon.rooms.DungeonLinker;
-import greymerk.roguelike.theme.ITheme;
-import greymerk.roguelike.util.mst.Edge;
-import greymerk.roguelike.util.mst.MinimumSpanningTree;
-import greymerk.roguelike.util.mst.Point;
-import greymerk.roguelike.worldgen.Cardinal;
-import greymerk.roguelike.worldgen.Coord;
-import greymerk.roguelike.worldgen.MetaBlock;
-import greymerk.roguelike.worldgen.WorldGenPrimitive;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import greymerk.roguelike.dungeon.base.IDungeonRoom;
+import greymerk.roguelike.util.mst.Edge;
+import greymerk.roguelike.util.mst.MinimumSpanningTree;
+import greymerk.roguelike.util.mst.Point;
+import greymerk.roguelike.worldgen.Cardinal;
+import greymerk.roguelike.worldgen.Coord;
 import net.minecraft.world.World;
 
 public class LevelGeneratorMST implements ILevelGenerator{
@@ -42,11 +36,11 @@ public class LevelGeneratorMST implements ILevelGenerator{
 	public void generate(Coord start, DungeonNode oldEnd) {
 		MinimumSpanningTree mst = new MinimumSpanningTree(rand, 7, 17, new Coord(start));
 		List<Edge> edges = mst.getEdges();
-		List<Coord> points = mst.getPointPositions();
+		List<Coord> vertices = mst.getPointPositions();
 		List<Edge> used = new ArrayList<Edge>();
 		
 		
-		for(Coord c : points){
+		for(Coord c : vertices){
 			for(Edge e : edges){
 				if(used.contains(e)) continue;
 				Point[] ends = e.getPoints(); 
@@ -62,18 +56,16 @@ public class LevelGeneratorMST implements ILevelGenerator{
 			}
 		}
 		
-
-		
 		DungeonNode startDungeonNode = null;
 		
-		for(Coord c : points){
+		for(Coord c : vertices){
 			List<Cardinal> entrances = new ArrayList<Cardinal>();
-			for(DungeonTunnel t : this.tunnels){
-				Coord[] ends = t.getEnds();
+			for(DungeonTunnel tunnel : this.tunnels){
+				Coord[] ends = tunnel.getEnds();
 				if(ends[0].equals(c)){
-					entrances.add(Cardinal.reverse(t.getDirection()));
-				} else {
-					entrances.add(t.getDirection());
+					entrances.add(tunnel.getDirection());
+				} else if(ends[1].equals(c)) {
+					entrances.add(Cardinal.reverse(tunnel.getDirection()));
 				}
 			}
 			
@@ -86,12 +78,6 @@ public class LevelGeneratorMST implements ILevelGenerator{
 			}
 		}
 		
-		for(DungeonNode d : this.nodes){
-			System.out.println(d.getPosition().toString());
-		}
-		
-		
-		
 		int attempts = 0;
 		
 		do{
@@ -99,8 +85,8 @@ public class LevelGeneratorMST implements ILevelGenerator{
 			attempts++;
 		} while(end == startDungeonNode || end.getPosition().distance(start) > (16 + attempts * 2));
 		
-		for(DungeonTunnel t : this.tunnels){
-			t.construct(world, rand, this.level.getSettings());
+		for(DungeonTunnel tunnel : this.tunnels){
+			tunnel.construct(world, rand, this.level.getSettings());
 		}
 		
 		Collections.shuffle(nodes, rand);
@@ -127,27 +113,10 @@ public class LevelGeneratorMST implements ILevelGenerator{
 			}
 		}
 		
-		generateLevelLink(world, rand, this.level.getSettings().getTheme(), start, oldEnd);
+		LevelGenerator.generateLevelLink(world, rand, this.level.getSettings(), start, oldEnd);
 	}
 	
-	private void generateLevelLink(World world, Random rand, ITheme theme, Coord start, DungeonNode oldEnd) {
-		
-		IDungeonRoom downstairs = new DungeonLinker();
-		downstairs.generate(world, rand, this.level.getSettings(), Cardinal.directions, start);
-		
-		if(oldEnd == null) return;
-		
-		IDungeonRoom upstairs = new DungeonCorner();
-		upstairs.generate(world, rand, this.level.getSettings(), oldEnd.getEntrances(), oldEnd.getPosition());
-		
-		MetaBlock stair = theme.getPrimaryStair();
-		
-		Coord cursor = new Coord(start);
-		for (int i = 0; i < oldEnd.getPosition().getY() - start.getY(); i++){
-			WorldGenPrimitive.spiralStairStep(world, rand, cursor, stair, theme.getPrimaryPillar());
-			cursor.add(Cardinal.UP);
-		}	
-	}
+
 	
 	public DungeonNode getEnd(){
 		return this.end;
