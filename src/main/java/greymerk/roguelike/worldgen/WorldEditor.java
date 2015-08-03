@@ -1,8 +1,10 @@
 package greymerk.roguelike.worldgen;
 
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import net.minecraft.block.Block;
@@ -18,11 +20,11 @@ import net.minecraft.world.biome.BiomeGenBase;
 public class WorldEditor {
 	
 	World world;
-	private int counter;
+	private Map<Block, Integer> stats;
 	
 	public WorldEditor(World world){
 		this.world = world;
-		this.counter = 0;
+		stats = new HashMap<Block, Integer>();
 	}
 	
 	public boolean setBlock(Coord pos, IBlockState block, int flags, boolean fillAir, boolean replaceSolid){
@@ -39,7 +41,15 @@ public class WorldEditor {
 		if(!replaceSolid && !isAir)	return false;
 		
 		world.setBlockState(pos.getBlockPos(), block, flags);
-		counter++;
+		
+		Block type = block.getBlock();
+		Integer count = stats.get(type);
+		if(count == null){
+			stats.put(type, 1);	
+		} else {
+			stats.put(type, count + 1);
+		}
+		
 		return true;
 		
 	}
@@ -311,7 +321,13 @@ public class WorldEditor {
 	
 	@Override
 	public String toString(){
-		return "Blocks placed: " + this.counter;
+		String toReturn = "";
+
+		for(Map.Entry<Block, Integer> pair : stats.entrySet()){
+			toReturn += pair.getKey().getLocalizedName() + ": " + pair.getValue() + "\n";
+		}
+		
+		return toReturn;
 	}
 }
 
