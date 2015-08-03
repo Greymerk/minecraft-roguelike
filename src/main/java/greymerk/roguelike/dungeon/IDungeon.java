@@ -1,19 +1,18 @@
 package greymerk.roguelike.dungeon;
 
-import greymerk.roguelike.dungeon.settings.ISettings;
-import greymerk.roguelike.treasure.ITreasureChest;
-import greymerk.roguelike.worldgen.Coord;
-
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.world.World;
+import greymerk.roguelike.dungeon.settings.ISettings;
+import greymerk.roguelike.treasure.ITreasureChest;
+import greymerk.roguelike.worldgen.Coord;
+import greymerk.roguelike.worldgen.WorldEditor;
 
 public interface IDungeon {
 
-	public void generate(World world, ISettings setting, int x, int z);
+	public void generate(WorldEditor editor, ISettings setting, int x, int z);
 	
-	public void spawnInChunk(World world, Random rand, int x, int z);
+	public void spawnInChunk(WorldEditor editor	, Random rand, int x, int z);
 	
 	public List<DungeonNode> getNodes();
 	

@@ -1,5 +1,8 @@
 package greymerk.roguelike.dungeon.segment.alcove;
 
+import java.util.List;
+import java.util.Random;
+
 import greymerk.roguelike.dungeon.segment.IAlcove;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.theme.ITheme;
@@ -8,14 +11,9 @@ import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.Spawner;
-import greymerk.roguelike.worldgen.WorldGenPrimitive;
+import greymerk.roguelike.worldgen.WorldEditor;
 import greymerk.roguelike.worldgen.blocks.Door;
-
-import java.util.List;
-import java.util.Random;
-
 import net.minecraft.init.Blocks;
-import net.minecraft.world.World;
 
 public class PrisonCell implements IAlcove{
 
@@ -23,7 +21,7 @@ public class PrisonCell implements IAlcove{
 	private ITheme theme;
 	
 	@Override
-	public void generate(World world, Random rand, LevelSettings settings, int x, int y, int z, Cardinal dir) {
+	public void generate(WorldEditor editor, Random rand, LevelSettings settings, int x, int y, int z, Cardinal dir) {
 		
 		this.theme = settings.getTheme();
 		IBlockFactory walls = theme.getPrimaryWall();
@@ -37,28 +35,28 @@ public class PrisonCell implements IAlcove{
 		Coord end = new Coord(start);
 		start.add(-2, -1, -2);
 		end.add(2, 3, 2);
-		walls.fillRectHollow(world, rand, start, end, true, true);
+		walls.fillRectHollow(editor, rand, start, end, true, true);
 		
 		start = new Coord(origin);
 		end = new Coord(origin);
 		end.add(dir, RECESSED);
 		end.add(Cardinal.UP);
-		air.fillRectSolid(world, rand, start, end, true, true);
+		air.fillRectSolid(editor, rand, start, end, true, true);
 		
 		Coord cursor = new Coord(origin);
 		cursor.add(dir, RECESSED - 1);
-		plate.setBlock(world, cursor);
+		plate.setBlock(editor, cursor);
 		cursor.add(Cardinal.DOWN);
-		if(rand.nextBoolean()) Spawner.generate(world, rand, settings, cursor, Spawner.ZOMBIE);
+		if(rand.nextBoolean()) Spawner.generate(editor, rand, settings, cursor, Spawner.ZOMBIE);
 		
 		cursor = new Coord(origin);
 		cursor.add(dir, 3);
-		Door.generate(world, cursor, Cardinal.reverse(dir), Door.IRON);
+		Door.generate(editor, cursor, Cardinal.reverse(dir), Door.IRON);
 		
 	}
 
 	@Override
-	public boolean isValidLocation(World world, int x, int y, int z, Cardinal dir) {
+	public boolean isValidLocation(WorldEditor editor, int x, int y, int z, Cardinal dir) {
 
 		Coord centre = new Coord(x, y, z);
 		centre.add(dir, RECESSED);
@@ -66,10 +64,10 @@ public class PrisonCell implements IAlcove{
 		y = centre.getY();
 		z = centre.getZ();
 		
-		List<Coord> toCheck = WorldGenPrimitive.getRectSolid(x - 2, y, z - 2, x + 2, y, z + 2);
+		List<Coord> toCheck = WorldEditor.getRectSolid(x - 2, y, z - 2, x + 2, y, z + 2);
 
 		for(Coord c : toCheck){
-			if (world.isAirBlock(c.getBlockPos())) return false;
+			if (editor.isAirBlock(c)) return false;
 		}
 		
 		return true;

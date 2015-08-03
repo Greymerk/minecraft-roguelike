@@ -1,5 +1,19 @@
 package greymerk.roguelike.dungeon.settings;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+
+import com.google.common.base.Charsets;
+import com.google.common.io.Files;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsBasicLoot;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsDesertTheme;
@@ -21,22 +35,7 @@ import greymerk.roguelike.dungeon.settings.builtin.SettingsWitchTheme;
 import greymerk.roguelike.util.WeightedChoice;
 import greymerk.roguelike.util.WeightedRandomizer;
 import greymerk.roguelike.worldgen.Coord;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-
-import net.minecraft.world.World;
-
-import com.google.common.base.Charsets;
-import com.google.common.io.Files;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import greymerk.roguelike.worldgen.WorldEditor;
 
 public class SettingsResolver {
 
@@ -128,10 +127,10 @@ public class SettingsResolver {
 		return new DungeonSettings(this.base, override);
 	}
 	
-	public ISettings getSettings(World world, Random rand, Coord pos){
+	public ISettings getSettings(WorldEditor editor, Random rand, Coord pos){
 		
-		DungeonSettings builtin = this.getBuiltin(world, rand, pos);
-		DungeonSettings custom = this.getCustom(world, rand, pos);
+		DungeonSettings builtin = this.getBuiltin(editor, rand, pos);
+		DungeonSettings custom = this.getCustom(editor, rand, pos);
 		
 		if(custom != null){
 			return new DungeonSettings(this.base, custom);
@@ -141,17 +140,17 @@ public class SettingsResolver {
 			return new DungeonSettings(this.base, builtin);
 		}
 		
-		if(this.base.isValid(world, pos)) return new DungeonSettings(this.base);
+		if(this.base.isValid(editor, pos)) return new DungeonSettings(this.base);
 		
 		return null;
 		
 	}
 	
-	private DungeonSettings getBuiltin(World world, Random rand, Coord pos){
+	private DungeonSettings getBuiltin(WorldEditor editor, Random rand, Coord pos){
 		WeightedRandomizer<DungeonSettings> settingsRandomizer = new WeightedRandomizer<DungeonSettings>();
 
 		for(DungeonSettings setting : this.builtin){
-			if(setting.isValid(world, pos)){
+			if(setting.isValid(editor, pos)){
 				settingsRandomizer.add(new WeightedChoice<DungeonSettings>(setting, setting.criteria.weight));
 			}
 		}
@@ -159,11 +158,11 @@ public class SettingsResolver {
 		return settingsRandomizer.get(rand);
 	}
 	
-	private DungeonSettings getCustom(World world, Random rand, Coord pos){
+	private DungeonSettings getCustom(WorldEditor editor, Random rand, Coord pos){
 		WeightedRandomizer<DungeonSettings> settingsRandomizer = new WeightedRandomizer<DungeonSettings>();
 		
 		for(DungeonSettings setting : this.settings.values()){
-			if(setting.isValid(world, pos)){
+			if(setting.isValid(editor, pos)){
 				int weight = setting.criteria.weight;
 				settingsRandomizer.add(new WeightedChoice<DungeonSettings>(setting, weight));
 			}

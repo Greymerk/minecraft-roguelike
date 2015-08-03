@@ -1,6 +1,7 @@
 package greymerk.roguelike.dungeon.rooms;
 
-import greymerk.roguelike.config.RogueConfig;
+import java.util.Random;
+
 import greymerk.roguelike.dungeon.base.DungeonBase;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.theme.ITheme;
@@ -11,12 +12,8 @@ import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.Spawner;
-import greymerk.roguelike.worldgen.WorldGenPrimitive;
-
-import java.util.Random;
-
+import greymerk.roguelike.worldgen.WorldEditor;
 import net.minecraft.init.Blocks;
-import net.minecraft.world.World;
 
 public class DungeonsNetherBrick extends DungeonBase {
 	
@@ -24,7 +21,7 @@ public class DungeonsNetherBrick extends DungeonBase {
 	public DungeonsNetherBrick() {
 	}
 
-	public boolean generate(World world, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
+	public boolean generate(WorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
 
 		int x = origin.getX();
 		int y = origin.getY();
@@ -36,29 +33,29 @@ public class DungeonsNetherBrick extends DungeonBase {
 		int width = 2 + rand.nextInt(3);
 		
 		IBlockFactory walls = theme.getPrimaryWall();
-		WorldGenPrimitive.fillRectHollow(world, rand, x - length - 1, y - 1, z - width - 1, x + length + 1, y + height + 1, z + width + 1, walls, false, true);
+		editor.fillRectHollow(rand, x - length - 1, y - 1, z - width - 1, x + length + 1, y + height + 1, z + width + 1, walls, false, true);
 		
 		
 		IBlockFactory floor = theme.getPrimaryFloor();
-		WorldGenPrimitive.fillRectSolid(world, rand, x - length - 1, y - 1, z - width - 1, x + length + 1, y - 1, z + width + 1, floor);
+		editor.fillRectSolid(rand, x - length - 1, y - 1, z - width - 1, x + length + 1, y - 1, z + width + 1, floor);
 
 		// lava crap under the floor
 		BlockWeightedRandom subFloor = new BlockWeightedRandom();
 		subFloor.addBlock(new MetaBlock(Blocks.lava), 8);
 		subFloor.addBlock(new MetaBlock(Blocks.obsidian), 3);
-		WorldGenPrimitive.fillRectSolid(world, rand, x - length, y - 5, z - width, x + length, y - 2, z + width, subFloor);
+		editor.fillRectSolid(rand, x - length, y - 5, z - width, x + length, y - 2, z + width, subFloor);
 		
 		BlockWeightedRandom ceiling = new BlockWeightedRandom();
 		ceiling.addBlock(new MetaBlock(Blocks.nether_brick_fence), 10);
 		ceiling.addBlock(new MetaBlock(Blocks.air), 5);
-		WorldGenPrimitive.fillRectSolid(world, rand, x - length, y + height, z - width, x + length, y + height, z + width, ceiling);
+		editor.fillRectSolid(rand, x - length, y + height, z - width, x + length, y + height, z + width, ceiling);
 		
-		TreasureChest.createChests(world, rand, settings, 1, WorldGenPrimitive.getRectSolid(x - length, y, z - width, x + length, y, z + width));
+		TreasureChest.createChests(editor, rand, settings, 1, WorldEditor.getRectSolid(x - length, y, z - width, x + length, y, z + width));
 
-		Spawner.generate(world, rand, settings, new Coord(x - length - 1, y + rand.nextInt(2), z - width - 1));
-		Spawner.generate(world, rand, settings, new Coord(x - length - 1, y + rand.nextInt(2), z + width + 1));
-		Spawner.generate(world, rand, settings, new Coord(x + length + 1, y + rand.nextInt(2), z - width - 1));
-		Spawner.generate(world, rand, settings, new Coord(x + length + 1, y + rand.nextInt(2), z + width + 1));
+		Spawner.generate(editor, rand, settings, new Coord(x - length - 1, y + rand.nextInt(2), z - width - 1));
+		Spawner.generate(editor, rand, settings, new Coord(x - length - 1, y + rand.nextInt(2), z + width + 1));
+		Spawner.generate(editor, rand, settings, new Coord(x + length + 1, y + rand.nextInt(2), z - width - 1));
+		Spawner.generate(editor, rand, settings, new Coord(x + length + 1, y + rand.nextInt(2), z + width + 1));
 
 		return true;
 	}

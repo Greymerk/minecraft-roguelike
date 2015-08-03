@@ -1,17 +1,15 @@
 package greymerk.roguelike.worldgen.blocks;
 
-import greymerk.roguelike.worldgen.Coord;
-import greymerk.roguelike.worldgen.MetaBlock;
-import greymerk.roguelike.worldgen.WorldGenPrimitive;
-
 import java.util.Random;
 
+import greymerk.roguelike.worldgen.Coord;
+import greymerk.roguelike.worldgen.MetaBlock;
+import greymerk.roguelike.worldgen.WorldEditor;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityFlowerPot;
-import net.minecraft.world.World;
 
 public enum FlowerPot {
 
@@ -19,11 +17,11 @@ public enum FlowerPot {
 	REDMUSHROOM, BROWNMUSHROOM, CACTUS, OAK, BIRCH, SPRUCE, JUNGLE, ACACIA, DARKOAK,
 	SHRUB, FERN;
 
-	public static void generate(World world, Coord pos, FlowerPot type){
+	public static void generate(WorldEditor editor, Coord pos, FlowerPot type){
 		MetaBlock pot = new MetaBlock(Blocks.flower_pot);
-		if(!pot.setBlock(world, pos)) return;
+		if(!pot.setBlock(editor, pos)) return;
 		
-		TileEntity potEntity = WorldGenPrimitive.getTileEntity(world, pos);
+		TileEntity potEntity = editor.getTileEntity(pos);
 		
 		if(potEntity == null) return;
 		if(!(potEntity instanceof TileEntityFlowerPot)) return;
@@ -33,9 +31,9 @@ public enum FlowerPot {
 		setData(flower, type);
 	}
 	
-	public static void generate(World world, Random rand, Coord pos){
+	public static void generate(WorldEditor editor, Random rand, Coord pos){
 		FlowerPot choice = FlowerPot.values()[rand.nextInt(FlowerPot.values().length)];
-		generate(world, pos, choice);
+		generate(editor, pos, choice);
 	}
 	
 	public static void setData(TileEntityFlowerPot pot, FlowerPot type){

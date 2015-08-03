@@ -1,18 +1,17 @@
 package greymerk.roguelike.dungeon.settings;
 
-import greymerk.roguelike.config.RogueConfig;
-import greymerk.roguelike.worldgen.Coord;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import net.minecraft.world.World;
-import net.minecraft.world.biome.BiomeGenBase;
-import net.minecraftforge.common.BiomeDictionary;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+
+import greymerk.roguelike.config.RogueConfig;
+import greymerk.roguelike.worldgen.Coord;
+import greymerk.roguelike.worldgen.WorldEditor;
+import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraftforge.common.BiomeDictionary;
 
 public class SpawnCriteria {
 
@@ -86,7 +85,7 @@ public class SpawnCriteria {
 		this.dimensionWhiteList = whiteList;
 	}
 	
-	public boolean isValid(World world, Coord pos){
+	public boolean isValid(WorldEditor editor, Coord pos){
 		
 		// @TODO : figure out dimension thing
 		Integer dimID = 0;
@@ -115,7 +114,7 @@ public class SpawnCriteria {
 		
 		boolean biomeFound = false;
 		
-		BiomeGenBase biome = world.getBiomeGenForCoords(pos.getBlockPos());
+		BiomeGenBase biome = editor.getBiome(pos);
 		
 		if(this.biomes != null){
 			if(this.biomes.contains(biome.biomeName)) biomeFound = true;

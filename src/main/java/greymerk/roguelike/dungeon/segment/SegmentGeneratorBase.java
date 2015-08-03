@@ -1,5 +1,7 @@
 package greymerk.roguelike.dungeon.segment;
 
+import java.util.Random;
+
 import greymerk.roguelike.dungeon.IDungeonLevel;
 import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.util.WeightedChoice;
@@ -7,11 +9,7 @@ import greymerk.roguelike.util.WeightedRandomizer;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
-import greymerk.roguelike.worldgen.WorldGenPrimitive;
-
-import java.util.Random;
-
-import net.minecraft.world.World;
+import greymerk.roguelike.worldgen.WorldEditor;
 
 public class SegmentGeneratorBase implements ISegmentGenerator{
 	
@@ -33,23 +31,23 @@ public class SegmentGeneratorBase implements ISegmentGenerator{
 	}
 	
 	@Override
-	public void genSegment(World world, Random rand, IDungeonLevel level, Cardinal dir, Coord pos) {
+	public void genSegment(WorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, Coord pos) {
 		
 		int x = pos.getX();
 		int y = pos.getY();
 		int z = pos.getZ();
 		
 		for(Cardinal orth : Cardinal.getOrthogonal(dir)){
-			ISegment seg = pickSegment(world, rand, level, dir, pos);
+			ISegment seg = pickSegment(editor, rand, level, dir, pos);
 			if(seg == null) return;
-			seg.generate(world, rand, level, orth, level.getSettings().getTheme(), x, y, z);
+			seg.generate(editor, rand, level, orth, level.getSettings().getTheme(), x, y, z);
 		}
 		
-		if(!level.hasNearbyNode(pos) && rand.nextInt(3) == 0) addSupport(world, rand, level.getSettings().getTheme(), x, y, z);
+		if(!level.hasNearbyNode(pos) && rand.nextInt(3) == 0) addSupport(editor, rand, level.getSettings().getTheme(), x, y, z);
 		
 	}
 	
-	private ISegment pickSegment(World world, Random rand, IDungeonLevel level, Cardinal dir, Coord pos){
+	private ISegment pickSegment(WorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, Coord pos){
 		int x = pos.getX();
 		int z = pos.getZ();
 		
@@ -70,22 +68,22 @@ public class SegmentGeneratorBase implements ISegmentGenerator{
 		return null;
 	}
 	
-	private void addSupport(World world, Random rand, ITheme theme, int x, int y, int z){
-		if(!world.isAirBlock(new Coord(x, y - 2, z).getBlockPos())) return;
+	private void addSupport(WorldEditor editor, Random rand, ITheme theme, int x, int y, int z){
+		if(!editor.isAirBlock(new Coord(x, y - 2, z))) return;
 		
-		WorldGenPrimitive.fillDown(world, rand, new Coord(x, y - 2, z), theme.getPrimaryPillar());
+		editor.fillDown(rand, new Coord(x, y - 2, z), theme.getPrimaryPillar());
 		
 		MetaBlock stair = theme.getPrimaryStair();
-		WorldGenPrimitive.blockOrientation(stair, Cardinal.WEST, true);
-		WorldGenPrimitive.setBlock(world, x - 1, y - 2, z, stair);
+		WorldEditor.blockOrientation(stair, Cardinal.WEST, true);
+		editor.setBlock(x - 1, y - 2, z, stair);
 		
-		WorldGenPrimitive.blockOrientation(stair, Cardinal.EAST, true);
-		WorldGenPrimitive.setBlock(world, x + 1, y - 2, z, stair);
+		WorldEditor.blockOrientation(stair, Cardinal.EAST, true);
+		editor.setBlock(x + 1, y - 2, z, stair);
 		
-		WorldGenPrimitive.blockOrientation(stair, Cardinal.SOUTH, true);
-		WorldGenPrimitive.setBlock(world, x, y - 2, z + 1, stair);
+		WorldEditor.blockOrientation(stair, Cardinal.SOUTH, true);
+		editor.setBlock(x, y - 2, z + 1, stair);
 		
-		WorldGenPrimitive.blockOrientation(stair, Cardinal.NORTH, true);
-		WorldGenPrimitive.setBlock(world, x, y - 2, z - 1, stair);	
+		WorldEditor.blockOrientation(stair, Cardinal.NORTH, true);
+		editor.setBlock(x, y - 2, z - 1, stair);	
 	}
 }

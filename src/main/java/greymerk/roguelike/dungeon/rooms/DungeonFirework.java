@@ -1,31 +1,29 @@
 package greymerk.roguelike.dungeon.rooms;
 
+import java.util.List;
+import java.util.Random;
+
 import greymerk.roguelike.dungeon.base.IDungeonRoom;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.treasure.loot.Firework;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
-import greymerk.roguelike.worldgen.WorldGenPrimitive;
+import greymerk.roguelike.worldgen.WorldEditor;
 import greymerk.roguelike.worldgen.redstone.Comparator;
 import greymerk.roguelike.worldgen.redstone.Dispenser;
 import greymerk.roguelike.worldgen.redstone.Dropper;
 import greymerk.roguelike.worldgen.redstone.Lever;
 import greymerk.roguelike.worldgen.redstone.Repeater;
 import greymerk.roguelike.worldgen.redstone.Torch;
-
-import java.util.List;
-import java.util.Random;
-
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
 
 public class DungeonFirework implements IDungeonRoom {
 
 	@Override
-	public boolean generate(World world, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
+	public boolean generate(WorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
 		
 		int x = origin.getX();
 		int y = origin.getY();
@@ -46,7 +44,7 @@ public class DungeonFirework implements IDungeonRoom {
 		end.add(orth[1], 4);
 		start.add(Cardinal.DOWN);
 		end.add(Cardinal.UP, 3);
-		WorldGenPrimitive.fillRectHollow(world, rand, start, end, new MetaBlock(Blocks.cobblestone), false, true);
+		editor.fillRectHollow(rand, start, end, new MetaBlock(Blocks.cobblestone), false, true);
 		
 		start = new Coord(x, y, z);
 		start.add(orth[0], 2);
@@ -54,30 +52,30 @@ public class DungeonFirework implements IDungeonRoom {
 		start.add(Cardinal.reverse(dir), 3);
 		end.add(dir, 7);
 		end.add(Cardinal.UP);
-		WorldGenPrimitive.fillRectSolid(world, rand, start, end, breadboard, true, true);
+		editor.fillRectSolid(rand, start, end, breadboard, true, true);
 		
 		start.add(orth[1], 2);
 		end.add(orth[1], 2);
-		WorldGenPrimitive.fillRectSolid(world, rand, start, end, breadboard, true, true);
+		editor.fillRectSolid(rand, start, end, breadboard, true, true);
 		
 		start.add(orth[1], 2);
 		end.add(orth[1], 2);
-		WorldGenPrimitive.fillRectSolid(world, rand, start, end, breadboard, true, true);
+		editor.fillRectSolid(rand, start, end, breadboard, true, true);
 		
 		cursor = new Coord(x, y, z);
 		cursor.add(orth[0], 2);
 		
-		launcher(world, rand, dir, cursor);
+		launcher(editor, rand, dir, cursor);
 		cursor.add(orth[1], 2);
-		launcher(world, rand, dir, cursor);
+		launcher(editor, rand, dir, cursor);
 		cursor.add(orth[1], 2);
-		launcher(world, rand, dir, cursor);
+		launcher(editor, rand, dir, cursor);
 		cursor.add(dir, 6);
-		launcher(world, rand, dir, cursor);
+		launcher(editor, rand, dir, cursor);
 		cursor.add(orth[0], 2);
-		launcher(world, rand, dir, cursor);
+		launcher(editor, rand, dir, cursor);
 		cursor.add(orth[0], 2);
-		launcher(world, rand, dir, cursor);
+		launcher(editor, rand, dir, cursor);
 		
 		start = new Coord(x, y, z);
 		start.add(dir, 4);
@@ -85,22 +83,22 @@ public class DungeonFirework implements IDungeonRoom {
 		start.add(orth[0], 2);
 		end.add(orth[1], 2);
 		end.add(dir, 2);
-		WorldGenPrimitive.fillRectSolid(world, rand, start, end, new MetaBlock(Blocks.air), true, true);
+		editor.fillRectSolid(rand, start, end, new MetaBlock(Blocks.air), true, true);
 		
 		cursor = new Coord(x, y, z);
 		cursor.add(dir, 2);
-		Repeater.generate(world, rand, dir, 0, cursor);
+		Repeater.generate(editor, rand, dir, 0, cursor);
 		cursor.add(orth[0], 2);
-		Repeater.generate(world, rand, dir, 0, cursor);
+		Repeater.generate(editor, rand, dir, 0, cursor);
 		cursor.add(orth[1], 4);
-		Repeater.generate(world, rand, dir, 0, cursor);
+		Repeater.generate(editor, rand, dir, 0, cursor);
 		
 		cursor = new Coord(x, y, z);
 		cursor.add(Cardinal.reverse(dir), 3);
 		cursor.add(orth[0]);
-		Repeater.generate(world, rand, orth[0], 0, cursor);
+		Repeater.generate(editor, rand, orth[0], 0, cursor);
 		cursor.add(orth[1], 2);
-		Repeater.generate(world, rand, orth[1], 0, cursor);
+		Repeater.generate(editor, rand, orth[1], 0, cursor);
 		
 		MetaBlock wire = new MetaBlock(Blocks.redstone_wire);
 		
@@ -112,69 +110,69 @@ public class DungeonFirework implements IDungeonRoom {
 		end.add(orth[0], 5);
 		end.add(Cardinal.reverse(dir), 5);
 		end.add(Cardinal.DOWN, 2);
-		WorldGenPrimitive.fillRectSolid(world, rand, start, end, new MetaBlock(Blocks.cobblestone), true, true);
+		editor.fillRectSolid(rand, start, end, new MetaBlock(Blocks.cobblestone), true, true);
 		
 		cursor = new Coord(x, y, z);
 		cursor.add(Cardinal.reverse(dir), 3);
 		cursor.add(Cardinal.DOWN);
-		Torch.generate(world, Torch.REDSTONE, Cardinal.UP, cursor);
+		Torch.generate(editor, Torch.REDSTONE, Cardinal.UP, cursor);
 		cursor.add(Cardinal.DOWN);
-		breadboard.setBlock(world, cursor);
+		breadboard.setBlock(editor, cursor);
 		cursor.add(orth[0]);
-		Torch.generate(world, Torch.REDSTONE, orth[0], cursor);
+		Torch.generate(editor, Torch.REDSTONE, orth[0], cursor);
 		cursor.add(orth[0]);
-		wire.setBlock(world, cursor);
+		wire.setBlock(editor, cursor);
 		cursor.add(Cardinal.reverse(dir));
-		wire.setBlock(world, cursor);
+		wire.setBlock(editor, cursor);
 		cursor.add(Cardinal.reverse(dir));
-		wire.setBlock(world, cursor);
+		wire.setBlock(editor, cursor);
 		cursor.add(orth[1]);
-		wire.setBlock(world, cursor);
+		wire.setBlock(editor, cursor);
 		cursor.add(orth[1]);
-		wire.setBlock(world, cursor);
+		wire.setBlock(editor, cursor);
 		cursor.add(dir);
-		Repeater.generate(world, rand, Cardinal.reverse(dir), 4, cursor);
+		Repeater.generate(editor, rand, Cardinal.reverse(dir), 4, cursor);
 		cursor.add(Cardinal.UP);
 		cursor.add(Cardinal.reverse(dir));
-		breadboard.setBlock(world, cursor);
+		breadboard.setBlock(editor, cursor);
 		cursor.add(Cardinal.UP);
-		Lever.generate(world, Cardinal.UP, cursor, true);
+		Lever.generate(editor, Cardinal.UP, cursor, true);
 		
 		return false;
 	}
 
 
-	private void launcher(World world, Random rand, Cardinal dir, Coord pos){
+	private void launcher(WorldEditor editor, Random rand, Cardinal dir, Coord pos){
 		Coord cursor = new Coord(pos);
-		WorldGenPrimitive.setBlock(world, cursor, Blocks.redstone_wire);
+		editor.setBlock(cursor, Blocks.redstone_wire);
 		cursor.add(Cardinal.reverse(dir));
-		WorldGenPrimitive.setBlock(world, cursor, Blocks.redstone_wire);
+		editor.setBlock(cursor, Blocks.redstone_wire);
 		cursor.add(Cardinal.reverse(dir));
-		Repeater.generate(world, rand, dir, 0, cursor);
+		Repeater.generate(editor, rand, dir, 0, cursor);
 		cursor.add(Cardinal.reverse(dir));
 		cursor.add(Cardinal.UP);
 		
 		Dropper dropper = new Dropper();
-		dropper.generate(world, Cardinal.UP, cursor);
+		dropper.generate(editor, Cardinal.UP, cursor);
 		for(int i = 0;i < 8; ++i){
-			dropper.add(world, cursor, i, new ItemStack(Items.dye, 1, i));
+			dropper.add(editor, cursor, i, new ItemStack(Items.dye, 1, i));
 		}
-		dropper.add(world, cursor, 8, new ItemStack(Items.wooden_hoe));
+		dropper.add(editor, cursor, 8, new ItemStack(Items.wooden_hoe));
 		
 		cursor.add(Cardinal.UP);
-		WorldGenPrimitive.setBlock(world, cursor, Blocks.hopper);
+		editor.setBlock(cursor, Blocks.hopper);
 		cursor.add(dir);
-		Comparator.generate(world, rand, dir, false, cursor);
+		Comparator.generate(editor, rand, dir, false, cursor);
 		cursor.add(dir);
-		WorldGenPrimitive.setBlock(world, cursor, Blocks.redstone_wire);
+		editor.setBlock(cursor, Blocks.redstone_wire);
 		cursor.add(dir);
-		WorldGenPrimitive.setBlock(world, cursor, Blocks.redstone_wire);
+		editor.setBlock(cursor, Blocks.redstone_wire);
 		cursor.add(dir);
 		
 		Coord top = new Coord(pos.getX(), 80, pos.getZ());
 		while(top.getY() > pos.getY()){
 			top.add(Cardinal.DOWN);
-			if(WorldGenPrimitive.getBlock(world, top).getBlock().getMaterial().isSolid()) break;
+			if(editor.getBlock(top).getBlock().getMaterial().isSolid()) break;
 		}
 		
 		if(top.getY() >= 100) return;
@@ -192,9 +190,9 @@ public class DungeonFirework implements IDungeonRoom {
 		boolean torch = false;
 		while(end.getY() < top.getY()){
 			if(torch){
-				Torch.generate(world, Torch.REDSTONE, Cardinal.UP, cursor);
+				Torch.generate(editor, Torch.REDSTONE, Cardinal.UP, cursor);
 			} else {
-				breadboard.setBlock(world, cursor);
+				breadboard.setBlock(editor, cursor);
 			}
 			torch = !torch;
 			cursor.add(Cardinal.UP);
@@ -205,35 +203,35 @@ public class DungeonFirework implements IDungeonRoom {
 			cursor.add(Cardinal.DOWN);
 		}
 		
-		Dispenser.generate(world, Cardinal.UP, cursor);
+		Dispenser.generate(editor, Cardinal.UP, cursor);
 		for(int i = 0; i < 9; i++){
-			Dispenser.add(world, cursor, i, Firework.get(rand, 16 + rand.nextInt(16)));
+			Dispenser.add(editor, cursor, i, Firework.get(rand, 16 + rand.nextInt(16)));
 		}
 		
 		cursor.add(Cardinal.UP);
 		MetaBlock cob = new MetaBlock(Blocks.cobblestone);
-		WorldGenPrimitive.fillRectSolid(world, rand, start, end, cob, true, true);
+		editor.fillRectSolid(rand, start, end, cob, true, true);
 		start.add(Cardinal.reverse(dir), 2);
 		end.add(Cardinal.reverse(dir), 2);
-		WorldGenPrimitive.fillRectSolid(world, rand, start, end, cob, true, true);
+		editor.fillRectSolid(rand, start, end, cob, true, true);
 		Cardinal[] orth = Cardinal.getOrthogonal(dir);
 		start.add(dir);
 		end.add(dir);
 		Coord above = new Coord(end);
 		above.add(Cardinal.UP, 10);
-		List<Coord> tubeEnd = WorldGenPrimitive.getRectSolid(cursor, above);
+		List<Coord> tubeEnd = WorldEditor.getRectSolid(cursor, above);
 		MetaBlock air = new MetaBlock(Blocks.air);
 		for(Coord c : tubeEnd){
-			if(WorldGenPrimitive.getBlock(world, c).getBlock().getMaterial().isSolid()){
-				air.setBlock(world, c);
+			if(editor.getBlock(c).getBlock().getMaterial().isSolid()){
+				air.setBlock(editor, c);
 			}
 		}
 		start.add(orth[0]);
 		end.add(orth[0]);
-		WorldGenPrimitive.fillRectSolid(world, rand, start, end, cob, true, true);
+		editor.fillRectSolid(rand, start, end, cob, true, true);
 		start.add(orth[1], 2);
 		end.add(orth[1], 2);
-		WorldGenPrimitive.fillRectSolid(world, rand, start, end, cob, true, true);
+		editor.fillRectSolid(rand, start, end, cob, true, true);
 	}
 	
 	
@@ -243,7 +241,7 @@ public class DungeonFirework implements IDungeonRoom {
 	}
 
 	@Override
-	public boolean validLocation(World world, Cardinal dir, int x, int y, int z) {
+	public boolean validLocation(WorldEditor editor, Cardinal dir, int x, int y, int z) {
 		Coord start;
 		Coord end;
 		
@@ -257,8 +255,8 @@ public class DungeonFirework implements IDungeonRoom {
 		start.add(Cardinal.DOWN);
 		end.add(Cardinal.UP, 3);
 		
-		for(Coord c : WorldGenPrimitive.getRectHollow(start, end)){
-			if(world.isAirBlock(c.getBlockPos())) return false;
+		for(Coord c : editor.getRectHollow(start, end)){
+			if(editor.isAirBlock(c)) return false;
 		}
 		
 		return true;

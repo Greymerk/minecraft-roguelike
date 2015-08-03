@@ -1,16 +1,14 @@
 package greymerk.roguelike.dungeon;
 
+import java.util.List;
+import java.util.Random;
+
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.dungeon.settings.ISettings;
 import greymerk.roguelike.dungeon.settings.SettingsResolver;
 import greymerk.roguelike.treasure.ITreasureChest;
 import greymerk.roguelike.worldgen.Coord;
-import greymerk.roguelike.worldgen.WorldGenPrimitive;
-
-import java.util.List;
-import java.util.Random;
-
-import net.minecraft.world.World;
+import greymerk.roguelike.worldgen.WorldEditor;
 
 public class Dungeon implements IDungeon{
 		
@@ -30,35 +28,35 @@ public class Dungeon implements IDungeon{
 		
 	}
 	
-	public void generateNear(World world, Random rand, int x, int z){
+	public void generateNear(WorldEditor editor, Random rand, int x, int z){
 		int attempts = 50;
 		
 		for(int i = 0;i < attempts;i++){
 			Coord location = getNearbyCoord(rand, x, z, 40, 100);
 			
-			if(!validLocation(world, rand, location.getX(), location.getZ())) continue;
+			if(!validLocation(editor, rand, location.getX(), location.getZ())) continue;
 			
-			ISettings setting = settingsResolver.getSettings(world, rand, location);
+			ISettings setting = settingsResolver.getSettings(editor, rand, location);
 			
 			if(setting == null) return;
 			
-			generate(world, setting, location.getX(), location.getZ());
+			generate(editor, setting, location.getX(), location.getZ());
 			return;
 		}
 	}
 	
-	public void generate(World world, ISettings settings, int inX, int inZ){
+	public void generate(WorldEditor editor, ISettings settings, int inX, int inZ){
 		DungeonGenerator generator = new DungeonGenerator();
-		generator.generate(world, settings, inX, inZ);
+		generator.generate(editor, settings, inX, inZ);
 	}
 	
-	public static boolean canSpawnInChunk(int chunkX, int chunkZ, World world){
+	public static boolean canSpawnInChunk(int chunkX, int chunkZ, WorldEditor editor){
 		
 		if(!RogueConfig.getBoolean(RogueConfig.DONATURALSPAWN)){
 			return false;
 		}
 		
-		if(!RogueConfig.getIntList(RogueConfig.DIMENSIONWL).contains((Integer)world.provider.getDimensionId())){
+		if(!RogueConfig.getIntList(RogueConfig.DIMENSIONWL).contains((Integer)editor.getDimension())){
 			return false;
 		}
 
@@ -76,7 +74,7 @@ public class Dungeon implements IDungeon{
 		int m = tempX / max;
 		int n = tempZ / max;
 		
-		Random r = world.setRandomSeed(m, n, 10387312);
+		Random r = editor.setSeed(m, n, 10387312);
 		
 		m *= max;
 		n *= max;
@@ -91,13 +89,13 @@ public class Dungeon implements IDungeon{
 		return true;
 	}
 	
-	public void spawnInChunk(World world, Random rand, int chunkX, int chunkZ) {
+	public void spawnInChunk(WorldEditor editor, Random rand, int chunkX, int chunkZ) {
 		
-		if(Dungeon.canSpawnInChunk(chunkX, chunkZ, world)){
+		if(Dungeon.canSpawnInChunk(chunkX, chunkZ, editor)){
 			int x = chunkX * 16 + 4;
 			int z = chunkZ * 16 + 4;
 			
-			generateNear(world, rand, x, z);
+			generateNear(editor, rand, x, z);
 		}
 	}
 	
@@ -110,17 +108,17 @@ public class Dungeon implements IDungeon{
 		return 0;
 	}
 	
-	public static boolean validLocation(World world, Random rand, int x, int z){
+	public static boolean validLocation(WorldEditor editor, Random rand, int x, int z){
 		int upperLimit = RogueConfig.getInt(RogueConfig.UPPERLIMIT);
 		int lowerLimit = RogueConfig.getInt(RogueConfig.LOWERLIMIT);
 		
-		if(!world.isAirBlock(new Coord(x, upperLimit, z).getBlockPos())){
+		if(!editor.isAirBlock(new Coord(x, upperLimit, z))){
 			return false;
 		}
 		
 		int y = upperLimit;
 		
-		while(!WorldGenPrimitive.getBlock(world, new Coord(x, y, z)).getBlock().getMaterial().isOpaque() && y > lowerLimit){
+		while(!editor.getBlock(new Coord(x, y, z)).getBlock().getMaterial().isOpaque() && y > lowerLimit){
 			--y;
 		}
 		
@@ -128,19 +126,19 @@ public class Dungeon implements IDungeon{
 			return false;
 		}
 		
-		List<Coord> above = WorldGenPrimitive.getRectSolid(x - 4, y + 4, z - 4, x + 4, y + 4, z + 4);
+		List<Coord> above = WorldEditor.getRectSolid(x - 4, y + 4, z - 4, x + 4, y + 4, z + 4);
 
 		for (Coord c : above){
-			if(WorldGenPrimitive.getBlock(world, c).getBlock().getMaterial().isOpaque()){
+			if(editor.getBlock(c).getBlock().getMaterial().isOpaque()){
 				return false;
 			}
 		}
 		
-		List<Coord> below = WorldGenPrimitive.getRectSolid(x - 4, y - 3, z - 4, x + 4, y - 3, z + 4);
+		List<Coord> below = WorldEditor.getRectSolid(x - 4, y - 3, z - 4, x + 4, y - 3, z + 4);
 		
 		int airCount = 0;
 		for (Coord c : below){
-			if(!WorldGenPrimitive.getBlock(world, c).getBlock().getMaterial().isOpaque()){
+			if(!editor.getBlock(c).getBlock().getMaterial().isOpaque()){
 				airCount++;
 			}
 			if(airCount > 8){
@@ -164,8 +162,8 @@ public class Dungeon implements IDungeon{
 		return nearby;
 	}
 	
-	public static Random getRandom(World world, int x, int z){
-		long seed = world.getSeed() * x * z;
+	public static Random getRandom(WorldEditor editor, int x, int z){
+		long seed = editor.getSeed() * x * z;
 		Random rand = new Random();
 		rand.setSeed(seed);
 		return rand;
@@ -173,31 +171,26 @@ public class Dungeon implements IDungeon{
 
 	@Override
 	public List<DungeonNode> getNodes() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public List<IDungeonLevel> getLevels() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public List<ITreasureChest> getChests() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public List<Coord> getChestLocations() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public List<Coord> getSpawnerLocations() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 }

@@ -1,12 +1,12 @@
 package greymerk.roguelike.dungeon.settings;
 
 import greymerk.roguelike.worldgen.Coord;
-import net.minecraft.world.World;
+import greymerk.roguelike.worldgen.WorldEditor;
 
 
 public interface ISettings {
 
-	public boolean isValid(World world, Coord pos);
+	public boolean isValid(WorldEditor editor, Coord pos);
 	
 	public LevelSettings getLevelSettings(int level);
 	

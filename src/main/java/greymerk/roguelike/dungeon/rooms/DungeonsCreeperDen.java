@@ -1,5 +1,9 @@
 package greymerk.roguelike.dungeon.rooms;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+
 import greymerk.roguelike.dungeon.base.DungeonBase;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.theme.ITheme;
@@ -9,18 +13,12 @@ import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.Spawner;
-import greymerk.roguelike.worldgen.WorldGenPrimitive;
-
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
-
+import greymerk.roguelike.worldgen.WorldEditor;
 import net.minecraft.init.Blocks;
-import net.minecraft.world.World;
 
 public class DungeonsCreeperDen extends DungeonBase {
 
-	public boolean generate(World world, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
+	public boolean generate(WorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
 
 		ITheme theme = settings.getTheme();
 		
@@ -46,42 +44,42 @@ public class DungeonsCreeperDen extends DungeonBase {
 		end = new Coord(origin);
 		start.add(new Coord(-4, -4, -4));
 		end.add(new Coord(4, 5, 4));
-		mossy.fillRectHollow(world, rand, start, end, false, true);
+		mossy.fillRectHollow(editor, rand, start, end, false, true);
 		
 		start = new Coord(origin);
 		end = new Coord(origin);
 		start.add(new Coord(-3, -1, -3));
 		end.add(new Coord(3, -1, 3));
-		floor.fillRectSolid(world, rand, start, end, true, true);
+		floor.fillRectSolid(editor, rand, start, end, true, true);
 		
 		start = new Coord(origin);
 		end = new Coord(origin);
 		start.add(new Coord(-3, -3, -3));
 		end.add(new Coord(3, -2, 3));
-		subfloor.fillRectSolid(world, rand, start, end, true, true);
+		subfloor.fillRectSolid(editor, rand, start, end, true, true);
 		
 		start = new Coord(origin);
 		end = new Coord(origin);
 		start.add(new Coord(-3, 0, -3));
 		end.add(new Coord(3, 0, 3));
 		
-		List<Coord> chestSpaces = WorldGenPrimitive.getRectSolid(start, end);
+		List<Coord> chestSpaces = WorldEditor.getRectSolid(start, end);
 		Collections.shuffle(chestSpaces);
 		
 		int counter = 0;
 		for(Coord spot : chestSpaces){
-			if(TreasureChest.isValidChestSpace(world, spot)){
-				TreasureChest.generate(world, rand, settings, spot, TreasureChest.ORE, settings.getDifficulty(spot), true);
+			if(TreasureChest.isValidChestSpace(editor, spot)){
+				TreasureChest.generate(editor, rand, settings, spot, TreasureChest.ORE, settings.getDifficulty(spot), true);
 				Coord cursor = new Coord(spot);
 				cursor.add(Cardinal.DOWN, 2);
-				tnt.setBlock(world, cursor);
+				tnt.setBlock(editor, cursor);
 				++counter;
 			}
 			
 			if(counter >= 2) break;
 		}
 		
-		Spawner.generate(world, rand, settings, new Coord(origin), Spawner.CREEPER);
+		Spawner.generate(editor, rand, settings, new Coord(origin), Spawner.CREEPER);
 		
 		return true;
 	}

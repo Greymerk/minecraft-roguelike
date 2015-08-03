@@ -1,5 +1,7 @@
 package greymerk.roguelike.dungeon.segment.part;
 
+import java.util.Random;
+
 import greymerk.roguelike.dungeon.IDungeonLevel;
 import greymerk.roguelike.dungeon.segment.IAlcove;
 import greymerk.roguelike.dungeon.segment.alcove.SilverfishNest;
@@ -7,17 +9,13 @@ import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
-import greymerk.roguelike.worldgen.WorldGenPrimitive;
-
-import java.util.Random;
-
+import greymerk.roguelike.worldgen.WorldEditor;
 import net.minecraft.init.Blocks;
-import net.minecraft.world.World;
 
 public class SegmentSilverfish extends SegmentBase {
 	
 	@Override
-	protected void genWall(World world, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
+	protected void genWall(WorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
 		
 		MetaBlock air = new MetaBlock(Blocks.air);
 		MetaBlock stair = theme.getSecondaryStair();
@@ -34,37 +32,37 @@ public class SegmentSilverfish extends SegmentBase {
 		end = new Coord(cursor);
 		end.add(orth[1], 1);
 		end.add(Cardinal.UP, 2);
-		WorldGenPrimitive.fillRectSolid(world, rand, start, end, air, true, true);
+		editor.fillRectSolid(rand, start, end, air, true, true);
 		
 		// front wall
 		start.add(dir, 1);
 		end.add(dir, 1);
-		WorldGenPrimitive.fillRectSolid(world, rand, start, end, theme.getPrimaryWall(), false, true);
+		editor.fillRectSolid(rand, start, end, theme.getPrimaryWall(), false, true);
 
 		// stairs
 		cursor.add(Cardinal.UP, 2);
 		for(Cardinal d : orth){
 			Coord c = new Coord(cursor);
 			c.add(d, 1);
-			WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(d), true);
-			WorldGenPrimitive.setBlock(world, rand, c, stair, true, true);
+			WorldEditor.blockOrientation(stair, Cardinal.reverse(d), true);
+			editor.setBlock(rand, c, stair, true, true);
 		}
 		
 		stair = theme.getPrimaryStair();
 		
 		cursor = new Coord(x, y, z);
 		cursor.add(dir, 3);
-		WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(dir), false);
-		stair.setBlock(world, cursor);
+		WorldEditor.blockOrientation(stair, Cardinal.reverse(dir), false);
+		stair.setBlock(editor, cursor);
 		cursor.add(Cardinal.UP);
-		air.setBlock(world, cursor);
+		air.setBlock(editor, cursor);
 		cursor.add(Cardinal.UP);
-		WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(dir), true);
-		stair.setBlock(world, cursor);
+		WorldEditor.blockOrientation(stair, Cardinal.reverse(dir), true);
+		stair.setBlock(editor, cursor);
 		
 		IAlcove nest = new SilverfishNest();
-		if(nest.isValidLocation(world, x, y, z, dir)){
-			nest.generate(world, rand, level.getSettings(), x, y, z, dir);
+		if(nest.isValidLocation(editor, x, y, z, dir)){
+			nest.generate(editor, rand, level.getSettings(), x, y, z, dir);
 			return;
 		}
 	}	

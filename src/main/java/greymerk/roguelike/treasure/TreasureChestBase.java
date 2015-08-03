@@ -1,26 +1,23 @@
 package greymerk.roguelike.treasure;
 
-import greymerk.roguelike.config.RogueConfig;
-import greymerk.roguelike.treasure.loot.Loot;
-import greymerk.roguelike.treasure.loot.LootSettings;
-import greymerk.roguelike.worldgen.Coord;
-import greymerk.roguelike.worldgen.MetaBlock;
-import greymerk.roguelike.worldgen.WorldGenPrimitive;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
+import greymerk.roguelike.config.RogueConfig;
+import greymerk.roguelike.treasure.loot.Loot;
+import greymerk.roguelike.treasure.loot.LootSettings;
+import greymerk.roguelike.worldgen.Coord;
+import greymerk.roguelike.worldgen.MetaBlock;
+import greymerk.roguelike.worldgen.WorldEditor;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityChest;
-import net.minecraft.world.World;
 
 public abstract class TreasureChestBase implements ITreasureChest, Iterable<InventorySlot>{
 
-	protected World world;
 	protected Random rand;
 	protected TileEntityChest chest;
 
@@ -36,8 +33,8 @@ public abstract class TreasureChestBase implements ITreasureChest, Iterable<Inve
 	}
 		
 
-	public ITreasureChest generate(World world, Random rand, LootSettings loot, Coord pos, int level, boolean trapped) {
-		this.world = world;
+	public ITreasureChest generate(WorldEditor editor, Random rand, LootSettings loot, Coord pos, int level, boolean trapped) {
+
 		this.rand = rand;
 
 		Collections.shuffle(slots, rand);
@@ -45,11 +42,11 @@ public abstract class TreasureChestBase implements ITreasureChest, Iterable<Inve
 		MetaBlock chestType = new MetaBlock(trapped ? Blocks.trapped_chest : Blocks.chest);
 		
 		
-		if(!chestType.setBlock(world, pos)){
+		if(!chestType.setBlock(editor, pos)){
 			return null;
 		}
 		
-		chest = (TileEntityChest) WorldGenPrimitive.getTileEntity(world, pos);
+		chest = (TileEntityChest) editor.getTileEntity(pos);
 
 		try{
 			

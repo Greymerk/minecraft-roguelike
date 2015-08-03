@@ -3,12 +3,12 @@ package greymerk.roguelike.worldgen.blocks;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
+import greymerk.roguelike.worldgen.WorldEditor;
 import net.minecraft.init.Blocks;
-import net.minecraft.world.World;
 
 public class Bed {
 
-	public static void generate(World world, Cardinal dir, Coord pos){
+	public static void generate(WorldEditor editor, Cardinal dir, Coord pos){
 		
 		Coord cursor = new Coord(pos);
 		
@@ -23,10 +23,10 @@ public class Bed {
 		}
 		
 		MetaBlock head = new MetaBlock(Blocks.bed.getStateFromMeta(meta + 8));
-		head.setBlock(world, cursor);
+		head.setBlock(editor, cursor);
 		
 		MetaBlock foot = new MetaBlock(Blocks.bed.getStateFromMeta(meta));
 		cursor.add(dir);
-		foot.setBlock(world, cursor);
+		foot.setBlock(editor, cursor);
 	}
 }

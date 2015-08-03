@@ -3,15 +3,14 @@ package greymerk.roguelike.worldgen;
 import java.util.Collection;
 import java.util.Random;
 
+import com.google.common.collect.ImmutableMap;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.world.World;
-
-import com.google.common.collect.ImmutableMap;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 
 public class MetaBlock extends BlockFactoryBase implements IBlockState{
 
@@ -46,13 +45,13 @@ public class MetaBlock extends BlockFactoryBase implements IBlockState{
 		this.state = state;
 	}
 
-	public boolean setBlock(World world, Coord pos){
-		return WorldGenPrimitive.setBlock(world, pos, this.state, this.flag, true, true);
+	public boolean setBlock(WorldEditor editor, Coord pos){
+		return editor.setBlock(pos, this.state, this.flag, true, true);
 	}
 	
 	@Override
-	public boolean setBlock(World world, Random rand, Coord pos, boolean fillAir, boolean replaceSolid) {
-		return WorldGenPrimitive.setBlock(world, pos, this.state, this.flag, fillAir, replaceSolid);
+	public boolean setBlock(WorldEditor editor, Random rand, Coord pos, boolean fillAir, boolean replaceSolid) {
+		return editor.setBlock(pos, this.state, this.flag, fillAir, replaceSolid);
 	}
 
 	@Override

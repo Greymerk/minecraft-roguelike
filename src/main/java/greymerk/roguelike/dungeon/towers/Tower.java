@@ -1,14 +1,12 @@
 package greymerk.roguelike.dungeon.towers;
 
-import greymerk.roguelike.worldgen.Coord;
-import greymerk.roguelike.worldgen.WorldGenPrimitive;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import greymerk.roguelike.worldgen.Coord;
+import greymerk.roguelike.worldgen.WorldEditor;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
-import net.minecraft.world.World;
 
 public enum Tower {
 
@@ -27,7 +25,7 @@ public enum Tower {
 		}
 	}
 	
-	public static Coord getBaseCoord(World world, int x, int y, int z){
+	public static Coord getBaseCoord(WorldEditor editor, int x, int y, int z){
 		
 		List<Block> invalidBlocks = new ArrayList<Block>();
 		invalidBlocks.add(Blocks.air);
@@ -43,7 +41,7 @@ public enum Tower {
 		invalidBlocks.add(Blocks.cocoa);
 		
 		int tempY = 128;
-		Block block = WorldGenPrimitive.getBlock(world, new Coord(x, tempY, z)).getBlock();
+		Block block = editor.getBlock(new Coord(x, tempY, z)).getBlock();
 
 		while(tempY > 60){
 
@@ -53,7 +51,7 @@ public enum Tower {
 
 			tempY = tempY - 1;
 
-			block = WorldGenPrimitive.getBlock(world, new Coord(x, tempY, z)).getBlock();
+			block = editor.getBlock(new Coord(x, tempY, z)).getBlock();
 
 		}
 

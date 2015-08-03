@@ -1,24 +1,22 @@
 package greymerk.roguelike.dungeon.segment.part;
 
+import java.util.Random;
+
 import greymerk.roguelike.dungeon.IDungeonLevel;
 import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
-import greymerk.roguelike.worldgen.WorldGenPrimitive;
-
-import java.util.Random;
-
+import greymerk.roguelike.worldgen.WorldEditor;
 import net.minecraft.init.Blocks;
-import net.minecraft.world.World;
 
 public class SegmentSewerArch extends SegmentBase {
 
 	@Override
-	protected void genWall(World world, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
+	protected void genWall(WorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
 			
 		MetaBlock stair = theme.getSecondaryStair(); 
-		WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(dir), true);
+		WorldEditor.blockOrientation(stair, Cardinal.reverse(dir), true);
 		MetaBlock water = new MetaBlock(Blocks.flowing_water);
 		MetaBlock air = new MetaBlock(Blocks.air);
 		MetaBlock bars = new MetaBlock(Blocks.iron_bars);
@@ -32,45 +30,45 @@ public class SegmentSewerArch extends SegmentBase {
 		
 		cursor = new Coord(x, y, z);
 		cursor.add(Cardinal.UP, 3);
-		WorldGenPrimitive.setBlock(world, rand, cursor, mossy, false, true);
+		editor.setBlock(rand, cursor, mossy, false, true);
 		cursor.add(Cardinal.UP);
-		WorldGenPrimitive.setBlock(world, rand, cursor, water, false, true);
+		editor.setBlock(rand, cursor, water, false, true);
 		
 		cursor = new Coord(x, y, z);
 		cursor.add(dir, 2);
-		WorldGenPrimitive.setBlock(world, rand, cursor, air, true, true);
+		editor.setBlock(rand, cursor, air, true, true);
 		cursor.add(Cardinal.UP, 1);
-		WorldGenPrimitive.setBlock(world, rand, cursor, air, true, true);
+		editor.setBlock(rand, cursor, air, true, true);
 		cursor.add(Cardinal.UP, 1);
-		WorldGenPrimitive.setBlock(world, rand, cursor, stair, true, true);
+		editor.setBlock(rand, cursor, stair, true, true);
 		
 		cursor = new Coord(x, y, z);
 		cursor.add(dir, 2);
-		bars.setBlock(world, cursor);
+		bars.setBlock(editor, cursor);
 		cursor.add(Cardinal.UP);
-		bars.setBlock(world, cursor);
+		bars.setBlock(editor, cursor);
 		
 		start = new Coord(x, y, z);
 		start.add(Cardinal.DOWN);
 		end = new Coord(start);
 		start.add(orth[0]);
 		end.add(orth[1]);
-		WorldGenPrimitive.fillRectSolid(world, rand, start, end, air, true, true);
+		editor.fillRectSolid(rand, start, end, air, true, true);
 		start.add(Cardinal.DOWN);
 		end.add(Cardinal.DOWN);
-		WorldGenPrimitive.fillRectSolid(world, rand, start, end, water, true, true);
+		editor.fillRectSolid(rand, start, end, water, true, true);
 		
 		for(Cardinal o : orth){
 			cursor = new Coord(x, y, z);
 			cursor.add(o, 1);
 			cursor.add(dir, 2);
-			WorldGenPrimitive.setBlock(world, rand, cursor, theme.getSecondaryPillar(), true, true);
+			editor.setBlock(rand, cursor, theme.getSecondaryPillar(), true, true);
 			cursor.add(Cardinal.UP, 1);
-			WorldGenPrimitive.setBlock(world, rand, cursor, theme.getSecondaryPillar(), true, true);
+			editor.setBlock(rand, cursor, theme.getSecondaryPillar(), true, true);
 			cursor.add(Cardinal.UP, 1);
-			WorldGenPrimitive.setBlock(world, rand, cursor, theme.getPrimaryWall(), true, true);
+			editor.setBlock(rand, cursor, theme.getPrimaryWall(), true, true);
 			cursor.add(Cardinal.reverse(dir), 1);
-			WorldGenPrimitive.setBlock(world, rand, cursor, stair, true, true);			
+			editor.setBlock(rand, cursor, stair, true, true);			
 		}
 	}
 }

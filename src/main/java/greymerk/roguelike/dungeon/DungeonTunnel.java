@@ -1,19 +1,17 @@
 package greymerk.roguelike.dungeon;
 
+import java.util.Iterator;
+import java.util.List;
+import java.util.Random;
+
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.worldgen.BlockJumble;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.MetaBlock;
-import greymerk.roguelike.worldgen.WorldGenPrimitive;
-
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
-
+import greymerk.roguelike.worldgen.WorldEditor;
 import net.minecraft.init.Blocks;
-import net.minecraft.world.World;
 
 public class DungeonTunnel implements Iterable<Coord>{
 
@@ -29,11 +27,11 @@ public class DungeonTunnel implements Iterable<Coord>{
 
 	@Override
 	public Iterator<Coord> iterator() {
-		List<Coord> t = WorldGenPrimitive.getRectSolid(start, end);
+		List<Coord> t = WorldEditor.getRectSolid(start, end);
 		return t.iterator();
 	}
 	
-	public void construct(World world, Random rand, LevelSettings settings){
+	public void construct(WorldEditor editor, Random rand, LevelSettings settings){
 		
 		MetaBlock air = new MetaBlock(Blocks.air);
 		
@@ -50,7 +48,7 @@ public class DungeonTunnel implements Iterable<Coord>{
 		e.add(Cardinal.SOUTH);
 		e.add(Cardinal.WEST);
 		e.add(Cardinal.UP, 2);
-		WorldGenPrimitive.fillRectSolid(world, rand, s, e, air, true, true);
+		editor.fillRectSolid(rand, s, e, air, true, true);
 		
 		s.add(Cardinal.NORTH);
 		s.add(Cardinal.EAST);
@@ -58,7 +56,7 @@ public class DungeonTunnel implements Iterable<Coord>{
 		e.add(Cardinal.SOUTH);
 		e.add(Cardinal.WEST);
 		e.add(Cardinal.UP);
-		WorldGenPrimitive.fillRectHollow(world, rand, s, e, wallBlocks, false, true);
+		editor.fillRectHollow(rand, s, e, wallBlocks, false, true);
 		
 		s = new Coord(this.start);
 		s.add(Cardinal.NORTH);
@@ -68,8 +66,8 @@ public class DungeonTunnel implements Iterable<Coord>{
 		e.add(Cardinal.SOUTH);
 		e.add(Cardinal.WEST);
 		e.add(Cardinal.DOWN);
-		WorldGenPrimitive.fillRectSolid(world, rand, s, e, floor, false, true);
-		WorldGenPrimitive.fillRectSolid(world, rand, s, e, bridgeBlocks, true, false);
+		editor.fillRectSolid(rand, s, e, floor, false, true);
+		editor.fillRectSolid(rand, s, e, bridgeBlocks, true, false);
 		
 		// end of the tunnel;
 		Coord location = new Coord(end);
@@ -83,7 +81,7 @@ public class DungeonTunnel implements Iterable<Coord>{
 		end.add(orth[1], 2);
 		end.add(Cardinal.DOWN, 2);
 		
-		WorldGenPrimitive.fillRectSolid(world, rand, start, end, wallBlocks, false, true);
+		editor.fillRectSolid(rand, start, end, wallBlocks, false, true);
 		
 	}
 	

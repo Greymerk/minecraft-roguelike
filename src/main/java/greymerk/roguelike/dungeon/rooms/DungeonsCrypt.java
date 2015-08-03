@@ -1,5 +1,9 @@
 package greymerk.roguelike.dungeon.rooms;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
+
 import greymerk.roguelike.dungeon.base.DungeonBase;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.theme.ITheme;
@@ -9,19 +13,13 @@ import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.Spawner;
-import greymerk.roguelike.worldgen.WorldGenPrimitive;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
-
+import greymerk.roguelike.worldgen.WorldEditor;
 import net.minecraft.init.Blocks;
-import net.minecraft.world.World;
 
 
 public class DungeonsCrypt extends DungeonBase {
 
-	public boolean generate(World world, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
+	public boolean generate(WorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
 		
 		ITheme theme = settings.getTheme();
 		MetaBlock air = new MetaBlock(Blocks.air);
@@ -37,19 +35,19 @@ public class DungeonsCrypt extends DungeonBase {
 		end = new Coord(origin);
 		start.add(-3, 0, -3);
 		end.add(3, 4, 3);
-		air.fillRectSolid(world, rand, start, end, true, true);
+		air.fillRectSolid(editor, rand, start, end, true, true);
 		
 		start = new Coord(origin);
 		end = new Coord(origin);
 		start.add(-9, -1, -9);
 		end.add(9, -1, 9);
-		floor.fillRectSolid(world, rand, start, end, true, true);
+		floor.fillRectSolid(editor, rand, start, end, true, true);
 		
 		start = new Coord(origin);
 		end = new Coord(origin);
 		start.add(-9, 5, -9);
 		end.add(9, 6, 9);
-		walls.fillRectSolid(world, rand, start, end, false, true);
+		walls.fillRectSolid(editor, rand, start, end, false, true);
 		
 		for(Cardinal dir : Cardinal.directions){
 			
@@ -63,7 +61,7 @@ public class DungeonsCrypt extends DungeonBase {
 				end.add(orth[0], 5);
 				end.add(dir, 5);
 				end.add(Cardinal.UP, 4);
-				air.fillRectSolid(world, rand, start, end, true, true);
+				air.fillRectSolid(editor, rand, start, end, true, true);
 			}
 			
 			if(doorways.contains(dir)){
@@ -75,7 +73,7 @@ public class DungeonsCrypt extends DungeonBase {
 				end.add(dir, 8);
 				end.add(orth[1], 2);
 				end.add(Cardinal.UP, 4);
-				air.fillRectSolid(world, rand, start, end, true, true);
+				air.fillRectSolid(editor, rand, start, end, true, true);
 				
 				for(Cardinal o : orth){
 					if(doorways.contains(o)){
@@ -85,7 +83,7 @@ public class DungeonsCrypt extends DungeonBase {
 						cursor.add(o, 3);
 						cursor.add(Cardinal.UP);
 						
-						crypt(world, rand, settings, cursor, o);
+						crypt(editor, rand, settings, cursor, o);
 					} else {
 						
 						start = new Coord(origin);
@@ -95,27 +93,27 @@ public class DungeonsCrypt extends DungeonBase {
 						end.add(dir, 8);
 						end.add(o, 8);
 						end.add(Cardinal.UP, 4);
-						air.fillRectSolid(world, rand, start, end, true, true);
+						air.fillRectSolid(editor, rand, start, end, true, true);
 						
 						cursor = new Coord(origin);
 						cursor.add(dir, 6);
 						cursor.add(o, 3);
 						cursor.add(Cardinal.UP);
 						
-						sarcophagus(world, rand, settings, cursor, o);
+						sarcophagus(editor, rand, settings, cursor, o);
 					}
 				}
 					
 			} else {
 				cursor = new Coord(origin);
 				cursor.add(dir, 4);
-				mausoleumWall(world, rand, settings, cursor, dir);
+				mausoleumWall(editor, rand, settings, cursor, dir);
 			}
 			
 			cursor = new Coord(origin);
 			cursor.add(dir, 3);
 			cursor.add(orth[0], 3);
-			pillar(world, rand, settings, cursor);
+			pillar(editor, rand, settings, cursor);
 			
 			start = new Coord(origin);
 			start.add(dir, 8);
@@ -123,14 +121,14 @@ public class DungeonsCrypt extends DungeonBase {
 			end = new Coord(start);
 			start.add(orth[0], 2);
 			end.add(orth[1], 2);
-			WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(dir), true);
-			stair.fillRectSolid(world, rand, start, end, true, false);
+			WorldEditor.blockOrientation(stair, Cardinal.reverse(dir), true);
+			stair.fillRectSolid(editor, rand, start, end, true, false);
 		}
 		
 		return true;
 	}
 	
-	private void sarcophagus(World world, Random rand, LevelSettings settings, Coord origin, Cardinal dir){
+	private void sarcophagus(WorldEditor editor, Random rand, LevelSettings settings, Coord origin, Cardinal dir){
 		
 		ITheme theme = settings.getTheme();
 		
@@ -149,12 +147,12 @@ public class DungeonsCrypt extends DungeonBase {
 		end = new Coord(start);
 		start.add(orth[0], 2);
 		end.add(orth[1], 2);
-		walls.fillRectSolid(world, rand, start, end, true, true);
+		walls.fillRectSolid(editor, rand, start, end, true, true);
 		
 		cursor = new Coord(origin);
 		cursor.add(dir, 5);
 		cursor.add(Cardinal.UP, 3);
-		WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(dir), true).setBlock(world, cursor);
+		WorldEditor.blockOrientation(stair, Cardinal.reverse(dir), true).setBlock(editor, cursor);
 		
 		start = new Coord(origin);
 		
@@ -166,40 +164,40 @@ public class DungeonsCrypt extends DungeonBase {
 			end = new Coord(start);
 			end.add(dir, 4);
 			end.add(Cardinal.UP, 4);
-			walls.fillRectSolid(world, rand, start, end, true, true);
+			walls.fillRectSolid(editor, rand, start, end, true, true);
 			
 			cursor = new Coord(origin);
 			cursor.add(Cardinal.DOWN);
 			cursor.add(dir, 5);
 			cursor.add(o, 2);
-			pillar(world, rand, settings, cursor);
+			pillar(editor, rand, settings, cursor);
 			
 			start = new Coord(origin);
 			start.add(Cardinal.UP, 3);
 			start.add(o, 2);
 			end = new Coord(start);
 			end.add(dir, 3);
-			WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(o), true);
-			stair.fillRectSolid(world, rand, start, end, true, true);
+			WorldEditor.blockOrientation(stair, Cardinal.reverse(o), true);
+			stair.fillRectSolid(editor, rand, start, end, true, true);
 		}
 		
 		cursor = new Coord(origin);
-		tomb(world, rand, settings, cursor, dir);
+		tomb(editor, rand, settings, cursor, dir);
 		
 		cursor.add(Cardinal.UP);
-		WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(dir), false).setBlock(world, cursor);
+		WorldEditor.blockOrientation(stair, Cardinal.reverse(dir), false).setBlock(editor, cursor);
 		cursor.add(Cardinal.DOWN, 2);
-		WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(dir), true).setBlock(world, cursor);
+		WorldEditor.blockOrientation(stair, Cardinal.reverse(dir), true).setBlock(editor, cursor);
 		cursor.add(dir);
-		walls.setBlock(world, rand, cursor);
+		walls.setBlock(editor, rand, cursor);
 		cursor.add(dir);
-		walls.setBlock(world, rand, cursor);
+		walls.setBlock(editor, rand, cursor);
 		cursor.add(dir);
-		WorldGenPrimitive.blockOrientation(stair, dir, false).setBlock(world, cursor);
+		WorldEditor.blockOrientation(stair, dir, false).setBlock(editor, cursor);
 		cursor.add(Cardinal.UP);
-		WorldGenPrimitive.blockOrientation(stair, dir, true).setBlock(world, cursor);
+		WorldEditor.blockOrientation(stair, dir, true).setBlock(editor, cursor);
 		cursor.add(Cardinal.UP);
-		WorldGenPrimitive.blockOrientation(stair, dir, false).setBlock(world, cursor);
+		WorldEditor.blockOrientation(stair, dir, false).setBlock(editor, cursor);
 		
 		for(Cardinal o : Cardinal.getOrthogonal(dir)){
 			cursor = new Coord(origin);
@@ -208,21 +206,21 @@ public class DungeonsCrypt extends DungeonBase {
 			start = new Coord(cursor);
 			end = new Coord(cursor);
 			end.add(dir, 3);
-			WorldGenPrimitive.blockOrientation(stair, o, false);
-			stair.fillRectSolid(world, rand, start, end, true, true);
+			WorldEditor.blockOrientation(stair, o, false);
+			stair.fillRectSolid(editor, rand, start, end, true, true);
 			start.add(Cardinal.UP);
 			end.add(Cardinal.UP);
-			WorldGenPrimitive.blockOrientation(stair, o, true);
-			stair.fillRectSolid(world, rand, start, end, true, true);
+			WorldEditor.blockOrientation(stair, o, true);
+			stair.fillRectSolid(editor, rand, start, end, true, true);
 			start.add(Cardinal.UP);
 			end.add(Cardinal.UP);
-			WorldGenPrimitive.blockOrientation(stair, o, false);
-			stair.fillRectSolid(world, rand, start, end, true, true);
+			WorldEditor.blockOrientation(stair, o, false);
+			stair.fillRectSolid(editor, rand, start, end, true, true);
 		}
 		
 	}
 	
-	private void crypt(World world, Random rand, LevelSettings settings, Coord origin, Cardinal dir){
+	private void crypt(WorldEditor editor, Random rand, LevelSettings settings, Coord origin, Cardinal dir){
 		
 		ITheme theme = settings.getTheme();
 		
@@ -243,25 +241,25 @@ public class DungeonsCrypt extends DungeonBase {
 		end.add(orth[1]);
 		end.add(dir, 3);
 		
-		walls.fillRectSolid(world, rand, start, end, true, true);
+		walls.fillRectSolid(editor, rand, start, end, true, true);
 		
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.reverse(dir));
 		cursor.add(Cardinal.UP, 2);
-		WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(dir), true).setBlock(world, cursor);
+		WorldEditor.blockOrientation(stair, Cardinal.reverse(dir), true).setBlock(editor, cursor);
 		cursor.add(Cardinal.UP);
-		walls.setBlock(world, rand, cursor);
+		walls.setBlock(editor, rand, cursor);
 		
 		for(Cardinal o : orth){
 			cursor = new Coord(origin);
 			cursor.add(Cardinal.reverse(dir));
 			cursor.add(Cardinal.UP);
 			cursor.add(o);
-			WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(dir), true).setBlock(world, cursor);
+			WorldEditor.blockOrientation(stair, Cardinal.reverse(dir), true).setBlock(editor, cursor);
 			cursor.add(Cardinal.UP);
-			walls.setBlock(world, rand, cursor);
+			walls.setBlock(editor, rand, cursor);
 			cursor.add(Cardinal.UP);
-			walls.setBlock(world, rand, cursor);
+			walls.setBlock(editor, rand, cursor);
 			
 			start = new Coord(origin);
 			start.add(Cardinal.UP, 3);
@@ -269,8 +267,8 @@ public class DungeonsCrypt extends DungeonBase {
 			start.add(o, 2);
 			end = new Coord(start);
 			end.add(dir, 7);
-			WorldGenPrimitive.blockOrientation(stair, o, true);
-			stair.fillRectSolid(world, rand, start, end, true, false);
+			WorldEditor.blockOrientation(stair, o, true);
+			stair.fillRectSolid(editor, rand, start, end, true, false);
 		}
 		
 		start = new Coord(origin);
@@ -279,13 +277,13 @@ public class DungeonsCrypt extends DungeonBase {
 		end = new Coord(start);
 		start.add(orth[0]);
 		end.add(orth[1]);
-		WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(dir), true);
-		stair.fillRectSolid(world, rand, start, end, true, true);
+		WorldEditor.blockOrientation(stair, Cardinal.reverse(dir), true);
+		stair.fillRectSolid(editor, rand, start, end, true, true);
 		
-		tomb(world, rand, settings, origin, dir);
+		tomb(editor, rand, settings, origin, dir);
 	}
 	
-	private void mausoleumWall(World world, Random rand, LevelSettings settings, Coord origin, Cardinal dir){
+	private void mausoleumWall(WorldEditor editor, Random rand, LevelSettings settings, Coord origin, Cardinal dir){
 		
 		ITheme theme = settings.getTheme();
 		IBlockFactory walls = theme.getPrimaryWall();
@@ -302,28 +300,28 @@ public class DungeonsCrypt extends DungeonBase {
 		end.add(orth[1], 3);
 		end.add(dir, 4);
 		end.add(Cardinal.UP, 4);
-		walls.fillRectSolid(world, rand, start, end, true, true);
+		walls.fillRectSolid(editor, rand, start, end, true, true);
 		
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.UP);
-		tomb(world, rand, settings, cursor, dir);
+		tomb(editor, rand, settings, cursor, dir);
 		
 		cursor.add(Cardinal.UP, 2);
-		tomb(world, rand, settings, cursor, dir);
+		tomb(editor, rand, settings, cursor, dir);
 		
 		for(Cardinal o : orth){
 			cursor = new Coord(origin);
 			cursor.add(Cardinal.UP);
 			cursor.add(o, 2);
-			tomb(world, rand, settings, cursor, dir);
+			tomb(editor, rand, settings, cursor, dir);
 			
 			cursor.add(Cardinal.UP, 2);
-			tomb(world, rand, settings, cursor, dir);
+			tomb(editor, rand, settings, cursor, dir);
 		}
 		
 	}
 	
-	private void pillar(World world, Random rand, LevelSettings settings, Coord origin){
+	private void pillar(WorldEditor editor, Random rand, LevelSettings settings, Coord origin){
 		
 		ITheme theme = settings.getTheme();
 		
@@ -337,17 +335,17 @@ public class DungeonsCrypt extends DungeonBase {
 		start = new Coord(origin);
 		end = new Coord(origin);
 		end.add(Cardinal.UP, 4);
-		walls.fillRectSolid(world, rand, start, end, true, true);
+		walls.fillRectSolid(editor, rand, start, end, true, true);
 		
 		for(Cardinal dir : Cardinal.directions){
 			cursor = new Coord(end);
 			cursor.add(dir);
-			WorldGenPrimitive.blockOrientation(stair, dir, true);
-			stair.setBlock(world, rand, cursor, true, false);
+			WorldEditor.blockOrientation(stair, dir, true);
+			stair.setBlock(editor, rand, cursor, true, false);
 		}
 	}
 	
-	private void tomb(World world, Random rand, LevelSettings settings, Coord origin, Cardinal dir){
+	private void tomb(WorldEditor editor, Random rand, LevelSettings settings, Coord origin, Cardinal dir){
 		
 		ITheme theme = settings.getTheme();
 		Coord cursor;
@@ -359,30 +357,30 @@ public class DungeonsCrypt extends DungeonBase {
 		cursor = new Coord(origin);
 		cursor.add(dir, 2);
 		cursor.add(Cardinal.UP);
-		WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(dir), true).setBlock(world, cursor);
+		WorldEditor.blockOrientation(stair, Cardinal.reverse(dir), true).setBlock(editor, cursor);
 		
 		cursor.add(Cardinal.reverse(dir));
-		WorldGenPrimitive.blockOrientation(stair, dir, true).setBlock(world, cursor);
+		WorldEditor.blockOrientation(stair, dir, true).setBlock(editor, cursor);
 		
 		cursor = new Coord(origin);
 		cursor.add(dir, 2);
-		air.fillRectSolid(world, rand, origin, cursor, true, true);
+		air.fillRectSolid(editor, rand, origin, cursor, true, true);
 		
 		if(rand.nextInt(3) == 0) return;
 
 		cursor = new Coord(origin);
-		tombStone.setBlock(world, cursor);
+		tombStone.setBlock(editor, cursor);
 		
 		if(rand.nextInt(4) != 0) return;
 		
 		cursor.add(dir);
 		Spawner spawnerType = rand.nextBoolean() ? Spawner.SKELETON : Spawner.ZOMBIE;
-		Spawner.generate(world, rand, settings, cursor, spawnerType);
+		Spawner.generate(editor, rand, settings, cursor, spawnerType);
 		
 		cursor.add(dir);
 		TreasureChest[] types = {TreasureChest.ARMOUR, TreasureChest.WEAPONS, TreasureChest.SPECIAL};
 		TreasureChest chestType = types[rand.nextInt(types.length)];
-		TreasureChest.generate(world, rand, settings, cursor, chestType);
+		TreasureChest.generate(editor, rand, settings, cursor, chestType);
 		
 	}
 	

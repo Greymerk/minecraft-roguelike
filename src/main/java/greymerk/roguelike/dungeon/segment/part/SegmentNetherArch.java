@@ -1,25 +1,23 @@
 package greymerk.roguelike.dungeon.segment.part;
 
+import java.util.Random;
+
 import greymerk.roguelike.dungeon.IDungeonLevel;
 import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.MetaBlock;
-import greymerk.roguelike.worldgen.WorldGenPrimitive;
-
-import java.util.Random;
-
+import greymerk.roguelike.worldgen.WorldEditor;
 import net.minecraft.init.Blocks;
-import net.minecraft.world.World;
 
 public class SegmentNetherArch extends SegmentBase {
 
 	@Override
-	protected void genWall(World world, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
+	protected void genWall(WorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
 		
 		MetaBlock step = theme.getSecondaryStair();
-		WorldGenPrimitive.blockOrientation(step, Cardinal.reverse(dir), true);
+		WorldEditor.blockOrientation(step, Cardinal.reverse(dir), true);
 		IBlockFactory pillar = theme.getSecondaryPillar();
 		
 
@@ -32,14 +30,14 @@ public class SegmentNetherArch extends SegmentBase {
 			cursor.add(dir, 1);
 			cursor.add(orth, 1);
 			cursor.add(Cardinal.UP, 2);
-			WorldGenPrimitive.setBlock(world, rand, cursor, step, true, true);
+			editor.setBlock(rand, cursor, step, true, true);
 			
 			cursor = new Coord(x, y, z);
 			cursor.add(dir, 2);
 			cursor.add(orth, 1);
-			WorldGenPrimitive.setBlock(world, rand, cursor, pillar, true, true);
+			editor.setBlock(rand, cursor, pillar, true, true);
 			cursor.add(Cardinal.UP, 1);
-			WorldGenPrimitive.setBlock(world, rand, cursor, pillar, true, true);
+			editor.setBlock(rand, cursor, pillar, true, true);
 		}
 			
 		MetaBlock fence = new MetaBlock(Blocks.nether_brick_fence);
@@ -47,15 +45,15 @@ public class SegmentNetherArch extends SegmentBase {
 		
 		cursor = new Coord(x, y, z);
 		cursor.add(dir, 2);		
-		WorldGenPrimitive.setBlock(world, rand, cursor, fence, true, true);
+		editor.setBlock(rand, cursor, fence, true, true);
 		cursor.add(Cardinal.UP, 1);		
-		WorldGenPrimitive.setBlock(world, rand, cursor, fence, true, true);
+		editor.setBlock(rand, cursor, fence, true, true);
 		
 		if(hasLava){
 			cursor.add(dir, 1);
-			WorldGenPrimitive.setBlock(world, rand, cursor, lava, true, true);
+			editor.setBlock(rand, cursor, lava, true, true);
 			cursor.add(Cardinal.DOWN, 1);		
-			WorldGenPrimitive.setBlock(world, rand, cursor, lava, true, true);
+			editor.setBlock(rand, cursor, lava, true, true);
 		}
 	}
 }

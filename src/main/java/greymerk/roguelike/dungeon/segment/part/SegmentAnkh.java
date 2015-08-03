@@ -1,22 +1,20 @@
 package greymerk.roguelike.dungeon.segment.part;
 
+import java.util.Random;
+
 import greymerk.roguelike.dungeon.IDungeonLevel;
 import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
-import greymerk.roguelike.worldgen.WorldGenPrimitive;
+import greymerk.roguelike.worldgen.WorldEditor;
 import greymerk.roguelike.worldgen.blocks.ColorBlock;
-
-import java.util.Random;
-
 import net.minecraft.init.Blocks;
-import net.minecraft.world.World;
 
 public class SegmentAnkh extends SegmentBase{
 
 	@Override
-	protected void genWall(World world, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
+	protected void genWall(WorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
 		Coord start;
 		Coord end;
 		Coord cursor;
@@ -34,7 +32,7 @@ public class SegmentAnkh extends SegmentBase{
 		end = new Coord(start);
 		end.add(Cardinal.UP, 2);
 		
-		WorldGenPrimitive.fillRectSolid(world, rand, start, end, air, true, true);
+		editor.fillRectSolid(rand, start, end, air, true, true);
 		
 		
 		for(Cardinal o : orth){
@@ -42,11 +40,11 @@ public class SegmentAnkh extends SegmentBase{
 			cursor = new Coord(x, y, z);
 			cursor.add(dir, 2);
 			cursor.add(o);
-			WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(o), false).setBlock(world, cursor);
+			WorldEditor.blockOrientation(stair, Cardinal.reverse(o), false).setBlock(editor, cursor);
 			cursor.add(Cardinal.UP);
-			WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(o), false).setBlock(world, cursor);
+			WorldEditor.blockOrientation(stair, Cardinal.reverse(o), false).setBlock(editor, cursor);
 			cursor.add(Cardinal.UP);
-			WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(o), true).setBlock(world, cursor);
+			WorldEditor.blockOrientation(stair, Cardinal.reverse(o), true).setBlock(editor, cursor);
 		}
 		
 		start = new Coord(x, y, z);
@@ -55,17 +53,17 @@ public class SegmentAnkh extends SegmentBase{
 		start.add(orth[0]);
 		end.add(orth[1]);
 		end.add(Cardinal.UP, 2);
-		WorldGenPrimitive.fillRectSolid(world, rand, start, end, glass, true, true);
+		editor.fillRectSolid(rand, start, end, glass, true, true);
 		start.add(dir);
 		end.add(dir);
-		WorldGenPrimitive.fillRectSolid(world, rand, start, end, white, true, true);
+		editor.fillRectSolid(rand, start, end, white, true, true);
 		
 		cursor = new Coord(x, y, z);
 		cursor.add(dir, 3);
 		cursor.add(Cardinal.DOWN);
-		glowstone.setBlock(world, cursor);
+		glowstone.setBlock(editor, cursor);
 		cursor.add(Cardinal.UP, 4);
-		glowstone.setBlock(world, cursor);
+		glowstone.setBlock(editor, cursor);
 	}
 
 }

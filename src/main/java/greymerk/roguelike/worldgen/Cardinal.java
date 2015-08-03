@@ -38,9 +38,8 @@ public enum Cardinal {
 		case SOUTH: return new Cardinal[] {EAST, WEST};
 		case EAST: return new Cardinal[] {NORTH, SOUTH};
 		case WEST: return new Cardinal[] {SOUTH, NORTH};
+		default: return null;
 		}
-		
-		return null;
 	}
 	
 	public static EnumFacing getFacing(Cardinal dir){

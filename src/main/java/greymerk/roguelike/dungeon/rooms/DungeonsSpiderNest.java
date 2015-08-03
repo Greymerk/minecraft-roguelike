@@ -1,5 +1,7 @@
 package greymerk.roguelike.dungeon.rooms;
 
+import java.util.Random;
+
 import greymerk.roguelike.dungeon.base.DungeonBase;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.treasure.TreasureChest;
@@ -8,15 +10,11 @@ import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.Spawner;
-import greymerk.roguelike.worldgen.WorldGenPrimitive;
-
-import java.util.Random;
-
+import greymerk.roguelike.worldgen.WorldEditor;
 import net.minecraft.init.Blocks;
-import net.minecraft.world.World;
 
 public class DungeonsSpiderNest extends DungeonBase {
-	World world;
+	WorldEditor editor;
 	Random rand;
 	int originX;
 	int originY;
@@ -31,9 +29,9 @@ public class DungeonsSpiderNest extends DungeonBase {
 		dungeonWidth = 3;
 	}
 
-	public boolean generate(World inWorld, Random inRandom, LevelSettings settings, Cardinal[] entrances, Coord origin) {
+	public boolean generate(WorldEditor editor, Random inRandom, LevelSettings settings, Cardinal[] entrances, Coord origin) {
 
-		world = inWorld;
+		this.editor = editor;
 		rand = inRandom;
 		originX = origin.getX();
 		originY = origin.getY();
@@ -52,23 +50,23 @@ public class DungeonsSpiderNest extends DungeonBase {
 					
 					int clearHeight = x > z ? x : z;
 					
-					if(blockY == originY) webs.setBlock(inWorld, inRandom, new Coord(blockX, blockY, blockZ));
+					if(blockY == originY) webs.setBlock(editor, inRandom, new Coord(blockX, blockY, blockZ));
 					if(clearHeight < 1) clearHeight = 1;
 					if(Math.abs(blockY - originY) > clearHeight) continue;
 						
 					if(rand.nextInt(clearHeight)  == 0){
-						webs.setBlock(inWorld, inRandom, new Coord(blockX, blockY, blockZ));
+						webs.setBlock(editor, inRandom, new Coord(blockX, blockY, blockZ));
 					} else if(rand.nextInt(5) == 0){
-						WorldGenPrimitive.setBlock(world, blockX, blockY, blockZ, Blocks.gravel);
+						editor.setBlock(blockX, blockY, blockZ, Blocks.gravel);
 					}
 					
 				}
 			}
 		}
 		
-		Spawner.generate(world, rand, settings, new Coord(originX, originY, originZ), Spawner.CAVESPIDER);
+		Spawner.generate(editor, rand, settings, new Coord(originX, originY, originZ), Spawner.CAVESPIDER);
 		
-		TreasureChest.createChests(world, rand, settings, 1 + rand.nextInt(3), WorldGenPrimitive.getRectSolid(
+		TreasureChest.createChests(editor, rand, settings, 1 + rand.nextInt(3), WorldEditor.getRectSolid(
 				originX - dungeonLength, originY - 1, originZ - dungeonWidth,
 				originX + dungeonLength, originY + 1, originZ + dungeonWidth));
 

@@ -1,13 +1,12 @@
 package greymerk.roguelike.dungeon.towers;
 
-import greymerk.roguelike.theme.ITheme;
-
 import java.util.Random;
 
-import net.minecraft.world.World;
+import greymerk.roguelike.theme.ITheme;
+import greymerk.roguelike.worldgen.WorldEditor;
 
 public interface ITower {
 
-	public void generate(World world, Random rand, ITheme theme, int x, int y, int z);
+	public void generate(WorldEditor editor, Random rand, ITheme theme, int x, int y, int z);
 	
 }

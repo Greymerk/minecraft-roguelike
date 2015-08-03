@@ -1,5 +1,7 @@
 package greymerk.roguelike.dungeon.rooms;
 
+import java.util.Random;
+
 import greymerk.roguelike.dungeon.base.DungeonBase;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.theme.ITheme;
@@ -10,17 +12,13 @@ import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.Spawner;
 import greymerk.roguelike.worldgen.SpawnerSettings;
-import greymerk.roguelike.worldgen.WorldGenPrimitive;
-
-import java.util.Random;
-
+import greymerk.roguelike.worldgen.WorldEditor;
 import net.minecraft.init.Blocks;
-import net.minecraft.world.World;
 
 public class DungeonPyramidTomb extends DungeonBase{
 
 	@Override
-	public boolean generate(World world, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
+	public boolean generate(WorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
 		
 
 		ITheme theme = settings.getTheme();
@@ -41,7 +39,7 @@ public class DungeonPyramidTomb extends DungeonBase{
 		end.add(Cardinal.SOUTH, 6);
 		end.add(Cardinal.EAST, 6);
 		end.add(Cardinal.UP, 2);
-		WorldGenPrimitive.fillRectSolid(world, rand, start, end, air, true, true);
+		editor.fillRectSolid(rand, start, end, air, true, true);
 		
 		start = new Coord(origin);
 		end = new Coord(origin);
@@ -52,7 +50,7 @@ public class DungeonPyramidTomb extends DungeonBase{
 		end.add(Cardinal.SOUTH, 4);
 		end.add(Cardinal.EAST, 4);
 		end.add(Cardinal.UP);
-		WorldGenPrimitive.fillRectSolid(world, rand, start, end, air, true, true);
+		editor.fillRectSolid(rand, start, end, air, true, true);
 		
 		start = new Coord(origin);
 		end = new Coord(origin);
@@ -63,7 +61,7 @@ public class DungeonPyramidTomb extends DungeonBase{
 		end.add(Cardinal.SOUTH, 3);
 		end.add(Cardinal.EAST, 3);
 		end.add(Cardinal.UP);
-		WorldGenPrimitive.fillRectSolid(world, rand, start, end, air, true, true);
+		editor.fillRectSolid(rand, start, end, air, true, true);
 		
 		start = new Coord(origin);
 		end = new Coord(origin);
@@ -74,7 +72,7 @@ public class DungeonPyramidTomb extends DungeonBase{
 		end.add(Cardinal.SOUTH, 2);
 		end.add(Cardinal.EAST, 2);
 		end.add(Cardinal.UP);
-		WorldGenPrimitive.fillRectSolid(world, rand, start, end, air, true, true);
+		editor.fillRectSolid(rand, start, end, air, true, true);
 		
 		// outer walls
 		start = new Coord(origin);
@@ -85,7 +83,7 @@ public class DungeonPyramidTomb extends DungeonBase{
 		end.add(Cardinal.EAST, 7);
 		start.add(Cardinal.DOWN);
 		end.add(Cardinal.UP, 3);
-		WorldGenPrimitive.fillRectHollow(world, rand, start, end, blocks, false, true);
+		editor.fillRectHollow(rand, start, end, blocks, false, true);
 		
 		// floor
 		start = new Coord(origin);
@@ -95,7 +93,7 @@ public class DungeonPyramidTomb extends DungeonBase{
 		start.add(Cardinal.WEST, 6);
 		end.add(Cardinal.SOUTH, 6);
 		end.add(Cardinal.EAST, 6);
-		WorldGenPrimitive.fillRectSolid(world, rand, start, end, theme.getPrimaryFloor(), true, true);
+		editor.fillRectSolid(rand, start, end, theme.getPrimaryFloor(), true, true);
 		
 		// pillars
 		
@@ -106,14 +104,14 @@ public class DungeonPyramidTomb extends DungeonBase{
 			cursor = new Coord(origin);
 			cursor.add(dir, 5);
 			cursor.add(Cardinal.UP, 3);
-			ceilingTiles(world, rand, theme, 9, Cardinal.reverse(dir), cursor);
+			ceilingTiles(editor, rand, theme, 9, Cardinal.reverse(dir), cursor);
 			
 			start = new Coord(origin);
 			start.add(dir, 5);
 			start.add(orth[0], 5);
 			end = new Coord(start);
 			end.add(Cardinal.UP, 3);
-			WorldGenPrimitive.fillRectSolid(world, rand, start, end, pillar, true, true);
+			editor.fillRectSolid(rand, start, end, pillar, true, true);
 			
 			for(Cardinal o : orth){
 				start = new Coord(origin);
@@ -121,12 +119,12 @@ public class DungeonPyramidTomb extends DungeonBase{
 				start.add(o);
 				end = new Coord(start);
 				end.add(Cardinal.UP, 3);
-				WorldGenPrimitive.fillRectSolid(world, rand, start, end, pillar, true, true);
+				editor.fillRectSolid(rand, start, end, pillar, true, true);
 				
 				start.add(o, 2);
 				end = new Coord(start);
 				end.add(Cardinal.UP, 3);
-				WorldGenPrimitive.fillRectSolid(world, rand, start, end, pillar, true, true);
+				editor.fillRectSolid(rand, start, end, pillar, true, true);
 			}
 		}
 		
@@ -138,14 +136,14 @@ public class DungeonPyramidTomb extends DungeonBase{
 		start.add(Cardinal.WEST);
 		end.add(Cardinal.SOUTH);
 		end.add(Cardinal.EAST);
-		WorldGenPrimitive.fillRectSolid(world, rand, start, end, blocks, true, true);
+		editor.fillRectSolid(rand, start, end, blocks, true, true);
 		
-		sarcophagus(world, rand, settings, entrances[0], origin);
+		sarcophagus(editor, rand, settings, entrances[0], origin);
 		
 		return true;
 	}
 
-	private void ceilingTiles(World world, Random rand, ITheme theme, int width, Cardinal dir, Coord origin){
+	private void ceilingTiles(WorldEditor editor, Random rand, ITheme theme, int width, Cardinal dir, Coord origin){
 		
 		if(width < 1) return;
 		
@@ -158,21 +156,21 @@ public class DungeonPyramidTomb extends DungeonBase{
 		Coord end = new Coord(origin);
 		start.add(orth[0], width / 2);
 		end.add(orth[1], width / 2);
-		WorldGenPrimitive.fillRectSolid(world, rand, start, end, air, true, true);
+		editor.fillRectSolid(rand, start, end, air, true, true);
 		start.add(Cardinal.UP);
 		end.add(Cardinal.UP);
-		WorldGenPrimitive.fillRectSolid(world, rand, start, end, theme.getPrimaryWall(), true, true);
+		editor.fillRectSolid(rand, start, end, theme.getPrimaryWall(), true, true);
 		
 		for (Cardinal o : orth){
 			for (int i = 0; i <= width / 2; ++i){
 				if((width / 2) % 2 == 0){
 					cursor = new Coord(origin);
 					cursor.add(o, i);
-					if(i % 2 == 0) tile(world, rand, theme, dir, cursor);
+					if(i % 2 == 0) tile(editor, rand, theme, dir, cursor);
 				} else {
 					cursor = new Coord(origin);
 					cursor.add(o, i);
-					if(i % 2 == 1) tile(world, rand, theme, dir, cursor);
+					if(i % 2 == 1) tile(editor, rand, theme, dir, cursor);
 				}
 			}
 		}
@@ -180,19 +178,19 @@ public class DungeonPyramidTomb extends DungeonBase{
 		cursor = new Coord(origin);
 		cursor.add(dir);
 		cursor.add(Cardinal.UP);
-		ceilingTiles(world, rand, theme, (width - 2), dir, cursor);
+		ceilingTiles(editor, rand, theme, (width - 2), dir, cursor);
 	}
 	
-	private void tile(World world, Random rand, ITheme theme, Cardinal dir, Coord origin){
+	private void tile(WorldEditor editor, Random rand, ITheme theme, Cardinal dir, Coord origin){
 		MetaBlock stair = theme.getPrimaryStair();
-		WorldGenPrimitive.blockOrientation(stair, dir, true).setBlock(world, origin);
+		WorldEditor.blockOrientation(stair, dir, true).setBlock(editor, origin);
 		Coord cursor = new Coord(origin);
 		cursor.add(Cardinal.UP);
-		theme.getPrimaryPillar().setBlock(world, rand, cursor);
+		theme.getPrimaryPillar().setBlock(editor, rand, cursor);
 	}
 	
 	
-	private void sarcophagus(World world, Random rand, LevelSettings settings, Cardinal dir, Coord origin){
+	private void sarcophagus(WorldEditor editor, Random rand, LevelSettings settings, Cardinal dir, Coord origin){
 		SpawnerSettings spawners = settings.getSpawners();
 		
 		MetaBlock stair = new MetaBlock(Blocks.quartz_stairs);
@@ -201,57 +199,57 @@ public class DungeonPyramidTomb extends DungeonBase{
 		Coord cursor;
 		
 		cursor = new Coord(origin);
-		blocks.setBlock(world, cursor);
+		blocks.setBlock(editor, cursor);
 		cursor.add(Cardinal.UP);
-		TreasureChest.generate(world, rand, settings, cursor, TreasureChest.ORE);
+		TreasureChest.generate(editor, rand, settings, cursor, TreasureChest.ORE);
 		cursor.add(Cardinal.UP);
-		blocks.setBlock(world, cursor);
+		blocks.setBlock(editor, cursor);
 		
 		for (Cardinal end : Cardinal.getOrthogonal(dir)){
 			
 			cursor = new Coord(origin);
 			cursor.add(end);
-			blocks.setBlock(world, cursor);
+			blocks.setBlock(editor, cursor);
 			cursor.add(Cardinal.UP);
-			spawners.generate(world, rand, cursor, Spawner.ZOMBIE, 4);
+			spawners.generate(editor, rand, cursor, Spawner.ZOMBIE, 4);
 			cursor.add(Cardinal.UP);
-			blocks.setBlock(world, cursor);
+			blocks.setBlock(editor, cursor);
 			
 			cursor = new Coord(origin);
 			cursor.add(end, 2);
-			WorldGenPrimitive.blockOrientation(stair, end, false).setBlock(world, cursor);
+			WorldEditor.blockOrientation(stair, end, false).setBlock(editor, cursor);
 			cursor.add(Cardinal.UP);
-			WorldGenPrimitive.blockOrientation(stair, end, true).setBlock(world, cursor);
+			WorldEditor.blockOrientation(stair, end, true).setBlock(editor, cursor);
 			cursor.add(Cardinal.UP);
-			WorldGenPrimitive.blockOrientation(stair, end, false).setBlock(world, cursor);
+			WorldEditor.blockOrientation(stair, end, false).setBlock(editor, cursor);
 			
 			for(Cardinal side : Cardinal.getOrthogonal(end)){
 
 				cursor = new Coord(origin);
 				cursor.add(side);
-				WorldGenPrimitive.blockOrientation(stair, side, false).setBlock(world, cursor);
+				WorldEditor.blockOrientation(stair, side, false).setBlock(editor, cursor);
 				cursor.add(Cardinal.UP);
-				WorldGenPrimitive.blockOrientation(stair, side, true).setBlock(world, cursor);
+				WorldEditor.blockOrientation(stair, side, true).setBlock(editor, cursor);
 				cursor.add(Cardinal.UP);
-				WorldGenPrimitive.blockOrientation(stair, side, false).setBlock(world, cursor);
+				WorldEditor.blockOrientation(stair, side, false).setBlock(editor, cursor);
 				
 				cursor = new Coord(origin);
 				cursor.add(side);
 				cursor.add(end);
-				WorldGenPrimitive.blockOrientation(stair, side, false).setBlock(world, cursor);
+				WorldEditor.blockOrientation(stair, side, false).setBlock(editor, cursor);
 				cursor.add(Cardinal.UP);
-				WorldGenPrimitive.blockOrientation(stair, side, true).setBlock(world, cursor);
+				WorldEditor.blockOrientation(stair, side, true).setBlock(editor, cursor);
 				cursor.add(Cardinal.UP);
-				WorldGenPrimitive.blockOrientation(stair, side, false).setBlock(world, cursor);
+				WorldEditor.blockOrientation(stair, side, false).setBlock(editor, cursor);
 				
 				cursor = new Coord(origin);
 				cursor.add(side);
 				cursor.add(end, 2);
-				WorldGenPrimitive.blockOrientation(stair, side, false).setBlock(world, cursor);
+				WorldEditor.blockOrientation(stair, side, false).setBlock(editor, cursor);
 				cursor.add(Cardinal.UP);
-				WorldGenPrimitive.blockOrientation(stair, side, true).setBlock(world, cursor);
+				WorldEditor.blockOrientation(stair, side, true).setBlock(editor, cursor);
 				cursor.add(Cardinal.UP);
-				WorldGenPrimitive.blockOrientation(stair, side, false).setBlock(world, cursor);
+				WorldEditor.blockOrientation(stair, side, false).setBlock(editor, cursor);
 			}
 		}
 	}

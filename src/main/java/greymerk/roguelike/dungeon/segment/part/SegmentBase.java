@@ -1,50 +1,50 @@
 package greymerk.roguelike.dungeon.segment.part;
 
+import java.util.Random;
+
 import greymerk.roguelike.dungeon.IDungeonLevel;
 import greymerk.roguelike.dungeon.segment.ISegment;
 import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
-
-import java.util.Random;
-
-import net.minecraft.world.World;
+import greymerk.roguelike.worldgen.WorldEditor;
 
 public abstract class SegmentBase implements ISegment {
 
 
 	
 	@Override
-	public void generate(World world, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
+	public void generate(WorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
 		
 		if(level.hasNearbyNode(new Coord(x, y, z))) return;
 		
-		if(isValidWall(world, dir, x, y, z)){
-			genWall(world, rand, level, dir, theme, x, y, z);
+		if(isValidWall(editor, dir, x, y, z)){
+			genWall(editor, rand, level, dir, theme, x, y, z);
 		}
 	}
 	
-	protected abstract void genWall(World world, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z);
+	protected abstract void genWall(WorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z);
 
-	protected boolean isValidWall(World world, Cardinal wallDirection, int x, int y, int z) {
+	protected boolean isValidWall(WorldEditor editor, Cardinal wallDirection, int x, int y, int z) {
 		
 		switch(wallDirection){
 		case NORTH:
-			if(world.isAirBlock(new Coord(x - 1, y + 1, z - 2).getBlockPos())) return false;
-			if(world.isAirBlock(new Coord(x + 1, y + 1, z - 2).getBlockPos())) return false;
+			if(editor.isAirBlock(new Coord(x - 1, y + 1, z - 2))) return false;
+			if(editor.isAirBlock(new Coord(x + 1, y + 1, z - 2))) return false;
 			break;
 		case SOUTH:
-			if(world.isAirBlock(new Coord(x - 1, y + 1, z + 2).getBlockPos())) return false;
-			if(world.isAirBlock(new Coord(x + 1, y + 1, z + 2).getBlockPos())) return false;
+			if(editor.isAirBlock(new Coord(x - 1, y + 1, z + 2))) return false;
+			if(editor.isAirBlock(new Coord(x + 1, y + 1, z + 2))) return false;
 			break;
 		case EAST:
-			if(world.isAirBlock(new Coord(x + 2, y + 1, z - 1).getBlockPos())) return false;
-			if(world.isAirBlock(new Coord(x + 2, y + 1, z + 1).getBlockPos())) return false;
+			if(editor.isAirBlock(new Coord(x + 2, y + 1, z - 1))) return false;
+			if(editor.isAirBlock(new Coord(x + 2, y + 1, z + 1))) return false;
 			break;
 		case WEST:
-			if(world.isAirBlock(new Coord(x - 2, y + 1, z - 1).getBlockPos())) return false;
-			if(world.isAirBlock(new Coord(x - 2, y + 1, z + 1).getBlockPos())) return false;
+			if(editor.isAirBlock(new Coord(x - 2, y + 1, z - 1))) return false;
+			if(editor.isAirBlock(new Coord(x - 2, y + 1, z + 1))) return false;
 			break;
+		default: return false;
 		}
 		
 		return true;

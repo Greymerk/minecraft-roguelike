@@ -1,5 +1,8 @@
 package greymerk.roguelike.dungeon.segment.part;
 
+import java.util.List;
+import java.util.Random;
+
 import greymerk.roguelike.dungeon.IDungeonLevel;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.theme.ITheme;
@@ -8,18 +11,13 @@ import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.Spawner;
-import greymerk.roguelike.worldgen.WorldGenPrimitive;
-
-import java.util.List;
-import java.util.Random;
-
+import greymerk.roguelike.worldgen.WorldEditor;
 import net.minecraft.init.Blocks;
-import net.minecraft.world.World;
 
 public class SegmentTomb extends SegmentBase {
 	
 	@Override
-	protected void genWall(World world, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
+	protected void genWall(WorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
 		
 		MetaBlock air = new MetaBlock(Blocks.air);
 		MetaBlock stair = theme.getPrimaryStair();
@@ -36,30 +34,30 @@ public class SegmentTomb extends SegmentBase {
 		end = new Coord(cursor);
 		end.add(orth[1], 1);
 		end.add(Cardinal.UP, 2);
-		WorldGenPrimitive.fillRectSolid(world, rand, start, end, air, true, true);
+		editor.fillRectSolid(rand, start, end, air, true, true);
 		
 		start.add(dir, 1);
 		end.add(dir, 1);
-		WorldGenPrimitive.fillRectSolid(world, rand, start, end, theme.getSecondaryWall(), false, true);
+		editor.fillRectSolid(rand, start, end, theme.getSecondaryWall(), false, true);
 
 		cursor.add(Cardinal.UP, 2);
 		for(Cardinal d : orth){
 			Coord c = new Coord(cursor);
 			c.add(d, 1);
-			WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(d), true);
-			WorldGenPrimitive.setBlock(world, rand, c, stair, true, true);
+			WorldEditor.blockOrientation(stair, Cardinal.reverse(d), true);
+			editor.setBlock(rand, c, stair, true, true);
 		}
 		
-		tomb(world, rand, level.getSettings(), theme, dir, new Coord(x, y, z));
+		tomb(editor, rand, level.getSettings(), theme, dir, new Coord(x, y, z));
 		
 		cursor = new Coord(x, y, z);
 		cursor.add(Cardinal.UP);
 		cursor.add(dir, 3);
-		WorldGenPrimitive.setBlock(world, cursor, Blocks.quartz_block);
+		editor.setBlock(cursor, Blocks.quartz_block);
 		
 	}
 	
-	private static void tomb(World world, Random rand, LevelSettings level, ITheme theme, Cardinal dir, Coord pos){
+	private static void tomb(WorldEditor editor, Random rand, LevelSettings level, ITheme theme, Cardinal dir, Coord pos){
 		
 		Coord cursor;
 		Coord start;
@@ -73,21 +71,21 @@ public class SegmentTomb extends SegmentBase {
 		end.add(orth[1]);
 		end.add(Cardinal.UP, 3);
 		end.add(dir, 3);
-		List<Coord> box = WorldGenPrimitive.getRectHollow(start, end);
+		List<Coord> box = editor.getRectHollow(start, end);
 		
 		// make sure the box is solid wall
 		for(Coord c : box){
-			if(!WorldGenPrimitive.getBlock(world, c).getBlock().getMaterial().isSolid()) return;
+			if(!editor.getBlock(c).getBlock().getMaterial().isSolid()) return;
 		}
 		
-		WorldGenPrimitive.fillRectHollow(world, rand, start, end, theme.getPrimaryWall(), true, true);
+		editor.fillRectHollow(rand, start, end, theme.getPrimaryWall(), true, true);
 		if(!(rand.nextInt(3) == 0)) return;
 		cursor = new Coord(pos);
 		cursor.add(Cardinal.UP);
 		cursor.add(dir, 4);
-		Spawner.generate(world, rand, level, cursor, rand.nextBoolean() ? Spawner.SKELETON : Spawner.ZOMBIE);
+		Spawner.generate(editor, rand, level, cursor, rand.nextBoolean() ? Spawner.SKELETON : Spawner.ZOMBIE);
 		cursor.add(dir);
-		TreasureChest.generate(world, rand, level, cursor, rand.nextBoolean() ? TreasureChest.ARMOUR : TreasureChest.WEAPONS);
+		TreasureChest.generate(editor, rand, level, cursor, rand.nextBoolean() ? TreasureChest.ARMOUR : TreasureChest.WEAPONS);
 		
 	}
 }

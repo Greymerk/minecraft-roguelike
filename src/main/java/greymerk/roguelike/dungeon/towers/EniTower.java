@@ -1,25 +1,23 @@
 package greymerk.roguelike.dungeon.towers;
 
+import java.util.Random;
+
 import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.MetaBlock;
-import greymerk.roguelike.worldgen.WorldGenPrimitive;
+import greymerk.roguelike.worldgen.WorldEditor;
 import greymerk.roguelike.worldgen.blocks.ColorBlock;
 import greymerk.roguelike.worldgen.blocks.Door;
-
-import java.util.Random;
-
 import net.minecraft.init.Blocks;
-import net.minecraft.world.World;
 
 public class EniTower implements ITower {
 
 	public EniTower(){}
 	
 	@Override
-	public void generate(World world, Random rand, ITheme theme, int x, int y, int z) {
+	public void generate(WorldEditor editor, Random rand, ITheme theme, int x, int y, int z) {
 		
 		MetaBlock air = new MetaBlock(Blocks.air);
 		
@@ -27,12 +25,12 @@ public class EniTower implements ITower {
 		
 		MetaBlock stair = theme.getPrimaryStair();
 		
-		Coord floor = Tower.getBaseCoord(world, x, y, z);
+		Coord floor = Tower.getBaseCoord(editor, x, y, z);
 		
-		WorldGenPrimitive.fillRectSolid(world, rand, x - 4, floor.getY(), z - 4, x + 4, floor.getY() + 3, z + 4, air);
-		WorldGenPrimitive.fillRectSolid(world, rand, x - 3, floor.getY() + 4, z - 3, x + 3, floor.getY() + 12, z + 3, air);
-		WorldGenPrimitive.fillRectSolid(world, rand, x - 2, floor.getY() + 13, z - 2, x + 2, floor.getY() + 21, z + 2, air);
-		WorldGenPrimitive.fillRectSolid(world, rand, x - 3, floor.getY() + 22, z - 3, x + 3, floor.getY() + 28, z + 3, air);
+		editor.fillRectSolid(rand, x - 4, floor.getY(), z - 4, x + 4, floor.getY() + 3, z + 4, air);
+		editor.fillRectSolid(rand, x - 3, floor.getY() + 4, z - 3, x + 3, floor.getY() + 12, z + 3, air);
+		editor.fillRectSolid(rand, x - 2, floor.getY() + 13, z - 2, x + 2, floor.getY() + 21, z + 2, air);
+		editor.fillRectSolid(rand, x - 3, floor.getY() + 22, z - 3, x + 3, floor.getY() + 28, z + 3, air);
 
 		Coord start;
 		Coord end;
@@ -45,7 +43,7 @@ public class EniTower implements ITower {
 				end = new Coord(start);
 				end.add(dir, 4);
 				end.add(orth, 2);
-				WorldGenPrimitive.fillRectSolid(world, rand, start, end, blocks, true, true);
+				editor.fillRectSolid(rand, start, end, blocks, true, true);
 				
 				start = new Coord(floor);
 				start.add(dir, 5);
@@ -53,7 +51,7 @@ public class EniTower implements ITower {
 				start.add(orth);
 				end.add(Cardinal.reverse(orth));
 				end.add(Cardinal.UP, 2);
-				WorldGenPrimitive.fillRectSolid(world, rand, start, end, blocks, true, true);
+				editor.fillRectSolid(rand, start, end, blocks, true, true);
 				
 				start = new Coord(floor);
 				start.add(dir, 4);
@@ -61,32 +59,32 @@ public class EniTower implements ITower {
 				end = new Coord(start);
 				end.add(orth);
 				end.add(Cardinal.UP, 3);
-				WorldGenPrimitive.fillRectSolid(world, rand, start, end, blocks, true, true);
+				editor.fillRectSolid(rand, start, end, blocks, true, true);
 				
 				start = new Coord(floor);
 				start.add(dir, 3);
 				start.add(orth, 3);
 				end = new Coord(start);
 				end.add(Cardinal.UP, 3);
-				WorldGenPrimitive.fillRectSolid(world, rand, start, end, blocks, true, true);
+				editor.fillRectSolid(rand, start, end, blocks, true, true);
 				
 				cursor = new Coord(floor);
 				cursor.add(dir, 5);
 				cursor.add(Cardinal.UP, 3);
-				WorldGenPrimitive.setBlock(world, rand, cursor, blocks, true, true);
+				editor.setBlock(rand, cursor, blocks, true, true);
 				cursor.add(orth);
-				WorldGenPrimitive.blockOrientation(stair, orth, false).setBlock(world, cursor);
+				WorldEditor.blockOrientation(stair, orth, false).setBlock(editor, cursor);
 				cursor.add(Cardinal.reverse(dir));
 				cursor.add(orth);
-				WorldGenPrimitive.blockOrientation(stair, dir, false).setBlock(world, cursor);
+				WorldEditor.blockOrientation(stair, dir, false).setBlock(editor, cursor);
 				cursor.add(orth);
-				WorldGenPrimitive.blockOrientation(stair, dir, false).setBlock(world, cursor);
+				WorldEditor.blockOrientation(stair, dir, false).setBlock(editor, cursor);
 				cursor.add(Cardinal.reverse(dir));
 				cursor.add(Cardinal.reverse(orth));
-				WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(orth), true).setBlock(world, cursor);
+				WorldEditor.blockOrientation(stair, Cardinal.reverse(orth), true).setBlock(editor, cursor);
 				cursor.add(dir);
 				cursor.add(Cardinal.reverse(orth));
-				WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(orth), true).setBlock(world, cursor);
+				WorldEditor.blockOrientation(stair, Cardinal.reverse(orth), true).setBlock(editor, cursor);
 				
 				// second section
 				
@@ -97,7 +95,7 @@ public class EniTower implements ITower {
 				start.add(orth);
 				end.add(Cardinal.reverse(orth));
 				end.add(Cardinal.UP, 8);
-				WorldGenPrimitive.fillRectSolid(world, rand, start, end, blocks, true, true);
+				editor.fillRectSolid(rand, start, end, blocks, true, true);
 				
 				start = new Coord(floor);
 				start.add(Cardinal.UP, 4);
@@ -106,17 +104,17 @@ public class EniTower implements ITower {
 				end = new Coord(start);
 				end.add(orth);
 				end.add(Cardinal.UP, 8);
-				WorldGenPrimitive.fillRectSolid(world, rand, start, end, blocks, true, true);
+				editor.fillRectSolid(rand, start, end, blocks, true, true);
 				
 				cursor = new Coord(floor);
 				cursor.add(Cardinal.UP, 13);
 				cursor.add(dir, 4);
-				WorldGenPrimitive.blockOrientation(stair, dir, false).setBlock(world, cursor);
+				WorldEditor.blockOrientation(stair, dir, false).setBlock(editor, cursor);
 				cursor.add(orth);
-				WorldGenPrimitive.blockOrientation(stair, dir, false).setBlock(world, cursor);
+				WorldEditor.blockOrientation(stair, dir, false).setBlock(editor, cursor);
 				cursor.add(Cardinal.reverse(dir));
 				cursor.add(orth);
-				WorldGenPrimitive.blockOrientation(stair, dir, false).setBlock(world, cursor);
+				WorldEditor.blockOrientation(stair, dir, false).setBlock(editor, cursor);
 				
 				// section 3
 				
@@ -127,7 +125,7 @@ public class EniTower implements ITower {
 				start.add(orth);
 				end.add(Cardinal.reverse(orth));
 				end.add(Cardinal.UP, 8);
-				WorldGenPrimitive.fillRectSolid(world, rand, start, end, blocks, true, true);
+				editor.fillRectSolid(rand, start, end, blocks, true, true);
 				
 				start = new Coord(floor);
 				start.add(Cardinal.UP, 13);
@@ -135,7 +133,7 @@ public class EniTower implements ITower {
 				start.add(orth, 2);
 				end = new Coord(start);
 				end.add(Cardinal.UP, 8);
-				WorldGenPrimitive.fillRectSolid(world, rand, start, end, blocks, true, true);
+				editor.fillRectSolid(rand, start, end, blocks, true, true);
 				
 				// section 4
 				
@@ -146,7 +144,7 @@ public class EniTower implements ITower {
 				start.add(orth, 2);
 				end.add(Cardinal.reverse(orth), 2);
 				end.add(Cardinal.UP, 6);
-				WorldGenPrimitive.fillRectSolid(world, rand, start, end, blocks, true, false);
+				editor.fillRectSolid(rand, start, end, blocks, true, false);
 				
 				start = new Coord(floor);
 				start.add(Cardinal.UP, 22);
@@ -154,24 +152,24 @@ public class EniTower implements ITower {
 				start.add(orth, 2);
 				end = new Coord(start);
 				end.add(Cardinal.UP, 6);
-				WorldGenPrimitive.fillRectSolid(world, rand, start, end, blocks, true, true);
+				editor.fillRectSolid(rand, start, end, blocks, true, true);
 				
 				start = new Coord(floor);
 				start.add(Cardinal.UP, 22);
 				end = new Coord(start);
 				end.add(dir, 3);
 				end.add(orth, 2);
-				WorldGenPrimitive.fillRectSolid(world, rand, start, end, blocks, true, true);
+				editor.fillRectSolid(rand, start, end, blocks, true, true);
 				
 				cursor = new Coord(floor);
 				cursor.add(Cardinal.UP, 20);
 				cursor.add(dir, 3);
 				cursor.add(orth, 2);
-				WorldGenPrimitive.blockOrientation(stair, dir, true).setBlock(world, cursor);
+				WorldEditor.blockOrientation(stair, dir, true).setBlock(editor, cursor);
 				cursor.add(Cardinal.UP);
-				WorldGenPrimitive.setBlock(world, rand, cursor, blocks, true, true);
+				editor.setBlock(rand, cursor, blocks, true, true);
 				cursor.add(dir);
-				WorldGenPrimitive.blockOrientation(stair, dir, true).setBlock(world, cursor);
+				WorldEditor.blockOrientation(stair, dir, true).setBlock(editor, cursor);
 				
 				// section 4 roof
 				
@@ -181,30 +179,30 @@ public class EniTower implements ITower {
 				start.add(dir, 3);
 				end = new Coord(start);
 				end.add(dir, 2);
-				WorldGenPrimitive.fillRectSolid(world, rand, start, end, theme.getSecondaryWall(), true, true);
+				editor.fillRectSolid(rand, start, end, theme.getSecondaryWall(), true, true);
 				start.add(orth);
 				end.add(orth);
-				WorldGenPrimitive.fillRectSolid(world, rand, start, end, WorldGenPrimitive.blockOrientation(roof, orth, false), true, true);
-				start.add(orth);
-				end.add(orth);
-				start.add(Cardinal.DOWN);
-				end.add(Cardinal.DOWN);
-				WorldGenPrimitive.fillRectSolid(world, rand, start, end, WorldGenPrimitive.blockOrientation(roof, orth, false), true, true);
+				editor.fillRectSolid(rand, start, end, WorldEditor.blockOrientation(roof, orth, false), true, true);
 				start.add(orth);
 				end.add(orth);
 				start.add(Cardinal.DOWN);
 				end.add(Cardinal.DOWN);
-				WorldGenPrimitive.fillRectSolid(world, rand, start, end, WorldGenPrimitive.blockOrientation(roof, orth, false), true, true);
+				editor.fillRectSolid(rand, start, end, WorldEditor.blockOrientation(roof, orth, false), true, true);
+				start.add(orth);
+				end.add(orth);
+				start.add(Cardinal.DOWN);
+				end.add(Cardinal.DOWN);
+				editor.fillRectSolid(rand, start, end, WorldEditor.blockOrientation(roof, orth, false), true, true);
 				cursor = new Coord(end);
 				cursor.add(Cardinal.reverse(orth));
-				WorldGenPrimitive.blockOrientation(roof, Cardinal.reverse(orth), true).setBlock(world, cursor);
+				WorldEditor.blockOrientation(roof, Cardinal.reverse(orth), true).setBlock(editor, cursor);
 				cursor.add(Cardinal.reverse(orth));
 				cursor.add(Cardinal.UP);
-				WorldGenPrimitive.blockOrientation(roof, Cardinal.reverse(orth), true).setBlock(world, cursor);
+				WorldEditor.blockOrientation(roof, Cardinal.reverse(orth), true).setBlock(editor, cursor);
 				
 				cursor.add(Cardinal.reverse(dir), 3);
 				cursor.add(orth);
-				WorldGenPrimitive.setBlock(world, rand, cursor, theme.getSecondaryWall(), true, true);
+				editor.setBlock(rand, cursor, theme.getSecondaryWall(), true, true);
 				
 				// tower top
 				start = new Coord(floor);
@@ -215,42 +213,42 @@ public class EniTower implements ITower {
 				end.add(dir, 2);
 				end.add(Cardinal.reverse(orth));
 				end.add(Cardinal.UP, 3);
-				WorldGenPrimitive.fillRectSolid(world, rand, start, end, blocks, true, true);
+				editor.fillRectSolid(rand, start, end, blocks, true, true);
 
 				
 				cursor = new Coord(floor);
 				cursor.add(Cardinal.UP, 33);
 				cursor.add(dir, 3);
-				WorldGenPrimitive.blockOrientation(roof, dir, false).setBlock(world, cursor);
+				WorldEditor.blockOrientation(roof, dir, false).setBlock(editor, cursor);
 				cursor.add(orth);
-				WorldGenPrimitive.blockOrientation(roof, dir, false).setBlock(world, cursor);
+				WorldEditor.blockOrientation(roof, dir, false).setBlock(editor, cursor);
 				cursor.add(Cardinal.reverse(dir));
 				cursor.add(orth);
-				WorldGenPrimitive.setBlock(world, rand, cursor, theme.getSecondaryWall(), true, true);
+				editor.setBlock(rand, cursor, theme.getSecondaryWall(), true, true);
 				cursor.add(Cardinal.reverse(orth));
 				cursor.add(Cardinal.UP);
-				WorldGenPrimitive.blockOrientation(roof, orth, false).setBlock(world, cursor);
+				WorldEditor.blockOrientation(roof, orth, false).setBlock(editor, cursor);
 				cursor.add(Cardinal.reverse(orth));
-				WorldGenPrimitive.setBlock(world, rand, cursor, theme.getSecondaryWall(), true, true);
+				editor.setBlock(rand, cursor, theme.getSecondaryWall(), true, true);
 				cursor.add(Cardinal.UP);
-				WorldGenPrimitive.blockOrientation(roof, dir, false).setBlock(world, cursor);
+				WorldEditor.blockOrientation(roof, dir, false).setBlock(editor, cursor);
 				cursor.add(Cardinal.reverse(dir));
-				WorldGenPrimitive.setBlock(world, rand, cursor, theme.getSecondaryWall(), true, true);
+				editor.setBlock(rand, cursor, theme.getSecondaryWall(), true, true);
 				cursor.add(Cardinal.DOWN);
-				WorldGenPrimitive.setBlock(world, rand, cursor, theme.getSecondaryWall(), true, true);
+				editor.setBlock(rand, cursor, theme.getSecondaryWall(), true, true);
 				cursor.add(orth);
-				WorldGenPrimitive.setBlock(world, rand, cursor, theme.getSecondaryWall(), true, true);
+				editor.setBlock(rand, cursor, theme.getSecondaryWall(), true, true);
 				cursor.add(Cardinal.UP);
-				WorldGenPrimitive.setBlock(world, rand, cursor, theme.getSecondaryWall(), true, true);
+				editor.setBlock(rand, cursor, theme.getSecondaryWall(), true, true);
 				cursor.add(Cardinal.UP);
 				cursor.add(Cardinal.reverse(orth));
-				WorldGenPrimitive.setBlock(world, rand, cursor, theme.getSecondaryWall(), true, true);
+				editor.setBlock(rand, cursor, theme.getSecondaryWall(), true, true);
 				cursor.add(Cardinal.UP);
-				WorldGenPrimitive.blockOrientation(roof, dir, false).setBlock(world, cursor);
+				WorldEditor.blockOrientation(roof, dir, false).setBlock(editor, cursor);
 				cursor.add(Cardinal.reverse(dir));
-				WorldGenPrimitive.setBlock(world, rand, cursor, theme.getSecondaryWall(), true, true);
+				editor.setBlock(rand, cursor, theme.getSecondaryWall(), true, true);
 				cursor.add(Cardinal.UP);
-				WorldGenPrimitive.setBlock(world, rand, cursor, theme.getSecondaryWall(), true, true);
+				editor.setBlock(rand, cursor, theme.getSecondaryWall(), true, true);
 			}
 		}
 
@@ -263,13 +261,13 @@ public class EniTower implements ITower {
 		end.add(Cardinal.SOUTH, 3);
 		end.add(Cardinal.WEST, 3);
 		
-		WorldGenPrimitive.fillRectSolid(world, rand, start, end, blocks, true, true);
+		editor.fillRectSolid(rand, start, end, blocks, true, true);
 		start.add(Cardinal.UP, 3);
 		end.add(Cardinal.UP, 3);
-		WorldGenPrimitive.fillRectSolid(world, rand, start, end, blocks, true, true);
+		editor.fillRectSolid(rand, start, end, blocks, true, true);
 		start.add(Cardinal.UP, 3);
 		end.add(Cardinal.UP, 3);
-		WorldGenPrimitive.fillRectSolid(world, rand, start, end, blocks, true, true);
+		editor.fillRectSolid(rand, start, end, blocks, true, true);
 		
 
 		for(Cardinal dir : Cardinal.directions){
@@ -281,11 +279,11 @@ public class EniTower implements ITower {
 			cursor.add(Cardinal.UP, 4);
 			MetaBlock window = ColorBlock.get(Blocks.stained_glass_pane, rand);
 			for(int i = 0; i < 3; i++){
-				WorldGenPrimitive.blockOrientation(stair, dir, false).setBlock(world, cursor);
+				WorldEditor.blockOrientation(stair, dir, false).setBlock(editor, cursor);
 				cursor.add(Cardinal.UP);
-				window.setBlock(world, cursor);
+				window.setBlock(editor, cursor);
 				cursor.add(Cardinal.UP);
-				window.setBlock(world, cursor);
+				window.setBlock(editor, cursor);
 				cursor.add(Cardinal.UP);
 			}
 			
@@ -295,46 +293,46 @@ public class EniTower implements ITower {
 			start.add(orth[0]);
 			end = new Coord(cursor);
 			end.add(orth[1]);
-			WorldGenPrimitive.fillRectSolid(world, rand, start, end, blocks, true, true);
+			editor.fillRectSolid(rand, start, end, blocks, true, true);
 			
 			// slit windows
 			cursor = new Coord(floor);
 			cursor.add(Cardinal.UP, 14);
 			cursor.add(dir, 3);
 			cursor.add(orth[0]);
-			WorldGenPrimitive.blockOrientation(stair, orth[1], false).setBlock(world, cursor);
+			WorldEditor.blockOrientation(stair, orth[1], false).setBlock(editor, cursor);
 			cursor.add(Cardinal.UP);
-			WorldGenPrimitive.blockOrientation(stair, orth[1], true).setBlock(world, cursor);
+			WorldEditor.blockOrientation(stair, orth[1], true).setBlock(editor, cursor);
 			cursor.add(Cardinal.UP);
 			cursor.add(orth[1]);
-			WorldGenPrimitive.blockOrientation(stair, orth[0], false).setBlock(world, cursor);
+			WorldEditor.blockOrientation(stair, orth[0], false).setBlock(editor, cursor);
 			cursor.add(Cardinal.UP);
-			WorldGenPrimitive.blockOrientation(stair, orth[0], true).setBlock(world, cursor);
+			WorldEditor.blockOrientation(stair, orth[0], true).setBlock(editor, cursor);
 			cursor.add(Cardinal.UP);
-			WorldGenPrimitive.blockOrientation(stair, orth[1], false).setBlock(world, cursor);
+			WorldEditor.blockOrientation(stair, orth[1], false).setBlock(editor, cursor);
 			cursor.add(Cardinal.UP);
-			WorldGenPrimitive.blockOrientation(stair, orth[1], true).setBlock(world, cursor);
+			WorldEditor.blockOrientation(stair, orth[1], true).setBlock(editor, cursor);
 			cursor.add(orth[1]);
 			cursor.add(Cardinal.UP);
-			WorldGenPrimitive.blockOrientation(stair, orth[0], false).setBlock(world, cursor);
+			WorldEditor.blockOrientation(stair, orth[0], false).setBlock(editor, cursor);
 			cursor.add(Cardinal.UP);
-			WorldGenPrimitive.blockOrientation(stair, orth[0], true).setBlock(world, cursor);
+			WorldEditor.blockOrientation(stair, orth[0], true).setBlock(editor, cursor);
 			
 			// top windows
 			
 			cursor = new Coord(floor);
 			cursor.add(Cardinal.UP, 23);
 			cursor.add(dir, 4);
-			window.setBlock(world, cursor);
+			window.setBlock(editor, cursor);
 			cursor.add(Cardinal.UP);
-			window.setBlock(world, cursor);
+			window.setBlock(editor, cursor);
 			cursor.add(Cardinal.UP);
-			window.setBlock(world, cursor);
+			window.setBlock(editor, cursor);
 			cursor.add(Cardinal.DOWN);
 			cursor.add(orth[0]);
-			window.setBlock(world, cursor);
+			window.setBlock(editor, cursor);
 			cursor.add(orth[1], 2);
-			window.setBlock(world, cursor);
+			window.setBlock(editor, cursor);
 			
 			// top ceiling
 			cursor = new Coord(floor);
@@ -344,27 +342,27 @@ public class EniTower implements ITower {
 			start.add(orth[0]);
 			end = new Coord(cursor);
 			end.add(orth[1]);
-			WorldGenPrimitive.fillRectSolid(world, rand, start, end, blocks, true, true);
+			editor.fillRectSolid(rand, start, end, blocks, true, true);
 			start.add(Cardinal.reverse(dir));
 			end.add(Cardinal.reverse(dir));
 			start.add(Cardinal.UP);
 			end.add(Cardinal.UP);
-			WorldGenPrimitive.fillRectSolid(world, rand, start, end, blocks, true, true);
+			editor.fillRectSolid(rand, start, end, blocks, true, true);
 			start.add(Cardinal.UP);
 			end.add(Cardinal.UP);
-			WorldGenPrimitive.fillRectSolid(world, rand, start, end, blocks, true, true);
+			editor.fillRectSolid(rand, start, end, blocks, true, true);
 			
 			cursor.add(Cardinal.reverse(dir));
 			cursor.add(orth[0], 2);
-			WorldGenPrimitive.setBlock(world, rand, cursor, blocks, true, true);
+			editor.setBlock(rand, cursor, blocks, true, true);
 		}
 		
 		start = new Coord(x - 4, 60, z - 4);
 		end = new Coord(x + 4, floor.getY(), z + 4);
-		WorldGenPrimitive.fillRectSolid(world, rand, start, end, blocks, true, true);
+		editor.fillRectSolid(rand, start, end, blocks, true, true);
 		
 		for(int i = (floor.getY() + 22); i >= 50; --i){
-			WorldGenPrimitive.spiralStairStep(world, rand, new Coord(x, i, z), stair, theme.getPrimaryPillar());
+			editor.spiralStairStep(rand, new Coord(x, i, z), stair, theme.getPrimaryPillar());
 		}
 		
 		
@@ -372,17 +370,17 @@ public class EniTower implements ITower {
 			cursor = new Coord(floor);
 			cursor.add(Cardinal.UP);
 			cursor.add(dir, 6);
-			if(world.isAirBlock(cursor.getBlockPos())){
+			if(editor.isAirBlock(cursor)){
 				cursor = new Coord(floor);
 				cursor.add(Cardinal.UP);
 				cursor.add(dir, 5);
-				Door.generate(world, cursor, dir, Door.OAK);
+				Door.generate(editor, cursor, dir, Door.OAK);
 				cursor.add(dir);
 				start = new Coord(cursor);
 				end = new Coord(start);
 				end.add(Cardinal.UP);
 				end.add(dir, 3);
-				WorldGenPrimitive.fillRectSolid(world, rand, start, end, air, true, true);
+				editor.fillRectSolid(rand, start, end, air, true, true);
 				break;
 			}
 		}

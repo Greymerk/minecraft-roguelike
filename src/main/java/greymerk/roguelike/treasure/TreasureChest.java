@@ -1,20 +1,18 @@
 package greymerk.roguelike.treasure;
 
 
-import greymerk.roguelike.dungeon.Dungeon;
-import greymerk.roguelike.dungeon.settings.LevelSettings;
-import greymerk.roguelike.worldgen.Cardinal;
-import greymerk.roguelike.worldgen.Coord;
-import greymerk.roguelike.worldgen.WorldGenPrimitive;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import greymerk.roguelike.dungeon.Dungeon;
+import greymerk.roguelike.dungeon.settings.LevelSettings;
+import greymerk.roguelike.worldgen.Cardinal;
+import greymerk.roguelike.worldgen.Coord;
+import greymerk.roguelike.worldgen.WorldEditor;
 import net.minecraft.init.Blocks;
-import net.minecraft.world.World;
 
 public enum TreasureChest {
 
@@ -47,36 +45,36 @@ public enum TreasureChest {
 		}
 	}
 	
-	public static void generate(World world, Random rand, LevelSettings settings, Coord pos, int level, boolean trapped){
+	public static void generate(WorldEditor editor, Random rand, LevelSettings settings, Coord pos, int level, boolean trapped){
 		
 		TreasureChest type = getChestType(rand, level);
 		ITreasureChest chest = getChest(type);
 		
-		chest.generate(world, rand, settings.getLoot(), pos, level, trapped);
+		chest.generate(editor, rand, settings.getLoot(), pos, level, trapped);
 	}
 	
-	public static void generate(World world, Random rand, LevelSettings settings, Coord pos){
-		generate(world, rand, settings, pos, settings.getDifficulty(pos), false);
+	public static void generate(WorldEditor editor,  Random rand, LevelSettings settings, Coord pos){
+		generate(editor, rand, settings, pos, settings.getDifficulty(pos), false);
 	}
 	
-	public static void generate(World world, Random rand, LevelSettings settings, Coord pos, TreasureChest type){
-		generate(world, rand, settings, pos, type, settings.getDifficulty(pos), false);
+	public static void generate(WorldEditor editor, Random rand, LevelSettings settings, Coord pos, TreasureChest type){
+		generate(editor, rand, settings, pos, type, settings.getDifficulty(pos), false);
 	}
 	
-	public static void generate(World world, Random rand, LevelSettings settings, Coord pos, TreasureChest type, int level, boolean trapped){
+	public static void generate(WorldEditor editor, Random rand, LevelSettings settings, Coord pos, TreasureChest type, int level, boolean trapped){
 		ITreasureChest chest = getChest(type);
-		chest.generate(world, rand, settings.getLoot(), pos, level, trapped);
+		chest.generate(editor, rand, settings.getLoot(), pos, level, trapped);
 	}
 	
-	public static void generate(World world, Random rand, LevelSettings settings, List<Coord> space, TreasureChest type){
-		createChests(world, rand, settings, 1, space, new ArrayList<TreasureChest>(Arrays.asList(type)));
+	public static void generate(WorldEditor editor, Random rand, LevelSettings settings, List<Coord> space, TreasureChest type){
+		createChests(editor, rand, settings, 1, space, new ArrayList<TreasureChest>(Arrays.asList(type)));
 	}
 	
-	public static void createChests(World world, Random rand, LevelSettings settings, int numChests, List<Coord> space){
-		createChests(world, rand, settings, numChests, space, false);
+	public static void createChests(WorldEditor editor, Random rand, LevelSettings settings, int numChests, List<Coord> space){
+		createChests(editor, rand, settings, numChests, space, false);
 	}
 	
-	public static void createChests(World world, Random rand, LevelSettings settings, int numChests, List<Coord> space, boolean trapped){
+	public static void createChests(WorldEditor editor, Random rand, LevelSettings settings, int numChests, List<Coord> space, boolean trapped){
 		
 		Collections.shuffle(space, rand);
 		
@@ -88,14 +86,14 @@ public enum TreasureChest {
 				break;
 			}
 			
-			if (isValidChestSpace(world, block)) {
-				generate(world, rand, settings, block, getChestType(rand, Dungeon.getLevel(block.getY())));
+			if (isValidChestSpace(editor, block)) {
+				generate(editor, rand, settings, block, getChestType(rand, Dungeon.getLevel(block.getY())));
 				count++;
 			}
 		}
 	}
 	
-	public static void createChests(World world, Random rand, LevelSettings settings, int numChests, List<Coord> space, List<TreasureChest> types){
+	public static void createChests(WorldEditor editor, Random rand, LevelSettings settings, int numChests, List<Coord> space, List<TreasureChest> types){
 		
 		Collections.shuffle(space, rand);
 		
@@ -107,8 +105,8 @@ public enum TreasureChest {
 				break;
 			}
 			
-			if (isValidChestSpace(world, block)) {
-				generate(world, rand, settings, block, types.get(rand.nextInt(types.size())));
+			if (isValidChestSpace(editor, block)) {
+				generate(editor, rand, settings, block, types.get(rand.nextInt(types.size())));
 				count++;
 			}
 		}
@@ -168,9 +166,9 @@ public enum TreasureChest {
 		
 	}
 
-	public static boolean isValidChestSpace(World world, Coord pos) {
+	public static boolean isValidChestSpace(WorldEditor editor, Coord pos) {
 
-		if (!world.isAirBlock(pos.getBlockPos())) {
+		if (!editor.isAirBlock(pos)) {
 			return false;
 		}
 		
@@ -178,12 +176,12 @@ public enum TreasureChest {
 		cursor = new Coord(pos);
 		cursor.add(Cardinal.DOWN);
 		
-		if (!WorldGenPrimitive.getBlock(world, cursor).getBlock().getMaterial().isSolid()) return false;
+		if (!editor.getBlock(cursor).getBlock().getMaterial().isSolid()) return false;
 		
 		for(Cardinal dir : Cardinal.directions){
 			cursor = new Coord(pos);
 			cursor.add(dir);
-			if(WorldGenPrimitive.getBlock(world, cursor).getBlock() == Blocks.chest) return false;
+			if(editor.getBlock(cursor).getBlock() == Blocks.chest) return false;
 		}
 		
 		return true;

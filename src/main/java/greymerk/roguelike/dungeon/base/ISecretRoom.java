@@ -1,15 +1,14 @@
 package greymerk.roguelike.dungeon.base;
 
+import java.util.Random;
+
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
-
-import java.util.Random;
-
-import net.minecraft.world.World;
+import greymerk.roguelike.worldgen.WorldEditor;
 
 public interface ISecretRoom {
 	
-	public boolean genRoom(World world, Random rand, LevelSettings settings, Cardinal dir, Coord pos);
+	public boolean genRoom(WorldEditor editor, Random rand, LevelSettings settings, Cardinal dir, Coord pos);
 	
 }

@@ -32,6 +32,7 @@ public class ItemArmour extends ItemBase {
 		return getRandom(rand, level, slot, enchant ? Loot.getEnchantLevel(rand, level) : 0);
 	}
 	
+	@SuppressWarnings("incomplete-switch")
 	public static ItemStack getRandom(Random rand, int level, Slot slot, int enchantLevel){
 
 		if(enchantLevel > 0 && rand.nextInt(20 + (level * 10)) == 0){
@@ -39,7 +40,7 @@ public class ItemArmour extends ItemBase {
 			case HEAD: return ItemSpecialty.getRandomItem(Equipment.HELMET, rand, level); 
 			case CHEST: return ItemSpecialty.getRandomItem(Equipment.CHEST, rand, level); 
 			case LEGS: return ItemSpecialty.getRandomItem(Equipment.LEGS, rand, level); 
-			case FEET: return ItemSpecialty.getRandomItem(Equipment.FEET, rand, level); 
+			case FEET: return ItemSpecialty.getRandomItem(Equipment.FEET, rand, level);
 			}
 		}
 
@@ -51,6 +52,7 @@ public class ItemArmour extends ItemBase {
 		
 	}
 	
+	@SuppressWarnings("incomplete-switch")
 	private static ItemStack pickArmour(Random rand, Slot slot, Quality quality) {
 		
 		switch(slot){

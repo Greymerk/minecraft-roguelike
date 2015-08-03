@@ -1,15 +1,13 @@
 package greymerk.roguelike.dungeon.base;
 
+import java.util.Random;
+
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
-import greymerk.roguelike.worldgen.WorldGenPrimitive;
-
-import java.util.Random;
-
+import greymerk.roguelike.worldgen.WorldEditor;
 import net.minecraft.init.Blocks;
-import net.minecraft.world.World;
 
 public class SecretRoom implements ISecretRoom {
 
@@ -26,17 +24,17 @@ public class SecretRoom implements ISecretRoom {
 		this.prototype = toCopy.prototype;
 	}
 	
-	private boolean isValid(World world, Random rand, Cardinal dir, Coord pos){
+	private boolean isValid(WorldEditor editor, Random rand, Cardinal dir, Coord pos){
 		if(count <= 0) return false;
 		Coord cursor = new Coord(pos);
 		cursor.add(dir, prototype.getSize() + 5);
 		
-		return prototype.validLocation(world, dir, cursor.getX(), cursor.getY(), cursor.getZ());
+		return prototype.validLocation(editor, dir, cursor.getX(), cursor.getY(), cursor.getZ());
 	}
 	
 	@Override
-	public boolean genRoom(World world, Random rand, LevelSettings settings, Cardinal dir, Coord pos){
-		if(!isValid(world, rand, dir, pos)) return false;
+	public boolean genRoom(WorldEditor editor, Random rand, LevelSettings settings, Cardinal dir, Coord pos){
+		if(!isValid(editor, rand, dir, pos)) return false;
 		
 		int size = prototype.getSize();
 		
@@ -48,16 +46,16 @@ public class SecretRoom implements ISecretRoom {
 		end.add(Cardinal.getOrthogonal(dir)[1]);
 		end.add(dir, size + 5);
 		end.add(Cardinal.UP, 2);
-		WorldGenPrimitive.fillRectSolid(world, rand, start, end, settings.getTheme().getPrimaryWall(), false, true);
+		editor.fillRectSolid(rand, start, end, settings.getTheme().getPrimaryWall(), false, true);
 		
 		start = new Coord(pos);
 		end = new Coord(pos);
 		end.add(dir, size + 5);
 		end.add(Cardinal.UP);
-		WorldGenPrimitive.fillRectSolid(world, rand, pos, end, new MetaBlock(Blocks.air), true, true);
+		editor.fillRectSolid(rand, pos, end, new MetaBlock(Blocks.air), true, true);
 		
 		end.add(Cardinal.DOWN);
-		this.prototype.generate(world, rand, settings, new Cardinal[]{dir}, end);
+		this.prototype.generate(editor, rand, settings, new Cardinal[]{dir}, end);
 		count -= 1;
 		
 		return true;

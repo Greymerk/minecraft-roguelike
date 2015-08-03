@@ -1,5 +1,7 @@
 package greymerk.roguelike.dungeon.rooms;
 
+import java.util.Random;
+
 import greymerk.roguelike.dungeon.base.DungeonBase;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.theme.ITheme;
@@ -7,19 +9,15 @@ import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.MetaBlock;
-import greymerk.roguelike.worldgen.WorldGenPrimitive;
-
-import java.util.Random;
-
+import greymerk.roguelike.worldgen.WorldEditor;
 import net.minecraft.init.Blocks;
-import net.minecraft.world.World;
 
 public class DungeonsFire extends DungeonBase {
 
 	
 	
 	@Override
-	public boolean generate(World world, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
+	public boolean generate(WorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
 		
 		ITheme theme = settings.getTheme();
 
@@ -41,7 +39,7 @@ public class DungeonsFire extends DungeonBase {
 		end.add(Cardinal.EAST, 8);
 		end.add(Cardinal.UP, 7);
 		
-		WorldGenPrimitive.fillRectHollow(world, rand, start, end, wall, false, true);
+		editor.fillRectHollow(rand, start, end, wall, false, true);
 		
 		start = new Coord(origin);
 		start.add(Cardinal.DOWN);
@@ -50,7 +48,7 @@ public class DungeonsFire extends DungeonBase {
 		start.add(Cardinal.WEST, 8);
 		end.add(Cardinal.SOUTH, 8);
 		end.add(Cardinal.EAST, 8);
-		WorldGenPrimitive.fillRectSolid(world, rand, start, end, theme.getPrimaryFloor(), false, true);
+		editor.fillRectSolid(rand, start, end, theme.getPrimaryFloor(), false, true);
 		
 		for(Cardinal dir : Cardinal.directions){
 			for(Cardinal orth : Cardinal.getOrthogonal(dir)){
@@ -59,43 +57,43 @@ public class DungeonsFire extends DungeonBase {
 				start.add(orth, 2);
 				end = new Coord(start);
 				end.add(Cardinal.UP, 6);
-				WorldGenPrimitive.fillRectSolid(world, rand, start, end, pillar, true, true);
+				editor.fillRectSolid(rand, start, end, pillar, true, true);
 				
 				cursor = new Coord(origin);
 				cursor.add(dir, 8);
 				cursor.add(orth);
 				cursor.add(Cardinal.UP, 2);
-				WorldGenPrimitive.setBlock(world, rand, cursor, WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(orth), true), true, false);
+				editor.setBlock(rand, cursor, WorldEditor.blockOrientation(stair, Cardinal.reverse(orth), true), true, false);
 				
 				cursor.add(Cardinal.reverse(dir));
 				cursor.add(Cardinal.UP);
-				WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(orth), true).setBlock(world, cursor);
+				WorldEditor.blockOrientation(stair, Cardinal.reverse(orth), true).setBlock(editor, cursor);
 				
 				start = new Coord(cursor);
 				start.add(Cardinal.UP);
 				end = new Coord(start);
 				end.add(Cardinal.UP, 3);
-				WorldGenPrimitive.fillRectSolid(world, rand, start, end, pillar, true, true);
+				editor.fillRectSolid(rand, start, end, pillar, true, true);
 				
 				cursor.add(Cardinal.reverse(dir));
 				cursor.add(orth);
-				WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(dir), true).setBlock(world, cursor);
+				WorldEditor.blockOrientation(stair, Cardinal.reverse(dir), true).setBlock(editor, cursor);
 				
 				start = new Coord(cursor);
 				start.add(Cardinal.UP);
 				end = new Coord(start);
 				end.add(Cardinal.UP, 3);
-				WorldGenPrimitive.fillRectSolid(world, rand, start, end, pillar, true, true);
+				editor.fillRectSolid(rand, start, end, pillar, true, true);
 				
 				cursor.add(dir);
 				cursor.add(orth);
-				WorldGenPrimitive.blockOrientation(stair, orth, true).setBlock(world, cursor);
+				WorldEditor.blockOrientation(stair, orth, true).setBlock(editor, cursor);
 				
 				start = new Coord(cursor);
 				start.add(Cardinal.UP);
 				end = new Coord(start);
 				end.add(Cardinal.UP, 3);
-				WorldGenPrimitive.fillRectSolid(world, rand, start, end, pillar, true, true);
+				editor.fillRectSolid(rand, start, end, pillar, true, true);
 
 			}
 			
@@ -103,7 +101,7 @@ public class DungeonsFire extends DungeonBase {
 			cursor.add(dir, 6);
 			cursor.add(Cardinal.getOrthogonal(dir)[0], 6);
 			
-			genFire(world, rand, theme, cursor);
+			genFire(editor, rand, theme, cursor);
 			
 			cursor = new Coord(origin);
 			cursor.add(Cardinal.UP, 4);
@@ -111,37 +109,37 @@ public class DungeonsFire extends DungeonBase {
 			start = new Coord(cursor);
 			end = new Coord(cursor);
 			end.add(dir, 6);
-			WorldGenPrimitive.fillRectSolid(world, rand, start, end, wall, true, true);
+			editor.fillRectSolid(rand, start, end, wall, true, true);
 			cursor.add(Cardinal.getOrthogonal(dir)[0]);
-			WorldGenPrimitive.setBlock(world, rand, cursor, wall, true, true);
+			editor.setBlock(rand, cursor, wall, true, true);
 			
 			start = new Coord(end);
 			end.add(Cardinal.UP, 2);
 			end.add(Cardinal.reverse(dir));
-			WorldGenPrimitive.fillRectSolid(world, rand, start, end, wall, true, true);
+			editor.fillRectSolid(rand, start, end, wall, true, true);
 			
 			Cardinal[] orth = Cardinal.getOrthogonal(dir);
-			WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(dir), true);
+			WorldEditor.blockOrientation(stair, Cardinal.reverse(dir), true);
 			
 			cursor = new Coord(end);
 			start = new Coord(cursor);
 			start.add(orth[0], 3);
 			end.add(orth[1], 3);
-			WorldGenPrimitive.fillRectSolid(world, rand, start, end, wall, true, false);
+			editor.fillRectSolid(rand, start, end, wall, true, false);
 			
 			start = new Coord(cursor);
 			start.add(Cardinal.DOWN);
 			end = new Coord(start);
 			start.add(orth[0], 3);
 			end.add(orth[1], 3);
-			WorldGenPrimitive.fillRectSolid(world, rand, start, end, stair, true, false);
+			editor.fillRectSolid(rand, start, end, stair, true, false);
 			
 			start = new Coord(cursor);
 			start.add(Cardinal.reverse(dir));
 			end = new Coord(start);
 			start.add(orth[0], 3);
 			end.add(orth[1], 3);
-			WorldGenPrimitive.fillRectSolid(world, rand, start, end, stair, true, false);
+			editor.fillRectSolid(rand, start, end, stair, true, false);
 		}
 		
 		
@@ -150,7 +148,7 @@ public class DungeonsFire extends DungeonBase {
 		return false;
 	}
 	
-	public static void genFire(World world, Random rand, ITheme theme, Coord origin){
+	public static void genFire(WorldEditor editor, Random rand, ITheme theme, Coord origin){
 		
 		IBlockFactory wall = theme.getPrimaryWall();
 		IBlockFactory pillar = theme.getPrimaryPillar();
@@ -162,9 +160,9 @@ public class DungeonsFire extends DungeonBase {
 		Coord end;
 		
 		cursor = new Coord(origin);
-		WorldGenPrimitive.setBlock(world, cursor, Blocks.netherrack);
+		editor.setBlock(cursor, Blocks.netherrack);
 		cursor.add(Cardinal.UP);
-		WorldGenPrimitive.setBlock(world, cursor, Blocks.fire);
+		editor.setBlock(cursor, Blocks.fire);
 		
 		for(Cardinal dir : Cardinal.directions){
 			
@@ -175,15 +173,15 @@ public class DungeonsFire extends DungeonBase {
 			start.add(orth[0]);
 			end = new Coord(start);
 			end.add(Cardinal.UP, 2);
-			WorldGenPrimitive.fillRectSolid(world, rand, start, end, pillar, true, false);
+			editor.fillRectSolid(rand, start, end, pillar, true, false);
 			
 			cursor = new Coord(origin);
 			cursor.add(dir);
-			WorldGenPrimitive.setBlock(world, rand, cursor, WorldGenPrimitive.blockOrientation(stair, dir, false), true, false);
+			editor.setBlock(rand, cursor, WorldEditor.blockOrientation(stair, dir, false), true, false);
 			cursor.add(Cardinal.UP);
-			WorldGenPrimitive.setBlock(world, cursor, Blocks.iron_bars);
+			editor.setBlock(cursor, Blocks.iron_bars);
 			cursor.add(Cardinal.UP);
-			WorldGenPrimitive.setBlock(world, rand, cursor, WorldGenPrimitive.blockOrientation(stair, dir, true), true, false);
+			editor.setBlock(rand, cursor, WorldEditor.blockOrientation(stair, dir, true), true, false);
 			
 			cursor = new Coord(origin);
 			cursor.add(Cardinal.UP, 6);
@@ -192,16 +190,16 @@ public class DungeonsFire extends DungeonBase {
 			for(Cardinal o : Cardinal.getOrthogonal(dir)){
 				Coord c = new Coord(cursor);
 				c.add(o, 2);
-				WorldGenPrimitive.setBlock(world, rand, c, WorldGenPrimitive.blockOrientation(stair, dir, true), true, false);
+				editor.setBlock(rand, c, WorldEditor.blockOrientation(stair, dir, true), true, false);
 				c.add(o);
-				WorldGenPrimitive.setBlock(world, rand, c, WorldGenPrimitive.blockOrientation(stair, dir, true), true, false);
+				editor.setBlock(rand, c, WorldEditor.blockOrientation(stair, dir, true), true, false);
 			}
 			
 			cursor = new Coord(origin);
 			cursor.add(Cardinal.UP);
 			cursor.add(dir, 2);
 			
-			if(!world.isAirBlock(cursor.getBlockPos())){
+			if(!editor.isAirBlock(cursor)){
 				continue;
 			}
 			
@@ -211,8 +209,8 @@ public class DungeonsFire extends DungeonBase {
 			end = new Coord(start);
 			start.add(orth[0], 2);
 			end.add(orth[1], 2);
-			WorldGenPrimitive.blockOrientation(stair, dir, true);
-			WorldGenPrimitive.fillRectSolid(world, rand, start, end, stair, true, false);
+			WorldEditor.blockOrientation(stair, dir, true);
+			editor.fillRectSolid(rand, start, end, stair, true, false);
 		}
 		
 		start = new Coord(origin);
@@ -224,7 +222,7 @@ public class DungeonsFire extends DungeonBase {
 		end.add(Cardinal.SOUTH, 2);
 		end.add(Cardinal.EAST, 2);
 		
-		WorldGenPrimitive.fillRectSolid(world, rand, start, end, wall, true, false);
+		editor.fillRectSolid(rand, start, end, wall, true, false);
 
 	}
 	

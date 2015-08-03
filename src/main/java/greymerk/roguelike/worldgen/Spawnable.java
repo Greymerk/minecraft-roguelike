@@ -1,16 +1,14 @@
 package greymerk.roguelike.worldgen;
 
-import greymerk.roguelike.util.JsonNBT;
-
 import java.util.Random;
 
+import com.google.gson.JsonObject;
+
+import greymerk.roguelike.util.JsonNBT;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.MobSpawnerBaseLogic;
 import net.minecraft.tileentity.TileEntityMobSpawner;
-import net.minecraft.world.World;
-
-import com.google.gson.JsonObject;
 
 public class Spawnable {
 
@@ -27,11 +25,11 @@ public class Spawnable {
 		}
 	}
 		
-	public void generate(World world, Random rand, Coord cursor, int level){
+	public void generate(WorldEditor editor, Random rand, Coord cursor, int level){
 		
-		if(!WorldGenPrimitive.setBlock(world, cursor, new MetaBlock(Blocks.mob_spawner))) return;
+		if(!editor.setBlock(cursor, new MetaBlock(Blocks.mob_spawner))) return;
 		
-		TileEntityMobSpawner spawner = (TileEntityMobSpawner) WorldGenPrimitive.getTileEntity(world, cursor);
+		TileEntityMobSpawner spawner = (TileEntityMobSpawner) editor.getTileEntity(cursor);
 
 		if (spawner == null) return;
 		

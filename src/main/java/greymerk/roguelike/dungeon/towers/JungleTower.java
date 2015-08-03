@@ -1,33 +1,31 @@
 package greymerk.roguelike.dungeon.towers;
 
+import java.util.Random;
+
 import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.worldgen.BlockStripes;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.MetaBlock;
-import greymerk.roguelike.worldgen.WorldGenPrimitive;
-
-import java.util.Random;
-
+import greymerk.roguelike.worldgen.WorldEditor;
 import net.minecraft.init.Blocks;
-import net.minecraft.world.World;
 
 public class JungleTower implements ITower{
 
 	@Override
-	public void generate(World world, Random rand, ITheme theme, int x, int y, int z) {
+	public void generate(WorldEditor editor, Random rand, ITheme theme, int x, int y, int z) {
 		
-		Coord origin = Tower.getBaseCoord(world, x, y, z);
+		Coord origin = Tower.getBaseCoord(editor, x, y, z);
 		Coord cursor;
 		
-		base(world, rand, theme, origin);
+		base(editor, rand, theme, origin);
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.UP, 4);
-		top(world, rand, theme, cursor);
+		top(editor, rand, theme, cursor);
 	}
 	
-	private void base(World world, Random rand, ITheme theme, Coord origin){
+	private void base(WorldEditor editor, Random rand, ITheme theme, Coord origin){
 		
 		Coord start;
 		Coord end;
@@ -46,18 +44,18 @@ public class JungleTower implements ITower{
 		
 		start = new Coord(start.getX(), 60, start.getZ());
 		
-		WorldGenPrimitive.fillRectSolid(world, rand, start, end, theme.getPrimaryWall(), true, true);
+		editor.fillRectSolid(rand, start, end, theme.getPrimaryWall(), true, true);
 		
 		MetaBlock stair = theme.getPrimaryStair();
 		
 		BlockStripes nsStairs = new BlockStripes();
-		nsStairs.addBlock(new MetaBlock(WorldGenPrimitive.blockOrientation(stair, Cardinal.NORTH, false)));
-		nsStairs.addBlock(new MetaBlock(WorldGenPrimitive.blockOrientation(stair, Cardinal.SOUTH, false)));
+		nsStairs.addBlock(new MetaBlock(WorldEditor.blockOrientation(stair, Cardinal.NORTH, false)));
+		nsStairs.addBlock(new MetaBlock(WorldEditor.blockOrientation(stair, Cardinal.SOUTH, false)));
 
 		
 		BlockStripes ewStairs = new BlockStripes();
-		ewStairs.addBlock(new MetaBlock(WorldGenPrimitive.blockOrientation(stair, Cardinal.EAST, false)));
-		ewStairs.addBlock(new MetaBlock(WorldGenPrimitive.blockOrientation(stair, Cardinal.WEST, false)));
+		ewStairs.addBlock(new MetaBlock(WorldEditor.blockOrientation(stair, Cardinal.EAST, false)));
+		ewStairs.addBlock(new MetaBlock(WorldEditor.blockOrientation(stair, Cardinal.WEST, false)));
 		
 		for (Cardinal dir : Cardinal.directions){
 			
@@ -79,16 +77,16 @@ public class JungleTower implements ITower{
 				end.add(dir, 2);
 				end.add(o, 3);
 				end.add(Cardinal.UP, 2);
-				WorldGenPrimitive.fillRectSolid(world, rand, start, end, air, true, true);
+				editor.fillRectSolid(rand, start, end, air, true, true);
 				start.add(dir);
 				end.add(Cardinal.reverse(dir));
-				WorldGenPrimitive.fillRectSolid(world, rand, start, end, stairs, true, true);
+				editor.fillRectSolid(rand, start, end, stairs, true, true);
 
 			}
 		}
 	}
 	
-	private void top(World world, Random rand, ITheme theme, Coord origin){
+	private void top(WorldEditor editor, Random rand, ITheme theme, Coord origin){
 		Coord start;
 		Coord end;
 		Coord cursor;
@@ -109,10 +107,10 @@ public class JungleTower implements ITower{
 		end.add(Cardinal.EAST, 6);
 		end.add(Cardinal.UP, 3);
 		
-		WorldGenPrimitive.fillRectHollow(world, rand, start, end, theme.getPrimaryWall(), true, true);
+		editor.fillRectHollow(rand, start, end, theme.getPrimaryWall(), true, true);
 		
 		for(int i = origin.getY() - 1; i >= 50; --i){
-			WorldGenPrimitive.spiralStairStep(world, rand, new Coord(origin.getX(), i, origin.getZ()), theme.getPrimaryStair(), theme.getPrimaryPillar());
+			editor.spiralStairStep(rand, new Coord(origin.getX(), i, origin.getZ()), theme.getPrimaryStair(), theme.getPrimaryPillar());
 		}
 		
 		for(Cardinal dir : Cardinal.directions){
@@ -124,7 +122,7 @@ public class JungleTower implements ITower{
 			start.add(orth[0]);
 			end.add(orth[1]);
 			end.add(Cardinal.UP, 2);
-			WorldGenPrimitive.fillRectSolid(world, rand, start, end, air, true, true);
+			editor.fillRectSolid(rand, start, end, air, true, true);
 			
 			for(Cardinal o : orth){
 				cursor = new Coord(origin);
@@ -133,47 +131,47 @@ public class JungleTower implements ITower{
 				start = new Coord(cursor);
 				end = new Coord(cursor);
 				end.add(Cardinal.UP, 2);
-				WorldGenPrimitive.fillRectSolid(world, rand, start, end, pillar, true, true);
+				editor.fillRectSolid(rand, start, end, pillar, true, true);
 				start.add(o, 2);
 				end.add(o, 2);
-				WorldGenPrimitive.fillRectSolid(world, rand, start, end, pillar, true, true);
+				editor.fillRectSolid(rand, start, end, pillar, true, true);
 				
 				Coord temp = new Coord(cursor);
 				
 				cursor.add(o);
-				WorldGenPrimitive.blockOrientation(stair, o, false).setBlock(world, cursor);
+				WorldEditor.blockOrientation(stair, o, false).setBlock(editor, cursor);
 				cursor.add(o);
-				WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(o), false).setBlock(world, cursor);
+				WorldEditor.blockOrientation(stair, Cardinal.reverse(o), false).setBlock(editor, cursor);
 				cursor.add(Cardinal.UP);
-				WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(o), true).setBlock(world, cursor);
+				WorldEditor.blockOrientation(stair, Cardinal.reverse(o), true).setBlock(editor, cursor);
 				cursor.add(Cardinal.reverse(o));
-				WorldGenPrimitive.blockOrientation(stair, o, true).setBlock(world, cursor);
+				WorldEditor.blockOrientation(stair, o, true).setBlock(editor, cursor);
 				cursor.add(Cardinal.UP);
-				blocks.setBlock(world, rand, cursor);
+				blocks.setBlock(editor, rand, cursor);
 				cursor.add(o);
-				blocks.setBlock(world, rand, cursor);
+				blocks.setBlock(editor, rand, cursor);
 				
 				cursor = new Coord(temp);
 				cursor.add(Cardinal.reverse(dir));
-				WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(dir), false).setBlock(world, cursor);
+				WorldEditor.blockOrientation(stair, Cardinal.reverse(dir), false).setBlock(editor, cursor);
 				cursor.add(o);
-				WorldGenPrimitive.blockOrientation(stair, o, false).setBlock(world, cursor);
+				WorldEditor.blockOrientation(stair, o, false).setBlock(editor, cursor);
 				cursor.add(o);
-				WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(o), false).setBlock(world, cursor);
+				WorldEditor.blockOrientation(stair, Cardinal.reverse(o), false).setBlock(editor, cursor);
 				cursor.add(Cardinal.UP);
-				WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(o), true).setBlock(world, cursor);
+				WorldEditor.blockOrientation(stair, Cardinal.reverse(o), true).setBlock(editor, cursor);
 				cursor.add(Cardinal.UP);
-				pillar.setBlock(world, rand, cursor);
+				pillar.setBlock(editor, rand, cursor);
 				cursor.add(Cardinal.reverse(o));
-				WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(dir), true).setBlock(world, cursor);
+				WorldEditor.blockOrientation(stair, Cardinal.reverse(dir), true).setBlock(editor, cursor);
 				cursor.add(Cardinal.reverse(o));
-				WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(dir), true).setBlock(world, cursor);
+				WorldEditor.blockOrientation(stair, Cardinal.reverse(dir), true).setBlock(editor, cursor);
 				cursor.add(Cardinal.reverse(o));
-				WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(dir), true).setBlock(world, cursor);
+				WorldEditor.blockOrientation(stair, Cardinal.reverse(dir), true).setBlock(editor, cursor);
 				cursor.add(dir);
-				WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(o), true).setBlock(world, cursor);
+				WorldEditor.blockOrientation(stair, Cardinal.reverse(o), true).setBlock(editor, cursor);
 				cursor.add(dir);
-				WorldGenPrimitive.blockOrientation(stair, Cardinal.reverse(o), true).setBlock(world, cursor);
+				WorldEditor.blockOrientation(stair, Cardinal.reverse(o), true).setBlock(editor, cursor);
 				
 				start = new Coord(origin);
 				start.add(dir, 6);
@@ -181,7 +179,7 @@ public class JungleTower implements ITower{
 				end = new Coord(start);
 				end.add(o);
 				end.add(Cardinal.UP, 2);
-				WorldGenPrimitive.fillRectSolid(world, rand, start, end, air, true, true);
+				editor.fillRectSolid(rand, start, end, air, true, true);
 				
 				
 			}
@@ -189,13 +187,13 @@ public class JungleTower implements ITower{
 			cursor = new Coord(origin);
 			cursor.add(Cardinal.DOWN);
 			cursor.add(dir, 11);
-			step(world, rand, theme, dir, cursor);
+			step(editor, rand, theme, dir, cursor);
 		}
 	}
 	
-	private void step(World world, Random rand, ITheme theme, Cardinal dir, Coord origin){
+	private void step(WorldEditor editor, Random rand, ITheme theme, Cardinal dir, Coord origin){
 		
-		if(WorldGenPrimitive.getBlock(world, origin).getBlock().isOpaqueCube()) return;
+		if(editor.getBlock(origin).getBlock().isOpaqueCube()) return;
 		if(origin.getY() <= 60) return;
 		
 		Coord start;
@@ -211,17 +209,17 @@ public class JungleTower implements ITower{
 		start.add(orth[0], 2);
 		end.add(orth[1], 2);
 		end = new Coord(end.getX(), 60, end.getZ());
-		WorldGenPrimitive.fillRectSolid(world, rand, start, end, blocks, true, true);
+		editor.fillRectSolid(rand, start, end, blocks, true, true);
 		
 		start = new Coord(origin);
 		end = new Coord(origin);
 		start.add(orth[0]);
 		end.add(orth[1]);
-		WorldGenPrimitive.blockOrientation(stair, dir, false);
-		WorldGenPrimitive.fillRectSolid(world, rand, start, end, stair, true, true);
+		WorldEditor.blockOrientation(stair, dir, false);
+		editor.fillRectSolid(rand, start, end, stair, true, true);
 		
 		origin.add(Cardinal.DOWN);
 		origin.add(dir);
-		step(world, rand, theme, dir, origin);
+		step(editor, rand, theme, dir, origin);
 	}
 }

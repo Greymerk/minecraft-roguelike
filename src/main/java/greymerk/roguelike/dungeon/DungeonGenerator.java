@@ -1,13 +1,12 @@
 package greymerk.roguelike.dungeon;
 
+import java.util.Random;
+
 import greymerk.roguelike.dungeon.settings.ISettings;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.dungeon.towers.Tower;
 import greymerk.roguelike.worldgen.Coord;
-
-import java.util.Random;
-
-import net.minecraft.world.World;
+import greymerk.roguelike.worldgen.WorldEditor;
 
 public class DungeonGenerator {
 	public static final int VERTICAL_SPACING = 10;
@@ -17,13 +16,13 @@ public class DungeonGenerator {
 		
 	}
 	
-	public void generate(World world, ISettings settings, int inX, int inZ){
+	public void generate(WorldEditor editor, ISettings settings, int inX, int inZ){
 		
 		int x = inX;
 		int y = TOPLEVEL;
 		int z = inZ;
 		
-		Random rand = Dungeon.getRandom(world, inX, inZ);
+		Random rand = Dungeon.getRandom(editor, inX, inZ);
 
 		int numLevels = settings.getNumLevels();
 		
@@ -33,12 +32,12 @@ public class DungeonGenerator {
 		
 		for (int i = 0; i < numLevels; ++i){
 			LevelSettings levelSettings = settings.getLevelSettings(i);
-			DungeonLevel level = new DungeonLevel(world, rand, levelSettings, new Coord(start));
+			DungeonLevel level = new DungeonLevel(editor, rand, levelSettings, new Coord(start));
 			
-			ILevelGenerator generator = LevelGenerator.getGenerator(world, rand, levelSettings.getGenerator(), level);
+			ILevelGenerator generator = LevelGenerator.getGenerator(editor, rand, levelSettings.getGenerator(), level);
 			level.generate(generator, new Coord(start), oldEnd);
 			
-			rand = Dungeon.getRandom(world, start.getX(), start.getZ());
+			rand = Dungeon.getRandom(editor, start.getX(), start.getZ());
 			oldEnd = generator.getEnd();			
 			x = oldEnd.getPosition().getX();
 			y = y - VERTICAL_SPACING;
@@ -47,7 +46,7 @@ public class DungeonGenerator {
 		}
 		
 		Tower tower = settings.getTower().getTower();
-		rand = Dungeon.getRandom(world, inX, inZ);
-		Tower.get(tower).generate(world, rand, settings.getTower().getTheme(), inX, TOPLEVEL, inZ);
+		rand = Dungeon.getRandom(editor, inX, inZ);
+		Tower.get(tower).generate(editor, rand, settings.getTower().getTheme(), inX, TOPLEVEL, inZ);
 	}
 }

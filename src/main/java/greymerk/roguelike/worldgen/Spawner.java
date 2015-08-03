@@ -1,15 +1,13 @@
 package greymerk.roguelike.worldgen;
 
-import greymerk.roguelike.dungeon.settings.LevelSettings;
-
 import java.util.Random;
 
+import greymerk.roguelike.dungeon.settings.LevelSettings;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.MobSpawnerBaseLogic;
 import net.minecraft.tileentity.TileEntityMobSpawner;
-import net.minecraft.world.World;
 
 public enum Spawner {
 	
@@ -18,26 +16,26 @@ public enum Spawner {
 	
 	private static final Spawner[] common = {SPIDER, SKELETON, ZOMBIE};
 	
-	public static void generate(World world, Random rand, LevelSettings level, Coord pos){
+	public static void generate(WorldEditor editor, Random rand, LevelSettings level, Coord pos){
 		Spawner type = common[rand.nextInt(common.length)];
-		generate(world, rand, level, pos, type);
+		generate(editor, rand, level, pos, type);
 	}
 	
-	public static void generate(World world, Random rand, LevelSettings level, Coord pos, Spawner type){
+	public static void generate(WorldEditor editor, Random rand, LevelSettings level, Coord pos, Spawner type){
 		
 		if(level.getSpawners() != null){
-			level.getSpawners().generate(world, rand, pos, type, level.getDifficulty(pos));
+			level.getSpawners().generate(editor, rand, pos, type, level.getDifficulty(pos));
 			return;
 		}
 		
-		generate(world, rand, level.getDifficulty(pos), pos, type);
+		generate(editor, rand, level.getDifficulty(pos), pos, type);
 	}
 	
-	public static void generate(World world, Random rand, int level, Coord pos, Spawner type){
+	public static void generate(WorldEditor editor, Random rand, int level, Coord pos, Spawner type){
 				
-		if(!WorldGenPrimitive.setBlock(world, pos, new MetaBlock(Blocks.mob_spawner))) return;
+		if(!editor.setBlock(pos, new MetaBlock(Blocks.mob_spawner))) return;
 		
-		TileEntityMobSpawner spawner = (TileEntityMobSpawner) WorldGenPrimitive.getTileEntity(world, pos);
+		TileEntityMobSpawner spawner = (TileEntityMobSpawner) editor.getTileEntity(pos);
 
 		if (spawner == null) return;
 		

@@ -1,19 +1,18 @@
 package greymerk.roguelike.dungeon.settings;
 
-import greymerk.roguelike.dungeon.towers.Tower;
-import greymerk.roguelike.theme.Theme;
-import greymerk.roguelike.worldgen.Coord;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.minecraft.world.World;
-
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+
+import greymerk.roguelike.dungeon.towers.Tower;
+import greymerk.roguelike.theme.Theme;
+import greymerk.roguelike.worldgen.Coord;
+import greymerk.roguelike.worldgen.WorldEditor;
 
 
 public class DungeonSettings implements ISettings{
@@ -152,11 +151,11 @@ public class DungeonSettings implements ISettings{
 	}
 	
 	@Override
-	public boolean isValid(World world, Coord pos) {
+	public boolean isValid(WorldEditor editor, Coord pos) {
 		
 		if(this.criteria == null) return false;
 		
-		return this.criteria.isValid(world, pos);
+		return this.criteria.isValid(editor, pos);
 	}
 
 	@Override

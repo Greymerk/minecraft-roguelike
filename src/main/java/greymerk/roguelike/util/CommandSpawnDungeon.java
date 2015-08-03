@@ -1,6 +1,9 @@
 package greymerk.roguelike.util;
 
 
+import java.util.List;
+import java.util.Random;
+
 import greymerk.roguelike.citadel.Citadel;
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.dungeon.Dungeon;
@@ -9,10 +12,7 @@ import greymerk.roguelike.dungeon.settings.DungeonSettings;
 import greymerk.roguelike.dungeon.settings.ISettings;
 import greymerk.roguelike.treasure.loot.provider.ItemNovelty;
 import greymerk.roguelike.worldgen.Coord;
-
-import java.util.List;
-import java.util.Random;
-
+import greymerk.roguelike.worldgen.WorldEditor;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.NumberInvalidException;
@@ -130,7 +130,8 @@ public class CommandSpawnDungeon extends CommandBase
 			}
 			
 			World world = sender.getEntityWorld();
-		
+			WorldEditor editor = new WorldEditor(world);
+			
 			if(settingName != null){
 				Dungeon.initResolver();
 				DungeonSettings setting = Dungeon.settingsResolver.getByName(settingName);
@@ -140,21 +141,21 @@ public class CommandSpawnDungeon extends CommandBase
 				}
 				
 				IDungeon dungeon = new Dungeon();
-				dungeon.generate(world, setting, x, z);
+				dungeon.generate(editor, setting, x, z);
 				return;
 			}
 			
-			Random rand = Dungeon.getRandom(world, x, z);
-			ISettings settings = Dungeon.settingsResolver.getSettings(world, rand, new Coord(x, 0, z));
+			Random rand = Dungeon.getRandom(editor, x, z);
+			ISettings settings = Dungeon.settingsResolver.getSettings(editor, rand, new Coord(x, 0, z));
 			if(settings != null){
 				IDungeon dungeon = new Dungeon();
-				dungeon.generate(world, settings, x, z);
+				dungeon.generate(editor, settings, x, z);
 				sender.addChatMessage(new ChatComponentText(TextFormat.apply("Success: Dungeon generated at " + Integer.toString(x) + " " + Integer.toString(z), TextFormat.GREEN)));
 				return;
 			}
 			
 			IDungeon dungeon = new Dungeon();
-			dungeon.generate(world, Dungeon.settingsResolver.getDefaultSettings(), x, z);
+			dungeon.generate(editor, Dungeon.settingsResolver.getDefaultSettings(), x, z);
 			sender.addChatMessage(new ChatComponentText(TextFormat.apply("Success: Dungeon generated at " + Integer.toString(x) + " " + Integer.toString(z), TextFormat.GREEN)));
 			return;
 		}
@@ -171,7 +172,7 @@ public class CommandSpawnDungeon extends CommandBase
 			}
 			
 			World world = sender.getEntityWorld();
-			Citadel.generate(world, x, z);
+			Citadel.generate(new WorldEditor(world), x, z);
 			return;
 		}
 		

@@ -9,39 +9,38 @@ import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
-import greymerk.roguelike.worldgen.WorldGenPrimitive;
-import net.minecraft.world.World;
+import greymerk.roguelike.worldgen.WorldEditor;
 
 public enum LevelGenerator {
 	
 	CLASSIC, MST;
 	
-	public static ILevelGenerator getGenerator(World world, Random rand, LevelGenerator type, IDungeonLevel level){
+	public static ILevelGenerator getGenerator(WorldEditor editor, Random rand, LevelGenerator type, IDungeonLevel level){
 			switch(type){
 			case CLASSIC:
-				return new LevelGeneratorClassic(world, rand, level);
+				return new LevelGeneratorClassic(editor, rand, level);
 			case MST:
-				return new LevelGeneratorMST(world, rand, level);
+				return new LevelGeneratorMST(editor, rand, level);
 			default:
-				return new LevelGeneratorClassic(world, rand, level);
+				return new LevelGeneratorClassic(editor, rand, level);
 			}
 	}
 	
-	public static void generateLevelLink(World world, Random rand, LevelSettings settings, Coord start, DungeonNode oldEnd) {
+	public static void generateLevelLink(WorldEditor editor, Random rand, LevelSettings settings, Coord start, DungeonNode oldEnd) {
 		
 		IDungeonRoom downstairs = new DungeonLinker();
-		downstairs.generate(world, rand, settings, Cardinal.directions, start);
+		downstairs.generate(editor, rand, settings, Cardinal.directions, start);
 		
 		if(oldEnd == null) return;
 		
 		IDungeonRoom upstairs = new DungeonLinkerTop();
-		upstairs.generate(world, rand, settings, oldEnd.getEntrances(), oldEnd.getPosition());
+		upstairs.generate(editor, rand, settings, oldEnd.getEntrances(), oldEnd.getPosition());
 		
 		MetaBlock stair = settings.getTheme().getPrimaryStair();
 		
 		Coord cursor = new Coord(start);
 		for (int i = 0; i < oldEnd.getPosition().getY() - start.getY(); i++){
-			WorldGenPrimitive.spiralStairStep(world, rand, cursor, stair, settings.getTheme().getPrimaryPillar());
+			editor.spiralStairStep(rand, cursor, stair, settings.getTheme().getPrimaryPillar());
 			cursor.add(Cardinal.UP);
 		}	
 	}

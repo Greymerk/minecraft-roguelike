@@ -9,11 +9,11 @@ import greymerk.roguelike.dungeon.base.IDungeonRoom;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
-import net.minecraft.world.World;
+import greymerk.roguelike.worldgen.WorldEditor;
 
 public class LevelGeneratorClassic implements ILevelGenerator{
 
-	private World world;
+	private WorldEditor editor;
 	private Random rand;
 	private IDungeonLevel level;
 
@@ -22,8 +22,8 @@ public class LevelGeneratorClassic implements ILevelGenerator{
 	private DungeonNode end;
 	
 	
-	public LevelGeneratorClassic(World world, Random rand, IDungeonLevel level){
-		this.world = world;
+	public LevelGeneratorClassic(WorldEditor editor, Random rand, IDungeonLevel level){
+		this.editor = editor;
 		this.rand = rand;
 		this.level = level;
 	
@@ -65,7 +65,7 @@ public class LevelGeneratorClassic implements ILevelGenerator{
 		} while(end == startDungeonNode || end.getPosition().distance(start) > (16 + attempts * 2));
 		
 		for(DungeonTunnel t : this.getTunnels()){
-			t.construct(world, rand, this.level.getSettings());
+			t.construct(editor, rand, this.level.getSettings());
 		}
 		
 		List<DungeonNode> nodes = this.getNodes();
@@ -84,16 +84,16 @@ public class LevelGeneratorClassic implements ILevelGenerator{
 
 			IDungeonRoom toGenerate = this.level.getSettings().getRooms().get(rand);
 			node.setDungeon(toGenerate);
-			toGenerate.generate(world, rand, this.level.getSettings(), node.getEntrances(), node.getPosition());
+			toGenerate.generate(editor, rand, this.level.getSettings(), node.getEntrances(), node.getPosition());
 		}
 		
 		for(DungeonTunnel tunnel : this.getTunnels()){			
 			for(Coord c : tunnel){
-				this.level.getSettings().getSegments().genSegment(world, rand, this.level, tunnel.getDirection(), c);
+				this.level.getSettings().getSegments().genSegment(editor, rand, this.level, tunnel.getDirection(), c);
 			}
 		}
 		
-		LevelGenerator.generateLevelLink(world, rand, this.level.getSettings(), start, oldEnd);
+		LevelGenerator.generateLevelLink(editor, rand, this.level.getSettings(), start, oldEnd);
 
 	}
 	
