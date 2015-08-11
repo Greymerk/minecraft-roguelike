@@ -17,8 +17,9 @@ public class SettingsRooms extends DungeonSettings{
 				factory = new DungeonFactory();
 				factory.addSingle(DungeonRoom.CAKE);
 				factory.addSingle(DungeonRoom.FIRE);
-				factory.addRandom(DungeonRoom.BRICK, 10);
-				factory.addRandom(DungeonRoom.CORNER, 3);
+				factory.addSingle(DungeonRoom.PRISON);
+				factory.addRandom(DungeonRoom.BRICK, 5);
+				factory.addRandom(DungeonRoom.CORNER, 2);
 				break;
 			case 1:
 				factory = new DungeonFactory();

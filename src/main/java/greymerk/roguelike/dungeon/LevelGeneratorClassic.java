@@ -43,7 +43,6 @@ public class LevelGeneratorClassic implements ILevelGenerator{
 		
 		for(Node n : gNodes){
 			n.cull();
-			
 		}
 		
 		DungeonNode startDungeonNode = null;
@@ -124,10 +123,6 @@ public class LevelGeneratorClassic implements ILevelGenerator{
 	
 	public void spawnNode(List<Node> nodes, Tunneler tunneler){		
 		Node toAdd = new Node(this, this.level.getSettings(), tunneler.getDirection(), tunneler.getPosition());
-		
-		if(this.level.inRange(toAdd.getPos())){
-			toAdd.spawnTunnelers();
-		}
 		
 		nodes.add(toAdd);
 	}
@@ -234,9 +229,14 @@ public class LevelGeneratorClassic implements ILevelGenerator{
 		}
 		
 		private void spawnTunnelers(){
+			
+			if(!this.level.level.inRange(pos)){
+				return;
+			}
+			
 			for(Cardinal dir : Cardinal.directions){
 				
-				if (dir.equals(this.direction)){
+				if (dir.equals(Cardinal.reverse(this.direction))){
 					continue;
 				}
 				
@@ -267,6 +267,7 @@ public class LevelGeneratorClassic implements ILevelGenerator{
 		
 		public Cardinal[] getEntrances(){
 			List<Cardinal> c = new ArrayList<Cardinal>();
+			c.add(Cardinal.reverse(this.direction));
 			for(Tunneler t : this.tunnelers){
 				c.add(t.dir);
 			}

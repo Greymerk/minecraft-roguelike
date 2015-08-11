@@ -11,6 +11,7 @@ import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.blocks.ColorBlock;
 import net.minecraft.init.Blocks;
 
 public class DungeonTunnel implements Iterable<Coord>{

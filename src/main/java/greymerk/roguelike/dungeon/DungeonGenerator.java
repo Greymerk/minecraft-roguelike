@@ -7,7 +7,6 @@ import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.dungeon.towers.Tower;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.WorldEditor;
-import net.minecraft.init.Blocks;
 
 public class DungeonGenerator {
 	public static final int VERTICAL_SPACING = 10;
