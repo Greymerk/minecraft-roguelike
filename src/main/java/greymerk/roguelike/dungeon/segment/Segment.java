@@ -2,7 +2,7 @@ package greymerk.roguelike.dungeon.segment;
 
 import greymerk.roguelike.dungeon.segment.part.SegmentAnkh;
 import greymerk.roguelike.dungeon.segment.part.SegmentArch;
-import greymerk.roguelike.dungeon.segment.part.SegmentArrowTrap;
+import greymerk.roguelike.dungeon.segment.part.SegmentTrap;
 import greymerk.roguelike.dungeon.segment.part.SegmentBooks;
 import greymerk.roguelike.dungeon.segment.part.SegmentCave;
 import greymerk.roguelike.dungeon.segment.part.SegmentChest;
@@ -74,7 +74,7 @@ public enum Segment {
 		case SEWERDRAIN: return new SegmentSewerDrain();
 		case MINESHAFT: return new SegmentMineShaft();
 		case LAMP: return new SegmentLamp();
-		case ARROW: return new SegmentArrowTrap();
+		case ARROW: return new SegmentTrap();
 		case SQUAREARCH: return new SegmentSquareArch();
 		case CELL: return new SegmentPrisonCell();
 		}

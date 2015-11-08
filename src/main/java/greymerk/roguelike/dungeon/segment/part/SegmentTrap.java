@@ -4,6 +4,7 @@ import java.util.Random;
 
 import greymerk.roguelike.dungeon.IDungeonLevel;
 import greymerk.roguelike.theme.ITheme;
+import greymerk.roguelike.treasure.loot.Potion;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
@@ -15,7 +16,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
-public class SegmentArrowTrap extends SegmentBase{
+public class SegmentTrap extends SegmentBase{
 
 	@Override
 	protected void genWall(WorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
@@ -79,9 +80,23 @@ public class SegmentArrowTrap extends SegmentBase{
 		Torch.generate(editor, Torch.REDSTONE, Cardinal.UP, cursor);
 		cursor.add(Cardinal.UP);
 		Dispenser.generate(editor, Cardinal.reverse(dir), cursor);
-		for(int i = 0; i <= 3; i++){
-			ItemStack arrows = new ItemStack(Items.arrow, rand.nextInt(4) + 1);
-			Dispenser.add(editor, cursor, rand.nextInt(9), arrows);
+		
+		boolean tnt = rand.nextBoolean();
+		
+		for(int i = 0; i < 5; i++){
+			Dispenser.add(editor, cursor, rand.nextInt(9), new ItemStack(Items.arrow, rand.nextInt(4) + 1));
+		}
+		
+		Dispenser.add(editor, cursor, 5, getPayload(rand));
+	}
+	
+	private ItemStack getPayload(Random rand){
+		
+		switch(rand.nextInt(3)){
+		case 0: return new ItemStack(Blocks.tnt);
+		case 1: return Potion.getSpecific(rand, Potion.POISON, false, false, true);
+		case 2: return Potion.getSpecific(rand, Potion.HARM, false, false, true);
+		default: return new ItemStack(Blocks.tnt);
 		}
 	}
 }

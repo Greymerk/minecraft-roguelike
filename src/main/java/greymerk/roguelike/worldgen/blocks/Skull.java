@@ -45,12 +45,17 @@ public enum Skull {
 	}
 	
 	public static void setRotation(Random rand, TileEntitySkull skull, Cardinal dir){
+		
 		int directionValue = getDirectionValue(dir);
 		
+		// nudge the skull so that it isn't perfectly aligned.
 		directionValue += -1 + rand.nextInt(3);
+		
+		// make sure the skull direction value is less than 16
 		directionValue = directionValue % 16;
 		
 		skull.setSkullRotation(directionValue);
+		
 	}
 	
 	public static int getSkullId(Skull type){

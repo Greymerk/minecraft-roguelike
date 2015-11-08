@@ -267,8 +267,6 @@ public class DungeonsPrison extends DungeonBase {
 	
 	private void pillar(WorldEditor editor, Random rand, LevelSettings settings, Coord origin, int height){
 		Coord cursor;
-		Coord start;
-		Coord end;
 		IBlockFactory pillar = settings.getTheme().getPrimaryPillar();
 		MetaBlock stair = settings.getTheme().getPrimaryStair();
 		
@@ -284,8 +282,6 @@ public class DungeonsPrison extends DungeonBase {
 	}
 	
 	private void cell(WorldEditor editor, Random rand, LevelSettings settings, Coord origin, List<Cardinal> entrances){
-		
-		
 		
 		Coord start;
 		Coord end;

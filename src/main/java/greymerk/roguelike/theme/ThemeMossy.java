@@ -10,22 +10,37 @@ public class ThemeMossy extends ThemeBase{
 
 	public ThemeMossy(){
 	
-		BlockWeightedRandom walls = new BlockWeightedRandom();
-		walls.addBlock(new MetaBlock(Blocks.cobblestone), 100);
-		walls.addBlock(new MetaBlock(Blocks.mossy_cobblestone), 30);
-		
+		MetaBlock mossBrick = new MetaBlock(Blocks.stonebrick);
+		mossBrick.withProperty(BlockStoneBrick.VARIANT_PROP, BlockStoneBrick.EnumType.MOSSY);
+		MetaBlock mossy = new MetaBlock(Blocks.mossy_cobblestone);
+		MetaBlock cobble = new MetaBlock(Blocks.cobblestone);
 		MetaBlock egg = new MetaBlock(Blocks.monster_egg);
-		egg.withProperty(BlockSilverfish.VARIANT_PROP, BlockSilverfish.EnumType.COBBLESTONE);
-		walls.addBlock(egg, 5);
+		MetaBlock gravel = new MetaBlock(Blocks.gravel);
 		
-		MetaBlock mossy = new MetaBlock(Blocks.stonebrick);
-		mossy.withProperty(BlockStoneBrick.VARIANT_PROP, BlockStoneBrick.EnumType.MOSSY);
+		egg.withProperty(BlockSilverfish.VARIANT_PROP, BlockSilverfish.EnumType.COBBLESTONE);
+		
+		BlockWeightedRandom walls = new BlockWeightedRandom();
+		walls.addBlock(cobble, 60);
+		walls.addBlock(mossBrick, 30);
+		walls.addBlock(egg, 5);
 		walls.addBlock(mossy, 10);
-		walls.addBlock(new MetaBlock(Blocks.gravel), 15);
+		walls.addBlock(gravel, 15);
+		
+		BlockWeightedRandom pillar = new BlockWeightedRandom();
+		pillar.addBlock(mossBrick, 20);
+		pillar.addBlock(cobble, 5);
+		pillar.addBlock(egg, 3);
+		pillar.addBlock(mossy, 5);
+		
+		BlockWeightedRandom floor = new BlockWeightedRandom();
+		floor.addBlock(mossy, 10);
+		floor.addBlock(mossBrick, 4);
+		floor.addBlock(cobble, 2);
+		floor.addBlock(gravel, 1);
 		
 		MetaBlock stair = new MetaBlock(Blocks.stone_stairs);
 		
-		this.primary = new BlockSet(walls, stair, walls);
+		this.primary = new BlockSet(floor, walls, stair, walls);
 		this.secondary = this.primary;
 	}
 }
