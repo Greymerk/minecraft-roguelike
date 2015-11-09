@@ -6,6 +6,7 @@ import greymerk.roguelike.dungeon.IDungeonLevel;
 import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
+import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
 import net.minecraft.init.Blocks;
@@ -18,7 +19,7 @@ public class SegmentSewer extends SegmentBase {
 		
 		MetaBlock air = new MetaBlock(Blocks.air);
 		MetaBlock water = new MetaBlock(Blocks.flowing_water);
-		MetaBlock stair = theme.getSecondaryStair();
+		IStair stair = theme.getSecondaryStair();
 
 		Coord start;
 		Coord end;
@@ -31,7 +32,7 @@ public class SegmentSewer extends SegmentBase {
 		end = new Coord(start);
 		start.add(orth[0]);
 		end.add(orth[1]);
-		WorldEditor.blockOrientation(stair, Cardinal.reverse(dir), true);
+		stair.setOrientation(Cardinal.reverse(dir), true);
 		editor.fillRectSolid(rand, start, end, stair, true, true);
 		
 		start = new Coord(x, y, z);

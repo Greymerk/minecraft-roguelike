@@ -12,8 +12,11 @@ import greymerk.roguelike.treasure.loot.provider.ItemFood;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
+import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
+import greymerk.roguelike.worldgen.MetaStair;
 import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.blocks.StairType;
 import net.minecraft.block.BlockColored;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumDyeColor;
@@ -25,7 +28,7 @@ import net.minecraft.tileentity.TileEntityChest;
 public class DungeonAshlea extends DungeonBase {
 
 	IBlockFactory plank;
-	MetaBlock stairSpruce;
+	IStair stair;
 	IBlockFactory log;
 	
 	
@@ -39,7 +42,7 @@ public class DungeonAshlea extends DungeonBase {
 		ITheme theme = settings.getTheme();
 		
 		plank = theme.getSecondaryWall();
-		stairSpruce = theme.getSecondaryStair();
+		stair = theme.getSecondaryStair();
 		log = theme.getSecondaryPillar();
 		MetaBlock air = new MetaBlock(Blocks.air);
 		
@@ -48,11 +51,11 @@ public class DungeonAshlea extends DungeonBase {
 
 		// ceiling
 		editor.fillRectSolid(rand, x - 6, y + 3, z - 6, x + 6, y + 4, z + 6, plank, true, true);
-		editor.fillRectSolid(rand, x - 4, y + 3, z - 2, x + 4, y + 3, z - 2, WorldEditor.blockOrientation(stairSpruce, Cardinal.SOUTH, true), true, true);
-		editor.fillRectSolid(rand, x - 4, y + 3, z + 2, x + 4, y + 3, z + 2, WorldEditor.blockOrientation(stairSpruce, Cardinal.NORTH, true), true, true);
+		editor.fillRectSolid(rand, x - 4, y + 3, z - 2, x + 4, y + 3, z - 2, stair.setOrientation(Cardinal.SOUTH, true), true, true);
+		editor.fillRectSolid(rand, x - 4, y + 3, z + 2, x + 4, y + 3, z + 2, stair.setOrientation(Cardinal.NORTH, true), true, true);
 		
-		editor.fillRectSolid(rand, x - 2, y + 3, z - 4, x - 2, y + 3, z + 4, WorldEditor.blockOrientation(stairSpruce, Cardinal.EAST, true), true, true);
-		editor.fillRectSolid(rand, x + 2, y + 3, z - 4, x + 2, y + 3, z + 4, WorldEditor.blockOrientation(stairSpruce, Cardinal.WEST, true), true, true);
+		editor.fillRectSolid(rand, x - 2, y + 3, z - 4, x - 2, y + 3, z + 4, stair.setOrientation(Cardinal.EAST, true), true, true);
+		editor.fillRectSolid(rand, x + 2, y + 3, z - 4, x + 2, y + 3, z + 4, stair.setOrientation(Cardinal.WEST, true), true, true);
 		
 		editor.fillRectSolid(rand, x - 1, y + 3, z - 4, x + 1, y + 3, z + 4, air);
 		editor.fillRectSolid(rand, x - 4, y + 3, z - 1, x + 4, y + 3, z + 1, air);
@@ -101,32 +104,32 @@ public class DungeonAshlea extends DungeonBase {
 	private void stove(WorldEditor editor, Random rand, int x, int y, int z){
 		
 		MetaBlock brick = new MetaBlock(Blocks.brick_block);
-		MetaBlock stair = new MetaBlock(Blocks.brick_stairs);
+		IStair stair = new MetaStair(StairType.BRICK);
 		
 		// floor
 		
 		// fire pit
 		editor.fillRectSolid(rand, x - 1, y - 1, z - 4, x + 2, y - 1, z + 1, brick);
 		editor.fillRectSolid(rand, x - 1, y, z - 4, x + 1, y + 2, z - 3, brick);
-		editor.setBlock(rand, x - 1, y, z - 2, WorldEditor.blockOrientation(stair, Cardinal.EAST, false), true, true);
-		editor.setBlock(rand, x - 1, y + 1, z - 2, WorldEditor.blockOrientation(stair, Cardinal.EAST, true), true, true);
+		editor.setBlock(rand, x - 1, y, z - 2, stair.setOrientation(Cardinal.EAST, false), true, true);
+		editor.setBlock(rand, x - 1, y + 1, z - 2, stair.setOrientation(Cardinal.EAST, true), true, true);
 		
-		editor.setBlock(rand, x + 1, y, z - 2, WorldEditor.blockOrientation(stair, Cardinal.WEST, false), true, true);
-		editor.setBlock(rand, x + 1, y + 1, z - 2, WorldEditor.blockOrientation(stair, Cardinal.WEST, true), true, true);
+		editor.setBlock(rand, x + 1, y, z - 2, stair.setOrientation(Cardinal.WEST, false), true, true);
+		editor.setBlock(rand, x + 1, y + 1, z - 2, stair.setOrientation(Cardinal.WEST, true), true, true);
 		
 		editor.fillRectSolid(rand, x - 1, y + 2, z - 2, x + 1, y + 2, z - 2, brick);
-		editor.fillRectSolid(rand, x - 1, y + 2, z - 1, x + 2, y + 2, z - 1, WorldEditor.blockOrientation(stair, Cardinal.SOUTH, true), true, true);
+		editor.fillRectSolid(rand, x - 1, y + 2, z - 1, x + 2, y + 2, z - 1, stair.setOrientation(Cardinal.SOUTH, true), true, true);
 		
 		editor.setBlock(x, y - 1, z - 3, Blocks.netherrack);
 		editor.setBlock(x, y, z - 3, Blocks.fire);
-		editor.setBlock(rand, x, y + 1, z - 3, WorldEditor.blockOrientation(stair, Cardinal.SOUTH, true), true, true);
+		editor.setBlock(rand, x, y + 1, z - 3, stair.setOrientation(Cardinal.SOUTH, true), true, true);
 
 		// furnace
 		editor.fillRectSolid(rand, x + 2, y, z - 1, x + 2, y + 2, z + 1, brick);
-		editor.fillRectSolid(rand, x + 1, y + 2, z - 1, x + 1, y + 2, z + 1, WorldEditor.blockOrientation(stair, Cardinal.WEST, true), true, true);
+		editor.fillRectSolid(rand, x + 1, y + 2, z - 1, x + 1, y + 2, z + 1, stair.setOrientation(Cardinal.WEST, true), true, true);
 		
 		editor.setBlock(x + 2, y, z, Blocks.furnace);
-		editor.setBlock(rand, x + 2, y + 1, z, WorldEditor.blockOrientation(stair, Cardinal.WEST, true), true, true);
+		editor.setBlock(rand, x + 2, y + 1, z, stair.setOrientation(Cardinal.WEST, true), true, true);
 		
 		// ceiling
 		editor.fillRectSolid(rand, x - 1, y + 3, z - 1, x + 1, y + 3, z + 1, brick);
@@ -137,14 +140,14 @@ public class DungeonAshlea extends DungeonBase {
 		editor.fillRectSolid(rand, x - 1, y - 1, z - 1, x + 1, y - 1, z + 1, plank, true, true);
 		
 		// benches
-		editor.fillRectSolid(rand, x - 1, y, z - 2, x + 1, y, z - 2, WorldEditor.blockOrientation(stairSpruce, Cardinal.SOUTH, false), true, true);
-		editor.fillRectSolid(rand, x - 2, y, z - 1, x - 2, y, z + 1, WorldEditor.blockOrientation(stairSpruce, Cardinal.EAST, false), true, true);
+		editor.fillRectSolid(rand, x - 1, y, z - 2, x + 1, y, z - 2, stair.setOrientation(Cardinal.SOUTH, false), true, true);
+		editor.fillRectSolid(rand, x - 2, y, z - 1, x - 2, y, z + 1, stair.setOrientation(Cardinal.EAST, false), true, true);
 		
 		// table
-		editor.setBlock(rand, x, y, z, WorldEditor.blockOrientation(stairSpruce, Cardinal.NORTH, true), true, true);
-		editor.setBlock(rand, x + 1, y, z, WorldEditor.blockOrientation(stairSpruce, Cardinal.EAST, true), true, true);
-		editor.setBlock(rand, x + 1, y, z + 1, WorldEditor.blockOrientation(stairSpruce, Cardinal.SOUTH, true), true, true);
-		editor.setBlock(rand, x, y, z + 1, WorldEditor.blockOrientation(stairSpruce, Cardinal.WEST, true), true, true);
+		editor.setBlock(rand, x, y, z, stair.setOrientation(Cardinal.NORTH, true), true, true);
+		editor.setBlock(rand, x + 1, y, z, stair.setOrientation(Cardinal.EAST, true), true, true);
+		editor.setBlock(rand, x + 1, y, z + 1, stair.setOrientation(Cardinal.SOUTH, true), true, true);
+		editor.setBlock(rand, x, y, z + 1, stair.setOrientation(Cardinal.WEST, true), true, true);
 		editor.setBlock(x, y + 1, z, Blocks.torch);
 	}
 
@@ -153,14 +156,14 @@ public class DungeonAshlea extends DungeonBase {
 		editor.fillRectSolid(rand, x - 1, y - 1, z - 1, x + 1, y - 1, z + 1, plank, true, true);
 		
 		// benches
-		editor.fillRectSolid(rand, x - 1, y, z + 2, x + 1, y, z + 2, WorldEditor.blockOrientation(stairSpruce, Cardinal.NORTH, false), true, true);
-		editor.fillRectSolid(rand, x - 2, y, z - 1, x - 2, y, z + 1, WorldEditor.blockOrientation(stairSpruce, Cardinal.EAST, false), true, true);
+		editor.fillRectSolid(rand, x - 1, y, z + 2, x + 1, y, z + 2, stair.setOrientation(Cardinal.NORTH, false), true, true);
+		editor.fillRectSolid(rand, x - 2, y, z - 1, x - 2, y, z + 1, stair.setOrientation(Cardinal.EAST, false), true, true);
 		
 		// table
-		editor.setBlock(rand, x, y, z - 1, WorldEditor.blockOrientation(stairSpruce, Cardinal.NORTH, true), true, true);
-		editor.setBlock(rand, x + 1, y, z - 1, WorldEditor.blockOrientation(stairSpruce, Cardinal.EAST, true), true, true);
-		editor.setBlock(rand, x + 1, y, z, WorldEditor.blockOrientation(stairSpruce, Cardinal.SOUTH, true), true, true);
-		editor.setBlock(rand, x, y, z, WorldEditor.blockOrientation(stairSpruce, Cardinal.WEST, true), true, true);
+		editor.setBlock(rand, x, y, z - 1, stair.setOrientation(Cardinal.NORTH, true), true, true);
+		editor.setBlock(rand, x + 1, y, z - 1, stair.setOrientation(Cardinal.EAST, true), true, true);
+		editor.setBlock(rand, x + 1, y, z, stair.setOrientation(Cardinal.SOUTH, true), true, true);
+		editor.setBlock(rand, x, y, z, stair.setOrientation(Cardinal.WEST, true), true, true);
 		editor.setBlock(x, y + 1, z, Blocks.torch);
 				
 	}
@@ -171,30 +174,30 @@ public class DungeonAshlea extends DungeonBase {
 		editor.fillRectSolid(rand, x - 1, y - 1, z - 1, x + 1, y - 1, z + 1, plank, true, true);
 		
 		// east shelf
-		editor.setBlock(rand, x + 2, y, z - 1, WorldEditor.blockOrientation(stairSpruce, Cardinal.SOUTH, true), true, true);
-		editor.setBlock(rand, x + 2, y, z, WorldEditor.blockOrientation(stairSpruce, Cardinal.WEST, true), true, true);
-		editor.setBlock(rand, x + 2, y, z + 1, WorldEditor.blockOrientation(stairSpruce, Cardinal.NORTH, true), true, true);
+		editor.setBlock(rand, x + 2, y, z - 1, stair.setOrientation(Cardinal.SOUTH, true), true, true);
+		editor.setBlock(rand, x + 2, y, z, stair.setOrientation(Cardinal.WEST, true), true, true);
+		editor.setBlock(rand, x + 2, y, z + 1, stair.setOrientation(Cardinal.NORTH, true), true, true);
 		new TreasureChestAshlea().generate(editor, rand, loot, new Coord(x + 2, y + 1, z), 1, false);
 		
 		// south shelf
-		editor.setBlock(rand, x - 1, y, z + 2, WorldEditor.blockOrientation(stairSpruce, Cardinal.EAST, true), true, true);
-		editor.setBlock(rand, x, y, z + 2, WorldEditor.blockOrientation(stairSpruce, Cardinal.NORTH, true), true, true);
-		editor.setBlock(rand, x + 1, y, z + 2, WorldEditor.blockOrientation(stairSpruce, Cardinal.WEST, true), true, true);
+		editor.setBlock(rand, x - 1, y, z + 2, stair.setOrientation(Cardinal.EAST, true), true, true);
+		editor.setBlock(rand, x, y, z + 2, stair.setOrientation(Cardinal.NORTH, true), true, true);
+		editor.setBlock(rand, x + 1, y, z + 2, stair.setOrientation(Cardinal.WEST, true), true, true);
 		new TreasureChestAshlea().generate(editor, rand, loot, new Coord(x, y + 1, z + 2), 1, false);
 	}
 	
 	private static void pillar(WorldEditor editor, Random rand, ITheme theme, int x, int y, int z){
 		
-		MetaBlock stair = theme.getSecondaryStair();
+		IStair stair = theme.getSecondaryStair();
 		IBlockFactory pillar = theme.getSecondaryPillar();
 		IBlockFactory wall = theme.getSecondaryWall();
 		
 		editor.fillRectSolid(rand, x, y, z, x, y + 1, z, pillar, true, true);
 		editor.setBlock(rand, x, y + 2, z, wall, true, true);
-		editor.setBlock(rand, x + 1, y + 2, z, WorldEditor.blockOrientation(stair, Cardinal.EAST, true), true, true);
-		editor.setBlock(rand, x - 1, y + 2, z, WorldEditor.blockOrientation(stair, Cardinal.WEST, true), true, true);
-		editor.setBlock(rand, x, y + 2, z + 1, WorldEditor.blockOrientation(stair, Cardinal.SOUTH, true), true, true);
-		editor.setBlock(rand, x, y + 2, z - 1, WorldEditor.blockOrientation(stair, Cardinal.NORTH, true), true, true);
+		editor.setBlock(rand, x + 1, y + 2, z, stair.setOrientation(Cardinal.EAST, true), true, true);
+		editor.setBlock(rand, x - 1, y + 2, z, stair.setOrientation(Cardinal.WEST, true), true, true);
+		editor.setBlock(rand, x, y + 2, z + 1, stair.setOrientation(Cardinal.SOUTH, true), true, true);
+		editor.setBlock(rand, x, y + 2, z - 1, stair.setOrientation(Cardinal.NORTH, true), true, true);
 		editor.fillRectSolid(rand, x - 1, y + 3, z - 1, x + 1, y + 3, z + 1, wall, true, true);
 		
 	}

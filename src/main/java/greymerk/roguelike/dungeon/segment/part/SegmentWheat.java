@@ -7,6 +7,7 @@ import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.worldgen.BlockJumble;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
+import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
 import net.minecraft.block.BlockPumpkin;
@@ -63,14 +64,14 @@ public class SegmentWheat extends SegmentBase {
 		pumpkin.withProperty(BlockPumpkin.FACING, Cardinal.getFacing(Cardinal.reverse(dir)));
 		pumpkin.setBlock(editor, cursor);
 		
+		IStair stair = theme.getSecondaryStair();
 		
 		for(Cardinal d : orth){
 			cursor = new Coord(x, y, z);
 			cursor.add(dir, 2);
 			cursor.add(d, 1);
-			cursor.add(Cardinal.UP, 1);
-			MetaBlock stair = theme.getSecondaryStair();
-			WorldEditor.blockOrientation(stair, Cardinal.reverse(d), true);
+			cursor.add(Cardinal.UP, 1);	
+			stair.setOrientation(Cardinal.reverse(d), true);
 			editor.setBlock(rand, cursor, stair, true, true);
 		}
 	}

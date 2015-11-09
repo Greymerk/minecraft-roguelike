@@ -13,6 +13,7 @@ import greymerk.roguelike.treasure.TreasureChest;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
+import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
 import net.minecraft.init.Blocks;
@@ -97,8 +98,8 @@ public class DungeonStorage extends DungeonBase {
 				cursor = new Coord(x, y, z);
 				cursor.add(dir, 6);
 				cursor.add(orth, 3);
-				MetaBlock step = theme.getSecondaryStair();
-				WorldEditor.blockOrientation(step, Cardinal.reverse(dir), true);
+				IStair step = theme.getSecondaryStair();
+				step.setOrientation(Cardinal.reverse(dir), true);
 				editor.setBlock(rand, cursor, step, true, true);
 				cursor.add(orth, 1);
 				editor.setBlock(rand, cursor, step, true, true);
@@ -140,9 +141,9 @@ public class DungeonStorage extends DungeonBase {
 	}
 
 	private static void pillarTop(WorldEditor editor, Random rand, ITheme theme, Coord cursor){
-		MetaBlock step = theme.getSecondaryStair();
+		IStair step = theme.getSecondaryStair();
 		for(Cardinal dir : Cardinal.directions){
-			WorldEditor.blockOrientation(step, dir, true);
+			step.setOrientation(dir, true);
 			cursor.add(dir, 1);
 			editor.setBlock(rand, cursor, step, true, false);
 			cursor.add(Cardinal.reverse(dir), 1);

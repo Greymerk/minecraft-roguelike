@@ -7,6 +7,7 @@ import greymerk.roguelike.worldgen.BlockStripes;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
+import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
 import net.minecraft.init.Blocks;
@@ -46,16 +47,16 @@ public class JungleTower implements ITower{
 		
 		editor.fillRectSolid(rand, start, end, theme.getPrimaryWall(), true, true);
 		
-		MetaBlock stair = theme.getPrimaryStair();
+		IStair stair = theme.getPrimaryStair();
 		
 		BlockStripes nsStairs = new BlockStripes();
-		nsStairs.addBlock(new MetaBlock(WorldEditor.blockOrientation(stair, Cardinal.NORTH, false)));
-		nsStairs.addBlock(new MetaBlock(WorldEditor.blockOrientation(stair, Cardinal.SOUTH, false)));
+		nsStairs.addBlock(new MetaBlock(stair.setOrientation(Cardinal.NORTH, false)));
+		nsStairs.addBlock(new MetaBlock(stair.setOrientation(Cardinal.SOUTH, false)));
 
 		
 		BlockStripes ewStairs = new BlockStripes();
-		ewStairs.addBlock(new MetaBlock(WorldEditor.blockOrientation(stair, Cardinal.EAST, false)));
-		ewStairs.addBlock(new MetaBlock(WorldEditor.blockOrientation(stair, Cardinal.WEST, false)));
+		ewStairs.addBlock(new MetaBlock(stair.setOrientation(Cardinal.EAST, false)));
+		ewStairs.addBlock(new MetaBlock(stair.setOrientation(Cardinal.WEST, false)));
 		
 		for (Cardinal dir : Cardinal.directions){
 			
@@ -93,7 +94,7 @@ public class JungleTower implements ITower{
 		
 		IBlockFactory blocks = theme.getPrimaryWall();
 		IBlockFactory pillar = theme.getPrimaryPillar();
-		MetaBlock stair = theme.getPrimaryStair();
+		IStair stair = theme.getPrimaryStair();
 		MetaBlock air = new MetaBlock(Blocks.air);
 		
 		start = new Coord(origin);
@@ -139,13 +140,13 @@ public class JungleTower implements ITower{
 				Coord temp = new Coord(cursor);
 				
 				cursor.add(o);
-				WorldEditor.blockOrientation(stair, o, false).setBlock(editor, cursor);
+				stair.setOrientation(o, false).setBlock(editor, cursor);
 				cursor.add(o);
-				WorldEditor.blockOrientation(stair, Cardinal.reverse(o), false).setBlock(editor, cursor);
+				stair.setOrientation(Cardinal.reverse(o), false).setBlock(editor, cursor);
 				cursor.add(Cardinal.UP);
-				WorldEditor.blockOrientation(stair, Cardinal.reverse(o), true).setBlock(editor, cursor);
+				stair.setOrientation(Cardinal.reverse(o), true).setBlock(editor, cursor);
 				cursor.add(Cardinal.reverse(o));
-				WorldEditor.blockOrientation(stair, o, true).setBlock(editor, cursor);
+				stair.setOrientation(o, true).setBlock(editor, cursor);
 				cursor.add(Cardinal.UP);
 				blocks.setBlock(editor, rand, cursor);
 				cursor.add(o);
@@ -153,25 +154,25 @@ public class JungleTower implements ITower{
 				
 				cursor = new Coord(temp);
 				cursor.add(Cardinal.reverse(dir));
-				WorldEditor.blockOrientation(stair, Cardinal.reverse(dir), false).setBlock(editor, cursor);
+				stair.setOrientation(Cardinal.reverse(dir), false).setBlock(editor, cursor);
 				cursor.add(o);
-				WorldEditor.blockOrientation(stair, o, false).setBlock(editor, cursor);
+				stair.setOrientation(o, false).setBlock(editor, cursor);
 				cursor.add(o);
-				WorldEditor.blockOrientation(stair, Cardinal.reverse(o), false).setBlock(editor, cursor);
+				stair.setOrientation(Cardinal.reverse(o), false).setBlock(editor, cursor);
 				cursor.add(Cardinal.UP);
-				WorldEditor.blockOrientation(stair, Cardinal.reverse(o), true).setBlock(editor, cursor);
+				stair.setOrientation(Cardinal.reverse(o), true).setBlock(editor, cursor);
 				cursor.add(Cardinal.UP);
 				pillar.setBlock(editor, rand, cursor);
 				cursor.add(Cardinal.reverse(o));
-				WorldEditor.blockOrientation(stair, Cardinal.reverse(dir), true).setBlock(editor, cursor);
+				stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
 				cursor.add(Cardinal.reverse(o));
-				WorldEditor.blockOrientation(stair, Cardinal.reverse(dir), true).setBlock(editor, cursor);
+				stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
 				cursor.add(Cardinal.reverse(o));
-				WorldEditor.blockOrientation(stair, Cardinal.reverse(dir), true).setBlock(editor, cursor);
+				stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
 				cursor.add(dir);
-				WorldEditor.blockOrientation(stair, Cardinal.reverse(o), true).setBlock(editor, cursor);
+				stair.setOrientation(Cardinal.reverse(o), true).setBlock(editor, cursor);
 				cursor.add(dir);
-				WorldEditor.blockOrientation(stair, Cardinal.reverse(o), true).setBlock(editor, cursor);
+				stair.setOrientation(Cardinal.reverse(o), true).setBlock(editor, cursor);
 				
 				start = new Coord(origin);
 				start.add(dir, 6);
@@ -199,7 +200,7 @@ public class JungleTower implements ITower{
 		Coord start;
 		Coord end;
 		
-		MetaBlock stair = theme.getPrimaryStair();
+		IStair stair = theme.getPrimaryStair();
 		IBlockFactory blocks = theme.getPrimaryWall();
 		
 		Cardinal[] orth = Cardinal.getOrthogonal(dir);
@@ -215,7 +216,7 @@ public class JungleTower implements ITower{
 		end = new Coord(origin);
 		start.add(orth[0]);
 		end.add(orth[1]);
-		WorldEditor.blockOrientation(stair, dir, false);
+		stair.setOrientation(dir, false);
 		editor.fillRectSolid(rand, start, end, stair, true, true);
 		
 		origin.add(Cardinal.DOWN);

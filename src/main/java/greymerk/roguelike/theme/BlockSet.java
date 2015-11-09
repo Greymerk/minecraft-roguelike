@@ -1,27 +1,29 @@
 package greymerk.roguelike.theme;
 
-import greymerk.roguelike.worldgen.BlockFactory;
-import greymerk.roguelike.worldgen.IBlockFactory;
-import greymerk.roguelike.worldgen.MetaBlock;
-
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+
+import greymerk.roguelike.worldgen.BlockFactory;
+import greymerk.roguelike.worldgen.IBlockFactory;
+import greymerk.roguelike.worldgen.IStair;
+import greymerk.roguelike.worldgen.MetaBlock;
+import greymerk.roguelike.worldgen.MetaStair;
 
 public class BlockSet implements IBlockSet {
 
 	private IBlockFactory floor;
 	private IBlockFactory fill;
-	private MetaBlock stair;
+	private IStair stair;
 	private IBlockFactory pillar;
 	
-	public BlockSet(IBlockFactory floor, IBlockFactory fill, MetaBlock stair, IBlockFactory pillar){
+	public BlockSet(IBlockFactory floor, IBlockFactory fill, IStair stair, IBlockFactory pillar){
 		this.floor = floor;
 		this.fill = fill;
 		this.stair = stair;
 		this.pillar = pillar;
 	}
 	
-	public BlockSet(IBlockFactory fill, MetaBlock stair, IBlockFactory pillar){
+	public BlockSet(IBlockFactory fill, IStair stair, IBlockFactory pillar){
 		this.floor = fill;
 		this.fill = fill;		
 		this.stair = stair;
@@ -48,7 +50,7 @@ public class BlockSet implements IBlockSet {
 		type = stair.get("type").getAsString();
 		if(!type.equals(BlockFactory.METABLOCK.name()));
 		data = stair.get("data").getAsJsonObject();
-		this.stair = new MetaBlock(data);
+		this.stair = new MetaStair(new MetaBlock(data));
 		
 		JsonObject pillar = json.get("pillar").getAsJsonObject();
 		type = pillar.get("type").getAsString();
@@ -62,8 +64,8 @@ public class BlockSet implements IBlockSet {
 	}
 
 	@Override
-	public MetaBlock getStair() {
-		return new MetaBlock(stair);
+	public IStair getStair() {
+		return stair;
 	}
 
 	@Override

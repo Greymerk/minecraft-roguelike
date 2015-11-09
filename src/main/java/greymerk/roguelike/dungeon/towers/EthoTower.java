@@ -6,6 +6,7 @@ import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
+import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
 import net.minecraft.init.Blocks;
@@ -18,7 +19,7 @@ public class EthoTower implements ITower {
 		IBlockFactory primary = theme.getPrimaryWall();
 		IBlockFactory pillar = theme.getSecondaryPillar();
 		
-		MetaBlock stair = theme.getSecondaryStair();
+		IStair stair = theme.getSecondaryStair();
 		
 		Coord floor = Tower.getBaseCoord(editor, x, y, z);
 		
@@ -64,34 +65,34 @@ public class EthoTower implements ITower {
 				editor.fillRectSolid(rand, start, end, pillar, true, true);
 				
 				end.add(Cardinal.UP);
-				WorldEditor.blockOrientation(stair, dir, false).setBlock(editor, end);
+				stair.setOrientation(dir, false).setBlock(editor, end);
 				
 				end.add(Cardinal.reverse(dir));
 				end.add(Cardinal.reverse(o));
-				WorldEditor.blockOrientation(stair, Cardinal.reverse(o), false).setBlock(editor, end);
+				stair.setOrientation(Cardinal.reverse(o), false).setBlock(editor, end);
 				end.add(Cardinal.reverse(o));
 				start = new Coord(end);
 				start.add(Cardinal.reverse(o), 2);
-				editor.fillRectSolid(rand, start, end, WorldEditor.blockOrientation(stair, dir, false), true, true);
+				editor.fillRectSolid(rand, start, end, stair.setOrientation(dir, false), true, true);
 				
 				end.add(Cardinal.reverse(dir));
 				end.add(Cardinal.UP);
 				start.add(Cardinal.reverse(dir));
 				start.add(Cardinal.UP);
-				editor.fillRectSolid(rand, start, end, WorldEditor.blockOrientation(stair, dir, false), true, true);
-				WorldEditor.blockOrientation(stair, Cardinal.reverse(o), false).setBlock(editor, end);
+				editor.fillRectSolid(rand, start, end, stair.setOrientation(dir, false), true, true);
+				stair.setOrientation(Cardinal.reverse(o), false).setBlock(editor, end);
 				
 				start = new Coord(floor);
 				start.add(dir, 3);
 				start.add(Cardinal.UP, 4);
 				end = new Coord(start);
 				end.add(o, 2);
-				editor.fillRectSolid(rand, start, end, WorldEditor.blockOrientation(stair, Cardinal.reverse(dir), true), true, true);
+				editor.fillRectSolid(rand, start, end, stair.setOrientation(Cardinal.reverse(dir), true), true, true);
 				start.add(Cardinal.reverse(dir));
 				start.add(Cardinal.UP);
 				end = new Coord(start);
 				end.add(o, 2);
-				editor.fillRectSolid(rand, start, end, WorldEditor.blockOrientation(stair, Cardinal.reverse(dir), true), true, true);
+				editor.fillRectSolid(rand, start, end, stair.setOrientation(Cardinal.reverse(dir), true), true, true);
 				start.add(Cardinal.UP);
 				end.add(Cardinal.UP);
 				editor.fillRectSolid(rand, start, end, pillar, true, true);
@@ -101,22 +102,22 @@ public class EthoTower implements ITower {
 				editor.fillRectSolid(rand, start, end, pillar, true, true);
 				cursor.add(Cardinal.reverse(o));
 				cursor.add(Cardinal.UP);
-				WorldEditor.blockOrientation(stair, Cardinal.reverse(o), false).setBlock(editor, cursor);
+				stair.setOrientation(Cardinal.reverse(o), false).setBlock(editor, cursor);
 				cursor.add(Cardinal.UP, 2);
-				WorldEditor.blockOrientation(stair, Cardinal.reverse(o), true).setBlock(editor, cursor);
+				stair.setOrientation(Cardinal.reverse(o), true).setBlock(editor, cursor);
 				start.add(Cardinal.UP);
 				end = new Coord(start);
 				end.add(Cardinal.reverse(o), 2);
-				editor.fillRectSolid(rand, start, end, WorldEditor.blockOrientation(stair, dir, false), true, true);
+				editor.fillRectSolid(rand, start, end, stair.setOrientation(dir, false), true, true);
 				cursor = new Coord(end);
 				cursor.add(Cardinal.reverse(dir));
-				WorldEditor.blockOrientation(stair, Cardinal.reverse(dir), true).setBlock(editor, cursor);
+				stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
 				cursor.add(o);
-				WorldEditor.blockOrientation(stair, Cardinal.reverse(dir), true).setBlock(editor, cursor);
+				stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
 				cursor.add(Cardinal.UP);
-				WorldEditor.blockOrientation(stair, dir, false).setBlock(editor, cursor);
+				stair.setOrientation(dir, false).setBlock(editor, cursor);
 				cursor.add(Cardinal.reverse(o));
-				WorldEditor.blockOrientation(stair, dir, false).setBlock(editor, cursor);
+				stair.setOrientation(dir, false).setBlock(editor, cursor);
 				
 				
 				
@@ -146,30 +147,30 @@ public class EthoTower implements ITower {
 					cursor.add(o, 2);
 					editor.setBlock(rand, cursor, primary, true, true);
 					cursor.add(o);
-					WorldEditor.blockOrientation(stair, o, false).setBlock(editor, cursor);
+					stair.setOrientation(o, false).setBlock(editor, cursor);
 					cursor.add(dir);
-					WorldEditor.blockOrientation(stair, o, false).setBlock(editor, cursor);
+					stair.setOrientation(o, false).setBlock(editor, cursor);
 					cursor.add(Cardinal.reverse(o));
-					WorldEditor.blockOrientation(stair, dir, false).setBlock(editor, cursor);
+					stair.setOrientation(dir, false).setBlock(editor, cursor);
 					cursor.add(Cardinal.reverse(dir));
 					cursor.add(Cardinal.UP);
-					WorldEditor.blockOrientation(stair, Cardinal.reverse(o), false).setBlock(editor, cursor);
+					stair.setOrientation(Cardinal.reverse(o), false).setBlock(editor, cursor);
 					cursor.add(Cardinal.UP);
-					WorldEditor.blockOrientation(stair, dir, false).setBlock(editor, cursor);
+					stair.setOrientation(dir, false).setBlock(editor, cursor);
 					cursor.add(o);
-					WorldEditor.blockOrientation(stair, o, false).setBlock(editor, cursor);
+					stair.setOrientation(o, false).setBlock(editor, cursor);
 					cursor.add(Cardinal.reverse(o));
 					cursor.add(Cardinal.UP);
-					WorldEditor.blockOrientation(stair, Cardinal.reverse(o), false).setBlock(editor, cursor);
+					stair.setOrientation(Cardinal.reverse(o), false).setBlock(editor, cursor);
 					cursor.add(Cardinal.reverse(o));
-					WorldEditor.blockOrientation(stair, Cardinal.reverse(o), true).setBlock(editor, cursor);
+					stair.setOrientation(Cardinal.reverse(o), true).setBlock(editor, cursor);
 					cursor.add(Cardinal.reverse(o));
 					cursor.add(Cardinal.UP);
-					WorldEditor.blockOrientation(stair, dir, false).setBlock(editor, cursor);
+					stair.setOrientation(dir, false).setBlock(editor, cursor);
 					cursor.add(o);
-					WorldEditor.blockOrientation(stair, dir, false).setBlock(editor, cursor);
+					stair.setOrientation(dir, false).setBlock(editor, cursor);
 					cursor.add(o);
-					WorldEditor.blockOrientation(stair, o, false).setBlock(editor, cursor);
+					stair.setOrientation(o, false).setBlock(editor, cursor);
 				}
 				
 				// carve doorway
@@ -198,11 +199,11 @@ public class EthoTower implements ITower {
 				start.add(dir, 5);
 				end = new Coord(start);
 				start.add(o, 2);
-				editor.fillRectSolid(rand, start, end, WorldEditor.blockOrientation(stair, dir, false), true, true);
+				editor.fillRectSolid(rand, start, end, stair.setOrientation(dir, false), true, true);
 				start.add(o);
-				WorldEditor.blockOrientation(stair, Cardinal.reverse(o), false).setBlock(editor, start);
+				stair.setOrientation(Cardinal.reverse(o), false).setBlock(editor, start);
 				start.add(Cardinal.DOWN);
-				WorldEditor.blockOrientation(stair, Cardinal.reverse(o), true).setBlock(editor, start);
+				stair.setOrientation(Cardinal.reverse(o), true).setBlock(editor, start);
 			}
 			
 		}
@@ -220,7 +221,7 @@ public class EthoTower implements ITower {
 		Coord start;
 		Coord end;
 		
-		MetaBlock stair = theme.getPrimaryStair();
+		IStair stair = theme.getPrimaryStair();
 		IBlockFactory blocks = theme.getPrimaryWall();
 		
 		Cardinal[] orth = Cardinal.getOrthogonal(dir);
@@ -236,7 +237,7 @@ public class EthoTower implements ITower {
 		end = new Coord(origin);
 		start.add(orth[0]);
 		end.add(orth[1]);
-		WorldEditor.blockOrientation(stair, dir, false);
+		stair.setOrientation(dir, false);
 		editor.fillRectSolid(rand, start, end, stair, true, true);
 		
 		origin.add(Cardinal.DOWN);

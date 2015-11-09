@@ -2,6 +2,8 @@ package greymerk.roguelike.theme;
 
 import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.MetaBlock;
+import greymerk.roguelike.worldgen.MetaStair;
+import greymerk.roguelike.worldgen.blocks.StairType;
 import net.minecraft.block.BlockSilverfish;
 import net.minecraft.block.BlockStoneBrick;
 import net.minecraft.init.Blocks;
@@ -38,7 +40,7 @@ public class ThemeMossy extends ThemeBase{
 		floor.addBlock(cobble, 2);
 		floor.addBlock(gravel, 1);
 		
-		MetaBlock stair = new MetaBlock(Blocks.stone_stairs);
+		MetaStair stair = new MetaStair(StairType.COBBLE);
 		
 		this.primary = new BlockSet(floor, walls, stair, walls);
 		this.secondary = this.primary;

@@ -10,8 +10,10 @@ import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
 import greymerk.roguelike.worldgen.blocks.Leaves;
-import greymerk.roguelike.worldgen.blocks.Log;
 import greymerk.roguelike.worldgen.blocks.Stair;
+import greymerk.roguelike.worldgen.blocks.StairType;
+import greymerk.roguelike.worldgen.blocks.Wood;
+import greymerk.roguelike.worldgen.blocks.WoodBlock;
 import net.minecraft.init.Blocks;
 
 public class DungeonEtho extends DungeonBase {
@@ -26,8 +28,8 @@ public class DungeonEtho extends DungeonBase {
 		MetaBlock air = new MetaBlock(Blocks.air);
 		
 		MetaBlock grass = new MetaBlock(Blocks.grass);
-		MetaBlock planks = new MetaBlock(Blocks.planks);
-		MetaBlock log = Log.getLog(Log.OAK);
+		MetaBlock planks = Wood.get(Wood.OAK, WoodBlock.PLANK);
+		MetaBlock log = Wood.get(Wood.OAK, WoodBlock.LOG);
 		MetaBlock water = new MetaBlock(Blocks.flowing_water);
 		
 		editor.fillRectSolid(rand, x - 5, y, z - 5, x + 5, y + 3, z + 5, air);
@@ -94,20 +96,20 @@ public class DungeonEtho extends DungeonBase {
 		
 		editor.fillRectSolid(rand, x - 2, y + 3, z - 6, x + 2, y + 3, z - 6, planks);
 		editor.setBlock(x - 2, y + 2, z - 6, Blocks.planks);
-		editor.setBlock(x - 1, y + 2, z - 6, Stair.get(Blocks.oak_stairs, Cardinal.EAST, true));
-		editor.setBlock(x + 1, y + 2, z - 6, Stair.get(Blocks.oak_stairs, Cardinal.WEST, true));
+		editor.setBlock(x - 1, y + 2, z - 6, Stair.get(StairType.OAK, Cardinal.EAST, true));
+		editor.setBlock(x + 1, y + 2, z - 6, Stair.get(StairType.OAK, Cardinal.WEST, true));
 		editor.setBlock(x + 2, y + 2, z - 6, Blocks.planks);
 		
 		editor.fillRectSolid(rand, x - 2, y + 4, z - 5, x + 2, y + 4, z - 5, planks);
-		editor.setBlock(x - 2, y + 3, z - 5, Stair.get(Blocks.oak_stairs, Cardinal.EAST, true));
-		editor.setBlock(x + 2, y + 3, z - 5, Stair.get(Blocks.oak_stairs, Cardinal.WEST, true));
+		editor.setBlock(x - 2, y + 3, z - 5, Stair.get(StairType.OAK, Cardinal.EAST, true));
+		editor.setBlock(x + 2, y + 3, z - 5, Stair.get(StairType.OAK, Cardinal.WEST, true));
 
 		editor.fillRectSolid(rand, x - 2, y + 5, z - 4, x + 2, y + 5, z - 4, planks);
-		editor.setBlock(x - 2, y + 4, z - 4, Stair.get(Blocks.oak_stairs, Cardinal.EAST, true));
-		editor.setBlock(x + 2, y + 4, z - 4, Stair.get(Blocks.oak_stairs, Cardinal.WEST, true));
+		editor.setBlock(x - 2, y + 4, z - 4, Stair.get(StairType.OAK, Cardinal.EAST, true));
+		editor.setBlock(x + 2, y + 4, z - 4, Stair.get(StairType.OAK, Cardinal.WEST, true));
 		
-		editor.setBlock(x - 3, y + 3, z - 4, Stair.get(Blocks.oak_stairs, Cardinal.SOUTH, true));
-		editor.setBlock(x + 3, y + 3, z - 4, Stair.get(Blocks.oak_stairs, Cardinal.SOUTH, true));
+		editor.setBlock(x - 3, y + 3, z - 4, Stair.get(StairType.OAK, Cardinal.SOUTH, true));
+		editor.setBlock(x + 3, y + 3, z - 4, Stair.get(StairType.OAK, Cardinal.SOUTH, true));
 		
 		editor.setBlock(x - 2, y - 2, z - 5, Blocks.glowstone);
 		editor.fillRectSolid(rand, x - 2, y - 1, z - 5, x - 2, y, z - 5, jungleLeaf, true, true);
@@ -127,20 +129,20 @@ public class DungeonEtho extends DungeonBase {
 
 		editor.fillRectSolid(rand, x - 2, y + 3, z + 6, x + 2, y + 3, z + 6, planks);
 		editor.setBlock(x - 2, y + 2, z + 6, Blocks.planks);
-		editor.setBlock(x - 1, y + 2, z + 6, Stair.get(Blocks.oak_stairs, Cardinal.EAST, true));
-		editor.setBlock(x + 1, y + 2, z + 6, Stair.get(Blocks.oak_stairs, Cardinal.WEST, true));
+		editor.setBlock(x - 1, y + 2, z + 6, Stair.get(StairType.OAK, Cardinal.EAST, true));
+		editor.setBlock(x + 1, y + 2, z + 6, Stair.get(StairType.OAK, Cardinal.WEST, true));
 		editor.setBlock(x + 2, y + 2, z + 6, Blocks.planks);
 		
 		editor.fillRectSolid(rand, x - 2, y + 4, z + 5, x + 2, y + 4, z + 5, planks);
-		editor.setBlock(x - 2, y + 3, z + 5, Stair.get(Blocks.oak_stairs, Cardinal.EAST, true));
-		editor.setBlock(x + 2, y + 3, z + 5, Stair.get(Blocks.oak_stairs, Cardinal.WEST, true));
+		editor.setBlock(x - 2, y + 3, z + 5, Stair.get(StairType.OAK, Cardinal.EAST, true));
+		editor.setBlock(x + 2, y + 3, z + 5, Stair.get(StairType.OAK, Cardinal.WEST, true));
 
 		editor.fillRectSolid(rand, x - 2, y + 5, z + 4, x + 2, y + 5, z + 4, planks);
-		editor.setBlock(x - 2, y + 4, z + 4, Stair.get(Blocks.oak_stairs, Cardinal.EAST, true));
-		editor.setBlock(x + 2, y + 4, z + 4, Stair.get(Blocks.oak_stairs, Cardinal.WEST, true));
+		editor.setBlock(x - 2, y + 4, z + 4, Stair.get(StairType.OAK, Cardinal.EAST, true));
+		editor.setBlock(x + 2, y + 4, z + 4, Stair.get(StairType.OAK, Cardinal.WEST, true));
 
-		editor.setBlock(x - 3, y + 3, z + 4, Stair.get(Blocks.oak_stairs, Cardinal.NORTH, true));
-		editor.setBlock(x + 3, y + 3, z + 4, Stair.get(Blocks.oak_stairs, Cardinal.NORTH, true));
+		editor.setBlock(x - 3, y + 3, z + 4, Stair.get(StairType.OAK, Cardinal.NORTH, true));
+		editor.setBlock(x + 3, y + 3, z + 4, Stair.get(StairType.OAK, Cardinal.NORTH, true));
 		
 		editor.setBlock(x - 2, y - 2, z + 5, Blocks.glowstone);
 		editor.fillRectSolid(rand, x - 2, y - 1, z + 5, x - 2, y, z + 5, jungleLeaf, true, true);
@@ -161,20 +163,20 @@ public class DungeonEtho extends DungeonBase {
 		
 		editor.fillRectSolid(rand, x - 6, y + 3, z - 2, x - 6, y + 3, z + 2, planks);
 		editor.setBlock(x - 6, y + 2, z - 2, Blocks.planks);
-		editor.setBlock(x - 6, y + 2, z - 1, Stair.get(Blocks.oak_stairs, Cardinal.SOUTH, true));
-		editor.setBlock(x - 6, y + 2, z + 1, Stair.get(Blocks.oak_stairs, Cardinal.NORTH, true));
+		editor.setBlock(x - 6, y + 2, z - 1, Stair.get(StairType.OAK, Cardinal.SOUTH, true));
+		editor.setBlock(x - 6, y + 2, z + 1, Stair.get(StairType.OAK, Cardinal.NORTH, true));
 		editor.setBlock(x - 6, y + 2, z + 2, Blocks.planks);
 		
 		editor.fillRectSolid(rand, x - 5, y + 4, z - 2, x - 5, y + 4, z + 2, planks);
-		editor.setBlock(x - 5, y + 3, z - 2, Stair.get(Blocks.oak_stairs, Cardinal.SOUTH, true));
-		editor.setBlock(x - 5, y + 3, z + 2, Stair.get(Blocks.oak_stairs, Cardinal.NORTH, true));
+		editor.setBlock(x - 5, y + 3, z - 2, Stair.get(StairType.OAK, Cardinal.SOUTH, true));
+		editor.setBlock(x - 5, y + 3, z + 2, Stair.get(StairType.OAK, Cardinal.NORTH, true));
 
 		editor.fillRectSolid(rand, x - 4, y + 5, z - 2, x - 4, y + 5, z + 2, planks);
-		editor.setBlock(x - 4, y + 4, z - 2, Stair.get(Blocks.oak_stairs, Cardinal.SOUTH, true));
-		editor.setBlock(x - 4, y + 4, z + 2, Stair.get(Blocks.oak_stairs, Cardinal.NORTH, true));
+		editor.setBlock(x - 4, y + 4, z - 2, Stair.get(StairType.OAK, Cardinal.SOUTH, true));
+		editor.setBlock(x - 4, y + 4, z + 2, Stair.get(StairType.OAK, Cardinal.NORTH, true));
 
-		editor.setBlock(x - 4, y + 3, z - 3, Stair.get(Blocks.oak_stairs, Cardinal.EAST, true));
-		editor.setBlock(x - 4, y + 3, z + 3, Stair.get(Blocks.oak_stairs, Cardinal.EAST, true));
+		editor.setBlock(x - 4, y + 3, z - 3, Stair.get(StairType.OAK, Cardinal.EAST, true));
+		editor.setBlock(x - 4, y + 3, z + 3, Stair.get(StairType.OAK, Cardinal.EAST, true));
 
 		editor.setBlock(x - 5, y - 2, z - 2, Blocks.glowstone);
 		editor.fillRectSolid(rand, x - 5, y - 1, z - 2, x - 5, y, z - 2, jungleLeaf, true, true);
@@ -195,20 +197,20 @@ public class DungeonEtho extends DungeonBase {
 		
 		editor.fillRectSolid(rand, x + 6, y + 3, z - 2, x + 6, y + 3, z + 2, planks);
 		editor.setBlock(x + 6, y + 2, z - 2, Blocks.planks);
-		editor.setBlock(x + 6, y + 2, z - 1, Stair.get(Blocks.oak_stairs, Cardinal.SOUTH, true));
-		editor.setBlock(x + 6, y + 2, z + 1, Stair.get(Blocks.oak_stairs, Cardinal.NORTH, true));
+		editor.setBlock(x + 6, y + 2, z - 1, Stair.get(StairType.OAK, Cardinal.SOUTH, true));
+		editor.setBlock(x + 6, y + 2, z + 1, Stair.get(StairType.OAK, Cardinal.NORTH, true));
 		editor.setBlock(x + 6, y + 2, z + 2, Blocks.planks);
 		
 		editor.fillRectSolid(rand, x + 5, y + 4, z - 2, x + 5, y + 4, z + 2, planks);
-		editor.setBlock(x + 5, y + 3, z - 2, Stair.get(Blocks.oak_stairs, Cardinal.SOUTH, true));
-		editor.setBlock(x + 5, y + 3, z + 2, Stair.get(Blocks.oak_stairs, Cardinal.NORTH, true));
+		editor.setBlock(x + 5, y + 3, z - 2, Stair.get(StairType.OAK, Cardinal.SOUTH, true));
+		editor.setBlock(x + 5, y + 3, z + 2, Stair.get(StairType.OAK, Cardinal.NORTH, true));
 
 		editor.fillRectSolid(rand, x + 4, y + 5, z - 2, x + 4, y + 5, z + 2, planks);
-		editor.setBlock(x + 4, y + 4, z - 2, Stair.get(Blocks.oak_stairs, Cardinal.SOUTH, true));
-		editor.setBlock(x + 4, y + 4, z + 2, Stair.get(Blocks.oak_stairs, Cardinal.NORTH, true));
+		editor.setBlock(x + 4, y + 4, z - 2, Stair.get(StairType.OAK, Cardinal.SOUTH, true));
+		editor.setBlock(x + 4, y + 4, z + 2, Stair.get(StairType.OAK, Cardinal.NORTH, true));
 
-		editor.setBlock(x + 4, y + 3, z - 3, Stair.get(Blocks.oak_stairs, Cardinal.WEST, true));
-		editor.setBlock(x + 4, y + 3, z + 3, Stair.get(Blocks.oak_stairs, Cardinal.WEST, true));
+		editor.setBlock(x + 4, y + 3, z - 3, Stair.get(StairType.OAK, Cardinal.WEST, true));
+		editor.setBlock(x + 4, y + 3, z + 3, Stair.get(StairType.OAK, Cardinal.WEST, true));
 
 		editor.fillRectSolid(rand, x - 3, y + 4, z - 3, x - 3, y + 5, z - 3, planks);
 		editor.fillRectSolid(rand, x - 3, y + 4, z + 3, x - 3, y + 5, z + 3, planks);

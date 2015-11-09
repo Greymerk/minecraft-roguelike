@@ -7,6 +7,7 @@ import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
+import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
 import net.minecraft.init.Blocks;
@@ -16,7 +17,7 @@ public class SegmentNetherWart extends SegmentBase{
 	@Override
 	protected void genWall(WorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
 		
-		MetaBlock step = theme.getSecondaryStair();
+		IStair step = theme.getSecondaryStair();
 		IBlockFactory wall = theme.getSecondaryWall();
 		MetaBlock air = new MetaBlock(Blocks.air);
 
@@ -38,7 +39,7 @@ public class SegmentNetherWart extends SegmentBase{
 		editor.setBlock(cursor, Blocks.nether_brick_fence);
 		
 		for(Cardinal orth : Cardinal.getOrthogonal(dir)){
-			WorldEditor.blockOrientation(step, Cardinal.reverse(orth), true);
+			step.setOrientation(Cardinal.reverse(orth), true);
 			cursor = new Coord(x, y, z);
 			cursor.add(dir, 2);
 			cursor.add(orth, 1);

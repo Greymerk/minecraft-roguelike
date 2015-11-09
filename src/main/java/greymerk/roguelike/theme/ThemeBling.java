@@ -2,6 +2,8 @@ package greymerk.roguelike.theme;
 
 import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.MetaBlock;
+import greymerk.roguelike.worldgen.MetaStair;
+import greymerk.roguelike.worldgen.blocks.StairType;
 import net.minecraft.init.Blocks;
 
 public class ThemeBling extends ThemeBase{
@@ -14,7 +16,7 @@ public class ThemeBling extends ThemeBase{
 		walls.addBlock(new MetaBlock(Blocks.emerald_block), 10);
 		walls.addBlock(new MetaBlock(Blocks.diamond_block), 20);
 		
-		MetaBlock stair = new MetaBlock(Blocks.quartz_stairs);
+		MetaStair stair = new MetaStair(StairType.QUARTZ);
 		MetaBlock pillar = new MetaBlock(Blocks.lapis_block);
 		this.primary = new BlockSet(walls, stair, pillar);
 		this.secondary = this.primary;

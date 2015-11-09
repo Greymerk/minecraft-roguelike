@@ -8,8 +8,6 @@ import java.util.Map;
 import java.util.Random;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockStairs;
-import net.minecraft.block.BlockStairs.EnumHalf;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
@@ -201,7 +199,7 @@ public class WorldEditor {
 	}
 	
 
-	public void spiralStairStep(Random rand, Coord origin, MetaBlock stair, IBlockFactory fill){
+	public void spiralStairStep(Random rand, Coord origin, IStair stair, IBlockFactory fill){
 		
 		MetaBlock air = new MetaBlock(Blocks.air);
 		Coord cursor;
@@ -224,11 +222,11 @@ public class WorldEditor {
 		Cardinal[] orth = Cardinal.getOrthogonal(dir);
 		cursor = new Coord(origin);
 		cursor.add(dir);
-		blockOrientation(stair, orth[0], false).setBlock(this, cursor);
+		stair.setOrientation(orth[0], false).setBlock(this, cursor);
 		cursor.add(orth[1]);
-		blockOrientation(stair, orth[1], true).setBlock(this, cursor);
+		stair.setOrientation(orth[1], true).setBlock(this, cursor);
 		cursor.add(Cardinal.reverse(dir));
-		blockOrientation(stair, Cardinal.reverse(dir), true).setBlock(this, cursor);
+		stair.setOrientation(Cardinal.reverse(dir), true).setBlock(this, cursor);
 		
 		
 	}
@@ -267,14 +265,6 @@ public class WorldEditor {
         	}
         }
 
-	}
-	
-	public static MetaBlock blockOrientation(MetaBlock block, Cardinal dir, Boolean upsideDown){
-		IBlockState stair = block.getBlock().getDefaultState();
-		stair = stair.withProperty(BlockStairs.FACING, Cardinal.getFacing(dir));
-		stair = stair.withProperty(BlockStairs.HALF, upsideDown ? EnumHalf.TOP : EnumHalf.BOTTOM);
-		block.setState(stair);
-		return block;
 	}
 	
 	public void fillDown(Random rand, Coord origin, IBlockFactory blocks){

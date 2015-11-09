@@ -6,6 +6,7 @@ import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
+import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
 import net.minecraft.init.Blocks;
@@ -23,7 +24,7 @@ public class RogueTower implements ITower{
 		
 		IBlockFactory blocks = theme.getPrimaryWall();
 		
-		MetaBlock stair = theme.getPrimaryStair();
+		IStair stair = theme.getPrimaryStair();
 		
 		Coord floor = Tower.getBaseCoord(editor, x, y, z);
 		int ground = floor.getY() - 1;
@@ -67,7 +68,7 @@ public class RogueTower implements ITower{
 				start.add(Cardinal.reverse(orth), 1);
 				editor.fillRectSolid(rand, start, end, blocks, true, true);
 				cursor.add(Cardinal.UP, 2);
-				WorldEditor.blockOrientation(stair, orth, false);
+				stair.setOrientation(orth, false);
 				editor.setBlock(rand, cursor, stair, true, true);
 				
 				start = new Coord(floor);
@@ -95,17 +96,17 @@ public class RogueTower implements ITower{
 				cursor.add(dir, 3);
 				cursor.add(orth, 2);
 				cursor.add(Cardinal.UP, 3);
-				WorldEditor.blockOrientation(stair, Cardinal.reverse(orth), true);
+				stair.setOrientation(Cardinal.reverse(orth), true);
 				editor.setBlock(rand, cursor, stair, true, true);
 				cursor.add(Cardinal.UP, 5);
-				WorldEditor.blockOrientation(stair, Cardinal.reverse(orth), true);
+				stair.setOrientation(Cardinal.reverse(orth), true);
 				editor.setBlock(rand, cursor, stair, true, true);
 				
 				start = new Coord(floor);
 				start.add(dir, 4);
 				start.add(orth, 3);
 				start.add(Cardinal.UP, 4);
-				WorldEditor.blockOrientation(stair, orth, true);
+				stair.setOrientation(orth, true);
 				editor.setBlock(rand, start, stair, true, true);
 				
 				start.add(Cardinal.UP, 1);
@@ -116,21 +117,21 @@ public class RogueTower implements ITower{
 				start = new Coord(floor);
 				start.add(dir, 5);
 				start.add(Cardinal.UP, 4);
-				WorldEditor.blockOrientation(stair, dir, true);
+				stair.setOrientation(dir, true);
 				editor.setBlock(rand, start, stair, true, true);
 				
 				cursor = new Coord(start);
 				cursor.add(orth, 1);
-				WorldEditor.blockOrientation(stair, orth, true);
+				stair.setOrientation(orth, true);
 				editor.setBlock(rand, cursor, stair, true, true);
 				
 				start.add(Cardinal.UP, 3);
-				WorldEditor.blockOrientation(stair, dir, true);
+				stair.setOrientation(dir, true);
 				editor.setBlock(rand, start, stair, true, true);
 				
 				cursor = new Coord(start);
 				cursor.add(orth, 1);
-				WorldEditor.blockOrientation(stair, orth, true);
+				stair.setOrientation(orth, true);
 				editor.setBlock(rand, cursor, stair, true, true);
 				
 				start.add(Cardinal.UP, 1);
@@ -142,7 +143,7 @@ public class RogueTower implements ITower{
 				cursor = new Coord(end);
 				cursor.add(orth, 1);
 				cursor.add(Cardinal.DOWN, 1);
-				WorldEditor.blockOrientation(stair, orth, true);
+				stair.setOrientation(orth, true);
 				editor.setBlock(rand, cursor, stair, true, true);
 				cursor.add(Cardinal.UP, 1);
 				cursor.add(orth, 1);
@@ -168,11 +169,11 @@ public class RogueTower implements ITower{
 				cursor.add(dir, 6);
 				cursor.add(Cardinal.UP, 9);
 				
-				WorldEditor.blockOrientation(stair, dir, true);
+				stair.setOrientation(dir, true);
 				editor.setBlock(rand, cursor, stair, true, true);
 				
 				cursor.add(orth, 1);
-				WorldEditor.blockOrientation(stair, orth, true);
+				stair.setOrientation(orth, true);
 				editor.setBlock(rand, cursor, stair, true, true);
 				
 				cursor.add(Cardinal.reverse(orth), 1);

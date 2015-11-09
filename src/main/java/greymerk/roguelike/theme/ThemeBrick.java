@@ -1,8 +1,11 @@
 package greymerk.roguelike.theme;
 
 import greymerk.roguelike.worldgen.MetaBlock;
+import greymerk.roguelike.worldgen.MetaStair;
 import greymerk.roguelike.worldgen.blocks.Log;
-import net.minecraft.block.BlockPlanks;
+import greymerk.roguelike.worldgen.blocks.StairType;
+import greymerk.roguelike.worldgen.blocks.Wood;
+import greymerk.roguelike.worldgen.blocks.WoodBlock;
 import net.minecraft.init.Blocks;
 
 public class ThemeBrick extends ThemeBase{
@@ -11,16 +14,14 @@ public class ThemeBrick extends ThemeBase{
 	
 		MetaBlock walls = new MetaBlock(Blocks.brick_block);
 		
-		MetaBlock stair = new MetaBlock(Blocks.brick_stairs);
-		MetaBlock pillar = Log.getLog(Log.SPRUCE);
+		MetaStair stair = new MetaStair(StairType.BRICK);
+		MetaBlock pillar = Log.getLog(Wood.SPRUCE);
 		
 		this.primary = new BlockSet(walls, stair, walls);
 		
-		MetaBlock segmentWall = new MetaBlock(Blocks.planks);
-		segmentWall.withProperty(BlockPlanks.VARIANT_PROP, BlockPlanks.EnumType.SPRUCE);
-		MetaBlock SegmentStair = new MetaBlock(Blocks.brick_stairs);
+		MetaBlock segmentWall = Wood.get(Wood.SPRUCE, WoodBlock.PLANK);
 		
-		this.secondary =  new BlockSet(segmentWall, SegmentStair, pillar);
+		this.secondary =  new BlockSet(segmentWall, stair, pillar);
 
 	}
 }

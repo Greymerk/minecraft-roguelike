@@ -11,6 +11,7 @@ import greymerk.roguelike.treasure.TreasureChest;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
+import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.Spawner;
 import greymerk.roguelike.worldgen.WorldEditor;
@@ -23,7 +24,7 @@ public class DungeonsCrypt extends DungeonBase {
 		
 		ITheme theme = settings.getTheme();
 		MetaBlock air = new MetaBlock(Blocks.air);
-		MetaBlock stair = theme.getPrimaryStair();
+		IStair stair = theme.getPrimaryStair();
 		IBlockFactory walls = theme.getPrimaryWall();
 		IBlockFactory floor = theme.getPrimaryFloor();
 		
@@ -121,7 +122,7 @@ public class DungeonsCrypt extends DungeonBase {
 			end = new Coord(start);
 			start.add(orth[0], 2);
 			end.add(orth[1], 2);
-			WorldEditor.blockOrientation(stair, Cardinal.reverse(dir), true);
+			stair.setOrientation(Cardinal.reverse(dir), true);
 			stair.fillRectSolid(editor, rand, start, end, true, false);
 		}
 		
@@ -133,7 +134,7 @@ public class DungeonsCrypt extends DungeonBase {
 		ITheme theme = settings.getTheme();
 		
 		IBlockFactory walls = theme.getPrimaryWall();
-		MetaBlock stair = theme.getPrimaryStair();
+		IStair stair = theme.getPrimaryStair();
 		
 		Coord cursor;
 		Coord start;
@@ -152,7 +153,7 @@ public class DungeonsCrypt extends DungeonBase {
 		cursor = new Coord(origin);
 		cursor.add(dir, 5);
 		cursor.add(Cardinal.UP, 3);
-		WorldEditor.blockOrientation(stair, Cardinal.reverse(dir), true).setBlock(editor, cursor);
+		stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
 		
 		start = new Coord(origin);
 		
@@ -177,7 +178,7 @@ public class DungeonsCrypt extends DungeonBase {
 			start.add(o, 2);
 			end = new Coord(start);
 			end.add(dir, 3);
-			WorldEditor.blockOrientation(stair, Cardinal.reverse(o), true);
+			stair.setOrientation(Cardinal.reverse(o), true);
 			stair.fillRectSolid(editor, rand, start, end, true, true);
 		}
 		
@@ -185,19 +186,19 @@ public class DungeonsCrypt extends DungeonBase {
 		tomb(editor, rand, settings, cursor, dir);
 		
 		cursor.add(Cardinal.UP);
-		WorldEditor.blockOrientation(stair, Cardinal.reverse(dir), false).setBlock(editor, cursor);
+		stair.setOrientation(Cardinal.reverse(dir), false).setBlock(editor, cursor);
 		cursor.add(Cardinal.DOWN, 2);
-		WorldEditor.blockOrientation(stair, Cardinal.reverse(dir), true).setBlock(editor, cursor);
+		stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
 		cursor.add(dir);
 		walls.setBlock(editor, rand, cursor);
 		cursor.add(dir);
 		walls.setBlock(editor, rand, cursor);
 		cursor.add(dir);
-		WorldEditor.blockOrientation(stair, dir, false).setBlock(editor, cursor);
+		stair.setOrientation(dir, false).setBlock(editor, cursor);
 		cursor.add(Cardinal.UP);
-		WorldEditor.blockOrientation(stair, dir, true).setBlock(editor, cursor);
+		stair.setOrientation(dir, true).setBlock(editor, cursor);
 		cursor.add(Cardinal.UP);
-		WorldEditor.blockOrientation(stair, dir, false).setBlock(editor, cursor);
+		stair.setOrientation(dir, false).setBlock(editor, cursor);
 		
 		for(Cardinal o : Cardinal.getOrthogonal(dir)){
 			cursor = new Coord(origin);
@@ -206,15 +207,15 @@ public class DungeonsCrypt extends DungeonBase {
 			start = new Coord(cursor);
 			end = new Coord(cursor);
 			end.add(dir, 3);
-			WorldEditor.blockOrientation(stair, o, false);
+			stair.setOrientation(o, false);
 			stair.fillRectSolid(editor, rand, start, end, true, true);
 			start.add(Cardinal.UP);
 			end.add(Cardinal.UP);
-			WorldEditor.blockOrientation(stair, o, true);
+			stair.setOrientation(o, true);
 			stair.fillRectSolid(editor, rand, start, end, true, true);
 			start.add(Cardinal.UP);
 			end.add(Cardinal.UP);
-			WorldEditor.blockOrientation(stair, o, false);
+			stair.setOrientation(o, false);
 			stair.fillRectSolid(editor, rand, start, end, true, true);
 		}
 		
@@ -225,7 +226,7 @@ public class DungeonsCrypt extends DungeonBase {
 		ITheme theme = settings.getTheme();
 		
 		IBlockFactory walls = theme.getPrimaryWall();
-		MetaBlock stair = theme.getPrimaryStair();
+		IStair stair = theme.getPrimaryStair();
 		
 		Coord cursor;
 		Coord start;
@@ -246,7 +247,7 @@ public class DungeonsCrypt extends DungeonBase {
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.reverse(dir));
 		cursor.add(Cardinal.UP, 2);
-		WorldEditor.blockOrientation(stair, Cardinal.reverse(dir), true).setBlock(editor, cursor);
+		stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
 		cursor.add(Cardinal.UP);
 		walls.setBlock(editor, rand, cursor);
 		
@@ -255,7 +256,7 @@ public class DungeonsCrypt extends DungeonBase {
 			cursor.add(Cardinal.reverse(dir));
 			cursor.add(Cardinal.UP);
 			cursor.add(o);
-			WorldEditor.blockOrientation(stair, Cardinal.reverse(dir), true).setBlock(editor, cursor);
+			stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
 			cursor.add(Cardinal.UP);
 			walls.setBlock(editor, rand, cursor);
 			cursor.add(Cardinal.UP);
@@ -267,7 +268,7 @@ public class DungeonsCrypt extends DungeonBase {
 			start.add(o, 2);
 			end = new Coord(start);
 			end.add(dir, 7);
-			WorldEditor.blockOrientation(stair, o, true);
+			stair.setOrientation(o, true);
 			stair.fillRectSolid(editor, rand, start, end, true, false);
 		}
 		
@@ -277,7 +278,7 @@ public class DungeonsCrypt extends DungeonBase {
 		end = new Coord(start);
 		start.add(orth[0]);
 		end.add(orth[1]);
-		WorldEditor.blockOrientation(stair, Cardinal.reverse(dir), true);
+		stair.setOrientation(Cardinal.reverse(dir), true);
 		stair.fillRectSolid(editor, rand, start, end, true, true);
 		
 		tomb(editor, rand, settings, origin, dir);
@@ -326,7 +327,7 @@ public class DungeonsCrypt extends DungeonBase {
 		ITheme theme = settings.getTheme();
 		
 		IBlockFactory walls = theme.getPrimaryWall();
-		MetaBlock stair = theme.getPrimaryStair();
+		IStair stair = theme.getPrimaryStair();
 		
 		Coord cursor;
 		Coord start;
@@ -340,7 +341,7 @@ public class DungeonsCrypt extends DungeonBase {
 		for(Cardinal dir : Cardinal.directions){
 			cursor = new Coord(end);
 			cursor.add(dir);
-			WorldEditor.blockOrientation(stair, dir, true);
+			stair.setOrientation(dir, true);
 			stair.setBlock(editor, rand, cursor, true, false);
 		}
 	}
@@ -350,17 +351,17 @@ public class DungeonsCrypt extends DungeonBase {
 		ITheme theme = settings.getTheme();
 		Coord cursor;
 		
-		MetaBlock stair = theme.getPrimaryStair();
+		IStair stair = theme.getPrimaryStair();
 		MetaBlock tombStone = new MetaBlock(Blocks.quartz_block);
 		MetaBlock air = new MetaBlock(Blocks.air);
 		
 		cursor = new Coord(origin);
 		cursor.add(dir, 2);
 		cursor.add(Cardinal.UP);
-		WorldEditor.blockOrientation(stair, Cardinal.reverse(dir), true).setBlock(editor, cursor);
+		stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
 		
 		cursor.add(Cardinal.reverse(dir));
-		WorldEditor.blockOrientation(stair, dir, true).setBlock(editor, cursor);
+		stair.setOrientation(dir, true).setBlock(editor, cursor);
 		
 		cursor = new Coord(origin);
 		cursor.add(dir, 2);

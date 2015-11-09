@@ -14,7 +14,8 @@ import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
 import greymerk.roguelike.worldgen.blocks.ColorBlock;
-import greymerk.roguelike.worldgen.blocks.Log;
+import greymerk.roguelike.worldgen.blocks.Wood;
+import greymerk.roguelike.worldgen.blocks.WoodBlock;
 import net.minecraft.init.Blocks;
 
 public class DungeonsMusic extends DungeonBase {
@@ -40,9 +41,9 @@ public class DungeonsMusic extends DungeonBase {
 		MetaBlock air = new MetaBlock(Blocks.air);
 		IBlockFactory wall = theme.getPrimaryWall();
 		IBlockFactory deco = theme.getSecondaryWall();
-		MetaBlock rug1 = ColorBlock.get(Blocks.carpet, rand);
-		MetaBlock rug2 = ColorBlock.get(Blocks.carpet, rand);
-		MetaBlock rug3 = ColorBlock.get(Blocks.carpet, rand);
+		MetaBlock rug1 = ColorBlock.get(ColorBlock.CARPET, rand);
+		MetaBlock rug2 = ColorBlock.get(ColorBlock.CARPET, rand);
+		MetaBlock rug3 = ColorBlock.get(ColorBlock.CARPET, rand);
 		
 		// fill air
 		editor.fillRectSolid(inRandom, originX - 5, originY, originZ - 5, originX + 5, originY + 3, originZ + 5, air);
@@ -57,7 +58,7 @@ public class DungeonsMusic extends DungeonBase {
 		editor.fillRectSolid(rand, originX - 1, originY, originZ - 1, originX + 1, originY, originZ + 1, rug3, true, true);
 		
 		//WALLS
-		MetaBlock log = Log.getLog(Log.OAK);
+		MetaBlock log = Wood.get(WoodBlock.LOG);
 		
 		// vertical beams
 		editor.fillRectSolid(inRandom, originX - 2, originY, originZ - 5, originX - 2, originY + 2, originZ - 5, log, true, true);

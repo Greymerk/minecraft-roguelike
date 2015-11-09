@@ -12,6 +12,7 @@ import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
 import greymerk.roguelike.worldgen.blocks.Log;
+import greymerk.roguelike.worldgen.blocks.Wood;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.init.Blocks;
 
@@ -30,7 +31,7 @@ public class DungeonsWood extends DungeonBase {
 		final int WIDTH = rand.nextInt(2) + 2;
 		final int LENGTH = rand.nextInt(2) + 3;
 
-		MetaBlock pillar = Log.getLog(Log.values()[rand.nextInt(Log.values().length)]);
+		MetaBlock pillar = Log.getLog(Wood.values()[rand.nextInt(Wood.values().length)]);
 		MetaBlock planks = new MetaBlock(Blocks.planks);
 		planks.withProperty(BlockPlanks.VARIANT_PROP, pillar.getValue(BlockPlanks.VARIANT_PROP));
 		

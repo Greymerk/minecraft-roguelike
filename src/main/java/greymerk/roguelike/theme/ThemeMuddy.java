@@ -2,7 +2,10 @@ package greymerk.roguelike.theme;
 
 import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.MetaBlock;
+import greymerk.roguelike.worldgen.MetaStair;
 import greymerk.roguelike.worldgen.blocks.Log;
+import greymerk.roguelike.worldgen.blocks.StairType;
+import greymerk.roguelike.worldgen.blocks.Wood;
 import net.minecraft.block.BlockStoneBrick;
 import net.minecraft.init.Blocks;
 
@@ -25,7 +28,7 @@ public class ThemeMuddy extends ThemeBase{
 		walls.addBlock(new MetaBlock(Blocks.clay), 30);
 		walls.addBlock(new MetaBlock(Blocks.gravel), 15);
 		
-		MetaBlock stair = new MetaBlock(Blocks.stone_stairs);
+		MetaStair stair = new MetaStair(StairType.COBBLE);
 		
 		MetaBlock mossy = new MetaBlock(Blocks.stonebrick);
 		mossy.withProperty(BlockStoneBrick.VARIANT_PROP, BlockStoneBrick.EnumType.MOSSY);
@@ -33,8 +36,8 @@ public class ThemeMuddy extends ThemeBase{
 		
 		this.primary = new BlockSet(floor, walls, stair, pillar);
 		
-		MetaBlock segmentWall = Log.getLog(Log.DARKOAK);
-		MetaBlock segmentStair = new MetaBlock(Blocks.dark_oak_stairs);
+		MetaBlock segmentWall = Log.getLog(Wood.DARKOAK);
+		MetaStair segmentStair = new MetaStair(StairType.DARKOAK);
 
 		
 		this.secondary = new BlockSet(floor, segmentWall, segmentStair, segmentWall);

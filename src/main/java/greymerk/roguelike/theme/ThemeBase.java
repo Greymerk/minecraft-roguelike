@@ -1,7 +1,7 @@
 package greymerk.roguelike.theme;
 
 import greymerk.roguelike.worldgen.IBlockFactory;
-import greymerk.roguelike.worldgen.MetaBlock;
+import greymerk.roguelike.worldgen.IStair;
 
 public class ThemeBase implements ITheme {
 	
@@ -26,7 +26,7 @@ public class ThemeBase implements ITheme {
 	}
 	
 	@Override
-	public MetaBlock getPrimaryStair() {
+	public IStair getPrimaryStair() {
 		return primary.getStair();
 	}
 
@@ -46,7 +46,7 @@ public class ThemeBase implements ITheme {
 	}
 
 	@Override
-	public MetaBlock getSecondaryStair() {
+	public IStair getSecondaryStair() {
 		return secondary.getStair();
 	}
 

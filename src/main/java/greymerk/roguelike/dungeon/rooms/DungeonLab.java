@@ -10,9 +10,12 @@ import greymerk.roguelike.treasure.TreasureChest;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
+import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
+import greymerk.roguelike.worldgen.MetaStair;
 import greymerk.roguelike.worldgen.WorldEditor;
 import greymerk.roguelike.worldgen.blocks.FlowerPot;
+import greymerk.roguelike.worldgen.blocks.StairType;
 import net.minecraft.block.BlockColored;
 import net.minecraft.block.BlockSlab.EnumBlockHalf;
 import net.minecraft.block.BlockStoneSlab;
@@ -116,10 +119,10 @@ public class DungeonLab extends DungeonBase {
 		
 		corner(editor, rand, theme, x, y, z);
 		
-		MetaBlock stair = theme.getSecondaryStair();
-		WorldEditor.blockOrientation(stair, Cardinal.NORTH, true);
+		IStair stair = theme.getSecondaryStair();
+		stair.setOrientation(Cardinal.NORTH, true);
 		editor.fillRectSolid(rand, new Coord(x + 1, y, z + 5), new Coord(x + 4, y, z + 5), stair, true, true);
-		WorldEditor.blockOrientation(stair, Cardinal.EAST, true);
+		stair.setOrientation(Cardinal.EAST, true);
 		editor.fillRectSolid(rand, new Coord(x, y, z + 1), new Coord(x, y, z + 4), stair, true, true);
 		
 		if(RogueConfig.getBoolean(RogueConfig.GENEROUS)){
@@ -135,30 +138,30 @@ public class DungeonLab extends DungeonBase {
 	private static void southEast(WorldEditor editor, Random rand, ITheme theme, int x, int y, int z){
 		
 		MetaBlock stone = new MetaBlock(Blocks.stonebrick);
-		MetaBlock stair = new MetaBlock(Blocks.stone_brick_stairs);
+		IStair stair = new MetaStair(StairType.STONEBRICK);
 		MetaBlock slab = new MetaBlock(Blocks.stone_slab.getDefaultState().withProperty(BlockStoneSlab.HALF_PROP, EnumBlockHalf.BOTTOM));
 		
 		corner(editor, rand, theme, x, y, z);
 		
 		editor.fillRectSolid(rand, new Coord(x + 1, y, z + 5), new Coord(x + 4, y, z + 5), new MetaBlock(Blocks.stonebrick), true, true);
-		editor.setBlock(new Coord(x + 1, y + 1, z + 5), WorldEditor.blockOrientation(stair, Cardinal.WEST, false));
+		editor.setBlock(new Coord(x + 1, y + 1, z + 5), stair.setOrientation(Cardinal.WEST, false));
 		editor.setBlock(new Coord(x + 2, y + 1, z + 5), Blocks.flowing_water);
 		editor.setBlock(new Coord(x + 2, y + 2, z + 5), slab);
-		editor.setBlock(new Coord(x + 3, y + 1, z + 5), WorldEditor.blockOrientation(stair, Cardinal.EAST, false));
+		editor.setBlock(new Coord(x + 3, y + 1, z + 5), stair.setOrientation(Cardinal.EAST, false));
 		
 		editor.fillRectSolid(rand, new Coord(x + 5, y, z + 1), new Coord(x + 5, y, z + 4), stone, true, true);
-		editor.setBlock(new Coord(x + 5, y + 1, z + 1), WorldEditor.blockOrientation(stair, Cardinal.NORTH, false));
+		editor.setBlock(new Coord(x + 5, y + 1, z + 1), stair.setOrientation(Cardinal.NORTH, false));
 		editor.setBlock(new Coord(x + 5, y + 1, z + 2), Blocks.flowing_water);
 		editor.setBlock(new Coord(x + 5, y + 2, z + 2), slab);
-		editor.setBlock(new Coord(x + 5, y + 1, z + 3), WorldEditor.blockOrientation(stair, Cardinal.SOUTH, false));
+		editor.setBlock(new Coord(x + 5, y + 1, z + 3), stair.setOrientation(Cardinal.SOUTH, false));
 		
 		editor.fillRectSolid(rand, new Coord(x + 3, y, z + 3), new Coord(x + 4, y, z + 4), stone, true, true);
 		editor.setBlock(new Coord(x + 3, y + 1, z + 3), Blocks.torch);
 		
-		editor.setBlock(rand, new Coord(x + 4, y, z + 1), WorldEditor.blockOrientation(stair, Cardinal.NORTH, false), true, true);
-		editor.setBlock(rand, new Coord(x + 3, y, z + 2), WorldEditor.blockOrientation(stair, Cardinal.WEST, false), true, true);
-		editor.setBlock(rand, new Coord(x + 2, y, z + 3), WorldEditor.blockOrientation(stair, Cardinal.NORTH, false), true, true);
-		editor.setBlock(rand, new Coord(x + 1, y, z + 4), WorldEditor.blockOrientation(stair, Cardinal.WEST, false), true, true);
+		editor.setBlock(rand, new Coord(x + 4, y, z + 1), stair.setOrientation(Cardinal.NORTH, false), true, true);
+		editor.setBlock(rand, new Coord(x + 3, y, z + 2), stair.setOrientation(Cardinal.WEST, false), true, true);
+		editor.setBlock(rand, new Coord(x + 2, y, z + 3), stair.setOrientation(Cardinal.NORTH, false), true, true);
+		editor.setBlock(rand, new Coord(x + 1, y, z + 4), stair.setOrientation(Cardinal.WEST, false), true, true);
 		
 		
 	}
@@ -187,9 +190,9 @@ public class DungeonLab extends DungeonBase {
 		
 		editor.setBlock(new Coord(x + 1, y, z + 1), Blocks.stonebrick);
 		
-		MetaBlock stair = new MetaBlock(Blocks.stone_brick_stairs);
-		editor.fillRectSolid(rand, new Coord(x + 2, y, z + 1), new Coord(x + 4, y, z + 1), WorldEditor.blockOrientation(stair, Cardinal.SOUTH, false), true, true);
-		editor.fillRectSolid(rand, new Coord(x + 1, y, z + 2), new Coord(x + 1, y, z + 4), WorldEditor.blockOrientation(stair, Cardinal.EAST, false), true, true);
+		IStair stair = new MetaStair(StairType.STONEBRICK);
+		editor.fillRectSolid(rand, new Coord(x + 2, y, z + 1), new Coord(x + 4, y, z + 1), stair.setOrientation(Cardinal.SOUTH, false), true, true);
+		editor.fillRectSolid(rand, new Coord(x + 1, y, z + 2), new Coord(x + 1, y, z + 4), stair.setOrientation(Cardinal.EAST, false), true, true);
 		
 		editor.setBlock(new Coord(x + 2, y - 1, z + 2), Blocks.redstone_block);
 		editor.setBlock(new Coord(x + 3, y - 1, z + 2), Blocks.redstone_lamp);
@@ -221,10 +224,10 @@ public class DungeonLab extends DungeonBase {
 		
 		editor.setBlock(new Coord(x + 4, y, z + 1), Blocks.stonebrick);
 		
-		MetaBlock stair = new MetaBlock (Blocks.stone_brick_stairs);
+		IStair stair = new MetaStair(StairType.STONEBRICK);
 		
-		editor.fillRectSolid(rand, new Coord(x + 1, y, z + 1), new Coord(x + 3, y, z + 1), WorldEditor.blockOrientation(stair, Cardinal.SOUTH, false), true, true);
-		editor.fillRectSolid(rand, new Coord(x + 4, y, z + 2), new Coord(x + 4, y, z + 4), WorldEditor.blockOrientation(stair, Cardinal.WEST, false), true, true);
+		editor.fillRectSolid(rand, new Coord(x + 1, y, z + 1), new Coord(x + 3, y, z + 1), stair.setOrientation(Cardinal.SOUTH, false), true, true);
+		editor.fillRectSolid(rand, new Coord(x + 4, y, z + 2), new Coord(x + 4, y, z + 4), stair.setOrientation(Cardinal.WEST, false), true, true);
 		
 		editor.setBlock(new Coord(x + 3, y - 1, z + 2), Blocks.redstone_block);
 		editor.setBlock(new Coord(x + 2, y - 1, z + 2), Blocks.redstone_lamp);
@@ -237,11 +240,11 @@ public class DungeonLab extends DungeonBase {
 		
 		editor.fillRectSolid(rand, new Coord(x, y, z), new Coord(x, y + 2, z), theme.getSecondaryPillar(), true, true);
 		editor.setBlock(rand, new Coord(x, y + 3, z), theme.getPrimaryWall(), true, true);
-		MetaBlock stair = theme.getSecondaryStair();
-		WorldEditor.blockOrientation(stair, Cardinal.EAST, true).setBlock(editor, new Coord(x + 1, y + 3, z));
-		WorldEditor.blockOrientation(stair, Cardinal.WEST, true).setBlock(editor, new Coord(x - 1, y + 3, z));
-		WorldEditor.blockOrientation(stair, Cardinal.SOUTH, true).setBlock(editor, new Coord(x, y + 3, z + 1));
-		WorldEditor.blockOrientation(stair, Cardinal.NORTH, true).setBlock(editor, new Coord(x, y + 3, z - 1));
+		IStair stair = theme.getSecondaryStair();
+		stair.setOrientation(Cardinal.EAST, true).setBlock(editor, new Coord(x + 1, y + 3, z));
+		stair.setOrientation(Cardinal.WEST, true).setBlock(editor, new Coord(x - 1, y + 3, z));
+		stair.setOrientation(Cardinal.SOUTH, true).setBlock(editor, new Coord(x, y + 3, z + 1));
+		stair.setOrientation(Cardinal.NORTH, true).setBlock(editor, new Coord(x, y + 3, z - 1));
 	
 	}
 	

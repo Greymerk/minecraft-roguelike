@@ -3,17 +3,19 @@ package greymerk.roguelike.theme;
 import greymerk.roguelike.worldgen.BlockStripes;
 import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.MetaBlock;
+import greymerk.roguelike.worldgen.MetaStair;
 import greymerk.roguelike.worldgen.blocks.ColorBlock;
+import greymerk.roguelike.worldgen.blocks.DyeColor;
+import greymerk.roguelike.worldgen.blocks.StairType;
 import net.minecraft.block.BlockQuartz;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.EnumDyeColor;
 
 public class ThemeEniQuartz extends ThemeBase{
 
 	public ThemeEniQuartz(){
 		
 		BlockWeightedRandom red = new BlockWeightedRandom();
-		red.addBlock(ColorBlock.get(Blocks.stained_hardened_clay, EnumDyeColor.RED), 100);
+		red.addBlock(ColorBlock.get(ColorBlock.CLAY, DyeColor.RED), 100);
 		red.addBlock(new MetaBlock(Blocks.flowing_lava), 5);
 		red.addBlock(new MetaBlock(Blocks.redstone_block), 1);
 		
@@ -23,13 +25,13 @@ public class ThemeEniQuartz extends ThemeBase{
 		
 		MetaBlock walls = new MetaBlock(Blocks.brick_block);		
 		
-		MetaBlock stair = new MetaBlock(Blocks.brick_stairs);
+		MetaStair stair = new MetaStair(StairType.BRICK);
 		
 		
 		this.primary = new BlockSet(floor, walls, stair, walls);
 		
 		MetaBlock quartz = new MetaBlock(Blocks.quartz_block);
-		MetaBlock quartzStair = new MetaBlock(Blocks.quartz_stairs);
+		MetaStair quartzStair = new MetaStair(StairType.QUARTZ);
 		MetaBlock quartzPillar = new MetaBlock(Blocks.quartz_block);
 		quartzPillar.withProperty(BlockQuartz.VARIANT_PROP, BlockQuartz.EnumType.LINES_Y);
 		

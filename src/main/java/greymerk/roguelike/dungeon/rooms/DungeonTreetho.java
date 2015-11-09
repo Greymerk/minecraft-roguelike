@@ -9,16 +9,17 @@ import greymerk.roguelike.util.mst.MinimumSpanningTree;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
+import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
 import greymerk.roguelike.worldgen.blocks.ColorBlock;
+import greymerk.roguelike.worldgen.blocks.DyeColor;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.block.BlockSapling;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.block.BlockStoneSlab;
 import net.minecraft.block.BlockWoodSlab;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.EnumDyeColor;
 
 public class DungeonTreetho extends DungeonBase{
 
@@ -80,7 +81,7 @@ public class DungeonTreetho extends DungeonBase{
 		MetaBlock light = new MetaBlock(Blocks.lit_pumpkin);
 		MetaBlock sapling = new MetaBlock(Blocks.sapling);
 		sapling.withProperty(BlockSapling.TYPE_PROP, BlockPlanks.EnumType.BIRCH);
-		MetaBlock glass = ColorBlock.get(Blocks.stained_glass, EnumDyeColor.YELLOW);
+		MetaBlock glass = ColorBlock.get(ColorBlock.GLASS, DyeColor.YELLOW);
 		MetaBlock dirt = new MetaBlock(Blocks.dirt);
 		
 		Cardinal[] orth = Cardinal.getOrthogonal(dir);
@@ -154,7 +155,7 @@ public class DungeonTreetho extends DungeonBase{
 		
 		ITheme theme = settings.getTheme();
 		IBlockFactory pillar = theme.getPrimaryPillar();
-		MetaBlock stair = theme.getPrimaryStair();
+		IStair stair = theme.getPrimaryStair();
 		
 		Coord cursor = new Coord(origin);
 		editor.fillDown(rand, cursor, pillar);
@@ -163,7 +164,7 @@ public class DungeonTreetho extends DungeonBase{
 			cursor = new Coord(origin);
 			cursor.add(dir);
 			if(editor.isAirBlock(cursor)){
-				WorldEditor.blockOrientation(stair, dir, true).setBlock(editor, cursor);
+				stair.setOrientation(dir, true).setBlock(editor, cursor);
 			}
 		}
 	}

@@ -10,9 +10,12 @@ import greymerk.roguelike.treasure.loot.provider.ItemNovelty;
 import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
+import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
+import greymerk.roguelike.worldgen.MetaStair;
 import greymerk.roguelike.worldgen.WorldEditor;
 import greymerk.roguelike.worldgen.blocks.ColorBlock;
+import greymerk.roguelike.worldgen.blocks.StairType;
 import net.minecraft.init.Blocks;
 
 public class DungeonNebris extends DungeonBase {
@@ -31,7 +34,7 @@ public class DungeonNebris extends DungeonBase {
 		waterFloor.addBlock(new MetaBlock(Blocks.glowstone), 7);
 		
 		
-		MetaBlock step = new MetaBlock(Blocks.stone_stairs);
+		IStair step = new MetaStair(StairType.COBBLE);
 		MetaBlock water = new MetaBlock(Blocks.flowing_water);
 		
 		// space
@@ -148,7 +151,7 @@ public class DungeonNebris extends DungeonBase {
 				cursor.add(Cardinal.DOWN, 1);
 				
 				
-				WorldEditor.blockOrientation(step, Cardinal.reverse(orth), true);
+				step.setOrientation(Cardinal.reverse(orth), true);
 				editor.setBlock(rand, cursor, step, true, true);
 			}
 		}
@@ -168,7 +171,7 @@ public class DungeonNebris extends DungeonBase {
 				
 				start.add(dir, 1);
 				end.add(dir, 1);
-				editor.fillRectSolid(rand, start, end, ColorBlock.get(Blocks.wool, rand), true, true);
+				editor.fillRectSolid(rand, start, end, ColorBlock.get(ColorBlock.WOOL, rand), true, true);
 				
 				start = new Coord(x, y, z);
 				start.add(dir, 8);
@@ -176,7 +179,7 @@ public class DungeonNebris extends DungeonBase {
 				end = new Coord(start);
 				end.add(Cardinal.UP, 3);
 				
-				editor.fillRectSolid(rand, start, end, ColorBlock.get(Blocks.wool, rand), true, true);
+				editor.fillRectSolid(rand, start, end, ColorBlock.get(ColorBlock.WOOL, rand), true, true);
 			}
 		}
 		

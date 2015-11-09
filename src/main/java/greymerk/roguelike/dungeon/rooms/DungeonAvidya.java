@@ -10,8 +10,11 @@ import greymerk.roguelike.treasure.TreasureChestEmpty;
 import greymerk.roguelike.treasure.loot.provider.ItemNovelty;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
+import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
+import greymerk.roguelike.worldgen.MetaStair;
 import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.blocks.StairType;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockColored;
 import net.minecraft.block.BlockPlanks;
@@ -191,8 +194,8 @@ public class DungeonAvidya extends DungeonBase {
 				cursor = new Coord(x, y, z);
 				cursor.add(dir, 7);
 				cursor.add(Cardinal.DOWN, 1);
-				MetaBlock step = new MetaBlock(Blocks.stone_brick_stairs);
-				WorldEditor.blockOrientation(step, Cardinal.reverse(dir), false);
+				IStair step = new MetaStair(StairType.STONEBRICK);
+				step.setOrientation(Cardinal.reverse(dir), false);
 				editor.setBlock(rand, cursor, step, true, true);
 				
 				cursor.add(orth, 1);
@@ -201,18 +204,18 @@ public class DungeonAvidya extends DungeonBase {
 				cursor.add(orth, 1);
 				editor.setBlock(rand, cursor, step, true, true);
 				
-				WorldEditor.blockOrientation(step, Cardinal.reverse(orth), false);
+				step.setOrientation(Cardinal.reverse(orth), false);
 				cursor.add(orth, 1);
 				editor.setBlock(rand, cursor, step, true, true);
 				
 				cursor.add(Cardinal.reverse(dir), 1);
 				editor.setBlock(rand, cursor, step, true, true);
 				
-				WorldEditor.blockOrientation(step, Cardinal.reverse(dir), false);
+				step.setOrientation(Cardinal.reverse(dir), false);
 				cursor.add(orth, 1);
 				editor.setBlock(rand, cursor, step, true, true);
 				
-				WorldEditor.blockOrientation(step, Cardinal.reverse(orth), false);
+				step.setOrientation(Cardinal.reverse(orth), false);
 				cursor.add(orth, 1);
 				editor.setBlock(rand, cursor, step, true, true);
 				
@@ -274,9 +277,9 @@ public class DungeonAvidya extends DungeonBase {
 	}
 	
 	private static void pillarTop(WorldEditor editor, Random rand, Coord cursor){
-		MetaBlock step = new MetaBlock(Blocks.quartz_stairs);
+		IStair step = new MetaStair(StairType.QUARTZ);
 		for(Cardinal dir : Cardinal.directions){
-			WorldEditor.blockOrientation(step, dir, true);
+			step.setOrientation(dir, true);
 			cursor.add(dir, 1);
 			editor.setBlock(rand, cursor, step, true, false);
 			cursor.add(Cardinal.reverse(dir), 1);

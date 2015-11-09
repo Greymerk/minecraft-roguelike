@@ -8,6 +8,7 @@ import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.treasure.TreasureChest;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
+import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
 import net.minecraft.init.Blocks;
@@ -31,7 +32,7 @@ public class DungeonReward implements IDungeonRoom {
 		Coord start;
 		Coord end;
 		
-		MetaBlock stair = theme.getPrimaryStair();
+		IStair stair = theme.getPrimaryStair();
 		
 		for(Cardinal dir : Cardinal.directions){
 			for(Cardinal orth : Cardinal.getOrthogonal(dir)){
@@ -43,16 +44,16 @@ public class DungeonReward implements IDungeonRoom {
 				end.add(Cardinal.UP, 5);
 				editor.fillRectSolid(rand, start, end, theme.getPrimaryWall(), true, true);
 				cursor.add(Cardinal.reverse(dir));
-				WorldEditor.blockOrientation(stair, Cardinal.reverse(dir), false).setBlock(editor, cursor);
+				stair.setOrientation(Cardinal.reverse(dir), false).setBlock(editor, cursor);
 				cursor.add(Cardinal.UP, 2);
-				WorldEditor.blockOrientation(stair, Cardinal.reverse(dir), true).setBlock(editor, cursor);
+				stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
 				cursor.add(Cardinal.UP);
 				start = new Coord(cursor);
 				end = new Coord(start);
 				end.add(Cardinal.UP, 2);
 				editor.fillRectSolid(rand, start, end, theme.getPrimaryWall(), true, true);
 				cursor.add(Cardinal.reverse(dir));
-				WorldEditor.blockOrientation(stair, Cardinal.reverse(dir), true).setBlock(editor, cursor);
+				stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
 				cursor.add(Cardinal.UP);
 				start = new Coord(cursor);
 				end = new Coord(start);
@@ -60,7 +61,7 @@ public class DungeonReward implements IDungeonRoom {
 				editor.fillRectSolid(rand, start, end, theme.getPrimaryWall(), true, true);
 				cursor.add(Cardinal.UP);
 				cursor.add(Cardinal.reverse(dir));
-				WorldEditor.blockOrientation(stair, Cardinal.reverse(dir), true).setBlock(editor, cursor);
+				stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
 				
 				start = new Coord(x, y, z);
 				start.add(dir, 7);
@@ -82,20 +83,20 @@ public class DungeonReward implements IDungeonRoom {
 				cursor.add(dir, 8);
 				cursor.add(Cardinal.UP, 2);
 				cursor.add(orth);
-				editor.setBlock(rand, cursor, WorldEditor.blockOrientation(stair, Cardinal.reverse(orth), true), true, false);
+				editor.setBlock(rand, cursor, stair.setOrientation(Cardinal.reverse(orth), true), true, false);
 				cursor.add(Cardinal.reverse(dir));
-				WorldEditor.blockOrientation(stair, Cardinal.reverse(orth), true).setBlock(editor, cursor);
-				cursor.add(Cardinal.reverse(dir));
-				cursor.add(Cardinal.UP);
-				WorldEditor.blockOrientation(stair, Cardinal.reverse(orth), true).setBlock(editor, cursor);
+				stair.setOrientation(Cardinal.reverse(orth), true).setBlock(editor, cursor);
 				cursor.add(Cardinal.reverse(dir));
 				cursor.add(Cardinal.UP);
-				WorldEditor.blockOrientation(stair, Cardinal.reverse(orth), true).setBlock(editor, cursor);
+				stair.setOrientation(Cardinal.reverse(orth), true).setBlock(editor, cursor);
 				cursor.add(Cardinal.reverse(dir));
 				cursor.add(Cardinal.UP);
-				WorldEditor.blockOrientation(stair, Cardinal.reverse(orth), true).setBlock(editor, cursor);
+				stair.setOrientation(Cardinal.reverse(orth), true).setBlock(editor, cursor);
+				cursor.add(Cardinal.reverse(dir));
+				cursor.add(Cardinal.UP);
+				stair.setOrientation(Cardinal.reverse(orth), true).setBlock(editor, cursor);
 				cursor.add(Cardinal.reverse(dir), 2);
-				WorldEditor.blockOrientation(stair, dir, true).setBlock(editor, cursor);
+				stair.setOrientation(dir, true).setBlock(editor, cursor);
 				
 				start = new Coord(x, y, z);
 				start.add(dir, 7);
@@ -114,28 +115,28 @@ public class DungeonReward implements IDungeonRoom {
 				cursor = new Coord(x, y, z);
 				cursor.add(dir, 7);
 				cursor.add(orth, 3);
-				WorldEditor.blockOrientation(stair, orth, false).setBlock(editor, cursor);
+				stair.setOrientation(orth, false).setBlock(editor, cursor);
 				cursor.add(orth, 2);
-				WorldEditor.blockOrientation(stair, Cardinal.reverse(orth), false).setBlock(editor, cursor);
+				stair.setOrientation(Cardinal.reverse(orth), false).setBlock(editor, cursor);
 				cursor.add(Cardinal.UP, 2);
-				WorldEditor.blockOrientation(stair, Cardinal.reverse(orth), true).setBlock(editor, cursor);
+				stair.setOrientation(Cardinal.reverse(orth), true).setBlock(editor, cursor);
 				cursor.add(Cardinal.reverse(orth), 2);
-				WorldEditor.blockOrientation(stair, orth, true).setBlock(editor, cursor);
+				stair.setOrientation(orth, true).setBlock(editor, cursor);
 				cursor.add(Cardinal.reverse(dir));
 				cursor.add(Cardinal.UP);
-				WorldEditor.blockOrientation(stair, orth, true).setBlock(editor, cursor);
+				stair.setOrientation(orth, true).setBlock(editor, cursor);
 				cursor.add(orth, 2);
-				WorldEditor.blockOrientation(stair, Cardinal.reverse(orth), true).setBlock(editor, cursor);
+				stair.setOrientation(Cardinal.reverse(orth), true).setBlock(editor, cursor);
 				cursor.add(Cardinal.reverse(dir));
 				cursor.add(Cardinal.UP);
 				end = new Coord(cursor);
 				end.add(Cardinal.reverse(orth), 2);
-				editor.fillRectSolid(rand, cursor, end, WorldEditor.blockOrientation(stair, Cardinal.reverse(dir), true), true, true);
+				editor.fillRectSolid(rand, cursor, end, stair.setOrientation(Cardinal.reverse(dir), true), true, true);
 				cursor.add(Cardinal.UP);
 				end.add(Cardinal.UP);
 				editor.fillRectSolid(rand, cursor, end, theme.getPrimaryWall(), true, true);
 				end.add(Cardinal.reverse(dir));
-				WorldEditor.blockOrientation(stair, orth, true).setBlock(editor, cursor);
+				stair.setOrientation(orth, true).setBlock(editor, cursor);
 				
 				cursor = new Coord(x, y, z);
 				cursor.add(dir, 7);
@@ -159,13 +160,13 @@ public class DungeonReward implements IDungeonRoom {
 			cursor = new Coord(x, y, z);
 			editor.setBlock(rand, cursor, theme.getPrimaryWall(), true, true);
 			cursor.add(dir);
-			WorldEditor.blockOrientation(stair, dir, false).setBlock(editor, cursor);
+			stair.setOrientation(dir, false).setBlock(editor, cursor);
 			cursor.add(o);
-			WorldEditor.blockOrientation(stair, dir, false).setBlock(editor, cursor);
+			stair.setOrientation(dir, false).setBlock(editor, cursor);
 			cursor.add(Cardinal.UP, 4);
-			WorldEditor.blockOrientation(stair, dir, true).setBlock(editor, cursor);
+			stair.setOrientation(dir, true).setBlock(editor, cursor);
 			cursor.add(Cardinal.reverse(o));
-			WorldEditor.blockOrientation(stair, dir, true).setBlock(editor, cursor);
+			stair.setOrientation(dir, true).setBlock(editor, cursor);
 			
 		}
 		

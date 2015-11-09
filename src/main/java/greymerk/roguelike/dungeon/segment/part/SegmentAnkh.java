@@ -6,9 +6,11 @@ import greymerk.roguelike.dungeon.IDungeonLevel;
 import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
+import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
 import greymerk.roguelike.worldgen.blocks.ColorBlock;
+import greymerk.roguelike.worldgen.blocks.DyeColor;
 import net.minecraft.init.Blocks;
 
 public class SegmentAnkh extends SegmentBase{
@@ -20,9 +22,9 @@ public class SegmentAnkh extends SegmentBase{
 		Coord cursor;
 		
 		MetaBlock air = new MetaBlock(Blocks.air);
-		MetaBlock stair = theme.getSecondaryStair();
-		MetaBlock glass = ColorBlock.get(Blocks.stained_glass, rand);
-		MetaBlock white = new MetaBlock(Blocks.stained_hardened_clay);
+		IStair stair = theme.getSecondaryStair();
+		MetaBlock glass = ColorBlock.get(ColorBlock.GLASS, rand);
+		MetaBlock white = ColorBlock.get(ColorBlock.GLASS, DyeColor.WHITE);
 		MetaBlock glowstone = new MetaBlock(Blocks.glowstone);
 		
 		Cardinal[] orth = Cardinal.getOrthogonal(dir);
@@ -40,11 +42,11 @@ public class SegmentAnkh extends SegmentBase{
 			cursor = new Coord(x, y, z);
 			cursor.add(dir, 2);
 			cursor.add(o);
-			WorldEditor.blockOrientation(stair, Cardinal.reverse(o), false).setBlock(editor, cursor);
+			stair.setOrientation(Cardinal.reverse(o), false).setBlock(editor, cursor);
 			cursor.add(Cardinal.UP);
-			WorldEditor.blockOrientation(stair, Cardinal.reverse(o), false).setBlock(editor, cursor);
+			stair.setOrientation(Cardinal.reverse(o), false).setBlock(editor, cursor);
 			cursor.add(Cardinal.UP);
-			WorldEditor.blockOrientation(stair, Cardinal.reverse(o), true).setBlock(editor, cursor);
+			stair.setOrientation(Cardinal.reverse(o), true).setBlock(editor, cursor);
 		}
 		
 		start = new Coord(x, y, z);

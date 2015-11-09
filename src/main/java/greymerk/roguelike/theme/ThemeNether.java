@@ -3,6 +3,8 @@ package greymerk.roguelike.theme;
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.MetaBlock;
+import greymerk.roguelike.worldgen.MetaStair;
+import greymerk.roguelike.worldgen.blocks.StairType;
 import net.minecraft.init.Blocks;
 
 public class ThemeNether extends ThemeBase{
@@ -22,7 +24,7 @@ public class ThemeNether extends ThemeBase{
 		if (RogueConfig.getBoolean(RogueConfig.PRECIOUSBLOCKS)) floor.addBlock(new MetaBlock(Blocks.gold_block), 2);
 		if (RogueConfig.getBoolean(RogueConfig.PRECIOUSBLOCKS)) floor.addBlock(new MetaBlock(Blocks.diamond_block), 1);
 		
-		MetaBlock stair = new MetaBlock(Blocks.nether_brick_stairs);
+		MetaStair stair = new MetaStair(StairType.NETHERBRICK);
 		
 		MetaBlock pillar = new MetaBlock(Blocks.obsidian);
 		

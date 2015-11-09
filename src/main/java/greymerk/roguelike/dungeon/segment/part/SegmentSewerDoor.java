@@ -7,6 +7,7 @@ import greymerk.roguelike.dungeon.base.SecretFactory;
 import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
+import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
 import greymerk.roguelike.worldgen.blocks.Door;
@@ -19,7 +20,7 @@ public class SegmentSewerDoor extends SegmentBase {
 	protected void genWall(WorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
 		
 		MetaBlock air = new MetaBlock(Blocks.air);
-		MetaBlock stair = theme.getSecondaryStair();
+		IStair stair = theme.getSecondaryStair();
 		MetaBlock bars = new MetaBlock(Blocks.iron_bars);
 		MetaBlock water = new MetaBlock(Blocks.flowing_water);
 		MetaBlock leaves = Leaves.get(Leaves.SPRUCE, false);
@@ -38,8 +39,8 @@ public class SegmentSewerDoor extends SegmentBase {
 		end = new Coord(start);
 		start.add(orth[0]);
 		end.add(orth[1]);
-		WorldEditor.blockOrientation(stair, orth[0], true).setBlock(editor, start);
-		WorldEditor.blockOrientation(stair, orth[1], true).setBlock(editor, end);
+		stair.setOrientation(orth[0], true).setBlock(editor, start);
+		stair.setOrientation(orth[1], true).setBlock(editor, end);
 		cursor = new Coord(x, y, z);
 		cursor.add(Cardinal.DOWN);
 		bars.setBlock(editor, cursor);
@@ -77,7 +78,7 @@ public class SegmentSewerDoor extends SegmentBase {
 		for(Cardinal d : orth){
 			Coord c = new Coord(cursor);
 			c.add(d, 1);
-			WorldEditor.blockOrientation(stair, Cardinal.reverse(d), true);
+			stair.setOrientation(Cardinal.reverse(d), true);
 			editor.setBlock(rand, c, stair, true, true);
 		}
 		

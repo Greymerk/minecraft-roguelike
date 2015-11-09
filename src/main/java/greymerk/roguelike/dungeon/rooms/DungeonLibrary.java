@@ -9,9 +9,12 @@ import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
+import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
+import greymerk.roguelike.worldgen.MetaStair;
 import greymerk.roguelike.worldgen.WorldEditor;
 import greymerk.roguelike.worldgen.blocks.Door;
+import greymerk.roguelike.worldgen.blocks.StairType;
 import net.minecraft.init.Blocks;
 
 
@@ -25,7 +28,7 @@ public class DungeonLibrary extends DungeonBase{
 		int z = origin.getZ();
 		IBlockFactory walls = settings.getTheme().getPrimaryWall();
 		
-		MetaBlock stair = settings.getTheme().getPrimaryStair();
+		IStair stair = settings.getTheme().getPrimaryStair();
 		
 		MetaBlock air = new MetaBlock(Blocks.air);
 
@@ -93,14 +96,14 @@ public class DungeonLibrary extends DungeonBase{
 				cursor.add(o, 3);
 				cursor.add(Cardinal.UP, 2);
 				
-				WorldEditor.blockOrientation(stair, Cardinal.reverse(o), true).setBlock(editor, cursor);
+				stair.setOrientation(Cardinal.reverse(o), true).setBlock(editor, cursor);
 				cursor.add(Cardinal.UP);
 				editor.setBlock(rand, cursor, walls, true, true);
 				cursor.add(Cardinal.reverse(o));
-				WorldEditor.blockOrientation(stair, Cardinal.reverse(o), true).setBlock(editor, cursor);
+				stair.setOrientation(Cardinal.reverse(o), true).setBlock(editor, cursor);
 				cursor.add(Cardinal.UP, 3);
 				cursor.add(Cardinal.reverse(dir));
-				WorldEditor.blockOrientation(stair, Cardinal.reverse(o), true).setBlock(editor, cursor);
+				stair.setOrientation(Cardinal.reverse(o), true).setBlock(editor, cursor);
 				
 			}
 			
@@ -108,9 +111,9 @@ public class DungeonLibrary extends DungeonBase{
 			cursor = new Coord(origin);
 			cursor.add(Cardinal.UP, 4);
 			cursor.add(dir);
-			WorldEditor.blockOrientation(stair, dir, true).setBlock(editor, cursor);
+			stair.setOrientation(dir, true).setBlock(editor, cursor);
 			cursor.add(dir, 2);
-			WorldEditor.blockOrientation(stair, Cardinal.reverse(dir), true).setBlock(editor, cursor);
+			stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
 			cursor.add(Cardinal.UP);
 			start = new Coord(cursor);
 			end = new Coord(cursor);
@@ -120,9 +123,9 @@ public class DungeonLibrary extends DungeonBase{
 			editor.setBlock(rand, cursor, walls, true, true);
 			cursor.add(Cardinal.UP);
 			cursor.add(Cardinal.reverse(dir));
-			WorldEditor.blockOrientation(stair, Cardinal.reverse(dir), true).setBlock(editor, cursor);
+			stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
 			cursor.add(Cardinal.reverse(dir));
-			WorldEditor.blockOrientation(stair, dir, true).setBlock(editor, cursor);
+			stair.setOrientation(dir, true).setBlock(editor, cursor);
 		}
 		
 		
@@ -156,10 +159,10 @@ public class DungeonLibrary extends DungeonBase{
 			cursor.add(o);
 			cursor.add(Cardinal.UP, 2);
 			
-			MetaBlock stair = theme.getPrimaryStair();
-			WorldEditor.blockOrientation(stair, Cardinal.reverse(dir), true).setBlock(editor, cursor);
+			IStair stair = theme.getPrimaryStair();
+			stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
 			cursor.add(dir);
-			WorldEditor.blockOrientation(stair, Cardinal.reverse(o), true).setBlock(editor, cursor);
+			stair.setOrientation(Cardinal.reverse(o), true).setBlock(editor, cursor);
 		}
 	}
 	
@@ -198,17 +201,17 @@ public class DungeonLibrary extends DungeonBase{
 		cursor = new Coord(pos);
 		cursor.add(dir, 4);
 		
-		MetaBlock stair = new MetaBlock(Blocks.oak_stairs);
-		WorldEditor.blockOrientation(stair, dir, false).setBlock(editor, cursor);
+		IStair stair = new MetaStair(StairType.OAK);
+		stair.setOrientation(dir, false).setBlock(editor, cursor);
 		
 		cursor.add(dir);
-		WorldEditor.blockOrientation(stair, Cardinal.reverse(dir), true).setBlock(editor, cursor);
+		stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
 		
 		cursor.add(orth[0]);
-		WorldEditor.blockOrientation(stair, orth[1], true).setBlock(editor, cursor);
+		stair.setOrientation(orth[1], true).setBlock(editor, cursor);
 		
 		cursor.add(orth[1], 2);
-		WorldEditor.blockOrientation(stair, orth[0], true).setBlock(editor, cursor);
+		stair.setOrientation(orth[0], true).setBlock(editor, cursor);
 		
 		
 	}

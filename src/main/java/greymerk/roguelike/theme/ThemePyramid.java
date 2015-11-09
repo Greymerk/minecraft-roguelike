@@ -2,6 +2,8 @@ package greymerk.roguelike.theme;
 
 import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.MetaBlock;
+import greymerk.roguelike.worldgen.MetaStair;
+import greymerk.roguelike.worldgen.blocks.StairType;
 import net.minecraft.block.BlockSandStone;
 import net.minecraft.init.Blocks;
 
@@ -20,7 +22,7 @@ public class ThemePyramid  extends ThemeBase{
 		walls.addBlock(chisel, 5);
 		walls.addBlock(new MetaBlock(Blocks.sand), 5);
 		
-		MetaBlock stair = new MetaBlock(Blocks.sandstone_stairs);
+		MetaStair stair = new MetaStair(StairType.SANDSTONE);
 		
 		MetaBlock pillar = smooth;
 		

@@ -1,7 +1,7 @@
 package greymerk.roguelike.theme;
 
 import greymerk.roguelike.worldgen.IBlockFactory;
-import greymerk.roguelike.worldgen.MetaBlock;
+import greymerk.roguelike.worldgen.IStair;
 
 public interface ITheme {
 
@@ -9,7 +9,7 @@ public interface ITheme {
 	
 	public IBlockFactory getPrimaryWall();
 		
-	public MetaBlock getPrimaryStair();
+	public IStair getPrimaryStair();
 	
 	public IBlockFactory getPrimaryPillar();
 	
@@ -17,7 +17,7 @@ public interface ITheme {
 	
 	public IBlockFactory getSecondaryWall();
 	
-	public MetaBlock getSecondaryStair();
+	public IStair getSecondaryStair();
 	
 	public IBlockFactory getSecondaryPillar();
 		

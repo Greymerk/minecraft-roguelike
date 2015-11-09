@@ -16,15 +16,19 @@ import greymerk.roguelike.treasure.loot.provider.ItemNovelty;
 import greymerk.roguelike.worldgen.BlockFactoryCheckers;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
+import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
+import greymerk.roguelike.worldgen.MetaStair;
 import greymerk.roguelike.worldgen.WorldEditor;
 import greymerk.roguelike.worldgen.blocks.Log;
+import greymerk.roguelike.worldgen.blocks.StairType;
+import greymerk.roguelike.worldgen.blocks.Wood;
+import greymerk.roguelike.worldgen.blocks.WoodBlock;
 import net.minecraft.block.BlockCocoa;
 import net.minecraft.block.BlockColored;
 import net.minecraft.block.BlockDoubleStoneSlab;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.block.BlockSlab;
-import net.minecraft.block.BlockStairs;
 import net.minecraft.block.BlockStoneSlab;
 import net.minecraft.block.BlockTrapDoor;
 import net.minecraft.init.Blocks;
@@ -44,14 +48,14 @@ public class DungeonBTeam extends DungeonBase {
 		
 		
 		MetaBlock air = new MetaBlock(Blocks.air);
-		MetaBlock oakLog = Log.getLog(Log.OAK);
-		MetaBlock stair = new MetaBlock(Blocks.spruce_stairs);
+		MetaBlock oakLog = Log.getLog(Wood.OAK);
+		IStair stair = new MetaStair(StairType.SPRUCE);
 		MetaBlock stonebrick = new MetaBlock(Blocks.stonebrick);
 		MetaBlock cyan = new MetaBlock(Blocks.stained_hardened_clay);
 		cyan.withProperty(BlockColored.COLOR, EnumDyeColor.CYAN);
 		MetaBlock doubleSlab = new MetaBlock(Blocks.double_stone_slab);
 		doubleSlab.withProperty(BlockDoubleStoneSlab.VARIANT_PROP, BlockStoneSlab.EnumType.STONE);
-		MetaBlock sprucePlank = new MetaBlock(Blocks.planks);
+		MetaBlock sprucePlank = Wood.get(WoodBlock.PLANK);
 		sprucePlank.withProperty(BlockPlanks.VARIANT_PROP, BlockPlanks.EnumType.SPRUCE);
 		
 		editor.fillRectSolid(rand, x - 4, y, z - 4, x + 4, y + 4, z + 5, air);
@@ -61,7 +65,7 @@ public class DungeonBTeam extends DungeonBase {
 		
 		// wood panel walls
 		
-		BlockFactoryCheckers panels = new BlockFactoryCheckers(Log.getLog(Log.SPRUCE, Cardinal.UP), Log.getLog(Log.SPRUCE, Cardinal.EAST));
+		BlockFactoryCheckers panels = new BlockFactoryCheckers(Log.getLog(Wood.SPRUCE, Cardinal.UP), Log.getLog(Wood.SPRUCE, Cardinal.EAST));
 		editor.fillRectSolid(rand, x - 4, y + 1, z + 6, x + 4, y + 3, z + 6, panels, true, true);
 		editor.fillRectSolid(rand, x - 4, y + 1, z - 5, x + 4, y + 3, z - 5, panels, true, true);
 	
@@ -71,9 +75,9 @@ public class DungeonBTeam extends DungeonBase {
 		editor.fillRectSolid(rand, x - 5, y - 1, z - 4, x - 5, y, z + 5, sprucePlank, true, true);
 		editor.fillRectSolid(rand, x + 5, y - 1, z - 4, x + 5, y, z + 5, sprucePlank, true, true);
 		
-		stair.withProperty(BlockStairs.FACING, EnumFacing.SOUTH);
+		stair.setOrientation(Cardinal.SOUTH, false);
 		editor.fillRectSolid(rand, x - 4, y + 4, z - 4, x + 4, y + 4, z - 4, stair, true, true);
-		stair.withProperty(BlockStairs.FACING, EnumFacing.NORTH);
+		stair.setOrientation(Cardinal.NORTH, false);
 		editor.fillRectSolid(rand, x - 4, y + 4, z + 5, x + 4, y + 4, z + 5, stair, true, true);
 		
 		// doors
@@ -93,9 +97,9 @@ public class DungeonBTeam extends DungeonBase {
 		
 		MetaBlock cocao = new MetaBlock(Blocks.cocoa);
 		cocao.withProperty(BlockCocoa.FACING, EnumFacing.EAST);
-		editor.setBlock(x - 5, y + 2, z - 2, Log.getLog(Log.JUNGLE, Cardinal.EAST));
+		editor.setBlock(x - 5, y + 2, z - 2, Log.getLog(Wood.JUNGLE, Cardinal.EAST));
 		cocao.setBlock(editor, new Coord(x - 4, y + 2, z - 2));
-		editor.setBlock(x - 5, y + 2, z + 3, Log.getLog(Log.JUNGLE, Cardinal.EAST));
+		editor.setBlock(x - 5, y + 2, z + 3, Log.getLog(Wood.JUNGLE, Cardinal.EAST));
 		cocao.setBlock(editor, new Coord(x - 4, y + 2, z + 3));
 		
 		lamp(editor, new Coord(x - 2, y, z - 4));
@@ -121,10 +125,10 @@ public class DungeonBTeam extends DungeonBase {
 		
 		// roof
 		editor.fillRectSolid(rand, x - 4, y + 5, z - 5, x + 4, y + 6, z + 6, new MetaBlock(Blocks.stone));
-		editor.fillRectSolid(rand, x - 2, y + 5, z - 1, x + 2, y + 5, z - 1, WorldEditor.blockOrientation(stair, Cardinal.SOUTH, true), true, true);
-		editor.fillRectSolid(rand, x - 2, y + 5, z + 2, x + 2, y + 5, z + 2, WorldEditor.blockOrientation(stair, Cardinal.NORTH, true), true, true);
-		editor.fillRectSolid(rand, x - 3, y + 5, z, x - 3, y + 5, z + 1, WorldEditor.blockOrientation(stair, Cardinal.EAST, true), true, true);
-		editor.fillRectSolid(rand, x + 3, y + 5, z, x + 3, y + 5, z + 1, WorldEditor.blockOrientation(stair, Cardinal.WEST, true), true, true);
+		editor.fillRectSolid(rand, x - 2, y + 5, z - 1, x + 2, y + 5, z - 1, stair.setOrientation(Cardinal.SOUTH, true), true, true);
+		editor.fillRectSolid(rand, x - 2, y + 5, z + 2, x + 2, y + 5, z + 2, stair.setOrientation(Cardinal.NORTH, true), true, true);
+		editor.fillRectSolid(rand, x - 3, y + 5, z, x - 3, y + 5, z + 1, stair.setOrientation(Cardinal.EAST, true), true, true);
+		editor.fillRectSolid(rand, x + 3, y + 5, z, x + 3, y + 5, z + 1, stair.setOrientation(Cardinal.WEST, true), true, true);
 		editor.fillRectSolid(rand, x - 2, y + 5, z, x + 2, y + 5, z + 1, new MetaBlock(Blocks.redstone_lamp));
 		
 		editor.setBlock(x - 3, y + 5, z - 1, oakLog);
@@ -135,22 +139,22 @@ public class DungeonBTeam extends DungeonBase {
 		
 		
 		// table
-		editor.fillRectSolid(rand, x - 2, y, z, x - 2, y, z + 1, WorldEditor.blockOrientation(stair, Cardinal.WEST, true), true, true);
-		editor.fillRectSolid(rand, x + 2, y, z, x + 2, y, z + 1, WorldEditor.blockOrientation(stair, Cardinal.EAST, true), true, true);
+		editor.fillRectSolid(rand, x - 2, y, z, x - 2, y, z + 1, stair.setOrientation(Cardinal.WEST, true), true, true);
+		editor.fillRectSolid(rand, x + 2, y, z, x + 2, y, z + 1, stair.setOrientation(Cardinal.EAST, true), true, true);
 		MetaBlock spruceSlabUpsideDown = new MetaBlock(Blocks.wooden_slab);
 		spruceSlabUpsideDown.withProperty(BlockPlanks.VARIANT_PROP, BlockPlanks.EnumType.SPRUCE);
 		spruceSlabUpsideDown.withProperty(BlockSlab.HALF_PROP, BlockSlab.EnumBlockHalf.TOP);
 		editor.fillRectSolid(rand, x - 1, y, z, x + 1, y, z + 1, spruceSlabUpsideDown, true, true);
 		
 		// chairs
-		MetaBlock chair = new MetaBlock(Blocks.nether_brick_stairs);
-		WorldEditor.blockOrientation(chair, Cardinal.SOUTH, false);
-		chair.setBlock(editor, new Coord(x - 1, y, z - 2));
-		chair.setBlock(editor, new Coord(x + 1, y, z - 2));
+		IStair chair = new MetaStair(StairType.NETHERBRICK);
+		chair.setOrientation(Cardinal.SOUTH, false);
+		chair.setBlock(editor, rand, new Coord(x - 1, y, z - 2));
+		chair.setBlock(editor, rand, new Coord(x + 1, y, z - 2));
 		
-		WorldEditor.blockOrientation(chair, Cardinal.NORTH, false);
-		chair.setBlock(editor, new Coord(x - 1, y, z + 3));
-		chair.setBlock(editor, new Coord(x + 1, y, z + 3));
+		chair.setOrientation(Cardinal.NORTH, false);
+		chair.setBlock(editor, rand, new Coord(x - 1, y, z + 3));
+		chair.setBlock(editor, rand, new Coord(x + 1, y, z + 3));
 		
 		// wall entrances
 		editor.fillRectSolid(rand, x - 7, y - 1, z - 4, x - 6, y + 4, z + 4, stonebrick);

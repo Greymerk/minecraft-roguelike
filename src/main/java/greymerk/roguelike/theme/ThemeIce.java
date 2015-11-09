@@ -1,6 +1,8 @@
 package greymerk.roguelike.theme;
 
 import greymerk.roguelike.worldgen.MetaBlock;
+import greymerk.roguelike.worldgen.MetaStair;
+import greymerk.roguelike.worldgen.blocks.StairType;
 import net.minecraft.init.Blocks;
 
 public class ThemeIce extends ThemeBase{
@@ -8,7 +10,7 @@ public class ThemeIce extends ThemeBase{
 	public ThemeIce(){
 	
 		MetaBlock walls = new MetaBlock(Blocks.snow);
-		MetaBlock stair = new MetaBlock(Blocks.quartz_stairs);
+		MetaStair stair = new MetaStair(StairType.QUARTZ);
 		MetaBlock pillar = new MetaBlock(Blocks.packed_ice);
 		
 		this.primary = new BlockSet(walls, stair, pillar);

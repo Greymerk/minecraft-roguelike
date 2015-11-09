@@ -8,7 +8,7 @@ import greymerk.roguelike.util.WeightedChoice;
 import greymerk.roguelike.util.WeightedRandomizer;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
-import greymerk.roguelike.worldgen.MetaBlock;
+import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.WorldEditor;
 
 public class SegmentGeneratorBase implements ISegmentGenerator{
@@ -73,17 +73,17 @@ public class SegmentGeneratorBase implements ISegmentGenerator{
 		
 		editor.fillDown(rand, new Coord(x, y - 2, z), theme.getPrimaryPillar());
 		
-		MetaBlock stair = theme.getPrimaryStair();
-		WorldEditor.blockOrientation(stair, Cardinal.WEST, true);
-		editor.setBlock(x - 1, y - 2, z, stair);
+		IStair stair = theme.getPrimaryStair();
+		stair.setOrientation(Cardinal.WEST, true);
+		stair.setBlock(editor, new Coord(x - 1, y - 2, z));
 		
-		WorldEditor.blockOrientation(stair, Cardinal.EAST, true);
-		editor.setBlock(x + 1, y - 2, z, stair);
+		stair.setOrientation(Cardinal.EAST, true);
+		stair.setBlock(editor, new Coord(x + 1, y - 2, z));
 		
-		WorldEditor.blockOrientation(stair, Cardinal.SOUTH, true);
-		editor.setBlock(x, y - 2, z + 1, stair);
+		stair.setOrientation(Cardinal.SOUTH, true);
+		stair.setBlock(editor, new Coord(x, y - 2, z + 1));
 		
-		WorldEditor.blockOrientation(stair, Cardinal.NORTH, true);
-		editor.setBlock(x, y - 2, z - 1, stair);	
+		stair.setOrientation(Cardinal.NORTH, true);
+		stair.setBlock(editor, new Coord(x, y - 2, z - 1));	
 	}
 }

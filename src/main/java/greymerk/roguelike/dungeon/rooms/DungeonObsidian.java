@@ -10,9 +10,12 @@ import greymerk.roguelike.treasure.TreasureChest;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
+import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
+import greymerk.roguelike.worldgen.MetaStair;
 import greymerk.roguelike.worldgen.Spawner;
 import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.blocks.StairType;
 import net.minecraft.init.Blocks;
 
 public class DungeonObsidian extends DungeonBase {
@@ -163,17 +166,17 @@ public class DungeonObsidian extends DungeonBase {
 				end.add(Cardinal.DOWN, 2);
 				
 				editor.fillRectSolid(rand, start, end, primaryWall, true, true);
-				MetaBlock step = new MetaBlock(Blocks.nether_brick_stairs);
+				IStair step = new MetaStair(StairType.NETHERBRICK);
 				Coord stepSpot = new Coord(x, y, z);
 				stepSpot.add(dir, 8);
 				stepSpot.add(Cardinal.DOWN, 1);
 				stepSpot.add(orth, 2);
-				WorldEditor.blockOrientation(step, orth, false);
+				step.setOrientation(orth, false);
 				editor.setBlock(rand, stepSpot, step, true, true);
 				stepSpot.add(dir, 1);
 				editor.setBlock(rand, stepSpot, step, true, true);
 				
-				WorldEditor.blockOrientation(step, Cardinal.reverse(dir), false);
+				step.setOrientation(Cardinal.reverse(dir), false);
 				stepSpot = new Coord(x, y, z);
 				stepSpot.add(Cardinal.DOWN, 2);
 				stepSpot.add(dir, 7);

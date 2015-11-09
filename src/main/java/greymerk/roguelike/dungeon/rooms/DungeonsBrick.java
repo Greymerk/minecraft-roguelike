@@ -12,6 +12,7 @@ import greymerk.roguelike.treasure.TreasureChest;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
+import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.Spawner;
 import greymerk.roguelike.worldgen.WorldEditor;
@@ -31,7 +32,7 @@ public class DungeonsBrick extends DungeonBase {
 		
 		ITheme theme = settings.getTheme();
 		
-		MetaBlock stair = theme.getPrimaryStair();
+		IStair stair = theme.getPrimaryStair();
 		IBlockFactory blocks = theme.getPrimaryWall();
 		IBlockFactory pillar = theme.getPrimaryPillar();
 		MetaBlock air = new MetaBlock(Blocks.air);
@@ -65,7 +66,7 @@ public class DungeonsBrick extends DungeonBase {
 			cursor = new Coord(x, y, z);
 			cursor.add(dir, 1);
 			cursor.add(Cardinal.UP, 5);
-			WorldEditor.blockOrientation(stair, Cardinal.reverse(dir), true);
+			stair.setOrientation(Cardinal.reverse(dir), true);
 			editor.setBlock(rand, cursor, stair, false, true);
 			cursor.add(Cardinal.getOrthogonal(dir)[0], 1);
 			editor.setBlock(rand, cursor, blocks, false, true);
@@ -94,7 +95,7 @@ public class DungeonsBrick extends DungeonBase {
 				cursor.add(dir, 3);
 				cursor.add(orth, 2);
 				cursor.add(Cardinal.UP, 3);
-				WorldEditor.blockOrientation(stair, Cardinal.reverse(orth), true);
+				stair.setOrientation(Cardinal.reverse(orth), true);
 				editor.setBlock(rand, cursor, stair, true, true);
 			}
 
@@ -110,7 +111,7 @@ public class DungeonsBrick extends DungeonBase {
 				cursor.add(Cardinal.UP, 4);
 				cursor.add(dir, 2);
 				cursor.add(orth, 1);
-				WorldEditor.blockOrientation(stair, Cardinal.reverse(orth), true);
+				stair.setOrientation(Cardinal.reverse(orth), true);
 				editor.setBlock(rand, cursor, stair, false, true);
 			}
 			

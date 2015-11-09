@@ -8,6 +8,7 @@ import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
+import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
 import net.minecraft.init.Blocks;
@@ -22,7 +23,7 @@ public class DungeonCorner extends DungeonBase {
 		int z = origin.getZ();
 		ITheme theme = settings.getTheme();
 		
-		MetaBlock stair = theme.getPrimaryStair();
+		IStair stair = theme.getPrimaryStair();
 		IBlockFactory blocks = theme.getPrimaryWall();
 		IBlockFactory pillar = theme.getPrimaryPillar();
 		MetaBlock air = new MetaBlock(Blocks.air);
@@ -61,7 +62,7 @@ public class DungeonCorner extends DungeonBase {
 			cursor = new Coord(x, y, z);
 			cursor.add(dir, 1);
 			cursor.add(Cardinal.UP, 4);
-			WorldEditor.blockOrientation(stair, Cardinal.reverse(dir), true);
+			stair.setOrientation(Cardinal.reverse(dir), true);
 			editor.setBlock(rand, cursor, stair, true, true);
 			
 			for(Cardinal orth : Cardinal.getOrthogonal(dir)){
@@ -69,7 +70,7 @@ public class DungeonCorner extends DungeonBase {
 				cursor.add(dir, 2);
 				cursor.add(orth, 1);
 				cursor.add(Cardinal.UP, 3);
-				WorldEditor.blockOrientation(stair, Cardinal.reverse(orth), true);
+				stair.setOrientation(Cardinal.reverse(orth), true);
 				editor.setBlock(rand, cursor, stair, true, true);
 			}
 		}

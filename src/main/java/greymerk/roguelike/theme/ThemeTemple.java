@@ -2,6 +2,8 @@ package greymerk.roguelike.theme;
 
 import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.MetaBlock;
+import greymerk.roguelike.worldgen.MetaStair;
+import greymerk.roguelike.worldgen.blocks.StairType;
 import net.minecraft.block.BlockPrismarine;
 import net.minecraft.init.Blocks;
 
@@ -19,7 +21,7 @@ public class ThemeTemple extends ThemeBase{
 		walls.addBlock(prismRough, 5);
 		walls.addBlock(new MetaBlock(Blocks.sea_lantern), 3);
 		
-		MetaBlock stair = new MetaBlock(Blocks.quartz_stairs);
+		MetaStair stair = new MetaStair(StairType.QUARTZ);
 		MetaBlock pillar = prismDark;
 		this.primary = new BlockSet(walls, stair, pillar);
 		this.secondary = this.primary;

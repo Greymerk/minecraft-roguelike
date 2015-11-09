@@ -62,8 +62,8 @@ public class DungeonsEnchant extends DungeonBase {
 		editor.fillRectSolid(rand, x + 4, y, z - 4, x + 4, y + 4, z - 4, chiselQuartz, true, true);
 		editor.fillRectSolid(rand, x + 4, y, z + 4, x + 4, y + 4, z + 4, chiselQuartz, true, true);
 		
-		MetaBlock decor = ColorBlock.get(Blocks.stained_hardened_clay, rand);
-		MetaBlock lining = ColorBlock.get(Blocks.stained_hardened_clay, rand);
+		MetaBlock decor = ColorBlock.get(ColorBlock.CLAY, rand);
+		MetaBlock lining = ColorBlock.get(ColorBlock.CLAY, rand);
 		
 		//lapis shell
 		editor.fillRectSolid(rand, x - 5, y, z - 3, x - 5, y + 4, z - 3, decor, true, true);

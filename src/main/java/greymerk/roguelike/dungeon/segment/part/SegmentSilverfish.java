@@ -8,6 +8,7 @@ import greymerk.roguelike.dungeon.segment.alcove.SilverfishNest;
 import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
+import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
 import net.minecraft.init.Blocks;
@@ -18,7 +19,7 @@ public class SegmentSilverfish extends SegmentBase {
 	protected void genWall(WorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
 		
 		MetaBlock air = new MetaBlock(Blocks.air);
-		MetaBlock stair = theme.getSecondaryStair();
+		IStair stair = theme.getSecondaryStair();
 		
 		Coord cursor = new Coord(x, y, z);
 		Coord start;
@@ -44,7 +45,7 @@ public class SegmentSilverfish extends SegmentBase {
 		for(Cardinal d : orth){
 			Coord c = new Coord(cursor);
 			c.add(d, 1);
-			WorldEditor.blockOrientation(stair, Cardinal.reverse(d), true);
+			stair.setOrientation(Cardinal.reverse(d), true);
 			editor.setBlock(rand, c, stair, true, true);
 		}
 		
@@ -52,12 +53,12 @@ public class SegmentSilverfish extends SegmentBase {
 		
 		cursor = new Coord(x, y, z);
 		cursor.add(dir, 3);
-		WorldEditor.blockOrientation(stair, Cardinal.reverse(dir), false);
+		stair.setOrientation(Cardinal.reverse(dir), false);
 		stair.setBlock(editor, cursor);
 		cursor.add(Cardinal.UP);
 		air.setBlock(editor, cursor);
 		cursor.add(Cardinal.UP);
-		WorldEditor.blockOrientation(stair, Cardinal.reverse(dir), true);
+		stair.setOrientation(Cardinal.reverse(dir), true);
 		stair.setBlock(editor, cursor);
 		
 		IAlcove nest = new SilverfishNest();

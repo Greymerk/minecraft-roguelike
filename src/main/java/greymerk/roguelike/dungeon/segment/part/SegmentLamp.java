@@ -7,6 +7,7 @@ import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
+import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
 import greymerk.roguelike.worldgen.redstone.Lever;
@@ -20,7 +21,7 @@ public class SegmentLamp extends SegmentBase{
 		
 		
 		Coord origin = new Coord(x, y, z);
-		MetaBlock stair = theme.getPrimaryStair();
+		IStair stair = theme.getPrimaryStair();
 		IBlockFactory wall = theme.getPrimaryWall();
 		MetaBlock air = new MetaBlock(Blocks.air);
 		
@@ -66,9 +67,9 @@ public class SegmentLamp extends SegmentBase{
 			cursor = new Coord(origin);
 			cursor.add(dir, 2);
 			cursor.add(side);
-			WorldEditor.blockOrientation(stair, Cardinal.reverse(side), false).setBlock(editor, cursor);
+			stair.setOrientation(Cardinal.reverse(side), false).setBlock(editor, cursor);
 			cursor.add(Cardinal.UP, 2);
-			WorldEditor.blockOrientation(stair, Cardinal.reverse(side), true).setBlock(editor, cursor);
+			stair.setOrientation(Cardinal.reverse(side), true).setBlock(editor, cursor);
 		}
 		
 		cursor = new Coord(origin);
@@ -97,7 +98,7 @@ public class SegmentLamp extends SegmentBase{
 	
 	private void overheadLight(WorldEditor editor, Random rand, ITheme theme, Coord origin){
 		
-		MetaBlock stair = theme.getPrimaryStair();
+		IStair stair = theme.getPrimaryStair();
 		
 		Coord cursor;
 		
@@ -106,7 +107,7 @@ public class SegmentLamp extends SegmentBase{
 		for(Cardinal dir : Cardinal.directions){
 			cursor = new Coord(origin);
 			cursor.add(dir);
-			WorldEditor.blockOrientation(stair, Cardinal.reverse(dir), true).setBlock(editor, cursor);
+			stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
 			cursor.add(Cardinal.getOrthogonal(dir)[0]);
 			stair.setBlock(editor, cursor);
 		}

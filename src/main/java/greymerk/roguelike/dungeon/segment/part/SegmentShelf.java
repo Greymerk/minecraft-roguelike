@@ -6,6 +6,7 @@ import greymerk.roguelike.dungeon.IDungeonLevel;
 import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
+import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
 import net.minecraft.init.Blocks;
@@ -16,7 +17,7 @@ public class SegmentShelf extends SegmentBase {
 	protected void genWall(WorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
 		
 		MetaBlock air = new MetaBlock(Blocks.air);
-		MetaBlock stair = theme.getSecondaryStair();
+		IStair stair = theme.getSecondaryStair();
 		
 		Coord cursor = new Coord(x, y, z);
 		Coord start;
@@ -42,7 +43,7 @@ public class SegmentShelf extends SegmentBase {
 		for(Cardinal d : orth){
 			Coord c = new Coord(cursor);
 			c.add(d, 1);
-			WorldEditor.blockOrientation(stair, Cardinal.reverse(d), true);
+			stair.setOrientation(Cardinal.reverse(d), true);
 			editor.setBlock(rand, c, stair, true, true);
 		}
 	}	

@@ -6,6 +6,7 @@ import greymerk.roguelike.dungeon.IDungeonLevel;
 import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
+import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.Spawner;
 import greymerk.roguelike.worldgen.WorldEditor;
@@ -18,7 +19,7 @@ public class SegmentSpawner extends SegmentBase {
 	protected void genWall(WorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
 		
 		MetaBlock air = new MetaBlock(Blocks.air);
-		MetaBlock stair = theme.getSecondaryStair();
+		IStair stair = theme.getSecondaryStair();
 		
 		
 		Coord cursor;
@@ -43,13 +44,13 @@ public class SegmentSpawner extends SegmentBase {
 			cursor.add(Cardinal.UP, 2);
 			cursor.add(dir, 2);
 			cursor.add(d, 1);
-			WorldEditor.blockOrientation(stair, Cardinal.reverse(dir), true);
+			stair.setOrientation(Cardinal.reverse(dir), true);
 			editor.setBlock(rand, cursor, stair, true, true);
 			
 			cursor = new Coord(x, y, z);
 			cursor.add(dir, 2);
 			cursor.add(d, 1);
-			WorldEditor.blockOrientation(stair, Cardinal.reverse(d), false);
+			stair.setOrientation(Cardinal.reverse(d), false);
 			editor.setBlock(rand, cursor, stair, true, true);
 		}
 	
@@ -58,7 +59,7 @@ public class SegmentSpawner extends SegmentBase {
 		cursor.add(dir, 3);
 		editor.setBlock(rand, cursor, air, true, true);
 		cursor.add(Cardinal.UP, 1);
-		WorldEditor.blockOrientation(stair, Cardinal.reverse(dir), true);
+		stair.setOrientation(Cardinal.reverse(dir), true);
 		editor.setBlock(rand, cursor, stair, true, true);
 		
 		Coord shelf = new Coord(x, y, z);

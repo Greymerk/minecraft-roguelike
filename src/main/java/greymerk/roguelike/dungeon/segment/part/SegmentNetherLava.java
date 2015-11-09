@@ -7,6 +7,7 @@ import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
+import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
 import net.minecraft.init.Blocks;
@@ -16,7 +17,7 @@ public class SegmentNetherLava extends SegmentBase {
 	@Override
 	protected void genWall(WorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
 		
-		MetaBlock step = theme.getSecondaryStair();
+		IStair step = theme.getSecondaryStair();
 		MetaBlock air = new MetaBlock(Blocks.air);
 		MetaBlock lava = new MetaBlock(Blocks.flowing_lava);
 		
@@ -53,11 +54,11 @@ public class SegmentNetherLava extends SegmentBase {
 			cursor = new Coord(x, y, z);
 			cursor.add(dir, 2);
 			
-			WorldEditor.blockOrientation(step, Cardinal.reverse(orth), false);
+			step.setOrientation(Cardinal.reverse(orth), false);
 			cursor.add(orth, 1);
 			editor.setBlock(rand, cursor, step, true, true);
 			
-			WorldEditor.blockOrientation(step, Cardinal.reverse(orth), true);
+			step.setOrientation(Cardinal.reverse(orth), true);
 			cursor.add(Cardinal.UP, 1);
 			editor.setBlock(rand, cursor, step, true, true);
 			

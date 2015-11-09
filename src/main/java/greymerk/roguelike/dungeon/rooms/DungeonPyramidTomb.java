@@ -9,10 +9,13 @@ import greymerk.roguelike.treasure.TreasureChest;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
+import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
+import greymerk.roguelike.worldgen.MetaStair;
 import greymerk.roguelike.worldgen.Spawner;
 import greymerk.roguelike.worldgen.SpawnerSettings;
 import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.blocks.StairType;
 import net.minecraft.init.Blocks;
 
 public class DungeonPyramidTomb extends DungeonBase{
@@ -182,8 +185,8 @@ public class DungeonPyramidTomb extends DungeonBase{
 	}
 	
 	private void tile(WorldEditor editor, Random rand, ITheme theme, Cardinal dir, Coord origin){
-		MetaBlock stair = theme.getPrimaryStair();
-		WorldEditor.blockOrientation(stair, dir, true).setBlock(editor, origin);
+		IStair stair = theme.getPrimaryStair();
+		stair.setOrientation(dir, true).setBlock(editor, origin);
 		Coord cursor = new Coord(origin);
 		cursor.add(Cardinal.UP);
 		theme.getPrimaryPillar().setBlock(editor, rand, cursor);
@@ -193,7 +196,7 @@ public class DungeonPyramidTomb extends DungeonBase{
 	private void sarcophagus(WorldEditor editor, Random rand, LevelSettings settings, Cardinal dir, Coord origin){
 		SpawnerSettings spawners = settings.getSpawners();
 		
-		MetaBlock stair = new MetaBlock(Blocks.quartz_stairs);
+		IStair stair = new MetaStair(StairType.QUARTZ);
 		MetaBlock blocks = new MetaBlock(Blocks.quartz_block);
 		
 		Coord cursor;
@@ -217,39 +220,39 @@ public class DungeonPyramidTomb extends DungeonBase{
 			
 			cursor = new Coord(origin);
 			cursor.add(end, 2);
-			WorldEditor.blockOrientation(stair, end, false).setBlock(editor, cursor);
+			stair.setOrientation(end, false).setBlock(editor, cursor);
 			cursor.add(Cardinal.UP);
-			WorldEditor.blockOrientation(stair, end, true).setBlock(editor, cursor);
+			stair.setOrientation(end, true).setBlock(editor, cursor);
 			cursor.add(Cardinal.UP);
-			WorldEditor.blockOrientation(stair, end, false).setBlock(editor, cursor);
+			stair.setOrientation(end, false).setBlock(editor, cursor);
 			
 			for(Cardinal side : Cardinal.getOrthogonal(end)){
 
 				cursor = new Coord(origin);
 				cursor.add(side);
-				WorldEditor.blockOrientation(stair, side, false).setBlock(editor, cursor);
+				stair.setOrientation(side, false).setBlock(editor, cursor);
 				cursor.add(Cardinal.UP);
-				WorldEditor.blockOrientation(stair, side, true).setBlock(editor, cursor);
+				stair.setOrientation(side, true).setBlock(editor, cursor);
 				cursor.add(Cardinal.UP);
-				WorldEditor.blockOrientation(stair, side, false).setBlock(editor, cursor);
+				stair.setOrientation(side, false).setBlock(editor, cursor);
 				
 				cursor = new Coord(origin);
 				cursor.add(side);
 				cursor.add(end);
-				WorldEditor.blockOrientation(stair, side, false).setBlock(editor, cursor);
+				stair.setOrientation(side, false).setBlock(editor, cursor);
 				cursor.add(Cardinal.UP);
-				WorldEditor.blockOrientation(stair, side, true).setBlock(editor, cursor);
+				stair.setOrientation(side, true).setBlock(editor, cursor);
 				cursor.add(Cardinal.UP);
-				WorldEditor.blockOrientation(stair, side, false).setBlock(editor, cursor);
+				stair.setOrientation(side, false).setBlock(editor, cursor);
 				
 				cursor = new Coord(origin);
 				cursor.add(side);
 				cursor.add(end, 2);
-				WorldEditor.blockOrientation(stair, side, false).setBlock(editor, cursor);
+				stair.setOrientation(side, false).setBlock(editor, cursor);
 				cursor.add(Cardinal.UP);
-				WorldEditor.blockOrientation(stair, side, true).setBlock(editor, cursor);
+				stair.setOrientation(side, true).setBlock(editor, cursor);
 				cursor.add(Cardinal.UP);
-				WorldEditor.blockOrientation(stair, side, false).setBlock(editor, cursor);
+				stair.setOrientation(side, false).setBlock(editor, cursor);
 			}
 		}
 	}

@@ -3,7 +3,10 @@ package greymerk.roguelike.theme;
 import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.MetaBlock;
+import greymerk.roguelike.worldgen.MetaStair;
 import greymerk.roguelike.worldgen.blocks.Log;
+import greymerk.roguelike.worldgen.blocks.StairType;
+import greymerk.roguelike.worldgen.blocks.Wood;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.block.BlockStoneBrick;
 import net.minecraft.init.Blocks;
@@ -20,16 +23,16 @@ public class ThemeSpruce extends ThemeBase{
 		walls.addBlock(new MetaBlock(Blocks.cobblestone), 5);
 		walls.addBlock(new MetaBlock(Blocks.gravel), 1);
 		
-		MetaBlock stair = new MetaBlock(Blocks.stone_brick_stairs);
+		MetaStair stair = new MetaStair(StairType.STONEBRICK);
 		
 		this.primary = new BlockSet(walls, stair, walls);
 		
 		MetaBlock spruce = new MetaBlock(Blocks.planks);
 		spruce.withProperty(BlockPlanks.VARIANT_PROP, BlockPlanks.EnumType.SPRUCE);
 		MetaBlock SegmentWall = spruce;
-		MetaBlock SegmentStair = new MetaBlock(Blocks.spruce_stairs);
+		MetaStair SegmentStair = new MetaStair(StairType.SPRUCE);
 		
-		MetaBlock pillar = Log.getLog(Log.SPRUCE, Cardinal.DOWN);
+		MetaBlock pillar = Log.getLog(Wood.SPRUCE, Cardinal.DOWN);
 		this.secondary =  new BlockSet(SegmentWall, SegmentStair, pillar);
 
 	}

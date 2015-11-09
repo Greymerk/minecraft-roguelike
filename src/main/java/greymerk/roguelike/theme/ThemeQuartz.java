@@ -1,6 +1,8 @@
 package greymerk.roguelike.theme;
 
 import greymerk.roguelike.worldgen.MetaBlock;
+import greymerk.roguelike.worldgen.MetaStair;
+import greymerk.roguelike.worldgen.blocks.StairType;
 import net.minecraft.block.BlockQuartz;
 import net.minecraft.init.Blocks;
 
@@ -10,7 +12,7 @@ public class ThemeQuartz extends ThemeBase{
 	
 		MetaBlock walls = new MetaBlock(Blocks.quartz_block);
 		
-		MetaBlock stair = new MetaBlock(Blocks.quartz_stairs);
+		MetaStair stair = new MetaStair(StairType.QUARTZ);
 		MetaBlock pillar = new MetaBlock(Blocks.quartz_block);
 		pillar.withProperty(BlockQuartz.VARIANT_PROP, BlockQuartz.EnumType.LINES_Y);
 		

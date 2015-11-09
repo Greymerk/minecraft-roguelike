@@ -6,6 +6,7 @@ import greymerk.roguelike.dungeon.IDungeonLevel;
 import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
+import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
 import net.minecraft.block.BlockStoneSlab;
@@ -17,7 +18,7 @@ public class SegmentNetherStripes extends SegmentBase {
 	@Override
 	protected void genWall(WorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
 		
-		MetaBlock step = theme.getSecondaryStair();
+		IStair step = theme.getSecondaryStair();
 
 		Coord start;
 		Coord end;
@@ -54,7 +55,7 @@ public class SegmentNetherStripes extends SegmentBase {
 			end.add(Cardinal.DOWN, 2);
 			if(isLava && !isAir) editor.fillRectSolid(rand, start, end, new MetaBlock(Blocks.lava), false, true);
 			
-			WorldEditor.blockOrientation(step, Cardinal.reverse(orth), true);
+			step.setOrientation(Cardinal.reverse(orth), true);
 			cursor = new Coord(x, y, z);
 			cursor.add(dir, 2);
 			cursor.add(orth, 1);

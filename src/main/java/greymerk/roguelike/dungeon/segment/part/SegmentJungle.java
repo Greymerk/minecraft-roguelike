@@ -6,6 +6,7 @@ import greymerk.roguelike.dungeon.IDungeonLevel;
 import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
+import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
 import greymerk.roguelike.worldgen.blocks.Leaves;
@@ -17,7 +18,7 @@ public class SegmentJungle extends SegmentBase {
 	@Override
 	protected void genWall(WorldEditor editor, Random rand, IDungeonLevel level, Cardinal wallDirection, ITheme theme, int x, int y, int z) {
 		
-		MetaBlock stair = theme.getSecondaryStair();
+		IStair stair = theme.getSecondaryStair();
 		
 		MetaBlock leaves = Leaves.get(Leaves.JUNGLE, false);
 		
@@ -50,7 +51,7 @@ public class SegmentJungle extends SegmentBase {
 			cursor.add(wallDirection, 2);
 			cursor.add(d, 1);
 			cursor.add(Cardinal.UP, 1);
-			WorldEditor.blockOrientation(stair, Cardinal.reverse(d), true);
+			stair.setOrientation(Cardinal.reverse(d), true);
 			editor.setBlock(rand, cursor, stair, true, true);
 		}
 

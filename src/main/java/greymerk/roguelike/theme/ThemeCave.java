@@ -3,6 +3,8 @@ package greymerk.roguelike.theme;
 import greymerk.roguelike.worldgen.BlockJumble;
 import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.MetaBlock;
+import greymerk.roguelike.worldgen.MetaStair;
+import greymerk.roguelike.worldgen.blocks.StairType;
 import net.minecraft.init.Blocks;
 
 public class ThemeCave extends ThemeBase{
@@ -26,7 +28,7 @@ public class ThemeCave extends ThemeBase{
 		walls.addBlock(new MetaBlock(Blocks.flowing_water), 3);
 		walls.addBlock(new MetaBlock(Blocks.flowing_lava), 1);
 
-		MetaBlock stair = new MetaBlock(Blocks.stone_stairs);
+		MetaStair stair = new MetaStair(StairType.COBBLE);
 		MetaBlock pillar = new MetaBlock(Blocks.cobblestone);
 		
 		this.primary = new BlockSet(floor, walls, stair, pillar);

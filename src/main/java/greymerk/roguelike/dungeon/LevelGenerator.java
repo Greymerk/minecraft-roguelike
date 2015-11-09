@@ -8,7 +8,7 @@ import greymerk.roguelike.dungeon.rooms.DungeonLinkerTop;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
-import greymerk.roguelike.worldgen.MetaBlock;
+import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.WorldEditor;
 
 public enum LevelGenerator {
@@ -36,7 +36,7 @@ public enum LevelGenerator {
 		IDungeonRoom upstairs = new DungeonLinkerTop();
 		upstairs.generate(editor, rand, settings, oldEnd.getEntrances(), oldEnd.getPosition());
 		
-		MetaBlock stair = settings.getTheme().getPrimaryStair();
+		IStair stair = settings.getTheme().getPrimaryStair();
 		
 		Coord cursor = new Coord(start);
 		for (int i = 0; i < oldEnd.getPosition().getY() - start.getY(); i++){

@@ -10,6 +10,7 @@ import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
+import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
 import net.minecraft.init.Blocks;
@@ -69,7 +70,7 @@ public class DungeonsPrison extends DungeonBase {
 		Cardinal[] orth;
 		
 		MetaBlock air = new MetaBlock(Blocks.air);
-		MetaBlock stair = settings.getTheme().getPrimaryStair();
+		IStair stair = settings.getTheme().getPrimaryStair();
 		
 		IBlockFactory wall = settings.getTheme().getPrimaryWall();
 		start = new Coord(origin);
@@ -136,14 +137,14 @@ public class DungeonsPrison extends DungeonBase {
 			for(Cardinal o : orth){
 				Coord c = new Coord(cursor);
 				c.add(o);
-				WorldEditor.blockOrientation(stair, Cardinal.reverse(o), true).setBlock(editor, c);
+				stair.setOrientation(Cardinal.reverse(o), true).setBlock(editor, c);
 			}
 			
 			cursor = new Coord(origin);
 			cursor.add(Cardinal.UP, 6);
 			air.setBlock(editor, cursor);
 			cursor.add(dir, 1);
-			WorldEditor.blockOrientation(stair, Cardinal.reverse(dir), true).setBlock(editor, cursor);
+			stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
 		}			
 	}
 	
@@ -156,7 +157,7 @@ public class DungeonsPrison extends DungeonBase {
 		orth = Cardinal.getOrthogonal(roomDir);
 		
 		MetaBlock air = new MetaBlock(Blocks.air);
-		MetaBlock stair = settings.getTheme().getPrimaryStair();
+		IStair stair = settings.getTheme().getPrimaryStair();
 		int height = 3;
 		
 		IBlockFactory wall = settings.getTheme().getPrimaryWall();
@@ -234,7 +235,7 @@ public class DungeonsPrison extends DungeonBase {
 			end = new Coord(start);
 			start.add(o[0], 3);
 			end.add(o[1], 3);
-			WorldEditor.blockOrientation(stair, Cardinal.reverse(dir), true).fillRectSolid(editor, rand, start, end, true, true);
+			stair.setOrientation(Cardinal.reverse(dir), true).fillRectSolid(editor, rand, start, end, true, true);
 			
 			cursor.add(Cardinal.UP, 1);
 			start = new Coord(cursor);
@@ -242,7 +243,7 @@ public class DungeonsPrison extends DungeonBase {
 			end = new Coord(start);
 			start.add(o[0], 3);
 			end.add(o[1], 3);
-			WorldEditor.blockOrientation(stair, Cardinal.reverse(dir), true).fillRectSolid(editor, rand, start, end, true, true);
+			stair.setOrientation(Cardinal.reverse(dir), true).fillRectSolid(editor, rand, start, end, true, true);
 		}
 		
 		
@@ -253,7 +254,7 @@ public class DungeonsPrison extends DungeonBase {
 		end = new Coord(start);
 		start.add(orth[0], 2);
 		end.add(orth[1], 2);
-		WorldEditor.blockOrientation(stair, Cardinal.reverse(roomDir), true).fillRectSolid(editor, rand, start, end, true, true);
+		stair.setOrientation(Cardinal.reverse(roomDir), true).fillRectSolid(editor, rand, start, end, true, true);
 		
 		cursor.add(Cardinal.UP, 1);
 		air.setBlock(editor, cursor);
@@ -262,13 +263,13 @@ public class DungeonsPrison extends DungeonBase {
 		end = new Coord(start);
 		start.add(orth[0], 1);
 		end.add(orth[1], 1);
-		WorldEditor.blockOrientation(stair, Cardinal.reverse(roomDir), true).fillRectSolid(editor, rand, start, end, true, true);
+		stair.setOrientation(Cardinal.reverse(roomDir), true).fillRectSolid(editor, rand, start, end, true, true);
 	}
 	
 	private void pillar(WorldEditor editor, Random rand, LevelSettings settings, Coord origin, int height){
 		Coord cursor;
 		IBlockFactory pillar = settings.getTheme().getPrimaryPillar();
-		MetaBlock stair = settings.getTheme().getPrimaryStair();
+		IStair stair = settings.getTheme().getPrimaryStair();
 		
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.UP, height - 1);
@@ -277,7 +278,7 @@ public class DungeonsPrison extends DungeonBase {
 		pillar.setBlock(editor, rand, cursor);
 		for(Cardinal dir : Cardinal.directions){
 			cursor.add(dir);
-			WorldEditor.blockOrientation(stair, dir, true).setBlock(editor, rand, cursor, true, false);
+			stair.setOrientation(dir, true).setBlock(editor, rand, cursor, true, false);
 		}
 	}
 	

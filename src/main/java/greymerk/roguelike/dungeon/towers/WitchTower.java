@@ -6,12 +6,13 @@ import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
+import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
 import greymerk.roguelike.worldgen.blocks.ColorBlock;
 import greymerk.roguelike.worldgen.blocks.Door;
+import greymerk.roguelike.worldgen.blocks.DyeColor;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.EnumDyeColor;
 
 public class WitchTower implements ITower {
 
@@ -20,9 +21,9 @@ public class WitchTower implements ITower {
 		
 		IBlockFactory blocks = theme.getPrimaryWall();
 		IBlockFactory pillar = theme.getPrimaryPillar();
-		MetaBlock stair = theme.getPrimaryStair();
+		IStair stair = theme.getPrimaryStair();
 		MetaBlock air = new MetaBlock(Blocks.air);
-		MetaBlock glass = ColorBlock.get(Blocks.stained_glass_pane, EnumDyeColor.BLACK);
+		MetaBlock glass = ColorBlock.get(ColorBlock.GLASS, DyeColor.BLACK);
 		
 		Coord origin = new Coord(x, y, z);
 		
@@ -69,11 +70,11 @@ public class WitchTower implements ITower {
 				editor.fillRectSolid(rand, start, end, pillar, true, true);
 				cursor = new Coord(end);
 				cursor.add(dir);
-				WorldEditor.blockOrientation(stair, dir, true).setBlock(editor, cursor);
+				stair.setOrientation(dir, true).setBlock(editor, cursor);
 				for(Cardinal d : orth){
 					cursor = new Coord(end);
 					cursor.add(d);
-					WorldEditor.blockOrientation(stair, d, true).setBlock(editor, cursor);
+					stair.setOrientation(d, true).setBlock(editor, cursor);
 				}
 			}
 		}
@@ -135,11 +136,11 @@ public class WitchTower implements ITower {
 				
 				cursor = new Coord(end);
 				cursor.add(dir);
-				WorldEditor.blockOrientation(stair, dir, true).setBlock(editor, cursor);
+				stair.setOrientation(dir, true).setBlock(editor, cursor);
 				for(Cardinal d : orth){
 					cursor = new Coord(end);
 					cursor.add(d);
-					WorldEditor.blockOrientation(stair, d, true).setBlock(editor, cursor);
+					stair.setOrientation(d, true).setBlock(editor, cursor);
 				}
 			}
 		}
@@ -195,11 +196,11 @@ public class WitchTower implements ITower {
 			
 			cursor = new Coord(end);
 			cursor.add(dir);
-			WorldEditor.blockOrientation(stair, dir, true).setBlock(editor, cursor);
+			stair.setOrientation(dir, true).setBlock(editor, cursor);
 
 			cursor = new Coord(end);
 			cursor.add(orth[0]);
-			WorldEditor.blockOrientation(stair, orth[0], true).setBlock(editor, cursor);
+			stair.setOrientation(orth[0], true).setBlock(editor, cursor);
 			
 			for (Cardinal o : orth){
 
@@ -219,7 +220,7 @@ public class WitchTower implements ITower {
 					start.add(Cardinal.DOWN, i);
 					end = new Coord(start);
 					end.add(dir, 2);
-					WorldEditor.blockOrientation(stair, o, false);
+					stair.setOrientation(o, false);
 					editor.fillRectSolid(rand, start, end, stair, true, true);
 					
 					if (i < 3){
@@ -244,7 +245,7 @@ public class WitchTower implements ITower {
 					cursor.add(dir, 6);
 					cursor.add(o);
 					cursor.add(Cardinal.DOWN, 2);
-					WorldEditor.blockOrientation(stair, Cardinal.reverse(o), true).setBlock(editor, cursor);
+					stair.setOrientation(Cardinal.reverse(o), true).setBlock(editor, cursor);
 				}
 			}
 		}
@@ -295,7 +296,7 @@ public class WitchTower implements ITower {
 			cursor.add(Cardinal.UP);
 			window(editor, rand, theme, dir, cursor);
 			
-			WorldEditor.blockOrientation(stair, dir, false);
+			stair.setOrientation(dir, false);
 			
 			start = new Coord(attic);
 			start.add(dir, 3);
@@ -363,7 +364,7 @@ public class WitchTower implements ITower {
 		
 		Coord cursor;
 		
-		MetaBlock stair = theme.getPrimaryStair();
+		IStair stair = theme.getPrimaryStair();
 		MetaBlock air = new MetaBlock(Blocks.air);
 		
 		cursor = new Coord(origin);
@@ -374,9 +375,9 @@ public class WitchTower implements ITower {
 		for (Cardinal o : Cardinal.getOrthogonal(dir)){
 			cursor = new Coord(origin);
 			cursor.add(o);
-			WorldEditor.blockOrientation(stair, Cardinal.reverse(o), false).setBlock(editor, cursor);
+			stair.setOrientation(Cardinal.reverse(o), false).setBlock(editor, cursor);
 			cursor.add(Cardinal.UP);
-			WorldEditor.blockOrientation(stair, Cardinal.reverse(o), true).setBlock(editor, cursor);
+			stair.setOrientation(Cardinal.reverse(o), true).setBlock(editor, cursor);
 		}
 	}
 	
@@ -387,7 +388,7 @@ public class WitchTower implements ITower {
 		Coord start;
 		Coord end;
 		
-		MetaBlock stair = theme.getPrimaryStair();
+		IStair stair = theme.getPrimaryStair();
 		IBlockFactory blocks = theme.getPrimaryWall();
 		
 		Cardinal[] orth = Cardinal.getOrthogonal(dir);
@@ -403,7 +404,7 @@ public class WitchTower implements ITower {
 		end = new Coord(origin);
 		start.add(orth[0]);
 		end.add(orth[1]);
-		WorldEditor.blockOrientation(stair, dir, false);
+		stair.setOrientation(dir, false);
 		editor.fillRectSolid(rand, start, end, stair, true, true);
 		
 		origin.add(Cardinal.DOWN);

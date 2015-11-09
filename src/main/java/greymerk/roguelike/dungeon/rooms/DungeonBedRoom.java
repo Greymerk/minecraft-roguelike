@@ -8,7 +8,7 @@ import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.treasure.TreasureChest;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
-import greymerk.roguelike.worldgen.MetaBlock;
+import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.WorldEditor;
 import greymerk.roguelike.worldgen.blocks.Bed;
 import greymerk.roguelike.worldgen.blocks.FlowerPot;
@@ -59,8 +59,8 @@ public class DungeonBedRoom implements IDungeonRoom {
 		editor.fillRectSolid(rand, start, end, theme.getSecondaryWall(), true, true);
 		
 		for(Cardinal o : orth){
-			MetaBlock stair = theme.getSecondaryStair();
-			WorldEditor.blockOrientation(stair, Cardinal.reverse(o), true);
+			IStair stair = theme.getSecondaryStair();
+			stair.setOrientation(Cardinal.reverse(o), true);
 			
 			start = new Coord(x, y, z);
 			start.add(o, 3);
@@ -116,8 +116,8 @@ public class DungeonBedRoom implements IDungeonRoom {
 		FlowerPot.generate(editor, rand, cursor);
 		cursor.add(Cardinal.reverse(side), 3);
 		cursor.add(Cardinal.DOWN);
-		MetaBlock stair = theme.getSecondaryStair();
-		WorldEditor.blockOrientation(stair, Cardinal.reverse(dir), true);
+		IStair stair = theme.getSecondaryStair();
+		stair.setOrientation(Cardinal.reverse(dir), true);
 		stair.setBlock(editor, cursor);
 		cursor.add(Cardinal.UP);
 		Torch.generate(editor, Torch.WOODEN, Cardinal.UP, cursor);
@@ -159,8 +159,8 @@ public class DungeonBedRoom implements IDungeonRoom {
 		
 		end.add(Cardinal.UP, 2);
 		editor.fillRectSolid(rand, start, end, theme.getSecondaryPillar(), true, true);
-		MetaBlock stair = theme.getSecondaryStair();
-		WorldEditor.blockOrientation(stair, Cardinal.reverse(dir), true);
+		IStair stair = theme.getSecondaryStair();
+		stair.setOrientation(Cardinal.reverse(dir), true);
 		end.add(Cardinal.reverse(dir));
 		stair.setBlock(editor, end);
 	}

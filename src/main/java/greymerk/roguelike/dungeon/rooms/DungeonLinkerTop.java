@@ -8,7 +8,7 @@ import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
-import greymerk.roguelike.worldgen.MetaBlock;
+import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.WorldEditor;
 import net.minecraft.init.Blocks;
 
@@ -22,7 +22,7 @@ public class DungeonLinkerTop extends DungeonBase{
 		IBlockFactory pillar = theme.getPrimaryPillar();
 		IBlockFactory wall = theme.getPrimaryWall();
 		IBlockFactory floor = theme.getPrimaryFloor();
-		MetaBlock stair = theme.getPrimaryStair();
+		IStair stair = theme.getPrimaryStair();
 		
 		Coord start;
 		Coord end;
@@ -66,18 +66,18 @@ public class DungeonLinkerTop extends DungeonBase{
 			wall.fillRectSolid(editor, rand, start, end, true, true);
 			start.add(Cardinal.reverse(dir));
 			end.add(Cardinal.reverse(dir));
-			editor.fillRectSolid(rand, start, end, WorldEditor.blockOrientation(stair, Cardinal.reverse(dir), true), true, true);
+			editor.fillRectSolid(rand, start, end, stair.setOrientation(Cardinal.reverse(dir), true), true, true);
 			
 			for(Cardinal o : orth){
 				cursor = new Coord(origin);
 				cursor.add(dir, 3);
 				cursor.add(Cardinal.UP, 2);
 				cursor.add(o, 2);
-				WorldEditor.blockOrientation(stair, Cardinal.reverse(o), true).setBlock(editor, cursor);
+				stair.setOrientation(Cardinal.reverse(o), true).setBlock(editor, cursor);
 				cursor.add(Cardinal.UP);
 				wall.setBlock(editor, rand, cursor);
 				cursor.add(Cardinal.reverse(o));
-				WorldEditor.blockOrientation(stair, Cardinal.reverse(o), true).setBlock(editor, cursor);
+				stair.setOrientation(Cardinal.reverse(o), true).setBlock(editor, cursor);
 			}
 		}
 		

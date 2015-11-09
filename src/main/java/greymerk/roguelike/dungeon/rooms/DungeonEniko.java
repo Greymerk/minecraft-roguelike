@@ -12,13 +12,16 @@ import greymerk.roguelike.treasure.loot.provider.ItemNovelty;
 import greymerk.roguelike.worldgen.BlockFactoryCheckers;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
+import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
+import greymerk.roguelike.worldgen.MetaStair;
 import greymerk.roguelike.worldgen.WorldEditor;
 import greymerk.roguelike.worldgen.blocks.ColorBlock;
+import greymerk.roguelike.worldgen.blocks.DyeColor;
+import greymerk.roguelike.worldgen.blocks.StairType;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.EnumDyeColor;
 
 public class DungeonEniko extends DungeonBase {
 
@@ -51,26 +54,26 @@ public class DungeonEniko extends DungeonBase {
 		pillar(editor, rand, x + 5, y, z + 2);
 		pillar(editor, rand, x + 5, y, z + 5);
 
-		MetaBlock shelf = new MetaBlock(Blocks.stone_brick_stairs);
-		WorldEditor.blockOrientation(shelf, Cardinal.EAST, true);
+		IStair shelf = new MetaStair(StairType.STONEBRICK);
+		shelf.setOrientation(Cardinal.EAST, true);
 		editor.fillRectSolid(rand, x - 6, y + 1, z - 4, x - 6, y + 3, z - 3, coal);
 		editor.fillRectSolid(rand, x - 5, y, z - 4, x - 5, y, z - 3, shelf, true, true);
 		editor.fillRectSolid(rand, x - 6, y + 1, z + 3, x - 6, y + 3, z + 4, coal);
 		editor.fillRectSolid(rand, x - 5, y, z + 3, x - 5, y, z + 4, shelf, true, true);
 		
-		WorldEditor.blockOrientation(shelf, Cardinal.WEST, true);
+		shelf.setOrientation(Cardinal.WEST, true);
 		editor.fillRectSolid(rand, x + 6, y + 1, z - 4, x + 6, y + 3, z - 3, coal);
 		editor.fillRectSolid(rand, x + 5, y, z - 4, x + 5, y, z - 3, shelf, true, true);
 		editor.fillRectSolid(rand, x + 6, y + 1, z + 3, x + 6, y + 3, z + 4, coal);
 		editor.fillRectSolid(rand, x + 5, y, z + 3, x + 5, y, z + 4, shelf, true, true);
 		
-		WorldEditor.blockOrientation(shelf, Cardinal.SOUTH, true);
+		shelf.setOrientation(Cardinal.SOUTH, true);
 		editor.fillRectSolid(rand, x - 4, y + 1, z - 6, x - 3, y + 3, z - 6, coal);
 		editor.fillRectSolid(rand, x - 4, y, z - 5, x - 3, y, z - 5, shelf, true, true);
 		editor.fillRectSolid(rand, x + 3, y + 1, z - 6, x + 4, y + 3, z - 6, coal);
 		editor.fillRectSolid(rand, x + 3, y, z - 5, x + 4, y, z - 5, shelf, true, true);
 		
-		WorldEditor.blockOrientation(shelf, Cardinal.NORTH, true);
+		shelf.setOrientation(Cardinal.NORTH, true);
 		editor.fillRectSolid(rand, x - 4, y + 1, z + 6, x - 3, y + 3, z + 6, coal);
 		editor.fillRectSolid(rand, x - 4, y, z + 5, x - 3, y, z + 5, shelf, true, true);
 		editor.fillRectSolid(rand, x + 3, y + 1, z + 6, x + 4, y + 3, z + 6, coal);
@@ -85,7 +88,7 @@ public class DungeonEniko extends DungeonBase {
 		
 		// floor
 		editor.fillRectSolid(rand, x - 5, y - 1, z - 5, x + 5, y - 1, z + 5, new MetaBlock(Blocks.stonebrick));
-		MetaBlock blockOne = RogueConfig.getBoolean(RogueConfig.PRECIOUSBLOCKS) ? new MetaBlock(Blocks.lapis_block) : ColorBlock.get(Blocks.stained_hardened_clay, EnumDyeColor.BLUE);
+		MetaBlock blockOne = RogueConfig.getBoolean(RogueConfig.PRECIOUSBLOCKS) ? new MetaBlock(Blocks.lapis_block) : ColorBlock.get(ColorBlock.CLAY, DyeColor.BLUE);
 		MetaBlock blockTwo = new MetaBlock(Blocks.quartz_block);
 		BlockFactoryCheckers checkers = new BlockFactoryCheckers(blockOne, blockTwo);
 		
@@ -128,12 +131,12 @@ public class DungeonEniko extends DungeonBase {
 	
 	private static void pillar(WorldEditor editor, Random rand, int x, int y, int z){
 		
-		MetaBlock stair = new MetaBlock(Blocks.stone_brick_stairs);
+		IStair stair = new MetaStair(StairType.STONEBRICK);
 		editor.fillRectSolid(rand, x, y, z, x, y + 3, z, new MetaBlock(Blocks.stonebrick));
-		editor.setBlock(rand, x + 1, y + 3, z, WorldEditor.blockOrientation(stair, Cardinal.EAST, true), true, false);
-		editor.setBlock(rand, x - 1, y + 3, z, WorldEditor.blockOrientation(stair, Cardinal.WEST, true), true, false);
-		editor.setBlock(rand, x, y + 3, z + 1, WorldEditor.blockOrientation(stair, Cardinal.SOUTH, true), true, false);
-		editor.setBlock(rand, x, y + 3, z - 1, WorldEditor.blockOrientation(stair, Cardinal.NORTH, true), true, false);
+		editor.setBlock(rand, x + 1, y + 3, z, stair.setOrientation(Cardinal.EAST, true), true, false);
+		editor.setBlock(rand, x - 1, y + 3, z, stair.setOrientation(Cardinal.WEST, true), true, false);
+		editor.setBlock(rand, x, y + 3, z + 1, stair.setOrientation(Cardinal.SOUTH, true), true, false);
+		editor.setBlock(rand, x, y + 3, z - 1, stair.setOrientation(Cardinal.NORTH, true), true, false);
 		
 	}
 	

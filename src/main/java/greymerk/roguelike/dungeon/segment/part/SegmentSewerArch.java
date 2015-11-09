@@ -6,6 +6,7 @@ import greymerk.roguelike.dungeon.IDungeonLevel;
 import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
+import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
 import net.minecraft.init.Blocks;
@@ -15,8 +16,8 @@ public class SegmentSewerArch extends SegmentBase {
 	@Override
 	protected void genWall(WorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
 			
-		MetaBlock stair = theme.getSecondaryStair(); 
-		WorldEditor.blockOrientation(stair, Cardinal.reverse(dir), true);
+		IStair stair = theme.getSecondaryStair(); 
+		stair.setOrientation(Cardinal.reverse(dir), true);
 		MetaBlock water = new MetaBlock(Blocks.flowing_water);
 		MetaBlock air = new MetaBlock(Blocks.air);
 		MetaBlock bars = new MetaBlock(Blocks.iron_bars);

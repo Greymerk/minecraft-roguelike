@@ -4,7 +4,10 @@ import greymerk.roguelike.worldgen.BlockJumble;
 import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.MetaBlock;
+import greymerk.roguelike.worldgen.MetaStair;
 import greymerk.roguelike.worldgen.blocks.Log;
+import greymerk.roguelike.worldgen.blocks.StairType;
+import greymerk.roguelike.worldgen.blocks.Wood;
 import net.minecraft.block.BlockStairs;
 import net.minecraft.block.BlockStoneBrick;
 import net.minecraft.init.Blocks;
@@ -25,10 +28,10 @@ public class ThemeJungle extends ThemeBase{
 		walls.addBlock(cracked, 20);
 		walls.addBlock(chisel, 15);
 		
-		MetaBlock stair = new MetaBlock(Blocks.stone_stairs);
+		MetaStair stair = new MetaStair(StairType.COBBLE);
 		
 		MetaBlock pillar = chisel;
-		MetaBlock pillar2 = Log.getLog(Log.JUNGLE);
+		MetaBlock pillar2 = Log.getLog(Wood.JUNGLE);
 		
 		BlockJumble stairJumble = new BlockJumble();
 		stairJumble.addBlock(new MetaBlock(Blocks.stone_stairs.getDefaultState().withProperty(BlockStairs.FACING, Cardinal.getFacing(Cardinal.NORTH))));

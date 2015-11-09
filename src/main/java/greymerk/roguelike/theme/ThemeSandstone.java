@@ -2,6 +2,8 @@ package greymerk.roguelike.theme;
 
 import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.MetaBlock;
+import greymerk.roguelike.worldgen.MetaStair;
+import greymerk.roguelike.worldgen.blocks.StairType;
 import net.minecraft.block.BlockSandStone;
 import net.minecraft.init.Blocks;
 
@@ -13,7 +15,7 @@ public class ThemeSandstone extends ThemeBase{
 		walls.addBlock(new MetaBlock(Blocks.sandstone), 100);
 		walls.addBlock(new MetaBlock(Blocks.sand), 5);
 		
-		MetaBlock stair = new MetaBlock(Blocks.sandstone_stairs);
+		MetaStair stair = new MetaStair(StairType.SANDSTONE);
 		
 		MetaBlock pillar = new MetaBlock(Blocks.sandstone);
 		pillar.withProperty(BlockSandStone.field_176297_a, BlockSandStone.EnumType.SMOOTH);

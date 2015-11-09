@@ -3,17 +3,19 @@ package greymerk.roguelike.theme;
 import greymerk.roguelike.worldgen.BlockStripes;
 import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.MetaBlock;
+import greymerk.roguelike.worldgen.MetaStair;
 import greymerk.roguelike.worldgen.blocks.ColorBlock;
+import greymerk.roguelike.worldgen.blocks.DyeColor;
+import greymerk.roguelike.worldgen.blocks.StairType;
 import net.minecraft.block.BlockQuartz;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.EnumDyeColor;
 
 public class ThemeEniIce extends ThemeBase{
 
 	public ThemeEniIce(){
 		
 		MetaBlock ice = new MetaBlock(Blocks.packed_ice);
-		MetaBlock purple = ColorBlock.get(Blocks.stained_hardened_clay, EnumDyeColor.PURPLE);
+		MetaBlock purple = ColorBlock.get(ColorBlock.CLAY, DyeColor.PURPLE);
 		
 		BlockWeightedRandom light = new BlockWeightedRandom();
 		light.addBlock(purple, 100);
@@ -30,11 +32,11 @@ public class ThemeEniIce extends ThemeBase{
 		floor.addBlock(dark);
 		
 		//MetaBlock quartz = new MetaBlock(Blocks.quartz_block);
-		MetaBlock quartzStair = new MetaBlock(Blocks.quartz_stairs);
+		MetaStair stair = new MetaStair(StairType.QUARTZ);
 		MetaBlock quartzPillar = new MetaBlock(Blocks.quartz_block);
 		quartzPillar.withProperty(BlockQuartz.VARIANT_PROP, BlockQuartz.EnumType.LINES_Y);
 		
-		this.primary = new BlockSet(floor, ice, quartzStair, quartzPillar);
-		this.secondary =  new BlockSet(floor, ice, quartzStair, quartzPillar);;
+		this.primary = new BlockSet(floor, ice, stair, quartzPillar);
+		this.secondary =  new BlockSet(floor, ice, stair, quartzPillar);;
 	}
 }

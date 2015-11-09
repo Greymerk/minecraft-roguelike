@@ -8,6 +8,7 @@ import greymerk.roguelike.treasure.loot.Potion;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
+import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
 import greymerk.roguelike.worldgen.redstone.Dispenser;
@@ -25,7 +26,7 @@ public class SegmentTrap extends SegmentBase{
 		MetaBlock wire = new MetaBlock(Blocks.redstone_wire);
 		MetaBlock vine = new MetaBlock(Blocks.vine);
 		MetaBlock air = new MetaBlock(Blocks.air);
-		MetaBlock stair = theme.getPrimaryStair();
+		IStair stair = theme.getPrimaryStair();
 		IBlockFactory wall = theme.getPrimaryWall();
 		
 		Cardinal[] orth = Cardinal.getOrthogonal(dir);
@@ -55,9 +56,9 @@ public class SegmentTrap extends SegmentBase{
 			cursor = new Coord(origin);
 			cursor.add(dir, 2);
 			cursor.add(side);
-			WorldEditor.blockOrientation(stair, Cardinal.reverse(side), false).setBlock(editor, cursor);
+			stair.setOrientation(Cardinal.reverse(side), false).setBlock(editor, cursor);
 			cursor.add(Cardinal.UP, 2);
-			WorldEditor.blockOrientation(stair, Cardinal.reverse(side), true).setBlock(editor, cursor);
+			stair.setOrientation(Cardinal.reverse(side), true).setBlock(editor, cursor);
 		}
 		
 		start = new Coord(origin);
@@ -80,8 +81,6 @@ public class SegmentTrap extends SegmentBase{
 		Torch.generate(editor, Torch.REDSTONE, Cardinal.UP, cursor);
 		cursor.add(Cardinal.UP);
 		Dispenser.generate(editor, Cardinal.reverse(dir), cursor);
-		
-		boolean tnt = rand.nextBoolean();
 		
 		for(int i = 0; i < 5; i++){
 			Dispenser.add(editor, cursor, rand.nextInt(9), new ItemStack(Items.arrow, rand.nextInt(4) + 1));

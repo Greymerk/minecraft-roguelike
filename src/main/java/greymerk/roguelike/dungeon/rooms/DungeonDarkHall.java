@@ -9,6 +9,7 @@ import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
+import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
 import net.minecraft.init.Blocks;
@@ -23,7 +24,7 @@ public class DungeonDarkHall extends DungeonBase{
 		IBlockFactory outerWall = theme.getPrimaryWall();
 		IBlockFactory wall = theme.getSecondaryWall();
 		IBlockFactory pillar = theme.getSecondaryPillar();
-		MetaBlock stair = theme.getSecondaryStair();
+		IStair stair = theme.getSecondaryStair();
 		MetaBlock air = new MetaBlock(Blocks.air);
 		
 		Coord cursor;
@@ -135,7 +136,7 @@ public class DungeonDarkHall extends DungeonBase{
 					cursor.add(dir, 7);
 					cursor.add(Cardinal.UP, 2);
 					cursor.add(o);
-					WorldEditor.blockOrientation(stair, Cardinal.reverse(o), true).setBlock(editor, cursor);
+					stair.setOrientation(Cardinal.reverse(o), true).setBlock(editor, cursor);
 					
 					cursor = new Coord(origin);
 					cursor.add(dir, 6);
@@ -184,7 +185,7 @@ public class DungeonDarkHall extends DungeonBase{
 
 		IBlockFactory wall = theme.getSecondaryWall();
 		IBlockFactory pillar = theme.getSecondaryPillar();
-		MetaBlock stair = theme.getSecondaryStair();
+		IStair stair = theme.getSecondaryStair();
 		
 		Coord cursor;
 		Coord start;
@@ -198,16 +199,16 @@ public class DungeonDarkHall extends DungeonBase{
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.UP, 3);
 		cursor.add(dir);
-		WorldEditor.blockOrientation(stair, dir, true).setBlock(editor, cursor);
+		stair.setOrientation(dir, true).setBlock(editor, cursor);
 		cursor.add(Cardinal.UP);
-		WorldEditor.blockOrientation(stair, Cardinal.reverse(dir), false).setBlock(editor, cursor);
+		stair.setOrientation(Cardinal.reverse(dir), false).setBlock(editor, cursor);
 		cursor.add(dir);
-		WorldEditor.blockOrientation(stair, dir, true).setBlock(editor, cursor);
+		stair.setOrientation(dir, true).setBlock(editor, cursor);
 		cursor.add(Cardinal.UP);
-		WorldEditor.blockOrientation(stair, Cardinal.reverse(dir), false).setBlock(editor, cursor);
+		stair.setOrientation(Cardinal.reverse(dir), false).setBlock(editor, cursor);
 		cursor.add(dir);
 		if(editor.isAirBlock(cursor)){
-			WorldEditor.blockOrientation(stair, dir, true).setBlock(editor, cursor);	
+			stair.setOrientation(dir, true).setBlock(editor, cursor);	
 		} else {
 			wall.setBlock(editor, rand, cursor);
 		}

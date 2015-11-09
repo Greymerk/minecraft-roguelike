@@ -7,11 +7,9 @@ import net.minecraft.block.BlockLog;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.init.Blocks;
 
-public enum Log {
+public class Log {
 
-	OAK, SPRUCE, BIRCH, JUNGLE, ACACIA, DARKOAK;
-	
-	public static MetaBlock getLog(Log type, Cardinal dir){
+	public static MetaBlock getLog(Wood type, Cardinal dir){
 		
 		MetaBlock log = new MetaBlock(getBlockId(type));
 		setType(log, type);
@@ -30,11 +28,11 @@ public enum Log {
 		
 	}
 	
-	public static MetaBlock getLog(Log type){
+	public static MetaBlock getLog(Wood type){
 		return getLog(type, Cardinal.UP);
 	}
 	
-	public static Block getBlockId(Log type){
+	public static Block getBlockId(Wood type){
 		switch(type){
 		case OAK: return Blocks.log;
 		case SPRUCE: return Blocks.log;
@@ -46,7 +44,7 @@ public enum Log {
 		}
 	}
 	
-	public static void setType(MetaBlock log, Log type){
+	public static void setType(MetaBlock log, Wood type){
 		switch(type){
 		case OAK: log.withProperty(BlockPlanks.VARIANT_PROP, BlockPlanks.EnumType.OAK); return;
 		case SPRUCE: log.withProperty(BlockPlanks.VARIANT_PROP, BlockPlanks.EnumType.SPRUCE); return;
