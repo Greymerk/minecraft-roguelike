@@ -2,37 +2,28 @@ package greymerk.roguelike.theme;
 
 import greymerk.roguelike.worldgen.BlockJumble;
 import greymerk.roguelike.worldgen.BlockWeightedRandom;
-import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.MetaStair;
+import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.StairType;
-import net.minecraft.block.BlockStoneBrick;
-import net.minecraft.init.Blocks;
 
 public class ThemeTower extends ThemeBase{
 
 	public ThemeTower(){
 	
-		MetaBlock cracked = new MetaBlock(Blocks.stonebrick);
-		cracked.withProperty(BlockStoneBrick.VARIANT_PROP, BlockStoneBrick.EnumType.CRACKED);
-		MetaBlock mossy = new MetaBlock(Blocks.stonebrick);
-		mossy.withProperty(BlockStoneBrick.VARIANT_PROP, BlockStoneBrick.EnumType.MOSSY);
-		
-		MetaBlock p = new MetaBlock(Blocks.stone.getStateFromMeta(6));
-		
 		BlockJumble stone = new BlockJumble();
-		stone.addBlock(new MetaBlock(Blocks.stonebrick));
-		stone.addBlock(cracked);
-		stone.addBlock(mossy);
+		stone.addBlock(BlockType.get(BlockType.STONE_BRICK));
+		stone.addBlock(BlockType.get(BlockType.STONE_BRICK_CRACKED));
+		stone.addBlock(BlockType.get(BlockType.STONE_BRICK_MOSSY));
 		
 		BlockWeightedRandom walls = new BlockWeightedRandom();
-		walls.addBlock(new MetaBlock(Blocks.air), 5);
+		walls.addBlock(BlockType.get(BlockType.AIR), 5);
 		walls.addBlock(stone, 30);
-		walls.addBlock(new MetaBlock(Blocks.cobblestone), 10);
-		walls.addBlock(new MetaBlock(Blocks.gravel), 5);
+		walls.addBlock(BlockType.get(BlockType.COBBLESTONE), 10);
+		walls.addBlock(BlockType.get(BlockType.GRAVEL), 5);
 		
 		MetaStair stair = new MetaStair(StairType.STONEBRICK);
 		
-		this.primary = new BlockSet(walls, stair, p);
+		this.primary = new BlockSet(walls, stair, BlockType.get(BlockType.ANDESITE_POLISHED));
 		this.secondary = this.primary;
 
 	}
