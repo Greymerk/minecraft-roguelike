@@ -5,25 +5,20 @@ import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.MetaStair;
+import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.Log;
 import greymerk.roguelike.worldgen.blocks.StairType;
 import greymerk.roguelike.worldgen.blocks.Wood;
-import net.minecraft.block.BlockStairs;
-import net.minecraft.block.BlockStoneBrick;
-import net.minecraft.init.Blocks;
 
 public class ThemeJungle extends ThemeBase{
 
 	public ThemeJungle(){
-		MetaBlock cracked = new MetaBlock(Blocks.stonebrick);
-		cracked.withProperty(BlockStoneBrick.VARIANT_PROP, BlockStoneBrick.EnumType.CRACKED);
-		MetaBlock mossy = new MetaBlock(Blocks.stonebrick);
-		mossy.withProperty(BlockStoneBrick.VARIANT_PROP, BlockStoneBrick.EnumType.MOSSY);
-		MetaBlock chisel = new MetaBlock(Blocks.stonebrick);
-		chisel.withProperty(BlockStoneBrick.VARIANT_PROP, BlockStoneBrick.EnumType.CHISELED);
+		MetaBlock cracked = BlockType.get(BlockType.STONE_BRICK_CRACKED);
+		MetaBlock mossy = BlockType.get(BlockType.STONE_BRICK_MOSSY);
+		MetaBlock chisel = BlockType.get(BlockType.STONE_BRICK_CHISELED);
 		
 		BlockWeightedRandom walls = new BlockWeightedRandom();
-		walls.addBlock(new MetaBlock(Blocks.mossy_cobblestone), 50);
+		walls.addBlock(BlockType.get(BlockType.COBBLESTONE_MOSSY), 50);
 		walls.addBlock(mossy, 30);
 		walls.addBlock(cracked, 20);
 		walls.addBlock(chisel, 15);
@@ -34,10 +29,11 @@ public class ThemeJungle extends ThemeBase{
 		MetaBlock pillar2 = Log.getLog(Wood.JUNGLE);
 		
 		BlockJumble stairJumble = new BlockJumble();
-		stairJumble.addBlock(new MetaBlock(Blocks.stone_stairs.getDefaultState().withProperty(BlockStairs.FACING, Cardinal.getFacing(Cardinal.NORTH))));
-		stairJumble.addBlock(new MetaBlock(Blocks.stone_stairs.getDefaultState().withProperty(BlockStairs.FACING, Cardinal.getFacing(Cardinal.SOUTH))));
-		stairJumble.addBlock(new MetaBlock(Blocks.stone_stairs.getDefaultState().withProperty(BlockStairs.FACING, Cardinal.getFacing(Cardinal.EAST))));
-		stairJumble.addBlock(new MetaBlock(Blocks.stone_stairs.getDefaultState().withProperty(BlockStairs.FACING, Cardinal.getFacing(Cardinal.WEST))));
+		for(Cardinal dir : Cardinal.directions){
+			MetaStair s = new MetaStair(StairType.STONEBRICK);
+			s.setOrientation(dir, false);
+			stairJumble.addBlock(s);
+		}
 		
 		BlockWeightedRandom floor = new BlockWeightedRandom();
 		floor.addBlock(stairJumble, 1);

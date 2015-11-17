@@ -10,14 +10,14 @@ import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
-import net.minecraft.init.Blocks;
+import greymerk.roguelike.worldgen.blocks.BlockType;
 
 public class SegmentFirePlace extends SegmentBase {
 	
 	@Override
 	protected void genWall(WorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
 		
-		MetaBlock air = new MetaBlock(Blocks.air);
+		MetaBlock air = BlockType.get(BlockType.AIR);
 		IStair stair = theme.getSecondaryStair();
 		
 		Coord cursor = new Coord(x, y, z);
@@ -55,7 +55,7 @@ public class SegmentFirePlace extends SegmentBase {
 		stair.setOrientation(Cardinal.reverse(dir), false);
 		stair.setBlock(editor, cursor);
 		cursor.add(Cardinal.UP);
-		editor.setBlock(cursor, Blocks.iron_bars);
+		editor.setBlock(cursor, BlockType.get(BlockType.IRON_BAR));
 		cursor.add(Cardinal.UP);
 		stair.setOrientation(Cardinal.reverse(dir), true);
 		stair.setBlock(editor, cursor);
@@ -77,8 +77,8 @@ public class SegmentFirePlace extends SegmentBase {
 		
 		cursor = new Coord(x, y, z);
 		cursor.add(dir, 4);
-		editor.setBlock(cursor, Blocks.netherrack);
+		editor.setBlock(cursor, BlockType.get(BlockType.NETHERRACK));
 		cursor.add(Cardinal.UP);
-		editor.setBlock(cursor, Blocks.fire);
+		editor.setBlock(cursor, BlockType.get(BlockType.FIRE));
 	}	
 }

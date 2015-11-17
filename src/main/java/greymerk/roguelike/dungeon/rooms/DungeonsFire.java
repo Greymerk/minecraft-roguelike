@@ -10,7 +10,7 @@ import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.WorldEditor;
-import net.minecraft.init.Blocks;
+import greymerk.roguelike.worldgen.blocks.BlockType;
 
 public class DungeonsFire extends DungeonBase {
 
@@ -160,9 +160,9 @@ public class DungeonsFire extends DungeonBase {
 		Coord end;
 		
 		cursor = new Coord(origin);
-		editor.setBlock(cursor, Blocks.netherrack);
+		editor.setBlock(cursor, BlockType.get(BlockType.NETHERRACK));
 		cursor.add(Cardinal.UP);
-		editor.setBlock(cursor, Blocks.fire);
+		editor.setBlock(cursor, BlockType.get(BlockType.FIRE));
 		
 		for(Cardinal dir : Cardinal.directions){
 			
@@ -179,7 +179,7 @@ public class DungeonsFire extends DungeonBase {
 			cursor.add(dir);
 			editor.setBlock(rand, cursor, stair.setOrientation(dir, false), true, false);
 			cursor.add(Cardinal.UP);
-			editor.setBlock(cursor, Blocks.iron_bars);
+			editor.setBlock(cursor, BlockType.get(BlockType.IRON_BAR));
 			cursor.add(Cardinal.UP);
 			editor.setBlock(rand, cursor, stair.setOrientation(dir, true), true, false);
 			

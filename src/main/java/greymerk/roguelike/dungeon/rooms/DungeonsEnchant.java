@@ -10,9 +10,9 @@ import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.ColorBlock;
-import net.minecraft.block.BlockQuartz;
-import net.minecraft.init.Blocks;
+import greymerk.roguelike.worldgen.blocks.Quartz;
 
 public class DungeonsEnchant extends DungeonBase {
 
@@ -24,12 +24,10 @@ public class DungeonsEnchant extends DungeonBase {
 		int z = origin.getZ();
 		
 		
-		MetaBlock air = new MetaBlock(Blocks.air);
-		MetaBlock chiselQuartz = new MetaBlock(Blocks.quartz_block);
-		chiselQuartz.withProperty(BlockQuartz.VARIANT_PROP, BlockQuartz.EnumType.CHISELED);
-		MetaBlock pillar = new MetaBlock(Blocks.quartz_block);
-		pillar.withProperty(BlockQuartz.VARIANT_PROP, BlockQuartz.EnumType.LINES_Y);
-		MetaBlock glowstone = new MetaBlock(Blocks.glowstone);
+		MetaBlock air = BlockType.get(BlockType.AIR);
+		MetaBlock chiselQuartz = Quartz.get(Quartz.CHISELED);
+		MetaBlock pillar = Quartz.getPillar(Cardinal.UP);
+		MetaBlock glowstone = BlockType.get(BlockType.GLOWSTONE);
 		
 		// clear space
 		editor.fillRectSolid(rand, x - 5, y, z - 5, x + 5, y + 4, z + 5, air);
@@ -113,8 +111,8 @@ public class DungeonsEnchant extends DungeonBase {
 		editor.fillRectSolid(rand, x - 1, y + 5, z + 2, x + 1, y + 5, z + 2, decor, true, true);
 		
 		editor.fillRectSolid(rand, x - 1, y + 5, z, x + 1, y + 5, z, glowstone);
-		editor.setBlock(x, y + 5, z - 1, Blocks.glowstone);
-		editor.setBlock(x, y + 5, z + 1, Blocks.glowstone);
+		editor.setBlock(x, y + 5, z - 1, BlockType.get(BlockType.GLOWSTONE));
+		editor.setBlock(x, y + 5, z + 1, BlockType.get(BlockType.GLOWSTONE));
 		
 		// enchanting floor
 		
@@ -137,10 +135,10 @@ public class DungeonsEnchant extends DungeonBase {
 		
 		editor.fillRectSolid(rand, x - 2, y - 1, z - 2, x + 2, y - 1, z + 2, decor, true, true);
 		
-		editor.setBlock(x, y - 1, z, Blocks.glowstone);
+		editor.setBlock(x, y - 1, z, BlockType.get(BlockType.GLOWSTONE));
 		
 		if(RogueConfig.getBoolean(RogueConfig.GENEROUS)){
-			editor.setBlock(x, y, z, Blocks.enchanting_table);
+			editor.setBlock(x, y, z, BlockType.get(BlockType.ENCHANTING_TABLE));
 		} else {
 			TreasureChest.generate(editor, rand, settings, new Coord(x, y, z), TreasureChest.ENCHANTING, 4, false);
 		}

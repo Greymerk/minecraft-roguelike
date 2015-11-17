@@ -10,7 +10,8 @@ import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
-import net.minecraft.init.Blocks;
+import greymerk.roguelike.worldgen.blocks.BlockType;
+
 
 public class JungleTower implements ITower{
 
@@ -30,7 +31,7 @@ public class JungleTower implements ITower{
 		
 		Coord start;
 		Coord end;
-		MetaBlock air = new MetaBlock(Blocks.air);
+		MetaBlock air = BlockType.get(BlockType.AIR);
 
 		
 		
@@ -95,7 +96,7 @@ public class JungleTower implements ITower{
 		IBlockFactory blocks = theme.getPrimaryWall();
 		IBlockFactory pillar = theme.getPrimaryPillar();
 		IStair stair = theme.getPrimaryStair();
-		MetaBlock air = new MetaBlock(Blocks.air);
+		MetaBlock air = BlockType.get(BlockType.AIR);
 		
 		start = new Coord(origin);
 		end = new Coord(origin);

@@ -9,6 +9,7 @@ import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.blocks.BlockType;
 import net.minecraft.init.Blocks;
 
 public class SegmentArch extends SegmentBase {
@@ -19,7 +20,7 @@ public class SegmentArch extends SegmentBase {
 		IStair stair = theme.getSecondaryStair(); 
 		stair.setOrientation(Cardinal.reverse(dir), true);
 		
-		MetaBlock air = new MetaBlock(Blocks.air);
+		MetaBlock air = BlockType.get(BlockType.AIR);
 		
 		Coord cursor = new Coord(x, y, z);
 		cursor.add(dir, 2);

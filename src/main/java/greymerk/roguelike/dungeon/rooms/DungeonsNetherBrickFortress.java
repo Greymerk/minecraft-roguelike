@@ -15,7 +15,8 @@ import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.Spawner;
 import greymerk.roguelike.worldgen.WorldEditor;
-import net.minecraft.init.Blocks;
+import greymerk.roguelike.worldgen.blocks.BlockType;
+import greymerk.roguelike.worldgen.blocks.Crops;
 
 public class DungeonsNetherBrickFortress extends DungeonBase {
 	
@@ -39,7 +40,7 @@ public class DungeonsNetherBrickFortress extends DungeonBase {
 		originY = origin.getY();
 		originZ = origin.getZ();
 		
-		MetaBlock air = new MetaBlock(Blocks.air);
+		MetaBlock air = BlockType.get(BlockType.AIR);
 
 		// cut out air space
 		editor.fillRectSolid(rand, originX - 5, originY, originZ - 5,
@@ -64,11 +65,11 @@ public class DungeonsNetherBrickFortress extends DungeonBase {
 	
 	protected void buildRoof(){
 		
-		MetaBlock air = new MetaBlock(Blocks.air);
+		MetaBlock air = BlockType.get(BlockType.AIR);
 		
 		// top
 		editor.fillRectSolid(rand, originX - 6, originY + 4, originZ - 6,
-				originX + 6, originY + 6, originZ + 6, new MetaBlock(Blocks.nether_brick));
+				originX + 6, originY + 6, originZ + 6, BlockType.get(BlockType.NETHERBRICK));
 
 		List<Coord> lavaArea = WorldEditor.getRectSolid(	originX - 3, originY + 6, originZ - 3,
 																originX + 3, originY + 6, originZ + 3);
@@ -79,7 +80,7 @@ public class DungeonsNetherBrickFortress extends DungeonBase {
 			int z = block.getZ();
 			
 			if(rand.nextBoolean()){
-				editor.setBlock(x, y, z, Blocks.lava);
+				editor.setBlock(x, y, z, BlockType.get(BlockType.LAVA_FLOWING));
 			}
 		}
 		
@@ -91,8 +92,8 @@ public class DungeonsNetherBrickFortress extends DungeonBase {
 		
 		// arches
 		BlockJumble fenceRandom = new BlockJumble();
-		fenceRandom.addBlock(new MetaBlock(Blocks.nether_brick));
-		fenceRandom.addBlock(new MetaBlock(Blocks.nether_brick_fence));
+		fenceRandom.addBlock(BlockType.get(BlockType.NETHERBRICK));
+		fenceRandom.addBlock(BlockType.get(BlockType.FENCE_NETHER_BRICK));
 		
 		editor.fillRectSolid(rand, originX - 5, originY + 4, originZ - 3, originX - 4, originY + 4, originZ + 3, fenceRandom);
 		editor.fillRectSolid(rand, originX + 4, originY + 4, originZ - 3, originX + 5, originY + 4, originZ + 3, fenceRandom);
@@ -112,7 +113,7 @@ public class DungeonsNetherBrickFortress extends DungeonBase {
 			int z = block.getZ();
 			
 			if(y >= originY && y <= originY + 4){
-				editor.setBlock(rand, x, y, z, new MetaBlock(Blocks.nether_brick), false, true);
+				editor.setBlock(rand, x, y, z, BlockType.get(BlockType.NETHERBRICK), false, true);
 			}
 		}
 		
@@ -141,7 +142,7 @@ public class DungeonsNetherBrickFortress extends DungeonBase {
 			int x = block.getX();
 			int y = block.getY();
 			int z = block.getZ();
-			editor.setBlock(x, y, z, Blocks.nether_brick);
+			editor.setBlock(x, y, z, BlockType.get(BlockType.NETHERBRICK));
 		}
 		
 		for(int i = 0; i < rand.nextInt(5) + 5; ++i){
@@ -155,13 +156,13 @@ public class DungeonsNetherBrickFortress extends DungeonBase {
     protected void buildFloor(){
 
 		// base
-		editor.fillRectSolid(rand, originX - 6, originY - 4, originZ - 6, originX + 6, originY - 1, originZ + 6, new MetaBlock(Blocks.nether_brick));
+		editor.fillRectSolid(rand, originX - 6, originY - 4, originZ - 6, originX + 6, originY - 1, originZ + 6, BlockType.get(BlockType.NETHERBRICK));
     	
 		List<Coord> soulSand = WorldEditor.getRectSolid(	originX - 5, originY - 1, originZ - 5,
 																originX + 5, originY - 1, originZ + 5);
 
-		MetaBlock sand = new MetaBlock(Blocks.soul_sand);
-		MetaBlock wart = new MetaBlock(Blocks.nether_wart);
+		MetaBlock sand = BlockType.get(BlockType.SOUL_SAND);
+		MetaBlock wart = Crops.get(Crops.NETHERWART);
 		
 		for (Coord block : soulSand){
 			int x = block.getX();

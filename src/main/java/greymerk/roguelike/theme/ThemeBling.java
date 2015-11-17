@@ -5,7 +5,6 @@ import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.MetaStair;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.StairType;
-import net.minecraft.init.Blocks;
 
 public class ThemeBling extends ThemeBase{
 

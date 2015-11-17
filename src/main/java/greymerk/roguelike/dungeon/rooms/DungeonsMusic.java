@@ -13,10 +13,10 @@ import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.ColorBlock;
 import greymerk.roguelike.worldgen.blocks.Wood;
 import greymerk.roguelike.worldgen.blocks.WoodBlock;
-import net.minecraft.init.Blocks;
 
 public class DungeonsMusic extends DungeonBase {
 	WorldEditor editor;
@@ -38,7 +38,7 @@ public class DungeonsMusic extends DungeonBase {
 		originY = origin.getY();
 		originZ = origin.getZ();
 
-		MetaBlock air = new MetaBlock(Blocks.air);
+		MetaBlock air = BlockType.get(BlockType.AIR);
 		IBlockFactory wall = theme.getPrimaryWall();
 		IBlockFactory deco = theme.getSecondaryWall();
 		MetaBlock rug1 = ColorBlock.get(ColorBlock.CARPET, rand);
@@ -119,17 +119,17 @@ public class DungeonsMusic extends DungeonBase {
 		editor.fillRectSolid(rand, originX - 5, originY + 4, originZ + 2, originX + 5, originY + 4, originZ + 2, log, true, true);
 		
 		// ceiling lamp
-		editor.setBlock(originX, originY + 4, originZ, Blocks.redstone_block);
-		editor.setBlock(originX - 1, originY + 4, originZ, Blocks.redstone_lamp);
-		editor.setBlock(originX + 1, originY + 4, originZ, Blocks.redstone_lamp);
-		editor.setBlock(originX, originY + 4, originZ - 1, Blocks.redstone_lamp);
-		editor.setBlock(originX, originY + 4, originZ + 1, Blocks.redstone_lamp);
+		editor.setBlock(originX, originY + 4, originZ, BlockType.get(BlockType.REDSTONE_BLOCK));
+		editor.setBlock(originX - 1, originY + 4, originZ, BlockType.get(BlockType.REDSTONE_LAMP_LIT));
+		editor.setBlock(originX + 1, originY + 4, originZ, BlockType.get(BlockType.REDSTONE_LAMP_LIT));
+		editor.setBlock(originX, originY + 4, originZ - 1, BlockType.get(BlockType.REDSTONE_LAMP_LIT));
+		editor.setBlock(originX, originY + 4, originZ + 1, BlockType.get(BlockType.REDSTONE_LAMP_LIT));
 		
 		// ceiling fill
 		editor.fillRectSolid(rand, originX - 5, originY + 4, originZ - 5, originX + 5, originY + 4, originZ + 5, deco, true, false);
 		
 		// music box
-		editor.setBlock(originX, originY, originZ, Blocks.jukebox);
+		editor.setBlock(originX, originY, originZ, BlockType.get(BlockType.JUKEBOX));
 		
 		return true;
 	}

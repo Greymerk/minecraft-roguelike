@@ -13,9 +13,9 @@ import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.redstone.Piston;
 import greymerk.roguelike.worldgen.redstone.Torch;
-import net.minecraft.init.Blocks;
 
 public class DungeonsPit extends DungeonBase {
 	WorldEditor editor;
@@ -69,7 +69,7 @@ public class DungeonsPit extends DungeonBase {
 		return true;
 	}
 
-	MetaBlock air = new MetaBlock(Blocks.air);
+	MetaBlock air = BlockType.get(BlockType.AIR);
 	protected void buildWalls() {
 		for (int blockX = originX - dungeonLength - 1; blockX <= originX + dungeonLength + 1; blockX++) {
 			for (int blockY = originY + dungeonHeight; blockY >= originY - 1; blockY--) {
@@ -80,7 +80,7 @@ public class DungeonsPit extends DungeonBase {
 							|| blockZ == originZ + dungeonWidth + 1){
 
 						if (blockY >= 0 && !editor.getBlock(new Coord(blockX, blockY - 1, blockZ)).getBlock().getMaterial().isSolid()) {
-							editor.setBlock(blockX, blockY, blockZ, Blocks.air);
+							editor.setBlock(blockX, blockY, blockZ, air);
 							continue;
 						}
 						
@@ -89,7 +89,7 @@ public class DungeonsPit extends DungeonBase {
 						blocks.setBlock(editor, rand, new Coord(blockX, blockY, blockZ));
 						
 					} else {
-						editor.setBlock(blockX, blockY, blockZ, Blocks.air);
+						editor.setBlock(blockX, blockY, blockZ, air);
 					}
 				}
 			}
@@ -123,7 +123,7 @@ public class DungeonsPit extends DungeonBase {
 						continue;
 					}
 					
-					if(y < 0 + rand.nextInt(5) && editor.getBlock(new Coord(x, y, z)).getBlock() == Blocks.bedrock){
+					if(y < 0 + rand.nextInt(5) && editor.getBlock(new Coord(x, y, z)).getBlock() == BlockType.get(BlockType.BEDROCK).getBlock()){
 						continue;
 					}
 					
@@ -138,11 +138,11 @@ public class DungeonsPit extends DungeonBase {
 					}
 					
 					if(y < 10){
-						editor.setBlock(x, y, z, Blocks.flowing_water);
+						editor.setBlock(x, y, z, BlockType.get(BlockType.WATER_FLOWING));
 						continue;
 					}
 					
-					editor.setBlock(x, y, z, Blocks.air);
+					editor.setBlock(x, y, z, BlockType.get(BlockType.AIR));
 				}
 			}
 		}
@@ -151,8 +151,8 @@ public class DungeonsPit extends DungeonBase {
 	private void setTrap(WorldEditor editor, Random rand, LevelSettings settings, Cardinal dir, Coord origin){
 		ITheme theme = settings.getTheme();
 		IBlockFactory walls = theme.getPrimaryWall();
-		MetaBlock plate = new MetaBlock(Blocks.stone_pressure_plate);
-		MetaBlock wire = new MetaBlock(Blocks.redstone_wire);
+		MetaBlock plate = BlockType.get(BlockType.PRESSURE_PLATE_STONE);
+		MetaBlock wire = BlockType.get(BlockType.REDSTONE_WIRE);
 		Coord start;
 		Coord end;
 		Coord cursor;

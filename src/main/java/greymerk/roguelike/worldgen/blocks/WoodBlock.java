@@ -2,6 +2,6 @@ package greymerk.roguelike.worldgen.blocks;
 
 public enum WoodBlock {
 
-	LOG, PLANK;
+	LOG, PLANK, FENCE, SAPLING;
 	
 }

@@ -3,23 +3,20 @@ package greymerk.roguelike.theme;
 import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.MetaStair;
+import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.Log;
 import greymerk.roguelike.worldgen.blocks.StairType;
 import greymerk.roguelike.worldgen.blocks.Wood;
-import net.minecraft.block.BlockStoneBrick;
-import net.minecraft.init.Blocks;
 
 public class ThemeSnow extends ThemeBase{
 
 	public ThemeSnow(){
 	
-		MetaBlock cracked = new MetaBlock(Blocks.stonebrick);
-		cracked.withProperty(BlockStoneBrick.VARIANT_PROP, BlockStoneBrick.EnumType.CRACKED);
-		MetaBlock mossy = new MetaBlock(Blocks.stonebrick);
-		mossy.withProperty(BlockStoneBrick.VARIANT_PROP, BlockStoneBrick.EnumType.MOSSY);
+		MetaBlock cracked = BlockType.get(BlockType.STONE_BRICK_CRACKED);
+		MetaBlock mossy = BlockType.get(BlockType.STONE_BRICK_MOSSY);
 		
 		BlockWeightedRandom walls = new BlockWeightedRandom();
-		walls.addBlock(new MetaBlock(Blocks.stonebrick), 10);
+		walls.addBlock(BlockType.get(BlockType.STONE_BRICK), 10);
 		walls.addBlock(cracked, 1);
 		walls.addBlock(mossy, 1);
 		
@@ -28,9 +25,9 @@ public class ThemeSnow extends ThemeBase{
 		
 		this.primary = new BlockSet(walls, stair, pillar);
 		
-		MetaBlock SegmentWall = new MetaBlock(Blocks.snow);
+		MetaBlock SegmentWall = BlockType.get(BlockType.SNOW);
 		MetaStair SegmentStair = new MetaStair(StairType.BRICK);
-		MetaBlock pillar2 = new MetaBlock(Blocks.brick_block);
+		MetaBlock pillar2 = BlockType.get(BlockType.BRICK);
 		
 		this.secondary =  new BlockSet(SegmentWall, SegmentStair, pillar2);
 	}

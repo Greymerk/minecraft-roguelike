@@ -8,10 +8,9 @@ import greymerk.roguelike.treasure.TreasureChest;
 import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
-import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.Spawner;
 import greymerk.roguelike.worldgen.WorldEditor;
-import net.minecraft.init.Blocks;
+import greymerk.roguelike.worldgen.blocks.BlockType;
 
 public class DungeonsSpiderNest extends DungeonBase {
 	WorldEditor editor;
@@ -38,8 +37,8 @@ public class DungeonsSpiderNest extends DungeonBase {
 		originZ = origin.getZ();
 
 		BlockWeightedRandom webs = new BlockWeightedRandom();
-		webs.addBlock(new MetaBlock(Blocks.web), 3);
-		webs.addBlock(new MetaBlock(Blocks.air), 1);
+		webs.addBlock(BlockType.get(BlockType.WEB), 3);
+		webs.addBlock(BlockType.get(BlockType.AIR), 1);
 		
 		for (int blockX = originX - dungeonLength - 1; blockX <= originX + dungeonLength + 1; blockX++) {
 			for (int blockZ = originZ - dungeonWidth - 1; blockZ <= originZ + dungeonWidth + 1; blockZ++) {
@@ -57,7 +56,7 @@ public class DungeonsSpiderNest extends DungeonBase {
 					if(rand.nextInt(clearHeight)  == 0){
 						webs.setBlock(editor, inRandom, new Coord(blockX, blockY, blockZ));
 					} else if(rand.nextInt(5) == 0){
-						editor.setBlock(blockX, blockY, blockZ, Blocks.gravel);
+						editor.setBlock(blockX, blockY, blockZ, BlockType.get(BlockType.GRAVEL));
 					}
 					
 				}

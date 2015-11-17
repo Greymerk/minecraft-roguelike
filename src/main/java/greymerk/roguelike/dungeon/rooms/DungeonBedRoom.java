@@ -11,10 +11,10 @@ import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.WorldEditor;
 import greymerk.roguelike.worldgen.blocks.Bed;
+import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.FlowerPot;
 import greymerk.roguelike.worldgen.blocks.Furnace;
 import greymerk.roguelike.worldgen.redstone.Torch;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
@@ -111,7 +111,7 @@ public class DungeonBedRoom implements IDungeonRoom {
 		cursor.add(side, 1);
 		Bed.generate(editor, Cardinal.reverse(dir), cursor);
 		cursor.add(side);
-		editor.setBlock(cursor, Blocks.bookshelf);
+		editor.setBlock(cursor, BlockType.get(BlockType.SHELF));
 		cursor.add(Cardinal.UP);
 		FlowerPot.generate(editor, rand, cursor);
 		cursor.add(Cardinal.reverse(side), 3);
@@ -133,9 +133,9 @@ public class DungeonBedRoom implements IDungeonRoom {
 			Torch.generate(editor, Torch.WOODEN, Cardinal.UP, cursor);
 			cursor.add(Cardinal.DOWN);
 			cursor.add(dir);
-			editor.setBlock(cursor, Blocks.crafting_table);
+			editor.setBlock(cursor, BlockType.get(BlockType.CRAFTING_TABLE));
 		} else {
-			editor.setBlock(cursor, Blocks.crafting_table);
+			editor.setBlock(cursor, BlockType.get(BlockType.CRAFTING_TABLE));
 			cursor.add(dir);
 			cursor.add(Cardinal.UP);
 			Torch.generate(editor, Torch.WOODEN, Cardinal.UP, cursor);

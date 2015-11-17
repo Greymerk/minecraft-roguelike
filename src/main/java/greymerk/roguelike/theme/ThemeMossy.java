@@ -1,25 +1,22 @@
 package greymerk.roguelike.theme;
 
 import greymerk.roguelike.worldgen.BlockWeightedRandom;
+import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.MetaStair;
+import greymerk.roguelike.worldgen.blocks.BlockType;
+import greymerk.roguelike.worldgen.blocks.SilverfishBlock;
 import greymerk.roguelike.worldgen.blocks.StairType;
-import net.minecraft.block.BlockSilverfish;
-import net.minecraft.block.BlockStoneBrick;
-import net.minecraft.init.Blocks;
 
 public class ThemeMossy extends ThemeBase{
 
 	public ThemeMossy(){
 	
-		MetaBlock mossBrick = new MetaBlock(Blocks.stonebrick);
-		mossBrick.withProperty(BlockStoneBrick.VARIANT_PROP, BlockStoneBrick.EnumType.MOSSY);
-		MetaBlock mossy = new MetaBlock(Blocks.mossy_cobblestone);
-		MetaBlock cobble = new MetaBlock(Blocks.cobblestone);
-		MetaBlock egg = new MetaBlock(Blocks.monster_egg);
-		MetaBlock gravel = new MetaBlock(Blocks.gravel);
-		
-		egg.withProperty(BlockSilverfish.VARIANT_PROP, BlockSilverfish.EnumType.COBBLESTONE);
+		MetaBlock mossBrick = BlockType.get(BlockType.STONE_BRICK_MOSSY);
+		MetaBlock mossy = BlockType.get(BlockType.COBBLESTONE_MOSSY);
+		MetaBlock cobble = BlockType.get(BlockType.COBBLESTONE);
+		IBlockFactory egg = SilverfishBlock.getJumble();
+		MetaBlock gravel = BlockType.get(BlockType.GRAVEL);
 		
 		BlockWeightedRandom walls = new BlockWeightedRandom();
 		walls.addBlock(cobble, 60);

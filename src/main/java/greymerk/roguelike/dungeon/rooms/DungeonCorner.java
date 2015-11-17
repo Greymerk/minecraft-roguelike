@@ -11,7 +11,7 @@ import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
-import net.minecraft.init.Blocks;
+import greymerk.roguelike.worldgen.blocks.BlockType;
 
 public class DungeonCorner extends DungeonBase {
 
@@ -26,7 +26,7 @@ public class DungeonCorner extends DungeonBase {
 		IStair stair = theme.getPrimaryStair();
 		IBlockFactory blocks = theme.getPrimaryWall();
 		IBlockFactory pillar = theme.getPrimaryPillar();
-		MetaBlock air = new MetaBlock(Blocks.air);
+		MetaBlock air = BlockType.get(BlockType.AIR);
 		
 		// fill air inside
 		editor.fillRectSolid(rand, x - 2, y, z - 2, x + 2, y + 3, z + 2, air);

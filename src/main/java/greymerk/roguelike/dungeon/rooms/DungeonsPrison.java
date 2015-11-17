@@ -13,7 +13,7 @@ import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
-import net.minecraft.init.Blocks;
+import greymerk.roguelike.worldgen.blocks.BlockType;
 
 public class DungeonsPrison extends DungeonBase {
 
@@ -69,7 +69,7 @@ public class DungeonsPrison extends DungeonBase {
 		Coord cursor;
 		Cardinal[] orth;
 		
-		MetaBlock air = new MetaBlock(Blocks.air);
+		MetaBlock air = BlockType.get(BlockType.AIR);
 		IStair stair = settings.getTheme().getPrimaryStair();
 		
 		IBlockFactory wall = settings.getTheme().getPrimaryWall();
@@ -156,7 +156,7 @@ public class DungeonsPrison extends DungeonBase {
 		Cardinal[] orth;
 		orth = Cardinal.getOrthogonal(roomDir);
 		
-		MetaBlock air = new MetaBlock(Blocks.air);
+		MetaBlock air = BlockType.get(BlockType.AIR);
 		IStair stair = settings.getTheme().getPrimaryStair();
 		int height = 3;
 		
@@ -293,8 +293,8 @@ public class DungeonsPrison extends DungeonBase {
 		if(editor.isAirBlock(cursor)) return;
 		
 		IBlockFactory wall = settings.getTheme().getPrimaryWall();
-		MetaBlock air = new MetaBlock(Blocks.air);
-		MetaBlock bar = new MetaBlock(Blocks.iron_bars);
+		MetaBlock air = BlockType.get(BlockType.AIR);
+		MetaBlock bar = BlockType.get(BlockType.IRON_BAR);
 		
 		start = new Coord(origin);
 		end = new Coord(origin);

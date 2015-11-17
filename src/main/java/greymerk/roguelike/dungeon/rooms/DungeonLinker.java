@@ -10,7 +10,7 @@ import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
-import net.minecraft.init.Blocks;
+import greymerk.roguelike.worldgen.blocks.BlockType;
 
 public class DungeonLinker extends DungeonBase{
 
@@ -22,7 +22,7 @@ public class DungeonLinker extends DungeonBase{
 		IBlockFactory pillar = theme.getPrimaryPillar();
 		IBlockFactory wall = theme.getPrimaryWall();
 		IBlockFactory floor = theme.getPrimaryFloor();
-		MetaBlock bars = new MetaBlock(Blocks.iron_bars);
+		MetaBlock bars = BlockType.get(BlockType.IRON_BAR);
 
 		Coord start;
 		Coord end;

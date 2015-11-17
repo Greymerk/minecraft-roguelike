@@ -12,8 +12,8 @@ import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.Spawner;
 import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.Door;
-import net.minecraft.init.Blocks;
 
 public class PrisonCell implements IAlcove{
 
@@ -25,8 +25,8 @@ public class PrisonCell implements IAlcove{
 		
 		this.theme = settings.getTheme();
 		IBlockFactory walls = theme.getPrimaryWall();
-		MetaBlock air = new MetaBlock(Blocks.air);
-		MetaBlock plate = new MetaBlock(Blocks.stone_pressure_plate);
+		MetaBlock air = BlockType.get(BlockType.AIR);
+		MetaBlock plate = BlockType.get(BlockType.PRESSURE_PLATE_STONE);
 		
 		Coord origin = new Coord(x, y, z);
 		

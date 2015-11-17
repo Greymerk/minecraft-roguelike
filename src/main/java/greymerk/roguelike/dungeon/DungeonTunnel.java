@@ -11,7 +11,7 @@ import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
-import net.minecraft.init.Blocks;
+import greymerk.roguelike.worldgen.blocks.BlockType;
 
 public class DungeonTunnel implements Iterable<Coord>{
 
@@ -33,7 +33,7 @@ public class DungeonTunnel implements Iterable<Coord>{
 	
 	public void construct(WorldEditor editor, Random rand, LevelSettings settings){
 		
-		MetaBlock air = new MetaBlock(Blocks.air);
+		MetaBlock air = BlockType.get(BlockType.AIR);
 		
 		IBlockFactory wallBlocks = settings.getTheme().getPrimaryWall();
 		IBlockFactory floor = settings.getTheme().getPrimaryFloor();

@@ -18,9 +18,9 @@ public class Log {
 		case UP:
 		case DOWN: log.withProperty(BlockLog.AXIS_PROP, BlockLog.EnumAxis.Y); break;
 		case EAST:
-		case WEST: log.withProperty(BlockLog.AXIS_PROP, BlockLog.EnumAxis.Z); break;
+		case WEST: log.withProperty(BlockLog.AXIS_PROP, BlockLog.EnumAxis.X); break;
 		case NORTH:
-		case SOUTH: log.withProperty(BlockLog.AXIS_PROP, BlockLog.EnumAxis.X); break;
+		case SOUTH: log.withProperty(BlockLog.AXIS_PROP, BlockLog.EnumAxis.Z); break;
 		default: log.withProperty(BlockLog.AXIS_PROP, BlockLog.EnumAxis.NONE); break;
 		}
 		

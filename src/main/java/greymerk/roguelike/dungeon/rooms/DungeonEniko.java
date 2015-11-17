@@ -16,12 +16,13 @@ import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.MetaStair;
 import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.ColorBlock;
 import greymerk.roguelike.worldgen.blocks.DyeColor;
+import greymerk.roguelike.worldgen.blocks.Quartz;
+import greymerk.roguelike.worldgen.blocks.Slab;
 import greymerk.roguelike.worldgen.blocks.StairType;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockSlab;
-import net.minecraft.init.Blocks;
+
 
 public class DungeonEniko extends DungeonBase {
 
@@ -32,9 +33,9 @@ public class DungeonEniko extends DungeonBase {
 		int y = origin.getY();
 		int z = origin.getZ();
 		
-		MetaBlock air = new MetaBlock(Blocks.air);
-		MetaBlock coal = new MetaBlock(Blocks.coal_block);
-		MetaBlock netherBrick = new MetaBlock(Blocks.nether_brick);
+		MetaBlock air = BlockType.get(BlockType.AIR);
+		MetaBlock coal = BlockType.get(BlockType.COAL_BLOCK);
+		MetaBlock netherBrick = BlockType.get(BlockType.NETHERBRICK);
 		
 		editor.fillRectSolid(rand, x - 5, y, z - 5, x + 5, y + 4, z + 5, air);
 		
@@ -87,26 +88,27 @@ public class DungeonEniko extends DungeonBase {
 		}
 		
 		// floor
-		editor.fillRectSolid(rand, x - 5, y - 1, z - 5, x + 5, y - 1, z + 5, new MetaBlock(Blocks.stonebrick));
-		MetaBlock blockOne = RogueConfig.getBoolean(RogueConfig.PRECIOUSBLOCKS) ? new MetaBlock(Blocks.lapis_block) : ColorBlock.get(ColorBlock.CLAY, DyeColor.BLUE);
-		MetaBlock blockTwo = new MetaBlock(Blocks.quartz_block);
+		editor.fillRectSolid(rand, x - 5, y - 1, z - 5, x + 5, y - 1, z + 5, BlockType.get(BlockType.STONE_BRICK));
+		MetaBlock blockOne = RogueConfig.getBoolean(RogueConfig.PRECIOUSBLOCKS) ? BlockType.get(BlockType.LAPIS_BLOCK) : ColorBlock.get(ColorBlock.CLAY, DyeColor.BLUE);
+		MetaBlock blockTwo = Quartz.get(Quartz.SMOOTH);
 		BlockFactoryCheckers checkers = new BlockFactoryCheckers(blockOne, blockTwo);
 		
 		editor.fillRectSolid(rand, x - 3, y - 1, z - 3, x + 3, y - 1, z + 3, checkers);
 		
-		MetaBlock lamp = new MetaBlock(Blocks.lit_redstone_lamp);
+		MetaBlock lamp = BlockType.get(BlockType.REDSTONE_LAMP_LIT);
+		MetaBlock redBlock = BlockType.get(BlockType.REDSTONE_BLOCK);
 		
 		editor.setBlock(x - 2, y - 1, z - 2, lamp);
-		editor.setBlock(x - 2, y - 2, z - 2, Blocks.redstone_block);
+		editor.setBlock(x - 2, y - 2, z - 2, redBlock);
 		
 		editor.setBlock(x - 2, y - 1, z + 2, lamp);
-		editor.setBlock(x - 2, y - 2, z + 2, Blocks.redstone_block);
+		editor.setBlock(x - 2, y - 2, z + 2, redBlock);
 		
 		editor.setBlock(x + 2, y - 1, z - 2, lamp);
-		editor.setBlock(x + 2, y - 2, z - 2, Blocks.redstone_block);
+		editor.setBlock(x + 2, y - 2, z - 2, redBlock);
 		
 		editor.setBlock(x + 2, y - 1, z + 2, lamp);
-		editor.setBlock(x + 2, y - 2, z + 2, Blocks.redstone_block);
+		editor.setBlock(x + 2, y - 2, z + 2, redBlock);
 		
 		// roof
 		editor.fillRectSolid(rand, x - 6, y + 4, z - 6, x - 4, y + 4, z + 6, netherBrick);
@@ -116,8 +118,7 @@ public class DungeonEniko extends DungeonBase {
 		
 		editor.fillRectSolid(rand, x - 4, y + 5, z - 4, x + 4, y + 5, z + 4, netherBrick);
 		
-		MetaBlock upsideDownNetherSlab = new MetaBlock(Blocks.stone_slab);
-		upsideDownNetherSlab.withProperty(BlockSlab.HALF_PROP, BlockSlab.EnumBlockHalf.TOP);
+		MetaBlock upsideDownNetherSlab = Slab.get(Slab.STONE, true, false, false);
 		
 		editor.fillRectSolid(rand, x - 3, y + 4, z - 3, x - 3, y + 4, z + 3, upsideDownNetherSlab, true, true);
 		editor.fillRectSolid(rand, x + 3, y + 4, z - 3, x + 3, y + 4, z + 3, upsideDownNetherSlab, true, true);
@@ -132,7 +133,7 @@ public class DungeonEniko extends DungeonBase {
 	private static void pillar(WorldEditor editor, Random rand, int x, int y, int z){
 		
 		IStair stair = new MetaStair(StairType.STONEBRICK);
-		editor.fillRectSolid(rand, x, y, z, x, y + 3, z, new MetaBlock(Blocks.stonebrick));
+		editor.fillRectSolid(rand, x, y, z, x, y + 3, z, BlockType.get(BlockType.STONE_BRICK));
 		editor.setBlock(rand, x + 1, y + 3, z, stair.setOrientation(Cardinal.EAST, true), true, false);
 		editor.setBlock(rand, x - 1, y + 3, z, stair.setOrientation(Cardinal.WEST, true), true, false);
 		editor.setBlock(rand, x, y + 3, z + 1, stair.setOrientation(Cardinal.SOUTH, true), true, false);
@@ -151,8 +152,7 @@ public class DungeonEniko extends DungeonBase {
 		List<Coord> box = editor.getRectHollow(x - size, y - 2, z - size, x + size, y + 5, z + size);
 		
 		for(Coord pos : box){
-			Block b = editor.getBlock(pos).getBlock();
-			if(!b.getMaterial().isSolid()) return false;
+			if(editor.isAirBlock(pos)) return false;
 		}
 		
 		return true;

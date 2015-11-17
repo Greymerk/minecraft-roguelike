@@ -9,7 +9,9 @@ import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
-import net.minecraft.init.Blocks;
+import greymerk.roguelike.worldgen.blocks.BlockType;
+import greymerk.roguelike.worldgen.redstone.Torch;
+
 
 public class RogueTower implements ITower{
 
@@ -20,7 +22,7 @@ public class RogueTower implements ITower{
 	
 	public void generate(WorldEditor editor, Random rand, ITheme theme, int x, int y, int z){
 		
-		MetaBlock air = new MetaBlock(Blocks.air);
+		MetaBlock air = BlockType.get(BlockType.AIR);
 		
 		IBlockFactory blocks = theme.getPrimaryWall();
 		
@@ -191,7 +193,7 @@ public class RogueTower implements ITower{
 				cursor.add(Cardinal.UP, 1);
 				editor.setBlock(rand, cursor, air, true, true);
 				cursor.add(orth, 2);
-				editor.setBlock(rand, cursor, new MetaBlock(Blocks.iron_bars), true, true);
+				editor.setBlock(rand, cursor, BlockType.get(BlockType.IRON_BAR), true, true);
 			}
 		}
 		
@@ -229,6 +231,6 @@ public class RogueTower implements ITower{
 		if(editor.isAirBlock(cursor)) return;
 
 		cursor.add(Cardinal.UP, 1);
-		editor.setBlock(rand, cursor, new MetaBlock(Blocks.torch), true, true);
+		Torch.generate(editor, Torch.WOODEN, Cardinal.UP, cursor);
 	}
 }

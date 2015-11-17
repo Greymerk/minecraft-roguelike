@@ -15,6 +15,7 @@ public enum StairType {
 		case SANDSTONE: return Blocks.sandstone_stairs;
 		case RED_SANDSTONE: return Blocks.red_sandstone_stairs;
 		case QUARTZ: return Blocks.quartz_stairs;
+		case NETHERBRICK: return Blocks.nether_brick_stairs;
 		case OAK: return Blocks.oak_stairs;
 		case SPRUCE: return Blocks.spruce_stairs;
 		case BIRCH: return Blocks.birch_stairs;

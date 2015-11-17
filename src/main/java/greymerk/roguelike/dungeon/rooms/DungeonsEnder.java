@@ -11,7 +11,8 @@ import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.Spawner;
 import greymerk.roguelike.worldgen.WorldEditor;
-import net.minecraft.init.Blocks;
+import greymerk.roguelike.worldgen.blocks.BlockType;
+import greymerk.roguelike.worldgen.blocks.Quartz;
 
 public class DungeonsEnder extends DungeonBase {
 	WorldEditor editor;
@@ -32,9 +33,9 @@ public class DungeonsEnder extends DungeonBase {
 		this.editor = editor;
 		rand = inRandom;
 
-		MetaBlock black = new MetaBlock(Blocks.obsidian);
-		MetaBlock white = new MetaBlock(Blocks.quartz_block);
-		MetaBlock air = new MetaBlock(Blocks.air);
+		MetaBlock black = BlockType.get(BlockType.OBSIDIAN);
+		MetaBlock white = Quartz.get(Quartz.SMOOTH);
+		MetaBlock air = BlockType.get(BlockType.AIR);
 
 		Coord start;
 		Coord end;

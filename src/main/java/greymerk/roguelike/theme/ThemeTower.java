@@ -2,6 +2,7 @@ package greymerk.roguelike.theme;
 
 import greymerk.roguelike.worldgen.BlockJumble;
 import greymerk.roguelike.worldgen.BlockWeightedRandom;
+import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.MetaStair;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.StairType;
@@ -23,7 +24,8 @@ public class ThemeTower extends ThemeBase{
 		
 		MetaStair stair = new MetaStair(StairType.STONEBRICK);
 		
-		this.primary = new BlockSet(walls, stair, BlockType.get(BlockType.ANDESITE_POLISHED));
+		IBlockFactory pillar = BlockType.get(BlockType.ANDESITE_POLISHED);
+		this.primary = new BlockSet(walls, stair, pillar);
 		this.secondary = this.primary;
 
 	}

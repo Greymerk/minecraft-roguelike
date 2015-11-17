@@ -13,9 +13,9 @@ import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.MetaStair;
 import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.Door;
 import greymerk.roguelike.worldgen.blocks.StairType;
-import net.minecraft.init.Blocks;
 
 
 public class DungeonLibrary extends DungeonBase{
@@ -30,7 +30,7 @@ public class DungeonLibrary extends DungeonBase{
 		
 		IStair stair = settings.getTheme().getPrimaryStair();
 		
-		MetaBlock air = new MetaBlock(Blocks.air);
+		MetaBlock air = BlockType.get(BlockType.AIR);
 
 		Coord cursor;
 		Coord start;
@@ -49,9 +49,9 @@ public class DungeonLibrary extends DungeonBase{
 		
 		start = new Coord(origin);
 		start.add(Cardinal.UP, 4);
-		editor.setBlock(start, Blocks.lit_redstone_lamp);
+		editor.setBlock(start, BlockType.get(BlockType.REDSTONE_LAMP_LIT));
 		start.add(Cardinal.UP);
-		editor.setBlock(start, Blocks.redstone_block);
+		editor.setBlock(start, BlockType.get(BlockType.REDSTONE_BLOCK));
 		start.add(Cardinal.UP);
 		end = new Coord(start);
 		end.add(Cardinal.UP);
@@ -172,7 +172,7 @@ public class DungeonLibrary extends DungeonBase{
 		Coord cursor;
 		
 		Cardinal[] orth = Cardinal.getOrthogonal(dir);
-		MetaBlock shelf = new MetaBlock(Blocks.bookshelf);
+		MetaBlock shelf = BlockType.get(BlockType.SHELF);
 
 		for(Cardinal o : orth){
 			start = new Coord(pos);
@@ -196,7 +196,7 @@ public class DungeonLibrary extends DungeonBase{
 		
 		start.add(Cardinal.reverse(dir));
 		end.add(Cardinal.reverse(dir));
-		editor.fillRectSolid(rand, start, end, new MetaBlock(Blocks.air), true, true);
+		editor.fillRectSolid(rand, start, end, BlockType.get(BlockType.AIR), true, true);
 		
 		cursor = new Coord(pos);
 		cursor.add(dir, 4);

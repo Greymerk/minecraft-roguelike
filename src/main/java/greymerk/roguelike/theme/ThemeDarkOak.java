@@ -6,15 +6,12 @@ import greymerk.roguelike.worldgen.blocks.Log;
 import greymerk.roguelike.worldgen.blocks.StairType;
 import greymerk.roguelike.worldgen.blocks.Wood;
 import greymerk.roguelike.worldgen.blocks.WoodBlock;
-import net.minecraft.block.BlockPlanks;
-import net.minecraft.init.Blocks;
 
 public class ThemeDarkOak extends ThemeBase{
 
 	public ThemeDarkOak(){
 		
-		MetaBlock walls = new MetaBlock(Blocks.planks);
-		walls.withProperty(BlockPlanks.VARIANT_PROP, BlockPlanks.EnumType.DARK_OAK);
+		MetaBlock walls = Wood.get(Wood.DARKOAK, WoodBlock.PLANK);
 		MetaStair stair = new MetaStair(StairType.DARKOAK);
 		MetaBlock pillar = Log.getLog(Wood.DARKOAK);
 		

@@ -9,7 +9,7 @@ import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.WorldEditor;
-import net.minecraft.init.Blocks;
+import greymerk.roguelike.worldgen.blocks.BlockType;
 
 public class SegmentFireArch extends SegmentBase {
 
@@ -42,11 +42,11 @@ public class SegmentFireArch extends SegmentBase {
 		stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
 		cursor.add(Cardinal.DOWN, 2);
 		cursor.add(dir);
-		editor.setBlock(cursor, Blocks.netherrack);
+		editor.setBlock(cursor, BlockType.get(BlockType.NETHERRACK));
 		cursor.add(Cardinal.UP);
-		editor.setBlock(cursor, Blocks.fire);
+		editor.setBlock(cursor, BlockType.get(BlockType.FIRE));
 		cursor.add(Cardinal.reverse(dir));
-		editor.setBlock(cursor, Blocks.iron_bars);
+		editor.setBlock(cursor, BlockType.get(BlockType.IRON_BAR));
 		
 		for(Cardinal orth : orths){
 			

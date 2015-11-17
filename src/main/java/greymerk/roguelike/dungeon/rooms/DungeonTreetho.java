@@ -12,14 +12,13 @@ import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.ColorBlock;
+import greymerk.roguelike.worldgen.blocks.Crops;
 import greymerk.roguelike.worldgen.blocks.DyeColor;
-import net.minecraft.block.BlockPlanks;
-import net.minecraft.block.BlockSapling;
-import net.minecraft.block.BlockSlab;
-import net.minecraft.block.BlockStoneSlab;
-import net.minecraft.block.BlockWoodSlab;
-import net.minecraft.init.Blocks;
+import greymerk.roguelike.worldgen.blocks.Slab;
+import greymerk.roguelike.worldgen.blocks.Wood;
+
 
 public class DungeonTreetho extends DungeonBase{
 
@@ -40,10 +39,8 @@ public class DungeonTreetho extends DungeonBase{
 		
 		editor.fillRectHollow(rand, start, end, wall, false, true);
 		
-		MetaBlock birchSlab = new MetaBlock(Blocks.wooden_slab);
-		birchSlab.withProperty(BlockWoodSlab.VARIANT_PROP, BlockPlanks.EnumType.BIRCH);
-		birchSlab.withProperty(BlockWoodSlab.HALF_PROP, BlockSlab.EnumBlockHalf.TOP);
-		MetaBlock pumpkin = new MetaBlock(Blocks.lit_pumpkin);
+		MetaBlock birchSlab = Slab.get(Slab.BIRCH, true, false, false);
+		MetaBlock pumpkin = Crops.get(Crops.PUMPKIN);
 		start = new Coord(origin);
 		end = new Coord(origin);
 		start.add(new Coord(-9, 8, -9));
@@ -76,13 +73,11 @@ public class DungeonTreetho extends DungeonBase{
 		Coord start;
 		Coord end;
 		
-		MetaBlock slab = new MetaBlock(Blocks.stone_slab);
-		slab.withProperty(BlockStoneSlab.VARIANT_PROP, BlockStoneSlab.EnumType.SAND);
-		MetaBlock light = new MetaBlock(Blocks.lit_pumpkin);
-		MetaBlock sapling = new MetaBlock(Blocks.sapling);
-		sapling.withProperty(BlockSapling.TYPE_PROP, BlockPlanks.EnumType.BIRCH);
+		MetaBlock slab = Slab.get(Slab.SANDSTONE);
+		MetaBlock light = BlockType.get(BlockType.PUMPKIN_LIT);
+		MetaBlock sapling = Wood.getSapling(Wood.BIRCH);
 		MetaBlock glass = ColorBlock.get(ColorBlock.GLASS, DyeColor.YELLOW);
-		MetaBlock dirt = new MetaBlock(Blocks.dirt);
+		MetaBlock dirt = BlockType.get(BlockType.DIRT);
 		
 		Cardinal[] orth = Cardinal.getOrthogonal(dir);
 		
@@ -122,8 +117,7 @@ public class DungeonTreetho extends DungeonBase{
 	
 	private void ceiling(WorldEditor editor, Random rand, LevelSettings settings, Coord origin){
 		
-		MetaBlock fill = new MetaBlock(Blocks.planks);
-		fill.withProperty(BlockPlanks.VARIANT_PROP, BlockPlanks.EnumType.DARK_OAK);
+		MetaBlock fill = Wood.getPlank(Wood.SPRUCE);
 		
 		MinimumSpanningTree tree = new MinimumSpanningTree(rand, 7, 3);
 		tree.generate(editor, rand, fill, origin);

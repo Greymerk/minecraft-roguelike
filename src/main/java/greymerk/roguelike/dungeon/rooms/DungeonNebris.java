@@ -14,9 +14,9 @@ import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.MetaStair;
 import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.ColorBlock;
 import greymerk.roguelike.worldgen.blocks.StairType;
-import net.minecraft.init.Blocks;
 
 public class DungeonNebris extends DungeonBase {
 
@@ -27,15 +27,15 @@ public class DungeonNebris extends DungeonBase {
 		int y = origin.getY();
 		int z = origin.getZ();
 		
-		MetaBlock air = new MetaBlock(Blocks.air);
-		MetaBlock cobble = new MetaBlock(Blocks.cobblestone);
+		MetaBlock air = BlockType.get(BlockType.AIR);
+		MetaBlock cobble = BlockType.get(BlockType.COBBLESTONE);
 		BlockWeightedRandom waterFloor = new BlockWeightedRandom();
 		waterFloor.addBlock(cobble, 40);
-		waterFloor.addBlock(new MetaBlock(Blocks.glowstone), 7);
+		waterFloor.addBlock(BlockType.get(BlockType.GLOWSTONE), 7);
 		
 		
 		IStair step = new MetaStair(StairType.COBBLE);
-		MetaBlock water = new MetaBlock(Blocks.flowing_water);
+		MetaBlock water = BlockType.get(BlockType.WATER_FLOWING);
 		
 		// space
 		editor.fillRectSolid(rand, x - 8, y - 3, z - 8, x + 8, y + 5, z + 8, air);

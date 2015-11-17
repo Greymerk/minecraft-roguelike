@@ -16,10 +16,12 @@ import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.MetaStair;
 import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.ColorBlock;
 import greymerk.roguelike.worldgen.blocks.DyeColor;
+import greymerk.roguelike.worldgen.blocks.Furnace;
 import greymerk.roguelike.worldgen.blocks.StairType;
-import net.minecraft.init.Blocks;
+import greymerk.roguelike.worldgen.redstone.Torch;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityChest;
 
@@ -43,7 +45,7 @@ public class DungeonMess extends DungeonBase {
 		stair = theme.getSecondaryStair();
 		log = theme.getSecondaryPillar();
 		
-		MetaBlock air = new MetaBlock(Blocks.air);
+		MetaBlock air = BlockType.get(BlockType.AIR);
 		
 		// air		
 		editor.fillRectSolid(rand, x - 6, y, z - 6, x + 6, y + 2, z + 6, air);
@@ -106,7 +108,7 @@ public class DungeonMess extends DungeonBase {
 
 	private void stove(WorldEditor editor, Random rand, int x, int y, int z){
 		
-		MetaBlock brick = new MetaBlock(Blocks.brick_block);
+		MetaBlock brick = BlockType.get(BlockType.BRICK);
 		IStair stair = new MetaStair(StairType.BRICK);
 		
 		// floor
@@ -123,15 +125,15 @@ public class DungeonMess extends DungeonBase {
 		editor.fillRectSolid(rand, x - 1, y + 2, z - 2, x + 1, y + 2, z - 2, brick);
 		editor.fillRectSolid(rand, x - 1, y + 2, z - 1, x + 2, y + 2, z - 1, stair.setOrientation(Cardinal.SOUTH, true), true, true);
 		
-		editor.setBlock(x, y - 1, z - 3, Blocks.netherrack);
-		editor.setBlock(x, y, z - 3, Blocks.fire);
+		editor.setBlock(x, y - 1, z - 3, BlockType.get(BlockType.NETHERRACK));
+		editor.setBlock(x, y, z - 3, BlockType.get(BlockType.FIRE));
 		editor.setBlock(rand, x, y + 1, z - 3, stair.setOrientation(Cardinal.SOUTH, true), true, true);
 
 		// furnace
 		editor.fillRectSolid(rand, x + 2, y, z - 1, x + 2, y + 2, z + 1, brick);
 		editor.fillRectSolid(rand, x + 1, y + 2, z - 1, x + 1, y + 2, z + 1, stair.setOrientation(Cardinal.WEST, true), true, true);
 		
-		editor.setBlock(x + 2, y, z, Blocks.furnace);
+		Furnace.generate(editor, Cardinal.WEST, new Coord(x + 2, y, z));
 		editor.setBlock(rand, x + 2, y + 1, z, stair.setOrientation(Cardinal.WEST, true), true, true);
 		
 		// ceiling
@@ -168,7 +170,7 @@ public class DungeonMess extends DungeonBase {
 		editor.setBlock(rand, x + 1, y, z, stair.setOrientation(Cardinal.EAST, true), true, true);
 		editor.setBlock(rand, x + 1, y, z + 1, stair.setOrientation(Cardinal.SOUTH, true), true, true);
 		editor.setBlock(rand, x, y, z + 1, stair.setOrientation(Cardinal.WEST, true), true, true);
-		editor.setBlock(x, y + 1, z, Blocks.torch);
+		Torch.generate(editor, Torch.WOODEN, Cardinal.UP, new Coord(x, y + 1, z));
 	}
 
 	private void southTable(WorldEditor editor, Random rand, int x, int y, int z){
@@ -184,8 +186,7 @@ public class DungeonMess extends DungeonBase {
 		editor.setBlock(rand, x + 1, y, z - 1, stair.setOrientation(Cardinal.EAST, true), true, true);
 		editor.setBlock(rand, x + 1, y, z, stair.setOrientation(Cardinal.SOUTH, true), true, true);
 		editor.setBlock(rand, x, y, z, stair.setOrientation(Cardinal.WEST, true), true, true);
-		editor.setBlock(x, y + 1, z, Blocks.torch);
-				
+		Torch.generate(editor, Torch.WOODEN, Cardinal.UP, new Coord(x, y + 1, z));
 	}
 	
 	private static void pillar(WorldEditor editor, Random rand, ITheme theme, int height, int x, int y, int z){

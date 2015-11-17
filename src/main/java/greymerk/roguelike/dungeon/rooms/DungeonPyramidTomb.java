@@ -15,8 +15,8 @@ import greymerk.roguelike.worldgen.MetaStair;
 import greymerk.roguelike.worldgen.Spawner;
 import greymerk.roguelike.worldgen.SpawnerSettings;
 import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.StairType;
-import net.minecraft.init.Blocks;
 
 public class DungeonPyramidTomb extends DungeonBase{
 
@@ -27,7 +27,7 @@ public class DungeonPyramidTomb extends DungeonBase{
 		ITheme theme = settings.getTheme();
 		IBlockFactory pillar = theme.getPrimaryPillar();
 		IBlockFactory blocks = theme.getPrimaryWall();
-		MetaBlock air = new MetaBlock(Blocks.air);
+		MetaBlock air = BlockType.get(BlockType.AIR);
 		
 
 		Coord start;
@@ -150,7 +150,7 @@ public class DungeonPyramidTomb extends DungeonBase{
 		
 		if(width < 1) return;
 		
-		MetaBlock air = new MetaBlock(Blocks.air);
+		MetaBlock air = BlockType.get(BlockType.AIR);
 		
 		Cardinal[] orth = Cardinal.getOrthogonal(dir);
 		Coord cursor;
@@ -197,7 +197,7 @@ public class DungeonPyramidTomb extends DungeonBase{
 		SpawnerSettings spawners = settings.getSpawners();
 		
 		IStair stair = new MetaStair(StairType.QUARTZ);
-		MetaBlock blocks = new MetaBlock(Blocks.quartz_block);
+		MetaBlock blocks = BlockType.get(BlockType.AIR);
 		
 		Coord cursor;
 		

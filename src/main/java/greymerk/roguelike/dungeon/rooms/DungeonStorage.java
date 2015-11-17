@@ -16,7 +16,7 @@ import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
-import net.minecraft.init.Blocks;
+import greymerk.roguelike.worldgen.blocks.BlockType;
 
 public class DungeonStorage extends DungeonBase {
 
@@ -29,7 +29,7 @@ public class DungeonStorage extends DungeonBase {
 		ITheme theme = settings.getTheme();
 		
 		HashSet<Coord> chestSpaces = new HashSet<Coord>();
-		MetaBlock air = new MetaBlock(Blocks.air);
+		MetaBlock air = BlockType.get(BlockType.AIR);
 		
 		// space
 		editor.fillRectSolid(rand, x - 6, y, z - 6, x + 6, y + 3, z + 6, air);
@@ -115,7 +115,7 @@ public class DungeonStorage extends DungeonBase {
 				end = new Coord(start);
 				end.add(dir, 3);
 				end.add(orth, 1);
-				editor.fillRectSolid(rand, start, end, new MetaBlock(Blocks.hardened_clay), true, true);
+				editor.fillRectSolid(rand, start, end, theme.getSecondaryFloor(), true, true);
 				
 				cursor = new Coord(x, y, z);
 				cursor.add(dir, 5);

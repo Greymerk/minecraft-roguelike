@@ -14,13 +14,13 @@ import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.MetaStair;
 import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.blocks.BlockType;
+import greymerk.roguelike.worldgen.blocks.ColorBlock;
+import greymerk.roguelike.worldgen.blocks.DyeColor;
+import greymerk.roguelike.worldgen.blocks.Leaves;
+import greymerk.roguelike.worldgen.blocks.Quartz;
 import greymerk.roguelike.worldgen.blocks.StairType;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockColored;
-import net.minecraft.block.BlockPlanks;
-import net.minecraft.block.BlockQuartz;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.EnumDyeColor;
 
 public class DungeonAvidya extends DungeonBase {
 
@@ -31,14 +31,11 @@ public class DungeonAvidya extends DungeonBase {
 		int y = origin.getY();
 		int z = origin.getZ();
 		
-		MetaBlock redClay = new MetaBlock(Blocks.stained_hardened_clay);
-		redClay.withProperty(BlockColored.COLOR, EnumDyeColor.RED);
-		MetaBlock whiteClay = new MetaBlock(Blocks.stained_hardened_clay);
-		whiteClay.withProperty(BlockColored.COLOR, EnumDyeColor.WHITE);
-		MetaBlock pillarQuartz = new MetaBlock(Blocks.quartz_block);
-		pillarQuartz.withProperty(BlockQuartz.VARIANT_PROP, BlockQuartz.EnumType.LINES_Y);
-		MetaBlock glowstone = new MetaBlock(Blocks.glowstone);
-		MetaBlock air = new MetaBlock(Blocks.air);
+		MetaBlock redClay = ColorBlock.get(ColorBlock.CLAY, DyeColor.RED);
+		MetaBlock whiteClay = ColorBlock.get(ColorBlock.CLAY, DyeColor.WHITE);
+		MetaBlock pillarQuartz = Quartz.getPillar(Cardinal.UP);
+		MetaBlock glowstone = BlockType.get(BlockType.GLOWSTONE);
+		MetaBlock air = BlockType.get(BlockType.AIR);
 		
 		// clear space
 		editor.fillRectSolid(rand, x - 8, y, z - 8, x + 8, y + 5, z + 8, air);
@@ -51,16 +48,14 @@ public class DungeonAvidya extends DungeonBase {
 		
 		
 		// floor
-		MetaBlock ying = new MetaBlock(Blocks.stained_hardened_clay);
-		ying.withProperty(BlockColored.COLOR, EnumDyeColor.BLACK);
-		MetaBlock yang = new MetaBlock(Blocks.stained_hardened_clay);
-		yang.withProperty(BlockColored.COLOR, EnumDyeColor.WHITE);
+		MetaBlock ying = ColorBlock.get(ColorBlock.CLAY, DyeColor.BLACK);
+		MetaBlock yang = ColorBlock.get(ColorBlock.CLAY, DyeColor.WHITE);
 		
 		// ying
 		editor.fillRectSolid(rand, x - 8, y - 2, z - 8, x + 8, y - 2, z + 8, ying, true, true);
 		
 		// yang
-		MetaBlock quartz = new MetaBlock(Blocks.quartz_block);
+		MetaBlock quartz = Quartz.get(Quartz.SMOOTH);
 		Coord start = new Coord(x, y, z);
 		start.add(Cardinal.DOWN, 2);
 		start.add(Cardinal.WEST, 5);
@@ -122,7 +117,7 @@ public class DungeonAvidya extends DungeonBase {
 				editor.fillRectSolid(rand, start, end, whiteClay, true, true);
 				start.add(Cardinal.DOWN, 5);
 				end.add(Cardinal.DOWN, 5);
-				editor.fillRectSolid(rand, start, end, new MetaBlock(Blocks.stonebrick), true, true);
+				editor.fillRectSolid(rand, start, end, BlockType.get(BlockType.STONE_BRICK), true, true);
 				
 				start = new Coord(x, y, z);
 				start.add(dir, 7);
@@ -227,19 +222,18 @@ public class DungeonAvidya extends DungeonBase {
 				cursor.add(Cardinal.DOWN, 1);
 				cursor.add(dir, 8);
 				cursor.add(orth, 3);
-				editor.setBlock(cursor, Blocks.grass);
-				MetaBlock leaves = new MetaBlock(Blocks.leaves);
-				leaves.withProperty(BlockPlanks.VARIANT_PROP, BlockPlanks.EnumType.OAK);
+				editor.setBlock(cursor, BlockType.get(BlockType.GRASS));
+				MetaBlock leaves = Leaves.get(Leaves.OAK, false);
 				
 				editor.setBlock(cursor.getX(), cursor.getY() + 1, cursor.getZ(), leaves);
 				cursor.add(orth, 1);
-				editor.setBlock(cursor, Blocks.grass);
+				editor.setBlock(cursor, BlockType.get(BlockType.GRASS));
 				editor.setBlock(cursor.getX(), cursor.getY() + 1, cursor.getZ(), leaves);
 				cursor.add(orth, 1);
-				editor.setBlock(cursor, Blocks.grass);
+				editor.setBlock(cursor, BlockType.get(BlockType.GRASS));
 				editor.setBlock(cursor.getX(), cursor.getY() + 1, cursor.getZ(), leaves);
 				cursor.add(Cardinal.reverse(dir), 1);
-				editor.setBlock(cursor, Blocks.cobblestone);
+				editor.setBlock(cursor, BlockType.get(BlockType.COBBLESTONE));
 				cursor.add(Cardinal.reverse(orth), 1);
 				glowstone.setBlock(editor, cursor);
 				cursor.add(orth, 2);
@@ -248,18 +242,18 @@ public class DungeonAvidya extends DungeonBase {
 				glowstone.setBlock(editor, cursor);
 				cursor.add(Cardinal.UP, 1);
 				cursor.add(Cardinal.reverse(dir), 1);
-				editor.setBlock(cursor, Blocks.cobblestone);
+				editor.setBlock(cursor, BlockType.get(BlockType.COBBLESTONE));
 				cursor.add(dir, 1);
 				cursor.add(orth, 1);
-				editor.setBlock(cursor, Blocks.cobblestone);
+				editor.setBlock(cursor, BlockType.get(BlockType.COBBLESTONE));
 				cursor.add(dir, 1);
-				editor.setBlock(cursor, Blocks.cobblestone);
+				editor.setBlock(cursor, BlockType.get(BlockType.COBBLESTONE));
 				cursor.add(orth, 1);
-				editor.setBlock(cursor, Blocks.cobblestone);
+				editor.setBlock(cursor, BlockType.get(BlockType.COBBLESTONE));
 				cursor.add(Cardinal.UP, 1);
-				editor.setBlock(cursor, Blocks.cobblestone);
+				editor.setBlock(cursor, BlockType.get(BlockType.COBBLESTONE));
 				cursor.add(Cardinal.UP, 3);
-				editor.setBlock(cursor, Blocks.flowing_water);
+				editor.setBlock(cursor, BlockType.get(BlockType.WATER_FLOWING));
 			}
 		}
 		

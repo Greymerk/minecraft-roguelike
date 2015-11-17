@@ -15,8 +15,8 @@ import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.MetaStair;
 import greymerk.roguelike.worldgen.Spawner;
 import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.StairType;
-import net.minecraft.init.Blocks;
 
 public class DungeonObsidian extends DungeonBase {
 
@@ -31,7 +31,7 @@ public class DungeonObsidian extends DungeonBase {
 		ITheme theme = settings.getTheme();
 		
 		HashSet<Coord> spawners = new HashSet<Coord>();
-		MetaBlock air = new MetaBlock(Blocks.air);
+		MetaBlock air = BlockType.get(BlockType.AIR);
 		IBlockFactory primaryWall = theme.getPrimaryWall();
 		IBlockFactory secondaryWall = theme.getSecondaryWall();
 		
@@ -321,13 +321,14 @@ public class DungeonObsidian extends DungeonBase {
 	}
 	
 	private static void lavaWindow(WorldEditor editor, Coord cursor, Cardinal orth){
-		editor.setBlock(cursor, Blocks.lava);
+		MetaBlock lava = BlockType.get(BlockType.LAVA_FLOWING);
+		editor.setBlock(cursor, lava);
 		cursor.add(Cardinal.DOWN, 1);
-		editor.setBlock(cursor, Blocks.lava);
+		editor.setBlock(cursor, lava);
 		cursor.add(orth, 1);
-		editor.setBlock(cursor, Blocks.lava);
+		editor.setBlock(cursor, lava);
 		cursor.add(Cardinal.UP, 1);
-		editor.setBlock(cursor, Blocks.lava);
+		editor.setBlock(cursor, lava);
 	}
 
 }

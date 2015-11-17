@@ -9,6 +9,7 @@ import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.ColorBlock;
 import greymerk.roguelike.worldgen.blocks.Door;
 import net.minecraft.init.Blocks;
@@ -20,7 +21,7 @@ public class EniTower implements ITower {
 	@Override
 	public void generate(WorldEditor editor, Random rand, ITheme theme, int x, int y, int z) {
 		
-		MetaBlock air = new MetaBlock(Blocks.air);
+		MetaBlock air = BlockType.get(BlockType.AIR);
 		
 		IBlockFactory blocks = theme.getPrimaryWall();
 		

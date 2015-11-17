@@ -12,17 +12,21 @@ import net.minecraft.init.Blocks;
 
 public enum BlockType {
 
-	AIR,
-	SMOOTH_STONE, GRANITE, GRANITE_POLISHED, DIORITE, DIORITE_POLISHED, ANDESITE, 
-	ANDESITE_POLISHED, GRASS, DIRT, DIRT_COARSE, DIRT_PODZOL, COBBLESTONE, BEDROCK,
-	SAND, SAND_RED, GRAVEL, ORE_GOLD, ORE_IRON, ORE_COAL, GLASS, ORE_LAPIS, LAPIS_BLOCK,
+	AIR, WATER_STILL, WATER_FLOWING, LAVA_STILL, LAVA_FLOWING, FIRE, IRON_BAR,
+	STONE_SMOOTH, GRANITE, GRANITE_POLISHED, DIORITE, DIORITE_POLISHED, ANDESITE, 
+	ANDESITE_POLISHED, GRASS, DIRT, DIRT_COARSE, DIRT_PODZOL, COBBLESTONE, COBBLESTONE_WALL, BEDROCK,
+	SAND, SAND_RED, GRAVEL, ORE_GOLD, ORE_IRON, ORE_COAL, GLASS, ORE_LAPIS, ORE_EMERALD, LAPIS_BLOCK,
 	SANDSTONE, SANDSTONE_CHISELED, SANDSTONE_SMOOTH, GOLD_BLOCK, IRON_BLOCK,
 	BRICK, COBBLESTONE_MOSSY, OBSIDIAN, ORE_DIAMOND, DIAMOND_BLOCK, FARMLAND, 
 	ORE_REDSTONE, ICE, SNOW, CLAY, NETHERRACK, SOUL_SAND, GLOWSTONE,
 	STONE_BRICK, STONE_BRICK_MOSSY, STONE_BRICK_CRACKED, STONE_BRICK_CHISELED,
 	MYCELIUM, NETHERBRICK, END_STONE, EMERALD_BLOCK, ORE_QUARTZ,
 	PRISMITE, PRISMARINE, PRISMARINE_DARK, SEA_LANTERN, COAL_BLOCK, ICE_PACKED,
-	SANDSTONE_RED, SANDSTONE_RED_CHISELED, SANDSTONE_RED_SMOOTH;
+	SANDSTONE_RED, SANDSTONE_RED_CHISELED, SANDSTONE_RED_SMOOTH,
+	QUARTZ, REDSTONE_BLOCK, PRESSURE_PLATE_STONE, PRESSURE_PLATE_WOODEN, SHELF, REDSTONE_WIRE,
+	COCAO, REEDS, CRAFTING_TABLE, NOTEBLOCK, REDSTONE_LAMP, REDSTONE_LAMP_LIT, JUKEBOX, FENCE,
+	TNT, ENCHANTING_TABLE, FENCE_NETHER_BRICK, WEB, PUMPKIN_LIT;
+	
 	
 	public static MetaBlock get(BlockType type){
 		
@@ -30,7 +34,13 @@ public enum BlockType {
 		
 		switch(type){
 		case AIR: return new MetaBlock(Blocks.air);
-		case SMOOTH_STONE: return new MetaBlock(Blocks.stone);
+		case WATER_STILL: return new MetaBlock(Blocks.water);
+		case WATER_FLOWING: return new MetaBlock(Blocks.flowing_water);
+		case LAVA_STILL: return new MetaBlock(Blocks.lava);
+		case LAVA_FLOWING: return new MetaBlock(Blocks.flowing_lava);
+		case FIRE: return new MetaBlock(Blocks.fire);
+		case IRON_BAR: return new MetaBlock(Blocks.iron_bars);
+		case STONE_SMOOTH: return new MetaBlock(Blocks.stone);
 		case GRANITE:
 			block = new MetaBlock(Blocks.stone);
 			block.withProperty(BlockStone.VARIANT_PROP, BlockStone.EnumType.GRANITE);
@@ -66,6 +76,7 @@ public enum BlockType {
 			block.withProperty(BlockDirt.VARIANT, BlockDirt.DirtType.PODZOL);
 			return block;
 		case COBBLESTONE: return new MetaBlock(Blocks.cobblestone);
+		case COBBLESTONE_WALL: return new MetaBlock(Blocks.cobblestone_wall);
 		case BEDROCK: return new MetaBlock(Blocks.bedrock);
 		case SAND: return new MetaBlock(Blocks.sand);
 		case SAND_RED:
@@ -78,6 +89,7 @@ public enum BlockType {
 		case GLASS: return new MetaBlock(Blocks.glass);
 		case ORE_LAPIS: return new MetaBlock(Blocks.lapis_ore);
 		case LAPIS_BLOCK: return new MetaBlock(Blocks.lapis_block);
+		case ORE_EMERALD: return new MetaBlock(Blocks.emerald_ore);
 		case SANDSTONE: return new MetaBlock(Blocks.sandstone);
 		case SANDSTONE_CHISELED:
 			block = new MetaBlock(Blocks.sandstone);
@@ -139,6 +151,25 @@ public enum BlockType {
 		case SANDSTONE_RED_SMOOTH:
 			block = new MetaBlock(Blocks.red_sandstone);
 			block.withProperty(BlockRedSandstone.TYPE, BlockRedSandstone.EnumType.SMOOTH);
+		case QUARTZ: return new MetaBlock(Blocks.quartz_block);
+		case REDSTONE_BLOCK: return new MetaBlock(Blocks.redstone_block);
+		case PRESSURE_PLATE_STONE: return new MetaBlock(Blocks.stone_pressure_plate);
+		case PRESSURE_PLATE_WOODEN: return new MetaBlock(Blocks.wooden_pressure_plate);
+		case SHELF: return new MetaBlock(Blocks.bookshelf);
+		case REDSTONE_WIRE: return new MetaBlock(Blocks.redstone_wire);
+		case COCAO: return new MetaBlock(Blocks.cocoa);
+		case REEDS: return new MetaBlock(Blocks.reeds);
+		case CRAFTING_TABLE: return new MetaBlock(Blocks.crafting_table);
+		case NOTEBLOCK: return new MetaBlock(Blocks.noteblock);
+		case REDSTONE_LAMP: return new MetaBlock(Blocks.redstone_lamp);
+		case REDSTONE_LAMP_LIT: return new MetaBlock(Blocks.lit_redstone_lamp);
+		case JUKEBOX: return new MetaBlock(Blocks.jukebox);
+		case FENCE: return new MetaBlock(Blocks.oak_fence);
+		case TNT: return new MetaBlock(Blocks.tnt);
+		case ENCHANTING_TABLE: return new MetaBlock(Blocks.enchanting_table);
+		case FENCE_NETHER_BRICK: return new MetaBlock(Blocks.nether_brick_fence);
+		case WEB: return new MetaBlock(Blocks.web);
+		case PUMPKIN_LIT: return new MetaBlock(Blocks.lit_pumpkin);
 		default: return new MetaBlock(Blocks.air);
 		}
 	}	

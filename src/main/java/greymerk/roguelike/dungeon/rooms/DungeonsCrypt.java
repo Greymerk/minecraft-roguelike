@@ -15,15 +15,14 @@ import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.Spawner;
 import greymerk.roguelike.worldgen.WorldEditor;
-import net.minecraft.init.Blocks;
-
+import greymerk.roguelike.worldgen.blocks.BlockType;
 
 public class DungeonsCrypt extends DungeonBase {
 
 	public boolean generate(WorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
 		
 		ITheme theme = settings.getTheme();
-		MetaBlock air = new MetaBlock(Blocks.air);
+		MetaBlock air = BlockType.get(BlockType.AIR);
 		IStair stair = theme.getPrimaryStair();
 		IBlockFactory walls = theme.getPrimaryWall();
 		IBlockFactory floor = theme.getPrimaryFloor();
@@ -352,8 +351,8 @@ public class DungeonsCrypt extends DungeonBase {
 		Coord cursor;
 		
 		IStair stair = theme.getPrimaryStair();
-		MetaBlock tombStone = new MetaBlock(Blocks.quartz_block);
-		MetaBlock air = new MetaBlock(Blocks.air);
+		MetaBlock tombStone = BlockType.get(BlockType.QUARTZ);
+		MetaBlock air = BlockType.get(BlockType.AIR);
 		
 		cursor = new Coord(origin);
 		cursor.add(dir, 2);

@@ -12,9 +12,9 @@ import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.Skull;
 import net.minecraft.block.BlockStoneBrick;
-import net.minecraft.init.Blocks;
 
 public class DungeonOssuary extends DungeonBase {
 
@@ -27,7 +27,7 @@ public class DungeonOssuary extends DungeonBase {
 		ITheme theme = settings.getTheme();
 		
 		IStair stair = theme.getPrimaryStair();
-		MetaBlock air = new MetaBlock(Blocks.air);
+		MetaBlock air = BlockType.get(BlockType.AIR);
 		
 		IBlockFactory walls = theme.getPrimaryWall();
 		editor.fillRectHollow(rand, new Coord(x - 8, y - 1, z - 8), new Coord(x + 8, y + 6, z + 8), walls, false, true);
@@ -35,12 +35,12 @@ public class DungeonOssuary extends DungeonBase {
 		
 		// any missing floor
 		BlockWeightedRandom cracked = new BlockWeightedRandom();
-		MetaBlock crack = new MetaBlock(Blocks.stonebrick);
+		MetaBlock crack = BlockType.get(BlockType.STONE_BRICK);
 		crack.withProperty(BlockStoneBrick.VARIANT_PROP, BlockStoneBrick.EnumType.CRACKED);
 		cracked.addBlock(crack, 10);
 		cracked.addBlock(air, 3);
-		cracked.addBlock(new MetaBlock(Blocks.cobblestone), 5);
-		cracked.addBlock(new MetaBlock(Blocks.gravel), 5);
+		cracked.addBlock(BlockType.get(BlockType.COBBLESTONE), 5);
+		cracked.addBlock(BlockType.get(BlockType.GRAVEL), 5);
 		
 		editor.fillRectSolid(rand, x - 7, y - 1, z - 7, x + 7, y - 1, z + 7, cracked, true, false);
 		
@@ -332,7 +332,7 @@ public class DungeonOssuary extends DungeonBase {
 		
 		IStair stair = theme.getPrimaryStair();
 		
-		editor.setBlock(x, y, z, new MetaBlock(Blocks.air));
+		editor.setBlock(x, y, z, BlockType.get(BlockType.AIR));
 		stair.setOrientation(Cardinal.EAST, true);
 		stair.setBlock(editor, new Coord(x - 1, y, z));
 		stair.setOrientation(Cardinal.WEST, true);

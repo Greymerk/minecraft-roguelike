@@ -3,32 +3,27 @@ package greymerk.roguelike.theme;
 import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.MetaStair;
+import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.Log;
 import greymerk.roguelike.worldgen.blocks.StairType;
 import greymerk.roguelike.worldgen.blocks.Wood;
-import net.minecraft.block.BlockPlanks;
-import net.minecraft.block.BlockStoneBrick;
-import net.minecraft.init.Blocks;
 
 public class ThemeDarkHall extends ThemeBase{
 
 	public ThemeDarkHall(){
 		
-		MetaBlock cracked = new MetaBlock(Blocks.stonebrick);
-		cracked.withProperty(BlockStoneBrick.VARIANT_PROP, BlockStoneBrick.EnumType.CRACKED);
+		MetaBlock cracked = BlockType.get(BlockType.STONE_BRICK_CRACKED);
 		
 		BlockWeightedRandom walls = new BlockWeightedRandom();
-		walls.addBlock(new MetaBlock(Blocks.cobblestone), 30);
-		walls.addBlock(new MetaBlock(Blocks.mossy_cobblestone), 10);
-		walls.addBlock(new MetaBlock(Blocks.stonebrick), 20);
+		walls.addBlock(BlockType.get(BlockType.COBBLESTONE), 30);
+		walls.addBlock(BlockType.get(BlockType.COBBLESTONE_MOSSY), 10);
+		walls.addBlock(BlockType.get(BlockType.STONE_BRICK), 20);
 		walls.addBlock(cracked, 10);
-		walls.addBlock(new MetaBlock(Blocks.gravel), 5);
+		walls.addBlock(BlockType.get(BlockType.GRAVEL), 5);
 		MetaStair stair = new MetaStair(StairType.STONEBRICK);
-		MetaBlock pillar = new MetaBlock(Blocks.stonebrick);
-		pillar.withProperty(BlockStoneBrick.VARIANT_PROP, BlockStoneBrick.EnumType.MOSSY);
+		MetaBlock pillar = BlockType.get(BlockType.STONE_BRICK_MOSSY);
 		
-		MetaBlock walls2 = new MetaBlock(Blocks.planks);
-		walls2.withProperty(BlockPlanks.VARIANT_PROP, BlockPlanks.EnumType.DARK_OAK);
+		MetaBlock walls2 = Wood.getPlank(Wood.DARKOAK);
 		MetaStair stair2 = new MetaStair(StairType.DARKOAK);
 		MetaBlock pillar2 = Log.getLog(Wood.DARKOAK);
 		

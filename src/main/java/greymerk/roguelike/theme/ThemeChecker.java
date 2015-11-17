@@ -4,15 +4,15 @@ import greymerk.roguelike.worldgen.BlockFactoryCheckers;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.MetaStair;
+import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.StairType;
-import net.minecraft.init.Blocks;
 
 public class ThemeChecker extends ThemeBase{
 
 	public ThemeChecker(){
 	
-		MetaBlock one = new MetaBlock(Blocks.obsidian);
-		MetaBlock two = new MetaBlock(Blocks.quartz_block);
+		MetaBlock one = BlockType.get(BlockType.OBSIDIAN);
+		MetaBlock two = BlockType.get(BlockType.QUARTZ);
 		
 		IBlockFactory checks = new BlockFactoryCheckers(one, two);
 		

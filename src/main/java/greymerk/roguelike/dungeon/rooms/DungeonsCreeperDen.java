@@ -14,7 +14,7 @@ import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.Spawner;
 import greymerk.roguelike.worldgen.WorldEditor;
-import net.minecraft.init.Blocks;
+import greymerk.roguelike.worldgen.blocks.BlockType;
 
 public class DungeonsCreeperDen extends DungeonBase {
 
@@ -25,16 +25,16 @@ public class DungeonsCreeperDen extends DungeonBase {
 		Coord start;
 		Coord end;
 		
-		MetaBlock tnt = new MetaBlock(Blocks.tnt);
+		MetaBlock tnt = BlockType.get(BlockType.TNT);
 		
 		BlockWeightedRandom mossy = new BlockWeightedRandom();
 		mossy.addBlock(theme.getPrimaryWall(), 3);
-		mossy.addBlock(new MetaBlock(Blocks.mossy_cobblestone), 1);
+		mossy.addBlock(BlockType.get(BlockType.COBBLESTONE_MOSSY), 1);
 		
 		BlockWeightedRandom floor = new BlockWeightedRandom();
 		floor.addBlock(theme.getPrimaryFloor(), 1);
-		mossy.addBlock(new MetaBlock(Blocks.mossy_cobblestone), 1);
-		floor.addBlock(new MetaBlock(Blocks.gravel), 3);
+		mossy.addBlock(BlockType.get(BlockType.COBBLESTONE_MOSSY), 1);
+		floor.addBlock(BlockType.get(BlockType.GRAVEL), 3);
 		
 		BlockWeightedRandom subfloor = new BlockWeightedRandom();
 		subfloor.addBlock(floor, 3);

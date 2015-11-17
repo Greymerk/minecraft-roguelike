@@ -11,7 +11,7 @@ import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
-import net.minecraft.init.Blocks;
+import greymerk.roguelike.worldgen.blocks.BlockType;
 
 public class DungeonReward implements IDungeonRoom {
 
@@ -23,7 +23,7 @@ public class DungeonReward implements IDungeonRoom {
 		int z = origin.getZ();
 		ITheme theme = settings.getTheme();
 		
-		editor.fillRectSolid(rand, x - 7, y, z - 7, x + 7, y + 5, z + 7, new MetaBlock(Blocks.air), true, true);
+		editor.fillRectSolid(rand, x - 7, y, z - 7, x + 7, y + 5, z + 7, BlockType.get(BlockType.AIR), true, true);
 		editor.fillRectHollow(rand, x - 8, y - 1, z - 8, x + 8, y + 6, z + 8, theme.getPrimaryWall(), false, true);
 		editor.fillRectSolid(rand, x - 1, y + 4, z - 1, x + 1, y + 5, z + 1, theme.getPrimaryWall());
 		
@@ -142,7 +142,7 @@ public class DungeonReward implements IDungeonRoom {
 				cursor.add(dir, 7);
 				cursor.add(orth, 4);
 				cursor.add(Cardinal.DOWN);
-				editor.setBlock(rand, cursor, new MetaBlock(Blocks.glowstone), true, true);
+				editor.setBlock(rand, cursor, BlockType.get(BlockType.GLOWSTONE), true, true);
 				
 			}
 			
@@ -172,7 +172,7 @@ public class DungeonReward implements IDungeonRoom {
 		
 		cursor = new Coord(x, y, z);
 		cursor.add(Cardinal.UP, 4);
-		editor.setBlock(rand, cursor, new MetaBlock(Blocks.glowstone), true, true);
+		editor.setBlock(rand, cursor, BlockType.get(BlockType.GLOWSTONE), true, true);
 		
 		cursor = new Coord(x, y, z);
 		cursor.add(Cardinal.UP);

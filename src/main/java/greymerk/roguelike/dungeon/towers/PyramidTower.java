@@ -7,6 +7,7 @@ import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.blocks.BlockType;
 import net.minecraft.init.Blocks;
 
 public class PyramidTower implements ITower{
@@ -17,7 +18,7 @@ public class PyramidTower implements ITower{
 		final int height = 30;
 		final int chamberDepth = 61;
 		
-		MetaBlock air = new MetaBlock(Blocks.air);
+		MetaBlock air = BlockType.get(BlockType.AIR);
 		
 		editor.fillPyramidSolid(rand, new Coord(x, chamberDepth, z), height, theme.getPrimaryWall(), true, true);
 		

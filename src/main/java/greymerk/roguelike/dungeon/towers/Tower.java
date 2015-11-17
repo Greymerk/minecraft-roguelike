@@ -5,6 +5,7 @@ import java.util.List;
 
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.blocks.BlockType;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 

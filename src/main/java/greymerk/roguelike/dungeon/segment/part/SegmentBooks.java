@@ -9,14 +9,14 @@ import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
-import net.minecraft.init.Blocks;
+import greymerk.roguelike.worldgen.blocks.BlockType;
 
 public class SegmentBooks extends SegmentBase {
 	
 	@Override
 	protected void genWall(WorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
 		
-		MetaBlock air = new MetaBlock(Blocks.air);
+		MetaBlock air = BlockType.get(BlockType.AIR);
 		IStair stair = theme.getSecondaryStair();
 		
 		Coord cursor = new Coord(x, y, z);
@@ -49,8 +49,8 @@ public class SegmentBooks extends SegmentBase {
 		
 		cursor = new Coord(x, y, z);
 		cursor.add(dir, 3);
-		editor.setBlock(cursor, Blocks.bookshelf);
+		editor.setBlock(cursor, BlockType.get(BlockType.SHELF));
 		cursor.add(Cardinal.UP);
-		editor.setBlock(cursor, Blocks.bookshelf);
+		editor.setBlock(cursor, BlockType.get(BlockType.SHELF));
 	}	
 }

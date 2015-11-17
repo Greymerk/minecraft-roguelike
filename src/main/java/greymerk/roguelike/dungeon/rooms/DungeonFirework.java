@@ -10,13 +10,16 @@ import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.blocks.BlockType;
+import greymerk.roguelike.worldgen.blocks.ColorBlock;
+import greymerk.roguelike.worldgen.blocks.DyeColor;
 import greymerk.roguelike.worldgen.redstone.Comparator;
 import greymerk.roguelike.worldgen.redstone.Dispenser;
 import greymerk.roguelike.worldgen.redstone.Dropper;
+import greymerk.roguelike.worldgen.redstone.Hopper;
 import greymerk.roguelike.worldgen.redstone.Lever;
 import greymerk.roguelike.worldgen.redstone.Repeater;
 import greymerk.roguelike.worldgen.redstone.Torch;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
@@ -28,7 +31,7 @@ public class DungeonFirework implements IDungeonRoom {
 		int x = origin.getX();
 		int y = origin.getY();
 		int z = origin.getZ();
-		MetaBlock breadboard = new MetaBlock(Blocks.planks);
+		MetaBlock breadboard = ColorBlock.get(ColorBlock.CLAY, DyeColor.GREEN);
 		
 		Coord cursor;
 		Coord start;
@@ -44,7 +47,7 @@ public class DungeonFirework implements IDungeonRoom {
 		end.add(orth[1], 4);
 		start.add(Cardinal.DOWN);
 		end.add(Cardinal.UP, 3);
-		editor.fillRectHollow(rand, start, end, new MetaBlock(Blocks.cobblestone), false, true);
+		editor.fillRectHollow(rand, start, end, BlockType.get(BlockType.COBBLESTONE), false, true);
 		
 		start = new Coord(x, y, z);
 		start.add(orth[0], 2);
@@ -83,7 +86,7 @@ public class DungeonFirework implements IDungeonRoom {
 		start.add(orth[0], 2);
 		end.add(orth[1], 2);
 		end.add(dir, 2);
-		editor.fillRectSolid(rand, start, end, new MetaBlock(Blocks.air), true, true);
+		editor.fillRectSolid(rand, start, end, BlockType.get(BlockType.AIR), true, true);
 		
 		cursor = new Coord(x, y, z);
 		cursor.add(dir, 2);
@@ -100,7 +103,7 @@ public class DungeonFirework implements IDungeonRoom {
 		cursor.add(orth[1], 2);
 		Repeater.generate(editor, rand, orth[1], 0, cursor);
 		
-		MetaBlock wire = new MetaBlock(Blocks.redstone_wire);
+		MetaBlock wire = BlockType.get(BlockType.REDSTONE_WIRE);
 		
 		start = new Coord(x, y, z);
 		start.add(Cardinal.DOWN, 2);
@@ -110,7 +113,7 @@ public class DungeonFirework implements IDungeonRoom {
 		end.add(orth[0], 5);
 		end.add(Cardinal.reverse(dir), 5);
 		end.add(Cardinal.DOWN, 2);
-		editor.fillRectSolid(rand, start, end, new MetaBlock(Blocks.cobblestone), true, true);
+		editor.fillRectSolid(rand, start, end, BlockType.get(BlockType.COBBLESTONE), true, true);
 		
 		cursor = new Coord(x, y, z);
 		cursor.add(Cardinal.reverse(dir), 3);
@@ -144,9 +147,9 @@ public class DungeonFirework implements IDungeonRoom {
 
 	private void launcher(WorldEditor editor, Random rand, Cardinal dir, Coord pos){
 		Coord cursor = new Coord(pos);
-		editor.setBlock(cursor, Blocks.redstone_wire);
+		editor.setBlock(cursor, BlockType.get(BlockType.REDSTONE_WIRE));
 		cursor.add(Cardinal.reverse(dir));
-		editor.setBlock(cursor, Blocks.redstone_wire);
+		editor.setBlock(cursor, BlockType.get(BlockType.REDSTONE_WIRE));
 		cursor.add(Cardinal.reverse(dir));
 		Repeater.generate(editor, rand, dir, 0, cursor);
 		cursor.add(Cardinal.reverse(dir));
@@ -160,13 +163,13 @@ public class DungeonFirework implements IDungeonRoom {
 		dropper.add(editor, cursor, 8, new ItemStack(Items.wooden_hoe));
 		
 		cursor.add(Cardinal.UP);
-		editor.setBlock(cursor, Blocks.hopper);
+		Hopper.generate(editor, Cardinal.DOWN, cursor);
 		cursor.add(dir);
 		Comparator.generate(editor, rand, dir, false, cursor);
 		cursor.add(dir);
-		editor.setBlock(cursor, Blocks.redstone_wire);
+		editor.setBlock(cursor, BlockType.get(BlockType.REDSTONE_WIRE));
 		cursor.add(dir);
-		editor.setBlock(cursor, Blocks.redstone_wire);
+		editor.setBlock(cursor, BlockType.get(BlockType.REDSTONE_WIRE));
 		cursor.add(dir);
 		
 		Coord top = new Coord(pos.getX(), 80, pos.getZ());
@@ -184,7 +187,7 @@ public class DungeonFirework implements IDungeonRoom {
 		start.add(dir);
 		Coord end = new Coord(start);
 		
-		MetaBlock breadboard = new MetaBlock(Blocks.planks);
+		MetaBlock breadboard = ColorBlock.get(ColorBlock.CLAY, DyeColor.GREEN);
 		
 		
 		boolean torch = false;
@@ -209,7 +212,7 @@ public class DungeonFirework implements IDungeonRoom {
 		}
 		
 		cursor.add(Cardinal.UP);
-		MetaBlock cob = new MetaBlock(Blocks.cobblestone);
+		MetaBlock cob = BlockType.get(BlockType.COBBLESTONE);
 		editor.fillRectSolid(rand, start, end, cob, true, true);
 		start.add(Cardinal.reverse(dir), 2);
 		end.add(Cardinal.reverse(dir), 2);
@@ -220,7 +223,7 @@ public class DungeonFirework implements IDungeonRoom {
 		Coord above = new Coord(end);
 		above.add(Cardinal.UP, 10);
 		List<Coord> tubeEnd = WorldEditor.getRectSolid(cursor, above);
-		MetaBlock air = new MetaBlock(Blocks.air);
+		MetaBlock air = BlockType.get(BlockType.AIR);
 		for(Coord c : tubeEnd){
 			if(editor.getBlock(c).getBlock().getMaterial().isSolid()){
 				air.setBlock(editor, c);

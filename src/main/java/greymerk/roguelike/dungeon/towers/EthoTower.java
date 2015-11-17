@@ -7,9 +7,8 @@ import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.IStair;
-import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
-import net.minecraft.init.Blocks;
+import greymerk.roguelike.worldgen.blocks.BlockType;
 
 public class EthoTower implements ITower {
 
@@ -182,7 +181,7 @@ public class EthoTower implements ITower {
 				start.add(orth[0]);
 				end.add(Cardinal.UP, 2);
 				end.add(orth[1]);
-				editor.fillRectSolid(rand, start, end, new MetaBlock(Blocks.air), true, true);
+				editor.fillRectSolid(rand, start, end, BlockType.get(BlockType.AIR), true, true);
 				
 				cursor = new Coord(floor);
 				cursor.add(dir, 6);

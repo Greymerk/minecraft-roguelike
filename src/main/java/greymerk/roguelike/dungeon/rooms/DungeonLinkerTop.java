@@ -10,7 +10,7 @@ import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.WorldEditor;
-import net.minecraft.init.Blocks;
+import greymerk.roguelike.worldgen.blocks.BlockType;
 
 public class DungeonLinkerTop extends DungeonBase{
 
@@ -36,7 +36,7 @@ public class DungeonLinkerTop extends DungeonBase{
 		
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.UP, 5);
-		editor.setBlock(cursor, Blocks.glowstone);
+		editor.setBlock(cursor, BlockType.get(BlockType.GLOWSTONE));
 		
 		start = new Coord(origin);
 		end = new Coord(origin);

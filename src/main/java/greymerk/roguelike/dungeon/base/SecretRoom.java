@@ -5,9 +5,8 @@ import java.util.Random;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
-import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
-import net.minecraft.init.Blocks;
+import greymerk.roguelike.worldgen.blocks.BlockType;
 
 public class SecretRoom implements ISecretRoom {
 
@@ -52,7 +51,7 @@ public class SecretRoom implements ISecretRoom {
 		end = new Coord(pos);
 		end.add(dir, size + 5);
 		end.add(Cardinal.UP);
-		editor.fillRectSolid(rand, pos, end, new MetaBlock(Blocks.air), true, true);
+		editor.fillRectSolid(rand, pos, end, BlockType.get(BlockType.AIR), true, true);
 		
 		end.add(Cardinal.DOWN);
 		this.prototype.generate(editor, rand, settings, new Cardinal[]{dir}, end);

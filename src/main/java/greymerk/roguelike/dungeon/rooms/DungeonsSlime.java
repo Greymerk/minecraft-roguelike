@@ -12,7 +12,7 @@ import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.Spawner;
 import greymerk.roguelike.worldgen.WorldEditor;
-import net.minecraft.init.Blocks;
+import greymerk.roguelike.worldgen.blocks.BlockType;
 
 public class DungeonsSlime extends DungeonBase {
 	WorldEditor editor;
@@ -37,11 +37,11 @@ public class DungeonsSlime extends DungeonBase {
 		originY = origin.getY();
 		originZ = origin.getZ();
 
-		liquid = new MetaBlock(Dungeon.getLevel(originY) == 4 ? Blocks.lava : Blocks.flowing_water);
+		liquid = Dungeon.getLevel(originY) == 4 ? BlockType.get(BlockType.LAVA_FLOWING) : BlockType.get(BlockType.WATER_FLOWING);
 
 		fillBlocks = theme.getPrimaryWall();
 		
-		MetaBlock air = new MetaBlock(Blocks.air);
+		MetaBlock air = BlockType.get(BlockType.AIR);
 		
 		// fill air
 		editor.fillRectSolid(rand, originX - 6, originY, originZ - 6, originX + 6, originY + 3, originZ + 6, air);
@@ -95,7 +95,7 @@ public class DungeonsSlime extends DungeonBase {
 		editor.fillRectSolid(rand, inX + 2, originY + 3, inZ - 1, inX + 2, originY + 3, inZ + 1, fillBlocks);
 
 		// carve ceiling air
-		editor.fillRectSolid(rand, inX - 1, originY + 1, inZ - 1, inX + 1, originY + 6, inZ + 1, new MetaBlock(Blocks.air));
+		editor.fillRectSolid(rand, inX - 1, originY + 1, inZ - 1, inX + 1, originY + 6, inZ + 1, BlockType.get(BlockType.AIR));
 		
 		// roof
 		editor.fillRectSolid(rand, inX - 2, originY + 7, inZ - 2, inX + 2, originY + 8, inZ + 2, fillBlocks);

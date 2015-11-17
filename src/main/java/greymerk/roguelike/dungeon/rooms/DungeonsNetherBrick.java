@@ -10,10 +10,9 @@ import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
-import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.Spawner;
 import greymerk.roguelike.worldgen.WorldEditor;
-import net.minecraft.init.Blocks;
+import greymerk.roguelike.worldgen.blocks.BlockType;
 
 public class DungeonsNetherBrick extends DungeonBase {
 	
@@ -41,13 +40,13 @@ public class DungeonsNetherBrick extends DungeonBase {
 
 		// lava crap under the floor
 		BlockWeightedRandom subFloor = new BlockWeightedRandom();
-		subFloor.addBlock(new MetaBlock(Blocks.lava), 8);
-		subFloor.addBlock(new MetaBlock(Blocks.obsidian), 3);
+		subFloor.addBlock(BlockType.get(BlockType.LAVA_FLOWING), 8);
+		subFloor.addBlock(BlockType.get(BlockType.OBSIDIAN), 3);
 		editor.fillRectSolid(rand, x - length, y - 5, z - width, x + length, y - 2, z + width, subFloor);
 		
 		BlockWeightedRandom ceiling = new BlockWeightedRandom();
-		ceiling.addBlock(new MetaBlock(Blocks.nether_brick_fence), 10);
-		ceiling.addBlock(new MetaBlock(Blocks.air), 5);
+		ceiling.addBlock(BlockType.get(BlockType.FENCE_NETHER_BRICK), 10);
+		ceiling.addBlock(BlockType.get(BlockType.AIR), 5);
 		editor.fillRectSolid(rand, x - length, y + height, z - width, x + length, y + height, z + width, ceiling);
 		
 		TreasureChest.createChests(editor, rand, settings, 1, WorldEditor.getRectSolid(x - length, y, z - width, x + length, y, z + width));

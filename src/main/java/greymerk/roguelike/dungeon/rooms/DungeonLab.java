@@ -14,13 +14,15 @@ import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.MetaStair;
 import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.blocks.BlockType;
+import greymerk.roguelike.worldgen.blocks.BrewingStand;
+import greymerk.roguelike.worldgen.blocks.ColorBlock;
+import greymerk.roguelike.worldgen.blocks.Crops;
+import greymerk.roguelike.worldgen.blocks.DyeColor;
 import greymerk.roguelike.worldgen.blocks.FlowerPot;
+import greymerk.roguelike.worldgen.blocks.Slab;
 import greymerk.roguelike.worldgen.blocks.StairType;
-import net.minecraft.block.BlockColored;
-import net.minecraft.block.BlockSlab.EnumBlockHalf;
-import net.minecraft.block.BlockStoneSlab;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.EnumDyeColor;
+import greymerk.roguelike.worldgen.redstone.Torch;
 
 public class DungeonLab extends DungeonBase {
 
@@ -35,7 +37,7 @@ public class DungeonLab extends DungeonBase {
 		IBlockFactory blocks = theme.getPrimaryWall();
 		
 		
-		MetaBlock air = new MetaBlock(Blocks.air);
+		MetaBlock air = BlockType.get(BlockType.AIR);
 		// Air
 		editor.fillRectSolid(rand, new Coord(x - 7, y, z - 7), new Coord(x + 7, y + 3, z + 7), air, true, true);
 
@@ -83,9 +85,10 @@ public class DungeonLab extends DungeonBase {
 
 	private static void corner(WorldEditor editor, Random rand, ITheme theme, int x, int y, int z){
 		
-		MetaBlock air = new MetaBlock(Blocks.air);
-		MetaBlock doubleSlab = new MetaBlock(Blocks.double_stone_slab.getDefaultState().withProperty(BlockStoneSlab.SEAMLESS_PROP, true));
-		MetaBlock cobble = new MetaBlock(Blocks.cobblestone);
+		MetaBlock air = BlockType.get(BlockType.AIR);
+		MetaBlock doubleSlab = Slab.get(Slab.STONE, false, true, true);
+		MetaBlock cobble = BlockType.get(BlockType.COBBLESTONE);
+		MetaBlock cyan = ColorBlock.get(ColorBlock.CLAY, DyeColor.CYAN);
 		
 		// pillars
 		pillar(editor, rand, theme, x, y, z);
@@ -94,7 +97,7 @@ public class DungeonLab extends DungeonBase {
 		pillar(editor, rand, theme, x + 5, y, z + 5);
 		
 		// tile floor
-		editor.fillRectSolid( rand, new Coord(x, y - 1, z), new Coord(x + 5, y - 1, z + 5), new MetaBlock(Blocks.stained_hardened_clay.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.CYAN)), true, true);
+		editor.fillRectSolid( rand, new Coord(x, y - 1, z), new Coord(x + 5, y - 1, z + 5), cyan, true, true);
 		editor.fillRectSolid( rand, new Coord(x + 1, y - 1, z + 2), new Coord(x + 4, y - 1, z + 3), doubleSlab, true, true);
 		editor.fillRectSolid( rand, new Coord(x + 2, y - 1, z + 1), new Coord(x + 3, y - 1, z + 4), doubleSlab, true, true);
 		
@@ -126,7 +129,7 @@ public class DungeonLab extends DungeonBase {
 		editor.fillRectSolid(rand, new Coord(x, y, z + 1), new Coord(x, y, z + 4), stair, true, true);
 		
 		if(RogueConfig.getBoolean(RogueConfig.GENEROUS)){
-			editor.setBlock(new Coord(x + 1, y + 1, z + 5), Blocks.brewing_stand);
+			editor.setBlock(new Coord(x + 1, y + 1, z + 5), BrewingStand.get());
 		}
 		
 		TreasureChest.generate(editor, rand, settings, new Coord(x, y + 1, z + 4), TreasureChest.POTIONS);
@@ -137,26 +140,27 @@ public class DungeonLab extends DungeonBase {
 	// fountains
 	private static void southEast(WorldEditor editor, Random rand, ITheme theme, int x, int y, int z){
 		
-		MetaBlock stone = new MetaBlock(Blocks.stonebrick);
+		MetaBlock stone = BlockType.get(BlockType.STONE_BRICK);
 		IStair stair = new MetaStair(StairType.STONEBRICK);
-		MetaBlock slab = new MetaBlock(Blocks.stone_slab.getDefaultState().withProperty(BlockStoneSlab.HALF_PROP, EnumBlockHalf.BOTTOM));
+		MetaBlock slab = Slab.get(Slab.STONEBRICK, false, false, false);
+		MetaBlock water = BlockType.get(BlockType.WATER_FLOWING);
 		
 		corner(editor, rand, theme, x, y, z);
 		
-		editor.fillRectSolid(rand, new Coord(x + 1, y, z + 5), new Coord(x + 4, y, z + 5), new MetaBlock(Blocks.stonebrick), true, true);
+		editor.fillRectSolid(rand, new Coord(x + 1, y, z + 5), new Coord(x + 4, y, z + 5), stone, true, true);
 		editor.setBlock(new Coord(x + 1, y + 1, z + 5), stair.setOrientation(Cardinal.WEST, false));
-		editor.setBlock(new Coord(x + 2, y + 1, z + 5), Blocks.flowing_water);
+		editor.setBlock(new Coord(x + 2, y + 1, z + 5), water);
 		editor.setBlock(new Coord(x + 2, y + 2, z + 5), slab);
 		editor.setBlock(new Coord(x + 3, y + 1, z + 5), stair.setOrientation(Cardinal.EAST, false));
 		
 		editor.fillRectSolid(rand, new Coord(x + 5, y, z + 1), new Coord(x + 5, y, z + 4), stone, true, true);
 		editor.setBlock(new Coord(x + 5, y + 1, z + 1), stair.setOrientation(Cardinal.NORTH, false));
-		editor.setBlock(new Coord(x + 5, y + 1, z + 2), Blocks.flowing_water);
+		editor.setBlock(new Coord(x + 5, y + 1, z + 2), water);
 		editor.setBlock(new Coord(x + 5, y + 2, z + 2), slab);
 		editor.setBlock(new Coord(x + 5, y + 1, z + 3), stair.setOrientation(Cardinal.SOUTH, false));
 		
 		editor.fillRectSolid(rand, new Coord(x + 3, y, z + 3), new Coord(x + 4, y, z + 4), stone, true, true);
-		editor.setBlock(new Coord(x + 3, y + 1, z + 3), Blocks.torch);
+		Torch.generate(editor, Torch.WOODEN, Cardinal.UP, new Coord(x + 3, y + 1, z + 3));
 		
 		editor.setBlock(rand, new Coord(x + 4, y, z + 1), stair.setOrientation(Cardinal.NORTH, false), true, true);
 		editor.setBlock(rand, new Coord(x + 3, y, z + 2), stair.setOrientation(Cardinal.WEST, false), true, true);
@@ -168,72 +172,82 @@ public class DungeonLab extends DungeonBase {
 	
 	private static void northWest(WorldEditor editor, Random rand, ITheme theme, int x, int y, int z){
 		
+		MetaBlock stone = BlockType.get(BlockType.STONE_BRICK);
+		MetaBlock redstone = BlockType.get(BlockType.REDSTONE_BLOCK);
+		MetaBlock lamp = BlockType.get(BlockType.REDSTONE_LAMP_LIT);
+		MetaBlock farmland = BlockType.get(BlockType.FARMLAND);
+		MetaBlock soul_sand = BlockType.get(BlockType.SOUL_SAND);
+		
 		corner(editor, rand, theme, x, y, z);
 		
-		editor.setBlock(new Coord(x + 1, y, z), Blocks.stonebrick);
+		editor.setBlock(new Coord(x + 1, y, z), stone);
 		FlowerPot.generate(editor, rand, new Coord(x + 1, y + 1, z));
-		editor.setBlock(new Coord(x + 2, y, z), Blocks.farmland);
-		editor.setBlock(new Coord(x + 2, y + 1, z), Blocks.carrots);
-		editor.setBlock(new Coord(x + 3, y, z), Blocks.farmland);
-		editor.setBlock(new Coord(x + 3, y + 1, z), Blocks.carrots);
-		editor.setBlock(new Coord(x + 4, y, z), Blocks.stonebrick);
+		editor.setBlock(new Coord(x + 2, y, z), farmland);
+		editor.setBlock(new Coord(x + 2, y + 1, z), Crops.get(Crops.CARROTS));
+		editor.setBlock(new Coord(x + 3, y, z), farmland);
+		editor.setBlock(new Coord(x + 3, y + 1, z), Crops.get(Crops.CARROTS));
+		editor.setBlock(new Coord(x + 4, y, z), stone);
 		FlowerPot.generate(editor, rand, new Coord(x + 4, y + 1, z));
 		
-		editor.setBlock(new Coord(x, y, z + 1), Blocks.stonebrick);
+		editor.setBlock(new Coord(x, y, z + 1), stone);
 		FlowerPot.generate(editor, rand, new Coord(x, y + 1, z + 1));
-		editor.setBlock(new Coord(x, y, z + 2), Blocks.soul_sand);
-		editor.setBlock(new Coord(x, y + 1, z + 2), Blocks.nether_wart);
-		editor.setBlock(new Coord(x, y, z + 3), Blocks.soul_sand);
-		editor.setBlock(new Coord(x, y + 1, z + 3), Blocks.nether_wart);
-		editor.setBlock(new Coord(x, y, z + 4), Blocks.stonebrick);
+		editor.setBlock(new Coord(x, y, z + 2), soul_sand);
+		editor.setBlock(new Coord(x, y + 1, z + 2), Crops.get(Crops.NETHERWART));
+		editor.setBlock(new Coord(x, y, z + 3), soul_sand);
+		editor.setBlock(new Coord(x, y + 1, z + 3), Crops.get(Crops.NETHERWART));
+		editor.setBlock(new Coord(x, y, z + 4), stone);
 		FlowerPot.generate(editor, rand, new Coord(x, y + 1, z + 4));
 		
-		editor.setBlock(new Coord(x + 1, y, z + 1), Blocks.stonebrick);
+		editor.setBlock(new Coord(x + 1, y, z + 1), stone);
 		
 		IStair stair = new MetaStair(StairType.STONEBRICK);
 		editor.fillRectSolid(rand, new Coord(x + 2, y, z + 1), new Coord(x + 4, y, z + 1), stair.setOrientation(Cardinal.SOUTH, false), true, true);
 		editor.fillRectSolid(rand, new Coord(x + 1, y, z + 2), new Coord(x + 1, y, z + 4), stair.setOrientation(Cardinal.EAST, false), true, true);
 		
-		editor.setBlock(new Coord(x + 2, y - 1, z + 2), Blocks.redstone_block);
-		editor.setBlock(new Coord(x + 3, y - 1, z + 2), Blocks.redstone_lamp);
-		editor.setBlock(new Coord(x + 2, y - 1, z + 3), Blocks.redstone_lamp);
+		editor.setBlock(new Coord(x + 2, y - 1, z + 2), redstone);
+		editor.setBlock(new Coord(x + 3, y - 1, z + 2), lamp);
+		editor.setBlock(new Coord(x + 2, y - 1, z + 3), lamp);
 		
-		editor.setBlock(new Coord(x, y, z), Blocks.water);
+		editor.setBlock(new Coord(x, y, z), BlockType.get(BlockType.WATER_FLOWING));
 	}
 	
 	private static void northEast(WorldEditor editor, Random rand, ITheme theme, int x, int y, int z){
 		
+		MetaBlock stone = BlockType.get(BlockType.STONE_BRICK);
+		MetaBlock redstone = BlockType.get(BlockType.REDSTONE_BLOCK);
+		MetaBlock lamp = BlockType.get(BlockType.REDSTONE_LAMP_LIT);
+		MetaBlock farmland = BlockType.get(BlockType.FARMLAND);
+		
 		corner(editor, rand, theme, x, y, z);
 		
-		editor.setBlock(new Coord(x + 1, y, z), Blocks.stonebrick);
+		editor.setBlock(new Coord(x + 1, y, z), stone);
 		FlowerPot.generate(editor, rand, new Coord(x + 1, y + 1, z));
-		editor.setBlock(new Coord(x + 2, y, z), Blocks.farmland);
-		editor.setBlock(new Coord(x + 2, y + 1, z), Blocks.melon_stem);
-		editor.setBlock(new Coord(x + 3, y, z), Blocks.farmland);
-		editor.setBlock(new Coord(x + 4, y, z), Blocks.stonebrick);
+		editor.setBlock(new Coord(x + 2, y, z), farmland);
+		editor.setBlock(new Coord(x + 2, y + 1, z), Crops.get(Crops.MELON));
+		editor.setBlock(new Coord(x + 3, y, z), farmland);
+		editor.setBlock(new Coord(x + 4, y, z), stone);
 		FlowerPot.generate(editor, rand, new Coord(x + 4, y + 1, z));
 		
-		editor.setBlock(new Coord(x + 5, y, z + 1), Blocks.stonebrick);
+		editor.setBlock(new Coord(x + 5, y, z + 1), stone);
 		FlowerPot.generate(editor, rand, new Coord(x + 5, y + 1, z + 1));
-		editor.setBlock(new Coord(x + 5, y, z + 2), Blocks.farmland);
-		editor.setBlock(new Coord(x + 5, y + 1, z + 2), Blocks.pumpkin_stem);
-		editor.setBlock(new Coord(x + 5, y, z + 3), Blocks.farmland);
-		editor.setBlock(new Coord(x + 5, y, z + 4), Blocks.stonebrick);
-		editor.setBlock(new Coord(x + 5, y + 1, z + 4), Blocks.flower_pot);
+		editor.setBlock(new Coord(x + 5, y, z + 2), farmland);
+		editor.setBlock(new Coord(x + 5, y + 1, z + 2), Crops.get(Crops.PUMPKIN));
+		editor.setBlock(new Coord(x + 5, y, z + 3), farmland);
+		editor.setBlock(new Coord(x + 5, y, z + 4), stone);
 		FlowerPot.generate(editor, rand, new Coord(x + 5, y + 1, z + 4));
 		
-		editor.setBlock(new Coord(x + 4, y, z + 1), Blocks.stonebrick);
+		editor.setBlock(new Coord(x + 4, y, z + 1), stone);
 		
 		IStair stair = new MetaStair(StairType.STONEBRICK);
 		
 		editor.fillRectSolid(rand, new Coord(x + 1, y, z + 1), new Coord(x + 3, y, z + 1), stair.setOrientation(Cardinal.SOUTH, false), true, true);
 		editor.fillRectSolid(rand, new Coord(x + 4, y, z + 2), new Coord(x + 4, y, z + 4), stair.setOrientation(Cardinal.WEST, false), true, true);
 		
-		editor.setBlock(new Coord(x + 3, y - 1, z + 2), Blocks.redstone_block);
-		editor.setBlock(new Coord(x + 2, y - 1, z + 2), Blocks.redstone_lamp);
-		editor.setBlock(new Coord(x + 3, y - 1, z + 3), Blocks.redstone_lamp);
+		editor.setBlock(new Coord(x + 3, y - 1, z + 2), redstone);
+		editor.setBlock(new Coord(x + 2, y - 1, z + 2), lamp);
+		editor.setBlock(new Coord(x + 3, y - 1, z + 3), lamp);
 		
-		editor.setBlock(new Coord(x + 5, y, z), Blocks.water);
+		editor.setBlock(new Coord(x + 5, y, z), BlockType.get(BlockType.WATER_FLOWING));
 	}
 	
 	private static void pillar(WorldEditor editor, Random rand, ITheme theme, int x, int y, int z){

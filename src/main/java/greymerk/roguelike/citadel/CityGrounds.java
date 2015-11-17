@@ -11,9 +11,8 @@ import greymerk.roguelike.util.mst.Edge;
 import greymerk.roguelike.util.mst.MinimumSpanningTree;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
-import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
-import net.minecraft.init.Blocks;
+import greymerk.roguelike.worldgen.blocks.BlockType;
 
 public class CityGrounds {
 
@@ -26,7 +25,7 @@ public class CityGrounds {
 		start.add(new Coord(Citadel.EDGE_LENGTH * -3, 10, Citadel.EDGE_LENGTH * -3));
 		end = new Coord(pos);
 		end.add(new Coord(Citadel.EDGE_LENGTH * 3, 40, Citadel.EDGE_LENGTH * 3));
-		editor.fillRectSolid(rand, start, end, new MetaBlock(Blocks.air), true, true);
+		editor.fillRectSolid(rand, start, end, BlockType.get(BlockType.AIR), true, true);
 		
 		start = new Coord(pos);
 		start.add(new Coord(Citadel.EDGE_LENGTH * -3, 10, Citadel.EDGE_LENGTH * -3));

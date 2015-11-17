@@ -9,6 +9,7 @@ import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.ColorBlock;
 import greymerk.roguelike.worldgen.blocks.DyeColor;
 import net.minecraft.init.Blocks;
@@ -21,11 +22,11 @@ public class SegmentAnkh extends SegmentBase{
 		Coord end;
 		Coord cursor;
 		
-		MetaBlock air = new MetaBlock(Blocks.air);
+		MetaBlock air = BlockType.get(BlockType.AIR);
 		IStair stair = theme.getSecondaryStair();
 		MetaBlock glass = ColorBlock.get(ColorBlock.GLASS, rand);
 		MetaBlock white = ColorBlock.get(ColorBlock.GLASS, DyeColor.WHITE);
-		MetaBlock glowstone = new MetaBlock(Blocks.glowstone);
+		MetaBlock glowstone = BlockType.get(BlockType.GLOWSTONE);
 		
 		Cardinal[] orth = Cardinal.getOrthogonal(dir);
 		

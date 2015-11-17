@@ -9,8 +9,8 @@ import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.Leaves;
-import net.minecraft.init.Blocks;
 
 public class SegmentJungle extends SegmentBase {
 
@@ -33,14 +33,14 @@ public class SegmentJungle extends SegmentBase {
 		start.add(orth[0], 1);
 		end.add(orth[1], 1);
 		end.add(Cardinal.UP, 1);
-		editor.fillRectSolid(rand, start, end, new MetaBlock(Blocks.air), true, true);
+		editor.fillRectSolid(rand, start, end, BlockType.get(BlockType.AIR), true, true);
 		start.add(Cardinal.DOWN, 1);
 		end.add(Cardinal.DOWN, 2);
 		
 		if(rand.nextInt(5) == 0){
-			editor.fillRectSolid(rand, start, end, new MetaBlock(Blocks.flowing_water), true, true);
+			editor.fillRectSolid(rand, start, end, BlockType.get(BlockType.WATER_FLOWING), true, true);
 		} else {
-			editor.fillRectSolid(rand, start, end, new MetaBlock(Blocks.grass), true, true);
+			editor.fillRectSolid(rand, start, end, BlockType.get(BlockType.GRASS), true, true);
 			start.add(Cardinal.UP, 1);
 			end.add(Cardinal.UP, 1);
 			if(rand.nextBoolean()) editor.fillRectSolid(rand, start, end, leaves, true, true);

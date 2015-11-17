@@ -15,11 +15,11 @@ import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.MetaStair;
 import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.Furnace;
+import greymerk.roguelike.worldgen.blocks.Slab;
 import greymerk.roguelike.worldgen.blocks.StairType;
 import greymerk.roguelike.worldgen.redstone.Hopper;
-import net.minecraft.block.BlockStoneSlab;
-import net.minecraft.init.Blocks;
 
 public class DungeonsSmithy extends DungeonBase {
 
@@ -44,7 +44,7 @@ public class DungeonsSmithy extends DungeonBase {
 		
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.reverse(dir), 9);
-		MetaBlock air = new MetaBlock(Blocks.air);
+		MetaBlock air = BlockType.get(BlockType.AIR);
 		air.setBlock(editor, cursor);
 		cursor.add(Cardinal.UP);
 		air.setBlock(editor, cursor);
@@ -321,11 +321,10 @@ public class DungeonsSmithy extends DungeonBase {
 	private void fireplace(WorldEditor editor, Random rand, LevelSettings settings, Cardinal dir, Coord origin){
 		
 		IStair stair = new MetaStair(StairType.BRICK);
-		MetaBlock brick = new MetaBlock(Blocks.brick_block);
-		MetaBlock brickSlab = new MetaBlock(Blocks.stone_slab);
-		brickSlab.withProperty(BlockStoneSlab.VARIANT_PROP, BlockStoneSlab.EnumType.BRICK);
-		MetaBlock bars = new MetaBlock(Blocks.iron_bars);
-		MetaBlock air = new MetaBlock(Blocks.air);
+		MetaBlock brick = BlockType.get(BlockType.BRICK);
+		MetaBlock brickSlab = Slab.get(Slab.BRICK);
+		MetaBlock bars = BlockType.get(BlockType.IRON_BAR);
+		MetaBlock air = BlockType.get(BlockType.AIR);
 		Cardinal[] orth = Cardinal.getOrthogonal(dir);
 		
 		Coord cursor;
@@ -407,8 +406,8 @@ public class DungeonsSmithy extends DungeonBase {
 			
 		}
 		
-		MetaBlock netherrack = new MetaBlock(Blocks.netherrack);
-		MetaBlock fire = new MetaBlock(Blocks.fire);
+		MetaBlock netherrack = BlockType.get(BlockType.NETHERRACK);
+		MetaBlock fire = BlockType.get(BlockType.FIRE);
 		
 		start = new Coord(origin);
 		start.add(dir, 5);
@@ -442,7 +441,7 @@ public class DungeonsSmithy extends DungeonBase {
 		Cardinal[] orth = Cardinal.getOrthogonal(dir);
 		
 		
-		MetaBlock anvil = new MetaBlock(Blocks.anvil);
+		MetaBlock anvil = BlockType.get(BlockType.AIR);
 		cursor = new Coord(origin);
 		cursor.add(dir);
 		anvil.setBlock(editor, cursor);
@@ -459,9 +458,9 @@ public class DungeonsSmithy extends DungeonBase {
 		cursor.add(orth[1], 3);
 		editor.setBlock(rand, cursor, wall, true, true);
 		cursor.add(dir);
-		editor.setBlock(cursor, Blocks.flowing_water);
+		editor.setBlock(cursor, BlockType.get(BlockType.WATER_FLOWING));
 		cursor.add(Cardinal.reverse(dir), 2);
-		editor.setBlock(cursor, Blocks.flowing_lava);
+		editor.setBlock(cursor, BlockType.get(BlockType.LAVA_FLOWING));
 		
 		cursor = new Coord(origin);
 		cursor.add(orth[0], 3);
@@ -485,7 +484,7 @@ public class DungeonsSmithy extends DungeonBase {
 		
 		Coord cursor;
 		
-		editor.setBlock(origin, Blocks.air);
+		editor.setBlock(origin, BlockType.get(BlockType.AIR));
 		
 		for(Cardinal dir : Cardinal.directions){
 			cursor = new Coord(origin);
@@ -497,9 +496,9 @@ public class DungeonsSmithy extends DungeonBase {
 		
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.UP);
-		editor.setBlock(cursor, Blocks.lit_redstone_lamp);
+		editor.setBlock(cursor, BlockType.get(BlockType.REDSTONE_LAMP_LIT));
 		cursor.add(Cardinal.UP);
-		editor.setBlock(cursor, Blocks.redstone_block);
+		editor.setBlock(cursor, BlockType.get(BlockType.REDSTONE_BLOCK));
 	}
 	
 	public int getSize(){

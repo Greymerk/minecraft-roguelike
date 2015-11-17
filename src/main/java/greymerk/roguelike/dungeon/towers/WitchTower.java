@@ -9,10 +9,10 @@ import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.ColorBlock;
 import greymerk.roguelike.worldgen.blocks.Door;
 import greymerk.roguelike.worldgen.blocks.DyeColor;
-import net.minecraft.init.Blocks;
 
 public class WitchTower implements ITower {
 
@@ -22,7 +22,7 @@ public class WitchTower implements ITower {
 		IBlockFactory blocks = theme.getPrimaryWall();
 		IBlockFactory pillar = theme.getPrimaryPillar();
 		IStair stair = theme.getPrimaryStair();
-		MetaBlock air = new MetaBlock(Blocks.air);
+		MetaBlock air = BlockType.get(BlockType.AIR);
 		MetaBlock glass = ColorBlock.get(ColorBlock.GLASS, DyeColor.BLACK);
 		
 		Coord origin = new Coord(x, y, z);
@@ -365,7 +365,7 @@ public class WitchTower implements ITower {
 		Coord cursor;
 		
 		IStair stair = theme.getPrimaryStair();
-		MetaBlock air = new MetaBlock(Blocks.air);
+		MetaBlock air = BlockType.get(BlockType.AIR);
 		
 		cursor = new Coord(origin);
 		air.setBlock(editor, cursor);

@@ -12,7 +12,7 @@ import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
-import net.minecraft.init.Blocks;
+import greymerk.roguelike.worldgen.blocks.BlockType;
 
 public class DungeonDarkHall extends DungeonBase{
 
@@ -25,7 +25,7 @@ public class DungeonDarkHall extends DungeonBase{
 		IBlockFactory wall = theme.getSecondaryWall();
 		IBlockFactory pillar = theme.getSecondaryPillar();
 		IStair stair = theme.getSecondaryStair();
-		MetaBlock air = new MetaBlock(Blocks.air);
+		MetaBlock air = BlockType.get(BlockType.AIR);
 		
 		Coord cursor;
 		Coord start;
