@@ -47,6 +47,7 @@ public class SettingsSegments extends DungeonSettings{
 				segments.add(Segment.SILVERFISH, 1);
 				segments.add(Segment.ARROW, 5);
 				segments.add(Segment.SKULL, 2);
+				segments.add(Segment.MUSHROOM, 3);
 				segments.add(Segment.CHEST, 1);
 				segments.add(Segment.CELL, 2);
 				segments.add(Segment.SPAWNER, 1);

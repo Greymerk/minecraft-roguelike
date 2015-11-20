@@ -1,7 +1,5 @@
 package greymerk.roguelike.dungeon.segment.part;
 
-import java.util.Random;
-
 import greymerk.roguelike.dungeon.IDungeonLevel;
 import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
@@ -9,7 +7,9 @@ import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
-import net.minecraft.init.Blocks;
+import greymerk.roguelike.worldgen.blocks.BlockType;
+
+import java.util.Random;
 
 public class SegmentSewerArch extends SegmentBase {
 
@@ -18,10 +18,10 @@ public class SegmentSewerArch extends SegmentBase {
 			
 		IStair stair = theme.getSecondaryStair(); 
 		stair.setOrientation(Cardinal.reverse(dir), true);
-		MetaBlock water = new MetaBlock(Blocks.flowing_water);
-		MetaBlock air = new MetaBlock(Blocks.air);
-		MetaBlock bars = new MetaBlock(Blocks.iron_bars);
-		MetaBlock mossy = new MetaBlock(Blocks.mossy_cobblestone);
+		MetaBlock water = BlockType.get(BlockType.WATER_FLOWING);
+		MetaBlock air = BlockType.get(BlockType.AIR);
+		MetaBlock bars = BlockType.get(BlockType.IRON_BAR);
+		MetaBlock mossy = BlockType.get(BlockType.COBBLESTONE_MOSSY);
 		
 		Coord cursor;
 		Coord start;

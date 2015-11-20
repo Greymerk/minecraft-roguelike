@@ -1,7 +1,5 @@
 package greymerk.roguelike.dungeon.segment.part;
 
-import java.util.Random;
-
 import greymerk.roguelike.dungeon.IDungeonLevel;
 import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
@@ -12,7 +10,8 @@ import greymerk.roguelike.worldgen.WorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.ColorBlock;
 import greymerk.roguelike.worldgen.blocks.DyeColor;
-import net.minecraft.init.Blocks;
+
+import java.util.Random;
 
 public class SegmentAnkh extends SegmentBase{
 

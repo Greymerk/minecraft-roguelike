@@ -1,7 +1,5 @@
 package greymerk.roguelike.dungeon.segment.part;
 
-import java.util.Random;
-
 import greymerk.roguelike.dungeon.IDungeonLevel;
 import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
@@ -10,7 +8,10 @@ import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
-import net.minecraft.init.Blocks;
+import greymerk.roguelike.worldgen.blocks.BlockType;
+import greymerk.roguelike.worldgen.blocks.Crops;
+
+import java.util.Random;
 
 public class SegmentNetherWart extends SegmentBase{
 
@@ -19,7 +20,7 @@ public class SegmentNetherWart extends SegmentBase{
 		
 		IStair step = theme.getSecondaryStair();
 		IBlockFactory wall = theme.getSecondaryWall();
-		MetaBlock air = new MetaBlock(Blocks.air);
+		MetaBlock air = BlockType.get(BlockType.AIR);
 
 		Coord cursor;
 		
@@ -34,9 +35,9 @@ public class SegmentNetherWart extends SegmentBase{
 		
 		cursor = new Coord(x, y, z);
 		cursor.add(dir, 3);
-		editor.setBlock(cursor, Blocks.nether_brick_fence);
+		editor.setBlock(cursor, BlockType.get(BlockType.FENCE_NETHER_BRICK));
 		cursor.add(Cardinal.UP, 1);
-		editor.setBlock(cursor, Blocks.nether_brick_fence);
+		editor.setBlock(cursor, BlockType.get(BlockType.FENCE_NETHER_BRICK));
 		
 		for(Cardinal orth : Cardinal.getOrthogonal(dir)){
 			step.setOrientation(Cardinal.reverse(orth), true);
@@ -50,13 +51,13 @@ public class SegmentNetherWart extends SegmentBase{
 			cursor.add(Cardinal.reverse(orth), 1);
 			editor.setBlock(rand, cursor, wall, true, true);
 			cursor.add(Cardinal.DOWN, 2);
-			editor.setBlock(cursor, Blocks.nether_wart);
+			editor.setBlock(cursor, Crops.get(Crops.NETHERWART));
 			cursor.add(orth, 1);
-			editor.setBlock(cursor, Blocks.nether_wart);
+			editor.setBlock(cursor, Crops.get(Crops.NETHERWART));
 			cursor.add(Cardinal.DOWN, 1);
-			editor.setBlock(cursor, Blocks.soul_sand);
+			editor.setBlock(cursor, BlockType.get(BlockType.SOUL_SAND));
 			cursor.add(Cardinal.reverse(orth), 1);
-			editor.setBlock(cursor, Blocks.soul_sand);
+			editor.setBlock(cursor, BlockType.get(BlockType.SOUL_SAND));
 		}
 		
 	}

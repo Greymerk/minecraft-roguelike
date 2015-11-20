@@ -1,7 +1,5 @@
 package greymerk.roguelike.dungeon.segment.part;
 
-import java.util.Random;
-
 import greymerk.roguelike.dungeon.IDungeonLevel;
 import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.treasure.loot.Potion;
@@ -11,8 +9,12 @@ import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.redstone.Dispenser;
 import greymerk.roguelike.worldgen.redstone.Torch;
+
+import java.util.Random;
+
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -22,10 +24,10 @@ public class SegmentTrap extends SegmentBase{
 	@Override
 	protected void genWall(WorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
 		
-		MetaBlock plate = new MetaBlock(Blocks.stone_pressure_plate);
-		MetaBlock wire = new MetaBlock(Blocks.redstone_wire);
-		MetaBlock vine = new MetaBlock(Blocks.vine);
-		MetaBlock air = new MetaBlock(Blocks.air);
+		MetaBlock plate = BlockType.get(BlockType.PRESSURE_PLATE_STONE);
+		MetaBlock wire = BlockType.get(BlockType.REDSTONE_WIRE);
+		MetaBlock vine = BlockType.get(BlockType.VINE);
+		MetaBlock air = BlockType.get(BlockType.AIR);
 		IStair stair = theme.getPrimaryStair();
 		IBlockFactory wall = theme.getPrimaryWall();
 		

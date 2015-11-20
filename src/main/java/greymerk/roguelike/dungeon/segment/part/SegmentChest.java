@@ -1,7 +1,5 @@
 package greymerk.roguelike.dungeon.segment.part;
 
-import java.util.Random;
-
 import greymerk.roguelike.dungeon.Dungeon;
 import greymerk.roguelike.dungeon.IDungeonLevel;
 import greymerk.roguelike.theme.ITheme;
@@ -12,7 +10,8 @@ import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
-import net.minecraft.init.Blocks;
+
+import java.util.Random;
 
 public class SegmentChest extends SegmentBase {
 
@@ -74,8 +73,8 @@ public class SegmentChest extends SegmentBase {
 		boolean trapped = Dungeon.getLevel(y) == 3 && rand.nextInt(3) == 0;
 		TreasureChest.generate(editor, rand, level.getSettings(), shelf, Dungeon.getLevel(y), trapped);
 		if(trapped){
-			editor.setBlock(shelf.getX(), shelf.getY() - 2, shelf.getZ(), Blocks.tnt);
-			if(rand.nextBoolean()) editor.setBlock(shelf.getX(), shelf.getY() - 3, shelf.getZ(), Blocks.tnt);
+			editor.setBlock(shelf.getX(), shelf.getY() - 2, shelf.getZ(), BlockType.get(BlockType.TNT));
+			if(rand.nextBoolean()) editor.setBlock(shelf.getX(), shelf.getY() - 3, shelf.getZ(), BlockType.get(BlockType.TNT));
 		}
 	}
 }

@@ -1,7 +1,5 @@
 package greymerk.roguelike.dungeon.segment.part;
 
-import java.util.Random;
-
 import greymerk.roguelike.dungeon.IDungeonLevel;
 import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
@@ -9,7 +7,9 @@ import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
-import net.minecraft.init.Blocks;
+import greymerk.roguelike.worldgen.blocks.BlockType;
+
+import java.util.Random;
 
 public class SegmentSewerDrain extends SegmentBase {
 
@@ -17,10 +17,10 @@ public class SegmentSewerDrain extends SegmentBase {
 	@Override
 	protected void genWall(WorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
 		
-		MetaBlock air = new MetaBlock(Blocks.air);
-		MetaBlock water = new MetaBlock(Blocks.flowing_water);
+		MetaBlock air = BlockType.get(BlockType.AIR);
+		MetaBlock water = BlockType.get(BlockType.WATER_FLOWING);
 		IStair stair = theme.getSecondaryStair();
-		MetaBlock bars = new MetaBlock(Blocks.iron_bars);
+		MetaBlock bars = BlockType.get(BlockType.IRON_BAR);
 		
 		Coord cursor;
 		Coord start;
@@ -47,7 +47,7 @@ public class SegmentSewerDrain extends SegmentBase {
 		editor.fillRectSolid(rand, start, end, air, true, true);
 		start.add(dir);
 		end.add(dir);
-		editor.fillRectSolid(rand, start, end, new MetaBlock(Blocks.mossy_cobblestone), true, true);
+		editor.fillRectSolid(rand, start, end, BlockType.get(BlockType.COBBLESTONE_MOSSY), true, true);
 		
 		for(Cardinal o : orth){
 			cursor = new Coord(x, y, z);

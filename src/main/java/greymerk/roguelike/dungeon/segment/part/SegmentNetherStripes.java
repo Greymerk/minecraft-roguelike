@@ -1,7 +1,5 @@
 package greymerk.roguelike.dungeon.segment.part;
 
-import java.util.Random;
-
 import greymerk.roguelike.dungeon.IDungeonLevel;
 import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
@@ -9,8 +7,10 @@ import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
-import net.minecraft.block.BlockStoneSlab;
-import net.minecraft.init.Blocks;
+import greymerk.roguelike.worldgen.blocks.BlockType;
+import greymerk.roguelike.worldgen.blocks.Slab;
+
+import java.util.Random;
 
 public class SegmentNetherStripes extends SegmentBase {
 	
@@ -23,7 +23,7 @@ public class SegmentNetherStripes extends SegmentBase {
 		Coord start;
 		Coord end;
 		Coord cursor;
-		MetaBlock air = new MetaBlock(Blocks.air);
+		MetaBlock air = BlockType.get(BlockType.AIR);
 		
 		cursor = new Coord(x, y, z);
 		cursor.add(dir, 2);
@@ -36,8 +36,7 @@ public class SegmentNetherStripes extends SegmentBase {
 		boolean isLava = rand.nextInt(5) == 0;
 
 		
-		MetaBlock slab = new MetaBlock(Blocks.stone_slab);
-		slab.withProperty(BlockStoneSlab.VARIANT_PROP, BlockStoneSlab.EnumType.NETHERBRICK);
+		MetaBlock slab = Slab.get(Slab.NETHERBRICK, false, false, false);
 		cursor = new Coord(x, y, z);
 		cursor.add(dir, 2);
 		editor.setBlock(rand, cursor, slab, true, true);
@@ -53,7 +52,7 @@ public class SegmentNetherStripes extends SegmentBase {
 			start.add(orth, 1);
 			start.add(Cardinal.UP, 3);
 			end.add(Cardinal.DOWN, 2);
-			if(isLava && !isAir) editor.fillRectSolid(rand, start, end, new MetaBlock(Blocks.lava), false, true);
+			if(isLava && !isAir) editor.fillRectSolid(rand, start, end, BlockType.get(BlockType.LAVA_FLOWING), false, true);
 			
 			step.setOrientation(Cardinal.reverse(orth), true);
 			cursor = new Coord(x, y, z);

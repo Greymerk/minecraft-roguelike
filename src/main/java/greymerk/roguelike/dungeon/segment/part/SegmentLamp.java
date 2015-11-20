@@ -1,7 +1,5 @@
 package greymerk.roguelike.dungeon.segment.part;
 
-import java.util.Random;
-
 import greymerk.roguelike.dungeon.IDungeonLevel;
 import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
@@ -10,9 +8,13 @@ import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.blocks.BlockType;
+import greymerk.roguelike.worldgen.blocks.ColorBlock;
+import greymerk.roguelike.worldgen.blocks.DyeColor;
 import greymerk.roguelike.worldgen.redstone.Lever;
 import greymerk.roguelike.worldgen.redstone.Torch;
-import net.minecraft.init.Blocks;
+
+import java.util.Random;
 
 public class SegmentLamp extends SegmentBase{
 
@@ -23,7 +25,7 @@ public class SegmentLamp extends SegmentBase{
 		Coord origin = new Coord(x, y, z);
 		IStair stair = theme.getPrimaryStair();
 		IBlockFactory wall = theme.getPrimaryWall();
-		MetaBlock air = new MetaBlock(Blocks.air);
+		MetaBlock air = BlockType.get(BlockType.AIR);
 		
 		Coord cursor;
 		Coord start;
@@ -82,7 +84,7 @@ public class SegmentLamp extends SegmentBase{
 		
 		Coord lever = new Coord(cursor);
 		cursor.add(dir);
-		editor.setBlock(cursor, Blocks.hardened_clay);
+		editor.setBlock(cursor, ColorBlock.get(ColorBlock.CLAY, DyeColor.ORANGE));
 		Lever.generate(editor, Cardinal.reverse(dir), lever, false);
 		cursor.add(dir);
 		Torch.generate(editor, Torch.REDSTONE, dir, cursor);
@@ -92,7 +94,7 @@ public class SegmentLamp extends SegmentBase{
 		start = new Coord(cursor);
 		end = new Coord(start);
 		end.add(Cardinal.reverse(dir), 3);
-		MetaBlock wire = new MetaBlock(Blocks.redstone_wire);
+		MetaBlock wire = BlockType.get(BlockType.REDSTONE_WIRE);
 		editor.fillRectSolid(rand, start, end, wire, true, true);
 	}
 	
@@ -102,7 +104,7 @@ public class SegmentLamp extends SegmentBase{
 		
 		Coord cursor;
 		
-		editor.setBlock(origin, Blocks.air);
+		editor.setBlock(origin, BlockType.get(BlockType.AIR));
 		
 		for(Cardinal dir : Cardinal.directions){
 			cursor = new Coord(origin);
@@ -114,7 +116,7 @@ public class SegmentLamp extends SegmentBase{
 		
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.UP);
-		editor.setBlock(cursor, Blocks.redstone_lamp);
+		editor.setBlock(cursor, BlockType.get(BlockType.REDSTONE_LAMP));
 	}
 	
 

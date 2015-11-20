@@ -1,7 +1,5 @@
 package greymerk.roguelike.dungeon.segment.part;
 
-import java.util.Random;
-
 import greymerk.roguelike.dungeon.IDungeonLevel;
 import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
@@ -10,7 +8,9 @@ import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
-import net.minecraft.init.Blocks;
+import greymerk.roguelike.worldgen.blocks.BlockType;
+
+import java.util.Random;
 
 public class SegmentNetherLava extends SegmentBase {
 
@@ -18,8 +18,8 @@ public class SegmentNetherLava extends SegmentBase {
 	protected void genWall(WorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
 		
 		IStair step = theme.getSecondaryStair();
-		MetaBlock air = new MetaBlock(Blocks.air);
-		MetaBlock lava = new MetaBlock(Blocks.flowing_lava);
+		MetaBlock air = BlockType.get(BlockType.AIR);
+		MetaBlock lava = BlockType.get(BlockType.LAVA_FLOWING);
 		
 		Coord start;
 		Coord end;

@@ -1,7 +1,5 @@
 package greymerk.roguelike.dungeon.segment.part;
 
-import java.util.Random;
-
 import greymerk.roguelike.dungeon.IDungeonLevel;
 import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
@@ -9,8 +7,10 @@ import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.Skull;
-import net.minecraft.init.Blocks;
+
+import java.util.Random;
 
 public class SegmentSkull extends SegmentBase {
 
@@ -18,7 +18,7 @@ public class SegmentSkull extends SegmentBase {
 	@Override
 	protected void genWall(WorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
 		
-		MetaBlock air = new MetaBlock(Blocks.air);
+		MetaBlock air = BlockType.get(BlockType.AIR);
 		IStair stair = theme.getSecondaryStair();
 		
 		

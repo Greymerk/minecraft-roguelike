@@ -1,14 +1,13 @@
 package greymerk.roguelike.dungeon.towers;
 
-import java.util.Random;
-
 import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
-import net.minecraft.init.Blocks;
+
+import java.util.Random;
 
 public class PyramidTower implements ITower{
 

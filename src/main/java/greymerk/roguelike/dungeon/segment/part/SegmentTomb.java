@@ -1,8 +1,5 @@
 package greymerk.roguelike.dungeon.segment.part;
 
-import java.util.List;
-import java.util.Random;
-
 import greymerk.roguelike.dungeon.IDungeonLevel;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.theme.ITheme;
@@ -13,14 +10,17 @@ import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.Spawner;
 import greymerk.roguelike.worldgen.WorldEditor;
-import net.minecraft.init.Blocks;
+import greymerk.roguelike.worldgen.blocks.BlockType;
+
+import java.util.List;
+import java.util.Random;
 
 public class SegmentTomb extends SegmentBase {
 	
 	@Override
 	protected void genWall(WorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
 		
-		MetaBlock air = new MetaBlock(Blocks.air);
+		MetaBlock air = BlockType.get(BlockType.AIR);
 		IStair stair = theme.getPrimaryStair();
 		
 		Coord cursor = new Coord(x, y, z);
@@ -54,7 +54,7 @@ public class SegmentTomb extends SegmentBase {
 		cursor = new Coord(x, y, z);
 		cursor.add(Cardinal.UP);
 		cursor.add(dir, 3);
-		editor.setBlock(cursor, Blocks.quartz_block);
+		editor.setBlock(cursor, BlockType.get(BlockType.QUARTZ));
 		
 	}
 	

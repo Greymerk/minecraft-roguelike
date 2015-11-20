@@ -8,7 +8,7 @@ import net.minecraft.util.EnumFacing;
 
 public enum Crops {
 
-	WHEAT, CARROTS, NETHERWART, MELON, PUMPKIN;
+	WHEAT, CARROTS, NETHERWART, MELON, PUMPKIN, POTATOES;
 	
 	public static MetaBlock get(Crops type){
 		switch(type){
@@ -17,6 +17,7 @@ public enum Crops {
 		case NETHERWART: return new MetaBlock(Blocks.nether_wart);
 		case MELON: return new MetaBlock(Blocks.melon_stem);
 		case PUMPKIN: return new MetaBlock(Blocks.pumpkin_stem);
+		case POTATOES: return new MetaBlock(Blocks.potatoes);
 		default: return new MetaBlock(Blocks.wheat);
 		}
 	}

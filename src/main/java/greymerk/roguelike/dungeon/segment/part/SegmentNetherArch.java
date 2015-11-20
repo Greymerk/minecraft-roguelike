@@ -1,7 +1,5 @@
 package greymerk.roguelike.dungeon.segment.part;
 
-import java.util.Random;
-
 import greymerk.roguelike.dungeon.IDungeonLevel;
 import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
@@ -10,7 +8,9 @@ import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
-import net.minecraft.init.Blocks;
+import greymerk.roguelike.worldgen.blocks.BlockType;
+
+import java.util.Random;
 
 public class SegmentNetherArch extends SegmentBase {
 
@@ -41,8 +41,8 @@ public class SegmentNetherArch extends SegmentBase {
 			editor.setBlock(rand, cursor, pillar, true, true);
 		}
 			
-		MetaBlock fence = new MetaBlock(Blocks.nether_brick_fence);
-		MetaBlock lava = new MetaBlock(Blocks.flowing_lava);
+		MetaBlock fence = BlockType.get(BlockType.FENCE_NETHER_BRICK);
+		MetaBlock lava = BlockType.get(BlockType.LAVA_FLOWING);
 		
 		cursor = new Coord(x, y, z);
 		cursor.add(dir, 2);		
