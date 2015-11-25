@@ -11,7 +11,7 @@ import net.minecraft.util.Tuple;
 public enum RogueConfig {
 
 	DONATURALSPAWN, LEVELRANGE, LEVELMAXROOMS, LEVELSCATTER, SPAWNFREQUENCY, GENEROUS, MOBDROPS, DIMENSIONWL, DIMENSIONBL, 
-	PRECIOUSBLOCKS, LOOTING, DONOVELTYSPAWN;
+	PRECIOUSBLOCKS, LOOTING, DONOVELTYSPAWN, UPPERLIMIT, LOWERLIMIT;
 	
 	public static final String configDirName = "config/roguelike_dungeons";
 	public static final String configFileName = "roguelike.cfg";
@@ -35,6 +35,8 @@ public enum RogueConfig {
 		case DIMENSIONBL: return "dimensionBL";
 		case PRECIOUSBLOCKS: return "preciousBlocks";
 		case LOOTING: return "looting";
+		case UPPERLIMIT: return "upperLimit";
+		case LOWERLIMIT: return "lowerLimit";
 		default: return null;
 		}
 	}
@@ -56,6 +58,8 @@ public enum RogueConfig {
 			return new Tuple(getName(option), new ArrayList<Integer>());
 		case PRECIOUSBLOCKS: return new Tuple(getName(option), true);
 		case LOOTING: return new Tuple(getName(option), 0.085D);
+		case UPPERLIMIT: return new Tuple(getName(option), 100);
+		case LOWERLIMIT: return new Tuple(getName(option), 60);
 		default: return null;
 		}
 	}
@@ -73,6 +77,8 @@ public enum RogueConfig {
 		if(!instance.ContainsKey(getName(DIMENSIONBL)))setIntList(DIMENSIONBL, (List<Integer>)getDefault(DIMENSIONBL).getSecond());
 		if(!instance.ContainsKey(getName(PRECIOUSBLOCKS)))setBoolean(PRECIOUSBLOCKS, (Boolean)getDefault(PRECIOUSBLOCKS).getSecond());
 		if(!instance.ContainsKey(getName(LOOTING)))setDouble(LOOTING, (Double) getDefault(LOOTING).getSecond());
+		if(!instance.ContainsKey(getName(UPPERLIMIT)))setInt(UPPERLIMIT, (Integer) getDefault(UPPERLIMIT).getSecond());
+		if(!instance.ContainsKey(getName(LOWERLIMIT)))setInt(LOWERLIMIT, (Integer) getDefault(LOWERLIMIT).getSecond());
 	}
 	
 	public static double getDouble(RogueConfig option){

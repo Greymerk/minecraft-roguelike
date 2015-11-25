@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.world.World;
-
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -36,7 +34,7 @@ public class BlockFactoryCheckers extends BlockFactoryBase {
 	}
 
 	@Override
-	public boolean setBlock(World world, Random rand, Coord origin, boolean fillAir, boolean replaceSolid) {
+	public boolean setBlock(WorldEditor editor, Random rand, Coord origin, boolean fillAir, boolean replaceSolid) {
 		
 		int x = origin.getX();
 		int y = origin.getY();
@@ -45,29 +43,29 @@ public class BlockFactoryCheckers extends BlockFactoryBase {
 		if (x % 2 == 0) {
 			if(z % 2 == 0){
 				if(y % 2 == 0){
-					return WorldGenPrimitive.setBlock(world, rand, x, y, z, fillOne, fillAir, replaceSolid);
+					return editor.setBlock(rand, new Coord(x, y, z), fillOne, fillAir, replaceSolid);
 				} else {
-					return WorldGenPrimitive.setBlock(world, rand, x, y, z, fillTwo, fillAir, replaceSolid);
+					return editor.setBlock(rand, new Coord(x, y, z), fillTwo, fillAir, replaceSolid);
 				}
 			} else {
 				if(y % 2 == 0){
-					return WorldGenPrimitive.setBlock(world, rand, x, y, z, fillTwo, fillAir, replaceSolid);
+					return editor.setBlock(rand, new Coord(x, y, z), fillTwo, fillAir, replaceSolid);
 				} else {
-					return WorldGenPrimitive.setBlock(world, rand, x, y, z, fillOne, fillAir, replaceSolid);
+					return editor.setBlock(rand, new Coord(x, y, z), fillOne, fillAir, replaceSolid);
 				}
 			}
 		} else {
 			if(z % 2 == 0){
 				if(y % 2 == 0){
-					return WorldGenPrimitive.setBlock(world, rand, x, y, z, fillTwo, fillAir, replaceSolid);
+					return editor.setBlock(rand, new Coord(x, y, z), fillTwo, fillAir, replaceSolid);
 				} else {
-					return WorldGenPrimitive.setBlock(world, rand, x, y, z, fillOne, fillAir, replaceSolid);
+					return editor.setBlock(rand, new Coord(x, y, z), fillOne, fillAir, replaceSolid);
 				}
 			} else {
 				if(y % 2 == 0){
-					return WorldGenPrimitive.setBlock(world, rand, x, y, z, fillOne, fillAir, replaceSolid);
+					return editor.setBlock(rand, new Coord(x, y, z), fillOne, fillAir, replaceSolid);
 				} else {
-					return WorldGenPrimitive.setBlock(world, rand, x, y, z, fillTwo, fillAir, replaceSolid);
+					return editor.setBlock(rand, new Coord(x, y, z), fillTwo, fillAir, replaceSolid);
 				}
 			}
 		}

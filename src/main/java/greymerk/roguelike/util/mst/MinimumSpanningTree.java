@@ -1,9 +1,5 @@
 package greymerk.roguelike.util.mst;
 
-import greymerk.roguelike.worldgen.Coord;
-import greymerk.roguelike.worldgen.IBlockFactory;
-import greymerk.roguelike.worldgen.WorldGenPrimitive;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -11,14 +7,20 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-import net.minecraft.world.World;
+import greymerk.roguelike.worldgen.Coord;
+import greymerk.roguelike.worldgen.IBlockFactory;
+import greymerk.roguelike.worldgen.WorldEditor;
 
 public class MinimumSpanningTree extends Graph{
 	
 	Set<Edge> mstEdges;
 	
 	public MinimumSpanningTree(Random rand, int size, int edgeLength){
-		super(rand, size, edgeLength);
+		this(rand, size, edgeLength, new Coord(0, 0, 0));
+	}
+	
+	public MinimumSpanningTree(Random rand, int size, int edgeLength, Coord origin){
+		super(rand, size, edgeLength, origin);
 		
 		mstEdges = new HashSet<Edge>();
 
@@ -57,7 +59,7 @@ public class MinimumSpanningTree extends Graph{
 		return p.getParent();
 	}
 	
-	public void generate(World world, Random rand, IBlockFactory blocks, Coord pos){
+	public void generate(WorldEditor editor, Random rand, IBlockFactory blocks, Coord pos){
 		
 		for(Edge e : this.mstEdges){
 			
@@ -66,7 +68,7 @@ public class MinimumSpanningTree extends Graph{
 			Coord end = e.getPoints()[1].getPosition();
 			end.add(pos);
 			
-			WorldGenPrimitive.fillRectHollow(world, rand, start, end, blocks, true, true);
+			editor.fillRectHollow(rand, start, end, blocks, true, true);
 		}
 	}
 	

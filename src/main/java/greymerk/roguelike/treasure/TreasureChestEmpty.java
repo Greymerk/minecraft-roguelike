@@ -1,31 +1,29 @@
 package greymerk.roguelike.treasure;
 
+import java.util.Random;
+
 import greymerk.roguelike.treasure.loot.LootSettings;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
-
-import java.util.Random;
-
+import greymerk.roguelike.worldgen.WorldEditor;
 import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntityChest;
-import net.minecraft.world.World;
 
 public class TreasureChestEmpty extends TreasureChestBase implements ITreasureChest {
 
 	@Override
-	public ITreasureChest generate(World inWorld, Random inRand, LootSettings loot, Coord pos, int level, boolean trapped) {
+	public ITreasureChest generate(WorldEditor editor, Random inRand, LootSettings loot, Coord pos, int level, boolean trapped) {
 		
-		world = inWorld;
 		rand = inRand;
 
 		MetaBlock chestType = new MetaBlock(trapped ? Blocks.trapped_chest : Blocks.chest);
 		
 		
-		if(!chestType.setBlock(inWorld, pos)){
+		if(!chestType.setBlock(editor, pos)){
 			return null;
 		}
 		
-		chest = (TileEntityChest) world.getTileEntity(pos.getX(), pos.getY(), pos.getZ());
+		chest = (TileEntityChest) editor.getTileEntity(pos);
 		
 		return this;
 

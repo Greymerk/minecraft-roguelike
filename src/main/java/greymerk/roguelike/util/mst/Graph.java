@@ -13,6 +13,10 @@ public class Graph {
 	protected List<Edge> edges;
 	
 	public Graph(Random rand, int size, int edgeLength){
+		this(rand, size, edgeLength, new Coord(0, 0, 0));
+	}
+	
+	public Graph(Random rand, int size, int edgeLength, Coord origin){
 		
 		points = new ArrayList<Point>();
 		
@@ -20,7 +24,7 @@ public class Graph {
 		
 		for(int i = 0; i < size; ++i){
 			
-			Coord temp = new Coord(0, 0, 0);
+			Coord temp = new Coord(origin);
 			temp.add(Cardinal.NORTH, offset);
 			temp.add(Cardinal.WEST, offset);
 			temp.add(Cardinal.SOUTH, edgeLength * i);

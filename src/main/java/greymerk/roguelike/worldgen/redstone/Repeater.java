@@ -1,20 +1,18 @@
 package greymerk.roguelike.worldgen.redstone;
 
+import java.util.Random;
+
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
-
-import java.util.Random;
-
+import greymerk.roguelike.worldgen.WorldEditor;
 import net.minecraft.init.Blocks;
-import net.minecraft.world.World;
 
 public class Repeater {
-
+	
 	private static final int MAX_DELAY = 3;
 	
-	public static void generate(World world, Random rand, Cardinal dir, int delay, Coord pos){
-		
+	public static void generate(WorldEditor editor, Random rand, Cardinal dir, int delay, Coord pos){
 		
 		int meta = 0;
 		
@@ -23,6 +21,7 @@ public class Repeater {
 		case EAST: meta = 1; break;
 		case SOUTH: meta = 2; break;
 		case WEST: meta = 3; break;
+		default:
 		}
 		
 		if(delay > 0){
@@ -30,8 +29,8 @@ public class Repeater {
 		}
 		
 		MetaBlock repeater = new MetaBlock(Blocks.unpowered_repeater, meta);
-		repeater.setBlock(world, pos);
-		world.scheduleBlockUpdate(pos.getX(), pos.getY(), pos.getZ(), Blocks.unpowered_repeater, 1);
+		repeater.setBlock(editor, pos);
+		editor.blockUpdate(pos, Blocks.unpowered_repeater, 1);
 	}
 	
 }

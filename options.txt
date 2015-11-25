@@ -3,7 +3,7 @@ mouseSensitivity:0.5
 fov:0.0
 gamma:0.5
 saturation:0.0
-renderDistance:12
+renderDistance:16
 guiScale:2
 particles:0
 bobView:true
@@ -86,7 +86,7 @@ key_key.hotbar.7:8
 key_key.hotbar.8:9
 key_key.hotbar.9:10
 soundCategory_master:0.3807947
-soundCategory_music:1.0
+soundCategory_music:0.0
 soundCategory_record:1.0
 soundCategory_weather:1.0
 soundCategory_block:1.0

@@ -3,12 +3,12 @@ package greymerk.roguelike.worldgen.redstone;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
+import greymerk.roguelike.worldgen.WorldEditor;
 import net.minecraft.init.Blocks;
-import net.minecraft.world.World;
 
 public class Hopper {
 
-	public static void generate(World world, Cardinal dir, Coord pos){
+	public static void generate(WorldEditor editor, Cardinal dir, Coord pos){
 		
 		MetaBlock hopper = new MetaBlock(Blocks.hopper);
 		
@@ -24,6 +24,6 @@ public class Hopper {
 		
 		hopper.setMeta(meta);
 		
-		hopper.setBlock(world, pos);
+		hopper.setBlock(editor, pos);
 	}
 }

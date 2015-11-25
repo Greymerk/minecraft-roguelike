@@ -2,11 +2,10 @@ package greymerk.roguelike.worldgen;
 
 import java.util.Random;
 
-import net.minecraft.block.Block;
-import net.minecraft.world.World;
-
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+
+import net.minecraft.block.Block;
 
 public class MetaBlock extends BlockFactoryBase {
 
@@ -43,7 +42,7 @@ public class MetaBlock extends BlockFactoryBase {
 		this.flag = toCopy.flag;
 	}
 	
-	public Block getBlockID(){
+	public Block getBlock(){
 		return block;
 	}
 	
@@ -67,13 +66,13 @@ public class MetaBlock extends BlockFactoryBase {
 		flag = in;
 	}
 
-	public boolean setBlock(World world, Coord pos){
-		return WorldGenPrimitive.setBlock(world, pos.getX(), pos.getY(), pos.getZ(), this.block, this.meta, this.flag, true, true);
+	public boolean setBlock(WorldEditor editor, Coord pos){
+		return editor.setBlock(pos, this, true, true);
 	}
 	
 	@Override
-	public boolean setBlock(World world, Random rand, Coord pos, boolean fillAir, boolean replaceSolid) {
-		return WorldGenPrimitive.setBlock(world, pos.getX(), pos.getY(), pos.getZ(), this.block, this.meta, this.flag, fillAir, replaceSolid);
+	public boolean setBlock(WorldEditor editor, Random rand, Coord pos, boolean fillAir, boolean replaceSolid) {
+		return editor.setBlock(pos, this, fillAir, replaceSolid);
 	}
 
 	

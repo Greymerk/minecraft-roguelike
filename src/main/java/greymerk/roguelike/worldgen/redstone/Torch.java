@@ -1,23 +1,27 @@
 package greymerk.roguelike.worldgen.redstone;
 
+
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
+import greymerk.roguelike.worldgen.WorldEditor;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
-import net.minecraft.world.World;
 
 public enum Torch {
 
-	REDSTONE, WOODEN;
+	REDSTONE, WOODEN, REDSTONE_UNLIT;
 	
-	public static void generate(World world, Torch type, Cardinal dir, Coord pos){
+	public static void generate(WorldEditor editor, Torch type, Cardinal dir, Coord pos){
 		
 		Block name;
+		
 		switch(type){
+		case WOODEN: name = Blocks.torch; break;
 		case REDSTONE: name = Blocks.redstone_torch; break;
-		default: name = Blocks.torch;
-		}
+		case REDSTONE_UNLIT: name = Blocks.unlit_redstone_torch; break;
+		default: name = Blocks.torch; break;
+		}		
 		
 		int meta;
 		switch(dir){
@@ -30,8 +34,6 @@ public enum Torch {
 		
 		MetaBlock torch = new MetaBlock(name, meta);
 		
-		torch.setBlock(world, pos);
-		
+		torch.setBlock(editor, pos);
 	}
-	
 }
