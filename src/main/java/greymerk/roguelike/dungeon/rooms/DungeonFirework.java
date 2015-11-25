@@ -139,7 +139,7 @@ public class DungeonFirework implements IDungeonRoom {
 		cursor.add(Cardinal.reverse(dir));
 		breadboard.setBlock(editor, cursor);
 		cursor.add(Cardinal.UP);
-		Lever.generate(editor, Cardinal.UP, cursor, false);
+		Lever.generate(editor, Cardinal.UP, cursor, true);
 		
 		return false;
 	}
