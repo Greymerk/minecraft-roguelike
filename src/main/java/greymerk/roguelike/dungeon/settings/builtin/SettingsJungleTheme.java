@@ -19,10 +19,9 @@ public class SettingsJungleTheme extends DungeonSettings{
 		this.criteria = new SpawnCriteria();
 		List<BiomeDictionary.Type> biomes = new ArrayList<BiomeDictionary.Type>();
 		biomes.add(BiomeDictionary.Type.JUNGLE);
-		this.criteria.setWeight(3);
 		this.criteria.setBiomeTypes(biomes);
 		
-		this.towerSettings = new TowerSettings(Tower.ROGUE, Theme.getTheme(Theme.JUNGLE));
+		this.towerSettings = new TowerSettings(Tower.JUNGLE, Theme.getTheme(Theme.JUNGLE));
 		
 		Theme[] themes = {Theme.JUNGLE, Theme.JUNGLE, Theme.MOSSY, Theme.MOSSY, Theme.NETHER};
 		

@@ -31,6 +31,7 @@ public class DungeonsPit extends DungeonBase {
 	IBlockFactory blocks;
 	
 	public DungeonsPit() {
+		super();
 		dungeonHeight = 3;
 		dungeonLength = 2;
 		dungeonWidth = 2;

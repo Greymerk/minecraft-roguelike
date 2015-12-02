@@ -16,8 +16,6 @@ import greymerk.roguelike.worldgen.WorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 
 public class DungeonsPrison extends DungeonBase {
-
-	public DungeonsPrison(){}
 	
 	@Override
 	public boolean generate(WorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {

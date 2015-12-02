@@ -22,6 +22,8 @@ public class TreasureChestEnchanting extends TreasureChestBase{
 		
 		item = loot.get(Loot.ENCHANTBONUS, rand);
 		chest.setInventorySlotContents(middle + 1, item);
+		
+		this.type = TreasureChest.ENCHANTING;
 	}
 	
 

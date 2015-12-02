@@ -18,5 +18,7 @@ public class TreasureChestOre extends TreasureChestBase{
 			item = loot.get(Loot.ORE, rand);			
 			chest.setInventorySlotContents(rand.nextInt(chest.getSizeInventory()), item);
 		}
+		
+		this.type = TreasureChest.ORE;
 	}
 }

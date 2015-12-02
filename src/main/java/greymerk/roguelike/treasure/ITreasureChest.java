@@ -17,4 +17,5 @@ public interface ITreasureChest {
 	
 	public boolean slotEmpty(int slot);
 	
+	public TreasureChest getType();
 }

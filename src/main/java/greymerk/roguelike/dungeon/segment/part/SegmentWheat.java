@@ -12,8 +12,6 @@ import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.Crops;
-import net.minecraft.block.BlockPumpkin;
-import net.minecraft.init.Blocks;
 
 public class SegmentWheat extends SegmentBase {
 
@@ -46,11 +44,11 @@ public class SegmentWheat extends SegmentBase {
 		start.add(orth[0], 1);
 		end.add(orth[1], 1);
 		end.add(Cardinal.UP, 1);
-		editor.fillRectSolid(rand, start, end, new MetaBlock(Blocks.air), true, true);
+		editor.fillRectSolid(rand, start, end, BlockType.get(BlockType.AIR), true, true);
 		start.add(Cardinal.DOWN, 1);
 		end.add(Cardinal.DOWN, 2);
 
-		editor.fillRectSolid(rand, start, end, new MetaBlock(Blocks.farmland), true, true);
+		editor.fillRectSolid(rand, start, end, BlockType.get(BlockType.FARMLAND), true, true);
 		start.add(Cardinal.UP, 1);
 		end.add(Cardinal.UP, 1);
 		BlockJumble crops = new BlockJumble();
@@ -62,8 +60,7 @@ public class SegmentWheat extends SegmentBase {
 		cursor = new Coord(x, y, z);
 		cursor.add(dir, 3);
 		cursor.add(Cardinal.UP, 1);
-		MetaBlock pumpkin = new MetaBlock(Blocks.lit_pumpkin.getDefaultState());
-		pumpkin.withProperty(BlockPumpkin.FACING, Cardinal.getFacing(Cardinal.reverse(dir)));
+		MetaBlock pumpkin = Crops.getPumpkin(Cardinal.reverse(dir), true);		
 		pumpkin.setBlock(editor, cursor);
 		
 		IStair stair = theme.getSecondaryStair();

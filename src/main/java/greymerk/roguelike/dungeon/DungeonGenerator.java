@@ -1,5 +1,7 @@
 package greymerk.roguelike.dungeon;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import greymerk.roguelike.dungeon.settings.ISettings;
@@ -12,8 +14,10 @@ public class DungeonGenerator {
 	public static final int VERTICAL_SPACING = 10;
 	public static final int TOPLEVEL = 50;
 	
+	private List<IDungeonLevel> levels;
+	
 	public DungeonGenerator(){
-		
+		this.levels = new ArrayList<IDungeonLevel>();
 	}
 	
 	public void generate(WorldEditor editor, ISettings settings, int inX, int inZ){
@@ -43,10 +47,15 @@ public class DungeonGenerator {
 			y = y - VERTICAL_SPACING;
 			z = oldEnd.getPosition().getZ();
 			start = new Coord(x, y, z);
+			levels.add(level);
 		}
 		
 		Tower tower = settings.getTower().getTower();
 		rand = Dungeon.getRandom(editor, inX, inZ);
 		Tower.get(tower).generate(editor, rand, settings.getTower().getTheme(), inX, TOPLEVEL, inZ);
+	}
+	
+	public List<IDungeonLevel> getLevels(){
+		return this.levels;
 	}
 }

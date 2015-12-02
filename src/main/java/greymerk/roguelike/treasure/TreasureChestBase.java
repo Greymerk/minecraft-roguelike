@@ -24,14 +24,16 @@ public abstract class TreasureChestBase implements ITreasureChest, Iterable<Inve
 	private static final int CHEST_MAX = 27;
 	private List<InventorySlot> slots;
 
+	protected TreasureChest type;
 	
 	public TreasureChestBase(){
 		slots = new ArrayList<InventorySlot>();
 		for(int i = 0; i < CHEST_MAX; ++i){
 			slots.add(new InventorySlot(i, this));
 		}
-	}
 		
+		this.type = TreasureChest.EMPTY;
+	}
 
 	public ITreasureChest generate(WorldEditor editor, Random rand, LootSettings loot, Coord pos, int level, boolean trapped) {
 
@@ -106,6 +108,9 @@ public abstract class TreasureChestBase implements ITreasureChest, Iterable<Inve
 	
 	protected abstract void fillChest(TileEntityChest chest, LootSettings loot, int level);
 	
-	
+	@Override
+	public TreasureChest getType(){
+		return this.type;
+	}
 
 }

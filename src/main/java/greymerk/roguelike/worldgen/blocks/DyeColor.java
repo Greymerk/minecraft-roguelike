@@ -5,7 +5,7 @@ import net.minecraft.item.EnumDyeColor;
 public enum DyeColor {
 
 	WHITE, ORANGE, MAGENTA, LIGHT_BLUE, YELLOW, LIME,
-	PINK, GRAY, SILVER, CYAN, PURPLE, BLUE, BROWN, GREEN,
+	PINK, GRAY, LIGHT_GRAY, CYAN, PURPLE, BLUE, BROWN, GREEN,
 	RED, BLACK;
 	
 	public static EnumDyeColor getColor(DyeColor color){
@@ -18,7 +18,7 @@ public enum DyeColor {
 		case LIME: return EnumDyeColor.LIME;
 		case PINK: return EnumDyeColor.PINK;
 		case GRAY: return EnumDyeColor.GRAY;
-		case SILVER: return EnumDyeColor.SILVER;
+		case LIGHT_GRAY: return EnumDyeColor.SILVER;
 		case CYAN: return EnumDyeColor.CYAN;
 		case PURPLE: return EnumDyeColor.PURPLE;
 		case BLUE: return EnumDyeColor.BLUE;

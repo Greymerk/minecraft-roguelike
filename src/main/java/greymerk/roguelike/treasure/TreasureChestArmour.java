@@ -22,6 +22,8 @@ public class TreasureChestArmour extends TreasureChestBase{
 		
 		item = loot.get(Loot.FOOD, rand);
 		chest.setInventorySlotContents(middle + 1, item);
+		
+		this.type = TreasureChest.ARMOUR;
 	}
 
 }

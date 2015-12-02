@@ -22,5 +22,7 @@ public class TreasureChestTools extends TreasureChestBase{
 		
 		item = loot.get(Loot.ORE, rand);
 		chest.setInventorySlotContents(middle + 1, item);
+		
+		this.type = TreasureChest.TOOLS;
 	}
 }

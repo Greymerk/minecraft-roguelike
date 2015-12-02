@@ -26,6 +26,7 @@ public class DungeonsMusic extends DungeonBase {
 	int originZ;
 	
 	public DungeonsMusic() {
+		super();
 	}
 
 	public boolean generate(WorldEditor editor, Random inRandom, LevelSettings settings, Cardinal[] entrances, Coord origin) {

@@ -1,6 +1,8 @@
 package greymerk.roguelike.dungeon.rooms;
 
-import greymerk.roguelike.dungeon.base.IDungeonRoom;
+import java.util.Random;
+
+import greymerk.roguelike.dungeon.base.DungeonBase;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.treasure.TreasureChest;
@@ -10,9 +12,7 @@ import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.WorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 
-import java.util.Random;
-
-public class DungeonReward implements IDungeonRoom {
+public class DungeonReward extends DungeonBase {
 
 	@Override
 	public boolean generate(WorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {

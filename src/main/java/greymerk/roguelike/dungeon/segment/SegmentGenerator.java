@@ -1,5 +1,7 @@
 package greymerk.roguelike.dungeon.segment;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import com.google.gson.JsonArray;
@@ -50,20 +52,24 @@ public class SegmentGenerator implements ISegmentGenerator{
 	}
 	
 	@Override
-	public void genSegment(WorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, Coord pos) {
+	public List<ISegment> genSegment(WorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, Coord pos) {
 		
 		int x = pos.getX();
 		int y = pos.getY();
 		int z = pos.getZ();
 		
+		List<ISegment> segs = new ArrayList<ISegment>();
+		
 		for(Cardinal orth : Cardinal.getOrthogonal(dir)){
 			ISegment seg = pickSegment(editor, rand, level, dir, pos);
-			if(seg == null) return;
+			if(seg == null) return segs;
 			seg.generate(editor, rand, level, orth, level.getSettings().getTheme(), x, y, z);
+			segs.add(seg);
 		}
 		
 		if(!level.hasNearbyNode(pos) && rand.nextInt(3) == 0) addSupport(editor, rand, level.getSettings().getTheme(), x, y, z);
 		
+		return segs;
 	}
 	
 	private ISegment pickSegment(WorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, Coord pos){

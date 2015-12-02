@@ -10,7 +10,6 @@ import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
-import net.minecraft.init.Blocks;
 
 public class SegmentSquareArch extends SegmentBase {
 

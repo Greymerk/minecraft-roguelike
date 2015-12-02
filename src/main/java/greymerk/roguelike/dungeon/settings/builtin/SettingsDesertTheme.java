@@ -1,19 +1,20 @@
 package greymerk.roguelike.dungeon.settings.builtin;
 
-import greymerk.roguelike.dungeon.base.DungeonFactory;
-import greymerk.roguelike.dungeon.base.DungeonRoom;
-import greymerk.roguelike.dungeon.segment.Segment;
-import greymerk.roguelike.dungeon.segment.SegmentGenerator;
-import greymerk.roguelike.dungeon.settings.LevelSettings;
-import greymerk.roguelike.dungeon.settings.DungeonSettings;
-import greymerk.roguelike.dungeon.settings.TowerSettings;
-import greymerk.roguelike.dungeon.settings.SpawnCriteria;
-import greymerk.roguelike.dungeon.towers.Tower;
-import greymerk.roguelike.theme.Theme;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import greymerk.roguelike.dungeon.LevelGenerator;
+import greymerk.roguelike.dungeon.base.DungeonFactory;
+import greymerk.roguelike.dungeon.base.DungeonRoom;
+import greymerk.roguelike.dungeon.base.SecretFactory;
+import greymerk.roguelike.dungeon.segment.Segment;
+import greymerk.roguelike.dungeon.segment.SegmentGenerator;
+import greymerk.roguelike.dungeon.settings.DungeonSettings;
+import greymerk.roguelike.dungeon.settings.LevelSettings;
+import greymerk.roguelike.dungeon.settings.SpawnCriteria;
+import greymerk.roguelike.dungeon.settings.TowerSettings;
+import greymerk.roguelike.dungeon.towers.Tower;
+import greymerk.roguelike.theme.Theme;
 import net.minecraftforge.common.BiomeDictionary;
 
 public class SettingsDesertTheme extends DungeonSettings{
@@ -24,11 +25,10 @@ public class SettingsDesertTheme extends DungeonSettings{
 		List<BiomeDictionary.Type> biomes = new ArrayList<BiomeDictionary.Type>();
 		biomes.add(BiomeDictionary.Type.SANDY);
 		this.criteria.setBiomeTypes(biomes);
-		this.criteria.setWeight(8);
 		
-		this.towerSettings = new TowerSettings(Tower.ROGUE, Theme.getTheme(Theme.PYRAMID));
+		this.towerSettings = new TowerSettings(Tower.PYRAMID, Theme.getTheme(Theme.PYRAMID));
 		
-		Theme[] themes = {Theme.SANDSTONE, Theme.SANDSTONE, Theme.CRYPT, Theme.CRYPT, Theme.NETHER};
+		Theme[] themes = {Theme.PYRAMID, Theme.SANDSTONE, Theme.SANDSTONERED, Theme.CRYPT, Theme.NETHER};
 		
 		for(int i = 0; i < 5; ++i){
 			
@@ -37,19 +37,50 @@ public class SettingsDesertTheme extends DungeonSettings{
 			
 			if(i == 0){
 				
-				SegmentGenerator segments = new SegmentGenerator(Segment.ARCH);
-				segments.add(Segment.DOOR, 20);
-				segments.add(Segment.ANKH, 3);
+				SegmentGenerator segments = new SegmentGenerator(Segment.SQUAREARCH);
+				segments.add(Segment.DOOR, 10);
+				segments.add(Segment.ANKH, 5);
 				segments.add(Segment.SKULL, 2);
 				segments.add(Segment.TOMB, 1);
 				level.setSegments(segments);
 				
 				DungeonFactory factory = new DungeonFactory();
-				factory.addSingle(DungeonRoom.CAKE);
 				factory.addSingle(DungeonRoom.PYRAMIDTOMB);
-				factory.addRandom(DungeonRoom.BRICK, 10);
-				factory.addRandom(DungeonRoom.CORNER, 3);
+				factory.addRandom(DungeonRoom.PYRAMIDSPAWNER, 5);
+				factory.addRandom(DungeonRoom.PYRAMIDCORNER, 3);
 				level.setRooms(factory);
+				
+				SecretFactory secrets = new SecretFactory();
+				secrets.addRoom(DungeonRoom.PYRAMIDTOMB);
+				level.setSecrets(secrets);
+				
+				level.setGenerator(LevelGenerator.CLASSIC);
+			}
+			
+			if(i == 1){
+				
+				SegmentGenerator segments = new SegmentGenerator(Segment.SQUAREARCH);
+				segments.add(Segment.SPAWNER, 1);
+				segments.add(Segment.DOOR, 10);
+				segments.add(Segment.INSET, 5);
+				segments.add(Segment.SHELF, 5);
+				segments.add(Segment.CHEST, 1);
+				segments.add(Segment.ANKH, 1);
+				segments.add(Segment.SKULL, 2);
+				segments.add(Segment.TOMB, 1);
+				level.setSegments(segments);
+				
+				DungeonFactory factory = new DungeonFactory();
+				factory.addRandom(DungeonRoom.PYRAMIDTOMB, 2);
+				factory.addRandom(DungeonRoom.PYRAMIDSPAWNER, 10);
+				factory.addRandom(DungeonRoom.PYRAMIDCORNER, 5);
+				level.setRooms(factory);
+				
+				SecretFactory secrets = new SecretFactory();
+				secrets.addRoom(DungeonRoom.ENCHANT);
+				level.setSecrets(secrets);
+				
+				level.setGenerator(LevelGenerator.CLASSIC);
 			}
 			
 			levels.put(i, level);

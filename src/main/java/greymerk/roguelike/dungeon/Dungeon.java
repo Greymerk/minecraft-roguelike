@@ -1,19 +1,33 @@
 package greymerk.roguelike.dungeon;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import greymerk.roguelike.Roguelike;
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.dungeon.settings.ISettings;
 import greymerk.roguelike.dungeon.settings.SettingsResolver;
 import greymerk.roguelike.treasure.ITreasureChest;
+import greymerk.roguelike.treasure.TreasureChest;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.WorldEditor;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.NBTTagString;
+import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraftforge.common.BiomeDictionary;
+import net.minecraftforge.common.BiomeDictionary.Type;
+import scala.actors.threadpool.Arrays;
 
 public class Dungeon implements IDungeon{
 		
 	
 	public static SettingsResolver settingsResolver;
+	
+	private DungeonGenerator generator;
 	
 	static{
 		initResolver();
@@ -25,7 +39,7 @@ public class Dungeon implements IDungeon{
 		
 	
 	public Dungeon(){
-		
+		this.generator = new DungeonGenerator();
 	}
 	
 	public void generateNear(WorldEditor editor, Random rand, int x, int z){
@@ -46,8 +60,25 @@ public class Dungeon implements IDungeon{
 	}
 	
 	public void generate(WorldEditor editor, ISettings settings, int inX, int inZ){
-		DungeonGenerator generator = new DungeonGenerator();
 		generator.generate(editor, settings, inX, inZ);
+		
+		String text = "~Architect's Resource Notes~\n\n";
+		text += "StoneBrick: " + editor.getStat(Blocks.stonebrick) + "\n";
+		text += "Cobblestone: " + editor.getStat(Blocks.cobblestone) + "\n";
+		text += "Logs: " + (editor.getStat(Blocks.log) + editor.getStat(Blocks.log2)) + "\n";
+		text += "Iron Bars: " + editor.getStat(Blocks.iron_bars) + "\n";
+		text += "Chests: " + (editor.getStat(Blocks.chest) + editor.getStat(Blocks.trapped_chest)) + "\n";
+		text += "Mob Spawners: " + editor.getStat(Blocks.mob_spawner) + "\n";
+		text += "TNT: " + editor.getStat(Blocks.tnt) + "\n";
+		text += "\n-Greymerk";
+		
+		ItemStack book = this.book(text);
+		
+		for(ITreasureChest chest : this.getChests()){
+			if(chest.getType() == TreasureChest.STARTER){
+				chest.setInventorySlot(book, 0);
+			}
+		}
 	}
 	
 	public static boolean canSpawnInChunk(int chunkX, int chunkZ, WorldEditor editor){
@@ -109,6 +140,13 @@ public class Dungeon implements IDungeon{
 	}
 	
 	public static boolean validLocation(WorldEditor editor, Random rand, int x, int z){
+		
+		BiomeGenBase biome = editor.getBiome(new Coord(x, 0, z));
+		Type[] biomeType = BiomeDictionary.getTypesForBiome(biome);
+		if(Arrays.asList(biomeType).contains(BiomeDictionary.Type.RIVER)){
+			return false;
+		}
+		
 		int upperLimit = RogueConfig.getInt(RogueConfig.UPPERLIMIT);
 		int lowerLimit = RogueConfig.getInt(RogueConfig.LOWERLIMIT);
 		
@@ -181,7 +219,14 @@ public class Dungeon implements IDungeon{
 
 	@Override
 	public List<ITreasureChest> getChests() {
-		return null;
+		List<IDungeonLevel> levels = generator.getLevels();
+		List<ITreasureChest> chests = new ArrayList<ITreasureChest>();
+		
+		for(IDungeonLevel level : levels){
+			chests.addAll(level.getChests());
+		}
+		
+		return chests;
 	}
 
 	@Override
@@ -192,5 +237,19 @@ public class Dungeon implements IDungeon{
 	@Override
 	public List<Coord> getSpawnerLocations() {
 		return null;
+	}
+	
+	private ItemStack book(String text){
+		ItemStack book = new ItemStack(Items.written_book);
+		
+		book.setTagInfo("author", new NBTTagString("Greymerk"));
+		book.setTagInfo("title", new NBTTagString("Statistics"));
+				
+		NBTTagList pages = new NBTTagList();
+		pages.appendTag(new NBTTagString(text));
+		
+		book.setTagInfo("pages", pages);
+		
+		return book;
 	}
 }

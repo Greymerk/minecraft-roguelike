@@ -12,7 +12,6 @@ import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
-import net.minecraft.init.Blocks;
 
 public class SegmentSilverfish extends SegmentBase {
 	

@@ -1,6 +1,7 @@
 package greymerk.roguelike.worldgen.blocks;
 
 import greymerk.roguelike.worldgen.MetaBlock;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirt;
 import net.minecraft.block.BlockPrismarine;
 import net.minecraft.block.BlockRedSandstone;
@@ -9,6 +10,8 @@ import net.minecraft.block.BlockSandStone;
 import net.minecraft.block.BlockStone;
 import net.minecraft.block.BlockStoneBrick;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 
 public enum BlockType {
 
@@ -135,12 +138,15 @@ public enum BlockType {
 		case PRISMITE: 
 			block = new MetaBlock(Blocks.prismarine);
 			block.withProperty(BlockPrismarine.VARIANTS, BlockPrismarine.EnumType.ROUGH);
+			return block;
 		case PRISMARINE: 
 			block = new MetaBlock(Blocks.prismarine);
 			block.withProperty(BlockPrismarine.VARIANTS, BlockPrismarine.EnumType.BRICKS);
+			return block;
 		case PRISMARINE_DARK: 
 			block = new MetaBlock(Blocks.prismarine);
 			block.withProperty(BlockPrismarine.VARIANTS, BlockPrismarine.EnumType.DARK);
+			return block;
 		case SEA_LANTERN: return new MetaBlock(Blocks.sea_lantern);
 		case COAL_BLOCK: return new MetaBlock(Blocks.coal_block);
 		case ICE_PACKED: return new MetaBlock(Blocks.packed_ice);
@@ -148,9 +154,11 @@ public enum BlockType {
 		case SANDSTONE_RED_CHISELED:
 			block = new MetaBlock(Blocks.red_sandstone);
 			block.withProperty(BlockRedSandstone.TYPE, BlockRedSandstone.EnumType.CHISELED);
+			return block;
 		case SANDSTONE_RED_SMOOTH:
 			block = new MetaBlock(Blocks.red_sandstone);
 			block.withProperty(BlockRedSandstone.TYPE, BlockRedSandstone.EnumType.SMOOTH);
+			return block;
 		case QUARTZ: return new MetaBlock(Blocks.quartz_block);
 		case REDSTONE_BLOCK: return new MetaBlock(Blocks.redstone_block);
 		case PRESSURE_PLATE_STONE: return new MetaBlock(Blocks.stone_pressure_plate);
@@ -173,5 +181,15 @@ public enum BlockType {
 		case VINE: return new MetaBlock(Blocks.vine);
 		default: return new MetaBlock(Blocks.air);
 		}
-	}	
+	}
+	
+	public static ItemStack getItem(BlockType type){
+		
+		MetaBlock block = BlockType.get(type);
+		Block b = block.getBlock();
+		Item i = Item.getItemFromBlock(b);
+		ItemStack item = new ItemStack(i);
+		
+		return item;
+	}
 }

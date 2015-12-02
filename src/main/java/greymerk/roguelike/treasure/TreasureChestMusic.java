@@ -21,5 +21,7 @@ public class TreasureChestMusic extends TreasureChestBase{
 		
 		item = loot.get(Loot.MUSIC, rand);
 		chest.setInventorySlotContents(middle, item);
+		
+		this.type = TreasureChest.MUSIC;
 	}
 }

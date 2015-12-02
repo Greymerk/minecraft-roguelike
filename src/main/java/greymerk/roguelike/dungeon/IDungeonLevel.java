@@ -1,8 +1,10 @@
 package greymerk.roguelike.dungeon;
 
+import java.util.Collection;
 import java.util.List;
 
 import greymerk.roguelike.dungeon.settings.LevelSettings;
+import greymerk.roguelike.treasure.ITreasureChest;
 import greymerk.roguelike.worldgen.Coord;
 
 public interface IDungeonLevel {
@@ -16,5 +18,7 @@ public interface IDungeonLevel {
 	public boolean inRange(Coord pos);
 	
 	boolean hasNearbyNode(Coord pos);
+
+	public Collection<? extends ITreasureChest> getChests();
 	
 }

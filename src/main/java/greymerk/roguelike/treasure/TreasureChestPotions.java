@@ -23,5 +23,7 @@ public class TreasureChestPotions extends TreasureChestBase{
 		item = loot.get(Loot.POTION, rand);
 		chest.setInventorySlotContents(middle + 1, item);
 		
+		this.type = TreasureChest.POTIONS;
+		
 	}
 }

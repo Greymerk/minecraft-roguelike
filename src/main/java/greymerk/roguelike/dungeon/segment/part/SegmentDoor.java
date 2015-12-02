@@ -3,6 +3,7 @@ package greymerk.roguelike.dungeon.segment.part;
 import java.util.Random;
 
 import greymerk.roguelike.dungeon.IDungeonLevel;
+import greymerk.roguelike.dungeon.base.IDungeonRoom;
 import greymerk.roguelike.dungeon.base.SecretFactory;
 import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
@@ -36,7 +37,7 @@ public class SegmentDoor extends SegmentBase {
 		editor.fillRectSolid(rand, start, end, air, true, true);
 		
 		SecretFactory secrets = level.getSettings().getSecrets();
-		boolean room = secrets.genRoom(editor, rand, level.getSettings(), dir, new Coord(x, y, z));
+		IDungeonRoom room = secrets.genRoom(editor, rand, level.getSettings(), dir, new Coord(x, y, z));
 		
 		start.add(dir, 1);
 		end.add(dir, 1);
@@ -50,10 +51,12 @@ public class SegmentDoor extends SegmentBase {
 			editor.setBlock(rand, c, stair, true, true);
 		}
 		
-		if(room){
+		if(room != null){
 			cursor = new Coord(x, y, z);
 			cursor.add(dir, 3);
 			Door.generate(editor, cursor, Cardinal.reverse(dir), Door.OAK);
+			
+			this.chests.addAll(room.getChests());
 		}
 	}	
 }

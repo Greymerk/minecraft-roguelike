@@ -19,6 +19,8 @@ public class TreasureChestFood extends TreasureChestBase{
 			item = loot.get(Loot.FOOD, rand);
 			chest.setInventorySlotContents((middle - 1) + i, item);
 		}
+		
+		this.type = TreasureChest.FOOD;
 	}
 
 }

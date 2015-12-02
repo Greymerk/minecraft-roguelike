@@ -28,7 +28,7 @@ public class DungeonsNetherBrickFortress extends DungeonBase {
 	Spawner spawner;
 	
 	public DungeonsNetherBrickFortress() {
-
+		super();
 	}
 	
 	

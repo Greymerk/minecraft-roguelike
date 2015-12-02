@@ -15,8 +15,8 @@ public class ThemeEniko2 extends ThemeBase{
 	public ThemeEniko2(){
 		
 		BlockStripes floor = new BlockStripes();
-		floor.addBlock(ColorBlock.get(ColorBlock.CLAY, DyeColor.PINK));
-		floor.addBlock(ColorBlock.get(ColorBlock.CLAY, DyeColor.PURPLE));
+		floor.addBlock(ColorBlock.get(ColorBlock.CLAY, DyeColor.BLUE));
+		floor.addBlock(ColorBlock.get(ColorBlock.CLAY, DyeColor.LIGHT_GRAY));
 		
 		BlockWeightedRandom walls = new BlockWeightedRandom();
 		walls.addBlock(BlockType.get(BlockType.STONE_BRICK), 20);

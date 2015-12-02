@@ -1,10 +1,14 @@
 package greymerk.roguelike.dungeon;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
+import greymerk.roguelike.dungeon.segment.ISegment;
+import greymerk.roguelike.dungeon.segment.ISegmentGenerator;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
+import greymerk.roguelike.treasure.ITreasureChest;
 import greymerk.roguelike.worldgen.BlockJumble;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
@@ -18,11 +22,13 @@ public class DungeonTunnel implements Iterable<Coord>{
 	private Coord start;
 	private Coord end;
 	private Cardinal dir;
+	private List<ISegment> segments;
 	
 	public DungeonTunnel(Coord start, Coord end, Cardinal dir){
 		this.start = start;
 		this.end = end;
 		this.dir = dir;
+		this.segments = new ArrayList<ISegment>();
 	}
 
 	@Override
@@ -95,5 +101,27 @@ public class DungeonTunnel implements Iterable<Coord>{
 	public Cardinal getDirection(){
 		return this.dir;
 	}
+
+	public void genSegments(WorldEditor editor, Random rand, IDungeonLevel level) {
+		LevelSettings settings = level.getSettings();
+		ISegmentGenerator segGen = settings.getSegments();
+		for(Coord c : this){
+			this.segments.addAll(segGen.genSegment(editor, rand, level, dir, c));
+		}
+		
+	}
 	
+	public List<ISegment> getSegments(){
+		return this.segments;
+	}
+	
+	public List<ITreasureChest> getChests(){
+		List<ITreasureChest> chests = new ArrayList<ITreasureChest>();
+		
+		for(ISegment segment : this.segments){
+			chests.addAll(segment.getChests());
+		}
+		
+		return chests;
+	}
 }

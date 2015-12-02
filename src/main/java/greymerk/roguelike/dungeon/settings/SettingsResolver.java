@@ -17,21 +17,16 @@ import com.google.gson.JsonParser;
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsBasicLoot;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsDesertTheme;
-import greymerk.roguelike.dungeon.settings.builtin.SettingsEniTheme;
-import greymerk.roguelike.dungeon.settings.builtin.SettingsEthoTheme;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsForestTheme;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsGenerator;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsJungleTheme;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsMountainTheme;
-import greymerk.roguelike.dungeon.settings.builtin.SettingsPyramidTheme;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsRooms;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsSecrets;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsSegments;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsSize;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsSwampTheme;
-import greymerk.roguelike.dungeon.settings.builtin.SettingsTempleTheme;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsTheme;
-import greymerk.roguelike.dungeon.settings.builtin.SettingsWitchTheme;
 import greymerk.roguelike.util.WeightedChoice;
 import greymerk.roguelike.util.WeightedRandomizer;
 import greymerk.roguelike.worldgen.Coord;
@@ -59,14 +54,9 @@ public class SettingsResolver {
 
 		this.builtin = new ArrayList<DungeonSettings>();
 		this.builtin.add(new SettingsDesertTheme());
-		this.builtin.add(new SettingsPyramidTheme());
 		this.builtin.add(new SettingsJungleTheme());
-		this.builtin.add(new SettingsTempleTheme());
 		this.builtin.add(new SettingsSwampTheme());
-		this.builtin.add(new SettingsWitchTheme());
-		this.builtin.add(new SettingsEniTheme());
 		this.builtin.add(new SettingsMountainTheme());
-		this.builtin.add(new SettingsEthoTheme());
 		this.builtin.add(new SettingsForestTheme());
 		
 		File settingsDir = new File(SETTINGS_DIRECTORY);

@@ -197,7 +197,7 @@ public class DungeonPyramidTomb extends DungeonBase{
 		SpawnerSettings spawners = settings.getSpawners();
 		
 		IStair stair = new MetaStair(StairType.QUARTZ);
-		MetaBlock blocks = BlockType.get(BlockType.AIR);
+		MetaBlock blocks = BlockType.get(BlockType.QUARTZ);
 		
 		Coord cursor;
 		

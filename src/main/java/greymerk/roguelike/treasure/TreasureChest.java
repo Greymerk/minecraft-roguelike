@@ -16,7 +16,7 @@ import net.minecraft.init.Blocks;
 
 public enum TreasureChest {
 
-	ARMOUR, WEAPONS, BLOCKS, ENCHANTING, FOOD, ORE, POTIONS, STARTER, TOOLS, SUPPLIES, SMITH, MUSIC, SPECIAL, REWARD;
+	ARMOUR, WEAPONS, BLOCKS, ENCHANTING, FOOD, ORE, POTIONS, STARTER, TOOLS, SUPPLIES, SMITH, MUSIC, SPECIAL, REWARD, EMPTY;
 	
 	public static final List<TreasureChest> level0 = new ArrayList<TreasureChest>(Arrays.asList(ORE, TOOLS, ARMOUR, WEAPONS, FOOD));
 	public static final List<TreasureChest> level1 = new ArrayList<TreasureChest>(Arrays.asList(ORE, TOOLS, ARMOUR, WEAPONS, FOOD));
@@ -45,36 +45,39 @@ public enum TreasureChest {
 		}
 	}
 	
-	public static void generate(WorldEditor editor, Random rand, LevelSettings settings, Coord pos, int level, boolean trapped){
+	public static ITreasureChest generate(WorldEditor editor, Random rand, LevelSettings settings, Coord pos, int level, boolean trapped){
 		
 		TreasureChest type = getChestType(rand, level);
 		ITreasureChest chest = getChest(type);
 		
-		chest.generate(editor, rand, settings.getLoot(), pos, level, trapped);
+		return chest.generate(editor, rand, settings.getLoot(), pos, level, trapped);
 	}
 	
-	public static void generate(WorldEditor editor,  Random rand, LevelSettings settings, Coord pos){
-		generate(editor, rand, settings, pos, settings.getDifficulty(pos), false);
+	public static ITreasureChest generate(WorldEditor editor,  Random rand, LevelSettings settings, Coord pos){
+		return generate(editor, rand, settings, pos, settings.getDifficulty(pos), false);
 	}
 	
-	public static void generate(WorldEditor editor, Random rand, LevelSettings settings, Coord pos, TreasureChest type){
-		generate(editor, rand, settings, pos, type, settings.getDifficulty(pos), false);
+	public static ITreasureChest generate(WorldEditor editor, Random rand, LevelSettings settings, Coord pos, TreasureChest type){
+		return generate(editor, rand, settings, pos, type, settings.getDifficulty(pos), false);
 	}
 	
-	public static void generate(WorldEditor editor, Random rand, LevelSettings settings, Coord pos, TreasureChest type, int level, boolean trapped){
+	public static ITreasureChest generate(WorldEditor editor, Random rand, LevelSettings settings, Coord pos, TreasureChest type, int level, boolean trapped){
 		ITreasureChest chest = getChest(type);
 		chest.generate(editor, rand, settings.getLoot(), pos, level, trapped);
+		return chest;
 	}
 	
-	public static void generate(WorldEditor editor, Random rand, LevelSettings settings, List<Coord> space, TreasureChest type){
-		createChests(editor, rand, settings, 1, space, new ArrayList<TreasureChest>(Arrays.asList(type)));
+	public static List<ITreasureChest> generate(WorldEditor editor, Random rand, LevelSettings settings, List<Coord> space, TreasureChest type){
+		return createChests(editor, rand, settings, 1, space, new ArrayList<TreasureChest>(Arrays.asList(type)));
 	}
 	
-	public static void createChests(WorldEditor editor, Random rand, LevelSettings settings, int numChests, List<Coord> space){
-		createChests(editor, rand, settings, numChests, space, false);
+	public static List<ITreasureChest> createChests(WorldEditor editor, Random rand, LevelSettings settings, int numChests, List<Coord> space){
+		return createChests(editor, rand, settings, numChests, space, false);
 	}
 	
-	public static void createChests(WorldEditor editor, Random rand, LevelSettings settings, int numChests, List<Coord> space, boolean trapped){
+	public static List<ITreasureChest> createChests(WorldEditor editor, Random rand, LevelSettings settings, int numChests, List<Coord> space, boolean trapped){
+		
+		List<ITreasureChest> chests = new ArrayList<ITreasureChest>();
 		
 		Collections.shuffle(space, rand);
 		
@@ -87,13 +90,18 @@ public enum TreasureChest {
 			}
 			
 			if (isValidChestSpace(editor, block)) {
-				generate(editor, rand, settings, block, getChestType(rand, Dungeon.getLevel(block.getY())));
+				ITreasureChest chest = generate(editor, rand, settings, block, getChestType(rand, Dungeon.getLevel(block.getY())));
+				chests.add(chest);
 				count++;
 			}
 		}
+		
+		return chests;
 	}
 	
-	public static void createChests(WorldEditor editor, Random rand, LevelSettings settings, int numChests, List<Coord> space, List<TreasureChest> types){
+	public static List<ITreasureChest> createChests(WorldEditor editor, Random rand, LevelSettings settings, int numChests, List<Coord> space, List<TreasureChest> types){
+		
+		List<ITreasureChest> chests = new ArrayList<ITreasureChest>();
 		
 		Collections.shuffle(space, rand);
 		
@@ -106,10 +114,13 @@ public enum TreasureChest {
 			}
 			
 			if (isValidChestSpace(editor, block)) {
-				generate(editor, rand, settings, block, types.get(rand.nextInt(types.size())));
+				ITreasureChest chest = generate(editor, rand, settings, block, types.get(rand.nextInt(types.size())));
+				chests.add(chest);
 				count++;
 			}
 		}
+		
+		return chests;
 	}
 	
 	private static TreasureChest getChestType(Random rand, int level){		

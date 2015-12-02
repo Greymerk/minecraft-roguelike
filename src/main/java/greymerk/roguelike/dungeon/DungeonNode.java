@@ -35,4 +35,8 @@ public class DungeonNode {
 	public Coord getPosition(){
 		return new Coord(this.pos);
 	}
+	
+	public IDungeonRoom getRoom(){
+		return toGenerate;
+	}
 }

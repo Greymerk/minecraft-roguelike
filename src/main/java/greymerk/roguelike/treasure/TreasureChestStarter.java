@@ -48,6 +48,8 @@ public class TreasureChestStarter extends TreasureChestBase{
 		}
 
 		if(itr.hasNext()) itr.next().set(book());
+		
+		this.type = TreasureChest.STARTER;
 
 	}
 	

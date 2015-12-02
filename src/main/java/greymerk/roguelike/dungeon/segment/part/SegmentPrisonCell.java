@@ -1,6 +1,9 @@
 package greymerk.roguelike.dungeon.segment.part;
 
+import java.util.Random;
+
 import greymerk.roguelike.dungeon.IDungeonLevel;
+import greymerk.roguelike.dungeon.base.IDungeonRoom;
 import greymerk.roguelike.dungeon.base.SecretFactory;
 import greymerk.roguelike.dungeon.segment.IAlcove;
 import greymerk.roguelike.dungeon.segment.alcove.PrisonCell;
@@ -12,8 +15,6 @@ import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.Door;
-
-import java.util.Random;
 
 public class SegmentPrisonCell extends SegmentBase {
 	
@@ -38,7 +39,7 @@ public class SegmentPrisonCell extends SegmentBase {
 		editor.fillRectSolid(rand, start, end, air, true, true);
 		
 		SecretFactory secrets = level.getSettings().getSecrets();
-		boolean room = secrets.genRoom(editor, rand, level.getSettings(), dir, new Coord(x, y, z));
+		IDungeonRoom room = secrets.genRoom(editor, rand, level.getSettings(), dir, new Coord(x, y, z));
 		
 		start.add(dir, 1);
 		end.add(dir, 1);
@@ -52,10 +53,12 @@ public class SegmentPrisonCell extends SegmentBase {
 			editor.setBlock(rand, c, stair, true, true);
 		}
 		
-		if(room){
+		if(room != null){
 			cursor = new Coord(x, y, z);
 			cursor.add(dir, 3);
 			Door.generate(editor, cursor, Cardinal.reverse(dir), Door.OAK);
+			
+			this.chests.addAll(room.getChests());
 		} else {
 			IAlcove cell = new PrisonCell();
 			if(cell.isValidLocation(editor, x, y, z, dir)){

@@ -25,6 +25,7 @@ public class DungeonsSlime extends DungeonBase {
 	MetaBlock liquid;
 	
 	public DungeonsSlime() {
+		super();
 	}
 
 	public boolean generate(WorldEditor editor, Random inRandom, LevelSettings settings, Cardinal[] entrances, Coord origin) {

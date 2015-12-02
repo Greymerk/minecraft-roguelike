@@ -17,5 +17,7 @@ public class TreasureChestSupplies extends TreasureChestBase{
 			item = loot.get(Loot.SUPPLY, rand);
 			chest.setInventorySlotContents(rand.nextInt(chest.getSizeInventory()), item);
 		}
+		
+		this.type = TreasureChest.SUPPLIES;
 	}
 }

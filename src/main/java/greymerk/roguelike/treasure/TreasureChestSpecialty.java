@@ -16,5 +16,7 @@ public class TreasureChestSpecialty extends TreasureChestBase{
 		
 		item = loot.get(Loot.SPECIAL, rand);
 		chest.setInventorySlotContents(middle, item);
+		
+		this.type = TreasureChest.SPECIAL;
 	}
 }

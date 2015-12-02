@@ -2,7 +2,7 @@ package greymerk.roguelike.dungeon.rooms;
 
 import java.util.Random;
 
-import greymerk.roguelike.dungeon.base.IDungeonRoom;
+import greymerk.roguelike.dungeon.base.DungeonBase;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.treasure.TreasureChest;
@@ -18,7 +18,7 @@ import greymerk.roguelike.worldgen.redstone.Torch;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
-public class DungeonBedRoom implements IDungeonRoom {
+public class DungeonBedRoom extends DungeonBase {
 
 	@Override
 	public boolean generate(WorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
@@ -126,7 +126,7 @@ public class DungeonBedRoom implements IDungeonRoom {
 		cursor = new Coord(x, y, z);
 		cursor.add(dir);
 		cursor.add(side, 3);
-		TreasureChest.generate(editor, rand, settings, cursor, TreasureChest.STARTER);
+		this.chests.add(TreasureChest.generate(editor, rand, settings, cursor, TreasureChest.STARTER));
 		cursor.add(Cardinal.reverse(side), 6);
 		if(rand.nextBoolean()){
 			cursor.add(Cardinal.UP);

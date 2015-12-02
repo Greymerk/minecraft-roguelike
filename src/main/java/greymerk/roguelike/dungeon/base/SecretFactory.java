@@ -75,18 +75,18 @@ public class SecretFactory implements ISecretRoom{
 		this.count += count;
 	}
 	
-	public boolean genRoom(WorldEditor editor, Random rand, LevelSettings settings, Cardinal dir, Coord pos){
-		if(count <= 0) return false;
+	public IDungeonRoom genRoom(WorldEditor editor, Random rand, LevelSettings settings, Cardinal dir, Coord pos){
+		if(count <= 0) return null;
 		
 		Collections.shuffle(this.secrets, rand);
 		
 		for(ISecretRoom room : secrets){
-			if(room.genRoom(editor, rand, settings, dir, pos)){
-				this.count--;
-				return true;
+			IDungeonRoom generated = room.genRoom(editor, rand, settings, dir, pos);
+			if(generated != null){
+				return generated;
 			}
 		}
 		
-		return false;
+		return null;
 	}
 }

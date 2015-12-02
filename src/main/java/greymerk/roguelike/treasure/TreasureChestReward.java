@@ -15,6 +15,8 @@ public class TreasureChestReward extends TreasureChestBase implements ITreasureC
 		
 		item = loot.get(Loot.REWARD, rand);
 		chest.setInventorySlotContents(middle, item);
+		
+		this.type = TreasureChest.REWARD;
 	}
 
 }

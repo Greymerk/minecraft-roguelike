@@ -23,9 +23,11 @@ public class DungeonsSpiderNest extends DungeonBase {
 	int dungeonWidth;
 	
 	public DungeonsSpiderNest() {
+		super();
 		dungeonHeight = 2;
 		dungeonLength = 3;
 		dungeonWidth = 3;
+		
 	}
 
 	public boolean generate(WorldEditor editor, Random inRandom, LevelSettings settings, Cardinal[] entrances, Coord origin) {

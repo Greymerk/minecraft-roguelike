@@ -3,8 +3,8 @@ package greymerk.roguelike.worldgen.blocks;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.MetaBlock;
 import net.minecraft.block.BlockCocoa;
+import net.minecraft.block.BlockPumpkin;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.EnumFacing;
 
 public enum Crops {
 
@@ -23,18 +23,17 @@ public enum Crops {
 	}
 	
 	public static MetaBlock getCocao(Cardinal dir){
-		
 		MetaBlock cocao = new MetaBlock(Blocks.cocoa);
-		switch(dir){
-		case NORTH: cocao.withProperty(BlockCocoa.FACING, EnumFacing.NORTH); break;
-		case EAST: cocao.withProperty(BlockCocoa.FACING, EnumFacing.EAST); break;
-		case WEST: cocao.withProperty(BlockCocoa.FACING, EnumFacing.WEST); break;
-		case SOUTH: cocao.withProperty(BlockCocoa.FACING, EnumFacing.SOUTH); break;
-		default:
-		}
-		
+		cocao.withProperty(BlockCocoa.FACING, Cardinal.getFacing(Cardinal.reverse(dir)));
+		cocao.withProperty(BlockCocoa.field_176501_a, 2);
 		return cocao;
-		
 	}
+	
+	public static MetaBlock getPumpkin(Cardinal dir, boolean lit){
+		MetaBlock pumpkin = new MetaBlock(lit ? Blocks.lit_pumpkin : Blocks.pumpkin); 
+		pumpkin.withProperty(BlockPumpkin.FACING, Cardinal.getFacing(Cardinal.reverse(dir)));
+		return pumpkin;
+	}
+	
 	
 }

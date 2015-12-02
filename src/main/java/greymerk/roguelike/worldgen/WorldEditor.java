@@ -319,5 +319,10 @@ public class WorldEditor {
 		
 		return toReturn;
 	}
+	
+	public int getStat(Block type){
+		if(!this.stats.containsKey(type)) return 0;
+		return this.stats.get(type);
+	}
 }
 

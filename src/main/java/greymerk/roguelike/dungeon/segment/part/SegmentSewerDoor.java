@@ -1,6 +1,9 @@
 package greymerk.roguelike.dungeon.segment.part;
 
+import java.util.Random;
+
 import greymerk.roguelike.dungeon.IDungeonLevel;
+import greymerk.roguelike.dungeon.base.IDungeonRoom;
 import greymerk.roguelike.dungeon.base.SecretFactory;
 import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
@@ -11,8 +14,6 @@ import greymerk.roguelike.worldgen.WorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.Door;
 import greymerk.roguelike.worldgen.blocks.Leaves;
-
-import java.util.Random;
 
 public class SegmentSewerDoor extends SegmentBase {
 	
@@ -68,7 +69,7 @@ public class SegmentSewerDoor extends SegmentBase {
 		editor.fillRectSolid(rand, start, end, air, true, true);
 		
 		SecretFactory secrets = level.getSettings().getSecrets();
-		boolean room = secrets.genRoom(editor, rand, level.getSettings(), dir, new Coord(x, y, z));
+		IDungeonRoom room = secrets.genRoom(editor, rand, level.getSettings(), dir, new Coord(x, y, z));
 		
 		start.add(dir, 1);
 		end.add(dir, 1);
@@ -82,10 +83,12 @@ public class SegmentSewerDoor extends SegmentBase {
 			editor.setBlock(rand, c, stair, true, true);
 		}
 		
-		if(room){
+		if(room != null){
 			cursor = new Coord(x, y, z);
 			cursor.add(dir, 3);
 			Door.generate(editor, cursor, Cardinal.reverse(dir), Door.IRON);
+			
+			this.chests.addAll(room.getChests());
 		}
 	}	
 }

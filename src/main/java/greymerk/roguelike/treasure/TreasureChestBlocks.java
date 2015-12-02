@@ -18,5 +18,7 @@ public class TreasureChestBlocks extends TreasureChestBase{
 			item = loot.get(Loot.BLOCK, rand);		
 			chest.setInventorySlotContents(rand.nextInt(chest.getSizeInventory()), item);
 		}
+		
+		this.type = TreasureChest.BLOCKS;
 	}
 }

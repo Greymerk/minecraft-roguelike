@@ -17,9 +17,6 @@ import greymerk.roguelike.worldgen.blocks.BlockType;
 public class DungeonsNetherBrick extends DungeonBase {
 	
 
-	public DungeonsNetherBrick() {
-	}
-
 	public boolean generate(WorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
 
 		int x = origin.getX();

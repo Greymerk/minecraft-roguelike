@@ -31,8 +31,8 @@ public enum ColorBlock {
 		case CLAY: return Blocks.stained_hardened_clay;
 		case WOOL: return Blocks.wool;
 		case CARPET: return Blocks.carpet;
-		case GLASS: return Blocks.glass;
-		case PANE: return Blocks.glass_pane;
+		case GLASS: return Blocks.stained_glass;
+		case PANE: return Blocks.stained_glass_pane;
 		default: return Blocks.wool;
 		}
 	}
