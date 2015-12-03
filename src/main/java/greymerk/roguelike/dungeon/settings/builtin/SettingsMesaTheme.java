@@ -23,9 +23,9 @@ public class SettingsMesaTheme extends DungeonSettings{
 		biomes.add(BiomeDictionary.Type.MESA);
 		this.criteria.setBiomeTypes(biomes);
 		
-		this.towerSettings = new TowerSettings(Tower.ENIKO, Theme.getTheme(Theme.RAINBOW));
+		this.towerSettings = new TowerSettings(Tower.ETHO, Theme.getTheme(Theme.ETHOTOWER));
 		
-		Theme[] themes = {Theme.RAINBOW, Theme.RAINBOW, Theme.CRYPT, Theme.CRYPT, Theme.NETHER};
+		Theme[] themes = {Theme.ETHOTOWER, Theme.ETHOTOWER, Theme.CRYPT, Theme.CRYPT, Theme.NETHER};
 		
 		for(int i = 0; i < 5; ++i){
 			LevelSettings level = new LevelSettings();

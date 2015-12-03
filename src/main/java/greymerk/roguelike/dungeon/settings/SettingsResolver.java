@@ -20,6 +20,7 @@ import greymerk.roguelike.dungeon.settings.builtin.SettingsDesertTheme;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsForestTheme;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsGenerator;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsJungleTheme;
+import greymerk.roguelike.dungeon.settings.builtin.SettingsMesaTheme;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsMountainTheme;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsRooms;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsSecrets;
@@ -58,6 +59,7 @@ public class SettingsResolver {
 		this.builtin.add(new SettingsSwampTheme());
 		this.builtin.add(new SettingsMountainTheme());
 		this.builtin.add(new SettingsForestTheme());
+		this.builtin.add(new SettingsMesaTheme());
 		
 		File settingsDir = new File(SETTINGS_DIRECTORY);
 		if(!settingsDir.exists() || !settingsDir.isDirectory()) return;

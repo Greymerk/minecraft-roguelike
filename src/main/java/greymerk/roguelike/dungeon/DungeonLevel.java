@@ -79,9 +79,7 @@ public class DungeonLevel implements IDungeonLevel{
 		for(DungeonTunnel tunnel : this.generator.getTunnels()){
 			chests.addAll(tunnel.getChests());
 		}
-		
-		System.out.println("num chests " + chests.size());
-		
+			
 		return chests;
 	}
 }

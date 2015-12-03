@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import greymerk.roguelike.Roguelike;
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.dungeon.settings.ISettings;
 import greymerk.roguelike.dungeon.settings.SettingsResolver;
@@ -28,6 +27,7 @@ public class Dungeon implements IDungeon{
 	public static SettingsResolver settingsResolver;
 	
 	private DungeonGenerator generator;
+	private Coord pos;
 	
 	static{
 		initResolver();
@@ -61,6 +61,7 @@ public class Dungeon implements IDungeon{
 	
 	public void generate(WorldEditor editor, ISettings settings, int inX, int inZ){
 		generator.generate(editor, settings, inX, inZ);
+		this.pos = new Coord(inX, 50, inZ);
 		
 		String text = "~Architect's Resource Notes~\n\n";
 		text += "StoneBrick: " + editor.getStat(Blocks.stonebrick) + "\n";
@@ -251,5 +252,13 @@ public class Dungeon implements IDungeon{
 		book.setTagInfo("pages", pages);
 		
 		return book;
+	}
+
+
+	public Coord getPosition() throws Exception {
+		if(this.pos == null){
+			throw new Exception("Dungeon not yet generated");
+		}
+		return this.pos;
 	}
 }

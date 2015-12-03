@@ -198,7 +198,6 @@ public class WorldEditor {
 		
 	}
 	
-
 	public void spiralStairStep(Random rand, Coord origin, IStair stair, IBlockFactory fill){
 		
 		MetaBlock air = new MetaBlock(Blocks.air);

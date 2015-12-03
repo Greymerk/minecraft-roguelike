@@ -113,6 +113,28 @@ public class CommandSpawnDungeon extends CommandBase
 				if(ap.hasEntry(2)){
 					settingName = ap.get(2);
 				}
+			} else if(ap.match(1, "nearby")){
+				EntityPlayerMP player = null;
+				try {
+					player = getCommandSenderAsPlayer(sender);
+				} catch (PlayerNotFoundException e) {
+					sender.addChatMessage(new ChatComponentText(TextFormat.apply("Failure: Cannot find player", TextFormat.RED)));
+					return;
+				}
+
+				x = (int) player.posX;
+				z = (int) player.posZ;
+				Dungeon toGenerate = new Dungeon();
+				WorldEditor editor = new WorldEditor(player.worldObj);
+				Random rand = Dungeon.getRandom(editor, x, z);
+				toGenerate.generateNear(editor, rand, x, z);
+				
+				try {
+					sender.addChatMessage(new ChatComponentText(TextFormat.apply("Success: Dungeon generated at " + toGenerate.getPosition().toString(), TextFormat.GREEN)));
+				} catch (Exception e) {
+					sender.addChatMessage(new ChatComponentText(TextFormat.apply("Failure: Unable to generate dungeon", TextFormat.RED)));
+				}
+				return;
 				
 			} else {
 				

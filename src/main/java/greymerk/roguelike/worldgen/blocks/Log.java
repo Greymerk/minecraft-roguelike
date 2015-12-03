@@ -14,6 +14,11 @@ public class Log {
 		MetaBlock log = new MetaBlock(getBlockId(type));
 		setType(log, type);
 
+		if(dir == null){
+			log.withProperty(BlockLog.AXIS_PROP, BlockLog.EnumAxis.NONE);
+			return log;
+		}
+		
 		switch(dir){
 		case UP:
 		case DOWN: log.withProperty(BlockLog.AXIS_PROP, BlockLog.EnumAxis.Y); break;

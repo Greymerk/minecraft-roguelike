@@ -26,7 +26,7 @@ public class SettingsForestTheme extends DungeonSettings{
 		this.criteria.setWeight(6);
 		this.criteria.setBiomeTypes(biomes);
 		
-		this.towerSettings = new TowerSettings(Tower.ROGUE, Theme.getTheme(Theme.SPRUCE));
+		this.towerSettings = new TowerSettings(Tower.HOUSE, Theme.getTheme(Theme.HOUSE));
 		
 		Theme[] themes = {Theme.ETHO, Theme.OAK, Theme.CRYPT, Theme.MOSSY, Theme.NETHER};
 		
@@ -45,7 +45,7 @@ public class SettingsForestTheme extends DungeonSettings{
 				DungeonFactory factory = new DungeonFactory();
 				factory.addSingle(DungeonRoom.CAKE);
 				factory.addSingle(DungeonRoom.DARKHALL);
-				factory.addRandom(DungeonRoom.BRICK, 10);
+				factory.addRandom(DungeonRoom.ETHO, 10);
 				factory.addRandom(DungeonRoom.CORNER, 3);
 				level.setRooms(factory);
 			}

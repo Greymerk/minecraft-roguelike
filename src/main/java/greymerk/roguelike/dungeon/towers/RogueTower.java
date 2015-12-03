@@ -17,8 +17,6 @@ public class RogueTower implements ITower{
 
 	public RogueTower(){
 	}
-
-
 	
 	public void generate(WorldEditor editor, Random rand, ITheme theme, int x, int y, int z){
 		
@@ -34,6 +32,7 @@ public class RogueTower implements ITower{
 		int roof = floor.getY() + 9;
 		
 		editor.fillRectSolid(rand, x - 3, ground, z - 3, x + 3, floor.getY() + 12, z + 3, air);
+		editor.fillRectSolid(rand, new Coord(x - 2, y + 10, z - 2), new Coord(x + 2, floor.getY() - 1, z + 2), blocks, false, true);
 
 		Coord start;
 		Coord end;
