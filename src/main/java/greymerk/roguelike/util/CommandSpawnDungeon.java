@@ -121,9 +121,34 @@ public class CommandSpawnDungeon extends CommandBase
 					sender.addChatMessage(new ChatComponentText(TextFormat.apply("Failure: Cannot find player", TextFormat.RED)));
 					return;
 				}
-
+				
 				x = (int) player.posX;
 				z = (int) player.posZ;
+				
+				if(ap.hasEntry(2)){
+					int num = 0;
+					try {
+						num = parseInt(ap.get(2));
+					} catch (NumberInvalidException e) {
+						sender.addChatMessage(new ChatComponentText(TextFormat.apply("Failure: Third argument must be a whole number", TextFormat.RED)));
+						return;
+					}
+					
+					if(num <= 0){
+						sender.addChatMessage(new ChatComponentText(TextFormat.apply("Failure: Third argument must be greater than zero.", TextFormat.RED)));
+						return;
+					}
+					
+					for(int i = 0; i < num; ++i){
+						Dungeon toGenerate = new Dungeon();
+						WorldEditor editor = new WorldEditor(player.worldObj);
+						Random rand = new Random();
+						toGenerate.generateNear(editor, rand, x, z);
+					}
+					sender.addChatMessage(new ChatComponentText(TextFormat.apply("Success: Dungeons generated all over the place!", TextFormat.GREEN)));
+					return;
+				}
+
 				Dungeon toGenerate = new Dungeon();
 				WorldEditor editor = new WorldEditor(player.worldObj);
 				Random rand = Dungeon.getRandom(editor, x, z);

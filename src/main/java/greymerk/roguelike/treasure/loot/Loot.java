@@ -28,7 +28,6 @@ public enum Loot {
 	
 	WEAPON, ARMOUR, BLOCK, JUNK, ORE, TOOL, POTION, FOOD, ENCHANTBOOK, ENCHANTBONUS, SUPPLY, MUSIC, SMITHY, SPECIAL, REWARD;
 
-	
 	public static ItemStack getEquipmentBySlot(Random rand, Slot slot, int level, boolean enchant){
 		
 		if(slot == Slot.WEAPON){

@@ -31,7 +31,7 @@ public class HouseTower implements ITower {
 		Coord floor = Tower.getBaseCoord(editor, x, y, z);
 		
 		IBlockFactory walls = theme.getPrimaryWall();
-		IBlockFactory mainFloor = theme.getSecondaryFloor();
+		IBlockFactory mainFloor = theme.getPrimaryFloor();
 		IStair stair = theme.getPrimaryStair();
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		
@@ -278,8 +278,8 @@ public class HouseTower implements ITower {
 	}
 
 	private void roof(WorldEditor editor, Random rand, ITheme theme, Cardinal dir, Coord origin) {
-		IBlockFactory walls = theme.getPrimaryWall();
-		IStair stair = theme.getPrimaryStair();
+		IBlockFactory walls = theme.getSecondaryWall();
+		IStair stair = theme.getSecondaryStair();
 		Cardinal[] orth = Cardinal.getOrthogonal(dir);
 		Coord cursor;
 		Coord start;
@@ -593,7 +593,7 @@ public class HouseTower implements ITower {
 
 	private void door(WorldEditor editor, Random rand, ITheme theme, Cardinal dir, Coord origin) {
 		
-		IBlockFactory walls = theme.getSecondaryWall();
+		IBlockFactory walls = theme.getPrimaryFloor();
 		IBlockFactory pillar = theme.getPrimaryPillar();
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		IStair stair = theme.getPrimaryStair();
