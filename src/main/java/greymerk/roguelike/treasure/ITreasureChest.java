@@ -11,7 +11,7 @@ public interface ITreasureChest {
 		
 	public ITreasureChest generate(WorldEditor editor, Random rand, LootSettings loot, Coord pos, int level, boolean trapped);
 	
-	public boolean setInventorySlot(int slot, ItemStack item);
+	public boolean setSlot(int slot, ItemStack item);
 	
 	public boolean setRandomEmptySlot(ItemStack item);
 	

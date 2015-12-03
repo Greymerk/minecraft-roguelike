@@ -2,11 +2,11 @@ package greymerk.roguelike.dungeon.rooms;
 
 import java.util.Random;
 
-import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.dungeon.base.DungeonBase;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.theme.ITheme;
-import greymerk.roguelike.treasure.TreasureChest;
+import greymerk.roguelike.treasure.ITreasureChest;
+import greymerk.roguelike.treasure.Treasure;
 import greymerk.roguelike.treasure.loot.Loot;
 import greymerk.roguelike.treasure.loot.LootSettings;
 import greymerk.roguelike.worldgen.Cardinal;
@@ -22,7 +22,6 @@ import greymerk.roguelike.worldgen.blocks.DyeColor;
 import greymerk.roguelike.worldgen.blocks.Furnace;
 import greymerk.roguelike.worldgen.blocks.StairType;
 import greymerk.roguelike.worldgen.redstone.Torch;
-import net.minecraft.item.ItemStack;
 
 
 
@@ -93,7 +92,7 @@ public class DungeonMess extends DungeonBase {
 		stove(editor, rand, x + 4, y, z - 4);
 		
 		// storage
-		storage(editor, rand, settings.getLoot(), x + 4, y, z + 4);
+		storage(editor, rand, settings, x + 4, y, z + 4);
 		
 		// table north
 		northTable(editor, rand, x - 4, y, z - 4);
@@ -139,7 +138,7 @@ public class DungeonMess extends DungeonBase {
 		editor.fillRectSolid(rand, x - 1, y + 3, z - 1, x + 1, y + 3, z + 1, brick);
 	}
 	
-	private void storage(WorldEditor editor, Random rand, LootSettings loot, int x, int y, int z){
+	private void storage(WorldEditor editor, Random rand, LevelSettings settings, int x, int y, int z){
 		
 		// floor
 		editor.fillRectSolid(rand, x - 1, y - 1, z - 1, x + 1, y - 1, z + 1, plank, true, true);
@@ -148,7 +147,11 @@ public class DungeonMess extends DungeonBase {
 		editor.setBlock(rand, x + 2, y, z - 1, stair.setOrientation(Cardinal.SOUTH, true), true, true);
 		editor.setBlock(rand, x + 2, y, z, stair.setOrientation(Cardinal.WEST, true), true, true);
 		editor.setBlock(rand, x + 2, y, z + 1, stair.setOrientation(Cardinal.NORTH, true), true, true);
-		new TreasureChestFoodStore().generate(editor, rand, loot, new Coord(x + 2, y + 1, z), 1, false);
+		ITreasureChest chest = Treasure.generate(editor, rand, settings, new Coord(x + 2, y + 1, z), Treasure.EMPTY, 1, false);
+		LootSettings loot = settings.getLoot();
+		for(int i = 0; i < 12; ++i){
+			chest.setRandomEmptySlot(loot.get(Loot.FOOD, rand));
+		}
 		
 		// south shelf
 		editor.setBlock(rand, x - 1, y, z + 2, stair.setOrientation(Cardinal.EAST, true), true, true);
@@ -201,7 +204,7 @@ public class DungeonMess extends DungeonBase {
 		editor.setBlock(rand, x, y + height, z + 1, stair.setOrientation(Cardinal.SOUTH, true), true, true);
 		editor.setBlock(rand, x, y + height, z - 1, stair.setOrientation(Cardinal.NORTH, true), true, true);
 	}
-	
+	/*
 	private class TreasureChestFoodStore extends TreasureChest{
 
 		@Override
@@ -219,6 +222,7 @@ public class DungeonMess extends DungeonBase {
 		}
 		
 	}
+	*/
 	
 	public int getSize(){
 		return 10;

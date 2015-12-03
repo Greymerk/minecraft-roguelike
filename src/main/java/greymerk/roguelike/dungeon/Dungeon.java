@@ -77,7 +77,7 @@ public class Dungeon implements IDungeon{
 		
 		for(ITreasureChest chest : this.getChests()){
 			if(chest.getType() == Treasure.STARTER){
-				chest.setInventorySlot(0, book);
+				chest.setSlot(0, book);
 			}
 		}
 	}

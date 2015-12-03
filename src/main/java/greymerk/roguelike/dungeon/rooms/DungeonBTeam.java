@@ -7,7 +7,7 @@ import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.dungeon.base.DungeonBase;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.treasure.ITreasureChest;
-import greymerk.roguelike.treasure.TreasureChestEmpty;
+import greymerk.roguelike.treasure.Treasure;
 import greymerk.roguelike.treasure.loot.Loot;
 import greymerk.roguelike.treasure.loot.PotionMixture;
 import greymerk.roguelike.treasure.loot.Record;
@@ -149,29 +149,29 @@ public class DungeonBTeam extends DungeonBase {
 		editor.fillRectSolid(rand, x - 7, y - 1, z - 4, x - 6, y + 4, z + 4, stonebrick);
 		editor.fillRectSolid(rand, x + 6, y - 1, z - 4, x + 7, y + 4, z + 4, stonebrick);
 		
-		ITreasureChest recordChest = new TreasureChestEmpty().generate(editor, rand, settings.getLoot(), new Coord(x - 4, y, z - 4), 0, false);
-		recordChest.setInventorySlot(recordChest.getSize() / 2, Record.getRecord(Record.STAL));
+		ITreasureChest recordChest = Treasure.generate(editor, rand, settings, new Coord(x - 4, y, z - 4), Treasure.EMPTY, 1, false); 
+
+		recordChest.setSlot(recordChest.getSize() / 2, Record.getRecord(Record.STAL));
 		editor.setBlock(x - 3, y, z - 4, BlockType.get(BlockType.JUKEBOX));
 		
-		ITreasureChest bdubsChest = new TreasureChestEmpty().generate(editor, rand, settings.getLoot(), new Coord(x - 3, y, z + 5), 0, false);
-		bdubsChest.setInventorySlot((bdubsChest.getSize() / 2) - 2, ItemNovelty.getItem(ItemNovelty.BDOUBLEO));
+		ITreasureChest bdubsChest = Treasure.generate(editor, rand, settings, new Coord(x - 3, y, z + 5), Treasure.EMPTY, 1, false);
+		bdubsChest.setSlot((bdubsChest.getSize() / 2) - 2, ItemNovelty.getItem(ItemNovelty.BDOUBLEO));
 		
 		ItemStack shirt = new ItemStack(Items.leather_chestplate);
 		Loot.setItemName(shirt, "Pink Sweater", null);
 		Loot.setItemLore(shirt, "\"It's chinese red!\"");
 		ItemArmour.dyeArmor(shirt, 250, 96, 128);
 		
-		bdubsChest.setInventorySlot((bdubsChest.getSize() / 2) + 2, shirt);
+		bdubsChest.setSlot((bdubsChest.getSize() / 2) + 2, shirt);
 		
-		ITreasureChest gennybChest = new TreasureChestEmpty().generate(editor, rand, settings.getLoot(), new Coord(x + 3, y, z + 5), 0, false);
-		gennybChest.setRandomEmptySlot(ItemNovelty.getItem(ItemNovelty.GENERIKB));
+		ITreasureChest gennybChest = Treasure.generate(editor, rand, settings, new Coord(x + 3, y, z + 5), Treasure.EMPTY, 1, false);
+		gennybChest.setSlot(gennybChest.getSize() / 2, ItemNovelty.getItem(ItemNovelty.GENERIKB));
 		
 		
 		editor.setBlock(x + 4, y, z - 4, BlockType.get(BlockType.SHELF));
 		editor.setBlock(x + 4, y + 1, z - 4, BrewingStand.get());
 		
-		ITreasureChest contraband = new TreasureChestEmpty().generate(editor, rand, settings.getLoot(), new Coord(x + 3, y, z - 4), 0, false);
-		
+		ITreasureChest contraband = Treasure.generate(editor, rand, settings, new Coord(x + 3, y, z - 4), Treasure.EMPTY, 1, false);		
 		for(int i = 0; i < 8; ++i){
 			ItemStack booze = PotionMixture.getBooze(rand);
 			contraband.setRandomEmptySlot(booze);

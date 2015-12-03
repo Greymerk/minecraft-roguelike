@@ -2,8 +2,6 @@ package greymerk.roguelike.treasure;
 
 import java.util.Random;
 
-import greymerk.roguelike.config.RogueConfig;
-import greymerk.roguelike.treasure.loot.Loot;
 import greymerk.roguelike.treasure.loot.LootSettings;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
@@ -12,12 +10,16 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityChest;
 
-public abstract class TreasureChest implements ITreasureChest{
+public class TreasureChest implements ITreasureChest{
 
 	protected Inventory inventory;
 	protected Treasure type;
 	protected Random rand;
 
+	public TreasureChest(Treasure type){
+		this.type = type;
+	}
+	
 	public ITreasureChest generate(WorldEditor editor, Random rand, LootSettings loot, Coord pos, int level, boolean trapped) {
 
 		this.rand = rand;
@@ -30,18 +32,14 @@ public abstract class TreasureChest implements ITreasureChest{
 		
 		TileEntityChest chest = (TileEntityChest) editor.getTileEntity(pos);
 		this.inventory = new Inventory(rand, chest);
-		
-		fillChest(loot, level);
-		int amount = RogueConfig.getBoolean(RogueConfig.GENEROUS) ? 9 : 4;
-		for(int i = 0; i < amount; ++i){
-			this.setRandomEmptySlot(loot.get(Loot.JUNK, rand));
-		}
 
+		Treasure.fillChest(this, rand, loot, level);
+		
 		return this;
 	}
 	
 	@Override
-	public boolean setInventorySlot(int slot, ItemStack item){
+	public boolean setSlot(int slot, ItemStack item){
 		return this.inventory.setInventorySlot(slot, item);
 	}
 	
@@ -55,8 +53,6 @@ public abstract class TreasureChest implements ITreasureChest{
 		return this.inventory.isEmptySlot(slot);
 	}
 
-	protected abstract void fillChest(LootSettings loot, int level);
-	
 	@Override
 	public Treasure getType(){
 		return this.type;

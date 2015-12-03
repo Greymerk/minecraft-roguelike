@@ -5,7 +5,7 @@ import java.util.Random;
 import greymerk.roguelike.dungeon.base.DungeonBase;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.treasure.ITreasureChest;
-import greymerk.roguelike.treasure.TreasureChestEmpty;
+import greymerk.roguelike.treasure.Treasure;
 import greymerk.roguelike.treasure.loot.provider.ItemNovelty;
 import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.Cardinal;
@@ -184,13 +184,13 @@ public class DungeonNebris extends DungeonBase {
 		}
 		
 		
-		ITreasureChest chest = new TreasureChestEmpty();
-		chest.generate(editor, rand, settings.getLoot(), new Coord(x, y, z), 0, false);
+		ITreasureChest chest = Treasure.generate(editor, rand, settings, new Coord(x, y, z), Treasure.EMPTY, 1, false);
+		
 		int middle = chest.getSize() / 2;
 		if(rand.nextBoolean()){
-			chest.setInventorySlot(middle, ItemNovelty.getItem(ItemNovelty.NEBRISCROWN));	
+			chest.setSlot(middle, ItemNovelty.getItem(ItemNovelty.NEBRISCROWN));	
 		} else {
-			chest.setInventorySlot(middle, ItemNovelty.getItem(ItemNovelty.NEBRISSWORD));
+			chest.setSlot(middle, ItemNovelty.getItem(ItemNovelty.NEBRISSWORD));
 		}
 		
 		

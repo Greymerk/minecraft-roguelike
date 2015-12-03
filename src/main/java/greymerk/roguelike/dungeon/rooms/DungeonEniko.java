@@ -7,7 +7,7 @@ import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.dungeon.base.DungeonBase;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.treasure.ITreasureChest;
-import greymerk.roguelike.treasure.TreasureChestEmpty;
+import greymerk.roguelike.treasure.Treasure;
 import greymerk.roguelike.treasure.loot.provider.ItemNovelty;
 import greymerk.roguelike.worldgen.BlockFactoryCheckers;
 import greymerk.roguelike.worldgen.Cardinal;
@@ -80,11 +80,12 @@ public class DungeonEniko extends DungeonBase {
 		editor.fillRectSolid(rand, x + 3, y + 1, z + 6, x + 4, y + 3, z + 6, coal);
 		editor.fillRectSolid(rand, x + 3, y, z + 5, x + 4, y, z + 5, shelf, true, true);
 		
-		ITreasureChest eniChest = new TreasureChestEmpty().generate(editor, rand, settings.getLoot(), new Coord(x + 3, y + 1, z + 5), 0, false);
+		ITreasureChest eniChest = Treasure.generate(editor, rand, settings, new Coord(x + 3, y + 1, z + 5), Treasure.EMPTY, 1, false); 
+		
 		if(rand.nextBoolean()){
-			eniChest.setInventorySlot(eniChest.getSize() / 2, ItemNovelty.getItem(ItemNovelty.ENIKOBOW));
+			eniChest.setSlot(eniChest.getSize() / 2, ItemNovelty.getItem(ItemNovelty.ENIKOBOW));
 		} else {
-			eniChest.setInventorySlot(eniChest.getSize() / 2, ItemNovelty.getItem(ItemNovelty.ENIKOSWORD));
+			eniChest.setSlot(eniChest.getSize() / 2, ItemNovelty.getItem(ItemNovelty.ENIKOSWORD));
 		}
 		
 		// floor

@@ -26,7 +26,8 @@ import net.minecraft.world.World;
 
 public enum Loot {
 	
-	WEAPON, ARMOUR, BLOCK, JUNK, ORE, TOOL, POTION, FOOD, ENCHANTBOOK, ENCHANTBONUS, SUPPLY, MUSIC, SMITHY, SPECIAL, REWARD;
+	WEAPON, ARMOUR, BLOCK, JUNK, ORE, TOOL, POTION, FOOD, ENCHANTBOOK,
+	ENCHANTBONUS, SUPPLY, MUSIC, SMITHY, SPECIAL, REWARD, STARTER;
 
 	public static ItemStack getEquipmentBySlot(Random rand, Slot slot, int level, boolean enchant){
 		
