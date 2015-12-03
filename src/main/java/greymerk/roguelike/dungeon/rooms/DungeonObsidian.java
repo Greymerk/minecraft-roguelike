@@ -6,7 +6,7 @@ import java.util.Random;
 import greymerk.roguelike.dungeon.base.DungeonBase;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.theme.ITheme;
-import greymerk.roguelike.treasure.TreasureChest;
+import greymerk.roguelike.treasure.Treasure;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
@@ -225,7 +225,7 @@ public class DungeonObsidian extends DungeonBase {
 				chestPos.add(dir, 4);
 				chestPos.add(orth, 2);
 				chestPos.add(Cardinal.DOWN, 3);
-				TreasureChest.generate(editor, rand, settings, chestPos, TreasureChest.ORE);
+				Treasure.generate(editor, rand, settings, chestPos, Treasure.ORE);
 			}
 		}
 		

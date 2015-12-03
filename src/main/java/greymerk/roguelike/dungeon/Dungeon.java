@@ -8,7 +8,7 @@ import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.dungeon.settings.ISettings;
 import greymerk.roguelike.dungeon.settings.SettingsResolver;
 import greymerk.roguelike.treasure.ITreasureChest;
-import greymerk.roguelike.treasure.TreasureChest;
+import greymerk.roguelike.treasure.Treasure;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.WorldEditor;
 import net.minecraft.init.Blocks;
@@ -76,8 +76,8 @@ public class Dungeon implements IDungeon{
 		ItemStack book = this.book(text);
 		
 		for(ITreasureChest chest : this.getChests()){
-			if(chest.getType() == TreasureChest.STARTER){
-				chest.setInventorySlot(book, 0);
+			if(chest.getType() == Treasure.STARTER){
+				chest.setInventorySlot(0, book);
 			}
 		}
 	}

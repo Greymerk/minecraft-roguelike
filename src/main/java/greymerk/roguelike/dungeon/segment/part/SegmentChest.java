@@ -3,7 +3,7 @@ package greymerk.roguelike.dungeon.segment.part;
 import greymerk.roguelike.dungeon.Dungeon;
 import greymerk.roguelike.dungeon.IDungeonLevel;
 import greymerk.roguelike.theme.ITheme;
-import greymerk.roguelike.treasure.TreasureChest;
+import greymerk.roguelike.treasure.Treasure;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IStair;
@@ -71,7 +71,7 @@ public class SegmentChest extends SegmentBase {
 		if(editor.isAirBlock(below)) return;	
 		
 		boolean trapped = Dungeon.getLevel(y) == 3 && rand.nextInt(3) == 0;
-		this.chests.add(TreasureChest.generate(editor, rand, level.getSettings(), shelf, Dungeon.getLevel(y), trapped));
+		this.chests.add(Treasure.generate(editor, rand, level.getSettings(), shelf, Dungeon.getLevel(y), trapped));
 		if(trapped){
 			editor.setBlock(shelf.getX(), shelf.getY() - 2, shelf.getZ(), BlockType.get(BlockType.TNT));
 			if(rand.nextBoolean()) editor.setBlock(shelf.getX(), shelf.getY() - 3, shelf.getZ(), BlockType.get(BlockType.TNT));

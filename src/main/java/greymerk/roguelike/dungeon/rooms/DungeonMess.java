@@ -6,7 +6,7 @@ import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.dungeon.base.DungeonBase;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.theme.ITheme;
-import greymerk.roguelike.treasure.TreasureChestBase;
+import greymerk.roguelike.treasure.TreasureChest;
 import greymerk.roguelike.treasure.loot.Loot;
 import greymerk.roguelike.treasure.loot.LootSettings;
 import greymerk.roguelike.worldgen.Cardinal;
@@ -23,7 +23,6 @@ import greymerk.roguelike.worldgen.blocks.Furnace;
 import greymerk.roguelike.worldgen.blocks.StairType;
 import greymerk.roguelike.worldgen.redstone.Torch;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntityChest;
 
 
 
@@ -203,18 +202,18 @@ public class DungeonMess extends DungeonBase {
 		editor.setBlock(rand, x, y + height, z - 1, stair.setOrientation(Cardinal.NORTH, true), true, true);
 	}
 	
-	private class TreasureChestFoodStore extends TreasureChestBase{
+	private class TreasureChestFoodStore extends TreasureChest{
 
 		@Override
-		protected void fillChest(TileEntityChest chest, LootSettings loot, int level) {
+		protected void fillChest(LootSettings loot, int level) {
 			ItemStack item;
 			
-			int stacks = RogueConfig.getBoolean(RogueConfig.GENEROUS) ? chest.getSizeInventory() : 12; 
+			int stacks = RogueConfig.getBoolean(RogueConfig.GENEROUS) ? 16 : 8; 
 			
 			for (int i = 0; i < stacks; i++) {
 				if(rand.nextInt(10) < 8){
 					item = loot.get(Loot.FOOD, rand);
-					chest.setInventorySlotContents(rand.nextInt(chest.getSizeInventory()), item);	
+					this.setRandomEmptySlot(item);	
 				}
 			}
 		}

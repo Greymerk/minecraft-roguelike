@@ -4,26 +4,26 @@ import greymerk.roguelike.treasure.loot.Loot;
 import greymerk.roguelike.treasure.loot.LootSettings;
 import greymerk.roguelike.treasure.loot.Potion;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntityChest;
 
-public class TreasureChestPotions extends TreasureChestBase{
+public class TreasureChestPotions extends TreasureChest{
 	
 	
 	@Override
-	protected void fillChest(TileEntityChest chest, LootSettings loot, int level){
-		int middle = chest.getSizeInventory()/2;
+	protected void fillChest(LootSettings loot, int level){
+		
+		int middle = this.inventory.getInventorySize()/2;
 		
 		ItemStack item;
 		item = loot.get(Loot.POTION, rand);	
-		chest.setInventorySlotContents(middle - 1, Potion.getRandom(rand));
+		this.setInventorySlot(middle - 1, Potion.getRandom(rand));
 
 		item = loot.get(Loot.POTION, rand);
-		chest.setInventorySlotContents(middle, item);
+		this.setInventorySlot(middle, item);
 
 		item = loot.get(Loot.POTION, rand);
-		chest.setInventorySlotContents(middle + 1, item);
+		this.setInventorySlot(middle + 1, item);
 		
-		this.type = TreasureChest.POTIONS;
+		this.type = Treasure.POTIONS;
 		
 	}
 }

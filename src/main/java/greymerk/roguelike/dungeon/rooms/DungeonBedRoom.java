@@ -5,7 +5,7 @@ import java.util.Random;
 import greymerk.roguelike.dungeon.base.DungeonBase;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.theme.ITheme;
-import greymerk.roguelike.treasure.TreasureChest;
+import greymerk.roguelike.treasure.Treasure;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IStair;
@@ -126,7 +126,7 @@ public class DungeonBedRoom extends DungeonBase {
 		cursor = new Coord(x, y, z);
 		cursor.add(dir);
 		cursor.add(side, 3);
-		this.chests.add(TreasureChest.generate(editor, rand, settings, cursor, TreasureChest.STARTER));
+		this.chests.add(Treasure.generate(editor, rand, settings, cursor, Treasure.STARTER));
 		cursor.add(Cardinal.reverse(side), 6);
 		if(rand.nextBoolean()){
 			cursor.add(Cardinal.UP);

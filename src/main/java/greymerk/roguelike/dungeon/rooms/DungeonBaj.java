@@ -108,8 +108,7 @@ public class DungeonBaj extends DungeonBase {
 		
 		editor.setBlock(x, y - 1, z, BlockType.get(BlockType.DIRT));
 		ITreasureChest chest = new TreasureChestEmpty().generate(editor, rand, settings.getLoot(), new Coord(x, y, z), 0, false);
-		chest.setInventorySlot(ItemNovelty.getItem(ItemNovelty.BAJ), chest.getInventorySize() / 2);
-		
+		chest.setInventorySlot(chest.getSize() / 2, ItemNovelty.getItem(ItemNovelty.BAJ));
 		
 		return false;
 	}

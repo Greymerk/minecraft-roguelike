@@ -3,20 +3,19 @@ package greymerk.roguelike.treasure;
 import greymerk.roguelike.treasure.loot.Loot;
 import greymerk.roguelike.treasure.loot.LootSettings;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntityChest;
 
-public class TreasureChestSpecialty extends TreasureChestBase{
+public class TreasureChestSpecialty extends TreasureChest{
 	
 	@Override
-	protected void fillChest(TileEntityChest chest, LootSettings loot, int level){
+	protected void fillChest(LootSettings loot, int level){
 
-		int middle = chest.getSizeInventory()/2;
+		int middle = this.inventory.getInventorySize()/2;
 						
 		ItemStack item;		
 		
 		item = loot.get(Loot.SPECIAL, rand);
-		chest.setInventorySlotContents(middle, item);
+		this.setInventorySlot(middle, item);
 		
-		this.type = TreasureChest.SPECIAL;
+		this.type = Treasure.SPECIAL;
 	}
 }

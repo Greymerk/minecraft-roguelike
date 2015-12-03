@@ -5,9 +5,6 @@ import java.util.Random;
 
 import greymerk.roguelike.dungeon.base.DungeonBase;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
-import greymerk.roguelike.treasure.ITreasureChest;
-import greymerk.roguelike.treasure.TreasureChestEmpty;
-import greymerk.roguelike.treasure.loot.provider.ItemNovelty;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IStair;
@@ -256,11 +253,6 @@ public class DungeonAvidya extends DungeonBase {
 				editor.setBlock(cursor, BlockType.get(BlockType.WATER_FLOWING));
 			}
 		}
-		
-		ITreasureChest chest = new TreasureChestEmpty();
-		chest.generate(editor, rand, settings.getLoot(), new Coord(x, y - 1, z), 0, false);
-		int middle = chest.getInventorySize() / 2;
-		chest.setInventorySlot(ItemNovelty.getItem(ItemNovelty.AVIDYA), middle);
 		
 		return true;
 	}

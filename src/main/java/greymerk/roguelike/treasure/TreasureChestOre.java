@@ -3,12 +3,11 @@ package greymerk.roguelike.treasure;
 import greymerk.roguelike.treasure.loot.Loot;
 import greymerk.roguelike.treasure.loot.LootSettings;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntityChest;
 
-public class TreasureChestOre extends TreasureChestBase{
+public class TreasureChestOre extends TreasureChest{
 	
 	@Override
-	protected void fillChest(TileEntityChest chest, LootSettings loot, int level){
+	protected void fillChest(LootSettings loot, int level){
 
 		int quantity = 4 + rand.nextInt(4);
 		
@@ -16,9 +15,9 @@ public class TreasureChestOre extends TreasureChestBase{
 
 		for (int i = 0; i < quantity; i++) {
 			item = loot.get(Loot.ORE, rand);			
-			chest.setInventorySlotContents(rand.nextInt(chest.getSizeInventory()), item);
+			this.setRandomEmptySlot(item);
 		}
 		
-		this.type = TreasureChest.ORE;
+		this.type = Treasure.ORE;
 	}
 }

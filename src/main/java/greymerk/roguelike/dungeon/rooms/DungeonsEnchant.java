@@ -5,7 +5,7 @@ import java.util.Random;
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.dungeon.base.DungeonBase;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
-import greymerk.roguelike.treasure.TreasureChest;
+import greymerk.roguelike.treasure.Treasure;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
@@ -140,7 +140,7 @@ public class DungeonsEnchant extends DungeonBase {
 		if(RogueConfig.getBoolean(RogueConfig.GENEROUS)){
 			editor.setBlock(x, y, z, BlockType.get(BlockType.ENCHANTING_TABLE));
 		} else {
-			TreasureChest.generate(editor, rand, settings, new Coord(x, y, z), TreasureChest.ENCHANTING, 4, false);
+			Treasure.generate(editor, rand, settings, new Coord(x, y, z), Treasure.ENCHANTING, 4, false);
 		}
 		return false;
 	}	

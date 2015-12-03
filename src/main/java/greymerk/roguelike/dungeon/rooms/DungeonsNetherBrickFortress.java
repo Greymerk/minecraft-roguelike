@@ -8,7 +8,7 @@ import java.util.Random;
 
 import greymerk.roguelike.dungeon.base.DungeonBase;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
-import greymerk.roguelike.treasure.TreasureChest;
+import greymerk.roguelike.treasure.Treasure;
 import greymerk.roguelike.worldgen.BlockJumble;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
@@ -50,8 +50,8 @@ public class DungeonsNetherBrickFortress extends DungeonBase {
 		buildFloor();
 		buildRoof();
 		
-		ArrayList<TreasureChest> types = new ArrayList<TreasureChest>(Arrays.asList(TreasureChest.SPECIAL));		
-		TreasureChest.createChests(editor, rand, settings, 2, WorldEditor.getRectSolid(
+		ArrayList<Treasure> types = new ArrayList<Treasure>(Arrays.asList(Treasure.SPECIAL));		
+		Treasure.createChests(editor, rand, settings, 2, WorldEditor.getRectSolid(
 				originX - 6, originY, originZ - 6,
 				originX + 6, originY, originZ + 6),
 				types);

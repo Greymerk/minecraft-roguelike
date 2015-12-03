@@ -5,7 +5,7 @@ import java.util.Random;
 import greymerk.roguelike.dungeon.base.DungeonBase;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.theme.ITheme;
-import greymerk.roguelike.treasure.TreasureChest;
+import greymerk.roguelike.treasure.Treasure;
 import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
@@ -46,7 +46,7 @@ public class DungeonsNetherBrick extends DungeonBase {
 		ceiling.addBlock(BlockType.get(BlockType.AIR), 5);
 		editor.fillRectSolid(rand, x - length, y + height, z - width, x + length, y + height, z + width, ceiling);
 		
-		TreasureChest.createChests(editor, rand, settings, 1, WorldEditor.getRectSolid(x - length, y, z - width, x + length, y, z + width));
+		Treasure.createChests(editor, rand, settings, 1, WorldEditor.getRectSolid(x - length, y, z - width, x + length, y, z + width));
 
 		Spawner.generate(editor, rand, settings, new Coord(x - length - 1, y + rand.nextInt(2), z - width - 1));
 		Spawner.generate(editor, rand, settings, new Coord(x - length - 1, y + rand.nextInt(2), z + width + 1));

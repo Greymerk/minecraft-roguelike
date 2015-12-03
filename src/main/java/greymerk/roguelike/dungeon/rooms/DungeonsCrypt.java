@@ -7,7 +7,7 @@ import java.util.Random;
 import greymerk.roguelike.dungeon.base.DungeonBase;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.theme.ITheme;
-import greymerk.roguelike.treasure.TreasureChest;
+import greymerk.roguelike.treasure.Treasure;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
@@ -378,9 +378,9 @@ public class DungeonsCrypt extends DungeonBase {
 		Spawner.generate(editor, rand, settings, cursor, spawnerType);
 		
 		cursor.add(dir);
-		TreasureChest[] types = {TreasureChest.ARMOUR, TreasureChest.WEAPONS, TreasureChest.SPECIAL};
-		TreasureChest chestType = types[rand.nextInt(types.length)];
-		TreasureChest.generate(editor, rand, settings, cursor, chestType);
+		Treasure[] types = {Treasure.ARMOUR, Treasure.WEAPONS, Treasure.SPECIAL};
+		Treasure chestType = types[rand.nextInt(types.length)];
+		Treasure.generate(editor, rand, settings, cursor, chestType);
 		
 	}
 	

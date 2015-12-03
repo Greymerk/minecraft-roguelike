@@ -150,21 +150,21 @@ public class DungeonBTeam extends DungeonBase {
 		editor.fillRectSolid(rand, x + 6, y - 1, z - 4, x + 7, y + 4, z + 4, stonebrick);
 		
 		ITreasureChest recordChest = new TreasureChestEmpty().generate(editor, rand, settings.getLoot(), new Coord(x - 4, y, z - 4), 0, false);
-		recordChest.setInventorySlot(Record.getRecord(Record.STAL), recordChest.getInventorySize() / 2);
+		recordChest.setInventorySlot(recordChest.getSize() / 2, Record.getRecord(Record.STAL));
 		editor.setBlock(x - 3, y, z - 4, BlockType.get(BlockType.JUKEBOX));
 		
 		ITreasureChest bdubsChest = new TreasureChestEmpty().generate(editor, rand, settings.getLoot(), new Coord(x - 3, y, z + 5), 0, false);
-		bdubsChest.setInventorySlot(ItemNovelty.getItem(ItemNovelty.BDOUBLEO), (bdubsChest.getInventorySize() / 2) - 2);
+		bdubsChest.setInventorySlot((bdubsChest.getSize() / 2) - 2, ItemNovelty.getItem(ItemNovelty.BDOUBLEO));
 		
 		ItemStack shirt = new ItemStack(Items.leather_chestplate);
 		Loot.setItemName(shirt, "Pink Sweater", null);
 		Loot.setItemLore(shirt, "\"It's chinese red!\"");
 		ItemArmour.dyeArmor(shirt, 250, 96, 128);
 		
-		bdubsChest.setInventorySlot(shirt, (bdubsChest.getInventorySize() / 2) + 2);
+		bdubsChest.setInventorySlot((bdubsChest.getSize() / 2) + 2, shirt);
 		
 		ITreasureChest gennybChest = new TreasureChestEmpty().generate(editor, rand, settings.getLoot(), new Coord(x + 3, y, z + 5), 0, false);
-		gennybChest.setInventorySlot(ItemNovelty.getItem(ItemNovelty.GENERIKB), gennybChest.getInventorySize() / 2);
+		gennybChest.setRandomEmptySlot(ItemNovelty.getItem(ItemNovelty.GENERIKB));
 		
 		
 		editor.setBlock(x + 4, y, z - 4, BlockType.get(BlockType.SHELF));
@@ -174,7 +174,7 @@ public class DungeonBTeam extends DungeonBase {
 		
 		for(int i = 0; i < 8; ++i){
 			ItemStack booze = PotionMixture.getBooze(rand);
-			contraband.setInventorySlot(booze, rand.nextInt(contraband.getInventorySize()));
+			contraband.setRandomEmptySlot(booze);
 		}
 		
 		return true;

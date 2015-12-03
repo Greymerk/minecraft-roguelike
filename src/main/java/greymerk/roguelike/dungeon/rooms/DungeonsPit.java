@@ -7,7 +7,7 @@ import java.util.Random;
 import greymerk.roguelike.dungeon.base.DungeonBase;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.theme.ITheme;
-import greymerk.roguelike.treasure.TreasureChest;
+import greymerk.roguelike.treasure.Treasure;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
@@ -65,7 +65,7 @@ public class DungeonsPit extends DungeonBase {
 		space.add(new Coord(originX + 2, originY, originZ - 2));
 		space.add(new Coord(originX + 2, originY, originZ + 2));
 		
-		TreasureChest.createChests(editor, inRandom, settings, 1, space);
+		Treasure.createChests(editor, inRandom, settings, 1, space);
 		
 		return true;
 	}

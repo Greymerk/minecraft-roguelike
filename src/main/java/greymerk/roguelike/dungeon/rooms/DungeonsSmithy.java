@@ -6,7 +6,7 @@ import greymerk.roguelike.dungeon.base.DungeonBase;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.treasure.ITreasureChest;
-import greymerk.roguelike.treasure.TreasureChest;
+import greymerk.roguelike.treasure.Treasure;
 import greymerk.roguelike.treasure.TreasureChestEmpty;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
@@ -471,7 +471,7 @@ public class DungeonsSmithy extends DungeonBase {
 		stair.setOrientation(orth[1], true);
 		editor.fillRectSolid(rand, start, end, stair, true, true);
 		cursor.add(Cardinal.UP);
-		TreasureChest.generate(editor, rand, settings, cursor, TreasureChest.SMITH);
+		Treasure.generate(editor, rand, settings, cursor, Treasure.SMITH);
 		
 		cursor = new Coord(origin);
 	}

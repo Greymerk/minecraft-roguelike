@@ -4,7 +4,7 @@ import java.util.Random;
 
 import greymerk.roguelike.dungeon.base.DungeonBase;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
-import greymerk.roguelike.treasure.TreasureChest;
+import greymerk.roguelike.treasure.Treasure;
 import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
@@ -67,7 +67,7 @@ public class DungeonsSpiderNest extends DungeonBase {
 		
 		Spawner.generate(editor, rand, settings, new Coord(originX, originY, originZ), Spawner.CAVESPIDER);
 		
-		TreasureChest.createChests(editor, rand, settings, 1 + rand.nextInt(3), WorldEditor.getRectSolid(
+		Treasure.createChests(editor, rand, settings, 1 + rand.nextInt(3), WorldEditor.getRectSolid(
 				originX - dungeonLength, originY - 1, originZ - dungeonWidth,
 				originX + dungeonLength, originY + 1, originZ + dungeonWidth));
 

@@ -6,7 +6,7 @@ import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.dungeon.base.DungeonBase;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.theme.ITheme;
-import greymerk.roguelike.treasure.TreasureChest;
+import greymerk.roguelike.treasure.Treasure;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
@@ -132,7 +132,7 @@ public class DungeonLab extends DungeonBase {
 			editor.setBlock(new Coord(x + 1, y + 1, z + 5), BrewingStand.get());
 		}
 		
-		TreasureChest.generate(editor, rand, settings, new Coord(x, y + 1, z + 4), TreasureChest.POTIONS);
+		Treasure.generate(editor, rand, settings, new Coord(x, y + 1, z + 4), Treasure.POTIONS);
 		
 		
 	}

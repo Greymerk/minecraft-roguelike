@@ -82,9 +82,9 @@ public class DungeonEniko extends DungeonBase {
 		
 		ITreasureChest eniChest = new TreasureChestEmpty().generate(editor, rand, settings.getLoot(), new Coord(x + 3, y + 1, z + 5), 0, false);
 		if(rand.nextBoolean()){
-			eniChest.setInventorySlot(ItemNovelty.getItem(ItemNovelty.ENIKOBOW), eniChest.getInventorySize() / 2);
+			eniChest.setInventorySlot(eniChest.getSize() / 2, ItemNovelty.getItem(ItemNovelty.ENIKOBOW));
 		} else {
-			eniChest.setInventorySlot(ItemNovelty.getItem(ItemNovelty.ENIKOSWORD), eniChest.getInventorySize() / 2);
+			eniChest.setInventorySlot(eniChest.getSize() / 2, ItemNovelty.getItem(ItemNovelty.ENIKOSWORD));
 		}
 		
 		// floor

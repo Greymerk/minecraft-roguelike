@@ -186,11 +186,11 @@ public class DungeonNebris extends DungeonBase {
 		
 		ITreasureChest chest = new TreasureChestEmpty();
 		chest.generate(editor, rand, settings.getLoot(), new Coord(x, y, z), 0, false);
-		int middle = chest.getInventorySize() / 2;
+		int middle = chest.getSize() / 2;
 		if(rand.nextBoolean()){
-			chest.setInventorySlot(ItemNovelty.getItem(ItemNovelty.NEBRISCROWN), middle);	
+			chest.setInventorySlot(middle, ItemNovelty.getItem(ItemNovelty.NEBRISCROWN));	
 		} else {
-			chest.setInventorySlot(ItemNovelty.getItem(ItemNovelty.NEBRISSWORD), middle);
+			chest.setInventorySlot(middle, ItemNovelty.getItem(ItemNovelty.NEBRISSWORD));
 		}
 		
 		
