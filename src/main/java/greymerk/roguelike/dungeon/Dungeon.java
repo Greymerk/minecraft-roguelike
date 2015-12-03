@@ -77,7 +77,7 @@ public class Dungeon implements IDungeon{
 		
 		for(ITreasureChest chest : this.getChests()){
 			if(chest.getType() == Treasure.STARTER){
-				chest.setSlot(0, book);
+				chest.setRandomEmptySlot(book);
 			}
 		}
 	}
@@ -230,14 +230,11 @@ public class Dungeon implements IDungeon{
 		return chests;
 	}
 
-	@Override
-	public List<Coord> getChestLocations() {
-		return null;
-	}
-
-	@Override
-	public List<Coord> getSpawnerLocations() {
-		return null;
+	public Coord getPosition() throws Exception {
+		if(this.pos == null){
+			throw new Exception("Dungeon not yet generated");
+		}
+		return this.pos;
 	}
 	
 	private ItemStack book(String text){
@@ -252,13 +249,5 @@ public class Dungeon implements IDungeon{
 		book.setTagInfo("pages", pages);
 		
 		return book;
-	}
-
-
-	public Coord getPosition() throws Exception {
-		if(this.pos == null){
-			throw new Exception("Dungeon not yet generated");
-		}
-		return this.pos;
 	}
 }

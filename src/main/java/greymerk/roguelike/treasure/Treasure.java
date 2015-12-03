@@ -193,7 +193,6 @@ public enum Treasure {
 		if(chest.getType() == EMPTY) return;
 		
 		int middle = chest.getSize()/2;
-		
 		switch(chest.getType()){
 		case ARMOUR:
 			chest.setSlot(middle - 1, loot.get(Loot.POTION, rand));
@@ -212,6 +211,10 @@ public enum Treasure {
 			chest.setSlot(middle + 1, loot.get(Loot.ENCHANTBONUS, rand));
 			break;
 		case FOOD:
+			for(int i = 0; i < 12; ++i){
+				chest.setRandomEmptySlot(loot.get(Loot.FOOD, rand));
+			}
+			break;
 		case ORE:
 			chest.setSlot(middle - 1, loot.get(Loot.ORE, rand));
 			chest.setSlot(middle, loot.get(Loot.ORE, rand));

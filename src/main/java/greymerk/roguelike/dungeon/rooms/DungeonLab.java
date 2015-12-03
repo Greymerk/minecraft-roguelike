@@ -118,7 +118,7 @@ public class DungeonLab extends DungeonBase {
 	}
 	
 	
-	private static void southWest(WorldEditor editor, Random rand, LevelSettings settings, ITheme theme, int x, int y, int z){
+	private void southWest(WorldEditor editor, Random rand, LevelSettings settings, ITheme theme, int x, int y, int z){
 		
 		corner(editor, rand, theme, x, y, z);
 		
@@ -132,9 +132,7 @@ public class DungeonLab extends DungeonBase {
 			editor.setBlock(new Coord(x + 1, y + 1, z + 5), BrewingStand.get());
 		}
 		
-		Treasure.generate(editor, rand, settings, new Coord(x, y + 1, z + 4), Treasure.POTIONS);
-		
-		
+		this.chests.add(Treasure.generate(editor, rand, settings, new Coord(x, y + 1, z + 4), Treasure.POTIONS));
 	}
 	
 	// fountains

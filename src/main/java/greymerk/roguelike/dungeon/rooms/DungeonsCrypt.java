@@ -380,7 +380,7 @@ public class DungeonsCrypt extends DungeonBase {
 		cursor.add(dir);
 		Treasure[] types = {Treasure.ARMOUR, Treasure.WEAPONS, Treasure.SPECIAL};
 		Treasure chestType = types[rand.nextInt(types.length)];
-		Treasure.generate(editor, rand, settings, cursor, chestType);
+		chests.add(Treasure.generate(editor, rand, settings, cursor, chestType));
 		
 	}
 	

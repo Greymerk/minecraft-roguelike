@@ -36,7 +36,6 @@ public enum Loot {
 		}
 		
 		return ItemArmour.getRandom(rand, level, slot, enchant);
-		
 	}
 
 	public static int getEnchantLevel(Random rand, int level) {

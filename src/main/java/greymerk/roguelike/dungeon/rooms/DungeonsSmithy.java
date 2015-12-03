@@ -466,7 +466,7 @@ public class DungeonsSmithy extends DungeonBase {
 		stair.setOrientation(orth[1], true);
 		editor.fillRectSolid(rand, start, end, stair, true, true);
 		cursor.add(Cardinal.UP);
-		Treasure.generate(editor, rand, settings, cursor, Treasure.SMITH);
+		chests.add(Treasure.generate(editor, rand, settings, cursor, Treasure.SMITH));
 		
 		cursor = new Coord(origin);
 	}

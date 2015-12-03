@@ -5,10 +5,7 @@ import java.util.Random;
 import greymerk.roguelike.dungeon.base.DungeonBase;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.theme.ITheme;
-import greymerk.roguelike.treasure.ITreasureChest;
 import greymerk.roguelike.treasure.Treasure;
-import greymerk.roguelike.treasure.loot.Loot;
-import greymerk.roguelike.treasure.loot.LootSettings;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
@@ -147,11 +144,7 @@ public class DungeonMess extends DungeonBase {
 		editor.setBlock(rand, x + 2, y, z - 1, stair.setOrientation(Cardinal.SOUTH, true), true, true);
 		editor.setBlock(rand, x + 2, y, z, stair.setOrientation(Cardinal.WEST, true), true, true);
 		editor.setBlock(rand, x + 2, y, z + 1, stair.setOrientation(Cardinal.NORTH, true), true, true);
-		ITreasureChest chest = Treasure.generate(editor, rand, settings, new Coord(x + 2, y + 1, z), Treasure.EMPTY, 1, false);
-		LootSettings loot = settings.getLoot();
-		for(int i = 0; i < 12; ++i){
-			chest.setRandomEmptySlot(loot.get(Loot.FOOD, rand));
-		}
+		chests.add(Treasure.generate(editor, rand, settings, new Coord(x + 2, y + 1, z), Treasure.FOOD, 1, false));
 		
 		// south shelf
 		editor.setBlock(rand, x - 1, y, z + 2, stair.setOrientation(Cardinal.EAST, true), true, true);
@@ -204,25 +197,6 @@ public class DungeonMess extends DungeonBase {
 		editor.setBlock(rand, x, y + height, z + 1, stair.setOrientation(Cardinal.SOUTH, true), true, true);
 		editor.setBlock(rand, x, y + height, z - 1, stair.setOrientation(Cardinal.NORTH, true), true, true);
 	}
-	/*
-	private class TreasureChestFoodStore extends TreasureChest{
-
-		@Override
-		protected void fillChest(LootSettings loot, int level) {
-			ItemStack item;
-			
-			int stacks = RogueConfig.getBoolean(RogueConfig.GENEROUS) ? 16 : 8; 
-			
-			for (int i = 0; i < stacks; i++) {
-				if(rand.nextInt(10) < 8){
-					item = loot.get(Loot.FOOD, rand);
-					this.setRandomEmptySlot(item);	
-				}
-			}
-		}
-		
-	}
-	*/
 	
 	public int getSize(){
 		return 10;

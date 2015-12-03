@@ -175,7 +175,7 @@ public class DungeonReward extends DungeonBase {
 		
 		cursor = new Coord(x, y, z);
 		cursor.add(Cardinal.UP);
-		Treasure.generate(editor, rand, settings, cursor, Treasure.REWARD);
+		chests.add(Treasure.generate(editor, rand, settings, cursor, Treasure.REWARD));
 		
 		return true;
 	}

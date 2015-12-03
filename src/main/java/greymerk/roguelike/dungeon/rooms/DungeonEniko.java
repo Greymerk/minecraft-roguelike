@@ -81,6 +81,7 @@ public class DungeonEniko extends DungeonBase {
 		editor.fillRectSolid(rand, x + 3, y, z + 5, x + 4, y, z + 5, shelf, true, true);
 		
 		ITreasureChest eniChest = Treasure.generate(editor, rand, settings, new Coord(x + 3, y + 1, z + 5), Treasure.EMPTY, 1, false); 
+		chests.add(eniChest);
 		
 		if(rand.nextBoolean()){
 			eniChest.setSlot(eniChest.getSize() / 2, ItemNovelty.getItem(ItemNovelty.ENIKOBOW));
