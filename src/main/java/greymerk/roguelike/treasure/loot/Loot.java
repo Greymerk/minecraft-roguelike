@@ -1,15 +1,14 @@
 package greymerk.roguelike.treasure.loot;
 
+import java.util.List;
+import java.util.Random;
+
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.treasure.loot.provider.ItemArmour;
 import greymerk.roguelike.treasure.loot.provider.ItemNovelty;
 import greymerk.roguelike.treasure.loot.provider.ItemTool;
 import greymerk.roguelike.treasure.loot.provider.ItemWeapon;
 import greymerk.roguelike.util.TextFormat;
-
-import java.util.List;
-import java.util.Random;
-
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -29,6 +28,16 @@ public enum Loot {
 	WEAPON, ARMOUR, BLOCK, JUNK, ORE, TOOL, POTION, FOOD, ENCHANTBOOK,
 	ENCHANTBONUS, SUPPLY, MUSIC, SMITHY, SPECIAL, REWARD, STARTER;
 
+	public static ILoot getLoot(){
+		
+		LootProvider loot = new LootProvider();
+		for(int i = 0; i < 5; ++i){
+			loot.put(i, new LootSettings(i));
+		}
+		
+		return loot;
+	}
+	
 	public static ItemStack getEquipmentBySlot(Random rand, Slot slot, int level, boolean enchant){
 		
 		if(slot == Slot.WEAPON){

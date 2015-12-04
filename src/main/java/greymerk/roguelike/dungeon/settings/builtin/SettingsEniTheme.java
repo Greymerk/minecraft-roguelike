@@ -1,20 +1,18 @@
 package greymerk.roguelike.dungeon.settings.builtin;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import greymerk.roguelike.dungeon.base.DungeonFactory;
 import greymerk.roguelike.dungeon.base.DungeonRoom;
 import greymerk.roguelike.dungeon.segment.Segment;
 import greymerk.roguelike.dungeon.segment.SegmentGenerator;
-import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.dungeon.settings.DungeonSettings;
-import greymerk.roguelike.dungeon.settings.TowerSettings;
+import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.dungeon.settings.SpawnCriteria;
+import greymerk.roguelike.dungeon.settings.TowerSettings;
 import greymerk.roguelike.dungeon.towers.Tower;
 import greymerk.roguelike.theme.Theme;
-import greymerk.roguelike.treasure.loot.LootSettings;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraftforge.common.BiomeDictionary;
 
 public class SettingsEniTheme extends DungeonSettings{
@@ -41,7 +39,6 @@ public class SettingsEniTheme extends DungeonSettings{
 				level.setRange(60);
 				level.setNumRooms(10);
 				level.setDifficulty(3);
-				level.setLoot(new LootSettings(3));
 				
 				DungeonFactory factory;
 			
@@ -65,7 +62,6 @@ public class SettingsEniTheme extends DungeonSettings{
 				level.setRange(80);
 				level.setNumRooms(20);
 				level.setDifficulty(3);
-				level.setLoot(new LootSettings(3));
 				
 				DungeonFactory factory;
 				factory = new DungeonFactory();
@@ -83,7 +79,6 @@ public class SettingsEniTheme extends DungeonSettings{
 			
 			if(i == 2){
 				level.setDifficulty(4);
-				level.setLoot(new LootSettings(4));
 				
 				SegmentGenerator segments = new SegmentGenerator(Segment.SEWERARCH);
 				segments.add(Segment.SEWER, 7);

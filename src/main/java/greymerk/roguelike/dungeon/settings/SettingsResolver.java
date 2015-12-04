@@ -15,7 +15,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import greymerk.roguelike.config.RogueConfig;
-import greymerk.roguelike.dungeon.settings.builtin.SettingsBasicLoot;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsDesertTheme;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsForestTheme;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsGenerator;
@@ -43,7 +42,6 @@ public class SettingsResolver {
 	public SettingsResolver(){
 		settings = new HashMap<String, DungeonSettings>();
 		DungeonSettings base = new SettingsBlank();
-		base = new DungeonSettings(base, new SettingsBasicLoot());
 		base = new DungeonSettings(base, new SettingsRooms());
 		base = new DungeonSettings(base, new SettingsSecrets());
 		base = new DungeonSettings(base, new SettingsSegments());

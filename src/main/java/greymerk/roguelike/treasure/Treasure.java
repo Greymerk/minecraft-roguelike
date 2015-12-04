@@ -11,8 +11,8 @@ import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.dungeon.Dungeon;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.treasure.loot.Equipment;
+import greymerk.roguelike.treasure.loot.ILoot;
 import greymerk.roguelike.treasure.loot.Loot;
-import greymerk.roguelike.treasure.loot.LootSettings;
 import greymerk.roguelike.treasure.loot.Quality;
 import greymerk.roguelike.treasure.loot.provider.ItemSpecialty;
 import greymerk.roguelike.worldgen.Cardinal;
@@ -40,7 +40,7 @@ public enum Treasure {
 		Treasure type = getChestType(rand, level);
 		ITreasureChest chest = getChest(type);
 		
-		return chest.generate(editor, rand, settings.getLoot(), pos, level, trapped);
+		return chest.generate(editor, rand, pos, level, trapped);
 	}
 	
 	public static ITreasureChest generate(WorldEditor editor,  Random rand, LevelSettings settings, Coord pos){
@@ -53,7 +53,7 @@ public enum Treasure {
 	
 	public static ITreasureChest generate(WorldEditor editor, Random rand, LevelSettings settings, Coord pos, Treasure type, int level, boolean trapped){
 		ITreasureChest chest = getChest(type);
-		chest.generate(editor, rand, settings.getLoot(), pos, level, trapped);
+		chest.generate(editor, rand, pos, level, trapped);
 		return chest;
 	}
 	
@@ -188,41 +188,47 @@ public enum Treasure {
 		return true;
 	}
 	
-	public static void fillChest(ITreasureChest chest, Random rand, LootSettings loot, int level){
+	public static void fillChest(ITreasureChest chest, Random rand, ILoot loot){
+		
+		int level = chest.getLevel();
 		
 		if(chest.getType() == EMPTY) return;
 		
 		int middle = chest.getSize()/2;
 		switch(chest.getType()){
 		case ARMOUR:
-			chest.setSlot(middle - 1, loot.get(Loot.POTION, rand));
-			chest.setSlot(middle, loot.get(Loot.ARMOUR, rand));
-			chest.setSlot(middle + 1, loot.get(Loot.FOOD, rand));
+			chest.setSlot(middle - 1, loot.get(rand, Loot.POTION, level));
+			chest.setSlot(middle, loot.get(rand, Loot.ARMOUR, level));
+			chest.setSlot(middle + 1, loot.get(rand, Loot.FOOD, level));
 			break;
 		case WEAPONS:
-			chest.setSlot(middle - 1, loot.get(Loot.POTION, rand));
-			chest.setSlot(middle, loot.get(Loot.WEAPON, rand));
-			chest.setSlot(middle + 1, loot.get(Loot.FOOD, rand));
+			chest.setSlot(middle - 1, loot.get(rand, Loot.POTION, level));
+			chest.setSlot(middle, loot.get(rand, Loot.WEAPON, level));
+			chest.setSlot(middle + 1, loot.get(rand, Loot.FOOD, level));
 			break;
 		case BLOCKS:
+			for(int i = 0; i < 8; ++i){
+				chest.setRandomEmptySlot(loot.get(rand, Loot.BLOCK, level));
+			}
+			break;
 		case ENCHANTING:
-			chest.setSlot(middle - 1, loot.get(Loot.ENCHANTBONUS, rand));
-			chest.setSlot(middle, loot.get(Loot.ENCHANTBOOK, rand));
-			chest.setSlot(middle + 1, loot.get(Loot.ENCHANTBONUS, rand));
+			chest.setSlot(middle - 1, loot.get(rand, Loot.ENCHANTBONUS, level));
+			chest.setSlot(middle, loot.get(rand, Loot.ENCHANTBOOK, level));
+			chest.setSlot(middle + 1, loot.get(rand, Loot.ENCHANTBONUS, level));
 			break;
 		case FOOD:
 			for(int i = 0; i < 12; ++i){
-				chest.setRandomEmptySlot(loot.get(Loot.FOOD, rand));
+				chest.setRandomEmptySlot(loot.get(rand, Loot.FOOD, level));
 			}
 			break;
 		case ORE:
-			chest.setSlot(middle - 1, loot.get(Loot.ORE, rand));
-			chest.setSlot(middle, loot.get(Loot.ORE, rand));
-			chest.setSlot(middle + 1, loot.get(Loot.ORE, rand));
+			chest.setSlot(middle - 1, loot.get(rand, Loot.ORE, level));
+			chest.setSlot(middle, loot.get(rand, Loot.ORE, level));
+			chest.setSlot(middle + 1, loot.get(rand, Loot.ORE, level));
 			break;
 		case POTIONS:
 			for(int i = 0; i < 8; ++i){
-				chest.setRandomEmptySlot(loot.get(Loot.POTION, rand));
+				chest.setRandomEmptySlot(loot.get(rand, Loot.POTION, level));
 			}
 			break;
 		case STARTER:
@@ -230,51 +236,51 @@ public enum Treasure {
 				if(RogueConfig.getBoolean(RogueConfig.GENEROUS)){
 					chest.setRandomEmptySlot(getStarterLoot(loot, i, rand));
 				} else {
-					chest.setRandomEmptySlot(loot.get(Loot.JUNK, rand));
+					chest.setRandomEmptySlot(loot.get(rand, Loot.JUNK, level));
 				}
 			}
 			break;
 		case TOOLS:
-			chest.setSlot(middle - 1, loot.get(Loot.ORE, rand));
-			chest.setSlot(middle, loot.get(Loot.TOOL, rand));
-			chest.setSlot(middle + 1, loot.get(Loot.ORE, rand));
+			chest.setSlot(middle - 1, loot.get(rand, Loot.ORE, level));
+			chest.setSlot(middle, loot.get(rand, Loot.TOOL, level));
+			chest.setSlot(middle + 1, loot.get(rand, Loot.ORE, level));
 			break;
 		case SUPPLIES:
 			for(int i = 0; i < 8; ++i){
-				chest.setRandomEmptySlot(loot.get(Loot.SUPPLY, rand));
+				chest.setRandomEmptySlot(loot.get(rand, Loot.SUPPLY, level));
 			}
 			break;
 		case SMITH:
-			chest.setSlot(middle - 1, loot.get(Loot.ORE, rand));
-			chest.setSlot(middle, loot.get(Loot.SMITHY, rand));
-			chest.setSlot(middle + 1, loot.get(Loot.ORE, rand));
+			chest.setSlot(middle - 1, loot.get(rand, Loot.ORE, level));
+			chest.setSlot(middle, loot.get(rand, Loot.SMITHY, level));
+			chest.setSlot(middle + 1, loot.get(rand, Loot.ORE, level));
 			break;
 		case MUSIC:
-			chest.setSlot(middle, loot.get(Loot.MUSIC, rand));
+			chest.setSlot(middle, loot.get(rand, Loot.MUSIC, level));
 			break;
 		case SPECIAL:
-			chest.setSlot(middle, loot.get(Loot.SPECIAL, rand));
+			chest.setSlot(middle, loot.get(rand, Loot.SPECIAL, level));
 			break;
 		case REWARD:
-			chest.setSlot(middle, loot.get(Loot.REWARD, rand));
+			chest.setSlot(middle, loot.get(rand, Loot.REWARD, level));
 			break;
 		default:
 		}
 		
 		int amount = RogueConfig.getBoolean(RogueConfig.GENEROUS) ? 9 : 4;
 		for(int i = 0; i < amount; ++i){
-			chest.setRandomEmptySlot(loot.get(Loot.JUNK, rand));
+			chest.setRandomEmptySlot(loot.get(rand, Loot.JUNK, level));
 		}
 	}
 	
-	public static ItemStack getStarterLoot(LootSettings loot, int choice, Random rand){
+	public static ItemStack getStarterLoot(ILoot loot, int choice, Random rand){
 		
-		if(!RogueConfig.getBoolean(RogueConfig.GENEROUS)) return loot.get(Loot.JUNK, rand);
+		if(!RogueConfig.getBoolean(RogueConfig.GENEROUS)) return loot.get(rand, Loot.JUNK, 0);
 		
 		switch (choice){
-		case 4: return loot.get(Loot.TOOL, rand);
-		case 3: return loot.get(Loot.WEAPON, rand);
-		case 2: return loot.get(Loot.FOOD, rand);
+		case 4: return loot.get(rand, Loot.TOOL, 0);
+		case 3: return loot.get(rand, Loot.WEAPON, 0);
+		case 2: return loot.get(rand, Loot.FOOD, 0);
 		case 1: if(RogueConfig.getBoolean(RogueConfig.GENEROUS)) return ItemSpecialty.getRandomItem(Equipment.LEGS, rand, Quality.WOOD);
 		default: return new ItemStack(Blocks.torch, 1 + rand.nextInt(RogueConfig.getBoolean(RogueConfig.GENEROUS) ? 7 : 3));
 		}

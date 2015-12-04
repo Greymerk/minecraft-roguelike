@@ -2,7 +2,6 @@ package greymerk.roguelike.treasure;
 
 import java.util.Random;
 
-import greymerk.roguelike.treasure.loot.LootSettings;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
@@ -15,14 +14,17 @@ public class TreasureChest implements ITreasureChest{
 	protected Inventory inventory;
 	protected Treasure type;
 	protected Random rand;
+	private int level;
 
 	public TreasureChest(Treasure type){
 		this.type = type;
+		this.level = 0;
 	}
 	
-	public ITreasureChest generate(WorldEditor editor, Random rand, LootSettings loot, Coord pos, int level, boolean trapped) {
+	public ITreasureChest generate(WorldEditor editor, Random rand, Coord pos, int level, boolean trapped) {
 
 		this.rand = rand;
+		this.level = level;
 		
 		MetaBlock chestType = new MetaBlock(trapped ? Blocks.trapped_chest : Blocks.chest);
 		
@@ -33,8 +35,6 @@ public class TreasureChest implements ITreasureChest{
 		TileEntityChest chest = (TileEntityChest) editor.getTileEntity(pos);
 		this.inventory = new Inventory(rand, chest);
 
-		Treasure.fillChest(this, rand, loot, level);
-		
 		return this;
 	}
 	
@@ -62,4 +62,10 @@ public class TreasureChest implements ITreasureChest{
 	public int getSize(){
 		return this.inventory.getInventorySize();
 	}
+
+	@Override
+	public int getLevel() {
+		return this.level;
+	}
+
 }

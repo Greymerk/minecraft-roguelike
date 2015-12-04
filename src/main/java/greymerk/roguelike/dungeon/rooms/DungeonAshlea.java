@@ -5,7 +5,6 @@ import java.util.Random;
 import greymerk.roguelike.dungeon.base.DungeonBase;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.theme.ITheme;
-import greymerk.roguelike.treasure.loot.LootSettings;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
@@ -85,7 +84,7 @@ public class DungeonAshlea extends DungeonBase {
 		stove(editor, rand, x + 4, y, z - 4);
 		
 		// storage
-		storage(editor, rand, settings.getLoot(), x + 4, y, z + 4);
+		storage(editor, rand, x + 4, y, z + 4);
 		
 		// table north
 		northTable(editor, rand, x - 4, y, z - 4);
@@ -163,7 +162,7 @@ public class DungeonAshlea extends DungeonBase {
 		Torch.generate(editor, Torch.WOODEN, Cardinal.UP, new Coord(x, y + 1, z));
 	}
 	
-	private void storage(WorldEditor editor, Random rand, LootSettings loot, int x, int y, int z){
+	private void storage(WorldEditor editor, Random rand, int x, int y, int z){
 		
 		// floor
 		editor.fillRectSolid(rand, x - 1, y - 1, z - 1, x + 1, y - 1, z + 1, plank, true, true);

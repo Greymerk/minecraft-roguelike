@@ -1,26 +1,19 @@
 package greymerk.roguelike.dungeon.settings.builtin;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import greymerk.roguelike.dungeon.base.DungeonFactory;
 import greymerk.roguelike.dungeon.base.DungeonRoom;
 import greymerk.roguelike.dungeon.base.SecretFactory;
 import greymerk.roguelike.dungeon.segment.Segment;
 import greymerk.roguelike.dungeon.segment.SegmentGenerator;
-import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.dungeon.settings.DungeonSettings;
-import greymerk.roguelike.dungeon.settings.TowerSettings;
+import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.dungeon.settings.SpawnCriteria;
+import greymerk.roguelike.dungeon.settings.TowerSettings;
 import greymerk.roguelike.dungeon.towers.Tower;
 import greymerk.roguelike.theme.Theme;
-import greymerk.roguelike.treasure.loot.Loot;
-import greymerk.roguelike.treasure.loot.LootSettings;
-import greymerk.roguelike.treasure.loot.WeightedRandomLoot;
-import greymerk.roguelike.util.WeightedRandomizer;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.BiomeDictionary;
 
 public class SettingsPyramidTheme extends DungeonSettings{
@@ -60,19 +53,6 @@ public class SettingsPyramidTheme extends DungeonSettings{
 		
 		SecretFactory secrets = new SecretFactory();
 		level.setSecrets(secrets);
-		
-		LootSettings loot = new LootSettings(3);
-		WeightedRandomizer<ItemStack> junk = new WeightedRandomizer<ItemStack>();
-		junk.add(new WeightedRandomLoot(Items.rotten_flesh, 20));
-		junk.add(new WeightedRandomLoot(Items.bone, 20));
-		junk.add(new WeightedRandomLoot(Items.dye, 4, 1, 5, 10));
-		junk.add(new WeightedRandomLoot(Items.gold_nugget, 10));
-		junk.add(new WeightedRandomLoot(Items.ender_eye, 5));
-		junk.add(new WeightedRandomLoot(Items.golden_hoe, 3));
-		junk.add(new WeightedRandomLoot(Items.emerald, 3));
-		junk.add(new WeightedRandomLoot(Items.diamond, 3));
-		loot.set(Loot.JUNK, junk);
-		level.setLoot(loot);
 		
 		for(int i = 0; i < 5; ++i){
 			levels.put(i, level);

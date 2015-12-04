@@ -1,20 +1,18 @@
 package greymerk.roguelike.dungeon.settings.builtin;
 
-import greymerk.roguelike.dungeon.settings.LevelSettings;
+import java.util.ArrayList;
+import java.util.List;
+
 import greymerk.roguelike.dungeon.base.DungeonFactory;
 import greymerk.roguelike.dungeon.base.DungeonRoom;
 import greymerk.roguelike.dungeon.segment.Segment;
 import greymerk.roguelike.dungeon.segment.SegmentGenerator;
 import greymerk.roguelike.dungeon.settings.DungeonSettings;
-import greymerk.roguelike.dungeon.settings.TowerSettings;
+import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.dungeon.settings.SpawnCriteria;
+import greymerk.roguelike.dungeon.settings.TowerSettings;
 import greymerk.roguelike.dungeon.towers.Tower;
 import greymerk.roguelike.theme.Theme;
-import greymerk.roguelike.treasure.loot.LootSettings;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraftforge.common.BiomeDictionary;
 
 public class SettingsMountainTheme extends DungeonSettings{
@@ -76,7 +74,6 @@ public class SettingsMountainTheme extends DungeonSettings{
 			
 			if(i == 2){
 				level.setDifficulty(4);
-				level.setLoot(new LootSettings(4));
 				
 				SegmentGenerator segments = new SegmentGenerator(Segment.SEWERARCH);
 				segments.add(Segment.SEWER, 7);

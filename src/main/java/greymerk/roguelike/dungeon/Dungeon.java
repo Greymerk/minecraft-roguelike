@@ -9,6 +9,8 @@ import greymerk.roguelike.dungeon.settings.ISettings;
 import greymerk.roguelike.dungeon.settings.SettingsResolver;
 import greymerk.roguelike.treasure.ITreasureChest;
 import greymerk.roguelike.treasure.Treasure;
+import greymerk.roguelike.treasure.loot.ILoot;
+import greymerk.roguelike.treasure.loot.Loot;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.WorldEditor;
 import net.minecraft.init.Blocks;
@@ -75,7 +77,13 @@ public class Dungeon implements IDungeon{
 		
 		ItemStack book = this.book(text);
 		
+		ILoot loot = Loot.getLoot();
+		Random rand = getRandom(editor, this.pos.getX(), this.pos.getZ());
+		
 		for(ITreasureChest chest : this.getChests()){
+			
+			Treasure.fillChest(chest, rand, loot);
+			
 			if(chest.getType() == Treasure.STARTER){
 				chest.setRandomEmptySlot(book);
 			}

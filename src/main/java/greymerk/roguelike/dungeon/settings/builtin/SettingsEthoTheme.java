@@ -47,7 +47,6 @@ public class SettingsEthoTheme extends DungeonSettings{
 				level.setRange(60);
 				level.setNumRooms(10);
 				level.setDifficulty(4);
-				level.setLoot(new LootSettings(4));
 				
 				DungeonFactory factory;
 			
@@ -82,7 +81,6 @@ public class SettingsEthoTheme extends DungeonSettings{
 				junk.add(new WeightedRandomLoot(Items.gunpowder, 1));
 				junk.add(new WeightedRandomLoot(Items.comparator, 1));
 				loot.set(Loot.JUNK, junk);
-				level.setLoot(loot);
 			}
 			
 			levels.put(i, level);

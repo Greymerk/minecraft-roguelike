@@ -1,5 +1,7 @@
 package greymerk.roguelike.dungeon.settings;
 
+import com.google.gson.JsonObject;
+
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.dungeon.Dungeon;
 import greymerk.roguelike.dungeon.LevelGenerator;
@@ -10,11 +12,8 @@ import greymerk.roguelike.dungeon.segment.ISegmentGenerator;
 import greymerk.roguelike.dungeon.segment.SegmentGenerator;
 import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.theme.Theme;
-import greymerk.roguelike.treasure.loot.LootSettings;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.SpawnerSettings;
-
-import com.google.gson.JsonObject;
 
 public class LevelSettings {
 
@@ -26,7 +25,6 @@ public class LevelSettings {
 	private SecretFactory secrets;
 	private ITheme theme;
 	private SegmentGenerator segments;
-	private LootSettings loot;
 	private SpawnerSettings spawners;
 	private LevelGenerator generator;
 	
@@ -46,7 +44,6 @@ public class LevelSettings {
 		this.secrets = toCopy.secrets != null ? new SecretFactory(toCopy.secrets) : null;
 		this.theme = toCopy.theme != null ? toCopy.theme : null;
 		this.segments = toCopy.segments != null ? new SegmentGenerator(toCopy.segments) : null;
-		this.loot = toCopy.loot != null ? new LootSettings(toCopy.loot) : null;
 		this.spawners = toCopy.spawners != null ? new SpawnerSettings(toCopy.spawners) : null;
 		this.generator = toCopy.generator;
 	}
@@ -73,8 +70,6 @@ public class LevelSettings {
 			this.segments = override.segments == null ? new SegmentGenerator(base.segments) : new SegmentGenerator(override.segments);
 		}
 		
-		this.loot = new LootSettings(base.loot, override.loot);
-		
 		this.spawners = new SpawnerSettings(base.spawners, override.spawners);
 		
 		this.generator = override.generator == null? base.generator : override.generator;
@@ -89,7 +84,6 @@ public class LevelSettings {
 		this.secrets = data.has("secrets") ? new SecretFactory(data.get("secrets").getAsJsonArray()) : null;
 		this.theme = data.has("theme") ? Theme.create(data.get("theme").getAsJsonObject()) : null;
 		this.segments = data.has("segments") ? new SegmentGenerator(data.get("segments").getAsJsonObject()) : null;
-		this.loot = data.has("loot") ? new LootSettings(data.get("loot").getAsJsonObject()) : null;
 		this.spawners = data.has("spawners") ? new SpawnerSettings(data.get("spawners").getAsJsonObject()) : null;
 		this.generator = data.has("generator") ? LevelGenerator.valueOf(data.get("generator").getAsString()) : null;
 	}
@@ -166,14 +160,6 @@ public class LevelSettings {
 	
 	public void setTheme(ITheme theme){
 		this.theme = theme;
-	}
-	
-	public LootSettings getLoot(){
-		return loot;
-	}
-	
-	public void setLoot(LootSettings loot){
-		this.loot = loot;
 	}
 	
 	public SpawnerSettings getSpawners(){
