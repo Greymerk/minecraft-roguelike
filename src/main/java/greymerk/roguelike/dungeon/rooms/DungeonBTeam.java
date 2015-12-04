@@ -149,11 +149,11 @@ public class DungeonBTeam extends DungeonBase {
 		editor.fillRectSolid(rand, x - 7, y - 1, z - 4, x - 6, y + 4, z + 4, stonebrick);
 		editor.fillRectSolid(rand, x + 6, y - 1, z - 4, x + 7, y + 4, z + 4, stonebrick);
 		
-		ITreasureChest recordChest = Treasure.generate(editor, rand, settings, new Coord(x - 4, y, z - 4), Treasure.EMPTY, 1, false); 
+		ITreasureChest recordChest = Treasure.generate(editor, rand, new Coord(x - 4, y, z - 4), Treasure.EMPTY, 1, false); 
 		recordChest.setSlot(recordChest.getSize() / 2, Record.getRecord(Record.STAL));
 		editor.setBlock(x - 3, y, z - 4, BlockType.get(BlockType.JUKEBOX));
 		
-		ITreasureChest bdubsChest = Treasure.generate(editor, rand, settings, new Coord(x - 3, y, z + 5), Treasure.EMPTY, 1, false);
+		ITreasureChest bdubsChest = Treasure.generate(editor, rand, new Coord(x - 3, y, z + 5), Treasure.EMPTY, 1, false);
 		bdubsChest.setSlot((bdubsChest.getSize() / 2) - 2, ItemNovelty.getItem(ItemNovelty.BDOUBLEO));
 		ItemStack shirt = new ItemStack(Items.leather_chestplate);
 		Loot.setItemName(shirt, "Pink Sweater", null);
@@ -162,13 +162,13 @@ public class DungeonBTeam extends DungeonBase {
 		
 		bdubsChest.setSlot((bdubsChest.getSize() / 2) + 2, shirt);
 		
-		ITreasureChest gennybChest = Treasure.generate(editor, rand, settings, new Coord(x + 3, y, z + 5), Treasure.EMPTY, 1, false);
+		ITreasureChest gennybChest = Treasure.generate(editor, rand, new Coord(x + 3, y, z + 5), Treasure.EMPTY, 1, false);
 		gennybChest.setSlot(gennybChest.getSize() / 2, ItemNovelty.getItem(ItemNovelty.GENERIKB));
 		
 		editor.setBlock(x + 4, y, z - 4, BlockType.get(BlockType.SHELF));
 		editor.setBlock(x + 4, y + 1, z - 4, BrewingStand.get());
 		
-		ITreasureChest contraband = Treasure.generate(editor, rand, settings, new Coord(x + 3, y, z - 4), Treasure.EMPTY, 1, false);		
+		ITreasureChest contraband = Treasure.generate(editor, rand, new Coord(x + 3, y, z - 4), Treasure.EMPTY, 1, false);		
 		for(int i = 0; i < 8; ++i){
 			ItemStack booze = PotionMixture.getBooze(rand);
 			contraband.setRandomEmptySlot(booze);

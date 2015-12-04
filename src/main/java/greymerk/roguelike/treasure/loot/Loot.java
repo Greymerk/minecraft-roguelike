@@ -6,6 +6,7 @@ import java.util.Random;
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.treasure.loot.provider.ItemArmour;
 import greymerk.roguelike.treasure.loot.provider.ItemNovelty;
+import greymerk.roguelike.treasure.loot.provider.ItemSpecialty;
 import greymerk.roguelike.treasure.loot.provider.ItemTool;
 import greymerk.roguelike.treasure.loot.provider.ItemWeapon;
 import greymerk.roguelike.util.TextFormat;
@@ -174,7 +175,15 @@ public enum Loot {
 					weapon = ItemTool.getRandom(rand, level, enchant);
 				}
 			} else {
-				weapon = ItemTool.getRandom(rand, level, enchant);
+				if(level > 1 && rand.nextInt(50) == 0){
+					weapon = ItemNovelty.getItem(ItemNovelty.AMLP);
+				} else if(level > 2 && rand.nextInt(50) == 0){
+					weapon = ItemNovelty.getItem(ItemNovelty.DINNERBONE);
+				} else if(level > 1 && rand.nextInt(20) == 0){
+					weapon = ItemSpecialty.getRandomTool(rand, Quality.getQuality(rand, level, Equipment.SHOVEL));
+				} else {
+					weapon = ItemTool.getRandom(rand, level, enchant);
+				}
 			}
 			mob.setCurrentItemOrArmor(0, weapon);
 		}
@@ -187,12 +196,23 @@ public enum Loot {
 				mob.setCurrentItemOrArmor(0, ItemWeapon.getSword(rand, level, enchant));
 			} else {
 				if(rand.nextInt(20) == 0){
-					if(level > 0 && rand.nextInt(5) == 0){
+					if(level > 2 && rand.nextInt(10) == 0){
+						mob.setCurrentItemOrArmor(0, ItemNovelty.getItem(ItemNovelty.NULL));
+					} else if(level > 0 && rand.nextInt(5) == 0){
 						mob.setCurrentItemOrArmor(0, ItemNovelty.getItem(ItemNovelty.VALANDRAH));
+					} else if(level > 0 && rand.nextInt(3) == 0){
+						mob.setCurrentItemOrArmor(0, ItemSpecialty.getRandomItem(Equipment.SWORD, rand, level));
+					} else {
+						mob.setCurrentItemOrArmor(0, ItemWeapon.getSword(rand, level, enchant));
 					}
-					mob.setCurrentItemOrArmor(0, ItemWeapon.getSword(rand, level, enchant));
 				} else {
-					mob.setCurrentItemOrArmor(0, ItemWeapon.getBow(rand, level, enchant));
+					if(level > 2 && rand.nextInt(50) == 0){
+						mob.setCurrentItemOrArmor(0, ItemNovelty.getItem(ItemNovelty.ENIKOBOW));
+					} else if(level > 1 && rand.nextInt(20) == 0){
+						mob.setCurrentItemOrArmor(0, ItemSpecialty.getRandomItem(Equipment.BOW, rand, level));
+					} else {
+						mob.setCurrentItemOrArmor(0, ItemWeapon.getBow(rand, level, enchant));	
+					}
 				}
 			}
 		}

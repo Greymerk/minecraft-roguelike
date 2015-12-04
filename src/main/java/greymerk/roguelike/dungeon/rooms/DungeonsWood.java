@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import greymerk.roguelike.dungeon.Dungeon;
 import greymerk.roguelike.dungeon.base.DungeonBase;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.treasure.Treasure;
@@ -63,7 +64,7 @@ public class DungeonsWood extends DungeonBase {
 		space.add(new Coord(x + WIDTH, y, z - LENGTH + 1));
 		space.add(new Coord(x + WIDTH, y, z + LENGTH - 1));
 		
-		Treasure.generate(editor, rand, settings, space, Treasure.FOOD);
+		Treasure.generate(editor, rand, space, Treasure.FOOD, Dungeon.getLevel(y));
 		
 		return true;
 	}

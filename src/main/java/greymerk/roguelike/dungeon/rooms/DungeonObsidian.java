@@ -3,6 +3,7 @@ package greymerk.roguelike.dungeon.rooms;
 import java.util.HashSet;
 import java.util.Random;
 
+import greymerk.roguelike.dungeon.Dungeon;
 import greymerk.roguelike.dungeon.base.DungeonBase;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.theme.ITheme;
@@ -225,7 +226,7 @@ public class DungeonObsidian extends DungeonBase {
 				chestPos.add(dir, 4);
 				chestPos.add(orth, 2);
 				chestPos.add(Cardinal.DOWN, 3);
-				Treasure.generate(editor, rand, settings, chestPos, Treasure.ORE);
+				Treasure.generate(editor, rand, chestPos, Treasure.ORE, Dungeon.getLevel(chestPos.getY()));
 			}
 		}
 		

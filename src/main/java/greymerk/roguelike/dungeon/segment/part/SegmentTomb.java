@@ -1,5 +1,6 @@
 package greymerk.roguelike.dungeon.segment.part;
 
+import greymerk.roguelike.dungeon.Dungeon;
 import greymerk.roguelike.dungeon.IDungeonLevel;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.theme.ITheme;
@@ -86,7 +87,7 @@ public class SegmentTomb extends SegmentBase {
 		cursor.add(dir, 4);
 		Spawner.generate(editor, rand, level, cursor, rand.nextBoolean() ? Spawner.SKELETON : Spawner.ZOMBIE);
 		cursor.add(dir);
-		Treasure.generate(editor, rand, level, cursor, rand.nextBoolean() ? Treasure.ARMOUR : Treasure.WEAPONS);
+		Treasure.generate(editor, rand, cursor, rand.nextBoolean() ? Treasure.ARMOUR : Treasure.WEAPONS, Dungeon.getLevel(cursor.getY()));
 		
 	}
 }

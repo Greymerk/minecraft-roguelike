@@ -15,10 +15,11 @@ public class SettingsSecrets extends DungeonSettings{
 			switch(i){
 			case 0:
 				factory.addRoom(DungeonRoom.BEDROOM, 2);
-				factory.addRoom(DungeonRoom.BTEAM);
+				factory.addRoom(DungeonRoom.SMITH);
+				factory.addRoom(DungeonRoom.FIREWORK);
 				break;
 			case 1:
-				factory.addRoom(DungeonRoom.SMITH);
+				factory.addRoom(DungeonRoom.BTEAM);
 				break;
 			case 2:
 				break;

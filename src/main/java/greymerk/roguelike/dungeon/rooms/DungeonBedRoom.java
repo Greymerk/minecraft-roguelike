@@ -2,6 +2,7 @@ package greymerk.roguelike.dungeon.rooms;
 
 import java.util.Random;
 
+import greymerk.roguelike.dungeon.Dungeon;
 import greymerk.roguelike.dungeon.base.DungeonBase;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.theme.ITheme;
@@ -126,7 +127,7 @@ public class DungeonBedRoom extends DungeonBase {
 		cursor = new Coord(x, y, z);
 		cursor.add(dir);
 		cursor.add(side, 3);
-		Treasure.generate(editor, rand, settings, cursor, Treasure.STARTER);
+		Treasure.generate(editor, rand, cursor, Treasure.STARTER, Dungeon.getLevel(cursor.getY()));
 		cursor.add(Cardinal.reverse(side), 6);
 		if(rand.nextBoolean()){
 			cursor.add(Cardinal.UP);

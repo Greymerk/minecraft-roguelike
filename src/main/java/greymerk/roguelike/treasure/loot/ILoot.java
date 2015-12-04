@@ -1,11 +1,10 @@
 package greymerk.roguelike.treasure.loot;
 
-import java.util.Random;
-
+import greymerk.roguelike.util.IWeighted;
 import net.minecraft.item.ItemStack;
 
 public interface ILoot {
-
-	public ItemStack get(Random rand, Loot type, int level);
+	
+	public IWeighted<ItemStack> get(Loot type, int level);
 	
 }

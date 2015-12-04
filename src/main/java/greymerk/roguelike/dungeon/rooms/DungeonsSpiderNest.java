@@ -2,6 +2,7 @@ package greymerk.roguelike.dungeon.rooms;
 
 import java.util.Random;
 
+import greymerk.roguelike.dungeon.Dungeon;
 import greymerk.roguelike.dungeon.base.DungeonBase;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.treasure.Treasure;
@@ -67,9 +68,9 @@ public class DungeonsSpiderNest extends DungeonBase {
 		
 		Spawner.generate(editor, rand, settings, new Coord(originX, originY, originZ), Spawner.CAVESPIDER);
 		
-		Treasure.createChests(editor, rand, settings, 1 + rand.nextInt(3), WorldEditor.getRectSolid(
+		Treasure.createChests(editor, rand, 1 + rand.nextInt(3), WorldEditor.getRectSolid(
 				originX - dungeonLength, originY - 1, originZ - dungeonWidth,
-				originX + dungeonLength, originY + 1, originZ + dungeonWidth));
+				originX + dungeonLength, originY + 1, originZ + dungeonWidth), Dungeon.getLevel(originY));
 
 		return true;
 	}

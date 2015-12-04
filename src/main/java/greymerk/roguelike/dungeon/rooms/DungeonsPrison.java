@@ -329,21 +329,6 @@ public class DungeonsPrison extends DungeonBase {
 			cursor.add(Cardinal.UP);
 			air.setBlock(editor, cursor);
 		}
-		
-		// ceiling holes
-		start = new Coord(origin);
-		end = new Coord(origin);
-		end.add(Cardinal.UP, 10);
-		air.fillRectSolid(editor, rand, start, end, true, true);
-		for(Cardinal dir : Cardinal.directions){
-			Cardinal[] orth = Cardinal.getOrthogonal(dir);
-			start = new Coord(origin);
-			start.add(dir);
-			start.add(orth[0]);
-			end = new Coord(start);
-			end.add(Cardinal.UP, 10);
-			air.fillRectSolid(editor, rand, start, end, true, true);
-		}
 	}
 	
 	public int getSize(){

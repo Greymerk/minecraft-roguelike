@@ -66,6 +66,8 @@ public class TreasureChest implements ITreasureChest{
 
 	@Override
 	public int getLevel() {
+		if(level < 0) return 0;
+		if(level > 4) return 4;
 		return this.level;
 	}
 

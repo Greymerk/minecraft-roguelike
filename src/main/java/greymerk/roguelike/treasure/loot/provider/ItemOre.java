@@ -13,9 +13,6 @@ public class ItemOre extends ItemBase{
 
 	@Override
 	public ItemStack getLootItem(Random rand, int level) {
-		if(level < 2 && rand.nextInt(500) == 0){
-			return ItemNovelty.getItem(ItemNovelty.MCGAMER);
-		}
 		return pickOre(rand, level);
 	}
 	

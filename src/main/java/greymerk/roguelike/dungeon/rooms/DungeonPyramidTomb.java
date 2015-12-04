@@ -2,6 +2,7 @@ package greymerk.roguelike.dungeon.rooms;
 
 import java.util.Random;
 
+import greymerk.roguelike.dungeon.Dungeon;
 import greymerk.roguelike.dungeon.base.DungeonBase;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.theme.ITheme;
@@ -204,7 +205,7 @@ public class DungeonPyramidTomb extends DungeonBase{
 		cursor = new Coord(origin);
 		blocks.setBlock(editor, cursor);
 		cursor.add(Cardinal.UP);
-		Treasure.generate(editor, rand, settings, cursor, Treasure.ORE);
+		Treasure.generate(editor, rand, cursor, Treasure.ORE, Dungeon.getLevel(cursor.getY()));
 		cursor.add(Cardinal.UP);
 		blocks.setBlock(editor, cursor);
 		

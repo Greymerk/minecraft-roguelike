@@ -11,6 +11,7 @@ import greymerk.roguelike.treasure.Treasure;
 import greymerk.roguelike.treasure.TreasureManager;
 import greymerk.roguelike.treasure.loot.ILoot;
 import greymerk.roguelike.treasure.loot.Loot;
+import greymerk.roguelike.util.WeightedChoice;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.WorldEditor;
 import net.minecraft.init.Blocks;
@@ -85,8 +86,7 @@ public class Dungeon implements IDungeon{
 		ILoot loot = Loot.getLoot();
 		
 		treasure.fillChests(rand, loot);
-		treasure.addItemToAll(Treasure.STARTER, book);
-		treasure.addItem(rand, 0, new ItemStack(Items.diamond));
+		treasure.addItemToAll(rand, Treasure.STARTER, new WeightedChoice<ItemStack>(book, 1), 1);
 	}
 	
 	public static boolean canSpawnInChunk(int chunkX, int chunkZ, WorldEditor editor){

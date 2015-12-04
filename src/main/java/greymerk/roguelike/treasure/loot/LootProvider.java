@@ -2,9 +2,8 @@ package greymerk.roguelike.treasure.loot;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
-import net.minecraft.init.Items;
+import greymerk.roguelike.util.IWeighted;
 import net.minecraft.item.ItemStack;
 
 public class LootProvider implements ILoot {
@@ -20,9 +19,10 @@ public class LootProvider implements ILoot {
 	}
 	
 	@Override
-	public ItemStack get(Random rand, Loot type, int level) {
-		if(!loot.containsKey(level)) return new ItemStack(Items.stick);
-		return loot.get(level).get(type, rand);
+	public IWeighted<ItemStack> get(Loot type, int level){
+		if(level < 0)return loot.get(0).get(type);
+		if(level > 4)return loot.get(4).get(type);
+		return loot.get(level).get(type);
 	}
 
 }

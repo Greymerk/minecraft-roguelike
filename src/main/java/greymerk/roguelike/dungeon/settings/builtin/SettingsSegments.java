@@ -23,7 +23,6 @@ public class SettingsSegments extends DungeonSettings{
 				break;
 			case 1:
 				segments = new SegmentGenerator(Segment.ARCH);
-				segments.add(Segment.SHELF, 1);
 				segments.add(Segment.INSET, 3);
 				segments.add(Segment.DOOR, 5);
 				segments.add(Segment.BOOKS, 1);

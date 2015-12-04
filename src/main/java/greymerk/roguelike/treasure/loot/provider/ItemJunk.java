@@ -17,17 +17,6 @@ public class ItemJunk extends ItemBase{
 
 	@Override
 	public ItemStack getLootItem(Random rand, int level){
-		if(rand.nextInt(500) == 0){
-			if(rand.nextBoolean()) return ItemNovelty.getItem(ItemNovelty.VECHS);
-
-			switch(level){
-			case 0: return ItemNovelty.getItem(ItemNovelty.GRIM);
-			case 1: return ItemNovelty.getItem(ItemNovelty.FOURLES);
-			case 2: return ItemNovelty.getItem(ItemNovelty.ZISTEAUSIGN);
-			case 3: return ItemNovelty.getItem(ItemNovelty.PAULSOARESJR);
-			case 4: return ItemNovelty.getItem(ItemNovelty.DINNERBONE);
-			}
-		}
 
 		if(level > 0 && rand.nextInt(200) == 0){
 			if(level > 2 && rand.nextInt(10) == 0) return new ItemStack(Items.diamond_horse_armor, 1, 0);

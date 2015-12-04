@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+import greymerk.roguelike.dungeon.Dungeon;
 import greymerk.roguelike.dungeon.base.DungeonBase;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.theme.ITheme;
@@ -109,7 +110,7 @@ public class DungeonPyramidSpawner extends DungeonBase {
 		}
 
 		List<Treasure> types = new ArrayList<Treasure>(Arrays.asList(Treasure.ARMOUR, Treasure.WEAPONS, Treasure.TOOLS));
-		Treasure.createChests(editor, rand, settings, 1, space, types);
+		Treasure.createChests(editor, rand, 1, space, types, Dungeon.getLevel(origin.getY()));
 		
 		Spawner.generate(editor, rand, settings, new Coord(x, y, z));
 

@@ -3,6 +3,7 @@ package greymerk.roguelike.dungeon.rooms;
 import java.util.Random;
 
 import greymerk.roguelike.config.RogueConfig;
+import greymerk.roguelike.dungeon.Dungeon;
 import greymerk.roguelike.dungeon.base.DungeonBase;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.theme.ITheme;
@@ -132,7 +133,7 @@ public class DungeonLab extends DungeonBase {
 			editor.setBlock(new Coord(x + 1, y + 1, z + 5), BrewingStand.get());
 		}
 		
-		Treasure.generate(editor, rand, settings, new Coord(x, y + 1, z + 4), Treasure.POTIONS);
+		Treasure.generate(editor, rand, new Coord(x, y + 1, z + 4), Treasure.POTIONS, Dungeon.getLevel(y));
 	}
 	
 	// fountains

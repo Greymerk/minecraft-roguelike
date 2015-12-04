@@ -2,6 +2,7 @@ package greymerk.roguelike.dungeon.rooms;
 
 import java.util.Random;
 
+import greymerk.roguelike.dungeon.Dungeon;
 import greymerk.roguelike.dungeon.base.DungeonBase;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.theme.ITheme;
@@ -48,7 +49,6 @@ public class DungeonsSmithy extends DungeonBase {
 		air.setBlock(editor, cursor);
 		
 		mainRoom(editor, rand, settings, dir, origin);
-		
 		
 		return true;
 	}
@@ -286,14 +286,14 @@ public class DungeonsSmithy extends DungeonBase {
 	
 	private void smelter(WorldEditor editor, Random rand, LevelSettings settings, Cardinal dir, Coord origin){
 		Coord cursor;
-		Treasure.generate(editor, rand, settings, origin, Treasure.EMPTY, 1, false);
+		Treasure.generate(editor, rand, origin, Treasure.EMPTY, 1, false);
 		cursor = new Coord(origin);
 		cursor.add(dir, 2);
 		cursor.add(Cardinal.UP, 2);
-		Treasure.generate(editor, rand, settings, cursor, Treasure.EMPTY, 1, false);
+		Treasure.generate(editor, rand, cursor, Treasure.EMPTY, 1, false);
 		cursor.add(Cardinal.UP);
 		cursor.add(Cardinal.reverse(dir));
-		Treasure.generate(editor, rand, settings, cursor, Treasure.EMPTY, 1, false);
+		Treasure.generate(editor, rand, cursor, Treasure.EMPTY, 1, false);
 		
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.UP);
@@ -466,7 +466,7 @@ public class DungeonsSmithy extends DungeonBase {
 		stair.setOrientation(orth[1], true);
 		editor.fillRectSolid(rand, start, end, stair, true, true);
 		cursor.add(Cardinal.UP);
-		Treasure.generate(editor, rand, settings, cursor, Treasure.SMITH);
+		Treasure.generate(editor, rand, cursor, Treasure.SMITH, Dungeon.getLevel(cursor.getY()));
 		
 		cursor = new Coord(origin);
 	}
