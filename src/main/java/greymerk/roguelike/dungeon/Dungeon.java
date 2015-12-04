@@ -9,6 +9,7 @@ import greymerk.roguelike.dungeon.settings.ISettings;
 import greymerk.roguelike.dungeon.settings.SettingsResolver;
 import greymerk.roguelike.treasure.ITreasureChest;
 import greymerk.roguelike.treasure.Treasure;
+import greymerk.roguelike.treasure.TreasureManager;
 import greymerk.roguelike.treasure.loot.ILoot;
 import greymerk.roguelike.treasure.loot.Loot;
 import greymerk.roguelike.worldgen.Coord;
@@ -80,14 +81,12 @@ public class Dungeon implements IDungeon{
 		ILoot loot = Loot.getLoot();
 		Random rand = getRandom(editor, this.pos.getX(), this.pos.getZ());
 		
-		for(ITreasureChest chest : this.getChests()){
-			
-			Treasure.fillChest(chest, rand, loot);
-			
-			if(chest.getType() == Treasure.STARTER){
-				chest.setRandomEmptySlot(book);
-			}
-		}
+		TreasureManager treasure = new TreasureManager();
+		treasure.addAll(this.getChests());
+		
+		treasure.fillChests(rand, loot);
+		treasure.addItemToAll(Treasure.STARTER, book);
+		treasure.addItem(rand, 0, new ItemStack(Items.diamond));
 	}
 	
 	public static boolean canSpawnInChunk(int chunkX, int chunkZ, WorldEditor editor){
