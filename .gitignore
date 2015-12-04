@@ -18,6 +18,7 @@
 /options.txt
 /screenshots
 /*.txt
+/*.log
 /server.properties
 /world
 /usernamecache.json
