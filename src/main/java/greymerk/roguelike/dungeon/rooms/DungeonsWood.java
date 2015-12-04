@@ -63,7 +63,7 @@ public class DungeonsWood extends DungeonBase {
 		space.add(new Coord(x + WIDTH, y, z - LENGTH + 1));
 		space.add(new Coord(x + WIDTH, y, z + LENGTH - 1));
 		
-		chests.addAll(Treasure.generate(editor, rand, settings, space, Treasure.FOOD));
+		Treasure.generate(editor, rand, settings, space, Treasure.FOOD);
 		
 		return true;
 	}

@@ -31,14 +31,10 @@ public enum Treasure {
 	public static final List<Treasure> level3 = new ArrayList<Treasure>(Arrays.asList(ORE, TOOLS, ARMOUR, WEAPONS));
 	public static final List<Treasure> level4 = new ArrayList<Treasure>(Arrays.asList(ORE, TOOLS, ARMOUR, WEAPONS));
 	
-	private static ITreasureChest getChest(Treasure type) {
-		return new TreasureChest(type);
-	}
-	
 	public static ITreasureChest generate(WorldEditor editor, Random rand, LevelSettings settings, Coord pos, int level, boolean trapped){
 		
 		Treasure type = getChestType(rand, level);
-		ITreasureChest chest = getChest(type);
+		ITreasureChest chest = new TreasureChest(type);
 		
 		return chest.generate(editor, rand, pos, level, trapped);
 	}
@@ -52,7 +48,7 @@ public enum Treasure {
 	}
 	
 	public static ITreasureChest generate(WorldEditor editor, Random rand, LevelSettings settings, Coord pos, Treasure type, int level, boolean trapped){
-		ITreasureChest chest = getChest(type);
+		ITreasureChest chest = new TreasureChest(type);
 		chest.generate(editor, rand, pos, level, trapped);
 		return chest;
 	}

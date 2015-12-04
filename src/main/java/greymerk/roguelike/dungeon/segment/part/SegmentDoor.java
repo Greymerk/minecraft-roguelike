@@ -55,8 +55,6 @@ public class SegmentDoor extends SegmentBase {
 			cursor = new Coord(x, y, z);
 			cursor.add(dir, 3);
 			Door.generate(editor, cursor, Cardinal.reverse(dir), Door.OAK);
-			
-			this.chests.addAll(room.getChests());
 		}
 	}	
 }

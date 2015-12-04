@@ -1,13 +1,9 @@
 package greymerk.roguelike.dungeon;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
-import greymerk.roguelike.dungeon.base.IDungeonRoom;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
-import greymerk.roguelike.treasure.ITreasureChest;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.WorldEditor;
 
@@ -65,21 +61,4 @@ public class DungeonLevel implements IDungeonLevel{
 		return dist < this.settings.getRange();
 	}
 
-	@Override
-	public Collection<? extends ITreasureChest> getChests() {
-		
-		List<ITreasureChest> chests = new ArrayList<ITreasureChest>();
-		
-		for(DungeonNode node : this.generator.getNodes()){
-			IDungeonRoom room = node.getRoom();
-			if(room == null) continue;
-			chests.addAll(room.getChests());
-		}
-		
-		for(DungeonTunnel tunnel : this.generator.getTunnels()){
-			chests.addAll(tunnel.getChests());
-		}
-			
-		return chests;
-	}
 }

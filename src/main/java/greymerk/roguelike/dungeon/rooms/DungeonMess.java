@@ -144,7 +144,7 @@ public class DungeonMess extends DungeonBase {
 		editor.setBlock(rand, x + 2, y, z - 1, stair.setOrientation(Cardinal.SOUTH, true), true, true);
 		editor.setBlock(rand, x + 2, y, z, stair.setOrientation(Cardinal.WEST, true), true, true);
 		editor.setBlock(rand, x + 2, y, z + 1, stair.setOrientation(Cardinal.NORTH, true), true, true);
-		chests.add(Treasure.generate(editor, rand, settings, new Coord(x + 2, y + 1, z), Treasure.FOOD, 1, false));
+		Treasure.generate(editor, rand, settings, new Coord(x + 2, y + 1, z), Treasure.FOOD, 1, false);
 		
 		// south shelf
 		editor.setBlock(rand, x - 1, y, z + 2, stair.setOrientation(Cardinal.EAST, true), true, true);

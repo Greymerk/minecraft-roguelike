@@ -84,4 +84,8 @@ public class TreasureManager {
 		}
 		return c;
 	}
+	
+	public List<ITreasureChest> getChests(){
+		return this.chests;
+	}
 }

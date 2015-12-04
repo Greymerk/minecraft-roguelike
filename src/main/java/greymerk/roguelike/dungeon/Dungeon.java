@@ -1,6 +1,5 @@
 package greymerk.roguelike.dungeon;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -31,6 +30,7 @@ public class Dungeon implements IDungeon{
 	
 	private DungeonGenerator generator;
 	private Coord pos;
+	private WorldEditor editor;
 	
 	static{
 		initResolver();
@@ -41,28 +41,29 @@ public class Dungeon implements IDungeon{
 	}
 		
 	
-	public Dungeon(){
+	public Dungeon(WorldEditor editor){
 		this.generator = new DungeonGenerator();
+		this.editor = editor;
 	}
 	
-	public void generateNear(WorldEditor editor, Random rand, int x, int z){
+	public void generateNear(Random rand, int x, int z){
 		int attempts = 50;
 		
 		for(int i = 0;i < attempts;i++){
 			Coord location = getNearbyCoord(rand, x, z, 40, 100);
 			
-			if(!validLocation(editor, rand, location.getX(), location.getZ())) continue;
+			if(!validLocation(rand, location.getX(), location.getZ())) continue;
 			
 			ISettings setting = settingsResolver.getSettings(editor, rand, location);
 			
 			if(setting == null) return;
 			
-			generate(editor, setting, location.getX(), location.getZ());
+			generate(setting, location.getX(), location.getZ());
 			return;
 		}
 	}
 	
-	public void generate(WorldEditor editor, ISettings settings, int inX, int inZ){
+	public void generate(ISettings settings, int inX, int inZ){
 		generator.generate(editor, settings, inX, inZ);
 		this.pos = new Coord(inX, 50, inZ);
 		
@@ -78,11 +79,10 @@ public class Dungeon implements IDungeon{
 		
 		ItemStack book = this.book(text);
 		
-		ILoot loot = Loot.getLoot();
 		Random rand = getRandom(editor, this.pos.getX(), this.pos.getZ());
 		
-		TreasureManager treasure = new TreasureManager();
-		treasure.addAll(this.getChests());
+		TreasureManager treasure = editor.getTreasure();
+		ILoot loot = Loot.getLoot();
 		
 		treasure.fillChests(rand, loot);
 		treasure.addItemToAll(Treasure.STARTER, book);
@@ -128,13 +128,13 @@ public class Dungeon implements IDungeon{
 		return true;
 	}
 	
-	public void spawnInChunk(WorldEditor editor, Random rand, int chunkX, int chunkZ) {
+	public void spawnInChunk(Random rand, int chunkX, int chunkZ) {
 		
 		if(Dungeon.canSpawnInChunk(chunkX, chunkZ, editor)){
 			int x = chunkX * 16 + 4;
 			int z = chunkZ * 16 + 4;
 			
-			generateNear(editor, rand, x, z);
+			generateNear(rand, x, z);
 		}
 	}
 	
@@ -147,7 +147,7 @@ public class Dungeon implements IDungeon{
 		return 0;
 	}
 	
-	public static boolean validLocation(WorldEditor editor, Random rand, int x, int z){
+	public boolean validLocation(Random rand, int x, int z){
 		
 		BiomeGenBase biome = editor.getBiome(new Coord(x, 0, z));
 		Type[] biomeType = BiomeDictionary.getTypesForBiome(biome);
@@ -216,25 +216,8 @@ public class Dungeon implements IDungeon{
 	}
 
 	@Override
-	public List<DungeonNode> getNodes() {
-		return null;
-	}
-
-	@Override
-	public List<IDungeonLevel> getLevels() {
-		return null;
-	}
-
-	@Override
 	public List<ITreasureChest> getChests() {
-		List<IDungeonLevel> levels = generator.getLevels();
-		List<ITreasureChest> chests = new ArrayList<ITreasureChest>();
-		
-		for(IDungeonLevel level : levels){
-			chests.addAll(level.getChests());
-		}
-		
-		return chests;
+		return this.editor.getTreasure().getChests();
 	}
 
 	public Coord getPosition() throws Exception {

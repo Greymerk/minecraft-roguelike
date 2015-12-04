@@ -140,7 +140,7 @@ public class DungeonsEnchant extends DungeonBase {
 		if(RogueConfig.getBoolean(RogueConfig.GENEROUS)){
 			editor.setBlock(x, y, z, BlockType.get(BlockType.ENCHANTING_TABLE));
 		} else {
-			chests.add(Treasure.generate(editor, rand, settings, new Coord(x, y, z), Treasure.ENCHANTING, 4, false));
+			Treasure.generate(editor, rand, settings, new Coord(x, y, z), Treasure.ENCHANTING, 4, false);
 		}
 		return false;
 	}	

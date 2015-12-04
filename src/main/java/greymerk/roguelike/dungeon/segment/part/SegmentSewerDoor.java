@@ -87,8 +87,6 @@ public class SegmentSewerDoor extends SegmentBase {
 			cursor = new Coord(x, y, z);
 			cursor.add(dir, 3);
 			Door.generate(editor, cursor, Cardinal.reverse(dir), Door.IRON);
-			
-			this.chests.addAll(room.getChests());
 		}
 	}	
 }

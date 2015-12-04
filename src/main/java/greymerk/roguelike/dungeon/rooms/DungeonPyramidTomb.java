@@ -204,7 +204,7 @@ public class DungeonPyramidTomb extends DungeonBase{
 		cursor = new Coord(origin);
 		blocks.setBlock(editor, cursor);
 		cursor.add(Cardinal.UP);
-		chests.add(Treasure.generate(editor, rand, settings, cursor, Treasure.ORE));
+		Treasure.generate(editor, rand, settings, cursor, Treasure.ORE);
 		cursor.add(Cardinal.UP);
 		blocks.setBlock(editor, cursor);
 		

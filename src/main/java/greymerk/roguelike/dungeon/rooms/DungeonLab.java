@@ -132,7 +132,7 @@ public class DungeonLab extends DungeonBase {
 			editor.setBlock(new Coord(x + 1, y + 1, z + 5), BrewingStand.get());
 		}
 		
-		this.chests.add(Treasure.generate(editor, rand, settings, new Coord(x, y + 1, z + 4), Treasure.POTIONS));
+		Treasure.generate(editor, rand, settings, new Coord(x, y + 1, z + 4), Treasure.POTIONS);
 	}
 	
 	// fountains

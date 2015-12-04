@@ -1,11 +1,9 @@
 package greymerk.roguelike.dungeon.base;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import greymerk.roguelike.dungeon.settings.LevelSettings;
-import greymerk.roguelike.treasure.ITreasureChest;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
@@ -13,12 +11,6 @@ import greymerk.roguelike.worldgen.WorldEditor;
 
 public abstract class DungeonBase implements IDungeonRoom{
 
-	protected List<ITreasureChest> chests;
-	
-	public DungeonBase(){
-		this.chests = new ArrayList<ITreasureChest>();
-	}
-	
 	@Override
 	public abstract boolean generate(WorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin);
 	
@@ -39,11 +31,4 @@ public abstract class DungeonBase implements IDungeonRoom{
 		return true;
 	}
 	
-	@Override
-	public List<ITreasureChest> getChests(){
-		if(this.chests == null){
-			return new ArrayList<ITreasureChest>();
-		}
-		return this.chests;
-	}
 }

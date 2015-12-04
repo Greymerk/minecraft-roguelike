@@ -35,6 +35,7 @@ public class TreasureChest implements ITreasureChest{
 		TileEntityChest chest = (TileEntityChest) editor.getTileEntity(pos);
 		this.inventory = new Inventory(rand, chest);
 
+		editor.addChest(this);
 		return this;
 	}
 	

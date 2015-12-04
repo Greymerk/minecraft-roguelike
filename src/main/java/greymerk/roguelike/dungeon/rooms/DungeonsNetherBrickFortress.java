@@ -51,10 +51,10 @@ public class DungeonsNetherBrickFortress extends DungeonBase {
 		buildRoof();
 		
 		ArrayList<Treasure> types = new ArrayList<Treasure>(Arrays.asList(Treasure.SPECIAL));		
-		chests.addAll(Treasure.createChests(editor, rand, settings, 2, WorldEditor.getRectSolid(
+		Treasure.createChests(editor, rand, settings, 2, WorldEditor.getRectSolid(
 				originX - 6, originY, originZ - 6,
 				originX + 6, originY, originZ + 6),
-				types));
+				types);
 
 		return true;
 	}

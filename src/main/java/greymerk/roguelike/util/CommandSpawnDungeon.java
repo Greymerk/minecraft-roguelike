@@ -140,19 +140,20 @@ public class CommandSpawnDungeon extends CommandBase
 					}
 					
 					for(int i = 0; i < num; ++i){
-						Dungeon toGenerate = new Dungeon();
+						
 						WorldEditor editor = new WorldEditor(player.worldObj);
+						Dungeon toGenerate = new Dungeon(editor);
 						Random rand = new Random();
-						toGenerate.generateNear(editor, rand, x, z);
+						toGenerate.generateNear(rand, x, z);
 					}
 					sender.addChatMessage(new ChatComponentText(TextFormat.apply("Success: Dungeons generated all over the place!", TextFormat.GREEN)));
 					return;
 				}
 
-				Dungeon toGenerate = new Dungeon();
 				WorldEditor editor = new WorldEditor(player.worldObj);
+				Dungeon toGenerate = new Dungeon(editor);
 				Random rand = Dungeon.getRandom(editor, x, z);
-				toGenerate.generateNear(editor, rand, x, z);
+				toGenerate.generateNear(rand, x, z);
 				
 				try {
 					sender.addChatMessage(new ChatComponentText(TextFormat.apply("Success: Dungeon generated at " + toGenerate.getPosition().toString(), TextFormat.GREEN)));
@@ -187,22 +188,22 @@ public class CommandSpawnDungeon extends CommandBase
 					return;
 				}
 				
-				IDungeon dungeon = new Dungeon();
-				dungeon.generate(editor, setting, x, z);
+				IDungeon dungeon = new Dungeon(editor);
+				dungeon.generate(setting, x, z);
 				return;
 			}
 			
 			Random rand = Dungeon.getRandom(editor, x, z);
 			ISettings settings = Dungeon.settingsResolver.getSettings(editor, rand, new Coord(x, 0, z));
 			if(settings != null){
-				IDungeon dungeon = new Dungeon();
-				dungeon.generate(editor, settings, x, z);
+				IDungeon dungeon = new Dungeon(editor);
+				dungeon.generate(settings, x, z);
 				sender.addChatMessage(new ChatComponentText(TextFormat.apply("Success: Dungeon generated at " + Integer.toString(x) + " " + Integer.toString(z), TextFormat.GREEN)));
 				return;
 			}
 			
-			IDungeon dungeon = new Dungeon();
-			dungeon.generate(editor, Dungeon.settingsResolver.getDefaultSettings(), x, z);
+			IDungeon dungeon = new Dungeon(editor);
+			dungeon.generate(Dungeon.settingsResolver.getDefaultSettings(), x, z);
 			sender.addChatMessage(new ChatComponentText(TextFormat.apply("Success: Dungeon generated at " + Integer.toString(x) + " " + Integer.toString(z), TextFormat.GREEN)));
 			return;
 		}

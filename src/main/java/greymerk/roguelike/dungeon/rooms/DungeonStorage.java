@@ -130,7 +130,7 @@ public class DungeonStorage extends DungeonBase {
 		
 		List<Coord> spaces = new ArrayList<Coord>(chestSpaces);
 		
-		chests.addAll(Treasure.createChests(editor, rand, settings, 3, spaces, types));
+		Treasure.createChests(editor, rand, settings, 3, spaces, types);
 		
 		return true;
 	}

@@ -126,7 +126,7 @@ public class DungeonBedRoom extends DungeonBase {
 		cursor = new Coord(x, y, z);
 		cursor.add(dir);
 		cursor.add(side, 3);
-		this.chests.add(Treasure.generate(editor, rand, settings, cursor, Treasure.STARTER));
+		Treasure.generate(editor, rand, settings, cursor, Treasure.STARTER);
 		cursor.add(Cardinal.reverse(side), 6);
 		if(rand.nextBoolean()){
 			cursor.add(Cardinal.UP);
