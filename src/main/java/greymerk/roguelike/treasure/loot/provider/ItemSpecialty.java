@@ -6,9 +6,7 @@ import greymerk.roguelike.treasure.loot.Enchant;
 import greymerk.roguelike.treasure.loot.Equipment;
 import greymerk.roguelike.treasure.loot.Loot;
 import greymerk.roguelike.treasure.loot.Quality;
-import greymerk.roguelike.util.IWeighted;
 import greymerk.roguelike.util.TextFormat;
-import greymerk.roguelike.util.WeightedChoice;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -187,7 +185,7 @@ public class ItemSpecialty extends ItemBase {
 			if(rand.nextBoolean()){
 				item.addEnchantment(Enchant.getEnchant(Enchant.SHARPNESS), 1);
 			}
-			item.addEnchantment(Enchantment.unbreaking, getUnbreakingLevel(quality, rand));
+			item.addEnchantment(Enchantment.unbreaking, 3);
 			Loot.setItemName(item, "Tempered Blade");
 			Loot.setItemLore(item, "Highly Durable", TextFormat.DARKGREEN);
 			return item;

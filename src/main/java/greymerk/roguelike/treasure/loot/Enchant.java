@@ -14,7 +14,7 @@ public enum Enchant {
 	
 	public static Enchantment getEnchant(Enchant type){
 		switch(type){
-		case SHARPNESS: return Enchantment.field_180308_g; 
+		case SHARPNESS: return Enchantment.field_180314_l; 
 		case SMITE: return Enchantment.field_180315_m;
 		case ARTHOPODS: return Enchantment.field_180312_n;
 		case LOOTING: return Enchantment.looting;
