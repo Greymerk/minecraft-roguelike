@@ -5,6 +5,7 @@ import java.util.List;
 
 import greymerk.roguelike.dungeon.base.DungeonFactory;
 import greymerk.roguelike.dungeon.base.DungeonRoom;
+import greymerk.roguelike.dungeon.base.SecretFactory;
 import greymerk.roguelike.dungeon.segment.Segment;
 import greymerk.roguelike.dungeon.segment.SegmentGenerator;
 import greymerk.roguelike.dungeon.settings.DungeonSettings;
@@ -45,6 +46,10 @@ public class SettingsMountainTheme extends DungeonSettings{
 				factory.addRandom(DungeonRoom.BRICK, 10);
 				factory.addRandom(DungeonRoom.CORNER, 3);
 				level.setRooms(factory);
+				
+				SecretFactory secrets = new SecretFactory();
+				secrets.addRoom(DungeonRoom.BEDROOM, 4);
+				level.setSecrets(secrets);
 				
 				SegmentGenerator segments = new SegmentGenerator(Segment.ARCH);
 				segments.add(Segment.DOOR, 5);

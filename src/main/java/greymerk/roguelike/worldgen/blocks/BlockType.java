@@ -170,7 +170,7 @@ public enum BlockType {
 		case CRAFTING_TABLE: return new MetaBlock(Blocks.crafting_table);
 		case NOTEBLOCK: return new MetaBlock(Blocks.noteblock);
 		case REDSTONE_LAMP: return new MetaBlock(Blocks.redstone_lamp);
-		case REDSTONE_LAMP_LIT: return new MetaBlock(Blocks.lit_redstone_lamp);
+		case REDSTONE_LAMP_LIT: return new MetaBlock(Blocks.lit_redstone_lamp.getDefaultState());
 		case JUKEBOX: return new MetaBlock(Blocks.jukebox);
 		case FENCE: return new MetaBlock(Blocks.oak_fence);
 		case TNT: return new MetaBlock(Blocks.tnt);
