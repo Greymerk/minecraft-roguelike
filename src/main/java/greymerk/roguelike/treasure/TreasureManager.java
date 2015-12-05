@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import greymerk.roguelike.treasure.loot.Equipment;
 import greymerk.roguelike.treasure.loot.ILoot;
 import greymerk.roguelike.treasure.loot.Loot;
+import greymerk.roguelike.treasure.loot.Quality;
+import greymerk.roguelike.treasure.loot.provider.ItemSpecialty;
 import greymerk.roguelike.util.IWeighted;
 import net.minecraft.item.ItemStack;
 
@@ -22,6 +25,12 @@ public class TreasureManager {
 	}
 	
 	public void fillChests(Random rand, ILoot loot){
+
+		this.addItemToAll(rand, Treasure.STARTER, 0, loot.get(Loot.WEAPON, 0), 2);
+		this.addItemToAll(rand, Treasure.STARTER, 0, new ItemSpecialty(0, 0, Equipment.LEGS, Quality.WOOD), 2);
+		this.addItemToAll(rand, Treasure.STARTER, 0, loot.get(Loot.TOOL, 0), 2);
+		this.addItemToAll(rand, Treasure.STARTER, 0, loot.get(Loot.FOOD, 0), 4);
+		
 		for(int i = 0; i < 5; ++i){
 			this.addItemToAll(rand, Treasure.ARMOUR, i, loot.get(Loot.POTION, i), 1);
 			this.addItemToAll(rand, Treasure.ARMOUR, i, loot.get(Loot.ARMOUR, i), 1);
@@ -35,10 +44,6 @@ public class TreasureManager {
 			this.addItemToAll(rand, Treasure.FOOD, i, loot.get(Loot.FOOD, i), 8);
 			this.addItemToAll(rand, Treasure.ORE, i, loot.get(Loot.ORE, i), 5);
 			this.addItemToAll(rand, Treasure.POTIONS, i, loot.get(Loot.POTION, i), 3);
-			this.addItemToAll(rand, Treasure.STARTER, i, loot.get(Loot.WEAPON, i), 2);
-			this.addItemToAll(rand, Treasure.STARTER, i, loot.get(Loot.ARMOUR, i), 2);
-			this.addItemToAll(rand, Treasure.STARTER, i, loot.get(Loot.TOOL, i), 2);
-			this.addItemToAll(rand, Treasure.STARTER, i, loot.get(Loot.FOOD, i), 4);
 			this.addItemToAll(rand, Treasure.TOOLS, i, loot.get(Loot.ORE, i), 1);
 			this.addItemToAll(rand, Treasure.TOOLS, i, loot.get(Loot.TOOL, i), 1);
 			this.addItemToAll(rand, Treasure.TOOLS, i, loot.get(Loot.BLOCK, i), 1);

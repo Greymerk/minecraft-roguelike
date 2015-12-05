@@ -1,13 +1,14 @@
 package greymerk.roguelike.treasure.loot.provider;
 
 
-import greymerk.roguelike.treasure.loot.Enchant;
-import greymerk.roguelike.treasure.loot.Loot;
-import greymerk.roguelike.util.TextFormat;
-
 import java.util.HashMap;
 import java.util.Map;
 
+import greymerk.roguelike.treasure.loot.Enchant;
+import greymerk.roguelike.treasure.loot.Loot;
+import greymerk.roguelike.util.IWeighted;
+import greymerk.roguelike.util.TextFormat;
+import greymerk.roguelike.util.WeightedChoice;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -55,6 +56,10 @@ public enum ItemNovelty {
 	public static ItemStack getItemByName(String name){
 		if(!names.containsKey(name)) return null;
 		return getItem(names.get(name));
+	}
+	
+	public static IWeighted<ItemStack> get(ItemNovelty choice){
+		return new WeightedChoice<ItemStack>(getItem(choice), 0);
 	}
 	
 	public static ItemStack getItem(ItemNovelty choice){
