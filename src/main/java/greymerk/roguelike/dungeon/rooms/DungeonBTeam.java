@@ -40,7 +40,6 @@ public class DungeonBTeam extends DungeonBase {
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		IStair stair = new MetaStair(StairType.SPRUCE);
 		MetaBlock log = Log.getLog(Wood.OAK, Cardinal.UP);
-		MetaBlock plank = Wood.getPlank(Wood.SPRUCE);
 		MetaBlock stonebrick = BlockType.get(BlockType.STONE_BRICK);
 		MetaBlock cyan = ColorBlock.get(ColorBlock.CLAY, DyeColor.CYAN);
 		MetaBlock slab = Slab.get(Slab.STONE, false, true, true);

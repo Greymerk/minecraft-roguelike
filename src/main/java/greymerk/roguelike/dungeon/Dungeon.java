@@ -85,7 +85,7 @@ public class Dungeon implements IDungeon{
 		TreasureManager treasure = editor.getTreasure();
 		ILoot loot = Loot.getLoot();
 		
-		treasure.fillChests(rand, loot);
+		settings.getLootRules().process(rand, loot, treasure);
 		treasure.addItemToAll(rand, Treasure.STARTER, new WeightedChoice<ItemStack>(book, 1), 1);
 	}
 	

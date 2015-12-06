@@ -11,8 +11,19 @@ import com.google.gson.JsonObject;
 
 import greymerk.roguelike.dungeon.towers.Tower;
 import greymerk.roguelike.theme.Theme;
+import greymerk.roguelike.treasure.Treasure;
+import greymerk.roguelike.treasure.loot.Equipment;
+import greymerk.roguelike.treasure.loot.ILoot;
+import greymerk.roguelike.treasure.loot.Loot;
+import greymerk.roguelike.treasure.loot.LootRule;
+import greymerk.roguelike.treasure.loot.LootRuleManager;
+import greymerk.roguelike.treasure.loot.Quality;
+import greymerk.roguelike.treasure.loot.provider.ItemSpecialty;
+import greymerk.roguelike.util.WeightedChoice;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.WorldEditor;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 
 
 public class DungeonSettings implements ISettings{
@@ -177,5 +188,41 @@ public class DungeonSettings implements ISettings{
 		if(depth > MAX_NUM_LEVELS) return MAX_NUM_LEVELS;
 		
 		return depth;
+	}
+
+	@Override
+	public LootRuleManager getLootRules() {
+		LootRuleManager lootRules = new LootRuleManager();
+		ILoot loot = Loot.getLoot();
+		lootRules.add(new LootRule(Treasure.STARTER, loot.get(Loot.WEAPON, 0),  0, true, 2));
+		lootRules.add(new LootRule(Treasure.STARTER, loot.get(Loot.FOOD, 0),  0, true, 2));
+		lootRules.add(new LootRule(Treasure.STARTER, loot.get(Loot.WEAPON, 0),  0, true, 2));
+		lootRules.add(new LootRule(Treasure.STARTER, new ItemSpecialty(0, 0, Equipment.LEGS, Quality.WOOD), 0, true, 2));
+		for(int i = 0; i < 5; ++i){
+			lootRules.add(new LootRule(Treasure.ARMOUR, loot.get(Loot.POTION, i),  i, true, 1));
+			lootRules.add(new LootRule(Treasure.ARMOUR, loot.get(Loot.ARMOUR, i),  i, true, 1));
+			lootRules.add(new LootRule(Treasure.ARMOUR, loot.get(Loot.FOOD, i),  i, true, 1));
+			lootRules.add(new LootRule(Treasure.WEAPONS, loot.get(Loot.POTION, i),  i, true, 1));
+			lootRules.add(new LootRule(Treasure.WEAPONS, loot.get(Loot.WEAPON, i),  i, true, 1));
+			lootRules.add(new LootRule(Treasure.WEAPONS, loot.get(Loot.FOOD, i),  i, true, 1));
+			lootRules.add(new LootRule(Treasure.BLOCKS, loot.get(Loot.BLOCK, i),  i, true, 6));
+			lootRules.add(new LootRule(Treasure.WEAPONS, loot.get(Loot.FOOD, i),  i, true, 1));
+			lootRules.add(new LootRule(Treasure.ENCHANTING, loot.get(Loot.ENCHANTBONUS, i),  i, true, 2));
+			lootRules.add(new LootRule(Treasure.ENCHANTING, loot.get(Loot.ENCHANTBOOK, i),  i, true, 1));
+			lootRules.add(new LootRule(Treasure.FOOD, loot.get(Loot.FOOD, i),  i, true, 8));
+			lootRules.add(new LootRule(Treasure.ORE, loot.get(Loot.ORE, i),  i, true, 3));
+			lootRules.add(new LootRule(Treasure.POTIONS, loot.get(Loot.POTION, i),  i, true, 3));
+			lootRules.add(new LootRule(Treasure.TOOLS, loot.get(Loot.ORE, i),  i, true, 1));
+			lootRules.add(new LootRule(Treasure.TOOLS, loot.get(Loot.TOOL, i),  i, true, 1));
+			lootRules.add(new LootRule(Treasure.TOOLS, loot.get(Loot.BLOCK, i),  i, true, 1));
+			lootRules.add(new LootRule(Treasure.SUPPLIES, loot.get(Loot.SUPPLY, i),  i, true, 6));
+			lootRules.add(new LootRule(Treasure.SMITH, loot.get(Loot.ORE, i),  i, true, 2));
+			lootRules.add(new LootRule(Treasure.SMITH, loot.get(Loot.SMITHY, i),  i, true, 1));
+			lootRules.add(new LootRule(Treasure.MUSIC, loot.get(Loot.MUSIC, i),  i, true, 1));
+			lootRules.add(new LootRule(Treasure.REWARD, loot.get(Loot.REWARD, i),  i, true, 2));
+			lootRules.add(new LootRule(null, loot.get(Loot.JUNK, i),  i, true, 6));
+			lootRules.add(new LootRule(null, loot.get(Loot.SPECIAL, i),  i, false, 3));
+		}
+		return lootRules;
 	}
 }

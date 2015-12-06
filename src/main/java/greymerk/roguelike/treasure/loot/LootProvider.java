@@ -24,5 +24,4 @@ public class LootProvider implements ILoot {
 		if(level > 4)return loot.get(4).get(type);
 		return loot.get(level).get(type);
 	}
-
 }

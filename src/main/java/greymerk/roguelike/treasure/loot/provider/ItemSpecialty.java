@@ -29,9 +29,8 @@ public class ItemSpecialty extends ItemBase {
 	@Override
 	public ItemStack get(Random rand){
 		if(this.type == null || quality == null){
-			return new ItemStack(Items.stick);
+			return getRandomItem(rand, this.level);
 		}
-		
 		return getRandomItem(this.type, rand, this.quality);
 	}
 		
