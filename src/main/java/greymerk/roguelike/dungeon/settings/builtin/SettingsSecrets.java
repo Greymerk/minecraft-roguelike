@@ -1,5 +1,6 @@
 package greymerk.roguelike.dungeon.settings.builtin;
 
+import greymerk.roguelike.dungeon.base.DungeonRoom;
 import greymerk.roguelike.dungeon.base.SecretFactory;
 import greymerk.roguelike.dungeon.settings.DungeonSettings;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
@@ -13,6 +14,7 @@ public class SettingsSecrets extends DungeonSettings{
 
 			switch(i){
 			case 0:
+				factory.addRoom(DungeonRoom.BEDROOM, 2);
 				break;
 			case 1:
 				break;

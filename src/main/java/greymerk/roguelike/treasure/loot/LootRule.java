@@ -23,6 +23,8 @@ public class LootRule {
 		this.amount = amount;
 	}
 	
+	
+	
 	public void process(Random rand, ILoot loot, TreasureManager treasure){
 		if(toEach && type != null) treasure.addItemToAll(rand, type, level, item, amount);		
 		if(toEach && type == null) treasure.addItemToAll(rand, level, item, amount);

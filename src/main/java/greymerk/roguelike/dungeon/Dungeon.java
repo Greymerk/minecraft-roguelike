@@ -228,7 +228,7 @@ public class Dungeon implements IDungeon{
 	}
 	
 	private ItemStack book(String text){
-		ItemStack book = new ItemStack(Items.written_book);
+		ItemStack book = new ItemStack(Items.written_book, 1);
 		
 		book.setTagInfo("author", new NBTTagString("Greymerk"));
 		book.setTagInfo("title", new NBTTagString("Statistics"));

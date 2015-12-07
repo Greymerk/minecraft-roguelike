@@ -1,15 +1,17 @@
 package greymerk.roguelike.dungeon.settings.builtin;
 
-import greymerk.roguelike.dungeon.settings.LevelSettings;
-import greymerk.roguelike.dungeon.settings.DungeonSettings;
-import greymerk.roguelike.dungeon.settings.TowerSettings;
-import greymerk.roguelike.dungeon.settings.SpawnCriteria;
-import greymerk.roguelike.dungeon.towers.Tower;
-import greymerk.roguelike.theme.Theme;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import greymerk.roguelike.dungeon.settings.DungeonSettings;
+import greymerk.roguelike.dungeon.settings.LevelSettings;
+import greymerk.roguelike.dungeon.settings.SpawnCriteria;
+import greymerk.roguelike.dungeon.settings.TowerSettings;
+import greymerk.roguelike.dungeon.towers.Tower;
+import greymerk.roguelike.theme.Theme;
+import greymerk.roguelike.treasure.loot.LootRuleManager;
+import greymerk.roguelike.treasure.loot.WeightedRandomLoot;
+import net.minecraft.init.Items;
 import net.minecraftforge.common.BiomeDictionary;
 
 public class SettingsJungleTheme extends DungeonSettings{
@@ -22,6 +24,12 @@ public class SettingsJungleTheme extends DungeonSettings{
 		this.criteria.setBiomeTypes(biomes);
 		
 		this.towerSettings = new TowerSettings(Tower.JUNGLE, Theme.getTheme(Theme.JUNGLE));
+		
+		LootRuleManager rules = new LootRuleManager();
+		for(int i = 0; i < 5; ++i){
+			rules.add(null, new WeightedRandomLoot(Items.emerald, 1), i, false, 6);	
+		}
+		this.lootRules = rules;
 		
 		Theme[] themes = {Theme.JUNGLE, Theme.JUNGLE, Theme.MOSSY, Theme.MOSSY, Theme.NETHER};
 		
