@@ -1,5 +1,8 @@
 package greymerk.roguelike.dungeon.settings;
 
+import java.util.List;
+
+import greymerk.roguelike.treasure.loot.LootRuleManager;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.WorldEditor;
 
@@ -12,5 +15,9 @@ public interface ISettings {
 	
 	public TowerSettings getTower();
 	
+	public LootRuleManager getLootRules();
+	
 	public int getNumLevels();
+	
+	public List<SettingsType> getOverrides();
 }

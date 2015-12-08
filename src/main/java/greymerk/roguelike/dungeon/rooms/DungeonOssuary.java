@@ -34,8 +34,7 @@ public class DungeonOssuary extends DungeonBase {
 		
 		// any missing floor
 		BlockWeightedRandom cracked = new BlockWeightedRandom();
-		MetaBlock crack = BlockType.get(BlockType.STONE_BRICK);
-		cracked.addBlock(crack, 10);
+		cracked.addBlock(BlockType.get(BlockType.STONE_BRICK_CRACKED), 10);
 		cracked.addBlock(air, 3);
 		cracked.addBlock(BlockType.get(BlockType.COBBLESTONE), 5);
 		cracked.addBlock(BlockType.get(BlockType.GRAVEL), 5);

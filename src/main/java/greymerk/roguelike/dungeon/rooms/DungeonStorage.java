@@ -6,10 +6,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 
+import greymerk.roguelike.dungeon.Dungeon;
 import greymerk.roguelike.dungeon.base.DungeonBase;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.theme.ITheme;
-import greymerk.roguelike.treasure.TreasureChest;
+import greymerk.roguelike.treasure.Treasure;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
@@ -126,11 +127,11 @@ public class DungeonStorage extends DungeonBase {
 		}
 		
 
-		List<TreasureChest> types = new ArrayList<TreasureChest>(Arrays.asList(TreasureChest.BLOCKS, TreasureChest.SUPPLIES));
+		List<Treasure> types = new ArrayList<Treasure>(Arrays.asList(Treasure.BLOCKS, Treasure.SUPPLIES));
 		
 		List<Coord> spaces = new ArrayList<Coord>(chestSpaces);
 		
-		TreasureChest.createChests(editor, rand, settings, 3, spaces, types);
+		Treasure.createChests(editor, rand, 3, spaces, types, Dungeon.getLevel(origin.getY()));
 		
 		return true;
 	}

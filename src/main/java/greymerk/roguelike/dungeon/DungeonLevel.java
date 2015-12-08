@@ -60,4 +60,5 @@ public class DungeonLevel implements IDungeonLevel{
 		int dist = (int) this.origin.distance(pos);
 		return dist < this.settings.getRange();
 	}
+
 }

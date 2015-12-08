@@ -9,6 +9,6 @@ import greymerk.roguelike.worldgen.WorldEditor;
 
 public interface ISecretRoom {
 	
-	public boolean genRoom(WorldEditor editor, Random rand, LevelSettings settings, Cardinal dir, Coord pos);
+	public IDungeonRoom genRoom(WorldEditor editor, Random rand, LevelSettings settings, Cardinal dir, Coord pos);
 	
 }

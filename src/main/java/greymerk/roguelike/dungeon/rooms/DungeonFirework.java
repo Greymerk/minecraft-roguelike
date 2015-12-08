@@ -3,7 +3,7 @@ package greymerk.roguelike.dungeon.rooms;
 import java.util.List;
 import java.util.Random;
 
-import greymerk.roguelike.dungeon.base.IDungeonRoom;
+import greymerk.roguelike.dungeon.base.DungeonBase;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.treasure.loot.Firework;
 import greymerk.roguelike.worldgen.Cardinal;
@@ -23,7 +23,7 @@ import greymerk.roguelike.worldgen.redstone.Torch;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
-public class DungeonFirework implements IDungeonRoom {
+public class DungeonFirework extends DungeonBase {
 
 	@Override
 	public boolean generate(WorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {

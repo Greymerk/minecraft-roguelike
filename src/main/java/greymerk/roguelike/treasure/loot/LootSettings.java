@@ -112,6 +112,10 @@ public class LootSettings {
 		return provider.get(rand);
 	}
 	
+	public IWeighted<ItemStack> get(Loot type){
+		return this.loot.get(type);
+	}
+	
 	public void set(Loot type, IWeighted<ItemStack> provider){
 		this.loot.put(type, provider);
 	}

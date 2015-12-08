@@ -33,12 +33,12 @@ public class WeightedRandomLoot implements Comparable<WeightedRandomLoot>, IWeig
 		this.weight = weight;
 	}
 
-	public WeightedRandomLoot(Item id, int damage, int weight){
-		this(id, damage, 1, 1, weight);
+	public WeightedRandomLoot(Item type, int damage, int weight){
+		this(type, damage, 1, 1, weight);
 	}
 	
-	public WeightedRandomLoot(Item id, int weight){
-		this(id, 0, 1, 1, weight);
+	public WeightedRandomLoot(Item type, int weight){
+		this(type, 0, 1, 1, weight);
 	}
 	
 	public WeightedRandomLoot(JsonObject json, int weight){

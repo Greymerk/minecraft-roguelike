@@ -1,20 +1,45 @@
 package greymerk.roguelike.treasure.loot.provider;
 
+import java.util.Random;
+
+import greymerk.roguelike.treasure.loot.Enchant;
 import greymerk.roguelike.treasure.loot.Equipment;
 import greymerk.roguelike.treasure.loot.Loot;
 import greymerk.roguelike.treasure.loot.Quality;
 import greymerk.roguelike.util.TextFormat;
-
-import java.util.Random;
-
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
 public class ItemSpecialty extends ItemBase {
 	
+	private Equipment type;
+	private Quality quality;
+	
 	public ItemSpecialty(int weight, int level){
 		super(weight, level);
+	}
+	
+	public ItemSpecialty(int weight, int level, Equipment type, Quality q){
+		super(weight, level);
+		this.type = type;
+		this.quality = q;
+	}
+	
+	public ItemSpecialty(int weight, int level, Quality q){
+		super(weight, level);
+		this.quality = q;
+	}
+	
+	@Override
+	public ItemStack get(Random rand){
+		if(this.type == null && quality != null){
+			return getRandomItem(Equipment.values()[rand.nextInt(Equipment.values().length)], rand, this.quality);
+		}
+		if(this.type == null || quality == null){
+			return getRandomItem(rand, this.level);
+		}
+		return getRandomItem(this.type, rand, this.quality);
 	}
 		
 	public static ItemStack getRandomItem(Random rand, int level){
@@ -143,7 +168,7 @@ public class ItemSpecialty extends ItemBase {
 		ItemStack item;
 		if (quality == Quality.DIAMOND){
 			item = new ItemStack(Items.diamond_sword);
-			item.addEnchantment(Enchantment.sharpness, 3 + rand.nextInt(3));
+			item.addEnchantment(Enchant.getEnchant(Enchant.SHARPNESS), 3 + rand.nextInt(3));
 			if(rand.nextInt(10) == 0){
 				item.addEnchantment(Enchantment.looting, 2 + rand.nextInt(2));
 				item.addEnchantment(Enchantment.unbreaking, getUnbreakingLevel(quality, rand));
@@ -165,9 +190,9 @@ public class ItemSpecialty extends ItemBase {
 		} else {
 			item = new ItemStack(Items.iron_sword);
 			if(rand.nextBoolean()){
-				item.addEnchantment(Enchantment.sharpness, 1);
+				item.addEnchantment(Enchant.getEnchant(Enchant.SHARPNESS), 1);
 			}
-			item.addEnchantment(Enchantment.unbreaking, getUnbreakingLevel(quality, rand));
+			item.addEnchantment(Enchantment.unbreaking, 3);
 			Loot.setItemName(item, "Tempered Blade");
 			Loot.setItemLore(item, "Highly Durable", TextFormat.DARKGREEN);
 			return item;
@@ -247,15 +272,15 @@ public class ItemSpecialty extends ItemBase {
 		String suffix = "";
 
 		if(rand.nextInt(20) == 0){
-			item.addEnchantment(Enchantment.protection, getProtectionLevel(quality, rand));
-			item.addEnchantment(Enchantment.respiration, 3);
+			item.addEnchantment(Enchant.getEnchant(Enchant.PROTECTION), getProtectionLevel(quality, rand));
+			item.addEnchantment(Enchant.getEnchant(Enchant.RESPIRATION), 3);
 			item.addEnchantment(Enchantment.aquaAffinity, 1);
 			suffix = "of Diving";
 		} else if(rand.nextInt(3) == 0){
-			item.addEnchantment(Enchantment.projectileProtection, getProtectionLevel(quality, rand));
+			item.addEnchantment(Enchant.getEnchant(Enchant.PROJECTILEPROTECTION), getProtectionLevel(quality, rand));
 			suffix = "of Deflection";
 		} else {		
-			item.addEnchantment(Enchantment.protection, getProtectionLevel(quality, rand));
+			item.addEnchantment(Enchant.getEnchant(Enchant.PROTECTION), getProtectionLevel(quality, rand));
 			suffix = "of Defense";
 		}
 		
@@ -302,14 +327,14 @@ public class ItemSpecialty extends ItemBase {
 			item.addEnchantment(Enchantment.fireProtection, getProtectionLevel(quality, rand));
 			suffix = "of Warding";
 		} else if(rand.nextInt(5) == 0){
-			item.addEnchantment(Enchantment.protection, getProtectionLevel(quality, rand));
-			item.addEnchantment(Enchantment.featherFalling, quality == Quality.DIAMOND ? 4 : 1 + rand.nextInt(3));
+			item.addEnchantment(Enchant.getEnchant(Enchant.PROTECTION), getProtectionLevel(quality, rand));
+			item.addEnchantment(Enchant.getEnchant(Enchant.FEATHERFALLING), quality == Quality.DIAMOND ? 4 : 1 + rand.nextInt(3));
 			suffix = "of Lightness";
 		} else if(rand.nextInt(3) == 0){
-			item.addEnchantment(Enchantment.projectileProtection, getProtectionLevel(quality, rand));
+			item.addEnchantment(Enchant.getEnchant(Enchant.PROJECTILEPROTECTION), getProtectionLevel(quality, rand));
 			suffix = "of Deflection";
 		} else {
-			item.addEnchantment(Enchantment.protection, getProtectionLevel(quality, rand));
+			item.addEnchantment(Enchant.getEnchant(Enchant.PROTECTION), getProtectionLevel(quality, rand));
 			suffix = "of Defense";
 		}
 		
@@ -358,10 +383,10 @@ public class ItemSpecialty extends ItemBase {
 			item.addEnchantment(Enchantment.blastProtection, getProtectionLevel(quality, rand));
 			suffix = "of Integrity";
 		} else if(rand.nextInt(3) == 0){
-			item.addEnchantment(Enchantment.projectileProtection, getProtectionLevel(quality, rand));
+			item.addEnchantment(Enchant.getEnchant(Enchant.PROJECTILEPROTECTION), getProtectionLevel(quality, rand));
 			suffix = "of Deflection";
 		} else {
-			item.addEnchantment(Enchantment.protection, getProtectionLevel(quality, rand));
+			item.addEnchantment(Enchant.getEnchant(Enchant.PROTECTION), getProtectionLevel(quality, rand));
 			suffix = "of Defense";
 		}
 		
@@ -410,10 +435,10 @@ public class ItemSpecialty extends ItemBase {
 			item.addEnchantment(Enchantment.blastProtection, getProtectionLevel(quality, rand));
 			suffix = "of Integrity";
 		} else if(rand.nextInt(3) == 0){
-			item.addEnchantment(Enchantment.projectileProtection, getProtectionLevel(quality, rand));
+			item.addEnchantment(Enchant.getEnchant(Enchant.PROJECTILEPROTECTION), getProtectionLevel(quality, rand));
 			suffix = "of Deflection";
 		} else {
-			item.addEnchantment(Enchantment.protection, getProtectionLevel(quality, rand));
+			item.addEnchantment(Enchant.getEnchant(Enchant.PROTECTION), getProtectionLevel(quality, rand));
 			suffix = "of Defense";
 		}
 		

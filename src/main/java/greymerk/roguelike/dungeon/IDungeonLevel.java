@@ -16,5 +16,5 @@ public interface IDungeonLevel {
 	public boolean inRange(Coord pos);
 	
 	boolean hasNearbyNode(Coord pos);
-	
+
 }

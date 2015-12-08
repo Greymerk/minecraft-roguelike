@@ -86,10 +86,11 @@ public class LevelGeneratorClassic implements ILevelGenerator{
 			toGenerate.generate(editor, rand, this.level.getSettings(), node.getEntrances(), node.getPosition());
 		}
 		
-		for(DungeonTunnel tunnel : this.getTunnels()){			
-			for(Coord c : tunnel){
-				this.level.getSettings().getSegments().genSegment(editor, rand, this.level, tunnel.getDirection(), c);
-			}
+		for(DungeonTunnel tunnel : this.getTunnels()){
+			tunnel.genSegments(editor, rand, this.level);
+			//for(Coord c : tunnel){
+				//this.level.getSettings().getSegments().genSegment(editor, rand, this.level, tunnel.getDirection(), c);
+			//}
 		}
 		
 		LevelGenerator.generateLevelLink(editor, rand, this.level.getSettings(), start, oldEnd);
@@ -240,9 +241,7 @@ public class LevelGeneratorClassic implements ILevelGenerator{
 					continue;
 				}
 				
-				if(tunnelers.isEmpty() || rand.nextBoolean()){
-					this.tunnelers.add(new Tunneler(dir, this.settings, this.level, new Coord(this.pos)));
-				}
+				this.tunnelers.add(new Tunneler(dir, this.settings, this.level, new Coord(this.pos)));
 			}
 		}
 		

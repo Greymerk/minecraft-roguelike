@@ -15,23 +15,9 @@ import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.Quartz;
 
 public class DungeonsEnder extends DungeonBase {
-	WorldEditor editor;
-	Random rand;
 
-	byte dungeonHeight;
-	int dungeonLength;
-	int dungeonWidth;
-	
-	public DungeonsEnder() {
-		dungeonHeight = 10;
-		dungeonLength = 4;
-		dungeonWidth = 4;
-	}
 
 	public boolean generate(WorldEditor editor, Random inRandom, LevelSettings settings, Cardinal[] entrances, Coord origin) {
-
-		this.editor = editor;
-		rand = inRandom;
 
 		MetaBlock black = BlockType.get(BlockType.OBSIDIAN);
 		MetaBlock white = Quartz.get(Quartz.SMOOTH);
@@ -67,9 +53,9 @@ public class DungeonsEnder extends DungeonBase {
 		
 		int top = end.getY() - start.getY() + 1;
 		for(Coord cell : box){
-			boolean disolve = rand.nextInt((cell.getY() - start.getY()) + 1) < 2;
+			boolean disolve = inRandom.nextInt((cell.getY() - start.getY()) + 1) < 2;
 			air.setBlock(editor, inRandom, cell, false, disolve);
-			black.setBlock(editor, inRandom, cell, false, rand.nextInt(top - (cell.getY() - start.getY())) == 0 && !disolve);
+			black.setBlock(editor, inRandom, cell, false, inRandom.nextInt(top - (cell.getY() - start.getY())) == 0 && !disolve);
 		}
 		
 		start = new Coord(origin);
@@ -80,7 +66,7 @@ public class DungeonsEnder extends DungeonBase {
 		BlockFactoryCheckers checkers = new BlockFactoryCheckers(black, white);
 		editor.fillRectSolid(inRandom, start, end, checkers, true, true);
 		// TODO: add ender chest
-		Spawner.generate(editor, rand, settings, origin, Spawner.ENDERMAN);
+		Spawner.generate(editor, inRandom, settings, origin, Spawner.ENDERMAN);
 
 		return true;
 	}

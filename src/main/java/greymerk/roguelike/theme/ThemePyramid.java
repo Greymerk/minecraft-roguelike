@@ -9,24 +9,17 @@ import greymerk.roguelike.worldgen.blocks.StairType;
 public class ThemePyramid  extends ThemeBase{
 
 	public ThemePyramid(){
-		
-		MetaBlock smooth = BlockType.get(BlockType.SANDSTONE_SMOOTH);
-		MetaBlock chisel = BlockType.get(BlockType.SANDSTONE_CHISELED);
-		
+	
 		BlockWeightedRandom walls = new BlockWeightedRandom();
-		walls.addBlock(smooth, 100);
+		walls.addBlock(BlockType.get(BlockType.SANDSTONE_SMOOTH), 100);
 		walls.addBlock(BlockType.get(BlockType.SANDSTONE), 10);
-		walls.addBlock(chisel, 5);
-		walls.addBlock(BlockType.get(BlockType.SAND), 5);
+		walls.addBlock(BlockType.get(BlockType.SANDSTONE_CHISELED), 5);
 		
 		MetaStair stair = new MetaStair(StairType.SANDSTONE);
-		
-		MetaBlock pillar = smooth;
+		MetaBlock pillar = BlockType.get(BlockType.SANDSTONE_SMOOTH);
+		MetaBlock SegmentWall = BlockType.get(BlockType.SANDSTONE_CHISELED);
 		
 		this.primary = new BlockSet(walls, stair, pillar);
-		
-		MetaBlock SegmentWall = chisel;
-		
 		this.secondary =  new BlockSet(SegmentWall, stair, pillar);
 
 	}

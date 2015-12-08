@@ -3,10 +3,11 @@ package greymerk.roguelike.dungeon.rooms;
 import java.util.HashSet;
 import java.util.Random;
 
+import greymerk.roguelike.dungeon.Dungeon;
 import greymerk.roguelike.dungeon.base.DungeonBase;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.theme.ITheme;
-import greymerk.roguelike.treasure.TreasureChest;
+import greymerk.roguelike.treasure.Treasure;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
@@ -225,7 +226,8 @@ public class DungeonObsidian extends DungeonBase {
 				chestPos.add(dir, 4);
 				chestPos.add(orth, 2);
 				chestPos.add(Cardinal.DOWN, 3);
-				TreasureChest.generate(editor, rand, settings, chestPos, TreasureChest.ORE);
+				Treasure[] types = {Treasure.SPECIAL, Treasure.ORE};
+				Treasure.generate(editor, rand, chestPos, types[rand.nextInt(types.length)], Dungeon.getLevel(chestPos.getY()));
 			}
 		}
 		
@@ -322,13 +324,14 @@ public class DungeonObsidian extends DungeonBase {
 	
 	private static void lavaWindow(WorldEditor editor, Coord cursor, Cardinal orth){
 		MetaBlock lava = BlockType.get(BlockType.LAVA_FLOWING);
+		MetaBlock fence = BlockType.get(BlockType.FENCE_NETHER_BRICK);
 		editor.setBlock(cursor, lava);
 		cursor.add(Cardinal.DOWN, 1);
 		editor.setBlock(cursor, lava);
 		cursor.add(orth, 1);
-		editor.setBlock(cursor, lava);
+		editor.setBlock(cursor, fence);
 		cursor.add(Cardinal.UP, 1);
-		editor.setBlock(cursor, lava);
+		editor.setBlock(cursor, fence);
 	}
 
 }

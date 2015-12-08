@@ -15,23 +15,21 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import greymerk.roguelike.config.RogueConfig;
-import greymerk.roguelike.dungeon.settings.builtin.SettingsBasicLoot;
+import greymerk.roguelike.dungeon.settings.builtin.SettingsCustomBase;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsDesertTheme;
-import greymerk.roguelike.dungeon.settings.builtin.SettingsEniTheme;
-import greymerk.roguelike.dungeon.settings.builtin.SettingsEthoTheme;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsForestTheme;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsGenerator;
+import greymerk.roguelike.dungeon.settings.builtin.SettingsGrasslandTheme;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsJungleTheme;
+import greymerk.roguelike.dungeon.settings.builtin.SettingsLootRules;
+import greymerk.roguelike.dungeon.settings.builtin.SettingsMesaTheme;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsMountainTheme;
-import greymerk.roguelike.dungeon.settings.builtin.SettingsPyramidTheme;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsRooms;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsSecrets;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsSegments;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsSize;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsSwampTheme;
-import greymerk.roguelike.dungeon.settings.builtin.SettingsTempleTheme;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsTheme;
-import greymerk.roguelike.dungeon.settings.builtin.SettingsWitchTheme;
 import greymerk.roguelike.util.WeightedChoice;
 import greymerk.roguelike.util.WeightedRandomizer;
 import greymerk.roguelike.worldgen.Coord;
@@ -47,27 +45,24 @@ public class SettingsResolver {
 	public SettingsResolver(){
 		settings = new HashMap<String, DungeonSettings>();
 		DungeonSettings base = new SettingsBlank();
-		base = new DungeonSettings(base, new SettingsBasicLoot());
 		base = new DungeonSettings(base, new SettingsRooms());
 		base = new DungeonSettings(base, new SettingsSecrets());
 		base = new DungeonSettings(base, new SettingsSegments());
 		base = new DungeonSettings(base, new SettingsSize());
 		base = new DungeonSettings(base, new SettingsTheme());
 		base = new DungeonSettings(base, new SettingsGenerator());
+		base = new DungeonSettings(base, new SettingsLootRules());
 		base.setCriteria(new SpawnCriteria());
 		this.base = base;
 
 		this.builtin = new ArrayList<DungeonSettings>();
 		this.builtin.add(new SettingsDesertTheme());
-		this.builtin.add(new SettingsPyramidTheme());
+		this.builtin.add(new SettingsGrasslandTheme());
 		this.builtin.add(new SettingsJungleTheme());
-		this.builtin.add(new SettingsTempleTheme());
 		this.builtin.add(new SettingsSwampTheme());
-		this.builtin.add(new SettingsWitchTheme());
-		this.builtin.add(new SettingsEniTheme());
 		this.builtin.add(new SettingsMountainTheme());
-		this.builtin.add(new SettingsEthoTheme());
 		this.builtin.add(new SettingsForestTheme());
+		this.builtin.add(new SettingsMesaTheme());
 		
 		File settingsDir = new File(SETTINGS_DIRECTORY);
 		if(!settingsDir.exists() || !settingsDir.isDirectory()) return;
@@ -131,9 +126,24 @@ public class SettingsResolver {
 		
 		DungeonSettings builtin = this.getBuiltin(editor, rand, pos);
 		DungeonSettings custom = this.getCustom(editor, rand, pos);
-		
+				
 		if(custom != null){
-			return new DungeonSettings(this.base, custom);
+			List<SettingsType> overrides = custom.getOverrides();
+			DungeonSettings customBase = new SettingsCustomBase();
+			for(SettingsType type : SettingsType.values()){
+				if(overrides.contains(type)) continue;
+				switch(type){
+				case LOOT: break;
+				case LOOTRULES: customBase = new DungeonSettings(customBase, new SettingsLootRules()); break;
+				case SECRETS: customBase = new DungeonSettings(customBase, new SettingsSecrets()); break;
+				case ROOMS: customBase = new DungeonSettings(customBase, new SettingsRooms()); break;
+				case THEMES: customBase = new DungeonSettings(customBase, new SettingsTheme()); break;
+				case SEGMENTS: customBase = new DungeonSettings(customBase, new SettingsSegments()); break;
+				case SIZE: customBase = new DungeonSettings(customBase, new SettingsSize()); break;
+				case GENERATORS: customBase = new DungeonSettings(customBase, new SettingsGenerator()); break;
+				}
+			}
+			return new DungeonSettings(customBase, custom);
 		}
 		
 		if(builtin != null && RogueConfig.getBoolean(RogueConfig.DONOVELTYSPAWN)){

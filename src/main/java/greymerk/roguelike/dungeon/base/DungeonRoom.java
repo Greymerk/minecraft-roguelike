@@ -19,6 +19,8 @@ import greymerk.roguelike.dungeon.rooms.DungeonMess;
 import greymerk.roguelike.dungeon.rooms.DungeonNebris;
 import greymerk.roguelike.dungeon.rooms.DungeonObsidian;
 import greymerk.roguelike.dungeon.rooms.DungeonOssuary;
+import greymerk.roguelike.dungeon.rooms.DungeonPyramidCorner;
+import greymerk.roguelike.dungeon.rooms.DungeonPyramidSpawner;
 import greymerk.roguelike.dungeon.rooms.DungeonPyramidTomb;
 import greymerk.roguelike.dungeon.rooms.DungeonReward;
 import greymerk.roguelike.dungeon.rooms.DungeonStorage;
@@ -45,7 +47,7 @@ public enum DungeonRoom {
 	BRICK, CREEPER, CRYPT, ENCHANT, ENDER, FIRE, MUSIC, NETHER, NETHERFORT, PIT, PRISON,
 	SLIME, SMITH, SPIDER, CAKE, LAB, CORNER, MESS, ETHO, ENIKO, BTEAM, BAJ, OSSUARY, OBSIDIAN,
 	AVIDYA, STORAGE, NEBRIS, ASHLEA, FIREWORK, BEDROOM, REWARD, LIBRARY, PYRAMIDTOMB, DARKHALL,
-	TREETHO, LINKER, LINKERTOP;
+	TREETHO, LINKER, LINKERTOP, PYRAMIDSPAWNER, PYRAMIDCORNER;
 	
 	public static IDungeonRoom getInstance(DungeonRoom choice){
 		switch(choice){
@@ -86,6 +88,8 @@ public enum DungeonRoom {
 		case TREETHO: return new DungeonTreetho();
 		case LINKER: return new DungeonLinker();
 		case LINKERTOP: return new DungeonLinkerTop();
+		case PYRAMIDSPAWNER: return new DungeonPyramidSpawner();
+		case PYRAMIDCORNER: return new DungeonPyramidCorner();
 		default: return null;
 		}
 	}

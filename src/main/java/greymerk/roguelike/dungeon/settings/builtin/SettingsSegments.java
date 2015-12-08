@@ -19,16 +19,17 @@ public class SettingsSegments extends DungeonSettings{
 				segments.add(Segment.LAMP, 2);
 				segments.add(Segment.FIREPLACE, 2);
 				segments.add(Segment.FLOWERS, 1);
-				segments.add(Segment.WHEAT, 2);
+				segments.add(Segment.WHEAT, 1);
 				break;
 			case 1:
 				segments = new SegmentGenerator(Segment.ARCH);
-				segments.add(Segment.SHELF, 1);
 				segments.add(Segment.INSET, 3);
-				segments.add(Segment.DOOR, 5);
-				segments.add(Segment.BOOKS, 1);
+				segments.add(Segment.SHELF, 5);
+				segments.add(Segment.FIREPLACE, 1);
+				segments.add(Segment.BOOKS, 2);
 				segments.add(Segment.CHEST, 1);
-				segments.add(Segment.SPAWNER, 1);
+				segments.add(Segment.FLOWERS, 1);
+				segments.add(Segment.SPAWNER, 2);
 				break;
 			case 2:
 				segments = new SegmentGenerator(Segment.ARCH);
@@ -56,11 +57,12 @@ public class SettingsSegments extends DungeonSettings{
 				break;
 			case 4:
 				segments = new SegmentGenerator(Segment.NETHERARCH);
+				segments.add(Segment.SPAWNER, 10);
 				segments.add(Segment.NETHERLAVA, 3);
 				segments.add(Segment.NETHERSTRIPE, 3);
 				segments.add(Segment.NETHERWART, 3);
+				segments.add(Segment.SKULL, 3);
 				segments.add(Segment.CHEST, 1);
-				segments.add(Segment.SPAWNER, 1);
 				break;
 			default:
 				segments = new SegmentGenerator(Segment.ARCH);

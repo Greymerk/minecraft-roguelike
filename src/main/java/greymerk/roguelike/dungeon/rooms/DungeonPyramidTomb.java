@@ -2,10 +2,11 @@ package greymerk.roguelike.dungeon.rooms;
 
 import java.util.Random;
 
+import greymerk.roguelike.dungeon.Dungeon;
 import greymerk.roguelike.dungeon.base.DungeonBase;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.theme.ITheme;
-import greymerk.roguelike.treasure.TreasureChest;
+import greymerk.roguelike.treasure.Treasure;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
@@ -197,14 +198,14 @@ public class DungeonPyramidTomb extends DungeonBase{
 		SpawnerSettings spawners = settings.getSpawners();
 		
 		IStair stair = new MetaStair(StairType.QUARTZ);
-		MetaBlock blocks = BlockType.get(BlockType.AIR);
+		MetaBlock blocks = BlockType.get(BlockType.QUARTZ);
 		
 		Coord cursor;
 		
 		cursor = new Coord(origin);
 		blocks.setBlock(editor, cursor);
 		cursor.add(Cardinal.UP);
-		TreasureChest.generate(editor, rand, settings, cursor, TreasureChest.ORE);
+		Treasure.generate(editor, rand, cursor, Treasure.ORE, Dungeon.getLevel(cursor.getY()));
 		cursor.add(Cardinal.UP);
 		blocks.setBlock(editor, cursor);
 		

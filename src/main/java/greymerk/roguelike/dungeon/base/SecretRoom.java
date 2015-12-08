@@ -12,15 +12,18 @@ public class SecretRoom implements ISecretRoom {
 
 	private int count;
 	private IDungeonRoom prototype;
+	DungeonRoom type;
 	
 	public SecretRoom(DungeonRoom type, int count){
 		this.count = count;
+		this.type = type;
 		this.prototype = DungeonRoom.getInstance(type);
 	}
 	
 	public SecretRoom(SecretRoom toCopy){
 		this.count = toCopy.count;
 		this.prototype = toCopy.prototype;
+		this.type = toCopy.type;
 	}
 	
 	private boolean isValid(WorldEditor editor, Random rand, Cardinal dir, Coord pos){
@@ -32,8 +35,8 @@ public class SecretRoom implements ISecretRoom {
 	}
 	
 	@Override
-	public boolean genRoom(WorldEditor editor, Random rand, LevelSettings settings, Cardinal dir, Coord pos){
-		if(!isValid(editor, rand, dir, pos)) return false;
+	public IDungeonRoom genRoom(WorldEditor editor, Random rand, LevelSettings settings, Cardinal dir, Coord pos){
+		if(!isValid(editor, rand, dir, pos)) return null;
 		
 		int size = prototype.getSize();
 		
@@ -57,6 +60,9 @@ public class SecretRoom implements ISecretRoom {
 		this.prototype.generate(editor, rand, settings, new Cardinal[]{dir}, end);
 		count -= 1;
 		
-		return true;
+		IDungeonRoom generated = this.prototype;
+		this.prototype = DungeonRoom.getInstance(this.type);
+		
+		return generated;
 	}
 }

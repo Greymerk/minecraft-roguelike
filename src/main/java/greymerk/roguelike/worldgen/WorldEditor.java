@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import greymerk.roguelike.treasure.ITreasureChest;
+import greymerk.roguelike.treasure.TreasureManager;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
@@ -20,10 +22,12 @@ public class WorldEditor {
 	
 	World world;
 	private Map<Block, Integer> stats;
+	private TreasureManager chests;
 	
 	public WorldEditor(World world){
 		this.world = world;
 		stats = new HashMap<Block, Integer>();
+		this.chests = new TreasureManager();
 	}
 	
 	public boolean setBlock(Coord pos, MetaBlock block, boolean fillAir, boolean replaceSolid){
@@ -330,5 +334,17 @@ public class WorldEditor {
 	public void setBlockMetadata(Coord pos, int meta) {
 		world.setBlockMetadataWithNotify(pos.getX(), pos.getY(), pos.getZ(), meta, 2);
 	}
+	
+	public int getStat(Block type){
+		if(!this.stats.containsKey(type)) return 0;
+		return this.stats.get(type);
+	}
+	
+	public void addChest(ITreasureChest toAdd){
+		this.chests.add(toAdd);
+	}
+	
+	public TreasureManager getTreasure(){
+		return this.chests;
+	}
 }
-

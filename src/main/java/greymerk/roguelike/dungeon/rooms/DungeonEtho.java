@@ -64,23 +64,6 @@ public class DungeonEtho extends DungeonBase {
 		editor.fillRectSolid(rand, x - 4, y - 1, z + 3, x - 3, y - 1, z + 4, water);
 		editor.setBlock(x - 5, y, z + 5, water);
 		
-		// alcove walls with diamonds
-		BlockWeightedRandom ethoStone = new BlockWeightedRandom();
-		ethoStone.addBlock(BlockType.get(BlockType.STONE_SMOOTH), 100);
-		ethoStone.addBlock(BlockType.get(BlockType.ORE_DIAMOND), 15);
-		
-		editor.fillRectSolid(rand, x - 6, y, z - 5, x - 6, y + 4, z - 4, ethoStone);
-		editor.fillRectSolid(rand, x - 6, y, z + 4, x - 6, y + 4, z + 5, ethoStone);
-		
-		editor.fillRectSolid(rand, x + 6, y, z - 5, x + 6, y + 4, z - 4, ethoStone);
-		editor.fillRectSolid(rand, x + 6, y, z + 4, x + 6, y + 4, z + 5, ethoStone);
-		
-		editor.fillRectSolid(rand, x - 5, y, z - 6, x - 4, y + 4, z - 6, ethoStone);
-		editor.fillRectSolid(rand, x + 4, y, z - 6, x + 5, y + 4, z - 6, ethoStone);
-		
-		editor.fillRectSolid(rand, x - 5, y, z + 6, x - 4, y + 4, z + 6, ethoStone);
-		editor.fillRectSolid(rand, x + 4, y, z + 6, x + 5, y + 4, z + 6, ethoStone);
-		
 		editor.fillRectSolid(rand, x - 1, y - 1, z - 5, x + 1, y - 1, z + 5, grass);
 		editor.fillRectSolid(rand, x - 5, y - 1, z - 1, x + 5, y - 1, z + 1, grass);
 		

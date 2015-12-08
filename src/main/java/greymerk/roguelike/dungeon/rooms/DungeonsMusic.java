@@ -7,7 +7,7 @@ import java.util.Random;
 import greymerk.roguelike.dungeon.base.DungeonBase;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.theme.ITheme;
-import greymerk.roguelike.treasure.TreasureChest;
+import greymerk.roguelike.treasure.Treasure;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
@@ -26,6 +26,7 @@ public class DungeonsMusic extends DungeonBase {
 	int originZ;
 	
 	public DungeonsMusic() {
+		super();
 	}
 
 	public boolean generate(WorldEditor editor, Random inRandom, LevelSettings settings, Cardinal[] entrances, Coord origin) {
@@ -104,7 +105,7 @@ public class DungeonsMusic extends DungeonBase {
 		chestSpace.addAll(WorldEditor.getRectSolid(originX + 5, originY + 1, originZ - 4, originX + 5, originY + 1, originZ - 3));
 		chestSpace.addAll(WorldEditor.getRectSolid(originX + 5, originY + 1, originZ + 3, originX + 5, originY + 1, originZ + 4));
 
-		TreasureChest.generate(editor, rand, settings, new ArrayList<Coord>(chestSpace), TreasureChest.MUSIC);
+		Treasure.generate(editor, rand, new ArrayList<Coord>(chestSpace), Treasure.MUSIC, 0);
 		
 		// horizontal beams
 		editor.fillRectSolid(rand, originX - 5, originY + 3, originZ - 5, originX - 5, originY + 3, originZ + 5, log, true, true);

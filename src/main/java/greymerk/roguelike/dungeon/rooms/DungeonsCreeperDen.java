@@ -7,7 +7,7 @@ import java.util.Random;
 import greymerk.roguelike.dungeon.base.DungeonBase;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.theme.ITheme;
-import greymerk.roguelike.treasure.TreasureChest;
+import greymerk.roguelike.treasure.Treasure;
 import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
@@ -68,8 +68,8 @@ public class DungeonsCreeperDen extends DungeonBase {
 		
 		int counter = 0;
 		for(Coord spot : chestSpaces){
-			if(TreasureChest.isValidChestSpace(editor, spot)){
-				TreasureChest.generate(editor, rand, settings, spot, TreasureChest.ORE, settings.getDifficulty(spot), true);
+			if(Treasure.isValidChestSpace(editor, spot)){
+				Treasure.generate(editor, rand, spot, Treasure.ORE, settings.getDifficulty(spot), true);
 				Coord cursor = new Coord(spot);
 				cursor.add(Cardinal.DOWN, 2);
 				tnt.setBlock(editor, cursor);

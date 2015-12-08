@@ -25,6 +25,7 @@ public class DungeonsSlime extends DungeonBase {
 	MetaBlock liquid;
 	
 	public DungeonsSlime() {
+		super();
 	}
 
 	public boolean generate(WorldEditor editor, Random inRandom, LevelSettings settings, Cardinal[] entrances, Coord origin) {
@@ -65,8 +66,6 @@ public class DungeonsSlime extends DungeonBase {
 		
 		if(Dungeon.getLevel(originY) == 4){
 			Spawner.generate(editor, rand, settings, new Coord(originX, originY + 5, originZ), Spawner.LAVASLIME);
-		} else {
-			editor.randomVines(rand, originX - 7, originY + 2, originZ - 7, originX + 7, originY + 5, originZ + 7);			
 		}
 		
 		return true;

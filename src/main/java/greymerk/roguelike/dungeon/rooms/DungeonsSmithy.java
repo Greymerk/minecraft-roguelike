@@ -2,12 +2,11 @@ package greymerk.roguelike.dungeon.rooms;
 
 import java.util.Random;
 
+import greymerk.roguelike.dungeon.Dungeon;
 import greymerk.roguelike.dungeon.base.DungeonBase;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.theme.ITheme;
-import greymerk.roguelike.treasure.ITreasureChest;
-import greymerk.roguelike.treasure.TreasureChest;
-import greymerk.roguelike.treasure.TreasureChestEmpty;
+import greymerk.roguelike.treasure.Treasure;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
@@ -50,7 +49,6 @@ public class DungeonsSmithy extends DungeonBase {
 		air.setBlock(editor, cursor);
 		
 		mainRoom(editor, rand, settings, dir, origin);
-		
 		
 		return true;
 	}
@@ -288,17 +286,14 @@ public class DungeonsSmithy extends DungeonBase {
 	
 	private void smelter(WorldEditor editor, Random rand, LevelSettings settings, Cardinal dir, Coord origin){
 		Coord cursor;
-		ITreasureChest input = new TreasureChestEmpty();
-		input.generate(editor, rand, settings.getLoot(), origin, 0, false);
+		Treasure.generate(editor, rand, origin, Treasure.EMPTY, 1, false);
 		cursor = new Coord(origin);
 		cursor.add(dir, 2);
 		cursor.add(Cardinal.UP, 2);
-		ITreasureChest output = new TreasureChestEmpty();
-		output.generate(editor, rand, settings.getLoot(), cursor, 0, false);
+		Treasure.generate(editor, rand, cursor, Treasure.EMPTY, 1, false);
 		cursor.add(Cardinal.UP);
 		cursor.add(Cardinal.reverse(dir));
-		ITreasureChest fuel = new TreasureChestEmpty();
-		fuel.generate(editor, rand, settings.getLoot(), cursor, 0, false);
+		Treasure.generate(editor, rand, cursor, Treasure.EMPTY, 1, false);
 		
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.UP);
@@ -471,7 +466,7 @@ public class DungeonsSmithy extends DungeonBase {
 		stair.setOrientation(orth[1], true);
 		editor.fillRectSolid(rand, start, end, stair, true, true);
 		cursor.add(Cardinal.UP);
-		TreasureChest.generate(editor, rand, settings, cursor, TreasureChest.SMITH);
+		Treasure.generate(editor, rand, cursor, Treasure.SMITH, Dungeon.getLevel(cursor.getY()));
 		
 		cursor = new Coord(origin);
 	}
@@ -495,10 +490,10 @@ public class DungeonsSmithy extends DungeonBase {
 		}
 		
 		cursor = new Coord(origin);
-		cursor.add(Cardinal.UP);
-		editor.setBlock(cursor, BlockType.get(BlockType.REDSTONE_LAMP_LIT));
-		cursor.add(Cardinal.UP);
+		cursor.add(Cardinal.UP, 2);
 		editor.setBlock(cursor, BlockType.get(BlockType.REDSTONE_BLOCK));
+		cursor.add(Cardinal.DOWN);
+		editor.setBlock(cursor, BlockType.get(BlockType.REDSTONE_LAMP_LIT));
 	}
 	
 	public int getSize(){

@@ -4,9 +4,6 @@ import java.util.Random;
 
 import greymerk.roguelike.dungeon.base.DungeonBase;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
-import greymerk.roguelike.treasure.ITreasureChest;
-import greymerk.roguelike.treasure.TreasureChestEmpty;
-import greymerk.roguelike.treasure.loot.provider.ItemNovelty;
 import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
@@ -107,9 +104,7 @@ public class DungeonBaj extends DungeonBase {
 		crops(editor, rand, x + 1, y - 1, z + 3);
 		
 		editor.setBlock(x, y - 1, z, BlockType.get(BlockType.DIRT));
-		ITreasureChest chest = new TreasureChestEmpty().generate(editor, rand, settings.getLoot(), new Coord(x, y, z), 0, false);
-		chest.setInventorySlot(ItemNovelty.getItem(ItemNovelty.BAJ), chest.getInventorySize() / 2);
-		
+
 		
 		return false;
 	}

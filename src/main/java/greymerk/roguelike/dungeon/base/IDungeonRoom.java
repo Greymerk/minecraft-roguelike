@@ -14,4 +14,5 @@ public interface IDungeonRoom {
 	public int getSize();
 	
 	public boolean validLocation(WorldEditor editor, Cardinal dir, int x, int y, int z);
+
 }

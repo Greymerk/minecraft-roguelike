@@ -23,12 +23,11 @@ public class SettingsSwampTheme extends DungeonSettings{
 		this.criteria = new SpawnCriteria();
 		List<BiomeDictionary.Type> biomes = new ArrayList<BiomeDictionary.Type>();
 		biomes.add(BiomeDictionary.Type.SWAMP);
-		this.criteria.setWeight(5);
 		this.criteria.setBiomeTypes(biomes);
 		
-		this.towerSettings = new TowerSettings(Tower.ROGUE, Theme.getTheme(Theme.MUDDY));
+		this.towerSettings = new TowerSettings(Tower.WITCH, Theme.getTheme(Theme.DARKOAK));
 		
-		Theme[] themes = {Theme.MUDDY, Theme.DARKHALL, Theme.CRYPT, Theme.MOSSY, Theme.NETHER};
+		Theme[] themes = {Theme.DARKHALL, Theme.DARKHALL, Theme.MUDDY, Theme.MOSSY, Theme.NETHER};
 		
 		for(int i = 0; i < 5; ++i){
 			
@@ -50,6 +49,27 @@ public class SettingsSwampTheme extends DungeonSettings{
 				factory.addRandom(DungeonRoom.BRICK, 10);
 				factory.addRandom(DungeonRoom.CORNER, 3);
 				level.setRooms(factory);
+			}
+			
+			if(i == 1){
+
+				SegmentGenerator segments = new SegmentGenerator(Segment.ARCH);
+				segments.add(Segment.DOOR, 8);
+				segments.add(Segment.SHELF, 4);
+				segments.add(Segment.INSET, 4);
+				segments.add(Segment.MUSHROOM, 3);
+				level.setSegments(segments);
+				
+				DungeonFactory factory = new DungeonFactory();
+				factory.addSingle(DungeonRoom.CAKE);
+				factory.addSingle(DungeonRoom.LAB);
+				factory.addSingle(DungeonRoom.SPIDER);
+				factory.addSingle(DungeonRoom.PIT);
+				factory.addSingle(DungeonRoom.PRISON);
+				factory.addRandom(DungeonRoom.BRICK, 10);
+				factory.addRandom(DungeonRoom.CORNER, 3);
+				level.setRooms(factory);
+				
 			}
 			
 			levels.put(i, level);

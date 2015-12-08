@@ -30,4 +30,5 @@ public abstract class DungeonBase implements IDungeonRoom{
 		
 		return true;
 	}
+	
 }

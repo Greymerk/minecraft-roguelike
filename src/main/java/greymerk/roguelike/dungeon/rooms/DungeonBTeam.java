@@ -3,17 +3,16 @@ package greymerk.roguelike.dungeon.rooms;
 import java.util.List;
 import java.util.Random;
 
-import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.dungeon.base.DungeonBase;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.treasure.ITreasureChest;
-import greymerk.roguelike.treasure.TreasureChestEmpty;
+import greymerk.roguelike.treasure.Treasure;
 import greymerk.roguelike.treasure.loot.Loot;
-import greymerk.roguelike.treasure.loot.PotionMixture;
 import greymerk.roguelike.treasure.loot.Record;
 import greymerk.roguelike.treasure.loot.provider.ItemArmour;
 import greymerk.roguelike.treasure.loot.provider.ItemNovelty;
 import greymerk.roguelike.worldgen.BlockFactoryCheckers;
+import greymerk.roguelike.worldgen.BlockJumble;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IStair;
@@ -38,171 +37,396 @@ public class DungeonBTeam extends DungeonBase {
 	@Override
 	public boolean generate(WorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
 		
-		int x = origin.getX();
-		int y = origin.getY();
-		int z = origin.getZ();
-		
-		
 		MetaBlock air = BlockType.get(BlockType.AIR);
-		MetaBlock oakLog = Log.getLog(Wood.OAK);
 		IStair stair = new MetaStair(StairType.SPRUCE);
+		MetaBlock log = Log.getLog(Wood.OAK, Cardinal.UP);
 		MetaBlock stonebrick = BlockType.get(BlockType.STONE_BRICK);
 		MetaBlock cyan = ColorBlock.get(ColorBlock.CLAY, DyeColor.CYAN);
-		MetaBlock doubleSlab = Slab.get(Slab.STONE, false, true, false);
-		MetaBlock sprucePlank = Wood.getPlank(Wood.SPRUCE);
+		MetaBlock slab = Slab.get(Slab.STONE, false, true, true);
 		MetaBlock cobble = BlockType.get(BlockType.COBBLESTONE);
+		MetaBlock lamp = BlockType.get(BlockType.REDSTONE_LAMP);
+				
+		Cardinal dir = entrances[0];
+		Cardinal[] orth = Cardinal.getOrthogonal(dir);
 		
-		editor.fillRectSolid(rand, x - 4, y, z - 4, x + 4, y + 4, z + 5, air);
-		editor.fillRectSolid(rand, x - 4, y - 1, z - 4, x + 4, y - 1, z + 5, cobble);
-		editor.fillRectSolid(rand, x - 3, y - 1, z - 2, x + 3, y - 1, z + 3, cyan, true, true);
-		editor.fillRectSolid(rand, x - 2, y - 1, z - 1, x + 2, y - 1, z + 2, doubleSlab, true, true);
+		Coord start;
+		Coord end;
+		Coord cursor;
 		
-		// wood panel walls
+		start = new Coord(origin);
+		end = new Coord(origin);
+		start.add(dir, 5);
+		end.add(Cardinal.reverse(dir), 4);
+		start.add(orth[0], 6);
+		end.add(orth[1], 6);
+		end.add(Cardinal.UP, 5);
+		start.add(Cardinal.DOWN);
+		stonebrick.fillRectHollow(editor, rand, start, end, true, true);
 		
-		BlockFactoryCheckers panels = new BlockFactoryCheckers(Log.getLog(Wood.SPRUCE, Cardinal.UP), Log.getLog(Wood.SPRUCE, Cardinal.EAST));
-		editor.fillRectSolid(rand, x - 4, y + 1, z + 6, x + 4, y + 3, z + 6, panels, true, true);
-		editor.fillRectSolid(rand, x - 4, y + 1, z - 5, x + 4, y + 3, z - 5, panels, true, true);
-	
-		editor.fillRectSolid(rand, x - 4, y, z + 6, x + 4, y, z + 6, sprucePlank, true, true);
-		editor.fillRectSolid(rand, x - 4, y, z - 5, x + 4, y, z - 5, sprucePlank, true, true);
+		start = new Coord(origin);
+		start.add(Cardinal.DOWN);
+		end = new Coord(start);
+		start.add(dir, 4);
+		end.add(Cardinal.reverse(dir), 3);
+		start.add(orth[0], 5);
+		end.add(orth[1], 5);
+		cobble.fillRectSolid(editor, rand, start, end, true, true);
 		
-		editor.fillRectSolid(rand, x - 5, y - 1, z - 4, x - 5, y, z + 5, sprucePlank, true, true);
-		editor.fillRectSolid(rand, x + 5, y - 1, z - 4, x + 5, y, z + 5, sprucePlank, true, true);
+		start = new Coord(origin);
+		start.add(Cardinal.DOWN);
+		end = new Coord(start);
+		start.add(dir, 3);
+		end.add(Cardinal.reverse(dir), 2);
+		start.add(orth[0], 4);
+		end.add(orth[1], 4);
+		cyan.fillRectSolid(editor, rand, start, end, true, true);
 		
-		stair.setOrientation(Cardinal.SOUTH, false);
-		editor.fillRectSolid(rand, x - 4, y + 4, z - 4, x + 4, y + 4, z - 4, stair, true, true);
-		stair.setOrientation(Cardinal.NORTH, false);
-		editor.fillRectSolid(rand, x - 4, y + 4, z + 5, x + 4, y + 4, z + 5, stair, true, true);
+		start = new Coord(origin);
+		start.add(Cardinal.DOWN);
+		end = new Coord(start);
+		start.add(dir, 2);
+		end.add(Cardinal.reverse(dir), 1);
+		start.add(orth[0], 3);
+		end.add(orth[1], 3);
+		slab.fillRectSolid(editor, rand, start, end, true, true);
 		
-		// doors
-		editor.fillRectSolid(rand, x - 1, y, z - 5, x + 1, y + 2, z - 5, cobble);
-		editor.fillRectSolid(rand, x, y, z - 5, x, y + 1, z - 5, air);
+		cursor = new Coord(origin);
+		cursor.add(Cardinal.reverse(dir), 4);
+		logWall(editor, rand, dir, cursor);
+		cursor.add(dir, 9);
+		logWall(editor, rand, Cardinal.reverse(dir), cursor);
 		
-		editor.fillRectSolid(rand, x - 1, y, z + 6, x + 1, y + 2, z + 6, cobble);
-		editor.fillRectSolid(rand, x, y, z + 6, x, y + 1, z + 6, air);
+		cursor = new Coord(origin);
+		cursor.add(orth[0], 6);
+		tvWall(editor, rand, orth[0], cursor);
 		
-		// west wall
-		editor.fillRectSolid(rand, x - 5, y, z - 5, x - 5, y + 4, z + 6, sprucePlank, true, true);
-		editor.fillRectSolid(rand, x - 5, y, z - 1, x - 5, y, z + 2, BlockType.get(BlockType.NOTEBLOCK));
-		editor.fillRectSolid(rand, x - 5, y + 1, z - 3, x - 5, y + 3, z + 4, BlockType.get(BlockType.SHELF));
-		MetaBlock black = ColorBlock.get(ColorBlock.WOOL, DyeColor.BLACK);
-		editor.fillRectSolid(rand, x - 5, y + 1, z - 1, x - 5, y + 3, z + 2, black, true, true);
+		cursor = new Coord(origin);
+		cursor.add(orth[1], 6);
+		bWall(editor, rand, orth[1], cursor);
 		
-		MetaBlock cocao = Crops.getCocao(Cardinal.WEST);
-		editor.setBlock(x - 5, y + 2, z - 2, Log.getLog(Wood.JUNGLE, Cardinal.EAST));
-		cocao.setBlock(editor, new Coord(x - 4, y + 2, z - 2));
-		editor.setBlock(x - 5, y + 2, z + 3, Log.getLog(Wood.JUNGLE, Cardinal.EAST));
-		cocao.setBlock(editor, new Coord(x - 4, y + 2, z + 3));
+		table(editor, rand, dir, origin);
 		
-		lamp(editor, rand, new Coord(x - 2, y, z - 4));
-		lamp(editor, rand, new Coord(x + 2, y, z - 4));
-		lamp(editor, rand, new Coord(x - 2, y, z + 5));
-		lamp(editor, rand, new Coord(x + 2, y, z + 5));
+		start = new Coord(origin);
+		start.add(Cardinal.reverse(dir), 4);
+		end = new Coord(start);
+		start.add(orth[0]);
+		end.add(orth[1]);
+		end.add(Cardinal.UP, 2);
+		cobble.fillRectSolid(editor, rand, start, end, true, true);
 		
-		// east wall
-		editor.fillRectSolid(rand, x + 5, y + 1, z - 4, x + 5, y + 4, z + 5, stonebrick);
+		cursor = new Coord(origin);
+		cursor.add(Cardinal.reverse(dir), 4);
+		air.setBlock(editor, cursor);
+		cursor.add(Cardinal.UP);
+		air.setBlock(editor, cursor);
 		
-		MetaBlock lime = ColorBlock.get(ColorBlock.WOOL, DyeColor.LIME);
-		MetaBlock greenBlock = RogueConfig.getBoolean(RogueConfig.PRECIOUSBLOCKS) ? BlockType.get(BlockType.EMERALD_BLOCK) : lime;
+		cursor = new Coord(origin);
+		cursor.add(Cardinal.reverse(dir));
+		cursor.add(orth[0], 3);
+		cursor.add(Cardinal.UP, 5);
+		log.setBlock(editor, cursor);
+		cursor.add(dir, 3);
+		log.setBlock(editor, cursor);
+		cursor.add(orth[1], 6);
+		log.setBlock(editor, cursor);
+		cursor.add(Cardinal.reverse(dir), 3);
+		log.setBlock(editor, cursor);
 		
-		editor.fillRectSolid(rand, x + 5, y, z - 1, x + 5, y + 4, z - 1, greenBlock, true, true);
-		editor.fillRectSolid(rand, x + 5, y, z, x + 5, y, z + 1, greenBlock, true, true);
-		editor.fillRectSolid(rand, x + 5, y + 1, z, x + 5, y + 1, z + 1, air);
-		greenBlock.setBlock(editor, new Coord(x + 5, y + 1, z + 2));
-		editor.fillRectSolid(rand, x + 5, y + 2, z, x + 5, y + 2, z + 1, greenBlock, true, true);
-		editor.fillRectSolid(rand, x + 5, y + 3, z, x + 5, y + 3, z + 1, air);
-		greenBlock.setBlock(editor, new Coord(x + 5, y + 3, z + 2));
-		editor.fillRectSolid(rand, x + 5, y + 4, z, x + 5, y + 4, z + 1, greenBlock, true, true);
+		start = new Coord(origin);
+		start.add(Cardinal.reverse(dir));
+		start.add(Cardinal.UP, 5);
+		end = new Coord(start);
+		start.add(orth[0], 2);
+		end.add(orth[1], 2);
+		stair.setOrientation(dir, true).fillRectSolid(editor, rand, start, end, true, true);
+		start.add(dir, 3);
+		end.add(dir, 3);
+		stair.setOrientation(Cardinal.reverse(dir), true).fillRectSolid(editor, rand, start, end, true, true);
 		
-		// roof
-		editor.fillRectSolid(rand, x - 4, y + 5, z - 5, x + 4, y + 6, z + 6, BlockType.get(BlockType.STONE_SMOOTH));
-		editor.fillRectSolid(rand, x - 2, y + 5, z - 1, x + 2, y + 5, z - 1, stair.setOrientation(Cardinal.SOUTH, true), true, true);
-		editor.fillRectSolid(rand, x - 2, y + 5, z + 2, x + 2, y + 5, z + 2, stair.setOrientation(Cardinal.NORTH, true), true, true);
-		editor.fillRectSolid(rand, x - 3, y + 5, z, x - 3, y + 5, z + 1, stair.setOrientation(Cardinal.EAST, true), true, true);
-		editor.fillRectSolid(rand, x + 3, y + 5, z, x + 3, y + 5, z + 1, stair.setOrientation(Cardinal.WEST, true), true, true);
-		editor.fillRectSolid(rand, x - 2, y + 5, z, x + 2, y + 5, z + 1, BlockType.get(BlockType.REDSTONE_LAMP));
+		for(Cardinal d : orth){
+			start = new Coord(origin);
+			start.add(Cardinal.UP, 5);
+			start.add(d, 3);
+			end = new Coord(start);
+			end.add(dir);
+			stair.setOrientation(Cardinal.reverse(d), true).fillRectSolid(editor, rand, start, end, true, true);
+		}
 		
-		editor.setBlock(x - 3, y + 5, z - 1, oakLog);
-		editor.setBlock(x + 3, y + 5, z - 1, oakLog);
+		start = new Coord(origin);
+		start.add(Cardinal.UP, 5);
+		end = new Coord(start);
+		start.add(orth[0], 2);
+		end.add(orth[1], 2);
+		end.add(dir);
+		lamp.fillRectSolid(editor, rand, start, end, true, true);
+
+		cursor = new Coord(origin);
+		cursor.add(dir, 4);
+		cursor.add(orth[1], 5);
+		BlockType.get(BlockType.SHELF).setBlock(editor, cursor);
+		cursor.add(Cardinal.UP);
+		BrewingStand.get().setBlock(editor, cursor);
 		
-		editor.setBlock(x - 3, y + 5, z + 2, oakLog);
-		editor.setBlock(x + 3, y + 5, z + 2, oakLog);
+		cursor = new Coord(origin);
+		cursor.add(dir, 4);
+		cursor.add(orth[0], 4);
+		BlockType.get(BlockType.JUKEBOX).setBlock(editor, cursor);
+		cursor.add(orth[0]);
+		ITreasureChest stal = Treasure.generate(editor, rand, cursor, Treasure.EMPTY, settings.getDifficulty(cursor));
+		stal.setSlot(stal.getSize() / 2, Record.getRecord(Record.STAL));
 		
-		
-		// table
-		editor.fillRectSolid(rand, x - 2, y, z, x - 2, y, z + 1, stair.setOrientation(Cardinal.WEST, true), true, true);
-		editor.fillRectSolid(rand, x + 2, y, z, x + 2, y, z + 1, stair.setOrientation(Cardinal.EAST, true), true, true);
-		MetaBlock spruceSlabUpsideDown = Slab.get(Slab.SPRUCE, true, false, false);
-		editor.fillRectSolid(rand, x - 1, y, z, x + 1, y, z + 1, spruceSlabUpsideDown, true, true);
-		
-		// chairs
-		IStair chair = new MetaStair(StairType.NETHERBRICK);
-		chair.setOrientation(Cardinal.SOUTH, false);
-		chair.setBlock(editor, rand, new Coord(x - 1, y, z - 2));
-		chair.setBlock(editor, rand, new Coord(x + 1, y, z - 2));
-		
-		chair.setOrientation(Cardinal.NORTH, false);
-		chair.setBlock(editor, rand, new Coord(x - 1, y, z + 3));
-		chair.setBlock(editor, rand, new Coord(x + 1, y, z + 3));
-		
-		// wall entrances
-		editor.fillRectSolid(rand, x - 7, y - 1, z - 4, x - 6, y + 4, z + 4, stonebrick);
-		editor.fillRectSolid(rand, x + 6, y - 1, z - 4, x + 7, y + 4, z + 4, stonebrick);
-		
-		ITreasureChest recordChest = new TreasureChestEmpty().generate(editor, rand, settings.getLoot(), new Coord(x - 4, y, z - 4), 0, false);
-		recordChest.setInventorySlot(Record.getRecord(Record.STAL), recordChest.getInventorySize() / 2);
-		editor.setBlock(x - 3, y, z - 4, BlockType.get(BlockType.JUKEBOX));
-		
-		ITreasureChest bdubsChest = new TreasureChestEmpty().generate(editor, rand, settings.getLoot(), new Coord(x - 3, y, z + 5), 0, false);
-		bdubsChest.setInventorySlot(ItemNovelty.getItem(ItemNovelty.BDOUBLEO), (bdubsChest.getInventorySize() / 2) - 2);
-		
+		cursor = new Coord(origin);
+		cursor.add(Cardinal.reverse(dir), 3);
+		cursor.add(orth[0], 4);
+		ITreasureChest bdub = Treasure.generate(editor, rand, cursor, Treasure.EMPTY, settings.getDifficulty(cursor));
+		bdub.setSlot((bdub.getSize() / 2) - 2, ItemNovelty.getItem(ItemNovelty.BDOUBLEO));
 		ItemStack shirt = new ItemStack(Items.leather_chestplate);
 		Loot.setItemName(shirt, "Pink Sweater", null);
 		Loot.setItemLore(shirt, "\"It's chinese red!\"");
 		ItemArmour.dyeArmor(shirt, 250, 96, 128);
+		bdub.setSlot((bdub.getSize() / 2) + 2, shirt);
 		
-		bdubsChest.setInventorySlot(shirt, (bdubsChest.getInventorySize() / 2) + 2);
-		
-		ITreasureChest gennybChest = new TreasureChestEmpty().generate(editor, rand, settings.getLoot(), new Coord(x + 3, y, z + 5), 0, false);
-		gennybChest.setInventorySlot(ItemNovelty.getItem(ItemNovelty.GENERIKB), gennybChest.getInventorySize() / 2);
-		
-		
-		editor.setBlock(x + 4, y, z - 4, BlockType.get(BlockType.SHELF));
-		editor.setBlock(x + 4, y + 1, z - 4, BrewingStand.get());
-		
-		ITreasureChest contraband = new TreasureChestEmpty().generate(editor, rand, settings.getLoot(), new Coord(x + 3, y, z - 4), 0, false);
-		
-		for(int i = 0; i < 8; ++i){
-			ItemStack booze = PotionMixture.getBooze(rand);
-			contraband.setInventorySlot(booze, rand.nextInt(contraband.getInventorySize()));
-		}
+		cursor = new Coord(origin);
+		cursor.add(Cardinal.reverse(dir), 3);
+		cursor.add(orth[1], 4);
+		ITreasureChest genny = Treasure.generate(editor, rand, cursor, Treasure.EMPTY, settings.getDifficulty(cursor));
+		genny.setSlot(genny.getSize() / 2, ItemNovelty.getItem(ItemNovelty.GENERIKB));
 		
 		return true;
 	}
+	
+	private void table(WorldEditor editor, Random rand, Cardinal dir, Coord origin){
 
-	private static void lamp(WorldEditor editor, Random rand, Coord pos){
+		IStair stair = new MetaStair(StairType.SPRUCE);
+		IStair chair = new MetaStair(StairType.NETHERBRICK);
+		MetaBlock slab = Slab.get(Slab.SPRUCE, true, false, false);
 		
-		MetaBlock spruce = Wood.getPlank(Wood.SPRUCE);
-		MetaBlock fence = Wood.getFence(Wood.SPRUCE);
-		Coord cursor = new Coord(pos);
-		cursor.add(Cardinal.UP, 4);
-		spruce.setBlock(editor, new Coord(cursor));
-		cursor.add(Cardinal.DOWN);
-		editor.setBlock(cursor, Wood.getPlank(Wood.OAK));
-		cursor.add(Cardinal.DOWN);
-		editor.setBlock(cursor, BlockType.get(BlockType.GLOWSTONE));
+		Cardinal[] orth = Cardinal.getOrthogonal(dir);
 		
-		for(Cardinal dir : Cardinal.directions){
-			MetaBlock trapdoor = Trapdoor.get(Trapdoor.OAK, Cardinal.reverse(dir), false, true);
-			Coord p = new Coord(cursor);
-			p.add(dir);
-			trapdoor.setBlock(editor, rand, p, true, false);
+		Coord start;
+		Coord end;
+		Coord cursor;
+		
+		start = new Coord(origin);
+		start.add(orth[0]);
+		end = new Coord(origin);
+		end.add(orth[1]);
+		end.add(dir);
+		slab.fillRectSolid(editor, rand, start, end, true, true);
+		
+		for(Cardinal d : orth){
+			start = new Coord(origin);
+			start.add(d, 2);
+			end = new Coord(start);
+			end.add(dir);
+			stair.setOrientation(d, true).fillRectSolid(editor, rand, start, end, true, true);
 		}
 		
-		cursor.add(Cardinal.DOWN);
+		cursor = new Coord(origin);
+		cursor.add(Cardinal.reverse(dir), 2);
+		for(Cardinal d : orth){
+			Coord c = new Coord(cursor);
+			c.add(d);
+			chair.setOrientation(dir, false).setBlock(editor, c);
+		}
+		
+		cursor.add(dir, 5);
+		for(Cardinal d : orth){
+			Coord c = new Coord(cursor);
+			c.add(d);
+			chair.setOrientation(Cardinal.reverse(dir), false).setBlock(editor, c);
+		}
+	}
+	
+	private void lamp(WorldEditor editor, Random rand, Cardinal dir, Coord origin){
+		MetaBlock fence = BlockType.get(BlockType.FENCE);
+		MetaBlock plank = Wood.getPlank(Wood.SPRUCE);
+		
+		Coord cursor;
+		
+		cursor = new Coord(origin);
+		plank.setBlock(editor, cursor);
+		cursor.add(Cardinal.UP);
 		fence.setBlock(editor, cursor);
-		cursor.add(Cardinal.DOWN);
-		spruce.setBlock(editor, cursor);
+		cursor.add(Cardinal.UP);
+		BlockType.get(BlockType.GLOWSTONE).setBlock(editor, cursor);
+		for(Cardinal d : Cardinal.directions){
+			if(d == Cardinal.reverse(dir)) continue;
+			
+			Coord c = new Coord(cursor);
+			c.add(d);
+			Trapdoor.get(Trapdoor.OAK, Cardinal.reverse(d), false, true).setBlock(editor, c);
+		}
+		cursor.add(Cardinal.UP);
+		fence.setBlock(editor, cursor);
+		cursor.add(Cardinal.UP);
+		plank.setBlock(editor, cursor);
+		cursor.add(Cardinal.UP);
+		plank.setBlock(editor, cursor);
+	}
+	
+	private void logWall(WorldEditor editor, Random rand, Cardinal dir, Coord origin){
+
+		Cardinal[] orth = Cardinal.getOrthogonal(dir);
+
+		Coord start;
+		Coord end;
+		Coord cursor;
+		
+		IStair stair = new MetaStair(StairType.SPRUCE);
+		MetaBlock plank = Wood.getPlank(Wood.SPRUCE);
+		BlockFactoryCheckers checkers = new BlockFactoryCheckers(
+				Log.getLog(Wood.SPRUCE, Cardinal.UP),
+				Log.getLog(Wood.SPRUCE, orth[0])
+				);
+
+		start = new Coord(origin);
+		start.add(Cardinal.UP);
+		end = new Coord(start);
+		start.add(orth[0], 4);
+		end.add(orth[1], 4);
+		end.add(Cardinal.UP, 2);
+		checkers.fillRectSolid(editor, rand, start, end, true, true);
+		
+		start = new Coord(origin);
+		end = new Coord(start);
+		start.add(orth[0], 5);
+		end.add(orth[1], 5);
+		plank.fillRectSolid(editor, rand, start, end, true, true);
+		start.add(dir);
+		end.add(dir);
+		start.add(Cardinal.UP, 4);
+		end.add(Cardinal.UP, 4);
+		stair.setOrientation(dir, true).fillRectSolid(editor, rand, start, end, true, true);
+		
+		for(Cardinal d : orth){
+			start = new Coord(origin);
+			start.add(d, 5);
+			start.add(Cardinal.UP);
+			end = new Coord(start);
+			end.add(Cardinal.UP, 2);
+			Log.getLog(Wood.SPRUCE, Cardinal.UP).fillRectSolid(editor, rand, start, end, true, true);
+			
+			cursor = new Coord(origin);
+			cursor.add(dir);
+			cursor.add(d, 3);
+			lamp(editor, rand, dir, cursor);
+		}
+		
+
+	}
+	
+	private void bWall(WorldEditor editor, Random rand, Cardinal dir, Coord origin){
+		BlockJumble bricks = new BlockJumble();
+		bricks.addBlock(BlockType.get(BlockType.STONE_BRICK));
+		bricks.addBlock(BlockType.get(BlockType.STONE_BRICK_CRACKED));
+		bricks.addBlock(BlockType.get(BlockType.STONE_BRICK_MOSSY));
+		MetaBlock plank = Wood.getPlank(Wood.SPRUCE);
+		MetaBlock b = BlockType.get(BlockType.EMERALD_BLOCK);
+		
+		Cardinal[] orth = Cardinal.getOrthogonal(dir);
+
+		Coord start;
+		Coord end;
+		Coord cursor;
+		
+		start = new Coord(origin);
+		end = new Coord(start);
+		start.add(orth[1], 3);
+		end.add(orth[0], 4);
+		plank.fillRectSolid(editor, rand, start, end, true, true);
+		
+		start = new Coord(origin);
+		start.add(Cardinal.UP);
+		end = new Coord(start);
+		start.add(orth[1], 3);
+		end.add(orth[0], 4);
+		end.add(Cardinal.UP, 3);
+		bricks.fillRectSolid(editor, rand, start, end, true, true);
+		
+		cursor = new Coord(origin);
+		cursor.add(Cardinal.reverse(dir));
+		for(int i = 0; i < 5; ++i){
+			
+			if(i % 2 == 0){
+				start = new Coord(cursor);
+				end = new Coord(start);
+				end.add(orth[0], 2);
+				b.fillRectSolid(editor, rand, start, end, true, true);
+			} else {
+				Coord c = new Coord(cursor);
+				c.add(orth[1]);
+				b.setBlock(editor, c);
+				c.add(orth[0], 3);
+				b.setBlock(editor, c);
+			}
+			
+			cursor.add(Cardinal.UP);
+		}
+		
+	}
+	
+	private void tvWall(WorldEditor editor, Random rand, Cardinal dir, Coord origin){
+		Cardinal[] orth = Cardinal.getOrthogonal(dir);
+
+		Coord start;
+		Coord end;
+		Coord cursor;
+		
+		MetaBlock plank = Wood.getPlank(Wood.SPRUCE);
+		MetaBlock shelf = BlockType.get(BlockType.SHELF);
+		MetaBlock jungle = Log.getLog(Wood.JUNGLE, dir);
+		MetaBlock note = BlockType.get(BlockType.NOTEBLOCK);
+		MetaBlock black = ColorBlock.get(ColorBlock.WOOL, DyeColor.BLACK);
+		MetaBlock bean = Crops.getCocao(dir);
+		MetaBlock slab = Slab.get(Slab.SPRUCE, true, false, false);
+		
+		start = new Coord(origin);
+		start.add(Cardinal.reverse(dir));
+		start.add(Cardinal.UP, 4);
+		end = new Coord(start);
+		start.add(orth[0], 2);
+		end.add(orth[1], 3);
+		slab.fillRectSolid(editor, rand, start, end, true, true);
+		
+		start = new Coord(origin);
+		end = new Coord(origin);
+		start.add(orth[0], 3);
+		end.add(orth[1], 4);
+		plank.fillRectSolid(editor, rand, start, end, true, true);
+		start.add(orth[1], 2);
+		end.add(orth[0], 2);
+		note.fillRectSolid(editor, rand, start, end, true, true);
+		start.add(Cardinal.UP);
+		end.add(Cardinal.UP, 3);
+		black.fillRectSolid(editor, rand, start, end, true, true);
+		
+		start = new Coord(origin);
+		start.add(orth[0], 2);
+		start.add(Cardinal.UP);
+		end = new Coord(start);
+		end.add(orth[0]);
+		end.add(Cardinal.UP, 2);
+		shelf.fillRectSolid(editor, rand, start, end, true, true);
+		cursor = new Coord(start);
+		cursor.add(Cardinal.UP);
+		jungle.setBlock(editor, cursor);
+		cursor.add(Cardinal.reverse(dir));
+		bean.setBlock(editor, cursor);
+		
+		start = new Coord(origin);
+		start.add(orth[1], 3);
+		start.add(Cardinal.UP);
+		end = new Coord(start);
+		end.add(orth[1]);
+		end.add(Cardinal.UP, 2);
+		shelf.fillRectSolid(editor, rand, start, end, true, true);
+		cursor = new Coord(start);
+		cursor.add(Cardinal.UP);
+		jungle.setBlock(editor, cursor);
+		cursor.add(Cardinal.reverse(dir));
+		bean.setBlock(editor, cursor);		
+		
 	}
 	
 	public int getSize(){
@@ -210,8 +434,6 @@ public class DungeonBTeam extends DungeonBase {
 	}
 	
 	public boolean validLocation(WorldEditor editor, Cardinal dir, int x, int y, int z){
-		
-		if(!(dir == Cardinal.NORTH || dir == Cardinal.SOUTH)) return false;
 		
 		List<Coord> box = editor.getRectHollow(x - 7, y - 2, z - 7, x + 7, y + 5, z + 7);
 		
@@ -222,4 +444,6 @@ public class DungeonBTeam extends DungeonBase {
 		
 		return true;
 	}
+	
+	
 }
