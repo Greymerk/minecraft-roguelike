@@ -57,8 +57,11 @@ public enum BlockType {
 		case ORE_LAPIS: return new MetaBlock(Blocks.lapis_ore);
 		case LAPIS_BLOCK: return new MetaBlock(Blocks.lapis_block);
 		case ORE_EMERALD: return new MetaBlock(Blocks.emerald_ore);
+		case SANDSTONE_RED:
 		case SANDSTONE: return new MetaBlock(Blocks.sandstone);
+		case SANDSTONE_RED_CHISELED:
 		case SANDSTONE_CHISELED: return new MetaBlock(Blocks.sandstone, 1);
+		case SANDSTONE_RED_SMOOTH:
 		case SANDSTONE_SMOOTH: return new MetaBlock(Blocks.sandstone, 2);
 		case GOLD_BLOCK: return new MetaBlock(Blocks.gold_block);
 		case IRON_BLOCK: return new MetaBlock(Blocks.iron_block);
@@ -89,9 +92,6 @@ public enum BlockType {
 		case PRISMARINE_DARK: return new MetaBlock(Blocks.cobblestone);
 		case COAL_BLOCK: return new MetaBlock(Blocks.coal_block);
 		case ICE_PACKED: return new MetaBlock(Blocks.packed_ice);
-		case SANDSTONE_RED: return new MetaBlock(Block.getBlockById(179));
-		case SANDSTONE_RED_CHISELED: return new MetaBlock(Block.getBlockById(179), 1);
-		case SANDSTONE_RED_SMOOTH: return new MetaBlock(Block.getBlockById(179), 2);
 		case QUARTZ: return new MetaBlock(Blocks.quartz_block);
 		case REDSTONE_BLOCK: return new MetaBlock(Blocks.redstone_block);
 		case PRESSURE_PLATE_STONE: return new MetaBlock(Blocks.stone_pressure_plate);

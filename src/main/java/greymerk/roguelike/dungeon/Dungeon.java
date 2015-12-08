@@ -1,5 +1,6 @@
 package greymerk.roguelike.dungeon;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -22,7 +23,7 @@ import net.minecraft.nbt.NBTTagString;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeDictionary.Type;
-import scala.actors.threadpool.Arrays;
+
 
 public class Dungeon implements IDungeon{
 		

@@ -12,8 +12,8 @@ public enum StairType {
 		case COBBLE: return Blocks.stone_stairs;
 		case STONEBRICK: return Blocks.stone_brick_stairs;
 		case BRICK: return Blocks.brick_stairs;
+		case RED_SANDSTONE:
 		case SANDSTONE: return Blocks.sandstone_stairs;
-		case RED_SANDSTONE: return Block.getBlockById(180);
 		case QUARTZ: return Blocks.quartz_stairs;
 		case NETHERBRICK: return Blocks.nether_brick_stairs;
 		case OAK: return Blocks.oak_stairs;
