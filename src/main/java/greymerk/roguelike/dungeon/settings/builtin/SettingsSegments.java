@@ -57,11 +57,12 @@ public class SettingsSegments extends DungeonSettings{
 				break;
 			case 4:
 				segments = new SegmentGenerator(Segment.NETHERARCH);
+				segments.add(Segment.SPAWNER, 10);
 				segments.add(Segment.NETHERLAVA, 3);
 				segments.add(Segment.NETHERSTRIPE, 3);
 				segments.add(Segment.NETHERWART, 3);
+				segments.add(Segment.SKULL, 3);
 				segments.add(Segment.CHEST, 1);
-				segments.add(Segment.SPAWNER, 1);
 				break;
 			default:
 				segments = new SegmentGenerator(Segment.ARCH);

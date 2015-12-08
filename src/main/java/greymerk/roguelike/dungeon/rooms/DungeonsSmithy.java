@@ -490,10 +490,10 @@ public class DungeonsSmithy extends DungeonBase {
 		}
 		
 		cursor = new Coord(origin);
-		cursor.add(Cardinal.UP);
-		editor.setBlock(cursor, BlockType.get(BlockType.REDSTONE_LAMP_LIT));
-		cursor.add(Cardinal.UP);
+		cursor.add(Cardinal.UP, 2);
 		editor.setBlock(cursor, BlockType.get(BlockType.REDSTONE_BLOCK));
+		cursor.add(Cardinal.DOWN);
+		editor.setBlock(cursor, BlockType.get(BlockType.REDSTONE_LAMP_LIT));
 	}
 	
 	public int getSize(){

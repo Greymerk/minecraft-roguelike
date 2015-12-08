@@ -12,6 +12,7 @@ import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
+import greymerk.roguelike.worldgen.Spawner;
 import greymerk.roguelike.worldgen.WorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 
@@ -55,7 +56,7 @@ public class DungeonsPrison extends DungeonBase {
 			cursor.add(dir, 6);
 			cursor.add(side, 6);
 			
-			cell(editor, rand, settings, cursor, doors);
+			cell(editor, rand, settings, cursor, doors, rand.nextBoolean());
 		}
 		
 		return true;
@@ -280,7 +281,7 @@ public class DungeonsPrison extends DungeonBase {
 		}
 	}
 	
-	private void cell(WorldEditor editor, Random rand, LevelSettings settings, Coord origin, List<Cardinal> entrances){
+	private void cell(WorldEditor editor, Random rand, LevelSettings settings, Coord origin, List<Cardinal> entrances, boolean occupied){
 		
 		Coord start;
 		Coord end;
@@ -325,9 +326,22 @@ public class DungeonsPrison extends DungeonBase {
 			end.add(Cardinal.UP, 2);
 			bar.fillRectSolid(editor, rand, start, end, true, true);
 			
-			air.setBlock(editor, cursor);
-			cursor.add(Cardinal.UP);
-			air.setBlock(editor, cursor);
+			if(rand.nextBoolean()){
+				air.setBlock(editor, cursor);
+				cursor.add(Cardinal.UP);
+				air.setBlock(editor, cursor);
+			}
+		}
+		
+		if(occupied){
+			if(rand.nextInt(10) == 0){
+				Spawner.generate(editor, rand, settings, origin, Spawner.WITCH);
+			} else if(rand.nextBoolean()){
+				Spawner.generate(editor, rand, settings, origin, Spawner.SKELETON);
+			} else {
+				Spawner.generate(editor, rand, settings, origin, Spawner.ZOMBIE);
+			}
+			
 		}
 	}
 	

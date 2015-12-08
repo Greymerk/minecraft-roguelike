@@ -99,17 +99,17 @@ public class DungeonEniko extends DungeonBase {
 		MetaBlock lamp = BlockType.get(BlockType.REDSTONE_LAMP_LIT);
 		MetaBlock redBlock = BlockType.get(BlockType.REDSTONE_BLOCK);
 		
-		editor.setBlock(x - 2, y - 1, z - 2, lamp);
 		editor.setBlock(x - 2, y - 2, z - 2, redBlock);
+		editor.setBlock(x - 2, y - 1, z - 2, lamp);
 		
-		editor.setBlock(x - 2, y - 1, z + 2, lamp);
 		editor.setBlock(x - 2, y - 2, z + 2, redBlock);
+		editor.setBlock(x - 2, y - 1, z + 2, lamp);
 		
-		editor.setBlock(x + 2, y - 1, z - 2, lamp);
 		editor.setBlock(x + 2, y - 2, z - 2, redBlock);
+		editor.setBlock(x + 2, y - 1, z - 2, lamp);
 		
-		editor.setBlock(x + 2, y - 1, z + 2, lamp);
 		editor.setBlock(x + 2, y - 2, z + 2, redBlock);
+		editor.setBlock(x + 2, y - 1, z + 2, lamp);
 		
 		// roof
 		editor.fillRectSolid(rand, x - 6, y + 4, z - 6, x - 4, y + 4, z + 6, netherBrick);

@@ -57,9 +57,9 @@ public class SettingsRooms extends DungeonSettings{
 			case 4:
 				factory = new DungeonFactory();
 				factory.addSingle(DungeonRoom.OBSIDIAN);
-				factory.addByRatio(DungeonRoom.FIRE, 30);
-				factory.addByRatio(DungeonRoom.NETHERFORT, 20);
-				factory.addByRatio(DungeonRoom.SLIME, 15);
+				factory.addSingle(DungeonRoom.FIRE);
+				factory.addSingle(DungeonRoom.NETHERFORT);
+				factory.addSingle(DungeonRoom.SLIME);
 				factory.addRandom(DungeonRoom.CORNER, 100);
 				factory.addRandom(DungeonRoom.NETHER, 30);
 				factory.addRandom(DungeonRoom.SLIME, 10);

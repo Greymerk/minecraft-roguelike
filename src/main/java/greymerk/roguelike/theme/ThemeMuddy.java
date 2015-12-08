@@ -13,9 +13,12 @@ public class ThemeMuddy extends ThemeBase{
 	public ThemeMuddy(){
 	
 		BlockWeightedRandom floor = new BlockWeightedRandom();
-		floor.addBlock(BlockType.get(BlockType.WATER_FLOWING), 10);
-		floor.addBlock(BlockType.get(BlockType.CLAY), 3);
-		floor.addBlock(BlockType.get(BlockType.DIRT), 1);
+		floor.addBlock(BlockType.get(BlockType.SOUL_SAND), 1);
+		floor.addBlock(BlockType.get(BlockType.CLAY), 4);
+		floor.addBlock(BlockType.get(BlockType.DIRT), 3);
+		floor.addBlock(BlockType.get(BlockType.MYCELIUM), 1);
+		floor.addBlock(BlockType.get(BlockType.GRAVEL), 3);
+		floor.addBlock(BlockType.get(BlockType.DIRT_COARSE), 1);
 		
 		BlockWeightedRandom walls = new BlockWeightedRandom();
 		walls.addBlock(BlockType.get(BlockType.COBBLESTONE), 50);

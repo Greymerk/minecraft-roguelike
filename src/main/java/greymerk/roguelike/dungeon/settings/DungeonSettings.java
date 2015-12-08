@@ -25,6 +25,7 @@ public class DungeonSettings implements ISettings{
 	protected SpawnCriteria criteria;
 	protected int depth;
 	protected LootRuleManager lootRules;
+	protected List<SettingsType> overrides;
 	
 	public DungeonSettings(){
 		this.levels = new HashMap<Integer, LevelSettings>();
@@ -43,6 +44,15 @@ public class DungeonSettings implements ISettings{
 			if(depth < 1) this.depth = 1;
 			if(depth > 5) this.depth = 5;
 			this.depth = depth;
+		}
+		
+		if(root.has("overrides")){
+			this.overrides = new ArrayList<SettingsType>();
+			JsonArray overrides = root.get("overrides").getAsJsonArray();
+			for(JsonElement e : overrides){
+				String type = e.getAsString();
+				this.overrides.add(SettingsType.valueOf(type));
+			}
 		}
 		
 		levels = new HashMap<Integer, LevelSettings>();
@@ -66,6 +76,7 @@ public class DungeonSettings implements ISettings{
 		}
 		
 		parseJson(base, root);
+		
 	}
 	
 	private void parseJson(DungeonSettings base, JsonObject root){
@@ -80,6 +91,10 @@ public class DungeonSettings implements ISettings{
 		
 		if(!root.has("loot_rules")){
 			this.lootRules = base.lootRules;
+		}
+		
+		if(!root.has("overrides")){
+			this.overrides = base.overrides;
 		}
 		
 		if(!root.has("levels")){
@@ -118,6 +133,11 @@ public class DungeonSettings implements ISettings{
 		this.lootRules = new LootRuleManager();
 		if(base.lootRules != null) this.lootRules.add(base.lootRules);
 		if(override.lootRules != null) this.lootRules.add(override.lootRules);
+		if(base.overrides != null || override.overrides != null){
+			this.overrides = new ArrayList<SettingsType>();
+			if(base.overrides != null) this.overrides.addAll(base.overrides);
+			if(override.overrides != null) this.overrides.addAll(override.overrides);
+		}
 		
 		if(override.towerSettings == null){
 			this.towerSettings = base.towerSettings;
@@ -146,6 +166,11 @@ public class DungeonSettings implements ISettings{
 		
 		for(int i = 0; i < MAX_NUM_LEVELS; ++i){
 			this.levels.put(i, new LevelSettings(toCopy.levels.get(i)));
+		}
+		
+		if(toCopy.overrides != null){
+			this.overrides = new ArrayList<SettingsType>();
+			this.overrides.addAll(toCopy.overrides);
 		}
 	}
 
@@ -189,5 +214,11 @@ public class DungeonSettings implements ISettings{
 	@Override
 	public LootRuleManager getLootRules() {
 		return this.lootRules;
+	}
+
+	@Override
+	public List<SettingsType> getOverrides() {
+		if(this.overrides == null) return new ArrayList<SettingsType>();
+		return this.overrides;
 	}
 }

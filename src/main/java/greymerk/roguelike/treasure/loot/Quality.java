@@ -11,30 +11,28 @@ public enum Quality{
 		switch(level){
 		
 		case 4:
-			if(rand.nextInt(20) == 0) return DIAMOND;
+			if(rand.nextInt(10) == 0) return DIAMOND;
 			if(rand.nextInt(5) == 0) return GOLD;
-			if(rand.nextInt(3) == 0) return IRON;
-			return STONE;
+			return IRON;
 		case 3:
-			if(rand.nextInt(50) == 0) return DIAMOND;
+			if(rand.nextInt(30) == 0) return DIAMOND;
 			if(rand.nextInt(10) == 0) return GOLD;
-			if(rand.nextInt(5) == 0) return IRON;
-			return STONE;
+			return IRON;
 		case 2:
-			if(rand.nextInt(100) == 0) return DIAMOND;
+			if(rand.nextInt(50) == 0) return DIAMOND;
 			if(rand.nextInt(20) == 0) return GOLD;
-			if(rand.nextInt(10) == 0) return IRON; 
+			if(rand.nextInt(5) == 0) return IRON; 
 			return STONE;
 		case 1:
-			if(rand.nextInt(200) == 0) return DIAMOND; 
-			if(rand.nextInt(20) == 0) return GOLD; 
+			if(rand.nextInt(100) == 0) return DIAMOND; 
+			if(rand.nextInt(30) == 0) return GOLD; 
 			if(rand.nextInt(10) == 0) return IRON;
 			if(rand.nextInt(3) == 0) return STONE;
 			return WOOD;
 		case 0:
-			if(rand.nextInt(1000) == 0) return DIAMOND;
-			if(rand.nextInt(200) == 0) return GOLD;
-			if(rand.nextInt(50) == 0) return IRON;
+			if(rand.nextInt(200) == 0) return DIAMOND;
+			if(rand.nextInt(100) == 0) return GOLD;
+			if(rand.nextInt(20) == 0) return IRON;
 			if(rand.nextInt(10) == 0) return STONE;
 			return WOOD;
 		default:
@@ -48,6 +46,7 @@ public enum Quality{
 		
 		case 4:
 			if(rand.nextInt(10) == 0) return DIAMOND;
+			if(rand.nextInt(3) == 0) return GOLD;
 			return IRON;
 		case 3:
 			if(rand.nextInt(20) == 0) return DIAMOND;
@@ -125,6 +124,17 @@ public enum Quality{
 			return getToolQuality(rand, level);
 		}
 		return null;
+	}
+	
+	public static Quality get(int level){
+		switch(level){
+		case 0: return Quality.WOOD;
+		case 1: return Quality.STONE;
+		case 2: return Quality.IRON;
+		case 3: return Quality.GOLD;
+		case 4: return Quality.DIAMOND;
+		default: return Quality.WOOD;
+		}
 	}
 	
 	

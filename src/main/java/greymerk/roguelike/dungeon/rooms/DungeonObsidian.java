@@ -226,7 +226,8 @@ public class DungeonObsidian extends DungeonBase {
 				chestPos.add(dir, 4);
 				chestPos.add(orth, 2);
 				chestPos.add(Cardinal.DOWN, 3);
-				Treasure.generate(editor, rand, chestPos, Treasure.ORE, Dungeon.getLevel(chestPos.getY()));
+				Treasure[] types = {Treasure.SPECIAL, Treasure.ORE};
+				Treasure.generate(editor, rand, chestPos, types[rand.nextInt(types.length)], Dungeon.getLevel(chestPos.getY()));
 			}
 		}
 		
@@ -323,13 +324,14 @@ public class DungeonObsidian extends DungeonBase {
 	
 	private static void lavaWindow(WorldEditor editor, Coord cursor, Cardinal orth){
 		MetaBlock lava = BlockType.get(BlockType.LAVA_FLOWING);
+		MetaBlock fence = BlockType.get(BlockType.FENCE_NETHER_BRICK);
 		editor.setBlock(cursor, lava);
 		cursor.add(Cardinal.DOWN, 1);
 		editor.setBlock(cursor, lava);
 		cursor.add(orth, 1);
-		editor.setBlock(cursor, lava);
+		editor.setBlock(cursor, fence);
 		cursor.add(Cardinal.UP, 1);
-		editor.setBlock(cursor, lava);
+		editor.setBlock(cursor, fence);
 	}
 
 }

@@ -48,11 +48,12 @@ public class DungeonLibrary extends DungeonBase{
 		editor.fillRectSolid(rand, x - 5, y - 1, z - 5, x + 5, y - 1, z + 5, settings.getTheme().getPrimaryFloor(), true, true);
 		
 		start = new Coord(origin);
-		start.add(Cardinal.UP, 4);
-		editor.setBlock(start, BlockType.get(BlockType.REDSTONE_LAMP_LIT));
-		start.add(Cardinal.UP);
+		start.add(Cardinal.UP, 5);
 		editor.setBlock(start, BlockType.get(BlockType.REDSTONE_BLOCK));
-		start.add(Cardinal.UP);
+		start.add(Cardinal.DOWN);
+		editor.setBlock(start, BlockType.get(BlockType.REDSTONE_LAMP_LIT));
+		start = new Coord(origin);
+		start.add(Cardinal.UP, 6);
 		end = new Coord(start);
 		end.add(Cardinal.UP);
 		editor.fillRectSolid(rand, start, end, settings.getTheme().getPrimaryPillar(), true, true);

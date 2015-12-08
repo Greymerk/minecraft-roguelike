@@ -31,15 +31,18 @@ public class LootRuleManager {
 			
 			Treasure type = rule.has("type") ? Treasure.valueOf(rule.get("type").getAsString()) : null;
 			
-			if(!rule.has("item")) continue;
-			JsonObject loot = rule.get("item").getAsJsonObject();
-			IWeighted<ItemStack> item = this.parseProvider(loot);
+			if(!rule.has("loot")) continue;
+			JsonArray data = rule.get("loot").getAsJsonArray();
+			WeightedRandomizer<ItemStack> items = new WeightedRandomizer<ItemStack>(1);		
+			for(JsonElement item : data){
+				items.add(parseProvider(item.getAsJsonObject()));
+			}
 
 			int level = rule.get("level").getAsInt();
 			boolean each = rule.get("each").getAsBoolean();
 			int amount = rule.get("quantity").getAsInt();
 			
-			this.add(type, item, level, each, amount);
+			this.add(type, items, level, each, amount);
 		}
 	}
 
@@ -57,20 +60,18 @@ public class LootRuleManager {
 		}
 	}
 	
-	private IWeighted<ItemStack> parseProvider(JsonObject data) {
+	private IWeighted<ItemStack> parseProvider(JsonObject lootItem) {
 		
-		int weight = data.has("weight") ? data.get("weight").getAsInt() : 1;
-		JsonElement loot = data.get("data");
+		int weight = lootItem.has("weight") ? lootItem.get("weight").getAsInt() : 1;
 		
-		if(loot.isJsonObject()){
-			return new WeightedRandomLoot(loot.getAsJsonObject(), weight);
+		if(lootItem.get("data").isJsonObject()){
+			JsonObject data = lootItem.get("data").getAsJsonObject();
+			return new WeightedRandomLoot(data, weight);
 		}
-		
-		JsonArray lootList = loot.getAsJsonArray();
-		
-		WeightedRandomizer<ItemStack> items = new WeightedRandomizer<ItemStack>(weight);
-		
-		for(JsonElement e : lootList){
+
+		JsonArray data = lootItem.get("data").getAsJsonArray();
+		WeightedRandomizer<ItemStack> items = new WeightedRandomizer<ItemStack>(weight);		
+		for(JsonElement e : data){
 			items.add(parseProvider(e.getAsJsonObject()));
 		}
 		

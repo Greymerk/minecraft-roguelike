@@ -15,6 +15,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import greymerk.roguelike.config.RogueConfig;
+import greymerk.roguelike.dungeon.settings.builtin.SettingsCustomBase;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsDesertTheme;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsForestTheme;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsGenerator;
@@ -125,9 +126,24 @@ public class SettingsResolver {
 		
 		DungeonSettings builtin = this.getBuiltin(editor, rand, pos);
 		DungeonSettings custom = this.getCustom(editor, rand, pos);
-		
+				
 		if(custom != null){
-			return new DungeonSettings(this.base, custom);
+			List<SettingsType> overrides = custom.getOverrides();
+			DungeonSettings customBase = new SettingsCustomBase();
+			for(SettingsType type : SettingsType.values()){
+				if(overrides.contains(type)) continue;
+				switch(type){
+				case LOOT: break;
+				case LOOTRULES: customBase = new DungeonSettings(customBase, new SettingsLootRules()); break;
+				case SECRETS: customBase = new DungeonSettings(customBase, new SettingsSecrets()); break;
+				case ROOMS: customBase = new DungeonSettings(customBase, new SettingsRooms()); break;
+				case THEMES: customBase = new DungeonSettings(customBase, new SettingsTheme()); break;
+				case SEGMENTS: customBase = new DungeonSettings(customBase, new SettingsSegments()); break;
+				case SIZE: customBase = new DungeonSettings(customBase, new SettingsSize()); break;
+				case GENERATORS: customBase = new DungeonSettings(customBase, new SettingsGenerator()); break;
+				}
+			}
+			return new DungeonSettings(customBase, custom);
 		}
 		
 		if(builtin != null && RogueConfig.getBoolean(RogueConfig.DONOVELTYSPAWN)){

@@ -26,8 +26,16 @@ public class ItemSpecialty extends ItemBase {
 		this.quality = q;
 	}
 	
+	public ItemSpecialty(int weight, int level, Quality q){
+		super(weight, level);
+		this.quality = q;
+	}
+	
 	@Override
 	public ItemStack get(Random rand){
+		if(this.type == null && quality != null){
+			return getRandomItem(Equipment.values()[rand.nextInt(Equipment.values().length)], rand, this.quality);
+		}
 		if(this.type == null || quality == null){
 			return getRandomItem(rand, this.level);
 		}

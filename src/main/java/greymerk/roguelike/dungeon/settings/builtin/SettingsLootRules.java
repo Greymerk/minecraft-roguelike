@@ -30,7 +30,7 @@ public class SettingsLootRules extends DungeonSettings{
 			lootRules.add(Treasure.ENCHANTING, loot.get(Loot.ENCHANTBONUS, i),  i, true, 2);
 			lootRules.add(Treasure.ENCHANTING, loot.get(Loot.ENCHANTBOOK, i),  i, true, 1);
 			lootRules.add(Treasure.FOOD, loot.get(Loot.FOOD, i),  i, true, 8);
-			lootRules.add(Treasure.ORE, loot.get(Loot.ORE, i),  i, true, 3);
+			lootRules.add(Treasure.ORE, loot.get(Loot.ORE, i),  i, true, 5);
 			lootRules.add(Treasure.POTIONS, loot.get(Loot.POTION, i),  i, true, 3);
 			lootRules.add(Treasure.TOOLS, loot.get(Loot.ORE, i),  i, true, 1);
 			lootRules.add(Treasure.TOOLS, loot.get(Loot.TOOL, i),  i, true, 1);
@@ -39,9 +39,10 @@ public class SettingsLootRules extends DungeonSettings{
 			lootRules.add(Treasure.SMITH, loot.get(Loot.ORE, i),  i, true, 2);
 			lootRules.add(Treasure.SMITH, loot.get(Loot.SMITHY, i),  i, true, 1);
 			lootRules.add(Treasure.MUSIC, loot.get(Loot.MUSIC, i),  i, true, 1);
+			lootRules.add(Treasure.SPECIAL, new ItemSpecialty(0, i, Quality.get(i)),  i, true, 2);
 			lootRules.add(Treasure.REWARD, loot.get(Loot.REWARD, i),  i, true, 2);
 			lootRules.add(null, loot.get(Loot.JUNK, i),  i, true, 6);
-			lootRules.add(null, loot.get(Loot.SPECIAL, i),  i, false, 3);
+			lootRules.add(null, new ItemSpecialty(0, i, Quality.get(i)),  i, false, 3);
 		}
 	}
 }
