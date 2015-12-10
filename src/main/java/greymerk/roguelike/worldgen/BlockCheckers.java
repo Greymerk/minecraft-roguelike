@@ -8,17 +8,17 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-public class BlockFactoryCheckers extends BlockFactoryBase {
+public class BlockCheckers extends BlockBase {
 
 	private IBlockFactory fillOne;
 	private IBlockFactory fillTwo;
 	
-	public BlockFactoryCheckers(IBlockFactory fillOne, IBlockFactory fillTwo){
+	public BlockCheckers(IBlockFactory fillOne, IBlockFactory fillTwo){
 		this.fillOne = fillOne;
 		this.fillTwo = fillTwo;
 	}
 	
-	public BlockFactoryCheckers(JsonElement json) {
+	public BlockCheckers(JsonElement json) {
 		JsonArray arr = (JsonArray)json;
 		List<IBlockFactory> blocks = new ArrayList<IBlockFactory>(); 
 		
@@ -26,7 +26,7 @@ public class BlockFactoryCheckers extends BlockFactoryBase {
 			JsonObject d = entry.getAsJsonObject();
 			String type = d.get("type").getAsString();
 			JsonElement blockJson = d.get("data");
-			blocks.add(BlockFactory.create(type, blockJson));
+			blocks.add(BlockProvider.create(type, blockJson));
 		}
 		
 		this.fillOne = blocks.get(0);

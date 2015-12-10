@@ -11,7 +11,7 @@ import greymerk.roguelike.treasure.loot.Loot;
 import greymerk.roguelike.treasure.loot.Record;
 import greymerk.roguelike.treasure.loot.provider.ItemArmour;
 import greymerk.roguelike.treasure.loot.provider.ItemNovelty;
-import greymerk.roguelike.worldgen.BlockFactoryCheckers;
+import greymerk.roguelike.worldgen.BlockCheckers;
 import greymerk.roguelike.worldgen.BlockJumble;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
@@ -275,7 +275,7 @@ public class DungeonBTeam extends DungeonBase {
 		
 		IStair stair = new MetaStair(StairType.SPRUCE);
 		MetaBlock plank = Wood.getPlank(Wood.SPRUCE);
-		BlockFactoryCheckers checkers = new BlockFactoryCheckers(
+		BlockCheckers checkers = new BlockCheckers(
 				Log.getLog(Wood.SPRUCE, Cardinal.UP),
 				Log.getLog(Wood.SPRUCE, orth[0])
 				);

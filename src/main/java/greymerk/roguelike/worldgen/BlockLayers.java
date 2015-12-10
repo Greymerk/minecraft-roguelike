@@ -8,15 +8,15 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-public class BlockStripes extends BlockBase {
+public class BlockLayers extends BlockBase{
 
 	private List<IBlockFactory> blocks;
 	
-	public BlockStripes(){
+	public BlockLayers(){
 		blocks = new ArrayList<IBlockFactory>();
 	}
 	
-	public BlockStripes(JsonElement data) {
+	public BlockLayers(JsonElement data) {
 		this();
 		for(JsonElement entry : (JsonArray)data){
 			JsonObject d = entry.getAsJsonObject();
@@ -26,16 +26,15 @@ public class BlockStripes extends BlockBase {
 			this.addBlock(toAdd);
 		}
 	}
-
+	
 	public void addBlock(IBlockFactory toAdd){
 		blocks.add(toAdd);
 	}
-
+	
 	@Override
-	public boolean setBlock(WorldEditor editor, Random rand, Coord origin, boolean fillAir, boolean replaceSolid) {
-		int size = blocks.size();
-		int choice = Math.abs((origin.getX() % size + origin.getY() % size + origin.getZ() % size)) % size;
-		IBlockFactory block = blocks.get(choice);
-		return block.setBlock(editor, rand, origin, fillAir, replaceSolid);
+	public boolean setBlock(WorldEditor editor, Random rand, Coord pos, boolean fillAir, boolean replaceSolid) {
+		IBlockFactory block = this.blocks.get(pos.getY() % this.blocks.size());
+		return block.setBlock(editor, rand, pos, fillAir, replaceSolid);
 	}
+
 }

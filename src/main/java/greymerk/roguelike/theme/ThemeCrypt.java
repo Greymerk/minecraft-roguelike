@@ -1,6 +1,6 @@
 package greymerk.roguelike.theme;
 
-import greymerk.roguelike.worldgen.BlockFactoryCheckers;
+import greymerk.roguelike.worldgen.BlockCheckers;
 import greymerk.roguelike.worldgen.BlockJumble;
 import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.MetaBlock;
@@ -24,7 +24,7 @@ public class ThemeCrypt extends ThemeBase{
 		
 		MetaBlock andesite = BlockType.get(BlockType.ANDESITE);
 		MetaBlock smoothAndesite = BlockType.get(BlockType.ANDESITE_POLISHED);
-		BlockFactoryCheckers pillar = new BlockFactoryCheckers(andesite, smoothAndesite);
+		BlockCheckers pillar = new BlockCheckers(andesite, smoothAndesite);
 
 		MetaStair stair = new MetaStair(StairType.STONEBRICK);
 		

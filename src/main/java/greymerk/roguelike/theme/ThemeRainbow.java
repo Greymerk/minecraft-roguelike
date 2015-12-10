@@ -1,6 +1,6 @@
 package greymerk.roguelike.theme;
 
-import greymerk.roguelike.worldgen.BlockStripes;
+import greymerk.roguelike.worldgen.BlockLayers;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.MetaStair;
 import greymerk.roguelike.worldgen.blocks.ColorBlock;
@@ -13,7 +13,7 @@ public class ThemeRainbow extends ThemeBase{
 
 	public ThemeRainbow(){
 	
-		BlockStripes rainbow = new BlockStripes();
+		BlockLayers rainbow = new BlockLayers();
 		for(DyeColor color : DyeColor.values()){
 			MetaBlock clay = ColorBlock.get(ColorBlock.CLAY, color);
 			rainbow.addBlock(clay);

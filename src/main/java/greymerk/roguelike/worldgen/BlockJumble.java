@@ -8,7 +8,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-public class BlockJumble extends BlockFactoryBase {
+public class BlockJumble extends BlockBase {
 
 	private List<IBlockFactory> blocks;
 	
@@ -22,7 +22,7 @@ public class BlockJumble extends BlockFactoryBase {
 			JsonObject d = entry.getAsJsonObject();
 			String type = d.get("type").getAsString();
 			JsonElement blockJson = d.get("data");
-			IBlockFactory toAdd = BlockFactory.create(type, blockJson);
+			IBlockFactory toAdd = BlockProvider.create(type, blockJson);
 			this.addBlock(toAdd);
 		}
 	}

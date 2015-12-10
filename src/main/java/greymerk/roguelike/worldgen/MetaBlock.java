@@ -12,7 +12,7 @@ import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 
-public class MetaBlock extends BlockFactoryBase implements IBlockState{
+public class MetaBlock extends BlockBase implements IBlockState{
 
 	private IBlockState state;
 	private int flag;

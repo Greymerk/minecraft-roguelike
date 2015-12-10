@@ -22,7 +22,7 @@ public class SettingsGrasslandTheme extends DungeonSettings{
 		biomes.add(BiomeDictionary.Type.PLAINS);
 		this.criteria.setBiomeTypes(biomes);
 		
-		this.towerSettings = new TowerSettings(Tower.JUNGLE, Theme.getTheme(Theme.TOWER));
+		this.towerSettings = new TowerSettings(Tower.ROGUE, Theme.getTheme(Theme.TOWER));
 		
 		for(int i = 0; i < 5; ++i){
 			

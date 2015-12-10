@@ -1,6 +1,6 @@
 package greymerk.roguelike.theme;
 
-import greymerk.roguelike.worldgen.BlockFactoryCheckers;
+import greymerk.roguelike.worldgen.BlockCheckers;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.MetaStair;
@@ -14,7 +14,7 @@ public class ThemeChecker extends ThemeBase{
 		MetaBlock one = BlockType.get(BlockType.OBSIDIAN);
 		MetaBlock two = BlockType.get(BlockType.QUARTZ);
 		
-		IBlockFactory checks = new BlockFactoryCheckers(one, two);
+		IBlockFactory checks = new BlockCheckers(one, two);
 		
 		MetaStair stair = new MetaStair(StairType.QUARTZ);
 		
