@@ -14,10 +14,7 @@ public enum Leaves {
 		
 		MetaBlock leaf = new MetaBlock(getBlockId(type));
 		leaf.withProperty(BlockPlanks.VARIANT_PROP, getType(type));
-		
-		if(decay){
-			leaf.withProperty(BlockLeaves.field_176237_a, decay);
-		}
+		leaf.withProperty(BlockLeaves.field_176237_a, decay);
 		
 		return leaf;
 		

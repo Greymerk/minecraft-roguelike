@@ -4,7 +4,7 @@
 		"name" : "Roguelike Dungeons",
 		"description" : "Adds randomized dungeons to the world",
 		"version" : "1.4",
-		"url" : "dungeons.homelinux.org",
+		"url" : "github.com/Greymerk/minecraft-roguelike",
 		"authorList" : ["Greymerk"],
 		"mcversion" : "1.8"
 	}

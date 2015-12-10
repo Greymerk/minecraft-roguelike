@@ -134,7 +134,7 @@ public class DungeonFirework extends DungeonBase {
 		cursor.add(orth[1]);
 		wire.setBlock(editor, cursor);
 		cursor.add(dir);
-		Repeater.generate(editor, rand, Cardinal.reverse(dir), 4, cursor);
+		Repeater.generate(editor, rand, dir, 4, cursor);
 		cursor.add(Cardinal.UP);
 		cursor.add(Cardinal.reverse(dir));
 		breadboard.setBlock(editor, cursor);
