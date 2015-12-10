@@ -4,7 +4,7 @@ import com.google.gson.JsonElement;
 
 public enum BlockProvider {
 	
-	METABLOCK, WEIGHTED, CHECKERS, JUMBLE, STRIPES, LAYERS;
+	METABLOCK, WEIGHTED, CHECKERS, JUMBLE, STRIPES, LAYERS, COLUMNS;
 
 	public static IBlockFactory create(String type, JsonElement blockJson) {
 		switch(BlockProvider.valueOf(type)){
@@ -14,6 +14,7 @@ public enum BlockProvider {
 		case JUMBLE: return new BlockJumble(blockJson);
 		case STRIPES: return new BlockStripes(blockJson);
 		case LAYERS: return new BlockLayers(blockJson);
+		case COLUMNS: return new BlockColumns(blockJson);
 		default: return null;
 		}
 	}
