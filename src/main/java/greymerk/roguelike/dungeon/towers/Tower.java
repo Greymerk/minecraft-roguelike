@@ -11,7 +11,7 @@ import net.minecraft.init.Blocks;
 
 public enum Tower {
 
-	ROGUE, ENIKO, ETHO, PYRAMID, JUNGLE, WITCH, HOUSE;
+	ROGUE, ENIKO, ETHO, PYRAMID, JUNGLE, WITCH, HOUSE, BUNKER;
 	
 	public static ITower get(Tower type){
 		
@@ -23,6 +23,7 @@ public enum Tower {
 		case JUNGLE: return new JungleTower();
 		case WITCH: return new WitchTower();
 		case HOUSE: return new HouseTower();
+		case BUNKER: return new BunkerTower();
 		default: return new RogueTower();
 		}
 	}
