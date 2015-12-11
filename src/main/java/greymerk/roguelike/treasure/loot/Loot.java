@@ -180,7 +180,7 @@ public enum Loot {
 				} else if(level > 2 && rand.nextInt(50) == 0){
 					weapon = ItemNovelty.getItem(ItemNovelty.DINNERBONE);
 				} else if(level > 1 && rand.nextInt(20) == 0){
-					weapon = ItemSpecialty.getRandomTool(rand, Quality.getQuality(rand, level, Equipment.SHOVEL));
+					weapon = ItemSpecialty.getRandomTool(rand, Quality.get(rand, level, Equipment.SHOVEL));
 				} else {
 					weapon = ItemTool.getRandom(rand, level, enchant);
 				}

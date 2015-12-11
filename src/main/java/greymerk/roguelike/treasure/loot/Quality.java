@@ -1,127 +1,164 @@
 package greymerk.roguelike.treasure.loot;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
+
+import greymerk.roguelike.util.IWeighted;
+import greymerk.roguelike.util.WeightedChoice;
+import greymerk.roguelike.util.WeightedRandomizer;
 
 public enum Quality{
 	
 	WOOD, STONE, IRON, GOLD, DIAMOND;
 	
-	public static Quality getArmourQuality(Random rand, int level) {
-
-		switch(level){
+	private static Map<Integer, IWeighted<Quality>> armourQuality;
+	private static Map<Integer, IWeighted<Quality>> weaponQuality;
+	private static Map<Integer, IWeighted<Quality>> toolQuality;
+	static {
+		armourQuality = new HashMap<Integer, IWeighted<Quality>>();
+		weaponQuality = new HashMap<Integer, IWeighted<Quality>>();
+		toolQuality = new HashMap<Integer, IWeighted<Quality>>();
 		
-		case 4:
-			if(rand.nextInt(10) == 0) return DIAMOND;
-			if(rand.nextInt(5) == 0) return GOLD;
-			return IRON;
-		case 3:
-			if(rand.nextInt(30) == 0) return DIAMOND;
-			if(rand.nextInt(10) == 0) return GOLD;
-			return IRON;
-		case 2:
-			if(rand.nextInt(50) == 0) return DIAMOND;
-			if(rand.nextInt(20) == 0) return GOLD;
-			if(rand.nextInt(5) == 0) return IRON; 
-			return STONE;
-		case 1:
-			if(rand.nextInt(100) == 0) return DIAMOND; 
-			if(rand.nextInt(30) == 0) return GOLD; 
-			if(rand.nextInt(10) == 0) return IRON;
-			if(rand.nextInt(3) == 0) return STONE;
-			return WOOD;
-		case 0:
-			if(rand.nextInt(200) == 0) return DIAMOND;
-			if(rand.nextInt(100) == 0) return GOLD;
-			if(rand.nextInt(20) == 0) return IRON;
-			if(rand.nextInt(10) == 0) return STONE;
-			return WOOD;
-		default:
-			return WOOD;
+		for(int i = 0; i < 5; ++i){
+			WeightedRandomizer<Quality> armour = new WeightedRandomizer<Quality>();
+			switch(i){
+			case 0:
+				armour.add(new WeightedChoice<Quality>(WOOD, 200));
+				armour.add(new WeightedChoice<Quality>(STONE, 50));
+				armour.add(new WeightedChoice<Quality>(IRON, 10));
+				armour.add(new WeightedChoice<Quality>(GOLD, 3));
+				armour.add(new WeightedChoice<Quality>(DIAMOND, 1));
+				break;
+			case 1:
+				armour.add(new WeightedChoice<Quality>(WOOD, 100));
+				armour.add(new WeightedChoice<Quality>(STONE, 30));
+				armour.add(new WeightedChoice<Quality>(IRON, 10));
+				armour.add(new WeightedChoice<Quality>(GOLD, 3));
+				armour.add(new WeightedChoice<Quality>(DIAMOND, 1));
+				break;
+			case 2:
+				armour.add(new WeightedChoice<Quality>(WOOD, 50));
+				armour.add(new WeightedChoice<Quality>(STONE, 20));
+				armour.add(new WeightedChoice<Quality>(IRON, 10));
+				armour.add(new WeightedChoice<Quality>(GOLD, 3));
+				armour.add(new WeightedChoice<Quality>(DIAMOND, 1));
+				break;
+			case 3:
+				armour.add(new WeightedChoice<Quality>(WOOD, 1));
+				armour.add(new WeightedChoice<Quality>(STONE, 3));
+				armour.add(new WeightedChoice<Quality>(IRON, 5));
+				armour.add(new WeightedChoice<Quality>(GOLD, 3));
+				armour.add(new WeightedChoice<Quality>(DIAMOND, 1));
+				break;
+			case 4:
+				armour.add(new WeightedChoice<Quality>(WOOD, 1));
+				armour.add(new WeightedChoice<Quality>(STONE, 2));
+				armour.add(new WeightedChoice<Quality>(IRON, 15));
+				armour.add(new WeightedChoice<Quality>(GOLD, 5));
+				armour.add(new WeightedChoice<Quality>(DIAMOND, 3));
+				break;
+			}
+			armourQuality.put(i, armour);
+			
+			WeightedRandomizer<Quality> weapon = new WeightedRandomizer<Quality>();
+			switch(i){
+			case 0:
+				weapon.add(new WeightedChoice<Quality>(WOOD, 200));
+				weapon.add(new WeightedChoice<Quality>(STONE, 50));
+				weapon.add(new WeightedChoice<Quality>(IRON, 10));
+				weapon.add(new WeightedChoice<Quality>(GOLD, 3));
+				weapon.add(new WeightedChoice<Quality>(DIAMOND, 1));
+				break;
+			case 1:
+				weapon.add(new WeightedChoice<Quality>(WOOD, 100));
+				weapon.add(new WeightedChoice<Quality>(STONE, 30));
+				weapon.add(new WeightedChoice<Quality>(IRON, 10));
+				weapon.add(new WeightedChoice<Quality>(GOLD, 3));
+				weapon.add(new WeightedChoice<Quality>(DIAMOND, 1));
+				break;
+			case 2:
+				weapon.add(new WeightedChoice<Quality>(WOOD, 50));
+				weapon.add(new WeightedChoice<Quality>(STONE, 20));
+				weapon.add(new WeightedChoice<Quality>(IRON, 10));
+				weapon.add(new WeightedChoice<Quality>(GOLD, 3));
+				weapon.add(new WeightedChoice<Quality>(DIAMOND, 1));
+				break;
+			case 3:
+				weapon.add(new WeightedChoice<Quality>(WOOD, 1));
+				weapon.add(new WeightedChoice<Quality>(STONE, 3));
+				weapon.add(new WeightedChoice<Quality>(IRON, 5));
+				weapon.add(new WeightedChoice<Quality>(GOLD, 3));
+				weapon.add(new WeightedChoice<Quality>(DIAMOND, 1));
+				break;
+			case 4:
+				weapon.add(new WeightedChoice<Quality>(WOOD, 1));
+				weapon.add(new WeightedChoice<Quality>(STONE, 2));
+				weapon.add(new WeightedChoice<Quality>(IRON, 15));
+				weapon.add(new WeightedChoice<Quality>(GOLD, 5));
+				weapon.add(new WeightedChoice<Quality>(DIAMOND, 3));
+				break;
+			}
+			weaponQuality.put(i, weapon);
+			
+			WeightedRandomizer<Quality> tool = new WeightedRandomizer<Quality>();
+			switch(i){
+			case 0:
+				tool.add(new WeightedChoice<Quality>(WOOD, 10));
+				tool.add(new WeightedChoice<Quality>(STONE, 20));
+				tool.add(new WeightedChoice<Quality>(IRON, 10));
+				tool.add(new WeightedChoice<Quality>(GOLD, 3));
+				tool.add(new WeightedChoice<Quality>(DIAMOND, 1));
+				break;
+			case 1:
+				tool.add(new WeightedChoice<Quality>(WOOD, 2));
+				tool.add(new WeightedChoice<Quality>(STONE, 10));
+				tool.add(new WeightedChoice<Quality>(IRON, 10));
+				tool.add(new WeightedChoice<Quality>(GOLD, 3));
+				tool.add(new WeightedChoice<Quality>(DIAMOND, 1));
+				break;
+			case 2:
+				tool.add(new WeightedChoice<Quality>(WOOD, 1));
+				tool.add(new WeightedChoice<Quality>(STONE, 5));
+				tool.add(new WeightedChoice<Quality>(IRON, 10));
+				tool.add(new WeightedChoice<Quality>(GOLD, 5));
+				tool.add(new WeightedChoice<Quality>(DIAMOND, 3));
+				break;
+			case 3:
+				tool.add(new WeightedChoice<Quality>(WOOD, 1));
+				tool.add(new WeightedChoice<Quality>(STONE, 3));
+				tool.add(new WeightedChoice<Quality>(IRON, 10));
+				tool.add(new WeightedChoice<Quality>(GOLD, 5));
+				tool.add(new WeightedChoice<Quality>(DIAMOND, 5));
+				break;
+			case 4:
+				tool.add(new WeightedChoice<Quality>(WOOD, 1));
+				tool.add(new WeightedChoice<Quality>(STONE, 2));
+				tool.add(new WeightedChoice<Quality>(IRON, 10));
+				tool.add(new WeightedChoice<Quality>(GOLD, 3));
+				tool.add(new WeightedChoice<Quality>(DIAMOND, 5));
+				break;
+			}
+			toolQuality.put(i, tool);
 		}
+		
 	}
 
-	public static Quality getWeaponQuality(Random rand, int level) {
-
-		switch(level){
-		
-		case 4:
-			if(rand.nextInt(10) == 0) return DIAMOND;
-			if(rand.nextInt(3) == 0) return GOLD;
-			return IRON;
-		case 3:
-			if(rand.nextInt(20) == 0) return DIAMOND;
-			if(rand.nextInt(10) == 0) return GOLD;
-			if(rand.nextInt(5) == 0) return STONE;
-			return IRON;
-		case 2:
-			if(rand.nextInt(40) == 0) return DIAMOND;
-			if(rand.nextInt(20) == 0) return GOLD;
-			if(rand.nextInt(3) == 0) return STONE;
-			return IRON;
-		case 1:
-			if(rand.nextInt(100) == 0) return DIAMOND;	
-			if(rand.nextInt(50) == 0) return GOLD;
-			if(rand.nextInt(10) == 0) return IRON;
-			return STONE;
-		case 0:
-			if(rand.nextInt(1000) == 0)return DIAMOND;
-			if(rand.nextInt(200) == 0)return GOLD;
-			if(rand.nextInt(20) == 0)return IRON;
-			if(rand.nextInt(5) == 0)return WOOD;
-			return STONE;
-		default:
-			return WOOD;
-		}
-	}
-	
-	public static Quality getToolQuality(Random rand, int level) {
-
-		switch(level){
-		
-		case 4:
-			if(rand.nextInt(10) == 0) return DIAMOND;
-			return IRON;
-		case 3:
-			if(rand.nextInt(50) == 0) return DIAMOND;
-			if(rand.nextInt(10) == 0) return GOLD;
-			if(rand.nextInt(5) == 0) return STONE;
-			return IRON;
-		case 2:
-			if(rand.nextInt(100) == 0) return DIAMOND;
-			if(rand.nextInt(20) == 0) return GOLD;
-			if(rand.nextInt(10) == 0) return IRON;
-			return STONE;
-		case 1:
-			if(rand.nextInt(200) == 0) return DIAMOND;
-			if(rand.nextInt(20) == 0) return GOLD;			
-			if(rand.nextInt(10) == 0) return IRON;
-			return STONE;
-		case 0:
-			if(rand.nextInt(1000) == 0)	return DIAMOND;
-			if(rand.nextInt(200) == 0) return GOLD;
-			if(rand.nextInt(50) == 0) return IRON;
-			if(rand.nextInt(3) == 0) return WOOD;
-			return STONE;
-		default:
-			return WOOD;
-		}
-	}
-
-	public static Quality getQuality(Random rand, int level, Equipment type) {
+	public static Quality get(Random rand, int level, Equipment type) {
 		
 		switch(type){
 		case SWORD:
 		case BOW:
-			return getWeaponQuality(rand, level);
+			return weaponQuality.get(level).get(rand);
 		case HELMET:
 		case CHEST:
 		case LEGS:
 		case FEET:
-			return getArmourQuality(rand, level);
+			return armourQuality.get(level).get(rand);
 		case PICK:
 		case AXE:
 		case SHOVEL:
-			return getToolQuality(rand, level);
+			return toolQuality.get(level).get(rand);
 		}
 		return null;
 	}
@@ -135,6 +172,18 @@ public enum Quality{
 		case 4: return Quality.DIAMOND;
 		default: return Quality.WOOD;
 		}
+	}
+
+	public static Quality getArmourQuality(Random rand, int level) {
+		return armourQuality.get(level).get(rand);
+	}
+
+	public static Quality getToolQuality(Random rand, int level) {
+		return toolQuality.get(level).get(rand);
+	}
+
+	public static Quality getWeaponQuality(Random rand, int level) {
+		return weaponQuality.get(level).get(rand);
 	}
 	
 	

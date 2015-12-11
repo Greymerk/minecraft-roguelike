@@ -61,9 +61,9 @@ public class ItemWeapon extends ItemBase{
 		return sword;		
 	}
 	
-	private static ItemStack pickSword(Random rand, int rank){
+	private static ItemStack pickSword(Random rand, int level){
 		
-		Quality quality = Quality.getWeaponQuality(rand, rank);
+		Quality quality = Quality.getWeaponQuality(rand, level);
 		
 		switch (quality) {
 		case DIAMOND: return new ItemStack(Items.diamond_sword);

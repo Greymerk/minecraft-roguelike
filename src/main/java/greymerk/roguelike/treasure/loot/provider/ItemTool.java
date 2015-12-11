@@ -55,8 +55,8 @@ public class ItemTool extends ItemBase {
 	}
 	
 
-	private static ItemStack pickAxe(Random rand, int rank) {
-		Quality quality = Quality.getToolQuality(rand, rank);
+	private static ItemStack pickAxe(Random rand, int level) {
+		Quality quality = Quality.getToolQuality(rand, level);
 		switch (quality) {
 		case DIAMOND: return new ItemStack(Items.diamond_axe);
 		case GOLD: return new ItemStack(Items.golden_axe);
@@ -66,9 +66,9 @@ public class ItemTool extends ItemBase {
 		}
 	}
 	
-	private static ItemStack pickShovel(Random rand, int rank) {
+	private static ItemStack pickShovel(Random rand, int level) {
 
-		Quality quality = Quality.getToolQuality(rand, rank);
+		Quality quality = Quality.getToolQuality(rand, level);
 		switch (quality) {
 		case DIAMOND: return new ItemStack(Items.diamond_shovel);
 		case GOLD: return new ItemStack(Items.golden_shovel);
@@ -78,9 +78,9 @@ public class ItemTool extends ItemBase {
 		}
 	}
 	
-	private static ItemStack pickPick(Random rand, int rank) {
+	private static ItemStack pickPick(Random rand, int level) {
 
-		Quality quality = Quality.getToolQuality(rand, rank);
+		Quality quality = Quality.getToolQuality(rand, level);
 		switch (quality) {
 		case DIAMOND: return new ItemStack(Items.diamond_pickaxe);
 		case GOLD: return new ItemStack(Items.golden_pickaxe);

@@ -8,6 +8,7 @@ import greymerk.roguelike.dungeon.base.DungeonBase;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.treasure.Treasure;
+import greymerk.roguelike.worldgen.BlockJumble;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
@@ -236,6 +237,21 @@ public class DungeonObsidian extends DungeonBase {
 		for(Coord space : spawners){
 			Spawner.generate(editor, rand, settings, space);
 		}
+		
+		BlockJumble crap = new BlockJumble();
+		crap.addBlock(BlockType.get(BlockType.LAVA_FLOWING));
+		crap.addBlock(BlockType.get(BlockType.SOUL_SAND));
+		crap.addBlock(BlockType.get(BlockType.OBSIDIAN));
+		
+		Coord start = new Coord(origin);
+		Coord end = new Coord(start);
+		start.add(Cardinal.DOWN, 5);
+		end.add(Cardinal.DOWN, 8);
+		start.add(Cardinal.NORTH, 6);
+		start.add(Cardinal.EAST, 6);
+		end.add(Cardinal.SOUTH, 6);
+		end.add(Cardinal.WEST, 6);
+		crap.fillRectSolid(editor, rand, start, end, true, true);
 		
 		return true;
 	}
