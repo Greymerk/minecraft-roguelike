@@ -2,17 +2,19 @@ package greymerk.roguelike.worldgen;
 
 import com.google.gson.JsonElement;
 
-public enum BlockFactory {
+public enum BlockProvider {
 	
-	METABLOCK, WEIGHTED, CHECKERS, JUMBLE, STRIPES;
+	METABLOCK, WEIGHTED, CHECKERS, JUMBLE, STRIPES, LAYERS, COLUMNS;
 
 	public static IBlockFactory create(String type, JsonElement blockJson) {
-		switch(BlockFactory.valueOf(type)){
+		switch(BlockProvider.valueOf(type)){
 		case METABLOCK: return new MetaBlock(blockJson);
 		case WEIGHTED: return new BlockWeightedRandom(blockJson);
-		case CHECKERS: return new BlockFactoryCheckers(blockJson);
+		case CHECKERS: return new BlockCheckers(blockJson);
 		case JUMBLE: return new BlockJumble(blockJson);
 		case STRIPES: return new BlockStripes(blockJson);
+		case LAYERS: return new BlockLayers(blockJson);
+		case COLUMNS: return new BlockColumns(blockJson);
 		default: return null;
 		}
 	}

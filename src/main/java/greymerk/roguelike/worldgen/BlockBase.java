@@ -2,7 +2,7 @@ package greymerk.roguelike.worldgen;
 
 import java.util.Random;
 
-public abstract class BlockFactoryBase implements IBlockFactory {
+public abstract class BlockBase implements IBlockFactory {
 	
 	@Override
 	public boolean setBlock(WorldEditor editor, Random rand, Coord pos) {

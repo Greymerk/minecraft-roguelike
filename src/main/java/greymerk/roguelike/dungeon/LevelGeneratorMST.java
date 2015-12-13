@@ -39,7 +39,6 @@ public class LevelGeneratorMST implements ILevelGenerator{
 		List<Coord> vertices = mst.getPointPositions();
 		List<Edge> used = new ArrayList<Edge>();
 		
-		
 		for(Coord c : vertices){
 			for(Edge e : edges){
 				if(used.contains(e)) continue;

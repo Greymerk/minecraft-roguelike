@@ -247,9 +247,8 @@ public class WorldEditor {
 
 		Coord c1 = new Coord(x1, y1, z1);
 		Coord c2 = new Coord(x2, y2, z2);
-		
 		Coord.correct(c1, c2);
-		
+
 		for(int x = c1.getX(); x <= c2.getX(); x++){
 			for(int y = c1.getY(); y <= c2.getY(); y++){
 				for(int z = c1.getZ(); z <= c2.getZ(); z++){
@@ -346,5 +345,9 @@ public class WorldEditor {
 	
 	public TreasureManager getTreasure(){
 		return this.chests;
+	}
+
+	public boolean canPlaceOnSide(Block block, Coord c, int dir) {
+		return block.canPlaceBlockOnSide(world, c.getX(), c.getY(), c.getZ(), dir);
 	}
 }

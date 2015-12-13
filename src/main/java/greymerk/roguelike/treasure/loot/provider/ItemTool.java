@@ -1,11 +1,10 @@
 package greymerk.roguelike.treasure.loot.provider;
 
-import greymerk.roguelike.treasure.loot.Equipment;
-import greymerk.roguelike.treasure.loot.Loot;
-import greymerk.roguelike.treasure.loot.Quality;
-
 import java.util.Random;
 
+import greymerk.roguelike.treasure.loot.Enchant;
+import greymerk.roguelike.treasure.loot.Equipment;
+import greymerk.roguelike.treasure.loot.Quality;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
@@ -38,7 +37,7 @@ public class ItemTool extends ItemBase {
 		ItemStack tool = pickTool(rand, level);
 		
 		if(enchant && rand.nextInt(6 - level) == 0){
-			Loot.enchantItem(tool, rand, Loot.getEnchantLevel(rand, level));
+			Enchant.enchantItem(rand, tool, Enchant.getLevel(rand, level));
 		}
 		
 		return tool;
@@ -55,8 +54,8 @@ public class ItemTool extends ItemBase {
 	}
 	
 
-	private static ItemStack pickAxe(Random rand, int rank) {
-		Quality quality = Quality.getToolQuality(rand, rank);
+	private static ItemStack pickAxe(Random rand, int level) {
+		Quality quality = Quality.getToolQuality(rand, level);
 		switch (quality) {
 		case DIAMOND: return new ItemStack(Items.diamond_axe);
 		case GOLD: return new ItemStack(Items.golden_axe);
@@ -66,9 +65,9 @@ public class ItemTool extends ItemBase {
 		}
 	}
 	
-	private static ItemStack pickShovel(Random rand, int rank) {
+	private static ItemStack pickShovel(Random rand, int level) {
 
-		Quality quality = Quality.getToolQuality(rand, rank);
+		Quality quality = Quality.getToolQuality(rand, level);
 		switch (quality) {
 		case DIAMOND: return new ItemStack(Items.diamond_shovel);
 		case GOLD: return new ItemStack(Items.golden_shovel);
@@ -78,9 +77,9 @@ public class ItemTool extends ItemBase {
 		}
 	}
 	
-	private static ItemStack pickPick(Random rand, int rank) {
+	private static ItemStack pickPick(Random rand, int level) {
 
-		Quality quality = Quality.getToolQuality(rand, rank);
+		Quality quality = Quality.getToolQuality(rand, level);
 		switch (quality) {
 		case DIAMOND: return new ItemStack(Items.diamond_pickaxe);
 		case GOLD: return new ItemStack(Items.golden_pickaxe);

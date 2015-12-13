@@ -5,7 +5,7 @@ import java.util.Random;
 
 import greymerk.roguelike.dungeon.base.DungeonBase;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
-import greymerk.roguelike.worldgen.BlockFactoryCheckers;
+import greymerk.roguelike.worldgen.BlockCheckers;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
@@ -63,7 +63,7 @@ public class DungeonsEnder extends DungeonBase {
 		start.add(-4, -1, -4);
 		end.add(4, -1, 4);
 		
-		BlockFactoryCheckers checkers = new BlockFactoryCheckers(black, white);
+		BlockCheckers checkers = new BlockCheckers(black, white);
 		editor.fillRectSolid(inRandom, start, end, checkers, true, true);
 		// TODO: add ender chest
 		Spawner.generate(editor, inRandom, settings, origin, Spawner.ENDERMAN);

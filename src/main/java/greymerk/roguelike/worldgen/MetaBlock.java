@@ -7,7 +7,7 @@ import com.google.gson.JsonObject;
 
 import net.minecraft.block.Block;
 
-public class MetaBlock extends BlockFactoryBase {
+public class MetaBlock extends BlockBase {
 
 	private Block block;
 	private int meta;

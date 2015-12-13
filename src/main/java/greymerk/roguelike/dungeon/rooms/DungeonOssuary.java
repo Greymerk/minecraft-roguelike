@@ -34,7 +34,8 @@ public class DungeonOssuary extends DungeonBase {
 		
 		// any missing floor
 		BlockWeightedRandom cracked = new BlockWeightedRandom();
-		cracked.addBlock(BlockType.get(BlockType.STONE_BRICK_CRACKED), 10);
+		MetaBlock crack = BlockType.get(BlockType.STONE_BRICK_CRACKED);
+		cracked.addBlock(crack, 10);
 		cracked.addBlock(air, 3);
 		cracked.addBlock(BlockType.get(BlockType.COBBLESTONE), 5);
 		cracked.addBlock(BlockType.get(BlockType.GRAVEL), 5);
@@ -362,6 +363,6 @@ public class DungeonOssuary extends DungeonBase {
 	private void placeSkull(WorldEditor editor, Random rand, int x, int y, int z, Cardinal dir){
 		if(rand.nextBoolean()) return;
 		Skull type = rand.nextInt(10) == 0 ? Skull.WITHER : Skull.SKELETON;
-		Skull.set(editor, rand, x, y, z, dir, type);
+		Skull.set(editor, rand, new Coord(x, y, z), dir, type);
 	}
 }

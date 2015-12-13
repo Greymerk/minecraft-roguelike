@@ -8,6 +8,9 @@ import greymerk.roguelike.dungeon.base.SecretFactory;
 import greymerk.roguelike.dungeon.settings.DungeonSettings;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.dungeon.settings.SpawnCriteria;
+import greymerk.roguelike.dungeon.settings.TowerSettings;
+import greymerk.roguelike.dungeon.towers.Tower;
+import greymerk.roguelike.theme.Theme;
 import net.minecraftforge.common.BiomeDictionary;
 
 public class SettingsGrasslandTheme extends DungeonSettings{
@@ -18,6 +21,8 @@ public class SettingsGrasslandTheme extends DungeonSettings{
 		List<BiomeDictionary.Type> biomes = new ArrayList<BiomeDictionary.Type>();
 		biomes.add(BiomeDictionary.Type.PLAINS);
 		this.criteria.setBiomeTypes(biomes);
+		
+		this.towerSettings = new TowerSettings(Tower.ROGUE, Theme.getTheme(Theme.TOWER));
 		
 		for(int i = 0; i < 5; ++i){
 			

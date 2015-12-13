@@ -13,6 +13,7 @@ import com.google.common.base.Charsets;
 import com.google.common.io.Files;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
 
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsCustomBase;
@@ -93,8 +94,8 @@ public class SettingsResolver {
 		
 		try {
 			content = Files.toString(toParse, Charsets.UTF_8);
-		} catch (IOException e1) {
-			return null;
+		} catch (IOException e) {
+			throw new Exception("Error reading file");
 		}
 		
 		JsonParser jParser = new JsonParser();
@@ -103,14 +104,16 @@ public class SettingsResolver {
 		
 		try {
 			root = (JsonObject)jParser.parse(content);
-		} catch (Exception e){
+		} catch (JsonSyntaxException e){
 			throw e;
+		} catch (Exception e){
+			throw new Exception("An error occurred while parsing json");
 		}
 		
 		try {
 			toAdd = new DungeonSettings(settings, root);
 		} catch (Exception e){
-			throw e;
+			throw new Exception("An error occurred while processing settings");
 		}
 		
 		return toAdd;
@@ -183,5 +186,27 @@ public class SettingsResolver {
 	
 	public ISettings getDefaultSettings(){
 		return new DungeonSettings(base);
+	}
+
+	public ISettings getWithDefault(String name) {
+		
+		DungeonSettings custom = this.settings.get(name);
+		if(custom == null) return null;
+		List<SettingsType> overrides = custom.getOverrides();
+		DungeonSettings customBase = new SettingsCustomBase();
+		for(SettingsType type : SettingsType.values()){
+			if(overrides.contains(type)) continue;
+			switch(type){
+			case LOOT: break;
+			case LOOTRULES: customBase = new DungeonSettings(customBase, new SettingsLootRules()); break;
+			case SECRETS: customBase = new DungeonSettings(customBase, new SettingsSecrets()); break;
+			case ROOMS: customBase = new DungeonSettings(customBase, new SettingsRooms()); break;
+			case THEMES: customBase = new DungeonSettings(customBase, new SettingsTheme()); break;
+			case SEGMENTS: customBase = new DungeonSettings(customBase, new SettingsSegments()); break;
+			case SIZE: customBase = new DungeonSettings(customBase, new SettingsSize()); break;
+			case GENERATORS: customBase = new DungeonSettings(customBase, new SettingsGenerator()); break;
+			}
+		}
+		return new DungeonSettings(customBase, custom);
 	}
 }

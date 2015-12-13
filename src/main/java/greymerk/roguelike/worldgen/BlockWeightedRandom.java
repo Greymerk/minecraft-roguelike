@@ -9,7 +9,7 @@ import com.google.gson.JsonObject;
 import greymerk.roguelike.util.WeightedChoice;
 import greymerk.roguelike.util.WeightedRandomizer;
 
-public class BlockWeightedRandom extends BlockFactoryBase {
+public class BlockWeightedRandom extends BlockBase {
 
 	private WeightedRandomizer<IBlockFactory> blocks;
 	
@@ -24,7 +24,7 @@ public class BlockWeightedRandom extends BlockFactoryBase {
 			String type = d.get("type").getAsString();
 			JsonElement blockJson = d.get("data");
 			int weight = d.get("weight").getAsInt();
-			IBlockFactory toAdd = BlockFactory.create(type, blockJson);
+			IBlockFactory toAdd = BlockProvider.create(type, blockJson);
 			this.addBlock(toAdd, weight);
 		}
 	}

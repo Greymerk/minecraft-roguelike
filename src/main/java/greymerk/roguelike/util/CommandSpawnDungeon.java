@@ -8,7 +8,6 @@ import greymerk.roguelike.citadel.Citadel;
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.dungeon.Dungeon;
 import greymerk.roguelike.dungeon.IDungeon;
-import greymerk.roguelike.dungeon.settings.DungeonSettings;
 import greymerk.roguelike.dungeon.settings.ISettings;
 import greymerk.roguelike.treasure.loot.provider.ItemNovelty;
 import greymerk.roguelike.worldgen.Coord;
@@ -182,14 +181,20 @@ public class CommandSpawnDungeon extends CommandBase
 			
 			if(settingName != null){
 				Dungeon.initResolver();
-				DungeonSettings setting = Dungeon.settingsResolver.getByName(settingName);
-				if(setting == null){
+				ISettings settings = Dungeon.settingsResolver.getWithDefault(settingName);
+				 
+				if(settings == null){
 					sender.addChatMessage(new ChatComponentText(TextFormat.apply("Failed: " + settingName + " not found.", TextFormat.RED)));
 					return;
 				}
 				
-				IDungeon dungeon = new Dungeon(editor);
-				dungeon.generate(setting, x, z);
+				Dungeon dungeon = new Dungeon(editor);
+				dungeon.generate(settings, x, z);
+				try {
+					sender.addChatMessage(new ChatComponentText(TextFormat.apply("Success: \"" + settingName + "\" Dungeon generated at " + dungeon.getPosition().toString(), TextFormat.GREEN)));
+				} catch (Exception e) {
+					sender.addChatMessage(new ChatComponentText(TextFormat.apply("Failure: Unable to generate dungeon", TextFormat.RED)));
+				}
 				return;
 			}
 			

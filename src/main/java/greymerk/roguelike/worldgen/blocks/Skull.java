@@ -14,10 +14,9 @@ public enum Skull {
 
 	SKELETON, WITHER, ZOMBIE, STEVE, CREEPER;
 	
-	public static void set(WorldEditor editor, Random rand, int x, int y, int z, Cardinal dir, Skull type){
+	public static void set(WorldEditor editor, Random rand, Coord pos, Cardinal dir, Skull type){
 		
-		MetaBlock skullBlock = new MetaBlock(Blocks.skull);
-		Coord pos = new Coord(x, y, z);
+		MetaBlock skullBlock = new MetaBlock(Blocks.skull, 1);
 		
 		if(!skullBlock.setBlock(editor, pos)) return;
 		
@@ -32,27 +31,17 @@ public enum Skull {
 		setRotation(rand, skull, dir);
 	}
 	
-	public static void set(WorldEditor editor, Random rand, Coord cursor, Cardinal dir, Skull type){
-		int x = cursor.getX();
-		int y = cursor.getY();
-		int z = cursor.getZ();
-		
-		set(editor, rand, x, y, z, dir, type);
-	}
-	
 	public static void setType(TileEntitySkull skull, Skull type){		
 		skull.func_152107_a(getSkullId(type));
 	}
 	
 	public static void setRotation(Random rand, TileEntitySkull skull, Cardinal dir){
-		
 		int directionValue = getDirectionValue(dir);
 		
 		directionValue += -1 + rand.nextInt(3);
 		directionValue = directionValue % 16;
 		
 		skull.func_145903_a(directionValue);
-		
 	}
 	
 	public static int getSkullId(Skull type){

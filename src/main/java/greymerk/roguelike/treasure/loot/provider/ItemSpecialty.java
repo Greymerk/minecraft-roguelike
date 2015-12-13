@@ -48,7 +48,7 @@ public class ItemSpecialty extends ItemBase {
 	
 	
 	public static ItemStack getRandomItem(Equipment type, Random rand, int level){
-		return getRandomItem(type, rand, Quality.getQuality(rand, level, type));
+		return getRandomItem(type, rand, Quality.get(rand, level, type));
 	}
 	
 	public static ItemStack getRandomItem(Equipment type, Random rand, Quality quality){

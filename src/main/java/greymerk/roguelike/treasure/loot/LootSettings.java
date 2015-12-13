@@ -69,7 +69,12 @@ public class LootSettings {
 				JsonElement providerData = data.get(type.toString());
 				
 				if(providerData.isJsonObject()){
-					loot.put(type, new WeightedRandomLoot(providerData.getAsJsonObject(), 0));
+					try {
+						loot.put(type, new WeightedRandomLoot(providerData.getAsJsonObject(), 0));
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 				
 				if(providerData.isJsonArray()){
@@ -93,7 +98,11 @@ public class LootSettings {
 		JsonElement loot = data.get("data");
 		
 		if(loot.isJsonObject()){
-			return new WeightedRandomLoot(loot.getAsJsonObject(), weight);
+			try {
+				return new WeightedRandomLoot(loot.getAsJsonObject(), weight);
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
 		}
 		
 		JsonArray lootList = loot.getAsJsonArray();

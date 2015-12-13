@@ -15,9 +15,6 @@ import greymerk.roguelike.worldgen.redstone.Torch;
 
 public class RogueTower implements ITower{
 
-	public RogueTower(){
-	}
-	
 	public void generate(WorldEditor editor, Random rand, ITheme theme, int x, int y, int z){
 		
 		MetaBlock air = BlockType.get(BlockType.AIR);

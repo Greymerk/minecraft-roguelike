@@ -9,7 +9,7 @@ import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.treasure.ITreasureChest;
 import greymerk.roguelike.treasure.Treasure;
 import greymerk.roguelike.treasure.loot.provider.ItemNovelty;
-import greymerk.roguelike.worldgen.BlockFactoryCheckers;
+import greymerk.roguelike.worldgen.BlockCheckers;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IStair;
@@ -92,7 +92,7 @@ public class DungeonEniko extends DungeonBase {
 		editor.fillRectSolid(rand, x - 5, y - 1, z - 5, x + 5, y - 1, z + 5, BlockType.get(BlockType.STONE_BRICK));
 		MetaBlock blockOne = RogueConfig.getBoolean(RogueConfig.PRECIOUSBLOCKS) ? BlockType.get(BlockType.LAPIS_BLOCK) : ColorBlock.get(ColorBlock.CLAY, DyeColor.BLUE);
 		MetaBlock blockTwo = Quartz.get(Quartz.SMOOTH);
-		BlockFactoryCheckers checkers = new BlockFactoryCheckers(blockOne, blockTwo);
+		BlockCheckers checkers = new BlockCheckers(blockOne, blockTwo);
 		
 		editor.fillRectSolid(rand, x - 3, y - 1, z - 3, x + 3, y - 1, z + 3, checkers);
 		
