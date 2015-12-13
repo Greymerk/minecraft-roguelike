@@ -227,7 +227,7 @@ public class DungeonObsidian extends DungeonBase {
 				chestPos.add(dir, 4);
 				chestPos.add(orth, 2);
 				chestPos.add(Cardinal.DOWN, 3);
-				Treasure[] types = {Treasure.SPECIAL, Treasure.ORE};
+				Treasure[] types = {Treasure.WEAPONS, Treasure.ARMOUR, Treasure.ORE};
 				Treasure.generate(editor, rand, chestPos, types[rand.nextInt(types.length)], Dungeon.getLevel(chestPos.getY()));
 			}
 		}

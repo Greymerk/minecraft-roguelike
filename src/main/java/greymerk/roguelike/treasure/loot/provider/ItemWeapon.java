@@ -37,7 +37,7 @@ public class ItemWeapon extends ItemBase{
 		ItemStack bow = new ItemStack(Items.bow);
 		
 		if(enchant && rand.nextInt(6 - level) == 0){
-			Enchant.enchantItem(bow, rand, Enchant.getLevel(rand, level));
+			Enchant.enchantItem(rand, bow, Enchant.getLevel(rand, level));
 		}
 		
 		return bow;
@@ -54,7 +54,7 @@ public class ItemWeapon extends ItemBase{
 		sword = pickSword(rand, level);
 		
 		if(enchant && rand.nextInt(6 - level) == 0){
-			Enchant.enchantItem(sword, rand, Enchant.getLevel(rand, level));
+			Enchant.enchantItem(rand, sword, Enchant.getLevel(rand, level));
 		}
 		
 		return sword;		

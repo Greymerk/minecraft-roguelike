@@ -29,10 +29,15 @@ public class DungeonSettings implements ISettings{
 	
 	public DungeonSettings(){
 		this.levels = new HashMap<Integer, LevelSettings>();
+		this.lootRules = new LootRuleManager();
 		this.depth = 0;
 	}
 	
 	public DungeonSettings(Map<String, DungeonSettings> settings, JsonObject root) throws Exception{
+		
+		this.lootRules = new LootRuleManager();
+		levels = new HashMap<Integer, LevelSettings>();
+		this.depth = 0;
 		
 		this.name = root.get("name").getAsString();
 		if(root.has("criteria")) this.criteria = new SpawnCriteria(root.get("criteria").getAsJsonObject());
@@ -54,8 +59,6 @@ public class DungeonSettings implements ISettings{
 				this.overrides.add(SettingsType.valueOf(type));
 			}
 		}
-		
-		levels = new HashMap<Integer, LevelSettings>();
 		
 		List<String> inheritList = new ArrayList<String>();
 		if(root.has("inherit")){
@@ -105,6 +108,7 @@ public class DungeonSettings implements ISettings{
 	
 	public DungeonSettings(DungeonSettings base, DungeonSettings override){
 		
+		levels = new HashMap<Integer, LevelSettings>();
 		if(override.depth != 0){
 			depth = override.depth;
 		} else {
@@ -125,8 +129,6 @@ public class DungeonSettings implements ISettings{
 		} else {
 			this.towerSettings = override.towerSettings;
 		}
-		
-		levels = new HashMap<Integer, LevelSettings>();
 		
 		for(int i = 0; i < MAX_NUM_LEVELS; ++i){
 			if(override.levels.get(i) == null){

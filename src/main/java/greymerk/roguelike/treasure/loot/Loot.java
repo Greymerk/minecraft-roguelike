@@ -19,7 +19,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
-import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 
 public enum Loot {
@@ -96,24 +95,8 @@ public enum Loot {
 	public static void addEquipment(World world, int level, Entity mob){
 			
 		if(level > 4) level = 4;
-		
 		Random rand = world.rand;
-				
-		EnumDifficulty difficulty = world.getDifficulty();
-		
-		if(difficulty == null){
-			difficulty = EnumDifficulty.NORMAL;
-		}
-		
-		boolean enchant;
-		
-		switch(difficulty){
-		case PEACEFUL: enchant = false; break;
-		case EASY: enchant = rand.nextInt(5) == 0; break;
-		case NORMAL: enchant = level >= 3 || rand.nextBoolean(); break;
-		case HARD: enchant = true; break;
-		default: enchant = true;
-		}
+		boolean enchant = Enchant.canEnchant(world.getDifficulty(), rand, level);
 		
 		ItemStack weapon;
 		
@@ -179,7 +162,6 @@ public enum Loot {
 			} else {
 				item = Loot.getEquipmentBySlot(rand, Slot.getSlotByNumber(i), level, enchant);
 			}
-			 
 			mob.setCurrentItemOrArmor(i, item);
 		}
 		

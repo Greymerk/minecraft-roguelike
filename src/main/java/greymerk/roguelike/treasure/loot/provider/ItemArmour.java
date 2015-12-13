@@ -45,7 +45,7 @@ public class ItemArmour extends ItemBase {
 
 		ItemStack item = pickArmour(rand, slot, Quality.getArmourQuality(rand, level));
 		
-		if(enchantLevel > 0) Enchant.enchantItem(item, rand, enchantLevel);
+		if(enchantLevel > 0) Enchant.enchantItem(rand, item, enchantLevel);
 		
 		return item;
 		

@@ -12,6 +12,7 @@ import greymerk.roguelike.treasure.Treasure;
 import greymerk.roguelike.treasure.TreasureManager;
 import greymerk.roguelike.util.IWeighted;
 import greymerk.roguelike.util.WeightedRandomizer;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
 public class LootRuleManager {
@@ -77,9 +78,18 @@ public class LootRuleManager {
 		
 		int weight = lootItem.has("weight") ? lootItem.get("weight").getAsInt() : 1;
 		
+		
 		if(lootItem.get("data").isJsonObject()){
 			JsonObject data = lootItem.get("data").getAsJsonObject();
-			return new WeightedRandomLoot(data, weight);
+			WeightedRandomLoot item = null;
+			try{
+				item = new WeightedRandomLoot(data, weight);
+			} catch (Exception e){
+				System.err.println(e.getMessage());
+				item = new WeightedRandomLoot(Items.stick, 1);
+			}
+			 
+			return item;
 		}
 
 		JsonArray data = lootItem.get("data").getAsJsonArray();

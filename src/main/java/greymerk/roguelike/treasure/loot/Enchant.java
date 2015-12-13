@@ -8,6 +8,7 @@ import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.world.EnumDifficulty;
 
 public enum Enchant {
 
@@ -59,16 +60,30 @@ public enum Enchant {
 		}
 	}
 
-	public static void enchantItemChance(ItemStack item, Random rand, int level){
-		if(rand.nextInt(7 - level) == 0) enchantItem(item, rand, getLevel(rand, level));
+	public static boolean canEnchant(EnumDifficulty difficulty, Random rand, int level){
+		
+		if(difficulty == null) difficulty = EnumDifficulty.NORMAL;
+		
+		switch(difficulty){
+		case PEACEFUL: return false;
+		case EASY: return rand.nextInt(5) == 0;
+		case NORMAL: return level >= 3 || rand.nextBoolean();
+		case HARD: return true;
+		default: return true;
+		}
 	}
 
-	public static void enchantItem(ItemStack item, Random rand, int enchantLevel) {
+	@SuppressWarnings("unchecked")
+	public static void enchantItem(Random rand, ItemStack item, int enchantLevel) {
 
 		if (item == null ) return;
-
-		@SuppressWarnings("unchecked")
-		List<EnchantmentData> enchants = EnchantmentHelper.buildEnchantmentList(rand, item, enchantLevel);
+		
+		List<EnchantmentData> enchants = null;
+		try{
+			enchants = EnchantmentHelper.buildEnchantmentList(rand, item, enchantLevel);
+		} catch(NullPointerException e){
+			throw e;
+		}
 		
 		boolean isBook = item.getItem() == Items.book;
 

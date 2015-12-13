@@ -37,7 +37,7 @@ public class ItemTool extends ItemBase {
 		ItemStack tool = pickTool(rand, level);
 		
 		if(enchant && rand.nextInt(6 - level) == 0){
-			Enchant.enchantItem(tool, rand, Enchant.getLevel(rand, level));
+			Enchant.enchantItem(rand, tool, Enchant.getLevel(rand, level));
 		}
 		
 		return tool;
