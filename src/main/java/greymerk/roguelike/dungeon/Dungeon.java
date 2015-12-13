@@ -11,16 +11,14 @@ import greymerk.roguelike.dungeon.settings.SettingsResolver;
 import greymerk.roguelike.treasure.ITreasureChest;
 import greymerk.roguelike.treasure.Treasure;
 import greymerk.roguelike.treasure.TreasureManager;
+import greymerk.roguelike.treasure.loot.Book;
 import greymerk.roguelike.treasure.loot.ILoot;
 import greymerk.roguelike.treasure.loot.Loot;
 import greymerk.roguelike.util.WeightedChoice;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.WorldEditor;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.nbt.NBTTagString;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeDictionary.Type;
@@ -69,16 +67,29 @@ public class Dungeon implements IDungeon{
 	public void generate(ISettings settings, int inX, int inZ){
 		generator.generate(editor, settings, inX, inZ);
 		this.pos = new Coord(inX, 50, inZ);
-		
-		ItemStack book = this.book();
-		
+
 		Random rand = getRandom(editor, this.pos.getX(), this.pos.getZ());
-		
 		TreasureManager treasure = editor.getTreasure();
 		ILoot loot = Loot.getLoot();
-		
 		settings.getLootRules().process(rand, loot, treasure);
-		treasure.addItemToAll(rand, Treasure.STARTER, new WeightedChoice<ItemStack>(book, 1), 1);
+		
+		Book book = new Book("Greymerk", "Statistics");
+		book.addPage("~Architect's Resource Notes~\n\n"
+			+ "StoneBrick: " + editor.getStat(Blocks.stonebrick) + "\n"
+			+ "Cobblestone: " + editor.getStat(Blocks.cobblestone) + "\n"
+			+ "Logs: " + (editor.getStat(Blocks.log) + editor.getStat(Blocks.log2)) + "\n"
+			+ "Iron Bars: " + editor.getStat(Blocks.iron_bars) + "\n"
+			+ "Chests: " + (editor.getStat(Blocks.chest) + editor.getStat(Blocks.trapped_chest)) + "\n"
+			+ "Mob Spawners: " + editor.getStat(Blocks.mob_spawner) + "\n"
+			+ "TNT: " + editor.getStat(Blocks.tnt) + "\n"
+			+ "\n-Greymerk");
+		book.addPage("Roguelike Dungeons v" + Roguelike.version + "\n"
+			+ "Dec 7th 2015\n\n"
+			+ "Credits\n\n"
+			+ "Author: Greymerk\n\n"
+			+ "Bits: Drainedsoul\n\n"
+			+ "Ideas: Eniko @enichan");
+		treasure.addItemToAll(rand, Treasure.STARTER, new WeightedChoice<ItemStack>(book.get(), 1), 1);
 	}
 	
 	public static boolean canSpawnInChunk(int chunkX, int chunkZ, WorldEditor editor){
@@ -217,38 +228,5 @@ public class Dungeon implements IDungeon{
 			throw new Exception("Dungeon not yet generated");
 		}
 		return this.pos;
-	}
-	
-	private ItemStack book(){
-		ItemStack book = new ItemStack(Items.written_book, 1);
-		
-		book.setTagInfo("author", new NBTTagString("Greymerk"));
-		book.setTagInfo("title", new NBTTagString("Statistics"));
-				
-		String page1 = "~Architect's Resource Notes~\n\n";
-		page1 += "StoneBrick: " + editor.getStat(Blocks.stonebrick) + "\n";
-		page1 += "Cobblestone: " + editor.getStat(Blocks.cobblestone) + "\n";
-		page1 += "Logs: " + (editor.getStat(Blocks.log) + editor.getStat(Blocks.log2)) + "\n";
-		page1 += "Iron Bars: " + editor.getStat(Blocks.iron_bars) + "\n";
-		page1 += "Chests: " + (editor.getStat(Blocks.chest) + editor.getStat(Blocks.trapped_chest)) + "\n";
-		page1 += "Mob Spawners: " + editor.getStat(Blocks.mob_spawner) + "\n";
-		page1 += "TNT: " + editor.getStat(Blocks.tnt) + "\n";
-		page1 += "\n-Greymerk";
-		
-		String page2 = 
-				"Roguelike Dungeons v" + Roguelike.version + "\n" +
-				"Dec 7th 2015\n\n" + 
-				"Credits\n\n" +
-				"Author: Greymerk\n\n" +
-				"Bits: Drainedsoul\n\n" +
-				"Ideas: Eniko @enichan";
-		
-		NBTTagList pages = new NBTTagList();
-		pages.appendTag(new NBTTagString(page1));
-		pages.appendTag(new NBTTagString(page2));
-		
-		book.setTagInfo("pages", pages);
-		
-		return book;
 	}
 }

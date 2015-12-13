@@ -1,12 +1,11 @@
 package greymerk.roguelike.treasure.loot.provider;
 
-import greymerk.roguelike.treasure.loot.Equipment;
-import greymerk.roguelike.treasure.loot.Loot;
-import greymerk.roguelike.treasure.loot.Quality;
-import greymerk.roguelike.treasure.loot.Slot;
-
 import java.util.Random;
 
+import greymerk.roguelike.treasure.loot.Enchant;
+import greymerk.roguelike.treasure.loot.Equipment;
+import greymerk.roguelike.treasure.loot.Quality;
+import greymerk.roguelike.treasure.loot.Slot;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -25,11 +24,11 @@ public class ItemArmour extends ItemBase {
 	public static ItemStack getRandom(Random rand, int level, boolean enchant){
 		return getRandom(rand, level,
 				Slot.getSlotByNumber(rand.nextInt(4) + 1),
-				enchant ? Loot.getEnchantLevel(rand, level) : 0);
+				enchant ? Enchant.getLevel(rand, level) : 0);
 	}
 	
 	public static ItemStack getRandom(Random rand, int level, Slot slot, boolean enchant){
-		return getRandom(rand, level, slot, enchant ? Loot.getEnchantLevel(rand, level) : 0);
+		return getRandom(rand, level, slot, enchant ? Enchant.getLevel(rand, level) : 0);
 	}
 	
 	@SuppressWarnings("incomplete-switch")
@@ -46,7 +45,7 @@ public class ItemArmour extends ItemBase {
 
 		ItemStack item = pickArmour(rand, slot, Quality.getArmourQuality(rand, level));
 		
-		if(enchantLevel > 0) Loot.enchantItem(item, rand, enchantLevel);
+		if(enchantLevel > 0) Enchant.enchantItem(item, rand, enchantLevel);
 		
 		return item;
 		

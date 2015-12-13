@@ -1,11 +1,10 @@
 package greymerk.roguelike.treasure.loot.provider;
 
-import greymerk.roguelike.treasure.loot.Equipment;
-import greymerk.roguelike.treasure.loot.Loot;
-import greymerk.roguelike.treasure.loot.Quality;
-
 import java.util.Random;
 
+import greymerk.roguelike.treasure.loot.Enchant;
+import greymerk.roguelike.treasure.loot.Equipment;
+import greymerk.roguelike.treasure.loot.Quality;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
@@ -38,7 +37,7 @@ public class ItemTool extends ItemBase {
 		ItemStack tool = pickTool(rand, level);
 		
 		if(enchant && rand.nextInt(6 - level) == 0){
-			Loot.enchantItem(tool, rand, Loot.getEnchantLevel(rand, level));
+			Enchant.enchantItem(tool, rand, Enchant.getLevel(rand, level));
 		}
 		
 		return tool;

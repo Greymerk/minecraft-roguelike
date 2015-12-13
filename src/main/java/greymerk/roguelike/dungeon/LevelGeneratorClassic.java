@@ -88,9 +88,6 @@ public class LevelGeneratorClassic implements ILevelGenerator{
 		
 		for(DungeonTunnel tunnel : this.getTunnels()){
 			tunnel.genSegments(editor, rand, this.level);
-			//for(Coord c : tunnel){
-				//this.level.getSettings().getSegments().genSegment(editor, rand, this.level, tunnel.getDirection(), c);
-			//}
 		}
 		
 		LevelGenerator.generateLevelLink(editor, rand, this.level.getSettings(), start, oldEnd);

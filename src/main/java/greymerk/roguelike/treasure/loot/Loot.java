@@ -1,6 +1,5 @@
 package greymerk.roguelike.treasure.loot;
 
-import java.util.List;
 import java.util.Random;
 
 import greymerk.roguelike.config.RogueConfig;
@@ -10,8 +9,6 @@ import greymerk.roguelike.treasure.loot.provider.ItemSpecialty;
 import greymerk.roguelike.treasure.loot.provider.ItemTool;
 import greymerk.roguelike.treasure.loot.provider.ItemWeapon;
 import greymerk.roguelike.util.TextFormat;
-import net.minecraft.enchantment.EnchantmentData;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.monster.EntitySkeleton;
@@ -48,50 +45,6 @@ public enum Loot {
 		return ItemArmour.getRandom(rand, level, slot, enchant);
 	}
 
-	public static int getEnchantLevel(Random rand, int level) {
-
-		switch(level){
-		case 4: return 21 + rand.nextInt(10);
-		case 3: return 16 + rand.nextInt(10);
-		case 2: return 5 + rand.nextInt(10);
-		case 1: return 1 + rand.nextInt(5);
-		case 0: return 1;
-		default: return 1;
-		}
-	}
-
-	public static void enchantItemChance(ItemStack item, Random rand, int level){
-		if(rand.nextInt(7 - level) == 0) enchantItem(item, rand, getEnchantLevel(rand, level));
-	}
-
-
-	
-	public static void enchantItem(ItemStack item, Random rand, int enchantLevel) {
-
-		if (item == null ) return;
-
-		@SuppressWarnings("unchecked")
-		List<EnchantmentData> enchants = EnchantmentHelper.buildEnchantmentList(rand, item, enchantLevel);
-		
-		boolean isBook = item.getItem() == Items.book;
-
-		if (isBook){
-			item.setItem(Items.enchanted_book);
-			if(enchants.size() > 1){
-				enchants.remove(rand.nextInt(enchants.size()));
-			}
-		}
-
-		for (EnchantmentData toAdd : enchants){
-			if (isBook){
-				Items.enchanted_book.addEnchantment(item, toAdd);
-			} else {
-				item.addEnchantment(toAdd.enchantmentobj, toAdd.enchantmentLevel);
-			}
-		}
-	}
-	
-	
 	public static void setItemLore(ItemStack item, String loreText){
 		
 		NBTTagCompound tag = item.getTagCompound(); 
