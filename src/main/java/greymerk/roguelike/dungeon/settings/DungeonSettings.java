@@ -65,8 +65,8 @@ public class DungeonSettings implements ISettings{
 			}
 		}
 		
+		// generate an inherit base and then apply inherited aspects.
 		DungeonSettings base = new SettingsBlank();
-		
 		for(String name : inheritList){
 			if(settings.containsKey(name)){
 				base = new DungeonSettings(base, settings.get(name));
@@ -74,9 +74,7 @@ public class DungeonSettings implements ISettings{
 				throw new Exception(name + " must be previously defined in order to be inherited");
 			}
 		}
-		
 		parseJson(base, root);
-		
 	}
 	
 	private void parseJson(DungeonSettings base, JsonObject root){
@@ -85,12 +83,10 @@ public class DungeonSettings implements ISettings{
 			this.towerSettings = base.towerSettings;
 		}
 		
+		this.lootRules.add(base.lootRules);
+		
 		if(!root.has("depth")){
 			this.depth = base.depth;
-		}
-		
-		if(!root.has("loot_rules")){
-			this.lootRules = base.lootRules;
 		}
 		
 		if(!root.has("overrides")){
@@ -131,8 +127,8 @@ public class DungeonSettings implements ISettings{
 		}
 		
 		this.lootRules = new LootRuleManager();
-		if(base.lootRules != null) this.lootRules.add(base.lootRules);
-		if(override.lootRules != null) this.lootRules.add(override.lootRules);
+		this.lootRules.add(base.lootRules);
+		this.lootRules.add(override.lootRules);
 		if(base.overrides != null || override.overrides != null){
 			this.overrides = new ArrayList<SettingsType>();
 			if(base.overrides != null) this.overrides.addAll(base.overrides);
@@ -220,5 +216,15 @@ public class DungeonSettings implements ISettings{
 	public List<SettingsType> getOverrides() {
 		if(this.overrides == null) return new ArrayList<SettingsType>();
 		return this.overrides;
+	}
+	
+	@Override
+	public String toString(){
+		String strg = "";
+		if(this.name != null){
+			strg += this.name + " : ";
+		}
+		strg += this.lootRules != null ? this.lootRules.toString() : 0; 
+		return strg;
 	}
 }

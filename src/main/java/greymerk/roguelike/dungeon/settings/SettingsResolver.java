@@ -86,6 +86,9 @@ public class SettingsResolver {
 			}
 			settings.put(toAdd.getName(), toAdd);
 		}
+		for(DungeonSettings setting : this.settings.values()){
+			System.out.println(setting.toString());
+		}
 	}
 	
 	private DungeonSettings parseFile(File toParse) throws Exception{

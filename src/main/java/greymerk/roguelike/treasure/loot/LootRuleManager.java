@@ -38,11 +38,23 @@ public class LootRuleManager {
 				items.add(parseProvider(item.getAsJsonObject()));
 			}
 
-			int level = rule.get("level").getAsInt();
+			List<Integer> levels = new ArrayList<Integer>();
+			JsonElement levelElement = rule.get("level");
+			if(levelElement.isJsonArray()){
+				JsonArray levelArray = levelElement.getAsJsonArray();
+				for(JsonElement lvl : levelArray){
+					levels.add(lvl.getAsInt());
+				}
+			} else {
+				levels.add(rule.get("level").getAsInt());
+			}			
+			
 			boolean each = rule.get("each").getAsBoolean();
 			int amount = rule.get("quantity").getAsInt();
 			
-			this.add(type, items, level, each, amount);
+			for(int level : levels){
+				this.add(type, items, level, each, amount);	
+			}
 		}
 	}
 
@@ -51,6 +63,7 @@ public class LootRuleManager {
 	}
 	
 	public void add(LootRuleManager other){
+		if(other == null) return;
 		this.rules.addAll(other.rules);
 	}
 	
@@ -76,5 +89,10 @@ public class LootRuleManager {
 		}
 		
 		return items;
+	}
+	
+	@Override
+	public String toString(){
+		return Integer.toString(this.rules.size());
 	}
 }

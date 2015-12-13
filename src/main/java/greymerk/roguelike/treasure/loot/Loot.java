@@ -12,6 +12,7 @@ import greymerk.roguelike.util.TextFormat;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.monster.EntitySkeleton;
+import net.minecraft.entity.monster.EntitySpider;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -172,14 +173,17 @@ public enum Loot {
 		
 		// put on some armour
 		for(int i = 1; i < 5; i++){
-			if (enchant){
-				ItemStack item = Loot.getEquipmentBySlot(rand, Slot.getSlotByNumber(i), level, enchant);
-				mob.setCurrentItemOrArmor(i, item);
+			ItemStack item;
+			if(mob instanceof EntitySpider){
+				item = Loot.getEquipmentBySlot(rand, Slot.FEET, level, enchant);	
+			} else {
+				item = Loot.getEquipmentBySlot(rand, Slot.getSlotByNumber(i), level, enchant);
 			}
+			 
+			mob.setCurrentItemOrArmor(i, item);
 		}
 		
 		// lower drop chance
-
 		for(int s = 0; s < 5; s++){
 			((EntityLiving)mob).setEquipmentDropChance(s, (float) RogueConfig.getDouble(RogueConfig.LOOTING));
 		}
