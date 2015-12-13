@@ -74,24 +74,11 @@ public class DungeonSettings implements ISettings{
 				throw new Exception(name + " must be previously defined in order to be inherited");
 			}
 		}
-		parseJson(base, root);
-	}
-	
-	private void parseJson(DungeonSettings base, JsonObject root){
 		
-		if(!root.has("tower")){
-			this.towerSettings = base.towerSettings;
-		}
-		
+		if(!root.has("tower")) this.towerSettings = base.towerSettings;
 		this.lootRules.add(base.lootRules);
-		
-		if(!root.has("depth")){
-			this.depth = base.depth;
-		}
-		
-		if(!root.has("overrides")){
-			this.overrides = base.overrides;
-		}
+		if(!root.has("depth")) this.depth = base.depth;
+		if(!root.has("overrides")) this.overrides = base.overrides;
 		
 		if(!root.has("levels")){
 			this.levels.putAll(base.levels);
@@ -99,9 +86,7 @@ public class DungeonSettings implements ISettings{
 		}
 		
 		JsonObject levelSet = root.get("levels").getAsJsonObject();
-		
 		for(int i = 0; i < 5; ++i){
-			
 			LevelSettings setting = new LevelSettings();
 			
 			if(levelSet.has("all")){
