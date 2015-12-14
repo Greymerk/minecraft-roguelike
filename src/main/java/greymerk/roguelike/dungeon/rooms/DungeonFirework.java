@@ -122,7 +122,7 @@ public class DungeonFirework extends DungeonBase {
 		cursor.add(Cardinal.DOWN);
 		breadboard.setBlock(editor, cursor);
 		cursor.add(orth[0]);
-		Torch.generate(editor, Torch.REDSTONE, orth[0], cursor);
+		Torch.generate(editor, Torch.REDSTONE_UNLIT, orth[0], cursor);
 		cursor.add(orth[0]);
 		wire.setBlock(editor, cursor);
 		cursor.add(Cardinal.reverse(dir));
@@ -134,7 +134,7 @@ public class DungeonFirework extends DungeonBase {
 		cursor.add(orth[1]);
 		wire.setBlock(editor, cursor);
 		cursor.add(dir);
-		Repeater.generate(editor, rand, dir, 4, cursor);
+		Repeater.generate(editor, rand, dir, 4, true, cursor);
 		cursor.add(Cardinal.UP);
 		cursor.add(Cardinal.reverse(dir));
 		breadboard.setBlock(editor, cursor);
