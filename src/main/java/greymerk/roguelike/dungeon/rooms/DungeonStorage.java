@@ -1,12 +1,11 @@
 package greymerk.roguelike.dungeon.rooms;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 
-import greymerk.roguelike.dungeon.Dungeon;
 import greymerk.roguelike.dungeon.base.DungeonBase;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.theme.ITheme;
@@ -106,7 +105,7 @@ public class DungeonStorage extends DungeonBase {
 				editor.setBlock(rand, cursor, step, true, true);
 				cursor.add(Cardinal.UP, 1);
 				chestSpaces.add(new Coord(cursor));
-				cursor.add(orth, 1);
+				cursor.add(Cardinal.reverse(orth), 1);
 				chestSpaces.add(new Coord(cursor));				
 				
 				start = new Coord(x, y, z);
@@ -126,19 +125,16 @@ public class DungeonStorage extends DungeonBase {
 			}
 		}
 		
-
-		List<Treasure> types = new ArrayList<Treasure>(Arrays.asList(Treasure.BLOCKS, Treasure.SUPPLIES));
-		
 		List<Coord> spaces = new ArrayList<Coord>(chestSpaces);
-		
-		Treasure.createChests(editor, rand, 3, spaces, types, Dungeon.getLevel(origin.getY()));
-		
+		Collections.shuffle(spaces);
+		Treasure.generate(editor, rand, spaces.remove(0), Treasure.SUPPLIES, settings.getDifficulty(origin));
+		Treasure.generate(editor, rand, spaces.remove(0), Treasure.BLOCKS, settings.getDifficulty(origin));
 		return true;
 	}
 
 	@Override
 	public int getSize() {
-		return 8;
+		return 10;
 	}
 
 	private static void pillarTop(WorldEditor editor, Random rand, ITheme theme, Coord cursor){

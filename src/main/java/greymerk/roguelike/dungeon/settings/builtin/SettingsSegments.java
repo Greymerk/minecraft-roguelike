@@ -24,12 +24,13 @@ public class SettingsSegments extends DungeonSettings{
 			case 1:
 				segments = new SegmentGenerator(Segment.ARCH);
 				segments.add(Segment.INSET, 3);
-				segments.add(Segment.SHELF, 5);
+				segments.add(Segment.SHELF, 3);
 				segments.add(Segment.FIREPLACE, 1);
-				segments.add(Segment.BOOKS, 2);
-				segments.add(Segment.CHEST, 1);
+				segments.add(Segment.WALL, 5);
+				segments.add(Segment.BOOKS, 1);
+				segments.add(Segment.CHEST, 2);
 				segments.add(Segment.FLOWERS, 1);
-				segments.add(Segment.SPAWNER, 2);
+				segments.add(Segment.SPAWNER, 3);
 				break;
 			case 2:
 				segments = new SegmentGenerator(Segment.ARCH);

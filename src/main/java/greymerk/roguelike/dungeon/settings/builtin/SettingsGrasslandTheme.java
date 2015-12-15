@@ -11,6 +11,13 @@ import greymerk.roguelike.dungeon.settings.SpawnCriteria;
 import greymerk.roguelike.dungeon.settings.TowerSettings;
 import greymerk.roguelike.dungeon.towers.Tower;
 import greymerk.roguelike.theme.Theme;
+import greymerk.roguelike.treasure.Treasure;
+import greymerk.roguelike.treasure.loot.LootRuleManager;
+import greymerk.roguelike.treasure.loot.WeightedRandomLoot;
+import greymerk.roguelike.util.WeightedRandomizer;
+import greymerk.roguelike.worldgen.blocks.Log;
+import greymerk.roguelike.worldgen.blocks.Wood;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.BiomeDictionary;
 
 public class SettingsGrasslandTheme extends DungeonSettings{
@@ -24,18 +31,27 @@ public class SettingsGrasslandTheme extends DungeonSettings{
 		
 		this.towerSettings = new TowerSettings(Tower.ROGUE, Theme.getTheme(Theme.TOWER));
 		
+		this.lootRules = new LootRuleManager();
+		WeightedRandomizer<ItemStack> wood = new WeightedRandomizer<ItemStack>(1);
+		wood.add(new WeightedRandomLoot(Log.getLog(Wood.OAK).getBlock(), 0, 2, 8, 1));
+		wood.add(new WeightedRandomLoot(Log.getLog(Wood.BIRCH).getBlock(), 0, 2, 8, 1));
+		this.lootRules.add(Treasure.BLOCKS, wood, 0, true, 1);
+		this.lootRules.add(Treasure.BLOCKS, wood, 1, true, 1);
+		this.lootRules.add(Treasure.STARTER, wood, 0, true, 1);
+		
 		for(int i = 0; i < 5; ++i){
 			
-			SecretFactory factory = new SecretFactory();
+			LevelSettings level = new LevelSettings();
+			SecretFactory secrets = new SecretFactory();
 
 			switch(i){
 			case 0:
-				factory.addRoom(DungeonRoom.BEDROOM, 2);
-				factory.addRoom(DungeonRoom.SMITH);
-				factory.addRoom(DungeonRoom.FIREWORK);
+				secrets.addRoom(DungeonRoom.BEDROOM, 2);
+				secrets.addRoom(DungeonRoom.SMITH);
+				secrets.addRoom(DungeonRoom.FIREWORK);
 				break;
 			case 1:
-				factory.addRoom(DungeonRoom.BTEAM);
+				secrets.addRoom(DungeonRoom.BTEAM);
 				break;
 			case 2:
 				break;
@@ -47,8 +63,7 @@ public class SettingsGrasslandTheme extends DungeonSettings{
 				break;
 			}
 			
-			LevelSettings level = new LevelSettings();
-			level.setSecrets(factory);
+			level.setSecrets(secrets);
 			levels.put(i, level);
 		}
 		

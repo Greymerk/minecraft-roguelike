@@ -8,7 +8,6 @@ import java.util.Random;
 import greymerk.roguelike.dungeon.segment.ISegment;
 import greymerk.roguelike.dungeon.segment.ISegmentGenerator;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
-import greymerk.roguelike.treasure.ITreasureChest;
 import greymerk.roguelike.worldgen.BlockJumble;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
@@ -113,15 +112,5 @@ public class DungeonTunnel implements Iterable<Coord>{
 	
 	public List<ISegment> getSegments(){
 		return this.segments;
-	}
-	
-	public List<ITreasureChest> getChests(){
-		List<ITreasureChest> chests = new ArrayList<ITreasureChest>();
-		
-		for(ISegment segment : this.segments){
-			chests.addAll(segment.getChests());
-		}
-		
-		return chests;
 	}
 }

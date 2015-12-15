@@ -1,19 +1,23 @@
 package greymerk.roguelike.dungeon.settings.builtin;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import greymerk.roguelike.dungeon.base.DungeonFactory;
 import greymerk.roguelike.dungeon.base.DungeonRoom;
 import greymerk.roguelike.dungeon.segment.Segment;
 import greymerk.roguelike.dungeon.segment.SegmentGenerator;
-import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.dungeon.settings.DungeonSettings;
-import greymerk.roguelike.dungeon.settings.TowerSettings;
+import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.dungeon.settings.SpawnCriteria;
+import greymerk.roguelike.dungeon.settings.TowerSettings;
 import greymerk.roguelike.dungeon.towers.Tower;
 import greymerk.roguelike.theme.Theme;
-
-import java.util.ArrayList;
-import java.util.List;
-
+import greymerk.roguelike.treasure.loot.LootRuleManager;
+import greymerk.roguelike.treasure.loot.WeightedRandomLoot;
+import greymerk.roguelike.util.WeightedRandomizer;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.BiomeDictionary;
 
 public class SettingsSwampTheme extends DungeonSettings{
@@ -29,6 +33,16 @@ public class SettingsSwampTheme extends DungeonSettings{
 		
 		Theme[] themes = {Theme.DARKHALL, Theme.DARKHALL, Theme.MUDDY, Theme.MOSSY, Theme.NETHER};
 		
+		WeightedRandomizer<ItemStack> brewing = new WeightedRandomizer<ItemStack>();
+		brewing.add(new WeightedRandomLoot(Items.glass_bottle, 0, 1, 3, 3));
+		brewing.add(new WeightedRandomLoot(Items.magma_cream, 0, 1, 2, 1));
+		brewing.add(new WeightedRandomLoot(Items.speckled_melon, 0, 1, 3, 1));
+		brewing.add(new WeightedRandomLoot(Items.blaze_powder, 0, 1, 3, 1));
+		brewing.add(new WeightedRandomLoot(Items.sugar, 0, 1, 3, 1));
+		this.lootRules = new LootRuleManager();
+		for(int i = 0; i < 5; ++i){
+			this.lootRules.add(null, brewing, i, true, 2);	
+		}
 		for(int i = 0; i < 5; ++i){
 			
 			LevelSettings level = new LevelSettings();

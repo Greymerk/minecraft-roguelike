@@ -6,6 +6,7 @@ import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
+import net.minecraft.block.BlockSkull;
 import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntitySkull;
@@ -17,9 +18,14 @@ public enum Skull {
 	public static void set(WorldEditor editor, Random rand, int x, int y, int z, Cardinal dir, Skull type){
 		
 		MetaBlock skullBlock = new MetaBlock(Blocks.skull);
+		
+		// Makes the skull sit flush against the block below it.
+		skullBlock.withProperty(BlockSkull.field_176418_a, Cardinal.getFacing(Cardinal.UP));
+		
 		Coord pos = new Coord(x, y, z);
 		
 		if(!skullBlock.setBlock(editor, pos)) return;
+		
 		
 		TileEntity skullEntity = editor.getTileEntity(pos);
 		
@@ -55,6 +61,8 @@ public enum Skull {
 		directionValue = directionValue % 16;
 		
 		skull.setSkullRotation(directionValue);
+		
+		
 		
 	}
 	

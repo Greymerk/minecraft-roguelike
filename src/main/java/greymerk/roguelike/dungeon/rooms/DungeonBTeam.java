@@ -3,6 +3,7 @@ package greymerk.roguelike.dungeon.rooms;
 import java.util.List;
 import java.util.Random;
 
+import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.dungeon.base.DungeonBase;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.treasure.ITreasureChest;
@@ -322,7 +323,9 @@ public class DungeonBTeam extends DungeonBase {
 		bricks.addBlock(BlockType.get(BlockType.STONE_BRICK_CRACKED));
 		bricks.addBlock(BlockType.get(BlockType.STONE_BRICK_MOSSY));
 		MetaBlock plank = Wood.getPlank(Wood.SPRUCE);
-		MetaBlock b = BlockType.get(BlockType.EMERALD_BLOCK);
+		MetaBlock b = RogueConfig.getBoolean(RogueConfig.GENEROUS)
+			? BlockType.get(BlockType.EMERALD_BLOCK)
+			: ColorBlock.get(ColorBlock.GLASS, DyeColor.LIME);
 		
 		Cardinal[] orth = Cardinal.getOrthogonal(dir);
 

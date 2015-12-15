@@ -17,7 +17,4 @@ public class ItemSmithy extends ItemBase{
 	public ItemStack getLootItem(Random rand, int level) {
 		return ItemSpecialty.getRandomItem(Equipment.SWORD, rand, Quality.IRON);
 	}
-	
-	
-
 }

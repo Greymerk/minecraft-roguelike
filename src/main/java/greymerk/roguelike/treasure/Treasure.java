@@ -14,13 +14,11 @@ import net.minecraft.init.Blocks;
 
 public enum Treasure {
 
-	ARMOUR, WEAPONS, BLOCKS, ENCHANTING, FOOD, ORE, POTIONS, STARTER, TOOLS, SUPPLIES, SMITH, MUSIC, SPECIAL, REWARD, EMPTY;
+	ARMOUR, WEAPONS, BLOCKS, ENCHANTING, FOOD, ORE, POTIONS,
+	STARTER, TOOLS, SUPPLIES, SMITH, MUSIC, REWARD, EMPTY;
 	
-	public static final List<Treasure> level0 = new ArrayList<Treasure>(Arrays.asList(ORE, TOOLS, ARMOUR, WEAPONS, FOOD));
-	public static final List<Treasure> level1 = new ArrayList<Treasure>(Arrays.asList(ORE, TOOLS, ARMOUR, WEAPONS, FOOD));
-	public static final List<Treasure> level2 = new ArrayList<Treasure>(Arrays.asList(ORE, TOOLS, ARMOUR, WEAPONS));
-	public static final List<Treasure> level3 = new ArrayList<Treasure>(Arrays.asList(ORE, TOOLS, ARMOUR, WEAPONS));
-	public static final List<Treasure> level4 = new ArrayList<Treasure>(Arrays.asList(ORE, TOOLS, ARMOUR, WEAPONS));
+	private static final List<Treasure> common = new ArrayList<Treasure>(Arrays.asList(TOOLS, ARMOUR, WEAPONS));
+
 	
 	public static ITreasureChest generate(WorldEditor editor, Random rand, Coord pos, int level, boolean trapped){
 		
@@ -97,57 +95,7 @@ public enum Treasure {
 	}
 	
 	private static Treasure getChestType(Random rand, int level){		
-		
-		switch(level){
-		
-		case 0:
-			
-			if(rand.nextInt(30) == 0){
-				return ENCHANTING;
-			}
-			
-			if(rand.nextInt(10) == 0){
-				return SUPPLIES;
-			}
-			
-			return level0.get(rand.nextInt(level0.size()));
-			
-		case 1:
-			
-			if(rand.nextInt(20) == 0){
-				return ENCHANTING;
-			}
-			
-			return level1.get(rand.nextInt(level1.size()));
-						
-		case 2:
-			
-			if(rand.nextInt(10) == 0){
-				return ENCHANTING;
-			}
-			
-			return level2.get(rand.nextInt(level2.size()));
-		
-		case 3:
-			
-			if(rand.nextInt(10) == 0){
-				return ENCHANTING;
-			}
-			
-			return level3.get(rand.nextInt(level3.size()));
-			
-		case 4:
-			
-			if(rand.nextInt(10) == 0){
-				return ENCHANTING;
-			}
-			
-			return level4.get(rand.nextInt(level4.size()));
-		
-		default:
-			return FOOD;
-		}
-		
+		return common.get(rand.nextInt(common.size()));
 	}
 
 	public static boolean isValidChestSpace(WorldEditor editor, Coord pos) {

@@ -14,7 +14,6 @@ import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.Skull;
-import net.minecraft.block.BlockStoneBrick;
 
 public class DungeonOssuary extends DungeonBase {
 
@@ -35,8 +34,7 @@ public class DungeonOssuary extends DungeonBase {
 		
 		// any missing floor
 		BlockWeightedRandom cracked = new BlockWeightedRandom();
-		MetaBlock crack = BlockType.get(BlockType.STONE_BRICK);
-		crack.withProperty(BlockStoneBrick.VARIANT_PROP, BlockStoneBrick.EnumType.CRACKED);
+		MetaBlock crack = BlockType.get(BlockType.STONE_BRICK_CRACKED);
 		cracked.addBlock(crack, 10);
 		cracked.addBlock(air, 3);
 		cracked.addBlock(BlockType.get(BlockType.COBBLESTONE), 5);

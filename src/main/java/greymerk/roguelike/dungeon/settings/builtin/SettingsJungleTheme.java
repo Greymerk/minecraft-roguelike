@@ -25,11 +25,11 @@ public class SettingsJungleTheme extends DungeonSettings{
 		
 		this.towerSettings = new TowerSettings(Tower.JUNGLE, Theme.getTheme(Theme.JUNGLE));
 		
-		LootRuleManager rules = new LootRuleManager();
+		this.lootRules = new LootRuleManager();
 		for(int i = 0; i < 5; ++i){
-			rules.add(null, new WeightedRandomLoot(Items.emerald, 1), i, false, 6);	
+			this.lootRules.add(null, new WeightedRandomLoot(Items.emerald, 1), i, false, 6);	
 		}
-		this.lootRules = rules;
+
 		
 		Theme[] themes = {Theme.JUNGLE, Theme.JUNGLE, Theme.MOSSY, Theme.MOSSY, Theme.NETHER};
 		
