@@ -14,10 +14,6 @@ public enum TallPlant {
 	public static void generate(WorldEditor editor, TallPlant type, Coord pos){
 		Coord cursor;
 
-		//BlockDoublePlant plant = new BlockDoublePlant();
-		//MetaBlock upper = new MetaBlock(plant.getStateFromMeta(getMeta(type, true)));
-		//MetaBlock lower = new MetaBlock(plant.getStateFromMeta(getMeta(type, false)));
-		
 		MetaBlock upper = new MetaBlock(Blocks.double_plant.getStateFromMeta(getMeta(type, true)));
 		MetaBlock lower = new MetaBlock(Blocks.double_plant.getStateFromMeta(getMeta(type, false)));
 		
