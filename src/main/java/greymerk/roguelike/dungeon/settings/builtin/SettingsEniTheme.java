@@ -46,7 +46,7 @@ public class SettingsEniTheme extends DungeonSettings{
 				factory.addSingle(DungeonRoom.LIBRARY);
 				factory.addSingle(DungeonRoom.MESS);
 				factory.addSingle(DungeonRoom.ENCHANT);
-				factory.addRandom(DungeonRoom.BRICK, 10);
+				factory.addRandom(DungeonRoom.ENIKO, 10);
 				factory.addRandom(DungeonRoom.CORNER, 3);
 				level.setRooms(factory);
 				
@@ -67,12 +67,11 @@ public class SettingsEniTheme extends DungeonSettings{
 				factory = new DungeonFactory();
 				factory.addSingle(DungeonRoom.LIBRARY);
 				factory.addSingle(DungeonRoom.LIBRARY);
-				factory.addSingle(DungeonRoom.ENIKO);
 				factory.addSingle(DungeonRoom.ENDER);
 				factory.addSingle(DungeonRoom.FIRE);
 				factory.addSingle(DungeonRoom.MESS);
 				factory.addSingle(DungeonRoom.LAB);
-				factory.addRandom(DungeonRoom.BRICK, 10);
+				factory.addRandom(DungeonRoom.ENIKO, 10);
 				factory.addRandom(DungeonRoom.CORNER, 3);
 				level.setRooms(factory);
 			}

@@ -15,7 +15,7 @@ public enum ColorBlock {
 	
 	public static MetaBlock get(ColorBlock type, DyeColor color){
 		Block b = getBlock(type);
-		EnumDyeColor c = DyeColor.getColor(color);
+		EnumDyeColor c = DyeColor.get(color);
 		MetaBlock block = new MetaBlock(b.getDefaultState().withProperty(BlockColored.COLOR, c));
 		return block;
 	}

@@ -14,8 +14,14 @@ import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.MetaStair;
 import greymerk.roguelike.worldgen.WorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
+import greymerk.roguelike.worldgen.blocks.ColorBlock;
 import greymerk.roguelike.worldgen.blocks.Door;
+import greymerk.roguelike.worldgen.blocks.DyeColor;
+import greymerk.roguelike.worldgen.blocks.FlowerPot;
 import greymerk.roguelike.worldgen.blocks.StairType;
+import greymerk.roguelike.worldgen.blocks.TallPlant;
+import greymerk.roguelike.worldgen.blocks.Trapdoor;
+import greymerk.roguelike.worldgen.redstone.Torch;
 
 
 public class DungeonLibrary extends DungeonBase{
@@ -67,7 +73,12 @@ public class DungeonLibrary extends DungeonBase{
 			if(Arrays.asList(entrances).contains(dir)){
 				door(editor, rand, settings.getTheme(), dir, origin);
 			} else {
-				desk(editor, rand, settings.getTheme(), dir, origin);
+				if(rand.nextBoolean()){
+					desk(editor, rand, settings.getTheme(), dir, origin);	
+				} else {
+					plants(editor, rand, settings.getTheme(), dir, origin);
+				}
+				
 			}
 			
 			start = new Coord(origin);
@@ -168,36 +179,36 @@ public class DungeonLibrary extends DungeonBase{
 	}
 	
 	private void desk(WorldEditor editor, Random rand, ITheme theme, Cardinal dir, Coord pos){
+		
+		Coord cursor;
 		Coord start;
 		Coord end;
-		Coord cursor;
-		
 		Cardinal[] orth = Cardinal.getOrthogonal(dir);
 		MetaBlock shelf = BlockType.get(BlockType.SHELF);
-
-		for(Cardinal o : orth){
-			start = new Coord(pos);
-			start.add(dir, 5);
-			start.add(o, 2);
-			end = new Coord(start);
-			end.add(Cardinal.UP, 2);
-			editor.fillRectSolid(rand, start, end, shelf, true, true);
-		}
 		
-		start = new Coord(pos);
-		start.add(dir, 6);
-		end = new Coord(start);
+		cursor = new Coord(pos);
+		cursor.add(dir, 5);
+		start = new Coord(cursor);
+		end = new Coord(cursor);
 		start.add(orth[0], 2);
 		end.add(orth[1], 2);
-		editor.fillRectSolid(rand, start, end, theme.getSecondaryWall(), true, true);
-		
-		start.add(Cardinal.UP);
 		end.add(Cardinal.UP, 2);
-		editor.fillRectSolid(rand, start, end, shelf, true, true);
+		BlockType.get(BlockType.AIR).fillRectSolid(editor, rand, start, end, true, true);
+		start.add(dir);
+		end.add(dir);
+		theme.getPrimaryWall().fillRectSolid(editor, rand, start, end, false, true);
 		
-		start.add(Cardinal.reverse(dir));
-		end.add(Cardinal.reverse(dir));
-		editor.fillRectSolid(rand, start, end, BlockType.get(BlockType.AIR), true, true);
+		for(Cardinal o : orth){
+			Coord c = new Coord(cursor);
+			c.add(o, 2);
+			c.add(Cardinal.UP, 2);
+			theme.getPrimaryStair().setOrientation(Cardinal.reverse(o), true).setBlock(editor, c);
+			c.add(dir);
+			c.add(Cardinal.DOWN);
+			shelf.setBlock(editor, c);
+			c.add(Cardinal.DOWN);
+			shelf.setBlock(editor, c);
+		}
 		
 		cursor = new Coord(pos);
 		cursor.add(dir, 4);
@@ -214,8 +225,66 @@ public class DungeonLibrary extends DungeonBase{
 		cursor.add(orth[1], 2);
 		stair.setOrientation(orth[0], true).setBlock(editor, cursor);
 		
+		cursor.add(Cardinal.UP);
+		FlowerPot.generate(editor, rand, cursor);
 		
+		cursor.add(orth[0]);
+		ColorBlock.get(ColorBlock.CARPET, DyeColor.GREEN).setBlock(editor, cursor);
+		
+		cursor.add(orth[0]);
+		Torch.generate(editor, Torch.WOODEN, Cardinal.UP, cursor);		
 	}
+	
+	private void plants(WorldEditor editor, Random rand, ITheme theme, Cardinal dir, Coord origin){
+		Coord cursor;
+		Coord start;
+		Coord end;
+		Cardinal[] orth = Cardinal.getOrthogonal(dir);
+		
+		cursor = new Coord(origin);
+		cursor.add(dir, 5);
+		start = new Coord(cursor);
+		end = new Coord(cursor);
+		start.add(orth[0], 2);
+		end.add(orth[1], 2);
+		end.add(Cardinal.UP, 2);
+		BlockType.get(BlockType.AIR).fillRectSolid(editor, rand, start, end, true, true);
+		start.add(dir);
+		end.add(dir);
+		theme.getPrimaryWall().fillRectSolid(editor, rand, start, end, false, true);
+		
+		for(Cardinal o : orth){
+			Coord c = new Coord(cursor);
+			c.add(o, 2);
+			c.add(Cardinal.UP, 2);
+			theme.getPrimaryStair().setOrientation(Cardinal.reverse(o), true).setBlock(editor, c);
+		}
+		
+		start = new Coord(cursor);
+		end = new Coord(cursor);
+		start.add(orth[0]);
+		end.add(orth[1]);
+		for(Coord c : WorldEditor.getRectSolid(start, end)){
+			plant(editor, rand, theme, c);
+		}
+	}
+	
+	private void plant(WorldEditor editor, Random rand, ITheme theme, Coord origin){
+		Coord cursor;
+		BlockType.get(BlockType.DIRT_PODZOL).setBlock(editor, origin);
+		
+		for(Cardinal dir : Cardinal.directions){
+			cursor = new Coord(origin);
+			cursor.add(dir);
+			Trapdoor.get(Trapdoor.OAK, Cardinal.reverse(dir), true, true).setBlock(editor, rand, cursor, true, false);
+		}
+		
+		cursor = new Coord(origin);
+		cursor.add(Cardinal.UP);
+		TallPlant[] plants = new TallPlant[]{TallPlant.FERN, TallPlant.ROSE, TallPlant.PEONY};
+		TallPlant.generate(editor, plants[rand.nextInt(plants.length)], cursor);
+	}
+
 	
 	@Override
 	public int getSize() {

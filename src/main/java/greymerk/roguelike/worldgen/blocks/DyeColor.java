@@ -1,5 +1,7 @@
 package greymerk.roguelike.worldgen.blocks;
 
+import java.util.Random;
+
 import net.minecraft.item.EnumDyeColor;
 
 public enum DyeColor {
@@ -8,7 +10,7 @@ public enum DyeColor {
 	PINK, GRAY, LIGHT_GRAY, CYAN, PURPLE, BLUE, BROWN, GREEN,
 	RED, BLACK;
 	
-	public static EnumDyeColor getColor(DyeColor color){
+	public static EnumDyeColor get(DyeColor color){
 		switch(color){
 		case WHITE: return EnumDyeColor.WHITE;
 		case ORANGE: return EnumDyeColor.ORANGE;
@@ -30,4 +32,7 @@ public enum DyeColor {
 		}
 	}
 	
+	public static DyeColor get(Random rand){
+		return DyeColor.values()[rand.nextInt(DyeColor.values().length)];
+	}
 }

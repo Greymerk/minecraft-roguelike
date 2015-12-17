@@ -3,9 +3,13 @@ package greymerk.roguelike.dungeon.rooms;
 import java.util.List;
 import java.util.Random;
 
+import com.sun.prism.j2d.paint.MultipleGradientPaint.ColorSpaceType;
+
 import greymerk.roguelike.dungeon.base.DungeonBase;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.treasure.loot.Firework;
+import greymerk.roguelike.treasure.loot.Loot;
+import greymerk.roguelike.util.TextFormat;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
@@ -47,7 +51,7 @@ public class DungeonFirework extends DungeonBase {
 		end.add(orth[1], 4);
 		start.add(Cardinal.DOWN);
 		end.add(Cardinal.UP, 3);
-		editor.fillRectHollow(rand, start, end, BlockType.get(BlockType.COBBLESTONE), false, true);
+		editor.fillRectHollow(rand, start, end, ColorBlock.get(ColorBlock.CLAY, DyeColor.ORANGE), false, true);
 		
 		start = new Coord(x, y, z);
 		start.add(orth[0], 2);
@@ -137,9 +141,19 @@ public class DungeonFirework extends DungeonBase {
 		Repeater.generate(editor, rand, dir, 4, true, cursor);
 		cursor.add(Cardinal.UP);
 		cursor.add(Cardinal.reverse(dir));
-		breadboard.setBlock(editor, cursor);
+		ColorBlock.get(ColorBlock.CLAY, DyeColor.RED).setBlock(editor, cursor);
 		cursor.add(Cardinal.UP);
 		Lever.generate(editor, Cardinal.UP, cursor, true);
+		
+		MetaBlock glowstone = BlockType.get(BlockType.GLOWSTONE);
+		cursor = new Coord(x, y, z);
+		cursor.add(Cardinal.reverse(dir), 5);
+		cursor.add(Cardinal.UP, 3);
+		glowstone.setBlock(editor, cursor);
+		cursor.add(dir, 4);
+		glowstone.setBlock(editor, cursor);
+		cursor.add(dir, 6);
+		glowstone.setBlock(editor, cursor);
 		
 		return false;
 	}
@@ -158,7 +172,10 @@ public class DungeonFirework extends DungeonBase {
 		Dropper dropper = new Dropper();
 		dropper.generate(editor, Cardinal.UP, cursor);
 		for(int i = 0;i < 8; ++i){
-			dropper.add(editor, cursor, i, new ItemStack(Items.dye, 1, i));
+			ItemStack stick = new ItemStack(Items.stick);
+			Loot.setItemName(stick, Integer.toString(i));
+			Loot.setItemLore(stick, "Random logic unit", TextFormat.DARKGRAY);
+			dropper.add(editor, cursor, i, stick);
 		}
 		dropper.add(editor, cursor, 8, new ItemStack(Items.wooden_hoe));
 		
