@@ -35,13 +35,20 @@ public class SpawnerSettings {
 	
 	public SpawnerSettings(SpawnerSettings toCopy){
 		this.spawners = new HashMap<Spawner, IWeighted<Spawnable>>();
+		if(toCopy == null) return;
 		this.spawners.putAll(toCopy.spawners);
 	}
 	
 	public SpawnerSettings(SpawnerSettings base, SpawnerSettings override){
 		this.spawners = new HashMap<Spawner, IWeighted<Spawnable>>();
-		if(base != null) this.spawners.putAll(base.spawners);
-		if(override != null) this.spawners.putAll(override.spawners);
+		
+		for(Spawner type : Spawner.values()){
+			if(override != null && override.spawners.containsKey(type)){
+				this.spawners.put(type, override.spawners.get(type));
+			} else if(base != null && base.spawners.containsKey(type)){
+				this.spawners.put(type, base.spawners.get(type));
+			}
+		}
 	}
 	
 	public void generate(WorldEditor editor, Random rand, Coord cursor, Spawner type, int level){

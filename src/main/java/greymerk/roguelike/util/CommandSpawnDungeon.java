@@ -21,6 +21,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.EntityRegistry;
 
 public class CommandSpawnDungeon extends CommandBase
 {
@@ -58,6 +59,24 @@ public class CommandSpawnDungeon extends CommandBase
 				sender.addChatMessage(new ChatComponentText(TextFormat.apply("Success: Configurations Reloaded", TextFormat.GREEN)));
 				return;
 			}
+			return;
+		}
+		
+		if(ap.match(0, "settings")){
+			if(!ap.hasEntry(1)){
+				sender.addChatMessage(new ChatComponentText(TextFormat.apply("Usage: roguelike settings [reload | list]", TextFormat.GRAY)));
+				return;
+			}
+			if(ap.match(1, "reload")){
+				Dungeon.initResolver();
+				sender.addChatMessage(new ChatComponentText(TextFormat.apply("Success: Settings Reloaded", TextFormat.GREEN)));
+				return;
+			}
+			if(ap.match(1, "list")){
+				sender.addChatMessage(new ChatComponentText(TextFormat.apply(Dungeon.settingsResolver.toString(), TextFormat.GREEN)));
+				return;
+			}
+			
 			return;
 		}
 		

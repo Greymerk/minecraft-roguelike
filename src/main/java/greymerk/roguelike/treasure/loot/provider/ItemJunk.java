@@ -44,8 +44,8 @@ public class ItemJunk extends ItemBase{
 			
 			if(level == 4 && rand.nextInt(10) == 0){
 				ChestGenHooks hook = rand.nextBoolean() ?
-						ChestGenHooks.getInfo(ChestGenHooks.PYRAMID_JUNGLE_CHEST):
-						ChestGenHooks.getInfo(ChestGenHooks.PYRAMID_DESERT_CHEST);
+				ChestGenHooks.getInfo(ChestGenHooks.PYRAMID_JUNGLE_CHEST):
+				ChestGenHooks.getInfo(ChestGenHooks.PYRAMID_DESERT_CHEST);
 				ItemStack toReturn = hook.getOneItem(rand);
 				if(toReturn != null) return toReturn;
 			}

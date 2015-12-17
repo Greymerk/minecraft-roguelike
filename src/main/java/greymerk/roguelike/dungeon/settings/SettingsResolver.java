@@ -113,7 +113,7 @@ public class SettingsResolver {
 		try {
 			toAdd = new DungeonSettings(settings, root);
 		} catch (Exception e){
-			throw new Exception("An error occurred while processing settings");
+			e.printStackTrace();
 		}
 		
 		return toAdd;
@@ -208,5 +208,14 @@ public class SettingsResolver {
 			}
 		}
 		return new DungeonSettings(customBase, custom);
+	}
+	
+	@Override
+	public String toString(){
+		String s = "";
+		for(String key : this.settings.keySet()){
+			s += key += " ";
+		}
+		return s;
 	}
 }
