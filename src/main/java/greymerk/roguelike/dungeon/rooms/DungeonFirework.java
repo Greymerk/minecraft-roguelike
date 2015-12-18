@@ -3,8 +3,6 @@ package greymerk.roguelike.dungeon.rooms;
 import java.util.List;
 import java.util.Random;
 
-import com.sun.prism.j2d.paint.MultipleGradientPaint.ColorSpaceType;
-
 import greymerk.roguelike.dungeon.base.DungeonBase;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.treasure.loot.Firework;

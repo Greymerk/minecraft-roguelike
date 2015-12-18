@@ -53,9 +53,11 @@ public class SettingsMountainTheme extends DungeonSettings{
 				level.setSecrets(secrets);
 				
 				SegmentGenerator segments = new SegmentGenerator(Segment.ARCH);
-				segments.add(Segment.DOOR, 5);
+				segments.add(Segment.DOOR, 7);
 				segments.add(Segment.ANKH, 2);
-				segments.add(Segment.FLOWERS, 2);
+				segments.add(Segment.PLANT, 3);
+				segments.add(Segment.LAMP, 1);
+				segments.add(Segment.FLOWERS, 1);
 				level.setSegments(segments);
 			}
 			

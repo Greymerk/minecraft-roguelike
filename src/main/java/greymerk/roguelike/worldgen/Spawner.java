@@ -16,19 +16,19 @@ public enum Spawner {
 	
 	private static final Spawner[] common = {SPIDER, SKELETON, ZOMBIE};
 	
-	public static void generate(WorldEditor editor, Random rand, LevelSettings level, Coord pos){
+	public static void generate(WorldEditor editor, Random rand, LevelSettings settings, Coord pos){
 		Spawner type = common[rand.nextInt(common.length)];
-		generate(editor, rand, level, pos, type);
+		generate(editor, rand, settings, pos, type);
 	}
 	
-	public static void generate(WorldEditor editor, Random rand, LevelSettings level, Coord pos, Spawner type){
+	public static void generate(WorldEditor editor, Random rand, LevelSettings settings, Coord pos, Spawner type){
 		
-		if(level.getSpawners() != null){
-			level.getSpawners().generate(editor, rand, pos, type, level.getDifficulty(pos));
+		if(settings.getSpawners() != null){
+			settings.getSpawners().generate(editor, rand, pos, type, settings.getDifficulty(pos));
 			return;
 		}
 		
-		generate(editor, rand, level.getDifficulty(pos), pos, type);
+		generate(editor, rand, settings.getDifficulty(pos), pos, type);
 	}
 	
 	public static void generate(WorldEditor editor, Random rand, int level, Coord pos, Spawner type){
