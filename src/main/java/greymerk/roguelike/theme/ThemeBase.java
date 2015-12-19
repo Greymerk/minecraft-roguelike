@@ -8,14 +8,14 @@ public class ThemeBase implements ITheme {
 	protected IBlockSet primary;
 	protected IBlockSet secondary;
 	
-	public ThemeBase(IBlockSet walls, IBlockSet decor){
-		this.primary = walls;
-		this.secondary = decor;
+	public ThemeBase(IBlockSet primary, IBlockSet secondary){
+		this.primary = primary;
+		this.secondary = secondary;
 	}
 	
-	public ThemeBase(ThemeBase base, IBlockSet walls, IBlockSet decor){
-		this.primary = walls == null ? base.primary : walls;
-		this.secondary = decor == null ? base.secondary : decor;
+	public ThemeBase(ThemeBase base, IBlockSet primary, IBlockSet secondary){
+		this.primary = primary == null ? base.primary : primary;
+		this.secondary = secondary == null ? base.secondary : secondary;
 	}
 	
 	public ThemeBase(){}

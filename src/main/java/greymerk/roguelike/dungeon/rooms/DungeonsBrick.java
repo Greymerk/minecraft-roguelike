@@ -139,6 +139,6 @@ public class DungeonsBrick extends DungeonBase {
 	}
 	
 	public int getSize(){
-		return 4;
+		return 6;
 	}
 }

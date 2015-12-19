@@ -21,10 +21,8 @@ public class BlockWeightedRandom extends BlockBase {
 		this();
 		for(JsonElement entry : (JsonArray)data){
 			JsonObject d = entry.getAsJsonObject();
-			String type = d.get("type").getAsString();
-			JsonElement blockJson = d.get("data");
 			int weight = d.get("weight").getAsInt();
-			IBlockFactory toAdd = BlockProvider.create(type, blockJson);
+			IBlockFactory toAdd = BlockProvider.create(d);
 			this.addBlock(toAdd, weight);
 		}
 	}

@@ -37,7 +37,7 @@ public class MetaBlock extends BlockBase implements IBlockState{
 		String name = json.get("name").getAsString();
 		Block block = (Block) Block.blockRegistry.getObject(name);
 		int meta = json.has("meta") ? json.get("meta").getAsInt() : 0;
-		this.state = new MetaBlock(block.getStateFromMeta(meta));
+		this.state = block.getStateFromMeta(meta);
 		flag = json.has("flag") ? json.get("flag").getAsInt() : 2;
 	}
 	
@@ -85,6 +85,11 @@ public class MetaBlock extends BlockBase implements IBlockState{
 	@Override
 	public Block getBlock() {
 		return this.state.getBlock();
+	}
+	
+	@Override
+	public String toString(){
+		return this.state.getBlock().getUnlocalizedName();
 	}
 	
 }

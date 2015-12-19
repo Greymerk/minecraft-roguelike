@@ -6,7 +6,6 @@ import java.util.Random;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 
 public class BlockCheckers extends BlockBase {
 
@@ -23,10 +22,7 @@ public class BlockCheckers extends BlockBase {
 		List<IBlockFactory> blocks = new ArrayList<IBlockFactory>(); 
 		
 		for(JsonElement entry : arr){
-			JsonObject d = entry.getAsJsonObject();
-			String type = d.get("type").getAsString();
-			JsonElement blockJson = d.get("data");
-			blocks.add(BlockProvider.create(type, blockJson));
+			blocks.add(BlockProvider.create(entry.getAsJsonObject()));
 		}
 		
 		this.fillOne = blocks.get(0);
