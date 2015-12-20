@@ -61,6 +61,24 @@ public class CommandSpawnDungeon extends CommandBase
 			return;
 		}
 		
+		if(ap.match(0, "settings")){
+			if(!ap.hasEntry(1)){
+				sender.addChatMessage(new ChatComponentText(TextFormat.apply("Usage: roguelike settings [reload | list]", TextFormat.GRAY)));
+				return;
+			}
+			if(ap.match(1, "reload")){
+				Dungeon.initResolver();
+				sender.addChatMessage(new ChatComponentText(TextFormat.apply("Success: Settings Reloaded", TextFormat.GREEN)));
+				return;
+			}
+			if(ap.match(1, "list")){
+				sender.addChatMessage(new ChatComponentText(TextFormat.apply(Dungeon.settingsResolver.toString(), TextFormat.GREEN)));
+				return;
+			}
+			
+			return;
+		}
+		
 		if(ap.match(0, "give")){
 			if(!ap.hasEntry(1)){
 				sender.addChatMessage(new ChatComponentText(TextFormat.apply("Usage: roguelike give novelty_name", TextFormat.GRAY)));

@@ -33,6 +33,7 @@ public class SettingsRooms extends DungeonSettings{
 				factory.addSingle(DungeonRoom.OSSUARY);
 				factory.addSingle(DungeonRoom.CREEPER);
 				factory.addSingle(DungeonRoom.FIRE);
+				factory.addSingle(DungeonRoom.SPIDER);
 				factory.addByRatio(DungeonRoom.PRISON, 5);
 				factory.addByRatio(DungeonRoom.CRYPT, 10);
 				factory.addByRatio(DungeonRoom.PIT, 7);

@@ -42,6 +42,8 @@ public enum Enchant {
 		case POWER: return Enchantment.power;
 		case FLAME: return Enchantment.flame;
 		case INFINITY: return Enchantment.infinity;
+		case LURE: return Enchantment.efficiency;
+		case LUCKOFTHESEA: return Enchantment.fortune;
 		default: return Enchantment.efficiency;
 		}
 	}

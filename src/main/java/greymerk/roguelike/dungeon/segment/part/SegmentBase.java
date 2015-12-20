@@ -1,23 +1,17 @@
 package greymerk.roguelike.dungeon.segment.part;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 import greymerk.roguelike.dungeon.IDungeonLevel;
 import greymerk.roguelike.dungeon.segment.ISegment;
 import greymerk.roguelike.theme.ITheme;
-import greymerk.roguelike.treasure.ITreasureChest;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.WorldEditor;
 
 public abstract class SegmentBase implements ISegment {
 
-	protected List<ITreasureChest> chests;
-	
 	public SegmentBase(){
-		chests = new ArrayList<ITreasureChest>();
 	}
 	
 	@Override
@@ -55,9 +49,5 @@ public abstract class SegmentBase implements ISegment {
 		}
 		
 		return true;
-	}
-	
-	public List<ITreasureChest> getChests(){
-		return this.chests;
 	}
 }

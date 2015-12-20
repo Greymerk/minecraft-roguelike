@@ -7,6 +7,7 @@ import greymerk.roguelike.treasure.loot.ILoot;
 import greymerk.roguelike.treasure.loot.Loot;
 import greymerk.roguelike.treasure.loot.LootRuleManager;
 import greymerk.roguelike.treasure.loot.Quality;
+import greymerk.roguelike.treasure.loot.provider.ItemEnchBook;
 import greymerk.roguelike.treasure.loot.provider.ItemSpecialty;
 
 public class SettingsLootRules extends DungeonSettings{
@@ -36,12 +37,13 @@ public class SettingsLootRules extends DungeonSettings{
 			lootRules.add(Treasure.TOOLS, loot.get(Loot.TOOL, i),  i, true, 1);
 			lootRules.add(Treasure.TOOLS, loot.get(Loot.BLOCK, i),  i, true, 1);
 			lootRules.add(Treasure.SUPPLIES, loot.get(Loot.SUPPLY, i),  i, true, 6);
-			lootRules.add(Treasure.SMITH, loot.get(Loot.ORE, i),  i, true, 2);
+			lootRules.add(Treasure.SMITH, loot.get(Loot.ORE, i),  i, true, 6);
 			lootRules.add(Treasure.SMITH, loot.get(Loot.SMITHY, i),  i, true, 1);
 			lootRules.add(Treasure.MUSIC, loot.get(Loot.MUSIC, i),  i, true, 1);
 			lootRules.add(Treasure.REWARD, loot.get(Loot.REWARD, i),  i, true, 2);
 			lootRules.add(null, loot.get(Loot.JUNK, i),  i, true, 6);
 			lootRules.add(null, new ItemSpecialty(0, i, Quality.get(i)),  i, false, 3);
+			lootRules.add(null, new ItemEnchBook(0, i),  i, false, i + 1);
 		}
 	}
 }

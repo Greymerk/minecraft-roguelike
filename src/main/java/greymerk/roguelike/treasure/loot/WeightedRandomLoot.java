@@ -17,6 +17,7 @@ public class WeightedRandomLoot implements Comparable<WeightedRandomLoot>, IWeig
 	
 	private String name;
 	private Item item;
+	private Block block;
 	private int damage;
 	private int min;
 	private int max;
@@ -24,6 +25,20 @@ public class WeightedRandomLoot implements Comparable<WeightedRandomLoot>, IWeig
 	private int weight;
 	
 	private NBTTagCompound nbt; 
+	
+	public WeightedRandomLoot(Block block, int damage, int minStackSize, int maxStackSize, int weight){
+		this.name = block.getUnlocalizedName();
+		this.block = block;
+		this.damage = damage;
+		this.min = minStackSize;
+		this.max = maxStackSize;
+		this.weight = weight;
+		this.enchLevel = 0;
+	}
+	
+	public WeightedRandomLoot(Item item, int damage, int minStackSize, int maxStackSize, int weight){
+		this(item, damage, minStackSize, maxStackSize, weight, 0);
+	}
 	
 	public WeightedRandomLoot(Item item, int damage, int minStackSize, int maxStackSize, int weight, int ench){
 		
@@ -33,7 +48,7 @@ public class WeightedRandomLoot implements Comparable<WeightedRandomLoot>, IWeig
 		this.min = minStackSize;
 		this.max = maxStackSize;
 		this.weight = weight;
-		this.enchLevel = 0;
+		this.enchLevel = ench;
 	}
 
 	public WeightedRandomLoot(Item item, int damage, int weight){
@@ -88,7 +103,9 @@ public class WeightedRandomLoot implements Comparable<WeightedRandomLoot>, IWeig
 
 	@Override
 	public ItemStack get(Random rand) {
-		ItemStack item = new ItemStack(this.item, this.getStackSize(rand), damage);
+		ItemStack item = null;
+		if(this.item != null) item = new ItemStack(this.item, this.getStackSize(rand), damage);
+		if(this.block != null) item = new ItemStack(this.block, this.getStackSize(rand), damage);
 		try{
 			if(this.enchLevel > 0 && this.enchLevel <= 30) Enchant.enchantItem(rand, item, this.enchLevel);
 		} catch (NullPointerException e){

@@ -27,7 +27,6 @@ public class ThemeEniko extends ThemeBase{
 		MetaBlock pillar = Slab.get(Slab.STONE, false, true, true);
 		
 		this.primary = new BlockSet(floor, walls, stair, pillar);
-		
 		this.secondary =  primary;
 	}
 }

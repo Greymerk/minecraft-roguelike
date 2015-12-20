@@ -105,7 +105,11 @@ public class DungeonsMusic extends DungeonBase {
 		chestSpace.addAll(WorldEditor.getRectSolid(originX + 5, originY + 1, originZ - 4, originX + 5, originY + 1, originZ - 3));
 		chestSpace.addAll(WorldEditor.getRectSolid(originX + 5, originY + 1, originZ + 3, originX + 5, originY + 1, originZ + 4));
 
-		Treasure.generate(editor, rand, new ArrayList<Coord>(chestSpace), Treasure.MUSIC, 0);
+		ArrayList<Coord> spaces = new ArrayList<Coord>();
+		spaces.addAll(chestSpace);
+		
+		Treasure.generate(editor, rand, spaces.remove(0), Treasure.MUSIC, settings.getDifficulty(origin), false);
+		Treasure.generate(editor, rand, spaces.remove(0), Treasure.SUPPLIES, settings.getDifficulty(origin), false);
 		
 		// horizontal beams
 		editor.fillRectSolid(rand, originX - 5, originY + 3, originZ - 5, originX - 5, originY + 3, originZ + 5, log, true, true);

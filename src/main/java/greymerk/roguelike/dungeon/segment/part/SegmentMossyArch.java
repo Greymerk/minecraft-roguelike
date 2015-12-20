@@ -8,6 +8,7 @@ import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
+import greymerk.roguelike.worldgen.blocks.Vine;
 
 import java.util.Random;
 
@@ -58,7 +59,7 @@ public class SegmentMossyArch extends SegmentBase {
 		
 		if(!spawnHoleSet){
 			editor.fillRectSolid(rand, x, y + 2, z, x, y + 5, z, BlockType.get(BlockType.AIR));
-			editor.randomVines(rand, x, y + 3, z, x, y + 5, z);
+			Vine.fill(editor, rand, new Coord(x, y + 3, z), new Coord(x, y + 5, z));
 			
 			if(!editor.isAirBlock(new Coord(x, y + 6, z))) editor.setBlock(x, y + 7, z, BlockType.get(BlockType.WATER_FLOWING));
 			spawnHoleSet = true;

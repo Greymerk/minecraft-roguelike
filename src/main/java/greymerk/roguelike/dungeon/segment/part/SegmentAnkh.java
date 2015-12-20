@@ -23,8 +23,9 @@ public class SegmentAnkh extends SegmentBase{
 		
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		IStair stair = theme.getSecondaryStair();
-		MetaBlock glass = ColorBlock.get(ColorBlock.GLASS, rand);
-		MetaBlock white = ColorBlock.get(ColorBlock.GLASS, DyeColor.WHITE);
+		DyeColor color = DyeColor.get(rand);
+		MetaBlock glass = ColorBlock.get(ColorBlock.GLASS, color);
+		MetaBlock back = ColorBlock.get(ColorBlock.CLAY, color);
 		MetaBlock glowstone = BlockType.get(BlockType.GLOWSTONE);
 		
 		Cardinal[] orth = Cardinal.getOrthogonal(dir);
@@ -58,7 +59,7 @@ public class SegmentAnkh extends SegmentBase{
 		editor.fillRectSolid(rand, start, end, glass, true, true);
 		start.add(dir);
 		end.add(dir);
-		editor.fillRectSolid(rand, start, end, white, true, true);
+		editor.fillRectSolid(rand, start, end, back, true, true);
 		
 		cursor = new Coord(x, y, z);
 		cursor.add(dir, 3);

@@ -44,7 +44,7 @@ public class LevelSettings {
 		this.secrets = toCopy.secrets != null ? new SecretFactory(toCopy.secrets) : null;
 		this.theme = toCopy.theme != null ? toCopy.theme : null;
 		this.segments = toCopy.segments != null ? new SegmentGenerator(toCopy.segments) : null;
-		this.spawners = toCopy.spawners != null ? new SpawnerSettings(toCopy.spawners) : null;
+		this.spawners = toCopy.spawners;
 		this.generator = toCopy.generator;
 	}
 	
@@ -70,8 +70,7 @@ public class LevelSettings {
 			this.segments = override.segments == null ? new SegmentGenerator(base.segments) : new SegmentGenerator(override.segments);
 		}
 		
-		this.spawners = new SpawnerSettings(base.spawners, override.spawners);
-		
+		this.spawners = override.spawners == null ? base.spawners : override.spawners;
 		this.generator = override.generator == null? base.generator : override.generator;
 	}
 	

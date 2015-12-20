@@ -74,7 +74,7 @@ public class DungeonSettings implements ISettings{
 			if(settings.containsKey(name)){
 				base = new DungeonSettings(base, settings.get(name));
 			} else {
-				throw new Exception(name + " must be previously defined in order to be inherited");
+				System.err.println(name + " setting inherited before creation in " + this.name);
 			}
 		}
 		
@@ -90,7 +90,7 @@ public class DungeonSettings implements ISettings{
 		
 		JsonObject levelSet = root.get("levels").getAsJsonObject();
 		for(int i = 0; i < 5; ++i){
-			LevelSettings setting = new LevelSettings();
+			LevelSettings setting = new LevelSettings(base.getLevelSettings(i));
 			
 			if(levelSet.has("all")){
 				JsonObject data = levelSet.get("all").getAsJsonObject();

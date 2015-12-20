@@ -77,13 +77,8 @@ public class SettingsResolver {
 				toAdd = parseFile(toParse);
 			} catch (Exception e){
 				System.err.println("Error found in file " + toParse.getName());
-				Throwable cause = e.getCause();
-				if(cause != null){
-					System.err.println(cause.getMessage());
-				} else {
-					System.err.println(e.getMessage());
-				}
-				return;
+				System.err.println(e.getMessage());
+				continue; // skip this setting
 			}
 			settings.put(toAdd.getName(), toAdd);
 		}
@@ -105,15 +100,17 @@ public class SettingsResolver {
 		try {
 			root = (JsonObject)jParser.parse(content);
 		} catch (JsonSyntaxException e){
-			throw e;
+			
+			Throwable cause = e.getCause();
+			throw new Exception(cause.getMessage());
 		} catch (Exception e){
-			throw new Exception("An error occurred while parsing json");
+			throw new Exception("An unknown error occurred while parsing json");
 		}
 		
 		try {
 			toAdd = new DungeonSettings(settings, root);
 		} catch (Exception e){
-			throw new Exception("An error occurred while processing settings");
+			throw new Exception("An error occured while adding " + toAdd.getName());
 		}
 		
 		return toAdd;
@@ -208,5 +205,14 @@ public class SettingsResolver {
 			}
 		}
 		return new DungeonSettings(customBase, custom);
+	}
+	
+	@Override
+	public String toString(){
+		String s = "";
+		for(String key : this.settings.keySet()){
+			s += key += " ";
+		}
+		return s;
 	}
 }

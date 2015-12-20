@@ -1,86 +1,68 @@
 package greymerk.roguelike.treasure.loot.provider;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
+import greymerk.roguelike.treasure.loot.WeightedRandomLoot;
+import greymerk.roguelike.util.WeightedRandomizer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
 public class ItemFood extends ItemBase{
 
+	private Map<Integer, WeightedRandomizer<ItemStack>> loot;
+	
 	public ItemFood(int weight, int level) {
 		super(weight, level);
+		this.loot = new HashMap<Integer, WeightedRandomizer<ItemStack>>();
+		for(int i = 0; i < 5; ++i){
+			
+			WeightedRandomizer<ItemStack> randomizer = new WeightedRandomizer<ItemStack>();
+			
+			switch(i){
+			case 4:
+				randomizer.add(new WeightedRandomLoot(Items.golden_apple, 0, 1, 1, 1));
+				randomizer.add(new WeightedRandomLoot(Items.golden_carrot, 0, 1, 1, 2));
+				randomizer.add(new WeightedRandomLoot(Items.cooked_beef, 0, 1, 5, 3));
+				randomizer.add(new WeightedRandomLoot(Items.cooked_porkchop, 0, 1, 5, 3));
+				break;
+			case 3:
+				randomizer.add(new WeightedRandomLoot(Items.cooked_beef, 0, 1, 3, 3));
+				randomizer.add(new WeightedRandomLoot(Items.cooked_porkchop, 0, 1, 3, 3));
+				randomizer.add(new WeightedRandomLoot(Items.cooked_chicken, 0, 1, 2, 1));
+				randomizer.add(new WeightedRandomLoot(Items.baked_potato, 0, 1, 2, 1));
+				break;
+			case 2:
+				randomizer.add(new WeightedRandomLoot(Items.cooked_beef, 0, 1, 3, 1));
+				randomizer.add(new WeightedRandomLoot(Items.cooked_porkchop, 0, 1, 3, 1));
+				randomizer.add(new WeightedRandomLoot(Items.cooked_chicken, 0, 1, 2, 2));
+				randomizer.add(new WeightedRandomLoot(Items.baked_potato, 0, 1, 2, 2));
+				break;
+			case 1:	
+				randomizer.add(new WeightedRandomLoot(Items.bread, 0, 1, 3, 5));
+				randomizer.add(new WeightedRandomLoot(Items.cooked_fished, 0, 1, 3, 5));
+				randomizer.add(new WeightedRandomLoot(Items.apple, 0, 1, 3, 2));
+				randomizer.add(new WeightedRandomLoot(Items.cooked_chicken, 0, 1, 2, 2));
+				randomizer.add(new WeightedRandomLoot(Items.baked_potato, 0, 1, 2, 2));
+				break;
+			case 0:
+				randomizer.add(new WeightedRandomLoot(Items.bread, 0, 1, 2, 5));
+				randomizer.add(new WeightedRandomLoot(Items.cooked_fished, 0, 1, 2, 5));
+				randomizer.add(new WeightedRandomLoot(Items.apple, 0, 1, 2, 5));
+				randomizer.add(new WeightedRandomLoot(Items.cookie, 0, 1, 4, 1));
+				break;
+			default:
+				randomizer.add(new WeightedRandomLoot(Items.bread, 1));
+			}
+			
+			loot.put(i, randomizer);
+		}
 	}
 
 	@Override
 	public ItemStack getLootItem(Random rand, int level) {
-		return getRandom(rand, level);
-	}		
-	
-	public static ItemStack getRandom(Random rand, int rank){
-		
-		ItemNovelty[] items = {
-				ItemNovelty.GINGER,
-				ItemNovelty.CLEO,
-				ItemNovelty.RLEAHY
-		};
-		
-		if(rank > 0 && rand.nextInt(500) == 0){
-			return ItemNovelty.getItem(items[rand.nextInt(items.length)]);
-		}
-		
-		return pickFood(rand, rank);
-	}
-	
-	
-	
-	public static ItemStack getDessert(Random rand){
-		
-		switch(rand.nextInt(4)){
-		case 0: return new ItemStack(Items.cake);
-		case 1: return new ItemStack(Items.egg);
-		case 2: return new ItemStack(Items.milk_bucket);
-		case 3: return new ItemStack(Items.pumpkin_pie);
-		default: return new ItemStack(Items.cookie);
-		}
-		
-		
-	}
-	
-	private static ItemStack pickFood(Random rand, int level) {
-
-		int quantity = 1 + rand.nextInt(2 + level);
-		
-		switch(level){
-
-		case 4:
-		case 3:
-			if(rand.nextInt(10) == 0) return new ItemStack(Items.golden_apple);
-			if(rand.nextInt(5) == 0) return new ItemStack(Items.golden_carrot, quantity);
-		case 2:
-			if(rand.nextInt(5) == 0){
-				if(rand.nextBoolean()) return new ItemStack(Items.cooked_porkchop, quantity);
-				return new ItemStack(Items.cooked_beef, quantity);
-			}
-			
-		case 1:
-			if(rand.nextInt(20) == 0) return new ItemStack(Items.melon, quantity);
-			
-			if(rand.nextInt(5) == 0){
-				if(rand.nextBoolean()) return new ItemStack(Items.cooked_chicken, quantity);
-				return new ItemStack(Items.baked_potato, quantity);
-			}
-		case 0:
-			if(rand.nextInt(20) == 0) return new ItemStack(Items.apple, 1);
-			
-			if(rand.nextInt(10) == 0) return new ItemStack(Items.mushroom_stew);
-			
-			if(rand.nextInt(5) == 0) return new ItemStack(Items.cooked_fished, quantity);
-		default:
-			return new ItemStack(Items.bread, quantity);
-		
-		
-		
-		}
+		return this.loot.get(level).get(rand);
 	}
 
 

@@ -12,7 +12,7 @@ public enum ColorBlock {
 	
 	public static MetaBlock get(ColorBlock type, DyeColor color){
 		Block b = getBlock(type);
-		int c = DyeColor.getColor(color);
+		int c = DyeColor.get(color);
 		MetaBlock block = new MetaBlock(b, c);
 		return block;
 	}

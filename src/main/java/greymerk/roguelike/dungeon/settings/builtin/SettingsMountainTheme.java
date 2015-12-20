@@ -23,6 +23,7 @@ public class SettingsMountainTheme extends DungeonSettings{
 		this.criteria = new SpawnCriteria();
 		List<BiomeDictionary.Type> biomes = new ArrayList<BiomeDictionary.Type>();
 		biomes.add(BiomeDictionary.Type.MOUNTAIN);
+		biomes.add(BiomeDictionary.Type.PLAINS);
 		this.criteria.setBiomeTypes(biomes);
 		
 		this.towerSettings = new TowerSettings(Tower.ENIKO, Theme.getTheme(Theme.OAK));
@@ -43,7 +44,7 @@ public class SettingsMountainTheme extends DungeonSettings{
 				factory = new DungeonFactory();
 				factory.addSingle(DungeonRoom.LIBRARY);
 				factory.addSingle(DungeonRoom.FIRE);
-				factory.addRandom(DungeonRoom.BRICK, 10);
+				factory.addRandom(DungeonRoom.ENIKO, 10);
 				factory.addRandom(DungeonRoom.CORNER, 3);
 				level.setRooms(factory);
 				
@@ -52,9 +53,11 @@ public class SettingsMountainTheme extends DungeonSettings{
 				level.setSecrets(secrets);
 				
 				SegmentGenerator segments = new SegmentGenerator(Segment.ARCH);
-				segments.add(Segment.DOOR, 5);
+				segments.add(Segment.DOOR, 7);
 				segments.add(Segment.ANKH, 2);
-				segments.add(Segment.FLOWERS, 2);
+				segments.add(Segment.PLANT, 3);
+				segments.add(Segment.LAMP, 1);
+				segments.add(Segment.FLOWERS, 1);
 				level.setSegments(segments);
 			}
 			
@@ -65,14 +68,12 @@ public class SettingsMountainTheme extends DungeonSettings{
 				
 				DungeonFactory factory;
 				factory = new DungeonFactory();
-				factory.addSingle(DungeonRoom.LIBRARY);
-				factory.addSingle(DungeonRoom.LIBRARY);
 				factory.addSingle(DungeonRoom.ENCHANT);
-				factory.addSingle(DungeonRoom.ENIKO);
 				factory.addSingle(DungeonRoom.FIRE);
 				factory.addSingle(DungeonRoom.MESS);
+				factory.addSingle(DungeonRoom.LIBRARY);
 				factory.addSingle(DungeonRoom.LAB);
-				factory.addRandom(DungeonRoom.BRICK, 10);
+				factory.addRandom(DungeonRoom.ENIKO, 10);
 				factory.addRandom(DungeonRoom.CORNER, 3);
 				level.setRooms(factory);
 			}

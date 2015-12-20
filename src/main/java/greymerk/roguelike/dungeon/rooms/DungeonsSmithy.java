@@ -2,6 +2,7 @@ package greymerk.roguelike.dungeon.rooms;
 
 import java.util.Random;
 
+import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.dungeon.Dungeon;
 import greymerk.roguelike.dungeon.base.DungeonBase;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
@@ -14,6 +15,7 @@ import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.MetaStair;
 import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.blocks.Anvil;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.Furnace;
 import greymerk.roguelike.worldgen.blocks.Slab;
@@ -436,7 +438,10 @@ public class DungeonsSmithy extends DungeonBase {
 		Cardinal[] orth = Cardinal.getOrthogonal(dir);
 		
 		
-		MetaBlock anvil = BlockType.get(BlockType.AIR);
+		MetaBlock anvil = Anvil.get(
+				(RogueConfig.getBoolean(RogueConfig.GENEROUS)
+				? Anvil.NEW_ANVIL
+				: Anvil.DAMAGED_ANVIL), orth[0]);
 		cursor = new Coord(origin);
 		cursor.add(dir);
 		anvil.setBlock(editor, cursor);

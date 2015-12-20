@@ -14,7 +14,6 @@ import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.MetaStair;
 import greymerk.roguelike.worldgen.Spawner;
-import greymerk.roguelike.worldgen.SpawnerSettings;
 import greymerk.roguelike.worldgen.WorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.StairType;
@@ -195,8 +194,6 @@ public class DungeonPyramidTomb extends DungeonBase{
 	
 	
 	private void sarcophagus(WorldEditor editor, Random rand, LevelSettings settings, Cardinal dir, Coord origin){
-		SpawnerSettings spawners = settings.getSpawners();
-		
 		IStair stair = new MetaStair(StairType.QUARTZ);
 		MetaBlock blocks = BlockType.get(BlockType.QUARTZ);
 		
@@ -215,7 +212,7 @@ public class DungeonPyramidTomb extends DungeonBase{
 			cursor.add(end);
 			blocks.setBlock(editor, cursor);
 			cursor.add(Cardinal.UP);
-			spawners.generate(editor, rand, cursor, Spawner.ZOMBIE, 4);
+			Spawner.generate(editor, rand, settings, cursor, Spawner.ZOMBIE);
 			cursor.add(Cardinal.UP);
 			blocks.setBlock(editor, cursor);
 			

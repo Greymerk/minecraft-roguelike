@@ -6,7 +6,6 @@ import java.util.Random;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 
 public class BlockLayers extends BlockBase{
 
@@ -19,11 +18,7 @@ public class BlockLayers extends BlockBase{
 	public BlockLayers(JsonElement data) {
 		this();
 		for(JsonElement entry : (JsonArray)data){
-			JsonObject d = entry.getAsJsonObject();
-			String type = d.get("type").getAsString();
-			JsonElement blockJson = d.get("data");
-			IBlockFactory toAdd = BlockProvider.create(type, blockJson);
-			this.addBlock(toAdd);
+			this.addBlock(BlockProvider.create(entry.getAsJsonObject()));
 		}
 	}
 	

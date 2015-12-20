@@ -1,12 +1,18 @@
 package greymerk.roguelike.worldgen.blocks;
 
+import java.util.Random;
+
 public enum DyeColor {
 
 	WHITE, ORANGE, MAGENTA, LIGHT_BLUE, YELLOW, LIME,
 	PINK, GRAY, SILVER, CYAN, PURPLE, BLUE, BROWN, GREEN,
 	RED, BLACK;
 	
-	public static int getColor(DyeColor color){
+	public static DyeColor get(Random rand){
+		return DyeColor.values()[rand.nextInt(DyeColor.values().length)];
+	}
+	
+	public static int get(DyeColor color){
 		switch(color){
 		case WHITE: return 0;
 		case ORANGE: return 1;

@@ -1,6 +1,5 @@
 package greymerk.roguelike.theme;
 
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import greymerk.roguelike.worldgen.BlockProvider;
@@ -12,55 +11,42 @@ import greymerk.roguelike.worldgen.MetaStair;
 public class BlockSet implements IBlockSet {
 
 	private IBlockFactory floor;
-	private IBlockFactory fill;
+	private IBlockFactory walls;
 	private IStair stair;
 	private IBlockFactory pillar;
 	
-	public BlockSet(IBlockFactory floor, IBlockFactory fill, IStair stair, IBlockFactory pillar){
+	public BlockSet(IBlockFactory floor, IBlockFactory walls, IStair stair, IBlockFactory pillar){
 		this.floor = floor;
-		this.fill = fill;
+		this.walls = walls;
 		this.stair = stair;
 		this.pillar = pillar;
 	}
 	
-	public BlockSet(IBlockFactory fill, IStair stair, IBlockFactory pillar){
-		this.floor = fill;
-		this.fill = fill;		
-		this.stair = stair;
-		this.pillar = pillar;
+	public BlockSet(IBlockFactory walls, IStair stair, IBlockFactory pillar){
+		this(walls, walls, stair, pillar);
 	}
 	
 	public BlockSet(JsonObject json){
 		
-		JsonObject walls = json.get("walls").getAsJsonObject();
-		String type = walls.get("type").getAsString();
-		JsonElement data = walls.get("data");
-		this.fill = BlockProvider.create(type, data);
+		this.walls = BlockProvider.create(json.get("walls").getAsJsonObject());
 
 		if(json.has("floor")){
-			JsonObject floor = json.get("floor").getAsJsonObject();
-			type = floor.get("type").getAsString();
-			data = floor.get("data");
-			this.floor = BlockProvider.create(type, data);
+			this.floor = BlockProvider.create(json.get("floor").getAsJsonObject());
 		} else {
-			this.floor = this.fill;
+			this.floor = this.walls;
 		}
 		
 		JsonObject stair = json.get("stair").getAsJsonObject();
-		type = stair.get("type").getAsString();
-		if(!type.equals(BlockProvider.METABLOCK.name()));
-		data = stair.get("data").getAsJsonObject();
-		this.stair = new MetaStair(new MetaBlock(data));
+		this.stair = stair.has("data")
+				? new MetaStair(new MetaBlock(stair.get("data").getAsJsonObject()))
+				: new MetaStair(new MetaBlock(stair));
 		
-		JsonObject pillar = json.get("pillar").getAsJsonObject();
-		type = pillar.get("type").getAsString();
-		data = pillar.get("data").getAsJsonObject();
-		this.pillar = BlockProvider.create(type, data);	
+		this.pillar = BlockProvider.create(json.get("pillar").getAsJsonObject());
 	}
 	
 	@Override
 	public IBlockFactory getFill() {
-		return fill;
+		return walls;
 	}
 
 	@Override
