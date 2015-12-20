@@ -13,7 +13,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 
@@ -214,14 +213,10 @@ public class WorldEditor {
 		end = new Coord(origin);
 		end.add(new Coord(1, 0, 1));
 		
-		// air
 		fillRectSolid(rand, start, end, air, true, true);
-		
-		// core
 		setBlock(rand, origin, fill, true, true);
 		
 		Cardinal dir = Cardinal.directions[origin.getY() % 4];
-		
 		Cardinal[] orth = Cardinal.getOrthogonal(dir);
 		cursor = new Coord(origin);
 		cursor.add(dir);
@@ -230,44 +225,6 @@ public class WorldEditor {
 		stair.setOrientation(orth[1], true).setBlock(this, cursor);
 		cursor.add(Cardinal.reverse(dir));
 		stair.setOrientation(Cardinal.reverse(dir), true).setBlock(this, cursor);
-		
-		
-	}
-	
-
-	public void randomVines(Random rand, int x1, int y1, int z1, int x2, int y2, int z2){
-
-		Coord c1 = new Coord(x1, y1, z1);
-		Coord c2 = new Coord(x2, y2, z2);
-		
-		Coord.correct(c1, c2);
-		
-		MetaBlock vine = new MetaBlock(Blocks.vine);
-		
-		for(int x = c1.getX(); x <= c2.getX(); x++){
-			for(int y = c1.getY(); y <= c2.getY(); y++){
-				for(int z = c1.getZ(); z <= c2.getZ(); z++){
-        			for (Cardinal dir : Cardinal.directions){
-        				Coord pos = new Coord(x, y, z);
-        				
-	        			if(world.isAirBlock(pos.getBlockPos())){
-	        				
-	        				if(rand.nextBoolean()){
-	        					continue;
-	        				}
-	        				
-	            		    if (Blocks.vine.canPlaceBlockOnSide(world, new BlockPos(x, y, z), Cardinal.getFacing(dir)));
-	                        {
-	                        	
-	            		    	setBlock(rand, pos, vine, true, true);
-	                            break;
-	                        }
-	        			}
-        			}
-        		}
-        	}
-        }
-
 	}
 	
 	public void fillDown(Random rand, Coord origin, IBlockFactory blocks){
