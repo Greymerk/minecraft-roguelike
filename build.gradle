@@ -17,7 +17,7 @@ buildscript {
 
 apply plugin: 'forge'
 
-version = "1.8-1.4.1"
+version = "1.8-1.4.2"
 group= "ca.rivas.roguelike" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "RoguelikeDungeons"
 

@@ -1,12 +1,13 @@
 package greymerk.roguelike.worldgen.redstone;
 
+import java.util.Arrays;
+
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
 import net.minecraft.block.BlockHopper;
 import net.minecraft.init.Blocks;
-import scala.actors.threadpool.Arrays;
 
 public class Hopper {
 

@@ -1,6 +1,7 @@
 package greymerk.roguelike.dungeon.rooms;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -17,7 +18,6 @@ import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.Spawner;
 import greymerk.roguelike.worldgen.WorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
-import scala.actors.threadpool.Arrays;
 
 
 public class DungeonEniko extends DungeonBase {
