@@ -10,6 +10,7 @@ import java.util.Random;
 import greymerk.roguelike.treasure.ITreasureChest;
 import greymerk.roguelike.treasure.TreasureManager;
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
@@ -267,6 +268,24 @@ public class WorldEditor {
 	
 	public void fillRectHollow(Random rand, int x, int y, int z, int x2, int y2, int z2, IBlockFactory blocks, boolean fillAir, boolean replaceSolid){
 		fillRectHollow(rand, new Coord(x, y, z), new Coord(x2, y2, z2), blocks, fillAir, replaceSolid);
+	}
+	
+	public boolean validGroundBlock(Coord pos){
+		
+		if(isAirBlock(pos)) return false;
+		
+		Block block = getBlock(pos).getBlock();
+		
+		if(block.getMaterial() == Material.wood) return false;
+		if(block.getMaterial() == Material.water) return false;
+		if(block.getMaterial() == Material.cactus) return false;
+		if(block.getMaterial() == Material.snow) return false;
+		if(block.getMaterial() == Material.grass) return false;
+		if(block.getMaterial() == Material.gourd) return false;
+		if(block.getMaterial() == Material.leaves) return false;
+		if(block.getMaterial() == Material.plants) return false;
+		
+		return true;
 	}
 	
 	@Override

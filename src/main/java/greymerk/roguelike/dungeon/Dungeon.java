@@ -15,8 +15,10 @@ import greymerk.roguelike.treasure.loot.Book;
 import greymerk.roguelike.treasure.loot.ILoot;
 import greymerk.roguelike.treasure.loot.Loot;
 import greymerk.roguelike.util.WeightedChoice;
+import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.WorldEditor;
+import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.biome.BiomeGenBase;
@@ -161,33 +163,31 @@ public class Dungeon implements IDungeon{
 		int upperLimit = RogueConfig.getInt(RogueConfig.UPPERLIMIT);
 		int lowerLimit = RogueConfig.getInt(RogueConfig.LOWERLIMIT);
 		
-		if(!editor.isAirBlock(new Coord(x, upperLimit, z))){
+		Coord cursor = new Coord(x, upperLimit, z);
+		
+		if(!editor.isAirBlock(cursor)){
 			return false;
 		}
 		
-		int y = upperLimit;
-		
-		while(!editor.getBlock(new Coord(x, y, z)).getBlock().getMaterial().isOpaque() && y > lowerLimit){
-			--y;
+		while(!editor.validGroundBlock(cursor)){
+			cursor.add(Cardinal.DOWN);
+			if(cursor.getY() < lowerLimit) return false;
+			if(editor.getBlock(cursor).getBlock().getMaterial() == Material.water) return false;
 		}
 		
-		if(y < lowerLimit){
-			return false;
-		}
-		
-		List<Coord> above = WorldEditor.getRectSolid(x - 4, y + 4, z - 4, x + 4, y + 4, z + 4);
+		List<Coord> above = WorldEditor.getRectSolid(x - 4, cursor.getY() + 4, z - 4, x + 4, cursor.getY() + 4, z + 4);
 
 		for (Coord c : above){
-			if(editor.getBlock(c).getBlock().getMaterial().isOpaque()){
+			if(editor.validGroundBlock(c)){
 				return false;
 			}
 		}
 		
-		List<Coord> below = WorldEditor.getRectSolid(x - 4, y - 3, z - 4, x + 4, y - 3, z + 4);
+		List<Coord> below = WorldEditor.getRectSolid(x - 4, cursor.getY() - 3, z - 4, x + 4, cursor.getY() - 3, z + 4);
 		
 		int airCount = 0;
 		for (Coord c : below){
-			if(!editor.getBlock(c).getBlock().getMaterial().isOpaque()){
+			if(!editor.validGroundBlock(c)){
 				airCount++;
 			}
 			if(airCount > 8){

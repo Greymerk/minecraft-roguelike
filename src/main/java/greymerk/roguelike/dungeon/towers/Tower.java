@@ -1,13 +1,10 @@
 package greymerk.roguelike.dungeon.towers;
 
+import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.WorldEditor;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
+import net.minecraft.block.material.Material;
 
 public enum Tower {
 
@@ -30,42 +27,21 @@ public enum Tower {
 	
 	public static Coord getBaseCoord(WorldEditor editor, int x, int y, int z){
 		
-		List<Block> invalidBlocks = new ArrayList<Block>();
-		invalidBlocks.add(Blocks.air);
-		invalidBlocks.add(Blocks.log);
-		invalidBlocks.add(Blocks.log2);
-		invalidBlocks.add(Blocks.leaves);
-		invalidBlocks.add(Blocks.leaves2);
-		invalidBlocks.add(Blocks.cactus);
-		invalidBlocks.add(Blocks.reeds);
-		invalidBlocks.add(Blocks.vine);
-		invalidBlocks.add(Blocks.snow);
-		invalidBlocks.add(Blocks.snow_layer);
-		invalidBlocks.add(Blocks.cocoa);
-		
-		int tempY = 128;
-		Block block = editor.getBlock(new Coord(x, tempY, z)).getBlock();
+		Coord cursor = new Coord(x, 128, z);
 
-		while(tempY > 60){
-
-			if(invalidBlocks.indexOf(block) == -1){
-				break;
-			}
-
-			tempY = tempY - 1;
-
-			block = editor.getBlock(new Coord(x, tempY, z)).getBlock();
-
+		while(cursor.getY() > 60){
+			if(editor.validGroundBlock(cursor)) break;
+			cursor.add(Cardinal.DOWN);
 		}
 
-		int yOffset = tempY - y;
+		int yOffset = cursor.getY() - y;
 
 		if(yOffset < 14){
 			yOffset = 14;
 		}
 		
 		return new Coord(x, y + yOffset, z);
-
 	}
+
 	
 }
