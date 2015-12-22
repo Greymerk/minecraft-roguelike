@@ -2,6 +2,7 @@ package greymerk.roguelike.worldgen;
 
 import java.util.Random;
 
+import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
@@ -43,7 +44,7 @@ public enum Spawner {
 		MobSpawnerBaseLogic logic = spawner.getSpawnerBaseLogic();
 		logic.setEntityName(name);
 		
-		setRoguelike(logic, level, name);
+		if(RogueConfig.getBoolean(RogueConfig.ROGUESPAWNERS))setRoguelike(logic, level, name);
 
 	}	
 	

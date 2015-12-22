@@ -34,6 +34,8 @@ public enum Tower {
 			cursor.add(Cardinal.DOWN);
 		}
 
+		cursor.add(Cardinal.UP);
+		
 		int yOffset = cursor.getY() - y;
 
 		if(yOffset < 14){
