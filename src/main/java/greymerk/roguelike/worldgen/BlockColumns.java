@@ -28,10 +28,9 @@ public class BlockColumns extends BlockBase{
 	
 	@Override
 	public boolean setBlock(WorldEditor editor, Random rand, Coord pos, boolean fillAir, boolean replaceSolid) {
-		IBlockFactory block = this.blocks.get(
-				(pos.getX() % this.blocks.size()
-				+ pos.getZ() % this.blocks.size())
-				% this.blocks.size());
+		int size = blocks.size();
+		int choice = Math.abs((pos.getX() % size + pos.getZ() % size)) % size;
+		IBlockFactory block = blocks.get(choice);
 		return block.setBlock(editor, rand, pos, fillAir, replaceSolid);
 	}
 
