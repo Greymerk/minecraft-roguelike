@@ -17,7 +17,8 @@ public class SettingsLootRules extends DungeonSettings{
 		ILoot loot = Loot.getLoot();
 		lootRules.add(Treasure.STARTER, loot.get(Loot.WEAPON, 0),  0, true, 2);
 		lootRules.add(Treasure.STARTER, loot.get(Loot.FOOD, 0),  0, true, 2);
-		lootRules.add(Treasure.STARTER, loot.get(Loot.WEAPON, 0),  0, true, 2);
+		lootRules.add(Treasure.STARTER, loot.get(Loot.TOOL, 0),  0, true, 2);
+		lootRules.add(Treasure.STARTER, loot.get(Loot.SUPPLY, 0),  0, true, 2);
 		lootRules.add(Treasure.STARTER, new ItemSpecialty(0, 0, Equipment.LEGS, Quality.WOOD), 0, true, 2);
 		for(int i = 0; i < 5; ++i){
 			lootRules.add(Treasure.ARMOUR, loot.get(Loot.POTION, i),  i, true, 1);

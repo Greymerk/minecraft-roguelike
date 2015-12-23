@@ -5,7 +5,7 @@ import java.util.Random;
 public enum DyeColor {
 
 	WHITE, ORANGE, MAGENTA, LIGHT_BLUE, YELLOW, LIME,
-	PINK, GRAY, SILVER, CYAN, PURPLE, BLUE, BROWN, GREEN,
+	PINK, GRAY, LIGHT_GRAY, CYAN, PURPLE, BLUE, BROWN, GREEN,
 	RED, BLACK;
 	
 	public static DyeColor get(Random rand){
@@ -22,7 +22,7 @@ public enum DyeColor {
 		case LIME: return 5;
 		case PINK: return 6;
 		case GRAY: return 7;
-		case SILVER: return 8;
+		case LIGHT_GRAY: return 8;
 		case CYAN: return 9;
 		case PURPLE: return 10;
 		case BLUE: return 11;

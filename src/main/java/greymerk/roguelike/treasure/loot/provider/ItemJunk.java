@@ -60,19 +60,19 @@ public class ItemJunk extends ItemBase{
 			return PotionMixture.getPotion(rand, PotionMixture.LAUDANUM);	
 		}
 		
-		if(rand.nextInt(20) == 0){
-			return new ItemStack(Blocks.torch, 3 + rand.nextInt(3 + level));
+		if(rand.nextInt(15) == 0){
+			return new ItemStack(Blocks.torch, 2 + rand.nextInt(5));
 		}
 
 		if(level > 0 && rand.nextInt(10) == 0){
 			switch(rand.nextInt(7)){
-			case 0: return new ItemStack(Items.slime_ball, 1 + rand.nextInt(3));
-			case 1: return new ItemStack(Items.snowball, 1 + rand.nextInt(3));
+			case 0: return new ItemStack(Items.slime_ball);
+			case 1: return new ItemStack(Items.snowball);
 			case 2: return new ItemStack(Items.mushroom_stew);
-			case 3: return new ItemStack(Items.clay_ball, 1 + rand.nextInt(3));
+			case 3: return new ItemStack(Items.clay_ball);
 			case 4: return new ItemStack(Items.flint);
-			case 5: return new ItemStack(Items.feather, 1 + rand.nextInt(3));
-			case 6: return new ItemStack(Items.glass_bottle, 1 + rand.nextInt(3));
+			case 5: return new ItemStack(Items.feather);
+			case 6: return new ItemStack(Items.glass_bottle);
 			}
 		}
 
@@ -80,7 +80,7 @@ public class ItemJunk extends ItemBase{
 		case 0: return new ItemStack(Items.bone);
 		case 1: return new ItemStack(Items.rotten_flesh);
 		case 2: return new ItemStack(Items.spider_eye);
-		case 3: return new ItemStack(Items.stick);
+		case 3: return new ItemStack(Items.paper);
 		case 4: return new ItemStack(Items.string);
 		case 5: return new ItemStack(Items.stick);
 		default: return new ItemStack(Items.stick);

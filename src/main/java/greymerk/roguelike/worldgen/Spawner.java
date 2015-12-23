@@ -2,6 +2,7 @@ package greymerk.roguelike.worldgen;
 
 import java.util.Random;
 
+import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
@@ -16,19 +17,19 @@ public enum Spawner {
 	
 	private static final Spawner[] common = {SPIDER, SKELETON, ZOMBIE};
 	
-	public static void generate(WorldEditor editor, Random rand, LevelSettings level, Coord pos){
+	public static void generate(WorldEditor editor, Random rand, LevelSettings settings, Coord pos){
 		Spawner type = common[rand.nextInt(common.length)];
-		generate(editor, rand, level, pos, type);
+		generate(editor, rand, settings, pos, type);
 	}
 	
-	public static void generate(WorldEditor editor, Random rand, LevelSettings level, Coord pos, Spawner type){
+	public static void generate(WorldEditor editor, Random rand, LevelSettings settings, Coord pos, Spawner type){
 		
-		if(level.getSpawners() != null){
-			level.getSpawners().generate(editor, rand, pos, type, level.getDifficulty(pos));
+		if(settings.getSpawners() != null){
+			settings.getSpawners().generate(editor, rand, pos, type, settings.getDifficulty(pos));
 			return;
 		}
 		
-		generate(editor, rand, level.getDifficulty(pos), pos, type);
+		generate(editor, rand, settings.getDifficulty(pos), pos, type);
 	}
 	
 	public static void generate(WorldEditor editor, Random rand, int level, Coord pos, Spawner type){
@@ -43,7 +44,7 @@ public enum Spawner {
 		MobSpawnerBaseLogic logic = spawner.func_145881_a();
 		logic.setEntityName(name);
 		
-		setRoguelike(logic, level, name);
+		if(RogueConfig.getBoolean(RogueConfig.ROGUESPAWNERS))setRoguelike(logic, level, name);
 
 	}	
 	
