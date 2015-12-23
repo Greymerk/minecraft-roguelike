@@ -3,8 +3,6 @@ package greymerk.roguelike.dungeon.towers;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.WorldEditor;
-import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
 
 public enum Tower {
 

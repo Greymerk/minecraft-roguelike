@@ -82,12 +82,12 @@ public class HouseTower implements ITower {
 		
 		start = new Coord(floor);
 		start.add(Cardinal.DOWN, 2);
-		start.add(orth[1]);
-		start.add(Cardinal.reverse(dir));
+		start.add(orth[1], 2);
+		start.add(Cardinal.reverse(dir), 2);
 		end = new Coord(floor.getX(), y + 10, floor.getZ());
-		end.add(Cardinal.reverse(dir), 4);
-		end.add(orth[0], 7);
-		BlockType.get(BlockType.STONE_SMOOTH).fillRectSolid(editor, rand, start, end, true, true);
+		end.add(Cardinal.reverse(dir), 5);
+		end.add(orth[0], 8);
+		walls.fillRectSolid(editor, rand, start, end, true, true);
 		
 		cursor = new Coord(floor);
 		cursor.add(Cardinal.reverse(dir), 5);
@@ -231,7 +231,6 @@ public class HouseTower implements ITower {
 		pane.setBlock(editor, cursor);
 		
 		// upstairs
-		
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.UP, 5);
 		cursor.add(orth[0]);
@@ -595,7 +594,7 @@ public class HouseTower implements ITower {
 
 	private void door(WorldEditor editor, Random rand, ITheme theme, Cardinal dir, Coord origin) {
 		
-		IBlockFactory walls = theme.getPrimaryFloor();
+		IBlockFactory floor = theme.getPrimaryFloor();
 		IBlockFactory pillar = theme.getPrimaryPillar();
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		IStair stair = theme.getPrimaryStair();
@@ -620,7 +619,7 @@ public class HouseTower implements ITower {
 		start.add(orth[0]);
 		end.add(Cardinal.UP, 2);
 		end.add(orth[1]);
-		walls.fillRectSolid(editor, rand, start, end, true, true);
+		floor.fillRectSolid(editor, rand, start, end, true, true);
 		
 		start = new Coord(origin);
 		start.add(Cardinal.DOWN);
@@ -629,16 +628,33 @@ public class HouseTower implements ITower {
 		end.add(dir);
 		start.add(orth[0]);
 		end.add(orth[1]);
-		walls.fillRectSolid(editor, rand, start, end, true, true);
+		floor.fillRectSolid(editor, rand, start, end, true, true);
+		
+		start = new Coord(origin);
+		start.add(Cardinal.DOWN, 2);
+		end = new Coord(start);
+		start.add(Cardinal.reverse(dir));
+		end.add(dir);
+		start.add(orth[0]);
+		end.add(orth[1]);
+		end = new Coord(end.getX(), 60, end.getZ());
+		floor.fillRectSolid(editor, rand, start, end, true, false);
 		
 		Door.generate(editor, origin, Cardinal.reverse(dir), Door.OAK);
 
 		for(Cardinal o : orth){
+			/*
 			start = new Coord(origin);
 			start.add(o, 2);
 			end = new Coord(start);
 			end.add(Cardinal.UP, 2);
 			pillar.fillRectSolid(editor, rand, start, end, true, true);
+			*/
+			
+			cursor = new Coord(origin);
+			cursor.add(o, 2);
+			cursor.add(Cardinal.UP, 2);
+			editor.fillDown(rand, cursor, pillar);
 			
 			cursor = new Coord(end);
 			cursor.add(o);
@@ -664,5 +680,46 @@ public class HouseTower implements ITower {
 		end.add(orth[1]);
 		end.add(Cardinal.UP, 2);
 		air.fillRectSolid(editor, rand, start, end, true, true);
+		
+		cursor = new Coord(origin);
+		cursor.add(Cardinal.DOWN);
+		cursor.add(Cardinal.reverse(dir), 2);
+		step(editor, rand, theme, Cardinal.reverse(dir), cursor);
+	}
+	
+	private void step(WorldEditor editor, Random rand, ITheme theme, Cardinal dir, Coord origin){
+		
+		Coord start;
+		Coord end;
+		Coord cursor;
+		
+		IStair stair = theme.getPrimaryStair();
+		IBlockFactory blocks = theme.getPrimaryWall();
+		
+		cursor = new Coord(origin);
+		cursor.add(Cardinal.DOWN);
+		cursor.add(dir);
+		if(editor.validGroundBlock(cursor)) return;
+		if(cursor.getY() <= 60) return;
+		
+		Cardinal[] orth = Cardinal.getOrthogonal(dir);
+		
+		start = new Coord(origin);
+		end = new Coord(origin);
+		start.add(orth[0]);
+		end.add(orth[1]);
+		end = new Coord(end.getX(), 60, end.getZ());
+		editor.fillRectSolid(rand, start, end, blocks, true, true);
+		
+		start = new Coord(origin);
+		end = new Coord(origin);
+		start.add(orth[0]);
+		end.add(orth[1]);
+		stair.setOrientation(dir, false);
+		editor.fillRectSolid(rand, start, end, stair, true, true);
+		
+		origin.add(Cardinal.DOWN);
+		origin.add(dir);
+		step(editor, rand, theme, dir, origin);
 	}
 }
