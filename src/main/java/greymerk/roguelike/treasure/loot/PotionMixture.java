@@ -22,6 +22,7 @@ public enum PotionMixture {
 			PotionEffect.addCustomEffect(potion, PotionEffect.STRENGTH, 3, duration);
 			PotionEffect.addCustomEffect(potion, PotionEffect.FATIGUE, 1, duration);
 			Loot.setItemName(potion, "Tequila");
+			ItemHideFlags.set(ItemHideFlags.EFFECTS, potion);
 			return potion;
 		case LAUDANUM:
 			potion = Potion.getSpecific(rand, Potion.STRENGTH, false, false, false);
@@ -32,6 +33,8 @@ public enum PotionMixture {
 			PotionEffect.addCustomEffect(potion, PotionEffect.FATIGUE, 2, duration);
 			PotionEffect.addCustomEffect(potion, PotionEffect.NAUSIA, 0, duration);
 			Loot.setItemName(potion, "Laudanum");
+			Loot.setItemLore(potion, "A medicinal tincture.");
+			ItemHideFlags.set(ItemHideFlags.EFFECTS, potion);
 			return potion;
 		case MOONSHINE:
 			potion = Potion.getSpecific(rand, Potion.WEAKNESS, false, false, false);
@@ -40,6 +43,7 @@ public enum PotionMixture {
 			PotionEffect.addCustomEffect(potion, PotionEffect.BLINDNESS, 1, duration);
 			PotionEffect.addCustomEffect(potion, PotionEffect.RESISTANCE, 2, duration);
 			Loot.setItemName(potion, "Moonshine");
+			ItemHideFlags.set(ItemHideFlags.EFFECTS, potion);
 			return potion;
 		case ABSINTHE:
 			potion = Potion.getSpecific(rand, Potion.POISON, false, false, false);
@@ -48,6 +52,7 @@ public enum PotionMixture {
 			PotionEffect.addCustomEffect(potion, PotionEffect.NIGHTVISION, 1, duration);
 			PotionEffect.addCustomEffect(potion, PotionEffect.JUMP, 2, duration);
 			Loot.setItemName(potion, "Absinthe");
+			ItemHideFlags.set(ItemHideFlags.EFFECTS, potion);
 			return potion;
 		case STOUT:
 			potion = Potion.getSpecific(rand, Potion.HARM, false, false, false);
@@ -56,11 +61,13 @@ public enum PotionMixture {
 			PotionEffect.addCustomEffect(potion, PotionEffect.FATIGUE, 1, duration);
 			PotionEffect.addCustomEffect(potion, PotionEffect.HEALTHBOOST, 2, duration);
 			Loot.setItemName(potion, "Stout");
+			ItemHideFlags.set(ItemHideFlags.EFFECTS, potion);
 			return potion;
 		case VILE:
-			potion = Potion.getSpecific(rand, Potion.HARM);
+			potion = Potion.getSpecific(rand, Potion.values()[rand.nextInt(Potion.values().length)]);
 			addRandomEffects(rand, potion, 2 + rand.nextInt(2));
 			Loot.setItemName(potion, "Vile Mixture");
+			ItemHideFlags.set(ItemHideFlags.EFFECTS, potion);
 			return potion;
 		}
 		
