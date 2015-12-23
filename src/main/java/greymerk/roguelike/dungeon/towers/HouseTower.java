@@ -643,13 +643,6 @@ public class HouseTower implements ITower {
 		Door.generate(editor, origin, Cardinal.reverse(dir), Door.OAK);
 
 		for(Cardinal o : orth){
-			/*
-			start = new Coord(origin);
-			start.add(o, 2);
-			end = new Coord(start);
-			end.add(Cardinal.UP, 2);
-			pillar.fillRectSolid(editor, rand, start, end, true, true);
-			*/
 			
 			cursor = new Coord(origin);
 			cursor.add(o, 2);
