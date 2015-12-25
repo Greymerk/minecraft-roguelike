@@ -43,7 +43,11 @@ public class WorldEditor {
 		if(!fillAir && isAir) return false;
 		if(!replaceSolid && !isAir)	return false;
 		
-		world.setBlock(pos.getX(), pos.getY(), pos.getZ(), block.getBlock(), block.getMeta(), block.getFlag());
+		try{
+			world.setBlock(pos.getX(), pos.getY(), pos.getZ(), block.getBlock(), block.getMeta(), block.getFlag());
+		} catch(NullPointerException npe){
+			//ignore it.
+		}
 		
 		Block type = block.getBlock();
 		Integer count = stats.get(type);
