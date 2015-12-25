@@ -87,8 +87,7 @@ public class SpawnCriteria {
 	
 	public boolean isValid(WorldEditor editor, Coord pos){
 		
-		// @TODO : figure out dimension thing
-		Integer dimID = 0;
+		Integer dimID = editor.getDimension();
 		
 		List<Integer> dimBL = new ArrayList<Integer>();
 		

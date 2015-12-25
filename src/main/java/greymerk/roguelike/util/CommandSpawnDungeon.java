@@ -61,6 +61,12 @@ public class CommandSpawnDungeon extends CommandBase
 			return;
 		}
 		
+		if(ap.match(0, "dim")){
+			int dim = sender.getEntityWorld().provider.getDimensionId();
+			sender.addChatMessage(new ChatComponentText(TextFormat.apply("Dimension id: " + Integer.toString(dim), TextFormat.GOLD)));
+			return;
+		}
+		
 		if(ap.match(0, "settings")){
 			if(!ap.hasEntry(1)){
 				sender.addChatMessage(new ChatComponentText(TextFormat.apply("Usage: roguelike settings [reload | list]", TextFormat.GRAY)));

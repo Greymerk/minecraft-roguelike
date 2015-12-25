@@ -100,11 +100,6 @@ public class Dungeon implements IDungeon{
 			return false;
 		}
 		
-		if(!RogueConfig.getIntList(RogueConfig.DIMENSIONWL).contains((Integer)editor.getDimension())){
-			return false;
-		}
-
-		
 		int frequency = RogueConfig.getInt(RogueConfig.SPAWNFREQUENCY);
 		int min = 8 * frequency / 10;
 		int max = 32 * frequency / 10;
