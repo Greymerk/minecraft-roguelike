@@ -87,8 +87,7 @@ public class SpawnCriteria {
 	
 	public boolean isValid(WorldEditor editor, Coord pos){
 		
-		// @TODO : figure out dimension thing
-		Integer dimID = 0;
+		Integer dimID = editor.getDimension();
 		
 		List<Integer> dimBL = new ArrayList<Integer>();
 		
@@ -108,7 +107,10 @@ public class SpawnCriteria {
 		
 		dimWL.addAll(RogueConfig.getIntList(RogueConfig.DIMENSIONWL));
 		
-		if(!dimWL.isEmpty() && !dimWL.contains(dimID)) return false;
+		// 
+		if(!dimWL.isEmpty()){
+			if(!dimWL.contains(dimID)) return false;
+		}
 		
 		if(this.biomes == null && this.biomeTypes == null) return true;
 		
