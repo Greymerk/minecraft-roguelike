@@ -40,14 +40,14 @@ public class DungeonsWood extends DungeonBase {
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		
 		
-		editor.fillRectSolid(rand, x - WIDTH, y, z - LENGTH, x + WIDTH, y + HEIGHT, z + LENGTH, air);
+		editor.fillRectSolid(rand, new Coord(x - WIDTH, y, z - LENGTH), new Coord(x + WIDTH, y + HEIGHT, z + LENGTH), air);
 		editor.fillRectHollow(rand, new Coord(x - WIDTH - 1, y - 1, z - LENGTH - 1), new Coord(x + WIDTH + 1, y + HEIGHT + 1, z + LENGTH + 1), planks, false, true);
 		
 		// log beams
-		editor.fillRectSolid(rand, x - WIDTH, y, z - LENGTH, x - WIDTH, y + HEIGHT, z - LENGTH, pillar, true, true);
-		editor.fillRectSolid(rand, x - WIDTH, y, z + LENGTH, x - WIDTH, y + HEIGHT, z + LENGTH, pillar, true, true);
-		editor.fillRectSolid(rand, x + WIDTH, y, z - LENGTH, x + WIDTH, y + HEIGHT, z - LENGTH, pillar, true, true);
-		editor.fillRectSolid(rand, x + WIDTH, y, z + LENGTH, x + WIDTH, y + HEIGHT, z + LENGTH, pillar, true, true);
+		editor.fillRectSolid(rand, new Coord(x - WIDTH, y, z - LENGTH), new Coord(x - WIDTH, y + HEIGHT, z - LENGTH), pillar, true, true);
+		editor.fillRectSolid(rand, new Coord(x - WIDTH, y, z + LENGTH), new Coord(x - WIDTH, y + HEIGHT, z + LENGTH), pillar, true, true);
+		editor.fillRectSolid(rand, new Coord(x + WIDTH, y, z - LENGTH), new Coord(x + WIDTH, y + HEIGHT, z - LENGTH), pillar, true, true);
+		editor.fillRectSolid(rand, new Coord(x + WIDTH, y, z + LENGTH), new Coord(x + WIDTH, y + HEIGHT, z + LENGTH), pillar, true, true);
 
 		// glowstone
 		glowstone.setBlock(editor, new Coord(x - WIDTH + 1, y - 1, z - LENGTH + 1));
@@ -55,7 +55,7 @@ public class DungeonsWood extends DungeonBase {
 		glowstone.setBlock(editor, new Coord(x + WIDTH - 1, y - 1, z - LENGTH + 1));
 		glowstone.setBlock(editor, new Coord(x + WIDTH - 1, y - 1, z + LENGTH - 1));
 		
-		editor.setBlock(rand, x, y, z, planks, true, true);
+		editor.setBlock(rand, new Coord(x, y, z), planks, true, true);
 		Cake.get().setBlock(editor, new Coord(x, y + 1, z));
 		
 		List<Coord> space = new ArrayList<Coord>();

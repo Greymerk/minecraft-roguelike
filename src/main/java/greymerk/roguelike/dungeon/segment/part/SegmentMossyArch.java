@@ -58,10 +58,10 @@ public class SegmentMossyArch extends SegmentBase {
 		editor.setBlock(rand, cursor, BlockType.get(BlockType.VINE), true, true);
 		
 		if(!spawnHoleSet){
-			editor.fillRectSolid(rand, x, y + 2, z, x, y + 5, z, BlockType.get(BlockType.AIR));
+			editor.fillRectSolid(rand, new Coord(x, y + 2, z), new Coord(x, y + 5, z), BlockType.get(BlockType.AIR));
 			Vine.fill(editor, rand, new Coord(x, y + 3, z), new Coord(x, y + 5, z));
 			
-			if(!editor.isAirBlock(new Coord(x, y + 6, z))) editor.setBlock(x, y + 7, z, BlockType.get(BlockType.WATER_FLOWING));
+			if(!editor.isAirBlock(new Coord(x, y + 6, z))) editor.setBlock(new Coord(x, y + 7, z), BlockType.get(BlockType.WATER_FLOWING));
 			spawnHoleSet = true;
 		}
 	}

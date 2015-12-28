@@ -29,13 +29,13 @@ public class DungeonCorner extends DungeonBase {
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		
 		// fill air inside
-		editor.fillRectSolid(rand, x - 2, y, z - 2, x + 2, y + 3, z + 2, air);
+		editor.fillRectSolid(rand, new Coord(x - 2, y, z - 2), new Coord(x + 2, y + 3, z + 2), air);
 		
 		// shell
 		editor.fillRectHollow(rand, new Coord(x - 3, y - 1, z - 3), new Coord(x + 3, y + 4, z + 3), blocks, false, true);
 		
 		// floor
-		editor.fillRectSolid(rand, x - 3, y - 1, z - 3, x + 3, y - 1, z + 3, theme.getPrimaryFloor(), false, true);
+		editor.fillRectSolid(rand, new Coord(x - 3, y - 1, z - 3), new Coord(x + 3, y - 1, z + 3), theme.getPrimaryFloor(), false, true);
 		
 		Coord start;
 		Coord end;

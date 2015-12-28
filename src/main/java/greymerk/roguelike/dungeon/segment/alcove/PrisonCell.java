@@ -64,7 +64,7 @@ public class PrisonCell implements IAlcove{
 		y = centre.getY();
 		z = centre.getZ();
 		
-		List<Coord> toCheck = editor.getRectSolid(x - 2, y, z - 2, x + 2, y, z + 2);
+		List<Coord> toCheck = editor.getRectSolid(new Coord(x - 2, y, z - 2), new Coord(x + 2, y, z + 2));
 
 		for(Coord c : toCheck){
 			if (editor.isAirBlock(c)) return false;

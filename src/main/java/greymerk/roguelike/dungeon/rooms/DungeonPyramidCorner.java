@@ -31,7 +31,7 @@ public class DungeonPyramidCorner extends DungeonBase {
 		editor.fillRectSolid(rand, new Coord(x - 1, y + 3, z - 1), new Coord(x + 1, y + 3, z + 1), air, true, true);
 		
 		// floor
-		editor.fillRectSolid(rand, x - 3, y - 1, z - 3, x + 3, y - 1, z + 3, theme.getPrimaryFloor(), false, true);
+		editor.fillRectSolid(rand, new Coord(x - 3, y - 1, z - 3), new Coord(x + 3, y - 1, z + 3), theme.getPrimaryFloor(), false, true);
 		
 		Coord start;
 		Coord end;

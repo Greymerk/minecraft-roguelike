@@ -88,8 +88,12 @@ public class WorldEditor implements IWorldEditor{
 		return world.provider.getDimensionId();
 	}
 	
-	public Random setSeed(int a, int b, int c){
+	public Random getSeededRandom(int a, int b, int c){
 		return world.setRandomSeed(a, b, c);
+	}
+	
+	public void fillRectSolid(Random rand, Coord start, Coord end, IBlockFactory blocks){
+		fillRectSolid(rand, start, end, blocks, true, true);
 	}
 	
 	public void fillRectSolid(Random rand, Coord start, Coord end, IBlockFactory blocks, boolean fillAir, boolean replaceSolid){
@@ -106,6 +110,10 @@ public class WorldEditor implements IWorldEditor{
 				}
 			}
 		}
+	}
+	
+	public void fillRectHollow(Random rand, Coord start, Coord end, IBlockFactory blocks){
+		fillRectHollow(rand, start, end, blocks, true, true);
 	}
 	
 	public void fillRectHollow(Random rand, Coord start, Coord end, IBlockFactory blocks, boolean fillAir, boolean replaceSolid){
@@ -248,30 +256,6 @@ public class WorldEditor implements IWorldEditor{
 	
 	public TileEntity getTileEntity(Coord pos){
 		return world.getTileEntity(pos.getBlockPos());
-	}
-	
-	public void setBlock(int x, int y, int z, Block block){
-		new MetaBlock(block).setBlock(this, new Coord(x, y, z));
-	}
-	
-	public boolean setBlock(int x, int y, int z, MetaBlock block){
-		return block.setBlock(this, new Coord(x, y, z));
-	}
-	
-	public void fillRectSolid(Random rand, int x, int y, int z, int x2, int y2, int z2, IBlockFactory blocks){
-		fillRectSolid(rand, new Coord(x, y, z), new Coord(x2, y2, z2), blocks, true, true);
-	}
-	
-	public void fillRectSolid(Random rand, int x, int y, int z, int x2, int y2, int z2, IBlockFactory blocks, boolean fillAir, boolean replaceSolid){
-		fillRectSolid(rand, new Coord(x, y, z), new Coord(x2, y2, z2), blocks, fillAir, replaceSolid);
-	}
-	
-	public boolean setBlock(Random rand, int x, int y, int z, IBlockFactory block, boolean fillAir, boolean replaceSolid){
-		return setBlock(rand, new Coord(x, y, z), block, true, true);
-	}
-	
-	public void fillRectHollow(Random rand, int x, int y, int z, int x2, int y2, int z2, IBlockFactory blocks, boolean fillAir, boolean replaceSolid){
-		fillRectHollow(rand, new Coord(x, y, z), new Coord(x2, y2, z2), blocks, fillAir, replaceSolid);
 	}
 	
 	public boolean validGroundBlock(Coord pos){

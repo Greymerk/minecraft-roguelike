@@ -30,24 +30,24 @@ public class DungeonsNetherBrick extends DungeonBase {
 		int width = 2 + rand.nextInt(3);
 		
 		IBlockFactory walls = theme.getPrimaryWall();
-		editor.fillRectHollow(rand, x - length - 1, y - 1, z - width - 1, x + length + 1, y + height + 1, z + width + 1, walls, false, true);
+		editor.fillRectHollow(rand, new Coord(x - length - 1, y - 1, z - width - 1), new Coord(x + length + 1, y + height + 1, z + width + 1), walls, false, true);
 		
 		
 		IBlockFactory floor = theme.getPrimaryFloor();
-		editor.fillRectSolid(rand, x - length - 1, y - 1, z - width - 1, x + length + 1, y - 1, z + width + 1, floor);
+		editor.fillRectSolid(rand, new Coord(x - length - 1, y - 1, z - width - 1), new Coord(x + length + 1, y - 1, z + width + 1), floor);
 
 		// lava crap under the floor
 		BlockWeightedRandom subFloor = new BlockWeightedRandom();
 		subFloor.addBlock(BlockType.get(BlockType.LAVA_FLOWING), 8);
 		subFloor.addBlock(BlockType.get(BlockType.OBSIDIAN), 3);
-		editor.fillRectSolid(rand, x - length, y - 5, z - width, x + length, y - 2, z + width, subFloor);
+		editor.fillRectSolid(rand, new Coord(x - length, y - 5, z - width), new Coord(x + length, y - 2, z + width), subFloor);
 		
 		BlockWeightedRandom ceiling = new BlockWeightedRandom();
 		ceiling.addBlock(BlockType.get(BlockType.FENCE_NETHER_BRICK), 10);
 		ceiling.addBlock(BlockType.get(BlockType.AIR), 5);
-		editor.fillRectSolid(rand, x - length, y + height, z - width, x + length, y + height, z + width, ceiling);
+		editor.fillRectSolid(rand, new Coord(x - length, y + height, z - width), new Coord(x + length, y + height, z + width), ceiling);
 		
-		Treasure.createChests(editor, rand, 1, editor.getRectSolid(x - length, y, z - width, x + length, y, z + width), Dungeon.getLevel(y));
+		Treasure.createChests(editor, rand, 1, editor.getRectSolid(new Coord(x - length, y, z - width), new Coord(x + length, y, z + width)), Dungeon.getLevel(y));
 
 		Spawner.generate(editor, rand, settings, new Coord(x - length - 1, y + rand.nextInt(2), z - width - 1));
 		Spawner.generate(editor, rand, settings, new Coord(x - length - 1, y + rand.nextInt(2), z + width + 1));

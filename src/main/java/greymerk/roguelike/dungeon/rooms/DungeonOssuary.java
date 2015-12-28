@@ -5,13 +5,12 @@ import java.util.Random;
 import greymerk.roguelike.dungeon.base.DungeonBase;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.theme.ITheme;
-import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.IStair;
-import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.IWorldEditor;
+import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.Skull;
 
@@ -19,350 +18,250 @@ public class DungeonOssuary extends DungeonBase {
 
 	@Override
 	public boolean generate(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
-		
-		int x = origin.getX();
-		int y = origin.getY();
-		int z = origin.getZ();
 		ITheme theme = settings.getTheme();
-		
+		IBlockFactory walls = theme.getPrimaryWall();
 		IStair stair = theme.getPrimaryStair();
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		
-		IBlockFactory walls = theme.getPrimaryWall();
-		editor.fillRectHollow(rand, new Coord(x - 8, y - 1, z - 8), new Coord(x + 8, y + 6, z + 8), walls, false, true);
-		editor.fillRectSolid(rand, x - 7, y + 5, z - 7, x + 7, y + 5, z + 7, walls);
+		Coord start;
+		Coord end;
+		Coord cursor;
 		
-		// any missing floor
-		BlockWeightedRandom cracked = new BlockWeightedRandom();
-		MetaBlock crack = BlockType.get(BlockType.STONE_BRICK_CRACKED);
-		cracked.addBlock(crack, 10);
-		cracked.addBlock(air, 3);
-		cracked.addBlock(BlockType.get(BlockType.COBBLESTONE), 5);
-		cracked.addBlock(BlockType.get(BlockType.GRAVEL), 5);
+		start = new Coord(origin);
+		end = new Coord(origin);
+		start.add(Cardinal.DOWN);
+		start.add(Cardinal.NORTH, 8);
+		start.add(Cardinal.EAST, 8);
+		end.add(Cardinal.SOUTH, 8);
+		end.add(Cardinal.WEST, 8);
+		end.add(Cardinal.UP, 6);
+		editor.fillRectHollow(rand, start, end, walls, false, true);
 		
-		editor.fillRectSolid(rand, x - 7, y - 1, z - 7, x + 7, y - 1, z + 7, cracked, true, false);
-		
-		// arches
-		// west
-		stair.setOrientation(Cardinal.EAST, true);
-		editor.fillRectSolid(rand, x - 7, y, z - 2, x - 6, y + 4, z - 2, walls);
-		editor.fillRectSolid(rand, x - 5, y + 3, z - 2, x - 5, y + 4, z - 2, walls);
-		stair.setBlock(editor, new Coord(x - 5, y + 2, z - 2));
-		editor.fillRectSolid(rand, x - 4, y + 4, z - 2, x - 4, y + 4, z - 2, walls);
-		stair.setBlock(editor, new Coord(x - 4, y + 3, z - 2));
-		stair.setBlock(editor, new Coord(x - 3, y + 4, z - 2));
-		
-		editor.fillRectSolid(rand, x - 7, y, z + 2, x - 6, y + 5, z + 2, walls);
-		editor.fillRectSolid(rand, x - 5, y + 3, z + 2, x - 5, y + 4, z + 2, walls);
-		stair.setBlock(editor, new Coord(x - 5, y + 2, z + 2));
-		editor.fillRectSolid(rand, x - 4, y + 4, z + 2, x - 4, y + 4, z + 2, walls);
-		stair.setBlock(editor, new Coord(x - 4, y + 3, z + 2));
-		stair.setBlock(editor, new Coord(x - 3, y + 4, z + 2));
-		
-		editor.fillRectSolid(rand, x - 7, y + 3, z - 1, x - 7, y + 5, z - 1, walls);
-		editor.fillRectSolid(rand, x - 7, y + 3, z + 1, x - 7, y + 5, z + 1, walls);
-		editor.fillRectSolid(rand, x - 7, y + 4, z, x - 7, y + 5, z, walls);
-		walls.setBlock(editor, rand, new Coord(x - 6, y + 4, z - 1));
-		walls.setBlock(editor, rand, new Coord(x - 6, y + 4, z + 1));
-		stair.setBlock(editor, new Coord(x - 6, y + 3, z - 1));
-		stair.setBlock(editor, new Coord(x - 6, y + 3, z + 1));
-		stair.setBlock(editor, new Coord(x - 7, y + 3, z));
-		stair.setBlock(editor, new Coord(x - 5, y + 4, z - 1));
-		stair.setBlock(editor, new Coord(x - 5, y + 4, z + 1));
-		stair.setBlock(editor, new Coord(x - 6, y + 4, z));
-		stair.setBlock(editor, new Coord(x - 5, y + 5, z));
-		
-		stair.setOrientation(Cardinal.SOUTH, true);
-		stair.setBlock(editor, new Coord(x - 7, y + 2, z - 1));
-		stair.setBlock(editor, new Coord(x - 4, y + 5, z - 1));
-		stair.setOrientation(Cardinal.NORTH, true);
-		stair.setBlock(editor, new Coord(x - 7, y + 2, z + 1));
-		stair.setBlock(editor, new Coord(x - 4, y + 5, z + 1));
-		
-		// east
-		stair.setOrientation(Cardinal.WEST, true);
-		editor.fillRectSolid(rand, x + 6, y, z - 2, x + 7, y + 5, z - 2, walls);
-		editor.fillRectSolid(rand, x + 5, y + 3, z - 2, x + 5, y + 4, z - 2, walls);
-		stair.setBlock(editor, new Coord(x + 5, y + 2, z - 2));
-		editor.fillRectSolid(rand, x + 4, y + 4, z - 2, x + 4, y + 4, z - 2, walls);
-		stair.setBlock(editor, new Coord(x + 4, y + 3, z - 2));
-		stair.setBlock(editor, new Coord(x + 3, y + 4, z - 2));
-		
-		editor.fillRectSolid(rand, x + 6, y, z + 2, x + 7, y + 5, z + 2, walls);
-		editor.fillRectSolid(rand, x + 5, y + 3, z + 2, x + 5, y + 4, z + 2, walls);
-		stair.setBlock(editor, new Coord(x + 5, y + 2, z - 2));
-		editor.fillRectSolid(rand, x + 4, y + 4, z + 2, x + 4, y + 4, z + 2, walls);
-		stair.setBlock(editor, new Coord(x + 4, y + 3, z + 2));
-		stair.setBlock(editor, new Coord(x + 3, y + 4, z + 2));
-		
-		editor.fillRectSolid(rand, x + 7, y + 3, z - 1, x + 7, y + 5, z - 1, walls);
-		editor.fillRectSolid(rand, x + 7, y + 3, z + 1, x + 7, y + 5, z + 1, walls);
-		editor.fillRectSolid(rand, x + 7, y + 4, z, x + 7, y + 5, z, walls);
-		walls.setBlock(editor, rand, new Coord(x + 6, y + 4, z - 1));
-		walls.setBlock(editor, rand, new Coord(x + 6, y + 4, z + 1));
-		stair.setBlock(editor, new Coord(x + 6, y + 3, z - 1));
-		stair.setBlock(editor, new Coord(x + 6, y + 3, z + 1));
-		stair.setBlock(editor, new Coord(x + 7, y + 3, z));
-		stair.setBlock(editor, new Coord(x + 5, y + 4, z - 1));
-		stair.setBlock(editor, new Coord(x + 5, y + 4, z + 1));
-		stair.setBlock(editor, new Coord(x + 6, y + 4, z));
-		stair.setBlock(editor, new Coord(x + 5, y + 5, z));
-		stair.setOrientation(Cardinal.SOUTH, true);
-		stair.setBlock(editor, new Coord(x + 7, y + 2, z - 1));
-		stair.setBlock(editor, new Coord(x + 4, y + 5, z - 1));
-		stair.setOrientation(Cardinal.NORTH, true);
-		stair.setBlock(editor, new Coord(x + 7, y + 2, z + 1));
-		stair.setBlock(editor, new Coord(x + 4, y + 5, z + 1));
-		
-		// north
-		stair.setOrientation(Cardinal.SOUTH, true);
-		editor.fillRectSolid(rand, x - 2, y, z - 7, x - 2, y + 5, z - 6, walls);
-		editor.fillRectSolid(rand, x - 2, y + 3, z - 5, x - 2, y + 4, z - 5, walls);
-		stair.setBlock(editor, new Coord(x - 2, y + 2, z - 5));
-		editor.fillRectSolid(rand, x - 2, y + 4, z - 4, x - 2, y + 4, z - 4, walls);
-		stair.setBlock(editor, new Coord(x - 2, y + 3, z - 4));
-		stair.setBlock(editor, new Coord(x - 2, y + 4, z - 3));
-		
-		editor.fillRectSolid(rand, x + 2, y, z - 7, x + 2, y + 5, z - 6, walls);
-		editor.fillRectSolid(rand, x + 2, y + 3, z - 5, x + 2, y + 4, z - 5, walls);
-		stair.setBlock(editor, new Coord(x + 2, y + 2, z - 5));
-		editor.fillRectSolid(rand, x + 2, y + 4, z - 4, x + 2, y + 4, z - 4, walls);
-		stair.setBlock(editor, new Coord(x + 2, y + 3, z - 4));
-		stair.setBlock(editor, new Coord(x + 2, y + 4, z - 3));
-		
-		editor.fillRectSolid(rand, x - 1, y + 3, z - 7, x - 1, y + 5, z - 7, walls);
-		editor.fillRectSolid(rand, x + 1, y + 3, z - 7, x + 1, y + 5, z - 7, walls);
-		editor.fillRectSolid(rand, x, y + 4, z - 7, x, y + 5, z - 7, walls);
-		walls.setBlock(editor, rand, new Coord(x - 1, y + 3, z - 6));
-		walls.setBlock(editor, rand, new Coord(x + 1, y + 3, z - 6));
-		stair.setBlock(editor, new Coord(x - 1, y + 3, z - 6));
-		stair.setBlock(editor, new Coord(x + 1, y + 3, z - 6));
-		stair.setBlock(editor, new Coord(x, y + 3, z - 7));
-		stair.setBlock(editor, new Coord(x - 1, y + 4, z - 5));
-		stair.setBlock(editor, new Coord(x + 1, y + 4, z - 5));
-		stair.setBlock(editor, new Coord(x, y + 4, z - 6));
-		stair.setBlock(editor, new Coord(x, y + 5, z - 5));
-		stair.setOrientation(Cardinal.EAST, true);
-		stair.setBlock(editor, new Coord(x - 1, y + 2, z - 7));
-		stair.setBlock(editor, new Coord(x - 1, y + 5, z - 4));
-		stair.setOrientation(Cardinal.WEST, true);
-		stair.setBlock(editor, new Coord(x + 1, y + 2, z - 7));
-		stair.setBlock(editor, new Coord(x + 1, y + 5, z - 4));
-		
-		// south
-		stair.setOrientation(Cardinal.NORTH, true);
-		editor.fillRectSolid(rand, x - 2, y, z + 6, x - 2, y + 5, z + 7, walls);
-		editor.fillRectSolid(rand, x - 2, y + 3, z + 5, x - 2, y + 4, z + 5, walls);
-		stair.setBlock(editor, new Coord(x - 2, y + 2, z + 5));
-		editor.fillRectSolid(rand, x - 2, y + 4, z + 4, x - 2, y + 4, z + 4, walls);
-		stair.setBlock(editor, new Coord(x - 2, y + 3, z + 4));
-		stair.setBlock(editor, new Coord(x - 2, y + 4, z + 3));
-		
-		editor.fillRectSolid(rand, x + 2, y, z + 6, x + 2, y + 5, z + 7, walls);
-		editor.fillRectSolid(rand, x + 2, y + 3, z + 5, x + 2, y + 4, z + 5, walls);
-		stair.setBlock(editor, new Coord(x + 2, y + 2, z + 5));
-		editor.fillRectSolid(rand, x + 2, y + 4, z + 4, x + 2, y + 4, z + 4, walls);
-		stair.setBlock(editor, new Coord(x + 2, y + 3, z + 4));
-		stair.setBlock(editor, new Coord(x + 2, y + 4, z + 3));
-		
-		editor.fillRectSolid(rand, x - 1, y + 3, z + 7, x - 1, y + 5, z + 7, walls);
-		editor.fillRectSolid(rand, x + 1, y + 3, z + 7, x + 1, y + 5, z + 7, walls);
-		editor.fillRectSolid(rand, x, y + 4, z + 7, x, y + 5, z + 7, walls);
-		walls.setBlock(editor, rand, new Coord(x - 1, y + 4, z + 6));
-		walls.setBlock(editor, rand, new Coord(x + 1, y + 4, z + 6));
-		stair.setBlock(editor, new Coord(x - 1, y + 3, z + 6));
-		stair.setBlock(editor, new Coord(x + 1, y + 3, z + 6));
-		stair.setBlock(editor, new Coord(x, y + 3, z + 7));
-		stair.setBlock(editor, new Coord(x - 1, y + 4, z + 5));
-		stair.setBlock(editor, new Coord(x + 1, y + 4, z + 5));
-		stair.setBlock(editor, new Coord(x, y + 4, z + 6));
-		stair.setBlock(editor, new Coord(x, y + 5, z + 5));
-		stair.setOrientation(Cardinal.EAST, true);
-		stair.setBlock(editor, new Coord(x - 1, y + 2, z + 7));
-		stair.setBlock(editor, new Coord(x - 1, y + 5, z + 4));
-		stair.setOrientation(Cardinal.WEST, true);
-		stair.setBlock(editor, new Coord(x + 1, y + 2, z + 7));
-		stair.setBlock(editor, new Coord(x + 1, y + 5, z + 4));
-		
-		// ceiling
-		editor.fillRectSolid(rand, x - 1, y + 5, z - 1, x + 1, y + 5, z + 1, air);
-		editor.setBlock(x, y + 6, z, air);
-		
-		editor.setBlock(x - 2, y + 5, z, air);
-		stair.setOrientation(Cardinal.WEST, true);
-		stair.setBlock(editor, new Coord(x - 3, y + 5, z));
-		stair.setBlock(editor, new Coord(x + 1, y + 6, z));
-		stair.setBlock(editor, new Coord(x + 1, y + 5, z + 2));
-		stair.setBlock(editor, new Coord(x + 1, y + 5, z - 2));
-		editor.setBlock(x - 4, y + 5, z, air);
-		
-		editor.setBlock(x + 2, y + 5, z, air);
-		stair.setOrientation(Cardinal.EAST, true);
-		stair.setBlock(editor, new Coord(x + 3, y + 5, z));
-		stair.setBlock(editor, new Coord(x - 1, y + 6, z));
-		stair.setBlock(editor, new Coord(x - 1, y + 5, z + 2));
-		stair.setBlock(editor, new Coord(x - 1, y + 5, z - 2));
-		editor.setBlock(x + 4, y + 5, z, air);
-		
-		editor.setBlock(x, y + 5, z - 2, air);
-		stair.setOrientation(Cardinal.NORTH, true);
-		stair.setBlock(editor, new Coord(x, y + 5, z - 3));
-		stair.setBlock(editor, new Coord(x, y + 6, z + 1));
-		stair.setBlock(editor, new Coord(x + 2, y + 5, z + 1));
-		stair.setBlock(editor, new Coord(x - 2, y + 5, z + 1));
-		editor.setBlock(x, y + 5, z - 4, air);
-		
-		editor.setBlock(x, y + 5, z + 2, air);
-		stair.setOrientation(Cardinal.SOUTH, true);
-		stair.setBlock(editor, new Coord(x, y + 5, z + 3));
-		stair.setBlock(editor, new Coord(x, y + 6, z - 1));
-		stair.setBlock(editor, new Coord(x + 2, y + 5, z - 1));
-		stair.setBlock(editor, new Coord(x - 2, y + 5, z - 1));
-		
-		
-		// corners
-		editor.fillRectSolid(rand, x - 7, y, z - 7, x - 6, y + 5, z - 6, walls);
-		editor.fillRectSolid(rand, x - 6, y + 6, z - 6, x - 3, y + 6, z - 3, walls);
-		stairCeiling(editor, rand, theme, x - 4, y + 5, z - 4);
-		stairArch(editor, rand, theme, x - 6, y + 4, z - 4, Cardinal.EAST);
-		stairArch(editor, rand, theme, x - 4, y + 4, z - 6, Cardinal.NORTH);
-		
-		editor.fillRectSolid(rand, x - 7, y, z + 6, x - 6, y + 5, z + 7, walls);
-		editor.fillRectSolid(rand, x - 6, y + 6, z + 3, x - 3, y + 6, z + 6, walls);
-		stairCeiling(editor, rand, theme, x - 4, y + 5, z + 4);
-		stairArch(editor, rand, theme, x - 6, y + 4, z + 4, Cardinal.EAST);
-		stairArch(editor, rand, theme, x - 4, y + 4, z + 6, Cardinal.NORTH);
-		
-		editor.fillRectSolid(rand, x + 6, y, z - 7, x + 7, y + 5, z - 6, walls);
-		editor.fillRectSolid(rand, x + 3, y + 6, z - 6, x + 6, y + 6, z - 3, walls);
-		stairCeiling(editor, rand, theme, x + 4, y + 5, z - 4);
-		stairArch(editor, rand, theme, x + 6, y + 4, z - 4, Cardinal.EAST);
-		stairArch(editor, rand, theme, x + 4, y + 4, z - 6, Cardinal.NORTH);
-		
-		editor.fillRectSolid(rand, x + 6, y, z + 6, x + 7, y + 5, z + 7, walls);
-		editor.fillRectSolid(rand, x + 3, y + 6, z + 3, x + 6, y + 6, z + 6, walls);
-		stairCeiling(editor, rand, theme, x + 4, y + 5, z + 4);
-		stairArch(editor, rand, theme, x + 6, y + 4, z + 4, Cardinal.EAST);
-		stairArch(editor, rand, theme, x + 4, y + 4, z + 6, Cardinal.NORTH);
+		// entrance arches
+		for(Cardinal dir : Cardinal.directions){
+			Cardinal[] orth = Cardinal.getOrthogonal(dir);	
+			cursor = new Coord(origin);
+			cursor.add(dir, 7);
+			for(Cardinal o : orth){
+				start = new Coord(cursor);
+				start.add(o, 2);
+				end = new Coord(start);
+				end.add(Cardinal.UP, 5);
+				end.add(Cardinal.reverse(dir));
+				editor.fillRectSolid(rand, start, end, walls);
 				
-		// shelves
-		editor.fillRectSolid(rand, x - 5, y, z - 7, x - 3, y, z - 7, walls);
-		placeSkull(editor, rand, x - 5, y + 1, z - 7, Cardinal.SOUTH);
-		placeSkull(editor, rand, x - 3, y + 1, z - 7, Cardinal.SOUTH);
-		editor.fillRectSolid(rand, x - 5, y + 2, z - 7, x - 3, y + 2, z - 7, walls);
-		placeSkull(editor, rand, x - 5, y + 3, z - 7, Cardinal.SOUTH);
-		placeSkull(editor, rand, x - 3, y + 3, z - 7, Cardinal.SOUTH);
-		editor.fillRectSolid(rand, x - 5, y + 4, z - 7, x - 3, y + 5, z - 7, walls);
-		editor.fillRectSolid(rand, x - 4, y, z - 7, x - 4, y + 4, z - 7, walls);
+				start = new Coord(cursor);
+				start.add(o, 2);
+				start.add(Cardinal.UP, 2);
+				start.add(Cardinal.reverse(dir), 2);
+				end = new Coord(start);
+				end.add(Cardinal.UP, 3);
+				editor.fillRectSolid(rand, start, end, walls);
+				stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, start);
+				
+				start.add(Cardinal.reverse(dir));
+				start.add(Cardinal.UP);
+				end.add(Cardinal.reverse(dir));
+				editor.fillRectSolid(rand, start, end, walls);
+				stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, start);
+				
+				start.add(Cardinal.reverse(dir));
+				start.add(Cardinal.UP);
+				end.add(Cardinal.reverse(dir));
+				editor.fillRectSolid(rand, start, end, walls);
+				stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, start);
+				
+				start = new Coord(cursor);
+				start.add(Cardinal.UP, 3);
+				end = new Coord(start);
+				start.add(orth[0]);
+				end.add(orth[1]);
+				end.add(Cardinal.UP, 3);
+				editor.fillRectSolid(rand, start, end, walls);
+				start.add(Cardinal.UP);
+				start.add(Cardinal.reverse(dir));
+				end.add(Cardinal.reverse(dir));
+				editor.fillRectSolid(rand, start, end, walls);
+				start.add(Cardinal.UP);
+				start.add(Cardinal.reverse(dir));
+				end.add(Cardinal.reverse(dir));
+				editor.fillRectSolid(rand, start, end, walls);
+				
+				Coord c = new Coord(cursor);
+				c.add(o);
+				c.add(Cardinal.UP, 2);
+				stair.setOrientation(Cardinal.reverse(o), true).setBlock(editor, c);
+				c.add(Cardinal.reverse(dir));
+				c.add(Cardinal.UP);
+				stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, c);
+				c.add(Cardinal.reverse(dir));
+				c.add(Cardinal.UP);
+				stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, c);
+				c.add(Cardinal.reverse(dir));
+			}
+			
+			Coord c = new Coord(origin);
+			c.add(dir, 7);
+			c.add(Cardinal.UP, 3);
+			stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, c);
+			c.add(Cardinal.reverse(dir));
+			c.add(Cardinal.UP);
+			stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, c);
+		}
 		
-		editor.fillRectSolid(rand, x + 3, y, z - 7, x + 5, y, z - 7, walls);
-		placeSkull(editor, rand, x + 5, y + 1, z - 7, Cardinal.SOUTH);
-		placeSkull(editor, rand, x + 3, y + 1, z - 7, Cardinal.SOUTH);
-		editor.fillRectSolid(rand, x + 3, y + 2, z - 7, x + 5, y + 2, z - 7, walls);
-		placeSkull(editor, rand, x + 5, y + 3, z - 7, Cardinal.SOUTH);
-		placeSkull(editor, rand, x + 3, y + 3, z - 7, Cardinal.SOUTH);
-		editor.fillRectSolid(rand, x + 3, y + 4, z - 7, x + 5, y + 5, z - 7, walls);
-		editor.fillRectSolid(rand, x + 4, y, z - 7, x + 4, y + 4, z - 7, walls);
+		for(Cardinal dir : Cardinal.directions){
+			cursor = new Coord(origin);
+			cursor.add(dir, 4);
+			cursor.add(Cardinal.UP, 5);
+			start = new Coord(cursor);
+			start.add(Cardinal.NORTH);
+			start.add(Cardinal.EAST);
+			end = new Coord(cursor);
+			end.add(Cardinal.SOUTH);
+			end.add(Cardinal.WEST);
+			editor.fillRectSolid(rand, start, end, walls);
+			air.setBlock(editor, cursor);
+			for(Cardinal d : Cardinal.directions){
+				Coord c = new Coord(cursor);
+				c.add(d);
+				stair.setOrientation(Cardinal.reverse(d), true).setBlock(editor, c);
+			}
+		}
 		
-		editor.fillRectSolid(rand, x - 5, y, z + 7, x - 3, y, z + 7, walls);
-		placeSkull(editor, rand, x - 5, y + 1, z + 7, Cardinal.NORTH);
-		placeSkull(editor, rand, x - 3, y + 1, z + 7, Cardinal.NORTH);
-		editor.fillRectSolid(rand, x - 5, y + 2, z + 7, x - 3, y + 2, z + 7, walls);
-		placeSkull(editor, rand, x - 5, y + 3, z + 7, Cardinal.NORTH);
-		placeSkull(editor, rand, x - 3, y + 3, z + 7, Cardinal.NORTH);
-		editor.fillRectSolid(rand, x - 5, y + 4, z + 7, x - 3, y + 5, z + 7, walls);
-		editor.fillRectSolid(rand, x - 4, y, z + 7, x - 4, y + 4, z + 7, walls);
+		// corner pillars
+		for(Cardinal dir : Cardinal.directions){
+			Cardinal[] orth = Cardinal.getOrthogonal(dir);
+			start = new Coord(origin);
+			start.add(dir, 6);
+			start.add(orth[0], 6);
+			end = new Coord(start);
+			end.add(dir);
+			end.add(orth[0]);
+			end.add(Cardinal.UP, 6);
+			editor.fillRectSolid(rand, start, end, walls);
+		}
 		
-		editor.fillRectSolid(rand, x + 3, y, z + 7, x + 5, y, z + 7, walls);
-		placeSkull(editor, rand, x + 5, y + 1, z + 7, Cardinal.NORTH);
-		placeSkull(editor, rand, x + 3, y + 1, z + 7, Cardinal.NORTH);
-		editor.fillRectSolid(rand, x + 3, y + 2, z + 7, x + 5, y + 2, z + 7, walls);
-		placeSkull(editor, rand, x + 5, y + 3, z + 7, Cardinal.NORTH);
-		placeSkull(editor, rand, x + 3, y + 3, z + 7, Cardinal.NORTH);
-		editor.fillRectSolid(rand, x + 3, y + 4, z + 7, x + 5, y + 5, z + 7, walls);
-		editor.fillRectSolid(rand, x + 4, y, z + 7, x + 4, y + 4, z + 7, walls);
+		// central ceiling
+		cursor = new Coord(origin);
+		cursor.add(Cardinal.UP, 6);
+		start = new Coord(cursor);
+		start.add(Cardinal.NORTH, 2);
+		start.add(Cardinal.EAST, 2);
+		end = new Coord(cursor);
+		end.add(Cardinal.SOUTH, 2);
+		end.add(Cardinal.WEST, 2);
+		editor.fillRectSolid(rand, start, end, walls);
+		start.add(Cardinal.DOWN);
+		end.add(Cardinal.DOWN);
+		air.fillRectSolid(editor, rand, start, end, true, true);
+		air.setBlock(editor, cursor);
+		for(Cardinal d : Cardinal.directions){
+			Coord c = new Coord(cursor);
+			c.add(d);
+			stair.setOrientation(Cardinal.reverse(d), true).setBlock(editor, c);
+		}
 		
-		editor.fillRectSolid(rand, x - 7, y, z - 5, x - 7, y, z - 3, walls);
-		placeSkull(editor, rand, x - 7, y + 1, z - 5, Cardinal.EAST);
-		placeSkull(editor, rand, x - 7, y + 1, z - 3, Cardinal.EAST);
-		editor.fillRectSolid(rand, x - 7, y + 2, z - 5, x - 7, y + 2, z - 3, walls);
-		placeSkull(editor, rand, x - 7, y + 3, z - 5, Cardinal.EAST);
-		placeSkull(editor, rand, x - 7, y + 3, z - 3, Cardinal.EAST);
-		editor.fillRectSolid(rand, x - 7, y + 4, z - 5, x - 7, y + 5, z - 3, walls);
-		editor.fillRectSolid(rand, x - 7, y, z - 4, x - 7, y + 4, z - 4, walls);
+		for(Cardinal dir : Cardinal.directions){
+			Cardinal[] orth = Cardinal.getOrthogonal(dir);
+			cursor = new Coord(origin);
+			cursor.add(Cardinal.UP, 5);
+			cursor.add(dir, 2);
+			air.setBlock(editor, cursor);
+			for(Cardinal o : orth){
+				Coord c = new Coord(cursor);
+				c.add(o);
+				stair.setOrientation(Cardinal.reverse(o), true).setBlock(editor, c);
+			}
+			cursor.add(orth[0], 2);
+			walls.setBlock(editor, rand, cursor);
+		}
 		
-		editor.fillRectSolid(rand, x - 7, y, z + 3, x - 7, y, z + 5, walls);
-		placeSkull(editor, rand, x - 7, y + 1, z + 5, Cardinal.EAST);
-		placeSkull(editor, rand, x - 7, y + 1, z + 3, Cardinal.EAST);
-		editor.fillRectSolid(rand, x - 7, y + 2, z + 3, x - 7, y + 2, z + 5, walls);
-		placeSkull(editor, rand, x - 7, y + 3, z + 5, Cardinal.EAST);
-		placeSkull(editor, rand, x - 7, y + 3, z + 3, Cardinal.EAST);
-		editor.fillRectSolid(rand, x - 7, y + 4, z + 3, x - 7, y + 5, z + 5, walls);
-		editor.fillRectSolid(rand, x - 7, y, z + 4, x - 7, y + 4, z + 4, walls);
+		for(Cardinal dir : Cardinal.directions){
+			Cardinal[] orth = Cardinal.getOrthogonal(dir);
+			cursor = new Coord(origin);
+			cursor.add(dir, 4);
+			cursor.add(orth[0], 4);
+			cursor.add(Cardinal.UP, 5);
+			start = new Coord(cursor);
+			start.add(Cardinal.NORTH);
+			start.add(Cardinal.EAST);
+			end = new Coord(cursor);
+			end.add(Cardinal.SOUTH);
+			end.add(Cardinal.WEST);
+			editor.fillRectSolid(rand, start, end, walls);
+			air.setBlock(editor, cursor);
+			for(Cardinal d : Cardinal.directions){
+				Coord c = new Coord(cursor);
+				c.add(d);
+				stair.setOrientation(Cardinal.reverse(d), true).setBlock(editor, c);
+			}
+			
+			for(Cardinal d : new Cardinal[]{dir, orth[0]}){
+				cursor = new Coord(origin);
+				cursor.add(dir, 4);
+				cursor.add(orth[0], 4);
+				cursor.add(Cardinal.UP, 4);
+				cursor.add(d, 2);
+				air.setBlock(editor, cursor);
+				for(Cardinal o : Cardinal.getOrthogonal(d)){
+					Coord c = new Coord(cursor);
+					c.add(o);
+					stair.setOrientation(Cardinal.reverse(o), true).setBlock(editor, c);
+				}
+				
+				start = new Coord(origin);
+				start.add(dir, 4);
+				start.add(orth[0], 4);
+				start.add(d, 2);
+				end = new Coord(start);
+				end.add(Cardinal.UP, 4);
+				walls.fillRectSolid(editor, rand, start, end, true, true);
+				start = new Coord(end);
+				start.add(Cardinal.getOrthogonal(d)[0]);
+				end.add(Cardinal.getOrthogonal(d)[1]);
+				end.add(Cardinal.UP, 2);
+				walls.fillRectSolid(editor, rand, start, end, true, true);
+				
+
+				for(Cardinal o : Cardinal.getOrthogonal(d)){
+					cursor = new Coord(origin);
+					cursor.add(dir, 4);
+					cursor.add(orth[0], 4);
+					cursor.add(d, 2);
+					cursor.add(o);
+					walls.setBlock(editor, rand, cursor);
+					cursor.add(Cardinal.UP);
+					skull(editor, rand, Cardinal.reverse(d), cursor);
+					cursor.add(Cardinal.UP);
+					walls.setBlock(editor, rand, cursor);
+					cursor.add(Cardinal.UP);
+					skull(editor, rand, Cardinal.reverse(d), cursor);
+				}
+			}
+			
+			cursor.add(dir, 2);
+		}
 		
-		editor.fillRectSolid(rand, x + 7, y, z - 5, x + 7, y, z - 3, walls);
-		placeSkull(editor, rand, x + 7, y + 1, z - 5, Cardinal.WEST);
-		placeSkull(editor, rand, x + 7, y + 1, z - 3, Cardinal.WEST);
-		editor.fillRectSolid(rand, x + 7, y + 2, z - 5, x + 7, y + 2, z - 3, walls);
-		placeSkull(editor, rand, x + 7, y + 3, z - 5, Cardinal.WEST);
-		placeSkull(editor, rand, x + 7, y + 3, z - 3, Cardinal.WEST);
-		editor.fillRectSolid(rand, x + 7, y + 4, z - 5, x + 7, y + 5, z - 3, walls);
-		editor.fillRectSolid(rand, x + 7, y, z - 4, x + 7, y + 4, z - 4, walls);
-		
-		editor.fillRectSolid(rand, x + 7, y, z + 3, x + 7, y, z + 5, walls);
-		placeSkull(editor, rand, x + 7, y + 1, z + 5, Cardinal.WEST);
-		placeSkull(editor, rand, x + 7, y + 1, z + 3, Cardinal.WEST);
-		editor.fillRectSolid(rand, x + 7, y + 2, z + 3, x + 7, y + 2, z + 5, walls);
-		placeSkull(editor, rand, x + 7, y + 3, z + 5, Cardinal.WEST);
-		placeSkull(editor, rand, x + 7, y + 3, z + 3, Cardinal.WEST);
-		editor.fillRectSolid(rand, x + 7, y + 4, z + 3, x + 7, y + 5, z + 5, walls);
-		editor.fillRectSolid(rand, x + 7, y, z + 4, x + 7, y + 4, z + 4, walls);
-		
-		return false;
+		return true;
 	}
 
+	private void skull(IWorldEditor editor, Random rand, Cardinal dir, Coord origin){
+		if(rand.nextInt(3) == 0) return;
+		
+		Coord cursor = new Coord(origin);
+		cursor.add(Cardinal.DOWN);
+		if(editor.isAirBlock(cursor)) return;
+		
+		if(rand.nextInt(15) == 0){
+			Skull.set(editor, rand, origin, dir, Skull.WITHER);
+			return;
+		}
+		
+		Skull.set(editor, rand, origin, dir, Skull.SKELETON);
+	}
+	
 	@Override
 	public int getSize() {
-		return 9;
-	}
-	
-	private void stairCeiling(IWorldEditor editor, Random rand, ITheme theme, int x, int y, int z){
-		
-		IStair stair = theme.getPrimaryStair();
-		
-		editor.setBlock(x, y, z, BlockType.get(BlockType.AIR));
-		stair.setOrientation(Cardinal.EAST, true);
-		stair.setBlock(editor, new Coord(x - 1, y, z));
-		stair.setOrientation(Cardinal.WEST, true);
-		stair.setBlock(editor, new Coord(x + 1, y, z));
-		
-		stair.setOrientation(Cardinal.SOUTH, true);
-		stair.setBlock(editor, new Coord(x, y, z - 1));
-		stair.setOrientation(Cardinal.NORTH, true);
-		stair.setBlock(editor, new Coord(x, y, z + 1));
-		
-	}
-	
-	private void stairArch(IWorldEditor editor, Random rand, ITheme theme, int x, int y, int z, Cardinal dir){
-		
-		IStair stair = theme.getPrimaryStair();
-		
-		if(dir == Cardinal.NORTH || dir == Cardinal.SOUTH){
-			stair.setOrientation(Cardinal.EAST, true);
-			stair.setBlock(editor, new Coord(x - 1, y, z));
-			stair.setOrientation(Cardinal.WEST, true);
-			stair.setBlock(editor, new Coord(x + 1, y, z));
-		} else {
-			stair.setOrientation(Cardinal.SOUTH, true);
-			stair.setBlock(editor, new Coord(x, y, z - 1));
-			stair.setOrientation(Cardinal.NORTH, true);
-			stair.setBlock(editor, new Coord(x, y, z + 1));
-		}
-	}
-	
-	private void placeSkull(IWorldEditor editor, Random rand, int x, int y, int z, Cardinal dir){
-		if(rand.nextBoolean()) return;
-		Skull type = rand.nextInt(10) == 0 ? Skull.WITHER : Skull.SKELETON;
-		Skull.set(editor, rand, x, y, z, dir, type);
+		return 8;
 	}
 }

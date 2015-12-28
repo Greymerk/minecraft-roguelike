@@ -21,7 +21,7 @@ public abstract class DungeonBase implements IDungeonRoom{
 	public boolean validLocation(IWorldEditor editor, Cardinal dir, int x, int y, int z){
 		
 		int size = getSize();
-		List<Coord> box = editor.getRectHollow(x - size, y - 2, z - size, x + size, y + 5, z + size);
+		List<Coord> box = editor.getRectHollow(new Coord(x - size, y - 2, z - size), new Coord(x + size, y + 5, z + size));
 		
 		for(Coord pos : box){
 			MetaBlock b = editor.getBlock(pos);

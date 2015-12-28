@@ -38,20 +38,20 @@ public class DungeonObsidian extends DungeonBase {
 		IBlockFactory secondaryWall = theme.getSecondaryWall();
 		
 		// space
-		editor.fillRectSolid(rand, x - 10, y - 3, z - 10, x + 10, y + 3, z + 10, air);
+		editor.fillRectSolid(rand, new Coord(x - 10, y - 3, z - 10), new Coord(x + 10, y + 3, z + 10), air);
 		
 		
 		// roof
-		editor.fillRectSolid(rand, x - 7, y + 6, z - 7, x + 7, y + 6, z + 7, secondaryWall);
-		editor.fillRectSolid(rand, x - 8, y + 5, z - 8, x + 8, y + 5, z + 8, secondaryWall);
-		editor.fillRectSolid(rand, x - 9, y + 4, z - 9, x + 9, y + 4, z + 9, secondaryWall);
-		editor.fillRectSolid(rand, x - 1, y + 3, z - 1, x + 1, y + 5, z + 1, air);
-		editor.setBlock(rand, x, y + 5, z, secondaryWall, true, true);
+		editor.fillRectSolid(rand, new Coord(x - 7, y + 6, z - 7), new Coord(x + 7, y + 6, z + 7), secondaryWall);
+		editor.fillRectSolid(rand, new Coord(x - 8, y + 5, z - 8), new Coord(x + 8, y + 5, z + 8), secondaryWall);
+		editor.fillRectSolid(rand, new Coord(x - 9, y + 4, z - 9), new Coord(x + 9, y + 4, z + 9), secondaryWall);
+		editor.fillRectSolid(rand, new Coord(x - 1, y + 3, z - 1), new Coord(x + 1, y + 5, z + 1), air);
+		editor.setBlock(rand, new Coord(x, y + 5, z), secondaryWall, true, true);
 		spawners.add(new Coord(x, y + 4, z));
 		
 		
 		// foundation
-		editor.fillRectSolid(rand, x - 10, y - 4, z - 10, x + 10, y - 4, z + 10, secondaryWall);
+		editor.fillRectSolid(rand, new Coord(x - 10, y - 4, z - 10), new Coord(x + 10, y - 4, z + 10), secondaryWall);
 		
 		// ceiling holes
 		for(Cardinal dir : Cardinal.directions){
@@ -287,7 +287,7 @@ public class DungeonObsidian extends DungeonBase {
 		int y = pillarLocation.getY();
 		int z = pillarLocation.getZ();
 		
-		editor.fillRectSolid(rand, x, y - 2, z, x, y + 3, z, secondaryWall);
+		editor.fillRectSolid(rand, new Coord(x, y - 2, z), new Coord(x, y + 3, z), secondaryWall);
 		Coord blockLocation = new Coord(x, y + 3, z);
 		
 		blockLocation.add(dir, 1);
@@ -309,11 +309,11 @@ public class DungeonObsidian extends DungeonBase {
 				Coord pillar = new Coord(x, y, z);
 				pillar.add(dir, 2);
 				pillar.add(orth, 2);
-				editor.fillRectSolid(rand, pillar.getX(), y - 4, pillar.getZ(), pillar.getX(), y + 4, pillar.getZ(), secondaryWall, true, true);
+				editor.fillRectSolid(rand, new Coord(pillar.getX(), y - 4, pillar.getZ()), new Coord(pillar.getX(), y + 4, pillar.getZ()), secondaryWall);
 				pillar.add(dir, 4);
-				editor.fillRectSolid(rand, pillar.getX(), y - 4, pillar.getZ(), pillar.getX(), y + 4, pillar.getZ(), secondaryWall, true, true);
+				editor.fillRectSolid(rand, new Coord(pillar.getX(), y - 4, pillar.getZ()), new Coord(pillar.getX(), y + 4, pillar.getZ()), secondaryWall);
 				pillar.add(orth, 3);
-				editor.fillRectSolid(rand, pillar.getX(), y - 4, pillar.getZ(), pillar.getX(), y + 4, pillar.getZ(), secondaryWall, true, true);
+				editor.fillRectSolid(rand, new Coord(pillar.getX(), y - 4, pillar.getZ()), new Coord(pillar.getX(), y + 4, pillar.getZ()), secondaryWall);
 				
 				Coord start = new Coord(x, y, z);
 				start.add(Cardinal.DOWN, 1);

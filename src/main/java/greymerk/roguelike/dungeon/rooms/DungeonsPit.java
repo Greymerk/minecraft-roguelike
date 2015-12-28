@@ -82,7 +82,7 @@ public class DungeonsPit extends DungeonBase {
 							|| blockZ == originZ + dungeonWidth + 1){
 
 						if (blockY >= 0 && !editor.getBlock(new Coord(blockX, blockY - 1, blockZ)).getBlock().getMaterial().isSolid()) {
-							editor.setBlock(blockX, blockY, blockZ, air);
+							editor.setBlock(new Coord(blockX, blockY, blockZ), air);
 							continue;
 						}
 						
@@ -91,7 +91,7 @@ public class DungeonsPit extends DungeonBase {
 						blocks.setBlock(editor, rand, new Coord(blockX, blockY, blockZ));
 						
 					} else {
-						editor.setBlock(blockX, blockY, blockZ, air);
+						editor.setBlock(new Coord(blockX, blockY, blockZ), air);
 					}
 				}
 			}
@@ -140,11 +140,11 @@ public class DungeonsPit extends DungeonBase {
 					}
 					
 					if(y < 10){
-						editor.setBlock(x, y, z, BlockType.get(BlockType.WATER_FLOWING));
+						editor.setBlock(new Coord(x, y, z), BlockType.get(BlockType.WATER_FLOWING));
 						continue;
 					}
 					
-					editor.setBlock(x, y, z, BlockType.get(BlockType.AIR));
+					editor.setBlock(new Coord(x, y, z), BlockType.get(BlockType.AIR));
 				}
 			}
 		}

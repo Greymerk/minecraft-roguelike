@@ -23,9 +23,9 @@ public class DungeonReward extends DungeonBase {
 		int z = origin.getZ();
 		ITheme theme = settings.getTheme();
 		
-		editor.fillRectSolid(rand, x - 7, y, z - 7, x + 7, y + 5, z + 7, BlockType.get(BlockType.AIR), true, true);
-		editor.fillRectHollow(rand, x - 8, y - 1, z - 8, x + 8, y + 6, z + 8, theme.getPrimaryWall(), false, true);
-		editor.fillRectSolid(rand, x - 1, y + 4, z - 1, x + 1, y + 5, z + 1, theme.getPrimaryWall());
+		editor.fillRectSolid(rand, new Coord(x - 7, y, z - 7), new Coord(x + 7, y + 5, z + 7), BlockType.get(BlockType.AIR), true, true);
+		editor.fillRectHollow(rand, new Coord(x - 8, y - 1, z - 8), new Coord(x + 8, y + 6, z + 8), theme.getPrimaryWall(), false, true);
+		editor.fillRectSolid(rand, new Coord(x - 1, y + 4, z - 1), new Coord(x + 1, y + 5, z + 1), theme.getPrimaryWall());
 		
 		
 		Coord cursor;

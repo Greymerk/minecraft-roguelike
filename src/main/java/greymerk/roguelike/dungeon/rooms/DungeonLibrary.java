@@ -43,15 +43,15 @@ public class DungeonLibrary extends DungeonBase{
 		Coord end;
 		
 		
-		editor.fillRectSolid(rand, x - 4, y, z - 4, x + 4, y + 3, z + 4, air, true, true);
-		editor.fillRectSolid(rand, x - 3, y + 4, z - 3, x + 3, y + 6, z + 3, air, true, true);
-		editor.fillRectSolid(rand, x - 2, y + 7, z - 2, x + 2, y + 7, z + 2, air, true, true);
+		editor.fillRectSolid(rand, new Coord(x - 4, y, z - 4), new Coord(x + 4, y + 3, z + 4), air, true, true);
+		editor.fillRectSolid(rand, new Coord(x - 3, y + 4, z - 3), new Coord(x + 3, y + 6, z + 3), air, true, true);
+		editor.fillRectSolid(rand, new Coord(x - 2, y + 7, z - 2), new Coord(x + 2, y + 7, z + 2), air, true, true);
 		
-		editor.fillRectHollow(rand, x - 5, y, z - 5, x + 5, y + 4, z + 5, walls, false, true);
-		editor.fillRectHollow(rand, x - 4, y + 3, z - 4, x + 4, y + 7, z + 4, walls, false, true);
-		editor.fillRectHollow(rand, x - 3, y + 6, z - 3, x + 3, y + 8, z + 3, walls, false, true);
+		editor.fillRectHollow(rand, new Coord(x - 5, y, z - 5), new Coord(x + 5, y + 4, z + 5), walls, false, true);
+		editor.fillRectHollow(rand, new Coord(x - 4, y + 3, z - 4), new Coord(x + 4, y + 7, z + 4), walls, false, true);
+		editor.fillRectHollow(rand, new Coord(x - 3, y + 6, z - 3), new Coord(x + 3, y + 8, z + 3), walls, false, true);
 		
-		editor.fillRectSolid(rand, x - 5, y - 1, z - 5, x + 5, y - 1, z + 5, settings.getTheme().getPrimaryFloor(), true, true);
+		editor.fillRectSolid(rand, new Coord(x - 5, y - 1, z - 5), new Coord(x + 5, y - 1, z + 5), settings.getTheme().getPrimaryFloor(), true, true);
 		
 		start = new Coord(origin);
 		start.add(Cardinal.UP, 5);

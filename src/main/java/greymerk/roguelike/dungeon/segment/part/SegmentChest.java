@@ -73,8 +73,8 @@ public class SegmentChest extends SegmentBase {
 		boolean trapped = Dungeon.getLevel(y) == 3 && rand.nextInt(3) == 0;
 		Treasure.generate(editor, rand, shelf, Dungeon.getLevel(y), trapped);
 		if(trapped){
-			editor.setBlock(shelf.getX(), shelf.getY() - 2, shelf.getZ(), BlockType.get(BlockType.TNT));
-			if(rand.nextBoolean()) editor.setBlock(shelf.getX(), shelf.getY() - 3, shelf.getZ(), BlockType.get(BlockType.TNT));
+			editor.setBlock(new Coord(shelf.getX(), shelf.getY() - 2, shelf.getZ()), BlockType.get(BlockType.TNT));
+			if(rand.nextBoolean()) editor.setBlock(new Coord(shelf.getX(), shelf.getY() - 3, shelf.getZ()), BlockType.get(BlockType.TNT));
 		}
 	}
 }

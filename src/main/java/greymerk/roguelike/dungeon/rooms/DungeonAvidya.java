@@ -35,13 +35,13 @@ public class DungeonAvidya extends DungeonBase {
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		
 		// clear space
-		editor.fillRectSolid(rand, x - 8, y, z - 8, x + 8, y + 5, z + 8, air);
+		editor.fillRectSolid(rand, new Coord(x - 8, y, z - 8), new Coord(x + 8, y + 5, z + 8), air);
 				
 		// roof
-		editor.fillRectSolid(rand, x - 6, y + 6, z - 6, x + 6, y + 6, z + 6, redClay, true, true);
-		editor.fillRectSolid(rand, x - 3, y + 6, z - 3, x + 3, y + 6, z + 3, glowstone);
+		editor.fillRectSolid(rand, new Coord(x - 6, y + 6, z - 6), new Coord(x + 6, y + 6, z + 6), redClay, true, true);
+		editor.fillRectSolid(rand, new Coord(x - 3, y + 6, z - 3), new Coord(x + 3, y + 6, z + 3), glowstone);
 		
-		editor.fillRectSolid(rand, x - 7, y - 1, z - 7, x + 7, y - 1, z + 7, air);
+		editor.fillRectSolid(rand, new Coord(x - 7, y - 1, z - 7), new Coord(x + 7, y - 1, z + 7), air);
 		
 		
 		// floor
@@ -49,7 +49,7 @@ public class DungeonAvidya extends DungeonBase {
 		MetaBlock yang = ColorBlock.get(ColorBlock.CLAY, DyeColor.WHITE);
 		
 		// ying
-		editor.fillRectSolid(rand, x - 8, y - 2, z - 8, x + 8, y - 2, z + 8, ying, true, true);
+		editor.fillRectSolid(rand, new Coord(x - 8, y - 2, z - 8), new Coord(x + 8, y - 2, z + 8), ying, true, true);
 		
 		// yang
 		MetaBlock quartz = Quartz.get(Quartz.SMOOTH);
@@ -222,13 +222,13 @@ public class DungeonAvidya extends DungeonBase {
 				editor.setBlock(cursor, BlockType.get(BlockType.GRASS));
 				MetaBlock leaves = Leaves.get(Leaves.OAK, false);
 				
-				editor.setBlock(cursor.getX(), cursor.getY() + 1, cursor.getZ(), leaves);
+				editor.setBlock(cursor, leaves);
 				cursor.add(orth, 1);
 				editor.setBlock(cursor, BlockType.get(BlockType.GRASS));
-				editor.setBlock(cursor.getX(), cursor.getY() + 1, cursor.getZ(), leaves);
+				editor.setBlock(cursor, leaves);
 				cursor.add(orth, 1);
 				editor.setBlock(cursor, BlockType.get(BlockType.GRASS));
-				editor.setBlock(cursor.getX(), cursor.getY() + 1, cursor.getZ(), leaves);
+				editor.setBlock(cursor, leaves);
 				cursor.add(Cardinal.reverse(dir), 1);
 				editor.setBlock(cursor, BlockType.get(BlockType.COBBLESTONE));
 				cursor.add(Cardinal.reverse(orth), 1);
@@ -274,7 +274,7 @@ public class DungeonAvidya extends DungeonBase {
 	
 	public boolean validLocation(IWorldEditor editor, Cardinal dir, int x, int y, int z){
 		
-		List<Coord> box = editor.getRectHollow(x - 10, y - 2, z - 10, x + 10, y + 5, z + 10);
+		List<Coord> box = editor.getRectHollow(new Coord(x - 10, y - 2, z - 10), new Coord(x + 10, y + 5, z + 10));
 		
 		for(Coord pos : box){
 			Block b = editor.getBlock(pos).getBlock();

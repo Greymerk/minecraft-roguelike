@@ -33,13 +33,13 @@ public class DungeonPyramidSpawner extends DungeonBase {
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		
 		// fill air inside
-		editor.fillRectSolid(rand, x - 3, y, z - 3, x + 3, y + 3, z + 3, air);
+		editor.fillRectSolid(rand, new Coord(x - 3, y, z - 3), new Coord(x + 3, y + 3, z + 3), air, true, true);
 		
 		
 		// shell
-		editor.fillRectHollow(rand, x - 4, y - 1, z - 4, x + 4, y + 4, z + 4, blocks, false, true);
-		editor.fillRectSolid(rand, x - 3, y + 4, z - 3, x + 3, y + 6, z + 3, blocks, false, true);
-		editor.fillRectSolid(rand, x - 2, y + 4, z - 2, x + 2, y + 4, z + 2, air);
+		editor.fillRectHollow(rand, new Coord(x - 4, y - 1, z - 4), new Coord(x + 4, y + 4, z + 4), blocks, false, true);
+		editor.fillRectSolid(rand, new Coord(x - 3, y + 4, z - 3), new Coord(x + 3, y + 6, z + 3), blocks, false, true);
+		editor.fillRectSolid(rand, new Coord(x - 2, y + 4, z - 2), new Coord(x + 2, y + 4, z + 2), air, true, true);
 
 		editor.fillRectSolid(rand, new Coord(x - 4, y - 1, z - 4), new Coord(x + 4, y - 1, z + 4), theme.getPrimaryFloor(), false, true);
 		

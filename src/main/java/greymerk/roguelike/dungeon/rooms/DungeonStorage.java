@@ -32,7 +32,7 @@ public class DungeonStorage extends DungeonBase {
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		
 		// space
-		editor.fillRectSolid(rand, x - 6, y, z - 6, x + 6, y + 3, z + 6, air);
+		editor.fillRectSolid(rand, new Coord(x - 6, y, z - 6), new Coord(x + 6, y + 3, z + 6), air);
 		
 		Coord cursor;
 		Coord start;
@@ -40,8 +40,8 @@ public class DungeonStorage extends DungeonBase {
 		
 		IBlockFactory blocks = theme.getPrimaryWall();
 		
-		editor.fillRectSolid(rand, x - 6, y - 1, z - 6, x + 6, y - 1, z + 6, blocks, true, true);
-		editor.fillRectSolid(rand, x - 5, y + 4, z - 5, x + 5, y + 4, z + 5, blocks, true, true);
+		editor.fillRectSolid(rand, new Coord(x - 6, y - 1, z - 6), new Coord(x + 6, y - 1, z + 6), blocks, true, true);
+		editor.fillRectSolid(rand, new Coord(x - 5, y + 4, z - 5), new Coord(x + 5, y + 4, z + 5), blocks, true, true);
 		
 		for(Cardinal dir : Cardinal.directions){			
 			for (Cardinal orth : Cardinal.getOrthogonal(dir)){

@@ -28,10 +28,10 @@ public class EniTower implements ITower {
 		
 		Coord floor = Tower.getBaseCoord(editor, x, y, z);
 		
-		editor.fillRectSolid(rand, x - 4, floor.getY(), z - 4, x + 4, floor.getY() + 3, z + 4, air);
-		editor.fillRectSolid(rand, x - 3, floor.getY() + 4, z - 3, x + 3, floor.getY() + 12, z + 3, air);
-		editor.fillRectSolid(rand, x - 2, floor.getY() + 13, z - 2, x + 2, floor.getY() + 21, z + 2, air);
-		editor.fillRectSolid(rand, x - 3, floor.getY() + 22, z - 3, x + 3, floor.getY() + 28, z + 3, air);
+		editor.fillRectSolid(rand, new Coord(x - 4, floor.getY(), z - 4), new Coord(x + 4, floor.getY() + 3, z + 4), air);
+		editor.fillRectSolid(rand, new Coord(x - 3, floor.getY() + 4, z - 3), new Coord(x + 3, floor.getY() + 12, z + 3), air);
+		editor.fillRectSolid(rand, new Coord(x - 2, floor.getY() + 13, z - 2), new Coord(x + 2, floor.getY() + 21, z + 2), air);
+		editor.fillRectSolid(rand, new Coord(x - 3, floor.getY() + 22, z - 3), new Coord(x + 3, floor.getY() + 28, z + 3), air);
 
 		Coord start;
 		Coord end;

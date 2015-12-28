@@ -36,11 +36,11 @@ public class DungeonsBrick extends DungeonBase {
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		
 		// fill air inside
-		editor.fillRectSolid(rand, x - 3, y, z - 3, x + 3, y + 3, z + 3, air);
-		editor.fillRectSolid(rand, x - 1, y + 4, z - 1, x + 1, y + 4, z + 1, air);
+		editor.fillRectSolid(rand, new Coord(x - 3, y, z - 3), new Coord(x + 3, y + 3, z + 3), air);
+		editor.fillRectSolid(rand, new Coord(x - 1, y + 4, z - 1), new Coord(x + 1, y + 4, z + 1), air);
 		
 		// shell
-		editor.fillRectHollow(rand, x - 4, y - 1, z - 4, x + 4, y + 4, z + 4, blocks, false, true);
+		editor.fillRectHollow(rand, new Coord(x - 4, y - 1, z - 4), new Coord(x + 4, y + 4, z + 4), blocks, false, true);
 
 		editor.fillRectSolid(rand, new Coord(x - 4, y - 1, z - 4), new Coord(x + 4, y - 1, z + 4), theme.getPrimaryFloor(), false, true);
 		

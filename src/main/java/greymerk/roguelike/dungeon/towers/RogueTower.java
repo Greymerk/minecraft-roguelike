@@ -28,15 +28,15 @@ public class RogueTower implements ITower{
 		int main = floor.getY() + 4;
 		int roof = floor.getY() + 9;
 		
-		editor.fillRectSolid(rand, x - 3, ground, z - 3, x + 3, floor.getY() + 12, z + 3, air);
+		editor.fillRectSolid(rand, new Coord(x - 3, ground, z - 3), new Coord(x + 3, floor.getY() + 12, z + 3), air);
 		editor.fillRectSolid(rand, new Coord(x - 2, y + 10, z - 2), new Coord(x + 2, floor.getY() - 1, z + 2), blocks, false, true);
 
 		Coord start;
 		Coord end;
 		Coord cursor;
 		
-		editor.fillRectSolid(rand, x - 3, main, z - 3, x + 3, main, z + 3, theme.getSecondaryWall(), true, true);
-		editor.fillRectSolid(rand, x - 3, roof, z - 3, x + 3, roof, z + 3, blocks, true, true);
+		editor.fillRectSolid(rand, new Coord(x - 3, main, z - 3), new Coord(x + 3, main, z + 3), theme.getSecondaryWall(), true, true);
+		editor.fillRectSolid(rand, new Coord(x - 3, roof, z - 3), new Coord(x + 3, roof, z + 3), blocks);
 		
 		for(Cardinal dir : Cardinal.directions){
 			for (Cardinal orth : Cardinal.getOrthogonal(dir)){

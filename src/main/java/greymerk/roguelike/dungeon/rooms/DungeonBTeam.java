@@ -438,7 +438,7 @@ public class DungeonBTeam extends DungeonBase {
 	
 	public boolean validLocation(IWorldEditor editor, Cardinal dir, int x, int y, int z){
 		
-		List<Coord> box = editor.getRectHollow(x - 7, y - 2, z - 7, x + 7, y + 5, z + 7);
+		List<Coord> box = editor.getRectHollow(new Coord(x - 7, y - 2, z - 7), new Coord(x + 7, y + 5, z + 7));
 		
 		for(Coord pos : box){
 			MetaBlock b = editor.getBlock(pos);

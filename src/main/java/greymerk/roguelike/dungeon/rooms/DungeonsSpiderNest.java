@@ -59,7 +59,7 @@ public class DungeonsSpiderNest extends DungeonBase {
 					if(rand.nextInt(clearHeight)  == 0){
 						webs.setBlock(editor, inRandom, new Coord(blockX, blockY, blockZ));
 					} else if(rand.nextInt(5) == 0){
-						editor.setBlock(blockX, blockY, blockZ, BlockType.get(BlockType.GRAVEL));
+						editor.setBlock(new Coord(blockX, blockY, blockZ), BlockType.get(BlockType.GRAVEL));
 					}
 					
 				}
@@ -69,8 +69,8 @@ public class DungeonsSpiderNest extends DungeonBase {
 		Spawner.generate(editor, rand, settings, new Coord(originX, originY, originZ), Spawner.CAVESPIDER);
 		
 		Treasure.createChests(editor, rand, 1 + rand.nextInt(3), editor.getRectSolid(
-				originX - dungeonLength, originY - 1, originZ - dungeonWidth,
-				originX + dungeonLength, originY + 1, originZ + dungeonWidth), Dungeon.getLevel(originY));
+				new Coord(originX - dungeonLength, originY - 1, originZ - dungeonWidth),
+				new Coord(originX + dungeonLength, originY + 1, originZ + dungeonWidth)), Dungeon.getLevel(originY));
 
 		return true;
 	}

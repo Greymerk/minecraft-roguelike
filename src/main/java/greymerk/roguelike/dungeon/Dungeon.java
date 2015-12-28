@@ -113,7 +113,7 @@ public class Dungeon implements IDungeon{
 		int m = tempX / max;
 		int n = tempZ / max;
 		
-		Random r = editor.setSeed(m, n, 10387312);
+		Random r = editor.getSeededRandom(m, n, 10387312);
 		
 		m *= max;
 		n *= max;
@@ -170,7 +170,7 @@ public class Dungeon implements IDungeon{
 			if(editor.getBlock(cursor).getBlock().getMaterial() == Material.water) return false;
 		}
 		
-		List<Coord> above = editor.getRectSolid(x - 4, cursor.getY() + 4, z - 4, x + 4, cursor.getY() + 4, z + 4);
+		List<Coord> above = editor.getRectSolid(new Coord(x - 4, cursor.getY() + 4, z - 4), new Coord(x + 4, cursor.getY() + 4, z + 4));
 
 		for (Coord c : above){
 			if(editor.validGroundBlock(c)){
@@ -178,7 +178,7 @@ public class Dungeon implements IDungeon{
 			}
 		}
 		
-		List<Coord> below = editor.getRectSolid(x - 4, cursor.getY() - 3, z - 4, x + 4, cursor.getY() - 3, z + 4);
+		List<Coord> below = editor.getRectSolid(new Coord(x - 4, cursor.getY() - 3, z - 4), new Coord(x + 4, cursor.getY() - 3, z + 4));
 		
 		int airCount = 0;
 		for (Coord c : below){
