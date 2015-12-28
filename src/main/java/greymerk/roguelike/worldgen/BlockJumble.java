@@ -27,7 +27,7 @@ public class BlockJumble extends BlockBase {
 	}
 
 	@Override
-	public boolean setBlock(WorldEditor editor, Random rand, Coord origin, boolean fillAir, boolean replaceSolid) {
+	public boolean setBlock(IWorldEditor editor, Random rand, Coord origin, boolean fillAir, boolean replaceSolid) {
 		IBlockFactory block = blocks.get(rand.nextInt(blocks.size()));
 		return block.setBlock(editor, rand, origin, fillAir, replaceSolid);
 	}

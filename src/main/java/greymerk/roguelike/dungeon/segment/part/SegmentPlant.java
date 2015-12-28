@@ -8,7 +8,7 @@ import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
-import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.TallPlant;
 import greymerk.roguelike.worldgen.blocks.Trapdoor;
@@ -16,7 +16,7 @@ import greymerk.roguelike.worldgen.blocks.Trapdoor;
 public class SegmentPlant extends SegmentBase {
 	
 	@Override
-	protected void genWall(WorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
+	protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
 		
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		IStair stair = theme.getSecondaryStair();
@@ -53,7 +53,7 @@ public class SegmentPlant extends SegmentBase {
 		
 	}
 	
-	private void plant(WorldEditor editor, Random rand, ITheme theme, Coord origin){
+	private void plant(IWorldEditor editor, Random rand, ITheme theme, Coord origin){
 		Coord cursor;
 		BlockType.get(BlockType.DIRT_PODZOL).setBlock(editor, origin);
 		

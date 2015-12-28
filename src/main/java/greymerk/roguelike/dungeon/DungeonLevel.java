@@ -5,7 +5,7 @@ import java.util.Random;
 
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.worldgen.Coord;
-import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.IWorldEditor;
 
 public class DungeonLevel implements IDungeonLevel{
 
@@ -13,7 +13,7 @@ public class DungeonLevel implements IDungeonLevel{
 	private LevelSettings settings;
 	private ILevelGenerator generator;
 	
-	public DungeonLevel(WorldEditor editor, Random rand, LevelSettings settings, Coord origin){
+	public DungeonLevel(IWorldEditor editor, Random rand, LevelSettings settings, Coord origin){
 		this.settings = settings;
 		this.origin = origin;
 	}

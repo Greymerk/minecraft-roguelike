@@ -17,7 +17,7 @@ import greymerk.roguelike.treasure.loot.Loot;
 import greymerk.roguelike.util.WeightedChoice;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
-import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -33,7 +33,7 @@ public class Dungeon implements IDungeon{
 	
 	private DungeonGenerator generator;
 	private Coord pos;
-	private WorldEditor editor;
+	private IWorldEditor editor;
 	
 	static{
 		initResolver();
@@ -44,7 +44,7 @@ public class Dungeon implements IDungeon{
 	}
 		
 	
-	public Dungeon(WorldEditor editor){
+	public Dungeon(IWorldEditor editor){
 		this.generator = new DungeonGenerator();
 		this.editor = editor;
 	}
@@ -94,7 +94,7 @@ public class Dungeon implements IDungeon{
 		treasure.addItemToAll(rand, Treasure.STARTER, new WeightedChoice<ItemStack>(book.get(), 1), 1);
 	}
 	
-	public static boolean canSpawnInChunk(int chunkX, int chunkZ, WorldEditor editor){
+	public static boolean canSpawnInChunk(int chunkX, int chunkZ, IWorldEditor editor){
 		
 		if(!RogueConfig.getBoolean(RogueConfig.DONATURALSPAWN)){
 			return false;
@@ -170,7 +170,7 @@ public class Dungeon implements IDungeon{
 			if(editor.getBlock(cursor).getBlock().getMaterial() == Material.water) return false;
 		}
 		
-		List<Coord> above = WorldEditor.getRectSolid(x - 4, cursor.getY() + 4, z - 4, x + 4, cursor.getY() + 4, z + 4);
+		List<Coord> above = editor.getRectSolid(x - 4, cursor.getY() + 4, z - 4, x + 4, cursor.getY() + 4, z + 4);
 
 		for (Coord c : above){
 			if(editor.validGroundBlock(c)){
@@ -178,7 +178,7 @@ public class Dungeon implements IDungeon{
 			}
 		}
 		
-		List<Coord> below = WorldEditor.getRectSolid(x - 4, cursor.getY() - 3, z - 4, x + 4, cursor.getY() - 3, z + 4);
+		List<Coord> below = editor.getRectSolid(x - 4, cursor.getY() - 3, z - 4, x + 4, cursor.getY() - 3, z + 4);
 		
 		int airCount = 0;
 		for (Coord c : below){
@@ -206,7 +206,7 @@ public class Dungeon implements IDungeon{
 		return nearby;
 	}
 	
-	public static Random getRandom(WorldEditor editor, int x, int z){
+	public static Random getRandom(IWorldEditor editor, int x, int z){
 		long seed = editor.getSeed() * x * z;
 		Random rand = new Random();
 		rand.setSeed(seed);

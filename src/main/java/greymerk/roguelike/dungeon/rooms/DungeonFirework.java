@@ -11,7 +11,7 @@ import greymerk.roguelike.util.TextFormat;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
-import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.ColorBlock;
 import greymerk.roguelike.worldgen.blocks.DyeColor;
@@ -28,7 +28,7 @@ import net.minecraft.item.ItemStack;
 public class DungeonFirework extends DungeonBase {
 
 	@Override
-	public boolean generate(WorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
+	public boolean generate(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
 		
 		int x = origin.getX();
 		int y = origin.getY();
@@ -157,7 +157,7 @@ public class DungeonFirework extends DungeonBase {
 	}
 
 
-	private void launcher(WorldEditor editor, Random rand, Cardinal dir, Coord pos){
+	private void launcher(IWorldEditor editor, Random rand, Cardinal dir, Coord pos){
 		Coord cursor = new Coord(pos);
 		editor.setBlock(cursor, BlockType.get(BlockType.REDSTONE_WIRE));
 		cursor.add(Cardinal.reverse(dir));
@@ -237,7 +237,7 @@ public class DungeonFirework extends DungeonBase {
 		end.add(dir);
 		Coord above = new Coord(end);
 		above.add(Cardinal.UP, 10);
-		List<Coord> tubeEnd = WorldEditor.getRectSolid(cursor, above);
+		List<Coord> tubeEnd = editor.getRectSolid(cursor, above);
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		for(Coord c : tubeEnd){
 			if(editor.getBlock(c).getBlock().getMaterial().isSolid()){
@@ -259,7 +259,7 @@ public class DungeonFirework extends DungeonBase {
 	}
 
 	@Override
-	public boolean validLocation(WorldEditor editor, Cardinal dir, int x, int y, int z) {
+	public boolean validLocation(IWorldEditor editor, Cardinal dir, int x, int y, int z) {
 		Coord start;
 		Coord end;
 		

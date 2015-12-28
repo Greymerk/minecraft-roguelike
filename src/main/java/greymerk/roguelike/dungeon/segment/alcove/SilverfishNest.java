@@ -10,7 +10,7 @@ import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.Spawner;
-import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.SilverfishBlock;
 
@@ -19,7 +19,7 @@ public class SilverfishNest implements IAlcove{
 	private static int RECESSED = 6;
 	
 	@Override
-	public void generate(WorldEditor editor, Random rand, LevelSettings settings, int x, int y, int z, Cardinal dir) {
+	public void generate(IWorldEditor editor, Random rand, LevelSettings settings, int x, int y, int z, Cardinal dir) {
 		
 		Coord corridor = new Coord(x, y, z);
 		Coord centre = new Coord(x, y, z);
@@ -40,7 +40,7 @@ public class SilverfishNest implements IAlcove{
 	}
 
 	@Override
-	public boolean isValidLocation(WorldEditor editor, int x, int y, int z, Cardinal dir) {
+	public boolean isValidLocation(IWorldEditor editor, int x, int y, int z, Cardinal dir) {
 
 		Coord centre = new Coord(x, y, z);
 		centre.add(dir, RECESSED);
@@ -48,7 +48,7 @@ public class SilverfishNest implements IAlcove{
 		y = centre.getY();
 		z = centre.getZ();
 		
-		List<Coord> toCheck = WorldEditor.getRectSolid(x - 2, y + 1, z - 2, x + 2, y + 1, z + 2);
+		List<Coord> toCheck = editor.getRectSolid(x - 2, y + 1, z - 2, x + 2, y + 1, z + 2);
 
 		for(Coord c : toCheck){
 			if (editor.isAirBlock(c)) return false;
@@ -57,7 +57,7 @@ public class SilverfishNest implements IAlcove{
 		return true;
 	}
 	
-	private void nest(WorldEditor editor, Random rand, int x, int y, int z){
+	private void nest(IWorldEditor editor, Random rand, int x, int y, int z){
 		BlockWeightedRandom fish = new BlockWeightedRandom();
 		IBlockFactory egg = SilverfishBlock.getJumble();
 		fish.addBlock(egg, 20);

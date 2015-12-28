@@ -12,7 +12,7 @@ import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.MetaStair;
-import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.ColorBlock;
 import greymerk.roguelike.worldgen.blocks.Door;
@@ -27,7 +27,7 @@ import greymerk.roguelike.worldgen.redstone.Torch;
 public class DungeonLibrary extends DungeonBase{
 
 	@Override
-	public boolean generate(WorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
+	public boolean generate(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
 		
 		int x = origin.getX();
 		int y = origin.getY();
@@ -146,7 +146,7 @@ public class DungeonLibrary extends DungeonBase{
 		return false;
 	}
 
-	private void door(WorldEditor editor, Random rand, ITheme theme, Cardinal dir, Coord pos){
+	private void door(IWorldEditor editor, Random rand, ITheme theme, Cardinal dir, Coord pos){
 		Coord start;
 		Coord end;
 		Cardinal[] orth = Cardinal.getOrthogonal(dir);
@@ -178,7 +178,7 @@ public class DungeonLibrary extends DungeonBase{
 		}
 	}
 	
-	private void desk(WorldEditor editor, Random rand, ITheme theme, Cardinal dir, Coord pos){
+	private void desk(IWorldEditor editor, Random rand, ITheme theme, Cardinal dir, Coord pos){
 		
 		Coord cursor;
 		Coord start;
@@ -235,7 +235,7 @@ public class DungeonLibrary extends DungeonBase{
 		Torch.generate(editor, Torch.WOODEN, Cardinal.UP, cursor);		
 	}
 	
-	private void plants(WorldEditor editor, Random rand, ITheme theme, Cardinal dir, Coord origin){
+	private void plants(IWorldEditor editor, Random rand, ITheme theme, Cardinal dir, Coord origin){
 		Coord cursor;
 		Coord start;
 		Coord end;
@@ -264,12 +264,12 @@ public class DungeonLibrary extends DungeonBase{
 		end = new Coord(cursor);
 		start.add(orth[0]);
 		end.add(orth[1]);
-		for(Coord c : WorldEditor.getRectSolid(start, end)){
+		for(Coord c : editor.getRectSolid(start, end)){
 			plant(editor, rand, theme, c);
 		}
 	}
 	
-	private void plant(WorldEditor editor, Random rand, ITheme theme, Coord origin){
+	private void plant(IWorldEditor editor, Random rand, ITheme theme, Coord origin){
 		Coord cursor;
 		BlockType.get(BlockType.DIRT_PODZOL).setBlock(editor, origin);
 		

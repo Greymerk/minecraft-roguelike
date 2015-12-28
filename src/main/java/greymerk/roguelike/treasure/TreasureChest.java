@@ -4,7 +4,7 @@ import java.util.Random;
 
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
-import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityChest;
@@ -21,7 +21,7 @@ public class TreasureChest implements ITreasureChest{
 		this.level = 0;
 	}
 	
-	public ITreasureChest generate(WorldEditor editor, Random rand, Coord pos, int level, boolean trapped) {
+	public ITreasureChest generate(IWorldEditor editor, Random rand, Coord pos, int level, boolean trapped) {
 
 		this.rand = rand;
 		this.level = level;

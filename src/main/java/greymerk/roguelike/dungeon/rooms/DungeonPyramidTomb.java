@@ -14,14 +14,14 @@ import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.MetaStair;
 import greymerk.roguelike.worldgen.Spawner;
-import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.StairType;
 
 public class DungeonPyramidTomb extends DungeonBase{
 
 	@Override
-	public boolean generate(WorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
+	public boolean generate(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
 		
 
 		ITheme theme = settings.getTheme();
@@ -146,7 +146,7 @@ public class DungeonPyramidTomb extends DungeonBase{
 		return true;
 	}
 
-	private void ceilingTiles(WorldEditor editor, Random rand, ITheme theme, int width, Cardinal dir, Coord origin){
+	private void ceilingTiles(IWorldEditor editor, Random rand, ITheme theme, int width, Cardinal dir, Coord origin){
 		
 		if(width < 1) return;
 		
@@ -184,7 +184,7 @@ public class DungeonPyramidTomb extends DungeonBase{
 		ceilingTiles(editor, rand, theme, (width - 2), dir, cursor);
 	}
 	
-	private void tile(WorldEditor editor, Random rand, ITheme theme, Cardinal dir, Coord origin){
+	private void tile(IWorldEditor editor, Random rand, ITheme theme, Cardinal dir, Coord origin){
 		IStair stair = theme.getPrimaryStair();
 		stair.setOrientation(dir, true).setBlock(editor, origin);
 		Coord cursor = new Coord(origin);
@@ -193,7 +193,7 @@ public class DungeonPyramidTomb extends DungeonBase{
 	}
 	
 	
-	private void sarcophagus(WorldEditor editor, Random rand, LevelSettings settings, Cardinal dir, Coord origin){
+	private void sarcophagus(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal dir, Coord origin){
 		IStair stair = new MetaStair(StairType.QUARTZ);
 		MetaBlock blocks = BlockType.get(BlockType.QUARTZ);
 		

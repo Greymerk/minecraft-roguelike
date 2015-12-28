@@ -4,7 +4,7 @@ package greymerk.roguelike.worldgen.redstone;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
-import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 
@@ -12,7 +12,7 @@ public enum Torch {
 
 	REDSTONE, WOODEN, REDSTONE_UNLIT;
 	
-	public static void generate(WorldEditor editor, Torch type, Cardinal dir, Coord pos){
+	public static void generate(IWorldEditor editor, Torch type, Cardinal dir, Coord pos){
 		
 		Block name;
 		

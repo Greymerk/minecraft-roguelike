@@ -7,18 +7,18 @@ import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
-import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.IWorldEditor;
 
 public abstract class DungeonBase implements IDungeonRoom{
 
 	@Override
-	public abstract boolean generate(WorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin);
+	public abstract boolean generate(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin);
 	
 	@Override
 	public abstract int getSize();
 	
 	@Override
-	public boolean validLocation(WorldEditor editor, Cardinal dir, int x, int y, int z){
+	public boolean validLocation(IWorldEditor editor, Cardinal dir, int x, int y, int z){
 		
 		int size = getSize();
 		List<Coord> box = editor.getRectHollow(x - size, y - 2, z - size, x + size, y + 5, z + size);

@@ -2,7 +2,7 @@ package greymerk.roguelike.dungeon.towers;
 
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
-import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.IWorldEditor;
 
 public enum Tower {
 
@@ -23,7 +23,7 @@ public enum Tower {
 		}
 	}
 	
-	public static Coord getBaseCoord(WorldEditor editor, int x, int y, int z){
+	public static Coord getBaseCoord(IWorldEditor editor, int x, int y, int z){
 		
 		Coord cursor = new Coord(x, 128, z);
 

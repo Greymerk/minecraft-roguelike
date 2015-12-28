@@ -9,7 +9,7 @@ import com.google.gson.JsonObject;
 
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.worldgen.Coord;
-import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.BiomeDictionary;
 
@@ -85,7 +85,7 @@ public class SpawnCriteria {
 		this.dimensionWhiteList = whiteList;
 	}
 	
-	public boolean isValid(WorldEditor editor, Coord pos){
+	public boolean isValid(IWorldEditor editor, Coord pos){
 		
 		Integer dimID = editor.getDimension();
 		

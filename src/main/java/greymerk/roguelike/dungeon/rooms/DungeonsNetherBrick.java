@@ -12,13 +12,13 @@ import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.Spawner;
-import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 
 public class DungeonsNetherBrick extends DungeonBase {
 	
 
-	public boolean generate(WorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
+	public boolean generate(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
 
 		int x = origin.getX();
 		int y = origin.getY();
@@ -47,7 +47,7 @@ public class DungeonsNetherBrick extends DungeonBase {
 		ceiling.addBlock(BlockType.get(BlockType.AIR), 5);
 		editor.fillRectSolid(rand, x - length, y + height, z - width, x + length, y + height, z + width, ceiling);
 		
-		Treasure.createChests(editor, rand, 1, WorldEditor.getRectSolid(x - length, y, z - width, x + length, y, z + width), Dungeon.getLevel(y));
+		Treasure.createChests(editor, rand, 1, editor.getRectSolid(x - length, y, z - width, x + length, y, z + width), Dungeon.getLevel(y));
 
 		Spawner.generate(editor, rand, settings, new Coord(x - length - 1, y + rand.nextInt(2), z - width - 1));
 		Spawner.generate(editor, rand, settings, new Coord(x - length - 1, y + rand.nextInt(2), z + width + 1));

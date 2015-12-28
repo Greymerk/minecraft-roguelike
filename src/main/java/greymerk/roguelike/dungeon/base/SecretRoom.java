@@ -5,7 +5,7 @@ import java.util.Random;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
-import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 
 public class SecretRoom implements ISecretRoom {
@@ -26,7 +26,7 @@ public class SecretRoom implements ISecretRoom {
 		this.type = toCopy.type;
 	}
 	
-	private boolean isValid(WorldEditor editor, Random rand, Cardinal dir, Coord pos){
+	private boolean isValid(IWorldEditor editor, Random rand, Cardinal dir, Coord pos){
 		if(count <= 0) return false;
 		Coord cursor = new Coord(pos);
 		cursor.add(dir, prototype.getSize() + 5);
@@ -35,7 +35,7 @@ public class SecretRoom implements ISecretRoom {
 	}
 	
 	@Override
-	public IDungeonRoom genRoom(WorldEditor editor, Random rand, LevelSettings settings, Cardinal dir, Coord pos){
+	public IDungeonRoom genRoom(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal dir, Coord pos){
 		if(!isValid(editor, rand, dir, pos)) return null;
 		
 		int size = prototype.getSize();

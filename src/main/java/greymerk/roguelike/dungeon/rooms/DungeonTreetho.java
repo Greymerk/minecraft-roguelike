@@ -11,7 +11,7 @@ import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
-import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.ColorBlock;
 import greymerk.roguelike.worldgen.blocks.Crops;
@@ -23,7 +23,7 @@ import greymerk.roguelike.worldgen.blocks.Wood;
 public class DungeonTreetho extends DungeonBase{
 
 	@Override
-	public boolean generate(WorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
+	public boolean generate(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
 
 		ITheme theme = settings.getTheme();
 		IBlockFactory wall = theme.getPrimaryWall();
@@ -68,7 +68,7 @@ public class DungeonTreetho extends DungeonBase{
 		return true;
 	}
 	
-	private void treeFarm(WorldEditor editor, Random rand, LevelSettings settings, Coord origin, Cardinal dir){
+	private void treeFarm(IWorldEditor editor, Random rand, LevelSettings settings, Coord origin, Cardinal dir){
 		Coord cursor;
 		Coord start;
 		Coord end;
@@ -115,7 +115,7 @@ public class DungeonTreetho extends DungeonBase{
 		
 	}
 	
-	private void ceiling(WorldEditor editor, Random rand, LevelSettings settings, Coord origin){
+	private void ceiling(IWorldEditor editor, Random rand, LevelSettings settings, Coord origin){
 		
 		MetaBlock fill = Wood.getPlank(Wood.SPRUCE);
 		
@@ -145,7 +145,7 @@ public class DungeonTreetho extends DungeonBase{
 		
 	}
 	
-	private void pillar(WorldEditor editor, Random rand, LevelSettings settings, Coord origin){
+	private void pillar(IWorldEditor editor, Random rand, LevelSettings settings, Coord origin){
 		
 		ITheme theme = settings.getTheme();
 		IBlockFactory pillar = theme.getPrimaryPillar();

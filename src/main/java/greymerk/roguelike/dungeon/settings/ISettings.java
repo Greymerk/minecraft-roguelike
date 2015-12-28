@@ -4,12 +4,12 @@ import java.util.List;
 
 import greymerk.roguelike.treasure.loot.LootRuleManager;
 import greymerk.roguelike.worldgen.Coord;
-import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.IWorldEditor;
 
 
 public interface ISettings {
 
-	public boolean isValid(WorldEditor editor, Coord pos);
+	public boolean isValid(IWorldEditor editor, Coord pos);
 	
 	public LevelSettings getLevelSettings(int level);
 	

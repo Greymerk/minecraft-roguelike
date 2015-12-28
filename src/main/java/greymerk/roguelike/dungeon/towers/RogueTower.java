@@ -8,14 +8,14 @@ import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
-import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.redstone.Torch;
 
 
 public class RogueTower implements ITower{
 
-	public void generate(WorldEditor editor, Random rand, ITheme theme, int x, int y, int z){
+	public void generate(IWorldEditor editor, Random rand, ITheme theme, int x, int y, int z){
 		
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		
@@ -220,7 +220,7 @@ public class RogueTower implements ITower{
 	}
 	
 	
-	private void addCrenellation(WorldEditor editor, Random rand, Coord cursor, IBlockFactory blocks){
+	private void addCrenellation(IWorldEditor editor, Random rand, Coord cursor, IBlockFactory blocks){
 		
 		editor.setBlock(rand, cursor, blocks, true, true);
 		

@@ -8,7 +8,7 @@ import greymerk.roguelike.dungeon.settings.ISettings;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.dungeon.towers.Tower;
 import greymerk.roguelike.worldgen.Coord;
-import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.IWorldEditor;
 
 public class DungeonGenerator {
 	public static final int VERTICAL_SPACING = 10;
@@ -20,7 +20,7 @@ public class DungeonGenerator {
 		this.levels = new ArrayList<IDungeonLevel>();
 	}
 	
-	public void generate(WorldEditor editor, ISettings settings, int inX, int inZ){
+	public void generate(IWorldEditor editor, ISettings settings, int inX, int inZ){
 		
 		int x = inX;
 		int y = TOPLEVEL;

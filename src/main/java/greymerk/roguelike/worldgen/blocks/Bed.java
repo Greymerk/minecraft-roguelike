@@ -3,12 +3,12 @@ package greymerk.roguelike.worldgen.blocks;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
-import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import net.minecraft.init.Blocks;
 
 public class Bed {
 
-	public static void generate(WorldEditor editor, Cardinal dir, Coord pos){
+	public static void generate(IWorldEditor editor, Cardinal dir, Coord pos){
 		
 		Coord cursor = new Coord(pos);
 		

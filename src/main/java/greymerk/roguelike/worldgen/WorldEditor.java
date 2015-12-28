@@ -17,7 +17,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 
-public class WorldEditor {
+public class WorldEditor implements IWorldEditor{
 	
 	World world;
 	private Map<Block, Integer> stats;
@@ -130,11 +130,11 @@ public class WorldEditor {
 	}
 	
 
-	public static List<Coord> getRectSolid(Coord start, Coord end){
+	public List<Coord> getRectSolid(Coord start, Coord end){
 		return getRectSolid(start.getX(), start.getY(), start.getZ(), end.getX(), end.getY(), end.getZ());
 	}
 	
-	public static List<Coord> getRectSolid(int x1, int y1, int z1, int x2, int y2, int z2){
+	public List<Coord> getRectSolid(int x1, int y1, int z1, int x2, int y2, int z2){
 		
 		Coord c1 = new Coord(x1, y1, z1);
 		Coord c2 = new Coord(x2, y2, z2);
@@ -254,8 +254,8 @@ public class WorldEditor {
 		new MetaBlock(block).setBlock(this, new Coord(x, y, z));
 	}
 	
-	public void setBlock(int x, int y, int z, MetaBlock block){
-		block.setBlock(this, new Coord(x, y, z));
+	public boolean setBlock(int x, int y, int z, MetaBlock block){
+		return block.setBlock(this, new Coord(x, y, z));
 	}
 	
 	public void fillRectSolid(Random rand, int x, int y, int z, int x2, int y2, int z2, IBlockFactory blocks){
@@ -266,8 +266,8 @@ public class WorldEditor {
 		fillRectSolid(rand, new Coord(x, y, z), new Coord(x2, y2, z2), blocks, fillAir, replaceSolid);
 	}
 	
-	public void setBlock(Random rand, int x, int y, int z, IBlockFactory block, boolean fillAir, boolean replaceSolid){
-		setBlock(rand, new Coord(x, y, z), block, true, true);
+	public boolean setBlock(Random rand, int x, int y, int z, IBlockFactory block, boolean fillAir, boolean replaceSolid){
+		return setBlock(rand, new Coord(x, y, z), block, true, true);
 	}
 	
 	public void fillRectHollow(Random rand, int x, int y, int z, int x2, int y2, int z2, IBlockFactory blocks, boolean fillAir, boolean replaceSolid){

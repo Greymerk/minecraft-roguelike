@@ -7,7 +7,7 @@ import greymerk.roguelike.dungeon.segment.ISegment;
 import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
-import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.IWorldEditor;
 
 public abstract class SegmentBase implements ISegment {
 
@@ -15,7 +15,7 @@ public abstract class SegmentBase implements ISegment {
 	}
 	
 	@Override
-	public void generate(WorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
+	public void generate(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
 		
 		if(level.hasNearbyNode(new Coord(x, y, z))) return;
 		
@@ -24,9 +24,9 @@ public abstract class SegmentBase implements ISegment {
 		}
 	}
 	
-	protected abstract void genWall(WorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z);
+	protected abstract void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z);
 
-	protected boolean isValidWall(WorldEditor editor, Cardinal wallDirection, int x, int y, int z) {
+	protected boolean isValidWall(IWorldEditor editor, Cardinal wallDirection, int x, int y, int z) {
 		
 		switch(wallDirection){
 		case NORTH:

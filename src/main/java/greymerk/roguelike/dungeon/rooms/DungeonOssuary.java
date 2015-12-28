@@ -11,14 +11,14 @@ import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
-import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.Skull;
 
 public class DungeonOssuary extends DungeonBase {
 
 	@Override
-	public boolean generate(WorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
+	public boolean generate(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
 		
 		int x = origin.getX();
 		int y = origin.getY();
@@ -326,7 +326,7 @@ public class DungeonOssuary extends DungeonBase {
 		return 9;
 	}
 	
-	private void stairCeiling(WorldEditor editor, Random rand, ITheme theme, int x, int y, int z){
+	private void stairCeiling(IWorldEditor editor, Random rand, ITheme theme, int x, int y, int z){
 		
 		IStair stair = theme.getPrimaryStair();
 		
@@ -343,7 +343,7 @@ public class DungeonOssuary extends DungeonBase {
 		
 	}
 	
-	private void stairArch(WorldEditor editor, Random rand, ITheme theme, int x, int y, int z, Cardinal dir){
+	private void stairArch(IWorldEditor editor, Random rand, ITheme theme, int x, int y, int z, Cardinal dir){
 		
 		IStair stair = theme.getPrimaryStair();
 		
@@ -360,7 +360,7 @@ public class DungeonOssuary extends DungeonBase {
 		}
 	}
 	
-	private void placeSkull(WorldEditor editor, Random rand, int x, int y, int z, Cardinal dir){
+	private void placeSkull(IWorldEditor editor, Random rand, int x, int y, int z, Cardinal dir){
 		if(rand.nextBoolean()) return;
 		Skull type = rand.nextInt(10) == 0 ? Skull.WITHER : Skull.SKELETON;
 		Skull.set(editor, rand, x, y, z, dir, type);

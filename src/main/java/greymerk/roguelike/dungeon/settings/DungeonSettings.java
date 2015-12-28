@@ -13,7 +13,7 @@ import greymerk.roguelike.dungeon.towers.Tower;
 import greymerk.roguelike.theme.Theme;
 import greymerk.roguelike.treasure.loot.LootRuleManager;
 import greymerk.roguelike.worldgen.Coord;
-import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.IWorldEditor;
 
 
 public class DungeonSettings implements ISettings{
@@ -166,7 +166,7 @@ public class DungeonSettings implements ISettings{
 	}
 	
 	@Override
-	public boolean isValid(WorldEditor editor, Coord pos) {
+	public boolean isValid(IWorldEditor editor, Coord pos) {
 		
 		if(this.criteria == null) return false;
 		

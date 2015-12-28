@@ -15,12 +15,12 @@ import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.Spawner;
-import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 
 public class DungeonPyramidSpawner extends DungeonBase {
 	
-	public boolean generate(WorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
+	public boolean generate(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
 		
 		int x = origin.getX();
 		int y = origin.getY();
@@ -117,7 +117,7 @@ public class DungeonPyramidSpawner extends DungeonBase {
 		return true;
 	}
 	
-	public boolean isValidDungeonLocation(WorldEditor editor, int x, int y, int z) {
+	public boolean isValidDungeonLocation(IWorldEditor editor, int x, int y, int z) {
 		return false;
 	}
 	

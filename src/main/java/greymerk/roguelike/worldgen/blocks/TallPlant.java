@@ -3,7 +3,7 @@ package greymerk.roguelike.worldgen.blocks;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
-import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.init.Blocks;
 
@@ -11,7 +11,7 @@ public enum TallPlant {
 
 	SUNFLOWER, LILAC, TALLGRASS, FERN, ROSE, PEONY;
 	
-	public static void generate(WorldEditor editor, TallPlant type, Coord pos){
+	public static void generate(IWorldEditor editor, TallPlant type, Coord pos){
 		Coord cursor;
 
 		MetaBlock upper = new MetaBlock(Blocks.double_plant.getStateFromMeta(getMeta(type, true)));

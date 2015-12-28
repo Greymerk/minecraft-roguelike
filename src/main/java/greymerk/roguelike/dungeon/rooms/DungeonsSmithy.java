@@ -14,7 +14,7 @@ import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.MetaStair;
-import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.blocks.Anvil;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.Furnace;
@@ -24,7 +24,7 @@ import greymerk.roguelike.worldgen.redstone.Hopper;
 
 public class DungeonsSmithy extends DungeonBase {
 
-	public boolean generate(WorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
+	public boolean generate(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
 
 		ITheme theme = settings.getTheme();
 
@@ -55,7 +55,7 @@ public class DungeonsSmithy extends DungeonBase {
 		return true;
 	}
 	
-	private void sideRoom(WorldEditor editor, Random rand, LevelSettings settings, Cardinal dir, Coord origin){
+	private void sideRoom(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal dir, Coord origin){
 		
 		ITheme theme = settings.getTheme();
 		
@@ -110,7 +110,7 @@ public class DungeonsSmithy extends DungeonBase {
 		overheadLight(editor, rand, settings, cursor);
 	}
 	
-	private void clearBoxes(WorldEditor editor, Random rand, ITheme theme, Cardinal dir, Coord origin){
+	private void clearBoxes(IWorldEditor editor, Random rand, ITheme theme, Cardinal dir, Coord origin){
 		
 		IBlockFactory wall = theme.getPrimaryWall();
 		Cardinal[] orth = Cardinal.getOrthogonal(dir);
@@ -167,7 +167,7 @@ public class DungeonsSmithy extends DungeonBase {
 		
 	}
 	
-	private void mainRoom(WorldEditor editor, Random rand, LevelSettings settings, Cardinal dir, Coord origin){
+	private void mainRoom(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal dir, Coord origin){
 		
 		ITheme theme = settings.getTheme();
 		IBlockFactory wall = theme.getPrimaryWall();
@@ -209,7 +209,7 @@ public class DungeonsSmithy extends DungeonBase {
 		
 	}
 	
-	private void mainPillar(WorldEditor editor, Random rand, ITheme theme, Cardinal dir, Coord origin){
+	private void mainPillar(IWorldEditor editor, Random rand, ITheme theme, Cardinal dir, Coord origin){
 		IBlockFactory wall = theme.getPrimaryWall();
 		IBlockFactory pillar = theme.getPrimaryPillar();
 		IStair stair = theme.getPrimaryStair();
@@ -250,7 +250,7 @@ public class DungeonsSmithy extends DungeonBase {
 	}
 	
 	
-	private void smelterSide(WorldEditor editor, Random rand, LevelSettings settings, Cardinal dir, Coord origin){
+	private void smelterSide(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal dir, Coord origin){
 		
 		ITheme theme = settings.getTheme();
 		IBlockFactory wall = theme.getPrimaryWall();
@@ -286,7 +286,7 @@ public class DungeonsSmithy extends DungeonBase {
 		}
 	}
 	
-	private void smelter(WorldEditor editor, Random rand, LevelSettings settings, Cardinal dir, Coord origin){
+	private void smelter(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal dir, Coord origin){
 		Coord cursor;
 		Treasure.generate(editor, rand, origin, Treasure.EMPTY, 1, false);
 		cursor = new Coord(origin);
@@ -315,7 +315,7 @@ public class DungeonsSmithy extends DungeonBase {
 		Hopper.generate(editor, Cardinal.DOWN, cursor);
 	}
 	
-	private void fireplace(WorldEditor editor, Random rand, LevelSettings settings, Cardinal dir, Coord origin){
+	private void fireplace(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal dir, Coord origin){
 		
 		IStair stair = new MetaStair(StairType.BRICK);
 		MetaBlock brick = BlockType.get(BlockType.BRICK);
@@ -425,7 +425,7 @@ public class DungeonsSmithy extends DungeonBase {
 		
 	}
 	
-	private void anvilRoom(WorldEditor editor, Random rand, LevelSettings settings, Cardinal dir, Coord origin){
+	private void anvilRoom(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal dir, Coord origin){
 		
 		ITheme theme = settings.getTheme();
 		IStair stair = theme.getPrimaryStair();
@@ -477,7 +477,7 @@ public class DungeonsSmithy extends DungeonBase {
 	}
 	
 	
-	private void overheadLight(WorldEditor editor, Random rand, LevelSettings settings, Coord origin){
+	private void overheadLight(IWorldEditor editor, Random rand, LevelSettings settings, Coord origin){
 		
 		ITheme theme = settings.getTheme();
 		IStair stair = theme.getPrimaryStair();

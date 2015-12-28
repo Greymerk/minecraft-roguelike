@@ -10,7 +10,7 @@ import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.MetaStair;
-import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.ColorBlock;
 import greymerk.roguelike.worldgen.blocks.DyeColor;
@@ -22,7 +22,7 @@ import net.minecraft.block.Block;
 public class DungeonAvidya extends DungeonBase {
 
 	@Override
-	public boolean generate(WorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
+	public boolean generate(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
 		
 		int x = origin.getX();
 		int y = origin.getY();
@@ -262,7 +262,7 @@ public class DungeonAvidya extends DungeonBase {
 		return 10;
 	}
 	
-	private static void pillarTop(WorldEditor editor, Random rand, Coord cursor){
+	private static void pillarTop(IWorldEditor editor, Random rand, Coord cursor){
 		IStair step = new MetaStair(StairType.QUARTZ);
 		for(Cardinal dir : Cardinal.directions){
 			step.setOrientation(dir, true);
@@ -272,7 +272,7 @@ public class DungeonAvidya extends DungeonBase {
 		}
 	}
 	
-	public boolean validLocation(WorldEditor editor, Cardinal dir, int x, int y, int z){
+	public boolean validLocation(IWorldEditor editor, Cardinal dir, int x, int y, int z){
 		
 		List<Coord> box = editor.getRectHollow(x - 10, y - 2, z - 10, x + 10, y + 5, z + 10);
 		

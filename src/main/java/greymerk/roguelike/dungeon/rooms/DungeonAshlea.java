@@ -11,7 +11,7 @@ import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.MetaStair;
-import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.ColorBlock;
 import greymerk.roguelike.worldgen.blocks.DyeColor;
@@ -29,7 +29,7 @@ public class DungeonAshlea extends DungeonBase {
 	
 	
 	@Override
-	public boolean generate(WorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
+	public boolean generate(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
 		
 		int x = origin.getX();
 		int y = origin.getY();
@@ -96,7 +96,7 @@ public class DungeonAshlea extends DungeonBase {
 		return true;
 	}
 
-	private void stove(WorldEditor editor, Random rand, int x, int y, int z){
+	private void stove(IWorldEditor editor, Random rand, int x, int y, int z){
 		
 		MetaBlock brick = BlockType.get(BlockType.BRICK);
 		IStair stair = new MetaStair(StairType.BRICK);
@@ -130,7 +130,7 @@ public class DungeonAshlea extends DungeonBase {
 		editor.fillRectSolid(rand, x - 1, y + 3, z - 1, x + 1, y + 3, z + 1, brick);
 	}
 
-	private void northTable(WorldEditor editor, Random rand, int x, int y, int z){
+	private void northTable(IWorldEditor editor, Random rand, int x, int y, int z){
 		// floor
 		editor.fillRectSolid(rand, x - 1, y - 1, z - 1, x + 1, y - 1, z + 1, plank, true, true);
 		
@@ -146,7 +146,7 @@ public class DungeonAshlea extends DungeonBase {
 		Torch.generate(editor, Torch.WOODEN, Cardinal.UP, new Coord(x, y + 1, z));
 	}
 
-	private void southTable(WorldEditor editor, Random rand, int x, int y, int z){
+	private void southTable(IWorldEditor editor, Random rand, int x, int y, int z){
 		// floor
 		editor.fillRectSolid(rand, x - 1, y - 1, z - 1, x + 1, y - 1, z + 1, plank, true, true);
 		
@@ -162,7 +162,7 @@ public class DungeonAshlea extends DungeonBase {
 		Torch.generate(editor, Torch.WOODEN, Cardinal.UP, new Coord(x, y + 1, z));
 	}
 	
-	private void storage(WorldEditor editor, Random rand, int x, int y, int z){
+	private void storage(IWorldEditor editor, Random rand, int x, int y, int z){
 		
 		// floor
 		editor.fillRectSolid(rand, x - 1, y - 1, z - 1, x + 1, y - 1, z + 1, plank, true, true);
@@ -179,7 +179,7 @@ public class DungeonAshlea extends DungeonBase {
 		editor.setBlock(rand, x + 1, y, z + 2, stair.setOrientation(Cardinal.WEST, true), true, true);
 	}
 	
-	private static void pillar(WorldEditor editor, Random rand, ITheme theme, int x, int y, int z){
+	private static void pillar(IWorldEditor editor, Random rand, ITheme theme, int x, int y, int z){
 		
 		IStair stair = theme.getSecondaryStair();
 		IBlockFactory pillar = theme.getSecondaryPillar();

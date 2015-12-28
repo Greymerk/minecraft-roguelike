@@ -14,7 +14,7 @@ import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.MetaStair;
-import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.BrewingStand;
 import greymerk.roguelike.worldgen.blocks.ColorBlock;
@@ -28,7 +28,7 @@ import greymerk.roguelike.worldgen.redstone.Torch;
 public class DungeonLab extends DungeonBase {
 
 	@Override
-	public boolean generate(WorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
+	public boolean generate(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
 		
 		int x = origin.getX();
 		int y = origin.getY();
@@ -84,7 +84,7 @@ public class DungeonLab extends DungeonBase {
 		return false;
 	}
 
-	private static void corner(WorldEditor editor, Random rand, ITheme theme, int x, int y, int z){
+	private static void corner(IWorldEditor editor, Random rand, ITheme theme, int x, int y, int z){
 		
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		MetaBlock doubleSlab = Slab.get(Slab.STONE, false, true, true);
@@ -119,7 +119,7 @@ public class DungeonLab extends DungeonBase {
 	}
 	
 	
-	private void southWest(WorldEditor editor, Random rand, LevelSettings settings, ITheme theme, int x, int y, int z){
+	private void southWest(IWorldEditor editor, Random rand, LevelSettings settings, ITheme theme, int x, int y, int z){
 		
 		corner(editor, rand, theme, x, y, z);
 		
@@ -137,7 +137,7 @@ public class DungeonLab extends DungeonBase {
 	}
 	
 	// fountains
-	private static void southEast(WorldEditor editor, Random rand, ITheme theme, int x, int y, int z){
+	private static void southEast(IWorldEditor editor, Random rand, ITheme theme, int x, int y, int z){
 		
 		MetaBlock stone = BlockType.get(BlockType.STONE_BRICK);
 		IStair stair = new MetaStair(StairType.STONEBRICK);
@@ -169,7 +169,7 @@ public class DungeonLab extends DungeonBase {
 		
 	}
 	
-	private static void northWest(WorldEditor editor, Random rand, ITheme theme, int x, int y, int z){
+	private static void northWest(IWorldEditor editor, Random rand, ITheme theme, int x, int y, int z){
 		
 		MetaBlock stone = BlockType.get(BlockType.STONE_BRICK);
 		MetaBlock redstone = BlockType.get(BlockType.REDSTONE_BLOCK);
@@ -210,7 +210,7 @@ public class DungeonLab extends DungeonBase {
 		editor.setBlock(new Coord(x, y, z), BlockType.get(BlockType.WATER_FLOWING));
 	}
 	
-	private static void northEast(WorldEditor editor, Random rand, ITheme theme, int x, int y, int z){
+	private static void northEast(IWorldEditor editor, Random rand, ITheme theme, int x, int y, int z){
 		
 		MetaBlock stone = BlockType.get(BlockType.STONE_BRICK);
 		MetaBlock redstone = BlockType.get(BlockType.REDSTONE_BLOCK);
@@ -249,7 +249,7 @@ public class DungeonLab extends DungeonBase {
 		editor.setBlock(new Coord(x + 5, y, z), BlockType.get(BlockType.WATER_FLOWING));
 	}
 	
-	private static void pillar(WorldEditor editor, Random rand, ITheme theme, int x, int y, int z){
+	private static void pillar(IWorldEditor editor, Random rand, ITheme theme, int x, int y, int z){
 		
 		editor.fillRectSolid(rand, new Coord(x, y, z), new Coord(x, y + 2, z), theme.getSecondaryPillar(), true, true);
 		editor.setBlock(rand, new Coord(x, y + 3, z), theme.getPrimaryWall(), true, true);

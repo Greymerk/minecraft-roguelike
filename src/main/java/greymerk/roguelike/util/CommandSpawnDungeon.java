@@ -11,6 +11,7 @@ import greymerk.roguelike.dungeon.IDungeon;
 import greymerk.roguelike.dungeon.settings.ISettings;
 import greymerk.roguelike.treasure.loot.provider.ItemNovelty;
 import greymerk.roguelike.worldgen.Coord;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.WorldEditor;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
@@ -164,7 +165,7 @@ public class CommandSpawnDungeon extends CommandBase
 					
 					for(int i = 0; i < num; ++i){
 						
-						WorldEditor editor = new WorldEditor(player.worldObj);
+						IWorldEditor editor = new WorldEditor(player.worldObj);
 						Dungeon toGenerate = new Dungeon(editor);
 						Random rand = new Random();
 						toGenerate.generateNear(rand, x, z);
@@ -173,7 +174,7 @@ public class CommandSpawnDungeon extends CommandBase
 					return;
 				}
 
-				WorldEditor editor = new WorldEditor(player.worldObj);
+				IWorldEditor editor = new WorldEditor(player.worldObj);
 				Dungeon toGenerate = new Dungeon(editor);
 				Random rand = Dungeon.getRandom(editor, x, z);
 				toGenerate.generateNear(rand, x, z);
@@ -201,7 +202,7 @@ public class CommandSpawnDungeon extends CommandBase
 			}
 			
 			World world = sender.getEntityWorld();
-			WorldEditor editor = new WorldEditor(world);
+			IWorldEditor editor = new WorldEditor(world);
 			
 			if(settingName != null){
 				Dungeon.initResolver();

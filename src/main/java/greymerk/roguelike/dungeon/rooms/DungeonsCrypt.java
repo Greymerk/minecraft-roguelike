@@ -15,12 +15,12 @@ import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.Spawner;
-import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 
 public class DungeonsCrypt extends DungeonBase {
 
-	public boolean generate(WorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
+	public boolean generate(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
 		
 		ITheme theme = settings.getTheme();
 		MetaBlock air = BlockType.get(BlockType.AIR);
@@ -129,7 +129,7 @@ public class DungeonsCrypt extends DungeonBase {
 		return true;
 	}
 	
-	private void sarcophagus(WorldEditor editor, Random rand, LevelSettings settings, Coord origin, Cardinal dir){
+	private void sarcophagus(IWorldEditor editor, Random rand, LevelSettings settings, Coord origin, Cardinal dir){
 		
 		ITheme theme = settings.getTheme();
 		
@@ -221,7 +221,7 @@ public class DungeonsCrypt extends DungeonBase {
 		
 	}
 	
-	private void crypt(WorldEditor editor, Random rand, LevelSettings settings, Coord origin, Cardinal dir){
+	private void crypt(IWorldEditor editor, Random rand, LevelSettings settings, Coord origin, Cardinal dir){
 		
 		ITheme theme = settings.getTheme();
 		
@@ -284,7 +284,7 @@ public class DungeonsCrypt extends DungeonBase {
 		tomb(editor, rand, settings, origin, dir);
 	}
 	
-	private void mausoleumWall(WorldEditor editor, Random rand, LevelSettings settings, Coord origin, Cardinal dir){
+	private void mausoleumWall(IWorldEditor editor, Random rand, LevelSettings settings, Coord origin, Cardinal dir){
 		
 		ITheme theme = settings.getTheme();
 		IBlockFactory walls = theme.getPrimaryWall();
@@ -322,7 +322,7 @@ public class DungeonsCrypt extends DungeonBase {
 		
 	}
 	
-	private void pillar(WorldEditor editor, Random rand, LevelSettings settings, Coord origin){
+	private void pillar(IWorldEditor editor, Random rand, LevelSettings settings, Coord origin){
 		
 		ITheme theme = settings.getTheme();
 		
@@ -346,7 +346,7 @@ public class DungeonsCrypt extends DungeonBase {
 		}
 	}
 	
-	private void tomb(WorldEditor editor, Random rand, LevelSettings settings, Coord origin, Cardinal dir){
+	private void tomb(IWorldEditor editor, Random rand, LevelSettings settings, Coord origin, Cardinal dir){
 		
 		ITheme theme = settings.getTheme();
 		Coord cursor;

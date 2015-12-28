@@ -17,12 +17,12 @@ public enum Spawner {
 	
 	private static final Spawner[] common = {SPIDER, SKELETON, ZOMBIE};
 	
-	public static void generate(WorldEditor editor, Random rand, LevelSettings settings, Coord pos){
+	public static void generate(IWorldEditor editor, Random rand, LevelSettings settings, Coord pos){
 		Spawner type = common[rand.nextInt(common.length)];
 		generate(editor, rand, settings, pos, type);
 	}
 	
-	public static void generate(WorldEditor editor, Random rand, LevelSettings settings, Coord pos, Spawner type){
+	public static void generate(IWorldEditor editor, Random rand, LevelSettings settings, Coord pos, Spawner type){
 		
 		if(settings.getSpawners() != null){
 			settings.getSpawners().generate(editor, rand, pos, type, settings.getDifficulty(pos));
@@ -32,7 +32,7 @@ public enum Spawner {
 		generate(editor, rand, settings.getDifficulty(pos), pos, type);
 	}
 	
-	public static void generate(WorldEditor editor, Random rand, int level, Coord pos, Spawner type){
+	public static void generate(IWorldEditor editor, Random rand, int level, Coord pos, Spawner type){
 				
 		if(!editor.setBlock(pos, new MetaBlock(Blocks.mob_spawner))) return;
 		

@@ -13,13 +13,13 @@ import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.MetaBlock;
-import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.redstone.Piston;
 import greymerk.roguelike.worldgen.redstone.Torch;
 
 public class DungeonsPit extends DungeonBase {
-	WorldEditor editor;
+	IWorldEditor editor;
 	Random rand;
 	int originX;
 	int originY;
@@ -38,7 +38,7 @@ public class DungeonsPit extends DungeonBase {
 		dungeonWidth = 2;
 	}
 
-	public boolean generate(WorldEditor editor, Random inRandom, LevelSettings settings, Cardinal[] entrances, Coord origin) {
+	public boolean generate(IWorldEditor editor, Random inRandom, LevelSettings settings, Cardinal[] entrances, Coord origin) {
 
 		ITheme theme = settings.getTheme();
 
@@ -150,7 +150,7 @@ public class DungeonsPit extends DungeonBase {
 		}
 	}
 	
-	private void setTrap(WorldEditor editor, Random rand, LevelSettings settings, Cardinal dir, Coord origin){
+	private void setTrap(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal dir, Coord origin){
 		ITheme theme = settings.getTheme();
 		IBlockFactory walls = theme.getPrimaryWall();
 		MetaBlock plate = BlockType.get(BlockType.PRESSURE_PLATE_STONE);

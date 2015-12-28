@@ -10,14 +10,14 @@ import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.Spawner;
-import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.Quartz;
 
 public class DungeonsEnder extends DungeonBase {
 
 
-	public boolean generate(WorldEditor editor, Random inRandom, LevelSettings settings, Cardinal[] entrances, Coord origin) {
+	public boolean generate(IWorldEditor editor, Random inRandom, LevelSettings settings, Cardinal[] entrances, Coord origin) {
 
 		MetaBlock black = BlockType.get(BlockType.OBSIDIAN);
 		MetaBlock white = Quartz.get(Quartz.SMOOTH);
@@ -49,7 +49,7 @@ public class DungeonsEnder extends DungeonBase {
 		end = new Coord(origin);
 		start.add(-3, 2, -3);
 		end.add(3, 10, 3);
-		List<Coord> box = WorldEditor.getRectSolid(start, end);
+		List<Coord> box = editor.getRectSolid(start, end);
 		
 		int top = end.getY() - start.getY() + 1;
 		for(Coord cell : box){

@@ -45,12 +45,12 @@ public class MetaBlock extends BlockBase implements IBlockState{
 		this.state = state;
 	}
 
-	public boolean setBlock(WorldEditor editor, Coord pos){
+	public boolean setBlock(IWorldEditor editor, Coord pos){
 		return editor.setBlock(pos, this.state, this.flag, true, true);
 	}
 		
 	@Override
-	public boolean setBlock(WorldEditor editor, Random rand, Coord pos, boolean fillAir, boolean replaceSolid) {
+	public boolean setBlock(IWorldEditor editor, Random rand, Coord pos, boolean fillAir, boolean replaceSolid) {
 		return editor.setBlock(pos, this.state, this.flag, fillAir, replaceSolid);
 	}
 

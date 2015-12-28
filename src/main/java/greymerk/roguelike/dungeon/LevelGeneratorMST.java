@@ -11,11 +11,11 @@ import greymerk.roguelike.util.mst.MinimumSpanningTree;
 import greymerk.roguelike.util.mst.Point;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
-import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.IWorldEditor;
 
 public class LevelGeneratorMST implements ILevelGenerator{
 
-	WorldEditor editor;
+	IWorldEditor editor;
 	Random rand;
 	IDungeonLevel level;
 	private DungeonNode end;
@@ -23,7 +23,7 @@ public class LevelGeneratorMST implements ILevelGenerator{
 	private List<DungeonNode> nodes;
 	private List<DungeonTunnel> tunnels;
 	
-	public LevelGeneratorMST(WorldEditor editor, Random rand, IDungeonLevel level){
+	public LevelGeneratorMST(IWorldEditor editor, Random rand, IDungeonLevel level){
 		this.editor = editor;
 		this.rand = rand;
 		this.level = level;
@@ -48,7 +48,7 @@ public class LevelGeneratorMST implements ILevelGenerator{
 						Cardinal dir = getDirection(ends, p);
 						Coord tStart = ends[0].getPosition();
 						Coord tEnd = ends[1].getPosition();
-						this.tunnels.add(new DungeonTunnel(tStart, tEnd, dir));
+						this.tunnels.add(new DungeonTunnel(editor, tStart, tEnd, dir));
 						used.add(e);
 					}
 				}

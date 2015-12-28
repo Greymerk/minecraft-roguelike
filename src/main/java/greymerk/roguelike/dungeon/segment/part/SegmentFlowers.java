@@ -9,14 +9,14 @@ import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
-import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.FlowerPot;
 
 public class SegmentFlowers extends SegmentBase {
 	
 	@Override
-	protected void genWall(WorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
+	protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
 		
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		IStair stair = theme.getSecondaryStair();
@@ -55,7 +55,7 @@ public class SegmentFlowers extends SegmentBase {
 		end = new Coord(start);
 		start.add(orth[0]);
 		end.add(orth[1]);
-		List<Coord> pots = WorldEditor.getRectSolid(start, end);
+		List<Coord> pots = editor.getRectSolid(start, end);
 		for(Coord c : pots){
 			if(rand.nextInt(3) == 0 && editor.getBlock(c).getBlock().getMaterial().isSolid()){
 				FlowerPot.generate(editor, rand, c);

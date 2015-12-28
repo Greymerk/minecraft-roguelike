@@ -13,12 +13,12 @@ import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.Spawner;
-import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 
 public class DungeonsCreeperDen extends DungeonBase {
 
-	public boolean generate(WorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
+	public boolean generate(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
 
 		ITheme theme = settings.getTheme();
 		
@@ -63,7 +63,7 @@ public class DungeonsCreeperDen extends DungeonBase {
 		start.add(new Coord(-3, 0, -3));
 		end.add(new Coord(3, 0, 3));
 		
-		List<Coord> chestSpaces = WorldEditor.getRectSolid(start, end);
+		List<Coord> chestSpaces = editor.getRectSolid(start, end);
 		Collections.shuffle(chestSpaces, rand);
 		
 		int counter = 0;

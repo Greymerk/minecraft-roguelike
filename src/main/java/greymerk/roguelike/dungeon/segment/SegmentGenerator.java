@@ -15,7 +15,7 @@ import greymerk.roguelike.util.WeightedRandomizer;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IStair;
-import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.IWorldEditor;
 
 public class SegmentGenerator implements ISegmentGenerator{
 	
@@ -52,7 +52,7 @@ public class SegmentGenerator implements ISegmentGenerator{
 	}
 	
 	@Override
-	public List<ISegment> genSegment(WorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, Coord pos) {
+	public List<ISegment> genSegment(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, Coord pos) {
 		
 		int x = pos.getX();
 		int y = pos.getY();
@@ -72,7 +72,7 @@ public class SegmentGenerator implements ISegmentGenerator{
 		return segs;
 	}
 	
-	private ISegment pickSegment(WorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, Coord pos){
+	private ISegment pickSegment(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, Coord pos){
 		int x = pos.getX();
 		int z = pos.getZ();
 		
@@ -93,7 +93,7 @@ public class SegmentGenerator implements ISegmentGenerator{
 		return null;
 	}
 	
-	private void addSupport(WorldEditor editor, Random rand, ITheme theme, int x, int y, int z){
+	private void addSupport(IWorldEditor editor, Random rand, ITheme theme, int x, int y, int z){
 		if(!editor.isAirBlock(new Coord(x, y - 2, z))) return;
 		
 		editor.fillDown(rand, new Coord(x, y - 2, z), theme.getPrimaryPillar());

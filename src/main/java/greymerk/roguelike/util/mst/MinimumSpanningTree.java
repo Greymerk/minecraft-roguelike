@@ -9,7 +9,7 @@ import java.util.Set;
 
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
-import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.IWorldEditor;
 
 public class MinimumSpanningTree extends Graph{
 	
@@ -59,7 +59,7 @@ public class MinimumSpanningTree extends Graph{
 		return p.getParent();
 	}
 	
-	public void generate(WorldEditor editor, Random rand, IBlockFactory blocks, Coord pos){
+	public void generate(IWorldEditor editor, Random rand, IBlockFactory blocks, Coord pos){
 		
 		for(Edge e : this.mstEdges){
 			

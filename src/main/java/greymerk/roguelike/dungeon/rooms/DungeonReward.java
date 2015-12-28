@@ -10,13 +10,13 @@ import greymerk.roguelike.treasure.Treasure;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IStair;
-import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 
 public class DungeonReward extends DungeonBase {
 
 	@Override
-	public boolean generate(WorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
+	public boolean generate(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
 		
 		int x = origin.getX();
 		int y = origin.getY();
@@ -187,7 +187,7 @@ public class DungeonReward extends DungeonBase {
 	}
 
 	@Override
-	public boolean validLocation(WorldEditor editor, Cardinal dir, int x, int y, int z) {
+	public boolean validLocation(IWorldEditor editor, Cardinal dir, int x, int y, int z) {
 		return false;
 	}
 

@@ -12,7 +12,7 @@ import com.google.gson.JsonObject;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
-import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.IWorldEditor;
 
 public class SecretFactory implements ISecretRoom{
 
@@ -75,7 +75,7 @@ public class SecretFactory implements ISecretRoom{
 		this.count += count;
 	}
 	
-	public IDungeonRoom genRoom(WorldEditor editor, Random rand, LevelSettings settings, Cardinal dir, Coord pos){
+	public IDungeonRoom genRoom(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal dir, Coord pos){
 		if(count <= 0) return null;
 		
 		Collections.shuffle(this.secrets, rand);

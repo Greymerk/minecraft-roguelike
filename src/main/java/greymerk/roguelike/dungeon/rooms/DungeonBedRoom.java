@@ -10,7 +10,7 @@ import greymerk.roguelike.treasure.Treasure;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IStair;
-import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.blocks.Bed;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.FlowerPot;
@@ -22,7 +22,7 @@ import net.minecraft.item.ItemStack;
 public class DungeonBedRoom extends DungeonBase {
 
 	@Override
-	public boolean generate(WorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
+	public boolean generate(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
 		
 		int x = origin.getX();
 		int y = origin.getY();
@@ -154,7 +154,7 @@ public class DungeonBedRoom extends DungeonBase {
 		return true;
 	}
 	
-	public static void pillar(WorldEditor editor, Random rand, Cardinal dir, ITheme theme, final Coord base){
+	public static void pillar(IWorldEditor editor, Random rand, Cardinal dir, ITheme theme, final Coord base){
 		Coord start = new Coord(base);
 		Coord end = new Coord(base);
 		
@@ -173,7 +173,7 @@ public class DungeonBedRoom extends DungeonBase {
 	}
 
 	@Override
-	public boolean validLocation(WorldEditor editor, Cardinal dir, int x, int y, int z) {
+	public boolean validLocation(IWorldEditor editor, Cardinal dir, int x, int y, int z) {
 		Coord start;
 		Coord end;
 		

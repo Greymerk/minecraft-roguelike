@@ -8,7 +8,7 @@ import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
-import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.Crops;
 import greymerk.roguelike.worldgen.redstone.Torch;
@@ -16,7 +16,7 @@ import greymerk.roguelike.worldgen.redstone.Torch;
 public class DungeonBaj extends DungeonBase {
 
 	@Override
-	public boolean generate(WorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
+	public boolean generate(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
 
 		
 		int x = origin.getX();
@@ -114,7 +114,7 @@ public class DungeonBaj extends DungeonBase {
 		return 8;
 	}
 
-	private void crops(WorldEditor editor, Random rand, int x, int y, int z){
+	private void crops(IWorldEditor editor, Random rand, int x, int y, int z){
 		
 		if(rand.nextInt(10) == 0){
 			editor.setBlock(x, y, z, BlockType.get(BlockType.GRAVEL));

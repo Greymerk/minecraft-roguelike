@@ -12,8 +12,8 @@ import greymerk.roguelike.worldgen.BlockJumble;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.MetaBlock;
-import greymerk.roguelike.worldgen.WorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 
 public class DungeonTunnel implements Iterable<Coord>{
@@ -22,21 +22,22 @@ public class DungeonTunnel implements Iterable<Coord>{
 	private Coord end;
 	private Cardinal dir;
 	private List<ISegment> segments;
+	private List<Coord> tunnel;
 	
-	public DungeonTunnel(Coord start, Coord end, Cardinal dir){
+	public DungeonTunnel(IWorldEditor editor, Coord start, Coord end, Cardinal dir){
 		this.start = start;
 		this.end = end;
+		this.tunnel = editor.getRectSolid(start, end);
 		this.dir = dir;
 		this.segments = new ArrayList<ISegment>();
 	}
 
 	@Override
 	public Iterator<Coord> iterator() {
-		List<Coord> t = WorldEditor.getRectSolid(start, end);
-		return t.iterator();
+		return tunnel.iterator();
 	}
 	
-	public void construct(WorldEditor editor, Random rand, LevelSettings settings){
+	public void construct(IWorldEditor editor, Random rand, LevelSettings settings){
 		
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		
@@ -101,7 +102,7 @@ public class DungeonTunnel implements Iterable<Coord>{
 		return this.dir;
 	}
 
-	public void genSegments(WorldEditor editor, Random rand, IDungeonLevel level) {
+	public void genSegments(IWorldEditor editor, Random rand, IDungeonLevel level) {
 		LevelSettings settings = level.getSettings();
 		ISegmentGenerator segGen = settings.getSegments();
 		for(Coord c : this){

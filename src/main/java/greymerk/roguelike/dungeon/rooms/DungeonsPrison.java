@@ -13,13 +13,13 @@ import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.Spawner;
-import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 
 public class DungeonsPrison extends DungeonBase {
 	
 	@Override
-	public boolean generate(WorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
+	public boolean generate(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
 				
 		Coord cursor;
 		
@@ -62,7 +62,7 @@ public class DungeonsPrison extends DungeonBase {
 		return true;
 	}
 	
-	public void largeRoom(WorldEditor editor, Random rand, LevelSettings settings, Coord origin){
+	public void largeRoom(IWorldEditor editor, Random rand, LevelSettings settings, Coord origin){
 		Coord start;
 		Coord end;
 		Coord cursor;
@@ -147,7 +147,7 @@ public class DungeonsPrison extends DungeonBase {
 		}			
 	}
 	
-	private void sideRoom(WorldEditor editor, Random rand, LevelSettings settings, Coord origin, Cardinal roomDir){
+	private void sideRoom(IWorldEditor editor, Random rand, LevelSettings settings, Coord origin, Cardinal roomDir){
 		
 		Coord start;
 		Coord end;
@@ -265,7 +265,7 @@ public class DungeonsPrison extends DungeonBase {
 		stair.setOrientation(Cardinal.reverse(roomDir), true).fillRectSolid(editor, rand, start, end, true, true);
 	}
 	
-	private void pillar(WorldEditor editor, Random rand, LevelSettings settings, Coord origin, int height){
+	private void pillar(IWorldEditor editor, Random rand, LevelSettings settings, Coord origin, int height){
 		Coord cursor;
 		IBlockFactory pillar = settings.getTheme().getPrimaryPillar();
 		IStair stair = settings.getTheme().getPrimaryStair();
@@ -281,7 +281,7 @@ public class DungeonsPrison extends DungeonBase {
 		}
 	}
 	
-	private void cell(WorldEditor editor, Random rand, LevelSettings settings, Coord origin, List<Cardinal> entrances, boolean occupied){
+	private void cell(IWorldEditor editor, Random rand, LevelSettings settings, Coord origin, List<Cardinal> entrances, boolean occupied){
 		
 		Coord start;
 		Coord end;

@@ -15,13 +15,13 @@ import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.Spawner;
-import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.Crops;
 
 public class DungeonsNetherBrickFortress extends DungeonBase {
 	
-	WorldEditor editor;
+	IWorldEditor editor;
 	Random rand;
 	int originX;
 	int originY;
@@ -33,7 +33,7 @@ public class DungeonsNetherBrickFortress extends DungeonBase {
 	}
 	
 	
-	public boolean generate(WorldEditor editor, Random inRandom, LevelSettings settings, Cardinal[] entrances, Coord origin) {
+	public boolean generate(IWorldEditor editor, Random inRandom, LevelSettings settings, Cardinal[] entrances, Coord origin) {
 		
 		this.editor = editor;
 		rand = inRandom;
@@ -52,7 +52,7 @@ public class DungeonsNetherBrickFortress extends DungeonBase {
 		buildRoof();
 		
 		ArrayList<Treasure> types = new ArrayList<Treasure>(Arrays.asList(Treasure.WEAPONS));		
-		Treasure.createChests(editor, rand, 2, WorldEditor.getRectSolid(
+		Treasure.createChests(editor, rand, 2, editor.getRectSolid(
 				originX - 6, originY, originZ - 6,
 				originX + 6, originY, originZ + 6),
 				types, Dungeon.getLevel(this.originY));
@@ -60,7 +60,7 @@ public class DungeonsNetherBrickFortress extends DungeonBase {
 		return true;
 	}
 	
-    public boolean isValidDungeonLocation(WorldEditor editor, int originX, int originY, int originZ){
+    public boolean isValidDungeonLocation(IWorldEditor editor, int originX, int originY, int originZ){
     	return false;
     }
 	
@@ -72,7 +72,7 @@ public class DungeonsNetherBrickFortress extends DungeonBase {
 		editor.fillRectSolid(rand, originX - 6, originY + 4, originZ - 6,
 				originX + 6, originY + 6, originZ + 6, BlockType.get(BlockType.NETHERBRICK));
 
-		List<Coord> lavaArea = WorldEditor.getRectSolid(	originX - 3, originY + 6, originZ - 3,
+		List<Coord> lavaArea = editor.getRectSolid(	originX - 3, originY + 6, originZ - 3,
 																originX + 3, originY + 6, originZ + 3);
 		
 		for (Coord block : lavaArea){
@@ -119,16 +119,16 @@ public class DungeonsNetherBrickFortress extends DungeonBase {
 		}
 		
 		// pillars
-		List<Coord> arch1 = WorldEditor.getRectSolid(	originX - 5, originY, originZ - 5,
+		List<Coord> arch1 = editor.getRectSolid(	originX - 5, originY, originZ - 5,
 															originX - 4, originY + 4, originZ - 4);
 
-		List<Coord> arch2 = WorldEditor.getRectSolid(	originX - 5, originY, originZ + 4,
+		List<Coord> arch2 = editor.getRectSolid(	originX - 5, originY, originZ + 4,
 															originX - 4, originY + 4, originZ + 5);	
 		
-		List<Coord> arch3 = WorldEditor.getRectSolid(	originX + 4, originY, originZ - 5,
+		List<Coord> arch3 = editor.getRectSolid(	originX + 4, originY, originZ - 5,
 															originX + 5, originY + 4, originZ - 4);	
 		
-		List<Coord> arch4 = WorldEditor.getRectSolid(	originX + 4, originY, originZ + 4,
+		List<Coord> arch4 = editor.getRectSolid(	originX + 4, originY, originZ + 4,
 															originX + 5, originY + 4, originZ + 5);	
 		
 		List<Coord> pillars = new ArrayList<Coord>();
@@ -159,7 +159,7 @@ public class DungeonsNetherBrickFortress extends DungeonBase {
 		// base
 		editor.fillRectSolid(rand, originX - 6, originY - 4, originZ - 6, originX + 6, originY - 1, originZ + 6, BlockType.get(BlockType.NETHERBRICK));
     	
-		List<Coord> soulSand = WorldEditor.getRectSolid(	originX - 5, originY - 1, originZ - 5,
+		List<Coord> soulSand = editor.getRectSolid(	originX - 5, originY - 1, originZ - 5,
 																originX + 5, originY - 1, originZ + 5);
 
 		MetaBlock sand = BlockType.get(BlockType.SOUL_SAND);

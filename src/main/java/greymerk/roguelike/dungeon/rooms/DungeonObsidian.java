@@ -16,7 +16,7 @@ import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.MetaStair;
 import greymerk.roguelike.worldgen.Spawner;
-import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.StairType;
 
@@ -25,7 +25,7 @@ public class DungeonObsidian extends DungeonBase {
 
 	
 	@Override
-	public boolean generate(WorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
+	public boolean generate(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
 		
 		int x = origin.getX();
 		int y = origin.getY();
@@ -261,7 +261,7 @@ public class DungeonObsidian extends DungeonBase {
 		return 10;
 	}
 	
-	private static void outerPillars(WorldEditor editor, Random rand, ITheme theme, int x, int y, int z){
+	private static void outerPillars(IWorldEditor editor, Random rand, ITheme theme, int x, int y, int z){
 		for(Cardinal dir : Cardinal.directions){
 			for (Cardinal orth : Cardinal.getOrthogonal(dir)){
 				Coord pillarLocation = new Coord(x, y, z);
@@ -279,7 +279,7 @@ public class DungeonObsidian extends DungeonBase {
 		}		
 	}
 	
-	private static void outerPillar(WorldEditor editor, Random rand, ITheme theme, Coord pillarLocation, Cardinal dir){
+	private static void outerPillar(IWorldEditor editor, Random rand, ITheme theme, Coord pillarLocation, Cardinal dir){
 		
 		IBlockFactory secondaryWall = theme.getSecondaryPillar();
 		
@@ -300,7 +300,7 @@ public class DungeonObsidian extends DungeonBase {
 		}
 	}
 	
-	private static void innerPillars(WorldEditor editor, Random rand, ITheme theme, int x, int y, int z){
+	private static void innerPillars(IWorldEditor editor, Random rand, ITheme theme, int x, int y, int z){
 		
 		IBlockFactory secondaryWall = theme.getSecondaryPillar();
 		
@@ -338,7 +338,7 @@ public class DungeonObsidian extends DungeonBase {
 		}
 	}
 	
-	private static void lavaWindow(WorldEditor editor, Coord cursor, Cardinal orth){
+	private static void lavaWindow(IWorldEditor editor, Coord cursor, Cardinal orth){
 		MetaBlock lava = BlockType.get(BlockType.LAVA_FLOWING);
 		MetaBlock fence = BlockType.get(BlockType.FENCE_NETHER_BRICK);
 		editor.setBlock(cursor, lava);

@@ -8,7 +8,7 @@ import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
-import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.ColorBlock;
 import greymerk.roguelike.worldgen.blocks.DyeColor;
@@ -16,7 +16,7 @@ import greymerk.roguelike.worldgen.blocks.DyeColor;
 public class BunkerTower implements ITower{
 
 	@Override
-	public void generate(WorldEditor editor, Random rand, ITheme theme, int x, int y, int z) {
+	public void generate(IWorldEditor editor, Random rand, ITheme theme, int x, int y, int z) {
 		
 		Coord origin = Tower.getBaseCoord(editor, x, y, z);
 		origin.add(Cardinal.UP);
@@ -327,7 +327,7 @@ public class BunkerTower implements ITower{
 		cursor.add(Cardinal.UP, 4);
 		start = new Coord(cursor.getX(), y, cursor.getZ());
 		end = new Coord(cursor);
-		for(Coord c : WorldEditor.getRectSolid(start, end)){
+		for(Coord c : editor.getRectSolid(start, end)){
 			editor.spiralStairStep(rand, c, stair, pillar);
 		}
 	}
