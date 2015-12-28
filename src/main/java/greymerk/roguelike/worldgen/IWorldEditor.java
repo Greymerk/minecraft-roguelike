@@ -14,9 +14,9 @@ public interface IWorldEditor {
 
 	boolean setBlock(Coord pos, IBlockState state, int flag, boolean fillAir, boolean replaceSolid);
 
-	boolean setBlock(Coord cursor, MetaBlock metaBlock);
+	boolean setBlock(Coord pos, MetaBlock metaBlock);
 	
-	boolean setBlock(Random rand, Coord pos, IBlockFactory fillOne, boolean fillAir, boolean replaceSolid);
+	boolean setBlock(Random rand, Coord pos, IBlockFactory blocks, boolean fillAir, boolean replaceSolid);
 
 	void fillRectHollow(Random rand, Coord start, Coord end, IBlockFactory blocks, boolean fillAir, boolean replaceSolid);
 
@@ -30,13 +30,13 @@ public interface IWorldEditor {
 
 	List<Coord> getRectSolid(Coord start, Coord end);
 	
-	MetaBlock getBlock(Coord cursor);
+	MetaBlock getBlock(Coord pos);
 
-	boolean isAirBlock(Coord coord);
+	boolean isAirBlock(Coord pos);
 	
 	TileEntity getTileEntity(Coord pos);
 
-	BiomeGenBase getBiome(Coord coord);
+	BiomeGenBase getBiome(Coord pos);
 	
 	int getDimension();
 	
@@ -48,11 +48,11 @@ public interface IWorldEditor {
 	
 	boolean canPlace(MetaBlock block, Coord pos, Cardinal dir);
 	
-	boolean validGroundBlock(Coord cursor);
+	boolean validGroundBlock(Coord pos);
 
-	void spiralStairStep(Random rand, Coord c, IStair stair, IBlockFactory pillar);
+	void spiralStairStep(Random rand, Coord pos, IStair stair, IBlockFactory pillar);
 
-	int getStat(Block stonebrick);
+	int getStat(Block block);
 
 	TreasureManager getTreasure();
 
