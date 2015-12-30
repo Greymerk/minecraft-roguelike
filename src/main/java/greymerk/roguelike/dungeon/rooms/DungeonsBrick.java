@@ -134,10 +134,6 @@ public class DungeonsBrick extends DungeonBase {
 		return true;
 	}
 	
-	public boolean isValidDungeonLocation(IWorldEditor editor, int x, int y, int z) {
-		return false;
-	}
-	
 	public int getSize(){
 		return 6;
 	}

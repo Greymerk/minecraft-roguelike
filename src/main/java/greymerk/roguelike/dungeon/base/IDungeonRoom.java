@@ -13,6 +13,6 @@ public interface IDungeonRoom {
 		
 	public int getSize();
 	
-	public boolean validLocation(IWorldEditor editor, Cardinal dir, int x, int y, int z);
+	public boolean validLocation(IWorldEditor editor, Cardinal dir, Coord pos);
 
 }

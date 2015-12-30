@@ -173,11 +173,11 @@ public class DungeonBedRoom extends DungeonBase {
 	}
 
 	@Override
-	public boolean validLocation(IWorldEditor editor, Cardinal dir, int x, int y, int z) {
+	public boolean validLocation(IWorldEditor editor, Cardinal dir, Coord pos) {
 		Coord start;
 		Coord end;
 		
-		start = new Coord(x, y, z);
+		start = new Coord(pos);
 		end = new Coord(start);
 		start.add(Cardinal.reverse(dir), 5);
 		end.add(dir, 5);

@@ -31,7 +31,7 @@ public class SecretRoom implements ISecretRoom {
 		Coord cursor = new Coord(pos);
 		cursor.add(dir, prototype.getSize() + 5);
 		
-		return prototype.validLocation(editor, dir, cursor.getX(), cursor.getY(), cursor.getZ());
+		return prototype.validLocation(editor, dir, cursor);
 	}
 	
 	@Override

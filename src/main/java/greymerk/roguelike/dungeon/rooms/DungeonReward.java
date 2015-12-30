@@ -185,10 +185,4 @@ public class DungeonReward extends DungeonBase {
 	public int getSize() {
 		return 10;
 	}
-
-	@Override
-	public boolean validLocation(IWorldEditor editor, Cardinal dir, int x, int y, int z) {
-		return false;
-	}
-
 }

@@ -18,13 +18,16 @@ public abstract class DungeonBase implements IDungeonRoom{
 	public abstract int getSize();
 	
 	@Override
-	public boolean validLocation(IWorldEditor editor, Cardinal dir, int x, int y, int z){
+	public boolean validLocation(IWorldEditor editor, Cardinal dir, Coord pos){
 		
 		int size = getSize();
-		List<Coord> box = editor.getRectHollow(new Coord(x - size, y - 2, z - size), new Coord(x + size, y + 5, z + size));
+		Coord start = new Coord(pos.getX() - size, pos.getY() - 2, pos.getZ() - size);
+		Coord end = new Coord(pos.getX() + size, pos.getY() + 5, pos.getZ() + size);
 		
-		for(Coord pos : box){
-			MetaBlock b = editor.getBlock(pos);
+		List<Coord> box = editor.getRectHollow(start, end);
+		
+		for(Coord cursor : box){
+			MetaBlock b = editor.getBlock(cursor);
 			if(!b.getBlock().getMaterial().isSolid()) return false;
 		}
 		
