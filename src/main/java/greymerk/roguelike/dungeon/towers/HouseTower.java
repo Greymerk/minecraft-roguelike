@@ -27,9 +27,9 @@ import greymerk.roguelike.worldgen.redstone.Torch;
 public class HouseTower implements ITower {
 
 	@Override
-	public void generate(IWorldEditor editor, Random rand, ITheme theme, int x, int y, int z) {
+	public void generate(IWorldEditor editor, Random rand, ITheme theme, Coord dungeon) {
 		
-		Coord floor = Tower.getBaseCoord(editor, x, y, z);
+		Coord floor = Tower.getBaseCoord(editor, dungeon);
 		
 		IBlockFactory walls = theme.getPrimaryWall();
 		IBlockFactory mainFloor = theme.getPrimaryFloor();
@@ -42,6 +42,10 @@ public class HouseTower implements ITower {
 		Coord cursor;
 		Coord start;
 		Coord end;
+		
+		int x = dungeon.getX();
+		int y = dungeon.getY();
+		int z = dungeon.getZ();
 		
 		floor.add(Cardinal.UP);
 		

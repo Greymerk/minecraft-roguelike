@@ -21,9 +21,9 @@ import greymerk.roguelike.worldgen.blocks.Wood;
 public class JungleTower implements ITower{
 
 	@Override
-	public void generate(IWorldEditor editor, Random rand, ITheme theme, int x, int y, int z) {
+	public void generate(IWorldEditor editor, Random rand, ITheme theme, Coord dungeon) {
 		
-		Coord origin = Tower.getBaseCoord(editor, x, y, z);
+		Coord origin = Tower.getBaseCoord(editor, dungeon);
 		origin.add(Cardinal.UP);
 		IBlockFactory pillar = theme.getPrimaryPillar();
 		IBlockFactory walls = theme.getPrimaryWall();
@@ -355,14 +355,14 @@ public class JungleTower implements ITower{
 		start = new Coord(origin);
 		start.add(Cardinal.NORTH, 2);
 		start.add(Cardinal.EAST, 2);
-		end = new Coord(origin.getX(), y + 10, origin.getZ());
+		end = new Coord(origin.getX(), dungeon.getY() + 10, origin.getZ());
 		end.add(Cardinal.SOUTH, 2);
 		end.add(Cardinal.WEST, 2);
 		walls.fillRectSolid(editor, rand, start, end, false, true);
 		
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.UP, 12);
-		start = new Coord(cursor.getX(), y, cursor.getZ());
+		start = new Coord(cursor.getX(), dungeon.getY(), cursor.getZ());
 		end = new Coord(cursor);
 		for(Coord c : editor.getRectSolid(start, end)){
 			editor.spiralStairStep(rand, c, stair, pillar);

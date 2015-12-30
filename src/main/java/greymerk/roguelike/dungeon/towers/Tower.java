@@ -23,9 +23,9 @@ public enum Tower {
 		}
 	}
 	
-	public static Coord getBaseCoord(IWorldEditor editor, int x, int y, int z){
+	public static Coord getBaseCoord(IWorldEditor editor, Coord pos){
 		
-		Coord cursor = new Coord(x, 128, z);
+		Coord cursor = new Coord(pos.getX(), 128, pos.getZ());
 
 		while(cursor.getY() > 60){
 			if(editor.validGroundBlock(cursor)) break;
@@ -34,13 +34,13 @@ public enum Tower {
 
 		cursor.add(Cardinal.UP);
 		
-		int yOffset = cursor.getY() - y;
+		int yOffset = cursor.getY() - pos.getY();
 
 		if(yOffset < 14){
 			yOffset = 14;
 		}
 		
-		return new Coord(x, y + yOffset, z);
+		return new Coord(pos.getX(), pos.getY() + yOffset, pos.getZ());
 	}
 
 	

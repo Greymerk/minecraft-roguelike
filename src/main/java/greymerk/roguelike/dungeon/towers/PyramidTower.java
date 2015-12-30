@@ -13,14 +13,18 @@ import greymerk.roguelike.worldgen.blocks.BlockType;
 public class PyramidTower implements ITower{
 
 	@Override
-	public void generate(IWorldEditor editor, Random rand, ITheme theme, int x, int y, int z) {
+	public void generate(IWorldEditor editor, Random rand, ITheme theme, Coord dungeon) {
 
-		Coord floor = Tower.getBaseCoord(editor, x, y, z);
+		Coord floor = Tower.getBaseCoord(editor, dungeon);
 		floor.add(Cardinal.UP);
 		IBlockFactory blocks = theme.getPrimaryWall();
 		Coord cursor;
 		Coord start;
 		Coord end;
+		
+		int x = dungeon.getX();
+		int y = dungeon.getY();
+		int z = dungeon.getZ();
 		
 		start = new Coord(x - 8, floor.getY() - 1, z - 8);
 		end = new Coord(x + 8, y + 10, z + 8);

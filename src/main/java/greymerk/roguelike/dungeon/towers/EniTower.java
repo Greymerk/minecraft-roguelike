@@ -18,7 +18,7 @@ public class EniTower implements ITower {
 	public EniTower(){}
 	
 	@Override
-	public void generate(IWorldEditor editor, Random rand, ITheme theme, int x, int y, int z) {
+	public void generate(IWorldEditor editor, Random rand, ITheme theme, Coord dungeon) {
 		
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		
@@ -26,7 +26,10 @@ public class EniTower implements ITower {
 		
 		IStair stair = theme.getPrimaryStair();
 		
-		Coord floor = Tower.getBaseCoord(editor, x, y, z);
+		Coord floor = Tower.getBaseCoord(editor, dungeon);
+		
+		int x = dungeon.getX();
+		int z = dungeon.getZ();
 		
 		editor.fillRectSolid(rand, new Coord(x - 4, floor.getY(), z - 4), new Coord(x + 4, floor.getY() + 3, z + 4), air);
 		editor.fillRectSolid(rand, new Coord(x - 3, floor.getY() + 4, z - 3), new Coord(x + 3, floor.getY() + 12, z + 3), air);

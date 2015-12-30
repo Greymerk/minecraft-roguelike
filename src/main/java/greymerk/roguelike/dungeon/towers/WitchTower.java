@@ -17,7 +17,7 @@ import greymerk.roguelike.worldgen.blocks.DyeColor;
 public class WitchTower implements ITower {
 
 	@Override
-	public void generate(IWorldEditor editor, Random rand, ITheme theme, int x, int y, int z) {
+	public void generate(IWorldEditor editor, Random rand, ITheme theme, Coord origin) {
 		
 		IBlockFactory blocks = theme.getPrimaryWall();
 		IBlockFactory pillar = theme.getPrimaryPillar();
@@ -25,9 +25,7 @@ public class WitchTower implements ITower {
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		MetaBlock glass = ColorBlock.get(ColorBlock.GLASS, DyeColor.BLACK);
 		
-		Coord origin = new Coord(x, y, z);
-		
-		Coord main = Tower.getBaseCoord(editor, x, y, z);
+		Coord main = Tower.getBaseCoord(editor, origin);
 		
 		Coord cursor;
 		Coord start;

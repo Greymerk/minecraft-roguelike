@@ -13,18 +13,21 @@ import greymerk.roguelike.worldgen.blocks.BlockType;
 public class EthoTower implements ITower {
 
 	@Override
-	public void generate(IWorldEditor editor, Random rand, ITheme theme, int x, int y, int z) {
+	public void generate(IWorldEditor editor, Random rand, ITheme theme, Coord dungeon) {
 		
 		IBlockFactory primary = theme.getPrimaryWall();
 		IBlockFactory pillar = theme.getSecondaryPillar();
 		
 		IStair stair = theme.getSecondaryStair();
 		
-		Coord floor = Tower.getBaseCoord(editor, x, y, z);
+		Coord floor = Tower.getBaseCoord(editor, dungeon);
 		
 		Coord start = new Coord(floor);
 		Coord end = new Coord(start);
 		Coord cursor;
+		
+		int x = dungeon.getX();
+		int z = dungeon.getZ();
 		
 		start.add(Cardinal.NORTH, 3);
 		start.add(Cardinal.WEST, 3);

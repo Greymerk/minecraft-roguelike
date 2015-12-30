@@ -16,9 +16,9 @@ import greymerk.roguelike.worldgen.blocks.DyeColor;
 public class BunkerTower implements ITower{
 
 	@Override
-	public void generate(IWorldEditor editor, Random rand, ITheme theme, int x, int y, int z) {
+	public void generate(IWorldEditor editor, Random rand, ITheme theme, Coord dungeon) {
 		
-		Coord origin = Tower.getBaseCoord(editor, x, y, z);
+		Coord origin = Tower.getBaseCoord(editor, dungeon);
 		origin.add(Cardinal.UP);
 		Coord cursor;
 		Coord start;
@@ -39,7 +39,7 @@ public class BunkerTower implements ITower{
 		end.add(Cardinal.UP, 4);
 		walls.fillRectHollow(editor, rand, start, end, true, true);
 		
-		start = new Coord(origin.getX(), y + 10, origin.getZ());
+		start = new Coord(origin.getX(), dungeon.getY() + 10, origin.getZ());
 		end = new Coord(origin);
 		end.add(Cardinal.DOWN);
 		start.add(Cardinal.NORTH, 5);
@@ -55,7 +55,7 @@ public class BunkerTower implements ITower{
 			end = new Coord(start);
 			start.add(orth[0]);
 			end.add(orth[1]);
-			start = new Coord(start.getX(), y + 10, start.getZ());
+			start = new Coord(start.getX(), dungeon.getY() + 10, start.getZ());
 			end.add(Cardinal.UP, 3);
 			walls.fillRectSolid(editor, rand, start, end, true, true);
 			end.add(Cardinal.DOWN);
@@ -73,7 +73,7 @@ public class BunkerTower implements ITower{
 			cursor = new Coord(origin);
 			cursor.add(dir, 5);
 			cursor.add(orth[0], 5);
-			start = new Coord(origin.getX(), y + 10, origin.getZ());
+			start = new Coord(origin.getX(), dungeon.getY() + 10, origin.getZ());
 			start.add(dir, 6);
 			start.add(orth[0], 6);
 			end = new Coord(origin);
@@ -91,7 +91,7 @@ public class BunkerTower implements ITower{
 			
 			
 			for(Cardinal o : orth){
-				start = new Coord(origin.getX(), y + 10, origin.getZ());
+				start = new Coord(origin.getX(), dungeon.getY() + 10, origin.getZ());
 				start.add(dir, 5);
 				start.add(o, 5);
 				end = new Coord(origin);
@@ -325,7 +325,7 @@ public class BunkerTower implements ITower{
 		
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.UP, 4);
-		start = new Coord(cursor.getX(), y, cursor.getZ());
+		start = new Coord(cursor.getX(), dungeon.getY(), cursor.getZ());
 		end = new Coord(cursor);
 		for(Coord c : editor.getRectSolid(start, end)){
 			editor.spiralStairStep(rand, c, stair, pillar);

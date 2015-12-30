@@ -15,7 +15,11 @@ import greymerk.roguelike.worldgen.redstone.Torch;
 
 public class RogueTower implements ITower{
 
-	public void generate(IWorldEditor editor, Random rand, ITheme theme, int x, int y, int z){
+	public void generate(IWorldEditor editor, Random rand, ITheme theme, Coord dungeon){
+		
+		int x = dungeon.getX();
+		int y = dungeon.getY();
+		int z = dungeon.getZ();
 		
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		
@@ -23,7 +27,7 @@ public class RogueTower implements ITower{
 		
 		IStair stair = theme.getPrimaryStair();
 		
-		Coord floor = Tower.getBaseCoord(editor, x, y, z);
+		Coord floor = Tower.getBaseCoord(editor, dungeon);
 		int ground = floor.getY() - 1;
 		int main = floor.getY() + 4;
 		int roof = floor.getY() + 9;

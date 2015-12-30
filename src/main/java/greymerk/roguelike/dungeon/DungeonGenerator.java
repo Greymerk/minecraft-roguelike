@@ -52,7 +52,7 @@ public class DungeonGenerator {
 		
 		Tower tower = settings.getTower().getTower();
 		rand = Dungeon.getRandom(editor, inX, inZ);
-		Tower.get(tower).generate(editor, rand, settings.getTower().getTheme(), inX, TOPLEVEL, inZ);
+		Tower.get(tower).generate(editor, rand, settings.getTower().getTheme(), new Coord(inX, TOPLEVEL, inZ));
 	}
 	
 	public List<IDungeonLevel> getLevels(){
