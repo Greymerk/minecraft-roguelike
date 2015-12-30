@@ -19,12 +19,12 @@ import java.util.Random;
 public class SegmentTomb extends SegmentBase {
 	
 	@Override
-	protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
+	protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, Coord origin) {
 		
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		IStair stair = theme.getPrimaryStair();
 		
-		Coord cursor = new Coord(x, y, z);
+		Coord cursor = new Coord(origin);
 		Coord start;
 		Coord end;
 		
@@ -50,9 +50,9 @@ public class SegmentTomb extends SegmentBase {
 			editor.setBlock(rand, c, stair, true, true);
 		}
 		
-		tomb(editor, rand, level.getSettings(), theme, dir, new Coord(x, y, z));
+		tomb(editor, rand, level.getSettings(), theme, dir, new Coord(origin));
 		
-		cursor = new Coord(x, y, z);
+		cursor = new Coord(origin);
 		cursor.add(Cardinal.UP);
 		cursor.add(dir, 3);
 		editor.setBlock(cursor, BlockType.get(BlockType.QUARTZ));

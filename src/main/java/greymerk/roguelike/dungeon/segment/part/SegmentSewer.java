@@ -15,7 +15,7 @@ public class SegmentSewer extends SegmentBase {
 
 	
 	@Override
-	protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
+	protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, Coord origin) {
 		
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		MetaBlock water = BlockType.get(BlockType.WATER_FLOWING);
@@ -26,7 +26,7 @@ public class SegmentSewer extends SegmentBase {
 		
 		Cardinal[] orth = Cardinal.getOrthogonal(dir);
 		
-		start = new Coord(x, y, z);
+		start = new Coord(origin);
 		start.add(Cardinal.UP, 2);
 		start.add(dir);
 		end = new Coord(start);
@@ -35,7 +35,7 @@ public class SegmentSewer extends SegmentBase {
 		stair.setOrientation(Cardinal.reverse(dir), true);
 		editor.fillRectSolid(rand, start, end, stair, true, true);
 		
-		start = new Coord(x, y, z);
+		start = new Coord(origin);
 		start.add(Cardinal.DOWN);
 		end = new Coord(start);
 		start.add(orth[0]);

@@ -15,7 +15,7 @@ import java.util.Random;
 public class SegmentNetherLava extends SegmentBase {
 
 	@Override
-	protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
+	protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, Coord origin) {
 		
 		IStair step = theme.getSecondaryStair();
 		MetaBlock air = BlockType.get(BlockType.AIR);
@@ -26,19 +26,19 @@ public class SegmentNetherLava extends SegmentBase {
 		Coord cursor;
 		
 		
-		cursor = new Coord(x, y, z);
+		cursor = new Coord(origin);
 		cursor.add(dir, 2);
 		air.setBlock(editor, cursor);
 		cursor.add(Cardinal.UP, 1);
 		air.setBlock(editor, cursor);
-		cursor = new Coord(x, y, z);
+		cursor = new Coord(origin);
 		cursor.add(dir, 5);
 		boolean isAir = editor.isAirBlock(cursor);
 		boolean isLava = true;
 		IBlockFactory wall = theme.getSecondaryWall();
 		
 		for(Cardinal orth : Cardinal.getOrthogonal(dir)){
-			start = new Coord(x, y, z);
+			start = new Coord(origin);
 			start.add(dir, 3);
 			end = new Coord(start);
 			start.add(orth, 1);
@@ -51,7 +51,7 @@ public class SegmentNetherLava extends SegmentBase {
 				lava.setBlock(editor, start);
 			}
 			
-			cursor = new Coord(x, y, z);
+			cursor = new Coord(origin);
 			cursor.add(dir, 2);
 			
 			step.setOrientation(Cardinal.reverse(orth), false);

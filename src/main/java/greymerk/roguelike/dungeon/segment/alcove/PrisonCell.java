@@ -21,14 +21,12 @@ public class PrisonCell implements IAlcove{
 	private ITheme theme;
 	
 	@Override
-	public void generate(IWorldEditor editor, Random rand, LevelSettings settings, int x, int y, int z, Cardinal dir) {
+	public void generate(IWorldEditor editor, Random rand, LevelSettings settings, Coord origin, Cardinal dir) {
 		
 		this.theme = settings.getTheme();
 		IBlockFactory walls = theme.getPrimaryWall();
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		MetaBlock plate = BlockType.get(BlockType.PRESSURE_PLATE_STONE);
-		
-		Coord origin = new Coord(x, y, z);
 		
 		Coord start = new Coord(origin);
 		start.add(dir, RECESSED);
@@ -56,13 +54,13 @@ public class PrisonCell implements IAlcove{
 	}
 
 	@Override
-	public boolean isValidLocation(IWorldEditor editor, int x, int y, int z, Cardinal dir) {
+	public boolean isValidLocation(IWorldEditor editor, Coord origin, Cardinal dir) {
 
-		Coord centre = new Coord(x, y, z);
+		Coord centre = new Coord(origin);
 		centre.add(dir, RECESSED);
-		x = centre.getX();
-		y = centre.getY();
-		z = centre.getZ();
+		int x = centre.getX();
+		int y = centre.getY();
+		int z = centre.getZ();
 		
 		List<Coord> toCheck = editor.getRectSolid(new Coord(x - 2, y, z - 2), new Coord(x + 2, y, z + 2));
 

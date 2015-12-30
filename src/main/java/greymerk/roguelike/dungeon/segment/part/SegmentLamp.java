@@ -19,10 +19,8 @@ import java.util.Random;
 public class SegmentLamp extends SegmentBase{
 
 	@Override
-	protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
+	protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, Coord origin) {
 		
-		
-		Coord origin = new Coord(x, y, z);
 		IStair stair = theme.getPrimaryStair();
 		IBlockFactory wall = theme.getPrimaryWall();
 		MetaBlock air = BlockType.get(BlockType.AIR);

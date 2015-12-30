@@ -14,9 +14,8 @@ import greymerk.roguelike.worldgen.blocks.BlockType;
 public class SegmentSquareArch extends SegmentBase {
 
 	@Override
-	protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
+	protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, Coord origin) {
 
-		Coord origin = new Coord(x, y, z);
 		Coord start;
 		Coord end;
 		

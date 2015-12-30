@@ -19,12 +19,12 @@ import greymerk.roguelike.worldgen.blocks.Door;
 public class SegmentPrisonCell extends SegmentBase {
 	
 	@Override
-	protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
+	protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, Coord origin) {
 		
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		IStair stair = theme.getSecondaryStair();
 		
-		Coord cursor = new Coord(x, y, z);
+		Coord cursor = new Coord(origin);
 		Coord start;
 		Coord end;
 		
@@ -39,7 +39,7 @@ public class SegmentPrisonCell extends SegmentBase {
 		editor.fillRectSolid(rand, start, end, air, true, true);
 		
 		SecretFactory secrets = level.getSettings().getSecrets();
-		IDungeonRoom room = secrets.genRoom(editor, rand, level.getSettings(), dir, new Coord(x, y, z));
+		IDungeonRoom room = secrets.genRoom(editor, rand, level.getSettings(), dir, new Coord(origin));
 		
 		start.add(dir, 1);
 		end.add(dir, 1);
@@ -54,13 +54,13 @@ public class SegmentPrisonCell extends SegmentBase {
 		}
 		
 		if(room != null){
-			cursor = new Coord(x, y, z);
+			cursor = new Coord(origin);
 			cursor.add(dir, 3);
 			Door.generate(editor, cursor, Cardinal.reverse(dir), Door.OAK);
 		} else {
 			IAlcove cell = new PrisonCell();
-			if(cell.isValidLocation(editor, x, y, z, dir)){
-				cell.generate(editor, rand, level.getSettings(), x, y, z, dir);
+			if(cell.isValidLocation(editor, new Coord(origin), dir)){
+				cell.generate(editor, rand, level.getSettings(), new Coord(origin), dir);
 			}
 		}
 	}	

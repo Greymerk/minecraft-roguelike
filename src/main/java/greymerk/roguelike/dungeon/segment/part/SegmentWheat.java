@@ -17,19 +17,19 @@ public class SegmentWheat extends SegmentBase {
 
 
 	@Override
-	protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
+	protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, Coord origin) {
 		
 		Coord cursor;
 		Coord start;
 		Coord end;
 		
-		cursor = new Coord(x, y, z);
+		cursor = new Coord(origin);
 		cursor.add(Cardinal.DOWN);
 		cursor.add(dir, 3);
 		editor.setBlock(cursor, BlockType.get(BlockType.WATER_FLOWING));
 		
 		Cardinal[] orth = Cardinal.getOrthogonal(dir);
-		start = new Coord(x, y, z);
+		start = new Coord(origin);
 		start.add(dir, 2);
 		end = new Coord(start);
 		start.add(orth[0]);
@@ -38,7 +38,7 @@ public class SegmentWheat extends SegmentBase {
 		end.add(dir);
 		editor.fillRectSolid(rand, start, end, theme.getSecondaryWall(), true, true);
 		
-		start = new Coord(x, y, z);
+		start = new Coord(origin);
 		start.add(dir, 2);
 		end = new Coord(start);
 		start.add(orth[0], 1);
@@ -57,7 +57,7 @@ public class SegmentWheat extends SegmentBase {
 		crops.addBlock(Crops.get(Crops.POTATOES));
 		editor.fillRectSolid(rand, start, end, crops, true, true);
 		
-		cursor = new Coord(x, y, z);
+		cursor = new Coord(origin);
 		cursor.add(dir, 3);
 		cursor.add(Cardinal.UP, 1);
 		MetaBlock pumpkin = Crops.getPumpkin(Cardinal.reverse(dir), true);		
@@ -66,7 +66,7 @@ public class SegmentWheat extends SegmentBase {
 		IStair stair = theme.getSecondaryStair();
 		
 		for(Cardinal d : orth){
-			cursor = new Coord(x, y, z);
+			cursor = new Coord(origin);
 			cursor.add(dir, 2);
 			cursor.add(d, 1);
 			cursor.add(Cardinal.UP, 1);	

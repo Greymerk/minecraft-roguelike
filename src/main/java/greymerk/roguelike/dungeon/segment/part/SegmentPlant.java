@@ -16,12 +16,12 @@ import greymerk.roguelike.worldgen.blocks.Trapdoor;
 public class SegmentPlant extends SegmentBase {
 	
 	@Override
-	protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
+	protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, Coord origin) {
 		
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		IStair stair = theme.getSecondaryStair();
 		
-		Coord cursor = new Coord(x, y, z);
+		Coord cursor = new Coord(origin);
 		Coord start;
 		Coord end;
 		
@@ -47,7 +47,7 @@ public class SegmentPlant extends SegmentBase {
 			editor.setBlock(rand, c, stair, true, true);
 		}
 		
-		cursor = new Coord(x, y, z);
+		cursor = new Coord(origin);
 		cursor.add(dir, 2);
 		plant(editor, rand, theme, cursor);		
 		

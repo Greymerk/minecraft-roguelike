@@ -14,14 +14,14 @@ import java.util.Random;
 public class SegmentArch extends SegmentBase {
 
 	@Override
-	protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
+	protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, Coord origin) {
 			
 		IStair stair = theme.getSecondaryStair(); 
 		stair.setOrientation(Cardinal.reverse(dir), true);
 		
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		
-		Coord cursor = new Coord(x, y, z);
+		Coord cursor = new Coord(origin);
 		cursor.add(dir, 2);
 		editor.setBlock(rand, cursor, air, true, true);
 		cursor.add(Cardinal.UP, 1);
@@ -30,7 +30,7 @@ public class SegmentArch extends SegmentBase {
 		editor.setBlock(rand, cursor, stair, true, true);
 		
 		for(Cardinal orth : Cardinal.getOrthogonal(dir)){
-			cursor = new Coord(x, y, z);
+			cursor = new Coord(origin);
 			cursor.add(orth, 1);
 			cursor.add(dir, 2);
 			editor.setBlock(rand, cursor, theme.getSecondaryPillar(), true, true);

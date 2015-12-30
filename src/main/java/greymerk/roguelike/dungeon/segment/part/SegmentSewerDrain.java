@@ -15,7 +15,7 @@ public class SegmentSewerDrain extends SegmentBase {
 
 	
 	@Override
-	protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
+	protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, Coord origin) {
 		
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		MetaBlock water = BlockType.get(BlockType.WATER_FLOWING);
@@ -28,7 +28,7 @@ public class SegmentSewerDrain extends SegmentBase {
 		
 		Cardinal[] orth = Cardinal.getOrthogonal(dir);
 		
-		start = new Coord(x, y, z);
+		start = new Coord(origin);
 		start.add(Cardinal.DOWN);
 		end = new Coord(start);
 		start.add(orth[0]);
@@ -38,7 +38,7 @@ public class SegmentSewerDrain extends SegmentBase {
 		end.add(Cardinal.DOWN);
 		editor.fillRectSolid(rand, start, end, water, false, true);
 				
-		start = new Coord(x, y, z);
+		start = new Coord(origin);
 		start.add(dir, 2);
 		end = new Coord(start);
 		start.add(orth[0]);
@@ -50,7 +50,7 @@ public class SegmentSewerDrain extends SegmentBase {
 		editor.fillRectSolid(rand, start, end, BlockType.get(BlockType.COBBLESTONE_MOSSY), true, true);
 		
 		for(Cardinal o : orth){
-			cursor = new Coord(x, y, z);
+			cursor = new Coord(origin);
 			cursor.add(dir, 2);
 			cursor.add(o);
 			stair.setOrientation(Cardinal.reverse(o), false).setBlock(editor, cursor);
@@ -60,14 +60,14 @@ public class SegmentSewerDrain extends SegmentBase {
 			stair.setOrientation(Cardinal.reverse(o), true).setBlock(editor, cursor);
 		}
 		
-		start = new Coord(x, y, z);
+		start = new Coord(origin);
 		start.add(Cardinal.UP);
 		end = new Coord(start);
 		end.add(dir, 5);
 		editor.fillRectSolid(rand, start, end, air, true, true);
 		water.setBlock(editor, end);
 		
-		cursor = new Coord(x, y, z);
+		cursor = new Coord(origin);
 		cursor.add(Cardinal.DOWN);
 		cursor.add(dir);
 		air.setBlock(editor, cursor);

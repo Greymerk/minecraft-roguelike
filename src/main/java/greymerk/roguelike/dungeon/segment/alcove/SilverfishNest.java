@@ -19,10 +19,10 @@ public class SilverfishNest implements IAlcove{
 	private static int RECESSED = 6;
 	
 	@Override
-	public void generate(IWorldEditor editor, Random rand, LevelSettings settings, int x, int y, int z, Cardinal dir) {
+	public void generate(IWorldEditor editor, Random rand, LevelSettings settings, Coord origin, Cardinal dir) {
 		
-		Coord corridor = new Coord(x, y, z);
-		Coord centre = new Coord(x, y, z);
+		Coord corridor = new Coord(origin);
+		Coord centre = new Coord(origin);
 		centre.add(dir, RECESSED);
 		
 		nest(editor, rand, centre.getX(), centre.getY(), centre.getZ());
@@ -40,13 +40,13 @@ public class SilverfishNest implements IAlcove{
 	}
 
 	@Override
-	public boolean isValidLocation(IWorldEditor editor, int x, int y, int z, Cardinal dir) {
+	public boolean isValidLocation(IWorldEditor editor, Coord origin, Cardinal dir) {
 
-		Coord centre = new Coord(x, y, z);
+		Coord centre = new Coord(origin);
 		centre.add(dir, RECESSED);
-		x = centre.getX();
-		y = centre.getY();
-		z = centre.getZ();
+		int x = centre.getX();
+		int y = centre.getY();
+		int z = centre.getZ();
 		
 		List<Coord> toCheck = editor.getRectSolid(new Coord(x - 2, y + 1, z - 2), new Coord(x + 2, y + 1, z + 2));
 

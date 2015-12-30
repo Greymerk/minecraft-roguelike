@@ -15,12 +15,12 @@ import greymerk.roguelike.worldgen.blocks.BlockType;
 public class SegmentFirePlace extends SegmentBase {
 	
 	@Override
-	protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
+	protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, Coord origin) {
 		
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		IStair stair = theme.getSecondaryStair();
 		
-		Coord cursor = new Coord(x, y, z);
+		Coord cursor = new Coord(origin);
 		Coord start;
 		Coord end;
 		
@@ -50,7 +50,7 @@ public class SegmentFirePlace extends SegmentBase {
 		
 		stair = theme.getPrimaryStair();
 		
-		cursor = new Coord(x, y, z);
+		cursor = new Coord(origin);
 		cursor.add(dir, 3);
 		stair.setOrientation(Cardinal.reverse(dir), false);
 		stair.setBlock(editor, cursor);
@@ -60,7 +60,7 @@ public class SegmentFirePlace extends SegmentBase {
 		stair.setOrientation(Cardinal.reverse(dir), true);
 		stair.setBlock(editor, cursor);
 		
-		start = new Coord(x, y, z);
+		start = new Coord(origin);
 		start.add(dir, 4);
 		end = new Coord(start);
 		start.add(Cardinal.DOWN);
@@ -75,7 +75,7 @@ public class SegmentFirePlace extends SegmentBase {
 		
 		editor.fillRectSolid(rand, start, end, theme.getPrimaryWall(), true, true);
 		
-		cursor = new Coord(x, y, z);
+		cursor = new Coord(origin);
 		cursor.add(dir, 4);
 		editor.setBlock(cursor, BlockType.get(BlockType.NETHERRACK));
 		cursor.add(Cardinal.UP);

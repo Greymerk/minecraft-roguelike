@@ -14,7 +14,7 @@ import java.util.Random;
 public class SegmentSewerArch extends SegmentBase {
 
 	@Override
-	protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
+	protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, Coord origin) {
 			
 		IStair stair = theme.getSecondaryStair(); 
 		stair.setOrientation(Cardinal.reverse(dir), true);
@@ -29,13 +29,13 @@ public class SegmentSewerArch extends SegmentBase {
 		
 		Cardinal[] orth = Cardinal.getOrthogonal(dir);
 		
-		cursor = new Coord(x, y, z);
+		cursor = new Coord(origin);
 		cursor.add(Cardinal.UP, 3);
 		editor.setBlock(rand, cursor, mossy, false, true);
 		cursor.add(Cardinal.UP);
 		editor.setBlock(rand, cursor, water, false, true);
 		
-		cursor = new Coord(x, y, z);
+		cursor = new Coord(origin);
 		cursor.add(dir, 2);
 		editor.setBlock(rand, cursor, air, true, true);
 		cursor.add(Cardinal.UP, 1);
@@ -43,13 +43,13 @@ public class SegmentSewerArch extends SegmentBase {
 		cursor.add(Cardinal.UP, 1);
 		editor.setBlock(rand, cursor, stair, true, true);
 		
-		cursor = new Coord(x, y, z);
+		cursor = new Coord(origin);
 		cursor.add(dir, 2);
 		bars.setBlock(editor, cursor);
 		cursor.add(Cardinal.UP);
 		bars.setBlock(editor, cursor);
 		
-		start = new Coord(x, y, z);
+		start = new Coord(origin);
 		start.add(Cardinal.DOWN);
 		end = new Coord(start);
 		start.add(orth[0]);
@@ -60,7 +60,7 @@ public class SegmentSewerArch extends SegmentBase {
 		editor.fillRectSolid(rand, start, end, water, true, true);
 		
 		for(Cardinal o : orth){
-			cursor = new Coord(x, y, z);
+			cursor = new Coord(origin);
 			cursor.add(o, 1);
 			cursor.add(dir, 2);
 			editor.setBlock(rand, cursor, theme.getSecondaryPillar(), true, true);

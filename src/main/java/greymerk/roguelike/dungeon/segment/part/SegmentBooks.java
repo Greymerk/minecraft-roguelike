@@ -14,12 +14,12 @@ import greymerk.roguelike.worldgen.blocks.BlockType;
 public class SegmentBooks extends SegmentBase {
 	
 	@Override
-	protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
+	protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, Coord origin) {
 		
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		IStair stair = theme.getSecondaryStair();
 		
-		Coord cursor = new Coord(x, y, z);
+		Coord cursor = new Coord(origin);
 		Coord start;
 		Coord end;
 		
@@ -33,7 +33,7 @@ public class SegmentBooks extends SegmentBase {
 		end.add(Cardinal.UP, 2);
 		editor.fillRectSolid(rand, start, end, air, true, true);
 		
-		level.getSettings().getSecrets().genRoom(editor, rand, level.getSettings(), dir, new Coord(x, y, z));
+		level.getSettings().getSecrets().genRoom(editor, rand, level.getSettings(), dir, new Coord(origin));
 		
 		start.add(dir, 1);
 		end.add(dir, 1);
@@ -47,7 +47,7 @@ public class SegmentBooks extends SegmentBase {
 			editor.setBlock(rand, c, stair, true, true);
 		}
 		
-		cursor = new Coord(x, y, z);
+		cursor = new Coord(origin);
 		cursor.add(dir, 3);
 		editor.setBlock(cursor, BlockType.get(BlockType.SHELF));
 		cursor.add(Cardinal.UP);

@@ -14,7 +14,7 @@ import java.util.Random;
 public class SegmentMineShaft extends SegmentBase {
 	
 	@Override
-	protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
+	protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, Coord origin) {
 		
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		
@@ -22,7 +22,7 @@ public class SegmentMineShaft extends SegmentBase {
 		
 		Cardinal[] orth = Cardinal.getOrthogonal(dir);
 		
-		Coord cursor = new Coord(x, y, z);
+		Coord cursor = new Coord(origin);
 		Coord start;
 		Coord end;
 
@@ -38,7 +38,7 @@ public class SegmentMineShaft extends SegmentBase {
 		cursor.add(orth[0]);
 		editor.fillRectSolid(rand, start, end, air, true, true);
 		
-		start = new Coord(x, y, z);
+		start = new Coord(origin);
 		start.add(dir, 2);
 		end = new Coord(start);
 		end.add(Cardinal.UP, 3);

@@ -20,7 +20,7 @@ import net.minecraft.item.ItemStack;
 public class SegmentTrap extends SegmentBase{
 
 	@Override
-	protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
+	protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, Coord origin) {
 		
 		MetaBlock plate = BlockType.get(BlockType.PRESSURE_PLATE_STONE);
 		MetaBlock wire = BlockType.get(BlockType.REDSTONE_WIRE);
@@ -31,7 +31,6 @@ public class SegmentTrap extends SegmentBase{
 		
 		Cardinal[] orth = Cardinal.getOrthogonal(dir);
 		
-		Coord origin = new Coord(x, y, z);
 		Coord cursor;
 		Coord start;
 		Coord end;

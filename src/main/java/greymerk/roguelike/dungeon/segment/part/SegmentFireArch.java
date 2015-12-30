@@ -16,7 +16,7 @@ public class SegmentFireArch extends SegmentBase {
 
 	
 	@Override
-	protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
+	protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, Coord origin) {
 		
 		IStair stair = theme.getPrimaryStair();
 		IBlockFactory walls = theme.getPrimaryWall();
@@ -27,7 +27,7 @@ public class SegmentFireArch extends SegmentBase {
 		
 		Cardinal[] orths = Cardinal.getOrthogonal(dir);
 		
-		start = new Coord(x, y, z);
+		start = new Coord(origin);
 		start.add(dir, 3);
 		end = new Coord(start);
 		start.add(orths[0]);
@@ -35,7 +35,7 @@ public class SegmentFireArch extends SegmentBase {
 		end.add(Cardinal.UP, 2);
 		end.add(dir);
 		editor.fillRectSolid(rand, start, end, walls, true, true);
-		cursor = new Coord(x, y, z);
+		cursor = new Coord(origin);
 		cursor.add(dir, 2);
 		stair.setOrientation(Cardinal.reverse(dir), false).setBlock(editor, cursor);
 		cursor.add(Cardinal.UP, 2);
@@ -50,7 +50,7 @@ public class SegmentFireArch extends SegmentBase {
 		
 		for(Cardinal orth : orths){
 			
-			cursor = new Coord(x, y, z);
+			cursor = new Coord(origin);
 			cursor.add(dir);
 			cursor.add(orth);
 			cursor.add(Cardinal.UP, 2);

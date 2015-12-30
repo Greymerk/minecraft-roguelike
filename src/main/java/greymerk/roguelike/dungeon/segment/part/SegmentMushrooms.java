@@ -19,7 +19,7 @@ public class SegmentMushrooms extends SegmentBase {
 	
 	
 	@Override
-	protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal wallDirection, ITheme theme, int x, int y, int z) {
+	protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal wallDirection, ITheme theme, Coord origin) {
 		
 		IStair stair = theme.getSecondaryStair();
 		MetaBlock air = BlockType.get(BlockType.AIR);
@@ -34,7 +34,7 @@ public class SegmentMushrooms extends SegmentBase {
 		Coord end;
 		
 		Cardinal[] orth = Cardinal.getOrthogonal(wallDirection);
-		start = new Coord(x, y, z);
+		start = new Coord(origin);
 		start.add(wallDirection, 2);
 		end = new Coord(start);
 		start.add(orth[0], 1);
@@ -50,7 +50,7 @@ public class SegmentMushrooms extends SegmentBase {
 		editor.fillRectSolid(rand, start, end, mushrooms, true, true);
 		
 		for(Cardinal d : orth){
-			cursor = new Coord(x, y, z);
+			cursor = new Coord(origin);
 			cursor.add(wallDirection, 2);
 			cursor.add(d, 1);
 			cursor.add(Cardinal.UP, 1);

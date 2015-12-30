@@ -16,12 +16,12 @@ import greymerk.roguelike.worldgen.blocks.BlockType;
 public class SegmentSilverfish extends SegmentBase {
 	
 	@Override
-	protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
+	protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, Coord origin) {
 		
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		IStair stair = theme.getSecondaryStair();
 		
-		Coord cursor = new Coord(x, y, z);
+		Coord cursor = new Coord(origin);
 		Coord start;
 		Coord end;
 		
@@ -51,7 +51,7 @@ public class SegmentSilverfish extends SegmentBase {
 		
 		stair = theme.getPrimaryStair();
 		
-		cursor = new Coord(x, y, z);
+		cursor = new Coord(origin);
 		cursor.add(dir, 3);
 		stair.setOrientation(Cardinal.reverse(dir), false);
 		stair.setBlock(editor, cursor);
@@ -62,8 +62,8 @@ public class SegmentSilverfish extends SegmentBase {
 		stair.setBlock(editor, cursor);
 		
 		IAlcove nest = new SilverfishNest();
-		if(nest.isValidLocation(editor, x, y, z, dir)){
-			nest.generate(editor, rand, level.getSettings(), x, y, z, dir);
+		if(nest.isValidLocation(editor, new Coord(origin), dir)){
+			nest.generate(editor, rand, level.getSettings(), new Coord(origin), dir);
 			return;
 		}
 	}	

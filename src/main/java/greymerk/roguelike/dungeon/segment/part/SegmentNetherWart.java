@@ -16,7 +16,7 @@ import java.util.Random;
 public class SegmentNetherWart extends SegmentBase{
 
 	@Override
-	protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
+	protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, Coord origin) {
 		
 		IStair step = theme.getSecondaryStair();
 		IBlockFactory wall = theme.getSecondaryWall();
@@ -24,16 +24,16 @@ public class SegmentNetherWart extends SegmentBase{
 
 		Coord cursor;
 		
-		cursor = new Coord(x, y, z);
+		cursor = new Coord(origin);
 		cursor.add(dir, 2);
 		editor.setBlock(rand, cursor, air, true, true);
 		cursor.add(Cardinal.UP, 1);
 		editor.setBlock(rand, cursor, air, true, true);
-		cursor = new Coord(x, y, z);
+		cursor = new Coord(origin);
 		cursor.add(dir, 5);
 
 		
-		cursor = new Coord(x, y, z);
+		cursor = new Coord(origin);
 		cursor.add(dir, 3);
 		editor.setBlock(cursor, BlockType.get(BlockType.FENCE_NETHER_BRICK));
 		cursor.add(Cardinal.UP, 1);
@@ -41,7 +41,7 @@ public class SegmentNetherWart extends SegmentBase{
 		
 		for(Cardinal orth : Cardinal.getOrthogonal(dir)){
 			step.setOrientation(Cardinal.reverse(orth), true);
-			cursor = new Coord(x, y, z);
+			cursor = new Coord(origin);
 			cursor.add(dir, 2);
 			cursor.add(orth, 1);
 			cursor.add(Cardinal.UP, 1);
