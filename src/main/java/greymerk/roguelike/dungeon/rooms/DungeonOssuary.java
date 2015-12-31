@@ -212,7 +212,7 @@ public class DungeonOssuary extends DungeonBase {
 				start = new Coord(origin);
 				start.add(dir, 4);
 				start.add(orth[0], 4);
-				start.add(d, 2);
+				start.add(d, 3);
 				end = new Coord(start);
 				end.add(Cardinal.UP, 4);
 				walls.fillRectSolid(editor, rand, start, end, true, true);
@@ -221,13 +221,16 @@ public class DungeonOssuary extends DungeonBase {
 				end.add(Cardinal.getOrthogonal(d)[1]);
 				end.add(Cardinal.UP, 2);
 				walls.fillRectSolid(editor, rand, start, end, true, true);
-				
+				start.add(Cardinal.reverse(d));
+				end.add(Cardinal.reverse(d));
+				start.add(Cardinal.UP);
+				walls.fillRectSolid(editor, rand, start, end, true, true);
 
 				for(Cardinal o : Cardinal.getOrthogonal(d)){
 					cursor = new Coord(origin);
 					cursor.add(dir, 4);
 					cursor.add(orth[0], 4);
-					cursor.add(d, 2);
+					cursor.add(d, 3);
 					cursor.add(o);
 					walls.setBlock(editor, rand, cursor);
 					cursor.add(Cardinal.UP);
@@ -236,6 +239,9 @@ public class DungeonOssuary extends DungeonBase {
 					walls.setBlock(editor, rand, cursor);
 					cursor.add(Cardinal.UP);
 					skull(editor, rand, Cardinal.reverse(d), cursor);
+					cursor.add(Cardinal.UP);
+					cursor.add(Cardinal.reverse(d));
+					stair.setOrientation(Cardinal.reverse(o), true).setBlock(editor, cursor);
 				}
 			}
 			
@@ -262,6 +268,6 @@ public class DungeonOssuary extends DungeonBase {
 	
 	@Override
 	public int getSize() {
-		return 8;
+		return 10;
 	}
 }
