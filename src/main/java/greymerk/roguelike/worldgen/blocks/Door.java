@@ -39,13 +39,13 @@ public enum Door {
 		default: door = new MetaBlock(Blocks.oak_door.getDefaultState()); break;
 		}
 		
-		door = door.withProperty(BlockDoor.HALF_PROP, top ? BlockDoor.EnumDoorHalf.UPPER : BlockDoor.EnumDoorHalf.LOWER);
+		door = door.withProperty(BlockDoor.HALF, top ? BlockDoor.EnumDoorHalf.UPPER : BlockDoor.EnumDoorHalf.LOWER);
 		
-		door = door.withProperty(BlockDoor.FACING_PROP, Cardinal.getFacing(dir));
+		door = door.withProperty(BlockDoor.FACING, Cardinal.getFacing(dir));
 		
-		door = door.withProperty(BlockDoor.OPEN_PROP, open);
+		door = door.withProperty(BlockDoor.OPEN, open);
 		
-		door = door.withProperty(BlockDoor.HINGEPOSITION_PROP, hingeLeft ? BlockDoor.EnumHingePosition.LEFT : BlockDoor.EnumHingePosition.RIGHT);
+		door = door.withProperty(BlockDoor.HINGE, hingeLeft ? BlockDoor.EnumHingePosition.LEFT : BlockDoor.EnumHingePosition.RIGHT);
 		
 		return new MetaBlock(door);
 	}

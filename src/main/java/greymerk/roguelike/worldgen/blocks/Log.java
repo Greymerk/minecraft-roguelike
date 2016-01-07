@@ -15,18 +15,18 @@ public class Log {
 		setType(log, type);
 
 		if(dir == null){
-			log.withProperty(BlockLog.AXIS_PROP, BlockLog.EnumAxis.NONE);
+			log.withProperty(BlockLog.LOG_AXIS, BlockLog.EnumAxis.NONE);
 			return log;
 		}
 		
 		switch(dir){
 		case UP:
-		case DOWN: log.withProperty(BlockLog.AXIS_PROP, BlockLog.EnumAxis.Y); break;
+		case DOWN: log.withProperty(BlockLog.LOG_AXIS, BlockLog.EnumAxis.Y); break;
 		case EAST:
-		case WEST: log.withProperty(BlockLog.AXIS_PROP, BlockLog.EnumAxis.X); break;
+		case WEST: log.withProperty(BlockLog.LOG_AXIS, BlockLog.EnumAxis.X); break;
 		case NORTH:
-		case SOUTH: log.withProperty(BlockLog.AXIS_PROP, BlockLog.EnumAxis.Z); break;
-		default: log.withProperty(BlockLog.AXIS_PROP, BlockLog.EnumAxis.NONE); break;
+		case SOUTH: log.withProperty(BlockLog.LOG_AXIS, BlockLog.EnumAxis.Z); break;
+		default: log.withProperty(BlockLog.LOG_AXIS, BlockLog.EnumAxis.NONE); break;
 		}
 		
 		return log;
@@ -51,13 +51,13 @@ public class Log {
 	
 	public static void setType(MetaBlock log, Wood type){
 		switch(type){
-		case OAK: log.withProperty(BlockPlanks.VARIANT_PROP, BlockPlanks.EnumType.OAK); return;
-		case SPRUCE: log.withProperty(BlockPlanks.VARIANT_PROP, BlockPlanks.EnumType.SPRUCE); return;
-		case BIRCH: log.withProperty(BlockPlanks.VARIANT_PROP, BlockPlanks.EnumType.BIRCH); return;
-		case JUNGLE: log.withProperty(BlockPlanks.VARIANT_PROP, BlockPlanks.EnumType.JUNGLE); return;
-		case ACACIA: log.withProperty(BlockPlanks.VARIANT_PROP, BlockPlanks.EnumType.ACACIA); return;
-		case DARKOAK: log.withProperty(BlockPlanks.VARIANT_PROP, BlockPlanks.EnumType.DARK_OAK); return;
-		default: log.withProperty(BlockPlanks.VARIANT_PROP, BlockPlanks.EnumType.OAK); return;
+		case OAK: log.withProperty(BlockPlanks.VARIANT, BlockPlanks.EnumType.OAK); return;
+		case SPRUCE: log.withProperty(BlockPlanks.VARIANT, BlockPlanks.EnumType.SPRUCE); return;
+		case BIRCH: log.withProperty(BlockPlanks.VARIANT, BlockPlanks.EnumType.BIRCH); return;
+		case JUNGLE: log.withProperty(BlockPlanks.VARIANT, BlockPlanks.EnumType.JUNGLE); return;
+		case ACACIA: log.withProperty(BlockPlanks.VARIANT, BlockPlanks.EnumType.ACACIA); return;
+		case DARKOAK: log.withProperty(BlockPlanks.VARIANT, BlockPlanks.EnumType.DARK_OAK); return;
+		default: log.withProperty(BlockPlanks.VARIANT, BlockPlanks.EnumType.OAK); return;
 		}
 	}
 }

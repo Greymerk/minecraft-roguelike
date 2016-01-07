@@ -11,6 +11,7 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ResourceLocation;
 
 public class WeightedRandomLoot implements Comparable<WeightedRandomLoot>, IWeighted<ItemStack>{
 	
@@ -61,7 +62,8 @@ public class WeightedRandomLoot implements Comparable<WeightedRandomLoot>, IWeig
 	
 	public WeightedRandomLoot(JsonObject json, int weight) throws Exception{
 		this.name = json.get("name").getAsString();
-		this.item = (Item) Item.itemRegistry.getObject(name);
+		ResourceLocation location = new ResourceLocation(name);
+		this.item = (Item) Item.itemRegistry.getObject(location);
 		try{
 			this.item.getUnlocalizedName();
 		} catch (NullPointerException e){

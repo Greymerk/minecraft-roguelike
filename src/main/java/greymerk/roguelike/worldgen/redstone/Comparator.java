@@ -16,9 +16,9 @@ public class Comparator {
 		MetaBlock comparator = new MetaBlock(Blocks.unpowered_comparator);
 		comparator.withProperty(BlockRedstoneComparator.FACING, Cardinal.getFacing(dir));
 		if(subtraction){
-			comparator.withProperty(BlockRedstoneComparator.field_176463_b, BlockRedstoneComparator.Mode.SUBTRACT);
+			comparator.withProperty(BlockRedstoneComparator.MODE, BlockRedstoneComparator.Mode.SUBTRACT);
 		} else {
-			comparator.withProperty(BlockRedstoneComparator.field_176463_b, BlockRedstoneComparator.Mode.COMPARE);
+			comparator.withProperty(BlockRedstoneComparator.MODE, BlockRedstoneComparator.Mode.COMPARE);
 		}
 		comparator.setBlock(world, pos);
 	}

@@ -27,12 +27,12 @@ public enum Wood {
 		MetaBlock plank = new MetaBlock(Blocks.planks);
 		
 		switch(type){
-		case OAK: plank.withProperty(BlockPlanks.VARIANT_PROP, BlockPlanks.EnumType.OAK); break;
-		case SPRUCE: plank.withProperty(BlockPlanks.VARIANT_PROP, BlockPlanks.EnumType.SPRUCE); break;
-		case BIRCH: plank.withProperty(BlockPlanks.VARIANT_PROP, BlockPlanks.EnumType.BIRCH); break;
-		case JUNGLE: plank.withProperty(BlockPlanks.VARIANT_PROP, BlockPlanks.EnumType.JUNGLE); break;
-		case ACACIA: plank.withProperty(BlockPlanks.VARIANT_PROP, BlockPlanks.EnumType.ACACIA); break;
-		case DARKOAK: plank.withProperty(BlockPlanks.VARIANT_PROP, BlockPlanks.EnumType.DARK_OAK); break;
+		case OAK: plank.withProperty(BlockPlanks.VARIANT, BlockPlanks.EnumType.OAK); break;
+		case SPRUCE: plank.withProperty(BlockPlanks.VARIANT, BlockPlanks.EnumType.SPRUCE); break;
+		case BIRCH: plank.withProperty(BlockPlanks.VARIANT, BlockPlanks.EnumType.BIRCH); break;
+		case JUNGLE: plank.withProperty(BlockPlanks.VARIANT, BlockPlanks.EnumType.JUNGLE); break;
+		case ACACIA: plank.withProperty(BlockPlanks.VARIANT, BlockPlanks.EnumType.ACACIA); break;
+		case DARKOAK: plank.withProperty(BlockPlanks.VARIANT, BlockPlanks.EnumType.DARK_OAK); break;
 		}
 		
 		return plank;
@@ -59,12 +59,12 @@ public enum Wood {
 		MetaBlock sapling = new MetaBlock(Blocks.sapling);
 		
 		switch(type){
-		case OAK: sapling.withProperty(BlockSapling.TYPE_PROP, BlockPlanks.EnumType.OAK); break; 
-		case SPRUCE: sapling.withProperty(BlockSapling.TYPE_PROP, BlockPlanks.EnumType.SPRUCE); break;
-		case BIRCH: sapling.withProperty(BlockSapling.TYPE_PROP, BlockPlanks.EnumType.BIRCH); break;
-		case JUNGLE: sapling.withProperty(BlockSapling.TYPE_PROP, BlockPlanks.EnumType.JUNGLE); break;
-		case ACACIA: sapling.withProperty(BlockSapling.TYPE_PROP, BlockPlanks.EnumType.ACACIA); break;
-		case DARKOAK: sapling.withProperty(BlockSapling.TYPE_PROP, BlockPlanks.EnumType.DARK_OAK); break;
+		case OAK: sapling.withProperty(BlockSapling.TYPE, BlockPlanks.EnumType.OAK); break; 
+		case SPRUCE: sapling.withProperty(BlockSapling.TYPE, BlockPlanks.EnumType.SPRUCE); break;
+		case BIRCH: sapling.withProperty(BlockSapling.TYPE, BlockPlanks.EnumType.BIRCH); break;
+		case JUNGLE: sapling.withProperty(BlockSapling.TYPE, BlockPlanks.EnumType.JUNGLE); break;
+		case ACACIA: sapling.withProperty(BlockSapling.TYPE, BlockPlanks.EnumType.ACACIA); break;
+		case DARKOAK: sapling.withProperty(BlockSapling.TYPE, BlockPlanks.EnumType.DARK_OAK); break;
 		default:
 		}
 		
@@ -73,7 +73,7 @@ public enum Wood {
 	
 	// used to copy the wood type from one block from another.
 	public static MetaBlock applyType(MetaBlock source, MetaBlock destination){
-		destination.withProperty(BlockPlanks.VARIANT_PROP, source.getValue(BlockPlanks.VARIANT_PROP));
+		destination.withProperty(BlockPlanks.VARIANT, source.getValue(BlockPlanks.VARIANT));
 		return destination;
 	}
 }

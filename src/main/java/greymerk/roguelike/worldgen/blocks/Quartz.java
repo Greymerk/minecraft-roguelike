@@ -14,10 +14,10 @@ public enum Quartz {
 		switch(type){
 		case CHISELED:
 			block = new MetaBlock(Blocks.quartz_block);
-			block.withProperty(BlockQuartz.VARIANT_PROP, BlockQuartz.EnumType.CHISELED);
+			block.withProperty(BlockQuartz.VARIANT, BlockQuartz.EnumType.CHISELED);
 		case PILLAR:
 			block = new MetaBlock(Blocks.quartz_block);
-			block.withProperty(BlockQuartz.VARIANT_PROP, BlockQuartz.EnumType.LINES_Y);
+			block.withProperty(BlockQuartz.VARIANT, BlockQuartz.EnumType.LINES_Y);
 		case SMOOTH:
 		default: return new MetaBlock(Blocks.quartz_block);
 		}
@@ -28,14 +28,14 @@ public enum Quartz {
 		switch(dir){
 		case EAST:
 		case WEST:
-			block.withProperty(BlockQuartz.VARIANT_PROP, BlockQuartz.EnumType.LINES_X); break;
+			block.withProperty(BlockQuartz.VARIANT, BlockQuartz.EnumType.LINES_X); break;
 		case NORTH:
 		case SOUTH:
-			block.withProperty(BlockQuartz.VARIANT_PROP, BlockQuartz.EnumType.LINES_Z); break;
+			block.withProperty(BlockQuartz.VARIANT, BlockQuartz.EnumType.LINES_Z); break;
 		case UP:
 		case DOWN:
 		default: 
-			block.withProperty(BlockQuartz.VARIANT_PROP, BlockQuartz.EnumType.LINES_Y); break;
+			block.withProperty(BlockQuartz.VARIANT, BlockQuartz.EnumType.LINES_Y); break;
 		}
 		
 		return block;

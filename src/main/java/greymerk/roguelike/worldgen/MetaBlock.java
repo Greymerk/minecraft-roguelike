@@ -11,6 +11,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.util.ResourceLocation;
 
 public class MetaBlock extends BlockBase implements IBlockState{
 
@@ -35,7 +36,8 @@ public class MetaBlock extends BlockBase implements IBlockState{
 	public MetaBlock(JsonElement e){
 		JsonObject json = (JsonObject)e;
 		String name = json.get("name").getAsString();
-		Block block = (Block) Block.blockRegistry.getObject(name);
+		ResourceLocation location = new ResourceLocation(name);
+		Block block = (Block) Block.blockRegistry.getObject(location);
 		int meta = json.has("meta") ? json.get("meta").getAsInt() : 0;
 		this.state = block.getStateFromMeta(meta);
 		flag = json.has("flag") ? json.get("flag").getAsInt() : 2;
@@ -55,28 +57,26 @@ public class MetaBlock extends BlockBase implements IBlockState{
 	}
 
 	@Override
-	public Collection<?> getPropertyNames() {
+	public Collection<IProperty> getPropertyNames() {
 		return this.state.getPropertyNames();
 	}
 
 	@Override
-	public Comparable<?> getValue(IProperty property) {
-		return this.state.getValue(property);
+	public <T extends Comparable<T>> T getValue(IProperty<T> property) {
+		return state.getValue(property);
 	}
-
-	@SuppressWarnings("rawtypes")
+	
 	@Override
-	public IBlockState withProperty(IProperty property, Comparable value) {
+	public <T extends Comparable<T>, V extends T> IBlockState withProperty(IProperty<T> property, V value) {
 		this.state = this.state.withProperty(property, value);
 		return this.state;
 	}
-
+	
 	@Override
 	public IBlockState cycleProperty(IProperty property) {
 		return this.state.cycleProperty(property);
 	}
 
-	@SuppressWarnings("rawtypes")
 	@Override
 	public ImmutableMap getProperties() {
 		return this.state.getProperties();
@@ -91,5 +91,9 @@ public class MetaBlock extends BlockBase implements IBlockState{
 	public String toString(){
 		return this.state.getBlock().getUnlocalizedName();
 	}
+
+
+
+
 	
 }

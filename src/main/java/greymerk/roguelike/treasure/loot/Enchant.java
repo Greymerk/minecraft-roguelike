@@ -20,20 +20,20 @@ public enum Enchant {
 	
 	public static Enchantment getEnchant(Enchant type){
 		switch(type){
-		case SHARPNESS: return Enchantment.field_180314_l; 
-		case SMITE: return Enchantment.field_180315_m;
-		case ARTHOPODS: return Enchantment.field_180312_n;
+		case SHARPNESS: return Enchantment.sharpness; 
+		case SMITE: return Enchantment.smite;
+		case ARTHOPODS: return Enchantment.baneOfArthropods;
 		case LOOTING: return Enchantment.looting;
-		case KNOCKBACK: return Enchantment.field_180313_o;
+		case KNOCKBACK: return Enchantment.knockback;
 		case FIREASPECT: return Enchantment.fireAspect;
 		case AQUAAFFINITY: return Enchantment.aquaAffinity;
-		case RESPIRATION: return Enchantment.field_180317_h;
-		case FEATHERFALLING: return Enchantment.field_180309_e;
-		case DEPTHSTRIDER: return Enchantment.field_180316_k;
-		case PROTECTION: return Enchantment.field_180310_c;
+		case RESPIRATION: return Enchantment.respiration;
+		case FEATHERFALLING: return Enchantment.featherFalling;
+		case DEPTHSTRIDER: return Enchantment.depthStrider;
+		case PROTECTION: return Enchantment.protection;
 		case BLASTPROTECTION: return Enchantment.blastProtection;
 		case FIREPROTECTION: return Enchantment.fireProtection;
-		case PROJECTILEPROTECTION: return Enchantment.field_180308_g;
+		case PROJECTILEPROTECTION: return Enchantment.projectileProtection;
 		case THORNS: return Enchantment.thorns;
 		case UNBREAKING: return Enchantment.unbreaking;
 		case EFFICIENCY: return Enchantment.efficiency;

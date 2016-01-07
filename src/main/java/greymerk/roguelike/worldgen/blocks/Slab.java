@@ -22,45 +22,45 @@ public enum Slab {
 		
 		switch(type){
 		case STONE:
-			slab.withProperty(BlockStoneSlab.VARIANT_PROP, BlockStoneSlab.EnumType.STONE);break;
+			slab.withProperty(BlockStoneSlab.VARIANT, BlockStoneSlab.EnumType.STONE);break;
 		case SANDSTONE:
-			slab.withProperty(BlockStoneSlab.VARIANT_PROP, BlockStoneSlab.EnumType.SAND);break;
+			slab.withProperty(BlockStoneSlab.VARIANT, BlockStoneSlab.EnumType.SAND);break;
 		case LEGACY_OAK:
-			slab.withProperty(BlockStoneSlab.VARIANT_PROP, BlockStoneSlab.EnumType.WOOD);break;
+			slab.withProperty(BlockStoneSlab.VARIANT, BlockStoneSlab.EnumType.WOOD);break;
 		case COBBLE:
-			slab.withProperty(BlockStoneSlab.VARIANT_PROP, BlockStoneSlab.EnumType.COBBLESTONE);break;
+			slab.withProperty(BlockStoneSlab.VARIANT, BlockStoneSlab.EnumType.COBBLESTONE);break;
 		case BRICK:
-			slab.withProperty(BlockStoneSlab.VARIANT_PROP, BlockStoneSlab.EnumType.BRICK);break;
+			slab.withProperty(BlockStoneSlab.VARIANT, BlockStoneSlab.EnumType.BRICK);break;
 		case STONEBRICK:
-			slab.withProperty(BlockStoneSlab.VARIANT_PROP, BlockStoneSlab.EnumType.SMOOTHBRICK);break;
+			slab.withProperty(BlockStoneSlab.VARIANT, BlockStoneSlab.EnumType.SMOOTHBRICK);break;
 		case NETHERBRICK:
-			slab.withProperty(BlockStoneSlab.VARIANT_PROP, BlockStoneSlab.EnumType.NETHERBRICK);break;
+			slab.withProperty(BlockStoneSlab.VARIANT, BlockStoneSlab.EnumType.NETHERBRICK);break;
 		case QUARTZ:
-			slab.withProperty(BlockStoneSlab.VARIANT_PROP, BlockStoneSlab.EnumType.QUARTZ);break;
+			slab.withProperty(BlockStoneSlab.VARIANT, BlockStoneSlab.EnumType.QUARTZ);break;
 		case SANDSTONE_RED:
 			// no enumtype because only one type for red sandstone?
 			break;
 		case OAK:
-			slab.withProperty(BlockWoodSlab.VARIANT_PROP, BlockPlanks.EnumType.OAK);break;
+			slab.withProperty(BlockWoodSlab.VARIANT, BlockPlanks.EnumType.OAK);break;
 		case SPRUCE:
-			slab.withProperty(BlockWoodSlab.VARIANT_PROP, BlockPlanks.EnumType.SPRUCE);break;
+			slab.withProperty(BlockWoodSlab.VARIANT, BlockPlanks.EnumType.SPRUCE);break;
 		case BIRCH:
-			slab.withProperty(BlockWoodSlab.VARIANT_PROP, BlockPlanks.EnumType.BIRCH);break;
+			slab.withProperty(BlockWoodSlab.VARIANT, BlockPlanks.EnumType.BIRCH);break;
 		case JUNGLE:
-			slab.withProperty(BlockWoodSlab.VARIANT_PROP, BlockPlanks.EnumType.JUNGLE);break;
+			slab.withProperty(BlockWoodSlab.VARIANT, BlockPlanks.EnumType.JUNGLE);break;
 		case ACACIA:
-			slab.withProperty(BlockWoodSlab.VARIANT_PROP, BlockPlanks.EnumType.ACACIA);break;
+			slab.withProperty(BlockWoodSlab.VARIANT, BlockPlanks.EnumType.ACACIA);break;
 		case DARKOAK:
-			slab.withProperty(BlockWoodSlab.VARIANT_PROP, BlockPlanks.EnumType.DARK_OAK);break;
+			slab.withProperty(BlockWoodSlab.VARIANT, BlockPlanks.EnumType.DARK_OAK);break;
 		default:
 		}
 		
 		if(!full && upsideDown){
-			slab.withProperty(BlockWoodSlab.HALF_PROP, BlockSlab.EnumBlockHalf.TOP);
+			slab.withProperty(BlockWoodSlab.HALF, BlockSlab.EnumBlockHalf.TOP);
 		}
 		
 		if(full && seamless){
-			slab.withProperty(BlockStoneSlab.SEAMLESS_PROP, true);
+			slab.withProperty(BlockStoneSlab.SEAMLESS, true);
 		}
 
 		return slab;

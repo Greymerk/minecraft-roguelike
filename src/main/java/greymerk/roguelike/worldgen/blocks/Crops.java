@@ -25,7 +25,7 @@ public enum Crops {
 	public static MetaBlock getCocao(Cardinal dir){
 		MetaBlock cocao = new MetaBlock(Blocks.cocoa);
 		cocao.withProperty(BlockCocoa.FACING, Cardinal.getFacing(Cardinal.reverse(dir)));
-		cocao.withProperty(BlockCocoa.field_176501_a, 2);
+		cocao.withProperty(BlockCocoa.AGE, 2);
 		return cocao;
 	}
 	

@@ -13,8 +13,8 @@ public enum Leaves {
 	public static MetaBlock get(Leaves type, boolean decay){
 		
 		MetaBlock leaf = new MetaBlock(getBlockId(type));
-		leaf.withProperty(BlockPlanks.VARIANT_PROP, getType(type));
-		leaf.withProperty(BlockLeaves.field_176237_a, decay);
+		leaf.withProperty(BlockPlanks.VARIANT, getType(type));
+		leaf.withProperty(BlockLeaves.DECAYABLE, decay);
 		
 		return leaf;
 		

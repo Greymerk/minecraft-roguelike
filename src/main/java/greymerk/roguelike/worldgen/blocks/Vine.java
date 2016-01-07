@@ -30,10 +30,10 @@ public class Vine {
 	}
 	
 	public static MetaBlock setOrientation(MetaBlock vine, Cardinal dir){
-		vine.withProperty(BlockVine.field_176273_b, Boolean.valueOf(dir == Cardinal.NORTH));
-		vine.withProperty(BlockVine.field_176278_M, Boolean.valueOf(dir == Cardinal.EAST));
-		vine.withProperty(BlockVine.field_176279_N, Boolean.valueOf(dir == Cardinal.SOUTH));
-		vine.withProperty(BlockVine.field_176280_O, Boolean.valueOf(dir == Cardinal.WEST));
+		vine.withProperty(BlockVine.NORTH, Boolean.valueOf(dir == Cardinal.NORTH));
+		vine.withProperty(BlockVine.EAST, Boolean.valueOf(dir == Cardinal.EAST));
+		vine.withProperty(BlockVine.SOUTH, Boolean.valueOf(dir == Cardinal.SOUTH));
+		vine.withProperty(BlockVine.WEST, Boolean.valueOf(dir == Cardinal.WEST));
 		return vine;
 	}
 }

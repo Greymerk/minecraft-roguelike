@@ -42,28 +42,28 @@ public enum FlowerPot {
 	
 	public static void setData(TileEntityFlowerPot pot, FlowerPot type){
 		switch(type){
-		case DANDELION: pot.func_145964_a(Item.getItemFromBlock(Blocks.yellow_flower), 0); return;
-		case POPPY: pot.func_145964_a(Item.getItemFromBlock(Blocks.red_flower), 0); return;
-		case ORCHID: pot.func_145964_a(Item.getItemFromBlock(Blocks.red_flower), 1); return;
-		case ALLIUM: pot.func_145964_a(Item.getItemFromBlock(Blocks.red_flower), 2); return;
-		case BLUET: pot.func_145964_a(Item.getItemFromBlock(Blocks.red_flower), 3); return;
-		case REDTULIP: pot.func_145964_a(Item.getItemFromBlock(Blocks.red_flower), 4); return;
-		case ORANGETULIP: pot.func_145964_a(Item.getItemFromBlock(Blocks.red_flower), 5); return;
-		case WHITETULIP: pot.func_145964_a(Item.getItemFromBlock(Blocks.red_flower), 6); return;
-		case PINKTULIP: pot.func_145964_a(Item.getItemFromBlock(Blocks.red_flower), 7); return;
-		case DAISY: pot.func_145964_a(Item.getItemFromBlock(Blocks.red_flower), 8); return;
-		case REDMUSHROOM: pot.func_145964_a(Item.getItemFromBlock(Blocks.red_mushroom), 0); return;
-		case BROWNMUSHROOM: pot.func_145964_a(Item.getItemFromBlock(Blocks.brown_mushroom), 0); return;
-		case CACTUS: pot.func_145964_a(Item.getItemFromBlock(Blocks.cactus), 0); return;
-		case OAK: pot.func_145964_a(Item.getItemFromBlock(Blocks.sapling), 0); return;
-		case SPRUCE: pot.func_145964_a(Item.getItemFromBlock(Blocks.sapling), 1); return;
-		case BIRCH: pot.func_145964_a(Item.getItemFromBlock(Blocks.sapling), 2); return;
-		case JUNGLE: pot.func_145964_a(Item.getItemFromBlock(Blocks.sapling), 3); return;
-		case ACACIA: pot.func_145964_a(Item.getItemFromBlock(Blocks.sapling), 4); return;
-		case DARKOAK: pot.func_145964_a(Item.getItemFromBlock(Blocks.sapling), 5); return;
-		case SHRUB: pot.func_145964_a(Item.getItemFromBlock(Blocks.tallgrass), 0); return;
-		case FERN: pot.func_145964_a(Item.getItemFromBlock(Blocks.tallgrass), 2); return;
-		default: pot.func_145964_a(Item.getItemFromBlock(Blocks.yellow_flower), 0); return;
+		case DANDELION: pot.setFlowerPotData(Item.getItemFromBlock(Blocks.yellow_flower), 0); return;
+		case POPPY: pot.setFlowerPotData(Item.getItemFromBlock(Blocks.red_flower), 0); return;
+		case ORCHID: pot.setFlowerPotData(Item.getItemFromBlock(Blocks.red_flower), 1); return;
+		case ALLIUM: pot.setFlowerPotData(Item.getItemFromBlock(Blocks.red_flower), 2); return;
+		case BLUET: pot.setFlowerPotData(Item.getItemFromBlock(Blocks.red_flower), 3); return;
+		case REDTULIP: pot.setFlowerPotData(Item.getItemFromBlock(Blocks.red_flower), 4); return;
+		case ORANGETULIP: pot.setFlowerPotData(Item.getItemFromBlock(Blocks.red_flower), 5); return;
+		case WHITETULIP: pot.setFlowerPotData(Item.getItemFromBlock(Blocks.red_flower), 6); return;
+		case PINKTULIP: pot.setFlowerPotData(Item.getItemFromBlock(Blocks.red_flower), 7); return;
+		case DAISY: pot.setFlowerPotData(Item.getItemFromBlock(Blocks.red_flower), 8); return;
+		case REDMUSHROOM: pot.setFlowerPotData(Item.getItemFromBlock(Blocks.red_mushroom), 0); return;
+		case BROWNMUSHROOM: pot.setFlowerPotData(Item.getItemFromBlock(Blocks.brown_mushroom), 0); return;
+		case CACTUS: pot.setFlowerPotData(Item.getItemFromBlock(Blocks.cactus), 0); return;
+		case OAK: pot.setFlowerPotData(Item.getItemFromBlock(Blocks.sapling), 0); return;
+		case SPRUCE: pot.setFlowerPotData(Item.getItemFromBlock(Blocks.sapling), 1); return;
+		case BIRCH: pot.setFlowerPotData(Item.getItemFromBlock(Blocks.sapling), 2); return;
+		case JUNGLE: pot.setFlowerPotData(Item.getItemFromBlock(Blocks.sapling), 3); return;
+		case ACACIA: pot.setFlowerPotData(Item.getItemFromBlock(Blocks.sapling), 4); return;
+		case DARKOAK: pot.setFlowerPotData(Item.getItemFromBlock(Blocks.sapling), 5); return;
+		case SHRUB: pot.setFlowerPotData(Item.getItemFromBlock(Blocks.tallgrass), 0); return;
+		case FERN: pot.setFlowerPotData(Item.getItemFromBlock(Blocks.tallgrass), 2); return;
+		default: pot.setFlowerPotData(Item.getItemFromBlock(Blocks.yellow_flower), 0); return;
 		}
 	}
 	
@@ -100,40 +100,40 @@ public enum FlowerPot {
 		case DANDELION: flower = new MetaBlock(Blocks.yellow_flower); break;
 		case POPPY: flower = new MetaBlock(Blocks.red_flower); break;
 		case ORCHID: flower = new MetaBlock(Blocks.red_flower);
-		flower.withProperty(Blocks.red_flower.func_176494_l(), BlockFlower.EnumFlowerType.BLUE_ORCHID); break;
+		flower.withProperty(Blocks.red_flower.getTypeProperty(), BlockFlower.EnumFlowerType.BLUE_ORCHID); break;
 		case ALLIUM: flower = new MetaBlock(Blocks.red_flower);
-		flower.withProperty(Blocks.red_flower.func_176494_l(), BlockFlower.EnumFlowerType.ALLIUM); break;
+		flower.withProperty(Blocks.red_flower.getTypeProperty(), BlockFlower.EnumFlowerType.ALLIUM); break;
 		case BLUET: flower = new MetaBlock(Blocks.red_flower);
-		flower.withProperty(Blocks.red_flower.func_176494_l(), BlockFlower.EnumFlowerType.HOUSTONIA); break;
+		flower.withProperty(Blocks.red_flower.getTypeProperty(), BlockFlower.EnumFlowerType.HOUSTONIA); break;
 		case REDTULIP: flower = new MetaBlock(Blocks.red_flower);
-		flower.withProperty(Blocks.red_flower.func_176494_l(), BlockFlower.EnumFlowerType.RED_TULIP); break;
+		flower.withProperty(Blocks.red_flower.getTypeProperty(), BlockFlower.EnumFlowerType.RED_TULIP); break;
 		case ORANGETULIP: flower = new MetaBlock(Blocks.red_flower);
-		flower.withProperty(Blocks.red_flower.func_176494_l(), BlockFlower.EnumFlowerType.ORANGE_TULIP); break;
+		flower.withProperty(Blocks.red_flower.getTypeProperty(), BlockFlower.EnumFlowerType.ORANGE_TULIP); break;
 		case WHITETULIP: flower = new MetaBlock(Blocks.red_flower);
-		flower.withProperty(Blocks.red_flower.func_176494_l(), BlockFlower.EnumFlowerType.WHITE_TULIP); break;
+		flower.withProperty(Blocks.red_flower.getTypeProperty(), BlockFlower.EnumFlowerType.WHITE_TULIP); break;
 		case PINKTULIP: flower = new MetaBlock(Blocks.red_flower);
-		flower.withProperty(Blocks.red_flower.func_176494_l(), BlockFlower.EnumFlowerType.PINK_TULIP); break;
+		flower.withProperty(Blocks.red_flower.getTypeProperty(), BlockFlower.EnumFlowerType.PINK_TULIP); break;
 		case DAISY: flower = new MetaBlock(Blocks.red_flower);
-		flower.withProperty(Blocks.red_flower.func_176494_l(), BlockFlower.EnumFlowerType.OXEYE_DAISY); break;
+		flower.withProperty(Blocks.red_flower.getTypeProperty(), BlockFlower.EnumFlowerType.OXEYE_DAISY); break;
 		case REDMUSHROOM: flower = new MetaBlock(Blocks.red_mushroom); break;
 		case BROWNMUSHROOM: flower = new MetaBlock(Blocks.brown_mushroom); break;
 		case CACTUS: flower = new MetaBlock(Blocks.cactus); break;
 		case OAK: flower = new MetaBlock(Blocks.sapling);
-		flower.withProperty(BlockSapling.TYPE_PROP, BlockPlanks.EnumType.OAK); break;
+		flower.withProperty(BlockSapling.TYPE, BlockPlanks.EnumType.OAK); break;
 		case SPRUCE: flower = new MetaBlock(Blocks.sapling);
-		flower.withProperty(BlockSapling.TYPE_PROP, BlockPlanks.EnumType.SPRUCE); break;
+		flower.withProperty(BlockSapling.TYPE, BlockPlanks.EnumType.SPRUCE); break;
 		case BIRCH: flower = new MetaBlock(Blocks.sapling);
-		flower.withProperty(BlockSapling.TYPE_PROP, BlockPlanks.EnumType.BIRCH); break;
+		flower.withProperty(BlockSapling.TYPE, BlockPlanks.EnumType.BIRCH); break;
 		case JUNGLE: flower = new MetaBlock(Blocks.sapling);
-		flower.withProperty(BlockSapling.TYPE_PROP, BlockPlanks.EnumType.JUNGLE); break;
+		flower.withProperty(BlockSapling.TYPE, BlockPlanks.EnumType.JUNGLE); break;
 		case ACACIA: flower = new MetaBlock(Blocks.sapling);
-		flower.withProperty(BlockSapling.TYPE_PROP, BlockPlanks.EnumType.ACACIA); break;
+		flower.withProperty(BlockSapling.TYPE, BlockPlanks.EnumType.ACACIA); break;
 		case DARKOAK: flower = new MetaBlock(Blocks.sapling);
-		flower.withProperty(BlockSapling.TYPE_PROP, BlockPlanks.EnumType.DARK_OAK); break;
+		flower.withProperty(BlockSapling.TYPE, BlockPlanks.EnumType.DARK_OAK); break;
 		case SHRUB: flower = new MetaBlock(Blocks.tallgrass);
-		flower.withProperty(BlockTallGrass.TYPE_PROP, BlockTallGrass.EnumType.DEAD_BUSH); break;
+		flower.withProperty(BlockTallGrass.TYPE, BlockTallGrass.EnumType.DEAD_BUSH); break;
 		case FERN: flower = new MetaBlock(Blocks.tallgrass);
-		flower.withProperty(BlockTallGrass.TYPE_PROP, BlockTallGrass.EnumType.FERN); break;
+		flower.withProperty(BlockTallGrass.TYPE, BlockTallGrass.EnumType.FERN); break;
 
 		default: flower = new MetaBlock(Blocks.yellow_flower);
 		}

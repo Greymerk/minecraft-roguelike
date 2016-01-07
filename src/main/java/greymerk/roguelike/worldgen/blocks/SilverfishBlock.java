@@ -15,13 +15,13 @@ public enum SilverfishBlock {
 		MetaBlock block = new MetaBlock(Blocks.monster_egg);
 		
 		switch(type){
-		case STONE: block.withProperty(BlockSilverfish.VARIANT_PROP, BlockSilverfish.EnumType.STONE); break;
-		case COBBLE: block.withProperty(BlockSilverfish.VARIANT_PROP, BlockSilverfish.EnumType.COBBLESTONE); break;
-		case STONEBRICK: block.withProperty(BlockSilverfish.VARIANT_PROP, BlockSilverfish.EnumType.STONEBRICK); break;
-		case STONEBRICK_MOSSY: block.withProperty(BlockSilverfish.VARIANT_PROP, BlockSilverfish.EnumType.MOSSY_STONEBRICK); break;
-		case STONEBRICK_CRACKED: block.withProperty(BlockSilverfish.VARIANT_PROP, BlockSilverfish.EnumType.CRACKED_STONEBRICK); break;
-		case STONEBRICK_CHISELED: block.withProperty(BlockSilverfish.VARIANT_PROP, BlockSilverfish.EnumType.CHISELED_STONEBRICK); break;
-		default: block.withProperty(BlockSilverfish.VARIANT_PROP, BlockSilverfish.EnumType.STONE); break;
+		case STONE: block.withProperty(BlockSilverfish.VARIANT, BlockSilverfish.EnumType.STONE); break;
+		case COBBLE: block.withProperty(BlockSilverfish.VARIANT, BlockSilverfish.EnumType.COBBLESTONE); break;
+		case STONEBRICK: block.withProperty(BlockSilverfish.VARIANT, BlockSilverfish.EnumType.STONEBRICK); break;
+		case STONEBRICK_MOSSY: block.withProperty(BlockSilverfish.VARIANT, BlockSilverfish.EnumType.MOSSY_STONEBRICK); break;
+		case STONEBRICK_CRACKED: block.withProperty(BlockSilverfish.VARIANT, BlockSilverfish.EnumType.CRACKED_STONEBRICK); break;
+		case STONEBRICK_CHISELED: block.withProperty(BlockSilverfish.VARIANT, BlockSilverfish.EnumType.CHISELED_STONEBRICK); break;
+		default: block.withProperty(BlockSilverfish.VARIANT, BlockSilverfish.EnumType.STONE); break;
 		}
 		
 		return block;

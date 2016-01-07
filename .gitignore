@@ -22,4 +22,7 @@
 /server.properties
 /world
 /usernamecache.json
+/usercache.json
 /asm
+/eclipse/
+*.launch

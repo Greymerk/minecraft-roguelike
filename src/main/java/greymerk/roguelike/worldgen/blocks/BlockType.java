@@ -46,27 +46,27 @@ public enum BlockType {
 		case STONE_SMOOTH: return new MetaBlock(Blocks.stone);
 		case GRANITE:
 			block = new MetaBlock(Blocks.stone);
-			block.withProperty(BlockStone.VARIANT_PROP, BlockStone.EnumType.GRANITE);
+			block.withProperty(BlockStone.VARIANT, BlockStone.EnumType.GRANITE);
 			return block;
 		case GRANITE_POLISHED:
 			block = new MetaBlock(Blocks.stone);
-			block.withProperty(BlockStone.VARIANT_PROP, BlockStone.EnumType.GRANITE_SMOOTH);
+			block.withProperty(BlockStone.VARIANT, BlockStone.EnumType.GRANITE_SMOOTH);
 			return block;
 		case DIORITE:
 			block = new MetaBlock(Blocks.stone);
-			block.withProperty(BlockStone.VARIANT_PROP, BlockStone.EnumType.DIORITE);
+			block.withProperty(BlockStone.VARIANT, BlockStone.EnumType.DIORITE);
 			return block;
 		case DIORITE_POLISHED:
 			block = new MetaBlock(Blocks.stone);
-			block.withProperty(BlockStone.VARIANT_PROP, BlockStone.EnumType.DIORITE_SMOOTH);
+			block.withProperty(BlockStone.VARIANT, BlockStone.EnumType.DIORITE_SMOOTH);
 			return block;
 		case ANDESITE:
 			block = new MetaBlock(Blocks.stone);
-			block.withProperty(BlockStone.VARIANT_PROP, BlockStone.EnumType.ANDESITE);
+			block.withProperty(BlockStone.VARIANT, BlockStone.EnumType.ANDESITE);
 			return block;
 		case ANDESITE_POLISHED:
 			block = new MetaBlock(Blocks.stone);
-			block.withProperty(BlockStone.VARIANT_PROP, BlockStone.EnumType.ANDESITE_SMOOTH);
+			block.withProperty(BlockStone.VARIANT, BlockStone.EnumType.ANDESITE_SMOOTH);
 			return block;
 		case GRASS: return new MetaBlock(Blocks.grass);
 		case DIRT: return new MetaBlock(Blocks.dirt);
@@ -84,7 +84,7 @@ public enum BlockType {
 		case SAND: return new MetaBlock(Blocks.sand);
 		case SAND_RED:
 			block = new MetaBlock(Blocks.sand);
-			block.withProperty(BlockSand.VARIANT_PROP, BlockSand.EnumType.RED_SAND);
+			block.withProperty(BlockSand.VARIANT, BlockSand.EnumType.RED_SAND);
 			return block;
 		case GRAVEL: return new MetaBlock(Blocks.gravel);
 		case ORE_GOLD: return new MetaBlock(Blocks.gold_ore);
@@ -96,11 +96,11 @@ public enum BlockType {
 		case SANDSTONE: return new MetaBlock(Blocks.sandstone);
 		case SANDSTONE_CHISELED:
 			block = new MetaBlock(Blocks.sandstone);
-			block.withProperty(BlockSandStone.field_176297_a, BlockSandStone.EnumType.CHISELED);
+			block.withProperty(BlockSandStone.TYPE, BlockSandStone.EnumType.CHISELED);
 			return block;
 		case SANDSTONE_SMOOTH:
 			block = new MetaBlock(Blocks.sandstone);
-			block.withProperty(BlockSandStone.field_176297_a, BlockSandStone.EnumType.SMOOTH);
+			block.withProperty(BlockSandStone.TYPE, BlockSandStone.EnumType.SMOOTH);
 			return block;
 		case GOLD_BLOCK: return new MetaBlock(Blocks.gold_block);
 		case IRON_BLOCK: return new MetaBlock(Blocks.iron_block);
@@ -120,15 +120,15 @@ public enum BlockType {
 		case STONE_BRICK: return new MetaBlock(Blocks.stonebrick);
 		case STONE_BRICK_MOSSY:
 			block = new MetaBlock(Blocks.stonebrick);
-			block.withProperty(BlockStoneBrick.VARIANT_PROP, BlockStoneBrick.EnumType.MOSSY);
+			block.withProperty(BlockStoneBrick.VARIANT, BlockStoneBrick.EnumType.MOSSY);
 			return block;
 		case STONE_BRICK_CRACKED:
 			block = new MetaBlock(Blocks.stonebrick);
-			block.withProperty(BlockStoneBrick.VARIANT_PROP, BlockStoneBrick.EnumType.CRACKED);
+			block.withProperty(BlockStoneBrick.VARIANT, BlockStoneBrick.EnumType.CRACKED);
 			return block;
 		case STONE_BRICK_CHISELED:
 			block = new MetaBlock(Blocks.stonebrick);
-			block.withProperty(BlockStoneBrick.VARIANT_PROP, BlockStoneBrick.EnumType.CHISELED);
+			block.withProperty(BlockStoneBrick.VARIANT, BlockStoneBrick.EnumType.CHISELED);
 			return block;
 		case MYCELIUM: return new MetaBlock(Blocks.mycelium);
 		case NETHERBRICK: return new MetaBlock(Blocks.nether_brick);
@@ -137,15 +137,15 @@ public enum BlockType {
 		case ORE_QUARTZ: return new MetaBlock(Blocks.quartz_ore);
 		case PRISMITE: 
 			block = new MetaBlock(Blocks.prismarine);
-			block.withProperty(BlockPrismarine.VARIANTS, BlockPrismarine.EnumType.ROUGH);
+			block.withProperty(BlockPrismarine.VARIANT, BlockPrismarine.EnumType.ROUGH);
 			return block;
 		case PRISMARINE: 
 			block = new MetaBlock(Blocks.prismarine);
-			block.withProperty(BlockPrismarine.VARIANTS, BlockPrismarine.EnumType.BRICKS);
+			block.withProperty(BlockPrismarine.VARIANT, BlockPrismarine.EnumType.BRICKS);
 			return block;
 		case PRISMARINE_DARK: 
 			block = new MetaBlock(Blocks.prismarine);
-			block.withProperty(BlockPrismarine.VARIANTS, BlockPrismarine.EnumType.DARK);
+			block.withProperty(BlockPrismarine.VARIANT, BlockPrismarine.EnumType.DARK);
 			return block;
 		case SEA_LANTERN: return new MetaBlock(Blocks.sea_lantern);
 		case COAL_BLOCK: return new MetaBlock(Blocks.coal_block);

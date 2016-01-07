@@ -19,14 +19,14 @@ public enum Trapdoor {
 		default: block = new MetaBlock(Blocks.trapdoor); break;
 		}
 		
-		block.withProperty(BlockTrapDoor.FACING_PROP, Cardinal.getFacing(dir));
+		block.withProperty(BlockTrapDoor.FACING, Cardinal.getFacing(dir));
 		
 		if(bottom){
-			block.withProperty(BlockTrapDoor.HALF_PROP, BlockTrapDoor.DoorHalf.BOTTOM);
+			block.withProperty(BlockTrapDoor.HALF, BlockTrapDoor.DoorHalf.BOTTOM);
 		}
 		
 		if(open){
-			block.withProperty(BlockTrapDoor.OPEN_PROP, true);
+			block.withProperty(BlockTrapDoor.OPEN, true);
 		}
 		
 		return block;
