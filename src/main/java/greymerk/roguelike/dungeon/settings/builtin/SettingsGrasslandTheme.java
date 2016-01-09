@@ -48,6 +48,7 @@ public class SettingsGrasslandTheme extends DungeonSettings{
 			case 0:
 				secrets.addRoom(DungeonRoom.BEDROOM, 2);
 				secrets.addRoom(DungeonRoom.SMITH);
+				secrets.addRoom(DungeonRoom.ENCHANT);
 				secrets.addRoom(DungeonRoom.FIREWORK);
 				break;
 			case 1:
