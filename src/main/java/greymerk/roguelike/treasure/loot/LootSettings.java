@@ -72,7 +72,6 @@ public class LootSettings {
 					try {
 						loot.put(type, new WeightedRandomLoot(providerData.getAsJsonObject(), 0));
 					} catch (Exception e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}

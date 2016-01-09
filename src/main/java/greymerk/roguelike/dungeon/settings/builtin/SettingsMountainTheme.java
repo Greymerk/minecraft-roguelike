@@ -68,7 +68,6 @@ public class SettingsMountainTheme extends DungeonSettings{
 				
 				DungeonFactory factory;
 				factory = new DungeonFactory();
-				factory.addSingle(DungeonRoom.ENCHANT);
 				factory.addSingle(DungeonRoom.FIRE);
 				factory.addSingle(DungeonRoom.MESS);
 				factory.addSingle(DungeonRoom.LIBRARY);

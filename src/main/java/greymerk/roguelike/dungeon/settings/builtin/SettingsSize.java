@@ -14,6 +14,7 @@ public class SettingsSize extends DungeonSettings{
 			LevelSettings level = new LevelSettings();
 			level.setNumRooms(numRooms[i]);
 			level.setRange(range[i]);
+			level.setScatter(12);
 			levels.put(i, level);
 		}
 	}

@@ -45,7 +45,6 @@ public class SettingsEniTheme extends DungeonSettings{
 				factory = new DungeonFactory();
 				factory.addSingle(DungeonRoom.LIBRARY);
 				factory.addSingle(DungeonRoom.MESS);
-				factory.addSingle(DungeonRoom.ENCHANT);
 				factory.addRandom(DungeonRoom.ENIKO, 10);
 				factory.addRandom(DungeonRoom.CORNER, 3);
 				level.setRooms(factory);

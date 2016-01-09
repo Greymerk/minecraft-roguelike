@@ -32,9 +32,16 @@ public enum SilverfishBlock {
 		
 		BlockJumble jumble = new BlockJumble();
 		
-		for(SilverfishBlock type : SilverfishBlock.values()){
-			jumble.addBlock(get(type));
-		}
+		SilverfishBlock[] types = new SilverfishBlock[]{
+				COBBLE,
+				STONEBRICK,
+				STONEBRICK_MOSSY,
+				STONEBRICK_CRACKED
+		};
+		
+		for(SilverfishBlock type : types){
+			jumble.addBlock(get(type));	
+		}		
 		
 		return jumble;
 		

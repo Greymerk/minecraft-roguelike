@@ -12,6 +12,7 @@ public class DungeonsEnchant extends DungeonBase {
 
 	@Override
 	public boolean generate(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
+		// TODO: Rebuild enchant room
 		return false;
 	}	
 	
