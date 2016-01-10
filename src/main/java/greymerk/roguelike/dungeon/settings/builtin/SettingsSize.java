@@ -7,8 +7,8 @@ public class SettingsSize extends DungeonSettings{
 	
 	public SettingsSize(){
 		
-		int[] numRooms = {10, 20, 30, 20, 10};
-		int[] range = {50, 60, 80, 60, 40};
+		int[] numRooms = {10, 15, 30, 20, 10};
+		int[] range = {40, 50, 80, 60, 40};
 		
 		for(int i = 0; i < 5; ++i){
 			LevelSettings level = new LevelSettings();

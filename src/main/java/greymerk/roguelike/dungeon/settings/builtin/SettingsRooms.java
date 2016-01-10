@@ -22,9 +22,7 @@ public class SettingsRooms extends DungeonSettings{
 				break;
 			case 1:
 				factory = new DungeonFactory();
-				factory.addSingle(DungeonRoom.MUSIC);
 				factory.addSingle(DungeonRoom.PIT);
-				factory.addSingle(DungeonRoom.MESS);
 				factory.addRandom(DungeonRoom.CORNER, 10);
 				factory.addRandom(DungeonRoom.BRICK, 3);
 				break;

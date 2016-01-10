@@ -23,20 +23,21 @@ public class SettingsSegments extends DungeonSettings{
 				break;
 			case 1:
 				segments = new SegmentGenerator(Segment.ARCH);
-				segments.add(Segment.INSET, 3);
-				segments.add(Segment.SHELF, 3);
+				segments.add(Segment.INSET, 2);
+				segments.add(Segment.SHELF, 2);
 				segments.add(Segment.FIREPLACE, 1);
-				segments.add(Segment.WALL, 5);
+				segments.add(Segment.WALL, 4);
 				segments.add(Segment.BOOKS, 1);
-				segments.add(Segment.CHEST, 2);
-				segments.add(Segment.SPAWNER, 3);
+				segments.add(Segment.CHEST, 1);
+				segments.add(Segment.SPAWNER, 1);
 				break;
 			case 2:
 				segments = new SegmentGenerator(Segment.ARCH);
-				segments.add(Segment.SHELF, 6);
-				segments.add(Segment.INSET, 6);
+				segments.add(Segment.SHELF, 4);
+				segments.add(Segment.INSET, 4);
+				segments.add(Segment.WALL, 4);
 				segments.add(Segment.SKULL, 1);
-				segments.add(Segment.TOMB, 3);
+				segments.add(Segment.TOMB, 2);
 				segments.add(Segment.CELL, 1);
 				segments.add(Segment.CHEST, 1);
 				segments.add(Segment.SPAWNER, 1);
@@ -47,9 +48,9 @@ public class SettingsSegments extends DungeonSettings{
 				segments.add(Segment.SHELF, 3);
 				segments.add(Segment.INSET, 3);
 				segments.add(Segment.SILVERFISH, 1);
-				segments.add(Segment.ARROW, 5);
-				segments.add(Segment.SKULL, 2);
-				segments.add(Segment.MUSHROOM, 3);
+				segments.add(Segment.ARROW, 2);
+				segments.add(Segment.SKULL, 1);
+				segments.add(Segment.MUSHROOM, 2);
 				segments.add(Segment.CHEST, 1);
 				segments.add(Segment.CELL, 2);
 				segments.add(Segment.SPAWNER, 1);
@@ -66,7 +67,7 @@ public class SettingsSegments extends DungeonSettings{
 				break;
 			default:
 				segments = new SegmentGenerator(Segment.ARCH);
-				segments.add(Segment.SHELF, 1);
+				segments.add(Segment.WALL, 1);
 				break;
 			}
 			

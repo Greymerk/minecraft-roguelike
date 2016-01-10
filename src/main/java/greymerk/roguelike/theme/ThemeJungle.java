@@ -37,7 +37,7 @@ public class ThemeJungle extends ThemeBase{
 		
 		BlockWeightedRandom floor = new BlockWeightedRandom();
 		floor.addBlock(stairJumble, 1);
-		floor.addBlock(walls, 3);
+		floor.addBlock(walls, 5);
 		
 		
 		this.primary = new BlockSet(floor, walls, stair, pillar);

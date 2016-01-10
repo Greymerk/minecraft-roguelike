@@ -151,10 +151,17 @@ public class Dungeon implements IDungeon{
 		
 		BiomeGenBase biome = editor.getBiome(new Coord(x, 0, z));
 		Type[] biomeType = BiomeDictionary.getTypesForBiome(biome);
-		if(Arrays.asList(biomeType).contains(BiomeDictionary.Type.RIVER)){
-			return false;
-		}
+		Type[] invalidBiomes = new Type[]{
+				BiomeDictionary.Type.RIVER,
+				BiomeDictionary.Type.BEACH,
+				BiomeDictionary.Type.MUSHROOM,
+				BiomeDictionary.Type.OCEAN
+		};
 		
+		for(Type type : invalidBiomes){
+			if(Arrays.asList(biomeType).contains(type)) return false;	
+		}
+				
 		int upperLimit = RogueConfig.getInt(RogueConfig.UPPERLIMIT);
 		int lowerLimit = RogueConfig.getInt(RogueConfig.LOWERLIMIT);
 		

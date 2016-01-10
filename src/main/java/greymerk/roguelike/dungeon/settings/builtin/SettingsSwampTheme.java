@@ -41,7 +41,8 @@ public class SettingsSwampTheme extends DungeonSettings{
 		brewing.add(new WeightedRandomLoot(Items.sugar, 0, 1, 3, 1));
 		this.lootRules = new LootRuleManager();
 		for(int i = 0; i < 5; ++i){
-			this.lootRules.add(null, brewing, i, true, 2);	
+			this.lootRules.add(null, brewing, i, true, 2);
+			this.lootRules.add(null, new WeightedRandomLoot(Items.slime_ball, 0, 1, 1 + i, 1), i, false, 4 + i * 3);
 		}
 		for(int i = 0; i < 5; ++i){
 			
