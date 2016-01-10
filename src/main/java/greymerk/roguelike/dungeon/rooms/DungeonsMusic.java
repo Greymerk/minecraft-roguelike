@@ -1,6 +1,7 @@
 package greymerk.roguelike.dungeon.rooms;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -18,7 +19,6 @@ import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.ColorBlock;
 import greymerk.roguelike.worldgen.blocks.DyeColor;
-import scala.actors.threadpool.Arrays;
 
 public class DungeonsMusic extends DungeonBase {
 
