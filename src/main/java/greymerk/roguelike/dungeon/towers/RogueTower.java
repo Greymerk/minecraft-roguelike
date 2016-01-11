@@ -43,7 +43,7 @@ public class RogueTower implements ITower{
 		editor.fillRectSolid(rand, new Coord(x - 3, roof, z - 3), new Coord(x + 3, roof, z + 3), blocks);
 		
 		for(Cardinal dir : Cardinal.directions){
-			for (Cardinal orth : Cardinal.getOrthogonal(dir)){
+			for (Cardinal orth : Cardinal.orthogonal(dir)){
 				// ground floor
 				start = new Coord(floor);
 				start.add(Cardinal.DOWN, 1);
@@ -198,7 +198,7 @@ public class RogueTower implements ITower{
 		}
 		
 		for(Cardinal dir : Cardinal.directions){
-			for (Cardinal orth : Cardinal.getOrthogonal(dir)){
+			for (Cardinal orth : Cardinal.orthogonal(dir)){
 				start = new Coord(x, ground, z);
 				start.add(dir, 4);
 				end = new Coord(x, 60, z);

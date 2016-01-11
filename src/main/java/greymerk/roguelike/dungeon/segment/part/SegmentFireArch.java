@@ -25,7 +25,7 @@ public class SegmentFireArch extends SegmentBase {
 		Coord end;
 		Coord cursor;
 		
-		Cardinal[] orths = Cardinal.getOrthogonal(dir);
+		Cardinal[] orths = Cardinal.orthogonal(dir);
 		
 		start = new Coord(origin);
 		start.add(dir, 3);

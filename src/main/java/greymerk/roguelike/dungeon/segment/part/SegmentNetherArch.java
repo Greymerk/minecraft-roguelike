@@ -26,7 +26,7 @@ public class SegmentNetherArch extends SegmentBase {
 		
 		boolean hasLava = rand.nextInt(5) == 0;
 		
-		for(Cardinal orth : Cardinal.getOrthogonal(dir)){
+		for(Cardinal orth : Cardinal.orthogonal(dir)){
 			cursor = new Coord(origin);
 			cursor.add(dir, 1);
 			cursor.add(orth, 1);

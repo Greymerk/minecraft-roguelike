@@ -37,7 +37,7 @@ public class HouseTower implements ITower {
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		
 		Cardinal dir = Cardinal.directions[(floor.getY() + 2) % 4];
-		Cardinal[] orth = Cardinal.getOrthogonal(dir);
+		Cardinal[] orth = Cardinal.orthogonal(dir);
 		
 		Coord cursor;
 		Coord start;
@@ -122,7 +122,7 @@ public class HouseTower implements ITower {
 		
 		IStair stair = Stair.get(StairType.OAK);
 		MetaBlock slab = Slab.get(Slab.OAK, true, false, false);
-		Cardinal[] orth = Cardinal.getOrthogonal(dir);
+		Cardinal[] orth = Cardinal.orthogonal(dir);
 		Coord cursor;
 		Coord start;
 		Coord end;
@@ -214,7 +214,7 @@ public class HouseTower implements ITower {
 
 	private void windows(IWorldEditor editor, Random rand, ITheme theme, Cardinal dir, Coord origin) {
 		MetaBlock pane = ColorBlock.get(ColorBlock.PANE, DyeColor.LIGHT_GRAY);
-		Cardinal[] orth = Cardinal.getOrthogonal(dir);
+		Cardinal[] orth = Cardinal.orthogonal(dir);
 		Coord cursor;
 		Coord start;
 		Coord end;
@@ -285,7 +285,7 @@ public class HouseTower implements ITower {
 	private void roof(IWorldEditor editor, Random rand, ITheme theme, Cardinal dir, Coord origin) {
 		IBlockFactory walls = theme.getSecondaryWall();
 		IStair stair = theme.getSecondaryStair();
-		Cardinal[] orth = Cardinal.getOrthogonal(dir);
+		Cardinal[] orth = Cardinal.orthogonal(dir);
 		Coord cursor;
 		Coord start;
 		Coord end;
@@ -441,7 +441,7 @@ public class HouseTower implements ITower {
 
 	private void upperFloor(IWorldEditor editor, Random rand, ITheme theme, Cardinal dir, Coord origin) {
 		IBlockFactory floor = theme.getPrimaryFloor();
-		Cardinal[] orth = Cardinal.getOrthogonal(dir);
+		Cardinal[] orth = Cardinal.orthogonal(dir);
 		Coord start;
 		Coord end;
 		
@@ -464,7 +464,7 @@ public class HouseTower implements ITower {
 
 	private void upperWalls(IWorldEditor editor, Random rand, ITheme theme, Cardinal dir, Coord origin) {
 		IBlockFactory walls = theme.getPrimaryWall();
-		Cardinal[] orth = Cardinal.getOrthogonal(dir);
+		Cardinal[] orth = Cardinal.orthogonal(dir);
 		Coord cursor;
 		Coord start;
 		Coord end;
@@ -587,7 +587,7 @@ public class HouseTower implements ITower {
 			cursor.add(Cardinal.UP, 2);
 			cursor.add(dir);
 			stair.setOrientation(dir, true).setBlock(editor, cursor);
-			for(Cardinal o : Cardinal.getOrthogonal(dir)){
+			for(Cardinal o : Cardinal.orthogonal(dir)){
 				Coord c = new Coord(cursor);
 				c.add(o);
 				stair.setOrientation(o, true).setBlock(editor, rand, c, true, false);
@@ -606,7 +606,7 @@ public class HouseTower implements ITower {
 		Coord start;
 		Coord end;
 		
-		Cardinal[] orth = Cardinal.getOrthogonal(dir);
+		Cardinal[] orth = Cardinal.orthogonal(dir);
 		
 		start = new Coord(origin);
 		start.add(Cardinal.reverse(dir));
@@ -699,7 +699,7 @@ public class HouseTower implements ITower {
 		if(editor.validGroundBlock(cursor)) return;
 		if(cursor.getY() <= 60) return;
 		
-		Cardinal[] orth = Cardinal.getOrthogonal(dir);
+		Cardinal[] orth = Cardinal.orthogonal(dir);
 		
 		start = new Coord(origin);
 		end = new Coord(origin);

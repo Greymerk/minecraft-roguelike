@@ -27,7 +27,7 @@ public class SegmentSewerArch extends SegmentBase {
 		Coord start;
 		Coord end;
 		
-		Cardinal[] orth = Cardinal.getOrthogonal(dir);
+		Cardinal[] orth = Cardinal.orthogonal(dir);
 		
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.UP, 3);

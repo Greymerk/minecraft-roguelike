@@ -29,7 +29,7 @@ public class SegmentTrap extends SegmentBase{
 		IStair stair = theme.getPrimaryStair();
 		IBlockFactory wall = theme.getPrimaryWall();
 		
-		Cardinal[] orth = Cardinal.getOrthogonal(dir);
+		Cardinal[] orth = Cardinal.orthogonal(dir);
 		
 		Coord cursor;
 		Coord start;

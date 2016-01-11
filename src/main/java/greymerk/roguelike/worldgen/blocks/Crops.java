@@ -24,14 +24,14 @@ public enum Crops {
 	
 	public static MetaBlock getCocao(Cardinal dir){
 		MetaBlock cocao = new MetaBlock(Blocks.cocoa);
-		cocao.withProperty(BlockCocoa.FACING, Cardinal.getFacing(Cardinal.reverse(dir)));
+		cocao.withProperty(BlockCocoa.FACING, Cardinal.facing(Cardinal.reverse(dir)));
 		cocao.withProperty(BlockCocoa.AGE, 2);
 		return cocao;
 	}
 	
 	public static MetaBlock getPumpkin(Cardinal dir, boolean lit){
 		MetaBlock pumpkin = new MetaBlock(lit ? Blocks.lit_pumpkin : Blocks.pumpkin); 
-		pumpkin.withProperty(BlockPumpkin.FACING, Cardinal.getFacing(Cardinal.reverse(dir)));
+		pumpkin.withProperty(BlockPumpkin.FACING, Cardinal.facing(Cardinal.reverse(dir)));
 		return pumpkin;
 	}
 	

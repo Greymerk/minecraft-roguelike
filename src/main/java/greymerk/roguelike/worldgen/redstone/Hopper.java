@@ -14,7 +14,7 @@ public class Hopper {
 	public static void generate(IWorldEditor editor, Cardinal dir, Coord pos){
 		MetaBlock hopper = new MetaBlock(Blocks.hopper);
 		if(Arrays.asList(Cardinal.directions).contains(dir)){
-			hopper.withProperty(BlockHopper.FACING, Cardinal.getFacing(dir));
+			hopper.withProperty(BlockHopper.FACING, Cardinal.facing(dir));
 		}
 		hopper.setBlock(editor, pos);
 	}

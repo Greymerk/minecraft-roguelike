@@ -68,7 +68,7 @@ public class DungeonLibrary extends DungeonBase{
 		
 		for(Cardinal dir : Cardinal.directions){
 			
-			Cardinal[] orth = Cardinal.getOrthogonal(dir);
+			Cardinal[] orth = Cardinal.orthogonal(dir);
 			
 			if(Arrays.asList(entrances).contains(dir)){
 				door(editor, rand, settings.getTheme(), dir, origin);
@@ -149,7 +149,7 @@ public class DungeonLibrary extends DungeonBase{
 	private void door(IWorldEditor editor, Random rand, ITheme theme, Cardinal dir, Coord pos){
 		Coord start;
 		Coord end;
-		Cardinal[] orth = Cardinal.getOrthogonal(dir);
+		Cardinal[] orth = Cardinal.orthogonal(dir);
 		
 		start = new Coord(pos);
 		start.add(dir, 7);
@@ -183,7 +183,7 @@ public class DungeonLibrary extends DungeonBase{
 		Coord cursor;
 		Coord start;
 		Coord end;
-		Cardinal[] orth = Cardinal.getOrthogonal(dir);
+		Cardinal[] orth = Cardinal.orthogonal(dir);
 		MetaBlock shelf = BlockType.get(BlockType.SHELF);
 		
 		cursor = new Coord(pos);
@@ -239,7 +239,7 @@ public class DungeonLibrary extends DungeonBase{
 		Coord cursor;
 		Coord start;
 		Coord end;
-		Cardinal[] orth = Cardinal.getOrthogonal(dir);
+		Cardinal[] orth = Cardinal.orthogonal(dir);
 		
 		cursor = new Coord(origin);
 		cursor.add(dir, 5);

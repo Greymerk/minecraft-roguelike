@@ -55,7 +55,7 @@ public class DungeonObsidian extends DungeonBase {
 		
 		// ceiling holes
 		for(Cardinal dir : Cardinal.directions){
-			for (Cardinal orth : Cardinal.getOrthogonal(dir)){
+			for (Cardinal orth : Cardinal.orthogonal(dir)){
 				Coord start = new Coord(x, y, z);
 				start.add(Cardinal.UP, 3);
 				start.add(dir, 3);
@@ -94,7 +94,7 @@ public class DungeonObsidian extends DungeonBase {
 		
 		// ceiling trims and outer walls
 		for(Cardinal dir : Cardinal.directions){
-			Cardinal[] orth = Cardinal.getOrthogonal(dir);
+			Cardinal[] orth = Cardinal.orthogonal(dir);
 			
 			// outer wall trim
 			Coord start = new Coord(x, y, z);
@@ -144,7 +144,7 @@ public class DungeonObsidian extends DungeonBase {
 		
 		// upper mid floor
 		for(Cardinal dir : Cardinal.directions){
-			Cardinal[] orth = Cardinal.getOrthogonal(dir);
+			Cardinal[] orth = Cardinal.orthogonal(dir);
 			Coord start = new Coord(x, y, z);
 			start.add(Cardinal.DOWN, 1);
 			Coord end = new Coord(start);
@@ -157,7 +157,7 @@ public class DungeonObsidian extends DungeonBase {
 		
 		// mid outer floors
 		for(Cardinal dir : Cardinal.directions){
-			for (Cardinal orth : Cardinal.getOrthogonal(dir)){
+			for (Cardinal orth : Cardinal.orthogonal(dir)){
 				Coord start = new Coord(x, y, z);
 				Coord end = new Coord(start);
 				start.add(dir, 9);
@@ -215,7 +215,7 @@ public class DungeonObsidian extends DungeonBase {
 		
 		// chests areas
 		for(Cardinal dir : Cardinal.directions){
-			for (Cardinal orth : Cardinal.getOrthogonal(dir)){
+			for (Cardinal orth : Cardinal.orthogonal(dir)){
 				Coord cursor = new Coord(x, y, z);
 				cursor.add(Cardinal.DOWN, 2);
 				cursor.add(dir, 3);
@@ -263,7 +263,7 @@ public class DungeonObsidian extends DungeonBase {
 	
 	private static void outerPillars(IWorldEditor editor, Random rand, ITheme theme, int x, int y, int z){
 		for(Cardinal dir : Cardinal.directions){
-			for (Cardinal orth : Cardinal.getOrthogonal(dir)){
+			for (Cardinal orth : Cardinal.orthogonal(dir)){
 				Coord pillarLocation = new Coord(x, y, z);
 				pillarLocation.add(dir, 10);
 
@@ -305,7 +305,7 @@ public class DungeonObsidian extends DungeonBase {
 		IBlockFactory secondaryWall = theme.getSecondaryPillar();
 		
 		for(Cardinal dir : Cardinal.directions){			
-			for (Cardinal orth : Cardinal.getOrthogonal(dir)){
+			for (Cardinal orth : Cardinal.orthogonal(dir)){
 				Coord pillar = new Coord(x, y, z);
 				pillar.add(dir, 2);
 				pillar.add(orth, 2);

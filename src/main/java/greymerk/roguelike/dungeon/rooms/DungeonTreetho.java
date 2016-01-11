@@ -57,7 +57,7 @@ public class DungeonTreetho extends DungeonBase{
 		cursor = new Coord(origin);
 		treeFarm(editor, rand, settings, cursor, entrances[0]);
 		
-		Cardinal[] orth = Cardinal.getOrthogonal(entrances[0]);
+		Cardinal[] orth = Cardinal.orthogonal(entrances[0]);
 		for(Cardinal o : orth){
 			cursor = new Coord(origin);
 			cursor.add(o, 5);
@@ -79,7 +79,7 @@ public class DungeonTreetho extends DungeonBase{
 		MetaBlock glass = ColorBlock.get(ColorBlock.GLASS, DyeColor.YELLOW);
 		MetaBlock dirt = BlockType.get(BlockType.DIRT);
 		
-		Cardinal[] orth = Cardinal.getOrthogonal(dir);
+		Cardinal[] orth = Cardinal.orthogonal(dir);
 		
 		start = new Coord(origin);
 		end = new Coord(origin);
@@ -127,7 +127,7 @@ public class DungeonTreetho extends DungeonBase{
 			start.add(dir, 9);
 			Coord end = new Coord(start);
 			
-			Cardinal[] orth = Cardinal.getOrthogonal(dir);
+			Cardinal[] orth = Cardinal.orthogonal(dir);
 			start.add(orth[0], 9);
 			end.add(orth[1], 9);
 			

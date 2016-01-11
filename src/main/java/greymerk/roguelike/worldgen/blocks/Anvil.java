@@ -20,7 +20,7 @@ public enum Anvil {
 		default:
 		}
 		
-		anvil.withProperty(BlockAnvil.FACING, Cardinal.getFacing(dir));
+		anvil.withProperty(BlockAnvil.FACING, Cardinal.facing(dir));
 		
 		return anvil;
 	}

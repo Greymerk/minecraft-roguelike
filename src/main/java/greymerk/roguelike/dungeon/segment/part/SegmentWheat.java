@@ -28,7 +28,7 @@ public class SegmentWheat extends SegmentBase {
 		cursor.add(dir, 3);
 		editor.setBlock(cursor, BlockType.get(BlockType.WATER_FLOWING));
 		
-		Cardinal[] orth = Cardinal.getOrthogonal(dir);
+		Cardinal[] orth = Cardinal.orthogonal(dir);
 		start = new Coord(origin);
 		start.add(dir, 2);
 		end = new Coord(start);

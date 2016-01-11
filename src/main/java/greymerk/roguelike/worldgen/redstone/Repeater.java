@@ -18,7 +18,7 @@ public class Repeater {
 	public static void generate(IWorldEditor editor, Random rand, Cardinal dir, int delay, boolean powered, Coord pos){
 		
 		MetaBlock repeater = powered ? new MetaBlock(Blocks.powered_repeater) : new MetaBlock(Blocks.unpowered_repeater);
-		repeater.withProperty(BlockRedstoneRepeater.FACING, Cardinal.getFacing(dir));
+		repeater.withProperty(BlockRedstoneRepeater.FACING, Cardinal.facing(dir));
 		if (delay > 0 && delay <= 4) repeater.withProperty(BlockRedstoneRepeater.DELAY, delay);
 		repeater.setBlock(editor, pos);
 	}

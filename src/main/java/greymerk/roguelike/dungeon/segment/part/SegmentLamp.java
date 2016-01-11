@@ -29,7 +29,7 @@ public class SegmentLamp extends SegmentBase{
 		Coord start;
 		Coord end;
 		
-		Cardinal[] orth = Cardinal.getOrthogonal(dir);
+		Cardinal[] orth = Cardinal.orthogonal(dir);
 		
 		start = new Coord(origin);
 		start.add(dir, 2);
@@ -108,7 +108,7 @@ public class SegmentLamp extends SegmentBase{
 			cursor = new Coord(origin);
 			cursor.add(dir);
 			stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
-			cursor.add(Cardinal.getOrthogonal(dir)[0]);
+			cursor.add(Cardinal.orthogonal(dir)[0]);
 			stair.setBlock(editor, cursor);
 		}
 		

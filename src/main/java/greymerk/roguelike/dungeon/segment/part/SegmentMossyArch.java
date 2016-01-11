@@ -34,7 +34,7 @@ public class SegmentMossyArch extends SegmentBase {
 		cursor.add(Cardinal.UP, 1);
 		editor.setBlock(rand, cursor, stair, true, true);
 		
-		for(Cardinal orth : Cardinal.getOrthogonal(wallDirection)){
+		for(Cardinal orth : Cardinal.orthogonal(wallDirection)){
 			cursor = new Coord(origin);
 			cursor.add(orth, 1);
 			cursor.add(wallDirection, 2);

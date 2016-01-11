@@ -102,7 +102,7 @@ public class DungeonPyramidTomb extends DungeonBase{
 		
 		for (Cardinal dir : Cardinal.directions){
 			
-			Cardinal[] orth = Cardinal.getOrthogonal(dir);
+			Cardinal[] orth = Cardinal.orthogonal(dir);
 			
 			cursor = new Coord(origin);
 			cursor.add(dir, 5);
@@ -152,7 +152,7 @@ public class DungeonPyramidTomb extends DungeonBase{
 		
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		
-		Cardinal[] orth = Cardinal.getOrthogonal(dir);
+		Cardinal[] orth = Cardinal.orthogonal(dir);
 		Coord cursor;
 		
 		Coord start = new Coord(origin);
@@ -206,7 +206,7 @@ public class DungeonPyramidTomb extends DungeonBase{
 		cursor.add(Cardinal.UP);
 		blocks.setBlock(editor, cursor);
 		
-		for (Cardinal end : Cardinal.getOrthogonal(dir)){
+		for (Cardinal end : Cardinal.orthogonal(dir)){
 			
 			cursor = new Coord(origin);
 			cursor.add(end);
@@ -224,7 +224,7 @@ public class DungeonPyramidTomb extends DungeonBase{
 			cursor.add(Cardinal.UP);
 			stair.setOrientation(end, false).setBlock(editor, cursor);
 			
-			for(Cardinal side : Cardinal.getOrthogonal(end)){
+			for(Cardinal side : Cardinal.orthogonal(end)){
 
 				cursor = new Coord(origin);
 				cursor.add(side);

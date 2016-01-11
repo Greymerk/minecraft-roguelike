@@ -48,7 +48,7 @@ public class EthoTower implements ITower {
 
 		for(Cardinal dir : Cardinal.directions){
 			
-			Cardinal[] orth = Cardinal.getOrthogonal(dir);
+			Cardinal[] orth = Cardinal.orthogonal(dir);
 			start = new Coord(floor);
 			start.add(dir, 3);
 			start.add(orth[0], 3);
@@ -143,7 +143,7 @@ public class EthoTower implements ITower {
 			
 			if(dir == front){
 
-				for(Cardinal o : Cardinal.getOrthogonal(dir)){
+				for(Cardinal o : Cardinal.orthogonal(dir)){
 					cursor = new Coord(floor);
 					cursor.add(dir, 5);
 					cursor.add(o, 2);
@@ -176,7 +176,7 @@ public class EthoTower implements ITower {
 				}
 				
 				// carve doorway
-				Cardinal[] orth = Cardinal.getOrthogonal(dir);
+				Cardinal[] orth = Cardinal.orthogonal(dir);
 				cursor = new Coord(floor);
 				cursor.add(dir, 4);
 				start = new Coord(cursor);
@@ -195,7 +195,7 @@ public class EthoTower implements ITower {
 			}
 			
 			
-			for(Cardinal o : Cardinal.getOrthogonal(dir)){
+			for(Cardinal o : Cardinal.orthogonal(dir)){
 				start = new Coord(floor);
 				start.add(Cardinal.UP, 4);
 				start.add(dir, 5);
@@ -226,7 +226,7 @@ public class EthoTower implements ITower {
 		IStair stair = theme.getPrimaryStair();
 		IBlockFactory blocks = theme.getPrimaryWall();
 		
-		Cardinal[] orth = Cardinal.getOrthogonal(dir);
+		Cardinal[] orth = Cardinal.orthogonal(dir);
 		
 		start = new Coord(origin);
 		end = new Coord(origin);

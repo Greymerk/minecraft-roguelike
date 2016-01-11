@@ -52,7 +52,7 @@ public class DungeonsCrypt extends DungeonBase {
 		
 		for(Cardinal dir : Cardinal.directions){
 			
-			Cardinal[] orth = Cardinal.getOrthogonal(dir);
+			Cardinal[] orth = Cardinal.orthogonal(dir);
 			List<?> doorways = Arrays.asList(entrances);
 			
 			if(doorways.contains(dir) && doorways.contains(orth[0])){
@@ -140,7 +140,7 @@ public class DungeonsCrypt extends DungeonBase {
 		Coord start;
 		Coord end;
 		
-		Cardinal[] orth = Cardinal.getOrthogonal(dir);
+		Cardinal[] orth = Cardinal.orthogonal(dir);
 		
 		start = new Coord(origin);
 		start.add(Cardinal.DOWN);
@@ -157,7 +157,7 @@ public class DungeonsCrypt extends DungeonBase {
 		
 		start = new Coord(origin);
 		
-		for(Cardinal o : Cardinal.getOrthogonal(dir)){
+		for(Cardinal o : Cardinal.orthogonal(dir)){
 			start = new Coord(origin);
 			start.add(Cardinal.DOWN);
 			start.add(dir);
@@ -200,7 +200,7 @@ public class DungeonsCrypt extends DungeonBase {
 		cursor.add(Cardinal.UP);
 		stair.setOrientation(dir, false).setBlock(editor, cursor);
 		
-		for(Cardinal o : Cardinal.getOrthogonal(dir)){
+		for(Cardinal o : Cardinal.orthogonal(dir)){
 			cursor = new Coord(origin);
 			cursor.add(Cardinal.DOWN);
 			cursor.add(o);
@@ -232,7 +232,7 @@ public class DungeonsCrypt extends DungeonBase {
 		Coord start;
 		Coord end;
 		
-		Cardinal[] orth = Cardinal.getOrthogonal(dir);
+		Cardinal[] orth = Cardinal.orthogonal(dir);
 		
 		start = new Coord(origin);
 		start.add(Cardinal.DOWN);
@@ -293,7 +293,7 @@ public class DungeonsCrypt extends DungeonBase {
 		Coord start;
 		Coord end;
 		
-		Cardinal[] orth = Cardinal.getOrthogonal(dir);
+		Cardinal[] orth = Cardinal.orthogonal(dir);
 		
 		start = new Coord(origin);
 		end = new Coord(origin);

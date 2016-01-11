@@ -48,7 +48,7 @@ public class DungeonBTeam extends DungeonBase {
 		MetaBlock lamp = BlockType.get(BlockType.REDSTONE_LAMP);
 				
 		Cardinal dir = entrances[0];
-		Cardinal[] orth = Cardinal.getOrthogonal(dir);
+		Cardinal[] orth = Cardinal.orthogonal(dir);
 		
 		Coord start;
 		Coord end;
@@ -202,7 +202,7 @@ public class DungeonBTeam extends DungeonBase {
 		IStair chair = new MetaStair(StairType.NETHERBRICK);
 		MetaBlock slab = Slab.get(Slab.SPRUCE, true, false, false);
 		
-		Cardinal[] orth = Cardinal.getOrthogonal(dir);
+		Cardinal[] orth = Cardinal.orthogonal(dir);
 		
 		Coord start;
 		Coord end;
@@ -268,7 +268,7 @@ public class DungeonBTeam extends DungeonBase {
 	
 	private void logWall(IWorldEditor editor, Random rand, Cardinal dir, Coord origin){
 
-		Cardinal[] orth = Cardinal.getOrthogonal(dir);
+		Cardinal[] orth = Cardinal.orthogonal(dir);
 
 		Coord start;
 		Coord end;
@@ -327,7 +327,7 @@ public class DungeonBTeam extends DungeonBase {
 			? BlockType.get(BlockType.EMERALD_BLOCK)
 			: ColorBlock.get(ColorBlock.GLASS, DyeColor.LIME);
 		
-		Cardinal[] orth = Cardinal.getOrthogonal(dir);
+		Cardinal[] orth = Cardinal.orthogonal(dir);
 
 		Coord start;
 		Coord end;
@@ -370,7 +370,7 @@ public class DungeonBTeam extends DungeonBase {
 	}
 	
 	private void tvWall(IWorldEditor editor, Random rand, Cardinal dir, Coord origin){
-		Cardinal[] orth = Cardinal.getOrthogonal(dir);
+		Cardinal[] orth = Cardinal.orthogonal(dir);
 
 		Coord start;
 		Coord end;

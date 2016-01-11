@@ -35,7 +35,7 @@ public class DungeonReward extends DungeonBase {
 		IStair stair = theme.getPrimaryStair();
 		
 		for(Cardinal dir : Cardinal.directions){
-			for(Cardinal orth : Cardinal.getOrthogonal(dir)){
+			for(Cardinal orth : Cardinal.orthogonal(dir)){
 				cursor = new Coord(x, y, z);
 				cursor.add(dir, 7);
 				cursor.add(orth, 2);
@@ -146,7 +146,7 @@ public class DungeonReward extends DungeonBase {
 				
 			}
 			
-			Cardinal o = Cardinal.getOrthogonal(dir)[0];
+			Cardinal o = Cardinal.orthogonal(dir)[0];
 			
 			start = new Coord(x, y, z);
 			start.add(dir, 6);

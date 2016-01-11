@@ -44,7 +44,7 @@ public class DungeonStorage extends DungeonBase {
 		editor.fillRectSolid(rand, new Coord(x - 5, y + 4, z - 5), new Coord(x + 5, y + 4, z + 5), blocks, true, true);
 		
 		for(Cardinal dir : Cardinal.directions){			
-			for (Cardinal orth : Cardinal.getOrthogonal(dir)){
+			for (Cardinal orth : Cardinal.orthogonal(dir)){
 				
 				cursor = new Coord(x, y, z);
 				cursor.add(Cardinal.UP, 3);

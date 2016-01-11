@@ -26,7 +26,7 @@ public class SegmentSkull extends SegmentBase {
 		Coord start;
 		Coord end;
 		
-		Cardinal[] orth = Cardinal.getOrthogonal(dir);		
+		Cardinal[] orth = Cardinal.orthogonal(dir);		
 		
 		start = new Coord(origin);
 		start.add(dir, 2);

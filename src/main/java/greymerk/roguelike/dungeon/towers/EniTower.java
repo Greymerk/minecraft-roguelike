@@ -41,7 +41,7 @@ public class EniTower implements ITower {
 		Coord cursor;
 		
 		for(Cardinal dir : Cardinal.directions){
-			for(Cardinal orth : Cardinal.getOrthogonal(dir)){
+			for(Cardinal orth : Cardinal.orthogonal(dir)){
 				
 				start = new Coord(floor);
 				end = new Coord(start);
@@ -275,7 +275,7 @@ public class EniTower implements ITower {
 		
 
 		for(Cardinal dir : Cardinal.directions){
-			Cardinal[] orth = Cardinal.getOrthogonal(dir);
+			Cardinal[] orth = Cardinal.orthogonal(dir);
 			
 			// lower windows
 			cursor = new Coord(floor);

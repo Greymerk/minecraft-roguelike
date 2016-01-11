@@ -63,12 +63,11 @@ public class DungeonsSmithy extends DungeonBase {
 		Coord start;
 		Coord end;
 		
-		Cardinal[] orth = Cardinal.getOrthogonal(dir);
 		IBlockFactory wall = theme.getPrimaryWall();
 		IBlockFactory pillar = theme.getPrimaryPillar();
 		IStair stair = theme.getPrimaryStair();
 		
-		for(Cardinal side : orth){
+		for(Cardinal side : Cardinal.orthogonal(dir)){
 			
 			start = new Coord(origin);
 			start.add(Cardinal.UP, 3);
@@ -84,7 +83,7 @@ public class DungeonsSmithy extends DungeonBase {
 			end.add(dir, 2);
 			editor.fillRectSolid(rand, start, end, stair.setOrientation(Cardinal.reverse(side), true), true, true);
 			
-			for(Cardinal o : Cardinal.getOrthogonal(side)){
+			for(Cardinal o : Cardinal.orthogonal(side)){
 				start = new Coord(origin);
 				start.add(side, 3);
 				start.add(o, 2);
@@ -113,7 +112,7 @@ public class DungeonsSmithy extends DungeonBase {
 	private void clearBoxes(IWorldEditor editor, Random rand, ITheme theme, Cardinal dir, Coord origin){
 		
 		IBlockFactory wall = theme.getPrimaryWall();
-		Cardinal[] orth = Cardinal.getOrthogonal(dir);
+		
 		
 		Coord cursor;
 		Coord start;
@@ -126,12 +125,12 @@ public class DungeonsSmithy extends DungeonBase {
 		start = new Coord(cursor);
 		start.add(Cardinal.DOWN);
 		start.add(dir, 3);
-		start.add(orth[0], 4);
+		start.add(Cardinal.left(dir), 4);
 		
 		end = new Coord(cursor);
 		end.add(Cardinal.UP, 4);
 		end.add(Cardinal.reverse(dir), 3);
-		end.add(orth[1], 4);
+		end.add(Cardinal.right(dir), 4);
 		
 		editor.fillRectHollow(rand, start, end, wall, true, true);
 		
@@ -142,12 +141,12 @@ public class DungeonsSmithy extends DungeonBase {
 		start = new Coord(cursor);
 		start.add(Cardinal.DOWN);
 		start.add(dir, 3);
-		start.add(orth[0], 4);
+		start.add(Cardinal.left(dir), 4);
 		
 		end = new Coord(cursor);
 		end.add(Cardinal.UP, 4);
 		end.add(Cardinal.reverse(dir), 3);
-		end.add(orth[1], 4);
+		end.add(Cardinal.right(dir), 4);
 		
 		editor.fillRectHollow(rand, start, end, wall, true, true);
 		
@@ -155,12 +154,12 @@ public class DungeonsSmithy extends DungeonBase {
 		
 		start = new Coord(origin);
 		start.add(Cardinal.DOWN);
-		start.add(orth[0], 6);
+		start.add(Cardinal.left(dir), 6);
 		start.add(Cardinal.reverse(dir), 4);
 		
 		end = new Coord(origin);
 		end.add(Cardinal.UP, 6);
-		end.add(orth[1], 6);
+		end.add(Cardinal.right(dir), 6);
 		end.add(dir, 4);
 		
 		editor.fillRectHollow(rand, start, end, wall, false, true);
@@ -171,7 +170,6 @@ public class DungeonsSmithy extends DungeonBase {
 		
 		ITheme theme = settings.getTheme();
 		IBlockFactory wall = theme.getPrimaryWall();
-		Cardinal[] orth = Cardinal.getOrthogonal(dir);
 		Coord cursor;
 		Coord start;
 		Coord end;
@@ -180,16 +178,16 @@ public class DungeonsSmithy extends DungeonBase {
 		start.add(dir, 3);
 		start.add(Cardinal.UP, 4);
 		end = new Coord(start);
-		start.add(orth[0], 5);
-		end.add(orth[1], 5);
+		start.add(Cardinal.left(dir), 5);
+		end.add(Cardinal.right(dir), 5);
 		end.add(Cardinal.UP);
 		editor.fillRectSolid(rand, start, end, wall, true, true);
 		start.add(Cardinal.reverse(dir), 6);
 		end.add(Cardinal.reverse(dir), 6);
 		editor.fillRectSolid(rand, start, end, wall, true, true);
 		
-		for(Cardinal side : orth){
-			for(Cardinal o : Cardinal.getOrthogonal(side)){
+		for(Cardinal side : Cardinal.orthogonal(dir)){
+			for(Cardinal o : Cardinal.orthogonal(side)){
 				cursor = new Coord(origin);
 				cursor.add(side, 2);
 				cursor.add(o, 3);
@@ -200,8 +198,8 @@ public class DungeonsSmithy extends DungeonBase {
 		}
 		
 		cursor = new Coord(origin);
-		smelterSide(editor, rand, settings, orth[0], origin);
-		fireplace(editor, rand, settings, orth[1], origin);
+		smelterSide(editor, rand, settings, Cardinal.left(dir), origin);
+		fireplace(editor, rand, settings, Cardinal.right(dir), origin);
 		
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.UP, 6);
@@ -213,7 +211,6 @@ public class DungeonsSmithy extends DungeonBase {
 		IBlockFactory wall = theme.getPrimaryWall();
 		IBlockFactory pillar = theme.getPrimaryPillar();
 		IStair stair = theme.getPrimaryStair();
-		Cardinal[] orth = Cardinal.getOrthogonal(dir);
 		Coord cursor;
 		Coord start;
 		Coord end;
@@ -223,11 +220,11 @@ public class DungeonsSmithy extends DungeonBase {
 		end.add(Cardinal.UP, 3);
 		editor.fillRectSolid(rand, start, end, pillar, true, true);
 		cursor = new Coord(end);
-		cursor.add(orth[0]);
-		stair.setOrientation(orth[0], true).setBlock(editor, cursor);
+		cursor.add(Cardinal.left(dir));
+		stair.setOrientation(Cardinal.left(dir), true).setBlock(editor, cursor);
 		cursor = new Coord(end);
-		cursor.add(orth[1]);
-		stair.setOrientation(orth[1], true).setBlock(editor, cursor);
+		cursor.add(Cardinal.right(dir));
+		stair.setOrientation(Cardinal.right(dir), true).setBlock(editor, cursor);
 		cursor = new Coord(end);
 		cursor.add(Cardinal.reverse(dir));
 		stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
@@ -242,11 +239,11 @@ public class DungeonsSmithy extends DungeonBase {
 		end.add(dir, 2);
 		editor.fillRectSolid(rand, start, end, wall, true, true);
 		cursor = new Coord(end);
-		cursor.add(orth[0]);
-		stair.setOrientation(orth[0], true).setBlock(editor, cursor);
+		cursor.add(Cardinal.left(dir));
+		stair.setOrientation(Cardinal.left(dir), true).setBlock(editor, cursor);
 		cursor = new Coord(end);
-		cursor.add(orth[1]);
-		stair.setOrientation(orth[1], true).setBlock(editor, cursor);
+		cursor.add(Cardinal.right(dir));
+		stair.setOrientation(Cardinal.right(dir), true).setBlock(editor, cursor);
 	}
 	
 	
@@ -255,7 +252,6 @@ public class DungeonsSmithy extends DungeonBase {
 		ITheme theme = settings.getTheme();
 		IBlockFactory wall = theme.getPrimaryWall();
 		
-		Cardinal[] orth = Cardinal.getOrthogonal(dir);
 		Coord cursor;
 		Coord start;
 		Coord end;
@@ -263,8 +259,8 @@ public class DungeonsSmithy extends DungeonBase {
 		start = new Coord(origin);
 		start.add(dir, 5);
 		end = new Coord(start);
-		start.add(orth[0], 2);
-		end.add(orth[1], 2);
+		start.add(Cardinal.left(dir), 2);
+		end.add(Cardinal.right(dir), 2);
 		editor.fillRectSolid(rand, start, end, wall, true, true);
 		start.add(Cardinal.reverse(dir));
 		end.add(Cardinal.reverse(dir));
@@ -273,7 +269,7 @@ public class DungeonsSmithy extends DungeonBase {
 		editor.fillRectSolid(rand, start, end, stair, true, true);
 		
 		
-		for(Cardinal o : orth){
+		for(Cardinal o : Cardinal.orthogonal(dir)){
 			cursor = new Coord(origin);
 			cursor.add(dir, 3);
 			cursor.add(o);
@@ -322,7 +318,6 @@ public class DungeonsSmithy extends DungeonBase {
 		MetaBlock brickSlab = Slab.get(Slab.BRICK);
 		MetaBlock bars = BlockType.get(BlockType.IRON_BAR);
 		MetaBlock air = BlockType.get(BlockType.AIR);
-		Cardinal[] orth = Cardinal.getOrthogonal(dir);
 		
 		Coord cursor;
 		Coord start;
@@ -332,8 +327,8 @@ public class DungeonsSmithy extends DungeonBase {
 		start.add(dir, 4);
 		end = new Coord(start);
 		start.add(Cardinal.DOWN);
-		start.add(orth[0]);
-		end.add(orth[1]);
+		start.add(Cardinal.left(dir));
+		end.add(Cardinal.right(dir));
 		end.add(dir, 2);
 		end.add(Cardinal.UP, 5);
 		
@@ -349,7 +344,7 @@ public class DungeonsSmithy extends DungeonBase {
 		cursor.add(dir, 4);
 		air.setBlock(editor, cursor);
 		
-		for(Cardinal side : orth){
+		for(Cardinal side : Cardinal.orthogonal(dir)){
 			
 			cursor = new Coord(origin);
 			cursor.add(dir, 4);
@@ -410,8 +405,8 @@ public class DungeonsSmithy extends DungeonBase {
 		start.add(dir, 5);
 		start.add(Cardinal.DOWN);
 		end = new Coord(start);
-		start.add(orth[0]);
-		end.add(orth[1]);
+		start.add(Cardinal.left(dir));
+		end.add(Cardinal.right(dir));
 		editor.fillRectSolid(rand, start, end, netherrack, true, true);
 		start.add(Cardinal.UP);
 		end.add(Cardinal.UP);
@@ -435,27 +430,25 @@ public class DungeonsSmithy extends DungeonBase {
 		Coord cursor;
 		Coord start;
 		Coord end;
-		Cardinal[] orth = Cardinal.getOrthogonal(dir);
-		
 		
 		MetaBlock anvil = Anvil.get(
 				(RogueConfig.getBoolean(RogueConfig.GENEROUS)
 				? Anvil.NEW_ANVIL
-				: Anvil.DAMAGED_ANVIL), orth[0]);
+				: Anvil.DAMAGED_ANVIL), Cardinal.left(dir));
 		cursor = new Coord(origin);
 		cursor.add(dir);
 		anvil.setBlock(editor, cursor);
 		
 		start = new Coord(origin);
-		start.add(orth[1], 2);
+		start.add(Cardinal.right(dir), 2);
 		end = new Coord(start);
 		start.add(dir, 2);
 		end.add(Cardinal.reverse(dir), 2);
-		stair.setOrientation(orth[0], false);
+		stair.setOrientation(Cardinal.left(dir), false);
 		editor.fillRectSolid(rand, start, end, stair, true, true);
 		
 		cursor = new Coord(origin);
-		cursor.add(orth[1], 3);
+		cursor.add(Cardinal.right(dir), 3);
 		editor.setBlock(rand, cursor, wall, true, true);
 		cursor.add(dir);
 		editor.setBlock(cursor, BlockType.get(BlockType.WATER_FLOWING));
@@ -463,12 +456,12 @@ public class DungeonsSmithy extends DungeonBase {
 		editor.setBlock(cursor, BlockType.get(BlockType.LAVA_FLOWING));
 		
 		cursor = new Coord(origin);
-		cursor.add(orth[0], 3);
+		cursor.add(Cardinal.left(dir), 3);
 		start = new Coord(cursor);
 		end = new Coord(start);
 		start.add(dir);
 		end.add(Cardinal.reverse(dir));
-		stair.setOrientation(orth[1], true);
+		stair.setOrientation(Cardinal.right(dir), true);
 		editor.fillRectSolid(rand, start, end, stair, true, true);
 		cursor.add(Cardinal.UP);
 		Treasure.generate(editor, rand, cursor, Treasure.SMITH, Dungeon.getLevel(cursor.getY()));
@@ -490,7 +483,7 @@ public class DungeonsSmithy extends DungeonBase {
 			cursor = new Coord(origin);
 			cursor.add(dir);
 			stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
-			cursor.add(Cardinal.getOrthogonal(dir)[0]);
+			cursor.add(Cardinal.left(dir));
 			stair.setBlock(editor, cursor);
 		}
 		

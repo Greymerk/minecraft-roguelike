@@ -60,7 +60,7 @@ public class SegmentGenerator implements ISegmentGenerator{
 		
 		List<ISegment> segs = new ArrayList<ISegment>();
 		
-		for(Cardinal orth : Cardinal.getOrthogonal(dir)){
+		for(Cardinal orth : Cardinal.orthogonal(dir)){
 			ISegment seg = pickSegment(editor, rand, level, dir, pos);
 			if(seg == null) return segs;
 			seg.generate(editor, rand, level, orth, level.getSettings().getTheme(), new Coord(pos));

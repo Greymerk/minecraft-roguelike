@@ -32,7 +32,7 @@ public class DungeonsEnder extends DungeonBase {
 		air.fillRectSolid(editor, inRandom, start, end, true, true);
 		for (Cardinal dir : Cardinal.directions){
 			
-			Cardinal[] orth = Cardinal.getOrthogonal(dir);
+			Cardinal[] orth = Cardinal.orthogonal(dir);
 			
 			start = new Coord(origin);
 			start.add(dir, 4);

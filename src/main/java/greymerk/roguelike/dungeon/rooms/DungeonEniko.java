@@ -60,7 +60,7 @@ public class DungeonEniko extends DungeonBase {
 		floor.fillRectSolid(editor, rand, start, end, true, true);
 		
 		for(Cardinal dir : Cardinal.directions){
-			Cardinal[] orth = Cardinal.getOrthogonal(dir);
+			Cardinal[] orth = Cardinal.orthogonal(dir);
 			cursor = new Coord(origin);
 			cursor.add(dir, 5);
 			for(Cardinal o : orth){

@@ -34,12 +34,12 @@ public class DungeonsPrison extends DungeonBase {
 		for(Cardinal dir : Cardinal.directions){
 			cursor = new Coord(origin);
 			cursor.add(dir, 3);
-			cursor.add(Cardinal.getOrthogonal(dir)[0], 3);
+			cursor.add(Cardinal.orthogonal(dir)[0], 3);
 			pillar(editor, rand, settings, cursor, 4);
 		}
 		
 		for(Cardinal dir : Cardinal.directions){
-			Cardinal side = Cardinal.getOrthogonal(dir)[0];
+			Cardinal side = Cardinal.orthogonal(dir)[0];
 			List<Cardinal> doors = new ArrayList<Cardinal>();
 			
 			if(Arrays.asList(entrances).contains(dir)){
@@ -110,7 +110,7 @@ public class DungeonsPrison extends DungeonBase {
 		settings.getTheme().getPrimaryWall().fillRectHollow(editor, rand, start, end, false, true);
 
 		for(Cardinal dir : Cardinal.directions){
-			orth = Cardinal.getOrthogonal(dir);
+			orth = Cardinal.orthogonal(dir);
 			cursor = new Coord(origin);
 			cursor.add(dir, 3);
 			cursor.add(orth[0], 3);
@@ -128,7 +128,7 @@ public class DungeonsPrison extends DungeonBase {
 		
 		
 		for(Cardinal dir : Cardinal.directions){
-			orth = Cardinal.getOrthogonal(dir);
+			orth = Cardinal.orthogonal(dir);
 			cursor = new Coord(origin);
 			cursor.add(Cardinal.UP, 5);
 			cursor.add(dir, 2);
@@ -153,7 +153,7 @@ public class DungeonsPrison extends DungeonBase {
 		Coord end;
 		Coord cursor;
 		Cardinal[] orth;
-		orth = Cardinal.getOrthogonal(roomDir);
+		orth = Cardinal.orthogonal(roomDir);
 		
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		IStair stair = settings.getTheme().getPrimaryStair();
@@ -207,15 +207,15 @@ public class DungeonsPrison extends DungeonBase {
 		end.add(Cardinal.UP);
 		air.fillRectSolid(editor, rand, start, end, true, true);
 		
-		for(Cardinal dir : Cardinal.getOrthogonal(roomDir)){
-			orth = Cardinal.getOrthogonal(dir);
+		for(Cardinal dir : Cardinal.orthogonal(roomDir)){
+			orth = Cardinal.orthogonal(dir);
 			cursor = new Coord(origin);
 			cursor.add(dir, 3);
 			cursor.add(roomDir, 3);
 			pillar(editor, rand, settings, cursor, height);
 		}
 		
-		orth = Cardinal.getOrthogonal(roomDir);
+		orth = Cardinal.orthogonal(roomDir);
 	
 		start = new Coord(origin);
 		start.add(Cardinal.UP, 4);
@@ -226,7 +226,7 @@ public class DungeonsPrison extends DungeonBase {
 		end.add(roomDir, 2);
 		
 		for(Cardinal dir : orth){
-			Cardinal[] o = Cardinal.getOrthogonal(dir);				
+			Cardinal[] o = Cardinal.orthogonal(dir);				
 			cursor = new Coord(origin);
 			cursor.add(Cardinal.UP, 4);
 			start = new Coord(cursor);
@@ -316,7 +316,7 @@ public class DungeonsPrison extends DungeonBase {
 		floor.fillRectSolid(editor, rand, start, end, false, true);
 		
 		for(Cardinal dir : entrances){
-			Cardinal[] orth = Cardinal.getOrthogonal(dir);
+			Cardinal[] orth = Cardinal.orthogonal(dir);
 			cursor = new Coord(origin);
 			cursor.add(dir, 2);
 			start = new Coord(cursor);

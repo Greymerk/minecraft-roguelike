@@ -45,7 +45,7 @@ public class SegmentNetherStripes extends SegmentBase {
 		cursor.add(Cardinal.UP, 1);
 		editor.setBlock(rand, cursor, slab, true, true);
 		
-		for(Cardinal orth : Cardinal.getOrthogonal(dir)){
+		for(Cardinal orth : Cardinal.orthogonal(dir)){
 			start = new Coord(origin);
 			start.add(dir, 3);
 			end = new Coord(start);

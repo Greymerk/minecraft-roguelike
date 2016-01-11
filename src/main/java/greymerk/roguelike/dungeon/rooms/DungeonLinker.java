@@ -47,7 +47,7 @@ public class DungeonLinker extends DungeonBase{
 		
 		for(Cardinal dir : Cardinal.directions){
 			
-			Cardinal[] orth = Cardinal.getOrthogonal(dir);
+			Cardinal[] orth = Cardinal.orthogonal(dir);
 			
 			start = new Coord(origin);
 			start.add(dir, 4);

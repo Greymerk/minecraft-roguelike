@@ -41,7 +41,7 @@ public enum Door {
 		
 		door = door.withProperty(BlockDoor.HALF, top ? BlockDoor.EnumDoorHalf.UPPER : BlockDoor.EnumDoorHalf.LOWER);
 		
-		door = door.withProperty(BlockDoor.FACING, Cardinal.getFacing(dir));
+		door = door.withProperty(BlockDoor.FACING, Cardinal.facing(dir));
 		
 		door = door.withProperty(BlockDoor.OPEN, open);
 		

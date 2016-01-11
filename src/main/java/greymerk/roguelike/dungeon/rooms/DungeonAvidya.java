@@ -103,7 +103,7 @@ public class DungeonAvidya extends DungeonBase {
 		
 		
 		for(Cardinal dir : Cardinal.directions){
-			for (Cardinal orth : Cardinal.getOrthogonal(dir)){
+			for (Cardinal orth : Cardinal.orthogonal(dir)){
 
 				// upper trim
 				start = new Coord(x, y, z);

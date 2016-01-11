@@ -29,7 +29,7 @@ public class SegmentArch extends SegmentBase {
 		cursor.add(Cardinal.UP, 1);
 		editor.setBlock(rand, cursor, stair, true, true);
 		
-		for(Cardinal orth : Cardinal.getOrthogonal(dir)){
+		for(Cardinal orth : Cardinal.orthogonal(dir)){
 			cursor = new Coord(origin);
 			cursor.add(orth, 1);
 			cursor.add(dir, 2);

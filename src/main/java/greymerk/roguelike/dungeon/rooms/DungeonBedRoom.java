@@ -35,7 +35,7 @@ public class DungeonBedRoom extends DungeonBase {
 		Coord end;
 		
 		Cardinal dir = entrances[0];
-		Cardinal[] orth = Cardinal.getOrthogonal(dir);
+		Cardinal[] orth = Cardinal.orthogonal(dir);
 		
 		start = new Coord(x, y, z);
 		end = new Coord(x, y, z);
@@ -66,8 +66,8 @@ public class DungeonBedRoom extends DungeonBase {
 			start = new Coord(x, y, z);
 			start.add(o, 3);
 			end = new Coord(start);
-			start.add(Cardinal.getOrthogonal(o)[0], 2);
-			end.add(Cardinal.getOrthogonal(o)[1], 2);
+			start.add(Cardinal.orthogonal(o)[0], 2);
+			end.add(Cardinal.orthogonal(o)[1], 2);
 			
 			editor.fillRectSolid(rand, start, end, stair, true, true);
 			start.add(Cardinal.UP, 2);
@@ -85,7 +85,7 @@ public class DungeonBedRoom extends DungeonBase {
 			cursor = new Coord(x, y, z);
 			cursor.add(o, 3);
 			pillar(editor, rand, o, theme, cursor);
-			for(Cardinal p : Cardinal.getOrthogonal(o)){
+			for(Cardinal p : Cardinal.orthogonal(o)){
 				Coord c = new Coord(cursor);
 				c.add(p, 3);
 				pillar(editor, rand, o, theme, c);
@@ -181,7 +181,7 @@ public class DungeonBedRoom extends DungeonBase {
 		end = new Coord(start);
 		start.add(Cardinal.reverse(dir), 5);
 		end.add(dir, 5);
-		Cardinal[] orth = Cardinal.getOrthogonal(dir);
+		Cardinal[] orth = Cardinal.orthogonal(dir);
 		start.add(orth[0], 5);
 		end.add(orth[1], 5);
 		start.add(Cardinal.DOWN);

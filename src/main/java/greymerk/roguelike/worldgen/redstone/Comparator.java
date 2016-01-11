@@ -14,7 +14,7 @@ public class Comparator {
 	public static void generate(IWorldEditor world, Random rand, Cardinal dir, boolean subtraction, Coord pos){
 		
 		MetaBlock comparator = new MetaBlock(Blocks.unpowered_comparator);
-		comparator.withProperty(BlockRedstoneComparator.FACING, Cardinal.getFacing(dir));
+		comparator.withProperty(BlockRedstoneComparator.FACING, Cardinal.facing(dir));
 		if(subtraction){
 			comparator.withProperty(BlockRedstoneComparator.MODE, BlockRedstoneComparator.Mode.SUBTRACT);
 		} else {

@@ -49,7 +49,7 @@ public class BunkerTower implements ITower{
 		walls.fillRectSolid(editor, rand, start, end, true, true);
 		
 		for(Cardinal dir : Cardinal.directions){
-			Cardinal[] orth = Cardinal.getOrthogonal(dir);
+			Cardinal[] orth = Cardinal.orthogonal(dir);
 			start = new Coord(origin);
 			start.add(dir, 5);
 			end = new Coord(start);
@@ -69,7 +69,7 @@ public class BunkerTower implements ITower{
 		}
 		
 		for(Cardinal dir : Cardinal.directions){
-			Cardinal[] orth = Cardinal.getOrthogonal(dir);
+			Cardinal[] orth = Cardinal.orthogonal(dir);
 			cursor = new Coord(origin);
 			cursor.add(dir, 5);
 			cursor.add(orth[0], 5);
@@ -104,7 +104,7 @@ public class BunkerTower implements ITower{
 		}	
 		
 		for(Cardinal dir : Cardinal.directions){
-			Cardinal[] orth = Cardinal.getOrthogonal(dir);
+			Cardinal[] orth = Cardinal.orthogonal(dir);
 			stair.setOrientation(dir, false);
 			for(Cardinal o : orth){
 				start = new Coord(origin);
@@ -124,7 +124,7 @@ public class BunkerTower implements ITower{
 		}
 		
 		for(Cardinal dir : Cardinal.directions){
-			Cardinal[] orth = Cardinal.getOrthogonal(dir);
+			Cardinal[] orth = Cardinal.orthogonal(dir);
 			cursor = new Coord(origin);
 			cursor.add(Cardinal.UP, 3);
 			cursor.add(dir, 6);
@@ -145,7 +145,7 @@ public class BunkerTower implements ITower{
 		}
 		
 		for(Cardinal dir : Cardinal.directions){
-			Cardinal[] orth = Cardinal.getOrthogonal(dir);
+			Cardinal[] orth = Cardinal.orthogonal(dir);
 			cursor = new Coord(origin);
 			cursor.add(Cardinal.UP, 4);
 			cursor.add(dir, 5);
@@ -157,7 +157,7 @@ public class BunkerTower implements ITower{
 		}
 		
 		for(Cardinal dir : Cardinal.directions){
-			Cardinal[] orth = Cardinal.getOrthogonal(dir);
+			Cardinal[] orth = Cardinal.orthogonal(dir);
 			cursor = new Coord(origin);
 			cursor.add(Cardinal.UP, 5);
 			cursor.add(dir, 4);
@@ -228,7 +228,7 @@ public class BunkerTower implements ITower{
 		walls.fillRectSolid(editor, rand, start, end, true, true);
 		
 		for(Cardinal dir : Cardinal.directions){
-			Cardinal[] orth = Cardinal.getOrthogonal(dir);
+			Cardinal[] orth = Cardinal.orthogonal(dir);
 			start = new Coord(origin);
 			start.add(Cardinal.UP, 3);
 			start.add(dir, 4);
@@ -239,7 +239,7 @@ public class BunkerTower implements ITower{
 		}
 
 		for(Cardinal dir : Cardinal.directions){
-			Cardinal[] orth = Cardinal.getOrthogonal(dir);
+			Cardinal[] orth = Cardinal.orthogonal(dir);
 			start = new Coord(origin);
 			start.add(dir, 4);
 			start.add(orth[0], 4);
@@ -249,7 +249,7 @@ public class BunkerTower implements ITower{
 		}
 		
 		for(Cardinal dir : Cardinal.directions){
-			Cardinal[] orth = Cardinal.getOrthogonal(dir);
+			Cardinal[] orth = Cardinal.orthogonal(dir);
 			start = new Coord(origin);
 			start.add(Cardinal.UP, 5);
 			start.add(dir, 3);
@@ -260,7 +260,7 @@ public class BunkerTower implements ITower{
 		}
 		
 		for(Cardinal dir : Cardinal.directions){
-			Cardinal[] orth = Cardinal.getOrthogonal(dir);
+			Cardinal[] orth = Cardinal.orthogonal(dir);
 			cursor = new Coord(origin);
 			cursor.add(Cardinal.UP, 2);
 			cursor.add(dir, 5);
@@ -281,7 +281,7 @@ public class BunkerTower implements ITower{
 		}	
 		
 		for(Cardinal dir : Cardinal.directions){
-			Cardinal[] orth = Cardinal.getOrthogonal(dir);
+			Cardinal[] orth = Cardinal.orthogonal(dir);
 			start = new Coord(origin);
 			start.add(dir, 5);
 			end = new Coord(start);

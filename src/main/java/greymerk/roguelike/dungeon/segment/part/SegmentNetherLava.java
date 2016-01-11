@@ -37,7 +37,7 @@ public class SegmentNetherLava extends SegmentBase {
 		boolean isLava = true;
 		IBlockFactory wall = theme.getSecondaryWall();
 		
-		for(Cardinal orth : Cardinal.getOrthogonal(dir)){
+		for(Cardinal orth : Cardinal.orthogonal(dir)){
 			start = new Coord(origin);
 			start.add(dir, 3);
 			end = new Coord(start);

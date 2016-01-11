@@ -230,12 +230,11 @@ public class WorldEditor implements IWorldEditor{
 		setBlock(rand, origin, fill, true, true);
 		
 		Cardinal dir = Cardinal.directions[origin.getY() % 4];
-		Cardinal[] orth = Cardinal.getOrthogonal(dir);
 		cursor = new Coord(origin);
 		cursor.add(dir);
-		stair.setOrientation(orth[0], false).setBlock(this, cursor);
-		cursor.add(orth[1]);
-		stair.setOrientation(orth[1], true).setBlock(this, cursor);
+		stair.setOrientation(Cardinal.left(dir), false).setBlock(this, cursor);
+		cursor.add(Cardinal.right(dir));
+		stair.setOrientation(Cardinal.right(dir), true).setBlock(this, cursor);
 		cursor.add(Cardinal.reverse(dir));
 		stair.setOrientation(Cardinal.reverse(dir), true).setBlock(this, cursor);
 	}
@@ -302,7 +301,7 @@ public class WorldEditor implements IWorldEditor{
 	
 	public boolean canPlace(MetaBlock block, Coord pos, Cardinal dir){
 		if(!this.isAirBlock(pos)) return false;
-		return block.getBlock().canPlaceBlockOnSide(world, pos.getBlockPos(), Cardinal.getFacing(dir));
+		return block.getBlock().canPlaceBlockOnSide(world, pos.getBlockPos(), Cardinal.facing(dir));
 	}
 }
 

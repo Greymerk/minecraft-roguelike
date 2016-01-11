@@ -26,7 +26,7 @@ public class SegmentJungle extends SegmentBase {
 		Coord start;
 		Coord end;
 		
-		Cardinal[] orth = Cardinal.getOrthogonal(wallDirection);
+		Cardinal[] orth = Cardinal.orthogonal(wallDirection);
 		start = new Coord(origin);
 		start.add(wallDirection, 2);
 		end = new Coord(start);

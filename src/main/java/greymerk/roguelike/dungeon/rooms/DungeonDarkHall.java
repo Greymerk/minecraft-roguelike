@@ -68,7 +68,7 @@ public class DungeonDarkHall extends DungeonBase{
 		editor.fillRectSolid(rand, start, end, theme.getPrimaryFloor(), false, true);
 		
 		for (Cardinal dir : entrances){
-			Cardinal[] orth = Cardinal.getOrthogonal(dir);
+			Cardinal[] orth = Cardinal.orthogonal(dir);
 			start = new Coord(origin);
 			start.add(orth[0]);
 			end = new Coord(origin);
@@ -79,7 +79,7 @@ public class DungeonDarkHall extends DungeonBase{
 		
 		for(Cardinal dir : Cardinal.directions){
 			
-			Cardinal[] orth = Cardinal.getOrthogonal(dir);
+			Cardinal[] orth = Cardinal.orthogonal(dir);
 			
 			start = new Coord(origin);
 			start.add(dir, 6);

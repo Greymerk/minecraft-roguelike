@@ -46,7 +46,7 @@ public class WitchTower implements ITower {
 		
 		for (Cardinal dir : Cardinal.directions){
 			
-			Cardinal[] orth = Cardinal.getOrthogonal(dir);
+			Cardinal[] orth = Cardinal.orthogonal(dir);
 			
 			start = new Coord(main);
 			start.add(dir, 3);
@@ -95,7 +95,7 @@ public class WitchTower implements ITower {
 		
 		for (Cardinal dir : Cardinal.directions){
 			
-			Cardinal[] orth = Cardinal.getOrthogonal(dir);
+			Cardinal[] orth = Cardinal.orthogonal(dir);
 			
 			start = new Coord(secondFloor);
 			start.add(dir, 4);
@@ -161,7 +161,7 @@ public class WitchTower implements ITower {
 		
 		for (Cardinal dir : Cardinal.directions){
 			
-			Cardinal[] orth = Cardinal.getOrthogonal(dir);
+			Cardinal[] orth = Cardinal.orthogonal(dir);
 			
 			cursor = new Coord(thirdFloor);
 			cursor.add(dir, 3);
@@ -287,7 +287,7 @@ public class WitchTower implements ITower {
 		
 		for (Cardinal dir : Cardinal.directions){
 			
-			Cardinal[] orth = Cardinal.getOrthogonal(dir);
+			Cardinal[] orth = Cardinal.orthogonal(dir);
 			
 			cursor = new Coord(attic);
 			cursor.add(dir, 2);
@@ -370,7 +370,7 @@ public class WitchTower implements ITower {
 		cursor.add(Cardinal.UP);
 		air.setBlock(editor, cursor);
 		
-		for (Cardinal o : Cardinal.getOrthogonal(dir)){
+		for (Cardinal o : Cardinal.orthogonal(dir)){
 			cursor = new Coord(origin);
 			cursor.add(o);
 			stair.setOrientation(Cardinal.reverse(o), false).setBlock(editor, cursor);
@@ -389,7 +389,7 @@ public class WitchTower implements ITower {
 		IStair stair = theme.getPrimaryStair();
 		IBlockFactory blocks = theme.getPrimaryWall();
 		
-		Cardinal[] orth = Cardinal.getOrthogonal(dir);
+		Cardinal[] orth = Cardinal.orthogonal(dir);
 		
 		start = new Coord(origin);
 		end = new Coord(origin);

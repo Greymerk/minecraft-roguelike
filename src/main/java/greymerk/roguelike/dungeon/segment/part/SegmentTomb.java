@@ -28,7 +28,7 @@ public class SegmentTomb extends SegmentBase {
 		Coord start;
 		Coord end;
 		
-		Cardinal[] orth = Cardinal.getOrthogonal(dir);
+		Cardinal[] orth = Cardinal.orthogonal(dir);
 		
 		cursor.add(dir, 2);
 		start = new Coord(cursor);
@@ -65,7 +65,7 @@ public class SegmentTomb extends SegmentBase {
 		Coord start;
 		Coord end;
 		
-		Cardinal[] orth = Cardinal.getOrthogonal(dir);
+		Cardinal[] orth = Cardinal.orthogonal(dir);
 		start = new Coord(pos);
 		start.add(dir, 3);
 		end = new Coord(start);

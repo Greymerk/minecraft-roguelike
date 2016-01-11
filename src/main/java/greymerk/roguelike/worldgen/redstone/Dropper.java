@@ -15,7 +15,7 @@ public class Dropper {
 	public boolean generate(IWorldEditor editor, Cardinal dir, Coord pos){
 
 		MetaBlock container = new MetaBlock(Blocks.dropper);
-		container.withProperty(BlockDropper.FACING, Cardinal.getFacing(dir));
+		container.withProperty(BlockDropper.FACING, Cardinal.facing(dir));
 		container.setBlock(editor, pos);
 		return true;
 	}

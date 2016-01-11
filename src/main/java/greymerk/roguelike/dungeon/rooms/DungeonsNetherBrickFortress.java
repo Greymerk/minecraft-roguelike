@@ -81,7 +81,7 @@ public class DungeonsNetherBrickFortress extends DungeonBase {
 		netherwart.fillRectSolid(editor, rand, start, end, false, true);
 		
 		for(Cardinal dir : Cardinal.directions){
-			Cardinal[] orth = Cardinal.getOrthogonal(dir);
+			Cardinal[] orth = Cardinal.orthogonal(dir);
 			
 			start = new Coord(origin);
 			start.add(Cardinal.UP, 5);

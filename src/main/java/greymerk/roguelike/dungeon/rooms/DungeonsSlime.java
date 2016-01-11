@@ -37,18 +37,17 @@ public class DungeonsSlime extends DungeonBase {
 		wall.fillRectHollow(editor, rand, start, end, false, true);
 		
 		for(Cardinal dir : Cardinal.directions){
-			Cardinal[] orth = Cardinal.getOrthogonal(dir);
 			cursor = new Coord(origin);
 			cursor.add(dir, 5);
-			cursor.add(orth[0], 5);
+			cursor.add(Cardinal.left(dir), 5);
 			corner(editor, rand, settings, cursor);
 			
 			start = new Coord(origin);
 			start.add(Cardinal.UP, 4);
 			start.add(dir, 3);
 			end = new Coord(start);
-			start.add(orth[0], 8);
-			end.add(orth[1], 8);
+			start.add(Cardinal.left(dir), 8);
+			end.add(Cardinal.right(dir), 8);
 			wall.fillRectSolid(editor, rand, start, end, true, true);
 			start.add(dir, 4);
 			end.add(dir, 4);
@@ -59,14 +58,13 @@ public class DungeonsSlime extends DungeonBase {
 			
 		
 		for(Cardinal dir : Cardinal.directions){
-			Cardinal[] orth = Cardinal.getOrthogonal(dir);
 			if(!Arrays.asList(entrances).contains(dir)){
 				start = new Coord(origin);
 				start.add(dir, 4);
 				end = new Coord(start);
 				end.add(dir, 2);
-				start.add(orth[0], 3);
-				end.add(orth[1], 3);
+				start.add(Cardinal.left(dir), 3);
+				end.add(Cardinal.right(dir), 3);
 				air.fillRectSolid(editor, rand, start, end, true, true);
 				start.add(Cardinal.DOWN);
 				end.add(Cardinal.DOWN);
@@ -78,8 +76,8 @@ public class DungeonsSlime extends DungeonBase {
 				start = new Coord(origin);
 				start.add(dir, 3);
 				end = new Coord(start);
-				start.add(orth[0], 2);
-				end.add(orth[1], 2);
+				start.add(Cardinal.left(dir), 2);
+				end.add(Cardinal.right(dir), 2);
 				bars.fillRectSolid(editor, rand, start, end, true, true);
 				
 				cursor = new Coord(origin);
@@ -90,7 +88,7 @@ public class DungeonsSlime extends DungeonBase {
 				cursor.add(Cardinal.DOWN);
 				cursor.add(dir);
 				water.setBlock(editor, cursor);
-				for(Cardinal o : orth){
+				for(Cardinal o : Cardinal.orthogonal(dir)){
 					cursor = new Coord(origin);
 					cursor.add(dir, 7);
 					cursor.add(o);
@@ -140,10 +138,9 @@ public class DungeonsSlime extends DungeonBase {
 		wall.fillRectSolid(editor, rand, start, end, true, true);
 		
 		for(Cardinal dir : Cardinal.directions){
-			Cardinal[] orth = Cardinal.getOrthogonal(dir);
 			start = new Coord(origin);
 			start.add(dir, 2);
-			start.add(orth[0], 2);
+			start.add(Cardinal.left(dir), 2);
 			end = new Coord(start);
 			end.add(Cardinal.UP, 3);
 			pillar.fillRectSolid(editor, rand, start, end, true, true);
@@ -157,8 +154,8 @@ public class DungeonsSlime extends DungeonBase {
 			start = new Coord(origin);
 			start.add(dir, 2);
 			end = new Coord(start);
-			start.add(orth[0]);
-			end.add(orth[1]);
+			start.add(Cardinal.left(dir));
+			end.add(Cardinal.right(dir));
 			bars.fillRectSolid(editor, rand, start, end, true, true);
 			
 		}

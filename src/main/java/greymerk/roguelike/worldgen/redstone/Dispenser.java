@@ -15,7 +15,7 @@ public class Dispenser {
 	public static boolean generate(IWorldEditor editor, Cardinal dir, Coord pos){
 
 		MetaBlock container = new MetaBlock(Blocks.dispenser);
-		container.withProperty(BlockDispenser.FACING, Cardinal.getFacing(dir));
+		container.withProperty(BlockDispenser.FACING, Cardinal.facing(dir));
 		container.setBlock(editor, pos);
 		return true;
 	}

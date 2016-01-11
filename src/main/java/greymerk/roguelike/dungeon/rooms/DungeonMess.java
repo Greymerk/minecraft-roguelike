@@ -56,7 +56,7 @@ public class DungeonMess extends DungeonBase {
 		BlockType.get(BlockType.GLOWSTONE).setBlock(editor, cursor);
 		
 		for(Cardinal dir : Cardinal.directions){
-			Cardinal[] orth = Cardinal.getOrthogonal(dir);
+			Cardinal[] orth = Cardinal.orthogonal(dir);
 			start = new Coord(origin);
 			start.add(dir, 3);
 			start.add(orth[0], 3);
@@ -156,7 +156,7 @@ public class DungeonMess extends DungeonBase {
 		Furnace.generate(editor, true, Cardinal.reverse(entrances[1]), cursor);
 		
 		for(Cardinal dir : entrances){
-			Cardinal[] orth = Cardinal.getOrthogonal(dir);
+			Cardinal[] orth = Cardinal.orthogonal(dir);
 			cursor = new Coord(origin);
 			cursor.add(entrances[0], 3);
 			cursor.add(entrances[1], 3);
@@ -240,7 +240,7 @@ public class DungeonMess extends DungeonBase {
 		
 		
 		for(Cardinal dir : entrances){
-			Cardinal[] orth = Cardinal.getOrthogonal(dir);
+			Cardinal[] orth = Cardinal.orthogonal(dir);
 			cursor = new Coord(origin);
 			cursor.add(entrances[0], 3);
 			cursor.add(entrances[1], 3);
@@ -296,7 +296,7 @@ public class DungeonMess extends DungeonBase {
 		Coord cursor;
 		Coord start;
 		Coord end;
-		Cardinal[] orth = Cardinal.getOrthogonal(dir);
+		Cardinal[] orth = Cardinal.orthogonal(dir);
 		
 		start = new Coord(origin);
 		start.add(dir, 7);
@@ -356,7 +356,7 @@ public class DungeonMess extends DungeonBase {
 		Coord cursor;
 		Coord start;
 		Coord end;
-		Cardinal[] orth = Cardinal.getOrthogonal(dir);
+		Cardinal[] orth = Cardinal.orthogonal(dir);
 		
 		start = new Coord(origin);
 		start.add(dir, 7);
@@ -428,7 +428,7 @@ public class DungeonMess extends DungeonBase {
 		Coord cursor;
 		Coord start;
 		Coord end;
-		Cardinal[] orth = Cardinal.getOrthogonal(dir);
+		Cardinal[] orth = Cardinal.orthogonal(dir);
 		
 		cursor = new Coord(origin);
 		cursor.add(dir, 7);
@@ -464,7 +464,7 @@ public class DungeonMess extends DungeonBase {
 		cursor.add(dir);
 		table.setOrientation(dir, true).setBlock(editor, cursor);
 		
-		for(Cardinal o : Cardinal.getOrthogonal(dir)){
+		for(Cardinal o : Cardinal.orthogonal(dir)){
 			cursor = new Coord(origin);
 			cursor.add(dir, 5);
 			cursor.add(o);

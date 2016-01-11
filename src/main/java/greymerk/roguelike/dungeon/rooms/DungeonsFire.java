@@ -51,7 +51,7 @@ public class DungeonsFire extends DungeonBase {
 		editor.fillRectSolid(rand, start, end, theme.getPrimaryFloor(), false, true);
 		
 		for(Cardinal dir : Cardinal.directions){
-			for(Cardinal orth : Cardinal.getOrthogonal(dir)){
+			for(Cardinal orth : Cardinal.orthogonal(dir)){
 				start = new Coord(origin);
 				start.add(dir, 7);
 				start.add(orth, 2);
@@ -99,7 +99,7 @@ public class DungeonsFire extends DungeonBase {
 			
 			cursor = new Coord(origin);
 			cursor.add(dir, 6);
-			cursor.add(Cardinal.getOrthogonal(dir)[0], 6);
+			cursor.add(Cardinal.orthogonal(dir)[0], 6);
 			
 			genFire(editor, rand, theme, cursor);
 			
@@ -110,7 +110,7 @@ public class DungeonsFire extends DungeonBase {
 			end = new Coord(cursor);
 			end.add(dir, 6);
 			editor.fillRectSolid(rand, start, end, wall, true, true);
-			cursor.add(Cardinal.getOrthogonal(dir)[0]);
+			cursor.add(Cardinal.orthogonal(dir)[0]);
 			editor.setBlock(rand, cursor, wall, true, true);
 			
 			start = new Coord(end);
@@ -118,7 +118,7 @@ public class DungeonsFire extends DungeonBase {
 			end.add(Cardinal.reverse(dir));
 			editor.fillRectSolid(rand, start, end, wall, true, true);
 			
-			Cardinal[] orth = Cardinal.getOrthogonal(dir);
+			Cardinal[] orth = Cardinal.orthogonal(dir);
 			stair.setOrientation(Cardinal.reverse(dir), true);
 			
 			cursor = new Coord(end);
@@ -166,7 +166,7 @@ public class DungeonsFire extends DungeonBase {
 		
 		for(Cardinal dir : Cardinal.directions){
 			
-			Cardinal[] orth = Cardinal.getOrthogonal(dir);
+			Cardinal[] orth = Cardinal.orthogonal(dir);
 
 			start = new Coord(origin);
 			start.add(dir);
@@ -187,7 +187,7 @@ public class DungeonsFire extends DungeonBase {
 			cursor.add(Cardinal.UP, 6);
 			cursor.add(dir, 3);
 			
-			for(Cardinal o : Cardinal.getOrthogonal(dir)){
+			for(Cardinal o : Cardinal.orthogonal(dir)){
 				Coord c = new Coord(cursor);
 				c.add(o, 2);
 				editor.setBlock(rand, c, stair.setOrientation(dir, true), true, false);

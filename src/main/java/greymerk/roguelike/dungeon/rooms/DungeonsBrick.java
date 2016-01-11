@@ -66,7 +66,7 @@ public class DungeonsBrick extends DungeonBase {
 			cursor.add(Cardinal.UP, 5);
 			stair.setOrientation(Cardinal.reverse(dir), true);
 			editor.setBlock(rand, cursor, stair, false, true);
-			cursor.add(Cardinal.getOrthogonal(dir)[0], 1);
+			cursor.add(Cardinal.left(dir), 1);
 			editor.setBlock(rand, cursor, blocks, false, true);
 
 			cursor = new Coord(x, y, z);
@@ -79,7 +79,7 @@ public class DungeonsBrick extends DungeonBase {
 			// pillar
 			cursor = new Coord(x, y, z);
 			cursor.add(dir, 3);
-			cursor.add(Cardinal.getOrthogonal(dir)[0], 3);
+			cursor.add(Cardinal.left(dir), 3);
 			start = new Coord(cursor);
 			cursor.add(Cardinal.UP, 2);
 			end = new Coord(cursor);
@@ -88,7 +88,7 @@ public class DungeonsBrick extends DungeonBase {
 			editor.setBlock(rand, cursor, blocks, true, true);
 			
 			// pillar stairs
-			for(Cardinal orth : Cardinal.getOrthogonal(dir)){
+			for(Cardinal orth : Cardinal.orthogonal(dir)){
 				cursor = new Coord(x, y, z);
 				cursor.add(dir, 3);
 				cursor.add(orth, 2);
@@ -100,11 +100,11 @@ public class DungeonsBrick extends DungeonBase {
 			// layer above pillars
 			cursor = new Coord(x, y, z);
 			cursor.add(dir, 2);
-			cursor.add(Cardinal.getOrthogonal(dir)[0], 2);
+			cursor.add(Cardinal.left(dir), 2);
 			cursor.add(Cardinal.UP, 4);
 			editor.setBlock(rand, cursor, blocks, false, true);
 			
-			for(Cardinal orth : Cardinal.getOrthogonal(dir)){
+			for(Cardinal orth : Cardinal.orthogonal(dir)){
 				cursor = new Coord(x, y, z);
 				cursor.add(Cardinal.UP, 4);
 				cursor.add(dir, 2);
@@ -115,11 +115,11 @@ public class DungeonsBrick extends DungeonBase {
 			
 			cursor = new Coord(x, y, z);
 			cursor.add(dir, 1);
-			cursor.add(Cardinal.getOrthogonal(dir)[0], 1);
+			cursor.add(Cardinal.left(dir), 1);
 			cursor.add(Cardinal.UP, 5);
 			editor.setBlock(rand, cursor, blocks, false, true);
 			
-			for(Cardinal orth : Cardinal.getOrthogonal(dir)){
+			for(Cardinal orth : Cardinal.orthogonal(dir)){
 				cursor = new Coord(x, y, z);
 				cursor.add(dir, 3);
 				cursor.add(orth, 2);

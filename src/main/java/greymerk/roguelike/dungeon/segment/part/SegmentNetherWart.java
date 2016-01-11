@@ -39,7 +39,7 @@ public class SegmentNetherWart extends SegmentBase{
 		cursor.add(Cardinal.UP, 1);
 		editor.setBlock(cursor, BlockType.get(BlockType.FENCE_NETHER_BRICK));
 		
-		for(Cardinal orth : Cardinal.getOrthogonal(dir)){
+		for(Cardinal orth : Cardinal.orthogonal(dir)){
 			step.setOrientation(Cardinal.reverse(orth), true);
 			cursor = new Coord(origin);
 			cursor.add(dir, 2);

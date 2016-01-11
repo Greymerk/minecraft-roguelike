@@ -28,7 +28,7 @@ public class SegmentAnkh extends SegmentBase{
 		MetaBlock back = ColorBlock.get(ColorBlock.CLAY, color);
 		MetaBlock glowstone = BlockType.get(BlockType.GLOWSTONE);
 		
-		Cardinal[] orth = Cardinal.getOrthogonal(dir);
+		Cardinal[] orth = Cardinal.orthogonal(dir);
 		
 		start = new Coord(pos);
 		start.add(dir, 2);

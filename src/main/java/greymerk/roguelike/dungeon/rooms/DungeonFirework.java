@@ -44,7 +44,7 @@ public class DungeonFirework extends DungeonBase {
 		end = new Coord(start);
 		start.add(Cardinal.reverse(dir), 9);
 		end.add(dir, 9);
-		Cardinal[] orth = Cardinal.getOrthogonal(dir);
+		Cardinal[] orth = Cardinal.orthogonal(dir);
 		start.add(orth[0], 4);
 		end.add(orth[1], 4);
 		start.add(Cardinal.DOWN);
@@ -232,7 +232,7 @@ public class DungeonFirework extends DungeonBase {
 		start.add(Cardinal.reverse(dir), 2);
 		end.add(Cardinal.reverse(dir), 2);
 		editor.fillRectSolid(rand, start, end, cob, true, true);
-		Cardinal[] orth = Cardinal.getOrthogonal(dir);
+		Cardinal[] orth = Cardinal.orthogonal(dir);
 		start.add(dir);
 		end.add(dir);
 		Coord above = new Coord(end);
@@ -267,7 +267,7 @@ public class DungeonFirework extends DungeonBase {
 		end = new Coord(start);
 		start.add(Cardinal.reverse(dir), 9);
 		end.add(dir, 9);
-		Cardinal[] orth = Cardinal.getOrthogonal(dir);
+		Cardinal[] orth = Cardinal.orthogonal(dir);
 		start.add(orth[0], 5);
 		end.add(orth[1], 5);
 		start.add(Cardinal.DOWN);

@@ -42,10 +42,10 @@ public class SecretRoom implements ISecretRoom {
 		
 		Coord start = new Coord(pos);
 		Coord end = new Coord(pos);
-		start.add(Cardinal.getOrthogonal(dir)[0]);
+		start.add(Cardinal.orthogonal(dir)[0]);
 		start.add(Cardinal.DOWN);
 		start.add(dir, 2);
-		end.add(Cardinal.getOrthogonal(dir)[1]);
+		end.add(Cardinal.orthogonal(dir)[1]);
 		end.add(dir, size + 5);
 		end.add(Cardinal.UP, 2);
 		editor.fillRectSolid(rand, start, end, settings.getTheme().getPrimaryWall(), false, true);

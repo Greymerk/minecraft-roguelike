@@ -73,7 +73,7 @@ public class DungeonsMusic extends DungeonBase {
 		}
 		
 		for(Cardinal dir : Cardinal.directions){
-			Cardinal[] orth = Cardinal.getOrthogonal(dir);
+			Cardinal[] orth = Cardinal.orthogonal(dir);
 			
 			cursor = new Coord(origin);
 			cursor.add(dir, 5);

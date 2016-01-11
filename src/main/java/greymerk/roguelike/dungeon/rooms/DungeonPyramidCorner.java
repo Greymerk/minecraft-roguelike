@@ -54,7 +54,7 @@ public class DungeonPyramidCorner extends DungeonBase {
 			
 			cursor = new Coord(x, y, z);
 			cursor.add(dir, 2);
-			cursor.add(Cardinal.getOrthogonal(dir)[0], 2);
+			cursor.add(Cardinal.orthogonal(dir)[0], 2);
 			start = new Coord(cursor);
 			cursor.add(Cardinal.UP, 2);
 			end = new Coord(cursor);

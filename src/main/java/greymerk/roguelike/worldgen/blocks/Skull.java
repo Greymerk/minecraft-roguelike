@@ -20,7 +20,7 @@ public enum Skull {
 		MetaBlock skullBlock = new MetaBlock(Blocks.skull);
 		
 		// Makes the skull sit flush against the block below it.
-		skullBlock.withProperty(BlockSkull.FACING, Cardinal.getFacing(Cardinal.UP));
+		skullBlock.withProperty(BlockSkull.FACING, Cardinal.facing(Cardinal.UP));
 		
 		Coord pos = new Coord(x, y, z);
 		

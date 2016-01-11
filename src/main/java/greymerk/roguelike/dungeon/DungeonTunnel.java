@@ -80,7 +80,7 @@ public class DungeonTunnel implements Iterable<Coord>{
 		location.add(dir, 1);
 		
 		Coord start = new Coord(location);
-		Cardinal[] orth = Cardinal.getOrthogonal(dir);
+		Cardinal[] orth = Cardinal.orthogonal(dir);
 		start.add(orth[0], 2);
 		start.add(Cardinal.UP, 2);
 		Coord end = new Coord(location);
