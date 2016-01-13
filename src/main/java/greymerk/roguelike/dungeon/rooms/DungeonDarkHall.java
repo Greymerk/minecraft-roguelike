@@ -79,11 +79,9 @@ public class DungeonDarkHall extends DungeonBase{
 		
 		for(Cardinal dir : Cardinal.directions){
 			
-			Cardinal[] orth = Cardinal.orthogonal(dir);
-			
 			start = new Coord(origin);
 			start.add(dir, 6);
-			start.add(orth[0], 6);
+			start.add(Cardinal.left(dir), 6);
 			end = new Coord(start);
 			end.add(Cardinal.UP, 5);
 			editor.fillRectSolid(rand, start, end, pillar, true, true);
@@ -92,16 +90,16 @@ public class DungeonDarkHall extends DungeonBase{
 			start.add(dir, 6);
 			start.add(Cardinal.UP, 6);
 			end = new Coord(start);
-			start.add(orth[0], 6);
-			end.add(orth[1], 6);
+			start.add(Cardinal.left(dir), 6);
+			end.add(Cardinal.right(dir), 6);
 			editor.fillRectSolid(rand, start, end, wall, true, true);
 			
 			start = new Coord(origin);
 			start.add(dir, 3);
 			start.add(Cardinal.UP, 6);
 			end = new Coord(start);
-			start.add(orth[0], 3);
-			end.add(orth[1], 3);
+			start.add(Cardinal.left(dir), 3);
+			end.add(Cardinal.right(dir), 3);
 			editor.fillRectSolid(rand, start, end, wall, true, true);
 			start.add(Cardinal.UP, 2);
 			end.add(Cardinal.UP, 2);
@@ -122,8 +120,8 @@ public class DungeonDarkHall extends DungeonBase{
 				start.add(Cardinal.UP, 2);
 				end = new Coord(start);
 				end.add(Cardinal.UP, 3);
-				start.add(orth[0], 2);
-				end.add(orth[1], 2);
+				start.add(Cardinal.left(dir), 2);
+				end.add(Cardinal.right(dir), 2);
 				editor.fillRectSolid(rand, start, end, wall, true, true);
 				
 				cursor = new Coord(origin);
@@ -131,7 +129,7 @@ public class DungeonDarkHall extends DungeonBase{
 				cursor.add(Cardinal.UP, 2);
 				air.setBlock(editor, cursor);
 				
-				for (Cardinal o : orth){
+				for (Cardinal o : Cardinal.orthogonal(dir)){
 					cursor = new Coord(origin);
 					cursor.add(dir, 7);
 					cursor.add(Cardinal.UP, 2);
@@ -163,7 +161,7 @@ public class DungeonDarkHall extends DungeonBase{
 			end.add(Cardinal.reverse(dir), 2);
 			editor.fillRectSolid(rand, start, end, wall, true, true);
 			
-			for (Cardinal o : orth){
+			for (Cardinal o : Cardinal.orthogonal(dir)){
 				cursor = new Coord(origin);
 				cursor.add(dir, 6);
 				cursor.add(o, 3);

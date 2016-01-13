@@ -35,13 +35,12 @@ public class DungeonBedRoom extends DungeonBase {
 		Coord end;
 		
 		Cardinal dir = entrances[0];
-		Cardinal[] orth = Cardinal.orthogonal(dir);
 		
 		start = new Coord(x, y, z);
 		end = new Coord(x, y, z);
 		
-		start.add(orth[0], 4);
-		end.add(orth[1], 4);
+		start.add(Cardinal.left(dir), 4);
+		end.add(Cardinal.right(dir), 4);
 		start.add(Cardinal.reverse(dir), 4);
 		end.add(dir, 4);
 		start.add(Cardinal.DOWN);
@@ -52,22 +51,22 @@ public class DungeonBedRoom extends DungeonBase {
 		start = new Coord(x, y, z);
 		start.add(Cardinal.DOWN);
 		end = new Coord(start);
-		start.add(orth[0], 1);
-		end.add(orth[1], 1);
+		start.add(Cardinal.left(dir), 1);
+		end.add(Cardinal.right(dir), 1);
 		start.add(Cardinal.reverse(dir), 2);
 		end.add(dir, 2);
 		
 		editor.fillRectSolid(rand, start, end, theme.getSecondaryWall(), true, true);
 		
-		for(Cardinal o : orth){
+		for(Cardinal o : Cardinal.orthogonal(dir)){
 			IStair stair = theme.getSecondaryStair();
 			stair.setOrientation(Cardinal.reverse(o), true);
 			
 			start = new Coord(x, y, z);
 			start.add(o, 3);
 			end = new Coord(start);
-			start.add(Cardinal.orthogonal(o)[0], 2);
-			end.add(Cardinal.orthogonal(o)[1], 2);
+			start.add(Cardinal.left(o), 2);
+			end.add(Cardinal.right(o), 2);
 			
 			editor.fillRectSolid(rand, start, end, stair, true, true);
 			start.add(Cardinal.UP, 2);
@@ -81,7 +80,7 @@ public class DungeonBedRoom extends DungeonBase {
 			editor.fillRectSolid(rand, start, end, stair, true, true);
 		}
 		
-		for(Cardinal o : orth){
+		for(Cardinal o : Cardinal.orthogonal(dir)){
 			cursor = new Coord(x, y, z);
 			cursor.add(o, 3);
 			pillar(editor, rand, o, theme, cursor);
@@ -99,13 +98,13 @@ public class DungeonBedRoom extends DungeonBase {
 		for(int i = 0; i < 3; ++i){
 			start = new Coord(cursor);
 			end = new Coord(cursor);
-			start.add(orth[0], 2);
-			end.add(orth[1], 2);
+			start.add(Cardinal.left(dir), 2);
+			end.add(Cardinal.right(dir), 2);
 			editor.fillRectSolid(rand, start, end, theme.getSecondaryWall(), true, true);
 			cursor.add(dir, 3);
 		}
 		
-		Cardinal side = orth[rand.nextInt(orth.length)];
+		Cardinal side = rand.nextBoolean() ? Cardinal.left(dir) : Cardinal.right(dir);
 		
 		cursor = new Coord(x, y, z);
 		cursor.add(dir, 3);
@@ -123,7 +122,7 @@ public class DungeonBedRoom extends DungeonBase {
 		cursor.add(Cardinal.UP);
 		Torch.generate(editor, Torch.WOODEN, Cardinal.UP, cursor);
 		
-		side = orth[rand.nextInt(orth.length)];
+		side = Cardinal.orthogonal(dir)[rand.nextBoolean() ? 1 : 0];
 		cursor = new Coord(x, y, z);
 		cursor.add(dir);
 		cursor.add(side, 3);
@@ -143,7 +142,7 @@ public class DungeonBedRoom extends DungeonBase {
 			cursor.add(Cardinal.DOWN);
 		}
 		
-		side = orth[rand.nextInt(orth.length)];
+		side = rand.nextBoolean() ? Cardinal.left(dir) : Cardinal.right(dir);
 		cursor = new Coord(x, y, z);
 		cursor.add(Cardinal.reverse(dir));
 		cursor.add(side, 3);
@@ -167,8 +166,7 @@ public class DungeonBedRoom extends DungeonBase {
 	}
 
 	@Override
-	public int getSize() {
-		
+	public int getSize() {	
 		return 5;
 	}
 
@@ -181,9 +179,8 @@ public class DungeonBedRoom extends DungeonBase {
 		end = new Coord(start);
 		start.add(Cardinal.reverse(dir), 5);
 		end.add(dir, 5);
-		Cardinal[] orth = Cardinal.orthogonal(dir);
-		start.add(orth[0], 5);
-		end.add(orth[1], 5);
+		start.add(Cardinal.left(dir), 5);
+		end.add(Cardinal.right(dir), 5);
 		start.add(Cardinal.DOWN);
 		end.add(Cardinal.UP, 3);
 		

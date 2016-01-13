@@ -60,10 +60,9 @@ public class DungeonEniko extends DungeonBase {
 		floor.fillRectSolid(editor, rand, start, end, true, true);
 		
 		for(Cardinal dir : Cardinal.directions){
-			Cardinal[] orth = Cardinal.orthogonal(dir);
 			cursor = new Coord(origin);
 			cursor.add(dir, 5);
-			for(Cardinal o : orth){
+			for(Cardinal o : Cardinal.orthogonal(dir)){
 				Coord c = new Coord(cursor);
 				c.add(o, 2);
 				pillar(editor, rand, theme, c);
@@ -79,15 +78,15 @@ public class DungeonEniko extends DungeonBase {
 				chests.add(new Coord(c));
 			}
 			
-			cursor.add(orth[0], 5);
+			cursor.add(Cardinal.left(dir), 5);
 			pillar(editor, rand, theme, cursor);
 			
 			if(Arrays.asList(entrances).contains(dir)){
 				start = new Coord(origin);
 				start.add(Cardinal.DOWN);
 				end = new Coord(start);
-				start.add(orth[0]);
-				end.add(orth[1]);
+				start.add(Cardinal.left(dir));
+				end.add(Cardinal.right(dir));
 				end.add(dir, 6);
 				floor.fillRectSolid(editor, rand, start, end, true, true);
 			}

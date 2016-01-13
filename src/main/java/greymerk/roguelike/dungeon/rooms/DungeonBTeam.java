@@ -48,7 +48,6 @@ public class DungeonBTeam extends DungeonBase {
 		MetaBlock lamp = BlockType.get(BlockType.REDSTONE_LAMP);
 				
 		Cardinal dir = entrances[0];
-		Cardinal[] orth = Cardinal.orthogonal(dir);
 		
 		Coord start;
 		Coord end;
@@ -58,8 +57,8 @@ public class DungeonBTeam extends DungeonBase {
 		end = new Coord(origin);
 		start.add(dir, 5);
 		end.add(Cardinal.reverse(dir), 4);
-		start.add(orth[0], 6);
-		end.add(orth[1], 6);
+		start.add(Cardinal.left(dir), 6);
+		end.add(Cardinal.right(dir), 6);
 		end.add(Cardinal.UP, 5);
 		start.add(Cardinal.DOWN);
 		stonebrick.fillRectHollow(editor, rand, start, end, true, true);
@@ -69,8 +68,8 @@ public class DungeonBTeam extends DungeonBase {
 		end = new Coord(start);
 		start.add(dir, 4);
 		end.add(Cardinal.reverse(dir), 3);
-		start.add(orth[0], 5);
-		end.add(orth[1], 5);
+		start.add(Cardinal.left(dir), 5);
+		end.add(Cardinal.right(dir), 5);
 		cobble.fillRectSolid(editor, rand, start, end, true, true);
 		
 		start = new Coord(origin);
@@ -78,8 +77,8 @@ public class DungeonBTeam extends DungeonBase {
 		end = new Coord(start);
 		start.add(dir, 3);
 		end.add(Cardinal.reverse(dir), 2);
-		start.add(orth[0], 4);
-		end.add(orth[1], 4);
+		start.add(Cardinal.left(dir), 4);
+		end.add(Cardinal.right(dir), 4);
 		cyan.fillRectSolid(editor, rand, start, end, true, true);
 		
 		start = new Coord(origin);
@@ -87,8 +86,8 @@ public class DungeonBTeam extends DungeonBase {
 		end = new Coord(start);
 		start.add(dir, 2);
 		end.add(Cardinal.reverse(dir), 1);
-		start.add(orth[0], 3);
-		end.add(orth[1], 3);
+		start.add(Cardinal.left(dir), 3);
+		end.add(Cardinal.right(dir), 3);
 		slab.fillRectSolid(editor, rand, start, end, true, true);
 		
 		cursor = new Coord(origin);
@@ -98,20 +97,20 @@ public class DungeonBTeam extends DungeonBase {
 		logWall(editor, rand, Cardinal.reverse(dir), cursor);
 		
 		cursor = new Coord(origin);
-		cursor.add(orth[0], 6);
-		tvWall(editor, rand, orth[0], cursor);
+		cursor.add(Cardinal.left(dir), 6);
+		tvWall(editor, rand, Cardinal.left(dir), cursor);
 		
 		cursor = new Coord(origin);
-		cursor.add(orth[1], 6);
-		bWall(editor, rand, orth[1], cursor);
+		cursor.add(Cardinal.right(dir), 6);
+		bWall(editor, rand, Cardinal.right(dir), cursor);
 		
 		table(editor, rand, dir, origin);
 		
 		start = new Coord(origin);
 		start.add(Cardinal.reverse(dir), 4);
 		end = new Coord(start);
-		start.add(orth[0]);
-		end.add(orth[1]);
+		start.add(Cardinal.left(dir));
+		end.add(Cardinal.right(dir));
 		end.add(Cardinal.UP, 2);
 		cobble.fillRectSolid(editor, rand, start, end, true, true);
 		
@@ -123,12 +122,12 @@ public class DungeonBTeam extends DungeonBase {
 		
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.reverse(dir));
-		cursor.add(orth[0], 3);
+		cursor.add(Cardinal.left(dir), 3);
 		cursor.add(Cardinal.UP, 5);
 		log.setBlock(editor, cursor);
 		cursor.add(dir, 3);
 		log.setBlock(editor, cursor);
-		cursor.add(orth[1], 6);
+		cursor.add(Cardinal.right(dir), 6);
 		log.setBlock(editor, cursor);
 		cursor.add(Cardinal.reverse(dir), 3);
 		log.setBlock(editor, cursor);
@@ -137,14 +136,14 @@ public class DungeonBTeam extends DungeonBase {
 		start.add(Cardinal.reverse(dir));
 		start.add(Cardinal.UP, 5);
 		end = new Coord(start);
-		start.add(orth[0], 2);
-		end.add(orth[1], 2);
+		start.add(Cardinal.left(dir), 2);
+		end.add(Cardinal.right(dir), 2);
 		stair.setOrientation(dir, true).fillRectSolid(editor, rand, start, end, true, true);
 		start.add(dir, 3);
 		end.add(dir, 3);
 		stair.setOrientation(Cardinal.reverse(dir), true).fillRectSolid(editor, rand, start, end, true, true);
 		
-		for(Cardinal d : orth){
+		for(Cardinal d : Cardinal.orthogonal(dir)){
 			start = new Coord(origin);
 			start.add(Cardinal.UP, 5);
 			start.add(d, 3);
@@ -156,29 +155,29 @@ public class DungeonBTeam extends DungeonBase {
 		start = new Coord(origin);
 		start.add(Cardinal.UP, 5);
 		end = new Coord(start);
-		start.add(orth[0], 2);
-		end.add(orth[1], 2);
+		start.add(Cardinal.left(dir), 2);
+		end.add(Cardinal.right(dir), 2);
 		end.add(dir);
 		lamp.fillRectSolid(editor, rand, start, end, true, true);
 
 		cursor = new Coord(origin);
 		cursor.add(dir, 4);
-		cursor.add(orth[1], 5);
+		cursor.add(Cardinal.right(dir), 5);
 		BlockType.get(BlockType.SHELF).setBlock(editor, cursor);
 		cursor.add(Cardinal.UP);
 		BrewingStand.get().setBlock(editor, cursor);
 		
 		cursor = new Coord(origin);
 		cursor.add(dir, 4);
-		cursor.add(orth[0], 4);
+		cursor.add(Cardinal.left(dir), 4);
 		BlockType.get(BlockType.JUKEBOX).setBlock(editor, cursor);
-		cursor.add(orth[0]);
+		cursor.add(Cardinal.left(dir));
 		ITreasureChest stal = Treasure.generate(editor, rand, cursor, Treasure.EMPTY, settings.getDifficulty(cursor));
 		stal.setSlot(stal.getSize() / 2, Record.getRecord(Record.STAL));
 		
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.reverse(dir), 3);
-		cursor.add(orth[0], 4);
+		cursor.add(Cardinal.left(dir), 4);
 		ITreasureChest bdub = Treasure.generate(editor, rand, cursor, Treasure.EMPTY, settings.getDifficulty(cursor));
 		bdub.setSlot((bdub.getSize() / 2) - 2, ItemNovelty.getItem(ItemNovelty.BDOUBLEO));
 		ItemStack shirt = new ItemStack(Items.leather_chestplate);
@@ -189,7 +188,7 @@ public class DungeonBTeam extends DungeonBase {
 		
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.reverse(dir), 3);
-		cursor.add(orth[1], 4);
+		cursor.add(Cardinal.right(dir), 4);
 		ITreasureChest genny = Treasure.generate(editor, rand, cursor, Treasure.EMPTY, settings.getDifficulty(cursor));
 		genny.setSlot(genny.getSize() / 2, ItemNovelty.getItem(ItemNovelty.GENERIKB));
 		
@@ -202,20 +201,18 @@ public class DungeonBTeam extends DungeonBase {
 		IStair chair = new MetaStair(StairType.NETHERBRICK);
 		MetaBlock slab = Slab.get(Slab.SPRUCE, true, false, false);
 		
-		Cardinal[] orth = Cardinal.orthogonal(dir);
-		
 		Coord start;
 		Coord end;
 		Coord cursor;
 		
 		start = new Coord(origin);
-		start.add(orth[0]);
+		start.add(Cardinal.left(dir));
 		end = new Coord(origin);
-		end.add(orth[1]);
+		end.add(Cardinal.right(dir));
 		end.add(dir);
 		slab.fillRectSolid(editor, rand, start, end, true, true);
 		
-		for(Cardinal d : orth){
+		for(Cardinal d : Cardinal.orthogonal(dir)){
 			start = new Coord(origin);
 			start.add(d, 2);
 			end = new Coord(start);
@@ -225,14 +222,14 @@ public class DungeonBTeam extends DungeonBase {
 		
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.reverse(dir), 2);
-		for(Cardinal d : orth){
+		for(Cardinal d : Cardinal.orthogonal(dir)){
 			Coord c = new Coord(cursor);
 			c.add(d);
 			chair.setOrientation(dir, false).setBlock(editor, c);
 		}
 		
 		cursor.add(dir, 5);
-		for(Cardinal d : orth){
+		for(Cardinal d : Cardinal.orthogonal(dir)){
 			Coord c = new Coord(cursor);
 			c.add(d);
 			chair.setOrientation(Cardinal.reverse(dir), false).setBlock(editor, c);
@@ -268,8 +265,6 @@ public class DungeonBTeam extends DungeonBase {
 	
 	private void logWall(IWorldEditor editor, Random rand, Cardinal dir, Coord origin){
 
-		Cardinal[] orth = Cardinal.orthogonal(dir);
-
 		Coord start;
 		Coord end;
 		Coord cursor;
@@ -278,21 +273,21 @@ public class DungeonBTeam extends DungeonBase {
 		MetaBlock plank = Wood.getPlank(Wood.SPRUCE);
 		BlockCheckers checkers = new BlockCheckers(
 				Log.getLog(Wood.SPRUCE, Cardinal.UP),
-				Log.getLog(Wood.SPRUCE, orth[0])
+				Log.getLog(Wood.SPRUCE, Cardinal.left(dir))
 				);
 
 		start = new Coord(origin);
 		start.add(Cardinal.UP);
 		end = new Coord(start);
-		start.add(orth[0], 4);
-		end.add(orth[1], 4);
+		start.add(Cardinal.left(dir), 4);
+		end.add(Cardinal.right(dir), 4);
 		end.add(Cardinal.UP, 2);
 		checkers.fillRectSolid(editor, rand, start, end, true, true);
 		
 		start = new Coord(origin);
 		end = new Coord(start);
-		start.add(orth[0], 5);
-		end.add(orth[1], 5);
+		start.add(Cardinal.left(dir), 5);
+		end.add(Cardinal.right(dir), 5);
 		plank.fillRectSolid(editor, rand, start, end, true, true);
 		start.add(dir);
 		end.add(dir);
@@ -300,7 +295,7 @@ public class DungeonBTeam extends DungeonBase {
 		end.add(Cardinal.UP, 4);
 		stair.setOrientation(dir, true).fillRectSolid(editor, rand, start, end, true, true);
 		
-		for(Cardinal d : orth){
+		for(Cardinal d : Cardinal.orthogonal(dir)){
 			start = new Coord(origin);
 			start.add(d, 5);
 			start.add(Cardinal.UP);
@@ -326,8 +321,6 @@ public class DungeonBTeam extends DungeonBase {
 		MetaBlock b = RogueConfig.getBoolean(RogueConfig.GENEROUS)
 			? BlockType.get(BlockType.EMERALD_BLOCK)
 			: ColorBlock.get(ColorBlock.GLASS, DyeColor.LIME);
-		
-		Cardinal[] orth = Cardinal.orthogonal(dir);
 
 		Coord start;
 		Coord end;
@@ -335,15 +328,15 @@ public class DungeonBTeam extends DungeonBase {
 		
 		start = new Coord(origin);
 		end = new Coord(start);
-		start.add(orth[1], 3);
-		end.add(orth[0], 4);
+		start.add(Cardinal.right(dir), 3);
+		end.add(Cardinal.left(dir), 4);
 		plank.fillRectSolid(editor, rand, start, end, true, true);
 		
 		start = new Coord(origin);
 		start.add(Cardinal.UP);
 		end = new Coord(start);
-		start.add(orth[1], 3);
-		end.add(orth[0], 4);
+		start.add(Cardinal.right(dir), 3);
+		end.add(Cardinal.left(dir), 4);
 		end.add(Cardinal.UP, 3);
 		bricks.fillRectSolid(editor, rand, start, end, true, true);
 		
@@ -354,13 +347,13 @@ public class DungeonBTeam extends DungeonBase {
 			if(i % 2 == 0){
 				start = new Coord(cursor);
 				end = new Coord(start);
-				end.add(orth[0], 2);
+				end.add(Cardinal.left(dir), 2);
 				b.fillRectSolid(editor, rand, start, end, true, true);
 			} else {
 				Coord c = new Coord(cursor);
-				c.add(orth[1]);
+				c.add(Cardinal.right(dir));
 				b.setBlock(editor, c);
-				c.add(orth[0], 3);
+				c.add(Cardinal.left(dir), 3);
 				b.setBlock(editor, c);
 			}
 			
@@ -370,7 +363,6 @@ public class DungeonBTeam extends DungeonBase {
 	}
 	
 	private void tvWall(IWorldEditor editor, Random rand, Cardinal dir, Coord origin){
-		Cardinal[] orth = Cardinal.orthogonal(dir);
 
 		Coord start;
 		Coord end;
@@ -388,27 +380,27 @@ public class DungeonBTeam extends DungeonBase {
 		start.add(Cardinal.reverse(dir));
 		start.add(Cardinal.UP, 4);
 		end = new Coord(start);
-		start.add(orth[0], 2);
-		end.add(orth[1], 3);
+		start.add(Cardinal.left(dir), 2);
+		end.add(Cardinal.right(dir), 3);
 		slab.fillRectSolid(editor, rand, start, end, true, true);
 		
 		start = new Coord(origin);
 		end = new Coord(origin);
-		start.add(orth[0], 3);
-		end.add(orth[1], 4);
+		start.add(Cardinal.left(dir), 3);
+		end.add(Cardinal.right(dir), 4);
 		plank.fillRectSolid(editor, rand, start, end, true, true);
-		start.add(orth[1], 2);
-		end.add(orth[0], 2);
+		start.add(Cardinal.right(dir), 2);
+		end.add(Cardinal.left(dir), 2);
 		note.fillRectSolid(editor, rand, start, end, true, true);
 		start.add(Cardinal.UP);
 		end.add(Cardinal.UP, 3);
 		black.fillRectSolid(editor, rand, start, end, true, true);
 		
 		start = new Coord(origin);
-		start.add(orth[0], 2);
+		start.add(Cardinal.left(dir), 2);
 		start.add(Cardinal.UP);
 		end = new Coord(start);
-		end.add(orth[0]);
+		end.add(Cardinal.left(dir));
 		end.add(Cardinal.UP, 2);
 		shelf.fillRectSolid(editor, rand, start, end, true, true);
 		cursor = new Coord(start);
@@ -418,10 +410,10 @@ public class DungeonBTeam extends DungeonBase {
 		bean.setBlock(editor, cursor);
 		
 		start = new Coord(origin);
-		start.add(orth[1], 3);
+		start.add(Cardinal.right(dir), 3);
 		start.add(Cardinal.UP);
 		end = new Coord(start);
-		end.add(orth[1]);
+		end.add(Cardinal.right(dir));
 		end.add(Cardinal.UP, 2);
 		shelf.fillRectSolid(editor, rand, start, end, true, true);
 		cursor = new Coord(start);
