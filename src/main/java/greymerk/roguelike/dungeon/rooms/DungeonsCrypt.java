@@ -52,14 +52,13 @@ public class DungeonsCrypt extends DungeonBase {
 		
 		for(Cardinal dir : Cardinal.directions){
 			
-			Cardinal[] orth = Cardinal.orthogonal(dir);
 			List<?> doorways = Arrays.asList(entrances);
 			
-			if(doorways.contains(dir) && doorways.contains(orth[0])){
+			if(doorways.contains(dir) && doorways.contains(Cardinal.left(dir))){
 				start = new Coord(origin);
 				end = new Coord(origin);
 				start.add(dir, 3);
-				end.add(orth[0], 5);
+				end.add(Cardinal.left(dir), 5);
 				end.add(dir, 5);
 				end.add(Cardinal.UP, 4);
 				air.fillRectSolid(editor, rand, start, end, true, true);
@@ -70,13 +69,13 @@ public class DungeonsCrypt extends DungeonBase {
 				start = new Coord(origin);
 				end = new Coord(origin);
 				start.add(dir, 3);
-				start.add(orth[0], 2);
+				start.add(Cardinal.left(dir), 2);
 				end.add(dir, 8);
-				end.add(orth[1], 2);
+				end.add(Cardinal.right(dir), 2);
 				end.add(Cardinal.UP, 4);
 				air.fillRectSolid(editor, rand, start, end, true, true);
 				
-				for(Cardinal o : orth){
+				for(Cardinal o : Cardinal.orthogonal(dir)){
 					if(doorways.contains(o)){
 						
 						cursor = new Coord(origin);
@@ -113,15 +112,15 @@ public class DungeonsCrypt extends DungeonBase {
 			
 			cursor = new Coord(origin);
 			cursor.add(dir, 3);
-			cursor.add(orth[0], 3);
+			cursor.add(Cardinal.left(dir), 3);
 			pillar(editor, rand, settings, cursor);
 			
 			start = new Coord(origin);
 			start.add(dir, 8);
 			start.add(Cardinal.UP, 4);
 			end = new Coord(start);
-			start.add(orth[0], 2);
-			end.add(orth[1], 2);
+			start.add(Cardinal.left(dir), 2);
+			end.add(Cardinal.right(dir), 2);
 			stair.setOrientation(Cardinal.reverse(dir), true);
 			stair.fillRectSolid(editor, rand, start, end, true, false);
 		}
@@ -140,14 +139,12 @@ public class DungeonsCrypt extends DungeonBase {
 		Coord start;
 		Coord end;
 		
-		Cardinal[] orth = Cardinal.orthogonal(dir);
-		
 		start = new Coord(origin);
 		start.add(Cardinal.DOWN);
 		start.add(dir, 5);
 		end = new Coord(start);
-		start.add(orth[0], 2);
-		end.add(orth[1], 2);
+		start.add(Cardinal.left(dir), 2);
+		end.add(Cardinal.right(dir), 2);
 		walls.fillRectSolid(editor, rand, start, end, true, true);
 		
 		cursor = new Coord(origin);
@@ -232,14 +229,12 @@ public class DungeonsCrypt extends DungeonBase {
 		Coord start;
 		Coord end;
 		
-		Cardinal[] orth = Cardinal.orthogonal(dir);
-		
 		start = new Coord(origin);
 		start.add(Cardinal.DOWN);
-		start.add(orth[0]);
+		start.add(Cardinal.left(dir));
 		end = new Coord(origin);
 		end.add(Cardinal.UP, 3);
-		end.add(orth[1]);
+		end.add(Cardinal.right(dir));
 		end.add(dir, 3);
 		
 		walls.fillRectSolid(editor, rand, start, end, true, true);
@@ -251,7 +246,7 @@ public class DungeonsCrypt extends DungeonBase {
 		cursor.add(Cardinal.UP);
 		walls.setBlock(editor, rand, cursor);
 		
-		for(Cardinal o : orth){
+		for(Cardinal o : Cardinal.orthogonal(dir)){
 			cursor = new Coord(origin);
 			cursor.add(Cardinal.reverse(dir));
 			cursor.add(Cardinal.UP);
@@ -276,8 +271,8 @@ public class DungeonsCrypt extends DungeonBase {
 		start.add(Cardinal.UP, 3);
 		start.add(Cardinal.reverse(dir), 2);
 		end = new Coord(start);
-		start.add(orth[0]);
-		end.add(orth[1]);
+		start.add(Cardinal.left(dir));
+		end.add(Cardinal.right(dir));
 		stair.setOrientation(Cardinal.reverse(dir), true);
 		stair.fillRectSolid(editor, rand, start, end, true, true);
 		
@@ -293,12 +288,10 @@ public class DungeonsCrypt extends DungeonBase {
 		Coord start;
 		Coord end;
 		
-		Cardinal[] orth = Cardinal.orthogonal(dir);
-		
 		start = new Coord(origin);
 		end = new Coord(origin);
-		start.add(orth[0], 3);
-		end.add(orth[1], 3);
+		start.add(Cardinal.left(dir), 3);
+		end.add(Cardinal.right(dir), 3);
 		end.add(dir, 4);
 		end.add(Cardinal.UP, 4);
 		walls.fillRectSolid(editor, rand, start, end, true, true);
@@ -310,7 +303,7 @@ public class DungeonsCrypt extends DungeonBase {
 		cursor.add(Cardinal.UP, 2);
 		tomb(editor, rand, settings, cursor, dir);
 		
-		for(Cardinal o : orth){
+		for(Cardinal o : Cardinal.orthogonal(dir)){
 			cursor = new Coord(origin);
 			cursor.add(Cardinal.UP);
 			cursor.add(o, 2);

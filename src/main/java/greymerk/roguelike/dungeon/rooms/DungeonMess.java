@@ -56,10 +56,9 @@ public class DungeonMess extends DungeonBase {
 		BlockType.get(BlockType.GLOWSTONE).setBlock(editor, cursor);
 		
 		for(Cardinal dir : Cardinal.directions){
-			Cardinal[] orth = Cardinal.orthogonal(dir);
 			start = new Coord(origin);
 			start.add(dir, 3);
-			start.add(orth[0], 3);
+			start.add(Cardinal.left(dir), 3);
 			end = new Coord(start);
 			end.add(Cardinal.UP, 3);
 			pillar.fillRectSolid(editor, rand, start, end, true, true);
@@ -74,12 +73,12 @@ public class DungeonMess extends DungeonBase {
 			start.add(dir, 3);
 			start.add(Cardinal.UP, 4);
 			end = new Coord(start);
-			start.add(orth[0], 3);
-			end.add(orth[1], 3);
+			start.add(Cardinal.left(dir), 3);
+			end.add(Cardinal.right(dir), 3);
 			wall.fillRectSolid(editor, rand, start, end, true, true);
 			
 			
-			Cardinal[] corner = new Cardinal[]{dir, orth[0]};
+			Cardinal[] corner = new Cardinal[]{dir, Cardinal.left(dir)};
 			if(entrances.length == 4 && dir == entrances[0]){
 				supplyCorner(editor, rand, settings, corner, origin);
 			} else {
@@ -156,7 +155,6 @@ public class DungeonMess extends DungeonBase {
 		Furnace.generate(editor, true, Cardinal.reverse(entrances[1]), cursor);
 		
 		for(Cardinal dir : entrances){
-			Cardinal[] orth = Cardinal.orthogonal(dir);
 			cursor = new Coord(origin);
 			cursor.add(entrances[0], 3);
 			cursor.add(entrances[1], 3);
@@ -185,14 +183,14 @@ public class DungeonMess extends DungeonBase {
 			cursor.add(entrances[1], 5);
 			cursor.add(dir, 2);
 			start = new Coord(cursor);
-			start.add(orth[0]);
+			start.add(Cardinal.left(dir));
 			end = new Coord(cursor);
-			end.add(orth[1]);
+			end.add(Cardinal.right(dir));
 			stair.setOrientation(Cardinal.reverse(dir), true).fillRectSolid(editor, rand, start, end, true, true);
 			start.add(Cardinal.UP, 2);
 			end.add(Cardinal.UP, 2);
-			stair.setOrientation(orth[1], true).setBlock(editor, start);
-			stair.setOrientation(orth[0], true).setBlock(editor, end);
+			stair.setOrientation(Cardinal.right(dir), true).setBlock(editor, start);
+			stair.setOrientation(Cardinal.left(dir), true).setBlock(editor, end);
 			start.add(Cardinal.UP);
 			end.add(Cardinal.UP);
 			wall.fillRectSolid(editor, rand, start, end, true, true);
@@ -240,7 +238,6 @@ public class DungeonMess extends DungeonBase {
 		
 		
 		for(Cardinal dir : entrances){
-			Cardinal[] orth = Cardinal.orthogonal(dir);
 			cursor = new Coord(origin);
 			cursor.add(entrances[0], 3);
 			cursor.add(entrances[1], 3);
@@ -269,14 +266,14 @@ public class DungeonMess extends DungeonBase {
 			cursor.add(entrances[1], 5);
 			cursor.add(dir, 2);
 			start = new Coord(cursor);
-			start.add(orth[0]);
+			start.add(Cardinal.left(dir));
 			end = new Coord(cursor);
-			end.add(orth[1]);
+			end.add(Cardinal.right(dir));
 			stair.setOrientation(Cardinal.reverse(dir), false).fillRectSolid(editor, rand, start, end, true, true);
 			start.add(Cardinal.UP, 2);
 			end.add(Cardinal.UP, 2);
-			stair.setOrientation(orth[1], true).setBlock(editor, start);
-			stair.setOrientation(orth[0], true).setBlock(editor, end);
+			stair.setOrientation(Cardinal.right(dir), true).setBlock(editor, start);
+			stair.setOrientation(Cardinal.left(dir), true).setBlock(editor, end);
 			start.add(Cardinal.UP);
 			end.add(Cardinal.UP);
 			wall.fillRectSolid(editor, rand, start, end, true, true);
@@ -296,18 +293,17 @@ public class DungeonMess extends DungeonBase {
 		Coord cursor;
 		Coord start;
 		Coord end;
-		Cardinal[] orth = Cardinal.orthogonal(dir);
 		
 		start = new Coord(origin);
 		start.add(dir, 7);
 		start.add(Cardinal.UP, 3);
 		end = new Coord(start);
 		end.add(Cardinal.UP);
-		start.add(orth[0], 2);
-		end.add(orth[1], 2);
+		start.add(Cardinal.left(dir), 2);
+		end.add(Cardinal.right(dir), 2);
 		wall.fillRectSolid(editor, rand, start, end, true, true);
 		
-		for(Cardinal o : orth){
+		for(Cardinal o : Cardinal.orthogonal(dir)){
 			cursor = new Coord(origin);
 			cursor.add(dir, 7);
 			cursor.add(o, 2);
@@ -337,8 +333,8 @@ public class DungeonMess extends DungeonBase {
 		start.add(dir, 4);
 		end = new Coord(start);
 		end.add(dir);
-		start.add(orth[0], 2);
-		end.add(orth[1], 2);
+		start.add(Cardinal.left(dir), 2);
+		end.add(Cardinal.right(dir), 2);
 		panel.fillRectSolid(editor, rand, start, end, false, true);
 		
 		
@@ -356,13 +352,12 @@ public class DungeonMess extends DungeonBase {
 		Coord cursor;
 		Coord start;
 		Coord end;
-		Cardinal[] orth = Cardinal.orthogonal(dir);
 		
 		start = new Coord(origin);
 		start.add(dir, 7);
 		end = new Coord(start);
-		start.add(orth[0], 2);
-		end.add(orth[1], 2);
+		start.add(Cardinal.left(dir), 2);
+		end.add(Cardinal.right(dir), 2);
 		end.add(Cardinal.UP, 2);
 		end.add(dir);
 		wall.fillRectSolid(editor, rand, start, end, true, true);
@@ -370,8 +365,8 @@ public class DungeonMess extends DungeonBase {
 		start = new Coord(origin);
 		start.add(dir, 7);
 		end = new Coord(start);
-		start.add(orth[0]);
-		end.add(orth[1]);
+		start.add(Cardinal.left(dir));
+		end.add(Cardinal.right(dir));
 		end.add(Cardinal.UP);
 		air.fillRectSolid(editor, rand, start, end, true, true);
 		
@@ -390,7 +385,7 @@ public class DungeonMess extends DungeonBase {
 		cursor.add(Cardinal.reverse(dir));
 		stair.setOrientation(Cardinal.reverse(dir), false).setBlock(editor, cursor);
 		
-		for(Cardinal o : orth){
+		for(Cardinal o : Cardinal.orthogonal(dir)){
 			cursor = new Coord(origin);
 			cursor.add(dir, 6);
 			cursor.add(o);
@@ -428,19 +423,18 @@ public class DungeonMess extends DungeonBase {
 		Coord cursor;
 		Coord start;
 		Coord end;
-		Cardinal[] orth = Cardinal.orthogonal(dir);
 		
 		cursor = new Coord(origin);
 		cursor.add(dir, 7);
 		stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
 		cursor.add(Cardinal.UP);
 		Treasure.generate(editor, rand, cursor, Treasure.FOOD, settings.getDifficulty(origin));
-		cursor.add(orth[0]);
+		cursor.add(Cardinal.left(dir));
 		Furnace.generate(editor, dir, cursor);
-		cursor.add(orth[1], 2);
+		cursor.add(Cardinal.right(dir), 2);
 		BlockType.get(BlockType.CRAFTING_TABLE).setBlock(editor, cursor);
 		
-		for(Cardinal o : orth){
+		for(Cardinal o : Cardinal.orthogonal(dir)){
 			cursor = new Coord(origin);
 			cursor.add(dir, 7);
 			cursor.add(o);

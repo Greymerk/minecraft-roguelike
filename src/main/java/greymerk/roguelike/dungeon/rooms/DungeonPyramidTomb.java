@@ -102,7 +102,6 @@ public class DungeonPyramidTomb extends DungeonBase{
 		
 		for (Cardinal dir : Cardinal.directions){
 			
-			Cardinal[] orth = Cardinal.orthogonal(dir);
 			
 			cursor = new Coord(origin);
 			cursor.add(dir, 5);
@@ -111,12 +110,12 @@ public class DungeonPyramidTomb extends DungeonBase{
 			
 			start = new Coord(origin);
 			start.add(dir, 5);
-			start.add(orth[0], 5);
+			start.add(Cardinal.left(dir), 5);
 			end = new Coord(start);
 			end.add(Cardinal.UP, 3);
 			editor.fillRectSolid(rand, start, end, pillar, true, true);
 			
-			for(Cardinal o : orth){
+			for(Cardinal o : Cardinal.orthogonal(dir)){
 				start = new Coord(origin);
 				start.add(dir, 5);
 				start.add(o);
@@ -152,19 +151,18 @@ public class DungeonPyramidTomb extends DungeonBase{
 		
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		
-		Cardinal[] orth = Cardinal.orthogonal(dir);
 		Coord cursor;
 		
 		Coord start = new Coord(origin);
 		Coord end = new Coord(origin);
-		start.add(orth[0], width / 2);
-		end.add(orth[1], width / 2);
+		start.add(Cardinal.left(dir), width / 2);
+		end.add(Cardinal.right(dir), width / 2);
 		editor.fillRectSolid(rand, start, end, air, true, true);
 		start.add(Cardinal.UP);
 		end.add(Cardinal.UP);
 		editor.fillRectSolid(rand, start, end, theme.getPrimaryWall(), true, true);
 		
-		for (Cardinal o : orth){
+		for (Cardinal o : Cardinal.orthogonal(dir)){
 			for (int i = 0; i <= width / 2; ++i){
 				if((width / 2) % 2 == 0){
 					cursor = new Coord(origin);

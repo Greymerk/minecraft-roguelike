@@ -46,29 +46,27 @@ public class DungeonLinkerTop extends DungeonBase{
 		
 		for(Cardinal dir : Cardinal.directions){
 			
-			Cardinal[] orth = Cardinal.orthogonal(dir);
-			
 			start = new Coord(origin);
 			end = new Coord(origin);
 			start.add(dir, 3);
-			start.add(orth[0], 3);
+			start.add(Cardinal.left(dir), 3);
 			end.add(dir, 4);
-			end.add(orth[0], 4);
+			end.add(Cardinal.left(dir), 4);
 			end.add(Cardinal.UP, 4);
 			pillar.fillRectSolid(editor, rand, start, end, true, true);
 			
 			start = new Coord(origin);
 			start.add(dir, 3);
-			start.add(orth[0], 2);
+			start.add(Cardinal.left(dir), 2);
 			start.add(Cardinal.UP, 4);
 			end = new Coord(start);
-			end.add(orth[1], 4);
+			end.add(Cardinal.right(dir), 4);
 			wall.fillRectSolid(editor, rand, start, end, true, true);
 			start.add(Cardinal.reverse(dir));
 			end.add(Cardinal.reverse(dir));
 			editor.fillRectSolid(rand, start, end, stair.setOrientation(Cardinal.reverse(dir), true), true, true);
 			
-			for(Cardinal o : orth){
+			for(Cardinal o : Cardinal.orthogonal(dir)){
 				cursor = new Coord(origin);
 				cursor.add(dir, 3);
 				cursor.add(Cardinal.UP, 2);

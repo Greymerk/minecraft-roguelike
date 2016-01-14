@@ -146,7 +146,7 @@ public class DungeonReward extends DungeonBase {
 				
 			}
 			
-			Cardinal o = Cardinal.orthogonal(dir)[0];
+			Cardinal o = Cardinal.left(dir);
 			
 			start = new Coord(x, y, z);
 			start.add(dir, 6);

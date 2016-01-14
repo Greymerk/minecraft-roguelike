@@ -94,14 +94,13 @@ public class DungeonObsidian extends DungeonBase {
 		
 		// ceiling trims and outer walls
 		for(Cardinal dir : Cardinal.directions){
-			Cardinal[] orth = Cardinal.orthogonal(dir);
 			
 			// outer wall trim
 			Coord start = new Coord(x, y, z);
 			start.add(dir, 10);
 			Coord end = new Coord(start);
-			start.add(orth[0], 9);
-			end.add(orth[1], 9);
+			start.add(Cardinal.left(dir), 9);
+			end.add(Cardinal.right(dir), 9);
 			
 			start.add(Cardinal.DOWN, 4);
 			end.add(Cardinal.DOWN, 1);
@@ -116,8 +115,8 @@ public class DungeonObsidian extends DungeonBase {
 			start.add(dir, 6);
 			start.add(Cardinal.UP, 3);
 			end = new Coord(start);
-			start.add(orth[0], 9);
-			end.add(orth[1], 9);
+			start.add(Cardinal.left(dir), 9);
+			end.add(Cardinal.right(dir), 9);
 			editor.fillRectSolid(rand, start, end, secondaryWall, true, true);
 			
 			// inner
@@ -125,8 +124,8 @@ public class DungeonObsidian extends DungeonBase {
 			start.add(dir, 2);
 			start.add(Cardinal.UP, 3);
 			end = new Coord(start);
-			start.add(orth[0], 9);
-			end.add(orth[1], 9);
+			start.add(Cardinal.left(dir), 9);
+			end.add(Cardinal.right(dir), 9);
 			editor.fillRectSolid(rand, start, end, secondaryWall, true, true);
 			
 			// outer shell
@@ -135,8 +134,8 @@ public class DungeonObsidian extends DungeonBase {
 			end = new Coord(start);
 			start.add(Cardinal.DOWN, 3);
 			end.add(Cardinal.UP, 3);
-			start.add(orth[0], 11);
-			end.add(orth[1], 11);
+			start.add(Cardinal.left(dir), 11);
+			end.add(Cardinal.right(dir), 11);
 			editor.fillRectSolid(rand, start, end, secondaryWall, false, true);
 		}
 				
@@ -144,14 +143,13 @@ public class DungeonObsidian extends DungeonBase {
 		
 		// upper mid floor
 		for(Cardinal dir : Cardinal.directions){
-			Cardinal[] orth = Cardinal.orthogonal(dir);
 			Coord start = new Coord(x, y, z);
 			start.add(Cardinal.DOWN, 1);
 			Coord end = new Coord(start);
 			end.add(Cardinal.DOWN, 3);
 			start.add(dir, 9);
-			start.add(orth[0], 1);
-			end.add(orth[1], 1);
+			start.add(Cardinal.left(dir), 1);
+			end.add(Cardinal.right(dir), 1);
 			editor.fillRectSolid(rand, start, end, primaryWall, true, true);
 		}
 		

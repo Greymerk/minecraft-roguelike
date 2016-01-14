@@ -47,23 +47,21 @@ public class DungeonLinker extends DungeonBase{
 		
 		for(Cardinal dir : Cardinal.directions){
 			
-			Cardinal[] orth = Cardinal.orthogonal(dir);
-			
 			start = new Coord(origin);
 			start.add(dir, 4);
 			end = new Coord(start);
 			end.add(Cardinal.UP, 8);
 			start.add(Cardinal.DOWN);
-			start.add(orth[0], 4);
-			end.add(orth[1], 4);
+			start.add(Cardinal.left(dir), 4);
+			end.add(Cardinal.right(dir), 4);
 			bars.fillRectSolid(editor, rand, start, end, true, false);
 			
 			start = new Coord(origin);
 			end = new Coord(origin);
 			start.add(dir, 3);
-			start.add(orth[0], 3);
+			start.add(Cardinal.left(dir), 3);
 			end.add(dir, 4);
-			end.add(orth[0], 4);
+			end.add(Cardinal.left(dir), 4);
 			end.add(Cardinal.UP, 8);
 			pillar.fillRectSolid(editor, rand, start, end, true, true);
 		}
