@@ -99,7 +99,7 @@ public class DungeonsFire extends DungeonBase {
 			
 			cursor = new Coord(origin);
 			cursor.add(dir, 6);
-			cursor.add(Cardinal.orthogonal(dir)[0], 6);
+			cursor.add(Cardinal.left(dir), 6);
 			
 			genFire(editor, rand, theme, cursor);
 			
@@ -118,27 +118,26 @@ public class DungeonsFire extends DungeonBase {
 			end.add(Cardinal.reverse(dir));
 			editor.fillRectSolid(rand, start, end, wall, true, true);
 			
-			Cardinal[] orth = Cardinal.orthogonal(dir);
 			stair.setOrientation(Cardinal.reverse(dir), true);
 			
 			cursor = new Coord(end);
 			start = new Coord(cursor);
-			start.add(orth[0], 3);
-			end.add(orth[1], 3);
+			start.add(Cardinal.left(dir), 3);
+			end.add(Cardinal.right(dir), 3);
 			editor.fillRectSolid(rand, start, end, wall, true, false);
 			
 			start = new Coord(cursor);
 			start.add(Cardinal.DOWN);
 			end = new Coord(start);
-			start.add(orth[0], 3);
-			end.add(orth[1], 3);
+			start.add(Cardinal.left(dir), 3);
+			end.add(Cardinal.right(dir), 3);
 			editor.fillRectSolid(rand, start, end, stair, true, false);
 			
 			start = new Coord(cursor);
 			start.add(Cardinal.reverse(dir));
 			end = new Coord(start);
-			start.add(orth[0], 3);
-			end.add(orth[1], 3);
+			start.add(Cardinal.left(dir), 3);
+			end.add(Cardinal.right(dir), 3);
 			editor.fillRectSolid(rand, start, end, stair, true, false);
 		}
 		
@@ -166,11 +165,9 @@ public class DungeonsFire extends DungeonBase {
 		
 		for(Cardinal dir : Cardinal.directions){
 			
-			Cardinal[] orth = Cardinal.orthogonal(dir);
-
 			start = new Coord(origin);
 			start.add(dir);
-			start.add(orth[0]);
+			start.add(Cardinal.left(dir));
 			end = new Coord(start);
 			end.add(Cardinal.UP, 2);
 			editor.fillRectSolid(rand, start, end, pillar, true, false);
@@ -207,8 +204,8 @@ public class DungeonsFire extends DungeonBase {
 			start.add(Cardinal.UP, 3);
 			start.add(dir, 2);
 			end = new Coord(start);
-			start.add(orth[0], 2);
-			end.add(orth[1], 2);
+			start.add(Cardinal.left(dir), 2);
+			end.add(Cardinal.right(dir), 2);
 			stair.setOrientation(dir, true);
 			editor.fillRectSolid(rand, start, end, stair, true, false);
 		}

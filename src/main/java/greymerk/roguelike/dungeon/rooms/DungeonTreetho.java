@@ -27,6 +27,8 @@ public class DungeonTreetho extends DungeonBase{
 
 		ITheme theme = settings.getTheme();
 		IBlockFactory wall = theme.getPrimaryWall();
+		Cardinal dir = entrances[0];
+		
 		
 		Coord cursor;
 		Coord start;
@@ -55,13 +57,12 @@ public class DungeonTreetho extends DungeonBase{
 		ceiling(editor, rand, settings, cursor);
 		
 		cursor = new Coord(origin);
-		treeFarm(editor, rand, settings, cursor, entrances[0]);
+		treeFarm(editor, rand, settings, cursor, dir);
 		
-		Cardinal[] orth = Cardinal.orthogonal(entrances[0]);
-		for(Cardinal o : orth){
+		for(Cardinal o : Cardinal.orthogonal(dir)){
 			cursor = new Coord(origin);
 			cursor.add(o, 5);
-			treeFarm(editor, rand, settings, cursor, entrances[0]);
+			treeFarm(editor, rand, settings, cursor, dir);
 		}
 		
 		
@@ -79,13 +80,11 @@ public class DungeonTreetho extends DungeonBase{
 		MetaBlock glass = ColorBlock.get(ColorBlock.GLASS, DyeColor.YELLOW);
 		MetaBlock dirt = BlockType.get(BlockType.DIRT);
 		
-		Cardinal[] orth = Cardinal.orthogonal(dir);
-		
 		start = new Coord(origin);
 		end = new Coord(origin);
 		
-		start.add(orth[0]);
-		end.add(orth[1]);
+		start.add(Cardinal.left(dir));
+		end.add(Cardinal.right(dir));
 		
 		start.add(Cardinal.reverse(dir), 7);
 		end.add(dir, 7);
@@ -127,19 +126,18 @@ public class DungeonTreetho extends DungeonBase{
 			start.add(dir, 9);
 			Coord end = new Coord(start);
 			
-			Cardinal[] orth = Cardinal.orthogonal(dir);
-			start.add(orth[0], 9);
-			end.add(orth[1], 9);
+			start.add(Cardinal.left(dir), 9);
+			end.add(Cardinal.right(dir), 9);
 			
 			editor.fillRectSolid(rand, start, end, fill, true, true);
 			
 			Coord cursor = new Coord(origin);
 			cursor.add(Cardinal.DOWN);
 			cursor.add(dir, 10);
-			cursor.add(orth[0], 10);
+			cursor.add(Cardinal.left(dir), 10);
 			for(int i = 0; i < 5; ++i){
 				pillar(editor, rand, settings, cursor);
-				cursor.add(orth[1], 4);
+				cursor.add(Cardinal.right(dir), 4);
 			}
 		}
 		

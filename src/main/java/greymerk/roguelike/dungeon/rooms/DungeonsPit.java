@@ -159,16 +159,14 @@ public class DungeonsPit extends DungeonBase {
 		Coord end;
 		Coord cursor;
 		
-		Cardinal[] orth = Cardinal.orthogonal(dir);
-		
 		start = new Coord(origin);
 		start.add(dir, 3);
 		start.add(Cardinal.DOWN);
-		start.add(orth[0]);
+		start.add(Cardinal.left(dir));
 		end = new Coord(origin);
 		end.add(dir, 6);
 		end.add(Cardinal.UP, 3);
-		end.add(orth[1]);
+		end.add(Cardinal.right(dir));
 		
 		
 		

@@ -73,7 +73,6 @@ public class DungeonsMusic extends DungeonBase {
 		}
 		
 		for(Cardinal dir : Cardinal.directions){
-			Cardinal[] orth = Cardinal.orthogonal(dir);
 			
 			cursor = new Coord(origin);
 			cursor.add(dir, 5);
@@ -84,15 +83,15 @@ public class DungeonsMusic extends DungeonBase {
 			
 			cursor = new Coord(origin);
 			cursor.add(dir, 5);
-			cursor.add(orth[0], 5);
+			cursor.add(Cardinal.left(dir), 5);
 			pillar(editor, rand, settings, cursor);
 			
 			start = new Coord(origin);
 			start.add(Cardinal.UP, 4);
 			start.add(dir, 3);
 			end = new Coord(start);
-			start.add(orth[0], 3);
-			end.add(orth[1], 3);
+			start.add(Cardinal.left(dir), 3);
+			end.add(Cardinal.right(dir), 3);
 			pillar.fillRectSolid(editor, rand, start, end, true, true);
 			
 			cursor = new Coord(origin);
@@ -102,7 +101,7 @@ public class DungeonsMusic extends DungeonBase {
 			cursor.add(dir);
 			stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
 			
-			for(Cardinal o : orth){
+			for(Cardinal o : Cardinal.orthogonal(dir)){
 				cursor = new Coord(origin);
 				cursor.add(dir, 5);
 				cursor.add(o, 2);

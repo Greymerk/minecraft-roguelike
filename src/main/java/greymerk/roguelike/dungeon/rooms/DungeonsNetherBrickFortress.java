@@ -81,38 +81,37 @@ public class DungeonsNetherBrickFortress extends DungeonBase {
 		netherwart.fillRectSolid(editor, rand, start, end, false, true);
 		
 		for(Cardinal dir : Cardinal.directions){
-			Cardinal[] orth = Cardinal.orthogonal(dir);
 			
 			start = new Coord(origin);
 			start.add(Cardinal.UP, 5);
 			start.add(dir, 4);
 			end = new Coord(start);
-			start.add(orth[0], 6);
-			end.add(orth[1], 6);
+			start.add(Cardinal.left(dir), 6);
+			end.add(Cardinal.right(dir), 6);
 			wall.fillRectSolid(editor, rand, start, end, true, true);
 			
 			start = new Coord(origin);
 			start.add(Cardinal.UP, 5);
 			start.add(dir, 6);
 			end = new Coord(start);
-			start.add(orth[0], 6);
-			end.add(orth[1], 6);
+			start.add(Cardinal.left(dir), 6);
+			end.add(Cardinal.right(dir), 6);
 			wall.fillRectSolid(editor, rand, start, end, true, true);
 			
 			start = new Coord(origin);
 			start.add(Cardinal.DOWN);
 			start.add(dir, 4);
 			end = new Coord(start);
-			start.add(orth[0], 2);
-			end.add(orth[1], 2);
+			start.add(Cardinal.left(dir), 2);
+			end.add(Cardinal.right(dir), 2);
 			stair.setOrientation(Cardinal.reverse(dir), false).fillRectSolid(editor, rand, start, end, true, true);
 			
 			cursor = new Coord(origin);
 			cursor.add(dir, 4);
-			cursor.add(orth[0], 4);
+			cursor.add(Cardinal.left(dir), 4);
 			supportPillar(editor, rand, settings, cursor);
 			
-			for(Cardinal o : orth){
+			for(Cardinal o : Cardinal.orthogonal(dir)){
 				cursor = new Coord(origin);
 				cursor.add(dir, 7);
 				cursor.add(o, 2);
