@@ -92,6 +92,7 @@ public class WorldEditor implements IWorldEditor{
 		return world.setRandomSeed(a, b, c);
 	}
 	
+	
 	public void fillRectSolid(Random rand, Coord start, Coord end, IBlockFactory blocks){
 		fillRectSolid(rand, start, end, blocks, true, true);
 	}
@@ -115,6 +116,7 @@ public class WorldEditor implements IWorldEditor{
 	public void fillRectHollow(Random rand, Coord start, Coord end, IBlockFactory blocks){
 		fillRectHollow(rand, start, end, blocks, true, true);
 	}
+	
 	
 	public void fillRectHollow(Random rand, Coord start, Coord end, IBlockFactory blocks, boolean fillAir, boolean replaceSolid){
 		

@@ -5,6 +5,7 @@ import java.util.Random;
 
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.WorldEditor;
 import net.minecraft.init.Blocks;
@@ -19,8 +20,11 @@ public class RectHollow implements IShape {
 		this.end = end;
 	}
 	
-	@Override
-	public void fill(WorldEditor editor, Random rand, IBlockFactory block, boolean fillAir, boolean replaceSolid) {
+	public static void fill(IWorldEditor editor, Random rand, Coord start, Coord end, IBlockFactory block){
+		fill(editor, rand, start, end, block, true, true);
+	}
+	
+	public static void fill(IWorldEditor editor, Random rand, Coord start, Coord end, IBlockFactory block, boolean fillAir, boolean replaceSolid){
 		Coord c1 = new Coord(start);
 		Coord c2 = new Coord(end);
 		
@@ -37,6 +41,12 @@ public class RectHollow implements IShape {
 				}
 			}	
 		}
+	}
+
+	
+	@Override
+	public void fill(IWorldEditor editor, Random rand, IBlockFactory block, boolean fillAir, boolean replaceSolid) {
+		fill(editor, rand, start, end, block, fillAir, replaceSolid);
 	}
 
 	@Override

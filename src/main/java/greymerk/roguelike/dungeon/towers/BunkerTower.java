@@ -7,11 +7,13 @@ import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.IStair;
-import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.IWorldEditor;
+import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.ColorBlock;
 import greymerk.roguelike.worldgen.blocks.DyeColor;
+import greymerk.roguelike.worldgen.shapes.RectHollow;
+import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 public class BunkerTower implements ITower{
 
@@ -37,7 +39,7 @@ public class BunkerTower implements ITower{
 		end.add(Cardinal.SOUTH, 5);
 		end.add(Cardinal.WEST, 5);
 		end.add(Cardinal.UP, 4);
-		walls.fillRectHollow(editor, rand, start, end, true, true);
+		RectHollow.fill(editor, rand, start, end, walls, true, true);
 		
 		start = new Coord(origin.getX(), dungeon.getY() + 10, origin.getZ());
 		end = new Coord(origin);
@@ -46,7 +48,7 @@ public class BunkerTower implements ITower{
 		start.add(Cardinal.EAST, 5);
 		end.add(Cardinal.SOUTH, 5);
 		end.add(Cardinal.WEST, 5);
-		walls.fillRectSolid(editor, rand, start, end, true, true);
+		RectSolid.fill(editor, rand, start, end, walls, true, true);
 		
 		for(Cardinal dir : Cardinal.directions){
 			Cardinal[] orth = Cardinal.orthogonal(dir);
@@ -57,15 +59,15 @@ public class BunkerTower implements ITower{
 			end.add(orth[1]);
 			start = new Coord(start.getX(), dungeon.getY() + 10, start.getZ());
 			end.add(Cardinal.UP, 3);
-			walls.fillRectSolid(editor, rand, start, end, true, true);
+			RectSolid.fill(editor, rand, start, end, walls, true, true);
 			end.add(Cardinal.DOWN);
 			end.add(dir);
 			start.add(dir);
-			walls.fillRectSolid(editor, rand, start, end, true, true);
+			RectSolid.fill(editor, rand, start, end, walls, true, true);
 			end.add(Cardinal.DOWN);
 			end.add(dir);
 			start.add(dir);
-			walls.fillRectSolid(editor, rand, start, end, true, true);
+			RectSolid.fill(editor, rand, start, end, walls, true, true);
 		}
 		
 		for(Cardinal dir : Cardinal.directions){
@@ -80,13 +82,13 @@ public class BunkerTower implements ITower{
 			end.add(dir, 6);
 			end.add(orth[0], 6);
 			end.add(Cardinal.UP, 2);
-			walls.fillRectSolid(editor, rand, start, end, true, true);
+			RectSolid.fill(editor, rand, start, end, walls, true, true);
 			start.add(dir);
 			start.add(orth[0]);
 			end.add(Cardinal.DOWN);
 			end.add(dir);
 			end.add(orth[0]);
-			walls.fillRectSolid(editor, rand, start, end, true, true);
+			RectSolid.fill(editor, rand, start, end, walls, true, true);
 			
 			
 			
@@ -99,7 +101,7 @@ public class BunkerTower implements ITower{
 				end.add(o, 5);
 				end.add(Cardinal.UP, 2);
 				end.add(o, 2);
-				walls.fillRectSolid(editor, rand, start, end, true, true);
+				RectSolid.fill(editor, rand, start, end, walls, true, true);
 			}
 		}	
 		

@@ -19,6 +19,8 @@ import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.ColorBlock;
 import greymerk.roguelike.worldgen.blocks.DyeColor;
+import greymerk.roguelike.worldgen.shapes.RectHollow;
+import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 public class DungeonsMusic extends DungeonBase {
 
@@ -41,13 +43,13 @@ public class DungeonsMusic extends DungeonBase {
 		end = new Coord(origin);
 		start.add(new Coord(-6, -1, -6));
 		end.add(new Coord(6, 5, 6));
-		wall.fillRectHollow(editor, rand, start, end, false, true);
+		RectHollow.fill(editor, rand, start, end, wall, false, true);
 
 		start = new Coord(origin);
 		end = new Coord(origin);
 		start.add(new Coord(-6, 4, -6));
 		end.add(new Coord(6, 5, 6));
-		panel.fillRectSolid(editor, rand, start, end, true, true);
+		RectSolid.fill(editor, rand, start, end, panel, true, true);
 		
 		start = new Coord(origin);
 		end = new Coord(origin);
@@ -59,7 +61,7 @@ public class DungeonsMusic extends DungeonBase {
 		end = new Coord(origin);
 		start.add(new Coord(-3, -1, -3));
 		end.add(new Coord(3, -1, 3));
-		floor.fillRectSolid(editor, rand, start, end, true, true);
+		RectSolid.fill(editor, rand, start, end, floor, true, true);
 		
 		List<DyeColor> colors = Arrays.asList(DyeColor.values());
 		Collections.shuffle(colors, rand);
@@ -92,7 +94,7 @@ public class DungeonsMusic extends DungeonBase {
 			end = new Coord(start);
 			start.add(Cardinal.left(dir), 3);
 			end.add(Cardinal.right(dir), 3);
-			pillar.fillRectSolid(editor, rand, start, end, true, true);
+			RectSolid.fill(editor, rand, start, end, pillar, true, true);
 			
 			cursor = new Coord(origin);
 			cursor.add(Cardinal.UP, 4);

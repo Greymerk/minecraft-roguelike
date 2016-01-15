@@ -8,9 +8,11 @@ import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
-import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.IWorldEditor;
+import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.blocks.BlockType;
+import greymerk.roguelike.worldgen.shapes.RectHollow;
+import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 public class DungeonLinker extends DungeonBase{
 
@@ -31,13 +33,13 @@ public class DungeonLinker extends DungeonBase{
 		end = new Coord(origin);
 		start.add(-4, -1, -4);
 		end.add(4, 9, 4);
-		wall.fillRectHollow(editor, rand, start, end, false, true);
+		RectHollow.fill(editor, rand, start, end, wall, false, true);
 		
 		start = new Coord(origin);
 		end = new Coord(origin);
 		start.add(-4, 9, -4);
 		end.add(4, 9, 4);
-		wall.fillRectSolid(editor, rand, start, end, true, true);
+		RectSolid.fill(editor, rand, start, end, wall, true, true);
 		
 		start = new Coord(origin);
 		end = new Coord(origin);

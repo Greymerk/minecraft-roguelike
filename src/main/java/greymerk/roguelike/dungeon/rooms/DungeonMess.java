@@ -18,6 +18,8 @@ import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.Furnace;
+import greymerk.roguelike.worldgen.shapes.RectHollow;
+import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 
 
@@ -43,13 +45,13 @@ public class DungeonMess extends DungeonBase {
 		start.add(new Coord(-8, -1, -8));
 		end = new Coord(origin);
 		end.add(new Coord(8, 5, 8));
-		wall.fillRectHollow(editor, rand, start, end, false, true);
+		RectHollow.fill(editor, rand, start, end, wall, false, true);
 		
 		start = new Coord(origin);
 		start.add(new Coord(-2, 5, -2));
 		end = new Coord(origin);
 		end.add(new Coord(2, 5, 2));
-		panel.fillRectSolid(editor, rand, start, end, false, true);
+		RectSolid.fill(editor, rand, start, end, panel, false, true);
 		
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.UP, 4);
@@ -61,7 +63,7 @@ public class DungeonMess extends DungeonBase {
 			start.add(Cardinal.left(dir), 3);
 			end = new Coord(start);
 			end.add(Cardinal.UP, 3);
-			pillar.fillRectSolid(editor, rand, start, end, true, true);
+			RectSolid.fill(editor, rand, start, end, pillar, true, true);
 			
 			for(Cardinal d : Cardinal.directions){
 				cursor = new Coord(end);
@@ -75,7 +77,7 @@ public class DungeonMess extends DungeonBase {
 			end = new Coord(start);
 			start.add(Cardinal.left(dir), 3);
 			end.add(Cardinal.right(dir), 3);
-			wall.fillRectSolid(editor, rand, start, end, true, true);
+			RectSolid.fill(editor, rand, start, end, wall, true, true);
 			
 			
 			Cardinal[] corner = new Cardinal[]{dir, Cardinal.left(dir)};
@@ -134,13 +136,13 @@ public class DungeonMess extends DungeonBase {
 		start.add(entrances[1], 7);
 		end = new Coord(start);
 		end.add(Cardinal.UP, 4);
-		wall.fillRectSolid(editor, rand, start, end, true, true);
+		RectSolid.fill(editor, rand, start, end, wall, true, true);
 		
 		start = new Coord(origin);
 		start.add(entrances[0], 4);
 		start.add(entrances[1], 4);
 		start.add(Cardinal.UP, 4);
-		panel.fillRectSolid(editor, rand, start, end, true, true);
+		RectSolid.fill(editor, rand, start, end, panel, true, true);
 		
 		cursor = new Coord(origin);
 		cursor.add(entrances[0], 5);
@@ -162,7 +164,7 @@ public class DungeonMess extends DungeonBase {
 			start = new Coord(cursor);
 			end = new Coord(cursor);
 			end.add(Cardinal.UP, 3);
-			pillar.fillRectSolid(editor, rand, start, end, true, true);
+			RectSolid.fill(editor, rand, start, end, pillar, true, true);
 			cursor.add(Cardinal.UP, 3);
 			cursor.add(Cardinal.reverse(dir));
 			wall.setBlock(editor, rand, cursor);
@@ -176,7 +178,7 @@ public class DungeonMess extends DungeonBase {
 			start = new Coord(cursor);
 			end = new Coord(cursor);
 			end.add(dir, 3);
-			wall.fillRectSolid(editor, rand, start, end, true, true);
+			RectSolid.fill(editor, rand, start, end, wall, true, true);
 			
 			cursor = new Coord(origin);
 			cursor.add(entrances[0], 5);
@@ -193,11 +195,11 @@ public class DungeonMess extends DungeonBase {
 			stair.setOrientation(Cardinal.left(dir), true).setBlock(editor, end);
 			start.add(Cardinal.UP);
 			end.add(Cardinal.UP);
-			wall.fillRectSolid(editor, rand, start, end, true, true);
+			RectSolid.fill(editor, rand, start, end, wall, true, true);
 			start.add(dir);
 			end.add(dir);
 			end.add(Cardinal.DOWN, 3);
-			panel.fillRectSolid(editor, rand, start, end, false, true);
+			RectSolid.fill(editor, rand, start, end, panel, false, true);
 		}
 	}
 	
@@ -217,13 +219,13 @@ public class DungeonMess extends DungeonBase {
 		start.add(entrances[1], 7);
 		end = new Coord(start);
 		end.add(Cardinal.UP, 4);
-		wall.fillRectSolid(editor, rand, start, end, true, true);
+		RectSolid.fill(editor, rand, start, end, wall, true, true);
 		
 		start = new Coord(origin);
 		start.add(entrances[0], 4);
 		start.add(entrances[1], 4);
 		start.add(Cardinal.UP, 4);
-		panel.fillRectSolid(editor, rand, start, end, true, true);
+		RectSolid.fill(editor, rand, start, end, panel, true, true);
 		
 		cursor = new Coord(origin);
 		cursor.add(entrances[0], 4);
@@ -245,7 +247,7 @@ public class DungeonMess extends DungeonBase {
 			start = new Coord(cursor);
 			end = new Coord(cursor);
 			end.add(Cardinal.UP, 3);
-			pillar.fillRectSolid(editor, rand, start, end, true, true);
+			RectSolid.fill(editor, rand, start, end, pillar, true, true);
 			cursor.add(Cardinal.UP, 3);
 			cursor.add(Cardinal.reverse(dir));
 			wall.setBlock(editor, rand, cursor);
@@ -259,7 +261,7 @@ public class DungeonMess extends DungeonBase {
 			start = new Coord(cursor);
 			end = new Coord(cursor);
 			end.add(dir, 3);
-			wall.fillRectSolid(editor, rand, start, end, true, true);
+			RectSolid.fill(editor, rand, start, end, wall, true, true);
 			
 			cursor = new Coord(origin);
 			cursor.add(entrances[0], 5);
@@ -276,11 +278,11 @@ public class DungeonMess extends DungeonBase {
 			stair.setOrientation(Cardinal.left(dir), true).setBlock(editor, end);
 			start.add(Cardinal.UP);
 			end.add(Cardinal.UP);
-			wall.fillRectSolid(editor, rand, start, end, true, true);
+			RectSolid.fill(editor, rand, start, end, wall, true, true);
 			start.add(dir);
 			end.add(dir);
 			end.add(Cardinal.DOWN, 3);
-			panel.fillRectSolid(editor, rand, start, end, false, true);
+			RectSolid.fill(editor, rand, start, end, panel, false, true);
 		}
 	}
 	
@@ -301,7 +303,7 @@ public class DungeonMess extends DungeonBase {
 		end.add(Cardinal.UP);
 		start.add(Cardinal.left(dir), 2);
 		end.add(Cardinal.right(dir), 2);
-		wall.fillRectSolid(editor, rand, start, end, true, true);
+		RectSolid.fill(editor, rand, start, end, wall, true, true);
 		
 		for(Cardinal o : Cardinal.orthogonal(dir)){
 			cursor = new Coord(origin);
@@ -335,7 +337,7 @@ public class DungeonMess extends DungeonBase {
 		end.add(dir);
 		start.add(Cardinal.left(dir), 2);
 		end.add(Cardinal.right(dir), 2);
-		panel.fillRectSolid(editor, rand, start, end, false, true);
+		RectSolid.fill(editor, rand, start, end, panel, false, true);
 		
 		
 	}
@@ -360,7 +362,7 @@ public class DungeonMess extends DungeonBase {
 		end.add(Cardinal.right(dir), 2);
 		end.add(Cardinal.UP, 2);
 		end.add(dir);
-		wall.fillRectSolid(editor, rand, start, end, true, true);
+		RectSolid.fill(editor, rand, start, end, wall, true, true);
 		
 		start = new Coord(origin);
 		start.add(dir, 7);

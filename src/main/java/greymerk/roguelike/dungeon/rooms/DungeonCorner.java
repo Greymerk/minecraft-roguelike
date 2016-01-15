@@ -9,9 +9,11 @@ import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.IStair;
-import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.IWorldEditor;
+import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.blocks.BlockType;
+import greymerk.roguelike.worldgen.shapes.RectHollow;
+import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 public class DungeonCorner extends DungeonBase {
 
@@ -29,13 +31,13 @@ public class DungeonCorner extends DungeonBase {
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		
 		// fill air inside
-		editor.fillRectSolid(rand, new Coord(x - 2, y, z - 2), new Coord(x + 2, y + 3, z + 2), air);
+		RectSolid.fill(editor, rand, new Coord(x - 2, y, z - 2), new Coord(x + 2, y + 3, z + 2), air);		
 		
 		// shell
-		editor.fillRectHollow(rand, new Coord(x - 3, y - 1, z - 3), new Coord(x + 3, y + 4, z + 3), blocks, false, true);
+		RectHollow.fill(editor, rand, new Coord(x - 3, y - 1, z - 3), new Coord(x + 3, y + 4, z + 3), blocks, false, true);
 		
 		// floor
-		editor.fillRectSolid(rand, new Coord(x - 3, y - 1, z - 3), new Coord(x + 3, y - 1, z + 3), theme.getPrimaryFloor(), false, true);
+		RectSolid.fill(editor, rand, new Coord(x - 3, y - 1, z - 3), new Coord(x + 3, y - 1, z + 3), theme.getPrimaryFloor(), false, true);
 		
 		Coord start;
 		Coord end;
@@ -55,7 +57,7 @@ public class DungeonCorner extends DungeonBase {
 			start = new Coord(cursor);
 			cursor.add(Cardinal.UP, 2);
 			end = new Coord(cursor);
-			editor.fillRectSolid(rand, start, end, pillar, true, true);
+			RectSolid.fill(editor, rand, start, end, pillar, true, true);
 			cursor.add(Cardinal.UP, 1);
 			editor.setBlock(rand, cursor, blocks, true, true);
 			

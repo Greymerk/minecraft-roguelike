@@ -18,6 +18,8 @@ import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.Spawner;
 import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
+import greymerk.roguelike.worldgen.shapes.RectHollow;
+import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 
 public class DungeonEniko extends DungeonBase {
@@ -39,25 +41,25 @@ public class DungeonEniko extends DungeonBase {
 		end = new Coord(origin);
 		start.add(new Coord(6, -1, 6));
 		end.add(new Coord(-6, 4, -6));
-		walls.fillRectHollow(editor, rand, start, end, false, true);
+		RectHollow.fill(editor, rand, start, end, walls, false, true);
 		
 		start = new Coord(origin);
 		end = new Coord(origin);
 		start.add(new Coord(6, 4, 6));
 		end.add(new Coord(-6, 5, -6));
-		theme.getSecondaryWall().fillRectSolid(editor, rand, start, end, false, true);
+		RectSolid.fill(editor, rand, start, end, theme.getSecondaryWall(), false, true);
 		
 		start = new Coord(origin);
 		end = new Coord(origin);
 		start.add(new Coord(3, 4, 3));
 		end.add(new Coord(-3, 4, -3));
-		air.fillRectSolid(editor, rand, start, end, true, true);
+		RectSolid.fill(editor, rand, start, end, air, true, true);
 		
 		start = new Coord(origin);
 		end = new Coord(origin);
 		start.add(new Coord(-3, -1, -3));
 		end.add(new Coord(3, -1, 3));
-		floor.fillRectSolid(editor, rand, start, end, true, true);
+		RectSolid.fill(editor, rand, start, end, floor, true, true);
 		
 		for(Cardinal dir : Cardinal.directions){
 			cursor = new Coord(origin);
@@ -88,7 +90,7 @@ public class DungeonEniko extends DungeonBase {
 				start.add(Cardinal.left(dir));
 				end.add(Cardinal.right(dir));
 				end.add(dir, 6);
-				floor.fillRectSolid(editor, rand, start, end, true, true);
+				RectSolid.fill(editor, rand, start, end, floor, true, true);
 			}
 		}
 		
@@ -112,7 +114,7 @@ public class DungeonEniko extends DungeonBase {
 		start = new Coord(origin);
 		end = new Coord(start);
 		end.add(Cardinal.UP, 3);
-		pillar.fillRectSolid(editor, rand, start, end, true, true);
+		RectSolid.fill(editor, rand, start, end, pillar, true, true);
 		for(Cardinal dir : Cardinal.directions){
 			cursor = new Coord(end);
 			cursor.add(dir);

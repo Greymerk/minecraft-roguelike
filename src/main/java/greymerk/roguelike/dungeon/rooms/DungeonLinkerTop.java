@@ -11,6 +11,8 @@ import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
+import greymerk.roguelike.worldgen.shapes.RectHollow;
+import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 public class DungeonLinkerTop extends DungeonBase{
 
@@ -32,7 +34,7 @@ public class DungeonLinkerTop extends DungeonBase{
 		end = new Coord(origin);
 		start.add(-4, -1, -4);
 		end.add(4, 5, 4);
-		wall.fillRectHollow(editor, rand, start, end, false, true);
+		RectHollow.fill(editor, rand, start, end, wall, false, true);
 		
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.UP, 5);
@@ -42,7 +44,7 @@ public class DungeonLinkerTop extends DungeonBase{
 		end = new Coord(origin);
 		start.add(-4, -1, -4);
 		end.add(4, -1, 4);
-		floor.fillRectSolid(editor, rand, start, end, true, true);
+		RectSolid.fill(editor, rand, start, end, floor, true, true);
 		
 		for(Cardinal dir : Cardinal.directions){
 			
@@ -53,7 +55,7 @@ public class DungeonLinkerTop extends DungeonBase{
 			end.add(dir, 4);
 			end.add(Cardinal.left(dir), 4);
 			end.add(Cardinal.UP, 4);
-			pillar.fillRectSolid(editor, rand, start, end, true, true);
+			RectSolid.fill(editor, rand, start, end, pillar, true, true);
 			
 			start = new Coord(origin);
 			start.add(dir, 3);
@@ -61,10 +63,10 @@ public class DungeonLinkerTop extends DungeonBase{
 			start.add(Cardinal.UP, 4);
 			end = new Coord(start);
 			end.add(Cardinal.right(dir), 4);
-			wall.fillRectSolid(editor, rand, start, end, true, true);
+			RectSolid.fill(editor, rand, start, end, wall, true, true);
 			start.add(Cardinal.reverse(dir));
 			end.add(Cardinal.reverse(dir));
-			editor.fillRectSolid(rand, start, end, stair.setOrientation(Cardinal.reverse(dir), true), true, true);
+			RectSolid.fill(editor, rand, start, end, stair.setOrientation(Cardinal.reverse(dir), true), true, true);
 			
 			for(Cardinal o : Cardinal.orthogonal(dir)){
 				cursor = new Coord(origin);
