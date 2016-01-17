@@ -60,6 +60,13 @@ public class Coord{
 		return this;
 	}
 	
+	public Coord sub(Coord other){
+		x -= other.x;
+		y -= other.y;
+		z -= other.y;
+		return this;
+	}
+	
 	public void add(Cardinal dir){
 		add(dir, 1);
 	}

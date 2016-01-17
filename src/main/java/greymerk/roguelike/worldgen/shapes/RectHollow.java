@@ -7,7 +7,6 @@ import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.MetaBlock;
-import greymerk.roguelike.worldgen.WorldEditor;
 import net.minecraft.init.Blocks;
 
 public class RectHollow implements IShape {
@@ -50,7 +49,7 @@ public class RectHollow implements IShape {
 	}
 
 	@Override
-	public Iterator<Coord> iter() {
+	public Iterator<Coord> iterator() {
 		// TODO Auto-generated method stub
 		return null;
 	}

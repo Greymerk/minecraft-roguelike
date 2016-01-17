@@ -17,7 +17,7 @@ group= "ca.rivas.roguelike" // http://maven.apache.org/guides/mini/guide-naming-
 archivesBaseName = "RoguelikeDungeons"
 
 minecraft {
-    version = "1.8.9-11.15.0.1688"
+    version = "1.8.9-11.15.0.1703"
     runDir = "run"
 	mappings = "stable_20"
 }

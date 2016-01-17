@@ -7,10 +7,11 @@ import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.IStair;
-import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.IWorldEditor;
+import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.redstone.Torch;
+import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 
 public class RogueTower implements ITower{
@@ -32,15 +33,16 @@ public class RogueTower implements ITower{
 		int main = floor.getY() + 4;
 		int roof = floor.getY() + 9;
 		
-		editor.fillRectSolid(rand, new Coord(x - 3, ground, z - 3), new Coord(x + 3, floor.getY() + 12, z + 3), air);
-		editor.fillRectSolid(rand, new Coord(x - 2, y + 10, z - 2), new Coord(x + 2, floor.getY() - 1, z + 2), blocks, false, true);
+		RectSolid.fill(editor, rand, new Coord(x - 3, ground, z - 3), new Coord(x + 3, floor.getY() + 12, z + 3), air);
+		
+		RectSolid.fill(editor, rand, new Coord(x - 2, y + 10, z - 2), new Coord(x + 2, floor.getY() - 1, z + 2), blocks, false, true);
 
 		Coord start;
 		Coord end;
 		Coord cursor;
 		
-		editor.fillRectSolid(rand, new Coord(x - 3, main, z - 3), new Coord(x + 3, main, z + 3), theme.getSecondaryWall(), true, true);
-		editor.fillRectSolid(rand, new Coord(x - 3, roof, z - 3), new Coord(x + 3, roof, z + 3), blocks);
+		RectSolid.fill(editor, rand, new Coord(x - 3, main, z - 3), new Coord(x + 3, main, z + 3), theme.getSecondaryWall(), true, true);
+		RectSolid.fill(editor, rand, new Coord(x - 3, roof, z - 3), new Coord(x + 3, roof, z + 3), blocks);
 		
 		for(Cardinal dir : Cardinal.directions){
 			for (Cardinal orth : Cardinal.orthogonal(dir)){
@@ -51,11 +53,11 @@ public class RogueTower implements ITower{
 				end = new Coord(start);
 				end.add(dir, 3);
 				end.add(orth, 1);
-				editor.fillRectSolid(rand, start, end, blocks, true, true);
+				RectSolid.fill(editor, rand, start, end, blocks, true, true);
 				start.add(orth, 2);
 				end.add(Cardinal.reverse(dir), 2);
 				end.add(orth, 2);
-				editor.fillRectSolid(rand, start, end, blocks, true, true);
+				RectSolid.fill(editor, rand, start, end, blocks, true, true);
 				
 				cursor = new Coord(floor);
 				cursor.add(dir, 5);
@@ -64,11 +66,11 @@ public class RogueTower implements ITower{
 				end = new Coord(cursor);
 				end.add(Cardinal.reverse(dir), 1);
 				end.add(Cardinal.UP, 2);
-				editor.fillRectSolid(rand, start, end, blocks, true, true);
+				RectSolid.fill(editor, rand, start, end, blocks, true, true);
 				start = new Coord(end);
 				start.add(dir, 1);
 				start.add(Cardinal.reverse(orth), 1);
-				editor.fillRectSolid(rand, start, end, blocks, true, true);
+				RectSolid.fill(editor, rand, start, end, blocks, true, true);
 				cursor.add(Cardinal.UP, 2);
 				stair.setOrientation(orth, false);
 				editor.setBlock(rand, cursor, stair, true, true);
@@ -78,21 +80,21 @@ public class RogueTower implements ITower{
 				end = new Coord(start);
 				end.add(Cardinal.UP, 9);
 				end.add(orth, 2);
-				editor.fillRectSolid(rand, start, end, blocks, true, true);
+				RectSolid.fill(editor, rand, start, end, blocks, true, true);
 				
 				start = new Coord(floor);
 				start.add(dir, 3);
 				start.add(orth, 3);
 				end = new Coord(start);
 				end.add(Cardinal.UP, 9);
-				editor.fillRectSolid(rand, start, end, blocks, true, true);
+				RectSolid.fill(editor, rand, start, end, blocks, true, true);
 				
 				start = new Coord(floor);
 				start.add(dir, 4);
 				end = new Coord(start);
 				end.add(dir, 1);
 				end.add(Cardinal.UP, 1);
-				editor.fillRectSolid(rand, start, end, air, true, true);
+				RectSolid.fill(editor, rand, start, end, air, true, true);
 				
 				cursor = new Coord(floor);
 				cursor.add(dir, 3);
@@ -114,7 +116,7 @@ public class RogueTower implements ITower{
 				start.add(Cardinal.UP, 1);
 				end = new Coord(start);
 				end.add(Cardinal.UP, 4);
-				editor.fillRectSolid(rand, start, end, blocks, true, true);
+				RectSolid.fill(editor, rand, start, end, blocks, true, true);
 				
 				start = new Coord(floor);
 				start.add(dir, 5);
@@ -140,7 +142,7 @@ public class RogueTower implements ITower{
 				end = new Coord(start);
 				end.add(orth, 1);
 				end.add(Cardinal.UP, 1);
-				editor.fillRectSolid(rand, start, end, blocks, true, true);
+				RectSolid.fill(editor, rand, start, end, blocks, true, true);
 				
 				cursor = new Coord(end);
 				cursor.add(orth, 1);
@@ -206,14 +208,14 @@ public class RogueTower implements ITower{
 				start.add(Cardinal.reverse(orth), 2);
 				end.add(orth, 2);
 				
-				editor.fillRectSolid(rand, start, end, blocks, true, true);
+				RectSolid.fill(editor, rand, start, end, blocks, true, true);
 				start = new Coord(x, ground, z);
 				start.add(dir, 3);
 				start.add(orth, 3);
 				end = new Coord(x, 60, z);
 				end.add(dir, 3);
 				end.add(orth, 3);
-				editor.fillRectSolid(rand, start, end, blocks, true, true);
+				RectSolid.fill(editor, rand, start, end, blocks, true, true);
 				
 			}
 		}

@@ -3,10 +3,10 @@ package greymerk.roguelike.worldgen.shapes;
 import java.util.Iterator;
 import java.util.Random;
 
+import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.IWorldEditor;
-import greymerk.roguelike.worldgen.WorldEditor;
 
 public class RectSolid implements IShape {
 
@@ -23,28 +23,69 @@ public class RectSolid implements IShape {
 	}
 	
 	public static void fill(IWorldEditor editor, Random rand, Coord start, Coord end, IBlockFactory block, boolean fillAir, boolean replaceSolid){
-		Coord c1 = new Coord(start);
-		Coord c2 = new Coord(end);
-		
-		Coord.correct(c1, c2);
-		
-		for(int x = c1.getX(); x <= c2.getX(); x++){
-			for(int y = c1.getY(); y <= c2.getY(); y++){
-				for(int z = c1.getZ(); z <= c2.getZ(); z++){
-					editor.setBlock(rand, new Coord(x, y, z), block, fillAir, replaceSolid);
-				}
-			}
+		RectSolid rect = new RectSolid(start, end);
+		for(Coord c : rect){
+			block.setBlock(editor, rand, c, fillAir, replaceSolid);
 		}
 	}
 	
 	@Override
 	public void fill(IWorldEditor editor, Random rand, IBlockFactory block, boolean fillAir, boolean replaceSolid) {
-		fill(editor, rand, start, end, block, fillAir, replaceSolid);
+		for(Coord c : this){
+			block.setBlock(editor, rand, c, fillAir, replaceSolid);
+		}
 	}
 
 	@Override
-	public Iterator<Coord> iter() {
-		return null;
+	public Iterator<Coord> iterator() {
+		return new RectSolidIterator(this.start, this.end);
 	}
+	
+	private class RectSolidIterator implements Iterator<Coord>{
 
+		Coord cursor;
+		Coord c1;
+		Coord c2;
+		
+		public RectSolidIterator(Coord c1, Coord c2){
+			this.c1 = new Coord(c1);
+			this.c2 = new Coord(c2);
+			
+			Coord.correct(this.c1, this.c2);
+			cursor = new Coord(this.c1);
+		}
+		
+		@Override
+		public boolean hasNext() {
+			return this.cursor.getY() <= this.c2.getY();
+		}
+
+		@Override
+		public Coord next() {
+			
+			Coord toReturn = new Coord(cursor);
+			
+			if(cursor.getZ() == c2.getZ()
+				&& cursor.getX() == c2.getX()){
+				cursor = new Coord(c1.getX(), cursor.getY(), c1.getZ());
+				cursor.add(Cardinal.UP);
+				return toReturn;
+			}
+			
+			if(cursor.getX() == c2.getX()){
+				cursor = new Coord(c1.getX(), cursor.getY(), cursor.getZ());
+				cursor.add(Cardinal.SOUTH);
+				return toReturn;
+			}
+			
+			cursor.add(Cardinal.EAST);
+			return toReturn;
+			
+		}
+
+		@Override
+		public void remove() {
+			throw new UnsupportedOperationException();	
+		}
+	}
 }

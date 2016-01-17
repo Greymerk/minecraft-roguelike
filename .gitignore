@@ -5,6 +5,7 @@
 /.settings/
 /assets/
 /bin/
+/run/
 /build/
 /config/
 /crash-reports/

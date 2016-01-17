@@ -12,13 +12,6 @@ import greymerk.roguelike.dungeon.settings.SpawnCriteria;
 import greymerk.roguelike.dungeon.settings.TowerSettings;
 import greymerk.roguelike.dungeon.towers.Tower;
 import greymerk.roguelike.theme.Theme;
-import greymerk.roguelike.treasure.Treasure;
-import greymerk.roguelike.treasure.loot.LootRuleManager;
-import greymerk.roguelike.treasure.loot.WeightedRandomLoot;
-import greymerk.roguelike.util.WeightedRandomizer;
-import greymerk.roguelike.worldgen.blocks.Log;
-import greymerk.roguelike.worldgen.blocks.Wood;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.BiomeDictionary;
 
 public class SettingsGrasslandTheme extends DungeonSettings{
