@@ -10,9 +10,11 @@ import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.IStair;
-import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.IWorldEditor;
+import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.blocks.BlockType;
+import greymerk.roguelike.worldgen.shapes.RectHollow;
+import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 public class DungeonDarkHall extends DungeonBase{
 
@@ -41,7 +43,7 @@ public class DungeonDarkHall extends DungeonBase{
 		start.add(Cardinal.DOWN);
 		end.add(Cardinal.UP, 7);
 		
-		editor.fillRectHollow(rand, start, end, outerWall, false, true);
+		RectHollow.fill(editor, rand, start, end, outerWall, false, true);
 		
 		start = new Coord(origin);
 		end = new Coord(origin);
@@ -53,7 +55,7 @@ public class DungeonDarkHall extends DungeonBase{
 		start.add(Cardinal.UP, 6);
 		end.add(Cardinal.UP, 9);
 
-		editor.fillRectHollow(rand, start, end, outerWall, false, true);
+		RectHollow.fill(editor, rand, start, end, outerWall, false, true);
 		
 		start = new Coord(origin);
 		end = new Coord(origin);
@@ -65,7 +67,7 @@ public class DungeonDarkHall extends DungeonBase{
 		start.add(Cardinal.DOWN);
 		end.add(Cardinal.DOWN);
 		
-		editor.fillRectSolid(rand, start, end, theme.getPrimaryFloor(), false, true);
+		RectSolid.fill(editor, rand, start, end, theme.getPrimaryFloor(), false, true);
 		
 		for (Cardinal dir : entrances){
 			Cardinal[] orth = Cardinal.orthogonal(dir);
@@ -74,7 +76,7 @@ public class DungeonDarkHall extends DungeonBase{
 			end = new Coord(origin);
 			end.add(orth[1]);
 			end.add(dir, 7);
-			editor.fillRectSolid(rand, start, end, theme.getSecondaryFloor(), false, true);
+			RectSolid.fill(editor, rand, start, end, theme.getSecondaryFloor(), false, true);
 		}
 		
 		for(Cardinal dir : Cardinal.directions){
@@ -84,7 +86,7 @@ public class DungeonDarkHall extends DungeonBase{
 			start.add(Cardinal.left(dir), 6);
 			end = new Coord(start);
 			end.add(Cardinal.UP, 5);
-			editor.fillRectSolid(rand, start, end, pillar, true, true);
+			RectSolid.fill(editor, rand, start, end, pillar);
 			
 			start = new Coord(origin);
 			start.add(dir, 6);
@@ -92,7 +94,7 @@ public class DungeonDarkHall extends DungeonBase{
 			end = new Coord(start);
 			start.add(Cardinal.left(dir), 6);
 			end.add(Cardinal.right(dir), 6);
-			editor.fillRectSolid(rand, start, end, wall, true, true);
+			RectSolid.fill(editor, rand, start, end, wall);
 			
 			start = new Coord(origin);
 			start.add(dir, 3);
@@ -100,10 +102,10 @@ public class DungeonDarkHall extends DungeonBase{
 			end = new Coord(start);
 			start.add(Cardinal.left(dir), 3);
 			end.add(Cardinal.right(dir), 3);
-			editor.fillRectSolid(rand, start, end, wall, true, true);
+			RectSolid.fill(editor, rand, start, end, wall);
 			start.add(Cardinal.UP, 2);
 			end.add(Cardinal.UP, 2);
-			editor.fillRectSolid(rand, start, end, wall, true, true);
+			RectSolid.fill(editor, rand, start, end, wall);
 			
 			start = new Coord(origin);
 			start.add(dir, 3);
@@ -112,7 +114,7 @@ public class DungeonDarkHall extends DungeonBase{
 			start.add(Cardinal.UP);
 			end = new Coord(start);
 			end.add(Cardinal.reverse(dir), 3);
-			editor.fillRectSolid(rand, start, end, wall, true, true);
+			RectSolid.fill(editor, rand, start, end, wall);
 			
 			if(Arrays.asList(entrances).contains(dir)){
 				start = new Coord(origin);
@@ -122,7 +124,7 @@ public class DungeonDarkHall extends DungeonBase{
 				end.add(Cardinal.UP, 3);
 				start.add(Cardinal.left(dir), 2);
 				end.add(Cardinal.right(dir), 2);
-				editor.fillRectSolid(rand, start, end, wall, true, true);
+				RectSolid.fill(editor, rand, start, end, wall);
 				
 				cursor = new Coord(origin);
 				cursor.add(dir, 7);
@@ -159,7 +161,7 @@ public class DungeonDarkHall extends DungeonBase{
 			start.add(Cardinal.UP, 6);
 			end = new Coord(start);
 			end.add(Cardinal.reverse(dir), 2);
-			editor.fillRectSolid(rand, start, end, wall, true, true);
+			RectSolid.fill(editor, rand, start, end, wall);
 			
 			for (Cardinal o : Cardinal.orthogonal(dir)){
 				cursor = new Coord(origin);
@@ -170,7 +172,7 @@ public class DungeonDarkHall extends DungeonBase{
 				start.add(Cardinal.UP, 6);
 				end = new Coord(start);
 				end.add(Cardinal.reverse(dir), 6);
-				editor.fillRectSolid(rand, start, end, wall, true, true);
+				RectSolid.fill(editor, rand, start, end, wall);
 			}
 		}
 		
@@ -192,7 +194,7 @@ public class DungeonDarkHall extends DungeonBase{
 		start = new Coord(origin);
 		end = new Coord(start);
 		end.add(Cardinal.UP, 5);
-		editor.fillRectSolid(rand, start, end, pillar, true, true);
+		RectSolid.fill(editor, rand, start, end, pillar);
 		
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.UP, 3);

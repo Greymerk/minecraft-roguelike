@@ -28,6 +28,7 @@ public class MetaBlock extends BlockBase implements IBlockState{
 		flag = 2;
 	}
 	
+	@SuppressWarnings("rawtypes")
 	public MetaBlock(Block block, IProperty ... properties){
 		BlockState s = new BlockState(block, properties);
 		this.state = s.getBaseState();
@@ -56,6 +57,7 @@ public class MetaBlock extends BlockBase implements IBlockState{
 		return editor.setBlock(pos, this.state, this.flag, fillAir, replaceSolid);
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public Collection<IProperty> getPropertyNames() {
 		return this.state.getPropertyNames();
@@ -72,13 +74,15 @@ public class MetaBlock extends BlockBase implements IBlockState{
 		return this.state;
 	}
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public IBlockState cycleProperty(IProperty property) {
 		return this.state.cycleProperty(property);
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
-	public ImmutableMap getProperties() {
+	public ImmutableMap<IProperty, Comparable> getProperties(){
 		return this.state.getProperties();
 	}
 

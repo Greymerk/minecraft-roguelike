@@ -9,7 +9,7 @@ import net.minecraft.init.Blocks;
 
 public class Log {
 
-	public static MetaBlock getLog(Wood type, Cardinal dir){
+	public static MetaBlock get(Wood type, Cardinal dir){
 		
 		MetaBlock log = new MetaBlock(getBlockId(type));
 		setType(log, type);
@@ -34,7 +34,7 @@ public class Log {
 	}
 	
 	public static MetaBlock getLog(Wood type){
-		return getLog(type, Cardinal.UP);
+		return get(type, Cardinal.UP);
 	}
 	
 	public static Block getBlockId(Wood type){

@@ -19,13 +19,14 @@ import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.Spawner;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.Crops;
+import greymerk.roguelike.worldgen.shapes.RectHollow;
+import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 public class DungeonsNetherBrickFortress extends DungeonBase {
 	
 	public boolean generate(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
 		ITheme theme = settings.getTheme();
 		IBlockFactory wall = theme.getPrimaryWall();
-		IBlockFactory pillar = theme.getPrimaryPillar();
 		IStair stair = theme.getPrimaryStair();
 		MetaBlock lava = BlockType.get(BlockType.LAVA_FLOWING);
 		MetaBlock air = BlockType.get(BlockType.AIR);
@@ -42,13 +43,13 @@ public class DungeonsNetherBrickFortress extends DungeonBase {
 		end = new Coord(origin);
 		start.add(new Coord(-8, -1, -8));
 		end.add(new Coord(8, 6, 8));
-		wall.fillRectHollow(editor, rand, start, end, false, true);
+		RectHollow.fill(editor, rand, start, end, wall, false, true);
 		
 		start = new Coord(origin);
 		end = new Coord(origin);
 		start.add(new Coord(-4, 6, -4));
 		end.add(new Coord(4, 6, 4));
-		wall.fillRectSolid(editor, rand, start, end, true, true);
+		RectSolid.fill(editor, rand, start, end, wall);
 		
 		start = new Coord(origin);
 		end = new Coord(origin);

@@ -42,24 +42,24 @@ public enum RogueConfig {
 		}
 	}
 	
-	public static Tuple getDefault(RogueConfig option){
+	public static Tuple<String, ?> getDefault(RogueConfig option){
 		switch(option){
-		case DONATURALSPAWN: return new Tuple(getName(option), true);
-		case DONOVELTYSPAWN: return new Tuple(getName(option), true);
-		case LEVELRANGE: return new Tuple(getName(option), 80);
-		case LEVELMAXROOMS: return new Tuple(getName(option), 30);
-		case LEVELSCATTER: return new Tuple(getName(option), 10);
-		case SPAWNFREQUENCY: return new Tuple(getName(option), 10);
-		case GENEROUS: return new Tuple(getName(option), true);
+		case DONATURALSPAWN: return new Tuple<String, Boolean>(getName(option), true);
+		case DONOVELTYSPAWN: return new Tuple<String, Boolean>(getName(option), true);
+		case LEVELRANGE: return new Tuple<String, Integer>(getName(option), 80);
+		case LEVELMAXROOMS: return new Tuple<String, Integer>(getName(option), 30);
+		case LEVELSCATTER: return new Tuple<String, Integer>(getName(option), 10);
+		case SPAWNFREQUENCY: return new Tuple<String, Integer>(getName(option), 10);
+		case GENEROUS: return new Tuple<String, Boolean>(getName(option), true);
 		case DIMENSIONWL:
-			return new Tuple(getName(option), new ArrayList<Integer>());
+			return new Tuple<String, List<Integer>>(getName(option), new ArrayList<Integer>());
 		case DIMENSIONBL:
-			return new Tuple(getName(option), new ArrayList<Integer>());
-		case PRECIOUSBLOCKS: return new Tuple(getName(option), true);
-		case LOOTING: return new Tuple(getName(option), 0.085D);
-		case UPPERLIMIT: return new Tuple(getName(option), 100);
-		case LOWERLIMIT: return new Tuple(getName(option), 60);
-		case ROGUESPAWNERS: return new Tuple(getName(option), true);
+			return new Tuple<String, List<Integer>>(getName(option), new ArrayList<Integer>());
+		case PRECIOUSBLOCKS: return new Tuple<String, Boolean>(getName(option), true);
+		case LOOTING: return new Tuple<String, Double>(getName(option), 0.085D);
+		case UPPERLIMIT: return new Tuple<String, Integer>(getName(option), 100);
+		case LOWERLIMIT: return new Tuple<String, Integer>(getName(option), 60);
+		case ROGUESPAWNERS: return new Tuple<String, Boolean>(getName(option), true);
 		default: return null;
 		}
 	}
@@ -84,7 +84,7 @@ public enum RogueConfig {
 	
 	public static double getDouble(RogueConfig option){
 		reload(false);
-		Tuple def = getDefault(option);
+		Tuple<String, ?> def = getDefault(option);
 		return instance.GetDouble(getName(option), (Double)def.getSecond());
 	}
 	
@@ -95,7 +95,7 @@ public enum RogueConfig {
 	
 	public static boolean getBoolean(RogueConfig option){
 		reload(false);
-		Tuple def = getDefault(option);
+		Tuple<String, ?> def = getDefault(option);
 		return instance.GetBoolean(getName(option), (Boolean)def.getSecond());
 	}
 	
@@ -106,26 +106,26 @@ public enum RogueConfig {
 	
 	public static int getInt(RogueConfig option){
 		reload(false);
-		Tuple def = getDefault(option);
+		Tuple<String, ?> def = getDefault(option);
 		return instance.GetInteger((String)def.getFirst(), (Integer)def.getSecond());
 	}
 	
 	public static void setInt(RogueConfig option, int value){
 		reload(false);
-		Tuple def = getDefault(option);
+		Tuple<String, ?> def = getDefault(option);
 		instance.Set((String)def.getFirst(), value);
 	}
 	
 	@SuppressWarnings("unchecked")
 	public static List<Integer> getIntList(RogueConfig option){
 		reload(false);
-		Tuple def = getDefault(option);
+		Tuple<String, ?> def = getDefault(option);
 		return instance.GetListInteger((String)def.getFirst(), (ArrayList<Integer>)def.getSecond());
 	}
 	
 	public static void setIntList(RogueConfig option, List<Integer> value){
 		reload(false);
-		Tuple def = getDefault(option);
+		Tuple<String, ?> def = getDefault(option);
 		instance.Set((String)def.getFirst(), value);
 	}
 	

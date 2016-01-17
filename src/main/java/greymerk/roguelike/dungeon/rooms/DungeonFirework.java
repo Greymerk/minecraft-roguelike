@@ -10,8 +10,8 @@ import greymerk.roguelike.treasure.loot.Loot;
 import greymerk.roguelike.util.TextFormat;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
-import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.IWorldEditor;
+import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.ColorBlock;
 import greymerk.roguelike.worldgen.blocks.DyeColor;
@@ -22,6 +22,8 @@ import greymerk.roguelike.worldgen.redstone.Hopper;
 import greymerk.roguelike.worldgen.redstone.Lever;
 import greymerk.roguelike.worldgen.redstone.Repeater;
 import greymerk.roguelike.worldgen.redstone.Torch;
+import greymerk.roguelike.worldgen.shapes.RectHollow;
+import greymerk.roguelike.worldgen.shapes.RectSolid;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
@@ -48,7 +50,7 @@ public class DungeonFirework extends DungeonBase {
 		end.add(Cardinal.right(dir), 4);
 		start.add(Cardinal.DOWN);
 		end.add(Cardinal.UP, 3);
-		editor.fillRectHollow(rand, start, end, ColorBlock.get(ColorBlock.CLAY, DyeColor.ORANGE), false, true);
+		RectHollow.fill(editor, rand, start, end, ColorBlock.get(ColorBlock.CLAY, DyeColor.ORANGE), false, true);
 		
 		start = new Coord(x, y, z);
 		start.add(Cardinal.left(dir), 2);
@@ -56,15 +58,15 @@ public class DungeonFirework extends DungeonBase {
 		start.add(Cardinal.reverse(dir), 3);
 		end.add(dir, 7);
 		end.add(Cardinal.UP);
-		editor.fillRectSolid(rand, start, end, breadboard, true, true);
+		RectSolid.fill(editor, rand, start, end, breadboard);
 		
 		start.add(Cardinal.right(dir), 2);
 		end.add(Cardinal.right(dir), 2);
-		editor.fillRectSolid(rand, start, end, breadboard, true, true);
+		RectSolid.fill(editor, rand, start, end, breadboard, true, true);
 		
 		start.add(Cardinal.right(dir), 2);
 		end.add(Cardinal.right(dir), 2);
-		editor.fillRectSolid(rand, start, end, breadboard, true, true);
+		RectSolid.fill(editor, rand, start, end, breadboard, true, true);
 		
 		cursor = new Coord(x, y, z);
 		cursor.add(Cardinal.left(dir), 2);
@@ -87,7 +89,7 @@ public class DungeonFirework extends DungeonBase {
 		start.add(Cardinal.left(dir), 2);
 		end.add(Cardinal.right(dir), 2);
 		end.add(dir, 2);
-		editor.fillRectSolid(rand, start, end, BlockType.get(BlockType.AIR), true, true);
+		RectSolid.fill(editor, rand, start, end, BlockType.get(BlockType.AIR), true, true);
 		
 		cursor = new Coord(x, y, z);
 		cursor.add(dir, 2);
@@ -114,7 +116,7 @@ public class DungeonFirework extends DungeonBase {
 		end.add(Cardinal.left(dir), 5);
 		end.add(Cardinal.reverse(dir), 5);
 		end.add(Cardinal.DOWN, 2);
-		editor.fillRectSolid(rand, start, end, BlockType.get(BlockType.COBBLESTONE), true, true);
+		RectSolid.fill(editor, rand, start, end, BlockType.get(BlockType.COBBLESTONE), true, true);
 		
 		cursor = new Coord(x, y, z);
 		cursor.add(Cardinal.reverse(dir), 3);
@@ -227,10 +229,10 @@ public class DungeonFirework extends DungeonBase {
 		
 		cursor.add(Cardinal.UP);
 		MetaBlock cob = BlockType.get(BlockType.COBBLESTONE);
-		editor.fillRectSolid(rand, start, end, cob, true, true);
+		RectSolid.fill(editor, rand, start, end, cob, true, true);
 		start.add(Cardinal.reverse(dir), 2);
 		end.add(Cardinal.reverse(dir), 2);
-		editor.fillRectSolid(rand, start, end, cob, true, true);
+		RectSolid.fill(editor, rand, start, end, cob, true, true);
 		start.add(dir);
 		end.add(dir);
 		Coord above = new Coord(end);
@@ -244,10 +246,10 @@ public class DungeonFirework extends DungeonBase {
 		}
 		start.add(Cardinal.left(dir));
 		end.add(Cardinal.left(dir));
-		editor.fillRectSolid(rand, start, end, cob, true, true);
+		RectSolid.fill(editor, rand, start, end, cob, true, true);
 		start.add(Cardinal.right(dir), 2);
 		end.add(Cardinal.right(dir), 2);
-		editor.fillRectSolid(rand, start, end, cob, true, true);
+		RectSolid.fill(editor, rand, start, end, cob, true, true);
 	}
 	
 	

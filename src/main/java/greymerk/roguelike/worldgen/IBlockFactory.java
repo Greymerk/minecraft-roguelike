@@ -12,6 +12,8 @@ public interface IBlockFactory {
 	
 	public void fill(IWorldEditor editor, Random rand, IShape shape, boolean fillAir, boolean replaceSolid);
 	
+	public void fill(IWorldEditor editor, Random rand, IShape shape);
+	
 	@Deprecated
 	public void fillRectSolid(IWorldEditor editor, Random rand, Coord start, Coord end, boolean fillAir, boolean replaceSolid);
 

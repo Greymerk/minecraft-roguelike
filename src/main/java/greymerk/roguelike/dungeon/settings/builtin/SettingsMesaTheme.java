@@ -3,9 +3,6 @@ package greymerk.roguelike.dungeon.settings.builtin;
 import java.util.ArrayList;
 import java.util.List;
 
-import greymerk.roguelike.dungeon.base.DungeonFactory;
-import greymerk.roguelike.dungeon.segment.Segment;
-import greymerk.roguelike.dungeon.segment.SegmentGenerator;
 import greymerk.roguelike.dungeon.settings.DungeonSettings;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.dungeon.settings.SpawnCriteria;
@@ -26,8 +23,6 @@ public class SettingsMesaTheme extends DungeonSettings{
 		this.towerSettings = new TowerSettings(Tower.ETHO, Theme.getTheme(Theme.ETHOTOWER));
 		
 		Theme[] themes = {Theme.ETHOTOWER, Theme.ETHOTOWER, Theme.CRYPT, Theme.CRYPT, Theme.NETHER};
-		DungeonFactory rooms;
-		SegmentGenerator segments;
 		for(int i = 0; i < 5; ++i){
 			LevelSettings level = new LevelSettings();
 			level.setTheme(Theme.getTheme(themes[i]));

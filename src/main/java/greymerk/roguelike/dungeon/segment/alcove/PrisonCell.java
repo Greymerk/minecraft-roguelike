@@ -9,11 +9,13 @@ import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.Spawner;
-import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.Door;
+import greymerk.roguelike.worldgen.shapes.RectHollow;
+import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 public class PrisonCell implements IAlcove{
 
@@ -33,13 +35,13 @@ public class PrisonCell implements IAlcove{
 		Coord end = new Coord(start);
 		start.add(-2, -1, -2);
 		end.add(2, 3, 2);
-		walls.fillRectHollow(editor, rand, start, end, true, true);
+		RectHollow.fill(editor, rand, start, end, walls);
 		
 		start = new Coord(origin);
 		end = new Coord(origin);
 		end.add(dir, RECESSED);
 		end.add(Cardinal.UP);
-		air.fillRectSolid(editor, rand, start, end, true, true);
+		RectSolid.fill(editor, rand, start, end, air);
 		
 		Coord cursor = new Coord(origin);
 		cursor.add(dir, RECESSED - 1);

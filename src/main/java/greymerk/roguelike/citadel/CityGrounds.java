@@ -13,6 +13,7 @@ import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
+import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 public class CityGrounds {
 
@@ -25,25 +26,25 @@ public class CityGrounds {
 		start.add(new Coord(Citadel.EDGE_LENGTH * -3, 10, Citadel.EDGE_LENGTH * -3));
 		end = new Coord(pos);
 		end.add(new Coord(Citadel.EDGE_LENGTH * 3, 40, Citadel.EDGE_LENGTH * 3));
-		editor.fillRectSolid(rand, start, end, BlockType.get(BlockType.AIR), true, true);
+		RectSolid.fill(editor, rand, start, end, BlockType.get(BlockType.AIR), true, true);
 		
 		start = new Coord(pos);
 		start.add(new Coord(Citadel.EDGE_LENGTH * -3, 10, Citadel.EDGE_LENGTH * -3));
 		end = new Coord(pos);
 		end.add(new Coord(Citadel.EDGE_LENGTH * 3, 20, Citadel.EDGE_LENGTH * 3));
-		editor.fillRectSolid(rand, start, end, theme.getPrimaryWall(), true, true);
+		RectSolid.fill(editor, rand, start, end, theme.getPrimaryWall(), true, true);
 		
 		start = new Coord(pos);
 		start.add(new Coord(Citadel.EDGE_LENGTH * -2, 20, Citadel.EDGE_LENGTH * -2));
 		end = new Coord(pos);
 		end.add(new Coord(Citadel.EDGE_LENGTH * 2, 30, Citadel.EDGE_LENGTH * 2));
-		editor.fillRectSolid(rand, start, end, theme.getPrimaryWall(), true, true);
+		RectSolid.fill(editor, rand, start, end, theme.getPrimaryWall(), true, true);
 		
 		start = new Coord(pos);
 		start.add(new Coord(Citadel.EDGE_LENGTH * -1, 30, Citadel.EDGE_LENGTH * -1));
 		end = new Coord(pos);
 		end.add(new Coord(Citadel.EDGE_LENGTH, 40, Citadel.EDGE_LENGTH));
-		editor.fillRectSolid(rand, start, end, theme.getPrimaryWall(), true, true);
+		RectSolid.fill(editor, rand, start, end, theme.getPrimaryWall(), true, true);
 		
 		Coord cursor = new Coord(pos);
 		cursor.add(Cardinal.UP, 20);
@@ -54,7 +55,7 @@ public class CityGrounds {
 			end = e.getPoints()[1].getPosition();
 			end.add(cursor);
 			end.add(Cardinal.DOWN, 20);
-			editor.fillRectSolid(rand, start, end, theme.getPrimaryWall(), true, true);
+			RectSolid.fill(editor, rand, start, end, theme.getPrimaryWall(), true, true);
 		}
 		
 		

@@ -29,7 +29,7 @@ public class ThemeSpruce extends ThemeBase{
 		MetaBlock SegmentWall = spruce;
 		MetaStair SegmentStair = new MetaStair(StairType.SPRUCE);
 		
-		MetaBlock pillar = Log.getLog(Wood.SPRUCE, Cardinal.DOWN);
+		MetaBlock pillar = Log.get(Wood.SPRUCE, Cardinal.DOWN);
 		this.secondary =  new BlockSet(SegmentWall, SegmentStair, pillar);
 
 	}

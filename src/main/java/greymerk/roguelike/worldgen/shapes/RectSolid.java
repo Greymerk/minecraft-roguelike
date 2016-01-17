@@ -65,8 +65,7 @@ public class RectSolid implements IShape {
 			
 			Coord toReturn = new Coord(cursor);
 			
-			if(cursor.getZ() == c2.getZ()
-				&& cursor.getX() == c2.getX()){
+			if(cursor.getZ() == c2.getZ() && cursor.getX() == c2.getX()){
 				cursor = new Coord(c1.getX(), cursor.getY(), c1.getZ());
 				cursor.add(Cardinal.UP);
 				return toReturn;

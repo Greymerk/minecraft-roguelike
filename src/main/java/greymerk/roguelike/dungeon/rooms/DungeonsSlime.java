@@ -14,13 +14,14 @@ import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.Vine;
+import greymerk.roguelike.worldgen.shapes.RectHollow;
+import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 public class DungeonsSlime extends DungeonBase {
 
 	public boolean generate(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
 		ITheme theme = settings.getTheme();
 		IBlockFactory wall = theme.getPrimaryWall();
-		IBlockFactory pillar = theme.getPrimaryPillar();
 		MetaBlock bars = BlockType.get(BlockType.IRON_BAR);
 		MetaBlock water = BlockType.get(BlockType.WATER_FLOWING);
 		MetaBlock air = BlockType.get(BlockType.AIR);
@@ -34,7 +35,7 @@ public class DungeonsSlime extends DungeonBase {
 		end = new Coord(origin);
 		start.add(new Coord(-8,-1,-8));
 		end.add(new Coord(8, 5, 8));
-		wall.fillRectHollow(editor, rand, start, end, false, true);
+		RectHollow.fill(editor, rand, start, end, wall, false, true);
 		
 		for(Cardinal dir : Cardinal.directions){
 			cursor = new Coord(origin);
@@ -48,10 +49,10 @@ public class DungeonsSlime extends DungeonBase {
 			end = new Coord(start);
 			start.add(Cardinal.left(dir), 8);
 			end.add(Cardinal.right(dir), 8);
-			wall.fillRectSolid(editor, rand, start, end, true, true);
+			RectSolid.fill(editor, rand, start, end, wall);
 			start.add(dir, 4);
 			end.add(dir, 4);
-			wall.fillRectSolid(editor, rand, start, end, true, true);
+			RectSolid.fill(editor, rand, start, end, wall);
 			
 		}
 
@@ -65,20 +66,20 @@ public class DungeonsSlime extends DungeonBase {
 				end.add(dir, 2);
 				start.add(Cardinal.left(dir), 3);
 				end.add(Cardinal.right(dir), 3);
-				air.fillRectSolid(editor, rand, start, end, true, true);
+				RectSolid.fill(editor, rand, start, end, air);
 				start.add(Cardinal.DOWN);
 				end.add(Cardinal.DOWN);
-				water.fillRectSolid(editor, rand, start, end, true, true);
+				RectSolid.fill(editor, rand, start, end, water);
 				start.add(Cardinal.DOWN);
 				end.add(Cardinal.DOWN);
-				wall.fillRectSolid(editor, rand, start, end, true, true);
+				RectSolid.fill(editor, rand, start, end, wall);
 				
 				start = new Coord(origin);
 				start.add(dir, 3);
 				end = new Coord(start);
 				start.add(Cardinal.left(dir), 2);
 				end.add(Cardinal.right(dir), 2);
-				bars.fillRectSolid(editor, rand, start, end, true, true);
+				RectSolid.fill(editor, rand, start, end, bars);
 				
 				cursor = new Coord(origin);
 				cursor.add(dir, 7);
@@ -123,7 +124,7 @@ public class DungeonsSlime extends DungeonBase {
 		end = new Coord(origin);
 		start.add(new Coord(-1, -1, -1));
 		end.add(new Coord(1, -1, 1));
-		water.fillRectSolid(editor, rand, start, end, true, true);
+		RectSolid.fill(editor, rand, start, end, water);
 		
 		start = new Coord(origin);
 		end = new Coord(origin);
@@ -135,7 +136,7 @@ public class DungeonsSlime extends DungeonBase {
 		end = new Coord(origin);
 		start.add(new Coord(-1, -2, -1));
 		end.add(new Coord(1, -2, 1));
-		wall.fillRectSolid(editor, rand, start, end, true, true);
+		RectSolid.fill(editor, rand, start, end, wall);
 		
 		for(Cardinal dir : Cardinal.directions){
 			start = new Coord(origin);
@@ -143,7 +144,7 @@ public class DungeonsSlime extends DungeonBase {
 			start.add(Cardinal.left(dir), 2);
 			end = new Coord(start);
 			end.add(Cardinal.UP, 3);
-			pillar.fillRectSolid(editor, rand, start, end, true, true);
+			RectSolid.fill(editor, rand, start, end, pillar);
 			
 			for(Cardinal d : Cardinal.directions){
 				cursor = new Coord(end);
@@ -156,7 +157,7 @@ public class DungeonsSlime extends DungeonBase {
 			end = new Coord(start);
 			start.add(Cardinal.left(dir));
 			end.add(Cardinal.right(dir));
-			bars.fillRectSolid(editor, rand, start, end, true, true);
+			RectSolid.fill(editor, rand, start, end, bars);
 			
 		}
 	}
