@@ -2,13 +2,14 @@ package greymerk.roguelike.worldgen;
 
 
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
 import greymerk.roguelike.treasure.ITreasureChest;
 import greymerk.roguelike.treasure.TreasureManager;
+import greymerk.roguelike.worldgen.shapes.RectHollow;
+import greymerk.roguelike.worldgen.shapes.RectSolid;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -29,7 +30,7 @@ public class WorldEditor implements IWorldEditor{
 		this.chests = new TreasureManager();
 	}
 	
-	public boolean setBlock(Coord pos, IBlockState block, int flags, boolean fillAir, boolean replaceSolid){
+	private boolean setBlock(Coord pos, IBlockState block, int flags, boolean fillAir, boolean replaceSolid){
 		
 		MetaBlock currentBlock = getBlock(pos);
 		
@@ -61,11 +62,11 @@ public class WorldEditor implements IWorldEditor{
 	}
 	
 	public boolean setBlock(Coord pos, MetaBlock block){
-		return block.setBlock(this, pos);
+		return this.setBlock(pos, block, true, true);
 	}
 	
-	public boolean setBlock(Coord pos, Block block){
-		return setBlock(pos, new MetaBlock(block));
+	public boolean setBlock(Coord pos, MetaBlock block, boolean fillAir, boolean replaceSolid){
+		return this.setBlock(pos, block.getState(), block.getFlag(), fillAir, replaceSolid);
 	}
 	
 	public boolean setBlock(Random rand, Coord coord, IBlockFactory blocks, boolean fillAir, boolean replaceSolid) {
@@ -98,19 +99,7 @@ public class WorldEditor implements IWorldEditor{
 	}
 	
 	public void fillRectSolid(Random rand, Coord start, Coord end, IBlockFactory blocks, boolean fillAir, boolean replaceSolid){
-		
-		Coord c1 = new Coord(start);
-		Coord c2 = new Coord(end);
-		
-		Coord.correct(c1, c2);
-		
-		for(int x = c1.getX(); x <= c2.getX(); x++){
-			for(int y = c1.getY(); y <= c2.getY(); y++){
-				for(int z = c1.getZ(); z <= c2.getZ(); z++){
-					this.setBlock(rand, new Coord(x, y, z), blocks, fillAir, replaceSolid);
-				}
-			}
-		}
+		RectSolid.fill(this, rand, start, end, blocks, fillAir, replaceSolid);
 	}
 	
 	public void fillRectHollow(Random rand, Coord start, Coord end, IBlockFactory blocks){
@@ -119,24 +108,7 @@ public class WorldEditor implements IWorldEditor{
 	
 	
 	public void fillRectHollow(Random rand, Coord start, Coord end, IBlockFactory blocks, boolean fillAir, boolean replaceSolid){
-		
-		Coord c1 = new Coord(start);
-		Coord c2 = new Coord(end);
-		
-		Coord.correct(c1, c2);
-		
-		for(int x = c1.getX(); x <= c2.getX(); x++){
-			for(int y = c1.getY(); y <= c2.getY(); y++){
-				for(int z = c1.getZ(); z <= c2.getZ(); z++){
-					if(x == c1.getX() || x == c2.getX() || y == c1.getY() || y == c2.getY() || z == c1.getZ() || z == c2.getZ()){
-						setBlock(rand, new Coord(x, y, z), blocks, fillAir, replaceSolid);
-					} else {					
-						setBlock(new Coord(x, y, z), new MetaBlock(Blocks.air));
-					}	
-				}
-			}
-			
-		}
+		RectHollow.fill(this, rand, start, end, blocks, fillAir, replaceSolid);
 	}
 	
 
@@ -145,23 +117,8 @@ public class WorldEditor implements IWorldEditor{
 	}
 	
 	public List<Coord> getRectSolid(int x1, int y1, int z1, int x2, int y2, int z2){
-		
-		Coord c1 = new Coord(x1, y1, z1);
-		Coord c2 = new Coord(x2, y2, z2);
-		
-		Coord.correct(c1, c2);
-		
-		List<Coord> points = new LinkedList<Coord>();
-		
-		for(int x = c1.getX(); x <= c2.getX(); x++){
-			for(int y = c1.getY(); y <= c2.getY(); y++){
-				for(int z = c1.getZ(); z <= c2.getZ(); z++){
-					points.add(new Coord(x, y, z));
-				}
-			}
-		}	
-		
-		return points;
+		RectSolid rect = new RectSolid(new Coord(x1, y1, z1), new Coord(x2, y2, z2));
+		return rect.get();
 	}
 	
 	public List<Coord> getRectHollow(Coord start, Coord end){
@@ -169,26 +126,8 @@ public class WorldEditor implements IWorldEditor{
 	}
 	
 	public List<Coord> getRectHollow(int x1, int y1, int z1, int x2, int y2, int z2){
-
-		
-		List<Coord> points = new LinkedList<Coord>();
-		
-		Coord c1 = new Coord(x1, y1, z1);
-		Coord c2 = new Coord(x2, y2, z2);
-		
-		Coord.correct(c1, c2);
-		
-		for(int x = c1.getX(); x <= c2.getX(); x++){
-			for(int y = c1.getY(); y <= c2.getY(); y++){
-				for(int z = c1.getZ(); z <= c2.getZ(); z++){
-					if(x == x1 || x == x2 || y == y1 || y == y2 || z == z1 || z == z2){
-						points.add(new Coord(x, y, z));
-					}
-				}
-			}
-		}
-		
-		return points;
+		RectHollow rect = new RectHollow(new Coord(x1, y1, z1), new Coord(x2, y2, z2));
+		return rect.get();
 	}
 	
 	public void fillPyramidSolid(Random rand, Coord base, int height, IBlockFactory blocks, boolean fillAir, boolean replaceSolid){

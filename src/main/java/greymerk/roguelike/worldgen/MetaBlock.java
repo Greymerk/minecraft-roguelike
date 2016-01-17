@@ -49,12 +49,12 @@ public class MetaBlock extends BlockBase implements IBlockState{
 	}
 
 	public boolean setBlock(IWorldEditor editor, Coord pos){
-		return editor.setBlock(pos, this.state, this.flag, true, true);
+		return editor.setBlock(pos, this, true, true);
 	}
 		
 	@Override
 	public boolean setBlock(IWorldEditor editor, Random rand, Coord pos, boolean fillAir, boolean replaceSolid) {
-		return editor.setBlock(pos, this.state, this.flag, fillAir, replaceSolid);
+		return editor.setBlock(pos, this, fillAir, replaceSolid);
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -86,9 +86,17 @@ public class MetaBlock extends BlockBase implements IBlockState{
 		return this.state.getProperties();
 	}
 
+	public IBlockState getState(){
+		return this.state;
+	}
+	
 	@Override
 	public Block getBlock() {
 		return this.state.getBlock();
+	}
+	
+	public int getFlag(){
+		return this.flag;
 	}
 	
 	@Override

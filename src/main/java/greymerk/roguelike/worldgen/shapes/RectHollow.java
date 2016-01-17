@@ -1,6 +1,8 @@
 package greymerk.roguelike.worldgen.shapes;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
 
 import greymerk.roguelike.worldgen.Cardinal;
@@ -28,6 +30,10 @@ public class RectHollow implements IShape {
 		rect.fill(editor, rand, block, fillAir, replaceSolid);
 	}
 
+	@Override
+	public void fill(IWorldEditor editor, Random rand, IBlockFactory block){
+		fill(editor, rand, block, true, true);
+	}
 	
 	@Override
 	public void fill(IWorldEditor editor, Random rand, IBlockFactory block, boolean fillAir, boolean replaceSolid) {
@@ -43,6 +49,17 @@ public class RectHollow implements IShape {
 		RectSolid.fill(editor, rand, innerStart, innerEnd, BlockType.get(BlockType.AIR));
 	}
 
+	@Override
+	public List<Coord> get(){
+		List<Coord> coords = new ArrayList<Coord>();
+		
+		for(Coord c : this){
+			coords.add(c);
+		}
+		
+		return coords;
+	}
+	
 	@Override
 	public Iterator<Coord> iterator() {
 		return new RectHollowIterator(start, end);
@@ -84,11 +101,13 @@ public class RectHollow implements IShape {
 				return toReturn;
 			}
 
-			if(cursor.getY() != c1.getY()
+			if(
+				cursor.getY() != c1.getY()
 				&& cursor.getY() != c2.getY()
 				&& cursor.getZ() != c1.getZ()
 				&& cursor.getZ() != c2.getZ()
-				&& cursor.getX() == c1.getX()){
+				&& cursor.getX() == c1.getX()
+			){
 				cursor.add(Cardinal.EAST, c2.getX() - c1.getX());
 			} else {
 				cursor.add(Cardinal.EAST);	

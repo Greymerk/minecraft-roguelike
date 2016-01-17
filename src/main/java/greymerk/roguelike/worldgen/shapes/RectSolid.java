@@ -1,6 +1,8 @@
 package greymerk.roguelike.worldgen.shapes;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
 
 import greymerk.roguelike.worldgen.Cardinal;
@@ -30,12 +32,28 @@ public class RectSolid implements IShape {
 	}
 	
 	@Override
+	public void fill(IWorldEditor editor, Random rand, IBlockFactory block){
+		fill(editor, rand, block, true, true);
+	}
+	
+	@Override
 	public void fill(IWorldEditor editor, Random rand, IBlockFactory block, boolean fillAir, boolean replaceSolid) {
 		for(Coord c : this){
 			block.setBlock(editor, rand, c, fillAir, replaceSolid);
 		}
 	}
 
+	@Override
+	public List<Coord> get(){
+		List<Coord> coords = new ArrayList<Coord>();
+		
+		for(Coord c : this){
+			coords.add(c);
+		}
+		
+		return coords;
+	}
+	
 	@Override
 	public Iterator<Coord> iterator() {
 		return new RectSolidIterator(this.start, this.end);
