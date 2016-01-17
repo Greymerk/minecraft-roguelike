@@ -11,12 +11,14 @@ import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.redstone.Torch;
+import greymerk.roguelike.worldgen.shapes.RectHollow;
 import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 
 public class RogueTower implements ITower{
 
 	public void generate(IWorldEditor editor, Random rand, ITheme theme, Coord dungeon){
+		
 		
 		int x = dungeon.getX();
 		int y = dungeon.getY();
