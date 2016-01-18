@@ -10,6 +10,7 @@ import java.util.Set;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.IWorldEditor;
+import greymerk.roguelike.worldgen.shapes.RectHollow;
 
 public class MinimumSpanningTree extends Graph{
 	
@@ -68,7 +69,7 @@ public class MinimumSpanningTree extends Graph{
 			Coord end = e.getPoints()[1].getPosition();
 			end.add(pos);
 			
-			editor.fillRectHollow(rand, start, end, blocks, true, true);
+			RectHollow.fill(editor, rand, start, end, blocks);
 		}
 	}
 	

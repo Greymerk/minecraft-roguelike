@@ -10,14 +10,16 @@ import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.IStair;
-import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.IWorldEditor;
+import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.ColorBlock;
 import greymerk.roguelike.worldgen.blocks.Crops;
 import greymerk.roguelike.worldgen.blocks.DyeColor;
 import greymerk.roguelike.worldgen.blocks.Slab;
 import greymerk.roguelike.worldgen.blocks.Wood;
+import greymerk.roguelike.worldgen.shapes.RectHollow;
+import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 
 public class DungeonTreetho extends DungeonBase{
@@ -39,7 +41,7 @@ public class DungeonTreetho extends DungeonBase{
 		start.add(new Coord(-11, -1, -11));
 		end.add(new Coord(11, 8, 11));
 		
-		editor.fillRectHollow(rand, start, end, wall, false, true);
+		RectHollow.fill(editor, rand, start, end, wall, false, true);
 		
 		MetaBlock birchSlab = Slab.get(Slab.BIRCH, true, false, false);
 		MetaBlock pumpkin = Crops.get(Crops.PUMPKIN);
@@ -47,10 +49,10 @@ public class DungeonTreetho extends DungeonBase{
 		end = new Coord(origin);
 		start.add(new Coord(-9, 8, -9));
 		end.add(new Coord(9, 8, 9));
-		editor.fillRectSolid(rand, start, end, birchSlab, true, true);
+		RectSolid.fill(editor, rand, start, end, birchSlab);
 		start.add(Cardinal.UP);
 		end.add(Cardinal.UP);
-		editor.fillRectSolid(rand, start, end, pumpkin, true, true);
+		RectSolid.fill(editor, rand, start, end, pumpkin, true, true);
 		
 		cursor = new Coord(origin);
 		cursor.add(new Coord(0, 8, 0));
@@ -89,7 +91,7 @@ public class DungeonTreetho extends DungeonBase{
 		start.add(Cardinal.reverse(dir), 7);
 		end.add(dir, 7);
 		
-		editor.fillRectSolid(rand, start, end, slab, true, true);
+		RectSolid.fill(editor, rand, start, end, slab, true, true);
 		
 		cursor = new Coord(origin);
 		
@@ -129,7 +131,7 @@ public class DungeonTreetho extends DungeonBase{
 			start.add(Cardinal.left(dir), 9);
 			end.add(Cardinal.right(dir), 9);
 			
-			editor.fillRectSolid(rand, start, end, fill, true, true);
+			RectSolid.fill(editor, rand, start, end, fill, true, true);
 			
 			Coord cursor = new Coord(origin);
 			cursor.add(Cardinal.DOWN);

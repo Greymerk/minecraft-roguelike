@@ -15,6 +15,8 @@ import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.blocks.BlockType;
+import greymerk.roguelike.worldgen.shapes.RectHollow;
+import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 public class DungeonTunnel implements Iterable<Coord>{
 
@@ -27,7 +29,7 @@ public class DungeonTunnel implements Iterable<Coord>{
 	public DungeonTunnel(IWorldEditor editor, Coord start, Coord end, Cardinal dir){
 		this.start = start;
 		this.end = end;
-		this.tunnel = editor.getRectSolid(start, end);
+		this.tunnel = new RectSolid(start, end).get();
 		this.dir = dir;
 		this.segments = new ArrayList<ISegment>();
 	}
@@ -54,7 +56,7 @@ public class DungeonTunnel implements Iterable<Coord>{
 		e.add(Cardinal.SOUTH);
 		e.add(Cardinal.WEST);
 		e.add(Cardinal.UP, 2);
-		editor.fillRectSolid(rand, s, e, air, true, true);
+		RectSolid.fill(editor, rand, s, e, air);
 		
 		s.add(Cardinal.NORTH);
 		s.add(Cardinal.EAST);
@@ -62,7 +64,7 @@ public class DungeonTunnel implements Iterable<Coord>{
 		e.add(Cardinal.SOUTH);
 		e.add(Cardinal.WEST);
 		e.add(Cardinal.UP);
-		editor.fillRectHollow(rand, s, e, wallBlocks, false, true);
+		RectHollow.fill(editor, rand, s, e, wallBlocks, false, true);
 		
 		s = new Coord(this.start);
 		s.add(Cardinal.NORTH);
@@ -72,8 +74,8 @@ public class DungeonTunnel implements Iterable<Coord>{
 		e.add(Cardinal.SOUTH);
 		e.add(Cardinal.WEST);
 		e.add(Cardinal.DOWN);
-		editor.fillRectSolid(rand, s, e, floor, false, true);
-		editor.fillRectSolid(rand, s, e, bridgeBlocks, true, false);
+		RectSolid.fill(editor, rand, s, e, floor, false, true);
+		RectSolid.fill(editor, rand, s, e, bridgeBlocks, true, false);
 		
 		// end of the tunnel;
 		Coord location = new Coord(end);
@@ -87,7 +89,7 @@ public class DungeonTunnel implements Iterable<Coord>{
 		end.add(orth[1], 2);
 		end.add(Cardinal.DOWN, 2);
 		
-		editor.fillRectSolid(rand, start, end, wallBlocks, false, true);
+		RectSolid.fill(editor, rand, start, end, wallBlocks, false, true);
 		
 	}
 	

@@ -11,12 +11,14 @@ import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.IStair;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.MetaStair;
 import greymerk.roguelike.worldgen.Spawner;
-import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.StairType;
+import greymerk.roguelike.worldgen.shapes.RectHollow;
+import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 public class DungeonPyramidTomb extends DungeonBase{
 
@@ -42,7 +44,7 @@ public class DungeonPyramidTomb extends DungeonBase{
 		end.add(Cardinal.SOUTH, 6);
 		end.add(Cardinal.EAST, 6);
 		end.add(Cardinal.UP, 2);
-		editor.fillRectSolid(rand, start, end, air, true, true);
+		RectSolid.fill(editor, rand, start, end, air, true, true);
 		
 		start = new Coord(origin);
 		end = new Coord(origin);
@@ -53,7 +55,7 @@ public class DungeonPyramidTomb extends DungeonBase{
 		end.add(Cardinal.SOUTH, 4);
 		end.add(Cardinal.EAST, 4);
 		end.add(Cardinal.UP);
-		editor.fillRectSolid(rand, start, end, air, true, true);
+		RectSolid.fill(editor, rand, start, end, air, true, true);
 		
 		start = new Coord(origin);
 		end = new Coord(origin);
@@ -64,7 +66,7 @@ public class DungeonPyramidTomb extends DungeonBase{
 		end.add(Cardinal.SOUTH, 3);
 		end.add(Cardinal.EAST, 3);
 		end.add(Cardinal.UP);
-		editor.fillRectSolid(rand, start, end, air, true, true);
+		RectSolid.fill(editor, rand, start, end, air, true, true);
 		
 		start = new Coord(origin);
 		end = new Coord(origin);
@@ -75,7 +77,7 @@ public class DungeonPyramidTomb extends DungeonBase{
 		end.add(Cardinal.SOUTH, 2);
 		end.add(Cardinal.EAST, 2);
 		end.add(Cardinal.UP);
-		editor.fillRectSolid(rand, start, end, air, true, true);
+		RectSolid.fill(editor, rand, start, end, air, true, true);
 		
 		// outer walls
 		start = new Coord(origin);
@@ -86,7 +88,7 @@ public class DungeonPyramidTomb extends DungeonBase{
 		end.add(Cardinal.EAST, 7);
 		start.add(Cardinal.DOWN);
 		end.add(Cardinal.UP, 3);
-		editor.fillRectHollow(rand, start, end, blocks, false, true);
+		RectHollow.fill(editor, rand, start, end, blocks, false, true);
 		
 		// floor
 		start = new Coord(origin);
@@ -96,7 +98,7 @@ public class DungeonPyramidTomb extends DungeonBase{
 		start.add(Cardinal.WEST, 6);
 		end.add(Cardinal.SOUTH, 6);
 		end.add(Cardinal.EAST, 6);
-		editor.fillRectSolid(rand, start, end, theme.getPrimaryFloor(), true, true);
+		RectSolid.fill(editor, rand, start, end, theme.getPrimaryFloor());
 		
 		// pillars
 		
@@ -113,7 +115,7 @@ public class DungeonPyramidTomb extends DungeonBase{
 			start.add(Cardinal.left(dir), 5);
 			end = new Coord(start);
 			end.add(Cardinal.UP, 3);
-			editor.fillRectSolid(rand, start, end, pillar, true, true);
+			RectSolid.fill(editor, rand, start, end, pillar, true, true);
 			
 			for(Cardinal o : Cardinal.orthogonal(dir)){
 				start = new Coord(origin);
@@ -121,12 +123,12 @@ public class DungeonPyramidTomb extends DungeonBase{
 				start.add(o);
 				end = new Coord(start);
 				end.add(Cardinal.UP, 3);
-				editor.fillRectSolid(rand, start, end, pillar, true, true);
+				RectSolid.fill(editor, rand, start, end, pillar, true, true);
 				
 				start.add(o, 2);
 				end = new Coord(start);
 				end.add(Cardinal.UP, 3);
-				editor.fillRectSolid(rand, start, end, pillar, true, true);
+				RectSolid.fill(editor, rand, start, end, pillar, true, true);
 			}
 		}
 		
@@ -138,7 +140,7 @@ public class DungeonPyramidTomb extends DungeonBase{
 		start.add(Cardinal.WEST);
 		end.add(Cardinal.SOUTH);
 		end.add(Cardinal.EAST);
-		editor.fillRectSolid(rand, start, end, blocks, true, true);
+		RectSolid.fill(editor, rand, start, end, blocks, true, true);
 		
 		sarcophagus(editor, rand, settings, entrances[0], origin);
 		
@@ -157,10 +159,10 @@ public class DungeonPyramidTomb extends DungeonBase{
 		Coord end = new Coord(origin);
 		start.add(Cardinal.left(dir), width / 2);
 		end.add(Cardinal.right(dir), width / 2);
-		editor.fillRectSolid(rand, start, end, air, true, true);
+		RectSolid.fill(editor, rand, start, end, air, true, true);
 		start.add(Cardinal.UP);
 		end.add(Cardinal.UP);
-		editor.fillRectSolid(rand, start, end, theme.getPrimaryWall(), true, true);
+		RectSolid.fill(editor, rand, start, end, theme.getPrimaryWall(), true, true);
 		
 		for (Cardinal o : Cardinal.orthogonal(dir)){
 			for (int i = 0; i <= width / 2; ++i){

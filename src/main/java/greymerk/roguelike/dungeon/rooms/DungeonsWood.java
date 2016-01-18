@@ -10,18 +10,17 @@ import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.treasure.Treasure;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
-import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.IWorldEditor;
+import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.Cake;
 import greymerk.roguelike.worldgen.blocks.Log;
 import greymerk.roguelike.worldgen.blocks.Wood;
+import greymerk.roguelike.worldgen.shapes.RectHollow;
+import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 public class DungeonsWood extends DungeonBase {
 	
-
-
-
 	@Override
 	public boolean generate(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
 		
@@ -40,14 +39,14 @@ public class DungeonsWood extends DungeonBase {
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		
 		
-		editor.fillRectSolid(rand, new Coord(x - WIDTH, y, z - LENGTH), new Coord(x + WIDTH, y + HEIGHT, z + LENGTH), air);
-		editor.fillRectHollow(rand, new Coord(x - WIDTH - 1, y - 1, z - LENGTH - 1), new Coord(x + WIDTH + 1, y + HEIGHT + 1, z + LENGTH + 1), planks, false, true);
+		RectSolid.fill(editor, rand, new Coord(x - WIDTH, y, z - LENGTH), new Coord(x + WIDTH, y + HEIGHT, z + LENGTH), air);
+		RectHollow.fill(editor, rand, new Coord(x - WIDTH - 1, y - 1, z - LENGTH - 1), new Coord(x + WIDTH + 1, y + HEIGHT + 1, z + LENGTH + 1), planks, false, true);
 		
 		// log beams
-		editor.fillRectSolid(rand, new Coord(x - WIDTH, y, z - LENGTH), new Coord(x - WIDTH, y + HEIGHT, z - LENGTH), pillar, true, true);
-		editor.fillRectSolid(rand, new Coord(x - WIDTH, y, z + LENGTH), new Coord(x - WIDTH, y + HEIGHT, z + LENGTH), pillar, true, true);
-		editor.fillRectSolid(rand, new Coord(x + WIDTH, y, z - LENGTH), new Coord(x + WIDTH, y + HEIGHT, z - LENGTH), pillar, true, true);
-		editor.fillRectSolid(rand, new Coord(x + WIDTH, y, z + LENGTH), new Coord(x + WIDTH, y + HEIGHT, z + LENGTH), pillar, true, true);
+		RectSolid.fill(editor, rand, new Coord(x - WIDTH, y, z - LENGTH), new Coord(x - WIDTH, y + HEIGHT, z - LENGTH), pillar);
+		RectSolid.fill(editor, rand, new Coord(x - WIDTH, y, z + LENGTH), new Coord(x - WIDTH, y + HEIGHT, z + LENGTH), pillar);
+		RectSolid.fill(editor, rand, new Coord(x + WIDTH, y, z - LENGTH), new Coord(x + WIDTH, y + HEIGHT, z - LENGTH), pillar);
+		RectSolid.fill(editor, rand, new Coord(x + WIDTH, y, z + LENGTH), new Coord(x + WIDTH, y + HEIGHT, z + LENGTH), pillar);
 
 		// glowstone
 		glowstone.setBlock(editor, new Coord(x - WIDTH + 1, y - 1, z - LENGTH + 1));
@@ -55,7 +54,7 @@ public class DungeonsWood extends DungeonBase {
 		glowstone.setBlock(editor, new Coord(x + WIDTH - 1, y - 1, z - LENGTH + 1));
 		glowstone.setBlock(editor, new Coord(x + WIDTH - 1, y - 1, z + LENGTH - 1));
 		
-		editor.setBlock(rand, new Coord(x, y, z), planks, true, true);
+		planks.setBlock(editor, rand, new Coord(x, y, z));
 		Cake.get().setBlock(editor, new Coord(x, y + 1, z));
 		
 		List<Coord> space = new ArrayList<Coord>();

@@ -7,12 +7,14 @@ import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.IStair;
-import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.IWorldEditor;
+import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.ColorBlock;
 import greymerk.roguelike.worldgen.blocks.Door;
 import greymerk.roguelike.worldgen.blocks.DyeColor;
+import greymerk.roguelike.worldgen.shapes.RectHollow;
+import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 public class WitchTower implements ITower {
 
@@ -42,7 +44,7 @@ public class WitchTower implements ITower {
 		end.add(Cardinal.EAST, 3);
 		end.add(Cardinal.UP, 3);
 		
-		editor.fillRectHollow(rand, start, end, blocks, true, true);
+		RectHollow.fill(editor, rand, start, end, blocks);
 		
 		for (Cardinal dir : Cardinal.directions){
 			
@@ -55,7 +57,7 @@ public class WitchTower implements ITower {
 			end = new Coord(start);
 			end.add(Cardinal.UP, 3);
 			
-			editor.fillRectSolid(rand, start, end, pillar, true, true);
+			RectSolid.fill(editor, rand, start, end, pillar);
 			
 			for (Cardinal o : orth){
 				start = new Coord(main);
@@ -65,7 +67,7 @@ public class WitchTower implements ITower {
 				end = new Coord(start);
 				end.add(Cardinal.UP, 3);
 				
-				editor.fillRectSolid(rand, start, end, pillar, true, true);
+				RectSolid.fill(editor, rand, start, end, pillar);
 				cursor = new Coord(end);
 				cursor.add(dir);
 				stair.setOrientation(dir, true).setBlock(editor, cursor);
@@ -91,7 +93,7 @@ public class WitchTower implements ITower {
 		end.add(Cardinal.EAST, 4);
 		end.add(Cardinal.UP, 6);
 		
-		editor.fillRectHollow(rand, start, end, blocks, true, true);
+		RectHollow.fill(editor, rand, start, end, blocks);
 		
 		for (Cardinal dir : Cardinal.directions){
 			
@@ -104,7 +106,7 @@ public class WitchTower implements ITower {
 			start.add(orth[0]);
 			end.add(orth[1]);
 			end.add(Cardinal.UP);
-			editor.fillRectSolid(rand, start, end, glass, true, true);
+			RectSolid.fill(editor, rand, start, end, glass);
 			
 			start = new Coord(secondFloor);
 			start.add(dir, 4);
@@ -112,7 +114,7 @@ public class WitchTower implements ITower {
 			start.add(orth[0], 4);
 			end = new Coord(start);
 			end.add(Cardinal.UP, 4);
-			editor.fillRectSolid(rand, start, end, air, true, true);
+			RectSolid.fill(editor, rand, start, end, air);
 			
 			for (Cardinal o : orth){
 				
@@ -122,7 +124,7 @@ public class WitchTower implements ITower {
 				start.add(o, 3);
 				end = new Coord(start);
 				end.add(Cardinal.UP, 3);
-				editor.fillRectSolid(rand, start, end, pillar, true, true);
+				RectSolid.fill(editor, rand, start, end, pillar);
 				
 				start = new Coord(secondFloor);
 				start.add(Cardinal.DOWN);
@@ -130,7 +132,7 @@ public class WitchTower implements ITower {
 				start.add(o, 2);
 				end = new Coord(start);
 				end.add(Cardinal.UP, 4);
-				editor.fillRectSolid(rand, start, end, pillar, true, true);
+				RectSolid.fill(editor, rand, start, end, pillar);
 				
 				cursor = new Coord(end);
 				cursor.add(dir);
@@ -157,7 +159,7 @@ public class WitchTower implements ITower {
 		end.add(Cardinal.EAST, 3);
 		end.add(Cardinal.UP, 4);
 		
-		editor.fillRectHollow(rand, start, end, blocks, true, true);
+		RectHollow.fill(editor, rand, start, end, blocks);
 		
 		for (Cardinal dir : Cardinal.directions){
 			
@@ -173,7 +175,7 @@ public class WitchTower implements ITower {
 			end = new Coord(start);
 			end.add(dir, 4);
 			end.add(Cardinal.DOWN);
-			editor.fillRectSolid(rand, start, end, blocks, true, true);
+			RectSolid.fill(editor, rand, start, end, blocks);
 			
 			start = new Coord(thirdFloor);
 			start.add(dir, 5);
@@ -182,7 +184,7 @@ public class WitchTower implements ITower {
 			start.add(orth[0]);
 			end.add(orth[1]);
 			end.add(Cardinal.DOWN);
-			editor.fillRectSolid(rand, start, end, blocks, true, true);
+			RectSolid.fill(editor, rand, start, end, blocks);
 			
 			start = new Coord(thirdFloor);
 			start.add(dir, 3);
@@ -190,7 +192,7 @@ public class WitchTower implements ITower {
 			start.add(Cardinal.DOWN, 2);
 			end = new Coord(start);
 			end.add(Cardinal.UP, 5);
-			editor.fillRectSolid(rand, start, end, pillar, true, true);
+			RectSolid.fill(editor, rand, start, end, pillar);
 			
 			cursor = new Coord(end);
 			cursor.add(dir);
@@ -209,7 +211,7 @@ public class WitchTower implements ITower {
 				end = new Coord(start);
 				end.add(o);
 				end.add(Cardinal.DOWN);
-				editor.fillRectSolid(rand, start, end, air, true, true);
+				RectSolid.fill(editor, rand, start, end, air);
 				
 				for(int i = 0; i < 4; ++i){
 					start = new Coord(thirdFloor);
@@ -219,7 +221,7 @@ public class WitchTower implements ITower {
 					end = new Coord(start);
 					end.add(dir, 2);
 					stair.setOrientation(o, false);
-					editor.fillRectSolid(rand, start, end, stair, true, true);
+					RectSolid.fill(editor, rand, start, end, stair);
 					
 					if (i < 3){
 						start = new Coord(thirdFloor);
@@ -228,7 +230,7 @@ public class WitchTower implements ITower {
 						start.add(Cardinal.DOWN, i + 1);
 						end = new Coord(start);
 						end.add(dir, 2);
-						editor.fillRectSolid(rand, start, end, blocks, true, true);
+						RectSolid.fill(editor, rand, start, end, blocks);
 					}
 					
 					start = new Coord(thirdFloor);
@@ -237,7 +239,7 @@ public class WitchTower implements ITower {
 					start.add(Cardinal.DOWN, 3);
 					end = new Coord(start);
 					end.add(dir, 2);
-					editor.fillRectSolid(rand, start, end, blocks, true, true);
+					RectSolid.fill(editor, rand, start, end, blocks);
 					
 					cursor = new Coord(thirdFloor);
 					cursor.add(dir, 6);
@@ -268,7 +270,7 @@ public class WitchTower implements ITower {
 		end.add(Cardinal.EAST, 2);
 		end.add(Cardinal.UP, 3);
 		
-		editor.fillRectHollow(rand, start, end, blocks, true, true);
+		RectHollow.fill(editor, rand, start, end, blocks);
 		
 		start = new Coord(attic);
 		start.add(Cardinal.UP, 4);
@@ -277,13 +279,13 @@ public class WitchTower implements ITower {
 		start.add(Cardinal.WEST);
 		end.add(Cardinal.SOUTH);
 		end.add(Cardinal.EAST);
-		editor.fillRectHollow(rand, start, end, blocks, true, true);
+		RectHollow.fill(editor, rand, start, end, blocks);
 		
 		start = new Coord(attic);
 		start.add(Cardinal.UP, 5);
 		end = new Coord(start);
 		end.add(Cardinal.UP, 2);
-		editor.fillRectHollow(rand, start, end, blocks, true, true);
+		RectHollow.fill(editor, rand, start, end, blocks);
 		
 		for (Cardinal dir : Cardinal.directions){
 			
@@ -302,7 +304,7 @@ public class WitchTower implements ITower {
 			start.add(orth[0], 3);
 			end.add(orth[1], 3);
 			
-			editor.fillRectSolid(rand, start, end, stair, true, true);
+			RectSolid.fill(editor, rand, start, end, stair);
 			
 			start = new Coord(attic);
 			start.add(dir, 4);
@@ -311,7 +313,7 @@ public class WitchTower implements ITower {
 			start.add(orth[0], 4);
 			end.add(orth[1], 4);
 			
-			editor.fillRectSolid(rand, start, end, stair, true, true);
+			RectSolid.fill(editor, rand, start, end, stair);
 			
 			start = new Coord(attic);
 			start.add(dir, 3);
@@ -320,7 +322,7 @@ public class WitchTower implements ITower {
 			start.add(orth[0], 3);
 			end.add(orth[1], 3);
 			
-			editor.fillRectSolid(rand, start, end, stair, true, true);
+			RectSolid.fill(editor, rand, start, end, stair);
 			
 			start = new Coord(attic);
 			start.add(dir, 2);
@@ -329,7 +331,7 @@ public class WitchTower implements ITower {
 			start.add(orth[0], 2);
 			end.add(orth[1], 2);
 			
-			editor.fillRectSolid(rand, start, end, stair, true, true);
+			RectSolid.fill(editor, rand, start, end, stair);
 			
 		}
 		
@@ -345,7 +347,7 @@ public class WitchTower implements ITower {
 				end = new Coord(start);
 				end.add(Cardinal.UP);
 				end.add(dir, 3);
-				editor.fillRectSolid(rand, start, end, air, true, true);
+				RectSolid.fill(editor, rand, start, end, air);
 				
 				cursor = new Coord(main);
 				cursor.add(dir, 4);
@@ -396,14 +398,14 @@ public class WitchTower implements ITower {
 		start.add(orth[0]);
 		end.add(orth[1]);
 		end = new Coord(end.getX(), 60, end.getZ());
-		editor.fillRectSolid(rand, start, end, blocks, true, true);
+		RectSolid.fill(editor, rand, start, end, blocks);
 		
 		start = new Coord(origin);
 		end = new Coord(origin);
 		start.add(orth[0]);
 		end.add(orth[1]);
 		stair.setOrientation(dir, false);
-		editor.fillRectSolid(rand, start, end, stair, true, true);
+		RectSolid.fill(editor, rand, start, end, stair);
 		
 		origin.add(Cardinal.DOWN);
 		origin.add(dir);

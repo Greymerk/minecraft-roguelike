@@ -115,13 +115,13 @@ public class BunkerTower implements ITower{
 				start.add(Cardinal.UP, 3);
 				end = new Coord(start);
 				end.add(Cardinal.reverse(o));
-				stair.fillRectSolid(editor, rand, start, end, true, true);
+				RectSolid.fill(editor, rand, start, end, stair);
 				start.add(Cardinal.DOWN);
 				start.add(dir);
 				start.add(o);
 				end = new Coord(start);
 				end.add(Cardinal.reverse(o), 2);
-				stair.fillRectSolid(editor, rand, start, end, true, true);
+				RectSolid.fill(editor, rand, start, end, stair);
 			}
 		}
 		
@@ -147,24 +147,22 @@ public class BunkerTower implements ITower{
 		}
 		
 		for(Cardinal dir : Cardinal.directions){
-			Cardinal[] orth = Cardinal.orthogonal(dir);
 			cursor = new Coord(origin);
 			cursor.add(Cardinal.UP, 4);
 			cursor.add(dir, 5);
 			start = new Coord(cursor);
 			end = new Coord(start);
-			start.add(orth[0], 5);
-			end.add(orth[1], 5);
-			stair.setOrientation(dir, false).fillRectSolid(editor, rand, start, end, true, true);
+			start.add(Cardinal.left(dir), 5);
+			end.add(Cardinal.right(dir), 5);
+			stair.setOrientation(dir, false).fill(editor, rand, new RectSolid(start, end));
 		}
 		
 		for(Cardinal dir : Cardinal.directions){
-			Cardinal[] orth = Cardinal.orthogonal(dir);
 			cursor = new Coord(origin);
 			cursor.add(Cardinal.UP, 5);
 			cursor.add(dir, 4);
 			stair.setOrientation(dir, false).setBlock(editor, cursor);
-			for(Cardinal o : orth){
+			for(Cardinal o : Cardinal.orthogonal(dir)){
 				Coord c = new Coord(cursor);
 				c.add(o);
 				pillar.setBlock(editor, rand, c);
@@ -175,7 +173,7 @@ public class BunkerTower implements ITower{
 			}
 			cursor.add(Cardinal.UP);
 			window.setBlock(editor, cursor);
-			for(Cardinal o : orth){
+			for(Cardinal o : Cardinal.orthogonal(dir)){
 				Coord c = new Coord(cursor);
 				c.add(o);
 				pillar.setBlock(editor, rand, c);
@@ -187,28 +185,28 @@ public class BunkerTower implements ITower{
 			cursor.add(Cardinal.UP);
 			start = new Coord(cursor);
 			end = new Coord(start);
-			start.add(orth[0], 3);
-			end.add(orth[1], 3);
-			stair.setOrientation(dir, false).fillRectSolid(editor, rand, start, end, true, true);
+			start.add(Cardinal.left(dir), 3);
+			end.add(Cardinal.right(dir), 3);
+			stair.setOrientation(dir, false).fill(editor, rand, new RectSolid(start, end));
 			start.add(Cardinal.reverse(dir));
 			end.add(Cardinal.reverse(dir));
-			stair.setOrientation(Cardinal.reverse(dir), true).fillRectSolid(editor, rand, start, end, true, true);
+			stair.setOrientation(Cardinal.reverse(dir), true).fill(editor, rand, new RectSolid(start, end));
 			start.add(Cardinal.UP);
 			end.add(Cardinal.UP);
-			start.add(orth[1]);
-			end.add(orth[0]);
-			stair.setOrientation(dir, false).fillRectSolid(editor, rand, start, end, true, true);
-			stair.setOrientation(orth[0], false).setBlock(editor, start);
-			stair.setOrientation(orth[1], false).setBlock(editor, end);
+			start.add(Cardinal.right(dir));
+			end.add(Cardinal.left(dir));
+			stair.setOrientation(dir, false).fill(editor, rand, new RectSolid(start, end));
+			stair.setOrientation(Cardinal.left(dir), false).setBlock(editor, start);
+			stair.setOrientation(Cardinal.right(dir), false).setBlock(editor, end);
 			start.add(Cardinal.reverse(dir));
 			end.add(Cardinal.reverse(dir));
 			start.add(Cardinal.UP);
 			end.add(Cardinal.UP);
-			start.add(orth[1]);
-			end.add(orth[0]);
-			stair.setOrientation(dir, false).fillRectSolid(editor, rand, start, end, true, true);
-			stair.setOrientation(orth[0], false).setBlock(editor, start);
-			stair.setOrientation(orth[1], false).setBlock(editor, end);
+			start.add(Cardinal.right(dir));
+			end.add(Cardinal.left(dir));
+			stair.setOrientation(dir, false).fill(editor, rand, new RectSolid(start, end));
+			stair.setOrientation(Cardinal.left(dir), false).setBlock(editor, start);
+			stair.setOrientation(Cardinal.right(dir), false).setBlock(editor, end);
 		}
 		
 		cursor = new Coord(origin);
@@ -219,7 +217,7 @@ public class BunkerTower implements ITower{
 		start.add(Cardinal.EAST, 2);
 		end.add(Cardinal.SOUTH, 2);
 		end.add(Cardinal.WEST, 2);
-		walls.fillRectSolid(editor, rand, start, end, true, true);
+		RectSolid.fill(editor, rand, start, end, walls);
 		cursor.add(Cardinal.UP);
 		start = new Coord(cursor);
 		end = new Coord(cursor);
@@ -227,7 +225,7 @@ public class BunkerTower implements ITower{
 		start.add(Cardinal.EAST);
 		end.add(Cardinal.SOUTH);
 		end.add(Cardinal.WEST);
-		walls.fillRectSolid(editor, rand, start, end, true, true);
+		RectSolid.fill(editor, rand, start, end, walls);
 		
 		for(Cardinal dir : Cardinal.directions){
 			Cardinal[] orth = Cardinal.orthogonal(dir);
@@ -237,7 +235,7 @@ public class BunkerTower implements ITower{
 			end = new Coord(start);
 			start.add(orth[0], 4);
 			end.add(orth[1], 4);
-			stair.setOrientation(Cardinal.reverse(dir), true).fillRectSolid(editor, rand, start, end, true, true);
+			stair.setOrientation(Cardinal.reverse(dir), true).fill(editor, rand, new RectSolid(start, end));
 		}
 
 		for(Cardinal dir : Cardinal.directions){
@@ -247,7 +245,7 @@ public class BunkerTower implements ITower{
 			start.add(orth[0], 4);
 			end = new Coord(start);
 			end.add(Cardinal.UP, 3);
-			pillar.fillRectSolid(editor, rand, start, end, true, true);
+			RectSolid.fill(editor, rand, start, end, pillar);
 		}
 		
 		for(Cardinal dir : Cardinal.directions){
@@ -258,7 +256,7 @@ public class BunkerTower implements ITower{
 			start.add(orth[0], 3);
 			end = new Coord(start);
 			end.add(Cardinal.UP, 2);
-			pillar.fillRectSolid(editor, rand, start, end, true, true);
+			RectSolid.fill(editor, rand, start, end, pillar);
 		}
 		
 		for(Cardinal dir : Cardinal.directions){
@@ -289,7 +287,7 @@ public class BunkerTower implements ITower{
 			end = new Coord(start);
 			end.add(Cardinal.UP);
 			end.add(dir, 3);
-			BlockType.get(BlockType.AIR).fillRectSolid(editor, rand, start, end, true, true);
+			RectSolid.fill(editor, rand, start, end, BlockType.get(BlockType.AIR));
 			
 			cursor = new Coord(start);
 			for(Cardinal o : orth){
@@ -298,18 +296,18 @@ public class BunkerTower implements ITower{
 				start.add(Cardinal.UP);
 				end = new Coord(start);
 				end.add(o);
-				stair.setOrientation(dir, false).fillRectSolid(editor, rand, start, end, true, true);
+				stair.setOrientation(dir, false).fill(editor, rand, new RectSolid(start, end));
 				start.add(Cardinal.UP);
 				end.add(Cardinal.UP);
-				window.fillRectSolid(editor, rand, start, end, true, true);
+				RectSolid.fill(editor, rand, start, end, window);
 				start.add(Cardinal.DOWN, 2);
 				end.add(Cardinal.DOWN, 2);
 				start.add(Cardinal.reverse(dir));
 				end.add(Cardinal.reverse(dir));
-				walls.fillRectSolid(editor, rand, start, end, true, true);
+				RectSolid.fill(editor, rand, start, end, walls);
 				start.add(Cardinal.reverse(dir));
 				end.add(Cardinal.reverse(dir));
-				stair.setOrientation(Cardinal.reverse(dir), false).fillRectSolid(editor, rand, start, end, true, true);
+				stair.setOrientation(Cardinal.reverse(dir), false).fill(editor, rand, new RectSolid(start, end));
 			}
 			
 			cursor = new Coord(origin);
@@ -329,7 +327,7 @@ public class BunkerTower implements ITower{
 		cursor.add(Cardinal.UP, 4);
 		start = new Coord(cursor.getX(), dungeon.getY(), cursor.getZ());
 		end = new Coord(cursor);
-		for(Coord c : editor.getRectSolid(start, end)){
+		for(Coord c : new RectSolid(start, end)){
 			editor.spiralStairStep(rand, c, stair, pillar);
 		}
 	}
