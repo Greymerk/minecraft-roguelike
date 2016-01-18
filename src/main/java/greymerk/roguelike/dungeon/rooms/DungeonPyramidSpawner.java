@@ -13,10 +13,12 @@ import greymerk.roguelike.treasure.Treasure;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.Spawner;
-import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
+import greymerk.roguelike.worldgen.shapes.RectHollow;
+import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 public class DungeonPyramidSpawner extends DungeonBase {
 	
@@ -33,15 +35,15 @@ public class DungeonPyramidSpawner extends DungeonBase {
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		
 		// fill air inside
-		editor.fillRectSolid(rand, new Coord(x - 3, y, z - 3), new Coord(x + 3, y + 3, z + 3), air, true, true);
+		RectSolid.fill(editor, rand, new Coord(x - 3, y, z - 3), new Coord(x + 3, y + 3, z + 3), air);
 		
 		
 		// shell
-		editor.fillRectHollow(rand, new Coord(x - 4, y - 1, z - 4), new Coord(x + 4, y + 4, z + 4), blocks, false, true);
-		editor.fillRectSolid(rand, new Coord(x - 3, y + 4, z - 3), new Coord(x + 3, y + 6, z + 3), blocks, false, true);
-		editor.fillRectSolid(rand, new Coord(x - 2, y + 4, z - 2), new Coord(x + 2, y + 4, z + 2), air, true, true);
+		RectHollow.fill(editor, rand, new Coord(x - 4, y - 1, z - 4), new Coord(x + 4, y + 4, z + 4), blocks, false, true);
+		RectSolid.fill(editor, rand, new Coord(x - 3, y + 4, z - 3), new Coord(x + 3, y + 6, z + 3), blocks, false, true);
+		RectSolid.fill(editor, rand, new Coord(x - 2, y + 4, z - 2), new Coord(x + 2, y + 4, z + 2), air);
 
-		editor.fillRectSolid(rand, new Coord(x - 4, y - 1, z - 4), new Coord(x + 4, y - 1, z + 4), theme.getPrimaryFloor(), false, true);
+		RectSolid.fill(editor, rand, new Coord(x - 4, y - 1, z - 4), new Coord(x + 4, y - 1, z + 4), theme.getPrimaryFloor(), false, true);
 		
 		Coord start;
 		Coord end;
@@ -51,7 +53,7 @@ public class DungeonPyramidSpawner extends DungeonBase {
 		cursor.add(Cardinal.UP, 5);
 		air.setBlock(editor, cursor);
 		cursor.add(Cardinal.UP, 1);
-		editor.setBlock(rand, cursor, blocks, true, true);
+		blocks.setBlock(editor, rand, cursor);
 		
 		cursor = new Coord(x, y, z);
 		cursor.add(Cardinal.UP, 5);
@@ -71,9 +73,9 @@ public class DungeonPyramidSpawner extends DungeonBase {
 			start = new Coord(cursor);
 			cursor.add(Cardinal.UP, 3);
 			end = new Coord(cursor);
-			editor.fillRectSolid(rand, start, end, pillar, true, true);
+			RectSolid.fill(editor, rand, start, end, pillar);
 			cursor.add(Cardinal.UP, 1);
-			editor.setBlock(rand, cursor, blocks, true, true);
+			blocks.setBlock(editor, rand, cursor);
 			
 			cursor = new Coord(x, y, z);
 			cursor.add(Cardinal.UP, 4);

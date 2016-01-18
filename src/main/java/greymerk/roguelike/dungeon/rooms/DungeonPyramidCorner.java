@@ -8,9 +8,11 @@ import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
-import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.IWorldEditor;
+import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.blocks.BlockType;
+import greymerk.roguelike.worldgen.shapes.RectHollow;
+import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 public class DungeonPyramidCorner extends DungeonBase {
 
@@ -26,12 +28,12 @@ public class DungeonPyramidCorner extends DungeonBase {
 		IBlockFactory pillar = theme.getPrimaryPillar();
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		
-		editor.fillRectHollow(rand, new Coord(x - 3, y - 1, z - 3), new Coord(x + 3, y + 3, z + 3), blocks, false, true);
-		editor.fillRectSolid(rand, new Coord(x - 2, y + 3, z - 2), new Coord(x + 2, y + 5, z + 2), blocks, false, true);
-		editor.fillRectSolid(rand, new Coord(x - 1, y + 3, z - 1), new Coord(x + 1, y + 3, z + 1), air, true, true);
+		RectHollow.fill(editor, rand, new Coord(x - 3, y - 1, z - 3), new Coord(x + 3, y + 3, z + 3), blocks, false, true);
+		RectSolid.fill(editor, rand, new Coord(x - 2, y + 3, z - 2), new Coord(x + 2, y + 5, z + 2), blocks, false, true);
+		RectSolid.fill(editor, rand, new Coord(x - 1, y + 3, z - 1), new Coord(x + 1, y + 3, z + 1), air, true, true);
 		
 		// floor
-		editor.fillRectSolid(rand, new Coord(x - 3, y - 1, z - 3), new Coord(x + 3, y - 1, z + 3), theme.getPrimaryFloor(), false, true);
+		RectSolid.fill(editor, rand, new Coord(x - 3, y - 1, z - 3), new Coord(x + 3, y - 1, z + 3), theme.getPrimaryFloor(), false, true);
 		
 		Coord start;
 		Coord end;
@@ -58,7 +60,7 @@ public class DungeonPyramidCorner extends DungeonBase {
 			start = new Coord(cursor);
 			cursor.add(Cardinal.UP, 2);
 			end = new Coord(cursor);
-			editor.fillRectSolid(rand, start, end, pillar, true, true);
+			RectSolid.fill(editor, rand, start, end, pillar, true, true);
 		}
 		
 		return true;

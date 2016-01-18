@@ -39,29 +39,29 @@ public class BlockCheckers extends BlockBase {
 		if (x % 2 == 0) {
 			if(z % 2 == 0){
 				if(y % 2 == 0){
-					return editor.setBlock(rand, new Coord(x, y, z), fillOne, fillAir, replaceSolid);
+					return fillOne.setBlock(editor, rand, new Coord(origin), fillAir, replaceSolid);
 				} else {
-					return editor.setBlock(rand, new Coord(x, y, z), fillTwo, fillAir, replaceSolid);
+					return fillTwo.setBlock(editor, rand, new Coord(origin), fillAir, replaceSolid);
 				}
 			} else {
 				if(y % 2 == 0){
-					return editor.setBlock(rand, new Coord(x, y, z), fillTwo, fillAir, replaceSolid);
+					return fillTwo.setBlock(editor, rand, new Coord(origin), fillAir, replaceSolid);
 				} else {
-					return editor.setBlock(rand, new Coord(x, y, z), fillOne, fillAir, replaceSolid);
+					return fillOne.setBlock(editor, rand, new Coord(origin), fillAir, replaceSolid);
 				}
 			}
 		} else {
 			if(z % 2 == 0){
 				if(y % 2 == 0){
-					return editor.setBlock(rand, new Coord(x, y, z), fillTwo, fillAir, replaceSolid);
+					return fillTwo.setBlock(editor, rand, new Coord(origin), fillAir, replaceSolid);
 				} else {
-					return editor.setBlock(rand, new Coord(x, y, z), fillOne, fillAir, replaceSolid);
+					return fillOne.setBlock(editor, rand, new Coord(origin), fillAir, replaceSolid);
 				}
 			} else {
 				if(y % 2 == 0){
-					return editor.setBlock(rand, new Coord(x, y, z), fillOne, fillAir, replaceSolid);
+					return fillOne.setBlock(editor, rand, new Coord(origin), fillAir, replaceSolid);
 				} else {
-					return editor.setBlock(rand, new Coord(x, y, z), fillTwo, fillAir, replaceSolid);
+					return fillTwo.setBlock(editor, rand, new Coord(origin), fillAir, replaceSolid);
 				}
 			}
 		}

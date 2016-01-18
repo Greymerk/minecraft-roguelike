@@ -12,9 +12,9 @@ import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.IStair;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.MetaStair;
-import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.BrewingStand;
 import greymerk.roguelike.worldgen.blocks.ColorBlock;
@@ -24,6 +24,8 @@ import greymerk.roguelike.worldgen.blocks.FlowerPot;
 import greymerk.roguelike.worldgen.blocks.Slab;
 import greymerk.roguelike.worldgen.blocks.StairType;
 import greymerk.roguelike.worldgen.redstone.Torch;
+import greymerk.roguelike.worldgen.shapes.RectHollow;
+import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 public class DungeonLab extends DungeonBase {
 
@@ -40,20 +42,20 @@ public class DungeonLab extends DungeonBase {
 		
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		// Air
-		editor.fillRectSolid(rand, new Coord(x - 7, y, z - 7), new Coord(x + 7, y + 3, z + 7), air, true, true);
+		air.fill(editor, rand, new RectSolid(new Coord(x - 7, y, z - 7), new Coord(x + 7, y + 3, z + 7)));
 
 		IBlockFactory roof = theme.getSecondaryWall();
 		// Wood upper Roof
-		editor.fillRectSolid(rand, new Coord(x - 6, y + 5, z - 6), new Coord(x + 6, y + 5, z + 6), roof, true, true);
-		editor.fillRectSolid(rand, new Coord(x - 1, y + 4, z - 1), new Coord(x + 1, y + 4, z + 1), air, true, true);
-		editor.fillRectSolid(rand, new Coord(x - 5, y + 4, z - 1), new Coord(x - 3, y + 4, z + 1), air, true, true);
-		editor.fillRectSolid(rand, new Coord(x + 3, y + 4, z - 1), new Coord(x + 5, y + 4, z + 1), air, true, true);
-		editor.fillRectSolid(rand, new Coord(x - 1, y + 4, z - 5), new Coord(x + 1, y + 4, z - 3), air, true, true);
-		editor.fillRectSolid(rand, new Coord(x - 1, y + 4, z + 3), new Coord(x + 1, y + 4, z + 5), air, true, true);
+		RectSolid.fill(editor, rand, new Coord(x - 6, y + 5, z - 6), new Coord(x + 6, y + 5, z + 6), roof);
+		RectSolid.fill(editor, rand, new Coord(x - 1, y + 4, z - 1), new Coord(x + 1, y + 4, z + 1), air);
+		RectSolid.fill(editor, rand, new Coord(x - 5, y + 4, z - 1), new Coord(x - 3, y + 4, z + 1), air);
+		RectSolid.fill(editor, rand, new Coord(x + 3, y + 4, z - 1), new Coord(x + 5, y + 4, z + 1), air);
+		RectSolid.fill(editor, rand, new Coord(x - 1, y + 4, z - 5), new Coord(x + 1, y + 4, z - 3), air);
+		RectSolid.fill(editor, rand, new Coord(x - 1, y + 4, z + 3), new Coord(x + 1, y + 4, z + 5), air);
 		
 		// shell
-		editor.fillRectHollow(rand, new Coord(x - 8, y - 1, z - 8), new Coord(x + 8, y + 4, z + 8), blocks, false, true);
-		editor.fillRectSolid(rand, new Coord(x - 8, y - 1, z - 8), new Coord(x + 8, y - 1, z + 8), theme.getPrimaryFloor(), false, true);
+		RectHollow.fill(editor, rand, new Coord(x - 8, y - 1, z - 8), new Coord(x + 8, y + 4, z + 8), blocks, false, true);
+		RectSolid.fill(editor, rand, new Coord(x - 8, y - 1, z - 8), new Coord(x + 8, y - 1, z + 8), theme.getPrimaryFloor(), false, true);
 		
 		
 		// corner rooms
@@ -63,23 +65,22 @@ public class DungeonLab extends DungeonBase {
 		northEast(editor, rand, theme, x + 2, y, z - 7);
 		
 		// outer walls
-		editor.fillRectSolid(rand, new Coord(x - 8, y, z - 7), new Coord(x - 8, y + 3, z - 7), blocks, true, true);
-		editor.fillRectSolid(rand, new Coord(x + 8, y, z - 7), new Coord(x + 8, y + 3, z - 7), blocks, true, true);
-		editor.fillRectSolid(rand, new Coord(x + 8, y, z - 7), new Coord(x + 8, y + 3, z - 7), blocks, true, true);
+		RectSolid.fill(editor, rand, new Coord(x - 8, y, z - 7), new Coord(x - 8, y + 3, z - 7), blocks);
+		RectSolid.fill(editor, rand, new Coord(x + 8, y, z - 7), new Coord(x + 8, y + 3, z - 7), blocks);
+		RectSolid.fill(editor, rand, new Coord(x + 8, y, z - 7), new Coord(x + 8, y + 3, z - 7), blocks);
 		
 		IBlockFactory backWalls = theme.getSecondaryWall();
 		
 		// wall planks
-		editor.fillRectSolid(rand, new Coord(x - 8, y + 1, z - 6), new Coord(x - 8, y + 3, z - 3), backWalls, true, true);
-		editor.fillRectSolid(rand, new Coord(x - 8, y + 1, z + 3), new Coord(x - 8, y + 3, z + 6), backWalls, true, true);
-		editor.fillRectSolid(rand, new Coord(x + 8, y + 1, z - 6), new Coord(x + 8, y + 3, z - 3), backWalls, true, true);
-		editor.fillRectSolid(rand, new Coord(x + 8, y + 1, z + 3), new Coord(x + 8, y + 3, z + 6), backWalls, true, true);
+		RectSolid.fill(editor, rand, new Coord(x - 8, y + 1, z - 6), new Coord(x - 8, y + 3, z - 3), backWalls);
+		RectSolid.fill(editor, rand, new Coord(x - 8, y + 1, z + 3), new Coord(x - 8, y + 3, z + 6), backWalls);
+		RectSolid.fill(editor, rand, new Coord(x + 8, y + 1, z - 6), new Coord(x + 8, y + 3, z - 3), backWalls);
+		RectSolid.fill(editor, rand, new Coord(x + 8, y + 1, z + 3), new Coord(x + 8, y + 3, z + 6), backWalls);
 		
-		editor.fillRectSolid(rand, new Coord(x - 6, y + 1, z - 8), new Coord(x - 3, y + 3, z - 8), backWalls, true, true);
-		editor.fillRectSolid(rand, new Coord(x + 3, y + 1, z - 8), new Coord(x + 6, y + 3, z - 8), backWalls, true, true);
-		editor.fillRectSolid(rand, new Coord(x - 6, y + 1, z + 8), new Coord(x - 3, y + 3, z + 8), backWalls, true, true);
-		editor.fillRectSolid(rand, new Coord(x + 3, y + 1, z + 8), new Coord(x + 6, y + 3, z + 8), backWalls, true, true);
-		
+		RectSolid.fill(editor, rand, new Coord(x - 6, y + 1, z - 8), new Coord(x - 3, y + 3, z - 8), backWalls);
+		RectSolid.fill(editor, rand, new Coord(x + 3, y + 1, z - 8), new Coord(x + 6, y + 3, z - 8), backWalls);
+		RectSolid.fill(editor, rand, new Coord(x - 6, y + 1, z + 8), new Coord(x - 3, y + 3, z + 8), backWalls);
+		RectSolid.fill(editor, rand, new Coord(x + 3, y + 1, z + 8), new Coord(x + 6, y + 3, z + 8), backWalls);
 		
 		return false;
 	}
@@ -98,24 +99,24 @@ public class DungeonLab extends DungeonBase {
 		pillar(editor, rand, theme, x + 5, y, z + 5);
 		
 		// tile floor
-		editor.fillRectSolid( rand, new Coord(x, y - 1, z), new Coord(x + 5, y - 1, z + 5), cyan, true, true);
-		editor.fillRectSolid( rand, new Coord(x + 1, y - 1, z + 2), new Coord(x + 4, y - 1, z + 3), doubleSlab, true, true);
-		editor.fillRectSolid( rand, new Coord(x + 2, y - 1, z + 1), new Coord(x + 3, y - 1, z + 4), doubleSlab, true, true);
+		RectSolid.fill(editor, rand, new Coord(x, y - 1, z), new Coord(x + 5, y - 1, z + 5), cyan);
+		RectSolid.fill(editor, rand, new Coord(x + 1, y - 1, z + 2), new Coord(x + 4, y - 1, z + 3), doubleSlab);
+		RectSolid.fill(editor, rand, new Coord(x + 2, y - 1, z + 1), new Coord(x + 3, y - 1, z + 4), doubleSlab);
 		
 		// ceiling dome
-		editor.fillRectSolid( rand, new Coord(x + 2, y + 4, z + 2), new Coord(x + 3, y + 8, z + 3), air, true, true);
-		editor.setBlock(new Coord(x + 3, y + 4, z + 1), air);
-		editor.setBlock(new Coord(x + 4, y + 4, z + 1), air);
-		editor.setBlock(new Coord(x + 3, y + 4, z + 4), air);
-		editor.setBlock(new Coord(x + 4, y + 4, z + 4), air);
+		RectSolid.fill(editor, rand, new Coord(x + 2, y + 4, z + 2), new Coord(x + 3, y + 8, z + 3), air);
+		air.setBlock(editor, new Coord(x + 3, y + 4, z + 1));
+		air.setBlock(editor, new Coord(x + 4, y + 4, z + 1));
+		air.setBlock(editor, new Coord(x + 3, y + 4, z + 4));
+		air.setBlock(editor, new Coord(x + 4, y + 4, z + 4));
 		
-		editor.setBlock(new Coord(x + 1, y + 4, z + 3), air);
-		editor.setBlock(new Coord(x + 1, y + 4, z + 4), air);
-		editor.setBlock(new Coord(x + 4, y + 4, z + 3), air);
-		editor.setBlock(new Coord(x + 4, y + 4, z + 4), air);
+		air.setBlock(editor, new Coord(x + 1, y + 4, z + 3));
+		air.setBlock(editor, new Coord(x + 1, y + 4, z + 4));
+		air.setBlock(editor, new Coord(x + 4, y + 4, z + 3));
+		air.setBlock(editor, new Coord(x + 4, y + 4, z + 4));
 		
-		editor.fillRectHollow(rand, new Coord(x + 1, y + 4, z + 1), new Coord(x + 4, y + 8, z + 4), cobble, false, true);
-		editor.fillRectSolid( rand, new Coord(x + 2, y + 8, z + 2), new Coord(x + 3, y + 8, z + 3), air, true, true);
+		RectHollow.fill(editor, rand, new Coord(x + 1, y + 4, z + 1), new Coord(x + 4, y + 8, z + 4), cobble, false, true);
+		RectSolid.fill(editor, rand, new Coord(x + 2, y + 8, z + 2), new Coord(x + 3, y + 8, z + 3), air);
 	}
 	
 	
@@ -125,9 +126,9 @@ public class DungeonLab extends DungeonBase {
 		
 		IStair stair = theme.getSecondaryStair();
 		stair.setOrientation(Cardinal.NORTH, true);
-		editor.fillRectSolid(rand, new Coord(x + 1, y, z + 5), new Coord(x + 4, y, z + 5), stair, true, true);
+		RectSolid.fill(editor, rand, new Coord(x + 1, y, z + 5), new Coord(x + 4, y, z + 5), stair);
 		stair.setOrientation(Cardinal.EAST, true);
-		editor.fillRectSolid(rand, new Coord(x, y, z + 1), new Coord(x, y, z + 4), stair, true, true);
+		RectSolid.fill(editor, rand, new Coord(x, y, z + 1), new Coord(x, y, z + 4), stair);
 		
 		if(RogueConfig.getBoolean(RogueConfig.GENEROUS)){
 			editor.setBlock(new Coord(x + 1, y + 1, z + 5), BrewingStand.get());
@@ -146,25 +147,25 @@ public class DungeonLab extends DungeonBase {
 		
 		corner(editor, rand, theme, x, y, z);
 		
-		editor.fillRectSolid(rand, new Coord(x + 1, y, z + 5), new Coord(x + 4, y, z + 5), stone, true, true);
+		RectSolid.fill(editor, rand, new Coord(x + 1, y, z + 5), new Coord(x + 4, y, z + 5), stone);
 		editor.setBlock(new Coord(x + 1, y + 1, z + 5), stair.setOrientation(Cardinal.WEST, false));
 		editor.setBlock(new Coord(x + 2, y + 1, z + 5), water);
 		editor.setBlock(new Coord(x + 2, y + 2, z + 5), slab);
 		editor.setBlock(new Coord(x + 3, y + 1, z + 5), stair.setOrientation(Cardinal.EAST, false));
 		
-		editor.fillRectSolid(rand, new Coord(x + 5, y, z + 1), new Coord(x + 5, y, z + 4), stone, true, true);
+		RectSolid.fill(editor, rand, new Coord(x + 5, y, z + 1), new Coord(x + 5, y, z + 4), stone);
 		editor.setBlock(new Coord(x + 5, y + 1, z + 1), stair.setOrientation(Cardinal.NORTH, false));
 		editor.setBlock(new Coord(x + 5, y + 1, z + 2), water);
 		editor.setBlock(new Coord(x + 5, y + 2, z + 2), slab);
 		editor.setBlock(new Coord(x + 5, y + 1, z + 3), stair.setOrientation(Cardinal.SOUTH, false));
 		
-		editor.fillRectSolid(rand, new Coord(x + 3, y, z + 3), new Coord(x + 4, y, z + 4), stone, true, true);
+		RectSolid.fill(editor, rand, new Coord(x + 3, y, z + 3), new Coord(x + 4, y, z + 4), stone);
 		Torch.generate(editor, Torch.WOODEN, Cardinal.UP, new Coord(x + 3, y + 1, z + 3));
 		
-		editor.setBlock(rand, new Coord(x + 4, y, z + 1), stair.setOrientation(Cardinal.NORTH, false), true, true);
-		editor.setBlock(rand, new Coord(x + 3, y, z + 2), stair.setOrientation(Cardinal.WEST, false), true, true);
-		editor.setBlock(rand, new Coord(x + 2, y, z + 3), stair.setOrientation(Cardinal.NORTH, false), true, true);
-		editor.setBlock(rand, new Coord(x + 1, y, z + 4), stair.setOrientation(Cardinal.WEST, false), true, true);
+		stair.setOrientation(Cardinal.NORTH, false).setBlock(editor, new Coord(x + 4, y, z + 1));
+		stair.setOrientation(Cardinal.WEST, false).setBlock(editor, new Coord(x + 3, y, z + 2));
+		stair.setOrientation(Cardinal.NORTH, false).setBlock(editor, new Coord(x + 2, y, z + 3));
+		stair.setOrientation(Cardinal.WEST, false).setBlock(editor, new Coord(x + 1, y, z + 4));
 		
 		
 	}
@@ -200,8 +201,8 @@ public class DungeonLab extends DungeonBase {
 		editor.setBlock(new Coord(x + 1, y, z + 1), stone);
 		
 		IStair stair = new MetaStair(StairType.STONEBRICK);
-		editor.fillRectSolid(rand, new Coord(x + 2, y, z + 1), new Coord(x + 4, y, z + 1), stair.setOrientation(Cardinal.SOUTH, false), true, true);
-		editor.fillRectSolid(rand, new Coord(x + 1, y, z + 2), new Coord(x + 1, y, z + 4), stair.setOrientation(Cardinal.EAST, false), true, true);
+		stair.setOrientation(Cardinal.SOUTH, false).fill(editor, rand, new RectSolid(new Coord(x + 2, y, z + 1), new Coord(x + 4, y, z + 1)));
+		stair.setOrientation(Cardinal.EAST, false).fill(editor, rand, new RectSolid(new Coord(x + 1, y, z + 2), new Coord(x + 1, y, z + 4)));
 		
 		editor.setBlock(new Coord(x + 2, y - 1, z + 2), redstone);
 		editor.setBlock(new Coord(x + 3, y - 1, z + 2), lamp);
@@ -239,8 +240,8 @@ public class DungeonLab extends DungeonBase {
 		
 		IStair stair = new MetaStair(StairType.STONEBRICK);
 		
-		editor.fillRectSolid(rand, new Coord(x + 1, y, z + 1), new Coord(x + 3, y, z + 1), stair.setOrientation(Cardinal.SOUTH, false), true, true);
-		editor.fillRectSolid(rand, new Coord(x + 4, y, z + 2), new Coord(x + 4, y, z + 4), stair.setOrientation(Cardinal.WEST, false), true, true);
+		stair.setOrientation(Cardinal.SOUTH, false).fill(editor, rand, new RectSolid(new Coord(x + 1, y, z + 1), new Coord(x + 3, y, z + 1)));
+		stair.setOrientation(Cardinal.WEST, false).fill(editor, rand, new RectSolid(new Coord(x + 4, y, z + 2), new Coord(x + 4, y, z + 4)));
 		
 		editor.setBlock(new Coord(x + 3, y - 1, z + 2), redstone);
 		editor.setBlock(new Coord(x + 2, y - 1, z + 2), lamp);
@@ -251,8 +252,8 @@ public class DungeonLab extends DungeonBase {
 	
 	private static void pillar(IWorldEditor editor, Random rand, ITheme theme, int x, int y, int z){
 		
-		editor.fillRectSolid(rand, new Coord(x, y, z), new Coord(x, y + 2, z), theme.getSecondaryPillar(), true, true);
-		editor.setBlock(rand, new Coord(x, y + 3, z), theme.getPrimaryWall(), true, true);
+		theme.getSecondaryPillar().fill(editor, rand, new RectSolid(new Coord(x, y, z), new Coord(x, y + 2, z)));
+		theme.getPrimaryWall().setBlock(editor, rand, new Coord(x, y + 3, z));
 		IStair stair = theme.getSecondaryStair();
 		stair.setOrientation(Cardinal.EAST, true).setBlock(editor, new Coord(x + 1, y + 3, z));
 		stair.setOrientation(Cardinal.WEST, true).setBlock(editor, new Coord(x - 1, y + 3, z));

@@ -9,13 +9,14 @@ import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.IStair;
-import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.IWorldEditor;
+import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.Leaves;
 import greymerk.roguelike.worldgen.blocks.Log;
 import greymerk.roguelike.worldgen.blocks.Vine;
 import greymerk.roguelike.worldgen.blocks.Wood;
+import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 
 public class JungleTower implements ITower{
@@ -73,7 +74,7 @@ public class JungleTower implements ITower{
 			start.add(Cardinal.left(dir), 2);
 			end = new Coord(start);
 			end.add(Cardinal.UP, 3);
-			pillar.fillRectSolid(editor, rand, start, end, true, true);
+			pillar.fill(editor, rand, new RectSolid(start, end));
 			cursor = new Coord(end);
 			for(Cardinal d : new Cardinal[]{Cardinal.reverse(dir), Cardinal.right(dir)}){
 				Coord c = new Coord(cursor);
@@ -94,7 +95,7 @@ public class JungleTower implements ITower{
 				start.add(Cardinal.DOWN);
 				end = new Coord(start);
 				end.add(Cardinal.DOWN, 2);
-				walls.fillRectSolid(editor, rand, start, end, true, true);
+				walls.fill(editor, rand, new RectSolid(start, end));
 				end.add(Cardinal.DOWN);
 				stair.setOrientation(d, true).setBlock(editor, end);
 			}
@@ -109,16 +110,16 @@ public class JungleTower implements ITower{
 			end = new Coord(cursor);
 			start.add(Cardinal.left(dir), 5);
 			end.add(Cardinal.right(dir), 5);
-			walls.fillRectSolid(editor, rand, start, end, true, true);
+			walls.fill(editor, rand, new RectSolid(start, end));
 			start.add(Cardinal.UP);
 			end.add(Cardinal.UP);
-			grass.fillRectSolid(editor, rand, start, end, true, true);
+			grass.fill(editor, rand, new RectSolid(start, end));
 			start.add(Cardinal.reverse(dir));
 			end.add(Cardinal.reverse(dir));
-			walls.fillRectSolid(editor, rand, start, end, true, true);
+			walls.fill(editor, rand, new RectSolid(start, end));
 			start.add(Cardinal.reverse(dir));
 			end.add(Cardinal.reverse(dir));
-			stair.setOrientation(Cardinal.reverse(dir), true).fillRectSolid(editor, rand, start, end, true, true);
+			stair.setOrientation(Cardinal.reverse(dir), true).fill(editor, rand, new RectSolid(start, end));
 			
 			cursor = new Coord(origin);
 			cursor.add(Cardinal.UP, 4);
@@ -135,11 +136,11 @@ public class JungleTower implements ITower{
 			start.add(dir, 2);
 			end = new Coord(start);
 			end.add(dir, 3);
-			walls.fillRectSolid(editor, rand, start, end, true, true);
+			walls.fill(editor, rand, new RectSolid(start, end));
 			end.add(Cardinal.left(dir), 3);
 			start = new Coord(end);
 			start.add(Cardinal.reverse(dir), 10);
-			walls.fillRectSolid(editor, rand, start, end, true, true);
+			walls.fill(editor, rand, new RectSolid(start, end));
 			
 			start = new Coord(origin);
 			start.add(Cardinal.UP, 6);
@@ -148,7 +149,7 @@ public class JungleTower implements ITower{
 			end = new Coord(start);
 			end.add(Cardinal.right(dir), 8);
 			end.add(dir, 3);
-			walls.fillRectSolid(editor, rand, start, end, true, true);
+			walls.fill(editor, rand, new RectSolid(start, end));
 			
 			start = new Coord(origin);
 			start.add(Cardinal.UP, 4);
@@ -157,7 +158,7 @@ public class JungleTower implements ITower{
 			start.add(Cardinal.left(dir), 2);
 			end.add(Cardinal.right(dir));
 			end.add(Cardinal.UP, 2);
-			walls.fillRectSolid(editor, rand, start, end, true, true);
+			walls.fill(editor, rand, new RectSolid(start, end));
 			
 			start = new Coord(origin);
 			start.add(Cardinal.UP, 4);
@@ -165,7 +166,7 @@ public class JungleTower implements ITower{
 			end = new Coord(start);
 			start.add(Cardinal.left(dir), 3);
 			end.add(Cardinal.right(dir), 2);
-			stair.setOrientation(dir, true).fillRectSolid(editor, rand, start, end, true, true);
+			stair.setOrientation(dir, true).fill(editor, rand, new RectSolid(start, end));
 		}
 		
 		// level 2 grass patches
@@ -178,10 +179,10 @@ public class JungleTower implements ITower{
 				end = new Coord(start);
 				end.add(o);
 				end.add(dir);
-				grass.fillRectSolid(editor, rand, start, end, true, true);
+				grass.fill(editor, rand, new RectSolid(start, end));
 				start.add(o, 3);
 				end.add(o, 3);
-				grass.fillRectSolid(editor, rand, start, end, true, true);
+				grass.fill(editor, rand, new RectSolid(start, end));
 			}
 		}
 
@@ -222,7 +223,7 @@ public class JungleTower implements ITower{
 			start = new Coord(cursor);
 			end = new Coord(start);
 			end.add(Cardinal.DOWN, 3);
-			pillar.fillRectSolid(editor, rand, start, end, true, true);
+			pillar.fill(editor, rand, new RectSolid(start, end));
 			for(Cardinal d : new Cardinal[]{Cardinal.right(dir), Cardinal.reverse(dir)}){
 				Coord c = new Coord(cursor);
 				c.add(d);
@@ -249,7 +250,7 @@ public class JungleTower implements ITower{
 			end = new Coord(start);
 			start.add(Cardinal.left(dir), 5);
 			end.add(Cardinal.right(dir), 4);
-			walls.fillRectSolid(editor, rand, start, end, true, true);
+			walls.fill(editor, rand, new RectSolid(start, end));
 			
 			start = new Coord(origin);
 			start.add(Cardinal.UP, 11);
@@ -258,7 +259,7 @@ public class JungleTower implements ITower{
 			start.add(Cardinal.left(dir));
 			end.add(Cardinal.right(dir), 4);
 			end.add(dir, 2);
-			walls.fillRectSolid(editor, rand, start, end, true, true);
+			walls.fill(editor, rand, new RectSolid(start, end));
 			
 			cursor = new Coord(origin);
 			cursor.add(Cardinal.UP, 11);
@@ -267,7 +268,7 @@ public class JungleTower implements ITower{
 			end = new Coord(start);
 			start.add(Cardinal.left(dir), 4);
 			end.add(Cardinal.right(dir), 4);
-			grass.fillRectSolid(editor, rand, start, end, true, true);
+			grass.fill(editor, rand, new RectSolid(start, end));
 			
 			cursor = new Coord(origin);
 			cursor.add(Cardinal.UP, 12);
@@ -277,7 +278,7 @@ public class JungleTower implements ITower{
 			end.add(dir);
 			start.add(Cardinal.left(dir));
 			end.add(Cardinal.right(dir), 4);
-			grass.fillRectSolid(editor, rand, start, end, true, true);
+			grass.fill(editor, rand, new RectSolid(start, end));
 		}
 		
 		for(Cardinal dir : Cardinal.directions){
@@ -288,7 +289,7 @@ public class JungleTower implements ITower{
 			end = new Coord(cursor);
 			start.add(Cardinal.left(dir), 4);
 			end.add(Cardinal.right(dir), 4);
-			walls.fillRectSolid(editor, rand, start, end, true, true);
+			walls.fill(editor, rand, new RectSolid(start, end));
 			
 			cursor = new Coord(origin);
 			cursor.add(Cardinal.UP, 11);
@@ -318,7 +319,7 @@ public class JungleTower implements ITower{
 			end = new Coord(start);
 			start.add(Cardinal.left(dir));
 			end.add(Cardinal.right(dir), 2);
-			walls.fillRectSolid(editor, rand, start, end, true, true);
+			walls.fill(editor, rand, new RectSolid(start, end));
 			
 			cursor = new Coord(origin);
 			cursor.add(Cardinal.UP, 17);
@@ -327,7 +328,7 @@ public class JungleTower implements ITower{
 			end = new Coord(cursor);
 			start.add(Cardinal.left(dir));
 			end.add(Cardinal.right(dir));
-			grass.fillRectSolid(editor, rand, start, end, true, true);
+			grass.fill(editor, rand, new RectSolid(start, end));
 			cursor.add(Cardinal.left(dir), 2);
 			walls.setBlock(editor, rand, cursor);
 			
@@ -338,10 +339,10 @@ public class JungleTower implements ITower{
 			start.add(Cardinal.left(dir));
 			end.add(Cardinal.reverse(dir));
 			end.add(Cardinal.right(dir));
-			walls.fillRectSolid(editor, rand, start, end, true, true);
+			walls.fill(editor, rand, new RectSolid(start, end));
 			start.add(Cardinal.UP);
 			end.add(Cardinal.UP);
-			grass.fillRectSolid(editor, rand, start, end, true, true);
+			grass.fill(editor, rand, new RectSolid(start, end));
 		}
 		
 		start = new Coord(origin);
@@ -350,13 +351,13 @@ public class JungleTower implements ITower{
 		end = new Coord(origin.getX(), dungeon.getY() + 10, origin.getZ());
 		end.add(Cardinal.SOUTH, 2);
 		end.add(Cardinal.WEST, 2);
-		walls.fillRectSolid(editor, rand, start, end, false, true);
+		walls.fill(editor, rand, new RectSolid(start, end), false, true);
 		
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.UP, 12);
 		start = new Coord(cursor.getX(), dungeon.getY(), cursor.getZ());
 		end = new Coord(cursor);
-		for(Coord c : editor.getRectSolid(start, end)){
+		for(Coord c : new RectSolid(start, end)){
 			editor.spiralStairStep(rand, c, stair, pillar);
 		}
 		
@@ -427,7 +428,7 @@ public class JungleTower implements ITower{
 			end.add(Cardinal.reverse(dir));
 			start.add(Cardinal.left(dir));
 			end.add(Cardinal.right(dir));
-			spots.addAll(editor.getRectSolid(start, end));
+			spots.addAll(new RectSolid(start, end).get());
 		}
 		
 		for(Coord c : spots){

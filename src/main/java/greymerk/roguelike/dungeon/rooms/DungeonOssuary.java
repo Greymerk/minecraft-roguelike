@@ -13,6 +13,8 @@ import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.Skull;
+import greymerk.roguelike.worldgen.shapes.RectHollow;
+import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 public class DungeonOssuary extends DungeonBase {
 
@@ -35,7 +37,7 @@ public class DungeonOssuary extends DungeonBase {
 		end.add(Cardinal.SOUTH, 8);
 		end.add(Cardinal.WEST, 8);
 		end.add(Cardinal.UP, 6);
-		editor.fillRectHollow(rand, start, end, walls, false, true);
+		RectHollow.fill(editor, rand, start, end, walls, false, true);
 		
 		// entrance arches
 		for(Cardinal dir : Cardinal.directions){
@@ -47,7 +49,7 @@ public class DungeonOssuary extends DungeonBase {
 				end = new Coord(start);
 				end.add(Cardinal.UP, 5);
 				end.add(Cardinal.reverse(dir));
-				editor.fillRectSolid(rand, start, end, walls);
+				RectSolid.fill(editor, rand, start, end, walls);
 				
 				start = new Coord(cursor);
 				start.add(o, 2);
@@ -55,19 +57,19 @@ public class DungeonOssuary extends DungeonBase {
 				start.add(Cardinal.reverse(dir), 2);
 				end = new Coord(start);
 				end.add(Cardinal.UP, 3);
-				editor.fillRectSolid(rand, start, end, walls);
+				RectSolid.fill(editor, rand, start, end, walls);
 				stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, start);
 				
 				start.add(Cardinal.reverse(dir));
 				start.add(Cardinal.UP);
 				end.add(Cardinal.reverse(dir));
-				editor.fillRectSolid(rand, start, end, walls);
+				RectSolid.fill(editor, rand, start, end, walls);
 				stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, start);
 				
 				start.add(Cardinal.reverse(dir));
 				start.add(Cardinal.UP);
 				end.add(Cardinal.reverse(dir));
-				editor.fillRectSolid(rand, start, end, walls);
+				RectSolid.fill(editor, rand, start, end, walls);
 				stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, start);
 				
 				start = new Coord(cursor);
@@ -76,15 +78,15 @@ public class DungeonOssuary extends DungeonBase {
 				start.add(Cardinal.left(dir));
 				end.add(Cardinal.right(dir));
 				end.add(Cardinal.UP, 3);
-				editor.fillRectSolid(rand, start, end, walls);
+				RectSolid.fill(editor, rand, start, end, walls);
 				start.add(Cardinal.UP);
 				start.add(Cardinal.reverse(dir));
 				end.add(Cardinal.reverse(dir));
-				editor.fillRectSolid(rand, start, end, walls);
+				RectSolid.fill(editor, rand, start, end, walls);
 				start.add(Cardinal.UP);
 				start.add(Cardinal.reverse(dir));
 				end.add(Cardinal.reverse(dir));
-				editor.fillRectSolid(rand, start, end, walls);
+				RectSolid.fill(editor, rand, start, end, walls);
 				
 				Coord c = new Coord(cursor);
 				c.add(o);
@@ -118,7 +120,7 @@ public class DungeonOssuary extends DungeonBase {
 			end = new Coord(cursor);
 			end.add(Cardinal.SOUTH);
 			end.add(Cardinal.WEST);
-			editor.fillRectSolid(rand, start, end, walls);
+			RectSolid.fill(editor, rand, start, end, walls);
 			air.setBlock(editor, cursor);
 			for(Cardinal d : Cardinal.directions){
 				Coord c = new Coord(cursor);
@@ -136,7 +138,7 @@ public class DungeonOssuary extends DungeonBase {
 			end.add(dir);
 			end.add(Cardinal.left(dir));
 			end.add(Cardinal.UP, 6);
-			editor.fillRectSolid(rand, start, end, walls);
+			RectSolid.fill(editor, rand, start, end, walls);
 		}
 		
 		// central ceiling
@@ -148,10 +150,10 @@ public class DungeonOssuary extends DungeonBase {
 		end = new Coord(cursor);
 		end.add(Cardinal.SOUTH, 2);
 		end.add(Cardinal.WEST, 2);
-		editor.fillRectSolid(rand, start, end, walls);
+		RectSolid.fill(editor, rand, start, end, walls);
 		start.add(Cardinal.DOWN);
 		end.add(Cardinal.DOWN);
-		air.fillRectSolid(editor, rand, start, end, true, true);
+		RectSolid.fill(editor, rand, start, end, air);
 		air.setBlock(editor, cursor);
 		for(Cardinal d : Cardinal.directions){
 			Coord c = new Coord(cursor);
@@ -185,7 +187,7 @@ public class DungeonOssuary extends DungeonBase {
 			end = new Coord(cursor);
 			end.add(Cardinal.SOUTH);
 			end.add(Cardinal.WEST);
-			editor.fillRectSolid(rand, start, end, walls);
+			RectSolid.fill(editor, rand, start, end, walls);
 			air.setBlock(editor, cursor);
 			for(Cardinal d : Cardinal.directions){
 				Coord c = new Coord(cursor);
@@ -212,16 +214,16 @@ public class DungeonOssuary extends DungeonBase {
 				start.add(d, 3);
 				end = new Coord(start);
 				end.add(Cardinal.UP, 4);
-				walls.fillRectSolid(editor, rand, start, end, true, true);
+				RectSolid.fill(editor, rand, start, end, walls);
 				start = new Coord(end);
 				start.add(Cardinal.orthogonal(d)[0]);
 				end.add(Cardinal.orthogonal(d)[1]);
 				end.add(Cardinal.UP, 2);
-				walls.fillRectSolid(editor, rand, start, end, true, true);
+				RectSolid.fill(editor, rand, start, end, walls);
 				start.add(Cardinal.reverse(d));
 				end.add(Cardinal.reverse(d));
 				start.add(Cardinal.UP);
-				walls.fillRectSolid(editor, rand, start, end, true, true);
+				RectSolid.fill(editor, rand, start, end, walls);
 
 				for(Cardinal o : Cardinal.orthogonal(d)){
 					cursor = new Coord(origin);
