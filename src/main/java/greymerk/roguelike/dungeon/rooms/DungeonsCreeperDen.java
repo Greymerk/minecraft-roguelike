@@ -74,7 +74,7 @@ public class DungeonsCreeperDen extends DungeonBase {
 				Treasure.generate(editor, rand, spot, Treasure.ORE, settings.getDifficulty(spot), true);
 				Coord cursor = new Coord(spot);
 				cursor.add(Cardinal.DOWN, 2);
-				tnt.setBlock(editor, cursor);
+				tnt.set(editor, cursor);
 				++counter;
 			}
 			

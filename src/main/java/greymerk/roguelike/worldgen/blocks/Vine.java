@@ -24,7 +24,7 @@ public class Vine {
 			Coord c = new Coord(origin);
 			c.add(dir);
 			if(editor.canPlace(vine, c, dir)){
-				setOrientation(vine, dir).setBlock(editor, c);
+				setOrientation(vine, dir).set(editor, c);
 				return;
 			}
 		}

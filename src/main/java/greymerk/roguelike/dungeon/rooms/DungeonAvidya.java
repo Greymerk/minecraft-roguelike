@@ -164,10 +164,10 @@ public class DungeonAvidya extends DungeonBase {
 				pillarTop(editor, rand, cursor2);
 				cursor2.add(Cardinal.reverse(dir), 1);
 				cursor2.add(Cardinal.UP, 1);
-				quartz.setBlock(editor, cursor2);
+				quartz.set(editor, cursor2);
 				cursor2.add(Cardinal.reverse(dir), 1);
 				cursor2.add(Cardinal.UP, 1);
-				whiteClay.setBlock(editor, cursor2);
+				whiteClay.set(editor, cursor2);
 				cursor.add(Cardinal.reverse(dir), 1);
 				cursor.add(Cardinal.UP, 1);
 				pillarTop(editor, rand, cursor);
@@ -189,69 +189,69 @@ public class DungeonAvidya extends DungeonBase {
 				cursor.add(Cardinal.DOWN, 1);
 				IStair step = new MetaStair(StairType.STONEBRICK);
 				step.setOrientation(Cardinal.reverse(dir), false);
-				step.setBlock(editor, cursor);
+				step.set(editor, cursor);
 				
 				cursor.add(orth, 1);
-				step.setBlock(editor, cursor);
+				step.set(editor, cursor);
 				
 				cursor.add(orth, 1);
-				step.setBlock(editor, cursor);
+				step.set(editor, cursor);
 				
 				step.setOrientation(Cardinal.reverse(orth), false);
 				cursor.add(orth, 1);
-				step.setBlock(editor, cursor);
+				step.set(editor, cursor);
 				
 				cursor.add(Cardinal.reverse(dir), 1);
-				step.setBlock(editor, cursor);
+				step.set(editor, cursor);
 				
 				step.setOrientation(Cardinal.reverse(dir), false);
 				cursor.add(orth, 1);
-				step.setBlock(editor, cursor);
+				step.set(editor, cursor);
 				
 				step.setOrientation(Cardinal.reverse(orth), false);
 				cursor.add(orth, 1);
-				step.setBlock(editor, cursor);
+				step.set(editor, cursor);
 				
 				cursor.add(Cardinal.reverse(dir), 1);
-				step.setBlock(editor, cursor);
+				step.set(editor, cursor);
 				
 				// perimeter decor
 				cursor = new Coord(x, y, z);
 				cursor.add(Cardinal.DOWN, 1);
 				cursor.add(dir, 8);
 				cursor.add(orth, 3);
-				editor.setBlock(cursor, BlockType.get(BlockType.GRASS));
+				BlockType.get(BlockType.GRASS).set(editor, cursor);
 				MetaBlock leaves = Leaves.get(Leaves.OAK, false);
 				
-				editor.setBlock(cursor, leaves);
+				leaves.set(editor, cursor);
 				cursor.add(orth, 1);
-				editor.setBlock(cursor, BlockType.get(BlockType.GRASS));
-				editor.setBlock(cursor, leaves);
+				BlockType.get(BlockType.GRASS).set(editor, cursor);
+				leaves.set(editor, cursor);
 				cursor.add(orth, 1);
-				editor.setBlock(cursor, BlockType.get(BlockType.GRASS));
-				editor.setBlock(cursor, leaves);
+				BlockType.get(BlockType.GRASS).set(editor, cursor);
+				leaves.set(editor, cursor);
 				cursor.add(Cardinal.reverse(dir), 1);
-				editor.setBlock(cursor, BlockType.get(BlockType.COBBLESTONE));
+				BlockType.get(BlockType.COBBLESTONE).set(editor, cursor);
 				cursor.add(Cardinal.reverse(orth), 1);
-				glowstone.setBlock(editor, cursor);
+				glowstone.set(editor, cursor);
 				cursor.add(orth, 2);
-				air.setBlock(editor, cursor);
+				air.set(editor, cursor);
 				cursor.add(Cardinal.DOWN, 1);
-				glowstone.setBlock(editor, cursor);
+				glowstone.set(editor, cursor);
 				cursor.add(Cardinal.UP, 1);
 				cursor.add(Cardinal.reverse(dir), 1);
-				editor.setBlock(cursor, BlockType.get(BlockType.COBBLESTONE));
+				BlockType.get(BlockType.COBBLESTONE).set(editor, cursor);
 				cursor.add(dir, 1);
 				cursor.add(orth, 1);
-				editor.setBlock(cursor, BlockType.get(BlockType.COBBLESTONE));
+				BlockType.get(BlockType.COBBLESTONE).set(editor, cursor);
 				cursor.add(dir, 1);
-				editor.setBlock(cursor, BlockType.get(BlockType.COBBLESTONE));
+				BlockType.get(BlockType.COBBLESTONE).set(editor, cursor);
 				cursor.add(orth, 1);
-				editor.setBlock(cursor, BlockType.get(BlockType.COBBLESTONE));
+				BlockType.get(BlockType.COBBLESTONE).set(editor, cursor);
 				cursor.add(Cardinal.UP, 1);
-				editor.setBlock(cursor, BlockType.get(BlockType.COBBLESTONE));
+				BlockType.get(BlockType.COBBLESTONE).set(editor, cursor);
 				cursor.add(Cardinal.UP, 3);
-				editor.setBlock(cursor, BlockType.get(BlockType.WATER_FLOWING));
+				BlockType.get(BlockType.WATER_FLOWING).set(editor, cursor);
 			}
 		}
 		

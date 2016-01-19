@@ -47,13 +47,13 @@ public class SegmentChest extends SegmentBase {
 			cursor.add(dir, 2);
 			cursor.add(d, 1);
 			stair.setOrientation(Cardinal.reverse(dir), true);
-			stair.setBlock(editor, cursor);
+			stair.set(editor, cursor);
 			
 			cursor = new Coord(origin);
 			cursor.add(dir, 2);
 			cursor.add(d, 1);
 			stair.setOrientation(Cardinal.reverse(d), false);
-			stair.setBlock(editor, cursor);
+			stair.set(editor, cursor);
 		}
 	
 		cursor = new Coord(origin);
@@ -62,7 +62,7 @@ public class SegmentChest extends SegmentBase {
 		air.set(editor, rand, cursor);
 		cursor.add(Cardinal.UP, 1);
 		stair.setOrientation(Cardinal.reverse(dir), true);
-		stair.setBlock(editor, cursor);
+		stair.set(editor, cursor);
 		
 		Coord shelf = new Coord(origin);
 		shelf.add(dir, 3);
@@ -74,8 +74,8 @@ public class SegmentChest extends SegmentBase {
 		boolean trapped = Dungeon.getLevel(origin.getY()) == 3 && rand.nextInt(3) == 0;
 		Treasure.generate(editor, rand, shelf, Dungeon.getLevel(origin.getY()), trapped);
 		if(trapped){
-			editor.setBlock(new Coord(shelf.getX(), shelf.getY() - 2, shelf.getZ()), BlockType.get(BlockType.TNT));
-			if(rand.nextBoolean()) editor.setBlock(new Coord(shelf.getX(), shelf.getY() - 3, shelf.getZ()), BlockType.get(BlockType.TNT));
+			BlockType.get(BlockType.TNT).set(editor, new Coord(shelf.getX(), shelf.getY() - 2, shelf.getZ()));
+			if(rand.nextBoolean()) BlockType.get(BlockType.TNT).set(editor, new Coord(shelf.getX(), shelf.getY() - 3, shelf.getZ()));
 		}
 	}
 }

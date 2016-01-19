@@ -35,7 +35,7 @@ public class Furnace {
 		
 		furnace.withProperty(BlockFurnace.FACING, Cardinal.facing(dir));
 		
-		furnace.setBlock(editor, pos);
+		furnace.set(editor, pos);
 		
 		if(fuel == null) return;
 		

@@ -16,7 +16,7 @@ public class Dispenser {
 
 		MetaBlock container = new MetaBlock(Blocks.dispenser);
 		container.withProperty(BlockDispenser.FACING, Cardinal.facing(dir));
-		container.setBlock(editor, pos);
+		container.set(editor, pos);
 		return true;
 	}
 	

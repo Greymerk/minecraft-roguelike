@@ -45,13 +45,13 @@ public class SegmentBooks extends SegmentBase {
 			Coord c = new Coord(cursor);
 			c.add(d, 1);
 			stair.setOrientation(Cardinal.reverse(d), true);
-			stair.setBlock(editor, c);
+			stair.set(editor, c);
 		}
 		
 		cursor = new Coord(origin);
 		cursor.add(dir, 3);
-		editor.setBlock(cursor, BlockType.get(BlockType.SHELF));
+		BlockType.get(BlockType.SHELF).set(editor, cursor);
 		cursor.add(Cardinal.UP);
-		editor.setBlock(cursor, BlockType.get(BlockType.SHELF));
+		BlockType.get(BlockType.SHELF).set(editor, cursor);
 	}	
 }

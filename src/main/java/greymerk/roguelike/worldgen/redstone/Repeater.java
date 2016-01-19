@@ -20,7 +20,7 @@ public class Repeater {
 		MetaBlock repeater = powered ? new MetaBlock(Blocks.powered_repeater) : new MetaBlock(Blocks.unpowered_repeater);
 		repeater.withProperty(BlockRedstoneRepeater.FACING, Cardinal.facing(dir));
 		if (delay > 0 && delay <= 4) repeater.withProperty(BlockRedstoneRepeater.DELAY, delay);
-		repeater.setBlock(editor, pos);
+		repeater.set(editor, pos);
 	}
 	
 }

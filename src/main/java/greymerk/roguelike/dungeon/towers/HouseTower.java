@@ -131,33 +131,33 @@ public class HouseTower implements ITower {
 		// downstairs table
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.reverse(dir), 4);
-		stair.setOrientation(orth[1], true).setBlock(editor, cursor);
+		stair.setOrientation(orth[1], true).set(editor, cursor);
 		cursor.add(orth[0]);
-		slab.setBlock(editor, cursor);
+		slab.set(editor, cursor);
 		cursor.add(orth[0]);
-		stair.setOrientation(orth[0], true).setBlock(editor, cursor);
+		stair.setOrientation(orth[0], true).set(editor, cursor);
 		
 		cursor = new Coord(origin);
 		cursor.add(orth[0], 4);
 		cursor.add(Cardinal.reverse(dir));
-		stair.setOrientation(orth[1], true).setBlock(editor, cursor);
+		stair.setOrientation(orth[1], true).set(editor, cursor);
 		cursor.add(orth[0]);
-		slab.setBlock(editor, cursor);
+		slab.set(editor, cursor);
 		cursor.add(orth[0]);
-		stair.setOrientation(orth[0], true).setBlock(editor, cursor);
+		stair.setOrientation(orth[0], true).set(editor, cursor);
 		cursor.add(orth[1]);
 		cursor.add(Cardinal.UP);
-		Cake.get().setBlock(editor, cursor);
+		Cake.get().set(editor, cursor);
 		
 		cursor = new Coord(origin);
 		cursor.add(orth[0], 7);
 		cursor.add(Cardinal.reverse(dir));
-		slab.setBlock(editor, cursor);
+		slab.set(editor, cursor);
 		cursor.add(Cardinal.UP);
 		Torch.generate(editor, Torch.WOODEN, Cardinal.UP, cursor);
 		cursor.add(Cardinal.DOWN);
 		cursor.add(Cardinal.reverse(dir));
-		BlockType.get(BlockType.CRAFTING_TABLE).setBlock(editor, cursor);
+		BlockType.get(BlockType.CRAFTING_TABLE).set(editor, cursor);
 		cursor.add(Cardinal.reverse(dir));
 		Furnace.generate(editor, true, orth[1], cursor);
 		
@@ -165,9 +165,9 @@ public class HouseTower implements ITower {
 		cursor.add(Cardinal.UP, 4);
 		cursor.add(orth[1], 2);
 		cursor.add(Cardinal.reverse(dir), 3);
-		stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
+		stair.setOrientation(Cardinal.reverse(dir), true).set(editor, cursor);
 		cursor.add(Cardinal.reverse(dir));
-		stair.setOrientation(dir, true).setBlock(editor, cursor);
+		stair.setOrientation(dir, true).set(editor, cursor);
 		cursor.add(Cardinal.UP);
 		FlowerPot.generate(editor, rand, cursor);
 		cursor.add(dir);
@@ -177,18 +177,18 @@ public class HouseTower implements ITower {
 		cursor.add(Cardinal.UP, 4);
 		cursor.add(orth[0]);
 		cursor.add(Cardinal.reverse(dir), 5);
-		stair.setOrientation(orth[1], true).setBlock(editor, cursor);
+		stair.setOrientation(orth[1], true).set(editor, cursor);
 		cursor.add(orth[0]);
-		slab.setBlock(editor, cursor);
+		slab.set(editor, cursor);
 		cursor.add(orth[0]);
-		stair.setOrientation(orth[0], true).setBlock(editor, cursor);
+		stair.setOrientation(orth[0], true).set(editor, cursor);
 		
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.UP, 4);
 		cursor.add(orth[0], 8);
 		Treasure.generate(editor, rand, cursor, Treasure.STARTER, 0);
 		cursor.add(Cardinal.reverse(dir));
-		BlockType.get(BlockType.SHELF).setBlock(editor, cursor);
+		BlockType.get(BlockType.SHELF).set(editor, cursor);
 		cursor.add(Cardinal.UP);
 		FlowerPot.generate(editor, rand, cursor);
 		cursor.add(Cardinal.DOWN);
@@ -223,47 +223,47 @@ public class HouseTower implements ITower {
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.reverse(dir), 5);
 		cursor.add(Cardinal.UP);
-		pane.setBlock(editor, cursor);
+		pane.set(editor, cursor);
 		cursor.add(orth[0], 2);
-		pane.setBlock(editor, cursor);
+		pane.set(editor, cursor);
 		
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.UP);
 		cursor.add(orth[0], 8);
 		cursor.add(Cardinal.reverse(dir), 2);
-		pane.setBlock(editor, cursor);
+		pane.set(editor, cursor);
 		cursor.add(Cardinal.reverse(dir), 2);
-		pane.setBlock(editor, cursor);
+		pane.set(editor, cursor);
 		
 		// upstairs
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.UP, 5);
 		cursor.add(orth[0]);
 		cursor.add(dir, 3);
-		pane.setBlock(editor, cursor);
+		pane.set(editor, cursor);
 		cursor.add(orth[1], 2);
-		pane.setBlock(editor, cursor);
+		pane.set(editor, cursor);
 		cursor.add(Cardinal.reverse(dir), 2);
 		cursor.add(orth[1], 2);
-		pane.setBlock(editor, cursor);
+		pane.set(editor, cursor);
 		cursor.add(Cardinal.reverse(dir));
-		pane.setBlock(editor, cursor);
+		pane.set(editor, cursor);
 		cursor.add(Cardinal.reverse(dir), 3);
-		pane.setBlock(editor, cursor);
+		pane.set(editor, cursor);
 		cursor.add(Cardinal.reverse(dir));
-		pane.setBlock(editor, cursor);
+		pane.set(editor, cursor);
 		
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.UP, 5);
 		cursor.add(orth[0], 9);
 		cursor.add(Cardinal.reverse(dir));
-		pane.setBlock(editor, cursor);
+		pane.set(editor, cursor);
 		cursor.add(Cardinal.reverse(dir));
-		pane.setBlock(editor, cursor);
+		pane.set(editor, cursor);
 		cursor.add(Cardinal.reverse(dir), 2);
-		pane.setBlock(editor, cursor);
+		pane.set(editor, cursor);
 		cursor.add(Cardinal.reverse(dir));
-		pane.setBlock(editor, cursor);
+		pane.set(editor, cursor);
 		cursor.add(Cardinal.UP, 2);
 		cursor.add(dir);
 		start = new Coord(cursor);
@@ -325,17 +325,17 @@ public class HouseTower implements ITower {
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.reverse(dir), 3);
 		cursor.add(Cardinal.UP, 5);
-		stair.setOrientation(Cardinal.left(dir), true).setBlock(editor, cursor);
+		stair.setOrientation(Cardinal.left(dir), true).set(editor, cursor);
 		cursor.add(dir);
-		stair.setOrientation(Cardinal.left(dir), true).setBlock(editor, cursor);
+		stair.setOrientation(Cardinal.left(dir), true).set(editor, cursor);
 		cursor.add(Cardinal.DOWN);
 		cursor.add(Cardinal.left(dir));
 		cursor.add(dir);
-		stair.setOrientation(Cardinal.right(dir), true).setBlock(editor, cursor);
+		stair.setOrientation(Cardinal.right(dir), true).set(editor, cursor);
 		cursor.add(Cardinal.DOWN);
 		cursor.add(Cardinal.left(dir));
 		cursor.add(dir);
-		stair.setOrientation(Cardinal.right(dir), true).setBlock(editor, cursor);
+		stair.setOrientation(Cardinal.right(dir), true).set(editor, cursor);
 		
 		start.add(Cardinal.left(dir));
 		end.add(Cardinal.left(dir));
@@ -586,7 +586,7 @@ public class HouseTower implements ITower {
 			cursor = new Coord(origin);
 			cursor.add(Cardinal.UP, 2);
 			cursor.add(dir);
-			stair.setOrientation(dir, true).setBlock(editor, cursor);
+			stair.setOrientation(dir, true).set(editor, cursor);
 			for(Cardinal o : Cardinal.orthogonal(dir)){
 				Coord c = new Coord(cursor);
 				c.add(o);
@@ -655,20 +655,20 @@ public class HouseTower implements ITower {
 			
 			cursor = new Coord(end);
 			cursor.add(o);
-			stair.setOrientation(o, true).setBlock(editor, cursor);
+			stair.setOrientation(o, true).set(editor, cursor);
 			cursor.add(Cardinal.reverse(dir));
-			stair.setOrientation(o, true).setBlock(editor, cursor);
+			stair.setOrientation(o, true).set(editor, cursor);
 			cursor.add(Cardinal.reverse(o));
-			stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
+			stair.setOrientation(Cardinal.reverse(dir), true).set(editor, cursor);
 			cursor.add(Cardinal.reverse(o));
-			stair.setOrientation(Cardinal.reverse(o), true).setBlock(editor, cursor);
+			stair.setOrientation(Cardinal.reverse(o), true).set(editor, cursor);
 		}
 		
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.UP, 2);
 		cursor.add(orth[0], 3);
 		cursor.add(dir);
-		stair.setOrientation(dir, true).setBlock(editor, cursor);
+		stair.setOrientation(dir, true).set(editor, cursor);
 		
 		start = new Coord(origin);
 		start.add(dir);

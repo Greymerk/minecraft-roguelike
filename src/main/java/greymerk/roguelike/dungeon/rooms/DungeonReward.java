@@ -45,16 +45,16 @@ public class DungeonReward extends DungeonBase {
 				end.add(Cardinal.UP, 5);
 				RectSolid.fill(editor, rand, start, end, theme.getPrimaryWall(), true, true);
 				cursor.add(Cardinal.reverse(dir));
-				stair.setOrientation(Cardinal.reverse(dir), false).setBlock(editor, cursor);
+				stair.setOrientation(Cardinal.reverse(dir), false).set(editor, cursor);
 				cursor.add(Cardinal.UP, 2);
-				stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
+				stair.setOrientation(Cardinal.reverse(dir), true).set(editor, cursor);
 				cursor.add(Cardinal.UP);
 				start = new Coord(cursor);
 				end = new Coord(start);
 				end.add(Cardinal.UP, 2);
 				RectSolid.fill(editor, rand, start, end, theme.getPrimaryWall(), true, true);
 				cursor.add(Cardinal.reverse(dir));
-				stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
+				stair.setOrientation(Cardinal.reverse(dir), true).set(editor, cursor);
 				cursor.add(Cardinal.UP);
 				start = new Coord(cursor);
 				end = new Coord(start);
@@ -62,7 +62,7 @@ public class DungeonReward extends DungeonBase {
 				RectSolid.fill(editor, rand, start, end, theme.getPrimaryWall(), true, true);
 				cursor.add(Cardinal.UP);
 				cursor.add(Cardinal.reverse(dir));
-				stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
+				stair.setOrientation(Cardinal.reverse(dir), true).set(editor, cursor);
 				
 				start = new Coord(x, y, z);
 				start.add(dir, 7);
@@ -86,18 +86,18 @@ public class DungeonReward extends DungeonBase {
 				cursor.add(orth);
 				stair.setOrientation(Cardinal.reverse(orth), true).set(editor, rand, cursor, true, false);
 				cursor.add(Cardinal.reverse(dir));
-				stair.setOrientation(Cardinal.reverse(orth), true).setBlock(editor, cursor);
+				stair.setOrientation(Cardinal.reverse(orth), true).set(editor, cursor);
 				cursor.add(Cardinal.reverse(dir));
 				cursor.add(Cardinal.UP);
-				stair.setOrientation(Cardinal.reverse(orth), true).setBlock(editor, cursor);
+				stair.setOrientation(Cardinal.reverse(orth), true).set(editor, cursor);
 				cursor.add(Cardinal.reverse(dir));
 				cursor.add(Cardinal.UP);
-				stair.setOrientation(Cardinal.reverse(orth), true).setBlock(editor, cursor);
+				stair.setOrientation(Cardinal.reverse(orth), true).set(editor, cursor);
 				cursor.add(Cardinal.reverse(dir));
 				cursor.add(Cardinal.UP);
-				stair.setOrientation(Cardinal.reverse(orth), true).setBlock(editor, cursor);
+				stair.setOrientation(Cardinal.reverse(orth), true).set(editor, cursor);
 				cursor.add(Cardinal.reverse(dir), 2);
-				stair.setOrientation(dir, true).setBlock(editor, cursor);
+				stair.setOrientation(dir, true).set(editor, cursor);
 				
 				start = new Coord(x, y, z);
 				start.add(dir, 7);
@@ -116,18 +116,18 @@ public class DungeonReward extends DungeonBase {
 				cursor = new Coord(x, y, z);
 				cursor.add(dir, 7);
 				cursor.add(orth, 3);
-				stair.setOrientation(orth, false).setBlock(editor, cursor);
+				stair.setOrientation(orth, false).set(editor, cursor);
 				cursor.add(orth, 2);
-				stair.setOrientation(Cardinal.reverse(orth), false).setBlock(editor, cursor);
+				stair.setOrientation(Cardinal.reverse(orth), false).set(editor, cursor);
 				cursor.add(Cardinal.UP, 2);
-				stair.setOrientation(Cardinal.reverse(orth), true).setBlock(editor, cursor);
+				stair.setOrientation(Cardinal.reverse(orth), true).set(editor, cursor);
 				cursor.add(Cardinal.reverse(orth), 2);
-				stair.setOrientation(orth, true).setBlock(editor, cursor);
+				stair.setOrientation(orth, true).set(editor, cursor);
 				cursor.add(Cardinal.reverse(dir));
 				cursor.add(Cardinal.UP);
-				stair.setOrientation(orth, true).setBlock(editor, cursor);
+				stair.setOrientation(orth, true).set(editor, cursor);
 				cursor.add(orth, 2);
-				stair.setOrientation(Cardinal.reverse(orth), true).setBlock(editor, cursor);
+				stair.setOrientation(Cardinal.reverse(orth), true).set(editor, cursor);
 				cursor.add(Cardinal.reverse(dir));
 				cursor.add(Cardinal.UP);
 				end = new Coord(cursor);
@@ -137,13 +137,13 @@ public class DungeonReward extends DungeonBase {
 				end.add(Cardinal.UP);
 				RectSolid.fill(editor, rand, cursor, end, theme.getPrimaryWall(), true, true);
 				end.add(Cardinal.reverse(dir));
-				stair.setOrientation(orth, true).setBlock(editor, cursor);
+				stair.setOrientation(orth, true).set(editor, cursor);
 				
 				cursor = new Coord(x, y, z);
 				cursor.add(dir, 7);
 				cursor.add(orth, 4);
 				cursor.add(Cardinal.DOWN);
-				BlockType.get(BlockType.GLOWSTONE).setBlock(editor, cursor);
+				BlockType.get(BlockType.GLOWSTONE).set(editor, cursor);
 				
 			}
 			
@@ -161,19 +161,19 @@ public class DungeonReward extends DungeonBase {
 			cursor = new Coord(x, y, z);
 			theme.getPrimaryWall().set(editor, rand, cursor);
 			cursor.add(dir);
-			stair.setOrientation(dir, false).setBlock(editor, cursor);
+			stair.setOrientation(dir, false).set(editor, cursor);
 			cursor.add(o);
-			stair.setOrientation(dir, false).setBlock(editor, cursor);
+			stair.setOrientation(dir, false).set(editor, cursor);
 			cursor.add(Cardinal.UP, 4);
-			stair.setOrientation(dir, true).setBlock(editor, cursor);
+			stair.setOrientation(dir, true).set(editor, cursor);
 			cursor.add(Cardinal.reverse(o));
-			stair.setOrientation(dir, true).setBlock(editor, cursor);
+			stair.setOrientation(dir, true).set(editor, cursor);
 			
 		}
 		
 		cursor = new Coord(x, y, z);
 		cursor.add(Cardinal.UP, 4);
-		BlockType.get(BlockType.GLOWSTONE).setBlock(editor, cursor);
+		BlockType.get(BlockType.GLOWSTONE).set(editor, cursor);
 		
 		cursor = new Coord(x, y, z);
 		cursor.add(Cardinal.UP);

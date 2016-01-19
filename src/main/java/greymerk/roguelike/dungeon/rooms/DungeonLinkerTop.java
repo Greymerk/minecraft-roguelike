@@ -38,7 +38,7 @@ public class DungeonLinkerTop extends DungeonBase{
 		
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.UP, 5);
-		editor.setBlock(cursor, BlockType.get(BlockType.GLOWSTONE));
+		BlockType.get(BlockType.GLOWSTONE).set(editor, cursor);
 		
 		start = new Coord(origin);
 		end = new Coord(origin);
@@ -73,11 +73,11 @@ public class DungeonLinkerTop extends DungeonBase{
 				cursor.add(dir, 3);
 				cursor.add(Cardinal.UP, 2);
 				cursor.add(o, 2);
-				stair.setOrientation(Cardinal.reverse(o), true).setBlock(editor, cursor);
+				stair.setOrientation(Cardinal.reverse(o), true).set(editor, cursor);
 				cursor.add(Cardinal.UP);
 				wall.set(editor, rand, cursor);
 				cursor.add(Cardinal.reverse(o));
-				stair.setOrientation(Cardinal.reverse(o), true).setBlock(editor, cursor);
+				stair.setOrientation(Cardinal.reverse(o), true).set(editor, cursor);
 			}
 		}
 		

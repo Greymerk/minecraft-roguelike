@@ -51,15 +51,15 @@ public class DungeonPyramidSpawner extends DungeonBase {
 
 		cursor = new Coord(x, y, z);
 		cursor.add(Cardinal.UP, 5);
-		air.setBlock(editor, cursor);
+		air.set(editor, cursor);
 		cursor.add(Cardinal.UP, 1);
 		blocks.set(editor, rand, cursor);
 		
 		cursor = new Coord(x, y, z);
 		cursor.add(Cardinal.UP, 5);
-		air.setBlock(editor, cursor);
+		air.set(editor, cursor);
 		cursor.add(Cardinal.UP);
-		air.setBlock(editor, cursor);
+		air.set(editor, cursor);
 		
 		// Chests
 		List<Coord> space = new ArrayList<Coord>();
@@ -87,9 +87,9 @@ public class DungeonPyramidSpawner extends DungeonBase {
 			cursor = new Coord(x, y, z);
 			cursor.add(Cardinal.UP, 5);
 			cursor.add(Cardinal.left(dir));
-			air.setBlock(editor, cursor);
+			air.set(editor, cursor);
 			cursor.add(Cardinal.UP);
-			air.setBlock(editor, cursor);
+			air.set(editor, cursor);
 			
 			for(Cardinal orth : Cardinal.orthogonal(dir)){
 				

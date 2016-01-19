@@ -58,19 +58,19 @@ public class DungeonOssuary extends DungeonBase {
 				end = new Coord(start);
 				end.add(Cardinal.UP, 3);
 				RectSolid.fill(editor, rand, start, end, walls);
-				stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, start);
+				stair.setOrientation(Cardinal.reverse(dir), true).set(editor, start);
 				
 				start.add(Cardinal.reverse(dir));
 				start.add(Cardinal.UP);
 				end.add(Cardinal.reverse(dir));
 				RectSolid.fill(editor, rand, start, end, walls);
-				stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, start);
+				stair.setOrientation(Cardinal.reverse(dir), true).set(editor, start);
 				
 				start.add(Cardinal.reverse(dir));
 				start.add(Cardinal.UP);
 				end.add(Cardinal.reverse(dir));
 				RectSolid.fill(editor, rand, start, end, walls);
-				stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, start);
+				stair.setOrientation(Cardinal.reverse(dir), true).set(editor, start);
 				
 				start = new Coord(cursor);
 				start.add(Cardinal.UP, 3);
@@ -91,23 +91,23 @@ public class DungeonOssuary extends DungeonBase {
 				Coord c = new Coord(cursor);
 				c.add(o);
 				c.add(Cardinal.UP, 2);
-				stair.setOrientation(Cardinal.reverse(o), true).setBlock(editor, c);
+				stair.setOrientation(Cardinal.reverse(o), true).set(editor, c);
 				c.add(Cardinal.reverse(dir));
 				c.add(Cardinal.UP);
-				stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, c);
+				stair.setOrientation(Cardinal.reverse(dir), true).set(editor, c);
 				c.add(Cardinal.reverse(dir));
 				c.add(Cardinal.UP);
-				stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, c);
+				stair.setOrientation(Cardinal.reverse(dir), true).set(editor, c);
 				c.add(Cardinal.reverse(dir));
 			}
 			
 			Coord c = new Coord(origin);
 			c.add(dir, 7);
 			c.add(Cardinal.UP, 3);
-			stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, c);
+			stair.setOrientation(Cardinal.reverse(dir), true).set(editor, c);
 			c.add(Cardinal.reverse(dir));
 			c.add(Cardinal.UP);
-			stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, c);
+			stair.setOrientation(Cardinal.reverse(dir), true).set(editor, c);
 		}
 		
 		for(Cardinal dir : Cardinal.directions){
@@ -121,11 +121,11 @@ public class DungeonOssuary extends DungeonBase {
 			end.add(Cardinal.SOUTH);
 			end.add(Cardinal.WEST);
 			RectSolid.fill(editor, rand, start, end, walls);
-			air.setBlock(editor, cursor);
+			air.set(editor, cursor);
 			for(Cardinal d : Cardinal.directions){
 				Coord c = new Coord(cursor);
 				c.add(d);
-				stair.setOrientation(Cardinal.reverse(d), true).setBlock(editor, c);
+				stair.setOrientation(Cardinal.reverse(d), true).set(editor, c);
 			}
 		}
 		
@@ -154,11 +154,11 @@ public class DungeonOssuary extends DungeonBase {
 		start.add(Cardinal.DOWN);
 		end.add(Cardinal.DOWN);
 		RectSolid.fill(editor, rand, start, end, air);
-		air.setBlock(editor, cursor);
+		air.set(editor, cursor);
 		for(Cardinal d : Cardinal.directions){
 			Coord c = new Coord(cursor);
 			c.add(d);
-			stair.setOrientation(Cardinal.reverse(d), true).setBlock(editor, c);
+			stair.setOrientation(Cardinal.reverse(d), true).set(editor, c);
 		}
 		
 		for(Cardinal dir : Cardinal.directions){
@@ -166,11 +166,11 @@ public class DungeonOssuary extends DungeonBase {
 			cursor = new Coord(origin);
 			cursor.add(Cardinal.UP, 5);
 			cursor.add(dir, 2);
-			air.setBlock(editor, cursor);
+			air.set(editor, cursor);
 			for(Cardinal o : orth){
 				Coord c = new Coord(cursor);
 				c.add(o);
-				stair.setOrientation(Cardinal.reverse(o), true).setBlock(editor, c);
+				stair.setOrientation(Cardinal.reverse(o), true).set(editor, c);
 			}
 			cursor.add(orth[0], 2);
 			walls.set(editor, rand, cursor);
@@ -188,11 +188,11 @@ public class DungeonOssuary extends DungeonBase {
 			end.add(Cardinal.SOUTH);
 			end.add(Cardinal.WEST);
 			RectSolid.fill(editor, rand, start, end, walls);
-			air.setBlock(editor, cursor);
+			air.set(editor, cursor);
 			for(Cardinal d : Cardinal.directions){
 				Coord c = new Coord(cursor);
 				c.add(d);
-				stair.setOrientation(Cardinal.reverse(d), true).setBlock(editor, c);
+				stair.setOrientation(Cardinal.reverse(d), true).set(editor, c);
 			}
 			
 			for(Cardinal d : new Cardinal[]{dir, Cardinal.left(dir)}){
@@ -201,11 +201,11 @@ public class DungeonOssuary extends DungeonBase {
 				cursor.add(Cardinal.left(dir), 4);
 				cursor.add(Cardinal.UP, 4);
 				cursor.add(d, 2);
-				air.setBlock(editor, cursor);
+				air.set(editor, cursor);
 				for(Cardinal o : Cardinal.orthogonal(d)){
 					Coord c = new Coord(cursor);
 					c.add(o);
-					stair.setOrientation(Cardinal.reverse(o), true).setBlock(editor, c);
+					stair.setOrientation(Cardinal.reverse(o), true).set(editor, c);
 				}
 				
 				start = new Coord(origin);
@@ -240,7 +240,7 @@ public class DungeonOssuary extends DungeonBase {
 					skull(editor, rand, Cardinal.reverse(d), cursor);
 					cursor.add(Cardinal.UP);
 					cursor.add(Cardinal.reverse(d));
-					stair.setOrientation(Cardinal.reverse(o), true).setBlock(editor, cursor);
+					stair.setOrientation(Cardinal.reverse(o), true).set(editor, cursor);
 				}
 			}
 			

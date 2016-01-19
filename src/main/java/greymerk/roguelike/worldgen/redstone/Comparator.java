@@ -20,7 +20,7 @@ public class Comparator {
 		} else {
 			comparator.withProperty(BlockRedstoneComparator.MODE, BlockRedstoneComparator.Mode.COMPARE);
 		}
-		comparator.setBlock(world, pos);
+		comparator.set(world, pos);
 	}
 	
 }

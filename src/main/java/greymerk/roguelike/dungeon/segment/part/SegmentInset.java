@@ -45,21 +45,21 @@ public class SegmentInset extends SegmentBase {
 			cursor.add(dir, 2);
 			cursor.add(d, 1);
 			stair.setOrientation(Cardinal.reverse(dir), true);
-			stair.setBlock(editor, cursor);
+			stair.set(editor, cursor);
 			
 			cursor = new Coord(origin);
 			cursor.add(dir, 2);
 			cursor.add(d, 1);
 			stair.setOrientation(Cardinal.reverse(d), false);
-			stair.setBlock(editor, cursor);
+			stair.set(editor, cursor);
 		}
 	
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.UP, 1);
 		cursor.add(dir, 3);
-		air.setBlock(editor, cursor);
+		air.set(editor, cursor);
 		cursor.add(Cardinal.UP, 1);
 		stair.setOrientation(Cardinal.reverse(dir), true);
-		stair.setBlock(editor, cursor);
+		stair.set(editor, cursor);
 	}
 }

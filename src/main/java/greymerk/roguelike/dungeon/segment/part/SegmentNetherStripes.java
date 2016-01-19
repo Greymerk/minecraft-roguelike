@@ -28,9 +28,9 @@ public class SegmentNetherStripes extends SegmentBase {
 		
 		cursor = new Coord(origin);
 		cursor.add(dir, 2);
-		air.setBlock(editor, cursor);
+		air.set(editor, cursor);
 		cursor.add(Cardinal.UP, 1);
-		air.setBlock(editor, cursor);
+		air.set(editor, cursor);
 		cursor = new Coord(origin);
 		cursor.add(dir, 5);
 		boolean isAir = editor.isAirBlock(cursor);
@@ -40,11 +40,11 @@ public class SegmentNetherStripes extends SegmentBase {
 		MetaBlock slab = Slab.get(Slab.NETHERBRICK, false, false, false);
 		cursor = new Coord(origin);
 		cursor.add(dir, 2);
-		slab.setBlock(editor, cursor);
+		slab.set(editor, cursor);
 		cursor.add(Cardinal.UP, 1);
-		slab.setBlock(editor, cursor);
+		slab.set(editor, cursor);
 		cursor.add(Cardinal.UP, 1);
-		slab.setBlock(editor, cursor);
+		slab.set(editor, cursor);
 		
 		for(Cardinal orth : Cardinal.orthogonal(dir)){
 			start = new Coord(origin);
@@ -59,13 +59,13 @@ public class SegmentNetherStripes extends SegmentBase {
 			cursor = new Coord(origin);
 			cursor.add(dir, 2);
 			cursor.add(orth, 1);
-			step.setBlock(editor, cursor);
+			step.set(editor, cursor);
 			cursor.add(Cardinal.UP, 1);
-			step.setBlock(editor, cursor);
+			step.set(editor, cursor);
 			cursor.add(Cardinal.UP, 1);
-			step.setBlock(editor, cursor);
+			step.set(editor, cursor);
 			cursor.add(Cardinal.reverse(dir), 1);
-			step.setBlock(editor, cursor);
+			step.set(editor, cursor);
 		}
 	}
 }

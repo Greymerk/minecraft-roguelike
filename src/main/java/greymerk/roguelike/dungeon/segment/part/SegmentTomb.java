@@ -57,7 +57,7 @@ public class SegmentTomb extends SegmentBase {
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.UP);
 		cursor.add(dir, 3);
-		editor.setBlock(cursor, BlockType.get(BlockType.QUARTZ));
+		BlockType.get(BlockType.QUARTZ).set(editor, cursor);
 		
 	}
 	

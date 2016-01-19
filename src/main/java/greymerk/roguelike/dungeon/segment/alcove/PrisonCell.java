@@ -44,7 +44,7 @@ public class PrisonCell implements IAlcove{
 		
 		Coord cursor = new Coord(origin);
 		cursor.add(dir, RECESSED - 1);
-		plate.setBlock(editor, cursor);
+		plate.set(editor, cursor);
 		cursor.add(Cardinal.DOWN);
 		if(rand.nextBoolean()) Spawner.generate(editor, rand, settings, cursor, Spawner.ZOMBIE);
 		

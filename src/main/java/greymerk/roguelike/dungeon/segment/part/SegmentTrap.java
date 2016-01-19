@@ -50,15 +50,15 @@ public class SegmentTrap extends SegmentBase{
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.UP);
 		cursor.add(dir, 3);
-		air.setBlock(editor, cursor);
+		air.set(editor, cursor);
 		
 		for (Cardinal side : orth){
 			cursor = new Coord(origin);
 			cursor.add(dir, 2);
 			cursor.add(side);
-			stair.setOrientation(Cardinal.reverse(side), false).setBlock(editor, cursor);
+			stair.setOrientation(Cardinal.reverse(side), false).set(editor, cursor);
 			cursor.add(Cardinal.UP, 2);
-			stair.setOrientation(Cardinal.reverse(side), true).setBlock(editor, cursor);
+			stair.setOrientation(Cardinal.reverse(side), true).set(editor, cursor);
 		}
 		
 		start = new Coord(origin);

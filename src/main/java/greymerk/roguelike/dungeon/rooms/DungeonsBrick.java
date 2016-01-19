@@ -53,7 +53,7 @@ public class DungeonsBrick extends DungeonBase {
 		
 		cursor = new Coord(x, y, z);
 		cursor.add(Cardinal.UP, 5);
-		air.setBlock(editor, cursor);
+		air.set(editor, cursor);
 		cursor.add(Cardinal.UP, 1);
 		blocks.set(editor, rand, cursor);
 		
@@ -74,7 +74,7 @@ public class DungeonsBrick extends DungeonBase {
 			cursor = new Coord(x, y, z);
 			cursor.add(dir, 2);
 			cursor.add(Cardinal.UP, 4);
-			air.setBlock(editor, cursor);
+			air.set(editor, cursor);
 			cursor.add(Cardinal.UP, 1);
 			blocks.set(editor, rand, cursor, false, true);
 			

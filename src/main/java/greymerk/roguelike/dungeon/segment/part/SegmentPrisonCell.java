@@ -51,7 +51,7 @@ public class SegmentPrisonCell extends SegmentBase {
 			Coord c = new Coord(cursor);
 			c.add(d, 1);
 			stair.setOrientation(Cardinal.reverse(d), true);
-			stair.setBlock(editor, c);
+			stair.set(editor, c);
 		}
 		
 		if(room != null){

@@ -27,7 +27,7 @@ public class SegmentWheat extends SegmentBase {
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.DOWN);
 		cursor.add(dir, 3);
-		editor.setBlock(cursor, BlockType.get(BlockType.WATER_FLOWING));
+		BlockType.get(BlockType.WATER_FLOWING).set(editor, cursor);
 		
 		Cardinal[] orth = Cardinal.orthogonal(dir);
 		start = new Coord(origin);
@@ -62,7 +62,7 @@ public class SegmentWheat extends SegmentBase {
 		cursor.add(dir, 3);
 		cursor.add(Cardinal.UP, 1);
 		MetaBlock pumpkin = Crops.getPumpkin(Cardinal.reverse(dir), true);		
-		pumpkin.setBlock(editor, cursor);
+		pumpkin.set(editor, cursor);
 		
 		IStair stair = theme.getSecondaryStair();
 		
@@ -72,7 +72,7 @@ public class SegmentWheat extends SegmentBase {
 			cursor.add(d, 1);
 			cursor.add(Cardinal.UP, 1);	
 			stair.setOrientation(Cardinal.reverse(d), true);
-			stair.setBlock(editor, cursor);
+			stair.set(editor, cursor);
 		}
 	}
 }

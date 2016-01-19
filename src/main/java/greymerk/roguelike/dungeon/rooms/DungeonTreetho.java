@@ -100,13 +100,13 @@ public class DungeonTreetho extends DungeonBase{
 			if(i % 2 == 0){
 				Coord p = new Coord(cursor);
 				if(i % 4 == 0){
-					sapling.setBlock(editor, p);
+					sapling.set(editor, p);
 					p.add(Cardinal.DOWN);
-					dirt.setBlock(editor, p);
+					dirt.set(editor, p);
 				} else {
-					glass.setBlock(editor, p);
+					glass.set(editor, p);
 					p.add(Cardinal.DOWN);
-					light.setBlock(editor, p);
+					light.set(editor, p);
 				}
 			}
 			cursor.add(dir);
@@ -158,7 +158,7 @@ public class DungeonTreetho extends DungeonBase{
 			cursor = new Coord(origin);
 			cursor.add(dir);
 			if(editor.isAirBlock(cursor)){
-				stair.setOrientation(dir, true).setBlock(editor, cursor);
+				stair.setOrientation(dir, true).set(editor, cursor);
 			}
 		}
 	}

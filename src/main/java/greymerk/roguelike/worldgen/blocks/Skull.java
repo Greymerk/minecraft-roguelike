@@ -24,7 +24,7 @@ public enum Skull {
 		
 		Coord pos = new Coord(x, y, z);
 		
-		if(!skullBlock.setBlock(editor, pos)) return;
+		if(!skullBlock.set(editor, pos)) return;
 		
 		
 		TileEntity skullEntity = editor.getTileEntity(pos);

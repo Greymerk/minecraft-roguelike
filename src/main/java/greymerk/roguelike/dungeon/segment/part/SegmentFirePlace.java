@@ -46,7 +46,7 @@ public class SegmentFirePlace extends SegmentBase {
 			Coord c = new Coord(cursor);
 			c.add(d, 1);
 			stair.setOrientation(Cardinal.reverse(d), true);
-			stair.setBlock(editor, c);
+			stair.set(editor, c);
 		}
 		
 		stair = theme.getPrimaryStair();
@@ -54,12 +54,12 @@ public class SegmentFirePlace extends SegmentBase {
 		cursor = new Coord(origin);
 		cursor.add(dir, 3);
 		stair.setOrientation(Cardinal.reverse(dir), false);
-		stair.setBlock(editor, cursor);
+		stair.set(editor, cursor);
 		cursor.add(Cardinal.UP);
-		editor.setBlock(cursor, BlockType.get(BlockType.IRON_BAR));
+		BlockType.get(BlockType.IRON_BAR).set(editor, cursor);
 		cursor.add(Cardinal.UP);
 		stair.setOrientation(Cardinal.reverse(dir), true);
-		stair.setBlock(editor, cursor);
+		stair.set(editor, cursor);
 		
 		start = new Coord(origin);
 		start.add(dir, 4);
@@ -77,8 +77,8 @@ public class SegmentFirePlace extends SegmentBase {
 		
 		cursor = new Coord(origin);
 		cursor.add(dir, 4);
-		editor.setBlock(cursor, BlockType.get(BlockType.NETHERRACK));
+		BlockType.get(BlockType.NETHERRACK).set(editor, cursor);
 		cursor.add(Cardinal.UP);
-		editor.setBlock(cursor, BlockType.get(BlockType.FIRE));
+		BlockType.get(BlockType.FIRE).set(editor, cursor);
 	}	
 }

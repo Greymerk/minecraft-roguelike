@@ -44,11 +44,11 @@ public class SegmentAnkh extends SegmentBase{
 			cursor = new Coord(pos);
 			cursor.add(dir, 2);
 			cursor.add(o);
-			stair.setOrientation(Cardinal.reverse(o), false).setBlock(editor, cursor);
+			stair.setOrientation(Cardinal.reverse(o), false).set(editor, cursor);
 			cursor.add(Cardinal.UP);
-			stair.setOrientation(Cardinal.reverse(o), false).setBlock(editor, cursor);
+			stair.setOrientation(Cardinal.reverse(o), false).set(editor, cursor);
 			cursor.add(Cardinal.UP);
-			stair.setOrientation(Cardinal.reverse(o), true).setBlock(editor, cursor);
+			stair.setOrientation(Cardinal.reverse(o), true).set(editor, cursor);
 		}
 		
 		start = new Coord(pos);
@@ -65,9 +65,9 @@ public class SegmentAnkh extends SegmentBase{
 		cursor = new Coord(pos);
 		cursor.add(dir, 3);
 		cursor.add(Cardinal.DOWN);
-		glowstone.setBlock(editor, cursor);
+		glowstone.set(editor, cursor);
 		cursor.add(Cardinal.UP, 4);
-		glowstone.setBlock(editor, cursor);
+		glowstone.set(editor, cursor);
 	}
 
 }

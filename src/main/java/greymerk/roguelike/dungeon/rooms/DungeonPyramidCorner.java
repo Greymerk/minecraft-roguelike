@@ -41,9 +41,9 @@ public class DungeonPyramidCorner extends DungeonBase {
 		
 		cursor = new Coord(x, y, z);
 		cursor.add(Cardinal.UP, 4);
-		air.setBlock(editor, cursor);
+		air.set(editor, cursor);
 		cursor.add(Cardinal.UP, 1);
-		air.setBlock(editor, cursor);
+		air.set(editor, cursor);
 		
 		
 		

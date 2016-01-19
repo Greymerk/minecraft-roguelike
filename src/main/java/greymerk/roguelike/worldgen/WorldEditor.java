@@ -60,11 +60,6 @@ public class WorldEditor implements IWorldEditor{
 	}
 	
 	@Override
-	public boolean setBlock(Coord pos, MetaBlock block){
-		return this.setBlock(pos, block, true, true);
-	}
-	
-	@Override
 	public boolean setBlock(Coord pos, MetaBlock block, boolean fillAir, boolean replaceSolid){
 		return this.setBlock(pos, block.getState(), block.getFlag(), fillAir, replaceSolid);
 	}
@@ -113,11 +108,11 @@ public class WorldEditor implements IWorldEditor{
 		Cardinal dir = Cardinal.directions[origin.getY() % 4];
 		cursor = new Coord(origin);
 		cursor.add(dir);
-		stair.setOrientation(Cardinal.left(dir), false).setBlock(this, cursor);
+		stair.setOrientation(Cardinal.left(dir), false).set(this, cursor);
 		cursor.add(Cardinal.right(dir));
-		stair.setOrientation(Cardinal.right(dir), true).setBlock(this, cursor);
+		stair.setOrientation(Cardinal.right(dir), true).set(this, cursor);
 		cursor.add(Cardinal.reverse(dir));
-		stair.setOrientation(Cardinal.reverse(dir), true).setBlock(this, cursor);
+		stair.setOrientation(Cardinal.reverse(dir), true).set(this, cursor);
 	}
 	
 	@Override

@@ -70,11 +70,11 @@ public class WitchTower implements ITower {
 				RectSolid.fill(editor, rand, start, end, pillar);
 				cursor = new Coord(end);
 				cursor.add(dir);
-				stair.setOrientation(dir, true).setBlock(editor, cursor);
+				stair.setOrientation(dir, true).set(editor, cursor);
 				for(Cardinal d : orth){
 					cursor = new Coord(end);
 					cursor.add(d);
-					stair.setOrientation(d, true).setBlock(editor, cursor);
+					stair.setOrientation(d, true).set(editor, cursor);
 				}
 			}
 		}
@@ -136,11 +136,11 @@ public class WitchTower implements ITower {
 				
 				cursor = new Coord(end);
 				cursor.add(dir);
-				stair.setOrientation(dir, true).setBlock(editor, cursor);
+				stair.setOrientation(dir, true).set(editor, cursor);
 				for(Cardinal d : orth){
 					cursor = new Coord(end);
 					cursor.add(d);
-					stair.setOrientation(d, true).setBlock(editor, cursor);
+					stair.setOrientation(d, true).set(editor, cursor);
 				}
 			}
 		}
@@ -196,11 +196,11 @@ public class WitchTower implements ITower {
 			
 			cursor = new Coord(end);
 			cursor.add(dir);
-			stair.setOrientation(dir, true).setBlock(editor, cursor);
+			stair.setOrientation(dir, true).set(editor, cursor);
 
 			cursor = new Coord(end);
 			cursor.add(orth[0]);
-			stair.setOrientation(orth[0], true).setBlock(editor, cursor);
+			stair.setOrientation(orth[0], true).set(editor, cursor);
 			
 			for (Cardinal o : orth){
 
@@ -245,7 +245,7 @@ public class WitchTower implements ITower {
 					cursor.add(dir, 6);
 					cursor.add(o);
 					cursor.add(Cardinal.DOWN, 2);
-					stair.setOrientation(Cardinal.reverse(o), true).setBlock(editor, cursor);
+					stair.setOrientation(Cardinal.reverse(o), true).set(editor, cursor);
 				}
 			}
 		}
@@ -368,16 +368,16 @@ public class WitchTower implements ITower {
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		
 		cursor = new Coord(origin);
-		air.setBlock(editor, cursor);
+		air.set(editor, cursor);
 		cursor.add(Cardinal.UP);
-		air.setBlock(editor, cursor);
+		air.set(editor, cursor);
 		
 		for (Cardinal o : Cardinal.orthogonal(dir)){
 			cursor = new Coord(origin);
 			cursor.add(o);
-			stair.setOrientation(Cardinal.reverse(o), false).setBlock(editor, cursor);
+			stair.setOrientation(Cardinal.reverse(o), false).set(editor, cursor);
 			cursor.add(Cardinal.UP);
-			stair.setOrientation(Cardinal.reverse(o), true).setBlock(editor, cursor);
+			stair.setOrientation(Cardinal.reverse(o), true).set(editor, cursor);
 		}
 	}
 	

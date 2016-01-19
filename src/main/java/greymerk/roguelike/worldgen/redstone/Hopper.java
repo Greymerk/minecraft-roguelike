@@ -16,6 +16,6 @@ public class Hopper {
 		if(Arrays.asList(Cardinal.directions).contains(dir)){
 			hopper.withProperty(BlockHopper.FACING, Cardinal.facing(dir));
 		}
-		hopper.setBlock(editor, pos);
+		hopper.set(editor, pos);
 	}
 }

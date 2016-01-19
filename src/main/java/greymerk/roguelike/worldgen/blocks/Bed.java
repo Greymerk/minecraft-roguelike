@@ -23,10 +23,10 @@ public class Bed {
 		}
 		
 		MetaBlock head = new MetaBlock(Blocks.bed.getStateFromMeta(meta + 8));
-		head.setBlock(editor, cursor);
+		head.set(editor, cursor);
 		
 		MetaBlock foot = new MetaBlock(Blocks.bed.getStateFromMeta(meta));
 		cursor.add(dir);
-		foot.setBlock(editor, cursor);
+		foot.set(editor, cursor);
 	}
 }

@@ -18,9 +18,9 @@ public enum TallPlant {
 		MetaBlock lower = new MetaBlock(Blocks.double_plant.getStateFromMeta(getMeta(type, false)));
 		
 		cursor = new Coord(pos);
-		lower.setBlock(editor, cursor);
+		lower.set(editor, cursor);
 		cursor.add(Cardinal.UP);
-		upper.setBlock(editor, cursor);
+		upper.set(editor, cursor);
 	}
 	
 	public static int getMeta(TallPlant type, boolean top){

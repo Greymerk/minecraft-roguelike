@@ -68,9 +68,9 @@ public class SegmentLamp extends SegmentBase{
 			cursor = new Coord(origin);
 			cursor.add(dir, 2);
 			cursor.add(side);
-			stair.setOrientation(Cardinal.reverse(side), false).setBlock(editor, cursor);
+			stair.setOrientation(Cardinal.reverse(side), false).set(editor, cursor);
 			cursor.add(Cardinal.UP, 2);
-			stair.setOrientation(Cardinal.reverse(side), true).setBlock(editor, cursor);
+			stair.setOrientation(Cardinal.reverse(side), true).set(editor, cursor);
 		}
 		
 		cursor = new Coord(origin);
@@ -83,7 +83,7 @@ public class SegmentLamp extends SegmentBase{
 		
 		Coord lever = new Coord(cursor);
 		cursor.add(dir);
-		editor.setBlock(cursor, ColorBlock.get(ColorBlock.CLAY, DyeColor.ORANGE));
+		ColorBlock.get(ColorBlock.CLAY, DyeColor.ORANGE).set(editor, cursor);
 		Lever.generate(editor, Cardinal.reverse(dir), lever, false);
 		cursor.add(dir);
 		Torch.generate(editor, Torch.REDSTONE, dir, cursor);
@@ -103,19 +103,19 @@ public class SegmentLamp extends SegmentBase{
 		
 		Coord cursor;
 		
-		editor.setBlock(origin, BlockType.get(BlockType.AIR));
+		BlockType.get(BlockType.AIR).set(editor, origin);
 		
 		for(Cardinal dir : Cardinal.directions){
 			cursor = new Coord(origin);
 			cursor.add(dir);
-			stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
+			stair.setOrientation(Cardinal.reverse(dir), true).set(editor, cursor);
 			cursor.add(Cardinal.orthogonal(dir)[0]);
-			stair.setBlock(editor, cursor);
+			stair.set(editor, cursor);
 		}
 		
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.UP);
-		editor.setBlock(cursor, BlockType.get(BlockType.REDSTONE_LAMP));
+		BlockType.get(BlockType.REDSTONE_LAMP).set(editor, cursor);
 	}
 	
 

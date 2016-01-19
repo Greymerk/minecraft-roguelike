@@ -102,10 +102,10 @@ public class RogueTower implements ITower{
 				cursor.add(orth, 2);
 				cursor.add(Cardinal.UP, 3);
 				stair.setOrientation(Cardinal.reverse(orth), true);
-				stair.setBlock(editor, cursor);
+				stair.set(editor, cursor);
 				cursor.add(Cardinal.UP, 5);
 				stair.setOrientation(Cardinal.reverse(orth), true);
-				stair.setBlock(editor, cursor);
+				stair.set(editor, cursor);
 				
 				start = new Coord(floor);
 				start.add(dir, 4);
@@ -149,10 +149,10 @@ public class RogueTower implements ITower{
 				cursor.add(orth, 1);
 				cursor.add(Cardinal.DOWN, 1);
 				stair.setOrientation(orth, true);
-				stair.setBlock(editor, cursor);
+				stair.set(editor, cursor);
 				cursor.add(Cardinal.UP, 1);
 				cursor.add(orth, 1);
-				stair.setBlock(editor, cursor);
+				stair.set(editor, cursor);
 				
 				cursor.add(Cardinal.reverse(orth), 1);
 				blocks.set(editor, rand, cursor);
@@ -175,7 +175,7 @@ public class RogueTower implements ITower{
 				cursor.add(Cardinal.UP, 9);
 				
 				stair.setOrientation(dir, true);
-				stair.setBlock(editor, cursor);
+				stair.set(editor, cursor);
 				
 				cursor.add(orth, 1);
 				stair.setOrientation(orth, true);
@@ -192,9 +192,9 @@ public class RogueTower implements ITower{
 				cursor = new Coord(floor);
 				cursor.add(dir, 4);
 				cursor.add(Cardinal.UP, 5);
-				air.setBlock(editor, cursor);
+				air.set(editor, cursor);
 				cursor.add(Cardinal.UP, 1);
-				air.setBlock(editor, cursor);
+				air.set(editor, cursor);
 				cursor.add(orth, 2);
 				BlockType.get(BlockType.IRON_BAR).set(editor, rand, cursor);
 			}

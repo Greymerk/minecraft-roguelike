@@ -47,7 +47,7 @@ public class SegmentSilverfish extends SegmentBase {
 			Coord c = new Coord(cursor);
 			c.add(d, 1);
 			stair.setOrientation(Cardinal.reverse(d), true);
-			stair.setBlock(editor, c);
+			stair.set(editor, c);
 		}
 		
 		stair = theme.getPrimaryStair();
@@ -55,12 +55,12 @@ public class SegmentSilverfish extends SegmentBase {
 		cursor = new Coord(origin);
 		cursor.add(dir, 3);
 		stair.setOrientation(Cardinal.reverse(dir), false);
-		stair.setBlock(editor, cursor);
+		stair.set(editor, cursor);
 		cursor.add(Cardinal.UP);
-		air.setBlock(editor, cursor);
+		air.set(editor, cursor);
 		cursor.add(Cardinal.UP);
 		stair.setOrientation(Cardinal.reverse(dir), true);
-		stair.setBlock(editor, cursor);
+		stair.set(editor, cursor);
 		
 		IAlcove nest = new SilverfishNest();
 		if(nest.isValidLocation(editor, new Coord(origin), dir)){

@@ -23,11 +23,11 @@ public class SegmentArch extends SegmentBase {
 		
 		Coord cursor = new Coord(origin);
 		cursor.add(dir, 2);
-		air.setBlock(editor, cursor);
+		air.set(editor, cursor);
 		cursor.add(Cardinal.UP, 1);
-		air.setBlock(editor, cursor);
+		air.set(editor, cursor);
 		cursor.add(Cardinal.UP, 1);
-		stair.setBlock(editor, cursor);
+		stair.set(editor, cursor);
 		
 		for(Cardinal orth : Cardinal.orthogonal(dir)){
 			cursor = new Coord(origin);
@@ -39,7 +39,7 @@ public class SegmentArch extends SegmentBase {
 			cursor.add(Cardinal.UP, 1);
 			theme.getPrimaryWall().set(editor, rand, cursor);
 			cursor.add(Cardinal.reverse(dir), 1);
-			stair.setBlock(editor, cursor);			
+			stair.set(editor, cursor);			
 		}
 	}
 }

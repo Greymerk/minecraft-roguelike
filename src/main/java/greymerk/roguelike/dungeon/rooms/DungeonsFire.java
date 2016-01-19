@@ -69,7 +69,7 @@ public class DungeonsFire extends DungeonBase {
 				
 				cursor.add(Cardinal.reverse(dir));
 				cursor.add(Cardinal.UP);
-				stair.setOrientation(Cardinal.reverse(orth), true).setBlock(editor, cursor);
+				stair.setOrientation(Cardinal.reverse(orth), true).set(editor, cursor);
 				
 				start = new Coord(cursor);
 				start.add(Cardinal.UP);
@@ -79,7 +79,7 @@ public class DungeonsFire extends DungeonBase {
 				
 				cursor.add(Cardinal.reverse(dir));
 				cursor.add(orth);
-				stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
+				stair.setOrientation(Cardinal.reverse(dir), true).set(editor, cursor);
 				
 				start = new Coord(cursor);
 				start.add(Cardinal.UP);
@@ -89,7 +89,7 @@ public class DungeonsFire extends DungeonBase {
 				
 				cursor.add(dir);
 				cursor.add(orth);
-				stair.setOrientation(orth, true).setBlock(editor, cursor);
+				stair.setOrientation(orth, true).set(editor, cursor);
 				
 				start = new Coord(cursor);
 				start.add(Cardinal.UP);
@@ -161,9 +161,9 @@ public class DungeonsFire extends DungeonBase {
 		Coord end;
 		
 		cursor = new Coord(origin);
-		editor.setBlock(cursor, BlockType.get(BlockType.NETHERRACK));
+		BlockType.get(BlockType.NETHERRACK).set(editor, cursor);
 		cursor.add(Cardinal.UP);
-		editor.setBlock(cursor, BlockType.get(BlockType.FIRE));
+		BlockType.get(BlockType.FIRE).set(editor, cursor);
 		
 		for(Cardinal dir : Cardinal.directions){
 			
@@ -178,7 +178,7 @@ public class DungeonsFire extends DungeonBase {
 			cursor.add(dir);
 			stair.setOrientation(dir, false).set(editor, rand, cursor, true, false);
 			cursor.add(Cardinal.UP);
-			editor.setBlock(cursor, BlockType.get(BlockType.IRON_BAR));
+			BlockType.get(BlockType.IRON_BAR).set(editor, cursor);
 			cursor.add(Cardinal.UP);
 			stair.setOrientation(dir, true).set(editor, rand, cursor, true, false);
 			

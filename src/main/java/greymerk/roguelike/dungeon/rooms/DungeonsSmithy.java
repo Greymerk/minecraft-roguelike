@@ -48,9 +48,9 @@ public class DungeonsSmithy extends DungeonBase {
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.reverse(dir), 9);
 		MetaBlock air = BlockType.get(BlockType.AIR);
-		air.setBlock(editor, cursor);
+		air.set(editor, cursor);
 		cursor.add(Cardinal.UP);
-		air.setBlock(editor, cursor);
+		air.set(editor, cursor);
 		
 		mainRoom(editor, rand, settings, dir, origin);
 		
@@ -95,14 +95,14 @@ public class DungeonsSmithy extends DungeonBase {
 				
 				cursor = new Coord(end);
 				cursor.add(Cardinal.reverse(side));
-				stair.setOrientation(Cardinal.reverse(side), true).setBlock(editor, cursor);
+				stair.setOrientation(Cardinal.reverse(side), true).set(editor, cursor);
 				cursor.add(Cardinal.UP);
 				cursor.add(Cardinal.reverse(side));
-				stair.setOrientation(Cardinal.reverse(side), true).setBlock(editor, cursor);
+				stair.setOrientation(Cardinal.reverse(side), true).set(editor, cursor);
 				
 				cursor = new Coord(end);
 				cursor.add(Cardinal.reverse(o));
-				stair.setOrientation(Cardinal.reverse(o), true).setBlock(editor, cursor);
+				stair.setOrientation(Cardinal.reverse(o), true).set(editor, cursor);
 			}
 		}
 		
@@ -223,17 +223,17 @@ public class DungeonsSmithy extends DungeonBase {
 		RectSolid.fill(editor, rand, start, end, pillar);
 		cursor = new Coord(end);
 		cursor.add(Cardinal.left(dir));
-		stair.setOrientation(Cardinal.left(dir), true).setBlock(editor, cursor);
+		stair.setOrientation(Cardinal.left(dir), true).set(editor, cursor);
 		cursor = new Coord(end);
 		cursor.add(Cardinal.right(dir));
-		stair.setOrientation(Cardinal.right(dir), true).setBlock(editor, cursor);
+		stair.setOrientation(Cardinal.right(dir), true).set(editor, cursor);
 		cursor = new Coord(end);
 		cursor.add(Cardinal.reverse(dir));
-		stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
+		stair.setOrientation(Cardinal.reverse(dir), true).set(editor, cursor);
 		cursor.add(Cardinal.UP);
 		wall.set(editor, rand, cursor);
 		cursor.add(Cardinal.reverse(dir));
-		stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
+		stair.setOrientation(Cardinal.reverse(dir), true).set(editor, cursor);
 		cursor.add(Cardinal.reverse(dir));
 		cursor.add(Cardinal.UP);
 		start = new Coord(cursor);
@@ -242,10 +242,10 @@ public class DungeonsSmithy extends DungeonBase {
 		RectSolid.fill(editor, rand, start, end, wall);
 		cursor = new Coord(end);
 		cursor.add(Cardinal.left(dir));
-		stair.setOrientation(Cardinal.left(dir), true).setBlock(editor, cursor);
+		stair.setOrientation(Cardinal.left(dir), true).set(editor, cursor);
 		cursor = new Coord(end);
 		cursor.add(Cardinal.right(dir));
-		stair.setOrientation(Cardinal.right(dir), true).setBlock(editor, cursor);
+		stair.setOrientation(Cardinal.right(dir), true).set(editor, cursor);
 	}
 	
 	
@@ -344,7 +344,7 @@ public class DungeonsSmithy extends DungeonBase {
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.UP);
 		cursor.add(dir, 4);
-		air.setBlock(editor, cursor);
+		air.set(editor, cursor);
 		
 		for(Cardinal side : Cardinal.orthogonal(dir)){
 			
@@ -352,51 +352,51 @@ public class DungeonsSmithy extends DungeonBase {
 			cursor.add(dir, 4);
 			cursor.add(side);
 			
-			stair.setOrientation(Cardinal.reverse(side), false).setBlock(editor, cursor);
+			stair.setOrientation(Cardinal.reverse(side), false).set(editor, cursor);
 			cursor.add(Cardinal.UP);
-			stair.setOrientation(Cardinal.reverse(side), true).setBlock(editor, cursor);
+			stair.setOrientation(Cardinal.reverse(side), true).set(editor, cursor);
 			cursor.add(Cardinal.UP);
-			stair.setOrientation(side, false).setBlock(editor, cursor);
+			stair.setOrientation(side, false).set(editor, cursor);
 			cursor.add(Cardinal.UP);
-			bars.setBlock(editor, cursor);
+			bars.set(editor, cursor);
 			cursor.add(Cardinal.UP);
-			bars.setBlock(editor, cursor);
+			bars.set(editor, cursor);
 			cursor.add(Cardinal.UP);
-			stair.setOrientation(side, true).setBlock(editor, cursor);
+			stair.setOrientation(side, true).set(editor, cursor);
 					
 			cursor = new Coord(origin);
 			cursor.add(dir, 3);
 			cursor.add(side);
-			stair.setOrientation(Cardinal.reverse(dir), false).setBlock(editor, cursor);
+			stair.setOrientation(Cardinal.reverse(dir), false).set(editor, cursor);
 			cursor.add(side);
-			stair.setOrientation(Cardinal.reverse(dir), false).setBlock(editor, cursor);
+			stair.setOrientation(Cardinal.reverse(dir), false).set(editor, cursor);
 			cursor.add(side);
-			brick.setBlock(editor, cursor);
+			brick.set(editor, cursor);
 			cursor.add(dir);
-			brick.setBlock(editor, cursor);
+			brick.set(editor, cursor);
 			cursor.add(Cardinal.UP);
-			stair.setOrientation(Cardinal.reverse(side), false).setBlock(editor, cursor);
+			stair.setOrientation(Cardinal.reverse(side), false).set(editor, cursor);
 			cursor.add(Cardinal.reverse(dir));
-			stair.setOrientation(Cardinal.reverse(side), false).setBlock(editor, cursor);
+			stair.setOrientation(Cardinal.reverse(side), false).set(editor, cursor);
 			
 			cursor = new Coord(origin);
 			cursor.add(dir, 4);
 			cursor.add(side, 2);
-			brick.setBlock(editor, cursor);
+			brick.set(editor, cursor);
 			cursor.add(dir);
-			brick.setBlock(editor, cursor);
+			brick.set(editor, cursor);
 			cursor.add(Cardinal.UP);
-			brick.setBlock(editor, cursor);
+			brick.set(editor, cursor);
 			cursor.add(Cardinal.UP);
-			stair.setOrientation(Cardinal.reverse(dir), false).setBlock(editor, cursor);
+			stair.setOrientation(Cardinal.reverse(dir), false).set(editor, cursor);
 			cursor.add(Cardinal.DOWN);
 			cursor.add(Cardinal.reverse(dir));
-			stair.setOrientation(Cardinal.reverse(dir), false).setBlock(editor, cursor);
+			stair.setOrientation(Cardinal.reverse(dir), false).set(editor, cursor);
 			
 			cursor = new Coord(origin);
 			cursor.add(dir, 3);
 			cursor.add(Cardinal.UP, 5);
-			stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
+			stair.setOrientation(Cardinal.reverse(dir), true).set(editor, cursor);
 			
 		}
 		
@@ -416,9 +416,9 @@ public class DungeonsSmithy extends DungeonBase {
 		
 		cursor = new Coord(origin);
 		cursor.add(dir, 3);
-		brickSlab.setBlock(editor, cursor);
+		brickSlab.set(editor, cursor);
 		cursor.add(dir);
-		brickSlab.setBlock(editor, cursor);
+		brickSlab.set(editor, cursor);
 		
 	}
 	
@@ -439,7 +439,7 @@ public class DungeonsSmithy extends DungeonBase {
 				: Anvil.DAMAGED_ANVIL), Cardinal.left(dir));
 		cursor = new Coord(origin);
 		cursor.add(dir);
-		anvil.setBlock(editor, cursor);
+		anvil.set(editor, cursor);
 		
 		start = new Coord(origin);
 		start.add(Cardinal.right(dir), 2);
@@ -453,9 +453,9 @@ public class DungeonsSmithy extends DungeonBase {
 		cursor.add(Cardinal.right(dir), 3);
 		wall.set(editor, rand, cursor);
 		cursor.add(dir);
-		editor.setBlock(cursor, BlockType.get(BlockType.WATER_FLOWING));
+		BlockType.get(BlockType.WATER_FLOWING).set(editor, cursor);
 		cursor.add(Cardinal.reverse(dir), 2);
-		editor.setBlock(cursor, BlockType.get(BlockType.LAVA_FLOWING));
+		BlockType.get(BlockType.LAVA_FLOWING).set(editor, cursor);
 		
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.left(dir), 3);
@@ -479,21 +479,21 @@ public class DungeonsSmithy extends DungeonBase {
 		
 		Coord cursor;
 		
-		editor.setBlock(origin, BlockType.get(BlockType.AIR));
+		BlockType.get(BlockType.AIR).set(editor, origin);
 		
 		for(Cardinal dir : Cardinal.directions){
 			cursor = new Coord(origin);
 			cursor.add(dir);
-			stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
+			stair.setOrientation(Cardinal.reverse(dir), true).set(editor, cursor);
 			cursor.add(Cardinal.left(dir));
-			stair.setBlock(editor, cursor);
+			stair.set(editor, cursor);
 		}
 		
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.UP, 2);
-		BlockType.get(BlockType.REDSTONE_BLOCK).setBlock(editor, cursor);
+		BlockType.get(BlockType.REDSTONE_BLOCK).set(editor, cursor);
 		cursor.add(Cardinal.DOWN);
-		BlockType.get(BlockType.REDSTONE_LAMP_LIT).setBlock(editor, cursor);
+		BlockType.get(BlockType.REDSTONE_LAMP_LIT).set(editor, cursor);
 	}
 	
 	public int getSize(){

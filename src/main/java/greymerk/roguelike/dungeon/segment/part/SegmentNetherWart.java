@@ -26,18 +26,18 @@ public class SegmentNetherWart extends SegmentBase{
 		
 		cursor = new Coord(origin);
 		cursor.add(dir, 2);
-		air.setBlock(editor, cursor);
+		air.set(editor, cursor);
 		cursor.add(Cardinal.UP, 1);
-		air.setBlock(editor, cursor);
+		air.set(editor, cursor);
 		cursor = new Coord(origin);
 		cursor.add(dir, 5);
 
 		
 		cursor = new Coord(origin);
 		cursor.add(dir, 3);
-		editor.setBlock(cursor, BlockType.get(BlockType.FENCE_NETHER_BRICK));
+		BlockType.get(BlockType.FENCE_NETHER_BRICK).set(editor, cursor);
 		cursor.add(Cardinal.UP, 1);
-		editor.setBlock(cursor, BlockType.get(BlockType.FENCE_NETHER_BRICK));
+		BlockType.get(BlockType.FENCE_NETHER_BRICK).set(editor, cursor);
 		
 		for(Cardinal orth : Cardinal.orthogonal(dir)){
 			step.setOrientation(Cardinal.reverse(orth), true);
@@ -45,19 +45,19 @@ public class SegmentNetherWart extends SegmentBase{
 			cursor.add(dir, 2);
 			cursor.add(orth, 1);
 			cursor.add(Cardinal.UP, 1);
-			step.setBlock(editor, cursor);
+			step.set(editor, cursor);
 			cursor.add(Cardinal.UP, 1);
 			wall.set(editor, rand, cursor);
 			cursor.add(Cardinal.reverse(orth), 1);
 			wall.set(editor, rand, cursor);
 			cursor.add(Cardinal.DOWN, 2);
-			editor.setBlock(cursor, Crops.get(Crops.NETHERWART));
+			Crops.get(Crops.NETHERWART).set(editor, cursor);
 			cursor.add(orth, 1);
-			editor.setBlock(cursor, Crops.get(Crops.NETHERWART));
+			Crops.get(Crops.NETHERWART).set(editor, cursor);
 			cursor.add(Cardinal.DOWN, 1);
-			editor.setBlock(cursor, BlockType.get(BlockType.SOUL_SAND));
+			BlockType.get(BlockType.SOUL_SAND).set(editor, cursor);
 			cursor.add(Cardinal.reverse(orth), 1);
-			editor.setBlock(cursor, BlockType.get(BlockType.SOUL_SAND));
+			BlockType.get(BlockType.SOUL_SAND).set(editor, cursor);
 		}
 		
 	}

@@ -71,9 +71,9 @@ public class DungeonEniko extends DungeonBase {
 				
 				c = new Coord(cursor);
 				c.add(o, 3);
-				stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, c);
+				stair.setOrientation(Cardinal.reverse(dir), true).set(editor, c);
 				c.add(o);
-				stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, c);
+				stair.setOrientation(Cardinal.reverse(dir), true).set(editor, c);
 				c.add(Cardinal.UP);
 				chests.add(new Coord(c));
 				c.add(Cardinal.reverse(o));

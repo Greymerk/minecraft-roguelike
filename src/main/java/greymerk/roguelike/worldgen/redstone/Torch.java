@@ -34,7 +34,7 @@ public enum Torch {
 		
 		MetaBlock torch = new MetaBlock(name.getStateFromMeta(meta));
 		
-		torch.setBlock(editor, pos);
+		torch.set(editor, pos);
 		
 	}
 	

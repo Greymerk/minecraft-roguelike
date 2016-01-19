@@ -45,7 +45,7 @@ public class DungeonCorner extends DungeonBase {
 		
 		cursor = new Coord(x, y, z);
 		cursor.add(Cardinal.UP, 4);
-		air.setBlock(editor, cursor);
+		air.set(editor, cursor);
 		cursor.add(Cardinal.UP, 1);
 		blocks.set(editor, rand, cursor);
 		

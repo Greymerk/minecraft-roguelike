@@ -13,7 +13,7 @@ public class Piston {
 		
 		MetaBlock piston = new MetaBlock(sticky ? Blocks.sticky_piston : Blocks.piston);
 		piston.withProperty(BlockPistonBase.FACING, Cardinal.facing(Cardinal.reverse(dir)));
-		piston.setBlock(editor, origin);
+		piston.set(editor, origin);
 	}
 	
 }

@@ -23,7 +23,7 @@ public enum FlowerPot {
 
 	public static void generate(IWorldEditor editor, Coord pos, FlowerPot type){
 		MetaBlock pot = new MetaBlock(Blocks.flower_pot);
-		if(!pot.setBlock(editor, pos)) return;
+		if(!pot.set(editor, pos)) return;
 		
 		TileEntity potEntity = editor.getTileEntity(pos);
 		

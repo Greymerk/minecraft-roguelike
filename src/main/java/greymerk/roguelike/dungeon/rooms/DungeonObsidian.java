@@ -340,13 +340,13 @@ public class DungeonObsidian extends DungeonBase {
 	private static void lavaWindow(IWorldEditor editor, Coord cursor, Cardinal orth){
 		MetaBlock lava = BlockType.get(BlockType.LAVA_FLOWING);
 		MetaBlock fence = BlockType.get(BlockType.FENCE_NETHER_BRICK);
-		editor.setBlock(cursor, lava);
+		lava.set(editor, cursor);
 		cursor.add(Cardinal.DOWN, 1);
-		editor.setBlock(cursor, lava);
+		lava.set(editor, cursor);
 		cursor.add(orth, 1);
-		editor.setBlock(cursor, fence);
+		fence.set(editor, cursor);
 		cursor.add(Cardinal.UP, 1);
-		editor.setBlock(cursor, fence);
+		fence.set(editor, cursor);
 	}
 
 }

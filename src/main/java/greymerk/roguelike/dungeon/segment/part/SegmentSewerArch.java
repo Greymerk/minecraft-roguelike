@@ -38,17 +38,17 @@ public class SegmentSewerArch extends SegmentBase {
 		
 		cursor = new Coord(origin);
 		cursor.add(dir, 2);
-		air.setBlock(editor, cursor);
+		air.set(editor, cursor);
 		cursor.add(Cardinal.UP, 1);
-		air.setBlock(editor, cursor);
+		air.set(editor, cursor);
 		cursor.add(Cardinal.UP, 1);
-		stair.setBlock(editor, cursor);
+		stair.set(editor, cursor);
 		
 		cursor = new Coord(origin);
 		cursor.add(dir, 2);
-		bars.setBlock(editor, cursor);
+		bars.set(editor, cursor);
 		cursor.add(Cardinal.UP);
-		bars.setBlock(editor, cursor);
+		bars.set(editor, cursor);
 		
 		start = new Coord(origin);
 		start.add(Cardinal.DOWN);
@@ -70,7 +70,7 @@ public class SegmentSewerArch extends SegmentBase {
 			cursor.add(Cardinal.UP, 1);
 			theme.getPrimaryWall().set(editor, rand, cursor);
 			cursor.add(Cardinal.reverse(dir), 1);
-			stair.setBlock(editor, cursor);			
+			stair.set(editor, cursor);			
 		}
 	}
 }

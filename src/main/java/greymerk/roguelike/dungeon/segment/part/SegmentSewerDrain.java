@@ -54,11 +54,11 @@ public class SegmentSewerDrain extends SegmentBase {
 			cursor = new Coord(origin);
 			cursor.add(dir, 2);
 			cursor.add(o);
-			stair.setOrientation(Cardinal.reverse(o), false).setBlock(editor, cursor);
+			stair.setOrientation(Cardinal.reverse(o), false).set(editor, cursor);
 			cursor.add(Cardinal.UP);
-			bars.setBlock(editor, cursor);
+			bars.set(editor, cursor);
 			cursor.add(Cardinal.UP);
-			stair.setOrientation(Cardinal.reverse(o), true).setBlock(editor, cursor);
+			stair.setOrientation(Cardinal.reverse(o), true).set(editor, cursor);
 		}
 		
 		start = new Coord(origin);
@@ -66,12 +66,12 @@ public class SegmentSewerDrain extends SegmentBase {
 		end = new Coord(start);
 		end.add(dir, 5);
 		RectSolid.fill(editor, rand, start, end, air);
-		water.setBlock(editor, end);
+		water.set(editor, end);
 		
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.DOWN);
 		cursor.add(dir);
-		air.setBlock(editor, cursor);
+		air.set(editor, cursor);
 		
 	}
 }

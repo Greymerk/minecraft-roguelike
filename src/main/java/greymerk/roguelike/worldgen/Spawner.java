@@ -34,7 +34,7 @@ public enum Spawner {
 	
 	public static void generate(IWorldEditor editor, Random rand, int level, Coord pos, Spawner type){
 				
-		if(!editor.setBlock(pos, new MetaBlock(Blocks.mob_spawner))) return;
+		if(!new MetaBlock(Blocks.mob_spawner).set(editor, pos)) return;
 		
 		TileEntityMobSpawner spawner = (TileEntityMobSpawner) editor.getTileEntity(pos);
 

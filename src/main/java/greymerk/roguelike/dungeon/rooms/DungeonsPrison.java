@@ -130,18 +130,18 @@ public class DungeonsPrison extends DungeonBase {
 			cursor = new Coord(origin);
 			cursor.add(Cardinal.UP, 5);
 			cursor.add(dir, 2);
-			air.setBlock(editor, cursor);
+			air.set(editor, cursor);
 			for(Cardinal o : Cardinal.orthogonal(dir)){
 				Coord c = new Coord(cursor);
 				c.add(o);
-				stair.setOrientation(Cardinal.reverse(o), true).setBlock(editor, c);
+				stair.setOrientation(Cardinal.reverse(o), true).set(editor, c);
 			}
 			
 			cursor = new Coord(origin);
 			cursor.add(Cardinal.UP, 6);
-			air.setBlock(editor, cursor);
+			air.set(editor, cursor);
 			cursor.add(dir, 1);
-			stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
+			stair.setOrientation(Cardinal.reverse(dir), true).set(editor, cursor);
 		}			
 	}
 	
@@ -248,7 +248,7 @@ public class DungeonsPrison extends DungeonBase {
 		stair.setOrientation(Cardinal.reverse(dir), true).fill(editor, rand, new RectSolid(start, end));
 		
 		cursor.add(Cardinal.UP, 1);
-		air.setBlock(editor, cursor);
+		air.set(editor, cursor);
 		start = new Coord(cursor);
 		start.add(dir, 1);
 		end = new Coord(start);
@@ -318,9 +318,9 @@ public class DungeonsPrison extends DungeonBase {
 			RectSolid.fill(editor, rand, start, end, bar);
 			
 			if(rand.nextBoolean()){
-				air.setBlock(editor, cursor);
+				air.set(editor, cursor);
 				cursor.add(Cardinal.UP);
-				air.setBlock(editor, cursor);
+				air.set(editor, cursor);
 			}
 		}
 		

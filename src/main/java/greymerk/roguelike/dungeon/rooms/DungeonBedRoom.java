@@ -109,14 +109,14 @@ public class DungeonBedRoom extends DungeonBase {
 		cursor.add(side, 1);
 		Bed.generate(editor, Cardinal.reverse(dir), cursor);
 		cursor.add(side);
-		editor.setBlock(cursor, BlockType.get(BlockType.SHELF));
+		BlockType.get(BlockType.SHELF).set(editor, cursor);
 		cursor.add(Cardinal.UP);
 		FlowerPot.generate(editor, rand, cursor);
 		cursor.add(Cardinal.reverse(side), 3);
 		cursor.add(Cardinal.DOWN);
 		IStair stair = theme.getSecondaryStair();
 		stair.setOrientation(Cardinal.reverse(dir), true);
-		stair.setBlock(editor, cursor);
+		stair.set(editor, cursor);
 		cursor.add(Cardinal.UP);
 		Torch.generate(editor, Torch.WOODEN, Cardinal.UP, cursor);
 		
@@ -131,9 +131,9 @@ public class DungeonBedRoom extends DungeonBase {
 			Torch.generate(editor, Torch.WOODEN, Cardinal.UP, cursor);
 			cursor.add(Cardinal.DOWN);
 			cursor.add(dir);
-			editor.setBlock(cursor, BlockType.get(BlockType.CRAFTING_TABLE));
+			BlockType.get(BlockType.CRAFTING_TABLE).set(editor, cursor);
 		} else {
-			editor.setBlock(cursor, BlockType.get(BlockType.CRAFTING_TABLE));
+			BlockType.get(BlockType.CRAFTING_TABLE).set(editor, cursor);
 			cursor.add(dir);
 			cursor.add(Cardinal.UP);
 			Torch.generate(editor, Torch.WOODEN, Cardinal.UP, cursor);
@@ -160,7 +160,7 @@ public class DungeonBedRoom extends DungeonBase {
 		IStair stair = theme.getSecondaryStair();
 		stair.setOrientation(Cardinal.reverse(dir), true);
 		end.add(Cardinal.reverse(dir));
-		stair.setBlock(editor, end);
+		stair.set(editor, end);
 	}
 
 	@Override

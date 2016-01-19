@@ -53,7 +53,7 @@ public class SegmentJungle extends SegmentBase {
 			cursor.add(d, 1);
 			cursor.add(Cardinal.UP, 1);
 			stair.setOrientation(Cardinal.reverse(d), true);
-			stair.setBlock(editor, cursor);
+			stair.set(editor, cursor);
 		}
 
 	}

@@ -45,7 +45,7 @@ public class SegmentPlant extends SegmentBase {
 			Coord c = new Coord(cursor);
 			c.add(d, 1);
 			stair.setOrientation(Cardinal.reverse(d), true);
-			stair.setBlock(editor, c);
+			stair.set(editor, c);
 		}
 		
 		cursor = new Coord(origin);
@@ -56,7 +56,7 @@ public class SegmentPlant extends SegmentBase {
 	
 	private void plant(IWorldEditor editor, Random rand, ITheme theme, Coord origin){
 		Coord cursor;
-		BlockType.get(BlockType.DIRT_PODZOL).setBlock(editor, origin);
+		BlockType.get(BlockType.DIRT_PODZOL).set(editor, origin);
 		
 		for(Cardinal dir : Cardinal.directions){
 			cursor = new Coord(origin);

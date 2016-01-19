@@ -53,7 +53,7 @@ public class JungleTower implements ITower{
 				c.add(Cardinal.UP);
 				walls.set(editor, rand, c);
 				c.add(Cardinal.UP);
-				stair.setOrientation(dir, false).setBlock(editor, c);
+				stair.setOrientation(dir, false).set(editor, c);
 				c.add(Cardinal.reverse(dir));
 				walls.set(editor, rand, c);
 			}
@@ -65,7 +65,7 @@ public class JungleTower implements ITower{
 			cursor.add(Cardinal.UP);
 			walls.set(editor, rand, cursor);
 			cursor.add(Cardinal.UP);
-			stair.setOrientation(dir, false).setBlock(editor, cursor);
+			stair.setOrientation(dir, false).set(editor, cursor);
 			cursor.add(Cardinal.reverse(dir));
 			walls.set(editor, rand, cursor);
 			
@@ -79,7 +79,7 @@ public class JungleTower implements ITower{
 			for(Cardinal d : new Cardinal[]{Cardinal.reverse(dir), Cardinal.right(dir)}){
 				Coord c = new Coord(cursor);
 				c.add(d);
-				stair.setOrientation(d, true).setBlock(editor, c);
+				stair.setOrientation(d, true).set(editor, c);
 			}
 			
 			// corner pillar
@@ -91,13 +91,13 @@ public class JungleTower implements ITower{
 			for(Cardinal d : new Cardinal[]{dir, Cardinal.left(dir)}){
 				start = new Coord(cursor);
 				start.add(d);
-				stair.setOrientation(d, false).setBlock(editor, start);
+				stair.setOrientation(d, false).set(editor, start);
 				start.add(Cardinal.DOWN);
 				end = new Coord(start);
 				end.add(Cardinal.DOWN, 2);
 				walls.fill(editor, rand, new RectSolid(start, end));
 				end.add(Cardinal.DOWN);
-				stair.setOrientation(d, true).setBlock(editor, end);
+				stair.setOrientation(d, true).set(editor, end);
 			}
 		}
 		
@@ -199,11 +199,11 @@ public class JungleTower implements ITower{
 				c.add(Cardinal.UP);
 				walls.set(editor, rand, c);
 				c.add(Cardinal.UP);
-				stair.setOrientation(dir, false).setBlock(editor, c);
+				stair.setOrientation(dir, false).set(editor, c);
 				c.add(Cardinal.reverse(dir));
 				walls.set(editor, rand, c);
 				c.add(Cardinal.UP);
-				stair.setOrientation(dir, false).setBlock(editor, c);
+				stair.setOrientation(dir, false).set(editor, c);
 			}
 			cursor.add(Cardinal.left(dir), 5);
 			pillar(editor, rand, theme, cursor);
@@ -213,7 +213,7 @@ public class JungleTower implements ITower{
 				c.add(Cardinal.UP);
 				walls.set(editor, rand, c);
 				c.add(Cardinal.UP);
-				stair.setOrientation(d, false).setBlock(editor, c);
+				stair.setOrientation(d, false).set(editor, c);
 			}
 			
 			cursor = new Coord(origin);
@@ -227,14 +227,14 @@ public class JungleTower implements ITower{
 			for(Cardinal d : new Cardinal[]{Cardinal.right(dir), Cardinal.reverse(dir)}){
 				Coord c = new Coord(cursor);
 				c.add(d);
-				stair.setOrientation(d, true).setBlock(editor, c);
+				stair.setOrientation(d, true).set(editor, c);
 			}
 			
 			cursor.add(Cardinal.DOWN);
 			for(Cardinal d : new Cardinal[]{Cardinal.left(dir), dir}){
 				Coord c = new Coord(cursor);
 				c.add(d);
-				stair.setOrientation(d, true).setBlock(editor, c);
+				stair.setOrientation(d, true).set(editor, c);
 				c.add(Cardinal.UP);
 				walls.set(editor, rand, c);
 				c.add(d);
@@ -310,7 +310,7 @@ public class JungleTower implements ITower{
 				c.add(Cardinal.UP);
 				walls.set(editor, rand, c);
 				c.add(Cardinal.UP);
-				stair.setOrientation(d, false).setBlock(editor, c);
+				stair.setOrientation(d, false).set(editor, c);
 			}
 			
 			start = new Coord(origin);
@@ -452,7 +452,7 @@ public class JungleTower implements ITower{
 		MetaBlock leaves = Leaves.get(Leaves.JUNGLE, false);
 		
 		Coord cursor = new Coord(origin);
-		Log.getLog(Wood.JUNGLE).setBlock(editor, cursor);
+		Log.getLog(Wood.JUNGLE).set(editor, cursor);
 		for(Cardinal dir : Cardinal.directions){
 			Coord c = new Coord(cursor);
 			c.add(dir);
@@ -460,7 +460,7 @@ public class JungleTower implements ITower{
 		}
 		if(rand.nextBoolean()){
 			cursor.add(Cardinal.UP);
-			Log.getLog(Wood.JUNGLE).setBlock(editor, cursor);
+			Log.getLog(Wood.JUNGLE).set(editor, cursor);
 			for(Cardinal dir : Cardinal.directions){
 				Coord c = new Coord(cursor);
 				c.add(dir);
@@ -469,7 +469,7 @@ public class JungleTower implements ITower{
 		}
 		if(rand.nextInt(3) == 0){
 			cursor.add(Cardinal.UP);
-			Log.getLog(Wood.JUNGLE).setBlock(editor, cursor);
+			Log.getLog(Wood.JUNGLE).set(editor, cursor);
 			for(Cardinal dir : Cardinal.directions){
 				Coord c = new Coord(cursor);
 				c.add(dir);
@@ -477,17 +477,17 @@ public class JungleTower implements ITower{
 			}
 		}
 		cursor.add(Cardinal.UP);
-		leaves.setBlock(editor, cursor);
+		leaves.set(editor, cursor);
 	}
 	
 	public void leafSpill(IWorldEditor editor, Random rand, ITheme theme, Coord origin, int count){
 		if(count < 0) return;
 		MetaBlock leaves = Leaves.get(Leaves.JUNGLE, false);
-		leaves.setBlock(editor, origin);
+		leaves.set(editor, origin);
 		Coord cursor = new Coord(origin);
 		cursor.add(Cardinal.DOWN);
 		if(!editor.getBlock(cursor).getBlock().getMaterial().isOpaque()){
-			leaves.setBlock(editor, origin);
+			leaves.set(editor, origin);
 			if(rand.nextBoolean()) leafSpill(editor, rand, theme, cursor, count - 1);
 			return;
 		}
@@ -496,7 +496,7 @@ public class JungleTower implements ITower{
 			cursor = new Coord(origin);
 			cursor.add(dir);
 			if(editor.getBlock(cursor).getBlock().getMaterial().isOpaque()) continue;
-			leaves.setBlock(editor, origin);
+			leaves.set(editor, origin);
 			cursor.add(Cardinal.DOWN);
 			if(editor.getBlock(cursor).getBlock().getMaterial().isOpaque()) continue;
 			leafSpill(editor, rand, theme, cursor, count - 1);
@@ -514,7 +514,7 @@ public class JungleTower implements ITower{
 		for(Cardinal dir : Cardinal.directions){
 			cursor = new Coord(origin);
 			cursor.add(dir);
-			stair.setOrientation(dir, true).setBlock(editor, cursor);
+			stair.setOrientation(dir, true).set(editor, cursor);
 		}
 	}
 	

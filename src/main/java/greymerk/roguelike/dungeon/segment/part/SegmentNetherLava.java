@@ -29,9 +29,9 @@ public class SegmentNetherLava extends SegmentBase {
 		
 		cursor = new Coord(origin);
 		cursor.add(dir, 2);
-		air.setBlock(editor, cursor);
+		air.set(editor, cursor);
 		cursor.add(Cardinal.UP, 1);
-		air.setBlock(editor, cursor);
+		air.set(editor, cursor);
 		cursor = new Coord(origin);
 		cursor.add(dir, 5);
 		boolean isAir = editor.isAirBlock(cursor);
@@ -47,9 +47,9 @@ public class SegmentNetherLava extends SegmentBase {
 			end.add(Cardinal.DOWN, 1);
 			if(isLava && !isAir){
 				RectSolid.fill(editor, rand, start, end, air);
-				lava.setBlock(editor, start);
+				lava.set(editor, start);
 				start.add(Cardinal.reverse(orth), 1);
-				lava.setBlock(editor, start);
+				lava.set(editor, start);
 			}
 			
 			cursor = new Coord(origin);
@@ -57,11 +57,11 @@ public class SegmentNetherLava extends SegmentBase {
 			
 			step.setOrientation(Cardinal.reverse(orth), false);
 			cursor.add(orth, 1);
-			step.setBlock(editor, cursor);
+			step.set(editor, cursor);
 			
 			step.setOrientation(Cardinal.reverse(orth), true);
 			cursor.add(Cardinal.UP, 1);
-			step.setBlock(editor, cursor);
+			step.set(editor, cursor);
 			
 			cursor.add(Cardinal.UP, 1);
 			wall.set(editor, rand, cursor);

@@ -129,14 +129,14 @@ public class DungeonDarkHall extends DungeonBase{
 				cursor = new Coord(origin);
 				cursor.add(dir, 7);
 				cursor.add(Cardinal.UP, 2);
-				air.setBlock(editor, cursor);
+				air.set(editor, cursor);
 				
 				for (Cardinal o : Cardinal.orthogonal(dir)){
 					cursor = new Coord(origin);
 					cursor.add(dir, 7);
 					cursor.add(Cardinal.UP, 2);
 					cursor.add(o);
-					stair.setOrientation(Cardinal.reverse(o), true).setBlock(editor, cursor);
+					stair.setOrientation(Cardinal.reverse(o), true).set(editor, cursor);
 					
 					cursor = new Coord(origin);
 					cursor.add(dir, 6);
@@ -199,16 +199,16 @@ public class DungeonDarkHall extends DungeonBase{
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.UP, 3);
 		cursor.add(dir);
-		stair.setOrientation(dir, true).setBlock(editor, cursor);
+		stair.setOrientation(dir, true).set(editor, cursor);
 		cursor.add(Cardinal.UP);
-		stair.setOrientation(Cardinal.reverse(dir), false).setBlock(editor, cursor);
+		stair.setOrientation(Cardinal.reverse(dir), false).set(editor, cursor);
 		cursor.add(dir);
-		stair.setOrientation(dir, true).setBlock(editor, cursor);
+		stair.setOrientation(dir, true).set(editor, cursor);
 		cursor.add(Cardinal.UP);
-		stair.setOrientation(Cardinal.reverse(dir), false).setBlock(editor, cursor);
+		stair.setOrientation(Cardinal.reverse(dir), false).set(editor, cursor);
 		cursor.add(dir);
 		if(editor.isAirBlock(cursor)){
-			stair.setOrientation(dir, true).setBlock(editor, cursor);	
+			stair.setOrientation(dir, true).set(editor, cursor);	
 		} else {
 			wall.set(editor, rand, cursor);
 		}

@@ -122,24 +122,24 @@ public class DungeonFirework extends DungeonBase {
 		cursor.add(Cardinal.DOWN);
 		Torch.generate(editor, Torch.REDSTONE, Cardinal.UP, cursor);
 		cursor.add(Cardinal.DOWN);
-		breadboard.setBlock(editor, cursor);
+		breadboard.set(editor, cursor);
 		cursor.add(Cardinal.left(dir));
 		Torch.generate(editor, Torch.REDSTONE_UNLIT, Cardinal.left(dir), cursor);
 		cursor.add(Cardinal.left(dir));
-		wire.setBlock(editor, cursor);
+		wire.set(editor, cursor);
 		cursor.add(Cardinal.reverse(dir));
-		wire.setBlock(editor, cursor);
+		wire.set(editor, cursor);
 		cursor.add(Cardinal.reverse(dir));
-		wire.setBlock(editor, cursor);
+		wire.set(editor, cursor);
 		cursor.add(Cardinal.right(dir));
-		wire.setBlock(editor, cursor);
+		wire.set(editor, cursor);
 		cursor.add(Cardinal.right(dir));
-		wire.setBlock(editor, cursor);
+		wire.set(editor, cursor);
 		cursor.add(dir);
 		Repeater.generate(editor, rand, dir, 4, true, cursor);
 		cursor.add(Cardinal.UP);
 		cursor.add(Cardinal.reverse(dir));
-		ColorBlock.get(ColorBlock.CLAY, DyeColor.RED).setBlock(editor, cursor);
+		ColorBlock.get(ColorBlock.CLAY, DyeColor.RED).set(editor, cursor);
 		cursor.add(Cardinal.UP);
 		Lever.generate(editor, Cardinal.UP, cursor, true);
 		
@@ -147,11 +147,11 @@ public class DungeonFirework extends DungeonBase {
 		cursor = new Coord(x, y, z);
 		cursor.add(Cardinal.reverse(dir), 5);
 		cursor.add(Cardinal.UP, 3);
-		glowstone.setBlock(editor, cursor);
+		glowstone.set(editor, cursor);
 		cursor.add(dir, 4);
-		glowstone.setBlock(editor, cursor);
+		glowstone.set(editor, cursor);
 		cursor.add(dir, 6);
-		glowstone.setBlock(editor, cursor);
+		glowstone.set(editor, cursor);
 		
 		return false;
 	}
@@ -159,9 +159,9 @@ public class DungeonFirework extends DungeonBase {
 
 	private void launcher(IWorldEditor editor, Random rand, Cardinal dir, Coord pos){
 		Coord cursor = new Coord(pos);
-		editor.setBlock(cursor, BlockType.get(BlockType.REDSTONE_WIRE));
+		BlockType.get(BlockType.REDSTONE_WIRE).set(editor, cursor);
 		cursor.add(Cardinal.reverse(dir));
-		editor.setBlock(cursor, BlockType.get(BlockType.REDSTONE_WIRE));
+		BlockType.get(BlockType.REDSTONE_WIRE).set(editor, cursor);
 		cursor.add(Cardinal.reverse(dir));
 		Repeater.generate(editor, rand, dir, 0, cursor);
 		cursor.add(Cardinal.reverse(dir));
@@ -182,9 +182,9 @@ public class DungeonFirework extends DungeonBase {
 		cursor.add(dir);
 		Comparator.generate(editor, rand, dir, false, cursor);
 		cursor.add(dir);
-		editor.setBlock(cursor, BlockType.get(BlockType.REDSTONE_WIRE));
+		BlockType.get(BlockType.REDSTONE_WIRE).set(editor, cursor);
 		cursor.add(dir);
-		editor.setBlock(cursor, BlockType.get(BlockType.REDSTONE_WIRE));
+		BlockType.get(BlockType.REDSTONE_WIRE).set(editor, cursor);
 		cursor.add(dir);
 		
 		Coord top = new Coord(pos.getX(), 80, pos.getZ());
@@ -210,7 +210,7 @@ public class DungeonFirework extends DungeonBase {
 			if(torch){
 				Torch.generate(editor, Torch.REDSTONE, Cardinal.UP, cursor);
 			} else {
-				breadboard.setBlock(editor, cursor);
+				breadboard.set(editor, cursor);
 			}
 			torch = !torch;
 			cursor.add(Cardinal.UP);
@@ -239,7 +239,7 @@ public class DungeonFirework extends DungeonBase {
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		for(Coord c : new RectSolid(cursor, above)){
 			if(editor.getBlock(c).getBlock().getMaterial().isSolid()){
-				air.setBlock(editor, c);
+				air.set(editor, c);
 			}
 		}
 		start.add(Cardinal.left(dir));

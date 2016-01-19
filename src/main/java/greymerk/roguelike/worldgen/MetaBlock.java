@@ -48,7 +48,7 @@ public class MetaBlock extends BlockBase implements IBlockState{
 		this.state = state;
 	}
 
-	public boolean setBlock(IWorldEditor editor, Coord pos){
+	public boolean set(IWorldEditor editor, Coord pos){
 		return editor.setBlock(pos, this, true, true);
 	}
 		

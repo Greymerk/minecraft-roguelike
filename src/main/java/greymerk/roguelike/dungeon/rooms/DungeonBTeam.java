@@ -117,21 +117,21 @@ public class DungeonBTeam extends DungeonBase {
 		
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.reverse(dir), 4);
-		air.setBlock(editor, cursor);
+		air.set(editor, cursor);
 		cursor.add(Cardinal.UP);
-		air.setBlock(editor, cursor);
+		air.set(editor, cursor);
 		
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.reverse(dir));
 		cursor.add(Cardinal.left(dir), 3);
 		cursor.add(Cardinal.UP, 5);
-		log.setBlock(editor, cursor);
+		log.set(editor, cursor);
 		cursor.add(dir, 3);
-		log.setBlock(editor, cursor);
+		log.set(editor, cursor);
 		cursor.add(Cardinal.right(dir), 6);
-		log.setBlock(editor, cursor);
+		log.set(editor, cursor);
 		cursor.add(Cardinal.reverse(dir), 3);
-		log.setBlock(editor, cursor);
+		log.set(editor, cursor);
 		
 		start = new Coord(origin);
 		start.add(Cardinal.reverse(dir));
@@ -164,14 +164,14 @@ public class DungeonBTeam extends DungeonBase {
 		cursor = new Coord(origin);
 		cursor.add(dir, 4);
 		cursor.add(Cardinal.right(dir), 5);
-		BlockType.get(BlockType.SHELF).setBlock(editor, cursor);
+		BlockType.get(BlockType.SHELF).set(editor, cursor);
 		cursor.add(Cardinal.UP);
-		BrewingStand.get().setBlock(editor, cursor);
+		BrewingStand.get().set(editor, cursor);
 		
 		cursor = new Coord(origin);
 		cursor.add(dir, 4);
 		cursor.add(Cardinal.left(dir), 4);
-		BlockType.get(BlockType.JUKEBOX).setBlock(editor, cursor);
+		BlockType.get(BlockType.JUKEBOX).set(editor, cursor);
 		cursor.add(Cardinal.left(dir));
 		ITreasureChest stal = Treasure.generate(editor, rand, cursor, Treasure.EMPTY, settings.getDifficulty(cursor));
 		stal.setSlot(stal.getSize() / 2, Record.getRecord(Record.STAL));
@@ -226,14 +226,14 @@ public class DungeonBTeam extends DungeonBase {
 		for(Cardinal d : Cardinal.orthogonal(dir)){
 			Coord c = new Coord(cursor);
 			c.add(d);
-			chair.setOrientation(dir, false).setBlock(editor, c);
+			chair.setOrientation(dir, false).set(editor, c);
 		}
 		
 		cursor.add(dir, 5);
 		for(Cardinal d : Cardinal.orthogonal(dir)){
 			Coord c = new Coord(cursor);
 			c.add(d);
-			chair.setOrientation(Cardinal.reverse(dir), false).setBlock(editor, c);
+			chair.setOrientation(Cardinal.reverse(dir), false).set(editor, c);
 		}
 	}
 	
@@ -244,24 +244,24 @@ public class DungeonBTeam extends DungeonBase {
 		Coord cursor;
 		
 		cursor = new Coord(origin);
-		plank.setBlock(editor, cursor);
+		plank.set(editor, cursor);
 		cursor.add(Cardinal.UP);
-		fence.setBlock(editor, cursor);
+		fence.set(editor, cursor);
 		cursor.add(Cardinal.UP);
-		BlockType.get(BlockType.GLOWSTONE).setBlock(editor, cursor);
+		BlockType.get(BlockType.GLOWSTONE).set(editor, cursor);
 		for(Cardinal d : Cardinal.directions){
 			if(d == Cardinal.reverse(dir)) continue;
 			
 			Coord c = new Coord(cursor);
 			c.add(d);
-			Trapdoor.get(Trapdoor.OAK, Cardinal.reverse(d), false, true).setBlock(editor, c);
+			Trapdoor.get(Trapdoor.OAK, Cardinal.reverse(d), false, true).set(editor, c);
 		}
 		cursor.add(Cardinal.UP);
-		fence.setBlock(editor, cursor);
+		fence.set(editor, cursor);
 		cursor.add(Cardinal.UP);
-		plank.setBlock(editor, cursor);
+		plank.set(editor, cursor);
 		cursor.add(Cardinal.UP);
-		plank.setBlock(editor, cursor);
+		plank.set(editor, cursor);
 	}
 	
 	private void logWall(IWorldEditor editor, Random rand, Cardinal dir, Coord origin){
@@ -353,9 +353,9 @@ public class DungeonBTeam extends DungeonBase {
 			} else {
 				Coord c = new Coord(cursor);
 				c.add(Cardinal.right(dir));
-				b.setBlock(editor, c);
+				b.set(editor, c);
 				c.add(Cardinal.left(dir), 3);
-				b.setBlock(editor, c);
+				b.set(editor, c);
 			}
 			
 			cursor.add(Cardinal.UP);
@@ -406,9 +406,9 @@ public class DungeonBTeam extends DungeonBase {
 		RectSolid.fill(editor, rand, start, end, shelf);
 		cursor = new Coord(start);
 		cursor.add(Cardinal.UP);
-		jungle.setBlock(editor, cursor);
+		jungle.set(editor, cursor);
 		cursor.add(Cardinal.reverse(dir));
-		bean.setBlock(editor, cursor);
+		bean.set(editor, cursor);
 		
 		start = new Coord(origin);
 		start.add(Cardinal.right(dir), 3);
@@ -419,9 +419,9 @@ public class DungeonBTeam extends DungeonBase {
 		RectSolid.fill(editor, rand, start, end, shelf);
 		cursor = new Coord(start);
 		cursor.add(Cardinal.UP);
-		jungle.setBlock(editor, cursor);
+		jungle.set(editor, cursor);
 		cursor.add(Cardinal.reverse(dir));
-		bean.setBlock(editor, cursor);		
+		bean.set(editor, cursor);		
 		
 	}
 	

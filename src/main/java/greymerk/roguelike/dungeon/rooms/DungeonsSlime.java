@@ -88,16 +88,16 @@ public class DungeonsSlime extends DungeonBase {
 				wall.set(editor, rand, cursor);
 				cursor.add(Cardinal.DOWN);
 				cursor.add(dir);
-				water.setBlock(editor, cursor);
+				water.set(editor, cursor);
 				for(Cardinal o : Cardinal.orthogonal(dir)){
 					cursor = new Coord(origin);
 					cursor.add(dir, 7);
 					cursor.add(o);
-					stair.setOrientation(o, true).setBlock(editor, cursor);
+					stair.setOrientation(o, true).set(editor, cursor);
 					cursor.add(Cardinal.UP);
 					wall.set(editor, rand, cursor);
 					cursor.add(Cardinal.UP);
-					stair.setOrientation(o, false).setBlock(editor, cursor);
+					stair.setOrientation(o, false).set(editor, cursor);
 					
 				}
 			}

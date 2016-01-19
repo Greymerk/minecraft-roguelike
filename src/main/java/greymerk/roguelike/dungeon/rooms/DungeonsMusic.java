@@ -81,7 +81,7 @@ public class DungeonsMusic extends DungeonBase {
 			cursor.add(Cardinal.UP, 3);
 			panel.set(editor, rand, cursor);
 			cursor.add(Cardinal.reverse(dir));
-			stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
+			stair.setOrientation(Cardinal.reverse(dir), true).set(editor, cursor);
 			
 			cursor = new Coord(origin);
 			cursor.add(dir, 5);
@@ -99,9 +99,9 @@ public class DungeonsMusic extends DungeonBase {
 			cursor = new Coord(origin);
 			cursor.add(Cardinal.UP, 4);
 			cursor.add(dir);
-			stair.setOrientation(dir, true).setBlock(editor, cursor);
+			stair.setOrientation(dir, true).set(editor, cursor);
 			cursor.add(dir);
-			stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
+			stair.setOrientation(Cardinal.reverse(dir), true).set(editor, cursor);
 			
 			for(Cardinal o : Cardinal.orthogonal(dir)){
 				cursor = new Coord(origin);
@@ -113,7 +113,7 @@ public class DungeonsMusic extends DungeonBase {
 				cursor.add(dir, 4);
 				cursor.add(Cardinal.UP, 3);
 				cursor.add(o);
-				stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
+				stair.setOrientation(Cardinal.reverse(dir), true).set(editor, cursor);
 				
 				cursor = new Coord(origin);
 				cursor.add(dir, 5);
@@ -126,30 +126,30 @@ public class DungeonsMusic extends DungeonBase {
 				cursor = new Coord(origin);
 				cursor.add(dir, 5);
 				cursor.add(o, 3);
-				stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
+				stair.setOrientation(Cardinal.reverse(dir), true).set(editor, cursor);
 				cursor.add(o);
-				stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
+				stair.setOrientation(Cardinal.reverse(dir), true).set(editor, cursor);
 				cursor.add(Cardinal.UP, 2);
-				stair.setOrientation(Cardinal.reverse(o), true).setBlock(editor, cursor);
+				stair.setOrientation(Cardinal.reverse(o), true).set(editor, cursor);
 				cursor.add(Cardinal.reverse(o));
-				stair.setOrientation(o, true).setBlock(editor, cursor);
+				stair.setOrientation(o, true).set(editor, cursor);
 				cursor.add(Cardinal.UP);
 				panel.set(editor, rand, cursor);
 				cursor.add(o);
 				panel.set(editor, rand, cursor);
 				cursor.add(Cardinal.reverse(dir));
-				stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
+				stair.setOrientation(Cardinal.reverse(dir), true).set(editor, cursor);
 				cursor.add(Cardinal.reverse(o));
-				stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
+				stair.setOrientation(Cardinal.reverse(dir), true).set(editor, cursor);
 			
 			}
 		}
 		
-		BlockType.get(BlockType.JUKEBOX).setBlock(editor, origin);
+		BlockType.get(BlockType.JUKEBOX).set(editor, origin);
 		
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.UP, 4);
-		BlockType.get(BlockType.GLOWSTONE).setBlock(editor, cursor);
+		BlockType.get(BlockType.GLOWSTONE).set(editor, cursor);
 		
 		Treasure.generate(editor, rand, chests, Treasure.MUSIC, settings.getDifficulty(origin));
 		

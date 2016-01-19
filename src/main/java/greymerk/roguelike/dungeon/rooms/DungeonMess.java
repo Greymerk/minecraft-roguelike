@@ -53,7 +53,7 @@ public class DungeonMess extends DungeonBase {
 		
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.UP, 4);
-		BlockType.get(BlockType.GLOWSTONE).setBlock(editor, cursor);
+		BlockType.get(BlockType.GLOWSTONE).set(editor, cursor);
 		
 		for(Cardinal dir : Cardinal.directions){
 			start = new Coord(origin);
@@ -66,7 +66,7 @@ public class DungeonMess extends DungeonBase {
 			for(Cardinal d : Cardinal.directions){
 				cursor = new Coord(end);
 				cursor.add(d);
-				stair.setOrientation(d, true).setBlock(editor, cursor);
+				stair.setOrientation(d, true).set(editor, cursor);
 			}
 			
 			start = new Coord(origin);
@@ -90,9 +90,9 @@ public class DungeonMess extends DungeonBase {
 			cursor = new Coord(origin);
 			cursor.add(Cardinal.UP, 4);
 			cursor.add(dir);
-			stair.setOrientation(dir, true).setBlock(editor, cursor);
+			stair.setOrientation(dir, true).set(editor, cursor);
 			cursor.add(dir);
-			stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
+			stair.setOrientation(Cardinal.reverse(dir), true).set(editor, cursor);
 		}
 		
 		List<Cardinal> nonDoors = new ArrayList<Cardinal>();
@@ -166,10 +166,10 @@ public class DungeonMess extends DungeonBase {
 			cursor.add(Cardinal.reverse(dir));
 			wall.set(editor, rand, cursor);
 			cursor.add(Cardinal.DOWN);
-			stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
+			stair.setOrientation(Cardinal.reverse(dir), true).set(editor, cursor);
 			cursor.add(Cardinal.UP);
 			cursor.add(Cardinal.reverse(dir));
-			stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
+			stair.setOrientation(Cardinal.reverse(dir), true).set(editor, cursor);
 			cursor.add(Cardinal.UP);
 			cursor.add(Cardinal.reverse(dir));
 			start = new Coord(cursor);
@@ -188,8 +188,8 @@ public class DungeonMess extends DungeonBase {
 			stair.setOrientation(Cardinal.reverse(dir), true).fill(editor, rand, new RectSolid(start, end));
 			start.add(Cardinal.UP, 2);
 			end.add(Cardinal.UP, 2);
-			stair.setOrientation(Cardinal.right(dir), true).setBlock(editor, start);
-			stair.setOrientation(Cardinal.left(dir), true).setBlock(editor, end);
+			stair.setOrientation(Cardinal.right(dir), true).set(editor, start);
+			stair.setOrientation(Cardinal.left(dir), true).set(editor, end);
 			start.add(Cardinal.UP);
 			end.add(Cardinal.UP);
 			RectSolid.fill(editor, rand, start, end, wall, true, true);
@@ -227,13 +227,13 @@ public class DungeonMess extends DungeonBase {
 		cursor = new Coord(origin);
 		cursor.add(entrances[0], 4);
 		cursor.add(entrances[1], 4);
-		table.setOrientation(Cardinal.reverse(entrances[0]), true).setBlock(editor, cursor);
+		table.setOrientation(Cardinal.reverse(entrances[0]), true).set(editor, cursor);
 		cursor.add(entrances[1]);
-		table.setOrientation(entrances[1], true).setBlock(editor, cursor);
+		table.setOrientation(entrances[1], true).set(editor, cursor);
 		cursor.add(entrances[0]);
-		table.setOrientation(entrances[0], true).setBlock(editor, cursor);
+		table.setOrientation(entrances[0], true).set(editor, cursor);
 		cursor.add(Cardinal.reverse(entrances[1]));
-		table.setOrientation(Cardinal.reverse(entrances[1]), true).setBlock(editor, cursor);
+		table.setOrientation(Cardinal.reverse(entrances[1]), true).set(editor, cursor);
 		
 		
 		for(Cardinal dir : entrances){
@@ -249,10 +249,10 @@ public class DungeonMess extends DungeonBase {
 			cursor.add(Cardinal.reverse(dir));
 			wall.set(editor, rand, cursor);
 			cursor.add(Cardinal.DOWN);
-			stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
+			stair.setOrientation(Cardinal.reverse(dir), true).set(editor, cursor);
 			cursor.add(Cardinal.UP);
 			cursor.add(Cardinal.reverse(dir));
-			stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
+			stair.setOrientation(Cardinal.reverse(dir), true).set(editor, cursor);
 			cursor.add(Cardinal.UP);
 			cursor.add(Cardinal.reverse(dir));
 			start = new Coord(cursor);
@@ -271,8 +271,8 @@ public class DungeonMess extends DungeonBase {
 			stair.setOrientation(Cardinal.reverse(dir), false).fill(editor, rand, new RectSolid(start, end));
 			start.add(Cardinal.UP, 2);
 			end.add(Cardinal.UP, 2);
-			stair.setOrientation(Cardinal.right(dir), true).setBlock(editor, start);
-			stair.setOrientation(Cardinal.left(dir), true).setBlock(editor, end);
+			stair.setOrientation(Cardinal.right(dir), true).set(editor, start);
+			stair.setOrientation(Cardinal.left(dir), true).set(editor, end);
 			start.add(Cardinal.UP);
 			end.add(Cardinal.UP);
 			RectSolid.fill(editor, rand, start, end, wall, true, true);
@@ -306,25 +306,25 @@ public class DungeonMess extends DungeonBase {
 			cursor.add(dir, 7);
 			cursor.add(o, 2);
 			cursor.add(Cardinal.UP, 2);
-			stair.setOrientation(Cardinal.reverse(o), true).setBlock(editor, cursor);
+			stair.setOrientation(Cardinal.reverse(o), true).set(editor, cursor);
 			
 			cursor.add(Cardinal.reverse(dir));
 			cursor.add(Cardinal.UP, 2);
-			stair.setOrientation(Cardinal.reverse(o), true).setBlock(editor, cursor);
+			stair.setOrientation(Cardinal.reverse(o), true).set(editor, cursor);
 			cursor.add(Cardinal.reverse(o));
-			stair.setOrientation(o, true).setBlock(editor, cursor);
+			stair.setOrientation(o, true).set(editor, cursor);
 		}
 		
 		cursor = new Coord(origin);
 		cursor.add(dir, 6);
 		cursor.add(Cardinal.UP, 3);
-		stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
+		stair.setOrientation(Cardinal.reverse(dir), true).set(editor, cursor);
 		cursor.add(Cardinal.UP);
 		wall.set(editor, rand, cursor);
 		cursor.add(Cardinal.reverse(dir));
-		stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
+		stair.setOrientation(Cardinal.reverse(dir), true).set(editor, cursor);
 		cursor.add(Cardinal.reverse(dir));
-		stair.setOrientation(dir, true).setBlock(editor, cursor);
+		stair.setOrientation(dir, true).set(editor, cursor);
 		
 		start = new Coord(origin);
 		start.add(Cardinal.UP, 5);
@@ -369,45 +369,45 @@ public class DungeonMess extends DungeonBase {
 		
 		cursor = new Coord(origin);
 		cursor.add(dir, 6);
-		bars.setBlock(editor, cursor);
+		bars.set(editor, cursor);
 		cursor.add(dir);
 		cursor.add(Cardinal.DOWN);
-		netherrack.setBlock(editor, cursor);
+		netherrack.set(editor, cursor);
 		cursor.add(Cardinal.UP);
-		fire.setBlock(editor, cursor);
+		fire.set(editor, cursor);
 		cursor.add(Cardinal.UP);
-		air.setBlock(editor, cursor);
+		air.set(editor, cursor);
 		cursor.add(Cardinal.UP);
-		air.setBlock(editor, cursor);
+		air.set(editor, cursor);
 		cursor.add(Cardinal.reverse(dir));
-		stair.setOrientation(Cardinal.reverse(dir), false).setBlock(editor, cursor);
+		stair.setOrientation(Cardinal.reverse(dir), false).set(editor, cursor);
 		
 		for(Cardinal o : Cardinal.orthogonal(dir)){
 			cursor = new Coord(origin);
 			cursor.add(dir, 6);
 			cursor.add(o);
-			bars.setBlock(editor, cursor);
+			bars.set(editor, cursor);
 			cursor.add(o);
 			wall.set(editor, rand, cursor);
 			cursor.add(Cardinal.UP);
-			stair.setOrientation(o, false).setBlock(editor, cursor);
+			stair.setOrientation(o, false).set(editor, cursor);
 			cursor.add(Cardinal.reverse(o));
-			stair.setOrientation(Cardinal.reverse(o), true).setBlock(editor, cursor);
+			stair.setOrientation(Cardinal.reverse(o), true).set(editor, cursor);
 			cursor.add(dir);
-			stair.setOrientation(Cardinal.reverse(o), true).setBlock(editor, cursor);
+			stair.setOrientation(Cardinal.reverse(o), true).set(editor, cursor);
 			cursor.add(Cardinal.UP);
 			cursor.add(Cardinal.reverse(dir));
-			stair.setOrientation(o, false).setBlock(editor, cursor);
+			stair.setOrientation(o, false).set(editor, cursor);
 			
 			cursor = new Coord(origin);
 			cursor.add(dir, 6);
 			cursor.add(o);
-			bars.setBlock(editor, cursor);
+			bars.set(editor, cursor);
 			cursor.add(dir);
 			cursor.add(Cardinal.DOWN);
-			netherrack.setBlock(editor, cursor);
+			netherrack.set(editor, cursor);
 			cursor.add(Cardinal.UP);
-			fire.setBlock(editor, cursor);
+			fire.set(editor, cursor);
 		}
 	}
 	
@@ -419,23 +419,23 @@ public class DungeonMess extends DungeonBase {
 		
 		cursor = new Coord(origin);
 		cursor.add(dir, 7);
-		stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
+		stair.setOrientation(Cardinal.reverse(dir), true).set(editor, cursor);
 		cursor.add(Cardinal.UP);
 		Treasure.generate(editor, rand, cursor, Treasure.FOOD, settings.getDifficulty(origin));
 		cursor.add(Cardinal.left(dir));
 		Furnace.generate(editor, dir, cursor);
 		cursor.add(Cardinal.right(dir), 2);
-		BlockType.get(BlockType.CRAFTING_TABLE).setBlock(editor, cursor);
+		BlockType.get(BlockType.CRAFTING_TABLE).set(editor, cursor);
 		
 		for(Cardinal o : Cardinal.orthogonal(dir)){
 			cursor = new Coord(origin);
 			cursor.add(dir, 7);
 			cursor.add(o);
-			stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
+			stair.setOrientation(Cardinal.reverse(dir), true).set(editor, cursor);
 			cursor.add(o);
-			stair.setOrientation(Cardinal.reverse(o), true).setBlock(editor, cursor);
+			stair.setOrientation(Cardinal.reverse(o), true).set(editor, cursor);
 			cursor.add(Cardinal.UP);
-			stair.setOrientation(Cardinal.reverse(o), false).setBlock(editor, cursor);
+			stair.setOrientation(Cardinal.reverse(o), false).set(editor, cursor);
 		}
 		
 		
@@ -447,17 +447,17 @@ public class DungeonMess extends DungeonBase {
 		Coord cursor = new Coord(origin);
 		
 		cursor.add(dir, 5);
-		table.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
+		table.setOrientation(Cardinal.reverse(dir), true).set(editor, cursor);
 		cursor.add(dir);
-		table.setOrientation(dir, true).setBlock(editor, cursor);
+		table.setOrientation(dir, true).set(editor, cursor);
 		
 		for(Cardinal o : Cardinal.orthogonal(dir)){
 			cursor = new Coord(origin);
 			cursor.add(dir, 5);
 			cursor.add(o);
-			table.setOrientation(o, true).setBlock(editor, cursor);
+			table.setOrientation(o, true).set(editor, cursor);
 			cursor.add(dir);
-			table.setOrientation(o, true).setBlock(editor, cursor);
+			table.setOrientation(o, true).set(editor, cursor);
 		}
 	}
 	

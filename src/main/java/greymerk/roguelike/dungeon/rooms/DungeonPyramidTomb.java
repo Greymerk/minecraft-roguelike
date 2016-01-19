@@ -186,7 +186,7 @@ public class DungeonPyramidTomb extends DungeonBase{
 	
 	private void tile(IWorldEditor editor, Random rand, ITheme theme, Cardinal dir, Coord origin){
 		IStair stair = theme.getPrimaryStair();
-		stair.setOrientation(dir, true).setBlock(editor, origin);
+		stair.setOrientation(dir, true).set(editor, origin);
 		Coord cursor = new Coord(origin);
 		cursor.add(Cardinal.UP);
 		theme.getPrimaryPillar().set(editor, rand, cursor);
@@ -200,57 +200,57 @@ public class DungeonPyramidTomb extends DungeonBase{
 		Coord cursor;
 		
 		cursor = new Coord(origin);
-		blocks.setBlock(editor, cursor);
+		blocks.set(editor, cursor);
 		cursor.add(Cardinal.UP);
 		Treasure.generate(editor, rand, cursor, Treasure.ORE, Dungeon.getLevel(cursor.getY()));
 		cursor.add(Cardinal.UP);
-		blocks.setBlock(editor, cursor);
+		blocks.set(editor, cursor);
 		
 		for (Cardinal end : Cardinal.orthogonal(dir)){
 			
 			cursor = new Coord(origin);
 			cursor.add(end);
-			blocks.setBlock(editor, cursor);
+			blocks.set(editor, cursor);
 			cursor.add(Cardinal.UP);
 			Spawner.generate(editor, rand, settings, cursor, Spawner.ZOMBIE);
 			cursor.add(Cardinal.UP);
-			blocks.setBlock(editor, cursor);
+			blocks.set(editor, cursor);
 			
 			cursor = new Coord(origin);
 			cursor.add(end, 2);
-			stair.setOrientation(end, false).setBlock(editor, cursor);
+			stair.setOrientation(end, false).set(editor, cursor);
 			cursor.add(Cardinal.UP);
-			stair.setOrientation(end, true).setBlock(editor, cursor);
+			stair.setOrientation(end, true).set(editor, cursor);
 			cursor.add(Cardinal.UP);
-			stair.setOrientation(end, false).setBlock(editor, cursor);
+			stair.setOrientation(end, false).set(editor, cursor);
 			
 			for(Cardinal side : Cardinal.orthogonal(end)){
 
 				cursor = new Coord(origin);
 				cursor.add(side);
-				stair.setOrientation(side, false).setBlock(editor, cursor);
+				stair.setOrientation(side, false).set(editor, cursor);
 				cursor.add(Cardinal.UP);
-				stair.setOrientation(side, true).setBlock(editor, cursor);
+				stair.setOrientation(side, true).set(editor, cursor);
 				cursor.add(Cardinal.UP);
-				stair.setOrientation(side, false).setBlock(editor, cursor);
+				stair.setOrientation(side, false).set(editor, cursor);
 				
 				cursor = new Coord(origin);
 				cursor.add(side);
 				cursor.add(end);
-				stair.setOrientation(side, false).setBlock(editor, cursor);
+				stair.setOrientation(side, false).set(editor, cursor);
 				cursor.add(Cardinal.UP);
-				stair.setOrientation(side, true).setBlock(editor, cursor);
+				stair.setOrientation(side, true).set(editor, cursor);
 				cursor.add(Cardinal.UP);
-				stair.setOrientation(side, false).setBlock(editor, cursor);
+				stair.setOrientation(side, false).set(editor, cursor);
 				
 				cursor = new Coord(origin);
 				cursor.add(side);
 				cursor.add(end, 2);
-				stair.setOrientation(side, false).setBlock(editor, cursor);
+				stair.setOrientation(side, false).set(editor, cursor);
 				cursor.add(Cardinal.UP);
-				stair.setOrientation(side, true).setBlock(editor, cursor);
+				stair.setOrientation(side, true).set(editor, cursor);
 				cursor.add(Cardinal.UP);
-				stair.setOrientation(side, false).setBlock(editor, cursor);
+				stair.setOrientation(side, false).set(editor, cursor);
 			}
 		}
 	}

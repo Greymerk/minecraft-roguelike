@@ -60,7 +60,7 @@ public class DungeonsSpiderNest extends DungeonBase {
 					if(rand.nextInt(clearHeight)  == 0){
 						webs.set(editor, inRandom, new Coord(blockX, blockY, blockZ));
 					} else if(rand.nextInt(5) == 0){
-						editor.setBlock(new Coord(blockX, blockY, blockZ), BlockType.get(BlockType.GRAVEL));
+						BlockType.get(BlockType.GRAVEL).set(editor, new Coord(blockX, blockY, blockZ));
 					}
 					
 				}

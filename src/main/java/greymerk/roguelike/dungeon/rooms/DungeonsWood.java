@@ -49,13 +49,13 @@ public class DungeonsWood extends DungeonBase {
 		RectSolid.fill(editor, rand, new Coord(x + WIDTH, y, z + LENGTH), new Coord(x + WIDTH, y + HEIGHT, z + LENGTH), pillar);
 
 		// glowstone
-		glowstone.setBlock(editor, new Coord(x - WIDTH + 1, y - 1, z - LENGTH + 1));
-		glowstone.setBlock(editor, new Coord(x - WIDTH + 1, y - 1, z + LENGTH - 1));
-		glowstone.setBlock(editor, new Coord(x + WIDTH - 1, y - 1, z - LENGTH + 1));
-		glowstone.setBlock(editor, new Coord(x + WIDTH - 1, y - 1, z + LENGTH - 1));
+		glowstone.set(editor, new Coord(x - WIDTH + 1, y - 1, z - LENGTH + 1));
+		glowstone.set(editor, new Coord(x - WIDTH + 1, y - 1, z + LENGTH - 1));
+		glowstone.set(editor, new Coord(x + WIDTH - 1, y - 1, z - LENGTH + 1));
+		glowstone.set(editor, new Coord(x + WIDTH - 1, y - 1, z + LENGTH - 1));
 		
 		planks.set(editor, rand, new Coord(x, y, z));
-		Cake.get().setBlock(editor, new Coord(x, y + 1, z));
+		Cake.get().set(editor, new Coord(x, y + 1, z));
 		
 		List<Coord> space = new ArrayList<Coord>();
 		space.add(new Coord(x - WIDTH, y, z - LENGTH + 1));

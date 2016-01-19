@@ -16,7 +16,7 @@ public class Dropper {
 
 		MetaBlock container = new MetaBlock(Blocks.dropper);
 		container.withProperty(BlockDropper.FACING, Cardinal.facing(dir));
-		container.setBlock(editor, pos);
+		container.set(editor, pos);
 		return true;
 	}
 	

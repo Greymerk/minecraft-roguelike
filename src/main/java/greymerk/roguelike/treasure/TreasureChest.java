@@ -28,7 +28,7 @@ public class TreasureChest implements ITreasureChest{
 		
 		MetaBlock chestType = new MetaBlock(trapped ? Blocks.trapped_chest : Blocks.chest);
 		
-		if(!chestType.setBlock(editor, pos)){
+		if(!chestType.set(editor, pos)){
 			return null;
 		}
 		

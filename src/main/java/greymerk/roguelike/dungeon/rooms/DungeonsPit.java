@@ -83,7 +83,7 @@ public class DungeonsPit extends DungeonBase {
 							|| blockZ == originZ + dungeonWidth + 1){
 
 						if (blockY >= 0 && !editor.getBlock(new Coord(blockX, blockY - 1, blockZ)).getBlock().getMaterial().isSolid()) {
-							editor.setBlock(new Coord(blockX, blockY, blockZ), air);
+							air.set(editor, new Coord(blockX, blockY, blockZ));
 							continue;
 						}
 						
@@ -92,7 +92,7 @@ public class DungeonsPit extends DungeonBase {
 						blocks.set(editor, rand, new Coord(blockX, blockY, blockZ));
 						
 					} else {
-						editor.setBlock(new Coord(blockX, blockY, blockZ), air);
+						air.set(editor, new Coord(blockX, blockY, blockZ));
 					}
 				}
 			}
@@ -141,11 +141,11 @@ public class DungeonsPit extends DungeonBase {
 					}
 					
 					if(y < 10){
-						editor.setBlock(new Coord(x, y, z), BlockType.get(BlockType.WATER_FLOWING));
+						BlockType.get(BlockType.WATER_FLOWING).set(editor, new Coord(x, y, z));
 						continue;
 					}
 					
-					editor.setBlock(new Coord(x, y, z), BlockType.get(BlockType.AIR));
+					BlockType.get(BlockType.AIR).set(editor, new Coord(x, y, z));
 				}
 			}
 		}
@@ -176,14 +176,14 @@ public class DungeonsPit extends DungeonBase {
 		
 		cursor = new Coord(origin);
 		cursor.add(dir, 2);
-		plate.setBlock(editor, cursor);
+		plate.set(editor, cursor);
 		
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.DOWN);
 		cursor.add(dir, 3);
 		Torch.generate(editor, Torch.REDSTONE, dir, cursor);
 		cursor.add(dir);
-		wire.setBlock(editor, cursor);
+		wire.set(editor, cursor);
 		cursor.add(Cardinal.UP);
 		cursor.add(dir);
 		Torch.generate(editor, Torch.REDSTONE_UNLIT, Cardinal.UP, cursor);

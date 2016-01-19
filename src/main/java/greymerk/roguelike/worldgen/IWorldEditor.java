@@ -10,8 +10,6 @@ import net.minecraft.world.biome.BiomeGenBase;
 
 public interface IWorldEditor {
 
-	boolean setBlock(Coord pos, MetaBlock metaBlock);
-	
 	boolean setBlock(Coord pos, MetaBlock metaBlock, boolean fillAir, boolean replaceSolid);
 	
 	MetaBlock getBlock(Coord pos);

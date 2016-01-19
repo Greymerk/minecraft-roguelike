@@ -31,7 +31,7 @@ public class SegmentNetherArch extends SegmentBase {
 			cursor.add(dir, 1);
 			cursor.add(orth, 1);
 			cursor.add(Cardinal.UP, 2);
-			step.setBlock(editor, cursor);
+			step.set(editor, cursor);
 			
 			cursor = new Coord(origin);
 			cursor.add(dir, 2);
@@ -52,9 +52,9 @@ public class SegmentNetherArch extends SegmentBase {
 		
 		if(hasLava){
 			cursor.add(dir, 1);
-			lava.setBlock(editor, cursor);
+			lava.set(editor, cursor);
 			cursor.add(Cardinal.DOWN, 1);		
-			lava.setBlock(editor, cursor);
+			lava.set(editor, cursor);
 		}
 	}
 }

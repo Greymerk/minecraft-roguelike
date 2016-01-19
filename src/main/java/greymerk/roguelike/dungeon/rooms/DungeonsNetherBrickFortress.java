@@ -159,7 +159,7 @@ public class DungeonsNetherBrickFortress extends DungeonBase {
 			cursor = new Coord(origin);
 			cursor.add(dir, 2);
 			cursor.add(Cardinal.UP, 4);
-			stair.setOrientation(dir, true).setBlock(editor, cursor);
+			stair.setOrientation(dir, true).set(editor, cursor);
 		}
 		
 		start = new Coord(origin);

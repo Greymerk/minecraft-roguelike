@@ -80,15 +80,15 @@ public class SegmentGeneratorBase implements ISegmentGenerator{
 		
 		IStair stair = theme.getPrimaryStair();
 		stair.setOrientation(Cardinal.WEST, true);
-		stair.setBlock(editor, new Coord(x - 1, y - 2, z));
+		stair.set(editor, new Coord(x - 1, y - 2, z));
 		
 		stair.setOrientation(Cardinal.EAST, true);
-		stair.setBlock(editor, new Coord(x + 1, y - 2, z));
+		stair.set(editor, new Coord(x + 1, y - 2, z));
 		
 		stair.setOrientation(Cardinal.SOUTH, true);
-		stair.setBlock(editor, new Coord(x, y - 2, z + 1));
+		stair.set(editor, new Coord(x, y - 2, z + 1));
 		
 		stair.setOrientation(Cardinal.NORTH, true);
-		stair.setBlock(editor, new Coord(x, y - 2, z - 1));	
+		stair.set(editor, new Coord(x, y - 2, z - 1));	
 	}
 }

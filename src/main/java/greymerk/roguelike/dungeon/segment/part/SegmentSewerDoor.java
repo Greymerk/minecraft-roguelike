@@ -36,23 +36,23 @@ public class SegmentSewerDoor extends SegmentBase {
 		
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.DOWN);
-		bars.setBlock(editor, cursor);
+		bars.set(editor, cursor);
 		start = new Coord(cursor);
 		end = new Coord(start);
 		start.add(orth[0]);
 		end.add(orth[1]);
-		stair.setOrientation(orth[0], true).setBlock(editor, start);
-		stair.setOrientation(orth[1], true).setBlock(editor, end);
+		stair.setOrientation(orth[0], true).set(editor, start);
+		stair.setOrientation(orth[1], true).set(editor, end);
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.DOWN);
-		bars.setBlock(editor, cursor);
+		bars.set(editor, cursor);
 		start.add(Cardinal.DOWN);
 		end.add(Cardinal.DOWN);
 		RectSolid.fill(editor, rand, start, end, water);
 		
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.UP, 3);
-		bars.setBlock(editor, cursor);
+		bars.set(editor, cursor);
 		cursor.add(Cardinal.UP);
 		leaves.set(editor, rand, cursor, false, true);
 		cursor.add(dir);

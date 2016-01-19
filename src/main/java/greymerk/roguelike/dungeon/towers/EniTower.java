@@ -78,18 +78,18 @@ public class EniTower implements ITower {
 				cursor.add(Cardinal.UP, 3);
 				blocks.set(editor, rand, cursor);
 				cursor.add(orth);
-				stair.setOrientation(orth, false).setBlock(editor, cursor);
+				stair.setOrientation(orth, false).set(editor, cursor);
 				cursor.add(Cardinal.reverse(dir));
 				cursor.add(orth);
-				stair.setOrientation(dir, false).setBlock(editor, cursor);
+				stair.setOrientation(dir, false).set(editor, cursor);
 				cursor.add(orth);
-				stair.setOrientation(dir, false).setBlock(editor, cursor);
+				stair.setOrientation(dir, false).set(editor, cursor);
 				cursor.add(Cardinal.reverse(dir));
 				cursor.add(Cardinal.reverse(orth));
-				stair.setOrientation(Cardinal.reverse(orth), true).setBlock(editor, cursor);
+				stair.setOrientation(Cardinal.reverse(orth), true).set(editor, cursor);
 				cursor.add(dir);
 				cursor.add(Cardinal.reverse(orth));
-				stair.setOrientation(Cardinal.reverse(orth), true).setBlock(editor, cursor);
+				stair.setOrientation(Cardinal.reverse(orth), true).set(editor, cursor);
 				
 				// second section
 				
@@ -114,12 +114,12 @@ public class EniTower implements ITower {
 				cursor = new Coord(floor);
 				cursor.add(Cardinal.UP, 13);
 				cursor.add(dir, 4);
-				stair.setOrientation(dir, false).setBlock(editor, cursor);
+				stair.setOrientation(dir, false).set(editor, cursor);
 				cursor.add(orth);
-				stair.setOrientation(dir, false).setBlock(editor, cursor);
+				stair.setOrientation(dir, false).set(editor, cursor);
 				cursor.add(Cardinal.reverse(dir));
 				cursor.add(orth);
-				stair.setOrientation(dir, false).setBlock(editor, cursor);
+				stair.setOrientation(dir, false).set(editor, cursor);
 				
 				// section 3
 				
@@ -170,11 +170,11 @@ public class EniTower implements ITower {
 				cursor.add(Cardinal.UP, 20);
 				cursor.add(dir, 3);
 				cursor.add(orth, 2);
-				stair.setOrientation(dir, true).setBlock(editor, cursor);
+				stair.setOrientation(dir, true).set(editor, cursor);
 				cursor.add(Cardinal.UP);
 				blocks.set(editor, rand, cursor);
 				cursor.add(dir);
-				stair.setOrientation(dir, true).setBlock(editor, cursor);
+				stair.setOrientation(dir, true).set(editor, cursor);
 				
 				// section 4 roof
 				
@@ -200,10 +200,10 @@ public class EniTower implements ITower {
 				RectSolid.fill(editor, rand, start, end, roof.setOrientation(orth, false));
 				cursor = new Coord(end);
 				cursor.add(Cardinal.reverse(orth));
-				roof.setOrientation(Cardinal.reverse(orth), true).setBlock(editor, cursor);
+				roof.setOrientation(Cardinal.reverse(orth), true).set(editor, cursor);
 				cursor.add(Cardinal.reverse(orth));
 				cursor.add(Cardinal.UP);
-				roof.setOrientation(Cardinal.reverse(orth), true).setBlock(editor, cursor);
+				roof.setOrientation(Cardinal.reverse(orth), true).set(editor, cursor);
 				
 				cursor.add(Cardinal.reverse(dir), 3);
 				cursor.add(orth);
@@ -224,19 +224,19 @@ public class EniTower implements ITower {
 				cursor = new Coord(floor);
 				cursor.add(Cardinal.UP, 33);
 				cursor.add(dir, 3);
-				roof.setOrientation(dir, false).setBlock(editor, cursor);
+				roof.setOrientation(dir, false).set(editor, cursor);
 				cursor.add(orth);
-				roof.setOrientation(dir, false).setBlock(editor, cursor);
+				roof.setOrientation(dir, false).set(editor, cursor);
 				cursor.add(Cardinal.reverse(dir));
 				cursor.add(orth);
 				theme.getSecondaryWall().set(editor, rand, cursor);
 				cursor.add(Cardinal.reverse(orth));
 				cursor.add(Cardinal.UP);
-				roof.setOrientation(orth, false).setBlock(editor, cursor);
+				roof.setOrientation(orth, false).set(editor, cursor);
 				cursor.add(Cardinal.reverse(orth));
 				theme.getSecondaryWall().set(editor, rand, cursor);
 				cursor.add(Cardinal.UP);
-				roof.setOrientation(dir, false).setBlock(editor, cursor);
+				roof.setOrientation(dir, false).set(editor, cursor);
 				cursor.add(Cardinal.reverse(dir));
 				theme.getSecondaryWall().set(editor, rand, cursor);
 				cursor.add(Cardinal.DOWN);
@@ -249,7 +249,7 @@ public class EniTower implements ITower {
 				cursor.add(Cardinal.reverse(orth));
 				theme.getSecondaryWall().set(editor, rand, cursor);
 				cursor.add(Cardinal.UP);
-				roof.setOrientation(dir, false).setBlock(editor, cursor);
+				roof.setOrientation(dir, false).set(editor, cursor);
 				cursor.add(Cardinal.reverse(dir));
 				theme.getSecondaryWall().set(editor, rand, cursor);
 				cursor.add(Cardinal.UP);
@@ -284,11 +284,11 @@ public class EniTower implements ITower {
 			cursor.add(Cardinal.UP, 4);
 			MetaBlock window = ColorBlock.get(ColorBlock.PANE, rand);
 			for(int i = 0; i < 3; i++){
-				stair.setOrientation(dir, false).setBlock(editor, cursor);
+				stair.setOrientation(dir, false).set(editor, cursor);
 				cursor.add(Cardinal.UP);
-				window.setBlock(editor, cursor);
+				window.set(editor, cursor);
 				cursor.add(Cardinal.UP);
-				window.setBlock(editor, cursor);
+				window.set(editor, cursor);
 				cursor.add(Cardinal.UP);
 			}
 			
@@ -305,39 +305,39 @@ public class EniTower implements ITower {
 			cursor.add(Cardinal.UP, 14);
 			cursor.add(dir, 3);
 			cursor.add(orth[0]);
-			stair.setOrientation(orth[1], false).setBlock(editor, cursor);
+			stair.setOrientation(orth[1], false).set(editor, cursor);
 			cursor.add(Cardinal.UP);
-			stair.setOrientation(orth[1], true).setBlock(editor, cursor);
+			stair.setOrientation(orth[1], true).set(editor, cursor);
 			cursor.add(Cardinal.UP);
 			cursor.add(orth[1]);
-			stair.setOrientation(orth[0], false).setBlock(editor, cursor);
+			stair.setOrientation(orth[0], false).set(editor, cursor);
 			cursor.add(Cardinal.UP);
-			stair.setOrientation(orth[0], true).setBlock(editor, cursor);
+			stair.setOrientation(orth[0], true).set(editor, cursor);
 			cursor.add(Cardinal.UP);
-			stair.setOrientation(orth[1], false).setBlock(editor, cursor);
+			stair.setOrientation(orth[1], false).set(editor, cursor);
 			cursor.add(Cardinal.UP);
-			stair.setOrientation(orth[1], true).setBlock(editor, cursor);
+			stair.setOrientation(orth[1], true).set(editor, cursor);
 			cursor.add(orth[1]);
 			cursor.add(Cardinal.UP);
-			stair.setOrientation(orth[0], false).setBlock(editor, cursor);
+			stair.setOrientation(orth[0], false).set(editor, cursor);
 			cursor.add(Cardinal.UP);
-			stair.setOrientation(orth[0], true).setBlock(editor, cursor);
+			stair.setOrientation(orth[0], true).set(editor, cursor);
 			
 			// top windows
 			
 			cursor = new Coord(floor);
 			cursor.add(Cardinal.UP, 23);
 			cursor.add(dir, 4);
-			window.setBlock(editor, cursor);
+			window.set(editor, cursor);
 			cursor.add(Cardinal.UP);
-			window.setBlock(editor, cursor);
+			window.set(editor, cursor);
 			cursor.add(Cardinal.UP);
-			window.setBlock(editor, cursor);
+			window.set(editor, cursor);
 			cursor.add(Cardinal.DOWN);
 			cursor.add(orth[0]);
-			window.setBlock(editor, cursor);
+			window.set(editor, cursor);
 			cursor.add(orth[1], 2);
-			window.setBlock(editor, cursor);
+			window.set(editor, cursor);
 			
 			// top ceiling
 			cursor = new Coord(floor);

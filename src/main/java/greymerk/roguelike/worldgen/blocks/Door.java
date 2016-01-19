@@ -20,10 +20,10 @@ public enum Door {
 		
 		Coord cursor = new Coord(pos);
 		MetaBlock doorBase = getMeta(type, false, dir, open, false);
-		doorBase.setBlock(editor, cursor);
+		doorBase.set(editor, cursor);
 		cursor.add(Cardinal.UP);
 		MetaBlock doorTop = getMeta(type, true, dir, open, false);
-		doorTop.setBlock(editor, cursor);
+		doorTop.set(editor, cursor);
 	}
 	
 	private static MetaBlock getMeta(Door type, boolean top, Cardinal dir, boolean open, boolean hingeLeft){

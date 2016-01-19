@@ -126,20 +126,20 @@ public class DungeonsEnchant extends DungeonBase {
 		cursor = new Coord(origin);
 		cursor.add(dir, 5);
 		cursor.add(Cardinal.UP, 4);
-		air.setBlock(editor, cursor);
+		air.set(editor, cursor);
 		cursor.add(Cardinal.UP);
-		BlockType.get(BlockType.GLOWSTONE).setBlock(editor, cursor);
+		BlockType.get(BlockType.GLOWSTONE).set(editor, cursor);
 		cursor.add(Cardinal.DOWN);
 		cursor.add(Cardinal.reverse(dir));
-		stair.setOrientation(dir, true).setBlock(editor, cursor);
+		stair.setOrientation(dir, true).set(editor, cursor);
 		cursor.add(Cardinal.reverse(dir));
 		wall.set(editor, rand, cursor);
 		cursor.add(Cardinal.reverse(dir));
-		stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
+		stair.setOrientation(Cardinal.reverse(dir), true).set(editor, cursor);
 		
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.UP, 5);
-		air.setBlock(editor, cursor);
+		air.set(editor, cursor);
 		cursor.add(Cardinal.UP);
 		wall.set(editor, rand, cursor);
 		
@@ -175,7 +175,7 @@ public class DungeonsEnchant extends DungeonBase {
 			cursor = new Coord(origin);
 			cursor.add(Cardinal.UP, 5);
 			cursor.add(d);
-			stair.setOrientation(Cardinal.reverse(d), true).setBlock(editor, cursor);
+			stair.setOrientation(Cardinal.reverse(d), true).set(editor, cursor);
 			cursor.add(Cardinal.left(d));
 			wall.set(editor, rand, cursor);
 			
@@ -207,13 +207,13 @@ public class DungeonsEnchant extends DungeonBase {
 			RectSolid.fill(editor, rand, start, end, wall);
 			cursor = new Coord(end);
 			cursor.add(Cardinal.reverse(dir));
-			stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
+			stair.setOrientation(Cardinal.reverse(dir), true).set(editor, cursor);
 			cursor.add(Cardinal.reverse(o));
-			stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
+			stair.setOrientation(Cardinal.reverse(dir), true).set(editor, cursor);
 			cursor.add(Cardinal.reverse(o));
-			stair.setOrientation(Cardinal.reverse(o), true).setBlock(editor, cursor);
+			stair.setOrientation(Cardinal.reverse(o), true).set(editor, cursor);
 			cursor.add(dir);
-			stair.setOrientation(dir, true).setBlock(editor, cursor);
+			stair.setOrientation(dir, true).set(editor, cursor);
 			
 			start = new Coord(origin);
 			start.add(o, 4);
@@ -256,13 +256,13 @@ public class DungeonsEnchant extends DungeonBase {
 			RectSolid.fill(editor, rand, start, end, pillar);
 			cursor = new Coord(end);
 			cursor.add(Cardinal.reverse(o));
-			stair.setOrientation(Cardinal.reverse(o), true).setBlock(editor, cursor);
+			stair.setOrientation(Cardinal.reverse(o), true).set(editor, cursor);
 			cursor.add(dir);
-			stair.setOrientation(Cardinal.reverse(o), true).setBlock(editor, cursor);
+			stair.setOrientation(Cardinal.reverse(o), true).set(editor, cursor);
 			cursor.add(o);
-			stair.setOrientation(dir, true).setBlock(editor, cursor);
+			stair.setOrientation(dir, true).set(editor, cursor);
 			cursor.add(o);
-			stair.setOrientation(dir, true).setBlock(editor, cursor);
+			stair.setOrientation(dir, true).set(editor, cursor);
 			
 			cursor = new Coord(origin);
 			cursor.add(Cardinal.reverse(dir), 2);
@@ -270,7 +270,7 @@ public class DungeonsEnchant extends DungeonBase {
 			cursor.add(Cardinal.UP, 4);
 			wall.set(editor, rand, cursor);
 			cursor.add(dir);
-			stair.setOrientation(Cardinal.reverse(o), true).setBlock(editor, cursor);
+			stair.setOrientation(Cardinal.reverse(o), true).set(editor, cursor);
 			
 			start = new Coord(origin);
 			start.add(Cardinal.UP);
@@ -284,13 +284,13 @@ public class DungeonsEnchant extends DungeonBase {
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.reverse(dir), 2);
 		cursor.add(Cardinal.UP, 4);
-		stair.setOrientation(dir, true).setBlock(editor, cursor);
+		stair.setOrientation(dir, true).set(editor, cursor);
 		cursor.add(Cardinal.reverse(dir));
 		wall.set(editor, rand, cursor);
 		
 		cursor = new Coord(origin);
 		cursor.add(dir, 5);
-		BlockType.get(BlockType.ENCHANTING_TABLE).setBlock(editor, cursor);
+		BlockType.get(BlockType.ENCHANTING_TABLE).set(editor, cursor);
 		
 		Treasure.generate(editor, rand, chests, Treasure.ENCHANTING, settings.getDifficulty(origin));
 		

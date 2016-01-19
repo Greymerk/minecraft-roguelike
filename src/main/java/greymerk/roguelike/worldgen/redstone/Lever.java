@@ -30,7 +30,7 @@ public class Lever {
 		
 		MetaBlock lever = new MetaBlock(Blocks.lever.getStateFromMeta(meta));
 		
-		lever.setBlock(editor, pos);
+		lever.set(editor, pos);
 	}
 	
 }

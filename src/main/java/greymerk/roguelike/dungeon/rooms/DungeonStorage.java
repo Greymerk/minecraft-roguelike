@@ -101,9 +101,9 @@ public class DungeonStorage extends DungeonBase {
 				cursor.add(orth, 3);
 				IStair step = theme.getSecondaryStair();
 				step.setOrientation(Cardinal.reverse(dir), true);
-				step.setBlock(editor, cursor);
+				step.set(editor, cursor);
 				cursor.add(orth, 1);
-				step.setBlock(editor, cursor);
+				step.set(editor, cursor);
 				cursor.add(Cardinal.UP, 1);
 				chestSpaces.add(new Coord(cursor));
 				cursor.add(Cardinal.reverse(orth), 1);

@@ -105,15 +105,15 @@ public class DungeonLab extends DungeonBase {
 		
 		// ceiling dome
 		RectSolid.fill(editor, rand, new Coord(x + 2, y + 4, z + 2), new Coord(x + 3, y + 8, z + 3), air);
-		air.setBlock(editor, new Coord(x + 3, y + 4, z + 1));
-		air.setBlock(editor, new Coord(x + 4, y + 4, z + 1));
-		air.setBlock(editor, new Coord(x + 3, y + 4, z + 4));
-		air.setBlock(editor, new Coord(x + 4, y + 4, z + 4));
+		air.set(editor, new Coord(x + 3, y + 4, z + 1));
+		air.set(editor, new Coord(x + 4, y + 4, z + 1));
+		air.set(editor, new Coord(x + 3, y + 4, z + 4));
+		air.set(editor, new Coord(x + 4, y + 4, z + 4));
 		
-		air.setBlock(editor, new Coord(x + 1, y + 4, z + 3));
-		air.setBlock(editor, new Coord(x + 1, y + 4, z + 4));
-		air.setBlock(editor, new Coord(x + 4, y + 4, z + 3));
-		air.setBlock(editor, new Coord(x + 4, y + 4, z + 4));
+		air.set(editor, new Coord(x + 1, y + 4, z + 3));
+		air.set(editor, new Coord(x + 1, y + 4, z + 4));
+		air.set(editor, new Coord(x + 4, y + 4, z + 3));
+		air.set(editor, new Coord(x + 4, y + 4, z + 4));
 		
 		RectHollow.fill(editor, rand, new Coord(x + 1, y + 4, z + 1), new Coord(x + 4, y + 8, z + 4), cobble, false, true);
 		RectSolid.fill(editor, rand, new Coord(x + 2, y + 8, z + 2), new Coord(x + 3, y + 8, z + 3), air);
@@ -131,7 +131,7 @@ public class DungeonLab extends DungeonBase {
 		RectSolid.fill(editor, rand, new Coord(x, y, z + 1), new Coord(x, y, z + 4), stair);
 		
 		if(RogueConfig.getBoolean(RogueConfig.GENEROUS)){
-			editor.setBlock(new Coord(x + 1, y + 1, z + 5), BrewingStand.get());
+			BrewingStand.get().set(editor, new Coord(x + 1, y + 1, z + 5));
 		}
 		
 		Treasure.generate(editor, rand, new Coord(x, y + 1, z + 4), Treasure.POTIONS, Dungeon.getLevel(y));
@@ -148,24 +148,24 @@ public class DungeonLab extends DungeonBase {
 		corner(editor, rand, theme, x, y, z);
 		
 		RectSolid.fill(editor, rand, new Coord(x + 1, y, z + 5), new Coord(x + 4, y, z + 5), stone);
-		editor.setBlock(new Coord(x + 1, y + 1, z + 5), stair.setOrientation(Cardinal.WEST, false));
-		editor.setBlock(new Coord(x + 2, y + 1, z + 5), water);
-		editor.setBlock(new Coord(x + 2, y + 2, z + 5), slab);
-		editor.setBlock(new Coord(x + 3, y + 1, z + 5), stair.setOrientation(Cardinal.EAST, false));
+		stair.setOrientation(Cardinal.WEST, false).set(editor, new Coord(x + 1, y + 1, z + 5));
+		water.set(editor, new Coord(x + 2, y + 1, z + 5));
+		slab.set(editor, new Coord(x + 2, y + 2, z + 5));
+		stair.setOrientation(Cardinal.EAST, false).set(editor, new Coord(x + 3, y + 1, z + 5));
 		
 		RectSolid.fill(editor, rand, new Coord(x + 5, y, z + 1), new Coord(x + 5, y, z + 4), stone);
-		editor.setBlock(new Coord(x + 5, y + 1, z + 1), stair.setOrientation(Cardinal.NORTH, false));
-		editor.setBlock(new Coord(x + 5, y + 1, z + 2), water);
-		editor.setBlock(new Coord(x + 5, y + 2, z + 2), slab);
-		editor.setBlock(new Coord(x + 5, y + 1, z + 3), stair.setOrientation(Cardinal.SOUTH, false));
+		stair.setOrientation(Cardinal.NORTH, false).set(editor, new Coord(x + 5, y + 1, z + 1));
+		water.set(editor, new Coord(x + 5, y + 1, z + 2));
+		slab.set(editor, new Coord(x + 5, y + 2, z + 2));
+		stair.setOrientation(Cardinal.SOUTH, false).set(editor, new Coord(x + 5, y + 1, z + 3));
 		
 		RectSolid.fill(editor, rand, new Coord(x + 3, y, z + 3), new Coord(x + 4, y, z + 4), stone);
 		Torch.generate(editor, Torch.WOODEN, Cardinal.UP, new Coord(x + 3, y + 1, z + 3));
 		
-		stair.setOrientation(Cardinal.NORTH, false).setBlock(editor, new Coord(x + 4, y, z + 1));
-		stair.setOrientation(Cardinal.WEST, false).setBlock(editor, new Coord(x + 3, y, z + 2));
-		stair.setOrientation(Cardinal.NORTH, false).setBlock(editor, new Coord(x + 2, y, z + 3));
-		stair.setOrientation(Cardinal.WEST, false).setBlock(editor, new Coord(x + 1, y, z + 4));
+		stair.setOrientation(Cardinal.NORTH, false).set(editor, new Coord(x + 4, y, z + 1));
+		stair.setOrientation(Cardinal.WEST, false).set(editor, new Coord(x + 3, y, z + 2));
+		stair.setOrientation(Cardinal.NORTH, false).set(editor, new Coord(x + 2, y, z + 3));
+		stair.setOrientation(Cardinal.WEST, false).set(editor, new Coord(x + 1, y, z + 4));
 		
 		
 	}
@@ -180,35 +180,35 @@ public class DungeonLab extends DungeonBase {
 		
 		corner(editor, rand, theme, x, y, z);
 		
-		editor.setBlock(new Coord(x + 1, y, z), stone);
+		stone.set(editor, new Coord(x + 1, y, z));
 		FlowerPot.generate(editor, rand, new Coord(x + 1, y + 1, z));
-		editor.setBlock(new Coord(x + 2, y, z), farmland);
-		editor.setBlock(new Coord(x + 2, y + 1, z), Crops.get(Crops.CARROTS));
-		editor.setBlock(new Coord(x + 3, y, z), farmland);
-		editor.setBlock(new Coord(x + 3, y + 1, z), Crops.get(Crops.CARROTS));
-		editor.setBlock(new Coord(x + 4, y, z), stone);
+		farmland.set(editor, new Coord(x + 2, y, z));
+		Crops.get(Crops.CARROTS).set(editor, new Coord(x + 2, y + 1, z));
+		farmland.set(editor, new Coord(x + 3, y, z));
+		Crops.get(Crops.CARROTS).set(editor, new Coord(x + 3, y + 1, z));
+		stone.set(editor, new Coord(x + 4, y, z));
 		FlowerPot.generate(editor, rand, new Coord(x + 4, y + 1, z));
 		
-		editor.setBlock(new Coord(x, y, z + 1), stone);
+		stone.set(editor, new Coord(x, y, z + 1));
 		FlowerPot.generate(editor, rand, new Coord(x, y + 1, z + 1));
-		editor.setBlock(new Coord(x, y, z + 2), soul_sand);
-		editor.setBlock(new Coord(x, y + 1, z + 2), Crops.get(Crops.NETHERWART));
-		editor.setBlock(new Coord(x, y, z + 3), soul_sand);
-		editor.setBlock(new Coord(x, y + 1, z + 3), Crops.get(Crops.NETHERWART));
-		editor.setBlock(new Coord(x, y, z + 4), stone);
+		soul_sand.set(editor, new Coord(x, y, z + 2));
+		Crops.get(Crops.NETHERWART).set(editor, new Coord(x, y + 1, z + 2));
+		soul_sand.set(editor, new Coord(x, y, z + 3));
+		Crops.get(Crops.NETHERWART).set(editor, new Coord(x, y + 1, z + 3));
+		stone.set(editor, new Coord(x, y, z + 4));
 		FlowerPot.generate(editor, rand, new Coord(x, y + 1, z + 4));
 		
-		editor.setBlock(new Coord(x + 1, y, z + 1), stone);
+		stone.set(editor, new Coord(x + 1, y, z + 1));
 		
 		IStair stair = new MetaStair(StairType.STONEBRICK);
 		stair.setOrientation(Cardinal.SOUTH, false).fill(editor, rand, new RectSolid(new Coord(x + 2, y, z + 1), new Coord(x + 4, y, z + 1)));
 		stair.setOrientation(Cardinal.EAST, false).fill(editor, rand, new RectSolid(new Coord(x + 1, y, z + 2), new Coord(x + 1, y, z + 4)));
 		
-		editor.setBlock(new Coord(x + 2, y - 1, z + 2), redstone);
-		editor.setBlock(new Coord(x + 3, y - 1, z + 2), lamp);
-		editor.setBlock(new Coord(x + 2, y - 1, z + 3), lamp);
+		redstone.set(editor, new Coord(x + 2, y - 1, z + 2));
+		lamp.set(editor, new Coord(x + 3, y - 1, z + 2));
+		lamp.set(editor, new Coord(x + 2, y - 1, z + 3));
 		
-		editor.setBlock(new Coord(x, y, z), BlockType.get(BlockType.WATER_FLOWING));
+		BlockType.get(BlockType.WATER_FLOWING).set(editor, new Coord(x, y, z));
 	}
 	
 	private static void northEast(IWorldEditor editor, Random rand, ITheme theme, int x, int y, int z){
@@ -220,34 +220,34 @@ public class DungeonLab extends DungeonBase {
 		
 		corner(editor, rand, theme, x, y, z);
 		
-		editor.setBlock(new Coord(x + 1, y, z), stone);
+		stone.set(editor, new Coord(x + 1, y, z));
 		FlowerPot.generate(editor, rand, new Coord(x + 1, y + 1, z));
-		editor.setBlock(new Coord(x + 2, y, z), farmland);
-		editor.setBlock(new Coord(x + 2, y + 1, z), Crops.get(Crops.MELON));
-		editor.setBlock(new Coord(x + 3, y, z), farmland);
-		editor.setBlock(new Coord(x + 4, y, z), stone);
+		farmland.set(editor, new Coord(x + 2, y, z));
+		Crops.get(Crops.MELON).set(editor, new Coord(x + 2, y + 1, z));
+		farmland.set(editor, new Coord(x + 3, y, z));
+		stone.set(editor, new Coord(x + 4, y, z));
 		FlowerPot.generate(editor, rand, new Coord(x + 4, y + 1, z));
 		
-		editor.setBlock(new Coord(x + 5, y, z + 1), stone);
+		stone.set(editor, new Coord(x + 5, y, z + 1));
 		FlowerPot.generate(editor, rand, new Coord(x + 5, y + 1, z + 1));
-		editor.setBlock(new Coord(x + 5, y, z + 2), farmland);
-		editor.setBlock(new Coord(x + 5, y + 1, z + 2), Crops.get(Crops.PUMPKIN));
-		editor.setBlock(new Coord(x + 5, y, z + 3), farmland);
-		editor.setBlock(new Coord(x + 5, y, z + 4), stone);
+		farmland.set(editor, new Coord(x + 5, y, z + 2));
+		Crops.get(Crops.PUMPKIN).set(editor, new Coord(x + 5, y + 1, z + 2));
+		farmland.set(editor, new Coord(x + 5, y, z + 3));
+		stone.set(editor, new Coord(x + 5, y, z + 4));
 		FlowerPot.generate(editor, rand, new Coord(x + 5, y + 1, z + 4));
 		
-		editor.setBlock(new Coord(x + 4, y, z + 1), stone);
+		stone.set(editor, new Coord(x + 4, y, z + 1));
 		
 		IStair stair = new MetaStair(StairType.STONEBRICK);
 		
 		stair.setOrientation(Cardinal.SOUTH, false).fill(editor, rand, new RectSolid(new Coord(x + 1, y, z + 1), new Coord(x + 3, y, z + 1)));
 		stair.setOrientation(Cardinal.WEST, false).fill(editor, rand, new RectSolid(new Coord(x + 4, y, z + 2), new Coord(x + 4, y, z + 4)));
 		
-		editor.setBlock(new Coord(x + 3, y - 1, z + 2), redstone);
-		editor.setBlock(new Coord(x + 2, y - 1, z + 2), lamp);
-		editor.setBlock(new Coord(x + 3, y - 1, z + 3), lamp);
+		redstone.set(editor, new Coord(x + 3, y - 1, z + 2));
+		lamp.set(editor, new Coord(x + 2, y - 1, z + 2));
+		lamp.set(editor, new Coord(x + 3, y - 1, z + 3));
 		
-		editor.setBlock(new Coord(x + 5, y, z), BlockType.get(BlockType.WATER_FLOWING));
+		BlockType.get(BlockType.WATER_FLOWING).set(editor, new Coord(x + 5, y, z));
 	}
 	
 	private static void pillar(IWorldEditor editor, Random rand, ITheme theme, int x, int y, int z){
@@ -255,10 +255,10 @@ public class DungeonLab extends DungeonBase {
 		theme.getSecondaryPillar().fill(editor, rand, new RectSolid(new Coord(x, y, z), new Coord(x, y + 2, z)));
 		theme.getPrimaryWall().set(editor, rand, new Coord(x, y + 3, z));
 		IStair stair = theme.getSecondaryStair();
-		stair.setOrientation(Cardinal.EAST, true).setBlock(editor, new Coord(x + 1, y + 3, z));
-		stair.setOrientation(Cardinal.WEST, true).setBlock(editor, new Coord(x - 1, y + 3, z));
-		stair.setOrientation(Cardinal.SOUTH, true).setBlock(editor, new Coord(x, y + 3, z + 1));
-		stair.setOrientation(Cardinal.NORTH, true).setBlock(editor, new Coord(x, y + 3, z - 1));
+		stair.setOrientation(Cardinal.EAST, true).set(editor, new Coord(x + 1, y + 3, z));
+		stair.setOrientation(Cardinal.WEST, true).set(editor, new Coord(x - 1, y + 3, z));
+		stair.setOrientation(Cardinal.SOUTH, true).set(editor, new Coord(x, y + 3, z + 1));
+		stair.setOrientation(Cardinal.NORTH, true).set(editor, new Coord(x, y + 3, z - 1));
 	
 	}
 	

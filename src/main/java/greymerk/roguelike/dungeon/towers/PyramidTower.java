@@ -126,7 +126,7 @@ public class PyramidTower implements ITower{
 		cursor = new Coord(origin);
 		cursor.add(dir);
 		cursor.add(Cardinal.UP, 4);
-		BlockType.get(BlockType.LAPIS_BLOCK).setBlock(editor, cursor);
+		BlockType.get(BlockType.LAPIS_BLOCK).set(editor, cursor);
 		
 		cursor.add(Cardinal.UP, 2);
 		blocks.set(editor, rand, cursor);
@@ -156,9 +156,9 @@ public class PyramidTower implements ITower{
 			// doors
 			cursor = new Coord(origin);
 			cursor.add(dir, 3);
-			air.setBlock(editor, cursor);
+			air.set(editor, cursor);
 			cursor.add(Cardinal.UP);
-			air.setBlock(editor, cursor);
+			air.set(editor, cursor);
 			
 			// wall cap
 			start = new Coord(origin);
@@ -220,7 +220,7 @@ public class PyramidTower implements ITower{
 		
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.UP, 7);
-		BlockType.get(BlockType.GLOWSTONE).setBlock(editor, cursor);
+		BlockType.get(BlockType.GLOWSTONE).set(editor, cursor);
 		
 	}
 
@@ -252,9 +252,9 @@ public class PyramidTower implements ITower{
 		
 		cursor = new Coord(pos);
 		cursor.add(Cardinal.reverse(dir), 2);
-		air.setBlock(editor, cursor);
+		air.set(editor, cursor);
 		cursor.add(Cardinal.UP);
-		air.setBlock(editor, cursor);
+		air.set(editor, cursor);
 		
 		for(Cardinal o : orth){
 			Coord c2 = new Coord(pos);
@@ -282,9 +282,9 @@ public class PyramidTower implements ITower{
 			cursor = new Coord(pos);
 			cursor.add(Cardinal.reverse(dir), 2);
 			cursor.add(o, 2);
-			air.setBlock(editor, cursor);
+			air.set(editor, cursor);
 			cursor.add(Cardinal.UP);
-			air.setBlock(editor, cursor);
+			air.set(editor, cursor);
 		}
 	}
 
