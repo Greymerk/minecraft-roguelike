@@ -61,7 +61,7 @@ public class SegmentPlant extends SegmentBase {
 		for(Cardinal dir : Cardinal.directions){
 			cursor = new Coord(origin);
 			cursor.add(dir);
-			Trapdoor.get(Trapdoor.OAK, Cardinal.reverse(dir), true, true).setBlock(editor, rand, cursor, true, false);
+			Trapdoor.get(Trapdoor.OAK, Cardinal.reverse(dir), true, true).set(editor, rand, cursor, true, false);
 		}
 		
 		cursor = new Coord(origin);

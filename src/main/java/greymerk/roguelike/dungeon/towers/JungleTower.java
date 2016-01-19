@@ -49,25 +49,25 @@ public class JungleTower implements ITower{
 				pillar(editor, rand, theme, c);
 				c.add(dir);
 				c.add(Cardinal.UP);
-				walls.setBlock(editor, rand, c);
+				walls.set(editor, rand, c);
 				c.add(Cardinal.UP);
-				walls.setBlock(editor, rand, c);
+				walls.set(editor, rand, c);
 				c.add(Cardinal.UP);
 				stair.setOrientation(dir, false).setBlock(editor, c);
 				c.add(Cardinal.reverse(dir));
-				walls.setBlock(editor, rand, c);
+				walls.set(editor, rand, c);
 			}
 			
 			cursor = new Coord(origin);
 			cursor.add(Cardinal.UP, 4);
 			cursor.add(dir, 8);
-			walls.setBlock(editor, rand, cursor);
+			walls.set(editor, rand, cursor);
 			cursor.add(Cardinal.UP);
-			walls.setBlock(editor, rand, cursor);
+			walls.set(editor, rand, cursor);
 			cursor.add(Cardinal.UP);
 			stair.setOrientation(dir, false).setBlock(editor, cursor);
 			cursor.add(Cardinal.reverse(dir));
-			walls.setBlock(editor, rand, cursor);
+			walls.set(editor, rand, cursor);
 			
 			start = new Coord(origin);
 			start.add(dir, 2);
@@ -197,11 +197,11 @@ public class JungleTower implements ITower{
 				pillar(editor, rand, theme, c);
 				c.add(dir);
 				c.add(Cardinal.UP);
-				walls.setBlock(editor, rand, c);
+				walls.set(editor, rand, c);
 				c.add(Cardinal.UP);
 				stair.setOrientation(dir, false).setBlock(editor, c);
 				c.add(Cardinal.reverse(dir));
-				walls.setBlock(editor, rand, c);
+				walls.set(editor, rand, c);
 				c.add(Cardinal.UP);
 				stair.setOrientation(dir, false).setBlock(editor, c);
 			}
@@ -211,7 +211,7 @@ public class JungleTower implements ITower{
 				Coord c = new Coord(cursor);
 				c.add(d);
 				c.add(Cardinal.UP);
-				walls.setBlock(editor, rand, c);
+				walls.set(editor, rand, c);
 				c.add(Cardinal.UP);
 				stair.setOrientation(d, false).setBlock(editor, c);
 			}
@@ -236,9 +236,9 @@ public class JungleTower implements ITower{
 				c.add(d);
 				stair.setOrientation(d, true).setBlock(editor, c);
 				c.add(Cardinal.UP);
-				walls.setBlock(editor, rand, c);
+				walls.set(editor, rand, c);
 				c.add(d);
-				walls.setBlock(editor, rand, c);
+				walls.set(editor, rand, c);
 			}
 			
 		}
@@ -295,7 +295,7 @@ public class JungleTower implements ITower{
 			cursor.add(Cardinal.UP, 11);
 			cursor.add(dir, 5);
 			cursor.add(Cardinal.left(dir), 5);
-			walls.setBlock(editor, rand, cursor);
+			walls.set(editor, rand, cursor);
 		}
 		
 		for(Cardinal dir : Cardinal.directions){
@@ -308,7 +308,7 @@ public class JungleTower implements ITower{
 				Coord c = new Coord(cursor);
 				c.add(d);
 				c.add(Cardinal.UP);
-				walls.setBlock(editor, rand, c);
+				walls.set(editor, rand, c);
 				c.add(Cardinal.UP);
 				stair.setOrientation(d, false).setBlock(editor, c);
 			}
@@ -330,7 +330,7 @@ public class JungleTower implements ITower{
 			end.add(Cardinal.right(dir));
 			grass.fill(editor, rand, new RectSolid(start, end));
 			cursor.add(Cardinal.left(dir), 2);
-			walls.setBlock(editor, rand, cursor);
+			walls.set(editor, rand, cursor);
 			
 			start = new Coord(origin);
 			start.add(Cardinal.UP, 17);
@@ -464,7 +464,7 @@ public class JungleTower implements ITower{
 			for(Cardinal dir : Cardinal.directions){
 				Coord c = new Coord(cursor);
 				c.add(dir);
-				leaves.setBlock(editor, rand, c, true, false);
+				leaves.set(editor, rand, c, true, false);
 			}
 		}
 		if(rand.nextInt(3) == 0){
@@ -473,7 +473,7 @@ public class JungleTower implements ITower{
 			for(Cardinal dir : Cardinal.directions){
 				Coord c = new Coord(cursor);
 				c.add(dir);
-				leaves.setBlock(editor, rand, c, true, false);
+				leaves.set(editor, rand, c, true, false);
 			}
 		}
 		cursor.add(Cardinal.UP);

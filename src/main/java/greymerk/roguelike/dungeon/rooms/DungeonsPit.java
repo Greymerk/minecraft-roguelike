@@ -89,7 +89,7 @@ public class DungeonsPit extends DungeonBase {
 						
 						if (!editor.getBlock(new Coord(blockX, blockY, blockZ)).getBlock().getMaterial().isSolid()) continue;
 						
-						blocks.setBlock(editor, rand, new Coord(blockX, blockY, blockZ));
+						blocks.set(editor, rand, new Coord(blockX, blockY, blockZ));
 						
 					} else {
 						editor.setBlock(new Coord(blockX, blockY, blockZ), air);
@@ -103,7 +103,7 @@ public class DungeonsPit extends DungeonBase {
 		
 		for (int blockX = originX - dungeonLength - 1; blockX <= originX + dungeonLength + 1; blockX++){
 			for (int blockZ = originZ - dungeonWidth - 1; blockZ <= originZ + dungeonWidth + 1; blockZ++){
-				blocks.setBlock(editor, rand, new Coord(blockX, originY - 1, blockZ));				
+				blocks.set(editor, rand, new Coord(blockX, originY - 1, blockZ));				
 			}
 		}
 	}
@@ -111,7 +111,7 @@ public class DungeonsPit extends DungeonBase {
 	protected void buildRoof(){
 		for (int blockX = originX - dungeonLength - 1; blockX <= originX + dungeonLength + 1; blockX++){
 			for (int blockZ = originZ - dungeonWidth - 1; blockZ <= originZ + dungeonWidth + 1; blockZ++){
-				blocks.setBlock(editor, rand, new Coord(blockX, dungeonHeight + 1, blockZ));
+				blocks.set(editor, rand, new Coord(blockX, dungeonHeight + 1, blockZ));
 			}
 		}
 	}
@@ -135,7 +135,7 @@ public class DungeonsPit extends DungeonBase {
 						|| z == originZ -2
 						|| z == originZ +2){
 						
-						blocks.setBlock(editor, rand, new Coord(x, y, z), true, true);
+						blocks.set(editor, rand, new Coord(x, y, z), true, true);
 						continue;
 						
 					}
@@ -171,7 +171,7 @@ public class DungeonsPit extends DungeonBase {
 		
 		for(Coord cell : new RectHollow(start, end)){
 			if(editor.isAirBlock(cell)) return;
-			walls.setBlock(editor, rand, cell);
+			walls.set(editor, rand, cell);
 		}
 		
 		cursor = new Coord(origin);

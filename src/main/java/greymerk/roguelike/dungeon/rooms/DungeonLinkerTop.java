@@ -75,7 +75,7 @@ public class DungeonLinkerTop extends DungeonBase{
 				cursor.add(o, 2);
 				stair.setOrientation(Cardinal.reverse(o), true).setBlock(editor, cursor);
 				cursor.add(Cardinal.UP);
-				wall.setBlock(editor, rand, cursor);
+				wall.set(editor, rand, cursor);
 				cursor.add(Cardinal.reverse(o));
 				stair.setOrientation(Cardinal.reverse(o), true).setBlock(editor, cursor);
 			}

@@ -108,7 +108,7 @@ public class WorldEditor implements IWorldEditor{
 		end.add(new Coord(1, 0, 1));
 		
 		RectSolid.fill(this, rand, start, end, air);
-		fill.setBlock(this, rand, origin);
+		fill.set(this, rand, origin);
 		
 		Cardinal dir = Cardinal.directions[origin.getY() % 4];
 		cursor = new Coord(origin);
@@ -126,7 +126,7 @@ public class WorldEditor implements IWorldEditor{
 		Coord cursor = new Coord(origin);
 		
 		while(!getBlock(cursor).getBlock().getMaterial().isOpaque() && cursor.getY() > 1){
-			blocks.setBlock(this, rand, cursor);
+			blocks.set(this, rand, cursor);
 			cursor.add(Cardinal.DOWN);
 		}
 	}

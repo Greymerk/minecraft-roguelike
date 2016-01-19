@@ -100,7 +100,7 @@ public class DungeonLibrary extends DungeonBase{
 			cursor.add(Cardinal.reverse(dir));
 			cursor.add(Cardinal.right(dir));
 			cursor.add(Cardinal.UP);
-			walls.setBlock(editor, rand, cursor);
+			walls.set(editor, rand, cursor);
 			
 			for(Cardinal o : Cardinal.orthogonal(dir)){
 				cursor = new Coord(origin);
@@ -110,7 +110,7 @@ public class DungeonLibrary extends DungeonBase{
 				
 				stair.setOrientation(Cardinal.reverse(o), true).setBlock(editor, cursor);
 				cursor.add(Cardinal.UP);
-				walls.setBlock(editor, rand, cursor);
+				walls.set(editor, rand, cursor);
 				cursor.add(Cardinal.reverse(o));
 				stair.setOrientation(Cardinal.reverse(o), true).setBlock(editor, cursor);
 				cursor.add(Cardinal.UP, 3);
@@ -131,7 +131,7 @@ public class DungeonLibrary extends DungeonBase{
 			start.add(Cardinal.reverse(dir), 2);
 			RectSolid.fill(editor, rand, start, end, walls);
 			cursor.add(Cardinal.UP);
-			walls.setBlock(editor, rand, cursor);
+			walls.set(editor, rand, cursor);
 			cursor.add(Cardinal.UP);
 			cursor.add(Cardinal.reverse(dir));
 			stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
@@ -273,7 +273,7 @@ public class DungeonLibrary extends DungeonBase{
 		for(Cardinal dir : Cardinal.directions){
 			cursor = new Coord(origin);
 			cursor.add(dir);
-			Trapdoor.get(Trapdoor.OAK, Cardinal.reverse(dir), true, true).setBlock(editor, rand, cursor, true, false);
+			Trapdoor.get(Trapdoor.OAK, Cardinal.reverse(dir), true, true).set(editor, rand, cursor, true, false);
 		}
 		
 		cursor = new Coord(origin);

@@ -143,7 +143,7 @@ public class DungeonStorage extends DungeonBase {
 		for(Cardinal dir : Cardinal.directions){
 			step.setOrientation(dir, true);
 			cursor.add(dir, 1);
-			step.setBlock(editor, rand, cursor, true, false);
+			step.set(editor, rand, cursor, true, false);
 			cursor.add(Cardinal.reverse(dir), 1);
 		}
 	}

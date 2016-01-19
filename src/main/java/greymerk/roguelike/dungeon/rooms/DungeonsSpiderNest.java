@@ -53,12 +53,12 @@ public class DungeonsSpiderNest extends DungeonBase {
 					
 					int clearHeight = x > z ? x : z;
 					
-					if(blockY == originY) webs.setBlock(editor, inRandom, new Coord(blockX, blockY, blockZ));
+					if(blockY == originY) webs.set(editor, inRandom, new Coord(blockX, blockY, blockZ));
 					if(clearHeight < 1) clearHeight = 1;
 					if(Math.abs(blockY - originY) > clearHeight) continue;
 						
 					if(rand.nextInt(clearHeight)  == 0){
-						webs.setBlock(editor, inRandom, new Coord(blockX, blockY, blockZ));
+						webs.set(editor, inRandom, new Coord(blockX, blockY, blockZ));
 					} else if(rand.nextInt(5) == 0){
 						editor.setBlock(new Coord(blockX, blockY, blockZ), BlockType.get(BlockType.GRAVEL));
 					}

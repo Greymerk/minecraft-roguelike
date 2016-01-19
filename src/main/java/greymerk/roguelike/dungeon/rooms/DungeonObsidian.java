@@ -47,7 +47,7 @@ public class DungeonObsidian extends DungeonBase {
 		RectSolid.fill(editor, rand, new Coord(x - 8, y + 5, z - 8), new Coord(x + 8, y + 5, z + 8), secondaryWall);
 		RectSolid.fill(editor, rand, new Coord(x - 9, y + 4, z - 9), new Coord(x + 9, y + 4, z + 9), secondaryWall);
 		RectSolid.fill(editor, rand, new Coord(x - 1, y + 3, z - 1), new Coord(x + 1, y + 5, z + 1), air);
-		secondaryWall.setBlock(editor, rand, new Coord(x, y + 5, z));
+		secondaryWall.set(editor, rand, new Coord(x, y + 5, z));
 		spawners.add(new Coord(x, y + 4, z));
 		
 		
@@ -86,9 +86,9 @@ public class DungeonObsidian extends DungeonBase {
 				cursor = new Coord(x, y, z);
 				cursor.add(Cardinal.UP, 5);
 				cursor.add(dir, 4);
-				secondaryWall.setBlock(editor, rand, cursor);
+				secondaryWall.set(editor, rand, cursor);
 				cursor.add(orth, 4);
-				secondaryWall.setBlock(editor, rand, cursor);
+				secondaryWall.set(editor, rand, cursor);
 			}
 		}
 
@@ -173,35 +173,35 @@ public class DungeonObsidian extends DungeonBase {
 				stepSpot.add(Cardinal.DOWN, 1);
 				stepSpot.add(orth, 2);
 				step.setOrientation(orth, false);
-				step.setBlock(editor, rand, stepSpot);
+				step.set(editor, rand, stepSpot);
 				stepSpot.add(dir, 1);
-				step.setBlock(editor, rand, stepSpot);
+				step.set(editor, rand, stepSpot);
 				
 				step.setOrientation(Cardinal.reverse(dir), false);
 				stepSpot = new Coord(x, y, z);
 				stepSpot.add(Cardinal.DOWN, 2);
 				stepSpot.add(dir, 7);
 				stepSpot.add(orth, 3);
-				step.setBlock(editor, rand, stepSpot);
+				step.set(editor, rand, stepSpot);
 				stepSpot.add(orth, 1);
-				step.setBlock(editor, rand, stepSpot);
+				step.set(editor, rand, stepSpot);
 				stepSpot.add(Cardinal.DOWN, 1);
 				stepSpot.add(Cardinal.reverse(dir), 1);
-				step.setBlock(editor, rand, stepSpot);
+				step.set(editor, rand, stepSpot);
 				stepSpot.add(Cardinal.reverse(orth), 1);
-				step.setBlock(editor, rand, stepSpot);
+				step.set(editor, rand, stepSpot);
 				stepSpot.add(dir, 1);
-				primaryWall.setBlock(editor, rand, stepSpot);
+				primaryWall.set(editor, rand, stepSpot);
 				stepSpot.add(orth, 1);
-				primaryWall.setBlock(editor, rand, stepSpot);
+				primaryWall.set(editor, rand, stepSpot);
 				
 				Coord corner = new Coord(x, y, z);
 				corner.add(dir, 7);
 				corner.add(orth, 7);
 				corner.add(Cardinal.DOWN, 2);
-				primaryWall.setBlock(editor, rand, corner);
+				primaryWall.set(editor, rand, corner);
 				corner.add(Cardinal.DOWN, 1);
-				primaryWall.setBlock(editor, rand, corner);
+				primaryWall.set(editor, rand, corner);
 
 				corner = new Coord(x, y, z);
 				corner.add(dir, 6);
@@ -290,12 +290,12 @@ public class DungeonObsidian extends DungeonBase {
 		Coord blockLocation = new Coord(x, y + 3, z);
 		
 		blockLocation.add(dir, 1);
-		secondaryWall.setBlock(editor, rand, blockLocation);
+		secondaryWall.set(editor, rand, blockLocation);
 		
 		for(int i = 0; i < 3; ++i){
 			blockLocation.add(Cardinal.reverse(dir), 1);
 			blockLocation.add(Cardinal.UP, 1);
-			secondaryWall.setBlock(editor, rand, blockLocation);
+			secondaryWall.set(editor, rand, blockLocation);
 		}
 	}
 	
@@ -326,7 +326,7 @@ public class DungeonObsidian extends DungeonBase {
 				start.add(Cardinal.DOWN, 1);
 				start.add(dir, 7);
 				start.add(orth, 5);
-				secondaryWall.setBlock(editor, rand, start);
+				secondaryWall.set(editor, rand, start);
 				start.add(Cardinal.DOWN, 1);
 				end = new Coord(start);
 				end.add(Cardinal.reverse(dir), 1);

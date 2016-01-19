@@ -590,7 +590,7 @@ public class HouseTower implements ITower {
 			for(Cardinal o : Cardinal.orthogonal(dir)){
 				Coord c = new Coord(cursor);
 				c.add(o);
-				stair.setOrientation(o, true).setBlock(editor, rand, c, true, false);
+				stair.setOrientation(o, true).set(editor, rand, c, true, false);
 			}
 		}
 		

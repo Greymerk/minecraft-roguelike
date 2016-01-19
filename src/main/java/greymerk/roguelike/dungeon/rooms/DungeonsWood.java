@@ -54,7 +54,7 @@ public class DungeonsWood extends DungeonBase {
 		glowstone.setBlock(editor, new Coord(x + WIDTH - 1, y - 1, z - LENGTH + 1));
 		glowstone.setBlock(editor, new Coord(x + WIDTH - 1, y - 1, z + LENGTH - 1));
 		
-		planks.setBlock(editor, rand, new Coord(x, y, z));
+		planks.set(editor, rand, new Coord(x, y, z));
 		Cake.get().setBlock(editor, new Coord(x, y + 1, z));
 		
 		List<Coord> space = new ArrayList<Coord>();

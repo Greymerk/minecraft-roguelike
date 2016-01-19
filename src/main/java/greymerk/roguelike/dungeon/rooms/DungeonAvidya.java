@@ -134,11 +134,11 @@ public class DungeonAvidya extends DungeonBase {
 				
 				Coord cursor = new Coord(end);
 				cursor.add(dir, 1);
-				quartz.setBlock(editor, rand, cursor);
+				quartz.set(editor, rand, cursor);
 				cursor = new Coord(end);
 				cursor.add(Cardinal.reverse(dir), 1);
 				cursor.add(orth, 1);
-				quartz.setBlock(editor, rand, cursor);
+				quartz.set(editor, rand, cursor);
 				pillarTop(editor, rand, cursor);
 				
 				// pillars
@@ -268,7 +268,7 @@ public class DungeonAvidya extends DungeonBase {
 		for(Cardinal dir : Cardinal.directions){
 			step.setOrientation(dir, true);
 			cursor.add(dir, 1);
-			step.setBlock(editor, rand, cursor, true, false);
+			step.set(editor, rand, cursor, true, false);
 			cursor.add(Cardinal.reverse(dir), 1);
 		}
 	}

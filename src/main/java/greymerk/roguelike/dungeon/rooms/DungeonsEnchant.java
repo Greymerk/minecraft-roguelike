@@ -133,7 +133,7 @@ public class DungeonsEnchant extends DungeonBase {
 		cursor.add(Cardinal.reverse(dir));
 		stair.setOrientation(dir, true).setBlock(editor, cursor);
 		cursor.add(Cardinal.reverse(dir));
-		wall.setBlock(editor, rand, cursor);
+		wall.set(editor, rand, cursor);
 		cursor.add(Cardinal.reverse(dir));
 		stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
 		
@@ -141,7 +141,7 @@ public class DungeonsEnchant extends DungeonBase {
 		cursor.add(Cardinal.UP, 5);
 		air.setBlock(editor, cursor);
 		cursor.add(Cardinal.UP);
-		wall.setBlock(editor, rand, cursor);
+		wall.set(editor, rand, cursor);
 		
 		for(Cardinal d : Cardinal.directions){
 			
@@ -177,7 +177,7 @@ public class DungeonsEnchant extends DungeonBase {
 			cursor.add(d);
 			stair.setOrientation(Cardinal.reverse(d), true).setBlock(editor, cursor);
 			cursor.add(Cardinal.left(d));
-			wall.setBlock(editor, rand, cursor);
+			wall.set(editor, rand, cursor);
 			
 		}
 		
@@ -268,7 +268,7 @@ public class DungeonsEnchant extends DungeonBase {
 			cursor.add(Cardinal.reverse(dir), 2);
 			cursor.add(o);
 			cursor.add(Cardinal.UP, 4);
-			wall.setBlock(editor, rand, cursor);
+			wall.set(editor, rand, cursor);
 			cursor.add(dir);
 			stair.setOrientation(Cardinal.reverse(o), true).setBlock(editor, cursor);
 			
@@ -286,7 +286,7 @@ public class DungeonsEnchant extends DungeonBase {
 		cursor.add(Cardinal.UP, 4);
 		stair.setOrientation(dir, true).setBlock(editor, cursor);
 		cursor.add(Cardinal.reverse(dir));
-		wall.setBlock(editor, rand, cursor);
+		wall.set(editor, rand, cursor);
 		
 		cursor = new Coord(origin);
 		cursor.add(dir, 5);

@@ -59,7 +59,7 @@ public class SegmentChest extends SegmentBase {
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.UP, 1);
 		cursor.add(dir, 3);
-		air.setBlock(editor, rand, cursor);
+		air.set(editor, rand, cursor);
 		cursor.add(Cardinal.UP, 1);
 		stair.setOrientation(Cardinal.reverse(dir), true);
 		stair.setBlock(editor, cursor);

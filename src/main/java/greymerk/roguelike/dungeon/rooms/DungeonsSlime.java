@@ -83,9 +83,9 @@ public class DungeonsSlime extends DungeonBase {
 				
 				cursor = new Coord(origin);
 				cursor.add(dir, 7);
-				wall.setBlock(editor, rand, cursor);
+				wall.set(editor, rand, cursor);
 				cursor.add(Cardinal.UP, 2);
-				wall.setBlock(editor, rand, cursor);
+				wall.set(editor, rand, cursor);
 				cursor.add(Cardinal.DOWN);
 				cursor.add(dir);
 				water.setBlock(editor, cursor);
@@ -95,7 +95,7 @@ public class DungeonsSlime extends DungeonBase {
 					cursor.add(o);
 					stair.setOrientation(o, true).setBlock(editor, cursor);
 					cursor.add(Cardinal.UP);
-					wall.setBlock(editor, rand, cursor);
+					wall.set(editor, rand, cursor);
 					cursor.add(Cardinal.UP);
 					stair.setOrientation(o, false).setBlock(editor, cursor);
 					
@@ -149,7 +149,7 @@ public class DungeonsSlime extends DungeonBase {
 			for(Cardinal d : Cardinal.directions){
 				cursor = new Coord(end);
 				cursor.add(d);
-				stair.setOrientation(d, true).setBlock(editor, rand, cursor, true, false);
+				stair.setOrientation(d, true).set(editor, rand, cursor, true, false);
 			}
 			
 			start = new Coord(origin);

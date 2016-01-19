@@ -84,7 +84,7 @@ public class DungeonReward extends DungeonBase {
 				cursor.add(dir, 8);
 				cursor.add(Cardinal.UP, 2);
 				cursor.add(orth);
-				stair.setOrientation(Cardinal.reverse(orth), true).setBlock(editor, rand, cursor, true, false);
+				stair.setOrientation(Cardinal.reverse(orth), true).set(editor, rand, cursor, true, false);
 				cursor.add(Cardinal.reverse(dir));
 				stair.setOrientation(Cardinal.reverse(orth), true).setBlock(editor, cursor);
 				cursor.add(Cardinal.reverse(dir));
@@ -159,7 +159,7 @@ public class DungeonReward extends DungeonBase {
 			RectSolid.fill(editor, rand, start, end, theme.getPrimaryPillar());
 			
 			cursor = new Coord(x, y, z);
-			theme.getPrimaryWall().setBlock(editor, rand, cursor);
+			theme.getPrimaryWall().set(editor, rand, cursor);
 			cursor.add(dir);
 			stair.setOrientation(dir, false).setBlock(editor, cursor);
 			cursor.add(o);

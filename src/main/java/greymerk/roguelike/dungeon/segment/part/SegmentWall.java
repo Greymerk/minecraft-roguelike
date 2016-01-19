@@ -56,9 +56,9 @@ public class SegmentWall extends SegmentBase {
 			cursor = new Coord(origin);
 			IBlockFactory wall = theme.getPrimaryWall();
 			cursor.add(dir, 3);
-			wall.setBlock(editor, rand, cursor);
+			wall.set(editor, rand, cursor);
 			cursor.add(Cardinal.UP);
-			wall.setBlock(editor, rand, cursor);
+			wall.set(editor, rand, cursor);
 		}
 	}	
 }

@@ -76,7 +76,7 @@ public class EniTower implements ITower {
 				cursor = new Coord(floor);
 				cursor.add(dir, 5);
 				cursor.add(Cardinal.UP, 3);
-				blocks.setBlock(editor, rand, cursor);
+				blocks.set(editor, rand, cursor);
 				cursor.add(orth);
 				stair.setOrientation(orth, false).setBlock(editor, cursor);
 				cursor.add(Cardinal.reverse(dir));
@@ -172,7 +172,7 @@ public class EniTower implements ITower {
 				cursor.add(orth, 2);
 				stair.setOrientation(dir, true).setBlock(editor, cursor);
 				cursor.add(Cardinal.UP);
-				blocks.setBlock(editor, rand, cursor);
+				blocks.set(editor, rand, cursor);
 				cursor.add(dir);
 				stair.setOrientation(dir, true).setBlock(editor, cursor);
 				
@@ -207,7 +207,7 @@ public class EniTower implements ITower {
 				
 				cursor.add(Cardinal.reverse(dir), 3);
 				cursor.add(orth);
-				theme.getSecondaryWall().setBlock(editor, rand, cursor);
+				theme.getSecondaryWall().set(editor, rand, cursor);
 				
 				// tower top
 				start = new Coord(floor);
@@ -229,31 +229,31 @@ public class EniTower implements ITower {
 				roof.setOrientation(dir, false).setBlock(editor, cursor);
 				cursor.add(Cardinal.reverse(dir));
 				cursor.add(orth);
-				theme.getSecondaryWall().setBlock(editor, rand, cursor);
+				theme.getSecondaryWall().set(editor, rand, cursor);
 				cursor.add(Cardinal.reverse(orth));
 				cursor.add(Cardinal.UP);
 				roof.setOrientation(orth, false).setBlock(editor, cursor);
 				cursor.add(Cardinal.reverse(orth));
-				theme.getSecondaryWall().setBlock(editor, rand, cursor);
+				theme.getSecondaryWall().set(editor, rand, cursor);
 				cursor.add(Cardinal.UP);
 				roof.setOrientation(dir, false).setBlock(editor, cursor);
 				cursor.add(Cardinal.reverse(dir));
-				theme.getSecondaryWall().setBlock(editor, rand, cursor);
+				theme.getSecondaryWall().set(editor, rand, cursor);
 				cursor.add(Cardinal.DOWN);
-				theme.getSecondaryWall().setBlock(editor, rand, cursor);
+				theme.getSecondaryWall().set(editor, rand, cursor);
 				cursor.add(orth);
-				theme.getSecondaryWall().setBlock(editor, rand, cursor);
+				theme.getSecondaryWall().set(editor, rand, cursor);
 				cursor.add(Cardinal.UP);
-				theme.getSecondaryWall().setBlock(editor, rand, cursor);
+				theme.getSecondaryWall().set(editor, rand, cursor);
 				cursor.add(Cardinal.UP);
 				cursor.add(Cardinal.reverse(orth));
-				theme.getSecondaryWall().setBlock(editor, rand, cursor);
+				theme.getSecondaryWall().set(editor, rand, cursor);
 				cursor.add(Cardinal.UP);
 				roof.setOrientation(dir, false).setBlock(editor, cursor);
 				cursor.add(Cardinal.reverse(dir));
-				theme.getSecondaryWall().setBlock(editor, rand, cursor);
+				theme.getSecondaryWall().set(editor, rand, cursor);
 				cursor.add(Cardinal.UP);
-				theme.getSecondaryWall().setBlock(editor, rand, cursor);
+				theme.getSecondaryWall().set(editor, rand, cursor);
 			}
 		}
 
@@ -359,7 +359,7 @@ public class EniTower implements ITower {
 			
 			cursor.add(Cardinal.reverse(dir));
 			cursor.add(orth[0], 2);
-			blocks.setBlock(editor, rand, cursor);
+			blocks.set(editor, rand, cursor);
 		}
 		
 		start = new Coord(x - 4, 60, z - 4);

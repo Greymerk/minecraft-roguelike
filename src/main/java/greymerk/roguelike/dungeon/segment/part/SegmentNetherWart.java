@@ -47,9 +47,9 @@ public class SegmentNetherWart extends SegmentBase{
 			cursor.add(Cardinal.UP, 1);
 			step.setBlock(editor, cursor);
 			cursor.add(Cardinal.UP, 1);
-			wall.setBlock(editor, rand, cursor);
+			wall.set(editor, rand, cursor);
 			cursor.add(Cardinal.reverse(orth), 1);
-			wall.setBlock(editor, rand, cursor);
+			wall.set(editor, rand, cursor);
 			cursor.add(Cardinal.DOWN, 2);
 			editor.setBlock(cursor, Crops.get(Crops.NETHERWART));
 			cursor.add(orth, 1);

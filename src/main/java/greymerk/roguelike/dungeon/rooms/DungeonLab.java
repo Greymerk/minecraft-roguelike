@@ -253,7 +253,7 @@ public class DungeonLab extends DungeonBase {
 	private static void pillar(IWorldEditor editor, Random rand, ITheme theme, int x, int y, int z){
 		
 		theme.getSecondaryPillar().fill(editor, rand, new RectSolid(new Coord(x, y, z), new Coord(x, y + 2, z)));
-		theme.getPrimaryWall().setBlock(editor, rand, new Coord(x, y + 3, z));
+		theme.getPrimaryWall().set(editor, rand, new Coord(x, y + 3, z));
 		IStair stair = theme.getSecondaryStair();
 		stair.setOrientation(Cardinal.EAST, true).setBlock(editor, new Coord(x + 1, y + 3, z));
 		stair.setOrientation(Cardinal.WEST, true).setBlock(editor, new Coord(x - 1, y + 3, z));

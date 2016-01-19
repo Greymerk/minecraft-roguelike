@@ -54,11 +54,11 @@ public class SegmentSewerDoor extends SegmentBase {
 		cursor.add(Cardinal.UP, 3);
 		bars.setBlock(editor, cursor);
 		cursor.add(Cardinal.UP);
-		leaves.setBlock(editor, rand, cursor, false, true);
+		leaves.set(editor, rand, cursor, false, true);
 		cursor.add(dir);
-		water.setBlock(editor, rand, cursor, false, true);
+		water.set(editor, rand, cursor, false, true);
 		cursor.add(dir);
-		glowstone.setBlock(editor, rand, cursor, false, true);
+		glowstone.set(editor, rand, cursor, false, true);
 		
 		cursor = new Coord(origin);
 		cursor.add(dir, 2);
@@ -81,7 +81,7 @@ public class SegmentSewerDoor extends SegmentBase {
 			Coord c = new Coord(cursor);
 			c.add(d, 1);
 			stair.setOrientation(Cardinal.reverse(d), true);
-			stair.setBlock(editor, rand, c);
+			stair.set(editor, rand, c);
 		}
 		
 		if(room != null){

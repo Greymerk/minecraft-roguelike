@@ -165,22 +165,22 @@ public class BunkerTower implements ITower{
 			for(Cardinal o : Cardinal.orthogonal(dir)){
 				Coord c = new Coord(cursor);
 				c.add(o);
-				pillar.setBlock(editor, rand, c);
+				pillar.set(editor, rand, c);
 				c.add(o);
 				stair.setOrientation(dir, false).setBlock(editor, c);
 				c.add(o);
-				pillar.setBlock(editor, rand, c);
+				pillar.set(editor, rand, c);
 			}
 			cursor.add(Cardinal.UP);
 			window.setBlock(editor, cursor);
 			for(Cardinal o : Cardinal.orthogonal(dir)){
 				Coord c = new Coord(cursor);
 				c.add(o);
-				pillar.setBlock(editor, rand, c);
+				pillar.set(editor, rand, c);
 				c.add(o);
 				window.setBlock(editor, c);
 				c.add(o);
-				pillar.setBlock(editor, rand, c);
+				pillar.set(editor, rand, c);
 			}
 			cursor.add(Cardinal.UP);
 			start = new Coord(cursor);

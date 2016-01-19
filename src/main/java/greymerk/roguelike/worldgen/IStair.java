@@ -8,6 +8,6 @@ public interface IStair extends IBlockFactory{
 	
 	public boolean setBlock(IWorldEditor editor, Coord pos);
 	
-	public boolean setBlock(IWorldEditor editor, Random rand, Coord pos, boolean fillAir, boolean replaceSolid);
+	public boolean set(IWorldEditor editor, Random rand, Coord pos, boolean fillAir, boolean replaceSolid);
 	
 }

@@ -53,8 +53,8 @@ public class DungeonsEnder extends DungeonBase {
 		int top = end.getY() - start.getY() + 1;
 		for(Coord cell : new RectSolid(start, end)){
 			boolean disolve = inRandom.nextInt((cell.getY() - start.getY()) + 1) < 2;
-			air.setBlock(editor, inRandom, cell, false, disolve);
-			black.setBlock(editor, inRandom, cell, false, inRandom.nextInt(top - (cell.getY() - start.getY())) == 0 && !disolve);
+			air.set(editor, inRandom, cell, false, disolve);
+			black.set(editor, inRandom, cell, false, inRandom.nextInt(top - (cell.getY() - start.getY())) == 0 && !disolve);
 		}
 		
 		start = new Coord(origin);

@@ -173,7 +173,7 @@ public class DungeonOssuary extends DungeonBase {
 				stair.setOrientation(Cardinal.reverse(o), true).setBlock(editor, c);
 			}
 			cursor.add(orth[0], 2);
-			walls.setBlock(editor, rand, cursor);
+			walls.set(editor, rand, cursor);
 		}
 		
 		for(Cardinal dir : Cardinal.directions){
@@ -231,11 +231,11 @@ public class DungeonOssuary extends DungeonBase {
 					cursor.add(Cardinal.left(dir), 4);
 					cursor.add(d, 3);
 					cursor.add(o);
-					walls.setBlock(editor, rand, cursor);
+					walls.set(editor, rand, cursor);
 					cursor.add(Cardinal.UP);
 					skull(editor, rand, Cardinal.reverse(d), cursor);
 					cursor.add(Cardinal.UP);
-					walls.setBlock(editor, rand, cursor);
+					walls.set(editor, rand, cursor);
 					cursor.add(Cardinal.UP);
 					skull(editor, rand, Cardinal.reverse(d), cursor);
 					cursor.add(Cardinal.UP);

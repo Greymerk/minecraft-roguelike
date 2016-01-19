@@ -189,7 +189,7 @@ public class DungeonPyramidTomb extends DungeonBase{
 		stair.setOrientation(dir, true).setBlock(editor, origin);
 		Coord cursor = new Coord(origin);
 		cursor.add(Cardinal.UP);
-		theme.getPrimaryPillar().setBlock(editor, rand, cursor);
+		theme.getPrimaryPillar().set(editor, rand, cursor);
 	}
 	
 	

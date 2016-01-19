@@ -118,7 +118,7 @@ public class DungeonEniko extends DungeonBase {
 		for(Cardinal dir : Cardinal.directions){
 			cursor = new Coord(end);
 			cursor.add(dir);
-			stair.setOrientation(dir, true).setBlock(editor, rand, cursor, true, false);
+			stair.setOrientation(dir, true).set(editor, rand, cursor, true, false);
 		}
 	}
 	

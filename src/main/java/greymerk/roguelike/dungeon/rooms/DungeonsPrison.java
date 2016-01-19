@@ -266,10 +266,10 @@ public class DungeonsPrison extends DungeonBase {
 		cursor.add(Cardinal.UP, height - 1);
 		editor.fillDown(rand, new Coord(cursor), pillar);
 		cursor.add(Cardinal.UP);
-		pillar.setBlock(editor, rand, cursor);
+		pillar.set(editor, rand, cursor);
 		for(Cardinal dir : Cardinal.directions){
 			cursor.add(dir);
-			stair.setOrientation(dir, true).setBlock(editor, rand, cursor, true, false);
+			stair.setOrientation(dir, true).set(editor, rand, cursor, true, false);
 		}
 	}
 	

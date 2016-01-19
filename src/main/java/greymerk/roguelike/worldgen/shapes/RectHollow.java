@@ -38,7 +38,7 @@ public class RectHollow implements IShape {
 	@Override
 	public void fill(IWorldEditor editor, Random rand, IBlockFactory block, boolean fillAir, boolean replaceSolid) {
 		for(Coord c : this){
-			block.setBlock(editor, rand, c, fillAir, replaceSolid);
+			block.set(editor, rand, c, fillAir, replaceSolid);
 		}
 		
 		Coord innerStart = new Coord(start);

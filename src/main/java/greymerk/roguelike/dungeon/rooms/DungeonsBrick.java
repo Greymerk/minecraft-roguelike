@@ -55,7 +55,7 @@ public class DungeonsBrick extends DungeonBase {
 		cursor.add(Cardinal.UP, 5);
 		air.setBlock(editor, cursor);
 		cursor.add(Cardinal.UP, 1);
-		blocks.setBlock(editor, rand, cursor);
+		blocks.set(editor, rand, cursor);
 		
 		// Chests
 		List<Coord> space = new ArrayList<Coord>();
@@ -67,16 +67,16 @@ public class DungeonsBrick extends DungeonBase {
 			cursor.add(dir, 1);
 			cursor.add(Cardinal.UP, 5);
 			stair.setOrientation(Cardinal.reverse(dir), true);
-			stair.setBlock(editor, rand, cursor, false, true);
+			stair.set(editor, rand, cursor, false, true);
 			cursor.add(Cardinal.left(dir), 1);
-			blocks.setBlock(editor, rand, cursor, false, true);
+			blocks.set(editor, rand, cursor, false, true);
 
 			cursor = new Coord(x, y, z);
 			cursor.add(dir, 2);
 			cursor.add(Cardinal.UP, 4);
 			air.setBlock(editor, cursor);
 			cursor.add(Cardinal.UP, 1);
-			blocks.setBlock(editor, rand, cursor, false, true);
+			blocks.set(editor, rand, cursor, false, true);
 			
 			// pillar
 			cursor = new Coord(x, y, z);
@@ -87,7 +87,7 @@ public class DungeonsBrick extends DungeonBase {
 			end = new Coord(cursor);
 			RectSolid.fill(editor, rand, start, end, pillar, true, true);
 			cursor.add(Cardinal.UP, 1);
-			blocks.setBlock(editor, rand, cursor);
+			blocks.set(editor, rand, cursor);
 			
 			// pillar stairs
 			for(Cardinal orth : Cardinal.orthogonal(dir)){
@@ -96,7 +96,7 @@ public class DungeonsBrick extends DungeonBase {
 				cursor.add(orth, 2);
 				cursor.add(Cardinal.UP, 3);
 				stair.setOrientation(Cardinal.reverse(orth), true);
-				stair.setBlock(editor, rand, cursor);
+				stair.set(editor, rand, cursor);
 			}
 
 			// layer above pillars
@@ -104,7 +104,7 @@ public class DungeonsBrick extends DungeonBase {
 			cursor.add(dir, 2);
 			cursor.add(Cardinal.left(dir), 2);
 			cursor.add(Cardinal.UP, 4);
-			blocks.setBlock(editor, rand, cursor, false, true);
+			blocks.set(editor, rand, cursor, false, true);
 			
 			for(Cardinal orth : Cardinal.orthogonal(dir)){
 				cursor = new Coord(x, y, z);
@@ -112,14 +112,14 @@ public class DungeonsBrick extends DungeonBase {
 				cursor.add(dir, 2);
 				cursor.add(orth, 1);
 				stair.setOrientation(Cardinal.reverse(orth), true);
-				stair.setBlock(editor, rand, cursor, false, true);
+				stair.set(editor, rand, cursor, false, true);
 			}
 			
 			cursor = new Coord(x, y, z);
 			cursor.add(dir, 1);
 			cursor.add(Cardinal.left(dir), 1);
 			cursor.add(Cardinal.UP, 5);
-			blocks.setBlock(editor, rand, cursor, false, true);
+			blocks.set(editor, rand, cursor, false, true);
 			
 			for(Cardinal orth : Cardinal.orthogonal(dir)){
 				cursor = new Coord(x, y, z);

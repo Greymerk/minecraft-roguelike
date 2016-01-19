@@ -47,7 +47,7 @@ public class DungeonCorner extends DungeonBase {
 		cursor.add(Cardinal.UP, 4);
 		air.setBlock(editor, cursor);
 		cursor.add(Cardinal.UP, 1);
-		blocks.setBlock(editor, rand, cursor);
+		blocks.set(editor, rand, cursor);
 		
 		for(Cardinal dir : Cardinal.directions){
 			
@@ -59,13 +59,13 @@ public class DungeonCorner extends DungeonBase {
 			end = new Coord(cursor);
 			RectSolid.fill(editor, rand, start, end, pillar, true, true);
 			cursor.add(Cardinal.UP, 1);
-			blocks.setBlock(editor, rand, cursor);
+			blocks.set(editor, rand, cursor);
 			
 			cursor = new Coord(x, y, z);
 			cursor.add(dir, 1);
 			cursor.add(Cardinal.UP, 4);
 			stair.setOrientation(Cardinal.reverse(dir), true);
-			stair.setBlock(editor, rand, cursor);
+			stair.set(editor, rand, cursor);
 			
 			for(Cardinal orth : Cardinal.orthogonal(dir)){
 				cursor = new Coord(x, y, z);
@@ -73,7 +73,7 @@ public class DungeonCorner extends DungeonBase {
 				cursor.add(orth, 1);
 				cursor.add(Cardinal.UP, 3);
 				stair.setOrientation(Cardinal.reverse(orth), true);
-				stair.setBlock(editor, rand, cursor);
+				stair.set(editor, rand, cursor);
 			}
 		}
 		

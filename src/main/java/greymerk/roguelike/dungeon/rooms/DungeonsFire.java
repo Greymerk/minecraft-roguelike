@@ -65,7 +65,7 @@ public class DungeonsFire extends DungeonBase {
 				cursor.add(dir, 8);
 				cursor.add(orth);
 				cursor.add(Cardinal.UP, 2);
-				stair.setOrientation(Cardinal.reverse(orth), true).setBlock(editor, rand, cursor, true, false);
+				stair.setOrientation(Cardinal.reverse(orth), true).set(editor, rand, cursor, true, false);
 				
 				cursor.add(Cardinal.reverse(dir));
 				cursor.add(Cardinal.UP);
@@ -113,7 +113,7 @@ public class DungeonsFire extends DungeonBase {
 			end.add(dir, 6);
 			RectSolid.fill(editor, rand, start, end, wall);
 			cursor.add(Cardinal.left(dir));
-			wall.setBlock(editor, rand, cursor);
+			wall.set(editor, rand, cursor);
 			
 			start = new Coord(end);
 			end.add(Cardinal.UP, 2);
@@ -176,11 +176,11 @@ public class DungeonsFire extends DungeonBase {
 			
 			cursor = new Coord(origin);
 			cursor.add(dir);
-			stair.setOrientation(dir, false).setBlock(editor, rand, cursor, true, false);
+			stair.setOrientation(dir, false).set(editor, rand, cursor, true, false);
 			cursor.add(Cardinal.UP);
 			editor.setBlock(cursor, BlockType.get(BlockType.IRON_BAR));
 			cursor.add(Cardinal.UP);
-			stair.setOrientation(dir, true).setBlock(editor, rand, cursor, true, false);
+			stair.setOrientation(dir, true).set(editor, rand, cursor, true, false);
 			
 			cursor = new Coord(origin);
 			cursor.add(Cardinal.UP, 6);
@@ -189,9 +189,9 @@ public class DungeonsFire extends DungeonBase {
 			for(Cardinal o : Cardinal.orthogonal(dir)){
 				Coord c = new Coord(cursor);
 				c.add(o, 2);
-				stair.setOrientation(dir, true).setBlock(editor, rand, c, true, false);
+				stair.setOrientation(dir, true).set(editor, rand, c, true, false);
 				c.add(o);
-				stair.setOrientation(dir, true).setBlock(editor, rand, c, true, false);
+				stair.setOrientation(dir, true).set(editor, rand, c, true, false);
 			}
 			
 			cursor = new Coord(origin);

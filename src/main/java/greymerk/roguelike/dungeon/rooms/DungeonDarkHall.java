@@ -110,7 +110,7 @@ public class DungeonDarkHall extends DungeonBase{
 			start = new Coord(origin);
 			start.add(dir, 3);
 			start.add(Cardinal.UP, 7);
-			pillar.setBlock(editor, rand, start);
+			pillar.set(editor, rand, start);
 			start.add(Cardinal.UP);
 			end = new Coord(start);
 			end.add(Cardinal.reverse(dir), 3);
@@ -146,9 +146,9 @@ public class DungeonDarkHall extends DungeonBase{
 					cursor = new Coord(origin);
 					cursor.add(dir, 7);
 					cursor.add(o, 2);
-					pillar.setBlock(editor, rand, cursor);
+					pillar.set(editor, rand, cursor);
 					cursor.add(Cardinal.UP);
-					pillar.setBlock(editor, rand, cursor);
+					pillar.set(editor, rand, cursor);
 				}
 			} else {
 				cursor = new Coord(origin);
@@ -210,7 +210,7 @@ public class DungeonDarkHall extends DungeonBase{
 		if(editor.isAirBlock(cursor)){
 			stair.setOrientation(dir, true).setBlock(editor, cursor);	
 		} else {
-			wall.setBlock(editor, rand, cursor);
+			wall.set(editor, rand, cursor);
 		}
 		
 	}

@@ -88,9 +88,9 @@ public class PyramidTower implements ITower{
 			cursor = new Coord(origin);
 			cursor.add(dir, 2);
 			cursor.add(o, 2);
-			blocks.setBlock(editor, rand, cursor);
+			blocks.set(editor, rand, cursor);
 			cursor.add(Cardinal.UP);
-			blocks.setBlock(editor, rand, cursor);
+			blocks.set(editor, rand, cursor);
 		}
 		
 		// door
@@ -111,7 +111,7 @@ public class PyramidTower implements ITower{
 		
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.UP, 2);
-		blocks.setBlock(editor, rand, cursor);
+		blocks.set(editor, rand, cursor);
 		
 		// door cap
 		start = new Coord(origin);
@@ -129,9 +129,9 @@ public class PyramidTower implements ITower{
 		BlockType.get(BlockType.LAPIS_BLOCK).setBlock(editor, cursor);
 		
 		cursor.add(Cardinal.UP, 2);
-		blocks.setBlock(editor, rand, cursor);
+		blocks.set(editor, rand, cursor);
 		cursor.add(Cardinal.UP);
-		blocks.setBlock(editor, rand, cursor);
+		blocks.set(editor, rand, cursor);
 	}
 
 	private void spire(IWorldEditor editor, Random rand, ITheme theme, Coord origin) {
@@ -262,7 +262,7 @@ public class PyramidTower implements ITower{
 				if(i % 2 == 0){
 					cursor = new Coord(c2);
 					cursor.add(Cardinal.UP, 5);
-					blocks.setBlock(editor, rand, cursor);
+					blocks.set(editor, rand, cursor);
 
 					start = new Coord(c2);
 					start.add(Cardinal.UP);
@@ -272,9 +272,9 @@ public class PyramidTower implements ITower{
 				} else {
 					cursor = new Coord(c2);
 					cursor.add(dir);
-					blocks.setBlock(editor, rand, cursor);
+					blocks.set(editor, rand, cursor);
 					cursor.add(Cardinal.UP);
-					blocks.setBlock(editor, rand, cursor);
+					blocks.set(editor, rand, cursor);
 				}
 				c2.add(o);
 			}
@@ -308,16 +308,16 @@ public class PyramidTower implements ITower{
 			
 			cursor = new Coord(pos);
 			cursor.add(face, 2);
-			blocks.setBlock(editor, rand, cursor);
+			blocks.set(editor, rand, cursor);
 			cursor.add(Cardinal.UP);
-			blocks.setBlock(editor, rand, cursor);
+			blocks.set(editor, rand, cursor);
 			
 			cursor = new Coord(pos);
 			cursor.add(face);
 			cursor.add(Cardinal.UP, 2);
-			blocks.setBlock(editor, rand, cursor);
+			blocks.set(editor, rand, cursor);
 			cursor.add(Cardinal.UP);
-			blocks.setBlock(editor, rand, cursor);
+			blocks.set(editor, rand, cursor);
 		}
 		
 		start = new Coord(pos);

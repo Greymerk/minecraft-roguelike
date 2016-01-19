@@ -7,8 +7,8 @@ import greymerk.roguelike.worldgen.shapes.IShape;
 public abstract class BlockBase implements IBlockFactory {
 	
 	@Override
-	public boolean setBlock(IWorldEditor editor, Random rand, Coord pos) {
-		return setBlock(editor, rand, pos, true, true);
+	public boolean set(IWorldEditor editor, Random rand, Coord pos) {
+		return set(editor, rand, pos, true, true);
 	}
 	
 	@Override

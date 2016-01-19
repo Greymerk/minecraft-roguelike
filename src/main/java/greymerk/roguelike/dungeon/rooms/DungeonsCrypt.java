@@ -188,9 +188,9 @@ public class DungeonsCrypt extends DungeonBase {
 		cursor.add(Cardinal.DOWN, 2);
 		stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
 		cursor.add(dir);
-		walls.setBlock(editor, rand, cursor);
+		walls.set(editor, rand, cursor);
 		cursor.add(dir);
-		walls.setBlock(editor, rand, cursor);
+		walls.set(editor, rand, cursor);
 		cursor.add(dir);
 		stair.setOrientation(dir, false).setBlock(editor, cursor);
 		cursor.add(Cardinal.UP);
@@ -245,7 +245,7 @@ public class DungeonsCrypt extends DungeonBase {
 		cursor.add(Cardinal.UP, 2);
 		stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
 		cursor.add(Cardinal.UP);
-		walls.setBlock(editor, rand, cursor);
+		walls.set(editor, rand, cursor);
 		
 		for(Cardinal o : Cardinal.orthogonal(dir)){
 			cursor = new Coord(origin);
@@ -254,9 +254,9 @@ public class DungeonsCrypt extends DungeonBase {
 			cursor.add(o);
 			stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
 			cursor.add(Cardinal.UP);
-			walls.setBlock(editor, rand, cursor);
+			walls.set(editor, rand, cursor);
 			cursor.add(Cardinal.UP);
-			walls.setBlock(editor, rand, cursor);
+			walls.set(editor, rand, cursor);
 			
 			start = new Coord(origin);
 			start.add(Cardinal.UP, 3);
@@ -336,7 +336,7 @@ public class DungeonsCrypt extends DungeonBase {
 			cursor = new Coord(end);
 			cursor.add(dir);
 			stair.setOrientation(dir, true);
-			stair.setBlock(editor, rand, cursor, true, false);
+			stair.set(editor, rand, cursor, true, false);
 		}
 	}
 	

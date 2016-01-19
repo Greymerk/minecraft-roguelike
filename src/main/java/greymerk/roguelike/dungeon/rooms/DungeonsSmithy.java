@@ -231,7 +231,7 @@ public class DungeonsSmithy extends DungeonBase {
 		cursor.add(Cardinal.reverse(dir));
 		stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
 		cursor.add(Cardinal.UP);
-		wall.setBlock(editor, rand, cursor);
+		wall.set(editor, rand, cursor);
 		cursor.add(Cardinal.reverse(dir));
 		stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
 		cursor.add(Cardinal.reverse(dir));
@@ -278,9 +278,9 @@ public class DungeonsSmithy extends DungeonBase {
 			smelter(editor, rand, settings, dir, cursor);
 			
 			cursor.add(o, 2);
-			wall.setBlock(editor, rand, cursor);
+			wall.set(editor, rand, cursor);
 			cursor.add(dir);
-			wall.setBlock(editor, rand, cursor);
+			wall.set(editor, rand, cursor);
 		}
 	}
 	
@@ -451,7 +451,7 @@ public class DungeonsSmithy extends DungeonBase {
 		
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.right(dir), 3);
-		wall.setBlock(editor, rand, cursor);
+		wall.set(editor, rand, cursor);
 		cursor.add(dir);
 		editor.setBlock(cursor, BlockType.get(BlockType.WATER_FLOWING));
 		cursor.add(Cardinal.reverse(dir), 2);

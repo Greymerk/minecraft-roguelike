@@ -39,11 +39,11 @@ public class SegmentMossyArch extends SegmentBase {
 			cursor = new Coord(origin);
 			cursor.add(orth, 1);
 			cursor.add(wallDirection, 2);
-			theme.getSecondaryPillar().setBlock(editor, rand, cursor);
+			theme.getSecondaryPillar().set(editor, rand, cursor);
 			cursor.add(Cardinal.UP, 1);
-			theme.getSecondaryPillar().setBlock(editor, rand, cursor);
+			theme.getSecondaryPillar().set(editor, rand, cursor);
 			cursor.add(Cardinal.UP, 1);
-			theme.getSecondaryWall().setBlock(editor, rand, cursor);
+			theme.getSecondaryWall().set(editor, rand, cursor);
 			cursor.add(Cardinal.reverse(wallDirection), 1);
 			stair.setBlock(editor, cursor);			
 		}

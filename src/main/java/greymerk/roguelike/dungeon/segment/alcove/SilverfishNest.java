@@ -66,11 +66,11 @@ public class SilverfishNest implements IAlcove{
 		fish.addBlock(BlockType.get(BlockType.SOUL_SAND), 5);
 		RectHollow.fill(editor, rand, new Coord(x - 2, y, z - 2), new Coord(x + 2, y + 3, z + 2), fish);
 		
-		fish.setBlock(editor, rand, new Coord(x - 1, y + 2, z));
-		fish.setBlock(editor, rand, new Coord(x + 1, y + 2, z));
-		fish.setBlock(editor, rand, new Coord(x, y + 2, z - 1));
-		fish.setBlock(editor, rand, new Coord(x, y + 2, z + 1));
-		fish.setBlock(editor, rand, new Coord(x, y + 1, z));
+		fish.set(editor, rand, new Coord(x - 1, y + 2, z));
+		fish.set(editor, rand, new Coord(x + 1, y + 2, z));
+		fish.set(editor, rand, new Coord(x, y + 2, z - 1));
+		fish.set(editor, rand, new Coord(x, y + 2, z + 1));
+		fish.set(editor, rand, new Coord(x, y + 1, z));
 		
 	}
 }

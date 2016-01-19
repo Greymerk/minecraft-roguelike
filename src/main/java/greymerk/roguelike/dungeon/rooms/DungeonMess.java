@@ -164,7 +164,7 @@ public class DungeonMess extends DungeonBase {
 			RectSolid.fill(editor, rand, start, end, pillar, true, true);
 			cursor.add(Cardinal.UP, 3);
 			cursor.add(Cardinal.reverse(dir));
-			wall.setBlock(editor, rand, cursor);
+			wall.set(editor, rand, cursor);
 			cursor.add(Cardinal.DOWN);
 			stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
 			cursor.add(Cardinal.UP);
@@ -247,7 +247,7 @@ public class DungeonMess extends DungeonBase {
 			RectSolid.fill(editor, rand, start, end, pillar, true, true);
 			cursor.add(Cardinal.UP, 3);
 			cursor.add(Cardinal.reverse(dir));
-			wall.setBlock(editor, rand, cursor);
+			wall.set(editor, rand, cursor);
 			cursor.add(Cardinal.DOWN);
 			stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
 			cursor.add(Cardinal.UP);
@@ -320,7 +320,7 @@ public class DungeonMess extends DungeonBase {
 		cursor.add(Cardinal.UP, 3);
 		stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
 		cursor.add(Cardinal.UP);
-		wall.setBlock(editor, rand, cursor);
+		wall.set(editor, rand, cursor);
 		cursor.add(Cardinal.reverse(dir));
 		stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
 		cursor.add(Cardinal.reverse(dir));
@@ -388,7 +388,7 @@ public class DungeonMess extends DungeonBase {
 			cursor.add(o);
 			bars.setBlock(editor, cursor);
 			cursor.add(o);
-			wall.setBlock(editor, rand, cursor);
+			wall.set(editor, rand, cursor);
 			cursor.add(Cardinal.UP);
 			stair.setOrientation(o, false).setBlock(editor, cursor);
 			cursor.add(Cardinal.reverse(o));

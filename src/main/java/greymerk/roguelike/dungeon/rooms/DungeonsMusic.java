@@ -79,7 +79,7 @@ public class DungeonsMusic extends DungeonBase {
 			cursor = new Coord(origin);
 			cursor.add(dir, 5);
 			cursor.add(Cardinal.UP, 3);
-			panel.setBlock(editor, rand, cursor);
+			panel.set(editor, rand, cursor);
 			cursor.add(Cardinal.reverse(dir));
 			stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
 			
@@ -134,9 +134,9 @@ public class DungeonsMusic extends DungeonBase {
 				cursor.add(Cardinal.reverse(o));
 				stair.setOrientation(o, true).setBlock(editor, cursor);
 				cursor.add(Cardinal.UP);
-				panel.setBlock(editor, rand, cursor);
+				panel.set(editor, rand, cursor);
 				cursor.add(o);
-				panel.setBlock(editor, rand, cursor);
+				panel.set(editor, rand, cursor);
 				cursor.add(Cardinal.reverse(dir));
 				stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
 				cursor.add(Cardinal.reverse(o));
@@ -173,9 +173,9 @@ public class DungeonsMusic extends DungeonBase {
 		for(Cardinal dir : Cardinal.directions){
 			cursor = new Coord(end);
 			cursor.add(dir);
-			stair.setOrientation(dir, true).setBlock(editor, rand, cursor, true, false);
+			stair.setOrientation(dir, true).set(editor, rand, cursor, true, false);
 			cursor.add(Cardinal.UP);
-			panel.setBlock(editor, rand, cursor);
+			panel.set(editor, rand, cursor);
 		}
 	}
 

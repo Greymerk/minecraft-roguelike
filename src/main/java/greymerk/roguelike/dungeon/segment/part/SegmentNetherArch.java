@@ -36,9 +36,9 @@ public class SegmentNetherArch extends SegmentBase {
 			cursor = new Coord(origin);
 			cursor.add(dir, 2);
 			cursor.add(orth, 1);
-			pillar.setBlock(editor, rand, cursor);
+			pillar.set(editor, rand, cursor);
 			cursor.add(Cardinal.UP, 1);
-			pillar.setBlock(editor, rand, cursor);
+			pillar.set(editor, rand, cursor);
 		}
 			
 		MetaBlock fence = BlockType.get(BlockType.FENCE_NETHER_BRICK);
@@ -46,9 +46,9 @@ public class SegmentNetherArch extends SegmentBase {
 		
 		cursor = new Coord(origin);
 		cursor.add(dir, 2);		
-		fence.setBlock(editor, rand, cursor);
+		fence.set(editor, rand, cursor);
 		cursor.add(Cardinal.UP, 1);		
-		fence.setBlock(editor, rand, cursor);
+		fence.set(editor, rand, cursor);
 		
 		if(hasLava){
 			cursor.add(dir, 1);

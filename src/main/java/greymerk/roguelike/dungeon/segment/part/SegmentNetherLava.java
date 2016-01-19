@@ -64,9 +64,9 @@ public class SegmentNetherLava extends SegmentBase {
 			step.setBlock(editor, cursor);
 			
 			cursor.add(Cardinal.UP, 1);
-			wall.setBlock(editor, rand, cursor);
+			wall.set(editor, rand, cursor);
 			cursor.add(Cardinal.reverse(orth), 1);
-			wall.setBlock(editor, rand, cursor);
+			wall.set(editor, rand, cursor);
 		}
 		
 	}

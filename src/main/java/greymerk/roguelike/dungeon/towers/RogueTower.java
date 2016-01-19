@@ -74,7 +74,7 @@ public class RogueTower implements ITower{
 				RectSolid.fill(editor, rand, start, end, blocks);
 				cursor.add(Cardinal.UP, 2);
 				stair.setOrientation(orth, false);
-				stair.setBlock(editor, rand, cursor);
+				stair.set(editor, rand, cursor);
 				
 				start = new Coord(floor);
 				start.add(dir, 4);
@@ -112,7 +112,7 @@ public class RogueTower implements ITower{
 				start.add(orth, 3);
 				start.add(Cardinal.UP, 4);
 				stair.setOrientation(orth, true);
-				stair.setBlock(editor, rand, start);
+				stair.set(editor, rand, start);
 				
 				start.add(Cardinal.UP, 1);
 				end = new Coord(start);
@@ -123,21 +123,21 @@ public class RogueTower implements ITower{
 				start.add(dir, 5);
 				start.add(Cardinal.UP, 4);
 				stair.setOrientation(dir, true);
-				stair.setBlock(editor, rand, start);
+				stair.set(editor, rand, start);
 				
 				cursor = new Coord(start);
 				cursor.add(orth, 1);
 				stair.setOrientation(orth, true);
-				stair.setBlock(editor, rand, cursor);
+				stair.set(editor, rand, cursor);
 				
 				start.add(Cardinal.UP, 3);
 				stair.setOrientation(dir, true);
-				stair.setBlock(editor, rand, start);
+				stair.set(editor, rand, start);
 				
 				cursor = new Coord(start);
 				cursor.add(orth, 1);
 				stair.setOrientation(orth, true);
-				stair.setBlock(editor, rand, cursor);
+				stair.set(editor, rand, cursor);
 				
 				start.add(Cardinal.UP, 1);
 				end = new Coord(start);
@@ -155,20 +155,20 @@ public class RogueTower implements ITower{
 				stair.setBlock(editor, cursor);
 				
 				cursor.add(Cardinal.reverse(orth), 1);
-				blocks.setBlock(editor, rand, cursor);
+				blocks.set(editor, rand, cursor);
 				cursor.add(Cardinal.UP, 1);
-				blocks.setBlock(editor, rand, cursor);
+				blocks.set(editor, rand, cursor);
 				cursor.add(orth, 1);
-				blocks.setBlock(editor, rand, cursor);
+				blocks.set(editor, rand, cursor);
 				cursor.add(Cardinal.UP, 1);
 				this.addCrenellation(editor, rand, cursor, blocks);
 				
 				cursor.add(Cardinal.DOWN, 2);
 				cursor.add(Cardinal.reverse(dir), 1);
 				cursor.add(orth, 1);
-				blocks.setBlock(editor, rand, cursor);
+				blocks.set(editor, rand, cursor);
 				cursor.add(Cardinal.DOWN, 1);
-				blocks.setBlock(editor, rand, cursor);
+				blocks.set(editor, rand, cursor);
 				
 				cursor = new Coord(floor);
 				cursor.add(dir, 6);
@@ -179,13 +179,13 @@ public class RogueTower implements ITower{
 				
 				cursor.add(orth, 1);
 				stair.setOrientation(orth, true);
-				stair.setBlock(editor, rand, cursor);
+				stair.set(editor, rand, cursor);
 				
 				cursor.add(Cardinal.reverse(orth), 1);
 				cursor.add(Cardinal.UP, 1);
-				blocks.setBlock(editor, rand, cursor);
+				blocks.set(editor, rand, cursor);
 				cursor.add(orth, 1);
-				blocks.setBlock(editor, rand, cursor);
+				blocks.set(editor, rand, cursor);
 				cursor.add(Cardinal.UP, 1);
 				this.addCrenellation(editor, rand, cursor, blocks);
 				
@@ -196,7 +196,7 @@ public class RogueTower implements ITower{
 				cursor.add(Cardinal.UP, 1);
 				air.setBlock(editor, cursor);
 				cursor.add(orth, 2);
-				BlockType.get(BlockType.IRON_BAR).setBlock(editor, rand, cursor);
+				BlockType.get(BlockType.IRON_BAR).set(editor, rand, cursor);
 			}
 		}
 		
@@ -229,7 +229,7 @@ public class RogueTower implements ITower{
 	
 	private void addCrenellation(IWorldEditor editor, Random rand, Coord cursor, IBlockFactory blocks){
 		
-		blocks.setBlock(editor, rand, cursor);
+		blocks.set(editor, rand, cursor);
 		
 		if(editor.isAirBlock(cursor)) return;
 

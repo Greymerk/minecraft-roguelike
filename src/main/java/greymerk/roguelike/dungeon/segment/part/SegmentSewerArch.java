@@ -32,9 +32,9 @@ public class SegmentSewerArch extends SegmentBase {
 		
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.UP, 3);
-		mossy.setBlock(editor, rand, cursor, false, true);
+		mossy.set(editor, rand, cursor, false, true);
 		cursor.add(Cardinal.UP);
-		water.setBlock(editor, rand, cursor, false, true);
+		water.set(editor, rand, cursor, false, true);
 		
 		cursor = new Coord(origin);
 		cursor.add(dir, 2);
@@ -64,11 +64,11 @@ public class SegmentSewerArch extends SegmentBase {
 			cursor = new Coord(origin);
 			cursor.add(o, 1);
 			cursor.add(dir, 2);
-			theme.getSecondaryPillar().setBlock(editor, rand, cursor);
+			theme.getSecondaryPillar().set(editor, rand, cursor);
 			cursor.add(Cardinal.UP, 1);
-			theme.getSecondaryPillar().setBlock(editor, rand, cursor);
+			theme.getSecondaryPillar().set(editor, rand, cursor);
 			cursor.add(Cardinal.UP, 1);
-			theme.getPrimaryWall().setBlock(editor, rand, cursor);
+			theme.getPrimaryWall().set(editor, rand, cursor);
 			cursor.add(Cardinal.reverse(dir), 1);
 			stair.setBlock(editor, cursor);			
 		}

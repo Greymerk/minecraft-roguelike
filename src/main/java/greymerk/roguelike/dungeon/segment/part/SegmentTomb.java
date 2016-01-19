@@ -49,7 +49,7 @@ public class SegmentTomb extends SegmentBase {
 			Coord c = new Coord(cursor);
 			c.add(d, 1);
 			stair.setOrientation(Cardinal.reverse(d), true);
-			stair.setBlock(editor, rand, c);
+			stair.set(editor, rand, c);
 		}
 		
 		tomb(editor, rand, level.getSettings(), theme, dir, new Coord(origin));

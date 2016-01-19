@@ -33,11 +33,11 @@ public class SegmentArch extends SegmentBase {
 			cursor = new Coord(origin);
 			cursor.add(orth, 1);
 			cursor.add(dir, 2);
-			theme.getSecondaryPillar().setBlock(editor, rand, cursor);
+			theme.getSecondaryPillar().set(editor, rand, cursor);
 			cursor.add(Cardinal.UP, 1);
-			theme.getSecondaryPillar().setBlock(editor, rand, cursor);
+			theme.getSecondaryPillar().set(editor, rand, cursor);
 			cursor.add(Cardinal.UP, 1);
-			theme.getPrimaryWall().setBlock(editor, rand, cursor);
+			theme.getPrimaryWall().set(editor, rand, cursor);
 			cursor.add(Cardinal.reverse(dir), 1);
 			stair.setBlock(editor, cursor);			
 		}
