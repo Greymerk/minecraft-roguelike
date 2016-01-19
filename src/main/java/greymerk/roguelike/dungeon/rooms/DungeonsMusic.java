@@ -55,7 +55,7 @@ public class DungeonsMusic extends DungeonBase {
 		end = new Coord(origin);
 		start.add(new Coord(-3, 4, -3));
 		end.add(new Coord(3, 4, 3));
-		air.fillRectSolid(editor, rand, start, end, true, true);
+		RectSolid.fill(editor, rand, start, end, air);
 		
 		start = new Coord(origin);
 		end = new Coord(origin);
@@ -71,7 +71,7 @@ public class DungeonsMusic extends DungeonBase {
 			start.add(new Coord(-i - 1, 0, -i - 1));
 			end.add(new Coord(i + 1, 0, i + 1));
 			MetaBlock carpet = ColorBlock.get(ColorBlock.CARPET, colors.get(i));
-			carpet.fillRectSolid(editor, rand, start, end, true, true);
+			RectSolid.fill(editor, rand, start, end, carpet);
 		}
 		
 		for(Cardinal dir : Cardinal.directions){
@@ -169,7 +169,7 @@ public class DungeonsMusic extends DungeonBase {
 		start = new Coord(origin);
 		end = new Coord(start);
 		end.add(Cardinal.UP, 2);
-		pillar.fillRectSolid(editor, rand, start, end, true, true);
+		RectSolid.fill(editor, rand, start, end, pillar);
 		for(Cardinal dir : Cardinal.directions){
 			cursor = new Coord(end);
 			cursor.add(dir);

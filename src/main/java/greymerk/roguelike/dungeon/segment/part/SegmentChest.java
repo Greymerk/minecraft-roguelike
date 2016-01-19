@@ -1,5 +1,7 @@
 package greymerk.roguelike.dungeon.segment.part;
 
+import java.util.Random;
+
 import greymerk.roguelike.dungeon.Dungeon;
 import greymerk.roguelike.dungeon.IDungeonLevel;
 import greymerk.roguelike.theme.ITheme;
@@ -7,11 +9,10 @@ import greymerk.roguelike.treasure.Treasure;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IStair;
-import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.IWorldEditor;
+import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.blocks.BlockType;
-
-import java.util.Random;
+import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 public class SegmentChest extends SegmentBase {
 
@@ -35,10 +36,10 @@ public class SegmentChest extends SegmentBase {
 		start.add(orth[0], 1);
 		end.add(orth[1], 1);
 		end.add(Cardinal.UP, 2);
-		editor.fillRectSolid(rand, start, end, air, true, true);
+		RectSolid.fill(editor, rand, start, end, air);
 		start.add(dir, 1);
 		end.add(dir, 1);
-		editor.fillRectSolid(rand, start, end, theme.getSecondaryWall(), true, true);
+		RectSolid.fill(editor, rand, start, end, theme.getSecondaryWall());
 		
 		for(Cardinal d : orth){
 			cursor = new Coord(origin);
@@ -46,22 +47,22 @@ public class SegmentChest extends SegmentBase {
 			cursor.add(dir, 2);
 			cursor.add(d, 1);
 			stair.setOrientation(Cardinal.reverse(dir), true);
-			editor.setBlock(rand, cursor, stair, true, true);
+			stair.setBlock(editor, cursor);
 			
 			cursor = new Coord(origin);
 			cursor.add(dir, 2);
 			cursor.add(d, 1);
 			stair.setOrientation(Cardinal.reverse(d), false);
-			editor.setBlock(rand, cursor, stair, true, true);
+			stair.setBlock(editor, cursor);
 		}
 	
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.UP, 1);
 		cursor.add(dir, 3);
-		editor.setBlock(rand, cursor, air, true, true);
+		air.setBlock(editor, rand, cursor);
 		cursor.add(Cardinal.UP, 1);
 		stair.setOrientation(Cardinal.reverse(dir), true);
-		editor.setBlock(rand, cursor, stair, true, true);
+		stair.setBlock(editor, cursor);
 		
 		Coord shelf = new Coord(origin);
 		shelf.add(dir, 3);

@@ -13,10 +13,11 @@ import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.IStair;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.Spawner;
-import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
+import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 public class DungeonsCrypt extends DungeonBase {
 
@@ -36,19 +37,19 @@ public class DungeonsCrypt extends DungeonBase {
 		end = new Coord(origin);
 		start.add(-3, 0, -3);
 		end.add(3, 4, 3);
-		air.fillRectSolid(editor, rand, start, end, true, true);
+		RectSolid.fill(editor, rand, start, end, air);
 		
 		start = new Coord(origin);
 		end = new Coord(origin);
 		start.add(-9, -1, -9);
 		end.add(9, -1, 9);
-		floor.fillRectSolid(editor, rand, start, end, true, true);
+		RectSolid.fill(editor, rand, start, end, floor);
 		
 		start = new Coord(origin);
 		end = new Coord(origin);
 		start.add(-9, 5, -9);
 		end.add(9, 6, 9);
-		walls.fillRectSolid(editor, rand, start, end, false, true);
+		RectSolid.fill(editor, rand, start, end, walls, false, true);
 		
 		for(Cardinal dir : Cardinal.directions){
 			
@@ -61,7 +62,7 @@ public class DungeonsCrypt extends DungeonBase {
 				end.add(Cardinal.left(dir), 5);
 				end.add(dir, 5);
 				end.add(Cardinal.UP, 4);
-				air.fillRectSolid(editor, rand, start, end, true, true);
+				RectSolid.fill(editor, rand, start, end, air);
 			}
 			
 			if(doorways.contains(dir)){
@@ -73,7 +74,7 @@ public class DungeonsCrypt extends DungeonBase {
 				end.add(dir, 8);
 				end.add(Cardinal.right(dir), 2);
 				end.add(Cardinal.UP, 4);
-				air.fillRectSolid(editor, rand, start, end, true, true);
+				RectSolid.fill(editor, rand, start, end, air);
 				
 				for(Cardinal o : Cardinal.orthogonal(dir)){
 					if(doorways.contains(o)){
@@ -93,7 +94,7 @@ public class DungeonsCrypt extends DungeonBase {
 						end.add(dir, 8);
 						end.add(o, 8);
 						end.add(Cardinal.UP, 4);
-						air.fillRectSolid(editor, rand, start, end, true, true);
+						RectSolid.fill(editor, rand, start, end, air);
 						
 						cursor = new Coord(origin);
 						cursor.add(dir, 6);
@@ -122,7 +123,7 @@ public class DungeonsCrypt extends DungeonBase {
 			start.add(Cardinal.left(dir), 2);
 			end.add(Cardinal.right(dir), 2);
 			stair.setOrientation(Cardinal.reverse(dir), true);
-			stair.fillRectSolid(editor, rand, start, end, true, false);
+			RectSolid.fill(editor, rand, start, end, stair, true, false);
 		}
 		
 		return true;
@@ -145,7 +146,7 @@ public class DungeonsCrypt extends DungeonBase {
 		end = new Coord(start);
 		start.add(Cardinal.left(dir), 2);
 		end.add(Cardinal.right(dir), 2);
-		walls.fillRectSolid(editor, rand, start, end, true, true);
+		RectSolid.fill(editor, rand, start, end, walls);
 		
 		cursor = new Coord(origin);
 		cursor.add(dir, 5);
@@ -162,7 +163,7 @@ public class DungeonsCrypt extends DungeonBase {
 			end = new Coord(start);
 			end.add(dir, 4);
 			end.add(Cardinal.UP, 4);
-			walls.fillRectSolid(editor, rand, start, end, true, true);
+			RectSolid.fill(editor, rand, start, end, walls);
 			
 			cursor = new Coord(origin);
 			cursor.add(Cardinal.DOWN);
@@ -176,7 +177,7 @@ public class DungeonsCrypt extends DungeonBase {
 			end = new Coord(start);
 			end.add(dir, 3);
 			stair.setOrientation(Cardinal.reverse(o), true);
-			stair.fillRectSolid(editor, rand, start, end, true, true);
+			RectSolid.fill(editor, rand, start, end, stair);
 		}
 		
 		cursor = new Coord(origin);
@@ -205,15 +206,15 @@ public class DungeonsCrypt extends DungeonBase {
 			end = new Coord(cursor);
 			end.add(dir, 3);
 			stair.setOrientation(o, false);
-			stair.fillRectSolid(editor, rand, start, end, true, true);
+			RectSolid.fill(editor, rand, start, end, stair);
 			start.add(Cardinal.UP);
 			end.add(Cardinal.UP);
 			stair.setOrientation(o, true);
-			stair.fillRectSolid(editor, rand, start, end, true, true);
+			RectSolid.fill(editor, rand, start, end, stair);
 			start.add(Cardinal.UP);
 			end.add(Cardinal.UP);
 			stair.setOrientation(o, false);
-			stair.fillRectSolid(editor, rand, start, end, true, true);
+			RectSolid.fill(editor, rand, start, end, stair);
 		}
 		
 	}
@@ -237,7 +238,7 @@ public class DungeonsCrypt extends DungeonBase {
 		end.add(Cardinal.right(dir));
 		end.add(dir, 3);
 		
-		walls.fillRectSolid(editor, rand, start, end, true, true);
+		RectSolid.fill(editor, rand, start, end, walls);
 		
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.reverse(dir));
@@ -264,7 +265,7 @@ public class DungeonsCrypt extends DungeonBase {
 			end = new Coord(start);
 			end.add(dir, 7);
 			stair.setOrientation(o, true);
-			stair.fillRectSolid(editor, rand, start, end, true, false);
+			RectSolid.fill(editor, rand, start, end, stair, true, false);
 		}
 		
 		start = new Coord(origin);
@@ -274,7 +275,7 @@ public class DungeonsCrypt extends DungeonBase {
 		start.add(Cardinal.left(dir));
 		end.add(Cardinal.right(dir));
 		stair.setOrientation(Cardinal.reverse(dir), true);
-		stair.fillRectSolid(editor, rand, start, end, true, true);
+		RectSolid.fill(editor, rand, start, end, stair);
 		
 		tomb(editor, rand, settings, origin, dir);
 	}
@@ -294,7 +295,7 @@ public class DungeonsCrypt extends DungeonBase {
 		end.add(Cardinal.right(dir), 3);
 		end.add(dir, 4);
 		end.add(Cardinal.UP, 4);
-		walls.fillRectSolid(editor, rand, start, end, true, true);
+		RectSolid.fill(editor, rand, start, end, walls);
 		
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.UP);
@@ -329,7 +330,7 @@ public class DungeonsCrypt extends DungeonBase {
 		start = new Coord(origin);
 		end = new Coord(origin);
 		end.add(Cardinal.UP, 4);
-		walls.fillRectSolid(editor, rand, start, end, true, true);
+		RectSolid.fill(editor, rand, start, end, walls);
 		
 		for(Cardinal dir : Cardinal.directions){
 			cursor = new Coord(end);
@@ -358,7 +359,7 @@ public class DungeonsCrypt extends DungeonBase {
 		
 		cursor = new Coord(origin);
 		cursor.add(dir, 2);
-		air.fillRectSolid(editor, rand, origin, cursor, true, true);
+		RectSolid.fill(editor, rand, origin, cursor, air);
 		
 		if(rand.nextInt(3) == 0) return;
 

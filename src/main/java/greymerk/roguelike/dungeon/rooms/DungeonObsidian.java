@@ -13,12 +13,13 @@ import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.IStair;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.MetaStair;
 import greymerk.roguelike.worldgen.Spawner;
-import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.StairType;
+import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 public class DungeonObsidian extends DungeonBase {
 
@@ -38,20 +39,20 @@ public class DungeonObsidian extends DungeonBase {
 		IBlockFactory secondaryWall = theme.getSecondaryWall();
 		
 		// space
-		editor.fillRectSolid(rand, new Coord(x - 10, y - 3, z - 10), new Coord(x + 10, y + 3, z + 10), air);
+		RectSolid.fill(editor, rand, new Coord(x - 10, y - 3, z - 10), new Coord(x + 10, y + 3, z + 10), air);
 		
 		
 		// roof
-		editor.fillRectSolid(rand, new Coord(x - 7, y + 6, z - 7), new Coord(x + 7, y + 6, z + 7), secondaryWall);
-		editor.fillRectSolid(rand, new Coord(x - 8, y + 5, z - 8), new Coord(x + 8, y + 5, z + 8), secondaryWall);
-		editor.fillRectSolid(rand, new Coord(x - 9, y + 4, z - 9), new Coord(x + 9, y + 4, z + 9), secondaryWall);
-		editor.fillRectSolid(rand, new Coord(x - 1, y + 3, z - 1), new Coord(x + 1, y + 5, z + 1), air);
-		editor.setBlock(rand, new Coord(x, y + 5, z), secondaryWall, true, true);
+		RectSolid.fill(editor, rand, new Coord(x - 7, y + 6, z - 7), new Coord(x + 7, y + 6, z + 7), secondaryWall);
+		RectSolid.fill(editor, rand, new Coord(x - 8, y + 5, z - 8), new Coord(x + 8, y + 5, z + 8), secondaryWall);
+		RectSolid.fill(editor, rand, new Coord(x - 9, y + 4, z - 9), new Coord(x + 9, y + 4, z + 9), secondaryWall);
+		RectSolid.fill(editor, rand, new Coord(x - 1, y + 3, z - 1), new Coord(x + 1, y + 5, z + 1), air);
+		secondaryWall.setBlock(editor, rand, new Coord(x, y + 5, z));
 		spawners.add(new Coord(x, y + 4, z));
 		
 		
 		// foundation
-		editor.fillRectSolid(rand, new Coord(x - 10, y - 4, z - 10), new Coord(x + 10, y - 4, z + 10), secondaryWall);
+		RectSolid.fill(editor, rand, new Coord(x - 10, y - 4, z - 10), new Coord(x + 10, y - 4, z + 10), secondaryWall);
 		
 		// ceiling holes
 		for(Cardinal dir : Cardinal.directions){
@@ -64,7 +65,7 @@ public class DungeonObsidian extends DungeonBase {
 				end.add(Cardinal.UP, 2);
 				end.add(dir, 2);
 				end.add(orth, 2);
-				editor.fillRectSolid(rand, start, end, air, true, true);
+				RectSolid.fill(editor, rand, start, end, air);
 
 				start = new Coord(x, y, z);
 				start.add(dir, 3);
@@ -73,7 +74,7 @@ public class DungeonObsidian extends DungeonBase {
 				end.add(dir, 2);
 				start.add(orth, 1);
 				end.add(Cardinal.UP, 2);
-				editor.fillRectSolid(rand, start, end, air, true, true);
+				RectSolid.fill(editor, rand, start, end, air);
 				
 				Coord cursor = new Coord(x, y, z);
 				cursor.add(Cardinal.UP, 4);
@@ -85,9 +86,9 @@ public class DungeonObsidian extends DungeonBase {
 				cursor = new Coord(x, y, z);
 				cursor.add(Cardinal.UP, 5);
 				cursor.add(dir, 4);
-				editor.setBlock(rand, cursor, secondaryWall, true, true);
+				secondaryWall.setBlock(editor, rand, cursor);
 				cursor.add(orth, 4);
-				editor.setBlock(rand, cursor, secondaryWall, true, true);
+				secondaryWall.setBlock(editor, rand, cursor);
 			}
 		}
 
@@ -104,11 +105,11 @@ public class DungeonObsidian extends DungeonBase {
 			
 			start.add(Cardinal.DOWN, 4);
 			end.add(Cardinal.DOWN, 1);
-			editor.fillRectSolid(rand, start, end, secondaryWall, true, true);
+			RectSolid.fill(editor, rand, start, end, secondaryWall);
 			
 			start.add(Cardinal.UP, 4 + 3);
 			end.add(Cardinal.UP, 1 + 3);
-			editor.fillRectSolid(rand, start, end, secondaryWall, true, true);
+			RectSolid.fill(editor, rand, start, end, secondaryWall);
 			
 			// mid
 			start = new Coord(x, y, z);
@@ -117,7 +118,7 @@ public class DungeonObsidian extends DungeonBase {
 			end = new Coord(start);
 			start.add(Cardinal.left(dir), 9);
 			end.add(Cardinal.right(dir), 9);
-			editor.fillRectSolid(rand, start, end, secondaryWall, true, true);
+			RectSolid.fill(editor, rand, start, end, secondaryWall);
 			
 			// inner
 			start = new Coord(x, y, z);
@@ -126,7 +127,7 @@ public class DungeonObsidian extends DungeonBase {
 			end = new Coord(start);
 			start.add(Cardinal.left(dir), 9);
 			end.add(Cardinal.right(dir), 9);
-			editor.fillRectSolid(rand, start, end, secondaryWall, true, true);
+			RectSolid.fill(editor, rand, start, end, secondaryWall);
 			
 			// outer shell
 			start = new Coord(x, y, z);
@@ -136,7 +137,7 @@ public class DungeonObsidian extends DungeonBase {
 			end.add(Cardinal.UP, 3);
 			start.add(Cardinal.left(dir), 11);
 			end.add(Cardinal.right(dir), 11);
-			editor.fillRectSolid(rand, start, end, secondaryWall, false, true);
+			RectSolid.fill(editor, rand, start, end, secondaryWall, false, true);
 		}
 				
 		outerPillars(editor, rand, theme, x, y, z);
@@ -150,7 +151,7 @@ public class DungeonObsidian extends DungeonBase {
 			start.add(dir, 9);
 			start.add(Cardinal.left(dir), 1);
 			end.add(Cardinal.right(dir), 1);
-			editor.fillRectSolid(rand, start, end, primaryWall, true, true);
+			RectSolid.fill(editor, rand, start, end, primaryWall);
 		}
 		
 		// mid outer floors
@@ -165,42 +166,42 @@ public class DungeonObsidian extends DungeonBase {
 				end.add(orth, 9);
 				end.add(Cardinal.DOWN, 2);
 				
-				editor.fillRectSolid(rand, start, end, primaryWall, true, true);
+				RectSolid.fill(editor, rand, start, end, primaryWall);
 				IStair step = new MetaStair(StairType.NETHERBRICK);
 				Coord stepSpot = new Coord(x, y, z);
 				stepSpot.add(dir, 8);
 				stepSpot.add(Cardinal.DOWN, 1);
 				stepSpot.add(orth, 2);
 				step.setOrientation(orth, false);
-				editor.setBlock(rand, stepSpot, step, true, true);
+				step.setBlock(editor, rand, stepSpot);
 				stepSpot.add(dir, 1);
-				editor.setBlock(rand, stepSpot, step, true, true);
+				step.setBlock(editor, rand, stepSpot);
 				
 				step.setOrientation(Cardinal.reverse(dir), false);
 				stepSpot = new Coord(x, y, z);
 				stepSpot.add(Cardinal.DOWN, 2);
 				stepSpot.add(dir, 7);
 				stepSpot.add(orth, 3);
-				editor.setBlock(rand, stepSpot, step, true, true);
+				step.setBlock(editor, rand, stepSpot);
 				stepSpot.add(orth, 1);
-				editor.setBlock(rand, stepSpot, step, true, true);
+				step.setBlock(editor, rand, stepSpot);
 				stepSpot.add(Cardinal.DOWN, 1);
 				stepSpot.add(Cardinal.reverse(dir), 1);
-				editor.setBlock(rand, stepSpot, step, true, true);
+				step.setBlock(editor, rand, stepSpot);
 				stepSpot.add(Cardinal.reverse(orth), 1);
-				editor.setBlock(rand, stepSpot, step, true, true);
+				step.setBlock(editor, rand, stepSpot);
 				stepSpot.add(dir, 1);
-				editor.setBlock(rand, stepSpot, primaryWall, true, true);
+				primaryWall.setBlock(editor, rand, stepSpot);
 				stepSpot.add(orth, 1);
-				editor.setBlock(rand, stepSpot, primaryWall, true, true);
+				primaryWall.setBlock(editor, rand, stepSpot);
 				
 				Coord corner = new Coord(x, y, z);
 				corner.add(dir, 7);
 				corner.add(orth, 7);
 				corner.add(Cardinal.DOWN, 2);
-				editor.setBlock(rand, corner, primaryWall, true, true);
+				primaryWall.setBlock(editor, rand, corner);
 				corner.add(Cardinal.DOWN, 1);
-				editor.setBlock(rand, corner, primaryWall, true, true);
+				primaryWall.setBlock(editor, rand, corner);
 
 				corner = new Coord(x, y, z);
 				corner.add(dir, 6);
@@ -249,7 +250,7 @@ public class DungeonObsidian extends DungeonBase {
 		start.add(Cardinal.EAST, 6);
 		end.add(Cardinal.SOUTH, 6);
 		end.add(Cardinal.WEST, 6);
-		crap.fillRectSolid(editor, rand, start, end, true, true);
+		RectSolid.fill(editor, rand, start, end, crap);
 		
 		return true;
 	}
@@ -285,16 +286,16 @@ public class DungeonObsidian extends DungeonBase {
 		int y = pillarLocation.getY();
 		int z = pillarLocation.getZ();
 		
-		editor.fillRectSolid(rand, new Coord(x, y - 2, z), new Coord(x, y + 3, z), secondaryWall);
+		RectSolid.fill(editor, rand, new Coord(x, y - 2, z), new Coord(x, y + 3, z), secondaryWall);
 		Coord blockLocation = new Coord(x, y + 3, z);
 		
 		blockLocation.add(dir, 1);
-		editor.setBlock(rand, blockLocation, secondaryWall, true, true);
+		secondaryWall.setBlock(editor, rand, blockLocation);
 		
 		for(int i = 0; i < 3; ++i){
 			blockLocation.add(Cardinal.reverse(dir), 1);
 			blockLocation.add(Cardinal.UP, 1);
-			editor.setBlock(rand, blockLocation, secondaryWall, true, true);
+			secondaryWall.setBlock(editor, rand, blockLocation);
 		}
 	}
 	
@@ -307,11 +308,11 @@ public class DungeonObsidian extends DungeonBase {
 				Coord pillar = new Coord(x, y, z);
 				pillar.add(dir, 2);
 				pillar.add(orth, 2);
-				editor.fillRectSolid(rand, new Coord(pillar.getX(), y - 4, pillar.getZ()), new Coord(pillar.getX(), y + 4, pillar.getZ()), secondaryWall);
+				RectSolid.fill(editor, rand, new Coord(pillar.getX(), y - 4, pillar.getZ()), new Coord(pillar.getX(), y + 4, pillar.getZ()), secondaryWall);
 				pillar.add(dir, 4);
-				editor.fillRectSolid(rand, new Coord(pillar.getX(), y - 4, pillar.getZ()), new Coord(pillar.getX(), y + 4, pillar.getZ()), secondaryWall);
+				RectSolid.fill(editor, rand, new Coord(pillar.getX(), y - 4, pillar.getZ()), new Coord(pillar.getX(), y + 4, pillar.getZ()), secondaryWall);
 				pillar.add(orth, 3);
-				editor.fillRectSolid(rand, new Coord(pillar.getX(), y - 4, pillar.getZ()), new Coord(pillar.getX(), y + 4, pillar.getZ()), secondaryWall);
+				RectSolid.fill(editor, rand, new Coord(pillar.getX(), y - 4, pillar.getZ()), new Coord(pillar.getX(), y + 4, pillar.getZ()), secondaryWall);
 				
 				Coord start = new Coord(x, y, z);
 				start.add(Cardinal.DOWN, 1);
@@ -319,19 +320,19 @@ public class DungeonObsidian extends DungeonBase {
 				start.add(dir, 2);
 				Coord end = new Coord(start);
 				end.add(dir, 5);
-				editor.fillRectSolid(rand, start, end, secondaryWall, true, true);
+				RectSolid.fill(editor, rand, start, end, secondaryWall);
 
 				start = new Coord(x, y, z);
 				start.add(Cardinal.DOWN, 1);
 				start.add(dir, 7);
 				start.add(orth, 5);
-				editor.setBlock(rand, start, secondaryWall, true, true);
+				secondaryWall.setBlock(editor, rand, start);
 				start.add(Cardinal.DOWN, 1);
 				end = new Coord(start);
 				end.add(Cardinal.reverse(dir), 1);
 				end.add(orth, 1);
 				end.add(Cardinal.DOWN, 1);
-				editor.fillRectSolid(rand, start, end, secondaryWall, true, true);
+				RectSolid.fill(editor, rand, start, end, secondaryWall);
 			}
 		}
 	}

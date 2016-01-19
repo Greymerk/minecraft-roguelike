@@ -7,9 +7,10 @@ import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IStair;
-import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.IWorldEditor;
+import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.blocks.BlockType;
+import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 public class SegmentBooks extends SegmentBase {
 	
@@ -31,20 +32,20 @@ public class SegmentBooks extends SegmentBase {
 		end = new Coord(cursor);
 		end.add(orth[1], 1);
 		end.add(Cardinal.UP, 2);
-		editor.fillRectSolid(rand, start, end, air, true, true);
+		RectSolid.fill(editor, rand, start, end, air);
 		
 		level.getSettings().getSecrets().genRoom(editor, rand, level.getSettings(), dir, new Coord(origin));
 		
 		start.add(dir, 1);
 		end.add(dir, 1);
-		editor.fillRectSolid(rand, start, end, theme.getSecondaryWall(), false, true);
+		RectSolid.fill(editor, rand, start, end, theme.getSecondaryWall(), false, true);
 
 		cursor.add(Cardinal.UP, 2);
 		for(Cardinal d : orth){
 			Coord c = new Coord(cursor);
 			c.add(d, 1);
 			stair.setOrientation(Cardinal.reverse(d), true);
-			editor.setBlock(rand, c, stair, true, true);
+			stair.setBlock(editor, c);
 		}
 		
 		cursor = new Coord(origin);

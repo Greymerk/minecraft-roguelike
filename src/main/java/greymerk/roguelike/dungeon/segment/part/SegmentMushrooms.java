@@ -1,17 +1,18 @@
 package greymerk.roguelike.dungeon.segment.part;
 
+import java.util.Random;
+
 import greymerk.roguelike.dungeon.IDungeonLevel;
 import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IStair;
-import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.IWorldEditor;
+import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.FlowerPot;
-
-import java.util.Random;
+import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 public class SegmentMushrooms extends SegmentBase {
 
@@ -40,14 +41,14 @@ public class SegmentMushrooms extends SegmentBase {
 		start.add(orth[0], 1);
 		end.add(orth[1], 1);
 		end.add(Cardinal.UP, 1);
-		editor.fillRectSolid(rand, start, end, air, true, true);
+		RectSolid.fill(editor, rand, start, end, air);
 		start.add(Cardinal.DOWN, 1);
 		end.add(Cardinal.DOWN, 2);
 		
-		editor.fillRectSolid(rand, start, end, BlockType.get(BlockType.MYCELIUM), true, true);
+		RectSolid.fill(editor, rand, start, end, BlockType.get(BlockType.MYCELIUM));
 		start.add(Cardinal.UP, 1);
 		end.add(Cardinal.UP, 1);
-		editor.fillRectSolid(rand, start, end, mushrooms, true, true);
+		RectSolid.fill(editor, rand, start, end, mushrooms);
 		
 		for(Cardinal d : orth){
 			cursor = new Coord(origin);
@@ -55,7 +56,7 @@ public class SegmentMushrooms extends SegmentBase {
 			cursor.add(d, 1);
 			cursor.add(Cardinal.UP, 1);
 			stair.setOrientation(Cardinal.reverse(d), true);
-			editor.setBlock(rand, cursor, stair, true, true);
+			stair.setBlock(editor, cursor);
 		}
 
 	}

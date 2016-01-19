@@ -31,9 +31,7 @@ public class DungeonMess extends DungeonBase {
 		ITheme theme = settings.getTheme();
 		IBlockFactory wall = theme.getPrimaryWall();
 		IBlockFactory panel = theme.getSecondaryWall();
-		IBlockFactory floor = theme.getPrimaryFloor();
 		IBlockFactory pillar = theme.getPrimaryPillar();
-		MetaBlock air = BlockType.get(BlockType.AIR);
 		IStair stair = theme.getPrimaryStair();
 		
 		Coord start;
@@ -126,7 +124,6 @@ public class DungeonMess extends DungeonBase {
 		IBlockFactory pillar = theme.getPrimaryPillar();
 		IBlockFactory panel = theme.getSecondaryWall();
 		IStair stair = theme.getPrimaryStair();
-		IStair table = theme.getSecondaryStair();
 		Coord cursor;
 		Coord start;
 		Coord end;
@@ -188,7 +185,7 @@ public class DungeonMess extends DungeonBase {
 			start.add(Cardinal.left(dir));
 			end = new Coord(cursor);
 			end.add(Cardinal.right(dir));
-			stair.setOrientation(Cardinal.reverse(dir), true).fillRectSolid(editor, rand, start, end, true, true);
+			stair.setOrientation(Cardinal.reverse(dir), true).fill(editor, rand, new RectSolid(start, end));
 			start.add(Cardinal.UP, 2);
 			end.add(Cardinal.UP, 2);
 			stair.setOrientation(Cardinal.right(dir), true).setBlock(editor, start);
@@ -271,7 +268,7 @@ public class DungeonMess extends DungeonBase {
 			start.add(Cardinal.left(dir));
 			end = new Coord(cursor);
 			end.add(Cardinal.right(dir));
-			stair.setOrientation(Cardinal.reverse(dir), false).fillRectSolid(editor, rand, start, end, true, true);
+			stair.setOrientation(Cardinal.reverse(dir), false).fill(editor, rand, new RectSolid(start, end));
 			start.add(Cardinal.UP, 2);
 			end.add(Cardinal.UP, 2);
 			stair.setOrientation(Cardinal.right(dir), true).setBlock(editor, start);
@@ -289,7 +286,6 @@ public class DungeonMess extends DungeonBase {
 	private void doorway(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal dir, Coord origin){
 		ITheme theme = settings.getTheme();
 		IBlockFactory wall = theme.getPrimaryWall();
-		IBlockFactory pillar = theme.getPrimaryPillar();
 		IBlockFactory panel = theme.getSecondaryWall();
 		IStair stair = theme.getPrimaryStair();
 		Coord cursor;
@@ -345,7 +341,6 @@ public class DungeonMess extends DungeonBase {
 	private void fireplace(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal dir, Coord origin){
 		ITheme theme = settings.getTheme();
 		IBlockFactory wall = theme.getPrimaryWall();
-		IBlockFactory pillar = theme.getPrimaryPillar();
 		IStair stair = theme.getPrimaryStair();
 		MetaBlock bars = BlockType.get(BlockType.IRON_BAR);
 		MetaBlock netherrack = BlockType.get(BlockType.NETHERRACK);
@@ -370,7 +365,7 @@ public class DungeonMess extends DungeonBase {
 		start.add(Cardinal.left(dir));
 		end.add(Cardinal.right(dir));
 		end.add(Cardinal.UP);
-		air.fillRectSolid(editor, rand, start, end, true, true);
+		RectSolid.fill(editor, rand, start, end, air);
 		
 		cursor = new Coord(origin);
 		cursor.add(dir, 6);
@@ -418,13 +413,9 @@ public class DungeonMess extends DungeonBase {
 	
 	private void supplies(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal dir, Coord origin){
 		ITheme theme = settings.getTheme();
-		IBlockFactory wall = theme.getPrimaryWall();
-		IBlockFactory pillar = theme.getPrimaryPillar();
 		IStair stair = theme.getPrimaryStair();
-		MetaBlock air = BlockType.get(BlockType.AIR);
 		Coord cursor;
-		Coord start;
-		Coord end;
+
 		
 		cursor = new Coord(origin);
 		cursor.add(dir, 7);

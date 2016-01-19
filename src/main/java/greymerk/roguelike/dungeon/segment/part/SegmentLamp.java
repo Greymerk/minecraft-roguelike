@@ -1,20 +1,21 @@
 package greymerk.roguelike.dungeon.segment.part;
 
+import java.util.Random;
+
 import greymerk.roguelike.dungeon.IDungeonLevel;
 import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.IStair;
-import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.IWorldEditor;
+import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.ColorBlock;
 import greymerk.roguelike.worldgen.blocks.DyeColor;
 import greymerk.roguelike.worldgen.redstone.Lever;
 import greymerk.roguelike.worldgen.redstone.Torch;
-
-import java.util.Random;
+import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 public class SegmentLamp extends SegmentBase{
 
@@ -37,7 +38,7 @@ public class SegmentLamp extends SegmentBase{
 		start.add(orth[0]);
 		end.add(orth[1]);
 		end.add(Cardinal.UP, 2);
-		editor.fillRectSolid(rand, start, end, air, true, true);
+		RectSolid.fill(editor, rand, start, end, air);
 		
 		start = new Coord(origin);
 		start.add(Cardinal.UP, 3);
@@ -46,7 +47,7 @@ public class SegmentLamp extends SegmentBase{
 		start.add(orth[0]);
 		end.add(Cardinal.reverse(dir));
 		end.add(orth[1]);
-		editor.fillRectSolid(rand, start, end, air, true, true);
+		RectSolid.fill(editor, rand, start, end, air);
 		
 		start = new Coord(origin);
 		start.add(dir, 3);
@@ -55,12 +56,12 @@ public class SegmentLamp extends SegmentBase{
 		end.add(orth[1]);
 		end.add(dir, 2);
 		end.add(Cardinal.UP, 6);
-		editor.fillRectSolid(rand, start, end, wall, true, true);
+		RectSolid.fill(editor, rand, start, end, wall);
 		start = new Coord(end);
 		start.add(Cardinal.DOWN, 2);
 		start.add(Cardinal.reverse(dir), 6);
 		start.add(orth[0], 2);
-		editor.fillRectSolid(rand, start, end, wall, true, true);
+		RectSolid.fill(editor, rand, start, end, wall);
 		
 		for (Cardinal side : orth){
 			
@@ -93,7 +94,7 @@ public class SegmentLamp extends SegmentBase{
 		end = new Coord(start);
 		end.add(Cardinal.reverse(dir), 3);
 		MetaBlock wire = BlockType.get(BlockType.REDSTONE_WIRE);
-		editor.fillRectSolid(rand, start, end, wire, true, true);
+		RectSolid.fill(editor, rand, start, end, wire);
 	}
 	
 	private void overheadLight(IWorldEditor editor, Random rand, ITheme theme, Coord origin){

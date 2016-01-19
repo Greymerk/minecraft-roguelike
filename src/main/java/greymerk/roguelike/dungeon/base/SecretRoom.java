@@ -7,6 +7,7 @@ import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
+import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 public class SecretRoom implements ISecretRoom {
 
@@ -48,13 +49,13 @@ public class SecretRoom implements ISecretRoom {
 		end.add(Cardinal.orthogonal(dir)[1]);
 		end.add(dir, size + 5);
 		end.add(Cardinal.UP, 2);
-		editor.fillRectSolid(rand, start, end, settings.getTheme().getPrimaryWall(), false, true);
+		RectSolid.fill(editor, rand, start, end, settings.getTheme().getPrimaryWall(), false, true);
 		
 		start = new Coord(pos);
 		end = new Coord(pos);
 		end.add(dir, size + 5);
 		end.add(Cardinal.UP);
-		editor.fillRectSolid(rand, pos, end, BlockType.get(BlockType.AIR), true, true);
+		RectSolid.fill(editor, rand, pos, end, BlockType.get(BlockType.AIR));
 		
 		end.add(Cardinal.DOWN);
 		this.prototype.generate(editor, rand, settings, new Cardinal[]{dir}, end);

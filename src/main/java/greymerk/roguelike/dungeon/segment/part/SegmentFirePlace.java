@@ -1,6 +1,5 @@
 package greymerk.roguelike.dungeon.segment.part;
 
-import java.util.List;
 import java.util.Random;
 
 import greymerk.roguelike.dungeon.IDungeonLevel;
@@ -8,9 +7,11 @@ import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IStair;
-import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.IWorldEditor;
+import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.blocks.BlockType;
+import greymerk.roguelike.worldgen.shapes.RectHollow;
+import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 public class SegmentFirePlace extends SegmentBase {
 	
@@ -32,12 +33,12 @@ public class SegmentFirePlace extends SegmentBase {
 		end = new Coord(cursor);
 		end.add(orth[1], 1);
 		end.add(Cardinal.UP, 2);
-		editor.fillRectSolid(rand, start, end, air, true, true);
+		RectSolid.fill(editor, rand, start, end, air);
 		
 		// front wall
 		start.add(dir, 1);
 		end.add(dir, 1);
-		editor.fillRectSolid(rand, start, end, theme.getPrimaryWall(), false, true);
+		RectSolid.fill(editor, rand, start, end, theme.getPrimaryWall(), false, true);
 
 		// stairs
 		cursor.add(Cardinal.UP, 2);
@@ -45,7 +46,7 @@ public class SegmentFirePlace extends SegmentBase {
 			Coord c = new Coord(cursor);
 			c.add(d, 1);
 			stair.setOrientation(Cardinal.reverse(d), true);
-			editor.setBlock(rand, c, stair, true, true);
+			stair.setBlock(editor, c);
 		}
 		
 		stair = theme.getPrimaryStair();
@@ -68,12 +69,11 @@ public class SegmentFirePlace extends SegmentBase {
 		end.add(Cardinal.UP, 3);
 		end.add(orth[1]);
 		end.add(dir, 2);
-		List<Coord> box = editor.getRectHollow(start, end);
-		for(Coord c : box){
+		for(Coord c : new RectHollow(start, end)){
 			if(!editor.getBlock(c).getBlock().getMaterial().isSolid()) return;
 		}
 		
-		editor.fillRectSolid(rand, start, end, theme.getPrimaryWall(), true, true);
+		RectSolid.fill(editor, rand, start, end, theme.getPrimaryWall());
 		
 		cursor = new Coord(origin);
 		cursor.add(dir, 4);

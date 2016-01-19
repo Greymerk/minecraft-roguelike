@@ -1,17 +1,18 @@
 package greymerk.roguelike.dungeon.segment.part;
 
+import java.util.Random;
+
 import greymerk.roguelike.dungeon.IDungeonLevel;
 import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IStair;
-import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.IWorldEditor;
+import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.ColorBlock;
 import greymerk.roguelike.worldgen.blocks.DyeColor;
-
-import java.util.Random;
+import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 public class SegmentAnkh extends SegmentBase{
 
@@ -35,7 +36,7 @@ public class SegmentAnkh extends SegmentBase{
 		end = new Coord(start);
 		end.add(Cardinal.UP, 2);
 		
-		editor.fillRectSolid(rand, start, end, air, true, true);
+		RectSolid.fill(editor, rand, start, end, air);
 		
 		
 		for(Cardinal o : orth){
@@ -56,10 +57,10 @@ public class SegmentAnkh extends SegmentBase{
 		start.add(orth[0]);
 		end.add(orth[1]);
 		end.add(Cardinal.UP, 2);
-		editor.fillRectSolid(rand, start, end, glass, true, true);
+		RectSolid.fill(editor, rand, start, end, glass);
 		start.add(dir);
 		end.add(dir);
-		editor.fillRectSolid(rand, start, end, back, true, true);
+		RectSolid.fill(editor, rand, start, end, back);
 		
 		cursor = new Coord(pos);
 		cursor.add(dir, 3);

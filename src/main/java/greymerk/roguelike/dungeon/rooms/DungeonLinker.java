@@ -45,7 +45,7 @@ public class DungeonLinker extends DungeonBase{
 		end = new Coord(origin);
 		start.add(-4, -1, -4);
 		end.add(4, -1, 4);
-		floor.fillRectSolid(editor, rand, start, end, true, true);
+		RectSolid.fill(editor, rand, start, end, floor);
 		
 		for(Cardinal dir : Cardinal.directions){
 			
@@ -56,7 +56,7 @@ public class DungeonLinker extends DungeonBase{
 			start.add(Cardinal.DOWN);
 			start.add(Cardinal.left(dir), 4);
 			end.add(Cardinal.right(dir), 4);
-			bars.fillRectSolid(editor, rand, start, end, true, false);
+			RectSolid.fill(editor, rand, start, end, bars, true, false);
 			
 			start = new Coord(origin);
 			end = new Coord(origin);
@@ -65,7 +65,7 @@ public class DungeonLinker extends DungeonBase{
 			end.add(dir, 4);
 			end.add(Cardinal.left(dir), 4);
 			end.add(Cardinal.UP, 8);
-			pillar.fillRectSolid(editor, rand, start, end, true, true);
+			RectSolid.fill(editor, rand, start, end, pillar);
 		}
 		
 

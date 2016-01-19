@@ -10,6 +10,7 @@ import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
+import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 public class SegmentFireArch extends SegmentBase {
 
@@ -34,7 +35,7 @@ public class SegmentFireArch extends SegmentBase {
 		end.add(orths[0]);
 		end.add(Cardinal.UP, 2);
 		end.add(dir);
-		editor.fillRectSolid(rand, start, end, walls, true, true);
+		RectSolid.fill(editor, rand, start, end, walls);
 		cursor = new Coord(origin);
 		cursor.add(dir, 2);
 		stair.setOrientation(Cardinal.reverse(dir), false).setBlock(editor, cursor);

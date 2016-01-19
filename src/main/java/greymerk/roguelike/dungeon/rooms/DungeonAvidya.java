@@ -1,6 +1,5 @@
 package greymerk.roguelike.dungeon.rooms;
 
-import java.util.List;
 import java.util.Random;
 
 import greymerk.roguelike.dungeon.base.DungeonBase;
@@ -8,15 +7,17 @@ import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IStair;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.MetaStair;
-import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.ColorBlock;
 import greymerk.roguelike.worldgen.blocks.DyeColor;
 import greymerk.roguelike.worldgen.blocks.Leaves;
 import greymerk.roguelike.worldgen.blocks.Quartz;
 import greymerk.roguelike.worldgen.blocks.StairType;
+import greymerk.roguelike.worldgen.shapes.RectHollow;
+import greymerk.roguelike.worldgen.shapes.RectSolid;
 import net.minecraft.block.Block;
 
 public class DungeonAvidya extends DungeonBase {
@@ -35,13 +36,13 @@ public class DungeonAvidya extends DungeonBase {
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		
 		// clear space
-		editor.fillRectSolid(rand, new Coord(x - 8, y, z - 8), new Coord(x + 8, y + 5, z + 8), air);
+		RectSolid.fill(editor, rand, new Coord(x - 8, y, z - 8), new Coord(x + 8, y + 5, z + 8), air);
 				
 		// roof
-		editor.fillRectSolid(rand, new Coord(x - 6, y + 6, z - 6), new Coord(x + 6, y + 6, z + 6), redClay, true, true);
-		editor.fillRectSolid(rand, new Coord(x - 3, y + 6, z - 3), new Coord(x + 3, y + 6, z + 3), glowstone);
+		RectSolid.fill(editor, rand, new Coord(x - 6, y + 6, z - 6), new Coord(x + 6, y + 6, z + 6), redClay, true, true);
+		RectSolid.fill(editor, rand, new Coord(x - 3, y + 6, z - 3), new Coord(x + 3, y + 6, z + 3), glowstone);
 		
-		editor.fillRectSolid(rand, new Coord(x - 7, y - 1, z - 7), new Coord(x + 7, y - 1, z + 7), air);
+		RectSolid.fill(editor, rand, new Coord(x - 7, y - 1, z - 7), new Coord(x + 7, y - 1, z + 7), air);
 		
 		
 		// floor
@@ -49,7 +50,7 @@ public class DungeonAvidya extends DungeonBase {
 		MetaBlock yang = ColorBlock.get(ColorBlock.CLAY, DyeColor.WHITE);
 		
 		// ying
-		editor.fillRectSolid(rand, new Coord(x - 8, y - 2, z - 8), new Coord(x + 8, y - 2, z + 8), ying, true, true);
+		RectSolid.fill(editor, rand, new Coord(x - 8, y - 2, z - 8), new Coord(x + 8, y - 2, z + 8), ying);
 		
 		// yang
 		MetaBlock quartz = Quartz.get(Quartz.SMOOTH);
@@ -59,46 +60,46 @@ public class DungeonAvidya extends DungeonBase {
 		Coord end = new Coord(start);
 		start.add(Cardinal.NORTH, 2);
 		end.add(Cardinal.SOUTH, 2);
-		editor.fillRectSolid(rand, start, end, yang, true, true);
+		RectSolid.fill(editor, rand, start, end, yang);
 		
 		start.add(Cardinal.EAST, 1);
 		end.add(Cardinal.EAST, 1);
 		start.add(Cardinal.NORTH, 2);
 		end.add(Cardinal.SOUTH, 2);
-		editor.fillRectSolid(rand, start, end, yang, true, true);
+		RectSolid.fill(editor, rand, start, end, yang);
 		
 		start.add(Cardinal.EAST, 1);
 		end.add(Cardinal.EAST, 1);
 		end.add(Cardinal.NORTH, 3);
-		editor.fillRectSolid(rand, start, end, yang, true, true);
+		RectSolid.fill(editor, rand, start, end, yang);
 		
 		start.add(Cardinal.EAST, 1);
 		end.add(Cardinal.EAST, 1);
 		start.add(Cardinal.NORTH, 1);
 		end.add(Cardinal.NORTH, 1);
-		editor.fillRectSolid(rand, start, end, yang, true, true);
+		RectSolid.fill(editor, rand, start, end, yang);
 		
 		start.add(Cardinal.EAST, 1);
 		end.add(Cardinal.EAST, 3);
 		end.add(Cardinal.NORTH, 1);
-		editor.fillRectSolid(rand, start, end, yang, true, true);
+		RectSolid.fill(editor, rand, start, end, yang);
 		
 		start.add(Cardinal.EAST, 3);
 		end.add(Cardinal.EAST, 1);
 		start.add(Cardinal.SOUTH, 1);
 		end.add(Cardinal.NORTH, 1);
-		editor.fillRectSolid(rand, start, end, yang, true, true);
+		RectSolid.fill(editor, rand, start, end, yang);
 		
 		start.add(Cardinal.WEST, 3);
 		end.add(Cardinal.WEST, 2);
 		end.add(Cardinal.NORTH, 1);
-		editor.fillRectSolid(rand, start, end, ying, true, true);
+		RectSolid.fill(editor, rand, start, end, yang);
 		
 		start.add(Cardinal.EAST, 1);
 		end.add(Cardinal.EAST, 1);
 		start.add(Cardinal.SOUTH, 7);
 		end.add(Cardinal.SOUTH, 7);
-		editor.fillRectSolid(rand, start, end, yang, true, true);
+		RectSolid.fill(editor, rand, start, end, yang);
 		
 		
 		
@@ -111,17 +112,17 @@ public class DungeonAvidya extends DungeonBase {
 				start.add(Cardinal.UP, 4);
 				end = new Coord(start);
 				end.add(orth, 8);
-				editor.fillRectSolid(rand, start, end, whiteClay, true, true);
+				RectSolid.fill(editor, rand, start, end, whiteClay);
 				start.add(Cardinal.DOWN, 5);
 				end.add(Cardinal.DOWN, 5);
-				editor.fillRectSolid(rand, start, end, BlockType.get(BlockType.STONE_BRICK), true, true);
+				RectSolid.fill(editor, rand, start, end, BlockType.get(BlockType.STONE_BRICK));
 				
 				start = new Coord(x, y, z);
 				start.add(dir, 7);
 				start.add(Cardinal.UP, 5);
 				end = new Coord(start);
 				end.add(orth, 7);
-				editor.fillRectSolid(rand, start, end, whiteClay, true, true);
+				RectSolid.fill(editor, rand, start, end, whiteClay);
 				
 				// ceiling details
 				start = new Coord(x, y, z);
@@ -129,15 +130,15 @@ public class DungeonAvidya extends DungeonBase {
 				start.add(Cardinal.UP, 5);
 				end = new Coord(start);
 				end.add(orth, 2);
-				editor.fillRectSolid(rand, start, end, quartz, true, true);
+				RectSolid.fill(editor, rand, start, end, quartz);
 				
 				Coord cursor = new Coord(end);
 				cursor.add(dir, 1);
-				editor.setBlock(rand, cursor, quartz, true, true);
+				quartz.setBlock(editor, rand, cursor);
 				cursor = new Coord(end);
 				cursor.add(Cardinal.reverse(dir), 1);
 				cursor.add(orth, 1);
-				editor.setBlock(rand, cursor, quartz, true, true);
+				quartz.setBlock(editor, rand, cursor);
 				pillarTop(editor, rand, cursor);
 				
 				// pillars
@@ -147,10 +148,10 @@ public class DungeonAvidya extends DungeonBase {
 				start.add(orth, 2);
 				end = new Coord(start);
 				end.add(Cardinal.UP, 4);
-				editor.fillRectSolid(rand, start, end, pillarQuartz, true, true);
+				RectSolid.fill(editor, rand, start, end, pillarQuartz);
 				start.add(orth, 4);
 				end.add(orth, 4);
-				editor.fillRectSolid(rand, start, end, pillarQuartz, true, true);
+				RectSolid.fill(editor, rand, start, end, pillarQuartz);
 				
 				// pillar tops
 				cursor = new Coord(x, y, z);
@@ -163,10 +164,10 @@ public class DungeonAvidya extends DungeonBase {
 				pillarTop(editor, rand, cursor2);
 				cursor2.add(Cardinal.reverse(dir), 1);
 				cursor2.add(Cardinal.UP, 1);
-				editor.setBlock(rand, cursor2, quartz, true, true);
+				quartz.setBlock(editor, cursor2);
 				cursor2.add(Cardinal.reverse(dir), 1);
 				cursor2.add(Cardinal.UP, 1);
-				editor.setBlock(rand, cursor2, whiteClay, true, true);
+				whiteClay.setBlock(editor, cursor2);
 				cursor.add(Cardinal.reverse(dir), 1);
 				cursor.add(Cardinal.UP, 1);
 				pillarTop(editor, rand, cursor);
@@ -180,7 +181,7 @@ public class DungeonAvidya extends DungeonBase {
 				end = new Coord(start);
 				end.add(orth, 9);
 				end.add(Cardinal.UP, 3);
-				editor.fillRectSolid(rand, start, end, whiteClay, false, true);
+				RectSolid.fill(editor, rand, start, end, whiteClay, false, true);
 				
 				// floor outer step circle
 				cursor = new Coord(x, y, z);
@@ -188,31 +189,31 @@ public class DungeonAvidya extends DungeonBase {
 				cursor.add(Cardinal.DOWN, 1);
 				IStair step = new MetaStair(StairType.STONEBRICK);
 				step.setOrientation(Cardinal.reverse(dir), false);
-				editor.setBlock(rand, cursor, step, true, true);
+				step.setBlock(editor, cursor);
 				
 				cursor.add(orth, 1);
-				editor.setBlock(rand, cursor, step, true, true);
+				step.setBlock(editor, cursor);
 				
 				cursor.add(orth, 1);
-				editor.setBlock(rand, cursor, step, true, true);
+				step.setBlock(editor, cursor);
 				
 				step.setOrientation(Cardinal.reverse(orth), false);
 				cursor.add(orth, 1);
-				editor.setBlock(rand, cursor, step, true, true);
+				step.setBlock(editor, cursor);
 				
 				cursor.add(Cardinal.reverse(dir), 1);
-				editor.setBlock(rand, cursor, step, true, true);
+				step.setBlock(editor, cursor);
 				
 				step.setOrientation(Cardinal.reverse(dir), false);
 				cursor.add(orth, 1);
-				editor.setBlock(rand, cursor, step, true, true);
+				step.setBlock(editor, cursor);
 				
 				step.setOrientation(Cardinal.reverse(orth), false);
 				cursor.add(orth, 1);
-				editor.setBlock(rand, cursor, step, true, true);
+				step.setBlock(editor, cursor);
 				
 				cursor.add(Cardinal.reverse(dir), 1);
-				editor.setBlock(rand, cursor, step, true, true);
+				step.setBlock(editor, cursor);
 				
 				// perimeter decor
 				cursor = new Coord(x, y, z);
@@ -267,16 +268,13 @@ public class DungeonAvidya extends DungeonBase {
 		for(Cardinal dir : Cardinal.directions){
 			step.setOrientation(dir, true);
 			cursor.add(dir, 1);
-			editor.setBlock(rand, cursor, step, true, false);
+			step.setBlock(editor, rand, cursor, true, false);
 			cursor.add(Cardinal.reverse(dir), 1);
 		}
 	}
 	
 	public boolean validLocation(IWorldEditor editor, Cardinal dir, int x, int y, int z){
-		
-		List<Coord> box = editor.getRectHollow(new Coord(x - 10, y - 2, z - 10), new Coord(x + 10, y + 5, z + 10));
-		
-		for(Coord pos : box){
+		for(Coord pos : new RectHollow(new Coord(x - 10, y - 2, z - 10), new Coord(x + 10, y + 5, z + 10))){
 			Block b = editor.getBlock(pos).getBlock();
 			if(!b.getMaterial().isSolid()) return false;
 		}

@@ -55,31 +55,31 @@ public class DungeonsNetherBrickFortress extends DungeonBase {
 		end = new Coord(origin);
 		start.add(new Coord(-3, 7, -3));
 		end.add(new Coord(3, 7, 3));
-		wall.fillRectSolid(editor, rand, start, end, true, true);
+		RectSolid.fill(editor, rand, start, end, wall);
 
 		start = new Coord(origin);
 		end = new Coord(origin);
 		start.add(new Coord(-2, 7, -2));
 		end.add(new Coord(2, 7, 2));
-		lava.fillRectSolid(editor, rand, start, end, true, true);
+		RectSolid.fill(editor, rand, start, end, lava);
 		
 		start = new Coord(origin);
 		end = new Coord(origin);
 		start.add(new Coord(-4, -1, -4));
 		end.add(new Coord(4, -3, 4));
-		wall.fillRectSolid(editor, rand, start, end, false, true);
+		RectSolid.fill(editor, rand, start, end, wall, false, true);
 		
 		start = new Coord(origin);
 		end = new Coord(origin);
 		start.add(new Coord(-3, -2, -3));
 		end.add(new Coord(3, -2, 3));
-		BlockType.get(BlockType.SOUL_SAND).fillRectSolid(editor, rand, start, end, false, true);
+		BlockType.get(BlockType.SOUL_SAND).fill(editor, rand, new RectSolid(start, end), false, true);
 		
 		start = new Coord(origin);
 		end = new Coord(origin);
 		start.add(new Coord(-3, -1, -3));
 		end.add(new Coord(3, -1, 3));
-		netherwart.fillRectSolid(editor, rand, start, end, false, true);
+		RectSolid.fill(editor, rand, start, end, netherwart, false, true);
 		
 		for(Cardinal dir : Cardinal.directions){
 			
@@ -89,7 +89,7 @@ public class DungeonsNetherBrickFortress extends DungeonBase {
 			end = new Coord(start);
 			start.add(Cardinal.left(dir), 6);
 			end.add(Cardinal.right(dir), 6);
-			wall.fillRectSolid(editor, rand, start, end, true, true);
+			RectSolid.fill(editor, rand, start, end, wall);
 			
 			start = new Coord(origin);
 			start.add(Cardinal.UP, 5);
@@ -97,7 +97,7 @@ public class DungeonsNetherBrickFortress extends DungeonBase {
 			end = new Coord(start);
 			start.add(Cardinal.left(dir), 6);
 			end.add(Cardinal.right(dir), 6);
-			wall.fillRectSolid(editor, rand, start, end, true, true);
+			RectSolid.fill(editor, rand, start, end, wall);
 			
 			start = new Coord(origin);
 			start.add(Cardinal.DOWN);
@@ -105,7 +105,7 @@ public class DungeonsNetherBrickFortress extends DungeonBase {
 			end = new Coord(start);
 			start.add(Cardinal.left(dir), 2);
 			end.add(Cardinal.right(dir), 2);
-			stair.setOrientation(Cardinal.reverse(dir), false).fillRectSolid(editor, rand, start, end, true, true);
+			stair.setOrientation(Cardinal.reverse(dir), false).fill(editor, rand, new RectSolid(start, end));
 			
 			cursor = new Coord(origin);
 			cursor.add(dir, 4);
@@ -141,7 +141,6 @@ public class DungeonsNetherBrickFortress extends DungeonBase {
 	private void supportPillar(IWorldEditor editor, Random rand, LevelSettings settings, Coord origin){
 		
 		ITheme theme = settings.getTheme();
-		IBlockFactory wall = theme.getPrimaryWall();
 		IBlockFactory pillar = theme.getPrimaryPillar();
 		IStair stair = theme.getPrimaryStair();
 		MetaBlock lava = BlockType.get(BlockType.LAVA_FLOWING);
@@ -155,7 +154,7 @@ public class DungeonsNetherBrickFortress extends DungeonBase {
 			start.add(dir);
 			end = new Coord(start);
 			end.add(Cardinal.UP, 5);
-			pillar.fillRectSolid(editor, rand, start, end, true, true);
+			RectSolid.fill(editor, rand, start, end, pillar);
 			
 			cursor = new Coord(origin);
 			cursor.add(dir, 2);
@@ -166,8 +165,8 @@ public class DungeonsNetherBrickFortress extends DungeonBase {
 		start = new Coord(origin);
 		end = new Coord(start);
 		end.add(Cardinal.UP, 5);
-		lava.fillRectSolid(editor, rand, start, end, true, true);
-		List<Coord> core = editor.getRectSolid(start, end);
+		RectSolid.fill(editor, rand, start, end, lava);
+		List<Coord> core = new RectSolid(start, end).get();
 		Spawner.generate(editor, rand, settings, core.get(rand.nextInt(core.size())));
 	}
 	
@@ -184,7 +183,7 @@ public class DungeonsNetherBrickFortress extends DungeonBase {
 		start = new Coord(origin);
 		end = new Coord(start);
 		end.add(Cardinal.UP, 5);
-		pillar.fillRectSolid(editor, rand, start, end, true, true);
+		RectSolid.fill(editor, rand, start, end, pillar);
 		
 		for(Cardinal dir : Cardinal.directions){
 			cursor = new Coord(origin);

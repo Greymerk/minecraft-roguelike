@@ -7,10 +7,11 @@ import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IStair;
-import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.IWorldEditor;
+import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.Leaves;
+import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 public class SegmentJungle extends SegmentBase {
 
@@ -33,17 +34,17 @@ public class SegmentJungle extends SegmentBase {
 		start.add(orth[0], 1);
 		end.add(orth[1], 1);
 		end.add(Cardinal.UP, 1);
-		editor.fillRectSolid(rand, start, end, BlockType.get(BlockType.AIR), true, true);
+		RectSolid.fill(editor, rand, start, end, BlockType.get(BlockType.AIR));
 		start.add(Cardinal.DOWN, 1);
 		end.add(Cardinal.DOWN, 2);
 		
 		if(rand.nextInt(5) == 0){
-			editor.fillRectSolid(rand, start, end, BlockType.get(BlockType.WATER_FLOWING), true, true);
+			RectSolid.fill(editor, rand, start, end, BlockType.get(BlockType.WATER_FLOWING));
 		} else {
-			editor.fillRectSolid(rand, start, end, BlockType.get(BlockType.GRASS), true, true);
+			RectSolid.fill(editor, rand, start, end, BlockType.get(BlockType.GRASS));
 			start.add(Cardinal.UP, 1);
 			end.add(Cardinal.UP, 1);
-			if(rand.nextBoolean()) editor.fillRectSolid(rand, start, end, leaves, true, true);
+			if(rand.nextBoolean()) RectSolid.fill(editor, rand, start, end, leaves);
 		}
 		
 		for(Cardinal d : orth){
@@ -52,7 +53,7 @@ public class SegmentJungle extends SegmentBase {
 			cursor.add(d, 1);
 			cursor.add(Cardinal.UP, 1);
 			stair.setOrientation(Cardinal.reverse(d), true);
-			editor.setBlock(rand, cursor, stair, true, true);
+			stair.setBlock(editor, cursor);
 		}
 
 	}

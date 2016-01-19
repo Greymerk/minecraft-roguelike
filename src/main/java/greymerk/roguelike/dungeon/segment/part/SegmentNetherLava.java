@@ -1,16 +1,17 @@
 package greymerk.roguelike.dungeon.segment.part;
 
+import java.util.Random;
+
 import greymerk.roguelike.dungeon.IDungeonLevel;
 import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.IStair;
-import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.IWorldEditor;
+import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.blocks.BlockType;
-
-import java.util.Random;
+import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 public class SegmentNetherLava extends SegmentBase {
 
@@ -45,7 +46,7 @@ public class SegmentNetherLava extends SegmentBase {
 			start.add(Cardinal.UP, 2);
 			end.add(Cardinal.DOWN, 1);
 			if(isLava && !isAir){
-				editor.fillRectSolid(rand, start, end, air, true, true);
+				RectSolid.fill(editor, rand, start, end, air);
 				lava.setBlock(editor, start);
 				start.add(Cardinal.reverse(orth), 1);
 				lava.setBlock(editor, start);
@@ -56,16 +57,16 @@ public class SegmentNetherLava extends SegmentBase {
 			
 			step.setOrientation(Cardinal.reverse(orth), false);
 			cursor.add(orth, 1);
-			editor.setBlock(rand, cursor, step, true, true);
+			step.setBlock(editor, cursor);
 			
 			step.setOrientation(Cardinal.reverse(orth), true);
 			cursor.add(Cardinal.UP, 1);
-			editor.setBlock(rand, cursor, step, true, true);
+			step.setBlock(editor, cursor);
 			
 			cursor.add(Cardinal.UP, 1);
-			editor.setBlock(rand, cursor, wall, true, true);
+			wall.setBlock(editor, rand, cursor);
 			cursor.add(Cardinal.reverse(orth), 1);
-			editor.setBlock(rand, cursor, wall, true, true);
+			wall.setBlock(editor, rand, cursor);
 		}
 		
 	}
