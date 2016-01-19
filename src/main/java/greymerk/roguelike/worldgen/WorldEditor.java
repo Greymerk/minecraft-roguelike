@@ -2,13 +2,11 @@ package greymerk.roguelike.worldgen;
 
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
 import greymerk.roguelike.treasure.ITreasureChest;
 import greymerk.roguelike.treasure.TreasureManager;
-import greymerk.roguelike.worldgen.shapes.RectHollow;
 import greymerk.roguelike.worldgen.shapes.RectSolid;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -61,100 +59,42 @@ public class WorldEditor implements IWorldEditor{
 		
 	}
 	
+	@Override
 	public boolean setBlock(Coord pos, MetaBlock block){
 		return this.setBlock(pos, block, true, true);
 	}
 	
+	@Override
 	public boolean setBlock(Coord pos, MetaBlock block, boolean fillAir, boolean replaceSolid){
 		return this.setBlock(pos, block.getState(), block.getFlag(), fillAir, replaceSolid);
 	}
 	
-	public boolean setBlock(Random rand, Coord coord, IBlockFactory blocks, boolean fillAir, boolean replaceSolid) {
-		return blocks.setBlock(this, rand, coord, fillAir, replaceSolid);
-	}
-	
+	@Override
 	public boolean isAirBlock(Coord pos){
 		return world.isAirBlock(pos.getBlockPos());
 	}
 	
+	@Override
 	public long getSeed(){
 		return this.world.getSeed();
 	}
 	
+	@Override
 	public BiomeGenBase getBiome(Coord pos){
 		return world.getBiomeGenForCoords(pos.getBlockPos());
 	}
 	
+	@Override
 	public int getDimension(){
 		return world.provider.getDimensionId();
 	}
 	
+	@Override
 	public Random getSeededRandom(int a, int b, int c){
 		return world.setRandomSeed(a, b, c);
 	}
-	
-	
-	public void fillRectSolid(Random rand, Coord start, Coord end, IBlockFactory blocks){
-		fillRectSolid(rand, start, end, blocks, true, true);
-	}
-	
-	public void fillRectSolid(Random rand, Coord start, Coord end, IBlockFactory blocks, boolean fillAir, boolean replaceSolid){
-		RectSolid.fill(this, rand, start, end, blocks, fillAir, replaceSolid);
-	}
-	
-	public void fillRectHollow(Random rand, Coord start, Coord end, IBlockFactory blocks){
-		fillRectHollow(rand, start, end, blocks, true, true);
-	}
-	
-	
-	public void fillRectHollow(Random rand, Coord start, Coord end, IBlockFactory blocks, boolean fillAir, boolean replaceSolid){
-		RectHollow.fill(this, rand, start, end, blocks, fillAir, replaceSolid);
-	}
-	
-
-	public List<Coord> getRectSolid(Coord start, Coord end){
-		return getRectSolid(start.getX(), start.getY(), start.getZ(), end.getX(), end.getY(), end.getZ());
-	}
-	
-	public List<Coord> getRectSolid(int x1, int y1, int z1, int x2, int y2, int z2){
-		RectSolid rect = new RectSolid(new Coord(x1, y1, z1), new Coord(x2, y2, z2));
-		return rect.get();
-	}
-	
-	public List<Coord> getRectHollow(Coord start, Coord end){
-		return getRectHollow(start.getX(), start.getY(), start.getZ(), end.getX(), end.getY(), end.getZ());
-	}
-	
-	public List<Coord> getRectHollow(int x1, int y1, int z1, int x2, int y2, int z2){
-		RectHollow rect = new RectHollow(new Coord(x1, y1, z1), new Coord(x2, y2, z2));
-		return rect.get();
-	}
-	
-	public void fillPyramidSolid(Random rand, Coord base, int height, IBlockFactory blocks, boolean fillAir, boolean replaceSolid){
 		
-		if(height == 0){
-			setBlock(rand, base, blocks, fillAir, replaceSolid);
-			return;
-		}
-		
-		Coord start;
-		Coord end;
-		
-		start = new Coord(base);
-		end = new Coord(base);
-		start.add(Cardinal.NORTH, height);
-		start.add(Cardinal.WEST, height);
-		end.add(Cardinal.SOUTH, height);
-		end.add(Cardinal.EAST, height);
-		
-		fillRectSolid(rand, start, end, blocks, fillAir, replaceSolid);
-		
-		base.add(Cardinal.UP);
-		
-		fillPyramidSolid(rand, base, (height - 1), blocks, fillAir, replaceSolid);
-		
-	}
-	
+	@Override
 	public void spiralStairStep(Random rand, Coord origin, IStair stair, IBlockFactory fill){
 		
 		MetaBlock air = new MetaBlock(Blocks.air);
@@ -167,8 +107,8 @@ public class WorldEditor implements IWorldEditor{
 		end = new Coord(origin);
 		end.add(new Coord(1, 0, 1));
 		
-		fillRectSolid(rand, start, end, air, true, true);
-		setBlock(rand, origin, fill, true, true);
+		RectSolid.fill(this, rand, start, end, air);
+		fill.setBlock(this, rand, origin);
 		
 		Cardinal dir = Cardinal.directions[origin.getY() % 4];
 		cursor = new Coord(origin);
@@ -180,6 +120,7 @@ public class WorldEditor implements IWorldEditor{
 		stair.setOrientation(Cardinal.reverse(dir), true).setBlock(this, cursor);
 	}
 	
+	@Override
 	public void fillDown(Random rand, Coord origin, IBlockFactory blocks){
 
 		Coord cursor = new Coord(origin);
@@ -190,14 +131,17 @@ public class WorldEditor implements IWorldEditor{
 		}
 	}
 	
+	@Override
 	public MetaBlock getBlock(Coord pos){
 		return new MetaBlock(world.getBlockState(pos.getBlockPos()));
 	}
 	
+	@Override
 	public TileEntity getTileEntity(Coord pos){
 		return world.getTileEntity(pos.getBlockPos());
 	}
 	
+	@Override
 	public boolean validGroundBlock(Coord pos){
 		
 		if(isAirBlock(pos)) return false;
@@ -227,19 +171,23 @@ public class WorldEditor implements IWorldEditor{
 		return toReturn;
 	}
 	
+	@Override
 	public int getStat(Block type){
 		if(!this.stats.containsKey(type)) return 0;
 		return this.stats.get(type);
 	}
 	
+	@Override
 	public void addChest(ITreasureChest toAdd){
 		this.chests.add(toAdd);
 	}
 	
+	@Override
 	public TreasureManager getTreasure(){
 		return this.chests;
 	}
 	
+	@Override
 	public boolean canPlace(MetaBlock block, Coord pos, Cardinal dir){
 		if(!this.isAirBlock(pos)) return false;
 		return block.getBlock().canPlaceBlockOnSide(world, pos.getBlockPos(), Cardinal.facing(dir));

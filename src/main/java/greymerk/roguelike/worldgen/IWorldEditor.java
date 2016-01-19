@@ -1,6 +1,5 @@
 package greymerk.roguelike.worldgen;
 
-import java.util.List;
 import java.util.Random;
 
 import greymerk.roguelike.treasure.ITreasureChest;
@@ -14,27 +13,6 @@ public interface IWorldEditor {
 	boolean setBlock(Coord pos, MetaBlock metaBlock);
 	
 	boolean setBlock(Coord pos, MetaBlock metaBlock, boolean fillAir, boolean replaceSolid);
-	
-	@Deprecated
-	boolean setBlock(Random rand, Coord pos, IBlockFactory blocks, boolean fillAir, boolean replaceSolid);
-	
-	@Deprecated
-	void fillRectHollow(Random rand, Coord start, Coord end, IBlockFactory blocks, boolean fillAir, boolean replaceSolid);
-
-	@Deprecated
-	void fillRectHollow(Random rand, Coord start, Coord end, IBlockFactory blocks);
-	
-	@Deprecated
-	void fillRectSolid(Random rand, Coord start, Coord end, IBlockFactory blocks, boolean fillAir, boolean replaceSolid);
-
-	@Deprecated
-	void fillRectSolid(Random rand, Coord start, Coord end, IBlockFactory blocks);
-	
-	@Deprecated
-	List<Coord> getRectHollow(Coord start, Coord end);
-
-	@Deprecated
-	List<Coord> getRectSolid(Coord start, Coord end);
 	
 	MetaBlock getBlock(Coord pos);
 
