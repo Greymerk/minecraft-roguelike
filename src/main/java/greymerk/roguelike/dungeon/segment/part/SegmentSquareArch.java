@@ -7,9 +7,10 @@ import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
-import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.IWorldEditor;
+import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.blocks.BlockType;
+import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 public class SegmentSquareArch extends SegmentBase {
 
@@ -26,13 +27,13 @@ public class SegmentSquareArch extends SegmentBase {
 		start.add(dir, 2);
 		end = new Coord(start);
 		end.add(Cardinal.UP, 2);
-		editor.fillRectSolid(rand, start, end, air, true, true);
+		RectSolid.fill(editor, rand, start, end, air);
 		
 		start = new Coord(origin);
 		start.add(dir, 3);
 		end = new Coord(start);
 		end.add(Cardinal.UP, 2);
-		editor.fillRectSolid(rand, start, end, pillar, true, true);
+		RectSolid.fill(editor, rand, start, end, pillar);
 		
 		for(Cardinal orth : Cardinal.orthogonal(dir)){
 			start = new Coord(origin);
@@ -40,7 +41,7 @@ public class SegmentSquareArch extends SegmentBase {
 			start.add(dir, 2);
 			end = new Coord(start);
 			end.add(Cardinal.UP, 2);
-			editor.fillRectSolid(rand, start, end, pillar, true, true);
+			RectSolid.fill(editor, rand, start, end, pillar);
 		}
 	}
 }

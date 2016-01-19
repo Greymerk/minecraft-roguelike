@@ -73,7 +73,6 @@ public enum Enchant {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	public static void enchantItem(Random rand, ItemStack item, int enchantLevel) {
 
 		if (item == null ) return;

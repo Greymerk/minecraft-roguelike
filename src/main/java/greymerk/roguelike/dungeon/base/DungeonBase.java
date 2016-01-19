@@ -1,13 +1,13 @@
 package greymerk.roguelike.dungeon.base;
 
-import java.util.List;
 import java.util.Random;
 
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
-import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.IWorldEditor;
+import greymerk.roguelike.worldgen.MetaBlock;
+import greymerk.roguelike.worldgen.shapes.RectHollow;
 
 public abstract class DungeonBase implements IDungeonRoom{
 
@@ -24,9 +24,7 @@ public abstract class DungeonBase implements IDungeonRoom{
 		Coord start = new Coord(pos.getX() - size, pos.getY() - 2, pos.getZ() - size);
 		Coord end = new Coord(pos.getX() + size, pos.getY() + 5, pos.getZ() + size);
 		
-		List<Coord> box = editor.getRectHollow(start, end);
-		
-		for(Coord cursor : box){
+		for(Coord cursor : new RectHollow(start, end)){
 			MetaBlock b = editor.getBlock(cursor);
 			if(!b.getBlock().getMaterial().isSolid()) return false;
 		}

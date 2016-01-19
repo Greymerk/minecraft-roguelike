@@ -4,14 +4,15 @@ import java.util.Random;
 
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
-import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.IWorldEditor;
+import greymerk.roguelike.worldgen.MetaBlock;
+import greymerk.roguelike.worldgen.shapes.RectSolid;
 import net.minecraft.block.BlockVine;
 
 public class Vine {
 
 	public static void fill(IWorldEditor editor, Random rand, Coord start, Coord end){
-		for(Coord cursor : editor.getRectSolid(start, end)){
+		for(Coord cursor : new RectSolid(start, end)){
 			set(editor, rand, cursor);
 		}
 	}

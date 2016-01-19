@@ -1,6 +1,5 @@
 package greymerk.roguelike.dungeon.rooms;
 
-import java.util.List;
 import java.util.Random;
 
 import greymerk.roguelike.dungeon.base.DungeonBase;
@@ -237,9 +236,8 @@ public class DungeonFirework extends DungeonBase {
 		end.add(dir);
 		Coord above = new Coord(end);
 		above.add(Cardinal.UP, 10);
-		List<Coord> tubeEnd = editor.getRectSolid(cursor, above);
 		MetaBlock air = BlockType.get(BlockType.AIR);
-		for(Coord c : tubeEnd){
+		for(Coord c : new RectSolid(cursor, above)){
 			if(editor.getBlock(c).getBlock().getMaterial().isSolid()){
 				air.setBlock(editor, c);
 			}
@@ -273,7 +271,7 @@ public class DungeonFirework extends DungeonBase {
 		start.add(Cardinal.DOWN);
 		end.add(Cardinal.UP, 3);
 		
-		for(Coord c : editor.getRectHollow(start, end)){
+		for(Coord c :  new RectHollow(start, end)){
 			if(editor.isAirBlock(c)) return false;
 		}
 		

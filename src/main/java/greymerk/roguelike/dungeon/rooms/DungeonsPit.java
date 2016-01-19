@@ -12,11 +12,12 @@ import greymerk.roguelike.treasure.Treasure;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
-import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.IWorldEditor;
+import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.redstone.Piston;
 import greymerk.roguelike.worldgen.redstone.Torch;
+import greymerk.roguelike.worldgen.shapes.RectHollow;
 
 public class DungeonsPit extends DungeonBase {
 	IWorldEditor editor;
@@ -168,11 +169,7 @@ public class DungeonsPit extends DungeonBase {
 		end.add(Cardinal.UP, 3);
 		end.add(Cardinal.right(dir));
 		
-		
-		
-		List<Coord> box = editor.getRectHollow(start, end);
-		
-		for(Coord cell : box){
+		for(Coord cell : new RectHollow(start, end)){
 			if(editor.isAirBlock(cell)) return;
 			walls.setBlock(editor, rand, cell);
 		}

@@ -65,7 +65,7 @@ public class DungeonsCreeperDen extends DungeonBase {
 		start.add(new Coord(-3, 0, -3));
 		end.add(new Coord(3, 0, 3));
 		
-		List<Coord> chestSpaces = editor.getRectSolid(start, end);
+		List<Coord> chestSpaces = new RectSolid(start, end).get();
 		Collections.shuffle(chestSpaces, rand);
 		
 		int counter = 0;

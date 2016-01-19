@@ -17,6 +17,7 @@ import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.ColorBlock;
 import greymerk.roguelike.worldgen.blocks.DyeColor;
+import greymerk.roguelike.worldgen.shapes.RectHollow;
 import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 public class DungeonsEnchant extends DungeonBase {
@@ -277,7 +278,7 @@ public class DungeonsEnchant extends DungeonBase {
 			end = new Coord(start);
 			start.add(Cardinal.left(o));
 			end.add(Cardinal.right(o));
-			chests.addAll(editor.getRectSolid(start, end));
+			chests.addAll(new RectSolid(start, end).get());
 		}
 		
 		cursor = new Coord(origin);
@@ -310,7 +311,7 @@ public class DungeonsEnchant extends DungeonBase {
 		start.add(Cardinal.DOWN);
 		end.add(Cardinal.UP, 2);
 		
-		for(Coord c : editor.getRectHollow(start, end)){
+		for(Coord c : new RectHollow(start, end)){
 			if(editor.isAirBlock(c)) return false;
 		}
 		

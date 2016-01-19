@@ -18,6 +18,7 @@ import greymerk.roguelike.util.WeightedChoice;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IWorldEditor;
+import greymerk.roguelike.worldgen.shapes.RectSolid;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -176,19 +177,15 @@ public class Dungeon implements IDungeon{
 			if(cursor.getY() < lowerLimit) return false;
 			if(editor.getBlock(cursor).getBlock().getMaterial() == Material.water) return false;
 		}
-		
-		List<Coord> above = editor.getRectSolid(new Coord(x - 4, cursor.getY() + 4, z - 4), new Coord(x + 4, cursor.getY() + 4, z + 4));
 
-		for (Coord c : above){
+		for (Coord c : new RectSolid(new Coord(x - 4, cursor.getY() + 4, z - 4), new Coord(x + 4, cursor.getY() + 4, z + 4))){
 			if(editor.validGroundBlock(c)){
 				return false;
 			}
 		}
 		
-		List<Coord> below = editor.getRectSolid(new Coord(x - 4, cursor.getY() - 3, z - 4), new Coord(x + 4, cursor.getY() - 3, z + 4));
-		
 		int airCount = 0;
-		for (Coord c : below){
+		for (Coord c : new RectSolid(new Coord(x - 4, cursor.getY() - 3, z - 4), new Coord(x + 4, cursor.getY() - 3, z + 4))){
 			if(!editor.validGroundBlock(c)){
 				airCount++;
 			}

@@ -3,7 +3,6 @@ package greymerk.roguelike.dungeon.settings.builtin;
 import java.util.ArrayList;
 import java.util.List;
 
-import greymerk.roguelike.dungeon.base.DungeonFactory;
 import greymerk.roguelike.dungeon.segment.Segment;
 import greymerk.roguelike.dungeon.segment.SegmentGenerator;
 import greymerk.roguelike.dungeon.settings.DungeonSettings;
@@ -36,7 +35,7 @@ public class SettingsJungleTheme extends DungeonSettings{
 
 		
 		Theme[] themes = {Theme.JUNGLE, Theme.JUNGLE, Theme.MOSSY, Theme.MOSSY, Theme.NETHER};
-		DungeonFactory rooms;
+
 		SegmentGenerator segments;
 		for(int i = 0; i < 5; ++i){
 			LevelSettings level = new LevelSettings();

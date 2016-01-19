@@ -182,7 +182,7 @@ public class DungeonBedRoom extends DungeonBase {
 		start.add(Cardinal.DOWN);
 		end.add(Cardinal.UP, 3);
 		
-		for(Coord c : editor.getRectHollow(start, end)){
+		for(Coord c : new RectHollow(start, end)){
 			if(editor.isAirBlock(c)) return false;
 		}
 		

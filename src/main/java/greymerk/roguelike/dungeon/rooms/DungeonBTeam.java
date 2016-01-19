@@ -1,6 +1,5 @@
 package greymerk.roguelike.dungeon.rooms;
 
-import java.util.List;
 import java.util.Random;
 
 import greymerk.roguelike.config.RogueConfig;
@@ -432,9 +431,7 @@ public class DungeonBTeam extends DungeonBase {
 	
 	public boolean validLocation(IWorldEditor editor, Cardinal dir, int x, int y, int z){
 		
-		List<Coord> box = editor.getRectHollow(new Coord(x - 7, y - 2, z - 7), new Coord(x + 7, y + 5, z + 7));
-		
-		for(Coord pos : box){
+		for(Coord pos : new RectHollow(new Coord(x - 7, y - 2, z - 7), new Coord(x + 7, y + 5, z + 7))){
 			MetaBlock b = editor.getBlock(pos);
 			if(!b.getBlock().getMaterial().isSolid()) return false;
 		}

@@ -1,6 +1,5 @@
 package greymerk.roguelike.dungeon.segment.alcove;
 
-import java.util.List;
 import java.util.Random;
 
 import greymerk.roguelike.dungeon.segment.IAlcove;
@@ -63,10 +62,8 @@ public class PrisonCell implements IAlcove{
 		int x = centre.getX();
 		int y = centre.getY();
 		int z = centre.getZ();
-		
-		List<Coord> toCheck = editor.getRectSolid(new Coord(x - 2, y, z - 2), new Coord(x + 2, y, z + 2));
 
-		for(Coord c : toCheck){
+		for(Coord c : new RectSolid(new Coord(x - 2, y, z - 2), new Coord(x + 2, y, z + 2))){
 			if (editor.isAirBlock(c)) return false;
 		}
 		

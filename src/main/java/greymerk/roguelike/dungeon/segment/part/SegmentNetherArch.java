@@ -31,14 +31,14 @@ public class SegmentNetherArch extends SegmentBase {
 			cursor.add(dir, 1);
 			cursor.add(orth, 1);
 			cursor.add(Cardinal.UP, 2);
-			editor.setBlock(rand, cursor, step, true, true);
+			step.setBlock(editor, cursor);
 			
 			cursor = new Coord(origin);
 			cursor.add(dir, 2);
 			cursor.add(orth, 1);
-			editor.setBlock(rand, cursor, pillar, true, true);
+			pillar.setBlock(editor, rand, cursor);
 			cursor.add(Cardinal.UP, 1);
-			editor.setBlock(rand, cursor, pillar, true, true);
+			pillar.setBlock(editor, rand, cursor);
 		}
 			
 		MetaBlock fence = BlockType.get(BlockType.FENCE_NETHER_BRICK);
@@ -46,15 +46,15 @@ public class SegmentNetherArch extends SegmentBase {
 		
 		cursor = new Coord(origin);
 		cursor.add(dir, 2);		
-		editor.setBlock(rand, cursor, fence, true, true);
+		fence.setBlock(editor, rand, cursor);
 		cursor.add(Cardinal.UP, 1);		
-		editor.setBlock(rand, cursor, fence, true, true);
+		fence.setBlock(editor, rand, cursor);
 		
 		if(hasLava){
 			cursor.add(dir, 1);
-			editor.setBlock(rand, cursor, lava, true, true);
+			lava.setBlock(editor, cursor);
 			cursor.add(Cardinal.DOWN, 1);		
-			editor.setBlock(rand, cursor, lava, true, true);
+			lava.setBlock(editor, cursor);
 		}
 	}
 }

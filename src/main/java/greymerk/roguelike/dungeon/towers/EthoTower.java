@@ -149,7 +149,7 @@ public class EthoTower implements ITower {
 					cursor = new Coord(floor);
 					cursor.add(dir, 5);
 					cursor.add(o, 2);
-					editor.setBlock(rand, cursor, primary, true, true);
+					primary.setBlock(editor, rand, cursor);
 					cursor.add(o);
 					stair.setOrientation(o, false).setBlock(editor, cursor);
 					cursor.add(dir);
