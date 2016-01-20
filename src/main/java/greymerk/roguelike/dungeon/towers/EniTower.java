@@ -276,7 +276,6 @@ public class EniTower implements ITower {
 		
 
 		for(Cardinal dir : Cardinal.directions){
-			Cardinal[] orth = Cardinal.orthogonal(dir);
 			
 			// lower windows
 			cursor = new Coord(floor);
@@ -295,33 +294,33 @@ public class EniTower implements ITower {
 			// floor before slit windows
 			cursor.add(Cardinal.reverse(dir), 2);
 			start = new Coord(cursor);
-			start.add(orth[0]);
+			start.add(Cardinal.left(dir));
 			end = new Coord(cursor);
-			end.add(orth[1]);
+			end.add(Cardinal.right(dir));
 			RectSolid.fill(editor, rand, start, end, blocks);
 			
 			// slit windows
 			cursor = new Coord(floor);
 			cursor.add(Cardinal.UP, 14);
 			cursor.add(dir, 3);
-			cursor.add(orth[0]);
-			stair.setOrientation(orth[1], false).set(editor, cursor);
+			cursor.add(Cardinal.left(dir));
+			stair.setOrientation(Cardinal.right(dir), false).set(editor, cursor);
 			cursor.add(Cardinal.UP);
-			stair.setOrientation(orth[1], true).set(editor, cursor);
+			stair.setOrientation(Cardinal.right(dir), true).set(editor, cursor);
 			cursor.add(Cardinal.UP);
-			cursor.add(orth[1]);
-			stair.setOrientation(orth[0], false).set(editor, cursor);
+			cursor.add(Cardinal.right(dir));
+			stair.setOrientation(Cardinal.left(dir), false).set(editor, cursor);
 			cursor.add(Cardinal.UP);
-			stair.setOrientation(orth[0], true).set(editor, cursor);
+			stair.setOrientation(Cardinal.left(dir), true).set(editor, cursor);
 			cursor.add(Cardinal.UP);
-			stair.setOrientation(orth[1], false).set(editor, cursor);
+			stair.setOrientation(Cardinal.right(dir), false).set(editor, cursor);
 			cursor.add(Cardinal.UP);
-			stair.setOrientation(orth[1], true).set(editor, cursor);
-			cursor.add(orth[1]);
+			stair.setOrientation(Cardinal.right(dir), true).set(editor, cursor);
+			cursor.add(Cardinal.right(dir));
 			cursor.add(Cardinal.UP);
-			stair.setOrientation(orth[0], false).set(editor, cursor);
+			stair.setOrientation(Cardinal.left(dir), false).set(editor, cursor);
 			cursor.add(Cardinal.UP);
-			stair.setOrientation(orth[0], true).set(editor, cursor);
+			stair.setOrientation(Cardinal.left(dir), true).set(editor, cursor);
 			
 			// top windows
 			
@@ -334,9 +333,9 @@ public class EniTower implements ITower {
 			cursor.add(Cardinal.UP);
 			window.set(editor, cursor);
 			cursor.add(Cardinal.DOWN);
-			cursor.add(orth[0]);
+			cursor.add(Cardinal.left(dir));
 			window.set(editor, cursor);
-			cursor.add(orth[1], 2);
+			cursor.add(Cardinal.right(dir), 2);
 			window.set(editor, cursor);
 			
 			// top ceiling
@@ -344,9 +343,9 @@ public class EniTower implements ITower {
 			cursor.add(Cardinal.UP, 26);
 			cursor.add(dir, 3);
 			start = new Coord(cursor);
-			start.add(orth[0]);
+			start.add(Cardinal.left(dir));
 			end = new Coord(cursor);
-			end.add(orth[1]);
+			end.add(Cardinal.right(dir));
 			RectSolid.fill(editor, rand, start, end, blocks);
 			start.add(Cardinal.reverse(dir));
 			end.add(Cardinal.reverse(dir));
@@ -358,7 +357,7 @@ public class EniTower implements ITower {
 			RectSolid.fill(editor, rand, start, end, blocks);
 			
 			cursor.add(Cardinal.reverse(dir));
-			cursor.add(orth[0], 2);
+			cursor.add(Cardinal.left(dir), 2);
 			blocks.set(editor, rand, cursor);
 		}
 		
