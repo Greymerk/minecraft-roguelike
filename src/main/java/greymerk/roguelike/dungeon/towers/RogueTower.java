@@ -11,6 +11,8 @@ import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.redstone.Torch;
+import greymerk.roguelike.worldgen.shapes.Ellipsoid;
+import greymerk.roguelike.worldgen.shapes.IShape;
 import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 
