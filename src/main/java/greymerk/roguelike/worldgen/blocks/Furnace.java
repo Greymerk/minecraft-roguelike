@@ -33,7 +33,7 @@ public class Furnace {
 			furnace = new MetaBlock(Blocks.furnace);
 		}
 		
-		furnace.withProperty(BlockFurnace.FACING, Cardinal.facing(dir));
+		furnace.withProperty(BlockFurnace.FACING, Cardinal.facing(Cardinal.reverse(dir)));
 		
 		furnace.set(editor, pos);
 		
