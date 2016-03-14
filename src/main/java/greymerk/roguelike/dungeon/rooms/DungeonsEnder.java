@@ -13,6 +13,7 @@ import greymerk.roguelike.worldgen.Spawner;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.Quartz;
 import greymerk.roguelike.worldgen.shapes.RectSolid;
+import scala.actors.threadpool.Arrays;
 
 public class DungeonsEnder extends DungeonBase {
 
@@ -64,7 +65,14 @@ public class DungeonsEnder extends DungeonBase {
 		
 		BlockCheckers checkers = new BlockCheckers(black, white);
 		RectSolid.fill(editor, inRandom, start, end, checkers);
-		// TODO: add ender chest
+		for(Cardinal dir : Cardinal.directions){
+			if(Arrays.asList(entrances).contains(dir)) continue;
+			Coord ender = new Coord(origin);
+			origin.add(dir, 4);
+			MetaBlock enderchest = BlockType.get(BlockType.ENDERCHEST);
+			enderchest.set(editor, ender);
+			break;
+		}
 		Spawner.generate(editor, inRandom, settings, origin, Spawner.ENDERMAN);
 
 		return true;
