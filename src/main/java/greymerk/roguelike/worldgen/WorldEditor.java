@@ -81,7 +81,7 @@ public class WorldEditor implements IWorldEditor{
 	
 	@Override
 	public int getDimension(){
-		return world.provider.getDimensionId();
+		return world.provider.getDimensionType().getId();
 	}
 	
 	@Override
@@ -120,7 +120,7 @@ public class WorldEditor implements IWorldEditor{
 
 		Coord cursor = new Coord(origin);
 		
-		while(!getBlock(cursor).getBlock().getMaterial().isOpaque() && cursor.getY() > 1){
+		while(!getBlock(cursor).getBlock().isVisuallyOpaque() && cursor.getY() > 1){
 			blocks.set(this, rand, cursor);
 			cursor.add(Cardinal.DOWN);
 		}
@@ -141,7 +141,7 @@ public class WorldEditor implements IWorldEditor{
 		
 		if(isAirBlock(pos)) return false;
 		
-		Block block = getBlock(pos).getBlock();
+		MetaBlock block = this.getBlock(pos);
 		
 		if(block.getMaterial() == Material.wood) return false;
 		if(block.getMaterial() == Material.water) return false;

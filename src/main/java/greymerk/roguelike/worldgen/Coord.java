@@ -1,8 +1,8 @@
 package greymerk.roguelike.worldgen;
 
-import net.minecraft.util.BlockPos;
-
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+
+import net.minecraft.util.math.BlockPos;
 
 public class Coord{
 

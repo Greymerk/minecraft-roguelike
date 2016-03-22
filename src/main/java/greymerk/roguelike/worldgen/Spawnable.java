@@ -27,7 +27,9 @@ public class Spawnable {
 		
 	public void generate(IWorldEditor editor, Random rand, Coord cursor, int level){
 		
-		if(!new MetaBlock(Blocks.mob_spawner).set(editor, cursor)) return;
+		MetaBlock spawnerBlock = new MetaBlock(Blocks.mob_spawner.getDefaultState());
+		
+		if(!spawnerBlock.set(editor, cursor)) return;
 		
 		TileEntityMobSpawner spawner = (TileEntityMobSpawner) editor.getTileEntity(cursor);
 

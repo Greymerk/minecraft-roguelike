@@ -70,7 +70,7 @@ public class SegmentFirePlace extends SegmentBase {
 		end.add(orth[1]);
 		end.add(dir, 2);
 		for(Coord c : new RectHollow(start, end)){
-			if(!editor.getBlock(c).getBlock().getMaterial().isSolid()) return;
+			if(!editor.getBlock(c).getMaterial().isSolid()) return;
 		}
 		
 		RectSolid.fill(editor, rand, start, end, theme.getPrimaryWall());

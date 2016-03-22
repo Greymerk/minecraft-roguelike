@@ -1,20 +1,16 @@
 package greymerk.roguelike.treasure.loot;
 
-import greymerk.roguelike.treasure.loot.provider.ItemNovelty;
-
 import java.util.Random;
 
+import greymerk.roguelike.treasure.loot.provider.ItemNovelty;
 import net.minecraft.init.Items;
+import net.minecraft.init.PotionTypes;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.PotionUtils;
 
 public enum Potion {
 	
 	HEALING, HARM, REGEN, POISON, STRENGTH, WEAKNESS, SLOWNESS, SWIFTNESS, FIRERESIST;
-	
-	public static final int SPLASH = 16384;
-	public static final int REGULAR = 8192;
-	public static final int UPGRADE = 32;
-	public static final int EXTEND = 64;
 	
 	public static ItemStack getRandom(Random rand){
 
@@ -26,77 +22,73 @@ public enum Potion {
 		return getSpecific(rand, type);
 	}
 	
-	public static ItemStack getSpecific(Random rand, Potion type){
-		return getSpecific(rand, type, rand.nextBoolean(), rand.nextBoolean(), rand.nextBoolean());
+	public static ItemStack getSpecific(Random rand, Potion effect){
+		return getSpecific(rand, PotionType.REGULAR, effect, rand.nextBoolean(), rand.nextBoolean());
 	}
 
-	public static ItemStack getSpecific(Random rand, Potion type, boolean upgrade, boolean extend, boolean splash){
+	public static ItemStack getSpecific(Random rand, PotionType type, Potion effect, boolean upgrade, boolean extend){
 		
-		int id = getPotionID(type);
-
-		if(upgrade && !extend){
-			id = upgrade(type, id);
-		}
-
-		if(extend && !upgrade){
-			id = extend(type, id);
-		}
+		ItemStack potion;
 		
-		if(upgrade && extend){
-			if(rand.nextBoolean()){
-				id = upgrade(type, id);
-			} else {
-				id = extend(type, id);
-			}
-		}
-
-		if(splash){
-			id = id | SPLASH;
-		} else {
-			id = id | REGULAR;
-		}
-		
-		return new ItemStack(Items.potionitem, 1, id);
-		
-	}
-	
-	public static int getPotionID(Potion type){
 		switch(type){
-		case REGEN: return 1;
-		case SWIFTNESS: return 2;
-		case FIRERESIST: return 3;
-		case POISON: return 4;
-		case HEALING: return 5;
-		case WEAKNESS: return 8;
-		case STRENGTH: return 9;
-		case SLOWNESS: return 10;
-		case HARM: return 12;
-		default: return 0;
-		}
-	}
-	
-	private static int upgrade(Potion type, int id){
-		
-		if(type == FIRERESIST){
-			return id;
+		case REGULAR: potion = new ItemStack(Items.potionitem); break;
+		case SPLASH: potion = new ItemStack(Items.splash_potion); break;
+		case LINGERING: potion = new ItemStack(Items.lingering_potion); break;
+		default: potion = new ItemStack(Items.potionitem); break;
 		}
 		
-		id = id & 15;
+		net.minecraft.potion.PotionType data = getEffect(effect, upgrade, extend);
 		
-		return id | UPGRADE;
+		return PotionUtils.addPotionToItemStack(potion, data);
 	}
 	
-	private static int extend(Potion type, int id){
-		
-		if(type == HEALING || type == HARM){
-			return id;
+	public static net.minecraft.potion.PotionType getEffect(Potion effect, boolean upgrade, boolean extend){
+		switch(effect){
+		case HEALING: return upgrade ? PotionTypes.strong_healing : PotionTypes.healing;
+		case HARM: return upgrade ? PotionTypes.strong_harming : PotionTypes.harming;
+		case REGEN:
+			if(extend){
+				return PotionTypes.long_regeneration;
+			} else {
+				return upgrade ? PotionTypes.strong_regeneration : PotionTypes.regeneration;
+			}
+		case POISON:
+			if(extend){
+				return PotionTypes.long_poison;
+			} else {
+				return upgrade ? PotionTypes.strong_poison : PotionTypes.poison;
+			}
+		case STRENGTH:
+			if(extend){
+				return PotionTypes.long_strength;
+			} else {
+				return upgrade ? PotionTypes.strong_strength : PotionTypes.strength;
+			}
+		case WEAKNESS:
+			if(extend){
+				return PotionTypes.long_weakness;
+			} else {
+				return PotionTypes.weakness;
+			}
+		case SLOWNESS:
+			if(extend){
+				return PotionTypes.long_slowness;
+			} else {
+				return PotionTypes.slowness;
+			}
+		case SWIFTNESS:
+			if(extend){
+				return PotionTypes.long_swiftness;
+			} else {
+				return upgrade ? PotionTypes.strong_swiftness : PotionTypes.swiftness;
+			}
+		case FIRERESIST:
+			if(extend){
+				return PotionTypes.long_fire_resistance;
+			} else {
+				return PotionTypes.fire_resistance;
+			} 
+		default: return PotionTypes.healing;
 		}
-		
-		id = id & 15;
-		
-		return id | EXTEND;
 	}
-	
-
-	
 }

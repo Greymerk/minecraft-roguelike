@@ -40,7 +40,7 @@ public class Roguelike {
 	
 	@EventHandler
 	public void serverStart(FMLServerStartingEvent event){
-		MinecraftServer server = MinecraftServer.getServer();
+		MinecraftServer server = event.getServer();
 		ICommandManager command = server.getCommandManager();
 		ServerCommandManager serverCommand = ((ServerCommandManager) command);
 		serverCommand.registerCommand(new CommandSpawnDungeon());

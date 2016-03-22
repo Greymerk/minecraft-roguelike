@@ -19,32 +19,38 @@ public enum Enchant {
 	POWER, PUNCH, FLAME, INFINITY, LURE, LUCKOFTHESEA;
 	
 	public static Enchantment getEnchant(Enchant type){
+		String name = getName(type);
+		return Enchantment.getEnchantmentByLocation(name);
+	}
+	
+	public static String getName(Enchant type){
 		switch(type){
-		case SHARPNESS: return Enchantment.sharpness; 
-		case SMITE: return Enchantment.smite;
-		case ARTHOPODS: return Enchantment.baneOfArthropods;
-		case LOOTING: return Enchantment.looting;
-		case KNOCKBACK: return Enchantment.knockback;
-		case FIREASPECT: return Enchantment.fireAspect;
-		case AQUAAFFINITY: return Enchantment.aquaAffinity;
-		case RESPIRATION: return Enchantment.respiration;
-		case FEATHERFALLING: return Enchantment.featherFalling;
-		case DEPTHSTRIDER: return Enchantment.depthStrider;
-		case PROTECTION: return Enchantment.protection;
-		case BLASTPROTECTION: return Enchantment.blastProtection;
-		case FIREPROTECTION: return Enchantment.fireProtection;
-		case PROJECTILEPROTECTION: return Enchantment.projectileProtection;
-		case THORNS: return Enchantment.thorns;
-		case UNBREAKING: return Enchantment.unbreaking;
-		case EFFICIENCY: return Enchantment.efficiency;
-		case SILKTOUCH: return Enchantment.silkTouch;
-		case FORTUNE: return Enchantment.fortune;
-		case POWER: return Enchantment.power;
-		case FLAME: return Enchantment.flame;
-		case INFINITY: return Enchantment.infinity;
-		case LURE: return Enchantment.lure;
-		case LUCKOFTHESEA: return Enchantment.luckOfTheSea;
-		default: return Enchantment.efficiency;
+			case SHARPNESS: return "sharpness";
+			case SMITE: return "smite";
+			case ARTHOPODS: return "bane_of_arthropods";
+			case LOOTING: return "looting";
+			case KNOCKBACK: return "knockback";
+			case FIREASPECT: return "fire_aspect";
+			case AQUAAFFINITY: return "aqua_affinity";
+			case RESPIRATION: return "respiration";
+			case FEATHERFALLING: return "feather_falling";
+			case DEPTHSTRIDER: return "depth_strider";
+			case PROTECTION: return "protection";
+			case BLASTPROTECTION: return "blast_protection";
+			case FIREPROTECTION: return "fire_protection";
+			case PROJECTILEPROTECTION: return "projectile_protection";
+			case THORNS: return "thorns";
+			case UNBREAKING: return "unbreaking";
+			case EFFICIENCY: return "efficiency";
+			case SILKTOUCH: return "silk_touch";
+			case FORTUNE: return "fortune";
+			case POWER: return "power";
+			case PUNCH: return "punch";
+			case FLAME: return "flame";
+			case INFINITY: return "infinity";
+			case LURE: return "lure";
+			case LUCKOFTHESEA: return "luck_of_the_sea";
+			default: return "efficiency";
 		}
 	}
 	
@@ -79,7 +85,7 @@ public enum Enchant {
 		
 		List<EnchantmentData> enchants = null;
 		try{
-			enchants = EnchantmentHelper.buildEnchantmentList(rand, item, enchantLevel);
+			enchants = EnchantmentHelper.buildEnchantmentList(rand, item, enchantLevel, false);
 		} catch(NullPointerException e){
 			throw e;
 		}

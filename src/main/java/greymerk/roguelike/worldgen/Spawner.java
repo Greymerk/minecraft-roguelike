@@ -8,7 +8,9 @@ import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.MobSpawnerBaseLogic;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityMobSpawner;
+import net.minecraft.util.WeightedSpawnerEntity;
 
 public enum Spawner {
 	
@@ -33,19 +35,43 @@ public enum Spawner {
 	}
 	
 	public static void generate(IWorldEditor editor, Random rand, int level, Coord pos, Spawner type){
-				
-		if(!new MetaBlock(Blocks.mob_spawner).set(editor, pos)) return;
 		
-		TileEntityMobSpawner spawner = (TileEntityMobSpawner) editor.getTileEntity(pos);
+		/*
+		MetaBlock spawnerBlock = new MetaBlock(Blocks.mob_spawner.getDefaultState());
+		spawnerBlock.set(editor, pos);
+		
+		TileEntity te = editor.getTileEntity(pos);
 
-		if (spawner == null) return;
+		if(!(te instanceof TileEntityMobSpawner)) return;
 		
-		String name = getSpawnerName(type);
+		TileEntityMobSpawner spawner = (TileEntityMobSpawner)te;
+		
 		MobSpawnerBaseLogic logic = spawner.getSpawnerBaseLogic();
+		String name = getSpawnerName(type);
 		logic.setEntityName(name);
+		logic.updateSpawner();
 		
-		if(RogueConfig.getBoolean(RogueConfig.ROGUESPAWNERS))setRoguelike(logic, level, name);
+		
+		*/
+		
+		editor.setBlock(
+				pos,
+				new MetaBlock(Blocks.mob_spawner.getDefaultState()),
+				true,
+				true);
+		
+        TileEntity tileentity = editor.getTileEntity(pos);
 
+        if (tileentity instanceof TileEntityMobSpawner)
+        {
+            ((TileEntityMobSpawner)tileentity).getSpawnerBaseLogic().setEntityName(getSpawnerName(type));
+        }
+        else
+        {
+            System.out.println("Not a mob spawner.");
+        }
+        
+        if(RogueConfig.getBoolean(RogueConfig.ROGUESPAWNERS))setRoguelike(((TileEntityMobSpawner)tileentity).getSpawnerBaseLogic(), level, getSpawnerName(type));
 	}	
 	
 	public static String getSpawnerName(Spawner type) {
@@ -69,17 +95,16 @@ public enum Spawner {
 		}
 	}
 
-	public static void setMeta(MobSpawnerBaseLogic logic, NBTTagCompound meta){
-		MobSpawnerBaseLogic.WeightedRandomMinecart cart = logic.new WeightedRandomMinecart(meta);
-    	logic.setRandomEntity(cart);
+	public static void setMeta(MobSpawnerBaseLogic logic, NBTTagCompound nbt){
+    	WeightedSpawnerEntity randomEntity = new WeightedSpawnerEntity(nbt);
+    	logic.func_184993_a(randomEntity);
     	logic.updateSpawner();
 	}
 	
 	public static void setRoguelike(MobSpawnerBaseLogic logic, int level, String type){
     	NBTTagCompound nbt = new NBTTagCompound();
-    	nbt.setString("Type", type);
-    	nbt.setInteger("Weight", 1);
-    	
+    	nbt.setString("id", type);
+   	
     	NBTTagCompound properties = new NBTTagCompound();
     	nbt.setTag("Properties", properties);
     	    	
@@ -94,9 +119,8 @@ public enum Spawner {
     	buff.setInteger("Duration", 10);
     	buff.setByte("Ambient", (byte) 0);
     	
-    	
-    	MobSpawnerBaseLogic.WeightedRandomMinecart cart = logic.new WeightedRandomMinecart(nbt);
-    	logic.setRandomEntity(cart);
+    	WeightedSpawnerEntity randomEntity = new WeightedSpawnerEntity(1, nbt);
+    	logic.func_184993_a(randomEntity);
     	logic.updateSpawner();
     }
 }

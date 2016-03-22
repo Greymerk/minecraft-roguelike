@@ -108,7 +108,7 @@ public enum Treasure {
 		cursor = new Coord(pos);
 		cursor.add(Cardinal.DOWN);
 		
-		if (!editor.getBlock(cursor).getBlock().getMaterial().isSolid()) return false;
+		if (!editor.getBlock(cursor).getMaterial().isSolid()) return false;
 		
 		for(Cardinal dir : Cardinal.directions){
 			cursor = new Coord(pos);

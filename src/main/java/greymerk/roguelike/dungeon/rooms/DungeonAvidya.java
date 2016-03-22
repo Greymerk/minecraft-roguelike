@@ -18,7 +18,6 @@ import greymerk.roguelike.worldgen.blocks.Quartz;
 import greymerk.roguelike.worldgen.blocks.StairType;
 import greymerk.roguelike.worldgen.shapes.RectHollow;
 import greymerk.roguelike.worldgen.shapes.RectSolid;
-import net.minecraft.block.Block;
 
 public class DungeonAvidya extends DungeonBase {
 
@@ -275,8 +274,7 @@ public class DungeonAvidya extends DungeonBase {
 	
 	public boolean validLocation(IWorldEditor editor, Cardinal dir, int x, int y, int z){
 		for(Coord pos : new RectHollow(new Coord(x - 10, y - 2, z - 10), new Coord(x + 10, y + 5, z + 10))){
-			Block b = editor.getBlock(pos).getBlock();
-			if(!b.getMaterial().isSolid()) return false;
+			if(!editor.getBlock(pos).getMaterial().isSolid()) return false;
 		}
 		
 		return true;

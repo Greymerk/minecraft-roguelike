@@ -70,10 +70,5 @@ public enum Wood {
 		
 		return sapling;
 	}
-	
-	// used to copy the wood type from one block from another.
-	public static MetaBlock applyType(MetaBlock source, MetaBlock destination){
-		destination.withProperty(BlockPlanks.VARIANT, source.getValue(BlockPlanks.VARIANT));
-		return destination;
-	}
+
 }

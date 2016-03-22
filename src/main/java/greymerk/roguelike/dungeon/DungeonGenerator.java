@@ -39,7 +39,11 @@ public class DungeonGenerator {
 			DungeonLevel level = new DungeonLevel(editor, rand, levelSettings, new Coord(start));
 			
 			ILevelGenerator generator = LevelGenerator.getGenerator(editor, rand, levelSettings.getGenerator(), level);
-			level.generate(generator, new Coord(start), oldEnd);
+			try{
+				level.generate(generator, new Coord(start), oldEnd);
+			} catch(Exception e){
+				e.printStackTrace();
+			}
 			
 			rand = Dungeon.getRandom(editor, start.getX(), start.getZ());
 			oldEnd = generator.getEnd();			

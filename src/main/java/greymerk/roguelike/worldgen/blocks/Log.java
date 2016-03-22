@@ -4,6 +4,8 @@ import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.MetaBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLog;
+import net.minecraft.block.BlockNewLog;
+import net.minecraft.block.BlockOldLog;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.init.Blocks;
 
@@ -12,6 +14,7 @@ public class Log {
 	public static MetaBlock get(Wood type, Cardinal dir){
 		
 		MetaBlock log = new MetaBlock(getBlockId(type));
+		
 		setType(log, type);
 
 		if(dir == null){
@@ -51,13 +54,13 @@ public class Log {
 	
 	public static void setType(MetaBlock log, Wood type){
 		switch(type){
-		case OAK: log.withProperty(BlockPlanks.VARIANT, BlockPlanks.EnumType.OAK); return;
-		case SPRUCE: log.withProperty(BlockPlanks.VARIANT, BlockPlanks.EnumType.SPRUCE); return;
-		case BIRCH: log.withProperty(BlockPlanks.VARIANT, BlockPlanks.EnumType.BIRCH); return;
-		case JUNGLE: log.withProperty(BlockPlanks.VARIANT, BlockPlanks.EnumType.JUNGLE); return;
-		case ACACIA: log.withProperty(BlockPlanks.VARIANT, BlockPlanks.EnumType.ACACIA); return;
-		case DARKOAK: log.withProperty(BlockPlanks.VARIANT, BlockPlanks.EnumType.DARK_OAK); return;
-		default: log.withProperty(BlockPlanks.VARIANT, BlockPlanks.EnumType.OAK); return;
+		case OAK: log.withProperty(BlockOldLog.VARIANT, BlockPlanks.EnumType.OAK); return;
+		case SPRUCE: log.withProperty(BlockOldLog.VARIANT, BlockPlanks.EnumType.SPRUCE); return;
+		case BIRCH: log.withProperty(BlockOldLog.VARIANT, BlockPlanks.EnumType.BIRCH); return;
+		case JUNGLE: log.withProperty(BlockOldLog.VARIANT, BlockPlanks.EnumType.JUNGLE); return;
+		case ACACIA: log.withProperty(BlockNewLog.VARIANT, BlockPlanks.EnumType.ACACIA); return;
+		case DARKOAK: log.withProperty(BlockNewLog.VARIANT, BlockPlanks.EnumType.DARK_OAK); return;
+		default: log.withProperty(BlockOldLog.VARIANT, BlockPlanks.EnumType.OAK); return;
 		}
 	}
 }

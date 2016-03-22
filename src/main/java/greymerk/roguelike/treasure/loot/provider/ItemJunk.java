@@ -1,13 +1,11 @@
 package greymerk.roguelike.treasure.loot.provider;
 
-import greymerk.roguelike.treasure.loot.PotionMixture;
-
 import java.util.Random;
 
+import greymerk.roguelike.treasure.loot.PotionMixture;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.ChestGenHooks;
 
 public class ItemJunk extends ItemBase{
 
@@ -39,21 +37,6 @@ public class ItemJunk extends ItemBase{
 		}
 
 		if(level < 3 && rand.nextInt(10 + ((1 + level) * 5)) == 0) return new ItemStack(Items.book);
-
-		if(level > 0 && rand.nextInt(20 / (1 + level)) == 0){
-			
-			if(level == 4 && rand.nextInt(10) == 0){
-				ChestGenHooks hook = rand.nextBoolean() ?
-				ChestGenHooks.getInfo(ChestGenHooks.PYRAMID_JUNGLE_CHEST):
-				ChestGenHooks.getInfo(ChestGenHooks.PYRAMID_DESERT_CHEST);
-				ItemStack toReturn = hook.getOneItem(rand);
-				if(toReturn != null) return toReturn;
-			}
-			
-			ChestGenHooks hook = ChestGenHooks.getInfo(ChestGenHooks.DUNGEON_CHEST);
-			ItemStack toReturn = hook.getOneItem(rand);
-			if(toReturn != null) return toReturn;
-		}
 
 		if(rand.nextInt(60) == 0){
 			if(level > 2 && rand.nextBoolean()) return PotionMixture.getPotion(rand, PotionMixture.VILE);

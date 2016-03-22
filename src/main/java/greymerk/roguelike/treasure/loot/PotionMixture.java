@@ -17,7 +17,7 @@ public enum PotionMixture {
 		int duration;
 		switch(type){
 		case TEQUILA:
-			potion = Potion.getSpecific(rand, Potion.FIRERESIST, false, false, false);
+			potion = Potion.getSpecific(rand, PotionType.REGULAR, Potion.FIRERESIST, false, false);
 			duration = 1000 + rand.nextInt(2000);
 			PotionEffect.addCustomEffect(potion, PotionEffect.STRENGTH, 3, duration);
 			PotionEffect.addCustomEffect(potion, PotionEffect.FATIGUE, 1, duration);
@@ -25,7 +25,7 @@ public enum PotionMixture {
 			ItemHideFlags.set(ItemHideFlags.EFFECTS, potion);
 			return potion;
 		case LAUDANUM:
-			potion = Potion.getSpecific(rand, Potion.STRENGTH, false, false, false);
+			potion = Potion.getSpecific(rand, PotionType.REGULAR, Potion.STRENGTH, false, false);
 			duration = 200;
 			PotionEffect.addCustomEffect(potion, PotionEffect.REGEN, 2, duration);
 			PotionEffect.addCustomEffect(potion, PotionEffect.WEAKNESS, 2, duration);
@@ -37,7 +37,7 @@ public enum PotionMixture {
 			ItemHideFlags.set(ItemHideFlags.EFFECTS, potion);
 			return potion;
 		case MOONSHINE:
-			potion = Potion.getSpecific(rand, Potion.WEAKNESS, false, false, false);
+			potion = Potion.getSpecific(rand, PotionType.REGULAR, Potion.WEAKNESS, false, false);
 			duration = 1000 + rand.nextInt(2000);
 			PotionEffect.addCustomEffect(potion, PotionEffect.DAMAGE, 2, 1);
 			PotionEffect.addCustomEffect(potion, PotionEffect.BLINDNESS, 1, duration);
@@ -46,7 +46,7 @@ public enum PotionMixture {
 			ItemHideFlags.set(ItemHideFlags.EFFECTS, potion);
 			return potion;
 		case ABSINTHE:
-			potion = Potion.getSpecific(rand, Potion.POISON, false, false, false);
+			potion = Potion.getSpecific(rand, PotionType.REGULAR, Potion.POISON, false, false);
 			duration = 1000 + rand.nextInt(2000);
 			PotionEffect.addCustomEffect(potion, PotionEffect.POISON, 1, 200 + rand.nextInt(300));
 			PotionEffect.addCustomEffect(potion, PotionEffect.NIGHTVISION, 1, duration);
@@ -55,7 +55,7 @@ public enum PotionMixture {
 			ItemHideFlags.set(ItemHideFlags.EFFECTS, potion);
 			return potion;
 		case STOUT:
-			potion = Potion.getSpecific(rand, Potion.HARM, false, false, false);
+			potion = Potion.getSpecific(rand, PotionType.REGULAR, Potion.HARM, false, false);
 			duration = 2000 + rand.nextInt(2000);
 			PotionEffect.addCustomEffect(potion, PotionEffect.REGEN, 1, duration);
 			PotionEffect.addCustomEffect(potion, PotionEffect.FATIGUE, 1, duration);

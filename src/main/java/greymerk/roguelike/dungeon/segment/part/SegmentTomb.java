@@ -79,7 +79,7 @@ public class SegmentTomb extends SegmentBase {
 		
 		// make sure the box is solid wall
 		for(Coord c : box){
-			if(!editor.getBlock(c).getBlock().getMaterial().isSolid()) return;
+			if(!editor.getBlock(c).getMaterial().isSolid()) return;
 		}
 		
 		RectHollow.fill(editor, rand, start, end, theme.getPrimaryWall());

@@ -7,6 +7,7 @@ import java.util.Collection;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.monster.EntitySlime;
+import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -25,7 +26,7 @@ public class EntityJoinWorld {
 		
 		Collection<?> effects = mob.getActivePotionEffects();
 		for(Object buff : effects){
-			if(((PotionEffect) buff).getPotionID() == 4){
+			if(Potion.getIdFromPotion(((PotionEffect) buff).getPotion()) == 4){
 				int level = ((PotionEffect) buff).getAmplifier();
 				Loot.addEquipment(event.world, level, event.entity);
 				return;

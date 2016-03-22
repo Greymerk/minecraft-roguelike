@@ -56,7 +56,7 @@ public class SegmentFlowers extends SegmentBase {
 		start.add(orth[0]);
 		end.add(orth[1]);
 		for(Coord c : new RectSolid(start, end)){
-			if(rand.nextInt(3) == 0 && editor.getBlock(c).getBlock().getMaterial().isSolid()){
+			if(rand.nextInt(3) == 0 && editor.getBlock(c).getMaterial().isSolid()){
 				FlowerPot.generate(editor, rand, c);
 			}
 		}

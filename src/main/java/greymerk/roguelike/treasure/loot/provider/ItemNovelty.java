@@ -9,7 +9,6 @@ import greymerk.roguelike.treasure.loot.Loot;
 import greymerk.roguelike.util.IWeighted;
 import greymerk.roguelike.util.TextFormat;
 import greymerk.roguelike.util.WeightedChoice;
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;

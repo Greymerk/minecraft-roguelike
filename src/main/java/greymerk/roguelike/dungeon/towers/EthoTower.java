@@ -220,7 +220,7 @@ public class EthoTower implements ITower {
 	
 	private void step(IWorldEditor editor, Random rand, ITheme theme, Cardinal dir, Coord origin){
 		
-		if(editor.getBlock(origin).getBlock().isOpaqueCube()) return;
+		if(editor.getBlock(origin).isOpaqueCube()) return;
 		
 		Coord start;
 		Coord end;

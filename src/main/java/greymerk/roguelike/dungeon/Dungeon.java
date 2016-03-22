@@ -175,7 +175,7 @@ public class Dungeon implements IDungeon{
 		while(!editor.validGroundBlock(cursor)){
 			cursor.add(Cardinal.DOWN);
 			if(cursor.getY() < lowerLimit) return false;
-			if(editor.getBlock(cursor).getBlock().getMaterial() == Material.water) return false;
+			if(editor.getBlock(cursor).getMaterial() == Material.water) return false;
 		}
 
 		for (Coord c : new RectSolid(new Coord(x - 4, cursor.getY() + 4, z - 4), new Coord(x + 4, cursor.getY() + 4, z + 4))){

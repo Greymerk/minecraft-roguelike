@@ -486,7 +486,7 @@ public class JungleTower implements ITower{
 		leaves.set(editor, origin);
 		Coord cursor = new Coord(origin);
 		cursor.add(Cardinal.DOWN);
-		if(!editor.getBlock(cursor).getBlock().getMaterial().isOpaque()){
+		if(!editor.getBlock(cursor).getMaterial().isOpaque()){
 			leaves.set(editor, origin);
 			if(rand.nextBoolean()) leafSpill(editor, rand, theme, cursor, count - 1);
 			return;
@@ -495,10 +495,10 @@ public class JungleTower implements ITower{
 		for(Cardinal dir : Cardinal.directions){
 			cursor = new Coord(origin);
 			cursor.add(dir);
-			if(editor.getBlock(cursor).getBlock().getMaterial().isOpaque()) continue;
+			if(editor.getBlock(cursor).getMaterial().isOpaque()) continue;
 			leaves.set(editor, origin);
 			cursor.add(Cardinal.DOWN);
-			if(editor.getBlock(cursor).getBlock().getMaterial().isOpaque()) continue;
+			if(editor.getBlock(cursor).getMaterial().isOpaque()) continue;
 			leafSpill(editor, rand, theme, cursor, count - 1);
 		}
 	}

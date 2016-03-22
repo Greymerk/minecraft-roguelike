@@ -2,7 +2,6 @@ package greymerk.roguelike.treasure.loot;
 
 import java.util.Random;
 
-import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.treasure.loot.provider.ItemArmour;
 import greymerk.roguelike.treasure.loot.provider.ItemNovelty;
 import greymerk.roguelike.treasure.loot.provider.ItemSpecialty;
@@ -10,11 +9,11 @@ import greymerk.roguelike.treasure.loot.provider.ItemTool;
 import greymerk.roguelike.treasure.loot.provider.ItemWeapon;
 import greymerk.roguelike.util.TextFormat;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.monster.EntitySpider;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.init.Items;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -34,6 +33,14 @@ public enum Loot {
 		}
 		
 		return loot;
+	}
+	
+	public static ItemStack getEquipmentBySlot(Random rand, EntityEquipmentSlot slot, int level, boolean enchant){
+		if(slot == EntityEquipmentSlot.MAINHAND){
+			return ItemWeapon.getRandom(rand, level, enchant);
+		}
+		
+		return ItemArmour.getRandom(rand, level, Slot.getSlot(slot), enchant);
 	}
 	
 	public static ItemStack getEquipmentBySlot(Random rand, Slot slot, int level, boolean enchant){
@@ -122,7 +129,7 @@ public enum Loot {
 					weapon = ItemTool.getRandom(rand, level, enchant);
 				}
 			}
-			mob.setCurrentItemOrArmor(0, weapon);
+			mob.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, weapon);
 		}
 		
 		// skelly gets a bow
@@ -130,44 +137,46 @@ public enum Loot {
 			
 			if(rand.nextInt(10) == 0 && level > 1){
 				((EntitySkeleton) mob).setSkeletonType(1);
-				mob.setCurrentItemOrArmor(0, ItemWeapon.getSword(rand, level, enchant));
+				mob.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, ItemWeapon.getSword(rand, level, enchant));
 			} else {
 				if(rand.nextInt(20) == 0){
 					if(level > 2 && rand.nextInt(10) == 0){
-						mob.setCurrentItemOrArmor(0, ItemNovelty.getItem(ItemNovelty.NULL));
+						mob.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, ItemNovelty.getItem(ItemNovelty.NULL));
 					} else if(level > 0 && rand.nextInt(5) == 0){
-						mob.setCurrentItemOrArmor(0, ItemNovelty.getItem(ItemNovelty.VALANDRAH));
+						mob.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, ItemNovelty.getItem(ItemNovelty.VALANDRAH));
 					} else if(level > 0 && rand.nextInt(3) == 0){
-						mob.setCurrentItemOrArmor(0, ItemSpecialty.getRandomItem(Equipment.SWORD, rand, level));
+						mob.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, ItemSpecialty.getRandomItem(Equipment.SWORD, rand, level));
 					} else {
-						mob.setCurrentItemOrArmor(0, ItemWeapon.getSword(rand, level, enchant));
+						mob.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, ItemWeapon.getSword(rand, level, enchant));
 					}
 				} else {
 					if(level > 2 && rand.nextInt(50) == 0){
-						mob.setCurrentItemOrArmor(0, ItemNovelty.getItem(ItemNovelty.ENIKOBOW));
+						mob.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, ItemNovelty.getItem(ItemNovelty.ENIKOBOW));
 					} else if(level > 1 && rand.nextInt(20) == 0){
-						mob.setCurrentItemOrArmor(0, ItemSpecialty.getRandomItem(Equipment.BOW, rand, level));
+						mob.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, ItemSpecialty.getRandomItem(Equipment.BOW, rand, level));
 					} else {
-						mob.setCurrentItemOrArmor(0, ItemWeapon.getBow(rand, level, enchant));	
+						mob.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, ItemWeapon.getBow(rand, level, enchant));	
 					}
 				}
 			}
 		}
 		
 		// put on some armour
-		for(int i = 1; i < 5; i++){
+		for(EntityEquipmentSlot slot : new EntityEquipmentSlot[]{
+				EntityEquipmentSlot.HEAD,
+				EntityEquipmentSlot.CHEST,
+				EntityEquipmentSlot.LEGS,
+				EntityEquipmentSlot.FEET
+				}){
 			ItemStack item;
 			if(mob instanceof EntitySpider){
 				item = Loot.getEquipmentBySlot(rand, Slot.FEET, level, enchant);	
 			} else {
-				item = Loot.getEquipmentBySlot(rand, Slot.getSlotByNumber(i), level, enchant);
+				item = Loot.getEquipmentBySlot(rand, Slot.getSlot(slot), level, enchant);
 			}
-			mob.setCurrentItemOrArmor(i, item);
+			mob.setItemStackToSlot(slot, item);
 		}
 		
 		// lower drop chance
-		for(int s = 0; s < 5; s++){
-			((EntityLiving)mob).setEquipmentDropChance(s, (float) RogueConfig.getDouble(RogueConfig.LOOTING));
-		}
 	}
 }
