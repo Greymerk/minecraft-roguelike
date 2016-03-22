@@ -11,17 +11,17 @@ import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IWorldEditor;
 import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraftforge.common.BiomeDictionary;
 
 public class SpawnCriteria {
 
 	int weight;
 	List<String> biomes;
-	//List<BiomeDictionary.Type> biomeTypes;
+	List<BiomeDictionary.Type> biomeTypes;
 	List<Integer> dimensionBlackList;
 	List<Integer> dimensionWhiteList;
 	
 	public SpawnCriteria(){
-		this.biomes = new ArrayList<String>();
 		this.weight = 1;
 	}
 	
@@ -34,6 +34,15 @@ public class SpawnCriteria {
 			for(JsonElement e : biomeList){
 				String name = e.getAsString();
 				this.biomes.add(name);
+			}
+		}
+		
+		if(data.has("biomeTypes")){
+			JsonArray biomeTypeList = data.get("biomeTypes").getAsJsonArray();
+			this.biomeTypes = new ArrayList<BiomeDictionary.Type>();
+			for(JsonElement e : biomeTypeList){
+				String type = e.getAsString();
+				this.biomeTypes.add(BiomeDictionary.Type.valueOf(type));
 			}
 		}
 		
@@ -60,8 +69,12 @@ public class SpawnCriteria {
 		this.weight = weight;
 	}
 	
-	public void addBiome(String biome){
-		this.biomes.add(biome);
+	public void setbiomes(List<String> biomes){
+		this.biomes = biomes;
+	}
+	
+	public void setBiomeTypes(List<BiomeDictionary.Type> biomeTypes){
+		this.biomeTypes = biomeTypes;
 	}
 	
 	public void setDimBlackList(List<Integer> blackList){
@@ -96,7 +109,23 @@ public class SpawnCriteria {
 		
 		if(!dimWL.isEmpty() && !dimWL.contains(dimID)) return false;
 		
-		BiomeGenBase b = editor.getBiome(pos);
-		return this.biomes.contains(b);
+		if(this.biomes == null && this.biomeTypes == null) return true;
+		
+		boolean biomeFound = false;
+		
+		BiomeGenBase biome = editor.getBiome(pos);
+		
+		if(this.biomes != null){
+			if(this.biomes.contains(biome.getBiomeName())) biomeFound = true;
+		}
+		
+		if(this.biomeTypes != null){
+			for(BiomeDictionary.Type type : this.biomeTypes){
+				if(BiomeDictionary.isBiomeOfType(biome, type)) biomeFound = true;
+			}
+		}
+		
+		return biomeFound;
 	}
+	
 }

@@ -5,7 +5,9 @@ import net.minecraft.init.Blocks;
 
 public enum StairType {
 
-	COBBLE, STONEBRICK, BRICK, SANDSTONE, RED_SANDSTONE, QUARTZ, NETHERBRICK, OAK, SPRUCE, BIRCH, JUNGLE, ACACIA, DARKOAK;
+	COBBLE, STONEBRICK, BRICK, SANDSTONE, RED_SANDSTONE, QUARTZ, NETHERBRICK,
+	OAK, SPRUCE, BIRCH, JUNGLE, ACACIA, DARKOAK,
+	PURPUR;
 	
 	public static Block getBlock(StairType type){
 		switch(type){
@@ -22,6 +24,7 @@ public enum StairType {
 		case JUNGLE: return Blocks.jungle_stairs;
 		case ACACIA: return Blocks.acacia_stairs;
 		case DARKOAK: return Blocks.dark_oak_stairs;
+		case PURPUR: return Blocks.purpur_stairs;
 		default: return Blocks.stone_stairs;
 		}
 	}

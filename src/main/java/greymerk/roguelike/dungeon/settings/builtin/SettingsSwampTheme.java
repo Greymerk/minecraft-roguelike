@@ -1,5 +1,8 @@
 package greymerk.roguelike.dungeon.settings.builtin;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import greymerk.roguelike.dungeon.base.DungeonFactory;
 import greymerk.roguelike.dungeon.base.DungeonRoom;
 import greymerk.roguelike.dungeon.segment.Segment;
@@ -15,13 +18,17 @@ import greymerk.roguelike.treasure.loot.WeightedRandomLoot;
 import greymerk.roguelike.util.WeightedRandomizer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.BiomeDictionary;
 
 public class SettingsSwampTheme extends DungeonSettings{
 	
 	public SettingsSwampTheme(){
 		
 		this.criteria = new SpawnCriteria();
-		this.criteria.addBiome("swampland");
+		List<BiomeDictionary.Type> biomes = new ArrayList<BiomeDictionary.Type>();
+		biomes.add(BiomeDictionary.Type.SWAMP);
+		this.criteria.setBiomeTypes(biomes);
+		
 		this.towerSettings = new TowerSettings(Tower.WITCH, Theme.getTheme(Theme.DARKOAK));
 		
 		Theme[] themes = {Theme.DARKHALL, Theme.DARKHALL, Theme.MUDDY, Theme.MOSSY, Theme.NETHER};

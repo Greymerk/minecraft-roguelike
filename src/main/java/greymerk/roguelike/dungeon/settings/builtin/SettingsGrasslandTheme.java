@@ -1,5 +1,8 @@
 package greymerk.roguelike.dungeon.settings.builtin;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import greymerk.roguelike.dungeon.base.DungeonFactory;
 import greymerk.roguelike.dungeon.base.DungeonRoom;
 import greymerk.roguelike.dungeon.base.SecretFactory;
@@ -9,13 +12,16 @@ import greymerk.roguelike.dungeon.settings.SpawnCriteria;
 import greymerk.roguelike.dungeon.settings.TowerSettings;
 import greymerk.roguelike.dungeon.towers.Tower;
 import greymerk.roguelike.theme.Theme;
+import net.minecraftforge.common.BiomeDictionary;
 
 public class SettingsGrasslandTheme extends DungeonSettings{
 
 	public SettingsGrasslandTheme(){
 		
 		this.criteria = new SpawnCriteria();
-		this.criteria.addBiome("plains");
+		List<BiomeDictionary.Type> biomes = new ArrayList<BiomeDictionary.Type>();
+		biomes.add(BiomeDictionary.Type.PLAINS);
+		this.criteria.setBiomeTypes(biomes);
 		
 		this.towerSettings = new TowerSettings(Tower.ROGUE, Theme.getTheme(Theme.TOWER));
 		

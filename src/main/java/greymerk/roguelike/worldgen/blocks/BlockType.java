@@ -28,8 +28,8 @@ public enum BlockType {
 	SANDSTONE_RED, SANDSTONE_RED_CHISELED, SANDSTONE_RED_SMOOTH,
 	QUARTZ, REDSTONE_BLOCK, PRESSURE_PLATE_STONE, PRESSURE_PLATE_WOODEN, SHELF, REDSTONE_WIRE,
 	COCAO, REEDS, CRAFTING_TABLE, NOTEBLOCK, REDSTONE_LAMP, REDSTONE_LAMP_LIT, JUKEBOX, FENCE,
-	TNT, ENCHANTING_TABLE, FENCE_NETHER_BRICK, WEB, PUMPKIN_LIT, VINE;
-	
+	TNT, ENCHANTING_TABLE, FENCE_NETHER_BRICK, WEB, PUMPKIN_LIT, VINE,
+	PURPUR_BLOCK, PURPUR_PILLAR, PURPUR_STAIR, PURPUR_DOUBLE_SLAB, PURPUR_SLAB, ENDER_BRICK;
 	
 	public static MetaBlock get(BlockType type){
 		
@@ -179,6 +179,12 @@ public enum BlockType {
 		case WEB: return new MetaBlock(Blocks.web);
 		case PUMPKIN_LIT: return new MetaBlock(Blocks.lit_pumpkin);
 		case VINE: return new MetaBlock(Blocks.vine);
+		case PURPUR_BLOCK: return new MetaBlock(Blocks.purpur_block);
+		case PURPUR_PILLAR: return new MetaBlock(Blocks.purpur_pillar);
+		case PURPUR_STAIR: return new MetaBlock(Blocks.purpur_stairs);
+		case PURPUR_DOUBLE_SLAB: return new MetaBlock(Blocks.purpur_double_slab);
+		case PURPUR_SLAB: return new MetaBlock(Blocks.purpur_slab);
+		case ENDER_BRICK: return new MetaBlock(Blocks.end_bricks);
 		default: return new MetaBlock(Blocks.air);
 		}
 	}

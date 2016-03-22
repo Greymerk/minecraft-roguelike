@@ -1,5 +1,8 @@
 package greymerk.roguelike.dungeon.settings.builtin;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import greymerk.roguelike.dungeon.base.DungeonFactory;
 import greymerk.roguelike.dungeon.base.DungeonRoom;
 import greymerk.roguelike.dungeon.base.SecretFactory;
@@ -11,13 +14,17 @@ import greymerk.roguelike.dungeon.settings.SpawnCriteria;
 import greymerk.roguelike.dungeon.settings.TowerSettings;
 import greymerk.roguelike.dungeon.towers.Tower;
 import greymerk.roguelike.theme.Theme;
+import net.minecraftforge.common.BiomeDictionary;
 
 public class SettingsMountainTheme extends DungeonSettings{
 	
 	public SettingsMountainTheme(){
 		
 		this.criteria = new SpawnCriteria();
-		this.criteria.addBiome("extreme_hills");
+		List<BiomeDictionary.Type> biomes = new ArrayList<BiomeDictionary.Type>();
+		biomes.add(BiomeDictionary.Type.MOUNTAIN);
+		biomes.add(BiomeDictionary.Type.PLAINS);
+		this.criteria.setBiomeTypes(biomes);
 		
 		this.towerSettings = new TowerSettings(Tower.ENIKO, Theme.getTheme(Theme.OAK));
 		
