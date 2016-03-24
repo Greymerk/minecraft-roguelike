@@ -7,6 +7,8 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
 
 public class Book {
 
@@ -42,7 +44,9 @@ public class Book {
 		NBTTagList nbtPages = new NBTTagList();
 		
 		for(String page : this.pages){
-			NBTTagString nbtPage = new NBTTagString(page);
+			ITextComponent text = new TextComponentString(page);
+			String json = ITextComponent.Serializer.componentToJson(text);
+			NBTTagString nbtPage = new NBTTagString(json);
 			nbtPages.appendTag(nbtPage);
 		}
 		

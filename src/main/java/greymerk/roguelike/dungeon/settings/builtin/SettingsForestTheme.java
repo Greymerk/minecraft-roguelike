@@ -35,7 +35,6 @@ public class SettingsForestTheme extends DungeonSettings{
 			case 0:
 				secrets.addRoom(DungeonRoom.BEDROOM);
 				secrets.addRoom(DungeonRoom.SMITH);
-				secrets.addRoom(DungeonRoom.ENCHANT);
 				break;
 			case 1:
 				rooms = new DungeonFactory();
