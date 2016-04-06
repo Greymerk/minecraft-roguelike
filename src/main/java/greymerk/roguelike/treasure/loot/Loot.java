@@ -131,7 +131,7 @@ public enum Loot {
 			}
 			mob.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, weapon);
 			
-			ItemStack shield = new ItemStack(Items.shield, 1, 0);
+			ItemStack shield = Shield.get(rand);
 			mob.setItemStackToSlot(EntityEquipmentSlot.OFFHAND, shield);
 		}
 		
