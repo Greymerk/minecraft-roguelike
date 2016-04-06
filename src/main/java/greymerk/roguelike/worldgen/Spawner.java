@@ -62,12 +62,9 @@ public enum Spawner {
 		
         TileEntity tileentity = editor.getTileEntity(pos);
 
-        if (tileentity instanceof TileEntityMobSpawner)
-        {
+        if (tileentity instanceof TileEntityMobSpawner){
             ((TileEntityMobSpawner)tileentity).getSpawnerBaseLogic().setEntityName(getSpawnerName(type));
-        }
-        else
-        {
+        } else {
             System.out.println("Not a mob spawner.");
         }
         
@@ -105,11 +102,8 @@ public enum Spawner {
     	NBTTagCompound nbt = new NBTTagCompound();
     	nbt.setString("id", type);
    	
-    	NBTTagCompound properties = new NBTTagCompound();
-    	nbt.setTag("Properties", properties);
-    	    	
     	NBTTagList activeEffects = new NBTTagList();
-    	properties.setTag("ActiveEffects", activeEffects);
+    	nbt.setTag("ActiveEffects", activeEffects);
     	
     	NBTTagCompound buff = new NBTTagCompound();
     	activeEffects.appendTag(buff);
