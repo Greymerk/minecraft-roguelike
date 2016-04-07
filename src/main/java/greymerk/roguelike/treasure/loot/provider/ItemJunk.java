@@ -3,6 +3,7 @@ package greymerk.roguelike.treasure.loot.provider;
 import java.util.Random;
 
 import greymerk.roguelike.treasure.loot.PotionMixture;
+import greymerk.roguelike.treasure.loot.Shield;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -25,6 +26,8 @@ public class ItemJunk extends ItemBase{
 
 		if(level > 1 && rand.nextInt(100) == 0) return new ItemStack(Items.ghast_tear);
 
+		if(rand.nextInt(70) == 0) return Shield.get(rand);
+		
 		if(level > 1 && rand.nextInt(50) == 0){			
 			switch(rand.nextInt(6)){
 			case 0: return new ItemStack(Items.gunpowder, 1 + rand.nextInt(3));

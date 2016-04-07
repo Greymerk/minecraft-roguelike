@@ -57,11 +57,11 @@ public enum Enchant {
 	public static int getLevel(Random rand, int level) {
 
 		switch(level){
-		case 4: return 21 + rand.nextInt(10);
-		case 3: return 16 + rand.nextInt(10);
-		case 2: return 5 + rand.nextInt(10);
-		case 1: return 1 + rand.nextInt(5);
-		case 0: return 1;
+		case 4: return 30 + rand.nextInt(10);
+		case 3: return 15 + rand.nextInt(15);
+		case 2: return 5 + rand.nextInt(15);
+		case 1: return 1 + rand.nextInt(10);
+		case 0: return 1 + rand.nextInt(5);
 		default: return 1;
 		}
 	}

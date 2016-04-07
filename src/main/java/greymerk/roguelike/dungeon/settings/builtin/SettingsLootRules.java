@@ -44,7 +44,7 @@ public class SettingsLootRules extends DungeonSettings{
 			lootRules.add(Treasure.REWARD, loot.get(Loot.REWARD, i),  i, true, 2);
 			lootRules.add(null, loot.get(Loot.JUNK, i),  i, true, 6);
 			lootRules.add(null, new ItemSpecialty(0, i, Quality.get(i)),  i, false, 3);
-			lootRules.add(null, new ItemEnchBook(0, i),  i, false, i + 1);
+			lootRules.add(null, new ItemEnchBook(0, i),  i, false, i * 2 + 5);
 		}
 	}
 }
