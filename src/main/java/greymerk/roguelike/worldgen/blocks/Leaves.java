@@ -1,10 +1,12 @@
 package greymerk.roguelike.worldgen.blocks;
 
+import greymerk.roguelike.worldgen.MetaBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeaves;
+import net.minecraft.block.BlockNewLeaf;
+import net.minecraft.block.BlockOldLeaf;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.init.Blocks;
-import greymerk.roguelike.worldgen.MetaBlock;
 
 public enum Leaves {
 	
@@ -12,8 +14,18 @@ public enum Leaves {
 	
 	public static MetaBlock get(Leaves type, boolean decay){
 		
-		MetaBlock leaf = new MetaBlock(getBlockId(type));
-		leaf.withProperty(BlockPlanks.VARIANT, getType(type));
+		Block base = getBlockId(type);
+		
+		MetaBlock leaf = new MetaBlock(base);
+		
+		// Original minecraft leaves use a different variant property than
+		// newer leaves like acacia and dark oak.
+		if(base == Blocks.leaves){
+			leaf.withProperty(BlockOldLeaf.VARIANT, getType(type));	
+		} else {
+			leaf.withProperty(BlockNewLeaf.VARIANT, getType(type));
+		}
+		
 		leaf.withProperty(BlockLeaves.DECAYABLE, decay);
 		
 		return leaf;
