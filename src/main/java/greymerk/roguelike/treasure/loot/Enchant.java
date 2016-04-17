@@ -16,7 +16,7 @@ public enum Enchant {
 	AQUAAFFINITY, RESPIRATION, FEATHERFALLING, DEPTHSTRIDER,
 	PROTECTION, BLASTPROTECTION, FIREPROTECTION, PROJECTILEPROTECTION, 
 	THORNS, UNBREAKING, EFFICIENCY, SILKTOUCH, FORTUNE,
-	POWER, PUNCH, FLAME, INFINITY, LURE, LUCKOFTHESEA;
+	POWER, PUNCH, FLAME, INFINITY, LURE, LUCKOFTHESEA, MENDING;
 	
 	public static Enchantment getEnchant(Enchant type){
 		String name = getName(type);
@@ -50,6 +50,7 @@ public enum Enchant {
 			case INFINITY: return "infinity";
 			case LURE: return "lure";
 			case LUCKOFTHESEA: return "luck_of_the_sea";
+			case MENDING: return "mending";
 			default: return "efficiency";
 		}
 	}
