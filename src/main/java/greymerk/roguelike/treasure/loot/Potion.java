@@ -22,35 +22,35 @@ public enum Potion {
 			return ItemNovelty.getItem(ItemNovelty.AVIDYA);
 		}
 		
-		Potion type = Potion.values()[rand.nextInt(Potion.values().length)];
-		return getSpecific(rand, type);
+		Potion effect = Potion.values()[rand.nextInt(Potion.values().length)];
+		return getSpecific(rand, PotionType.REGULAR, effect);
 	}
 	
-	public static ItemStack getSpecific(Random rand, Potion type){
-		return getSpecific(rand, type, rand.nextBoolean(), rand.nextBoolean(), rand.nextBoolean());
+	public static ItemStack getSpecific(Random rand, PotionType type, Potion effect){
+		return getSpecific(rand, type, effect, rand.nextBoolean(), rand.nextBoolean());
 	}
 
-	public static ItemStack getSpecific(Random rand, Potion type, boolean upgrade, boolean extend, boolean splash){
+	public static ItemStack getSpecific(Random rand, PotionType type, Potion effect, boolean upgrade, boolean extend){
 		
-		int id = getPotionID(type);
+		int id = getPotionID(effect);
 
 		if(upgrade && !extend){
-			id = upgrade(type, id);
+			id = upgrade(effect, id);
 		}
 
 		if(extend && !upgrade){
-			id = extend(type, id);
+			id = extend(effect, id);
 		}
 		
 		if(upgrade && extend){
 			if(rand.nextBoolean()){
-				id = upgrade(type, id);
+				id = upgrade(effect, id);
 			} else {
-				id = extend(type, id);
+				id = extend(effect, id);
 			}
 		}
 
-		if(splash){
+		if(type == PotionType.SPLASH){
 			id = id | SPLASH;
 		} else {
 			id = id | REGULAR;
@@ -60,8 +60,8 @@ public enum Potion {
 		
 	}
 	
-	public static int getPotionID(Potion type){
-		switch(type){
+	public static int getPotionID(Potion effect){
+		switch(effect){
 		case REGEN: return 1;
 		case SWIFTNESS: return 2;
 		case FIRERESIST: return 3;
@@ -75,9 +75,9 @@ public enum Potion {
 		}
 	}
 	
-	private static int upgrade(Potion type, int id){
+	private static int upgrade(Potion effect, int id){
 		
-		if(type == FIRERESIST){
+		if(effect == FIRERESIST){
 			return id;
 		}
 		
@@ -86,9 +86,9 @@ public enum Potion {
 		return id | UPGRADE;
 	}
 	
-	private static int extend(Potion type, int id){
+	private static int extend(Potion effect, int id){
 		
-		if(type == HEALING || type == HARM){
+		if(effect == HEALING || effect == HARM){
 			return id;
 		}
 		

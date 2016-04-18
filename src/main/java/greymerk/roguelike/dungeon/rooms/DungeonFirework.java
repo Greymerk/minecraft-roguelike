@@ -190,7 +190,7 @@ public class DungeonFirework extends DungeonBase {
 		Coord top = new Coord(pos.getX(), 80, pos.getZ());
 		while(top.getY() > pos.getY()){
 			top.add(Cardinal.DOWN);
-			if(editor.getBlock(top).getBlock().getMaterial().isSolid()) break;
+			if(editor.getBlock(top).getMaterial().isSolid()) break;
 		}
 		
 		if(top.getY() >= 100) return;
@@ -238,7 +238,7 @@ public class DungeonFirework extends DungeonBase {
 		above.add(Cardinal.UP, 10);
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		for(Coord c : new RectSolid(cursor, above)){
-			if(editor.getBlock(c).getBlock().getMaterial().isSolid()){
+			if(editor.getBlock(c).getMaterial().isSolid()){
 				air.set(editor, c);
 			}
 		}

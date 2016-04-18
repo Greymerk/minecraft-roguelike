@@ -433,7 +433,7 @@ public class DungeonBTeam extends DungeonBase {
 		
 		for(Coord pos : new RectHollow(new Coord(x - 7, y - 2, z - 7), new Coord(x + 7, y + 5, z + 7))){
 			MetaBlock b = editor.getBlock(pos);
-			if(!b.getBlock().getMaterial().isSolid()) return false;
+			if(!b.getMaterial().isSolid()) return false;
 		}
 		
 		return true;

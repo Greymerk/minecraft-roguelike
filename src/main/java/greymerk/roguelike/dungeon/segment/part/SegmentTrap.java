@@ -5,6 +5,7 @@ import java.util.Random;
 import greymerk.roguelike.dungeon.IDungeonLevel;
 import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.treasure.loot.Potion;
+import greymerk.roguelike.treasure.loot.PotionType;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
@@ -93,8 +94,8 @@ public class SegmentTrap extends SegmentBase{
 		
 		switch(rand.nextInt(3)){
 		case 0: return BlockType.getItem(BlockType.TNT);
-		case 1: return Potion.getSpecific(rand, Potion.POISON, false, false, true);
-		case 2: return Potion.getSpecific(rand, Potion.HARM, false, false, true);
+		case 1: return Potion.getSpecific(rand, PotionType.SPLASH, Potion.POISON, false, false);
+		case 2: return Potion.getSpecific(rand, PotionType.SPLASH, Potion.HARM, false, false);
 		default: return BlockType.getItem(BlockType.TNT);
 		}
 	}

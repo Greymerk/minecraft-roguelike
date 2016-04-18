@@ -26,7 +26,7 @@ public abstract class DungeonBase implements IDungeonRoom{
 		
 		for(Coord cursor : new RectHollow(start, end)){
 			MetaBlock b = editor.getBlock(cursor);
-			if(!b.getBlock().getMaterial().isSolid()) return false;
+			if(!b.getMaterial().isSolid()) return false;
 		}
 		
 		return true;

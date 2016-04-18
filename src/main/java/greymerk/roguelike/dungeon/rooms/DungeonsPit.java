@@ -82,12 +82,12 @@ public class DungeonsPit extends DungeonBase {
 							|| blockX == originX + dungeonLength + 1
 							|| blockZ == originZ + dungeonWidth + 1){
 
-						if (blockY >= 0 && !editor.getBlock(new Coord(blockX, blockY - 1, blockZ)).getBlock().getMaterial().isSolid()) {
+						if (blockY >= 0 && !editor.getBlock(new Coord(blockX, blockY - 1, blockZ)).getMaterial().isSolid()) {
 							air.set(editor, new Coord(blockX, blockY, blockZ));
 							continue;
 						}
 						
-						if (!editor.getBlock(new Coord(blockX, blockY, blockZ)).getBlock().getMaterial().isSolid()) continue;
+						if (!editor.getBlock(new Coord(blockX, blockY, blockZ)).getMaterial().isSolid()) continue;
 						
 						blocks.set(editor, rand, new Coord(blockX, blockY, blockZ));
 						

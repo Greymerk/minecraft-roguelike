@@ -33,7 +33,6 @@ public class DungeonsWood extends DungeonBase {
 
 		MetaBlock pillar = Log.getLog(Wood.values()[rand.nextInt(Wood.values().length)]);
 		MetaBlock planks = Wood.getPlank(Wood.OAK);
-		Wood.applyType(pillar, planks);
 		
 		MetaBlock glowstone = BlockType.get(BlockType.GLOWSTONE);
 		MetaBlock air = BlockType.get(BlockType.AIR);

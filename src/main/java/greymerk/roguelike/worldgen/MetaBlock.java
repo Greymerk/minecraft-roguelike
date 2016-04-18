@@ -8,6 +8,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
@@ -104,7 +105,13 @@ public class MetaBlock extends BlockBase implements IBlockState{
 		return this.state.getBlock().getUnlocalizedName();
 	}
 
-
+	public Material getMaterial(){
+		return this.state.getBlock().getMaterial();
+	}
+	
+	public boolean isOpaqueCube(){
+		return this.state.getBlock().isOpaqueCube();
+	}
 
 
 	
