@@ -30,7 +30,7 @@ public class Repeater {
 		}
 		
 		if(delay > 0){
-			meta += 3 + (delay > MAX_DELAY ? MAX_DELAY : delay);
+			meta += (delay > MAX_DELAY ? MAX_DELAY : delay) << 2;
 		}
 		
 		Block b = powered ? Blocks.powered_repeater : Blocks.unpowered_repeater;
@@ -38,7 +38,6 @@ public class Repeater {
 		MetaBlock repeater = new MetaBlock(b, meta);
 				
 		repeater.set(editor, pos);
-		//editor.blockUpdate(pos, b, 1);
 	}
 	
 }

@@ -185,5 +185,10 @@ public class WorldEditor implements IWorldEditor{
 		Material m = this.getBlock(cursor).getMaterial();
 		return m.isReplaceable();
 	}
+
+	@Override
+	public void setBlockMetadata(Coord pos, int meta) {
+		world.setBlockMetadataWithNotify(pos.getX(), pos.getY(), pos.getZ(), meta, 2);
+	}
 }
 

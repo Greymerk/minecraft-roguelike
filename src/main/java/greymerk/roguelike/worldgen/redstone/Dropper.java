@@ -23,8 +23,9 @@ public class Dropper {
 		case EAST: meta = 5; break;
 		}
 
-		MetaBlock container = new MetaBlock(Blocks.dropper, meta);
+		MetaBlock container = new MetaBlock(Blocks.dropper);
 		container.set(editor, pos);
+		editor.setBlockMetadata(pos, meta);
 		return true;
 	}
 	

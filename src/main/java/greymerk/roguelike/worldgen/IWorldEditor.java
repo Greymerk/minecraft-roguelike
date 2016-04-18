@@ -12,6 +12,8 @@ public interface IWorldEditor {
 
 	boolean setBlock(Coord pos, MetaBlock metaBlock, boolean fillAir, boolean replaceSolid);
 	
+	void setBlockMetadata(Coord pos, int meta);
+	
 	MetaBlock getBlock(Coord pos);
 
 	boolean isAirBlock(Coord pos);

@@ -24,8 +24,8 @@ public class Dispenser {
 		}
 
 		MetaBlock container = new MetaBlock(Blocks.dispenser);
-		container.setMeta(meta);
 		container.set(editor, pos);
+		editor.setBlockMetadata(pos, meta);
 		return true;
 	}
 	

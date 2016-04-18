@@ -22,8 +22,7 @@ public class Hopper {
 		default: meta = 0;
 		}
 		
-		hopper.setMeta(meta);
-		
 		hopper.set(editor, pos);
+		editor.setBlockMetadata(pos, meta);
 	}
 }

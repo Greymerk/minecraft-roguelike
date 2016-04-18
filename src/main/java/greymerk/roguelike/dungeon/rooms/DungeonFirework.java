@@ -172,10 +172,13 @@ public class DungeonFirework extends DungeonBase {
 		for(int i = 0;i < 8; ++i){
 			ItemStack stick = new ItemStack(Items.stick);
 			Loot.setItemName(stick, Integer.toString(i));
-			Loot.setItemLore(stick, "Random logic unit", TextFormat.DARKGRAY);
+			Loot.setItemLore(stick, "Weak signal logic unit", TextFormat.DARKGRAY);
 			dropper.add(editor, cursor, i, stick);
 		}
-		dropper.add(editor, cursor, 8, new ItemStack(Items.wooden_hoe));
+		ItemStack hoe = new ItemStack(Items.wooden_hoe);
+		Loot.setItemName(hoe, "Your Mum");
+		Loot.setItemLore(hoe, "Strong signal logic unit", TextFormat.DARKGRAY);
+		dropper.add(editor, cursor, 8, hoe);
 		
 		cursor.add(Cardinal.UP);
 		Hopper.generate(editor, Cardinal.DOWN, cursor);
