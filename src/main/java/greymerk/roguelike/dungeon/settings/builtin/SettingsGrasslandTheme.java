@@ -3,6 +3,7 @@ package greymerk.roguelike.dungeon.settings.builtin;
 import java.util.ArrayList;
 import java.util.List;
 
+import greymerk.roguelike.dungeon.base.DungeonFactory;
 import greymerk.roguelike.dungeon.base.DungeonRoom;
 import greymerk.roguelike.dungeon.base.SecretFactory;
 import greymerk.roguelike.dungeon.settings.DungeonSettings;
@@ -11,13 +12,6 @@ import greymerk.roguelike.dungeon.settings.SpawnCriteria;
 import greymerk.roguelike.dungeon.settings.TowerSettings;
 import greymerk.roguelike.dungeon.towers.Tower;
 import greymerk.roguelike.theme.Theme;
-import greymerk.roguelike.treasure.Treasure;
-import greymerk.roguelike.treasure.loot.LootRuleManager;
-import greymerk.roguelike.treasure.loot.WeightedRandomLoot;
-import greymerk.roguelike.util.WeightedRandomizer;
-import greymerk.roguelike.worldgen.blocks.Log;
-import greymerk.roguelike.worldgen.blocks.Wood;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.BiomeDictionary;
 
 public class SettingsGrasslandTheme extends DungeonSettings{
@@ -31,27 +25,28 @@ public class SettingsGrasslandTheme extends DungeonSettings{
 		
 		this.towerSettings = new TowerSettings(Tower.ROGUE, Theme.getTheme(Theme.TOWER));
 		
-		this.lootRules = new LootRuleManager();
-		WeightedRandomizer<ItemStack> wood = new WeightedRandomizer<ItemStack>(1);
-		wood.add(new WeightedRandomLoot(Log.getLog(Wood.OAK).getBlock(), 0, 2, 8, 1));
-		wood.add(new WeightedRandomLoot(Log.getLog(Wood.BIRCH).getBlock(), 0, 2, 8, 1));
-		this.lootRules.add(Treasure.BLOCKS, wood, 0, true, 1);
-		this.lootRules.add(Treasure.BLOCKS, wood, 1, true, 1);
-		this.lootRules.add(Treasure.STARTER, wood, 0, true, 1);
-		
 		for(int i = 0; i < 5; ++i){
 			
 			LevelSettings level = new LevelSettings();
 			SecretFactory secrets = new SecretFactory();
-
+			DungeonFactory rooms;
+			
 			switch(i){
 			case 0:
-				secrets.addRoom(DungeonRoom.BEDROOM, 2);
+				secrets.addRoom(DungeonRoom.BEDROOM);
 				secrets.addRoom(DungeonRoom.SMITH);
 				secrets.addRoom(DungeonRoom.FIREWORK);
 				break;
 			case 1:
 				secrets.addRoom(DungeonRoom.BTEAM);
+				rooms = new DungeonFactory();
+				rooms.addSingle(DungeonRoom.MUSIC);
+				rooms.addSingle(DungeonRoom.PIT);
+				rooms.addSingle(DungeonRoom.MESS);
+				rooms.addSingle(DungeonRoom.LAB);
+				rooms.addRandom(DungeonRoom.CORNER, 10);
+				rooms.addRandom(DungeonRoom.BRICK, 3);
+				level.setRooms(rooms);
 				break;
 			case 2:
 				break;

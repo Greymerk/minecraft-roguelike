@@ -5,14 +5,14 @@ import java.util.Random;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
-import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.IWorldEditor;
 
 public interface IDungeonRoom {
 
-	public boolean generate(WorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin);
+	public boolean generate(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin);
 		
 	public int getSize();
 	
-	public boolean validLocation(WorldEditor editor, Cardinal dir, int x, int y, int z);
+	public boolean validLocation(IWorldEditor editor, Cardinal dir, Coord pos);
 
 }

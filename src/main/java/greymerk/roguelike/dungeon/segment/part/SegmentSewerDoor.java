@@ -9,16 +9,17 @@ import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IStair;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.MetaBlock;
-import greymerk.roguelike.worldgen.WorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.Door;
 import greymerk.roguelike.worldgen.blocks.Leaves;
+import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 public class SegmentSewerDoor extends SegmentBase {
 	
 	@Override
-	protected void genWall(WorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
+	protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, Coord origin) {
 		
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		IStair stair = theme.getSecondaryStair();
@@ -31,60 +32,60 @@ public class SegmentSewerDoor extends SegmentBase {
 		Coord start;
 		Coord end;
 		
-		Cardinal[] orth = Cardinal.getOrthogonal(dir);
+		Cardinal[] orth = Cardinal.orthogonal(dir);
 		
-		cursor = new Coord(x, y, z);
+		cursor = new Coord(origin);
 		cursor.add(Cardinal.DOWN);
-		bars.setBlock(editor, cursor);
+		bars.set(editor, cursor);
 		start = new Coord(cursor);
 		end = new Coord(start);
 		start.add(orth[0]);
 		end.add(orth[1]);
-		stair.setOrientation(orth[0], true).setBlock(editor, start);
-		stair.setOrientation(orth[1], true).setBlock(editor, end);
-		cursor = new Coord(x, y, z);
+		stair.setOrientation(orth[0], true).set(editor, start);
+		stair.setOrientation(orth[1], true).set(editor, end);
+		cursor = new Coord(origin);
 		cursor.add(Cardinal.DOWN);
-		bars.setBlock(editor, cursor);
+		bars.set(editor, cursor);
 		start.add(Cardinal.DOWN);
 		end.add(Cardinal.DOWN);
-		editor.fillRectSolid(rand, start, end, water, true, true);
+		RectSolid.fill(editor, rand, start, end, water);
 		
-		cursor = new Coord(x, y, z);
+		cursor = new Coord(origin);
 		cursor.add(Cardinal.UP, 3);
-		bars.setBlock(editor, cursor);
+		bars.set(editor, cursor);
 		cursor.add(Cardinal.UP);
-		editor.setBlock(rand, cursor, leaves, false, true);
+		leaves.set(editor, rand, cursor, false, true);
 		cursor.add(dir);
-		editor.setBlock(rand, cursor, water, false, true);
+		water.set(editor, rand, cursor, false, true);
 		cursor.add(dir);
-		editor.setBlock(rand, cursor, glowstone, false, true);
+		glowstone.set(editor, rand, cursor, false, true);
 		
-		cursor = new Coord(x, y, z);
+		cursor = new Coord(origin);
 		cursor.add(dir, 2);
 		start = new Coord(cursor);
 		start.add(orth[0], 1);
 		end = new Coord(cursor);
 		end.add(orth[1], 1);
 		end.add(Cardinal.UP, 2);
-		editor.fillRectSolid(rand, start, end, air, true, true);
+		RectSolid.fill(editor, rand, start, end, air);
 		
 		SecretFactory secrets = level.getSettings().getSecrets();
-		IDungeonRoom room = secrets.genRoom(editor, rand, level.getSettings(), dir, new Coord(x, y, z));
+		IDungeonRoom room = secrets.genRoom(editor, rand, level.getSettings(), dir, new Coord(origin));
 		
 		start.add(dir, 1);
 		end.add(dir, 1);
-		editor.fillRectSolid(rand, start, end, theme.getSecondaryWall(), false, true);
+		RectSolid.fill(editor, rand, start, end, theme.getSecondaryWall(), false, true);
 
 		cursor.add(Cardinal.UP, 2);
 		for(Cardinal d : orth){
 			Coord c = new Coord(cursor);
 			c.add(d, 1);
 			stair.setOrientation(Cardinal.reverse(d), true);
-			editor.setBlock(rand, c, stair, true, true);
+			stair.set(editor, rand, c);
 		}
 		
 		if(room != null){
-			cursor = new Coord(x, y, z);
+			cursor = new Coord(origin);
 			cursor.add(dir, 3);
 			Door.generate(editor, cursor, Cardinal.reverse(dir), Door.IRON);
 		}

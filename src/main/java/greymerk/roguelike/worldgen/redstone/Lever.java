@@ -2,13 +2,13 @@ package greymerk.roguelike.worldgen.redstone;
 
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.MetaBlock;
-import greymerk.roguelike.worldgen.WorldEditor;
 import net.minecraft.init.Blocks;
 
 public class Lever {
 
-	public static void generate(WorldEditor editor, Cardinal dir, Coord pos, boolean active){
+	public static void generate(IWorldEditor editor, Cardinal dir, Coord pos, boolean active){
 		
 		MetaBlock lever = new MetaBlock(Blocks.lever);
 		
@@ -31,7 +31,7 @@ public class Lever {
 		
 		lever.setMeta(meta);
 		
-		lever.setBlock(editor, pos);
+		lever.set(editor, pos);
 	}
 	
 }

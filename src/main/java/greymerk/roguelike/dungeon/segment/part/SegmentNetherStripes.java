@@ -1,22 +1,23 @@
 package greymerk.roguelike.dungeon.segment.part;
 
+import java.util.Random;
+
 import greymerk.roguelike.dungeon.IDungeonLevel;
 import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IStair;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.MetaBlock;
-import greymerk.roguelike.worldgen.WorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.Slab;
-
-import java.util.Random;
+import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 public class SegmentNetherStripes extends SegmentBase {
 	
 
 	@Override
-	protected void genWall(WorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
+	protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, Coord origin) {
 		
 		IStair step = theme.getSecondaryStair();
 
@@ -25,46 +26,46 @@ public class SegmentNetherStripes extends SegmentBase {
 		Coord cursor;
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		
-		cursor = new Coord(x, y, z);
+		cursor = new Coord(origin);
 		cursor.add(dir, 2);
-		editor.setBlock(rand, cursor, air, true, true);
+		air.set(editor, cursor);
 		cursor.add(Cardinal.UP, 1);
-		editor.setBlock(rand, cursor, air, true, true);
-		cursor = new Coord(x, y, z);
+		air.set(editor, cursor);
+		cursor = new Coord(origin);
 		cursor.add(dir, 5);
 		boolean isAir = editor.isAirBlock(cursor);
 		boolean isLava = rand.nextInt(5) == 0;
 
 		
 		MetaBlock slab = Slab.get(Slab.NETHERBRICK, false, false, false);
-		cursor = new Coord(x, y, z);
+		cursor = new Coord(origin);
 		cursor.add(dir, 2);
-		editor.setBlock(rand, cursor, slab, true, true);
+		slab.set(editor, cursor);
 		cursor.add(Cardinal.UP, 1);
-		editor.setBlock(rand, cursor, slab, true, true);
+		slab.set(editor, cursor);
 		cursor.add(Cardinal.UP, 1);
-		editor.setBlock(rand, cursor, slab, true, true);
+		slab.set(editor, cursor);
 		
-		for(Cardinal orth : Cardinal.getOrthogonal(dir)){
-			start = new Coord(x, y, z);
+		for(Cardinal orth : Cardinal.orthogonal(dir)){
+			start = new Coord(origin);
 			start.add(dir, 3);
 			end = new Coord(start);
 			start.add(orth, 1);
 			start.add(Cardinal.UP, 3);
 			end.add(Cardinal.DOWN, 2);
-			if(isLava && !isAir) editor.fillRectSolid(rand, start, end, BlockType.get(BlockType.LAVA_FLOWING), false, true);
+			if(isLava && !isAir) RectSolid.fill(editor, rand, start, end, BlockType.get(BlockType.LAVA_FLOWING), false, true);
 			
 			step.setOrientation(Cardinal.reverse(orth), true);
-			cursor = new Coord(x, y, z);
+			cursor = new Coord(origin);
 			cursor.add(dir, 2);
 			cursor.add(orth, 1);
-			editor.setBlock(rand, cursor, step, true, true);
+			step.set(editor, cursor);
 			cursor.add(Cardinal.UP, 1);
-			editor.setBlock(rand, cursor, step, true, true);
+			step.set(editor, cursor);
 			cursor.add(Cardinal.UP, 1);
-			editor.setBlock(rand, cursor, step, true, true);
+			step.set(editor, cursor);
 			cursor.add(Cardinal.reverse(dir), 1);
-			editor.setBlock(rand, cursor, step, true, true);
+			step.set(editor, cursor);
 		}
 	}
 }

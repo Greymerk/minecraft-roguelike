@@ -6,6 +6,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 
 public class MetaBlock extends BlockBase {
 
@@ -66,12 +67,20 @@ public class MetaBlock extends BlockBase {
 		flag = in;
 	}
 
-	public boolean setBlock(WorldEditor editor, Coord pos){
+	public boolean set(IWorldEditor editor, Coord pos){
 		return editor.setBlock(pos, this, true, true);
 	}
 	
+	public Material getMaterial(){
+		return this.block.getMaterial();
+	}
+
+	public boolean isOpaqueCube(){
+		return this.block.isOpaqueCube();
+	}
+	
 	@Override
-	public boolean setBlock(WorldEditor editor, Random rand, Coord pos, boolean fillAir, boolean replaceSolid) {
+	public boolean set(IWorldEditor editor, Random rand, Coord pos, boolean fillAir, boolean replaceSolid) {
 		return editor.setBlock(pos, this, fillAir, replaceSolid);
 	}
 

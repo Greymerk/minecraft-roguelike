@@ -15,7 +15,7 @@ public class ThemeBrick extends ThemeBase{
 		MetaBlock walls = BlockType.get(BlockType.BRICK);
 		
 		MetaStair stair = new MetaStair(StairType.BRICK);
-		MetaBlock pillar = Log.getLog(Wood.SPRUCE);
+		MetaBlock pillar = Log.get(Wood.SPRUCE);
 		
 		this.primary = new BlockSet(walls, stair, walls);
 		

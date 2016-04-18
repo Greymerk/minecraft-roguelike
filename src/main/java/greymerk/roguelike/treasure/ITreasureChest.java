@@ -3,12 +3,12 @@ package greymerk.roguelike.treasure;
 import java.util.Random;
 
 import greymerk.roguelike.worldgen.Coord;
-import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import net.minecraft.item.ItemStack;
 
 public interface ITreasureChest {
 		
-	public ITreasureChest generate(WorldEditor editor, Random rand, Coord pos, int level, boolean trapped);
+	public ITreasureChest generate(IWorldEditor editor, Random rand, Coord pos, int level, boolean trapped);
 	
 	public boolean setSlot(int slot, ItemStack item);
 	

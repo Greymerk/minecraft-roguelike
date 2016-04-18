@@ -2,8 +2,8 @@ package greymerk.roguelike.worldgen.blocks;
 
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.MetaBlock;
-import greymerk.roguelike.worldgen.WorldEditor;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 
@@ -11,19 +11,19 @@ public enum Door {
 
 	IRON, OAK, BIRCH, SPRUCE, JUNGLE, ACACIA, DARKOAK;
 	
-	public static void generate(WorldEditor editor, Coord pos, Cardinal dir, Door type){
+	public static void generate(IWorldEditor editor, Coord pos, Cardinal dir, Door type){
 		generate(editor, pos, dir, type, false);
 	}
 	
-	public static void generate(WorldEditor editor, Coord pos, Cardinal dir, Door type, boolean open){
+	public static void generate(IWorldEditor editor, Coord pos, Cardinal dir, Door type, boolean open){
 		
 		Coord cursor = new Coord(pos);
 		
 		MetaBlock doorBase = new MetaBlock(getBlockId(type), getMeta(false, dir, open, false));
-		doorBase.setBlock(editor, cursor);
+		doorBase.set(editor, cursor);
 		cursor.add(Cardinal.UP);
 		MetaBlock doorTop = new MetaBlock(getBlockId(type), getMeta(true, dir, open, false));
-		doorTop.setBlock(editor, cursor);
+		doorTop.set(editor, cursor);
 	}
 	
 	private static Block getBlockId(Door type){

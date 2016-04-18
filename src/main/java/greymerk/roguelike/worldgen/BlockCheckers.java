@@ -30,7 +30,7 @@ public class BlockCheckers extends BlockBase {
 	}
 
 	@Override
-	public boolean setBlock(WorldEditor editor, Random rand, Coord origin, boolean fillAir, boolean replaceSolid) {
+	public boolean set(IWorldEditor editor, Random rand, Coord origin, boolean fillAir, boolean replaceSolid) {
 		
 		int x = origin.getX();
 		int y = origin.getY();
@@ -39,29 +39,29 @@ public class BlockCheckers extends BlockBase {
 		if (x % 2 == 0) {
 			if(z % 2 == 0){
 				if(y % 2 == 0){
-					return editor.setBlock(rand, new Coord(x, y, z), fillOne, fillAir, replaceSolid);
+					return fillOne.set(editor, rand, new Coord(origin), fillAir, replaceSolid);
 				} else {
-					return editor.setBlock(rand, new Coord(x, y, z), fillTwo, fillAir, replaceSolid);
+					return fillTwo.set(editor, rand, new Coord(origin), fillAir, replaceSolid);
 				}
 			} else {
 				if(y % 2 == 0){
-					return editor.setBlock(rand, new Coord(x, y, z), fillTwo, fillAir, replaceSolid);
+					return fillTwo.set(editor, rand, new Coord(origin), fillAir, replaceSolid);
 				} else {
-					return editor.setBlock(rand, new Coord(x, y, z), fillOne, fillAir, replaceSolid);
+					return fillOne.set(editor, rand, new Coord(origin), fillAir, replaceSolid);
 				}
 			}
 		} else {
 			if(z % 2 == 0){
 				if(y % 2 == 0){
-					return editor.setBlock(rand, new Coord(x, y, z), fillTwo, fillAir, replaceSolid);
+					return fillTwo.set(editor, rand, new Coord(origin), fillAir, replaceSolid);
 				} else {
-					return editor.setBlock(rand, new Coord(x, y, z), fillOne, fillAir, replaceSolid);
+					return fillOne.set(editor, rand, new Coord(origin), fillAir, replaceSolid);
 				}
 			} else {
 				if(y % 2 == 0){
-					return editor.setBlock(rand, new Coord(x, y, z), fillOne, fillAir, replaceSolid);
+					return fillOne.set(editor, rand, new Coord(origin), fillAir, replaceSolid);
 				} else {
-					return editor.setBlock(rand, new Coord(x, y, z), fillTwo, fillAir, replaceSolid);
+					return fillTwo.set(editor, rand, new Coord(origin), fillAir, replaceSolid);
 				}
 			}
 		}

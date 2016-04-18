@@ -9,15 +9,17 @@ import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.IStair;
-import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
+import greymerk.roguelike.worldgen.shapes.RectHollow;
+import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 public class DungeonsFire extends DungeonBase {
 
 	
 	
 	@Override
-	public boolean generate(WorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
+	public boolean generate(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
 		
 		ITheme theme = settings.getTheme();
 
@@ -39,7 +41,7 @@ public class DungeonsFire extends DungeonBase {
 		end.add(Cardinal.EAST, 8);
 		end.add(Cardinal.UP, 7);
 		
-		editor.fillRectHollow(rand, start, end, wall, false, true);
+		RectHollow.fill(editor, rand, start, end, wall, false, true);
 		
 		start = new Coord(origin);
 		start.add(Cardinal.DOWN);
@@ -48,58 +50,58 @@ public class DungeonsFire extends DungeonBase {
 		start.add(Cardinal.WEST, 8);
 		end.add(Cardinal.SOUTH, 8);
 		end.add(Cardinal.EAST, 8);
-		editor.fillRectSolid(rand, start, end, theme.getPrimaryFloor(), false, true);
+		RectSolid.fill(editor, rand, start, end, theme.getPrimaryFloor(), false, true);
 		
 		for(Cardinal dir : Cardinal.directions){
-			for(Cardinal orth : Cardinal.getOrthogonal(dir)){
+			for(Cardinal orth : Cardinal.orthogonal(dir)){
 				start = new Coord(origin);
 				start.add(dir, 7);
 				start.add(orth, 2);
 				end = new Coord(start);
 				end.add(Cardinal.UP, 6);
-				editor.fillRectSolid(rand, start, end, pillar, true, true);
+				RectSolid.fill(editor, rand, start, end, pillar);
 				
 				cursor = new Coord(origin);
 				cursor.add(dir, 8);
 				cursor.add(orth);
 				cursor.add(Cardinal.UP, 2);
-				editor.setBlock(rand, cursor, stair.setOrientation(Cardinal.reverse(orth), true), true, false);
+				stair.setOrientation(Cardinal.reverse(orth), true).set(editor, rand, cursor, true, false);
 				
 				cursor.add(Cardinal.reverse(dir));
 				cursor.add(Cardinal.UP);
-				stair.setOrientation(Cardinal.reverse(orth), true).setBlock(editor, cursor);
+				stair.setOrientation(Cardinal.reverse(orth), true).set(editor, cursor);
 				
 				start = new Coord(cursor);
 				start.add(Cardinal.UP);
 				end = new Coord(start);
 				end.add(Cardinal.UP, 3);
-				editor.fillRectSolid(rand, start, end, pillar, true, true);
+				RectSolid.fill(editor, rand, start, end, pillar);
 				
 				cursor.add(Cardinal.reverse(dir));
 				cursor.add(orth);
-				stair.setOrientation(Cardinal.reverse(dir), true).setBlock(editor, cursor);
+				stair.setOrientation(Cardinal.reverse(dir), true).set(editor, cursor);
 				
 				start = new Coord(cursor);
 				start.add(Cardinal.UP);
 				end = new Coord(start);
 				end.add(Cardinal.UP, 3);
-				editor.fillRectSolid(rand, start, end, pillar, true, true);
+				RectSolid.fill(editor, rand, start, end, pillar);
 				
 				cursor.add(dir);
 				cursor.add(orth);
-				stair.setOrientation(orth, true).setBlock(editor, cursor);
+				stair.setOrientation(orth, true).set(editor, cursor);
 				
 				start = new Coord(cursor);
 				start.add(Cardinal.UP);
 				end = new Coord(start);
 				end.add(Cardinal.UP, 3);
-				editor.fillRectSolid(rand, start, end, pillar, true, true);
+				RectSolid.fill(editor, rand, start, end, pillar);
 
 			}
 			
 			cursor = new Coord(origin);
 			cursor.add(dir, 6);
-			cursor.add(Cardinal.getOrthogonal(dir)[0], 6);
+			cursor.add(Cardinal.left(dir), 6);
 			
 			genFire(editor, rand, theme, cursor);
 			
@@ -109,37 +111,36 @@ public class DungeonsFire extends DungeonBase {
 			start = new Coord(cursor);
 			end = new Coord(cursor);
 			end.add(dir, 6);
-			editor.fillRectSolid(rand, start, end, wall, true, true);
-			cursor.add(Cardinal.getOrthogonal(dir)[0]);
-			editor.setBlock(rand, cursor, wall, true, true);
+			RectSolid.fill(editor, rand, start, end, wall);
+			cursor.add(Cardinal.left(dir));
+			wall.set(editor, rand, cursor);
 			
 			start = new Coord(end);
 			end.add(Cardinal.UP, 2);
 			end.add(Cardinal.reverse(dir));
-			editor.fillRectSolid(rand, start, end, wall, true, true);
+			RectSolid.fill(editor, rand, start, end, wall);
 			
-			Cardinal[] orth = Cardinal.getOrthogonal(dir);
 			stair.setOrientation(Cardinal.reverse(dir), true);
 			
 			cursor = new Coord(end);
 			start = new Coord(cursor);
-			start.add(orth[0], 3);
-			end.add(orth[1], 3);
-			editor.fillRectSolid(rand, start, end, wall, true, false);
+			start.add(Cardinal.left(dir), 3);
+			end.add(Cardinal.right(dir), 3);
+			RectSolid.fill(editor, rand, start, end, wall, true, false);
 			
 			start = new Coord(cursor);
 			start.add(Cardinal.DOWN);
 			end = new Coord(start);
-			start.add(orth[0], 3);
-			end.add(orth[1], 3);
-			editor.fillRectSolid(rand, start, end, stair, true, false);
+			start.add(Cardinal.left(dir), 3);
+			end.add(Cardinal.right(dir), 3);
+			RectSolid.fill(editor, rand, start, end, stair, true, false);
 			
 			start = new Coord(cursor);
 			start.add(Cardinal.reverse(dir));
 			end = new Coord(start);
-			start.add(orth[0], 3);
-			end.add(orth[1], 3);
-			editor.fillRectSolid(rand, start, end, stair, true, false);
+			start.add(Cardinal.left(dir), 3);
+			end.add(Cardinal.right(dir), 3);
+			RectSolid.fill(editor, rand, start, end, stair, true, false);
 		}
 		
 		
@@ -148,7 +149,7 @@ public class DungeonsFire extends DungeonBase {
 		return false;
 	}
 	
-	public static void genFire(WorldEditor editor, Random rand, ITheme theme, Coord origin){
+	public static void genFire(IWorldEditor editor, Random rand, ITheme theme, Coord origin){
 		
 		IBlockFactory wall = theme.getPrimaryWall();
 		IBlockFactory pillar = theme.getPrimaryPillar();
@@ -160,39 +161,37 @@ public class DungeonsFire extends DungeonBase {
 		Coord end;
 		
 		cursor = new Coord(origin);
-		editor.setBlock(cursor, BlockType.get(BlockType.NETHERRACK));
+		BlockType.get(BlockType.NETHERRACK).set(editor, cursor);
 		cursor.add(Cardinal.UP);
-		editor.setBlock(cursor, BlockType.get(BlockType.FIRE));
+		BlockType.get(BlockType.FIRE).set(editor, cursor);
 		
 		for(Cardinal dir : Cardinal.directions){
 			
-			Cardinal[] orth = Cardinal.getOrthogonal(dir);
-
 			start = new Coord(origin);
 			start.add(dir);
-			start.add(orth[0]);
+			start.add(Cardinal.left(dir));
 			end = new Coord(start);
 			end.add(Cardinal.UP, 2);
-			editor.fillRectSolid(rand, start, end, pillar, true, false);
+			RectSolid.fill(editor, rand, start, end, pillar, true, false);
 			
 			cursor = new Coord(origin);
 			cursor.add(dir);
-			editor.setBlock(rand, cursor, stair.setOrientation(dir, false), true, false);
+			stair.setOrientation(dir, false).set(editor, rand, cursor, true, false);
 			cursor.add(Cardinal.UP);
-			editor.setBlock(cursor, BlockType.get(BlockType.IRON_BAR));
+			BlockType.get(BlockType.IRON_BAR).set(editor, cursor);
 			cursor.add(Cardinal.UP);
-			editor.setBlock(rand, cursor, stair.setOrientation(dir, true), true, false);
+			stair.setOrientation(dir, true).set(editor, rand, cursor, true, false);
 			
 			cursor = new Coord(origin);
 			cursor.add(Cardinal.UP, 6);
 			cursor.add(dir, 3);
 			
-			for(Cardinal o : Cardinal.getOrthogonal(dir)){
+			for(Cardinal o : Cardinal.orthogonal(dir)){
 				Coord c = new Coord(cursor);
 				c.add(o, 2);
-				editor.setBlock(rand, c, stair.setOrientation(dir, true), true, false);
+				stair.setOrientation(dir, true).set(editor, rand, c, true, false);
 				c.add(o);
-				editor.setBlock(rand, c, stair.setOrientation(dir, true), true, false);
+				stair.setOrientation(dir, true).set(editor, rand, c, true, false);
 			}
 			
 			cursor = new Coord(origin);
@@ -207,10 +206,10 @@ public class DungeonsFire extends DungeonBase {
 			start.add(Cardinal.UP, 3);
 			start.add(dir, 2);
 			end = new Coord(start);
-			start.add(orth[0], 2);
-			end.add(orth[1], 2);
+			start.add(Cardinal.left(dir), 2);
+			end.add(Cardinal.right(dir), 2);
 			stair.setOrientation(dir, true);
-			editor.fillRectSolid(rand, start, end, stair, true, false);
+			RectSolid.fill(editor, rand, start, end, stair, true, false);
 		}
 		
 		start = new Coord(origin);
@@ -222,7 +221,7 @@ public class DungeonsFire extends DungeonBase {
 		end.add(Cardinal.SOUTH, 2);
 		end.add(Cardinal.EAST, 2);
 		
-		editor.fillRectSolid(rand, start, end, wall, true, false);
+		RectSolid.fill(editor, rand, start, end, wall, true, false);
 
 	}
 	

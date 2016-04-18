@@ -9,39 +9,50 @@ public enum Cardinal {
 	
 	public static Cardinal[] directions = {NORTH, EAST, SOUTH, WEST};
 	
-	public static int getBlockMeta(Cardinal dir){
-		switch(dir){
-		case NORTH: return 2;
-		case EAST: return 1;
-		case WEST: return 0;
-		case SOUTH: return 3;
-		default: return 0;
-		}
-	}
-	
-	
 	public static Cardinal reverse(Cardinal dir){
 		switch(dir){
 		case NORTH: return SOUTH;
 		case EAST: return WEST;
 		case WEST: return EAST;
 		case SOUTH: return NORTH;
+		case DOWN: return UP;
+		case UP: return DOWN;
 		default: return null;
 		}
 	}
 
-	public static Cardinal[] getOrthogonal(Cardinal dir) {
+	public static Cardinal left(Cardinal dir){
+		switch(dir){
+		case NORTH: return WEST;
+		case EAST: return NORTH;
+		case SOUTH: return EAST;
+		case WEST: return SOUTH;
+		default: return dir;
+		}
+	}
+
+	public static Cardinal right(Cardinal dir){
+		switch(dir){
+		case NORTH: return EAST;
+		case EAST: return SOUTH;
+		case SOUTH: return WEST;
+		case WEST: return NORTH;
+		default: return dir;
+		}
+	}
+	
+	public static Cardinal[] orthogonal(Cardinal dir) {
 		
 		switch(dir){
 		case NORTH: return new Cardinal[] {WEST, EAST};
 		case SOUTH: return new Cardinal[] {EAST, WEST};
 		case EAST: return new Cardinal[] {NORTH, SOUTH};
 		case WEST: return new Cardinal[] {SOUTH, NORTH};
-		default: return null;
+		default: return new Cardinal[]{dir, dir};
 		}
 	}
 	
-	public static EnumFacing getFacing(Cardinal dir){
+	public static EnumFacing facing(Cardinal dir){
 		
 		switch(dir){
 		case NORTH: return EnumFacing.SOUTH;
@@ -52,5 +63,5 @@ public enum Cardinal {
 		case DOWN: return EnumFacing.DOWN;
 		default: return null;
 		}
-	}	
+	}
 }

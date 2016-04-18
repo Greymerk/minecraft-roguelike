@@ -9,12 +9,13 @@ import greymerk.roguelike.treasure.Treasure;
 import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.Spawner;
-import greymerk.roguelike.worldgen.WorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
+import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 public class DungeonsSpiderNest extends DungeonBase {
-	WorldEditor editor;
+	IWorldEditor editor;
 	Random rand;
 	int originX;
 	int originY;
@@ -31,7 +32,7 @@ public class DungeonsSpiderNest extends DungeonBase {
 		
 	}
 
-	public boolean generate(WorldEditor editor, Random inRandom, LevelSettings settings, Cardinal[] entrances, Coord origin) {
+	public boolean generate(IWorldEditor editor, Random inRandom, LevelSettings settings, Cardinal[] entrances, Coord origin) {
 
 		this.editor = editor;
 		rand = inRandom;
@@ -52,14 +53,14 @@ public class DungeonsSpiderNest extends DungeonBase {
 					
 					int clearHeight = x > z ? x : z;
 					
-					if(blockY == originY) webs.setBlock(editor, inRandom, new Coord(blockX, blockY, blockZ));
+					if(blockY == originY) webs.set(editor, inRandom, new Coord(blockX, blockY, blockZ));
 					if(clearHeight < 1) clearHeight = 1;
 					if(Math.abs(blockY - originY) > clearHeight) continue;
 						
 					if(rand.nextInt(clearHeight)  == 0){
-						webs.setBlock(editor, inRandom, new Coord(blockX, blockY, blockZ));
+						webs.set(editor, inRandom, new Coord(blockX, blockY, blockZ));
 					} else if(rand.nextInt(5) == 0){
-						editor.setBlock(blockX, blockY, blockZ, BlockType.get(BlockType.GRAVEL));
+						BlockType.get(BlockType.GRAVEL).set(editor, new Coord(blockX, blockY, blockZ));
 					}
 					
 				}
@@ -68,9 +69,12 @@ public class DungeonsSpiderNest extends DungeonBase {
 		
 		Spawner.generate(editor, rand, settings, new Coord(originX, originY, originZ), Spawner.CAVESPIDER);
 		
-		Treasure.createChests(editor, rand, 1 + rand.nextInt(3), WorldEditor.getRectSolid(
-				originX - dungeonLength, originY - 1, originZ - dungeonWidth,
-				originX + dungeonLength, originY + 1, originZ + dungeonWidth), Dungeon.getLevel(originY));
+		Treasure.createChests(editor, rand, 1 + rand.nextInt(3),
+				new RectSolid(
+				new Coord(originX - dungeonLength, originY - 1, originZ - dungeonWidth),
+				new Coord(originX + dungeonLength, originY + 1, originZ + dungeonWidth)
+				).get()
+				, Dungeon.getLevel(originY));
 
 		return true;
 	}

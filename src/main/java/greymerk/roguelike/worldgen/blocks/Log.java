@@ -14,8 +14,12 @@ public class Log {
 		
 	}
 	
-	public static MetaBlock getLog(Wood type){
+	public static MetaBlock get(Wood type){
 		return getLog(type, Cardinal.UP);
+	}
+	
+	public static MetaBlock get(Wood type, Cardinal dir){
+		return new MetaBlock(getBlockId(type), getMeta(type, dir));
 	}
 	
 	public static Block getBlockId(Wood type){

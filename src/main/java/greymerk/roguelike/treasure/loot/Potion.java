@@ -22,35 +22,35 @@ public enum Potion {
 			return ItemNovelty.getItem(ItemNovelty.AVIDYA);
 		}
 		
-		Potion type = Potion.values()[rand.nextInt(Potion.values().length)];
-		return getSpecific(rand, type);
+		Potion effect = Potion.values()[rand.nextInt(Potion.values().length)];
+		return getSpecific(rand, effect);
 	}
 	
-	public static ItemStack getSpecific(Random rand, Potion type){
-		return getSpecific(rand, type, rand.nextBoolean(), rand.nextBoolean(), rand.nextBoolean());
+	public static ItemStack getSpecific(Random rand, Potion effect){
+		return getSpecific(rand, PotionType.REGULAR, effect, rand.nextBoolean(), rand.nextBoolean());
 	}
 
-	public static ItemStack getSpecific(Random rand, Potion type, boolean upgrade, boolean extend, boolean splash){
+	public static ItemStack getSpecific(Random rand, PotionType type, Potion effect, boolean upgrade, boolean extend){
 		
-		int id = getPotionID(type);
+		int id = getPotionID(effect);
 
 		if(upgrade && !extend){
-			id = upgrade(type, id);
+			id = upgrade(effect, id);
 		}
 
 		if(extend && !upgrade){
-			id = extend(type, id);
+			id = extend(effect, id);
 		}
 		
 		if(upgrade && extend){
 			if(rand.nextBoolean()){
-				id = upgrade(type, id);
+				id = upgrade(effect, id);
 			} else {
-				id = extend(type, id);
+				id = extend(effect, id);
 			}
 		}
 
-		if(splash){
+		if(type == PotionType.SPLASH){
 			id = id | SPLASH;
 		} else {
 			id = id | REGULAR;

@@ -13,7 +13,7 @@ public class ThemeDarkOak extends ThemeBase{
 		
 		MetaBlock walls = Wood.get(Wood.DARKOAK, WoodBlock.PLANK);
 		MetaStair stair = new MetaStair(StairType.DARKOAK);
-		MetaBlock pillar = Log.getLog(Wood.DARKOAK);
+		MetaBlock pillar = Log.get(Wood.DARKOAK);
 		
 		this.primary = new BlockSet(walls, stair, pillar);
 		MetaBlock secondaryWalls = Wood.get(Wood.DARKOAK, WoodBlock.PLANK);

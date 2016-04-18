@@ -12,14 +12,15 @@ import greymerk.roguelike.treasure.Treasure;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.MetaBlock;
-import greymerk.roguelike.worldgen.WorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.redstone.Piston;
 import greymerk.roguelike.worldgen.redstone.Torch;
+import greymerk.roguelike.worldgen.shapes.RectHollow;
 
 public class DungeonsPit extends DungeonBase {
-	WorldEditor editor;
+	IWorldEditor editor;
 	Random rand;
 	int originX;
 	int originY;
@@ -38,7 +39,7 @@ public class DungeonsPit extends DungeonBase {
 		dungeonWidth = 2;
 	}
 
-	public boolean generate(WorldEditor editor, Random inRandom, LevelSettings settings, Cardinal[] entrances, Coord origin) {
+	public boolean generate(IWorldEditor editor, Random inRandom, LevelSettings settings, Cardinal[] entrances, Coord origin) {
 
 		ITheme theme = settings.getTheme();
 
@@ -81,17 +82,17 @@ public class DungeonsPit extends DungeonBase {
 							|| blockX == originX + dungeonLength + 1
 							|| blockZ == originZ + dungeonWidth + 1){
 
-						if (blockY >= 0 && !editor.getBlock(new Coord(blockX, blockY - 1, blockZ)).getBlock().getMaterial().isSolid()) {
-							editor.setBlock(blockX, blockY, blockZ, air);
+						if (blockY >= 0 && !editor.getBlock(new Coord(blockX, blockY - 1, blockZ)).getMaterial().isSolid()) {
+							air.set(editor, new Coord(blockX, blockY, blockZ));
 							continue;
 						}
 						
-						if (!editor.getBlock(new Coord(blockX, blockY, blockZ)).getBlock().getMaterial().isSolid()) continue;
+						if (!editor.getBlock(new Coord(blockX, blockY, blockZ)).getMaterial().isSolid()) continue;
 						
-						blocks.setBlock(editor, rand, new Coord(blockX, blockY, blockZ));
+						blocks.set(editor, rand, new Coord(blockX, blockY, blockZ));
 						
 					} else {
-						editor.setBlock(blockX, blockY, blockZ, air);
+						air.set(editor, new Coord(blockX, blockY, blockZ));
 					}
 				}
 			}
@@ -102,7 +103,7 @@ public class DungeonsPit extends DungeonBase {
 		
 		for (int blockX = originX - dungeonLength - 1; blockX <= originX + dungeonLength + 1; blockX++){
 			for (int blockZ = originZ - dungeonWidth - 1; blockZ <= originZ + dungeonWidth + 1; blockZ++){
-				blocks.setBlock(editor, rand, new Coord(blockX, originY - 1, blockZ));				
+				blocks.set(editor, rand, new Coord(blockX, originY - 1, blockZ));				
 			}
 		}
 	}
@@ -110,7 +111,7 @@ public class DungeonsPit extends DungeonBase {
 	protected void buildRoof(){
 		for (int blockX = originX - dungeonLength - 1; blockX <= originX + dungeonLength + 1; blockX++){
 			for (int blockZ = originZ - dungeonWidth - 1; blockZ <= originZ + dungeonWidth + 1; blockZ++){
-				blocks.setBlock(editor, rand, new Coord(blockX, dungeonHeight + 1, blockZ));
+				blocks.set(editor, rand, new Coord(blockX, dungeonHeight + 1, blockZ));
 			}
 		}
 	}
@@ -134,23 +135,23 @@ public class DungeonsPit extends DungeonBase {
 						|| z == originZ -2
 						|| z == originZ +2){
 						
-						blocks.setBlock(editor, rand, new Coord(x, y, z), true, true);
+						blocks.set(editor, rand, new Coord(x, y, z), true, true);
 						continue;
 						
 					}
 					
 					if(y < 10){
-						editor.setBlock(x, y, z, BlockType.get(BlockType.WATER_FLOWING));
+						BlockType.get(BlockType.WATER_FLOWING).set(editor, new Coord(x, y, z));
 						continue;
 					}
 					
-					editor.setBlock(x, y, z, BlockType.get(BlockType.AIR));
+					BlockType.get(BlockType.AIR).set(editor, new Coord(x, y, z));
 				}
 			}
 		}
 	}
 	
-	private void setTrap(WorldEditor editor, Random rand, LevelSettings settings, Cardinal dir, Coord origin){
+	private void setTrap(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal dir, Coord origin){
 		ITheme theme = settings.getTheme();
 		IBlockFactory walls = theme.getPrimaryWall();
 		MetaBlock plate = BlockType.get(BlockType.PRESSURE_PLATE_STONE);
@@ -159,36 +160,30 @@ public class DungeonsPit extends DungeonBase {
 		Coord end;
 		Coord cursor;
 		
-		Cardinal[] orth = Cardinal.getOrthogonal(dir);
-		
 		start = new Coord(origin);
 		start.add(dir, 3);
 		start.add(Cardinal.DOWN);
-		start.add(orth[0]);
+		start.add(Cardinal.left(dir));
 		end = new Coord(origin);
 		end.add(dir, 6);
 		end.add(Cardinal.UP, 3);
-		end.add(orth[1]);
+		end.add(Cardinal.right(dir));
 		
-		
-		
-		List<Coord> box = editor.getRectHollow(start, end);
-		
-		for(Coord cell : box){
+		for(Coord cell : new RectHollow(start, end)){
 			if(editor.isAirBlock(cell)) return;
-			walls.setBlock(editor, rand, cell);
+			walls.set(editor, rand, cell);
 		}
 		
 		cursor = new Coord(origin);
 		cursor.add(dir, 2);
-		plate.setBlock(editor, cursor);
+		plate.set(editor, cursor);
 		
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.DOWN);
 		cursor.add(dir, 3);
 		Torch.generate(editor, Torch.REDSTONE, dir, cursor);
 		cursor.add(dir);
-		wire.setBlock(editor, cursor);
+		wire.set(editor, cursor);
 		cursor.add(Cardinal.UP);
 		cursor.add(dir);
 		Torch.generate(editor, Torch.REDSTONE_UNLIT, Cardinal.UP, cursor);

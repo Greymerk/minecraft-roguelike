@@ -4,8 +4,8 @@ import java.util.Random;
 
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.MetaBlock;
-import greymerk.roguelike.worldgen.WorldEditor;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 
@@ -13,11 +13,11 @@ public class Repeater {
 	
 	private static final int MAX_DELAY = 3;
 	
-	public static void generate(WorldEditor editor, Random rand, Cardinal dir, int delay, Coord pos){
+	public static void generate(IWorldEditor editor, Random rand, Cardinal dir, int delay, Coord pos){
 		generate(editor, rand, dir, delay, false, pos);
 	}
 	
-	public static void generate(WorldEditor editor, Random rand, Cardinal dir, int delay, boolean powered, Coord pos){
+	public static void generate(IWorldEditor editor, Random rand, Cardinal dir, int delay, boolean powered, Coord pos){
 		
 		int meta = 0;
 		
@@ -37,8 +37,8 @@ public class Repeater {
 		
 		MetaBlock repeater = new MetaBlock(b, meta);
 				
-		repeater.setBlock(editor, pos);
-		editor.blockUpdate(pos, b, 1);
+		repeater.set(editor, pos);
+		//editor.blockUpdate(pos, b, 1);
 	}
 	
 }

@@ -35,7 +35,7 @@ public class ThemeMuddy extends ThemeBase{
 		
 		this.primary = new BlockSet(floor, walls, stair, pillar);
 		
-		MetaBlock segmentWall = Log.getLog(Wood.DARKOAK);
+		MetaBlock segmentWall = Log.get(Wood.DARKOAK);
 		MetaStair segmentStair = new MetaStair(StairType.DARKOAK);
 
 		this.secondary = new BlockSet(floor, segmentWall, segmentStair, segmentWall);

@@ -5,13 +5,13 @@ import java.util.Random;
 import greymerk.roguelike.theme.Theme;
 import greymerk.roguelike.util.mst.MinimumSpanningTree;
 import greymerk.roguelike.worldgen.Coord;
-import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.IWorldEditor;
 
 public class Citadel {
 
 	public static final int EDGE_LENGTH = 17;
 	
-	public static void generate(WorldEditor editor, int x, int z){
+	public static void generate(IWorldEditor editor, int x, int z){
 		
 		Random rand = getRandom(editor, x, z);
 		
@@ -22,7 +22,7 @@ public class Citadel {
 	}
 	
 	
-	public static Random getRandom(WorldEditor editor, int x, int z){
+	public static Random getRandom(IWorldEditor editor, int x, int z){
 		long seed = editor.getSeed() * x * z;
 		Random rand = new Random();
 		rand.setSeed(seed);

@@ -9,20 +9,22 @@ import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.Spawner;
-import greymerk.roguelike.worldgen.WorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.SilverfishBlock;
+import greymerk.roguelike.worldgen.shapes.RectHollow;
+import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 public class SilverfishNest implements IAlcove{
 
 	private static int RECESSED = 6;
 	
 	@Override
-	public void generate(WorldEditor editor, Random rand, LevelSettings settings, int x, int y, int z, Cardinal dir) {
+	public void generate(IWorldEditor editor, Random rand, LevelSettings settings, Coord origin, Cardinal dir) {
 		
-		Coord corridor = new Coord(x, y, z);
-		Coord centre = new Coord(x, y, z);
+		Coord corridor = new Coord(origin);
+		Coord centre = new Coord(origin);
 		centre.add(dir, RECESSED);
 		
 		nest(editor, rand, centre.getX(), centre.getY(), centre.getZ());
@@ -34,21 +36,21 @@ public class SilverfishNest implements IAlcove{
 		end.add(Cardinal.UP);
 		end.add(Cardinal.reverse(dir), 1);
 		
-		editor.fillRectSolid(rand, start, end, BlockType.get(BlockType.AIR), true, true);
+		RectSolid.fill(editor, rand, start, end, BlockType.get(BlockType.AIR));
 		Spawner.generate(editor, rand, settings, centre, Spawner.SILVERFISH);
 		
 	}
 
 	@Override
-	public boolean isValidLocation(WorldEditor editor, int x, int y, int z, Cardinal dir) {
+	public boolean isValidLocation(IWorldEditor editor, Coord origin, Cardinal dir) {
 
-		Coord centre = new Coord(x, y, z);
+		Coord centre = new Coord(origin);
 		centre.add(dir, RECESSED);
-		x = centre.getX();
-		y = centre.getY();
-		z = centre.getZ();
+		int x = centre.getX();
+		int y = centre.getY();
+		int z = centre.getZ();
 		
-		List<Coord> toCheck = WorldEditor.getRectSolid(x - 2, y + 1, z - 2, x + 2, y + 1, z + 2);
+		List<Coord> toCheck = new RectSolid(new Coord(x - 2, y + 1, z - 2), new Coord(x + 2, y + 1, z + 2)).get();
 
 		for(Coord c : toCheck){
 			if (editor.isAirBlock(c)) return false;
@@ -57,18 +59,18 @@ public class SilverfishNest implements IAlcove{
 		return true;
 	}
 	
-	private void nest(WorldEditor editor, Random rand, int x, int y, int z){
+	private void nest(IWorldEditor editor, Random rand, int x, int y, int z){
 		BlockWeightedRandom fish = new BlockWeightedRandom();
 		IBlockFactory egg = SilverfishBlock.getJumble();
 		fish.addBlock(egg, 20);
 		fish.addBlock(BlockType.get(BlockType.SOUL_SAND), 5);
-		editor.fillRectHollow(rand, new Coord(x - 2, y, z - 2), new Coord(x + 2, y + 3, z + 2), fish, true, true);
+		RectHollow.fill(editor, rand, new Coord(x - 2, y, z - 2), new Coord(x + 2, y + 3, z + 2), fish);
 		
-		fish.setBlock(editor, rand, new Coord(x - 1, y + 2, z));
-		fish.setBlock(editor, rand, new Coord(x + 1, y + 2, z));
-		fish.setBlock(editor, rand, new Coord(x, y + 2, z - 1));
-		fish.setBlock(editor, rand, new Coord(x, y + 2, z + 1));
-		fish.setBlock(editor, rand, new Coord(x, y + 1, z));
+		fish.set(editor, rand, new Coord(x - 1, y + 2, z));
+		fish.set(editor, rand, new Coord(x + 1, y + 2, z));
+		fish.set(editor, rand, new Coord(x, y + 2, z - 1));
+		fish.set(editor, rand, new Coord(x, y + 2, z + 1));
+		fish.set(editor, rand, new Coord(x, y + 1, z));
 		
 	}
 }

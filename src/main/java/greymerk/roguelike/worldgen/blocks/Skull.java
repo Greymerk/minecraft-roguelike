@@ -4,8 +4,8 @@ import java.util.Random;
 
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.MetaBlock;
-import greymerk.roguelike.worldgen.WorldEditor;
 import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntitySkull;
@@ -14,11 +14,11 @@ public enum Skull {
 
 	SKELETON, WITHER, ZOMBIE, STEVE, CREEPER;
 	
-	public static void set(WorldEditor editor, Random rand, Coord pos, Cardinal dir, Skull type){
+	public static void set(IWorldEditor editor, Random rand, Coord pos, Cardinal dir, Skull type){
 		
 		MetaBlock skullBlock = new MetaBlock(Blocks.skull, 1);
 		
-		if(!skullBlock.setBlock(editor, pos)) return;
+		if(!skullBlock.set(editor, pos)) return;
 		
 		TileEntity skullEntity = editor.getTileEntity(pos);
 		

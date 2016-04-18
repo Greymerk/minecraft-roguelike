@@ -1,67 +1,69 @@
 package greymerk.roguelike.dungeon.segment.part;
 
+import java.util.Random;
+
 import greymerk.roguelike.dungeon.IDungeonLevel;
 import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IStair;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.MetaBlock;
-import greymerk.roguelike.worldgen.WorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.Vine;
-
-import java.util.Random;
+import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 public class SegmentMossyArch extends SegmentBase {
 
 	private boolean spawnHoleSet = false;
 	
 	@Override
-	protected void genWall(WorldEditor editor, Random rand, IDungeonLevel level, Cardinal wallDirection, ITheme theme, int x, int y, int z) {
+	protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal wallDirection, ITheme theme, Coord origin) {
 		
 		IStair stair = theme.getSecondaryStair(); 
 		stair.setOrientation(Cardinal.reverse(wallDirection), true);
 		
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		
-		level.getSettings().getSecrets().genRoom(editor, rand, level.getSettings(), wallDirection, new Coord(x, y, z));
+		level.getSettings().getSecrets().genRoom(editor, rand, level.getSettings(), wallDirection, new Coord(origin));
 		
-		Coord cursor = new Coord(x, y, z);
+		Coord cursor = new Coord(origin);
 		cursor.add(wallDirection, 2);
-		editor.setBlock(rand, cursor, air, true, true);
+		air.set(editor, cursor);
 		cursor.add(Cardinal.UP, 1);
-		editor.setBlock(rand, cursor, air, true, true);
+		air.set(editor, cursor);
 		cursor.add(Cardinal.UP, 1);
-		editor.setBlock(rand, cursor, stair, true, true);
+		stair.set(editor, cursor);
 		
-		for(Cardinal orth : Cardinal.getOrthogonal(wallDirection)){
-			cursor = new Coord(x, y, z);
+		for(Cardinal orth : Cardinal.orthogonal(wallDirection)){
+			cursor = new Coord(origin);
 			cursor.add(orth, 1);
 			cursor.add(wallDirection, 2);
-			editor.setBlock(rand, cursor, theme.getSecondaryPillar(), true, true);
+			theme.getSecondaryPillar().set(editor, rand, cursor);
 			cursor.add(Cardinal.UP, 1);
-			editor.setBlock(rand, cursor, theme.getSecondaryPillar(), true, true);
+			theme.getSecondaryPillar().set(editor, rand, cursor);
 			cursor.add(Cardinal.UP, 1);
-			editor.setBlock(rand, cursor, theme.getSecondaryWall(), true, true);
+			theme.getSecondaryWall().set(editor, rand, cursor);
 			cursor.add(Cardinal.reverse(wallDirection), 1);
-			editor.setBlock(rand, cursor, stair, true, true);			
+			stair.set(editor, cursor);			
 		}
 		
-		cursor = new Coord(x, y, z);
+		cursor = new Coord(origin);
 		cursor.add(wallDirection, 2);
 		cursor.add(Cardinal.DOWN, 1);
-		editor.setBlock(cursor, BlockType.get(BlockType.WATER_FLOWING));
+		BlockType.get(BlockType.WATER_FLOWING).set(editor, cursor);
 		
-		cursor = new Coord(x, y, z);
+		cursor = new Coord(origin);
 		cursor.add(Cardinal.UP, 3);
 		cursor.add(wallDirection, 1);
-		editor.setBlock(rand, cursor, BlockType.get(BlockType.VINE), true, true);
+		BlockType.get(BlockType.VINE).set(editor, cursor);
 		
 		if(!spawnHoleSet){
-			editor.fillRectSolid(rand, x, y + 2, z, x, y + 5, z, BlockType.get(BlockType.AIR));
-			Vine.fill(editor, rand, new Coord(x, y + 3, z), new Coord(x, y + 5, z));
+			RectSolid.fill(editor, rand, new Coord(0, 2, 0).add(origin), new Coord(0, 5, 0).add(origin), BlockType.get(BlockType.AIR));
+			Vine.fill(editor, rand, new Coord(0, 3, 0).add(origin), new Coord(0, 5, 0).add(origin));
 			
-			if(!editor.isAirBlock(new Coord(x, y + 6, z))) editor.setBlock(x, y + 7, z, BlockType.get(BlockType.WATER_FLOWING));
+			
+			if(!editor.isAirBlock(new Coord(0, 6, 0).add(origin))) BlockType.get(BlockType.WATER_FLOWING).set(editor, new Coord(0, 7, 0).add(origin));
 			spawnHoleSet = true;
 		}
 	}

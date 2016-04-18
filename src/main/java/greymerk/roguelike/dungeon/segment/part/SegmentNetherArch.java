@@ -7,7 +7,7 @@ import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
-import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 
 import java.util.Random;
@@ -15,7 +15,7 @@ import java.util.Random;
 public class SegmentNetherArch extends SegmentBase {
 
 	@Override
-	protected void genWall(WorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
+	protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, Coord origin) {
 		
 		IStair step = theme.getSecondaryStair();
 		step.setOrientation(Cardinal.reverse(dir), true);
@@ -26,35 +26,35 @@ public class SegmentNetherArch extends SegmentBase {
 		
 		boolean hasLava = rand.nextInt(5) == 0;
 		
-		for(Cardinal orth : Cardinal.getOrthogonal(dir)){
-			cursor = new Coord(x, y, z);
+		for(Cardinal orth : Cardinal.orthogonal(dir)){
+			cursor = new Coord(origin);
 			cursor.add(dir, 1);
 			cursor.add(orth, 1);
 			cursor.add(Cardinal.UP, 2);
-			editor.setBlock(rand, cursor, step, true, true);
+			step.set(editor, cursor);
 			
-			cursor = new Coord(x, y, z);
+			cursor = new Coord(origin);
 			cursor.add(dir, 2);
 			cursor.add(orth, 1);
-			editor.setBlock(rand, cursor, pillar, true, true);
+			pillar.set(editor, rand, cursor);
 			cursor.add(Cardinal.UP, 1);
-			editor.setBlock(rand, cursor, pillar, true, true);
+			pillar.set(editor, rand, cursor);
 		}
 			
 		MetaBlock fence = BlockType.get(BlockType.FENCE_NETHER_BRICK);
 		MetaBlock lava = BlockType.get(BlockType.LAVA_FLOWING);
 		
-		cursor = new Coord(x, y, z);
+		cursor = new Coord(origin);
 		cursor.add(dir, 2);		
-		editor.setBlock(rand, cursor, fence, true, true);
+		fence.set(editor, rand, cursor);
 		cursor.add(Cardinal.UP, 1);		
-		editor.setBlock(rand, cursor, fence, true, true);
+		fence.set(editor, rand, cursor);
 		
 		if(hasLava){
 			cursor.add(dir, 1);
-			editor.setBlock(rand, cursor, lava, true, true);
+			lava.set(editor, cursor);
 			cursor.add(Cardinal.DOWN, 1);		
-			editor.setBlock(rand, cursor, lava, true, true);
+			lava.set(editor, cursor);
 		}
 	}
 }

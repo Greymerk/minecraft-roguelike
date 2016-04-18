@@ -4,7 +4,6 @@ package greymerk.roguelike.dungeon.base;
 import greymerk.roguelike.dungeon.rooms.DungeonAshlea;
 import greymerk.roguelike.dungeon.rooms.DungeonAvidya;
 import greymerk.roguelike.dungeon.rooms.DungeonBTeam;
-import greymerk.roguelike.dungeon.rooms.DungeonBaj;
 import greymerk.roguelike.dungeon.rooms.DungeonBedRoom;
 import greymerk.roguelike.dungeon.rooms.DungeonCorner;
 import greymerk.roguelike.dungeon.rooms.DungeonDarkHall;
@@ -16,7 +15,6 @@ import greymerk.roguelike.dungeon.rooms.DungeonLibrary;
 import greymerk.roguelike.dungeon.rooms.DungeonLinker;
 import greymerk.roguelike.dungeon.rooms.DungeonLinkerTop;
 import greymerk.roguelike.dungeon.rooms.DungeonMess;
-import greymerk.roguelike.dungeon.rooms.DungeonNebris;
 import greymerk.roguelike.dungeon.rooms.DungeonObsidian;
 import greymerk.roguelike.dungeon.rooms.DungeonOssuary;
 import greymerk.roguelike.dungeon.rooms.DungeonPyramidCorner;
@@ -45,8 +43,8 @@ import greymerk.roguelike.dungeon.rooms.DungeonsWood;
 public enum DungeonRoom {
 	
 	BRICK, CREEPER, CRYPT, ENCHANT, ENDER, FIRE, MUSIC, NETHER, NETHERFORT, PIT, PRISON,
-	SLIME, SMITH, SPIDER, CAKE, LAB, CORNER, MESS, ETHO, ENIKO, BTEAM, BAJ, OSSUARY, OBSIDIAN,
-	AVIDYA, STORAGE, NEBRIS, ASHLEA, FIREWORK, BEDROOM, REWARD, LIBRARY, PYRAMIDTOMB, DARKHALL,
+	SLIME, SMITH, SPIDER, CAKE, LAB, CORNER, MESS, ETHO, ENIKO, BTEAM, OSSUARY, OBSIDIAN,
+	AVIDYA, STORAGE, ASHLEA, FIREWORK, BEDROOM, REWARD, LIBRARY, PYRAMIDTOMB, DARKHALL,
 	TREETHO, LINKER, LINKERTOP, PYRAMIDSPAWNER, PYRAMIDCORNER;
 	
 	public static IDungeonRoom getInstance(DungeonRoom choice){
@@ -72,12 +70,10 @@ public enum DungeonRoom {
 		case ETHO: return new DungeonEtho();
 		case ENIKO: return new DungeonEniko();
 		case BTEAM: return new DungeonBTeam();
-		case BAJ: return new DungeonBaj();
 		case OSSUARY: return new DungeonOssuary();
 		case OBSIDIAN: return new DungeonObsidian();
 		case AVIDYA: return new DungeonAvidya();
 		case STORAGE: return new DungeonStorage();
-		case NEBRIS: return new DungeonNebris();
 		case ASHLEA: return new DungeonAshlea();
 		case FIREWORK: return new DungeonFirework();
 		case BEDROOM: return new DungeonBedRoom();

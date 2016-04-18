@@ -34,7 +34,7 @@ import greymerk.roguelike.dungeon.settings.builtin.SettingsTheme;
 import greymerk.roguelike.util.WeightedChoice;
 import greymerk.roguelike.util.WeightedRandomizer;
 import greymerk.roguelike.worldgen.Coord;
-import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.IWorldEditor;
 
 public class SettingsResolver {
 
@@ -122,7 +122,7 @@ public class SettingsResolver {
 		return new DungeonSettings(this.base, override);
 	}
 	
-	public ISettings getSettings(WorldEditor editor, Random rand, Coord pos){
+	public ISettings getSettings(IWorldEditor editor, Random rand, Coord pos){
 		
 		DungeonSettings builtin = this.getBuiltin(editor, rand, pos);
 		DungeonSettings custom = this.getCustom(editor, rand, pos);
@@ -156,7 +156,7 @@ public class SettingsResolver {
 		
 	}
 	
-	private DungeonSettings getBuiltin(WorldEditor editor, Random rand, Coord pos){
+	private DungeonSettings getBuiltin(IWorldEditor editor, Random rand, Coord pos){
 		WeightedRandomizer<DungeonSettings> settingsRandomizer = new WeightedRandomizer<DungeonSettings>();
 
 		for(DungeonSettings setting : this.builtin){
@@ -168,7 +168,7 @@ public class SettingsResolver {
 		return settingsRandomizer.get(rand);
 	}
 	
-	private DungeonSettings getCustom(WorldEditor editor, Random rand, Coord pos){
+	private DungeonSettings getCustom(IWorldEditor editor, Random rand, Coord pos){
 		WeightedRandomizer<DungeonSettings> settingsRandomizer = new WeightedRandomizer<DungeonSettings>();
 		
 		for(DungeonSettings setting : this.settings.values()){

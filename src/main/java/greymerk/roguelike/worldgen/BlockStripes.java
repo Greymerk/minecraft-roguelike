@@ -27,10 +27,10 @@ public class BlockStripes extends BlockBase {
 	}
 
 	@Override
-	public boolean setBlock(WorldEditor editor, Random rand, Coord origin, boolean fillAir, boolean replaceSolid) {
+	public boolean set(IWorldEditor editor, Random rand, Coord origin, boolean fillAir, boolean replaceSolid) {
 		int size = blocks.size();
 		int choice = Math.abs((origin.getX() % size + origin.getY() % size + origin.getZ() % size)) % size;
 		IBlockFactory block = blocks.get(choice);
-		return block.setBlock(editor, rand, origin, fillAir, replaceSolid);
+		return block.set(editor, rand, origin, fillAir, replaceSolid);
 	}
 }

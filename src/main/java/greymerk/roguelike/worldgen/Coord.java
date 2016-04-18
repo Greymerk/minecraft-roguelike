@@ -51,10 +51,18 @@ public class Coord{
 		this.z += z;
 	}
 	
-	public void add(Coord other){
+	public Coord add(Coord other){
 		x += other.x;
 		y += other.y;
 		z += other.z;
+		return this;
+	}
+	
+	public Coord sub(Coord other){
+		x -= other.x;
+		y -= other.y;
+		z -= other.y;
+		return this;
 	}
 	
 	public void add(Cardinal dir){
@@ -121,4 +129,5 @@ public class Coord{
 		
 		return true;
 	}
+	
 }

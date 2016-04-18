@@ -2,13 +2,13 @@ package greymerk.roguelike.worldgen.redstone;
 
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.MetaBlock;
-import greymerk.roguelike.worldgen.WorldEditor;
 import net.minecraft.init.Blocks;
 
 public class Piston {
 
-	public static void generate(WorldEditor editor, Coord origin, Cardinal dir, boolean sticky){
+	public static void generate(IWorldEditor editor, Coord origin, Cardinal dir, boolean sticky){
 		
 		MetaBlock piston = new MetaBlock(sticky ? Blocks.sticky_piston : Blocks.piston);
 		
@@ -24,7 +24,7 @@ public class Piston {
 		
 		piston.setMeta(meta);
 		
-		piston.setBlock(editor, origin);
+		piston.set(editor, origin);
 	}
 	
 }

@@ -1,21 +1,22 @@
 package greymerk.roguelike.dungeon.segment.part;
 
+import java.util.Random;
+
 import greymerk.roguelike.dungeon.IDungeonLevel;
 import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IStair;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.MetaBlock;
-import greymerk.roguelike.worldgen.WorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
-
-import java.util.Random;
+import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 public class SegmentSewerDrain extends SegmentBase {
 
 	
 	@Override
-	protected void genWall(WorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
+	protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, Coord origin) {
 		
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		MetaBlock water = BlockType.get(BlockType.WATER_FLOWING);
@@ -26,51 +27,51 @@ public class SegmentSewerDrain extends SegmentBase {
 		Coord start;
 		Coord end;
 		
-		Cardinal[] orth = Cardinal.getOrthogonal(dir);
+		Cardinal[] orth = Cardinal.orthogonal(dir);
 		
-		start = new Coord(x, y, z);
+		start = new Coord(origin);
 		start.add(Cardinal.DOWN);
 		end = new Coord(start);
 		start.add(orth[0]);
 		end.add(orth[1]);
-		editor.fillRectSolid(rand, start, end, air, true, true);
+		RectSolid.fill(editor, rand, start, end, air);
 		start.add(Cardinal.DOWN);
 		end.add(Cardinal.DOWN);
-		editor.fillRectSolid(rand, start, end, water, false, true);
+		RectSolid.fill(editor, rand, start, end, water, false, true);
 				
-		start = new Coord(x, y, z);
+		start = new Coord(origin);
 		start.add(dir, 2);
 		end = new Coord(start);
 		start.add(orth[0]);
 		end.add(orth[1]);
 		end.add(Cardinal.UP, 2);
-		editor.fillRectSolid(rand, start, end, air, true, true);
+		RectSolid.fill(editor, rand, start, end, air);
 		start.add(dir);
 		end.add(dir);
-		editor.fillRectSolid(rand, start, end, BlockType.get(BlockType.COBBLESTONE_MOSSY), true, true);
+		RectSolid.fill(editor, rand, start, end, BlockType.get(BlockType.COBBLESTONE_MOSSY));
 		
 		for(Cardinal o : orth){
-			cursor = new Coord(x, y, z);
+			cursor = new Coord(origin);
 			cursor.add(dir, 2);
 			cursor.add(o);
-			stair.setOrientation(Cardinal.reverse(o), false).setBlock(editor, cursor);
+			stair.setOrientation(Cardinal.reverse(o), false).set(editor, cursor);
 			cursor.add(Cardinal.UP);
-			bars.setBlock(editor, cursor);
+			bars.set(editor, cursor);
 			cursor.add(Cardinal.UP);
-			stair.setOrientation(Cardinal.reverse(o), true).setBlock(editor, cursor);
+			stair.setOrientation(Cardinal.reverse(o), true).set(editor, cursor);
 		}
 		
-		start = new Coord(x, y, z);
+		start = new Coord(origin);
 		start.add(Cardinal.UP);
 		end = new Coord(start);
 		end.add(dir, 5);
-		editor.fillRectSolid(rand, start, end, air, true, true);
-		water.setBlock(editor, end);
+		RectSolid.fill(editor, rand, start, end, air);
+		water.set(editor, end);
 		
-		cursor = new Coord(x, y, z);
+		cursor = new Coord(origin);
 		cursor.add(Cardinal.DOWN);
 		cursor.add(dir);
-		air.setBlock(editor, cursor);
+		air.set(editor, cursor);
 		
 	}
 }

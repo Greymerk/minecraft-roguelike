@@ -9,11 +9,11 @@ import greymerk.roguelike.dungeon.base.IDungeonRoom;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
-import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.IWorldEditor;
 
 public class LevelGeneratorClassic implements ILevelGenerator{
 
-	private WorldEditor editor;
+	private IWorldEditor editor;
 	private Random rand;
 	private IDungeonLevel level;
 
@@ -22,7 +22,7 @@ public class LevelGeneratorClassic implements ILevelGenerator{
 	private DungeonNode end;
 	
 	
-	public LevelGeneratorClassic(WorldEditor editor, Random rand, IDungeonLevel level){
+	public LevelGeneratorClassic(IWorldEditor editor, Random rand, IDungeonLevel level){
 		this.editor = editor;
 		this.rand = rand;
 		this.level = level;
@@ -53,7 +53,7 @@ public class LevelGeneratorClassic implements ILevelGenerator{
 				startDungeonNode = nToAdd;
 			}
 			this.nodes.add(nToAdd);
-			this.tunnels.addAll(n.createTunnels());
+			this.tunnels.addAll(n.createTunnels(editor));
 		}
 					
 		int attempts = 0;
@@ -81,6 +81,7 @@ public class LevelGeneratorClassic implements ILevelGenerator{
 				continue;
 			}
 
+			// TODO: Find way to check available space when picking room
 			IDungeonRoom toGenerate = this.level.getSettings().getRooms().get(rand);
 			node.setDungeon(toGenerate);
 			toGenerate.generate(editor, rand, this.level.getSettings(), node.getEntrances(), node.getPosition());
@@ -204,7 +205,7 @@ public class LevelGeneratorClassic implements ILevelGenerator{
 		}
 		
 		public DungeonTunnel createTunnel(){
-			return new DungeonTunnel(new Coord(this.start), new Coord(this.end), this.dir);
+			return new DungeonTunnel(editor, new Coord(this.start), new Coord(this.end), this.dir);
 		}
 	}
 	
@@ -270,7 +271,7 @@ public class LevelGeneratorClassic implements ILevelGenerator{
 			return c.toArray(new Cardinal[c.size()]);
 		}
 		
-		public List<DungeonTunnel> createTunnels(){
+		public List<DungeonTunnel> createTunnels(IWorldEditor editor){
 			List<DungeonTunnel> tunnels = new ArrayList<DungeonTunnel>();
 			for(Tunneler t : this.tunnelers){
 				tunnels.add(t.createTunnel());

@@ -11,7 +11,7 @@ import greymerk.roguelike.util.WeightedRandomizer;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IStair;
-import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.IWorldEditor;
 
 public class SegmentGeneratorBase implements ISegmentGenerator{
 	
@@ -33,7 +33,7 @@ public class SegmentGeneratorBase implements ISegmentGenerator{
 	}
 	
 	@Override
-	public List<ISegment> genSegment(WorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, Coord pos) {
+	public List<ISegment> genSegment(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, Coord pos) {
 		
 		int x = pos.getX();
 		int y = pos.getY();
@@ -41,10 +41,10 @@ public class SegmentGeneratorBase implements ISegmentGenerator{
 		
 		List<ISegment> segs = new ArrayList<ISegment>();
 		
-		for(Cardinal orth : Cardinal.getOrthogonal(dir)){
+		for(Cardinal orth : Cardinal.orthogonal(dir)){
 			ISegment seg = pickSegment(editor, rand, level, dir, pos);
 			if(seg == null) return segs;
-			seg.generate(editor, rand, level, orth, level.getSettings().getTheme(), x, y, z);
+			seg.generate(editor, rand, level, orth, level.getSettings().getTheme(), new Coord(pos));
 			segs.add(seg);
 		}
 		
@@ -52,7 +52,7 @@ public class SegmentGeneratorBase implements ISegmentGenerator{
 		return segs;
 	}
 	
-	private ISegment pickSegment(WorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, Coord pos){
+	private ISegment pickSegment(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, Coord pos){
 		int x = pos.getX();
 		int z = pos.getZ();
 		
@@ -73,22 +73,22 @@ public class SegmentGeneratorBase implements ISegmentGenerator{
 		return null;
 	}
 	
-	private void addSupport(WorldEditor editor, Random rand, ITheme theme, int x, int y, int z){
+	private void addSupport(IWorldEditor editor, Random rand, ITheme theme, int x, int y, int z){
 		if(!editor.isAirBlock(new Coord(x, y - 2, z))) return;
 		
 		editor.fillDown(rand, new Coord(x, y - 2, z), theme.getPrimaryPillar());
 		
 		IStair stair = theme.getPrimaryStair();
 		stair.setOrientation(Cardinal.WEST, true);
-		stair.setBlock(editor, new Coord(x - 1, y - 2, z));
+		stair.set(editor, new Coord(x - 1, y - 2, z));
 		
 		stair.setOrientation(Cardinal.EAST, true);
-		stair.setBlock(editor, new Coord(x + 1, y - 2, z));
+		stair.set(editor, new Coord(x + 1, y - 2, z));
 		
 		stair.setOrientation(Cardinal.SOUTH, true);
-		stair.setBlock(editor, new Coord(x, y - 2, z + 1));
+		stair.set(editor, new Coord(x, y - 2, z + 1));
 		
 		stair.setOrientation(Cardinal.NORTH, true);
-		stair.setBlock(editor, new Coord(x, y - 2, z - 1));	
+		stair.set(editor, new Coord(x, y - 2, z - 1));	
 	}
 }

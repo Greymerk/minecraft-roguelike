@@ -1,22 +1,23 @@
 package greymerk.roguelike.dungeon.segment.part;
 
+import java.util.Random;
+
 import greymerk.roguelike.dungeon.IDungeonLevel;
 import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IStair;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.MetaBlock;
-import greymerk.roguelike.worldgen.WorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.ColorBlock;
 import greymerk.roguelike.worldgen.blocks.DyeColor;
-
-import java.util.Random;
+import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 public class SegmentAnkh extends SegmentBase{
 
 	@Override
-	protected void genWall(WorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
+	protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, Coord pos) {
 		Coord start;
 		Coord end;
 		Coord cursor;
@@ -28,45 +29,45 @@ public class SegmentAnkh extends SegmentBase{
 		MetaBlock back = ColorBlock.get(ColorBlock.CLAY, color);
 		MetaBlock glowstone = BlockType.get(BlockType.GLOWSTONE);
 		
-		Cardinal[] orth = Cardinal.getOrthogonal(dir);
+		Cardinal[] orth = Cardinal.orthogonal(dir);
 		
-		start = new Coord(x, y, z);
+		start = new Coord(pos);
 		start.add(dir, 2);
 		end = new Coord(start);
 		end.add(Cardinal.UP, 2);
 		
-		editor.fillRectSolid(rand, start, end, air, true, true);
+		RectSolid.fill(editor, rand, start, end, air);
 		
 		
 		for(Cardinal o : orth){
 			
-			cursor = new Coord(x, y, z);
+			cursor = new Coord(pos);
 			cursor.add(dir, 2);
 			cursor.add(o);
-			stair.setOrientation(Cardinal.reverse(o), false).setBlock(editor, cursor);
+			stair.setOrientation(Cardinal.reverse(o), false).set(editor, cursor);
 			cursor.add(Cardinal.UP);
-			stair.setOrientation(Cardinal.reverse(o), false).setBlock(editor, cursor);
+			stair.setOrientation(Cardinal.reverse(o), false).set(editor, cursor);
 			cursor.add(Cardinal.UP);
-			stair.setOrientation(Cardinal.reverse(o), true).setBlock(editor, cursor);
+			stair.setOrientation(Cardinal.reverse(o), true).set(editor, cursor);
 		}
 		
-		start = new Coord(x, y, z);
+		start = new Coord(pos);
 		start.add(dir, 3);
 		end = new Coord(start);
 		start.add(orth[0]);
 		end.add(orth[1]);
 		end.add(Cardinal.UP, 2);
-		editor.fillRectSolid(rand, start, end, glass, true, true);
+		RectSolid.fill(editor, rand, start, end, glass);
 		start.add(dir);
 		end.add(dir);
-		editor.fillRectSolid(rand, start, end, back, true, true);
+		RectSolid.fill(editor, rand, start, end, back);
 		
-		cursor = new Coord(x, y, z);
+		cursor = new Coord(pos);
 		cursor.add(dir, 3);
 		cursor.add(Cardinal.DOWN);
-		glowstone.setBlock(editor, cursor);
+		glowstone.set(editor, cursor);
 		cursor.add(Cardinal.UP, 4);
-		glowstone.setBlock(editor, cursor);
+		glowstone.set(editor, cursor);
 	}
 
 }

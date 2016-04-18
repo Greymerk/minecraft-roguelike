@@ -18,8 +18,17 @@ public class MetaStair extends MetaBlock implements IStair{
 	}
 	
 	public MetaStair setOrientation(Cardinal dir, Boolean upsideDown){
-		this.setMeta(Cardinal.getBlockMeta(dir) + (upsideDown ? 4 : 0));
+		this.setMeta(getBlockMeta(dir) + (upsideDown ? 4 : 0));
 		return this;
 	}
-
+	
+	public static int getBlockMeta(Cardinal dir){
+		switch(dir){
+		case NORTH: return 2;
+		case EAST: return 1;
+		case WEST: return 0;
+		case SOUTH: return 3;
+		default: return 0;
+		}
+	}
 }

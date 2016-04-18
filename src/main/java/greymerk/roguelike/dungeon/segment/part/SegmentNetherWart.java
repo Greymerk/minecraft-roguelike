@@ -7,7 +7,7 @@ import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
-import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.Crops;
 
@@ -16,7 +16,7 @@ import java.util.Random;
 public class SegmentNetherWart extends SegmentBase{
 
 	@Override
-	protected void genWall(WorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, int x, int y, int z) {
+	protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, Coord origin) {
 		
 		IStair step = theme.getSecondaryStair();
 		IBlockFactory wall = theme.getSecondaryWall();
@@ -24,40 +24,40 @@ public class SegmentNetherWart extends SegmentBase{
 
 		Coord cursor;
 		
-		cursor = new Coord(x, y, z);
+		cursor = new Coord(origin);
 		cursor.add(dir, 2);
-		editor.setBlock(rand, cursor, air, true, true);
+		air.set(editor, cursor);
 		cursor.add(Cardinal.UP, 1);
-		editor.setBlock(rand, cursor, air, true, true);
-		cursor = new Coord(x, y, z);
+		air.set(editor, cursor);
+		cursor = new Coord(origin);
 		cursor.add(dir, 5);
 
 		
-		cursor = new Coord(x, y, z);
+		cursor = new Coord(origin);
 		cursor.add(dir, 3);
-		editor.setBlock(cursor, BlockType.get(BlockType.FENCE_NETHER_BRICK));
+		BlockType.get(BlockType.FENCE_NETHER_BRICK).set(editor, cursor);
 		cursor.add(Cardinal.UP, 1);
-		editor.setBlock(cursor, BlockType.get(BlockType.FENCE_NETHER_BRICK));
+		BlockType.get(BlockType.FENCE_NETHER_BRICK).set(editor, cursor);
 		
-		for(Cardinal orth : Cardinal.getOrthogonal(dir)){
+		for(Cardinal orth : Cardinal.orthogonal(dir)){
 			step.setOrientation(Cardinal.reverse(orth), true);
-			cursor = new Coord(x, y, z);
+			cursor = new Coord(origin);
 			cursor.add(dir, 2);
 			cursor.add(orth, 1);
 			cursor.add(Cardinal.UP, 1);
-			editor.setBlock(rand, cursor, step, true, true);
+			step.set(editor, cursor);
 			cursor.add(Cardinal.UP, 1);
-			editor.setBlock(rand, cursor, wall, true, true);
+			wall.set(editor, rand, cursor);
 			cursor.add(Cardinal.reverse(orth), 1);
-			editor.setBlock(rand, cursor, wall, true, true);
+			wall.set(editor, rand, cursor);
 			cursor.add(Cardinal.DOWN, 2);
-			editor.setBlock(cursor, Crops.get(Crops.NETHERWART));
+			Crops.get(Crops.NETHERWART).set(editor, cursor);
 			cursor.add(orth, 1);
-			editor.setBlock(cursor, Crops.get(Crops.NETHERWART));
+			Crops.get(Crops.NETHERWART).set(editor, cursor);
 			cursor.add(Cardinal.DOWN, 1);
-			editor.setBlock(cursor, BlockType.get(BlockType.SOUL_SAND));
+			BlockType.get(BlockType.SOUL_SAND).set(editor, cursor);
 			cursor.add(Cardinal.reverse(orth), 1);
-			editor.setBlock(cursor, BlockType.get(BlockType.SOUL_SAND));
+			BlockType.get(BlockType.SOUL_SAND).set(editor, cursor);
 		}
 		
 	}

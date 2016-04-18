@@ -14,14 +14,15 @@ import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.IStair;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.MetaBlock;
-import greymerk.roguelike.worldgen.WorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
+import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 public class DungeonStorage extends DungeonBase {
 
 	@Override
-	public boolean generate(WorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
+	public boolean generate(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
 		
 		int x = origin.getX();
 		int y = origin.getY();
@@ -32,7 +33,7 @@ public class DungeonStorage extends DungeonBase {
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		
 		// space
-		editor.fillRectSolid(rand, x - 6, y, z - 6, x + 6, y + 3, z + 6, air);
+		RectSolid.fill(editor, rand, new Coord(x - 6, y, z - 6), new Coord(x + 6, y + 3, z + 6), air);
 		
 		Coord cursor;
 		Coord start;
@@ -40,11 +41,11 @@ public class DungeonStorage extends DungeonBase {
 		
 		IBlockFactory blocks = theme.getPrimaryWall();
 		
-		editor.fillRectSolid(rand, x - 6, y - 1, z - 6, x + 6, y - 1, z + 6, blocks, true, true);
-		editor.fillRectSolid(rand, x - 5, y + 4, z - 5, x + 5, y + 4, z + 5, blocks, true, true);
+		RectSolid.fill(editor, rand, new Coord(x - 6, y - 1, z - 6), new Coord(x + 6, y - 1, z + 6), blocks);
+		RectSolid.fill(editor, rand, new Coord(x - 5, y + 4, z - 5), new Coord(x + 5, y + 4, z + 5), blocks);
 		
 		for(Cardinal dir : Cardinal.directions){			
-			for (Cardinal orth : Cardinal.getOrthogonal(dir)){
+			for (Cardinal orth : Cardinal.orthogonal(dir)){
 				
 				cursor = new Coord(x, y, z);
 				cursor.add(Cardinal.UP, 3);
@@ -64,7 +65,7 @@ public class DungeonStorage extends DungeonBase {
 				end.add(Cardinal.DOWN, 3);
 				end.add(dir, 1);
 				end.add(orth, 1);
-				editor.fillRectSolid(rand, start, end, blocks, true, true);
+				RectSolid.fill(editor, rand, start, end, blocks);
 				
 				cursor = new Coord(x, y, z);
 				cursor.add(dir, 2);
@@ -89,20 +90,20 @@ public class DungeonStorage extends DungeonBase {
 				start.add(Cardinal.UP, 3);
 				end = new Coord(start);
 				end.add(orth, 5);
-				editor.fillRectSolid(rand, start, end, blocks, true, true);
+				RectSolid.fill(editor, rand, start, end, blocks);
 				start.add(dir, 1);
 				end.add(dir, 1);
 				end.add(Cardinal.DOWN, 3);
-				editor.fillRectSolid(rand, start, end, blocks, false, true);				
+				RectSolid.fill(editor, rand, start, end, blocks, false, true);				
 				
 				cursor = new Coord(x, y, z);
 				cursor.add(dir, 6);
 				cursor.add(orth, 3);
 				IStair step = theme.getSecondaryStair();
 				step.setOrientation(Cardinal.reverse(dir), true);
-				editor.setBlock(rand, cursor, step, true, true);
+				step.set(editor, cursor);
 				cursor.add(orth, 1);
-				editor.setBlock(rand, cursor, step, true, true);
+				step.set(editor, cursor);
 				cursor.add(Cardinal.UP, 1);
 				chestSpaces.add(new Coord(cursor));
 				cursor.add(Cardinal.reverse(orth), 1);
@@ -115,7 +116,7 @@ public class DungeonStorage extends DungeonBase {
 				end = new Coord(start);
 				end.add(dir, 3);
 				end.add(orth, 1);
-				editor.fillRectSolid(rand, start, end, theme.getSecondaryFloor(), true, true);
+				RectSolid.fill(editor, rand, start, end, theme.getSecondaryFloor());
 				
 				cursor = new Coord(x, y, z);
 				cursor.add(dir, 5);
@@ -137,19 +138,19 @@ public class DungeonStorage extends DungeonBase {
 		return 10;
 	}
 
-	private static void pillarTop(WorldEditor editor, Random rand, ITheme theme, Coord cursor){
+	private static void pillarTop(IWorldEditor editor, Random rand, ITheme theme, Coord cursor){
 		IStair step = theme.getSecondaryStair();
 		for(Cardinal dir : Cardinal.directions){
 			step.setOrientation(dir, true);
 			cursor.add(dir, 1);
-			editor.setBlock(rand, cursor, step, true, false);
+			step.set(editor, rand, cursor, true, false);
 			cursor.add(Cardinal.reverse(dir), 1);
 		}
 	}
 	
-	private static void pillar(WorldEditor editor, Random rand, Coord base, ITheme theme, int height){
+	private static void pillar(IWorldEditor editor, Random rand, Coord base, ITheme theme, int height){
 		Coord top = new Coord(base);
 		top.add(Cardinal.UP, height);
-		editor.fillRectSolid(rand, base, top, theme.getSecondaryPillar(), true, true);
+		RectSolid.fill(editor, rand, base, top, theme.getSecondaryPillar());
 	}	
 }

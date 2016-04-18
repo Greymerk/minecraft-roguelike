@@ -17,7 +17,8 @@ import greymerk.roguelike.treasure.loot.Loot;
 import greymerk.roguelike.util.WeightedChoice;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
-import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.IWorldEditor;
+import greymerk.roguelike.worldgen.shapes.RectSolid;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -33,7 +34,7 @@ public class Dungeon implements IDungeon{
 	
 	private DungeonGenerator generator;
 	private Coord pos;
-	private WorldEditor editor;
+	private IWorldEditor editor;
 	
 	static{
 		initResolver();
@@ -44,7 +45,7 @@ public class Dungeon implements IDungeon{
 	}
 		
 	
-	public Dungeon(WorldEditor editor){
+	public Dungeon(IWorldEditor editor){
 		this.generator = new DungeonGenerator();
 		this.editor = editor;
 	}
@@ -86,7 +87,7 @@ public class Dungeon implements IDungeon{
 			+ "TNT: " + editor.getStat(Blocks.tnt) + "\n"
 			+ "\n-Greymerk");
 		book.addPage("Roguelike Dungeons v" + Roguelike.version + "\n"
-			+ "Dec 23rd 2015\n\n"
+			+ "April 16th 2016\n\n"
 			+ "Credits\n\n"
 			+ "Author: Greymerk\n\n"
 			+ "Bits: Drainedsoul\n\n"
@@ -94,7 +95,7 @@ public class Dungeon implements IDungeon{
 		treasure.addItemToAll(rand, Treasure.STARTER, new WeightedChoice<ItemStack>(book.get(), 1), 1);
 	}
 	
-	public static boolean canSpawnInChunk(int chunkX, int chunkZ, WorldEditor editor){
+	public static boolean canSpawnInChunk(int chunkX, int chunkZ, IWorldEditor editor){
 		
 		if(!RogueConfig.getBoolean(RogueConfig.DONATURALSPAWN)){
 			return false;
@@ -113,7 +114,7 @@ public class Dungeon implements IDungeon{
 		int m = tempX / max;
 		int n = tempZ / max;
 		
-		Random r = editor.setSeed(m, n, 10387312);
+		Random r = editor.getSeededRandom(m, n, 10387312);
 		
 		m *= max;
 		n *= max;
@@ -151,10 +152,17 @@ public class Dungeon implements IDungeon{
 		
 		BiomeGenBase biome = editor.getBiome(new Coord(x, 0, z));
 		Type[] biomeType = BiomeDictionary.getTypesForBiome(biome);
-		if(Arrays.asList(biomeType).contains(BiomeDictionary.Type.RIVER)){
-			return false;
-		}
+		Type[] invalidBiomes = new Type[]{
+				BiomeDictionary.Type.RIVER,
+				BiomeDictionary.Type.BEACH,
+				BiomeDictionary.Type.MUSHROOM,
+				BiomeDictionary.Type.OCEAN
+		};
 		
+		for(Type type : invalidBiomes){
+			if(Arrays.asList(biomeType).contains(type)) return false;	
+		}
+				
 		int upperLimit = RogueConfig.getInt(RogueConfig.UPPERLIMIT);
 		int lowerLimit = RogueConfig.getInt(RogueConfig.LOWERLIMIT);
 		
@@ -167,21 +175,17 @@ public class Dungeon implements IDungeon{
 		while(!editor.validGroundBlock(cursor)){
 			cursor.add(Cardinal.DOWN);
 			if(cursor.getY() < lowerLimit) return false;
-			if(editor.getBlock(cursor).getBlock().getMaterial() == Material.water) return false;
+			if(editor.getBlock(cursor).getMaterial() == Material.water) return false;
 		}
-		
-		List<Coord> above = WorldEditor.getRectSolid(x - 4, cursor.getY() + 4, z - 4, x + 4, cursor.getY() + 4, z + 4);
 
-		for (Coord c : above){
+		for (Coord c : new RectSolid(new Coord(x - 4, cursor.getY() + 4, z - 4), new Coord(x + 4, cursor.getY() + 4, z + 4))){
 			if(editor.validGroundBlock(c)){
 				return false;
 			}
 		}
 		
-		List<Coord> below = WorldEditor.getRectSolid(x - 4, cursor.getY() - 3, z - 4, x + 4, cursor.getY() - 3, z + 4);
-		
 		int airCount = 0;
-		for (Coord c : below){
+		for (Coord c : new RectSolid(new Coord(x - 4, cursor.getY() - 3, z - 4), new Coord(x + 4, cursor.getY() - 3, z + 4))){
 			if(!editor.validGroundBlock(c)){
 				airCount++;
 			}
@@ -206,7 +210,7 @@ public class Dungeon implements IDungeon{
 		return nearby;
 	}
 	
-	public static Random getRandom(WorldEditor editor, int x, int z){
+	public static Random getRandom(IWorldEditor editor, int x, int z){
 		long seed = editor.getSeed() * x * z;
 		Random rand = new Random();
 		rand.setSeed(seed);

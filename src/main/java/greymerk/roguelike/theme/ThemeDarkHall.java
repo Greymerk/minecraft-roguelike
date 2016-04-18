@@ -25,7 +25,7 @@ public class ThemeDarkHall extends ThemeBase{
 		
 		MetaBlock walls2 = Wood.getPlank(Wood.DARKOAK);
 		MetaStair stair2 = new MetaStair(StairType.DARKOAK);
-		MetaBlock pillar2 = Log.getLog(Wood.DARKOAK);
+		MetaBlock pillar2 = Log.get(Wood.DARKOAK);
 		
 		this.primary = new BlockSet(walls, stair, pillar);
 		this.secondary = new BlockSet(walls2, stair2, pillar2);

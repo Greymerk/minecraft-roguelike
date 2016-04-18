@@ -1,6 +1,5 @@
 package greymerk.roguelike.dungeon.segment.alcove;
 
-import java.util.List;
 import java.util.Random;
 
 import greymerk.roguelike.dungeon.segment.IAlcove;
@@ -9,11 +8,13 @@ import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.Spawner;
-import greymerk.roguelike.worldgen.WorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.Door;
+import greymerk.roguelike.worldgen.shapes.RectHollow;
+import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 public class PrisonCell implements IAlcove{
 
@@ -21,31 +22,29 @@ public class PrisonCell implements IAlcove{
 	private ITheme theme;
 	
 	@Override
-	public void generate(WorldEditor editor, Random rand, LevelSettings settings, int x, int y, int z, Cardinal dir) {
+	public void generate(IWorldEditor editor, Random rand, LevelSettings settings, Coord origin, Cardinal dir) {
 		
 		this.theme = settings.getTheme();
 		IBlockFactory walls = theme.getPrimaryWall();
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		MetaBlock plate = BlockType.get(BlockType.PRESSURE_PLATE_STONE);
 		
-		Coord origin = new Coord(x, y, z);
-		
 		Coord start = new Coord(origin);
 		start.add(dir, RECESSED);
 		Coord end = new Coord(start);
 		start.add(-2, -1, -2);
 		end.add(2, 3, 2);
-		walls.fillRectHollow(editor, rand, start, end, true, true);
+		RectHollow.fill(editor, rand, start, end, walls);
 		
 		start = new Coord(origin);
 		end = new Coord(origin);
 		end.add(dir, RECESSED);
 		end.add(Cardinal.UP);
-		air.fillRectSolid(editor, rand, start, end, true, true);
+		RectSolid.fill(editor, rand, start, end, air);
 		
 		Coord cursor = new Coord(origin);
 		cursor.add(dir, RECESSED - 1);
-		plate.setBlock(editor, cursor);
+		plate.set(editor, cursor);
 		cursor.add(Cardinal.DOWN);
 		if(rand.nextBoolean()) Spawner.generate(editor, rand, settings, cursor, Spawner.ZOMBIE);
 		
@@ -56,17 +55,15 @@ public class PrisonCell implements IAlcove{
 	}
 
 	@Override
-	public boolean isValidLocation(WorldEditor editor, int x, int y, int z, Cardinal dir) {
+	public boolean isValidLocation(IWorldEditor editor, Coord origin, Cardinal dir) {
 
-		Coord centre = new Coord(x, y, z);
+		Coord centre = new Coord(origin);
 		centre.add(dir, RECESSED);
-		x = centre.getX();
-		y = centre.getY();
-		z = centre.getZ();
-		
-		List<Coord> toCheck = WorldEditor.getRectSolid(x - 2, y, z - 2, x + 2, y, z + 2);
+		int x = centre.getX();
+		int y = centre.getY();
+		int z = centre.getZ();
 
-		for(Coord c : toCheck){
+		for(Coord c : new RectSolid(new Coord(x - 2, y, z - 2), new Coord(x + 2, y, z + 2))){
 			if (editor.isAirBlock(c)) return false;
 		}
 		

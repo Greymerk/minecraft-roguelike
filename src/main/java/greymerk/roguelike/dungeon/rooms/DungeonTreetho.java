@@ -10,23 +10,27 @@ import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.IStair;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.MetaBlock;
-import greymerk.roguelike.worldgen.WorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.ColorBlock;
 import greymerk.roguelike.worldgen.blocks.Crops;
 import greymerk.roguelike.worldgen.blocks.DyeColor;
 import greymerk.roguelike.worldgen.blocks.Slab;
 import greymerk.roguelike.worldgen.blocks.Wood;
+import greymerk.roguelike.worldgen.shapes.RectHollow;
+import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 
 public class DungeonTreetho extends DungeonBase{
 
 	@Override
-	public boolean generate(WorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
+	public boolean generate(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
 
 		ITheme theme = settings.getTheme();
 		IBlockFactory wall = theme.getPrimaryWall();
+		Cardinal dir = entrances[0];
+		
 		
 		Coord cursor;
 		Coord start;
@@ -37,7 +41,7 @@ public class DungeonTreetho extends DungeonBase{
 		start.add(new Coord(-11, -1, -11));
 		end.add(new Coord(11, 8, 11));
 		
-		editor.fillRectHollow(rand, start, end, wall, false, true);
+		RectHollow.fill(editor, rand, start, end, wall, false, true);
 		
 		MetaBlock birchSlab = Slab.get(Slab.BIRCH, true, false, false);
 		MetaBlock pumpkin = Crops.get(Crops.PUMPKIN);
@@ -45,30 +49,29 @@ public class DungeonTreetho extends DungeonBase{
 		end = new Coord(origin);
 		start.add(new Coord(-9, 8, -9));
 		end.add(new Coord(9, 8, 9));
-		editor.fillRectSolid(rand, start, end, birchSlab, true, true);
+		RectSolid.fill(editor, rand, start, end, birchSlab);
 		start.add(Cardinal.UP);
 		end.add(Cardinal.UP);
-		editor.fillRectSolid(rand, start, end, pumpkin, true, true);
+		RectSolid.fill(editor, rand, start, end, pumpkin, true, true);
 		
 		cursor = new Coord(origin);
 		cursor.add(new Coord(0, 8, 0));
 		ceiling(editor, rand, settings, cursor);
 		
 		cursor = new Coord(origin);
-		treeFarm(editor, rand, settings, cursor, entrances[0]);
+		treeFarm(editor, rand, settings, cursor, dir);
 		
-		Cardinal[] orth = Cardinal.getOrthogonal(entrances[0]);
-		for(Cardinal o : orth){
+		for(Cardinal o : Cardinal.orthogonal(dir)){
 			cursor = new Coord(origin);
 			cursor.add(o, 5);
-			treeFarm(editor, rand, settings, cursor, entrances[0]);
+			treeFarm(editor, rand, settings, cursor, dir);
 		}
 		
 		
 		return true;
 	}
 	
-	private void treeFarm(WorldEditor editor, Random rand, LevelSettings settings, Coord origin, Cardinal dir){
+	private void treeFarm(IWorldEditor editor, Random rand, LevelSettings settings, Coord origin, Cardinal dir){
 		Coord cursor;
 		Coord start;
 		Coord end;
@@ -79,18 +82,16 @@ public class DungeonTreetho extends DungeonBase{
 		MetaBlock glass = ColorBlock.get(ColorBlock.GLASS, DyeColor.YELLOW);
 		MetaBlock dirt = BlockType.get(BlockType.DIRT);
 		
-		Cardinal[] orth = Cardinal.getOrthogonal(dir);
-		
 		start = new Coord(origin);
 		end = new Coord(origin);
 		
-		start.add(orth[0]);
-		end.add(orth[1]);
+		start.add(Cardinal.left(dir));
+		end.add(Cardinal.right(dir));
 		
 		start.add(Cardinal.reverse(dir), 7);
 		end.add(dir, 7);
 		
-		editor.fillRectSolid(rand, start, end, slab, true, true);
+		RectSolid.fill(editor, rand, start, end, slab, true, true);
 		
 		cursor = new Coord(origin);
 		
@@ -99,13 +100,13 @@ public class DungeonTreetho extends DungeonBase{
 			if(i % 2 == 0){
 				Coord p = new Coord(cursor);
 				if(i % 4 == 0){
-					sapling.setBlock(editor, p);
+					sapling.set(editor, p);
 					p.add(Cardinal.DOWN);
-					dirt.setBlock(editor, p);
+					dirt.set(editor, p);
 				} else {
-					glass.setBlock(editor, p);
+					glass.set(editor, p);
 					p.add(Cardinal.DOWN);
-					light.setBlock(editor, p);
+					light.set(editor, p);
 				}
 			}
 			cursor.add(dir);
@@ -115,7 +116,7 @@ public class DungeonTreetho extends DungeonBase{
 		
 	}
 	
-	private void ceiling(WorldEditor editor, Random rand, LevelSettings settings, Coord origin){
+	private void ceiling(IWorldEditor editor, Random rand, LevelSettings settings, Coord origin){
 		
 		MetaBlock fill = Wood.getPlank(Wood.SPRUCE);
 		
@@ -127,25 +128,24 @@ public class DungeonTreetho extends DungeonBase{
 			start.add(dir, 9);
 			Coord end = new Coord(start);
 			
-			Cardinal[] orth = Cardinal.getOrthogonal(dir);
-			start.add(orth[0], 9);
-			end.add(orth[1], 9);
+			start.add(Cardinal.left(dir), 9);
+			end.add(Cardinal.right(dir), 9);
 			
-			editor.fillRectSolid(rand, start, end, fill, true, true);
+			RectSolid.fill(editor, rand, start, end, fill, true, true);
 			
 			Coord cursor = new Coord(origin);
 			cursor.add(Cardinal.DOWN);
 			cursor.add(dir, 10);
-			cursor.add(orth[0], 10);
+			cursor.add(Cardinal.left(dir), 10);
 			for(int i = 0; i < 5; ++i){
 				pillar(editor, rand, settings, cursor);
-				cursor.add(orth[1], 4);
+				cursor.add(Cardinal.right(dir), 4);
 			}
 		}
 		
 	}
 	
-	private void pillar(WorldEditor editor, Random rand, LevelSettings settings, Coord origin){
+	private void pillar(IWorldEditor editor, Random rand, LevelSettings settings, Coord origin){
 		
 		ITheme theme = settings.getTheme();
 		IBlockFactory pillar = theme.getPrimaryPillar();
@@ -158,7 +158,7 @@ public class DungeonTreetho extends DungeonBase{
 			cursor = new Coord(origin);
 			cursor.add(dir);
 			if(editor.isAirBlock(cursor)){
-				stair.setOrientation(dir, true).setBlock(editor, cursor);
+				stair.setOrientation(dir, true).set(editor, cursor);
 			}
 		}
 	}

@@ -8,7 +8,7 @@ import greymerk.roguelike.dungeon.settings.ISettings;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.dungeon.towers.Tower;
 import greymerk.roguelike.worldgen.Coord;
-import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.IWorldEditor;
 
 public class DungeonGenerator {
 	public static final int VERTICAL_SPACING = 10;
@@ -20,7 +20,7 @@ public class DungeonGenerator {
 		this.levels = new ArrayList<IDungeonLevel>();
 	}
 	
-	public void generate(WorldEditor editor, ISettings settings, int inX, int inZ){
+	public void generate(IWorldEditor editor, ISettings settings, int inX, int inZ){
 		
 		int x = inX;
 		int y = TOPLEVEL;
@@ -39,7 +39,11 @@ public class DungeonGenerator {
 			DungeonLevel level = new DungeonLevel(editor, rand, levelSettings, new Coord(start));
 			
 			ILevelGenerator generator = LevelGenerator.getGenerator(editor, rand, levelSettings.getGenerator(), level);
-			level.generate(generator, new Coord(start), oldEnd);
+			try{
+				level.generate(generator, new Coord(start), oldEnd);
+			} catch(Exception e){
+				e.printStackTrace();
+			}
 			
 			rand = Dungeon.getRandom(editor, start.getX(), start.getZ());
 			oldEnd = generator.getEnd();			
@@ -52,7 +56,7 @@ public class DungeonGenerator {
 		
 		Tower tower = settings.getTower().getTower();
 		rand = Dungeon.getRandom(editor, inX, inZ);
-		Tower.get(tower).generate(editor, rand, settings.getTower().getTheme(), inX, TOPLEVEL, inZ);
+		Tower.get(tower).generate(editor, rand, settings.getTower().getTheme(), new Coord(inX, TOPLEVEL, inZ));
 	}
 	
 	public List<IDungeonLevel> getLevels(){

@@ -14,15 +14,17 @@ import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.IStair;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.Spawner;
-import greymerk.roguelike.worldgen.WorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
+import greymerk.roguelike.worldgen.shapes.RectHollow;
+import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 public class DungeonsBrick extends DungeonBase {
 
 	
-	public boolean generate(WorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
+	public boolean generate(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
 		
 		int x = origin.getX();
 		int y = origin.getY();
@@ -36,13 +38,13 @@ public class DungeonsBrick extends DungeonBase {
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		
 		// fill air inside
-		editor.fillRectSolid(rand, x - 3, y, z - 3, x + 3, y + 3, z + 3, air);
-		editor.fillRectSolid(rand, x - 1, y + 4, z - 1, x + 1, y + 4, z + 1, air);
+		RectSolid.fill(editor, rand, new Coord(x - 3, y, z - 3), new Coord(x + 3, y + 3, z + 3), air);
+		RectSolid.fill(editor, rand, new Coord(x - 1, y + 4, z - 1), new Coord(x + 1, y + 4, z + 1), air);
 		
 		// shell
-		editor.fillRectHollow(rand, x - 4, y - 1, z - 4, x + 4, y + 4, z + 4, blocks, false, true);
+		RectHollow.fill(editor, rand, new Coord(x - 4, y - 1, z - 4), new Coord(x + 4, y + 4, z + 4), blocks, false, true);
 
-		editor.fillRectSolid(rand, new Coord(x - 4, y - 1, z - 4), new Coord(x + 4, y - 1, z + 4), theme.getPrimaryFloor(), false, true);
+		RectSolid.fill(editor, rand, new Coord(x - 4, y - 1, z - 4), new Coord(x + 4, y - 1, z + 4), theme.getPrimaryFloor(), false, true);
 		
 		Coord start;
 		Coord end;
@@ -51,9 +53,9 @@ public class DungeonsBrick extends DungeonBase {
 		
 		cursor = new Coord(x, y, z);
 		cursor.add(Cardinal.UP, 5);
-		air.setBlock(editor, cursor);
+		air.set(editor, cursor);
 		cursor.add(Cardinal.UP, 1);
-		editor.setBlock(rand, cursor, blocks, true, true);
+		blocks.set(editor, rand, cursor);
 		
 		// Chests
 		List<Coord> space = new ArrayList<Coord>();
@@ -65,61 +67,61 @@ public class DungeonsBrick extends DungeonBase {
 			cursor.add(dir, 1);
 			cursor.add(Cardinal.UP, 5);
 			stair.setOrientation(Cardinal.reverse(dir), true);
-			editor.setBlock(rand, cursor, stair, false, true);
-			cursor.add(Cardinal.getOrthogonal(dir)[0], 1);
-			editor.setBlock(rand, cursor, blocks, false, true);
+			stair.set(editor, rand, cursor, false, true);
+			cursor.add(Cardinal.left(dir), 1);
+			blocks.set(editor, rand, cursor, false, true);
 
 			cursor = new Coord(x, y, z);
 			cursor.add(dir, 2);
 			cursor.add(Cardinal.UP, 4);
-			air.setBlock(editor, cursor);
+			air.set(editor, cursor);
 			cursor.add(Cardinal.UP, 1);
-			editor.setBlock(rand, cursor, blocks, false, true);
+			blocks.set(editor, rand, cursor, false, true);
 			
 			// pillar
 			cursor = new Coord(x, y, z);
 			cursor.add(dir, 3);
-			cursor.add(Cardinal.getOrthogonal(dir)[0], 3);
+			cursor.add(Cardinal.left(dir), 3);
 			start = new Coord(cursor);
 			cursor.add(Cardinal.UP, 2);
 			end = new Coord(cursor);
-			editor.fillRectSolid(rand, start, end, pillar, true, true);
+			RectSolid.fill(editor, rand, start, end, pillar, true, true);
 			cursor.add(Cardinal.UP, 1);
-			editor.setBlock(rand, cursor, blocks, true, true);
+			blocks.set(editor, rand, cursor);
 			
 			// pillar stairs
-			for(Cardinal orth : Cardinal.getOrthogonal(dir)){
+			for(Cardinal orth : Cardinal.orthogonal(dir)){
 				cursor = new Coord(x, y, z);
 				cursor.add(dir, 3);
 				cursor.add(orth, 2);
 				cursor.add(Cardinal.UP, 3);
 				stair.setOrientation(Cardinal.reverse(orth), true);
-				editor.setBlock(rand, cursor, stair, true, true);
+				stair.set(editor, rand, cursor);
 			}
 
 			// layer above pillars
 			cursor = new Coord(x, y, z);
 			cursor.add(dir, 2);
-			cursor.add(Cardinal.getOrthogonal(dir)[0], 2);
+			cursor.add(Cardinal.left(dir), 2);
 			cursor.add(Cardinal.UP, 4);
-			editor.setBlock(rand, cursor, blocks, false, true);
+			blocks.set(editor, rand, cursor, false, true);
 			
-			for(Cardinal orth : Cardinal.getOrthogonal(dir)){
+			for(Cardinal orth : Cardinal.orthogonal(dir)){
 				cursor = new Coord(x, y, z);
 				cursor.add(Cardinal.UP, 4);
 				cursor.add(dir, 2);
 				cursor.add(orth, 1);
 				stair.setOrientation(Cardinal.reverse(orth), true);
-				editor.setBlock(rand, cursor, stair, false, true);
+				stair.set(editor, rand, cursor, false, true);
 			}
 			
 			cursor = new Coord(x, y, z);
 			cursor.add(dir, 1);
-			cursor.add(Cardinal.getOrthogonal(dir)[0], 1);
+			cursor.add(Cardinal.left(dir), 1);
 			cursor.add(Cardinal.UP, 5);
-			editor.setBlock(rand, cursor, blocks, false, true);
+			blocks.set(editor, rand, cursor, false, true);
 			
-			for(Cardinal orth : Cardinal.getOrthogonal(dir)){
+			for(Cardinal orth : Cardinal.orthogonal(dir)){
 				cursor = new Coord(x, y, z);
 				cursor.add(dir, 3);
 				cursor.add(orth, 2);
@@ -130,12 +132,7 @@ public class DungeonsBrick extends DungeonBase {
 		List<Treasure> types = new ArrayList<Treasure>(Arrays.asList(Treasure.ARMOUR, Treasure.WEAPONS, Treasure.TOOLS));
 		Treasure.createChests(editor, rand, 1, space, types, Dungeon.getLevel(origin.getY()));
 		Spawner.generate(editor, rand, settings, new Coord(x, y, z));
-
 		return true;
-	}
-	
-	public boolean isValidDungeonLocation(WorldEditor editor, int x, int y, int z) {
-		return false;
 	}
 	
 	public int getSize(){

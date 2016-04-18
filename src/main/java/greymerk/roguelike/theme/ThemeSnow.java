@@ -21,7 +21,7 @@ public class ThemeSnow extends ThemeBase{
 		walls.addBlock(mossy, 1);
 		
 		MetaStair stair = new MetaStair(StairType.STONEBRICK);
-		MetaBlock pillar = Log.getLog(Wood.SPRUCE);
+		MetaBlock pillar = Log.get(Wood.SPRUCE);
 		
 		this.primary = new BlockSet(walls, stair, pillar);
 		

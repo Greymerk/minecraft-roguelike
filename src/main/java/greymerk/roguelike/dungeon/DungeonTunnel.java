@@ -12,9 +12,11 @@ import greymerk.roguelike.worldgen.BlockJumble;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.MetaBlock;
-import greymerk.roguelike.worldgen.WorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
+import greymerk.roguelike.worldgen.shapes.RectHollow;
+import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 public class DungeonTunnel implements Iterable<Coord>{
 
@@ -22,21 +24,22 @@ public class DungeonTunnel implements Iterable<Coord>{
 	private Coord end;
 	private Cardinal dir;
 	private List<ISegment> segments;
+	private List<Coord> tunnel;
 	
-	public DungeonTunnel(Coord start, Coord end, Cardinal dir){
+	public DungeonTunnel(IWorldEditor editor, Coord start, Coord end, Cardinal dir){
 		this.start = start;
 		this.end = end;
+		this.tunnel = new RectSolid(start, end).get();
 		this.dir = dir;
 		this.segments = new ArrayList<ISegment>();
 	}
 
 	@Override
 	public Iterator<Coord> iterator() {
-		List<Coord> t = WorldEditor.getRectSolid(start, end);
-		return t.iterator();
+		return tunnel.iterator();
 	}
 	
-	public void construct(WorldEditor editor, Random rand, LevelSettings settings){
+	public void construct(IWorldEditor editor, Random rand, LevelSettings settings){
 		
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		
@@ -53,7 +56,7 @@ public class DungeonTunnel implements Iterable<Coord>{
 		e.add(Cardinal.SOUTH);
 		e.add(Cardinal.WEST);
 		e.add(Cardinal.UP, 2);
-		editor.fillRectSolid(rand, s, e, air, true, true);
+		RectSolid.fill(editor, rand, s, e, air);
 		
 		s.add(Cardinal.NORTH);
 		s.add(Cardinal.EAST);
@@ -61,7 +64,7 @@ public class DungeonTunnel implements Iterable<Coord>{
 		e.add(Cardinal.SOUTH);
 		e.add(Cardinal.WEST);
 		e.add(Cardinal.UP);
-		editor.fillRectHollow(rand, s, e, wallBlocks, false, true);
+		RectHollow.fill(editor, rand, s, e, wallBlocks, false, true);
 		
 		s = new Coord(this.start);
 		s.add(Cardinal.NORTH);
@@ -71,22 +74,22 @@ public class DungeonTunnel implements Iterable<Coord>{
 		e.add(Cardinal.SOUTH);
 		e.add(Cardinal.WEST);
 		e.add(Cardinal.DOWN);
-		editor.fillRectSolid(rand, s, e, floor, false, true);
-		editor.fillRectSolid(rand, s, e, bridgeBlocks, true, false);
+		RectSolid.fill(editor, rand, s, e, floor, false, true);
+		RectSolid.fill(editor, rand, s, e, bridgeBlocks, true, false);
 		
 		// end of the tunnel;
 		Coord location = new Coord(end);
 		location.add(dir, 1);
 		
 		Coord start = new Coord(location);
-		Cardinal[] orth = Cardinal.getOrthogonal(dir);
+		Cardinal[] orth = Cardinal.orthogonal(dir);
 		start.add(orth[0], 2);
 		start.add(Cardinal.UP, 2);
 		Coord end = new Coord(location);
 		end.add(orth[1], 2);
 		end.add(Cardinal.DOWN, 2);
 		
-		editor.fillRectSolid(rand, start, end, wallBlocks, false, true);
+		RectSolid.fill(editor, rand, start, end, wallBlocks, false, true);
 		
 	}
 	
@@ -101,7 +104,7 @@ public class DungeonTunnel implements Iterable<Coord>{
 		return this.dir;
 	}
 
-	public void genSegments(WorldEditor editor, Random rand, IDungeonLevel level) {
+	public void genSegments(IWorldEditor editor, Random rand, IDungeonLevel level) {
 		LevelSettings settings = level.getSettings();
 		ISegmentGenerator segGen = settings.getSegments();
 		for(Coord c : this){

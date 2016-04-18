@@ -13,10 +13,10 @@ public enum Wood {
 	
 	public static MetaBlock get(Wood type, WoodBlock block){
 		switch(block){
-		case LOG: return Log.getLog(type);
+		case LOG: return Log.get(type);
 		case PLANK: return getPlank(type);
 		case FENCE: return getFence(type);
-		default: return Log.getLog(OAK);
+		default: return Log.get(OAK);
 		}
 	}
 	

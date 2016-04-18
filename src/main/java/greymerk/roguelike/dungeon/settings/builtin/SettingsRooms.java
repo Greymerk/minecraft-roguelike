@@ -22,49 +22,41 @@ public class SettingsRooms extends DungeonSettings{
 				break;
 			case 1:
 				factory = new DungeonFactory();
-				factory.addSingle(DungeonRoom.MUSIC);
 				factory.addSingle(DungeonRoom.PIT);
-				factory.addSingle(DungeonRoom.MESS);
 				factory.addRandom(DungeonRoom.CORNER, 10);
 				factory.addRandom(DungeonRoom.BRICK, 3);
 				break;
 			case 2:
 				factory = new DungeonFactory();
 				factory.addSingle(DungeonRoom.OSSUARY);
+				factory.addSingle(DungeonRoom.CRYPT);
 				factory.addSingle(DungeonRoom.CREEPER);
 				factory.addSingle(DungeonRoom.FIRE);
 				factory.addSingle(DungeonRoom.SPIDER);
-				factory.addByRatio(DungeonRoom.PRISON, 5);
-				factory.addByRatio(DungeonRoom.CRYPT, 10);
-				factory.addByRatio(DungeonRoom.PIT, 7);
-				factory.addRandom(DungeonRoom.CORNER, 10);
+				factory.addSingle(DungeonRoom.PRISON);
+				factory.addRandom(DungeonRoom.CRYPT, 5);
+				factory.addRandom(DungeonRoom.CORNER, 5);
 				factory.addRandom(DungeonRoom.BRICK, 3);
 				break;	
 			case 3:
 				factory = new DungeonFactory();
 				factory.addSingle(DungeonRoom.OSSUARY);
 				factory.addSingle(DungeonRoom.ENDER);
-				factory.addByRatio(DungeonRoom.CRYPT, 15);
-				factory.addByRatio(DungeonRoom.PRISON, 15);
-				factory.addByRatio(DungeonRoom.SPIDER, 15);
-				factory.addByRatio(DungeonRoom.CREEPER, 15);
-				factory.addByRatio(DungeonRoom.FIRE, 20);
-				factory.addRandom(DungeonRoom.CORNER, 100);
-				factory.addRandom(DungeonRoom.BRICK, 30);
-				factory.addRandom(DungeonRoom.SPIDER, 10);
-				factory.addRandom(DungeonRoom.SLIME, 10);
-				factory.addRandom(DungeonRoom.PIT, 10);
+				factory.addSingle(DungeonRoom.CRYPT);
+				factory.addRandom(DungeonRoom.PRISON, 3);
+				factory.addRandom(DungeonRoom.SLIME, 5);
+				factory.addRandom(DungeonRoom.CREEPER, 1);
+				factory.addRandom(DungeonRoom.SPIDER, 1);
+				factory.addRandom(DungeonRoom.PIT, 1);
 				break;
 			case 4:
 				factory = new DungeonFactory();
 				factory.addSingle(DungeonRoom.OBSIDIAN);
 				factory.addSingle(DungeonRoom.FIRE);
 				factory.addSingle(DungeonRoom.NETHERFORT);
-				factory.addSingle(DungeonRoom.SLIME);
-				factory.addRandom(DungeonRoom.CORNER, 100);
-				factory.addRandom(DungeonRoom.NETHER, 30);
-				factory.addRandom(DungeonRoom.SLIME, 10);
-				factory.addRandom(DungeonRoom.SPIDER, 10);
+				factory.addRandom(DungeonRoom.CORNER, 10);
+				factory.addRandom(DungeonRoom.NETHER, 3);
+				factory.addRandom(DungeonRoom.SPIDER, 1);
 				break;
 			default:
 				factory = new DungeonFactory();

@@ -1,7 +1,9 @@
 package greymerk.roguelike.dungeon.rooms;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 import greymerk.roguelike.dungeon.base.DungeonBase;
@@ -11,136 +13,170 @@ import greymerk.roguelike.treasure.Treasure;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
+import greymerk.roguelike.worldgen.IStair;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.MetaBlock;
-import greymerk.roguelike.worldgen.WorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.ColorBlock;
-import greymerk.roguelike.worldgen.blocks.Wood;
-import greymerk.roguelike.worldgen.blocks.WoodBlock;
+import greymerk.roguelike.worldgen.blocks.DyeColor;
+import greymerk.roguelike.worldgen.shapes.RectHollow;
+import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 public class DungeonsMusic extends DungeonBase {
-	WorldEditor editor;
-	Random rand;
-	int originX;
-	int originY;
-	int originZ;
-	
-	public DungeonsMusic() {
-		super();
-	}
 
-	public boolean generate(WorldEditor editor, Random inRandom, LevelSettings settings, Cardinal[] entrances, Coord origin) {
-
+	public boolean generate(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
 		ITheme theme = settings.getTheme();
-		
-		this.editor = editor;
-		rand = inRandom;
-		originX = origin.getX();
-		originY = origin.getY();
-		originZ = origin.getZ();
-
-		MetaBlock air = BlockType.get(BlockType.AIR);
 		IBlockFactory wall = theme.getPrimaryWall();
-		IBlockFactory deco = theme.getSecondaryWall();
-		MetaBlock rug1 = ColorBlock.get(ColorBlock.CARPET, rand);
-		MetaBlock rug2 = ColorBlock.get(ColorBlock.CARPET, rand);
-		MetaBlock rug3 = ColorBlock.get(ColorBlock.CARPET, rand);
+		IStair stair = theme.getSecondaryStair();
+		IBlockFactory panel = theme.getSecondaryWall();
+		IBlockFactory pillar = theme.getSecondaryPillar();
+		MetaBlock air = BlockType.get(BlockType.AIR);
+		IBlockFactory floor = theme.getSecondaryFloor();
 		
-		// fill air
-		editor.fillRectSolid(inRandom, originX - 5, originY, originZ - 5, originX + 5, originY + 3, originZ + 5, air);
+		Coord start;
+		Coord end;
+		Coord cursor;
 		
-		// shell
-		editor.fillRectHollow(rand, new Coord(originX - 6, originY - 2, originZ - 6), new Coord(originX + 6, originY + 5, originZ + 6), wall, false, true);
+		List<Coord> chests = new ArrayList<Coord>();
 		
-		// floor
-		editor.fillRectSolid(rand, originX - 5, originY - 1, originZ - 5, originX + 5, originY - 1, originZ + 5, deco, true, true);
-		editor.fillRectSolid(rand, originX - 3, originY, originZ - 3, originX + 3, originY, originZ + 3, rug1, true, true);
-		editor.fillRectSolid(rand, originX - 2, originY, originZ - 2, originX + 2, originY, originZ + 2, rug2, true, true);
-		editor.fillRectSolid(rand, originX - 1, originY, originZ - 1, originX + 1, originY, originZ + 1, rug3, true, true);
-		
-		//WALLS
-		MetaBlock log = Wood.get(WoodBlock.LOG);
-		
-		// vertical beams
-		editor.fillRectSolid(inRandom, originX - 2, originY, originZ - 5, originX - 2, originY + 2, originZ - 5, log, true, true);
-		editor.fillRectSolid(inRandom, originX + 2, originY, originZ - 5, originX + 2, originY + 2, originZ - 5, log, true, true);
+		start = new Coord(origin);
+		end = new Coord(origin);
+		start.add(new Coord(-6, -1, -6));
+		end.add(new Coord(6, 5, 6));
+		RectHollow.fill(editor, rand, start, end, wall, false, true);
 
-		editor.fillRectSolid(inRandom, originX - 2, originY, originZ + 5, originX - 2, originY + 2, originZ + 5, log, true, true);
-		editor.fillRectSolid(inRandom, originX + 2, originY, originZ + 5, originX + 2, originY + 2, originZ + 5, log, true, true);
-
-		editor.fillRectSolid(rand, originX - 5, originY, originZ - 2, originX - 5, originY + 2, originZ - 2, log, true, true);
-		editor.fillRectSolid(rand, originX - 5, originY, originZ + 2, originX - 5, originY + 2, originZ + 2, log, true, true);
-
-		editor.fillRectSolid(rand, originX + 5, originY, originZ - 2, originX + 5, originY + 2, originZ - 2, log, true, true);
-		editor.fillRectSolid(rand, originX + 5, originY, originZ + 2, originX + 5, originY + 2, originZ + 2, log, true, true);
-
-		editor.fillRectSolid(rand, originX - 5, originY, originZ - 5, originX - 5, originY + 2, originZ - 5, log, true, true);
-		editor.fillRectSolid(rand, originX - 5, originY, originZ + 5, originX - 5, originY + 2, originZ + 5, log, true, true);
-		editor.fillRectSolid(rand, originX + 5, originY, originZ - 5, originX + 5, originY + 2, originZ - 5, log, true, true);
-		editor.fillRectSolid(rand, originX + 5, originY, originZ + 5, originX + 5, originY + 2, originZ + 5, log, true, true);
-
-		// shelves
-		editor.fillRectSolid(rand, originX - 4, originY, originZ - 5, originX - 3, originY, originZ - 5, deco, true, true);
-		editor.fillRectSolid(rand, originX + 3, originY, originZ - 5, originX + 4, originY, originZ - 5, deco, true, true);
+		start = new Coord(origin);
+		end = new Coord(origin);
+		start.add(new Coord(-6, 4, -6));
+		end.add(new Coord(6, 5, 6));
+		RectSolid.fill(editor, rand, start, end, panel, true, true);
 		
-		editor.fillRectSolid(rand, originX - 4, originY, originZ + 5, originX - 3, originY, originZ + 5, deco, true, true);
-		editor.fillRectSolid(rand, originX + 3, originY, originZ + 5, originX + 4, originY, originZ + 5, deco, true, true);
+		start = new Coord(origin);
+		end = new Coord(origin);
+		start.add(new Coord(-3, 4, -3));
+		end.add(new Coord(3, 4, 3));
+		RectSolid.fill(editor, rand, start, end, air);
 		
-		editor.fillRectSolid(rand, originX - 5, originY, originZ - 4, originX - 5, originY, originZ - 3, deco, true, true);
-		editor.fillRectSolid(rand, originX - 5, originY, originZ + 3, originX - 5, originY, originZ + 4, deco, true, true);
+		start = new Coord(origin);
+		end = new Coord(origin);
+		start.add(new Coord(-3, -1, -3));
+		end.add(new Coord(3, -1, 3));
+		RectSolid.fill(editor, rand, start, end, floor, true, true);
 		
-		editor.fillRectSolid(rand, originX + 5, originY, originZ - 4, originX + 5, originY, originZ - 3, deco, true, true);
-		editor.fillRectSolid(rand, originX + 5, originY, originZ + 3, originX + 5, originY, originZ + 4, deco, true, true);
+		List<DyeColor> colors = Arrays.asList(DyeColor.values());
+		Collections.shuffle(colors, rand);
+		for(int i = 2; i >= 0; --i){
+			start = new Coord(origin);
+			end = new Coord(origin);
+			start.add(new Coord(-i - 1, 0, -i - 1));
+			end.add(new Coord(i + 1, 0, i + 1));
+			MetaBlock carpet = ColorBlock.get(ColorBlock.CARPET, colors.get(i));
+			RectSolid.fill(editor, rand, start, end, carpet);
+		}
 		
-		HashSet<Coord> chestSpace = new HashSet<Coord>();
-		chestSpace.addAll(WorldEditor.getRectSolid(originX - 4, originY + 1, originZ - 5, originX - 3, originY + 1, originZ - 5));
-		chestSpace.addAll(WorldEditor.getRectSolid(originX + 3, originY + 1, originZ - 5, originX + 4, originY + 1, originZ - 5));
+		for(Cardinal dir : Cardinal.directions){
+			
+			cursor = new Coord(origin);
+			cursor.add(dir, 5);
+			cursor.add(Cardinal.UP, 3);
+			panel.set(editor, rand, cursor);
+			cursor.add(Cardinal.reverse(dir));
+			stair.setOrientation(Cardinal.reverse(dir), true).set(editor, cursor);
+			
+			cursor = new Coord(origin);
+			cursor.add(dir, 5);
+			cursor.add(Cardinal.left(dir), 5);
+			pillar(editor, rand, settings, cursor);
+			
+			start = new Coord(origin);
+			start.add(Cardinal.UP, 4);
+			start.add(dir, 3);
+			end = new Coord(start);
+			start.add(Cardinal.left(dir), 3);
+			end.add(Cardinal.right(dir), 3);
+			RectSolid.fill(editor, rand, start, end, pillar, true, true);
+			
+			cursor = new Coord(origin);
+			cursor.add(Cardinal.UP, 4);
+			cursor.add(dir);
+			stair.setOrientation(dir, true).set(editor, cursor);
+			cursor.add(dir);
+			stair.setOrientation(Cardinal.reverse(dir), true).set(editor, cursor);
+			
+			for(Cardinal o : Cardinal.orthogonal(dir)){
+				cursor = new Coord(origin);
+				cursor.add(dir, 5);
+				cursor.add(o, 2);
+				pillar(editor, rand, settings, cursor);
+				
+				cursor = new Coord(origin);
+				cursor.add(dir, 4);
+				cursor.add(Cardinal.UP, 3);
+				cursor.add(o);
+				stair.setOrientation(Cardinal.reverse(dir), true).set(editor, cursor);
+				
+				cursor = new Coord(origin);
+				cursor.add(dir, 5);
+				cursor.add(o, 3);
+				cursor.add(Cardinal.UP);
+				chests.add(new Coord(cursor));
+				cursor.add(o);
+				chests.add(new Coord(cursor));
+				
+				cursor = new Coord(origin);
+				cursor.add(dir, 5);
+				cursor.add(o, 3);
+				stair.setOrientation(Cardinal.reverse(dir), true).set(editor, cursor);
+				cursor.add(o);
+				stair.setOrientation(Cardinal.reverse(dir), true).set(editor, cursor);
+				cursor.add(Cardinal.UP, 2);
+				stair.setOrientation(Cardinal.reverse(o), true).set(editor, cursor);
+				cursor.add(Cardinal.reverse(o));
+				stair.setOrientation(o, true).set(editor, cursor);
+				cursor.add(Cardinal.UP);
+				panel.set(editor, rand, cursor);
+				cursor.add(o);
+				panel.set(editor, rand, cursor);
+				cursor.add(Cardinal.reverse(dir));
+				stair.setOrientation(Cardinal.reverse(dir), true).set(editor, cursor);
+				cursor.add(Cardinal.reverse(o));
+				stair.setOrientation(Cardinal.reverse(dir), true).set(editor, cursor);
+			
+			}
+		}
 		
-		chestSpace.addAll(WorldEditor.getRectSolid(originX - 4, originY + 1, originZ + 5, originX - 3, originY + 1, originZ + 5));
-		chestSpace.addAll(WorldEditor.getRectSolid(originX + 3, originY + 1, originZ + 5, originX + 4, originY + 1, originZ + 5));
+		BlockType.get(BlockType.JUKEBOX).set(editor, origin);
 		
-		chestSpace.addAll(WorldEditor.getRectSolid(originX - 5, originY + 1, originZ - 4, originX - 5, originY + 1, originZ - 3));
-		chestSpace.addAll(WorldEditor.getRectSolid(originX - 5, originY + 1, originZ + 3, originX - 5, originY + 1, originZ + 4));
+		cursor = new Coord(origin);
+		cursor.add(Cardinal.UP, 4);
+		BlockType.get(BlockType.GLOWSTONE).set(editor, cursor);
 		
-		chestSpace.addAll(WorldEditor.getRectSolid(originX + 5, originY + 1, originZ - 4, originX + 5, originY + 1, originZ - 3));
-		chestSpace.addAll(WorldEditor.getRectSolid(originX + 5, originY + 1, originZ + 3, originX + 5, originY + 1, originZ + 4));
-
-		ArrayList<Coord> spaces = new ArrayList<Coord>();
-		spaces.addAll(chestSpace);
+		Treasure.generate(editor, rand, chests, Treasure.MUSIC, settings.getDifficulty(origin));
 		
-		Treasure.generate(editor, rand, spaces.remove(0), Treasure.MUSIC, settings.getDifficulty(origin), false);
-		Treasure.generate(editor, rand, spaces.remove(0), Treasure.SUPPLIES, settings.getDifficulty(origin), false);
-		
-		// horizontal beams
-		editor.fillRectSolid(rand, originX - 5, originY + 3, originZ - 5, originX - 5, originY + 3, originZ + 5, log, true, true);
-		editor.fillRectSolid(rand, originX - 5, originY + 3, originZ - 5, originX + 5, originY + 3, originZ - 5, log, true, true);
-		editor.fillRectSolid(rand, originX - 5, originY + 3, originZ + 5, originX + 5, originY + 3, originZ + 5, log, true, true);
-		editor.fillRectSolid(rand, originX + 5, originY + 3, originZ - 5, originX + 5, originY + 3, originZ + 5, log, true, true);
-		
-		// ceiling cross beams
-		editor.fillRectSolid(rand, originX - 2, originY + 4, originZ - 5, originX - 2, originY + 4, originZ + 5, log, true, true);
-		editor.fillRectSolid(rand, originX + 2, originY + 4, originZ - 5, originX + 2, originY + 4, originZ + 5, log, true, true);
-		editor.fillRectSolid(rand, originX - 5, originY + 4, originZ - 2, originX + 5, originY + 4, originZ - 2, log, true, true);
-		editor.fillRectSolid(rand, originX - 5, originY + 4, originZ + 2, originX + 5, originY + 4, originZ + 2, log, true, true);
-		
-		// ceiling lamp
-		editor.setBlock(originX, originY + 4, originZ, BlockType.get(BlockType.REDSTONE_BLOCK));
-		editor.setBlock(originX - 1, originY + 4, originZ, BlockType.get(BlockType.REDSTONE_LAMP_LIT));
-		editor.setBlock(originX + 1, originY + 4, originZ, BlockType.get(BlockType.REDSTONE_LAMP_LIT));
-		editor.setBlock(originX, originY + 4, originZ - 1, BlockType.get(BlockType.REDSTONE_LAMP_LIT));
-		editor.setBlock(originX, originY + 4, originZ + 1, BlockType.get(BlockType.REDSTONE_LAMP_LIT));
-		
-		// ceiling fill
-		editor.fillRectSolid(rand, originX - 5, originY + 4, originZ - 5, originX + 5, originY + 4, originZ + 5, deco, true, false);
-		
-		// music box
-		editor.setBlock(originX, originY, originZ, BlockType.get(BlockType.JUKEBOX));
-		
-		return true;
+		return false;
 	}
 	
-	public boolean isValidDungeonLocation(WorldEditor editor, int originX, int originY, int originZ) {
-		return false;
+	private void pillar(IWorldEditor editor, Random rand, LevelSettings settings, Coord origin){
+		ITheme theme = settings.getTheme();
+		IStair stair = theme.getSecondaryStair();
+		IBlockFactory panel = theme.getSecondaryWall();
+		IBlockFactory pillar = theme.getSecondaryPillar();
+		
+		Coord start;
+		Coord end;
+		Coord cursor;
+		
+		start = new Coord(origin);
+		end = new Coord(start);
+		end.add(Cardinal.UP, 2);
+		RectSolid.fill(editor, rand, start, end, pillar);
+		for(Cardinal dir : Cardinal.directions){
+			cursor = new Coord(end);
+			cursor.add(dir);
+			stair.setOrientation(dir, true).set(editor, rand, cursor, true, false);
+			cursor.add(Cardinal.UP);
+			panel.set(editor, rand, cursor);
+		}
 	}
 
 	public int getSize(){

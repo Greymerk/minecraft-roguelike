@@ -15,6 +15,9 @@ import greymerk.roguelike.dungeon.settings.SpawnCriteria;
 import greymerk.roguelike.dungeon.settings.TowerSettings;
 import greymerk.roguelike.dungeon.towers.Tower;
 import greymerk.roguelike.theme.Theme;
+import greymerk.roguelike.treasure.loot.LootRuleManager;
+import greymerk.roguelike.treasure.loot.WeightedRandomLoot;
+import net.minecraft.init.Items;
 import net.minecraftforge.common.BiomeDictionary;
 
 public class SettingsDesertTheme extends DungeonSettings{
@@ -28,6 +31,11 @@ public class SettingsDesertTheme extends DungeonSettings{
 		
 		this.towerSettings = new TowerSettings(Tower.PYRAMID, Theme.getTheme(Theme.PYRAMID));
 		
+		this.lootRules = new LootRuleManager();
+		for(int i = 0; i < 5; ++i){
+			this.lootRules.add(null, new WeightedRandomLoot(Items.gold_ingot, 0, 1, 1 + i, 1), i, false, 6);
+		}
+		
 		Theme[] themes = {Theme.PYRAMID, Theme.SANDSTONE, Theme.SANDSTONERED, Theme.CRYPT, Theme.NETHER};
 		
 		for(int i = 0; i < 5; ++i){
@@ -36,7 +44,7 @@ public class SettingsDesertTheme extends DungeonSettings{
 			level.setTheme(Theme.getTheme(themes[i]));
 			
 			if(i == 0){
-				
+				level.setDifficulty(2);
 				SegmentGenerator segments = new SegmentGenerator(Segment.SQUAREARCH);
 				segments.add(Segment.DOOR, 10);
 				segments.add(Segment.ANKH, 5);
@@ -58,7 +66,7 @@ public class SettingsDesertTheme extends DungeonSettings{
 			}
 			
 			if(i == 1){
-				
+				level.setDifficulty(2);
 				SegmentGenerator segments = new SegmentGenerator(Segment.SQUAREARCH);
 				segments.add(Segment.SPAWNER, 1);
 				segments.add(Segment.DOOR, 10);
@@ -75,10 +83,6 @@ public class SettingsDesertTheme extends DungeonSettings{
 				factory.addRandom(DungeonRoom.PYRAMIDSPAWNER, 10);
 				factory.addRandom(DungeonRoom.PYRAMIDCORNER, 5);
 				level.setRooms(factory);
-				
-				SecretFactory secrets = new SecretFactory();
-				secrets.addRoom(DungeonRoom.ENCHANT);
-				level.setSecrets(secrets);
 				
 				level.setGenerator(LevelGenerator.CLASSIC);
 			}

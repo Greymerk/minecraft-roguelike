@@ -26,7 +26,7 @@ public class ThemeJungle extends ThemeBase{
 		MetaStair stair = new MetaStair(StairType.COBBLE);
 		
 		MetaBlock pillar = chisel;
-		MetaBlock pillar2 = Log.getLog(Wood.JUNGLE);
+		MetaBlock pillar2 = Log.get(Wood.JUNGLE);
 		
 		BlockJumble stairJumble = new BlockJumble();
 		for(Cardinal dir : Cardinal.directions){
@@ -37,7 +37,7 @@ public class ThemeJungle extends ThemeBase{
 		
 		BlockWeightedRandom floor = new BlockWeightedRandom();
 		floor.addBlock(stairJumble, 1);
-		floor.addBlock(walls, 3);
+		floor.addBlock(walls, 5);
 		
 		
 		this.primary = new BlockSet(floor, walls, stair, pillar);

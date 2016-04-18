@@ -5,8 +5,9 @@ import java.util.Random;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
-import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
+import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 public class SecretRoom implements ISecretRoom {
 
@@ -26,35 +27,35 @@ public class SecretRoom implements ISecretRoom {
 		this.type = toCopy.type;
 	}
 	
-	private boolean isValid(WorldEditor editor, Random rand, Cardinal dir, Coord pos){
+	private boolean isValid(IWorldEditor editor, Random rand, Cardinal dir, Coord pos){
 		if(count <= 0) return false;
 		Coord cursor = new Coord(pos);
 		cursor.add(dir, prototype.getSize() + 5);
 		
-		return prototype.validLocation(editor, dir, cursor.getX(), cursor.getY(), cursor.getZ());
+		return prototype.validLocation(editor, dir, cursor);
 	}
 	
 	@Override
-	public IDungeonRoom genRoom(WorldEditor editor, Random rand, LevelSettings settings, Cardinal dir, Coord pos){
+	public IDungeonRoom genRoom(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal dir, Coord pos){
 		if(!isValid(editor, rand, dir, pos)) return null;
 		
 		int size = prototype.getSize();
 		
 		Coord start = new Coord(pos);
 		Coord end = new Coord(pos);
-		start.add(Cardinal.getOrthogonal(dir)[0]);
+		start.add(Cardinal.orthogonal(dir)[0]);
 		start.add(Cardinal.DOWN);
 		start.add(dir, 2);
-		end.add(Cardinal.getOrthogonal(dir)[1]);
+		end.add(Cardinal.orthogonal(dir)[1]);
 		end.add(dir, size + 5);
 		end.add(Cardinal.UP, 2);
-		editor.fillRectSolid(rand, start, end, settings.getTheme().getPrimaryWall(), false, true);
+		RectSolid.fill(editor, rand, start, end, settings.getTheme().getPrimaryWall(), false, true);
 		
 		start = new Coord(pos);
 		end = new Coord(pos);
 		end.add(dir, size + 5);
 		end.add(Cardinal.UP);
-		editor.fillRectSolid(rand, pos, end, BlockType.get(BlockType.AIR), true, true);
+		RectSolid.fill(editor, rand, pos, end, BlockType.get(BlockType.AIR));
 		
 		end.add(Cardinal.DOWN);
 		this.prototype.generate(editor, rand, settings, new Cardinal[]{dir}, end);

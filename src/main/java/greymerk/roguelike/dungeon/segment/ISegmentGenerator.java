@@ -6,10 +6,10 @@ import java.util.Random;
 import greymerk.roguelike.dungeon.IDungeonLevel;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
-import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.IWorldEditor;
 
 public interface ISegmentGenerator {
 	
-	public List<ISegment> genSegment(WorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, Coord pos);
+	public List<ISegment> genSegment(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, Coord pos);
 	
 }

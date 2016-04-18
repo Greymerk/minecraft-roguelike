@@ -4,17 +4,28 @@ import java.util.Random;
 
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.MetaBlock;
-import greymerk.roguelike.worldgen.WorldEditor;
-import net.minecraft.init.Blocks;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Facing;
+import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 public class Vine {
 
-	public static void fill(WorldEditor editor, Random rand, Coord start, Coord end){
-		for(Coord cursor : WorldEditor.getRectSolid(start, end)){
-			set(editor, cursor);
+	public static void fill(IWorldEditor editor, Random rand, Coord start, Coord end){
+		for(Coord cursor : new RectSolid(start, end)){
+			set(editor, rand, cursor);
+		}
+	}
+	
+	private static void set(IWorldEditor editor, Random rand, Coord origin){
+		if(!editor.isAirBlock(origin)) return;
+		MetaBlock vine = BlockType.get(BlockType.VINE);
+		for(Cardinal dir : Cardinal.directions){
+			Coord c = new Coord(origin);
+			c.add(dir);
+			if(editor.canPlace(vine, c, dir)){
+				setOrientation(vine, dir).set(editor, c);
+				return;
+			}
 		}
 	}
 	
@@ -27,15 +38,5 @@ public class Vine {
 		default: vine.setMeta(0); break;
 		}
 		return vine;
-	}
-	
-	public static void set(WorldEditor editor, Coord pos){
-		if(!editor.isAirBlock(pos)) return;		
-		
-		for (int dir = 2; dir <= 5; ++dir){
-			if (editor.canPlaceOnSide(Blocks.vine, pos, dir)){
-				editor.setBlock(pos, new MetaBlock(Blocks.vine, 1 << Direction.facingToDirection[Facing.oppositeSide[dir]]), true, true);
-			};
-		}
 	}
 }

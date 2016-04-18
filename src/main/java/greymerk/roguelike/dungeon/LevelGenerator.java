@@ -9,13 +9,13 @@ import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IStair;
-import greymerk.roguelike.worldgen.WorldEditor;
+import greymerk.roguelike.worldgen.IWorldEditor;
 
 public enum LevelGenerator {
 	
 	CLASSIC, MST;
 	
-	public static ILevelGenerator getGenerator(WorldEditor editor, Random rand, LevelGenerator type, IDungeonLevel level){
+	public static ILevelGenerator getGenerator(IWorldEditor editor, Random rand, LevelGenerator type, IDungeonLevel level){
 			switch(type){
 			case CLASSIC:
 				return new LevelGeneratorClassic(editor, rand, level);
@@ -26,7 +26,7 @@ public enum LevelGenerator {
 			}
 	}
 	
-	public static void generateLevelLink(WorldEditor editor, Random rand, LevelSettings settings, Coord start, DungeonNode oldEnd) {
+	public static void generateLevelLink(IWorldEditor editor, Random rand, LevelSettings settings, Coord start, DungeonNode oldEnd) {
 		
 		IDungeonRoom downstairs = new DungeonLinker();
 		downstairs.generate(editor, rand, settings, Cardinal.directions, start);

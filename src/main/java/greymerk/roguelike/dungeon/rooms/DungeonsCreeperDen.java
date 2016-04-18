@@ -11,14 +11,16 @@ import greymerk.roguelike.treasure.Treasure;
 import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.Spawner;
-import greymerk.roguelike.worldgen.WorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
+import greymerk.roguelike.worldgen.shapes.RectHollow;
+import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 public class DungeonsCreeperDen extends DungeonBase {
 
-	public boolean generate(WorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
+	public boolean generate(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
 
 		ITheme theme = settings.getTheme();
 		
@@ -44,26 +46,26 @@ public class DungeonsCreeperDen extends DungeonBase {
 		end = new Coord(origin);
 		start.add(new Coord(-4, -4, -4));
 		end.add(new Coord(4, 5, 4));
-		mossy.fillRectHollow(editor, rand, start, end, false, true);
+		RectHollow.fill(editor, rand, start, end, mossy, false, true);
 		
 		start = new Coord(origin);
 		end = new Coord(origin);
 		start.add(new Coord(-3, -1, -3));
 		end.add(new Coord(3, -1, 3));
-		floor.fillRectSolid(editor, rand, start, end, true, true);
+		RectSolid.fill(editor, rand, start, end, floor, true, true);
 		
 		start = new Coord(origin);
 		end = new Coord(origin);
 		start.add(new Coord(-3, -3, -3));
 		end.add(new Coord(3, -2, 3));
-		subfloor.fillRectSolid(editor, rand, start, end, true, true);
+		RectSolid.fill(editor, rand, start, end, subfloor, true, true);
 		
 		start = new Coord(origin);
 		end = new Coord(origin);
 		start.add(new Coord(-3, 0, -3));
 		end.add(new Coord(3, 0, 3));
 		
-		List<Coord> chestSpaces = WorldEditor.getRectSolid(start, end);
+		List<Coord> chestSpaces = new RectSolid(start, end).get();
 		Collections.shuffle(chestSpaces, rand);
 		
 		int counter = 0;
@@ -72,7 +74,7 @@ public class DungeonsCreeperDen extends DungeonBase {
 				Treasure.generate(editor, rand, spot, Treasure.ORE, settings.getDifficulty(spot), true);
 				Coord cursor = new Coord(spot);
 				cursor.add(Cardinal.DOWN, 2);
-				tnt.setBlock(editor, cursor);
+				tnt.set(editor, cursor);
 				++counter;
 			}
 			

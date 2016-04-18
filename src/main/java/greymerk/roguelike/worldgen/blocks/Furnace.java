@@ -2,8 +2,8 @@ package greymerk.roguelike.worldgen.blocks;
 
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
+import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.MetaBlock;
-import greymerk.roguelike.worldgen.WorldEditor;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -14,15 +14,15 @@ public class Furnace {
 	public static final int FUEL_SLOT = 1;
 	public static final int OUTPUT_SLOT = 2;
 	
-	public static void generate(WorldEditor editor, Cardinal dir, Coord pos){
+	public static void generate(IWorldEditor editor, Cardinal dir, Coord pos){
 		generate(editor, null, false, dir, pos);
 	}
 	
-	public static void generate(WorldEditor editor, boolean lit, Cardinal dir, Coord pos){
+	public static void generate(IWorldEditor editor, boolean lit, Cardinal dir, Coord pos){
 		generate(editor, null, lit, dir, pos);
 	}
 	
-	public static void generate(WorldEditor editor, ItemStack fuel, boolean lit, Cardinal dir, Coord pos){
+	public static void generate(IWorldEditor editor, ItemStack fuel, boolean lit, Cardinal dir, Coord pos){
 
 		MetaBlock furnace;
 		
@@ -34,7 +34,7 @@ public class Furnace {
 		
 		furnace.setMeta(dirNum(dir));
 		
-		furnace.setBlock(editor, pos);
+		furnace.set(editor, pos);
 		
 		if(fuel == null) return;
 		

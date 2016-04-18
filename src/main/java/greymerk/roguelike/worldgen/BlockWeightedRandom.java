@@ -32,8 +32,8 @@ public class BlockWeightedRandom extends BlockBase {
 	}
 
 	@Override
-	public boolean setBlock(WorldEditor editor, Random rand, Coord origin, boolean fillAir, boolean replaceSolid) {
+	public boolean set(IWorldEditor editor, Random rand, Coord pos, boolean fillAir, boolean replaceSolid) {
 		IBlockFactory block = blocks.get(rand);
-		return block.setBlock(editor, rand, origin, fillAir, replaceSolid);
+		return block.set(editor, rand, pos, fillAir, replaceSolid);
 	}
 }

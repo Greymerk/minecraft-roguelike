@@ -44,7 +44,7 @@ public class SpawnerSettings {
 		if(override != null) this.spawners.putAll(override.spawners);
 	}
 	
-	public void generate(WorldEditor editor, Random rand, Coord cursor, Spawner type, int level){
+	public void generate(IWorldEditor editor, Random rand, Coord cursor, Spawner type, int level){
 		
 		if(!spawners.containsKey(type)){
 			Spawner.generate(editor, rand, level, cursor, type);
