@@ -52,7 +52,9 @@ public enum RogueConfig {
 		case SPAWNFREQUENCY: return new Tuple(getName(option), 10);
 		case GENEROUS: return new Tuple(getName(option), true);
 		case DIMENSIONWL:
-			return new Tuple(getName(option), new ArrayList<Integer>());
+			List<Integer> wl = new ArrayList<Integer>();
+			wl.add(0);
+			return new Tuple(getName(option), wl);
 		case DIMENSIONBL:
 			return new Tuple(getName(option), new ArrayList<Integer>());
 		case PRECIOUSBLOCKS: return new Tuple(getName(option), true);
