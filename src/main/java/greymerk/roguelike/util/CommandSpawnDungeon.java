@@ -24,6 +24,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraftforge.common.BiomeDictionary;
+import net.minecraftforge.common.BiomeDictionary.Type;
+import net.minecraftforge.common.BiomeManager.BiomeType;
 
 public class CommandSpawnDungeon extends CommandBase
 {
@@ -48,6 +52,30 @@ public class CommandSpawnDungeon extends CommandBase
 		
 		if(!ap.hasEntry(0)){
 			sender.addChatMessage(new TextComponentString(TextFormat.apply("Usage: roguelike [dungeon | give | config]", TextFormat.GRAY)));
+			return;
+		}
+		
+		if(ap.match(0, "biome")){
+			World world = sender.getEntityWorld();
+			IWorldEditor editor = new WorldEditor(world);
+			Coord pos;
+			if(!ap.hasEntry(1)){
+				pos = new Coord(sender.getPosition().getX(), sender.getPosition().getY(), sender.getPosition().getZ());
+			} else {
+				int x = parseInt(ap.get(1));
+				int z = parseInt(ap.get(2));
+				pos = new Coord(x, 0, z);
+			}
+			sender.addChatMessage(new TextComponentString(TextFormat.apply("Biome Information for " + pos.toString(), TextFormat.GOLD)));
+			
+			BiomeGenBase biome = editor.getBiome(pos);
+			sender.addChatMessage(new TextComponentString(TextFormat.apply(biome.getBiomeName(), TextFormat.GOLD)));
+			Type[] biomeTypes = BiomeDictionary.getTypesForBiome(biome);
+			String types = "";
+			for(BiomeDictionary.Type type : biomeTypes){
+				types += type.name() + " ";
+			}
+			sender.addChatMessage(new TextComponentString(TextFormat.apply(types, TextFormat.GOLD)));
 			return;
 		}
 		
