@@ -14,7 +14,8 @@ public class Banner {
 	public static ItemStack get(Random rand){
 		
 		ItemStack banner = new ItemStack(Items.banner);
-		for(int i = 0; i < rand.nextInt(4) + 1; ++i){
+		int n = rand.nextInt(8) + 1;
+		for(int i = 0; i < n; ++i){
 			addPattern(banner, rand);
 		}
 		

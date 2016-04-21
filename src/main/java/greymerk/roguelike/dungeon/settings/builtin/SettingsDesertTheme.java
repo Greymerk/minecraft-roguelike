@@ -36,7 +36,7 @@ public class SettingsDesertTheme extends DungeonSettings{
 			this.lootRules.add(null, new WeightedRandomLoot(Items.gold_ingot, 0, 1, 1 + i, 1), i, false, 6);
 		}
 		
-		Theme[] themes = {Theme.PYRAMID, Theme.SANDSTONE, Theme.SANDSTONERED, Theme.CRYPT, Theme.NETHER};
+		Theme[] themes = {Theme.PYRAMID, Theme.SANDSTONE, Theme.SANDSTONERED, Theme.ENDER, Theme.NETHER};
 		
 		for(int i = 0; i < 5; ++i){
 			
@@ -82,6 +82,55 @@ public class SettingsDesertTheme extends DungeonSettings{
 				factory.addRandom(DungeonRoom.PYRAMIDTOMB, 2);
 				factory.addRandom(DungeonRoom.PYRAMIDSPAWNER, 10);
 				factory.addRandom(DungeonRoom.PYRAMIDCORNER, 5);
+				level.setRooms(factory);
+				
+				level.setGenerator(LevelGenerator.CLASSIC);
+			}
+			
+			if(i == 2){
+				level.setDifficulty(2);
+				SegmentGenerator segments = new SegmentGenerator(Segment.SQUAREARCH);
+				segments.add(Segment.SPAWNER, 1);
+				segments.add(Segment.DOOR, 10);
+				segments.add(Segment.INSET, 5);
+				segments.add(Segment.SHELF, 5);
+				segments.add(Segment.CHEST, 1);
+				segments.add(Segment.SKULL, 2);
+				segments.add(Segment.TOMB, 1);
+				level.setSegments(segments);
+				
+				DungeonFactory factory = new DungeonFactory();
+				factory.addRandom(DungeonRoom.PYRAMIDTOMB, 1);
+				factory.addRandom(DungeonRoom.CRYPT, 4);
+				factory.addSingle(DungeonRoom.OSSUARY);
+				factory.addRandom(DungeonRoom.SPIDER, 2);
+				factory.addRandom(DungeonRoom.PYRAMIDSPAWNER, 5);
+				factory.addRandom(DungeonRoom.PYRAMIDCORNER, 4);
+				
+				level.setRooms(factory);
+				
+				level.setGenerator(LevelGenerator.CLASSIC);
+			}
+			
+			if(i == 3){
+				level.setDifficulty(2);
+				SegmentGenerator segments = new SegmentGenerator(Segment.SQUAREARCH);
+				segments.add(Segment.SPAWNER, 1);
+				segments.add(Segment.DOOR, 10);
+				segments.add(Segment.INSET, 5);
+				segments.add(Segment.SHELF, 5);
+				segments.add(Segment.CHEST, 1);
+				segments.add(Segment.SKULL, 2);
+				segments.add(Segment.TOMB, 1);
+				level.setSegments(segments);
+				
+				DungeonFactory factory = new DungeonFactory();
+				factory.addRandom(DungeonRoom.PYRAMIDTOMB, 1);
+				factory.addRandom(DungeonRoom.SLIME, 2);
+				factory.addRandom(DungeonRoom.FIRE, 2);
+				factory.addRandom(DungeonRoom.PYRAMIDSPAWNER, 5);
+				factory.addRandom(DungeonRoom.PYRAMIDCORNER, 4);
+				factory.addRandom(DungeonRoom.SPIDER, 2);
 				level.setRooms(factory);
 				
 				level.setGenerator(LevelGenerator.CLASSIC);

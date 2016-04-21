@@ -150,8 +150,9 @@ public class Dungeon implements IDungeon{
 	
 	public boolean validLocation(Random rand, int x, int z){
 		
-		BiomeGenBase biome = editor.getBiome(new Coord(x, 0, z));
-		Type[] biomeType = BiomeDictionary.getTypesForBiome(biome);
+		Coord pos = new Coord(x, 0, z);
+		BiomeGenBase biome = editor.getBiome(pos);
+
 		Type[] invalidBiomes = new Type[]{
 				BiomeDictionary.Type.RIVER,
 				BiomeDictionary.Type.BEACH,
@@ -160,7 +161,7 @@ public class Dungeon implements IDungeon{
 		};
 		
 		for(Type type : invalidBiomes){
-			if(Arrays.asList(biomeType).contains(type)) return false;	
+			if(BiomeDictionary.isBiomeOfType(biome, type)) return false;
 		}
 				
 		int upperLimit = RogueConfig.getInt(RogueConfig.UPPERLIMIT);
