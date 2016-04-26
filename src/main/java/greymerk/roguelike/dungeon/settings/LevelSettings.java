@@ -13,7 +13,7 @@ import greymerk.roguelike.dungeon.segment.SegmentGenerator;
 import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.theme.Theme;
 import greymerk.roguelike.worldgen.Coord;
-import greymerk.roguelike.worldgen.SpawnerSettings;
+import greymerk.roguelike.worldgen.spawners.SpawnerSettings;
 
 public class LevelSettings {
 

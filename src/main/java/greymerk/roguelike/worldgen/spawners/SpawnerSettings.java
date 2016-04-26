@@ -1,4 +1,4 @@
-package greymerk.roguelike.worldgen;
+package greymerk.roguelike.worldgen.spawners;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,6 +11,8 @@ import com.google.gson.JsonObject;
 import greymerk.roguelike.util.IWeighted;
 import greymerk.roguelike.util.WeightedChoice;
 import greymerk.roguelike.util.WeightedRandomizer;
+import greymerk.roguelike.worldgen.Coord;
+import greymerk.roguelike.worldgen.IWorldEditor;
 
 public class SpawnerSettings {
 
@@ -53,12 +55,13 @@ public class SpawnerSettings {
 	
 	public void generate(IWorldEditor editor, Random rand, Coord cursor, Spawner type, int level){
 		
-		if(!spawners.containsKey(type)){
-			Spawner.generate(editor, rand, level, cursor, type);
-			return;
-		}
+		Spawnable toSpawn;
 		
-		Spawnable toSpawn = spawners.get(type).get(rand);
+		if(spawners.containsKey(type)){
+			toSpawn = spawners.get(type).get(rand);
+		} else {
+			toSpawn = new Spawnable(type);
+		}
 		
 		toSpawn.generate(editor, rand, cursor, level);
 		
