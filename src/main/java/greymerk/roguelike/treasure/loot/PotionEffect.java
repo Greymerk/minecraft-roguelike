@@ -6,39 +6,18 @@ import net.minecraft.nbt.NBTTagList;
 
 public enum PotionEffect {
 	
-	SPEED, SLOWNESS, HASTE, FATIGUE, STRENGTH, HEALTH, DAMAGE, JUMP, 
-	NAUSIA, REGEN, RESISTANCE, FIRERESIST, WATERBREATH, INVISIBILITY,
-	BLINDNESS, NIGHTVISION, HUNGER, WEAKNESS, POISON, WITHER, HEALTHBOOST,
-	ABSORPTION, SATURATION;
+	SPEED(1), SLOWNESS(2), HASTE(3), FATIGUE(4), STRENGTH(5), HEALTH(6), DAMAGE(7), JUMP(8), 
+	NAUSIA(9), REGEN(10), RESISTANCE(11), FIRERESIST(12), WATERBREATH(13), INVISIBILITY(14),
+	BLINDNESS(15), NIGHTVISION(16), HUNGER(17), WEAKNESS(18), POISON(19), WITHER(20), HEALTHBOOST(21),
+	ABSORPTION(22), SATURATION(23);
+	
+	private int id;
+	PotionEffect(int id){
+		this.id = id;
+	}
 	
 	public static int getEffectID(PotionEffect type){
-		
-		switch(type){
-		case SPEED: return 1;
-		case SLOWNESS: return 2;
-		case HASTE: return 3;
-		case FATIGUE: return 4;
-		case STRENGTH: return 5;
-		case HEALTH: return 6;
-		case DAMAGE: return 7;
-		case JUMP: return 8;
-		case NAUSIA: return 9;
-		case REGEN: return 10;
-		case RESISTANCE: return 11; 
-		case FIRERESIST: return 12;
-		case WATERBREATH: return 13;
-		case INVISIBILITY: return 14;
-		case BLINDNESS: return 15;
-		case NIGHTVISION: return 16;
-		case HUNGER: return 17;
-		case WEAKNESS: return 18;
-		case POISON: return 19;
-		case WITHER: return 20;
-		case HEALTHBOOST: return 21;
-		case ABSORPTION: return 22;
-		case SATURATION: return 23;
-		default: return 0;
-		}		
+		return type.id;
 	}
 	
 	public static void addCustomEffect(ItemStack potion, PotionEffect type, int amplifier, int duration){
@@ -59,10 +38,9 @@ public enum PotionEffect {
 			tag.setTag(CUSTOM, effects);
 		}
 		
-		int effectID = PotionEffect.getEffectID(type);
 		NBTTagCompound toAdd = new NBTTagCompound();
 		
-		toAdd.setByte("Id", (byte)effectID);
+		toAdd.setByte("Id", (byte)type.id);
 		toAdd.setByte("Amplifier", (byte)amplifier);
 		toAdd.setInteger("Duration", duration);
 		toAdd.setBoolean("Ambient", true);
