@@ -25,6 +25,10 @@ public enum Potion {
 	public static ItemStack getSpecific(Random rand, Potion effect){
 		return getSpecific(rand, PotionType.REGULAR, effect, rand.nextBoolean(), rand.nextBoolean());
 	}
+	
+	public static ItemStack getSpecific(Random rand, PotionType type, Potion effect){
+		return getSpecific(rand, type, effect, rand.nextBoolean(), rand.nextBoolean());
+	}
 
 	public static ItemStack getSpecific(Random rand, PotionType type, Potion effect, boolean upgrade, boolean extend){
 		

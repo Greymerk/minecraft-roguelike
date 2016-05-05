@@ -64,7 +64,11 @@ public enum PotionMixture {
 			ItemHideFlags.set(ItemHideFlags.EFFECTS, potion);
 			return potion;
 		case VILE:
-			potion = Potion.getSpecific(rand, Potion.values()[rand.nextInt(Potion.values().length)]);
+			potion = Potion.getSpecific(
+					rand,
+					PotionType.values()[rand.nextInt(PotionType.values().length)],
+					Potion.values()[rand.nextInt(Potion.values().length)]
+					);
 			addRandomEffects(rand, potion, 2 + rand.nextInt(2));
 			Loot.setItemName(potion, "Vile Mixture");
 			ItemHideFlags.set(ItemHideFlags.EFFECTS, potion);

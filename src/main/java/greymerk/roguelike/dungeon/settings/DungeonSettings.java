@@ -78,11 +78,10 @@ public class DungeonSettings implements ISettings{
 			}
 		}
 		
-		if(!root.has("tower")) this.towerSettings = base.towerSettings;
 		this.lootRules.add(base.lootRules);
 		if(!root.has("depth")) this.depth = base.depth;
 		if(!root.has("overrides")) this.overrides = base.overrides;
-		
+		if(!root.has("tower")) this.towerSettings = base.towerSettings;
 		if(!root.has("levels")){
 			this.levels.putAll(base.levels);
 			return;
@@ -116,7 +115,9 @@ public class DungeonSettings implements ISettings{
 		}
 		
 		this.lootRules = new LootRuleManager();
-		this.lootRules.add(base.lootRules);
+		if(!override.getOverrides().contains(SettingsType.LOOTRULES)){
+			this.lootRules.add(base.lootRules);
+		}
 		this.lootRules.add(override.lootRules);
 		if(base.overrides != null || override.overrides != null){
 			this.overrides = new ArrayList<SettingsType>();
@@ -145,6 +146,7 @@ public class DungeonSettings implements ISettings{
 		
 		this.levels = new HashMap<Integer, LevelSettings>();
 		
+		this.towerSettings = toCopy.towerSettings;
 		this.lootRules = toCopy.lootRules;
 		
 		for(int i = 0; i < MAX_NUM_LEVELS; ++i){
@@ -180,7 +182,7 @@ public class DungeonSettings implements ISettings{
 	
 	@Override
 	public TowerSettings getTower(){
-		if(this.towerSettings == null) return new TowerSettings(Tower.ROGUE, Theme.getTheme(Theme.TOWER));
+		if(this.towerSettings == null) return new TowerSettings(Tower.ROGUE, Theme.getTheme(Theme.PURPUR));
 		
 		return this.towerSettings;
 	}
