@@ -32,8 +32,8 @@ public class DungeonLinkerTop extends DungeonBase{
 		
 		start = new Coord(origin);
 		end = new Coord(origin);
-		start.add(-4, -1, -4);
-		end.add(4, 5, 4);
+		start.add(new Coord(-4, -1, -4));
+		end.add(new Coord(4, 5, 4));
 		RectHollow.fill(editor, rand, start, end, wall, false, true);
 		
 		cursor = new Coord(origin);
@@ -42,8 +42,8 @@ public class DungeonLinkerTop extends DungeonBase{
 		
 		start = new Coord(origin);
 		end = new Coord(origin);
-		start.add(-4, -1, -4);
-		end.add(4, -1, 4);
+		start.add(new Coord(-4, -1, -4));
+		end.add(new Coord(4, -1, 4));
 		RectSolid.fill(editor, rand, start, end, floor, true, true);
 		
 		for(Cardinal dir : Cardinal.directions){

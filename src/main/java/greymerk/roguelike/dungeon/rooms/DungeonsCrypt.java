@@ -35,20 +35,20 @@ public class DungeonsCrypt extends DungeonBase {
 		
 		start = new Coord(origin);
 		end = new Coord(origin);
-		start.add(-3, 0, -3);
-		end.add(3, 4, 3);
+		start.add(new Coord(-3, 0, -3));
+		end.add(new Coord(3, 4, 3));
 		RectSolid.fill(editor, rand, start, end, air);
 		
 		start = new Coord(origin);
 		end = new Coord(origin);
-		start.add(-9, -1, -9);
-		end.add(9, -1, 9);
+		start.add(new Coord(-9, -1, -9));
+		end.add(new Coord(9, -1, 9));
 		RectSolid.fill(editor, rand, start, end, floor);
 		
 		start = new Coord(origin);
 		end = new Coord(origin);
-		start.add(-9, 5, -9);
-		end.add(9, 6, 9);
+		start.add(new Coord(-9, 5, -9));
+		end.add(new Coord(9, 6, 9));
 		RectSolid.fill(editor, rand, start, end, walls, false, true);
 		
 		for(Cardinal dir : Cardinal.directions){

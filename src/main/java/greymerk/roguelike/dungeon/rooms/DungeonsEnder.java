@@ -27,8 +27,8 @@ public class DungeonsEnder extends DungeonBase {
 		Coord end;
 		start = new Coord(origin);
 		end = new Coord(origin);
-		start.add(-3, 0, -3);
-		end.add(3, 2, 3);
+		start.add(new Coord(-3, 0, -3));
+		end.add(new Coord(3, 2, 3));
 		RectSolid.fill(editor, inRandom, start, end, air);
 		for (Cardinal dir : Cardinal.directions){
 			
@@ -47,8 +47,8 @@ public class DungeonsEnder extends DungeonBase {
 		
 		start = new Coord(origin);
 		end = new Coord(origin);
-		start.add(-3, 2, -3);
-		end.add(3, 10, 3);
+		start.add(new Coord(-3, 2, -3));
+		end.add(new Coord(3, 10, 3));
 		
 		int top = end.getY() - start.getY() + 1;
 		for(Coord cell : new RectSolid(start, end)){
@@ -59,8 +59,8 @@ public class DungeonsEnder extends DungeonBase {
 		
 		start = new Coord(origin);
 		end = new Coord(origin);
-		start.add(-4, -1, -4);
-		end.add(4, -1, 4);
+		start.add(new Coord(-4, -1, -4));
+		end.add(new Coord(4, -1, 4));
 		
 		BlockCheckers checkers = new BlockCheckers(black, white);
 		RectSolid.fill(editor, inRandom, start, end, checkers);

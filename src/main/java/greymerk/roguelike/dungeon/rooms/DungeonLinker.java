@@ -31,20 +31,20 @@ public class DungeonLinker extends DungeonBase{
 		
 		start = new Coord(origin);
 		end = new Coord(origin);
-		start.add(-4, -1, -4);
-		end.add(4, 9, 4);
+		start.add(new Coord(-4, -1, -4));
+		end.add(new Coord(4, 9, 4));
 		RectHollow.fill(editor, rand, start, end, wall, false, true);
 		
 		start = new Coord(origin);
 		end = new Coord(origin);
-		start.add(-4, 9, -4);
-		end.add(4, 9, 4);
+		start.add(new Coord(-4, 9, -4));
+		end.add(new Coord(4, 9, 4));
 		RectSolid.fill(editor, rand, start, end, wall, true, true);
 		
 		start = new Coord(origin);
 		end = new Coord(origin);
-		start.add(-4, -1, -4);
-		end.add(4, -1, 4);
+		start.add(new Coord(-4, -1, -4));
+		end.add(new Coord(4, -1, 4));
 		RectSolid.fill(editor, rand, start, end, floor);
 		
 		for(Cardinal dir : Cardinal.directions){

@@ -42,8 +42,8 @@ public class DungeonsEnchant extends DungeonBase {
 		start = new Coord(origin);
 		start.add(dir, 5);
 		end = new Coord(start);
-		start.add(-2, 0, -2);
-		end.add(2, 3, 2);
+		start.add(new Coord(-2, 0, -2));
+		end.add(new Coord(2, 3, 2));
 		RectSolid.fill(editor, rand, start, end, air);
 		
 		start = new Coord(origin);
