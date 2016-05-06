@@ -16,11 +16,8 @@ public enum RogueConfig {
 	public static final String configDirName = "config/roguelike_dungeons";
 	public static final String configFileName = "roguelike.cfg";
 	
+	public static boolean testing = false;
 	private static ConfigFile instance = null;
-	
-	static{
-		init();
-	}
 	
 	public static String getName(RogueConfig option){
 		switch(option){
@@ -85,6 +82,7 @@ public enum RogueConfig {
 	}
 	
 	public static double getDouble(RogueConfig option){
+		if(testing) return (Double)getDefault(option).getSecond();
 		reload(false);
 		Tuple<String, ?> def = getDefault(option);
 		return instance.GetDouble(getName(option), (Double)def.getSecond());
@@ -96,6 +94,7 @@ public enum RogueConfig {
 	}
 	
 	public static boolean getBoolean(RogueConfig option){
+		if(testing) return (Boolean)getDefault(option).getSecond();
 		reload(false);
 		Tuple<String, ?> def = getDefault(option);
 		return instance.GetBoolean(getName(option), (Boolean)def.getSecond());
@@ -107,6 +106,7 @@ public enum RogueConfig {
 	}
 	
 	public static int getInt(RogueConfig option){
+		if(testing) return (Integer)getDefault(option).getSecond();
 		reload(false);
 		Tuple<String, ?> def = getDefault(option);
 		return instance.GetInteger((String)def.getFirst(), (Integer)def.getSecond());
@@ -120,6 +120,7 @@ public enum RogueConfig {
 	
 	@SuppressWarnings("unchecked")
 	public static List<Integer> getIntList(RogueConfig option){
+		if(testing) return (ArrayList<Integer>)getDefault(option).getSecond();
 		reload(false);
 		Tuple<String, ?> def = getDefault(option);
 		return instance.GetListInteger((String)def.getFirst(), (ArrayList<Integer>)def.getSecond());
@@ -132,6 +133,8 @@ public enum RogueConfig {
 	}
 	
 	private static void init(){
+		
+		if(testing) return;
 		
 		// make sure file exists
 		File configDir = new File(configDirName);

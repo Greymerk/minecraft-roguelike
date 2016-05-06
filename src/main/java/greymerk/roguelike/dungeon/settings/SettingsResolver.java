@@ -107,7 +107,7 @@ public class SettingsResolver {
 		}
 		
 		try {
-			toAdd = new DungeonSettings(settings, root);
+			toAdd = new DungeonSettings(root);
 		} catch (Exception e){
 			throw new Exception("An error occured while adding " + toAdd.getName());
 		}
@@ -123,14 +123,10 @@ public class SettingsResolver {
 	
 	public ISettings getSettings(IWorldEditor editor, Random rand, Coord pos){
 		
-		DungeonSettings setting = new DungeonSettings(this.base, this.getBuiltin(editor, rand, pos));
-		List<DungeonSettings> customSettings = this.getCustom(editor, rand, pos);
-
-		for(DungeonSettings custom : customSettings){
-			setting = new DungeonSettings(setting, custom);
-		}
+		DungeonSettings regular = new DungeonSettings(this.base, this.getBuiltin(editor, rand, pos));
+		DungeonSettings custom = this.getCustom(editor, rand, pos);
 		
-		return setting;
+		return new DungeonSettings(regular, custom);
 		
 	}
 	
@@ -143,19 +139,36 @@ public class SettingsResolver {
 			}
 		}
 		
-		return new DungeonSettings(settingsRandomizer.get(rand));
-	}
-	
-	private List<DungeonSettings> getCustom(IWorldEditor editor, Random rand, Coord pos){
-		List<DungeonSettings> settings = new ArrayList<DungeonSettings>();
+		DungeonSettings picked = settingsRandomizer.get(rand);
 		
-		for(DungeonSettings setting : this.settings.values()){
-			if(setting.isValid(editor, pos)){
-				settings.add(new DungeonSettings(setting));
-			}
+		if(picked == null){
+			return new DungeonSettings(this.base);
 		}
 		
-		return settings;
+		return picked;
+	}
+	
+	private DungeonSettings getCustom(IWorldEditor editor, Random rand, Coord pos){
+		
+		DungeonSettings custom = new SettingsBlank();
+		for(DungeonSettings setting : this.settings.values()){
+			if(!setting.isValid(editor, pos)){
+				continue;
+			}
+			
+			// generate an inherit base and then apply inherited aspects.
+			for(String name : setting.getInherits(rand)){
+				if(this.settings.containsKey(name)){
+					setting = new DungeonSettings(setting, this.settings.get(name));
+				} else {
+					System.err.println(name + " setting inherited before creation in " + setting.getName());
+				}
+			}
+			
+			custom = new DungeonSettings(custom, setting);
+		}
+		
+		return custom;
 	}
 	
 	public ISettings getDefaultSettings(){
