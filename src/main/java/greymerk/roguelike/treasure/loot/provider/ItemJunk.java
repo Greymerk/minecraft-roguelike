@@ -4,6 +4,7 @@ import java.util.Random;
 
 import greymerk.roguelike.treasure.loot.PotionMixture;
 import greymerk.roguelike.treasure.loot.Shield;
+import greymerk.roguelike.treasure.loot.TippedArrow;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -28,7 +29,11 @@ public class ItemJunk extends ItemBase{
 
 		if(rand.nextInt(70) == 0) return Shield.get(rand);
 		
-		if(level > 1 && rand.nextInt(50) == 0){			
+		if(level > 1 && rand.nextInt(40) == 0){
+			return TippedArrow.get(rand, 4 + rand.nextInt(level) * 2);
+		}
+		
+		if(level > 1 && rand.nextInt(40) == 0){			
 			switch(rand.nextInt(6)){
 			case 0: return new ItemStack(Items.gunpowder, 1 + rand.nextInt(3));
 			case 1: return new ItemStack(Items.blaze_powder, 1 + rand.nextInt(3));

@@ -6,6 +6,7 @@ import greymerk.roguelike.dungeon.IDungeonLevel;
 import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.treasure.loot.Potion;
 import greymerk.roguelike.treasure.loot.PotionType;
+import greymerk.roguelike.treasure.loot.TippedArrow;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
@@ -84,7 +85,9 @@ public class SegmentTrap extends SegmentBase{
 		Dispenser.generate(editor, Cardinal.reverse(dir), cursor);
 		
 		for(int i = 0; i < 5; i++){
-			Dispenser.add(editor, cursor, rand.nextInt(9), new ItemStack(Items.arrow, rand.nextInt(4) + 1));
+			int amount = rand.nextInt(5) + 1;
+			ItemStack arrows = getArrow(rand, amount);
+			Dispenser.add(editor, cursor, rand.nextInt(9), arrows);
 		}
 		
 		Dispenser.add(editor, cursor, 5, getPayload(rand));
@@ -97,6 +100,17 @@ public class SegmentTrap extends SegmentBase{
 		case 1: return Potion.getSpecific(PotionType.SPLASH, Potion.POISON, false, false);
 		case 2: return Potion.getSpecific(PotionType.SPLASH, Potion.HARM, false, false);
 		default: return BlockType.getItem(BlockType.TNT);
+		}
+	}
+	
+	private ItemStack getArrow(Random rand, int amount){
+		ItemStack arrows;
+		switch(rand.nextInt(4)){
+		case 0: return TippedArrow.get(Potion.HARM, amount);
+		case 1: return TippedArrow.get(Potion.POISON, amount);
+		case 2: return TippedArrow.get(Potion.SLOWNESS, amount);
+		case 3: return TippedArrow.get(Potion.WEAKNESS, amount);
+		default: return new ItemStack(Items.arrow, amount);
 		}
 	}
 }

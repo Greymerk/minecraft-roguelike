@@ -8,11 +8,15 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public class TippedArrow {
 
-	public static ItemStack get(Random rand){
-		Potion type = Potion.values()[rand.nextInt(Potion.values().length)];
-		return get(type);
+	public static ItemStack get(Random rand){	
+		return get(rand, 1);
 	}
-
+	
+	public static ItemStack get(Random rand, int amount){
+		Potion type = Potion.values()[rand.nextInt(Potion.values().length)];
+		return get(type, amount);
+	}
+		
 	public static ItemStack get(Potion type){
 		return get(type, 1);
 	}
