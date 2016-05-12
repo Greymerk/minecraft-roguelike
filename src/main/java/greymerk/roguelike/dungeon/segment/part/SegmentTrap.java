@@ -94,8 +94,8 @@ public class SegmentTrap extends SegmentBase{
 		
 		switch(rand.nextInt(3)){
 		case 0: return BlockType.getItem(BlockType.TNT);
-		case 1: return Potion.getSpecific(rand, PotionType.SPLASH, Potion.POISON, false, false);
-		case 2: return Potion.getSpecific(rand, PotionType.SPLASH, Potion.HARM, false, false);
+		case 1: return Potion.getSpecific(PotionType.SPLASH, Potion.POISON, false, false);
+		case 2: return Potion.getSpecific(PotionType.SPLASH, Potion.HARM, false, false);
 		default: return BlockType.getItem(BlockType.TNT);
 		}
 	}

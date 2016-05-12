@@ -2,7 +2,6 @@ package greymerk.roguelike.treasure.loot;
 
 import java.util.Random;
 
-import greymerk.roguelike.treasure.loot.provider.ItemNovelty;
 import net.minecraft.init.Items;
 import net.minecraft.init.PotionTypes;
 import net.minecraft.item.ItemStack;
@@ -13,24 +12,19 @@ public enum Potion {
 	HEALING, HARM, REGEN, POISON, STRENGTH, WEAKNESS, SLOWNESS, SWIFTNESS, FIRERESIST;
 	
 	public static ItemStack getRandom(Random rand){
-
-		if(rand.nextInt(200) == 0){
-			return ItemNovelty.getItem(ItemNovelty.AVIDYA);
-		}
-		
 		Potion type = Potion.values()[rand.nextInt(Potion.values().length)];
 		return getSpecific(rand, type);
 	}
 	
 	public static ItemStack getSpecific(Random rand, Potion effect){
-		return getSpecific(rand, PotionType.REGULAR, effect, rand.nextBoolean(), rand.nextBoolean());
+		return getSpecific(PotionType.REGULAR, effect, rand.nextBoolean(), rand.nextBoolean());
 	}
 	
 	public static ItemStack getSpecific(Random rand, PotionType type, Potion effect){
-		return getSpecific(rand, type, effect, rand.nextBoolean(), rand.nextBoolean());
+		return getSpecific(type, effect, rand.nextBoolean(), rand.nextBoolean());
 	}
 
-	public static ItemStack getSpecific(Random rand, PotionType type, Potion effect, boolean upgrade, boolean extend){
+	public static ItemStack getSpecific(PotionType type, Potion effect, boolean upgrade, boolean extend){
 		
 		ItemStack potion;
 		

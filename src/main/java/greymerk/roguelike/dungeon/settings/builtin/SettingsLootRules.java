@@ -6,9 +6,13 @@ import greymerk.roguelike.treasure.loot.Equipment;
 import greymerk.roguelike.treasure.loot.ILoot;
 import greymerk.roguelike.treasure.loot.Loot;
 import greymerk.roguelike.treasure.loot.LootRuleManager;
+import greymerk.roguelike.treasure.loot.Potion;
 import greymerk.roguelike.treasure.loot.Quality;
+import greymerk.roguelike.treasure.loot.TippedArrow;
 import greymerk.roguelike.treasure.loot.provider.ItemEnchBook;
 import greymerk.roguelike.treasure.loot.provider.ItemSpecialty;
+import greymerk.roguelike.util.WeightedChoice;
+import net.minecraft.item.ItemStack;
 
 public class SettingsLootRules extends DungeonSettings{
 	
@@ -19,6 +23,7 @@ public class SettingsLootRules extends DungeonSettings{
 		lootRules.add(Treasure.STARTER, loot.get(Loot.FOOD, 0),  0, true, 2);
 		lootRules.add(Treasure.STARTER, loot.get(Loot.TOOL, 0),  0, true, 2);
 		lootRules.add(Treasure.STARTER, loot.get(Loot.SUPPLY, 0),  0, true, 2);
+		lootRules.add(Treasure.STARTER, new WeightedChoice<ItemStack>(TippedArrow.get(Potion.POISON, 5), 1),  0, true, 2);
 		lootRules.add(Treasure.STARTER, new ItemSpecialty(0, 0, Equipment.LEGS, Quality.WOOD), 0, true, 2);
 		for(int i = 0; i < 5; ++i){
 			lootRules.add(Treasure.ARMOUR, loot.get(Loot.POTION, i),  i, true, 1);

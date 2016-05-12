@@ -50,5 +50,5 @@ public enum PotionEffect {
 		potion.setTagCompound(tag);
 
 	}
-	
+
 }
