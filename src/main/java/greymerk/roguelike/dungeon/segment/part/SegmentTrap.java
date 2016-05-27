@@ -104,7 +104,7 @@ public class SegmentTrap extends SegmentBase{
 	}
 	
 	private ItemStack getArrow(Random rand, int amount){
-		ItemStack arrows;
+
 		switch(rand.nextInt(4)){
 		case 0: return TippedArrow.get(Potion.HARM, amount);
 		case 1: return TippedArrow.get(Potion.POISON, amount);
