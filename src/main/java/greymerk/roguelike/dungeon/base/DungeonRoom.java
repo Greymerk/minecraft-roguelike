@@ -5,6 +5,7 @@ import greymerk.roguelike.dungeon.rooms.DungeonAshlea;
 import greymerk.roguelike.dungeon.rooms.DungeonAvidya;
 import greymerk.roguelike.dungeon.rooms.DungeonBTeam;
 import greymerk.roguelike.dungeon.rooms.DungeonBedRoom;
+import greymerk.roguelike.dungeon.rooms.DungeonBlaze;
 import greymerk.roguelike.dungeon.rooms.DungeonCorner;
 import greymerk.roguelike.dungeon.rooms.DungeonDarkHall;
 import greymerk.roguelike.dungeon.rooms.DungeonEniko;
@@ -45,7 +46,7 @@ public enum DungeonRoom {
 	BRICK, CREEPER, CRYPT, ENCHANT, ENDER, FIRE, MUSIC, NETHER, NETHERFORT, PIT, PRISON,
 	SLIME, SMITH, SPIDER, CAKE, LAB, CORNER, MESS, ETHO, ENIKO, BTEAM, OSSUARY, OBSIDIAN,
 	AVIDYA, STORAGE, ASHLEA, FIREWORK, BEDROOM, REWARD, LIBRARY, PYRAMIDTOMB, DARKHALL,
-	TREETHO, LINKER, LINKERTOP, PYRAMIDSPAWNER, PYRAMIDCORNER;
+	TREETHO, LINKER, LINKERTOP, PYRAMIDSPAWNER, PYRAMIDCORNER, BLAZE;
 	
 	public static IDungeonRoom getInstance(DungeonRoom choice){
 		switch(choice){
@@ -86,6 +87,7 @@ public enum DungeonRoom {
 		case LINKERTOP: return new DungeonLinkerTop();
 		case PYRAMIDSPAWNER: return new DungeonPyramidSpawner();
 		case PYRAMIDCORNER: return new DungeonPyramidCorner();
+		case BLAZE: return new DungeonBlaze();
 		default: return null;
 		}
 	}

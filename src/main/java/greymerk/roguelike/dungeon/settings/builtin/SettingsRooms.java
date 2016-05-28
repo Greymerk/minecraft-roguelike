@@ -52,11 +52,14 @@ public class SettingsRooms extends DungeonSettings{
 			case 4:
 				factory = new DungeonFactory();
 				factory.addSingle(DungeonRoom.OBSIDIAN);
-				factory.addSingle(DungeonRoom.FIRE);
+				factory.addSingle(DungeonRoom.BLAZE);
+				factory.addSingle(DungeonRoom.PRISON);
+				factory.addSingle(DungeonRoom.DARKHALL);
 				factory.addSingle(DungeonRoom.NETHERFORT);
 				factory.addRandom(DungeonRoom.CORNER, 10);
+				factory.addRandom(DungeonRoom.BLAZE, 3);
 				factory.addRandom(DungeonRoom.NETHER, 3);
-				factory.addRandom(DungeonRoom.SPIDER, 1);
+				factory.addRandom(DungeonRoom.SPIDER, 2);
 				break;
 			default:
 				factory = new DungeonFactory();
