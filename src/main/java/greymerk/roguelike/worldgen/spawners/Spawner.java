@@ -24,21 +24,21 @@ import net.minecraft.entity.passive.EntityBat;
 
 public enum Spawner {
 	
-	CREEPER(EntityList.classToStringMapping.get(EntityCreeper.class)),
-	CAVESPIDER(EntityList.classToStringMapping.get(EntityCaveSpider.class)),
-	SPIDER(EntityList.classToStringMapping.get(EntitySpider.class)),
-	SKELETON(EntityList.classToStringMapping.get(EntitySkeleton.class)),
-	ZOMBIE(EntityList.classToStringMapping.get(EntityZombie.class)),
-	SILVERFISH(EntityList.classToStringMapping.get(EntitySilverfish.class)),
-	ENDERMAN(EntityList.classToStringMapping.get(EntityEnderman.class)),
-	WITCH(EntityList.classToStringMapping.get(EntityWitch.class)),
-	WITHERBOSS(EntityList.classToStringMapping.get(EntityWither.class)),
-	BAT(EntityList.classToStringMapping.get(EntityBat.class)),
-	LAVASLIME(EntityList.classToStringMapping.get(EntityMagmaCube.class)),
-	BLAZE(EntityList.classToStringMapping.get(EntityBlaze.class)),
-	SLIME(EntityList.classToStringMapping.get(EntitySlime.class)),
-	PRIMEDTNT(EntityList.classToStringMapping.get(EntityTNTPrimed.class)),
-	PIGZOMBIE(EntityList.classToStringMapping.get(EntityPigZombie.class));
+	CREEPER(EntityList.CLASS_TO_NAME.get(EntityCreeper.class)),
+	CAVESPIDER(EntityList.CLASS_TO_NAME.get(EntityCaveSpider.class)),
+	SPIDER(EntityList.CLASS_TO_NAME.get(EntitySpider.class)),
+	SKELETON(EntityList.CLASS_TO_NAME.get(EntitySkeleton.class)),
+	ZOMBIE(EntityList.CLASS_TO_NAME.get(EntityZombie.class)),
+	SILVERFISH(EntityList.CLASS_TO_NAME.get(EntitySilverfish.class)),
+	ENDERMAN(EntityList.CLASS_TO_NAME.get(EntityEnderman.class)),
+	WITCH(EntityList.CLASS_TO_NAME.get(EntityWitch.class)),
+	WITHERBOSS(EntityList.CLASS_TO_NAME.get(EntityWither.class)),
+	BAT(EntityList.CLASS_TO_NAME.get(EntityBat.class)),
+	LAVASLIME(EntityList.CLASS_TO_NAME.get(EntityMagmaCube.class)),
+	BLAZE(EntityList.CLASS_TO_NAME.get(EntityBlaze.class)),
+	SLIME(EntityList.CLASS_TO_NAME.get(EntitySlime.class)),
+	PRIMEDTNT(EntityList.CLASS_TO_NAME.get(EntityTNTPrimed.class)),
+	PIGZOMBIE(EntityList.CLASS_TO_NAME.get(EntityPigZombie.class));
 	
 	private String name;
 	Spawner(String name){

@@ -57,11 +57,11 @@ public class ItemTool extends ItemBase {
 	private static ItemStack pickAxe(Random rand, int level) {
 		Quality quality = Quality.getToolQuality(rand, level);
 		switch (quality) {
-		case DIAMOND: return new ItemStack(Items.diamond_axe);
-		case GOLD: return new ItemStack(Items.golden_axe);
-		case IRON: return new ItemStack(Items.iron_axe);
-		case STONE: return new ItemStack(Items.stone_axe);
-		default: return new ItemStack(Items.wooden_axe);
+		case DIAMOND: return new ItemStack(Items.DIAMOND_AXE);
+		case GOLD: return new ItemStack(Items.GOLDEN_AXE);
+		case IRON: return new ItemStack(Items.IRON_AXE);
+		case STONE: return new ItemStack(Items.STONE_AXE);
+		default: return new ItemStack(Items.WOODEN_AXE);
 		}
 	}
 	
@@ -69,11 +69,11 @@ public class ItemTool extends ItemBase {
 
 		Quality quality = Quality.getToolQuality(rand, level);
 		switch (quality) {
-		case DIAMOND: return new ItemStack(Items.diamond_shovel);
-		case GOLD: return new ItemStack(Items.golden_shovel);
-		case IRON: return new ItemStack(Items.iron_shovel);
-		case STONE: return new ItemStack(Items.stone_shovel);
-		default: return new ItemStack(Items.wooden_shovel);
+		case DIAMOND: return new ItemStack(Items.DIAMOND_SHOVEL);
+		case GOLD: return new ItemStack(Items.GOLDEN_SHOVEL);
+		case IRON: return new ItemStack(Items.IRON_SHOVEL);
+		case STONE: return new ItemStack(Items.STONE_SHOVEL);
+		default: return new ItemStack(Items.WOODEN_SHOVEL);
 		}
 	}
 	
@@ -81,11 +81,11 @@ public class ItemTool extends ItemBase {
 
 		Quality quality = Quality.getToolQuality(rand, level);
 		switch (quality) {
-		case DIAMOND: return new ItemStack(Items.diamond_pickaxe);
-		case GOLD: return new ItemStack(Items.golden_pickaxe);
-		case IRON: return new ItemStack(Items.iron_pickaxe);
-		case STONE: return new ItemStack(Items.stone_pickaxe);
-		default: return new ItemStack(Items.wooden_pickaxe);
+		case DIAMOND: return new ItemStack(Items.DIAMOND_PICKAXE);
+		case GOLD: return new ItemStack(Items.GOLDEN_PICKAXE);
+		case IRON: return new ItemStack(Items.IRON_PICKAXE);
+		case STONE: return new ItemStack(Items.STONE_PICKAXE);
+		default: return new ItemStack(Items.WOODEN_PICKAXE);
 		}
 	}
 

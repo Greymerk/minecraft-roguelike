@@ -14,9 +14,9 @@ public enum Trapdoor {
 		MetaBlock block;
 		
 		switch(type){
-		case OAK: block = new MetaBlock(Blocks.trapdoor); break;
-		case IRON: block = new MetaBlock(Blocks.iron_trapdoor); break;
-		default: block = new MetaBlock(Blocks.trapdoor); break;
+		case OAK: block = new MetaBlock(Blocks.TRAPDOOR); break;
+		case IRON: block = new MetaBlock(Blocks.IRON_TRAPDOOR); break;
+		default: block = new MetaBlock(Blocks.TRAPDOOR); break;
 		}
 		
 		block.withProperty(BlockTrapDoor.FACING, Cardinal.facing(dir));

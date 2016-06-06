@@ -12,7 +12,7 @@ public enum SilverfishBlock {
 	
 	public static MetaBlock get(SilverfishBlock type){
 		
-		MetaBlock block = new MetaBlock(Blocks.monster_egg);
+		MetaBlock block = new MetaBlock(Blocks.MONSTER_EGG);
 		
 		switch(type){
 		case STONE: block.withProperty(BlockSilverfish.VARIANT, BlockSilverfish.EnumType.STONE); break;

@@ -33,7 +33,7 @@ public class SettingsDesertTheme extends DungeonSettings{
 		
 		this.lootRules = new LootRuleManager();
 		for(int i = 0; i < 5; ++i){
-			this.lootRules.add(null, new WeightedRandomLoot(Items.gold_ingot, 0, 1, 1 + i, 1), i, false, 6);
+			this.lootRules.add(null, new WeightedRandomLoot(Items.GOLD_INGOT, 0, 1, 1 + i, 1), i, false, 6);
 		}
 		
 		Theme[] themes = {Theme.PYRAMID, Theme.SANDSTONE, Theme.SANDSTONERED, Theme.ENDER, Theme.NETHER};

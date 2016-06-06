@@ -29,8 +29,8 @@ public class SettingsJungleTheme extends DungeonSettings{
 		
 		this.lootRules = new LootRuleManager();
 		for(int i = 0; i < 5; ++i){
-			this.lootRules.add(null, new WeightedRandomLoot(Items.emerald, 0, 1, 1 + i, 1), i, false, 6);	
-			this.lootRules.add(null, new WeightedRandomLoot(Items.diamond, 1), i, false, 3 + i * 3);
+			this.lootRules.add(null, new WeightedRandomLoot(Items.EMERALD, 0, 1, 1 + i, 1), i, false, 6);	
+			this.lootRules.add(null, new WeightedRandomLoot(Items.DIAMOND, 1), i, false, 3 + i * 3);
 		}
 
 		

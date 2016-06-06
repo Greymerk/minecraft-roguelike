@@ -24,7 +24,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeDictionary.Type;
 
@@ -67,7 +67,7 @@ public class CommandSpawnDungeon extends CommandBase
 			}
 			sender.addChatMessage(new TextComponentString(TextFormat.apply("Biome Information for " + pos.toString(), TextFormat.GOLD)));
 			
-			BiomeGenBase biome = editor.getBiome(pos);
+			Biome biome = editor.getBiome(pos);
 			sender.addChatMessage(new TextComponentString(TextFormat.apply(biome.getBiomeName(), TextFormat.GOLD)));
 			Type[] biomeTypes = BiomeDictionary.getTypesForBiome(biome);
 			String types = "";

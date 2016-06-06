@@ -56,7 +56,7 @@ public class Spawnable {
 		
 		editor.setBlock(
 				pos,
-				new MetaBlock(Blocks.mob_spawner.getDefaultState()),
+				new MetaBlock(Blocks.MOB_SPAWNER.getDefaultState()),
 				true,
 				true);
 		
@@ -89,7 +89,7 @@ public class Spawnable {
 	
 	private static void setMeta(MobSpawnerBaseLogic logic, NBTTagCompound nbt){
     	WeightedSpawnerEntity randomEntity = new WeightedSpawnerEntity(1, nbt);
-    	logic.func_184993_a(randomEntity);
+    	logic.setNextSpawnData(randomEntity);
     	logic.updateSpawner();
 	}
 	

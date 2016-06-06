@@ -7,6 +7,7 @@ import java.util.Random;
 
 import greymerk.roguelike.treasure.ITreasureChest;
 import greymerk.roguelike.treasure.TreasureManager;
+import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.shapes.RectSolid;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -14,7 +15,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.biome.Biome;
 
 public class WorldEditor implements IWorldEditor{
 	
@@ -32,9 +33,9 @@ public class WorldEditor implements IWorldEditor{
 		
 		MetaBlock currentBlock = getBlock(pos);
 		
-		if(currentBlock.getBlock() == Blocks.chest) return false;
-		if(currentBlock.getBlock() == Blocks.trapped_chest) return false;
-		if(currentBlock.getBlock() == Blocks.mob_spawner) return false;
+		if(currentBlock.getBlock() == Blocks.CHEST) return false;
+		if(currentBlock.getBlock() == Blocks.TRAPPED_CHEST) return false;
+		if(currentBlock.getBlock() == Blocks.MOB_SPAWNER) return false;
 		
 		boolean isAir = world.isAirBlock(pos.getBlockPos());
 		
@@ -75,7 +76,7 @@ public class WorldEditor implements IWorldEditor{
 	}
 	
 	@Override
-	public BiomeGenBase getBiome(Coord pos){
+	public Biome getBiome(Coord pos){
 		return world.getBiomeGenForCoords(pos.getBlockPos());
 	}
 	
@@ -92,7 +93,7 @@ public class WorldEditor implements IWorldEditor{
 	@Override
 	public void spiralStairStep(Random rand, Coord origin, IStair stair, IBlockFactory fill){
 		
-		MetaBlock air = new MetaBlock(Blocks.air);
+		MetaBlock air = BlockType.get(BlockType.AIR);
 		Coord cursor;
 		Coord start;
 		Coord end;
@@ -143,14 +144,14 @@ public class WorldEditor implements IWorldEditor{
 		
 		MetaBlock block = this.getBlock(pos);
 		
-		if(block.getMaterial() == Material.wood) return false;
-		if(block.getMaterial() == Material.water) return false;
-		if(block.getMaterial() == Material.cactus) return false;
-		if(block.getMaterial() == Material.snow) return false;
-		if(block.getMaterial() == Material.grass) return false;
-		if(block.getMaterial() == Material.gourd) return false;
-		if(block.getMaterial() == Material.leaves) return false;
-		if(block.getMaterial() == Material.plants) return false;
+		if(block.getMaterial() == Material.WOOD) return false;
+		if(block.getMaterial() == Material.WATER) return false;
+		if(block.getMaterial() == Material.CACTUS) return false;
+		if(block.getMaterial() == Material.SNOW) return false;
+		if(block.getMaterial() == Material.GRASS) return false;
+		if(block.getMaterial() == Material.GOURD) return false;
+		if(block.getMaterial() == Material.LEAVES) return false;
+		if(block.getMaterial() == Material.PLANTS) return false;
 		
 		return true;
 	}

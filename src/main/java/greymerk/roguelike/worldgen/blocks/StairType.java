@@ -6,26 +6,25 @@ import net.minecraft.init.Blocks;
 public enum StairType {
 
 	COBBLE, STONEBRICK, BRICK, SANDSTONE, RED_SANDSTONE, QUARTZ, NETHERBRICK,
-	OAK, SPRUCE, BIRCH, JUNGLE, ACACIA, DARKOAK,
-	PURPUR;
+	OAK, SPRUCE, BIRCH, JUNGLE, ACACIA, DARKOAK, PURPUR;
 	
 	public static Block getBlock(StairType type){
 		switch(type){
-		case COBBLE: return Blocks.stone_stairs;
-		case STONEBRICK: return Blocks.stone_brick_stairs;
-		case BRICK: return Blocks.brick_stairs;
-		case SANDSTONE: return Blocks.sandstone_stairs;
-		case RED_SANDSTONE: return Blocks.red_sandstone_stairs;
-		case QUARTZ: return Blocks.quartz_stairs;
-		case NETHERBRICK: return Blocks.nether_brick_stairs;
-		case OAK: return Blocks.oak_stairs;
-		case SPRUCE: return Blocks.spruce_stairs;
-		case BIRCH: return Blocks.birch_stairs;
-		case JUNGLE: return Blocks.jungle_stairs;
-		case ACACIA: return Blocks.acacia_stairs;
-		case DARKOAK: return Blocks.dark_oak_stairs;
-		case PURPUR: return Blocks.purpur_stairs;
-		default: return Blocks.stone_stairs;
+		case COBBLE: return Blocks.STONE_STAIRS;
+		case STONEBRICK: return Blocks.STONE_BRICK_STAIRS;
+		case BRICK: return Blocks.BRICK_STAIRS;
+		case SANDSTONE: return Blocks.SANDSTONE_STAIRS;
+		case RED_SANDSTONE: return Blocks.RED_SANDSTONE_STAIRS;
+		case QUARTZ: return Blocks.QUARTZ_STAIRS;
+		case NETHERBRICK: return Blocks.NETHER_BRICK_STAIRS;
+		case OAK: return Blocks.OAK_STAIRS;
+		case SPRUCE: return Blocks.SPRUCE_STAIRS;
+		case BIRCH: return Blocks.BIRCH_STAIRS;
+		case JUNGLE: return Blocks.JUNGLE_STAIRS;
+		case ACACIA: return Blocks.ACACIA_STAIRS;
+		case DARKOAK: return Blocks.DARK_OAK_STAIRS;
+		case PURPUR: return Blocks.PURPUR_STAIRS;
+		default: return Blocks.STONE_STAIRS;
 		}
 	}
 }

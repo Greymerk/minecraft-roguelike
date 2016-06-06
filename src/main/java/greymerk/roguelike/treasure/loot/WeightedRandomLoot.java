@@ -63,7 +63,7 @@ public class WeightedRandomLoot implements Comparable<WeightedRandomLoot>, IWeig
 	public WeightedRandomLoot(JsonObject json, int weight) throws Exception{
 		this.name = json.get("name").getAsString();
 		ResourceLocation location = new ResourceLocation(name);
-		this.item = (Item) Item.itemRegistry.getObject(location);
+		this.item = (Item) Item.REGISTRY.getObject(location);
 		try{
 			this.item.getUnlocalizedName();
 		} catch (NullPointerException e){

@@ -14,7 +14,7 @@ public class Shield {
 		
 		ItemStack banner = Banner.get(rand);
 		
-		ItemStack shield = new ItemStack(Items.shield, 1, 0); 
+		ItemStack shield = new ItemStack(Items.SHIELD, 1, 0); 
 		
 		applyBanner(banner, shield);
 		
@@ -27,7 +27,7 @@ public class Shield {
 		EnumDyeColor dye = EnumDyeColor.byDyeDamage(TileEntityBanner.getBaseColor(banner));
 		
 		shield.setTagCompound(patterns);
-		TileEntityBanner.func_184248_a(shield, dye);
+		TileEntityBanner.addBaseColorTag(shield, dye);
 	}
 	
 }

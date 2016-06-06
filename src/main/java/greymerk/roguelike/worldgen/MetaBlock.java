@@ -50,11 +50,12 @@ public class MetaBlock extends BlockBase implements IBlockState{
 		this.state = s.getBaseState();
 	}
 	
+	@SuppressWarnings("deprecation")
 	public MetaBlock(JsonElement e){
 		JsonObject json = (JsonObject)e;
 		String name = json.get("name").getAsString();
 		ResourceLocation location = new ResourceLocation(name);
-		Block block = (Block) Block.blockRegistry.getObject(location);
+		Block block = (Block) Block.REGISTRY.getObject(location);
 		int meta = json.has("meta") ? json.get("meta").getAsInt() : 0;
 		this.state = block.getStateFromMeta(meta);
 		flag = json.has("flag") ? json.get("flag").getAsInt() : 2;
@@ -294,10 +295,20 @@ public class MetaBlock extends BlockBase implements IBlockState{
 		return this.state.getLightOpacity();
 	}
 
+	@Override
+	public void neighborChanged(World arg0, BlockPos arg1, Block arg2) {
+		this.state.neighborChanged(arg0, arg1, arg2);
+	}
+
+	@Override
+	public boolean onBlockEventReceived(World arg0, BlockPos arg1, int arg2, int arg3) {
+		return this.state.onBlockEventReceived(arg0, arg1, arg2, arg3);
+	}
+
 	@SuppressWarnings("deprecation")
 	@Override
-	public int getlightValue() {
-		return this.state.getlightValue();
+	public int getLightValue() {
+		return this.state.getLightValue();
 	}
 
 

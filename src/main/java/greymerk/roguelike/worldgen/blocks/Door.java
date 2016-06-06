@@ -30,13 +30,13 @@ public enum Door {
 		
 		IBlockState door;
 		switch(type){
-		case IRON: door = new MetaBlock(Blocks.iron_door.getDefaultState()); break;
-		case BIRCH: door = new MetaBlock(Blocks.birch_door.getDefaultState()); break;
-		case SPRUCE: door = new MetaBlock(Blocks.spruce_door.getDefaultState()); break;
-		case JUNGLE: door = new MetaBlock(Blocks.jungle_door.getDefaultState()); break;
-		case ACACIA: door = new MetaBlock(Blocks.acacia_door.getDefaultState()); break;
-		case DARKOAK: door = new MetaBlock(Blocks.dark_oak_door.getDefaultState()); break;
-		default: door = new MetaBlock(Blocks.oak_door.getDefaultState()); break;
+		case IRON: door = new MetaBlock(Blocks.IRON_DOOR.getDefaultState()); break;
+		case BIRCH: door = new MetaBlock(Blocks.BIRCH_DOOR.getDefaultState()); break;
+		case SPRUCE: door = new MetaBlock(Blocks.SPRUCE_DOOR.getDefaultState()); break;
+		case JUNGLE: door = new MetaBlock(Blocks.JUNGLE_DOOR.getDefaultState()); break;
+		case ACACIA: door = new MetaBlock(Blocks.ACACIA_DOOR.getDefaultState()); break;
+		case DARKOAK: door = new MetaBlock(Blocks.DARK_OAK_DOOR.getDefaultState()); break;
+		default: door = new MetaBlock(Blocks.OAK_DOOR.getDefaultState()); break;
 		}
 		
 		door = door.withProperty(BlockDoor.HALF, top ? BlockDoor.EnumDoorHalf.UPPER : BlockDoor.EnumDoorHalf.LOWER);

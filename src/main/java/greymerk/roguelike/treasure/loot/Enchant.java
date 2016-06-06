@@ -91,10 +91,10 @@ public enum Enchant {
 			throw e;
 		}
 		
-		boolean isBook = item.getItem() == Items.book;
+		boolean isBook = item.getItem() == Items.BOOK;
 
 		if (isBook){
-			item.setItem(Items.enchanted_book);
+			item.setItem(Items.ENCHANTED_BOOK);
 			if(enchants.size() > 1){
 				enchants.remove(rand.nextInt(enchants.size()));
 			}
@@ -102,7 +102,7 @@ public enum Enchant {
 
 		for (EnchantmentData toAdd : enchants){
 			if (isBook){
-				Items.enchanted_book.addEnchantment(item, toAdd);
+				Items.ENCHANTED_BOOK.addEnchantment(item, toAdd);
 			} else {
 				item.addEnchantment(toAdd.enchantmentobj, toAdd.enchantmentLevel);
 			}

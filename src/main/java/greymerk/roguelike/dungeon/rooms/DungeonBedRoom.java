@@ -145,7 +145,7 @@ public class DungeonBedRoom extends DungeonBase {
 		cursor.add(Cardinal.reverse(dir));
 		cursor.add(side, 3);
 		if(rand.nextBoolean()) cursor.add(Cardinal.reverse(dir));
-		Furnace.generate(editor, new ItemStack(Items.coal, 2 + rand.nextInt(3)), true, Cardinal.reverse(side), cursor);
+		Furnace.generate(editor, new ItemStack(Items.COAL, 2 + rand.nextInt(3)), true, Cardinal.reverse(side), cursor);
 		
 		
 		return true;

@@ -22,41 +22,41 @@ public class ItemFood extends ItemBase{
 			
 			switch(i){
 			case 4:
-				randomizer.add(new WeightedRandomLoot(Items.golden_apple, 0, 1, 1, 1));
-				randomizer.add(new WeightedRandomLoot(Items.golden_carrot, 0, 1, 1, 2));
-				randomizer.add(new WeightedRandomLoot(Items.cooked_beef, 0, 1, 5, 3));
-				randomizer.add(new WeightedRandomLoot(Items.cooked_porkchop, 0, 1, 5, 3));
-				randomizer.add(new WeightedRandomLoot(Items.cooked_mutton, 0, 1, 5, 3));
+				randomizer.add(new WeightedRandomLoot(Items.GOLDEN_APPLE, 0, 1, 1, 1));
+				randomizer.add(new WeightedRandomLoot(Items.GOLDEN_CARROT, 0, 1, 1, 2));
+				randomizer.add(new WeightedRandomLoot(Items.COOKED_BEEF, 0, 1, 5, 3));
+				randomizer.add(new WeightedRandomLoot(Items.COOKED_PORKCHOP, 0, 1, 5, 3));
+				randomizer.add(new WeightedRandomLoot(Items.COOKED_MUTTON, 0, 1, 5, 3));
 				break;
 			case 3:
-				randomizer.add(new WeightedRandomLoot(Items.cooked_beef, 0, 1, 3, 3));
-				randomizer.add(new WeightedRandomLoot(Items.cooked_porkchop, 0, 1, 3, 3));
-				randomizer.add(new WeightedRandomLoot(Items.cooked_mutton, 0, 1, 3, 3));
-				randomizer.add(new WeightedRandomLoot(Items.cooked_chicken, 0, 1, 2, 1));
-				randomizer.add(new WeightedRandomLoot(Items.baked_potato, 0, 1, 2, 1));
+				randomizer.add(new WeightedRandomLoot(Items.COOKED_BEEF, 0, 1, 3, 3));
+				randomizer.add(new WeightedRandomLoot(Items.COOKED_PORKCHOP, 0, 1, 3, 3));
+				randomizer.add(new WeightedRandomLoot(Items.COOKED_MUTTON, 0, 1, 3, 3));
+				randomizer.add(new WeightedRandomLoot(Items.COOKED_CHICKEN, 0, 1, 2, 1));
+				randomizer.add(new WeightedRandomLoot(Items.BAKED_POTATO, 0, 1, 2, 1));
 				break;
 			case 2:
-				randomizer.add(new WeightedRandomLoot(Items.cooked_beef, 0, 1, 3, 1));
-				randomizer.add(new WeightedRandomLoot(Items.cooked_porkchop, 0, 1, 3, 1));
-				randomizer.add(new WeightedRandomLoot(Items.cooked_mutton, 0, 1, 3, 1));
-				randomizer.add(new WeightedRandomLoot(Items.cooked_chicken, 0, 1, 2, 2));
-				randomizer.add(new WeightedRandomLoot(Items.baked_potato, 0, 1, 2, 2));
+				randomizer.add(new WeightedRandomLoot(Items.COOKED_BEEF, 0, 1, 3, 1));
+				randomizer.add(new WeightedRandomLoot(Items.COOKED_PORKCHOP, 0, 1, 3, 1));
+				randomizer.add(new WeightedRandomLoot(Items.COOKED_MUTTON, 0, 1, 3, 1));
+				randomizer.add(new WeightedRandomLoot(Items.COOKED_CHICKEN, 0, 1, 2, 2));
+				randomizer.add(new WeightedRandomLoot(Items.BAKED_POTATO, 0, 1, 2, 2));
 				break;
 			case 1:	
-				randomizer.add(new WeightedRandomLoot(Items.bread, 0, 1, 3, 5));
-				randomizer.add(new WeightedRandomLoot(Items.cooked_fish, 0, 1, 3, 5));
-				randomizer.add(new WeightedRandomLoot(Items.apple, 0, 1, 3, 2));
-				randomizer.add(new WeightedRandomLoot(Items.cooked_chicken, 0, 1, 2, 2));
-				randomizer.add(new WeightedRandomLoot(Items.baked_potato, 0, 1, 2, 2));
+				randomizer.add(new WeightedRandomLoot(Items.BREAD, 0, 1, 3, 5));
+				randomizer.add(new WeightedRandomLoot(Items.COOKED_FISH, 0, 1, 3, 5));
+				randomizer.add(new WeightedRandomLoot(Items.APPLE, 0, 1, 3, 2));
+				randomizer.add(new WeightedRandomLoot(Items.COOKED_CHICKEN, 0, 1, 2, 2));
+				randomizer.add(new WeightedRandomLoot(Items.BAKED_POTATO, 0, 1, 2, 2));
 				break;
 			case 0:
-				randomizer.add(new WeightedRandomLoot(Items.bread, 0, 1, 2, 5));
-				randomizer.add(new WeightedRandomLoot(Items.cooked_fish, 0, 1, 2, 5));
-				randomizer.add(new WeightedRandomLoot(Items.apple, 0, 1, 2, 5));
-				randomizer.add(new WeightedRandomLoot(Items.cookie, 0, 1, 4, 1));
+				randomizer.add(new WeightedRandomLoot(Items.BREAD, 0, 1, 2, 5));
+				randomizer.add(new WeightedRandomLoot(Items.COOKED_FISH, 0, 1, 2, 5));
+				randomizer.add(new WeightedRandomLoot(Items.APPLE, 0, 1, 2, 5));
+				randomizer.add(new WeightedRandomLoot(Items.COOKIE, 0, 1, 4, 1));
 				break;
 			default:
-				randomizer.add(new WeightedRandomLoot(Items.bread, 1));
+				randomizer.add(new WeightedRandomLoot(Items.BREAD, 1));
 			}
 			
 			loot.put(i, randomizer);

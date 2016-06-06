@@ -12,7 +12,7 @@ public class Firework {
 	
 	public static ItemStack get(Random rand, int stackSize){
 	
-		ItemStack rocket = new ItemStack(Items.fireworks, stackSize);
+		ItemStack rocket = new ItemStack(Items.FIREWORKS, stackSize);
 		
 		NBTTagCompound tag = new NBTTagCompound();
 		NBTTagCompound fireworks = new NBTTagCompound();

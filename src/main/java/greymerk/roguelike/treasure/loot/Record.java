@@ -22,19 +22,19 @@ public enum Record{
 	public static Item getId(Record type){
 		
 		switch(type){
-		case THIRTEEN: return Items.record_13;
-		case CAT: return Items.record_cat;
-		case BLOCKS: return Items.record_blocks;
-		case CHIRP: return Items.record_chirp;
-		case FAR: return Items.record_far;
-		case MALL: return Items.record_mall;
-		case MELLOHI: return Items.record_mellohi;
-		case STAL: return Items.record_stal;
-		case STRAD: return Items.record_strad;
-		case WARD: return Items.record_ward;
-		case ELEVEN: return Items.record_11;
-		case WAIT: return Items.record_wait;
-		default: return Items.record_cat;
+		case THIRTEEN: return Items.RECORD_13;
+		case CAT: return Items.RECORD_CAT;
+		case BLOCKS: return Items.RECORD_BLOCKS;
+		case CHIRP: return Items.RECORD_CHIRP;
+		case FAR: return Items.RECORD_FAR;
+		case MALL: return Items.RECORD_MALL;
+		case MELLOHI: return Items.RECORD_MELLOHI;
+		case STAL: return Items.RECORD_STAL;
+		case STRAD: return Items.RECORD_STRAD;
+		case WARD: return Items.RECORD_WARD;
+		case ELEVEN: return Items.RECORD_11;
+		case WAIT: return Items.RECORD_WAIT;
+		default: return Items.RECORD_CAT;
 		}
 	}
 	

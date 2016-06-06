@@ -13,8 +13,8 @@ public class ItemEnchBonus extends ItemBase{
 
 	@Override
 	public ItemStack getLootItem(Random rand, int level) {
-		if(rand.nextBoolean()) return new ItemStack(Items.experience_bottle, 1 + rand.nextInt(5));
-		return new ItemStack(Items.ender_pearl, 1 + rand.nextInt(2));
+		if(rand.nextBoolean()) return new ItemStack(Items.EXPERIENCE_BOTTLE, 1 + rand.nextInt(5));
+		return new ItemStack(Items.ENDER_PEARL, 1 + rand.nextInt(2));
 	}
 
 	

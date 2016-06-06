@@ -34,7 +34,7 @@ public class ItemWeapon extends ItemBase{
 			return ItemSpecialty.getRandomItem(Equipment.BOW, rand, level);
 		}
 		
-		ItemStack bow = new ItemStack(Items.bow);
+		ItemStack bow = new ItemStack(Items.BOW);
 		
 		if(enchant && rand.nextInt(6 - level) == 0){
 			Enchant.enchantItem(rand, bow, Enchant.getLevel(rand, level));
@@ -65,11 +65,11 @@ public class ItemWeapon extends ItemBase{
 		Quality quality = Quality.getWeaponQuality(rand, level);
 		
 		switch (quality) {
-		case DIAMOND: return new ItemStack(Items.diamond_sword);
-		case GOLD: return new ItemStack(Items.golden_sword);
-		case IRON: return new ItemStack(Items.iron_sword);
-		case STONE: return new ItemStack(Items.stone_sword);
-		default: return new ItemStack(Items.wooden_sword);
+		case DIAMOND: return new ItemStack(Items.DIAMOND_SWORD);
+		case GOLD: return new ItemStack(Items.GOLDEN_SWORD);
+		case IRON: return new ItemStack(Items.IRON_SWORD);
+		case STONE: return new ItemStack(Items.STONE_SWORD);
+		default: return new ItemStack(Items.WOODEN_SWORD);
 		}
 	}
 

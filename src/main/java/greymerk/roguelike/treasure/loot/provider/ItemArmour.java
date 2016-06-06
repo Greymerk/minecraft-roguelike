@@ -59,12 +59,12 @@ public class ItemArmour extends ItemBase {
 		case HEAD:
 			switch (quality) {
 
-			case DIAMOND: return new ItemStack(Items.diamond_helmet);
-			case GOLD: return new ItemStack(Items.golden_helmet);
-			case IRON: return new ItemStack(Items.iron_helmet);
-			case STONE: return new ItemStack(Items.chainmail_helmet);
+			case DIAMOND: return new ItemStack(Items.DIAMOND_HELMET);
+			case GOLD: return new ItemStack(Items.GOLDEN_HELMET);
+			case IRON: return new ItemStack(Items.IRON_HELMET);
+			case STONE: return new ItemStack(Items.CHAINMAIL_HELMET);
 			default:
-				ItemStack item = new ItemStack(Items.leather_helmet);
+				ItemStack item = new ItemStack(Items.LEATHER_HELMET);
 				dyeArmor(item, rand.nextInt(256), rand.nextInt(255), rand.nextInt(255));
 				return item;
 			}
@@ -72,12 +72,12 @@ public class ItemArmour extends ItemBase {
 		case FEET:
 			switch (quality) {
 
-			case DIAMOND: return new ItemStack(Items.diamond_helmet);
-			case GOLD: return new ItemStack(Items.golden_helmet);
-			case IRON: return new ItemStack(Items.iron_helmet);
-			case STONE: return new ItemStack(Items.chainmail_helmet);
+			case DIAMOND: return new ItemStack(Items.DIAMOND_BOOTS);
+			case GOLD: return new ItemStack(Items.GOLDEN_BOOTS);
+			case IRON: return new ItemStack(Items.IRON_BOOTS);
+			case STONE: return new ItemStack(Items.CHAINMAIL_BOOTS);
 			default:
-				ItemStack item = new ItemStack(Items.leather_boots);
+				ItemStack item = new ItemStack(Items.LEATHER_BOOTS);
 				dyeArmor(item, rand.nextInt(256), rand.nextInt(255), rand.nextInt(255));
 				return item;
 			}
@@ -85,24 +85,24 @@ public class ItemArmour extends ItemBase {
 		case CHEST:
 			switch (quality) {
 
-			case DIAMOND: return new ItemStack(Items.diamond_chestplate);
-			case GOLD: return new ItemStack(Items.golden_chestplate);
-			case IRON: return new ItemStack(Items.iron_chestplate);
-			case STONE: return new ItemStack(Items.chainmail_chestplate);
+			case DIAMOND: return new ItemStack(Items.DIAMOND_CHESTPLATE);
+			case GOLD: return new ItemStack(Items.GOLDEN_CHESTPLATE);
+			case IRON: return new ItemStack(Items.IRON_CHESTPLATE);
+			case STONE: return new ItemStack(Items.CHAINMAIL_CHESTPLATE);
 			default:
-				ItemStack item = new ItemStack(Items.leather_chestplate);
+				ItemStack item = new ItemStack(Items.LEATHER_CHESTPLATE);
 				dyeArmor(item, rand.nextInt(256), rand.nextInt(255), rand.nextInt(255));
 				return item;
 			}
 		case LEGS:
 			switch (quality) {
 	
-			case DIAMOND: return new ItemStack(Items.diamond_leggings);
-			case GOLD: return new ItemStack(Items.golden_leggings);
-			case IRON: return new ItemStack(Items.iron_leggings);
-			case STONE: return new ItemStack(Items.chainmail_leggings);
+			case DIAMOND: return new ItemStack(Items.DIAMOND_LEGGINGS);
+			case GOLD: return new ItemStack(Items.GOLDEN_LEGGINGS);
+			case IRON: return new ItemStack(Items.IRON_LEGGINGS);
+			case STONE: return new ItemStack(Items.CHAINMAIL_LEGGINGS);
 			default:
-				ItemStack item = new ItemStack(Items.leather_leggings);
+				ItemStack item = new ItemStack(Items.LEATHER_LEGGINGS);
 				dyeArmor(item, rand.nextInt(256), rand.nextInt(255), rand.nextInt(255));
 				return item;
 			}

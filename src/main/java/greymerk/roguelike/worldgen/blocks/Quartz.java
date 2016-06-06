@@ -13,18 +13,18 @@ public enum Quartz {
 		MetaBlock block;
 		switch(type){
 		case CHISELED:
-			block = new MetaBlock(Blocks.quartz_block);
+			block = new MetaBlock(Blocks.QUARTZ_BLOCK);
 			block.withProperty(BlockQuartz.VARIANT, BlockQuartz.EnumType.CHISELED);
 		case PILLAR:
-			block = new MetaBlock(Blocks.quartz_block);
+			block = new MetaBlock(Blocks.QUARTZ_BLOCK);
 			block.withProperty(BlockQuartz.VARIANT, BlockQuartz.EnumType.LINES_Y);
 		case SMOOTH:
-		default: return new MetaBlock(Blocks.quartz_block);
+		default: return new MetaBlock(Blocks.QUARTZ_BLOCK);
 		}
 	}
 	
 	public static MetaBlock getPillar(Cardinal dir){
-		MetaBlock block = new MetaBlock(Blocks.quartz_block);
+		MetaBlock block = new MetaBlock(Blocks.QUARTZ_BLOCK);
 		switch(dir){
 		case EAST:
 		case WEST:

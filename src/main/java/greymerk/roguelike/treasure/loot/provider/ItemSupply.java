@@ -15,19 +15,19 @@ public class ItemSupply extends ItemBase{
 	@Override
 	public ItemStack getLootItem(Random rand, int level) {
 		
-		if(rand.nextInt(20) == 0) return new ItemStack(Items.carrot, 1);
-		if(rand.nextInt(20) == 0) return new ItemStack(Items.potato, 1);
+		if(rand.nextInt(20) == 0) return new ItemStack(Items.CARROT, 1);
+		if(rand.nextInt(20) == 0) return new ItemStack(Items.POTATO, 1);
 
 		switch(rand.nextInt(8)){
-		case 0: return new ItemStack(Items.wheat_seeds, rand.nextInt(8) + 1);
-		case 1: return new ItemStack(Items.pumpkin_seeds, rand.nextInt(8) + 1);
-		case 2: return new ItemStack(Items.melon_seeds, rand.nextInt(8) + 1);		
-		case 3: return new ItemStack(Items.wheat, rand.nextInt(8) + 1);
-		case 4: return new ItemStack(Blocks.torch, 10 + rand.nextInt(10));
-		case 5: return new ItemStack(Items.paper, rand.nextInt(8) + 1);
-		case 6:	return new ItemStack(Items.book, rand.nextInt(4) + 1);
-		case 7:	return new ItemStack(Blocks.sapling, rand.nextInt(4) + 1, rand.nextInt(4));
-		default: return new ItemStack(Items.stick, 1);
+		case 0: return new ItemStack(Items.WHEAT_SEEDS, rand.nextInt(8) + 1);
+		case 1: return new ItemStack(Items.PUMPKIN_SEEDS, rand.nextInt(8) + 1);
+		case 2: return new ItemStack(Items.MELON_SEEDS, rand.nextInt(8) + 1);		
+		case 3: return new ItemStack(Items.WHEAT, rand.nextInt(8) + 1);
+		case 4: return new ItemStack(Blocks.TORCH, 10 + rand.nextInt(10));
+		case 5: return new ItemStack(Items.PAPER, rand.nextInt(8) + 1);
+		case 6:	return new ItemStack(Items.BOOK, rand.nextInt(4) + 1);
+		case 7:	return new ItemStack(Blocks.SAPLING, rand.nextInt(4) + 1, rand.nextInt(4));
+		default: return new ItemStack(Items.STICK, 1);
 		}
 	}
 }

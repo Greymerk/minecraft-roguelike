@@ -11,7 +11,7 @@ public enum Anvil {
 	
 	public static MetaBlock get(Anvil damage, Cardinal dir){
 		
-		MetaBlock anvil = new MetaBlock(Blocks.anvil);
+		MetaBlock anvil = new MetaBlock(Blocks.ANVIL);
 		
 		switch(damage){
 		case NEW_ANVIL: anvil.withProperty(BlockAnvil.DAMAGE, 0); break;

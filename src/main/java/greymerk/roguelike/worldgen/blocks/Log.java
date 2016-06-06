@@ -42,13 +42,13 @@ public class Log {
 	
 	public static Block getBlockId(Wood type){
 		switch(type){
-		case OAK: return Blocks.log;
-		case SPRUCE: return Blocks.log;
-		case BIRCH: return Blocks.log;
-		case JUNGLE: return Blocks.log;
-		case ACACIA: return Blocks.log2;
-		case DARKOAK: return Blocks.log2;
-		default: return Blocks.log;
+		case OAK: return Blocks.LOG;
+		case SPRUCE: return Blocks.LOG;
+		case BIRCH: return Blocks.LOG;
+		case JUNGLE: return Blocks.LOG;
+		case ACACIA: return Blocks.LOG2;
+		case DARKOAK: return Blocks.LOG2;
+		default: return Blocks.LOG;
 		}
 	}
 	

@@ -19,13 +19,13 @@ public class ItemJunk extends ItemBase{
 	public ItemStack getLootItem(Random rand, int level){
 
 		if(level > 0 && rand.nextInt(200) == 0){
-			if(level > 2 && rand.nextInt(10) == 0) return new ItemStack(Items.diamond_horse_armor, 1, 0);
-			if(level > 1 && rand.nextInt(5) == 0) return new ItemStack(Items.golden_horse_armor, 1, 0);
-			if(rand.nextInt(3) == 0) return new ItemStack(Items.iron_horse_armor, 1, 0);
-			return new ItemStack(Items.saddle);
+			if(level > 2 && rand.nextInt(10) == 0) return new ItemStack(Items.DIAMOND_HORSE_ARMOR, 1, 0);
+			if(level > 1 && rand.nextInt(5) == 0) return new ItemStack(Items.GOLDEN_HORSE_ARMOR, 1, 0);
+			if(rand.nextInt(3) == 0) return new ItemStack(Items.IRON_HORSE_ARMOR, 1, 0);
+			return new ItemStack(Items.SADDLE);
 		}
 
-		if(level > 1 && rand.nextInt(100) == 0) return new ItemStack(Items.ghast_tear);
+		if(level > 1 && rand.nextInt(100) == 0) return new ItemStack(Items.GHAST_TEAR);
 
 		if(rand.nextInt(70) == 0) return Shield.get(rand);
 		
@@ -35,16 +35,16 @@ public class ItemJunk extends ItemBase{
 		
 		if(level > 1 && rand.nextInt(40) == 0){			
 			switch(rand.nextInt(6)){
-			case 0: return new ItemStack(Items.gunpowder, 1 + rand.nextInt(3));
-			case 1: return new ItemStack(Items.blaze_powder, 1 + rand.nextInt(3));
-			case 2: return new ItemStack(Items.gold_nugget, 1 + rand.nextInt(3));
-			case 3: return new ItemStack(Items.redstone, 1 + rand.nextInt(3));
-			case 4: return new ItemStack(Items.glowstone_dust, 1 + rand.nextInt(3));
-			case 5: return new ItemStack(Items.dye, 1 + rand.nextInt(3));
+			case 0: return new ItemStack(Items.GUNPOWDER, 1 + rand.nextInt(3));
+			case 1: return new ItemStack(Items.BLAZE_POWDER, 1 + rand.nextInt(3));
+			case 2: return new ItemStack(Items.GOLD_NUGGET, 1 + rand.nextInt(3));
+			case 3: return new ItemStack(Items.REDSTONE, 1 + rand.nextInt(3));
+			case 4: return new ItemStack(Items.GLOWSTONE_DUST, 1 + rand.nextInt(3));
+			case 5: return new ItemStack(Items.DYE, 1 + rand.nextInt(3));
 			}
 		}
 
-		if(level < 3 && rand.nextInt(10 + ((1 + level) * 5)) == 0) return new ItemStack(Items.book);
+		if(level < 3 && rand.nextInt(10 + ((1 + level) * 5)) == 0) return new ItemStack(Items.BOOK);
 
 		if(rand.nextInt(60) == 0){
 			if(level > 2 && rand.nextBoolean()) return PotionMixture.getPotion(rand, PotionMixture.VILE);
@@ -52,29 +52,29 @@ public class ItemJunk extends ItemBase{
 		}
 		
 		if(rand.nextInt(15) == 0){
-			return new ItemStack(Blocks.torch, 2 + rand.nextInt(5));
+			return new ItemStack(Blocks.TORCH, 2 + rand.nextInt(5));
 		}
 
 		if(level > 0 && rand.nextInt(10) == 0){
 			switch(rand.nextInt(7)){
-			case 0: return new ItemStack(Items.slime_ball);
-			case 1: return new ItemStack(Items.snowball);
-			case 2: return new ItemStack(Items.mushroom_stew);
-			case 3: return new ItemStack(Items.clay_ball);
-			case 4: return new ItemStack(Items.flint);
-			case 5: return new ItemStack(Items.feather);
-			case 6: return new ItemStack(Items.glass_bottle);
+			case 0: return new ItemStack(Items.SLIME_BALL);
+			case 1: return new ItemStack(Items.SNOWBALL);
+			case 2: return new ItemStack(Items.MUSHROOM_STEW);
+			case 3: return new ItemStack(Items.CLAY_BALL);
+			case 4: return new ItemStack(Items.FLINT);
+			case 5: return new ItemStack(Items.FEATHER);
+			case 6: return new ItemStack(Items.GLASS_BOTTLE);
 			}
 		}
 
 		switch(rand.nextInt(6)){
-		case 0: return new ItemStack(Items.bone);
-		case 1: return new ItemStack(Items.rotten_flesh);
-		case 2: return new ItemStack(Items.spider_eye);
-		case 3: return new ItemStack(Items.paper);
-		case 4: return new ItemStack(Items.string);
-		case 5: return new ItemStack(Items.stick);
-		default: return new ItemStack(Items.stick);
+		case 0: return new ItemStack(Items.BONE);
+		case 1: return new ItemStack(Items.ROTTEN_FLESH);
+		case 2: return new ItemStack(Items.SPIDER_EYE);
+		case 3: return new ItemStack(Items.PAPER);
+		case 4: return new ItemStack(Items.STRING);
+		case 5: return new ItemStack(Items.STICK);
+		default: return new ItemStack(Items.STICK);
 		}
 	}
 }

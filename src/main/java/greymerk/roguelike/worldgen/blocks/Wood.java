@@ -24,7 +24,7 @@ public enum Wood {
 	
 	public static MetaBlock getPlank(Wood type){
 		
-		MetaBlock plank = new MetaBlock(Blocks.planks);
+		MetaBlock plank = new MetaBlock(Blocks.PLANKS);
 		
 		switch(type){
 		case OAK: plank.withProperty(BlockPlanks.VARIANT, BlockPlanks.EnumType.OAK); break;
@@ -43,20 +43,20 @@ public enum Wood {
 		MetaBlock fence;
 		
 		switch(type){
-		case OAK: fence = new MetaBlock(Blocks.oak_fence); break;
-		case SPRUCE: fence = new MetaBlock(Blocks.spruce_fence); break;
-		case BIRCH: fence = new MetaBlock(Blocks.birch_fence); break;
-		case JUNGLE: fence = new MetaBlock(Blocks.jungle_fence); break;
-		case ACACIA: fence = new MetaBlock(Blocks.acacia_fence); break;
-		case DARKOAK: fence = new MetaBlock(Blocks.dark_oak_fence); break;
-		default: fence = new MetaBlock(Blocks.oak_fence); break;
+		case OAK: fence = new MetaBlock(Blocks.OAK_FENCE); break;
+		case SPRUCE: fence = new MetaBlock(Blocks.SPRUCE_FENCE); break;
+		case BIRCH: fence = new MetaBlock(Blocks.BIRCH_FENCE); break;
+		case JUNGLE: fence = new MetaBlock(Blocks.JUNGLE_FENCE); break;
+		case ACACIA: fence = new MetaBlock(Blocks.ACACIA_FENCE); break;
+		case DARKOAK: fence = new MetaBlock(Blocks.DARK_OAK_FENCE); break;
+		default: fence = new MetaBlock(Blocks.OAK_FENCE); break;
 		}
 		
 		return fence;
 	}
 	
 	public static MetaBlock getSapling(Wood type){
-		MetaBlock sapling = new MetaBlock(Blocks.sapling);
+		MetaBlock sapling = new MetaBlock(Blocks.SAPLING);
 		
 		switch(type){
 		case OAK: sapling.withProperty(BlockSapling.TYPE, BlockPlanks.EnumType.OAK); break; 

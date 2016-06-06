@@ -26,7 +26,7 @@ public class TreasureChest implements ITreasureChest{
 		this.rand = rand;
 		this.level = level;
 		
-		MetaBlock chestType = new MetaBlock(trapped ? Blocks.trapped_chest : Blocks.chest);
+		MetaBlock chestType = new MetaBlock(trapped ? Blocks.TRAPPED_CHEST : Blocks.CHEST);
 		
 		if(!chestType.set(editor, pos)){
 			return null;

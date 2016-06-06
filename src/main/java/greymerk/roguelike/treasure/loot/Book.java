@@ -39,7 +39,7 @@ public class Book {
 	}
 	
 	public ItemStack get(){
-		ItemStack book = new ItemStack(Items.written_book, 1);
+		ItemStack book = new ItemStack(Items.WRITTEN_BOOK, 1);
 		
 		NBTTagList nbtPages = new NBTTagList();
 		

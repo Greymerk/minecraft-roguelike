@@ -22,7 +22,7 @@ public class ItemBlock extends ItemBase{
 		this.loot.add(new WeightedRandomLoot(BlockType.get(BlockType.STONE_BRICK).getBlock(), 0, 8, 32, 5));
 		this.loot.add(new WeightedRandomLoot(BlockType.get(BlockType.STONE_BRICK_MOSSY).getBlock(), 0, 8, 32, 1));
 		this.loot.add(new WeightedRandomLoot(BlockType.get(BlockType.STONE_BRICK_CRACKED).getBlock(), 0, 8, 32, 1));
-		this.loot.add(new WeightedRandomLoot(Items.bread, 1));
+		this.loot.add(new WeightedRandomLoot(Items.BREAD, 1));
 	}
 
 	@Override

@@ -20,7 +20,7 @@ public enum Leaves {
 		
 		// Original minecraft leaves use a different variant property than
 		// newer leaves like acacia and dark oak.
-		if(base == Blocks.leaves){
+		if(base == Blocks.LEAVES){
 			leaf.withProperty(BlockOldLeaf.VARIANT, getType(type));	
 		} else {
 			leaf.withProperty(BlockNewLeaf.VARIANT, getType(type));
@@ -34,13 +34,13 @@ public enum Leaves {
 	
 	public static Block getBlockId(Leaves type){
 		switch(type){
-		case OAK: return Blocks.leaves;
-		case SPRUCE: return Blocks.leaves;
-		case BIRCH: return Blocks.leaves;
-		case JUNGLE: return Blocks.leaves;
-		case ACACIA: return Blocks.leaves2;
-		case DARKOAK: return Blocks.leaves2;
-		default: return Blocks.log;
+		case OAK: return Blocks.LEAVES;
+		case SPRUCE: return Blocks.LEAVES;
+		case BIRCH: return Blocks.LEAVES;
+		case JUNGLE: return Blocks.LEAVES;
+		case ACACIA: return Blocks.LEAVES2;
+		case DARKOAK: return Blocks.LEAVES2;
+		default: return Blocks.LOG;
 		}
 	}
 	

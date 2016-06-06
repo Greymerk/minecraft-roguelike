@@ -29,10 +29,10 @@ public enum Potion {
 		ItemStack potion;
 		
 		switch(type){
-		case REGULAR: potion = new ItemStack(Items.potionitem); break;
-		case SPLASH: potion = new ItemStack(Items.splash_potion); break;
-		case LINGERING: potion = new ItemStack(Items.lingering_potion); break;
-		default: potion = new ItemStack(Items.potionitem); break;
+		case REGULAR: potion = new ItemStack(Items.POTIONITEM); break;
+		case SPLASH: potion = new ItemStack(Items.SPLASH_POTION); break;
+		case LINGERING: potion = new ItemStack(Items.LINGERING_POTION); break;
+		default: potion = new ItemStack(Items.POTIONITEM); break;
 		}
 		
 		net.minecraft.potion.PotionType data = getEffect(effect, upgrade, extend);
@@ -42,51 +42,51 @@ public enum Potion {
 	
 	public static net.minecraft.potion.PotionType getEffect(Potion effect, boolean upgrade, boolean extend){
 		switch(effect){
-		case HEALING: return upgrade ? PotionTypes.strong_healing : PotionTypes.healing;
-		case HARM: return upgrade ? PotionTypes.strong_harming : PotionTypes.harming;
+		case HEALING: return upgrade ? PotionTypes.STRONG_HEALING : PotionTypes.HEALING;
+		case HARM: return upgrade ? PotionTypes.STRONG_HARMING : PotionTypes.HARMING;
 		case REGEN:
 			if(extend){
-				return PotionTypes.long_regeneration;
+				return PotionTypes.LONG_REGENERATION;
 			} else {
-				return upgrade ? PotionTypes.strong_regeneration : PotionTypes.regeneration;
+				return upgrade ? PotionTypes.STRONG_REGENERATION : PotionTypes.REGENERATION;
 			}
 		case POISON:
 			if(extend){
-				return PotionTypes.long_poison;
+				return PotionTypes.LONG_POISON;
 			} else {
-				return upgrade ? PotionTypes.strong_poison : PotionTypes.poison;
+				return upgrade ? PotionTypes.STRONG_POISON : PotionTypes.POISON;
 			}
 		case STRENGTH:
 			if(extend){
-				return PotionTypes.long_strength;
+				return PotionTypes.LONG_STRENGTH;
 			} else {
-				return upgrade ? PotionTypes.strong_strength : PotionTypes.strength;
+				return upgrade ? PotionTypes.STRONG_STRENGTH : PotionTypes.STRENGTH;
 			}
 		case WEAKNESS:
 			if(extend){
-				return PotionTypes.long_weakness;
+				return PotionTypes.LONG_WEAKNESS;
 			} else {
-				return PotionTypes.weakness;
+				return PotionTypes.WEAKNESS;
 			}
 		case SLOWNESS:
 			if(extend){
-				return PotionTypes.long_slowness;
+				return PotionTypes.LONG_SLOWNESS;
 			} else {
-				return PotionTypes.slowness;
+				return PotionTypes.SLOWNESS;
 			}
 		case SWIFTNESS:
 			if(extend){
-				return PotionTypes.long_swiftness;
+				return PotionTypes.LONG_SWIFTNESS;
 			} else {
-				return upgrade ? PotionTypes.strong_swiftness : PotionTypes.swiftness;
+				return upgrade ? PotionTypes.STRONG_SWIFTNESS : PotionTypes.SWIFTNESS;
 			}
 		case FIRERESIST:
 			if(extend){
-				return PotionTypes.long_fire_resistance;
+				return PotionTypes.LONG_FIRE_RESISTANCE;
 			} else {
-				return PotionTypes.fire_resistance;
+				return PotionTypes.FIRE_RESISTANCE;
 			} 
-		default: return PotionTypes.healing;
+		default: return PotionTypes.HEALING;
 		}
 	}
 }

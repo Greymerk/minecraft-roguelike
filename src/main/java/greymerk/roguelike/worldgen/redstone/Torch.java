@@ -3,10 +3,12 @@ package greymerk.roguelike.worldgen.redstone;
 
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
-import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.IWorldEditor;
+import greymerk.roguelike.worldgen.MetaBlock;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockTorch;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.EnumFacing;
 
 public enum Torch {
 
@@ -17,22 +19,21 @@ public enum Torch {
 		Block name;
 		
 		switch(type){
-		case WOODEN: name = Blocks.torch; break;
-		case REDSTONE: name = Blocks.redstone_torch; break;
-		case REDSTONE_UNLIT: name = Blocks.unlit_redstone_torch; break;
-		default: name = Blocks.torch; break;
+		case WOODEN: name = Blocks.TORCH; break;
+		case REDSTONE: name = Blocks.REDSTONE_TORCH; break;
+		case REDSTONE_UNLIT: name = Blocks.UNLIT_REDSTONE_TORCH; break;
+		default: name = Blocks.TORCH; break;
 		}		
 		
-		int meta;
-		switch(dir){
-		case EAST: meta = 1; break;
-		case WEST: meta = 2; break;
-		case SOUTH: meta = 3; break;
-		case NORTH: meta = 4; break;
-		default: meta = 5; break;
+		MetaBlock torch = new MetaBlock(name);
+		if(dir == Cardinal.UP){
+			torch.withProperty(BlockTorch.FACING, EnumFacing.UP);
+		} else if(dir == Cardinal.DOWN){
+			torch.withProperty(BlockTorch.FACING, EnumFacing.DOWN);
+		} else {
+			torch.withProperty(BlockTorch.FACING, Cardinal.facing(Cardinal.reverse(dir)));
 		}
 		
-		MetaBlock torch = new MetaBlock(name.getStateFromMeta(meta));
 		
 		torch.set(editor, pos);
 		

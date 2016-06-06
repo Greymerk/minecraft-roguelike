@@ -28,9 +28,9 @@ public class Furnace {
 		MetaBlock furnace;
 		
 		if(lit){
-			furnace = new MetaBlock(Blocks.lit_furnace);
+			furnace = new MetaBlock(Blocks.LIT_FURNACE);
 		} else {
-			furnace = new MetaBlock(Blocks.furnace);
+			furnace = new MetaBlock(Blocks.FURNACE);
 		}
 		
 		furnace.withProperty(BlockFurnace.FACING, Cardinal.facing(Cardinal.reverse(dir)));

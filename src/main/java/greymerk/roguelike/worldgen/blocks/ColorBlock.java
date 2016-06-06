@@ -28,12 +28,12 @@ public enum ColorBlock {
 	
 	public static Block getBlock(ColorBlock type){
 		switch(type){
-		case CLAY: return Blocks.stained_hardened_clay;
-		case WOOL: return Blocks.wool;
-		case CARPET: return Blocks.carpet;
-		case GLASS: return Blocks.stained_glass;
-		case PANE: return Blocks.stained_glass_pane;
-		default: return Blocks.wool;
+		case CLAY: return Blocks.STAINED_HARDENED_CLAY;
+		case WOOL: return Blocks.WOOL;
+		case CARPET: return Blocks.CARPET;
+		case GLASS: return Blocks.STAINED_GLASS;
+		case PANE: return Blocks.STAINED_GLASS_PANE;
+		default: return Blocks.WOOL;
 		}
 	}
 	

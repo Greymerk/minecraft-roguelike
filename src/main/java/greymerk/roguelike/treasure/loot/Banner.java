@@ -13,7 +13,7 @@ public class Banner {
 
 	public static ItemStack get(Random rand){
 		
-		ItemStack banner = new ItemStack(Items.banner);
+		ItemStack banner = new ItemStack(Items.BANNER);
 		int n = rand.nextInt(8) + 1;
 		for(int i = 0; i < n; ++i){
 			addPattern(banner, rand);

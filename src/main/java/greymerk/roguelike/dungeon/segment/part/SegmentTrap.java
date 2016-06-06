@@ -110,7 +110,7 @@ public class SegmentTrap extends SegmentBase{
 		case 1: return TippedArrow.get(Potion.POISON, amount);
 		case 2: return TippedArrow.get(Potion.SLOWNESS, amount);
 		case 3: return TippedArrow.get(Potion.WEAKNESS, amount);
-		default: return new ItemStack(Items.arrow, amount);
+		default: return new ItemStack(Items.ARROW, amount);
 		}
 	}
 }

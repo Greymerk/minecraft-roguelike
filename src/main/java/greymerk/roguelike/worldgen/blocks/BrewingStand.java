@@ -8,6 +8,6 @@ public enum BrewingStand {
 	INPUT, LEFT, CENTER, RIGHT;
 	
 	public static MetaBlock get(){
-		return new MetaBlock(Blocks.brewing_stand);
+		return new MetaBlock(Blocks.BREWING_STAND);
 	}	
 }

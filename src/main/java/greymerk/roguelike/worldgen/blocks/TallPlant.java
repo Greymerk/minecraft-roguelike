@@ -14,8 +14,8 @@ public enum TallPlant {
 	public static void generate(IWorldEditor editor, TallPlant type, Coord pos){
 		Coord cursor;
 
-		MetaBlock upper = new MetaBlock(Blocks.double_plant.getStateFromMeta(getMeta(type, true)));
-		MetaBlock lower = new MetaBlock(Blocks.double_plant.getStateFromMeta(getMeta(type, false)));
+		MetaBlock upper = new MetaBlock(Blocks.DOUBLE_PLANT.getStateFromMeta(getMeta(type, true)));
+		MetaBlock lower = new MetaBlock(Blocks.DOUBLE_PLANT.getStateFromMeta(getMeta(type, false)));
 		
 		cursor = new Coord(pos);
 		lower.set(editor, cursor);

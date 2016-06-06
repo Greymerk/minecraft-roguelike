@@ -114,7 +114,7 @@ public enum Loot {
 				if(rand.nextInt(20) == 0){
 					weapon = ItemNovelty.getItem(ItemNovelty.ASHLEA);
 				} else if(rand.nextInt(5) == 0){
-					weapon = new ItemStack(Items.cookie);
+					weapon = new ItemStack(Items.COOKIE);
 				} else {
 					weapon = ItemTool.getRandom(rand, level, enchant);
 				}

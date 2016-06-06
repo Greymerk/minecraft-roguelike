@@ -81,17 +81,17 @@ public enum Slab {
 		case STONEBRICK:
 		case NETHERBRICK:
 		case QUARTZ:
-			return full ? Blocks.double_stone_slab : Blocks.stone_slab;
+			return full ? Blocks.DOUBLE_STONE_SLAB : Blocks.STONE_SLAB;
 		case SANDSTONE_RED:
-			return full ? Blocks.double_stone_slab2 : Blocks.stone_slab2;
+			return full ? Blocks.DOUBLE_STONE_SLAB2 : Blocks.STONE_SLAB2;
 		case OAK:
 		case SPRUCE:
 		case BIRCH:
 		case JUNGLE:
 		case ACACIA:
 		case DARKOAK:
-			return full ? Blocks.double_wooden_slab : Blocks.wooden_slab;
-		default: return Blocks.stone_slab;
+			return full ? Blocks.DOUBLE_WOODEN_SLAB : Blocks.WOODEN_SLAB;
+		default: return Blocks.STONE_SLAB;
 		}
 	}
 	

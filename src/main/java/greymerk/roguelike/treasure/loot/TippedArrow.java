@@ -24,9 +24,9 @@ public class TippedArrow {
 	public static ItemStack get(Potion type, int amount){
 		
 		net.minecraft.potion.PotionType pot = Potion.getEffect(type, false, false);
-		String id = net.minecraft.potion.PotionType.potionTypeRegistry.getNameForObject(pot).toString();
+		String id = net.minecraft.potion.PotionType.REGISTRY.getNameForObject(pot).toString();
 		
-		ItemStack arrow = new ItemStack(Items.tipped_arrow, amount);
+		ItemStack arrow = new ItemStack(Items.TIPPED_ARROW, amount);
 		
 		NBTTagCompound nbt = new NBTTagCompound();
 		nbt.setString("Potion", id);

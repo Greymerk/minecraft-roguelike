@@ -10,7 +10,7 @@ import com.google.gson.JsonObject;
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IWorldEditor;
-import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
 
 public class SpawnCriteria {
@@ -113,7 +113,7 @@ public class SpawnCriteria {
 		
 		boolean biomeFound = false;
 		
-		BiomeGenBase biome = editor.getBiome(pos);
+		Biome biome = editor.getBiome(pos);
 		
 		if(this.biomes != null){
 			if(this.biomes.contains(biome.getBiomeName())) biomeFound = true;

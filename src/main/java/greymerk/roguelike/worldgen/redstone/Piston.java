@@ -11,7 +11,7 @@ public class Piston {
 
 	public static void generate(IWorldEditor editor, Coord origin, Cardinal dir, boolean sticky){
 		
-		MetaBlock piston = new MetaBlock(sticky ? Blocks.sticky_piston : Blocks.piston);
+		MetaBlock piston = new MetaBlock(sticky ? Blocks.STICKY_PISTON : Blocks.PISTON);
 		piston.withProperty(BlockPistonBase.FACING, Cardinal.facing(Cardinal.reverse(dir)));
 		piston.set(editor, origin);
 	}

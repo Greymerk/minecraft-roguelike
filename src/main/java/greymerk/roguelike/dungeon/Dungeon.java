@@ -21,7 +21,7 @@ import greymerk.roguelike.worldgen.shapes.RectSolid;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeDictionary.Type;
 
@@ -77,16 +77,16 @@ public class Dungeon implements IDungeon{
 		
 		Book book = new Book("Greymerk", "Statistics");
 		book.addPage("~Architect's Resource Notes~\n\n"
-			+ "StoneBrick: " + editor.getStat(Blocks.stonebrick) + "\n"
-			+ "Cobblestone: " + editor.getStat(Blocks.cobblestone) + "\n"
-			+ "Logs: " + (editor.getStat(Blocks.log) + editor.getStat(Blocks.log2)) + "\n"
-			+ "Iron Bars: " + editor.getStat(Blocks.iron_bars) + "\n"
-			+ "Chests: " + (editor.getStat(Blocks.chest) + editor.getStat(Blocks.trapped_chest)) + "\n"
-			+ "Mob Spawners: " + editor.getStat(Blocks.mob_spawner) + "\n"
-			+ "TNT: " + editor.getStat(Blocks.tnt) + "\n"
+			+ "StoneBrick: " + editor.getStat(Blocks.STONEBRICK) + "\n"
+			+ "Cobblestone: " + editor.getStat(Blocks.COBBLESTONE) + "\n"
+			+ "Logs: " + (editor.getStat(Blocks.LOG) + editor.getStat(Blocks.LOG2)) + "\n"
+			+ "Iron Bars: " + editor.getStat(Blocks.IRON_BARS) + "\n"
+			+ "Chests: " + (editor.getStat(Blocks.CHEST) + editor.getStat(Blocks.TRAPPED_CHEST)) + "\n"
+			+ "Mob Spawners: " + editor.getStat(Blocks.MOB_SPAWNER) + "\n"
+			+ "TNT: " + editor.getStat(Blocks.TNT) + "\n"
 			+ "\n-Greymerk");
 		book.addPage("Roguelike Dungeons v" + Roguelike.version + "\n"
-			+ "April 16th 2016\n\n"
+			+ "June 5th 2016\n\n"
 			+ "Credits\n\n"
 			+ "Author: Greymerk\n\n"
 			+ "Bits: Drainedsoul\n\n"
@@ -150,7 +150,7 @@ public class Dungeon implements IDungeon{
 	public boolean validLocation(Random rand, int x, int z){
 		
 		Coord pos = new Coord(x, 0, z);
-		BiomeGenBase biome = editor.getBiome(pos);
+		Biome biome = editor.getBiome(pos);
 
 		Type[] invalidBiomes = new Type[]{
 				BiomeDictionary.Type.RIVER,
@@ -175,7 +175,7 @@ public class Dungeon implements IDungeon{
 		while(!editor.validGroundBlock(cursor)){
 			cursor.add(Cardinal.DOWN);
 			if(cursor.getY() < lowerLimit) return false;
-			if(editor.getBlock(cursor).getMaterial() == Material.water) return false;
+			if(editor.getBlock(cursor).getMaterial() == Material.WATER) return false;
 		}
 
 		for (Coord c : new RectSolid(new Coord(x - 4, cursor.getY() + 4, z - 4), new Coord(x + 4, cursor.getY() + 4, z + 4))){

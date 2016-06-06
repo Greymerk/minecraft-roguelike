@@ -113,7 +113,7 @@ public enum Treasure {
 		for(Cardinal dir : Cardinal.directions){
 			cursor = new Coord(pos);
 			cursor.add(dir);
-			if(editor.getBlock(cursor).getBlock() == Blocks.chest) return false;
+			if(editor.getBlock(cursor).getBlock() == Blocks.CHEST) return false;
 		}
 		
 		return true;

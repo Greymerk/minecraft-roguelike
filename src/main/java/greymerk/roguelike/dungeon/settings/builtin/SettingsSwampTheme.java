@@ -34,15 +34,15 @@ public class SettingsSwampTheme extends DungeonSettings{
 		Theme[] themes = {Theme.DARKHALL, Theme.DARKHALL, Theme.MUDDY, Theme.MOSSY, Theme.NETHER};
 		
 		WeightedRandomizer<ItemStack> brewing = new WeightedRandomizer<ItemStack>();
-		brewing.add(new WeightedRandomLoot(Items.glass_bottle, 0, 1, 3, 3));
-		brewing.add(new WeightedRandomLoot(Items.magma_cream, 0, 1, 2, 1));
-		brewing.add(new WeightedRandomLoot(Items.speckled_melon, 0, 1, 3, 1));
-		brewing.add(new WeightedRandomLoot(Items.blaze_powder, 0, 1, 3, 1));
-		brewing.add(new WeightedRandomLoot(Items.sugar, 0, 1, 3, 1));
+		brewing.add(new WeightedRandomLoot(Items.GLASS_BOTTLE, 0, 1, 3, 3));
+		brewing.add(new WeightedRandomLoot(Items.MAGMA_CREAM, 0, 1, 2, 1));
+		brewing.add(new WeightedRandomLoot(Items.SPECKLED_MELON, 0, 1, 3, 1));
+		brewing.add(new WeightedRandomLoot(Items.BLAZE_POWDER, 0, 1, 3, 1));
+		brewing.add(new WeightedRandomLoot(Items.SUGAR, 0, 1, 3, 1));
 		this.lootRules = new LootRuleManager();
 		for(int i = 0; i < 5; ++i){
 			this.lootRules.add(null, brewing, i, true, 2);
-			this.lootRules.add(null, new WeightedRandomLoot(Items.slime_ball, 0, 1, 1 + i, 1), i, false, 4 + i * 3);
+			this.lootRules.add(null, new WeightedRandomLoot(Items.SLIME_BALL, 0, 1, 1 + i, 1), i, false, 4 + i * 3);
 		}
 		for(int i = 0; i < 5; ++i){
 			

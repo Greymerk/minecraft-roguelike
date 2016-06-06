@@ -17,7 +17,7 @@ public enum Skull {
 	
 	public static void set(IWorldEditor editor, Random rand, int x, int y, int z, Cardinal dir, Skull type){
 		
-		MetaBlock skullBlock = new MetaBlock(Blocks.skull);
+		MetaBlock skullBlock = new MetaBlock(Blocks.SKULL);
 		
 		// Makes the skull sit flush against the block below it.
 		skullBlock.withProperty(BlockSkull.FACING, Cardinal.facing(Cardinal.UP));
