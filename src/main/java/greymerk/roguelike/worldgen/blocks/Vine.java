@@ -20,10 +20,9 @@ public class Vine {
 		if(!editor.isAirBlock(origin)) return;
 		MetaBlock vine = BlockType.get(BlockType.VINE);
 		for(Cardinal dir : Cardinal.directions){
-			Coord c = new Coord(origin);
-			c.add(dir);
-			if(editor.canPlace(vine, c, dir)){
-				setOrientation(vine, dir).set(editor, c);
+			if(editor.canPlace(vine, origin, dir)){
+				setOrientation(vine, dir);
+				vine.set(editor, origin);
 				return;
 			}
 		}
@@ -31,10 +30,10 @@ public class Vine {
 	
 	public static MetaBlock setOrientation(MetaBlock vine, Cardinal dir){
 		switch(dir){
-		case SOUTH: vine.setMeta(0); break;
-		case WEST: vine.setMeta(1); break;
-		case NORTH: vine.setMeta(2); break;
-		case EAST: vine.setMeta(3); break;
+		case SOUTH: vine.setMeta(1); break;
+		case WEST: vine.setMeta(2); break;
+		case NORTH: vine.setMeta(4); break;
+		case EAST: vine.setMeta(8); break;
 		default: vine.setMeta(0); break;
 		}
 		return vine;

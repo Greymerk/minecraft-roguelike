@@ -183,7 +183,7 @@ public class WorldEditor implements IWorldEditor{
 		Coord cursor = new Coord(pos);
 		cursor.add(dir);
 		Material m = this.getBlock(cursor).getMaterial();
-		return m.isReplaceable();
+		return !m.isReplaceable();
 	}
 
 	@Override
