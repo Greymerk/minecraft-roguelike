@@ -1,5 +1,6 @@
 package greymerk.roguelike.dungeon;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -7,6 +8,7 @@ import greymerk.roguelike.Roguelike;
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.dungeon.settings.ISettings;
 import greymerk.roguelike.dungeon.settings.SettingsResolver;
+import greymerk.roguelike.dungeon.settings.SpawnCriteria;
 import greymerk.roguelike.treasure.ITreasureChest;
 import greymerk.roguelike.treasure.Treasure;
 import greymerk.roguelike.treasure.TreasureManager;
@@ -96,9 +98,14 @@ public class Dungeon implements IDungeon{
 	
 	public static boolean canSpawnInChunk(int chunkX, int chunkZ, IWorldEditor editor){
 		
-		if(!RogueConfig.getBoolean(RogueConfig.DONATURALSPAWN)){
-			return false;
-		}
+		if(!RogueConfig.getBoolean(RogueConfig.DONATURALSPAWN)) return false;
+		
+		int dim = editor.getDimension();
+		List<Integer> wl = new ArrayList<Integer>();
+		wl.addAll(RogueConfig.getIntList(RogueConfig.DIMENSIONWL));
+		List<Integer> bl = new ArrayList<Integer>();
+		bl.addAll(RogueConfig.getIntList(RogueConfig.DIMENSIONBL));
+		if(!SpawnCriteria.isValidDimension(dim, wl, bl)) return false;
 		
 		int frequency = RogueConfig.getInt(RogueConfig.SPAWNFREQUENCY);
 		int min = 8 * frequency / 10;
