@@ -31,8 +31,24 @@ public class SpawnCriteriaTest {
 		wl.add(0);
 		List<Integer> bl = new ArrayList<Integer>();
 		
-		boolean valid = SpawnCriteria.isValidDimension(dim, wl, bl);		
-		assertTrue(!valid);
+		assertFalse(SpawnCriteria.isValidDimension(dim, wl, bl));
 	}
 
+	@Test
+	public void whiteListSeveral(){
+		List<Integer> wl = new ArrayList<Integer>();
+		wl.add(5);
+		wl.add(8);
+		wl.add(12);
+		List<Integer> bl = new ArrayList<Integer>();
+		
+		assertFalse(SpawnCriteria.isValidDimension(0, wl, bl)); // not overworld
+		assertFalse(SpawnCriteria.isValidDimension(-1, wl, bl)); // not nether
+		assertFalse(SpawnCriteria.isValidDimension(1, wl, bl)); // not end
+		assertFalse(SpawnCriteria.isValidDimension(15, wl, bl));
+		assertTrue(SpawnCriteria.isValidDimension(5, wl, bl));
+		assertTrue(SpawnCriteria.isValidDimension(8, wl, bl));
+		assertTrue(SpawnCriteria.isValidDimension(12, wl, bl));
+	}
+	
 }
