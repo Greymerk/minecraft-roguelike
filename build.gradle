@@ -12,12 +12,12 @@ buildscript {
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-version = "1.9.4-1.5.2"
+version = "1.9.4-1.5.3"
 group= "ca.rivas.roguelike" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "RoguelikeDungeons"
 
 minecraft {
-    version = "1.9.4-12.17.0.1954"
+    version = "1.9.4-12.17.0.1970"
     runDir = "run"
 	mappings = "snapshot_20160518"
 }
