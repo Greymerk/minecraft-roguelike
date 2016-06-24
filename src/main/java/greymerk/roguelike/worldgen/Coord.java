@@ -57,7 +57,7 @@ public class Coord{
 	public Coord sub(Coord other){
 		x -= other.x;
 		y -= other.y;
-		z -= other.y;
+		z -= other.z;
 		return this;
 	}
 	
