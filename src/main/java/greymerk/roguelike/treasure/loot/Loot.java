@@ -13,6 +13,7 @@ import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.monster.EntitySpider;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.monster.SkeletonType;
+import net.minecraft.entity.monster.ZombieType;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
@@ -120,6 +121,9 @@ public enum Loot {
 					weapon = ItemTool.getRandom(rand, level, enchant);
 				}
 			} else {
+				if(level > 1 && rand.nextInt(10) == 0){
+					((EntityZombie)mob).func_189778_a(ZombieType.HUSK);
+				}
 				if(level > 1 && rand.nextInt(50) == 0){
 					weapon = ItemNovelty.getItem(ItemNovelty.AMLP);
 				} else if(level > 2 && rand.nextInt(50) == 0){
@@ -143,6 +147,9 @@ public enum Loot {
 				((EntitySkeleton) mob).func_189768_a(SkeletonType.WITHER);
 				mob.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, ItemWeapon.getSword(rand, level, enchant));
 			} else {
+				if(rand.nextInt(10) == 0){
+					((EntitySkeleton)mob).func_189768_a(SkeletonType.STRAY);
+				}
 				if(rand.nextInt(20) == 0){
 					if(level > 2 && rand.nextInt(10) == 0){
 						mob.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, ItemNovelty.getItem(ItemNovelty.NULL));

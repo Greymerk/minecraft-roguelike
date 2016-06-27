@@ -12,7 +12,7 @@ public class SettingsTheme extends DungeonSettings{
 		
 		this.towerSettings = new TowerSettings(Tower.ROGUE, Theme.getTheme(Theme.TOWER));
 		
-		Theme[] themes = {Theme.OAK, Theme.SPRUCE, Theme.CRYPT, Theme.MOSSY, Theme.NETHER};
+		Theme[] themes = {Theme.OAK, Theme.SPRUCE, Theme.CRYPT, Theme.MOSSY, Theme.HELL};
 		
 		for(int i = 0; i < 5; ++i){
 			LevelSettings level = new LevelSettings();
@@ -21,5 +21,4 @@ public class SettingsTheme extends DungeonSettings{
 		}
 	}
 
-	
 }

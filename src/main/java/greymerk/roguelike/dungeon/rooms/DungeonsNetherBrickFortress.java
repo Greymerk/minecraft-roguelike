@@ -33,7 +33,6 @@ public class DungeonsNetherBrickFortress extends DungeonBase {
 		BlockWeightedRandom netherwart = new BlockWeightedRandom();
 		netherwart.addBlock(air, 3);
 		netherwart.addBlock(Crops.get(Crops.NETHERWART), 1);
-		List<Coord> chests = new ArrayList<Coord>();
 		
 		Coord start;
 		Coord end;
@@ -80,6 +79,18 @@ public class DungeonsNetherBrickFortress extends DungeonBase {
 		start.add(new Coord(-3, -1, -3));
 		end.add(new Coord(3, -1, 3));
 		RectSolid.fill(editor, rand, start, end, netherwart, false, true);
+		List<Coord> chests = (new RectSolid(start, end).get());
+		
+		Treasure[] types = new Treasure[]{
+				Treasure.ARMOUR,
+				Treasure.WEAPONS,
+				Treasure.ENCHANTING,
+				Treasure.ORE,
+				Treasure.TOOLS
+				};
+		
+		Treasure.createChests(editor, rand, rand.nextInt(3) + 1, chests, Arrays.asList(types), settings.getDifficulty(origin));
+		
 		
 		for(Cardinal dir : Cardinal.directions){
 			
@@ -118,23 +129,12 @@ public class DungeonsNetherBrickFortress extends DungeonBase {
 				cursor.add(o, 2);
 				pillar(editor, rand, settings, cursor);
 				cursor.add(o);
-				chests.add(new Coord(cursor));
 				cursor.add(o);
-				chests.add(new Coord(cursor));
 				cursor.add(o);
 				pillar(editor, rand, settings, cursor);
 			}
 		}
 		
-		Treasure[] types = new Treasure[]{
-				Treasure.ARMOUR,
-				Treasure.WEAPONS,
-				Treasure.ENCHANTING,
-				Treasure.ORE,
-				Treasure.TOOLS
-				};
-		
-		Treasure.createChests(editor, rand, rand.nextInt(3) + 1, chests, Arrays.asList(types), settings.getDifficulty(origin));
 		return true;
 	}
 	

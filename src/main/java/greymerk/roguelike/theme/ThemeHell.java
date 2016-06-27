@@ -16,20 +16,21 @@ public class ThemeHell extends ThemeBase{
 		walls.addBlock(BlockType.get(BlockType.NETHERRACK), 20);
 		walls.addBlock(BlockType.get(BlockType.ORE_QUARTZ), 20);
 		walls.addBlock(BlockType.get(BlockType.SOUL_SAND), 15);
+		walls.addBlock(BlockType.get(BlockType.NETHER_WART_BLOCK), 10);
 		walls.addBlock(BlockType.get(BlockType.COAL_BLOCK), 5);
 
 		BlockWeightedRandom floor = new BlockWeightedRandom();
-		floor.addBlock(walls, 2000);
+		floor.addBlock(walls, 1500);
+		floor.addBlock(BlockType.get(BlockType.RED_NETHERBRICK), 500);
 		floor.addBlock(BlockType.get(BlockType.REDSTONE_BLOCK), 50);
 		if (RogueConfig.getBoolean(RogueConfig.PRECIOUSBLOCKS)) floor.addBlock(BlockType.get(BlockType.GOLD_BLOCK), 2);
 		if (RogueConfig.getBoolean(RogueConfig.PRECIOUSBLOCKS)) floor.addBlock(BlockType.get(BlockType.DIAMOND_BLOCK), 1);
 		
 		MetaStair stair = new MetaStair(StairType.NETHERBRICK);
-		
 		MetaBlock pillar = BlockType.get(BlockType.OBSIDIAN);
 		
 		this.primary = new BlockSet(floor, walls, stair, pillar);
-		this.secondary = this.primary;
+		this.secondary = new BlockSet(floor, BlockType.get(BlockType.RED_NETHERBRICK), stair, BlockType.get(BlockType.MAGMA));
 
 	}
 }

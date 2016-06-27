@@ -2,6 +2,7 @@ package greymerk.roguelike.worldgen.blocks;
 
 import greymerk.roguelike.worldgen.MetaBlock;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockBone;
 import net.minecraft.block.BlockDirt;
 import net.minecraft.block.BlockPrismarine;
 import net.minecraft.block.BlockRedSandstone;
@@ -12,6 +13,7 @@ import net.minecraft.block.BlockStoneBrick;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
 
 public enum BlockType {
 
@@ -29,7 +31,8 @@ public enum BlockType {
 	QUARTZ, REDSTONE_BLOCK, PRESSURE_PLATE_STONE, PRESSURE_PLATE_WOODEN, SHELF, REDSTONE_WIRE,
 	COCAO, REEDS, CRAFTING_TABLE, NOTEBLOCK, REDSTONE_LAMP, REDSTONE_LAMP_LIT, JUKEBOX, FENCE,
 	TNT, ENCHANTING_TABLE, FENCE_NETHER_BRICK, WEB, PUMPKIN_LIT, VINE,
-	PURPUR_BLOCK, PURPUR_PILLAR, PURPUR_STAIR, PURPUR_DOUBLE_SLAB, PURPUR_SLAB, ENDER_BRICK;
+	PURPUR_BLOCK, PURPUR_PILLAR, PURPUR_STAIR, PURPUR_DOUBLE_SLAB, PURPUR_SLAB, ENDER_BRICK,
+	MAGMA, RED_NETHERBRICK, NETHER_WART_BLOCK, BONE_BLOCK;
 	
 	public static MetaBlock get(BlockType type){
 		
@@ -185,6 +188,13 @@ public enum BlockType {
 		case PURPUR_DOUBLE_SLAB: return new MetaBlock(Blocks.PURPUR_DOUBLE_SLAB);
 		case PURPUR_SLAB: return new MetaBlock(Blocks.PURPUR_SLAB);
 		case ENDER_BRICK: return new MetaBlock(Blocks.END_BRICKS);
+		case MAGMA: return new MetaBlock(Blocks.field_189877_df);
+		case RED_NETHERBRICK: return new MetaBlock(Blocks.field_189879_dh);
+		case NETHER_WART_BLOCK: return new MetaBlock(Blocks.field_189878_dg);
+		case BONE_BLOCK:
+			block = new MetaBlock(Blocks.field_189880_di);
+			block.withProperty(BlockBone.AXIS, EnumFacing.UP.getAxis());
+			return block;
 		default: return new MetaBlock(Blocks.AIR);
 		}
 	}
