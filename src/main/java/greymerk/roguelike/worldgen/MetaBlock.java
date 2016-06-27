@@ -311,6 +311,11 @@ public class MetaBlock extends BlockBase implements IBlockState{
 		return this.state.getLightValue();
 	}
 
+	@Override
+	public boolean func_189884_a(Entity arg0) {
+		return state.func_189884_a(arg0);
+	}
+
 
 
 

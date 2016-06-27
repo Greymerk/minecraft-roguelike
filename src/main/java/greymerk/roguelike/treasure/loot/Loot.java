@@ -12,6 +12,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.monster.EntitySpider;
 import net.minecraft.entity.monster.EntityZombie;
+import net.minecraft.entity.monster.SkeletonType;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
@@ -139,7 +140,7 @@ public enum Loot {
 		if(mob instanceof EntitySkeleton){
 			
 			if(rand.nextInt(10) == 0 && level > 1){
-				((EntitySkeleton) mob).setSkeletonType(1);
+				((EntitySkeleton) mob).func_189768_a(SkeletonType.WITHER);
 				mob.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, ItemWeapon.getSword(rand, level, enchant));
 			} else {
 				if(rand.nextInt(20) == 0){
