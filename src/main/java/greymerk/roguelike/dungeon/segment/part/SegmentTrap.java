@@ -86,7 +86,7 @@ public class SegmentTrap extends SegmentBase{
 		
 		for(int i = 0; i < 5; i++){
 			int amount = rand.nextInt(5) + 1;
-			ItemStack arrows = getArrow(rand, amount);
+			ItemStack arrows = TippedArrow.getHarmful(rand, amount);
 			Dispenser.add(editor, cursor, rand.nextInt(9), arrows);
 		}
 		
@@ -100,17 +100,6 @@ public class SegmentTrap extends SegmentBase{
 		case 1: return Potion.getSpecific(PotionType.SPLASH, Potion.POISON, false, false);
 		case 2: return Potion.getSpecific(PotionType.SPLASH, Potion.HARM, false, false);
 		default: return BlockType.getItem(BlockType.TNT);
-		}
-	}
-	
-	private ItemStack getArrow(Random rand, int amount){
-
-		switch(rand.nextInt(4)){
-		case 0: return TippedArrow.get(Potion.HARM, amount);
-		case 1: return TippedArrow.get(Potion.POISON, amount);
-		case 2: return TippedArrow.get(Potion.SLOWNESS, amount);
-		case 3: return TippedArrow.get(Potion.WEAKNESS, amount);
-		default: return new ItemStack(Items.ARROW, amount);
 		}
 	}
 }

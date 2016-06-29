@@ -39,12 +39,12 @@ public class ItemJunk extends ItemBase{
 			case 1: return new ItemStack(Items.BLAZE_POWDER, 1 + rand.nextInt(3));
 			case 2: return new ItemStack(Items.GOLD_NUGGET, 1 + rand.nextInt(3));
 			case 3: return new ItemStack(Items.REDSTONE, 1 + rand.nextInt(3));
-			case 4: return new ItemStack(Items.GLOWSTONE_DUST, 1 + rand.nextInt(3));
+			case 4: return new ItemStack(Items.GLOWSTONE_DUST, 1 + rand.nextInt(8));
 			case 5: return new ItemStack(Items.DYE, 1 + rand.nextInt(3));
 			}
 		}
 
-		if(level < 3 && rand.nextInt(10 + ((1 + level) * 5)) == 0) return new ItemStack(Items.BOOK);
+		if(level < 3 && rand.nextInt(80) == 0) return new ItemStack(Items.BOOK);
 
 		if(rand.nextInt(60) == 0){
 			if(level > 2 && rand.nextBoolean()) return PotionMixture.getPotion(rand, PotionMixture.VILE);
@@ -52,11 +52,11 @@ public class ItemJunk extends ItemBase{
 		}
 		
 		if(rand.nextInt(15) == 0){
-			return new ItemStack(Blocks.TORCH, 2 + rand.nextInt(5));
+			return new ItemStack(Blocks.TORCH, 3 + rand.nextInt(8));
 		}
 
-		if(level > 0 && rand.nextInt(10) == 0){
-			switch(rand.nextInt(7)){
+		if(level > 0 && rand.nextInt(8) == 0){
+			switch(rand.nextInt(8)){
 			case 0: return new ItemStack(Items.SLIME_BALL);
 			case 1: return new ItemStack(Items.SNOWBALL);
 			case 2: return new ItemStack(Items.MUSHROOM_STEW);
@@ -64,6 +64,7 @@ public class ItemJunk extends ItemBase{
 			case 4: return new ItemStack(Items.FLINT);
 			case 5: return new ItemStack(Items.FEATHER);
 			case 6: return new ItemStack(Items.GLASS_BOTTLE);
+			case 7: return new ItemStack(Items.LEATHER);
 			}
 		}
 

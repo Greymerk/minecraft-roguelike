@@ -111,11 +111,11 @@ public enum Loot {
 		
 		// zombie gets a sword
 		if(mob instanceof EntityZombie){
-			if(rand.nextInt(20) == 0){
+			if(level > 1 && rand.nextInt(40) == 0){
 				((EntityZombie)mob).setChild(true);
-				if(rand.nextInt(20) == 0){
+				if(rand.nextInt(5) == 0){
 					weapon = ItemNovelty.getItem(ItemNovelty.ASHLEA);
-				} else if(rand.nextInt(5) == 0){
+				} else if(rand.nextInt(2) == 0){
 					weapon = new ItemStack(Items.COOKIE);
 				} else {
 					weapon = ItemTool.getRandom(rand, level, enchant);
@@ -167,6 +167,9 @@ public enum Loot {
 						mob.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, ItemSpecialty.getRandomItem(Equipment.BOW, rand, level));
 					} else {
 						mob.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, ItemWeapon.getBow(rand, level, enchant));	
+					}
+					if(level > 4 || rand.nextInt(10 - (2 * level)) == 0){
+						mob.setItemStackToSlot(EntityEquipmentSlot.OFFHAND, TippedArrow.getHarmful(rand, 1));
 					}
 				}
 			}

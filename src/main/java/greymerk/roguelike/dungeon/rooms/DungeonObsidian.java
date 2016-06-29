@@ -202,13 +202,6 @@ public class DungeonObsidian extends DungeonBase {
 				primaryWall.set(editor, rand, corner);
 				corner.add(Cardinal.DOWN, 1);
 				primaryWall.set(editor, rand, corner);
-
-				corner = new Coord(x, y, z);
-				corner.add(dir, 6);
-				corner.add(orth, 6);
-				corner.add(Cardinal.DOWN, 1);
-				spawners.add(new Coord(corner));
-				
 			}
 		}
 		
@@ -320,7 +313,7 @@ public class DungeonObsidian extends DungeonBase {
 				start.add(dir, 2);
 				Coord end = new Coord(start);
 				end.add(dir, 5);
-				RectSolid.fill(editor, rand, start, end, secondaryWall);
+				RectSolid.fill(editor, rand, start, end, theme.getPrimaryPillar());
 
 				start = new Coord(x, y, z);
 				start.add(Cardinal.DOWN, 1);

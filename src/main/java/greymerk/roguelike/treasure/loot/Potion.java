@@ -41,6 +41,9 @@ public enum Potion {
 	}
 	
 	public static net.minecraft.potion.PotionType getEffect(Potion effect, boolean upgrade, boolean extend){
+		
+		if(effect == null) return PotionTypes.AWKWARD;
+		
 		switch(effect){
 		case HEALING: return upgrade ? PotionTypes.STRONG_HEALING : PotionTypes.HEALING;
 		case HARM: return upgrade ? PotionTypes.STRONG_HARMING : PotionTypes.HARMING;
@@ -86,7 +89,7 @@ public enum Potion {
 			} else {
 				return PotionTypes.FIRE_RESISTANCE;
 			} 
-		default: return PotionTypes.HEALING;
+		default: return PotionTypes.AWKWARD;
 		}
 	}
 }
