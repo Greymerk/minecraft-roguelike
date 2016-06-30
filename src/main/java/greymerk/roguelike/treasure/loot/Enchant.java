@@ -73,11 +73,12 @@ public enum Enchant {
 		
 		switch(difficulty){
 		case PEACEFUL: return false;
-		case EASY: return rand.nextInt(5) == 0;
-		case NORMAL: return level >= 3 || rand.nextBoolean();
-		case HARD: return true;
-		default: return true;
+		case EASY: return rand.nextInt(6) == 0;
+		case NORMAL: return level >= 2 && rand.nextInt(4) == 0;
+		case HARD: return rand.nextBoolean();
 		}
+		
+		return false;
 	}
 
 	public static void enchantItem(Random rand, ItemStack item, int enchantLevel) {

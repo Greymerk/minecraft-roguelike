@@ -361,12 +361,12 @@ public class DungeonsCrypt extends DungeonBase {
 		cursor.add(dir, 2);
 		RectSolid.fill(editor, rand, origin, cursor, air);
 		
-		if(rand.nextInt(3) == 0) return;
+		if(rand.nextInt(4) == 0) return;
 
 		cursor = new Coord(origin);
 		tombStone.set(editor, cursor);
 		
-		if(rand.nextInt(4) != 0) return;
+		if(rand.nextInt(5) != 0) return;
 		
 		cursor.add(dir);
 		Spawner spawnerType = rand.nextBoolean() ? Spawner.SKELETON : Spawner.ZOMBIE;

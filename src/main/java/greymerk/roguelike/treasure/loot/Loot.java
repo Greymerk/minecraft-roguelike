@@ -1,5 +1,6 @@
 package greymerk.roguelike.treasure.loot;
 
+import java.util.List;
 import java.util.Random;
 
 import greymerk.roguelike.treasure.loot.provider.ItemArmour;
@@ -21,6 +22,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.VillagerRegistry;
+import net.minecraftforge.fml.common.registry.VillagerRegistry.VillagerProfession;
 
 public enum Loot {
 	
@@ -105,25 +108,33 @@ public enum Loot {
 			
 		if(level > 4) level = 4;
 		Random rand = world.rand;
-		boolean enchant = Enchant.canEnchant(world.getDifficulty(), rand, level);
 		
 		ItemStack weapon;
 		
 		// zombie gets a sword
 		if(mob instanceof EntityZombie){
+			
+			EntityZombie zombie = (EntityZombie)mob;
+			
+			if(rand.nextInt(10) == 0){
+				List<VillagerProfession> professions = VillagerRegistry.instance().getRegistry().getValues();
+				VillagerProfession profession = professions.get(rand.nextInt(professions.size()));
+				zombie.setVillagerType(profession);
+			} else if(level > 1 && rand.nextInt(10) == 0){
+				zombie.func_189778_a(ZombieType.HUSK);
+			}
+			
 			if(level > 1 && rand.nextInt(40) == 0){
-				((EntityZombie)mob).setChild(true);
+				zombie.setChild(true);
 				if(rand.nextInt(5) == 0){
 					weapon = ItemNovelty.getItem(ItemNovelty.ASHLEA);
 				} else if(rand.nextInt(2) == 0){
-					weapon = new ItemStack(Items.COOKIE);
+					weapon = ItemTool.getRandom(rand, level, false);
 				} else {
-					weapon = ItemTool.getRandom(rand, level, enchant);
+					weapon = new ItemStack(Items.COOKIE);
 				}
 			} else {
-				if(level > 1 && rand.nextInt(10) == 0){
-					((EntityZombie)mob).func_189778_a(ZombieType.HUSK);
-				}
+
 				if(level > 1 && rand.nextInt(50) == 0){
 					weapon = ItemNovelty.getItem(ItemNovelty.AMLP);
 				} else if(level > 2 && rand.nextInt(50) == 0){
@@ -131,13 +142,11 @@ public enum Loot {
 				} else if(level > 1 && rand.nextInt(20) == 0){
 					weapon = ItemSpecialty.getRandomTool(rand, Quality.get(rand, level, Equipment.SHOVEL));
 				} else {
-					weapon = ItemTool.getRandom(rand, level, enchant);
+					weapon = ItemTool.getRandom(rand, level, Enchant.canEnchant(world.getDifficulty(), rand, level));
 				}
 			}
 			mob.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, weapon);
-			
-			ItemStack shield = Shield.get(rand);
-			mob.setItemStackToSlot(EntityEquipmentSlot.OFFHAND, shield);
+			mob.setItemStackToSlot(EntityEquipmentSlot.OFFHAND, Shield.get(rand));
 		}
 		
 		// skelly gets a bow
@@ -145,7 +154,7 @@ public enum Loot {
 			
 			if(rand.nextInt(10) == 0 && level > 1){
 				((EntitySkeleton) mob).func_189768_a(SkeletonType.WITHER);
-				mob.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, ItemWeapon.getSword(rand, level, enchant));
+				mob.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, ItemWeapon.getSword(rand, level, Enchant.canEnchant(world.getDifficulty(), rand, level)));
 			} else {
 				if(rand.nextInt(10) == 0){
 					((EntitySkeleton)mob).func_189768_a(SkeletonType.STRAY);
@@ -158,7 +167,7 @@ public enum Loot {
 					} else if(level > 0 && rand.nextInt(3) == 0){
 						mob.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, ItemSpecialty.getRandomItem(Equipment.SWORD, rand, level));
 					} else {
-						mob.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, ItemWeapon.getSword(rand, level, enchant));
+						mob.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, ItemWeapon.getSword(rand, level, Enchant.canEnchant(world.getDifficulty(), rand, level)));
 					}
 				} else {
 					if(level > 2 && rand.nextInt(50) == 0){
@@ -166,9 +175,9 @@ public enum Loot {
 					} else if(level > 1 && rand.nextInt(20) == 0){
 						mob.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, ItemSpecialty.getRandomItem(Equipment.BOW, rand, level));
 					} else {
-						mob.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, ItemWeapon.getBow(rand, level, enchant));	
+						mob.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, ItemWeapon.getBow(rand, level, Enchant.canEnchant(world.getDifficulty(), rand, level)));	
 					}
-					if(level > 4 || rand.nextInt(10 - (2 * level)) == 0){
+					if(Enchant.canEnchant(world.getDifficulty(), rand, level) && rand.nextInt(10) == 0){
 						mob.setItemStackToSlot(EntityEquipmentSlot.OFFHAND, TippedArrow.getHarmful(rand, 1));
 					}
 				}
@@ -184,13 +193,11 @@ public enum Loot {
 				}){
 			ItemStack item;
 			if(mob instanceof EntitySpider){
-				item = Loot.getEquipmentBySlot(rand, Slot.FEET, level, enchant);	
+				item = Loot.getEquipmentBySlot(rand, Slot.FEET, level, Enchant.canEnchant(world.getDifficulty(), rand, level));	
 			} else {
-				item = Loot.getEquipmentBySlot(rand, Slot.getSlot(slot), level, enchant);
+				item = Loot.getEquipmentBySlot(rand, Slot.getSlot(slot), level, Enchant.canEnchant(world.getDifficulty(), rand, level));
 			}
 			mob.setItemStackToSlot(slot, item);
 		}
-		
-		// lower drop chance
 	}
 }

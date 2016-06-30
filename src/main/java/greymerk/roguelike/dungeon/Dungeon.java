@@ -88,7 +88,7 @@ public class Dungeon implements IDungeon{
 			+ "TNT: " + editor.getStat(Blocks.TNT) + "\n"
 			+ "\n-Greymerk");
 		book.addPage("Roguelike Dungeons v" + Roguelike.version + "\n"
-			+ "June 26th 2016\n\n"
+			+ "June 29th 2016\n\n"
 			+ "Credits\n\n"
 			+ "Author: Greymerk\n\n"
 			+ "Bits: Drainedsoul\n\n"
