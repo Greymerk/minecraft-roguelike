@@ -145,6 +145,7 @@ public class DungeonMess extends DungeonBase {
 		cursor.add(entrances[0], 5);
 		cursor.add(entrances[1], 5);
 		cursor.add(entrances[0], 2);
+		cursor.add(Cardinal.UP);
 		Treasure.generate(editor, rand, cursor, Treasure.FOOD, settings.getDifficulty(cursor));
 		
 		cursor = new Coord(origin);
