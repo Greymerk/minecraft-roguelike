@@ -29,23 +29,25 @@ public class SettingsGrasslandTheme extends DungeonSettings{
 			
 			LevelSettings level = new LevelSettings();
 			SecretFactory secrets = new SecretFactory();
-			DungeonFactory rooms;
+			DungeonFactory rooms = new DungeonFactory();;
 			
 			switch(i){
 			case 0:
 				secrets.addRoom(DungeonRoom.BEDROOM);
 				secrets.addRoom(DungeonRoom.SMITH);
 				secrets.addRoom(DungeonRoom.FIREWORK);
+				level.setSecrets(secrets);
+				level.setRooms(rooms);
 				break;
 			case 1:
 				secrets.addRoom(DungeonRoom.BTEAM);
-				rooms = new DungeonFactory();
 				rooms.addSingle(DungeonRoom.MUSIC);
 				rooms.addSingle(DungeonRoom.PIT);
 				rooms.addSingle(DungeonRoom.MESS);
 				rooms.addSingle(DungeonRoom.LAB);
 				rooms.addRandom(DungeonRoom.CORNER, 10);
 				rooms.addRandom(DungeonRoom.BRICK, 3);
+				level.setSecrets(secrets);
 				level.setRooms(rooms);
 				break;
 			case 2:
@@ -57,8 +59,6 @@ public class SettingsGrasslandTheme extends DungeonSettings{
 			default:
 				break;
 			}
-			
-			level.setSecrets(secrets);
 			levels.put(i, level);
 		}
 		

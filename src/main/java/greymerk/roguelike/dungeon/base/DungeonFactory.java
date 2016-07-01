@@ -50,6 +50,7 @@ public class DungeonFactory implements IDungeonFactory {
 		singles.addAll(toCopy.singles);
 		
 		multiple = new WeightedRandomizer<DungeonRoom>(toCopy.multiple);
+		base = toCopy.base;
 	}
 
 	public void addSingle(DungeonRoom type){

@@ -8,6 +8,7 @@ import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.treasure.ITreasureChest;
 import greymerk.roguelike.treasure.Treasure;
 import greymerk.roguelike.treasure.loot.Loot;
+import greymerk.roguelike.treasure.loot.PotionMixture;
 import greymerk.roguelike.treasure.loot.Record;
 import greymerk.roguelike.treasure.loot.provider.ItemArmour;
 import greymerk.roguelike.treasure.loot.provider.ItemNovelty;
@@ -166,7 +167,8 @@ public class DungeonBTeam extends DungeonBase {
 		cursor.add(Cardinal.right(dir), 5);
 		BlockType.get(BlockType.SHELF).set(editor, cursor);
 		cursor.add(Cardinal.UP);
-		BrewingStand.get().set(editor, cursor);
+		BrewingStand.generate(editor, cursor);
+		BrewingStand.add(editor, cursor, BrewingStand.MIDDLE, PotionMixture.getPotion(rand, PotionMixture.MOONSHINE));
 		
 		cursor = new Coord(origin);
 		cursor.add(dir, 4);

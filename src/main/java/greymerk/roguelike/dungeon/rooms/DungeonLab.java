@@ -26,6 +26,8 @@ import greymerk.roguelike.worldgen.blocks.StairType;
 import greymerk.roguelike.worldgen.redstone.Torch;
 import greymerk.roguelike.worldgen.shapes.RectHollow;
 import greymerk.roguelike.worldgen.shapes.RectSolid;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 
 public class DungeonLab extends DungeonBase {
 
@@ -131,7 +133,9 @@ public class DungeonLab extends DungeonBase {
 		RectSolid.fill(editor, rand, new Coord(x, y, z + 1), new Coord(x, y, z + 4), stair);
 		
 		if(RogueConfig.getBoolean(RogueConfig.GENEROUS)){
-			BrewingStand.get().set(editor, new Coord(x + 1, y + 1, z + 5));
+			Coord bs = new Coord(x + 1, y + 1, z + 5);
+			BrewingStand.generate(editor, bs);
+			BrewingStand.add(editor, bs, BrewingStand.FUEL, new ItemStack(Items.BLAZE_POWDER));
 		}
 		
 		Treasure.generate(editor, rand, new Coord(x, y + 1, z + 4), Treasure.POTIONS, Dungeon.getLevel(y));
