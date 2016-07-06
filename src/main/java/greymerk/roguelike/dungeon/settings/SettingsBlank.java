@@ -11,11 +11,5 @@ public class SettingsBlank extends DungeonSettings{
 		
 		levels = new HashMap<Integer, LevelSettings>();
 		this.lootRules = new LootRuleManager();
-		
-		for(int i = 0; i < 5; ++i){
-			LevelSettings level = new LevelSettings();
-			levels.put(i, level);
-		}
 	}
-	
 }

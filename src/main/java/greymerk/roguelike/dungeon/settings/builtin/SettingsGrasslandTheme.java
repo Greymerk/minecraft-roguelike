@@ -29,7 +29,7 @@ public class SettingsGrasslandTheme extends DungeonSettings{
 			
 			LevelSettings level = new LevelSettings();
 			SecretFactory secrets = new SecretFactory();
-			DungeonFactory rooms = new DungeonFactory();;
+			DungeonFactory rooms = new DungeonFactory();
 			
 			switch(i){
 			case 0:
@@ -37,7 +37,6 @@ public class SettingsGrasslandTheme extends DungeonSettings{
 				secrets.addRoom(DungeonRoom.SMITH);
 				secrets.addRoom(DungeonRoom.FIREWORK);
 				level.setSecrets(secrets);
-				level.setRooms(rooms);
 				break;
 			case 1:
 				secrets.addRoom(DungeonRoom.BTEAM);

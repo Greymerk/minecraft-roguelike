@@ -25,6 +25,8 @@ public class ItemJunk extends ItemBase{
 			return new ItemStack(Items.SADDLE);
 		}
 
+		if(rand.nextInt(100) == 0) return PotionMixture.getRandom(rand);
+		
 		if(level > 1 && rand.nextInt(100) == 0) return new ItemStack(Items.GHAST_TEAR);
 
 		if(level < 3 && rand.nextInt(80) == 0) return new ItemStack(Items.BOOK);
@@ -44,7 +46,7 @@ public class ItemJunk extends ItemBase{
 			}
 		}
 
-		if(rand.nextInt(60) == 0) return PotionMixture.getRandom(rand);
+		if(rand.nextInt(60) == 0) return PotionMixture.getPotion(rand, PotionMixture.LAUDANUM);
 		
 		if(rand.nextInt(30) == 0) return new ItemStack(Blocks.TORCH, 6 + rand.nextInt(20));
 
