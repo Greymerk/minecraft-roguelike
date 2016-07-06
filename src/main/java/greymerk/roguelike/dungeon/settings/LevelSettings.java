@@ -57,11 +57,15 @@ public class LevelSettings {
 		this.levelDifficulty = (base.levelDifficulty != override.levelDifficulty && override.levelDifficulty != -1) || base.levelDifficulty == -1 ? override.levelDifficulty : base.levelDifficulty;
 		
 		if(base.rooms != null || override.rooms != null){
-			this.rooms = override.rooms == null ? new DungeonFactory(base.rooms) : new DungeonFactory(override.rooms);
+			this.rooms = override.rooms == null 
+					? new DungeonFactory(base.rooms) 
+					: new DungeonFactory(override.rooms);
 		}
 		
 		if(base.secrets != null || override.secrets != null){
-			this.secrets = override.secrets == null ? new SecretFactory(base.secrets) : new SecretFactory(override.secrets);
+			this.secrets = override.secrets == null
+					? new SecretFactory(base.secrets) 
+					: new SecretFactory(override.secrets);
 		}
 		
 		this.theme = override.theme == null ? base.theme : override.theme;

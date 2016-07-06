@@ -17,7 +17,6 @@ import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.redstone.Dispenser;
 import greymerk.roguelike.worldgen.redstone.Torch;
 import greymerk.roguelike.worldgen.shapes.RectSolid;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
 public class SegmentTrap extends SegmentBase{

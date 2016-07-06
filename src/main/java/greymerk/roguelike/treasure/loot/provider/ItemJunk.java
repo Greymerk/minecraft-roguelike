@@ -44,7 +44,7 @@ public class ItemJunk extends ItemBase{
 			}
 		}
 
-		if(rand.nextInt(60) == 0) return PotionMixture.getPotion(rand, PotionMixture.LAUDANUM);	
+		if(rand.nextInt(60) == 0) return PotionMixture.getRandom(rand);
 		
 		if(rand.nextInt(30) == 0) return new ItemStack(Blocks.TORCH, 6 + rand.nextInt(20));
 

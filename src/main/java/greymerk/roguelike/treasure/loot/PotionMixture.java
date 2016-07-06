@@ -130,7 +130,7 @@ public enum PotionMixture {
 	}
 	
 	public static ItemStack getRandom(Random rand){
-		final PotionMixture[] potions = {LAUDANUM, RAGE, STOUT, STAMINA, NECTAR, COFFEE, AURA};
+		final PotionMixture[] potions = {LAUDANUM, RAGE, STAMINA, NECTAR, COFFEE, AURA};
 		int choice = rand.nextInt(potions.length);
 		PotionMixture type = potions[choice];
 		return getPotion(rand, type);
