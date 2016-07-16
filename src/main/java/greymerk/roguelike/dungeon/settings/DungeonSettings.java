@@ -112,10 +112,8 @@ public class DungeonSettings implements ISettings{
 		}
 		this.lootRules.add(other.lootRules);
 		
-		if(other.towerSettings == null){
-			this.towerSettings = base.towerSettings;
-		} else {
-			this.towerSettings = other.towerSettings;
+		if(base.towerSettings != null || other.towerSettings != null){
+			this.towerSettings = new TowerSettings(base.towerSettings, other.towerSettings);
 		}
 		
 		for(int i = 0; i < MAX_NUM_LEVELS; ++i){
@@ -141,7 +139,7 @@ public class DungeonSettings implements ISettings{
 		
 		this.levels = new HashMap<Integer, LevelSettings>();
 		
-		this.towerSettings = toCopy.towerSettings;
+		this.towerSettings = new TowerSettings(toCopy.towerSettings);
 		this.lootRules = toCopy.lootRules;
 		
 		for(int i = 0; i < MAX_NUM_LEVELS; ++i){

@@ -21,16 +21,45 @@ public class TowerSettings {
 	public TowerSettings(JsonElement e) {
 
 		JsonObject data = e.getAsJsonObject();
-		this.tower = data.has("type") ? Tower.valueOf(data.get("type").getAsString()) : Tower.ROGUE;
-		this.theme = data.has("theme") ? Theme.create(data.get("theme").getAsJsonObject()) : new ThemeTower();
+		this.tower = data.has("type") ? Tower.valueOf(data.get("type").getAsString()) : null;
+		this.theme = data.has("theme") ? Theme.create(data.get("theme").getAsJsonObject()) : null;
 
 	}
+
+	public TowerSettings(TowerSettings base, TowerSettings override){
+		if(base == null){
+			this.tower = override.tower;
+			this.theme = override.theme;
+			return;
+		}
+		
+		if(override == null){
+			this.tower = base.tower;
+			this.theme = base.theme;
+			return;
+		}
+		
+		this.tower = override.tower == null ? base.tower : override.tower;
+		this.theme = override.theme == null ? base.theme : override.theme;
+		
+	}
 	
-	public ITheme getTheme(){
-		return this.theme;
+	public TowerSettings(TowerSettings toCopy){
+		this.tower = toCopy.tower;
+		this.theme = toCopy.theme;
 	}
 	
 	public Tower getTower(){
+		if (this.tower == null) return Tower.ROGUE;
+		
 		return this.tower;
 	}
+	
+	public ITheme getTheme(){
+		if (this.theme == null) return new ThemeTower();
+		
+		return this.theme;
+	}
+	
+
 }
