@@ -43,7 +43,7 @@ public class ItemArmour extends ItemBase {
 			}
 		}
 
-		ItemStack item = pickArmour(rand, slot, Quality.getArmourQuality(rand, level));
+		ItemStack item = get(rand, slot, Quality.getArmourQuality(rand, level));
 		
 		if(enchantLevel > 0) Enchant.enchantItem(rand, item, enchantLevel);
 		
@@ -52,7 +52,7 @@ public class ItemArmour extends ItemBase {
 	}
 	
 	@SuppressWarnings("incomplete-switch")
-	private static ItemStack pickArmour(Random rand, Slot slot, Quality quality) {
+	public static ItemStack get(Random rand, Slot slot, Quality quality) {
 		
 		switch(slot){
 		

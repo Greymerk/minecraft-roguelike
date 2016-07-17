@@ -15,6 +15,8 @@ public enum Skull {
 
 	SKELETON, WITHER, ZOMBIE, STEVE, CREEPER;
 	
+	// TODO: Figure out how to give player heads.
+	
 	public static void set(IWorldEditor editor, Random rand, int x, int y, int z, Cardinal dir, Skull type){
 		
 		MetaBlock skullBlock = new MetaBlock(Blocks.SKULL);
