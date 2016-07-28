@@ -21,7 +21,8 @@ import net.minecraft.world.World;
 
 public enum MonsterProfile {
 
-	TALLMOB, ZOMBIE, SKELETON, VILLAGER, BABY, ASHLEA, RLEAHY, ARCHER, WITHER, POISONARCHER, MAGICARCHER, SWORDSMAN;
+	TALLMOB, ZOMBIE, SKELETON, VILLAGER, BABY, ASHLEA, RLEAHY, 
+	ARCHER, WITHER, POISONARCHER, MAGICARCHER, SWORDSMAN;
 	
 	public static IMonsterProfile get(MonsterProfile profile){
 		switch(profile){

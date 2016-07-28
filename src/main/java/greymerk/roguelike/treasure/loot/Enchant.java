@@ -74,7 +74,7 @@ public enum Enchant {
 		switch(difficulty){
 		case PEACEFUL: return false;
 		case EASY: return rand.nextInt(6) == 0;
-		case NORMAL: return level >= 2 && rand.nextInt(4) == 0;
+		case NORMAL: return level >= 1 && rand.nextInt(4) == 0;
 		case HARD: return rand.nextBoolean();
 		}
 		

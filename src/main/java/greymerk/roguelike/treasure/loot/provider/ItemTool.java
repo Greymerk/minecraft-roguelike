@@ -22,10 +22,6 @@ public class ItemTool extends ItemBase {
 
 	public static ItemStack getRandom(Random rand, int level, boolean enchant){
 		
-		if(level > 1 && rand.nextInt(500) == 0){
-			return ItemNovelty.getItem(ItemNovelty.AMLP);
-		}
-		
 		if(enchant && rand.nextInt(20 + (level * 10)) == 0){
 			switch(rand.nextInt(3)){
 			case 0: return ItemSpecialty.getRandomItem(Equipment.PICK, rand, level);

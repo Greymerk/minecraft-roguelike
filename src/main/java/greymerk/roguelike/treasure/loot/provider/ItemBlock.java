@@ -5,7 +5,6 @@ import java.util.Random;
 import greymerk.roguelike.treasure.loot.WeightedRandomLoot;
 import greymerk.roguelike.util.WeightedRandomizer;
 import greymerk.roguelike.worldgen.blocks.BlockType;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
 public class ItemBlock extends ItemBase{
@@ -22,7 +21,6 @@ public class ItemBlock extends ItemBase{
 		this.loot.add(new WeightedRandomLoot(BlockType.get(BlockType.STONE_BRICK).getBlock(), 0, 8, 32, 5));
 		this.loot.add(new WeightedRandomLoot(BlockType.get(BlockType.STONE_BRICK_MOSSY).getBlock(), 0, 8, 32, 1));
 		this.loot.add(new WeightedRandomLoot(BlockType.get(BlockType.STONE_BRICK_CRACKED).getBlock(), 0, 8, 32, 1));
-		this.loot.add(new WeightedRandomLoot(Items.BREAD, 1));
 	}
 
 	@Override
