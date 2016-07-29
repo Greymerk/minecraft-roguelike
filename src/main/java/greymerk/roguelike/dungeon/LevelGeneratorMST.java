@@ -1,10 +1,10 @@
 package greymerk.roguelike.dungeon;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.dungeon.base.IDungeonRoom;
 import greymerk.roguelike.util.mst.Edge;
 import greymerk.roguelike.util.mst.MinimumSpanningTree;
@@ -84,32 +84,41 @@ public class LevelGeneratorMST implements ILevelGenerator{
 			attempts++;
 		} while(end == startDungeonNode || end.getPosition().distance(start) > (16 + attempts * 2));
 		
-		for(DungeonTunnel tunnel : this.tunnels){
-			tunnel.construct(editor, rand, this.level.getSettings());
-		}
-		
-		Collections.shuffle(nodes, rand);
-		
-		// node dungeons
+		// assign dungeons
 		for (DungeonNode node : nodes){
 			
-			if(node == end){
-				continue;
-			}
+			if(node == end || node == startDungeonNode) continue;
 			
-			if(node == startDungeonNode){
-				continue;
-			}
-
+			// TODO: Find way to check available space when picking room
 			IDungeonRoom toGenerate = this.level.getSettings().getRooms().get(rand);
 			node.setDungeon(toGenerate);
 			toGenerate.generate(editor, rand, this.level.getSettings(), node.getEntrances(), node.getPosition());
 		}
 		
-		for(DungeonTunnel tunnel : this.tunnels){			
-			for(Coord c : tunnel){
-				this.level.getSettings().getSegments().genSegment(editor, rand, this.level, tunnel.getDirection(), c);
+		if(RogueConfig.getBoolean(RogueConfig.ENCASE)){
+			for (DungeonNode node : nodes){
+				if(node == end || node == startDungeonNode) continue;
+				node.encase(editor, rand, this.level.getSettings().getTheme());
 			}
+			
+			for(DungeonTunnel t : this.getTunnels()){
+				t.encase(editor, rand, this.level.getSettings().getTheme());
+			}
+		}
+		
+		for(DungeonTunnel t : this.getTunnels()){
+			t.construct(editor, rand, this.level.getSettings());
+		}
+		
+		for (DungeonNode node : nodes){
+			if(node == end || node == startDungeonNode) continue;
+			IDungeonRoom toGenerate = node.getRoom();
+			toGenerate.generate(editor, rand, this.level.getSettings(), node.getEntrances(), node.getPosition());
+		}
+		
+		
+		for(DungeonTunnel tunnel : this.getTunnels()){
+			tunnel.genSegments(editor, rand, this.level);
 		}
 		
 		LevelGenerator.generateLevelLink(editor, rand, this.level.getSettings(), start, oldEnd);

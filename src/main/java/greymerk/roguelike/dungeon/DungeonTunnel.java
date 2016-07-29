@@ -5,9 +5,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
+import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.dungeon.segment.ISegment;
 import greymerk.roguelike.dungeon.segment.ISegmentGenerator;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
+import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.worldgen.BlockJumble;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
@@ -39,20 +41,35 @@ public class DungeonTunnel implements Iterable<Coord>{
 		return tunnel.iterator();
 	}
 	
+	public void encase(IWorldEditor editor, Random rand, ITheme theme){
+		Coord s;
+		Coord e;
+		s = new Coord(this.start);
+		e = new Coord(this.end);
+		s.add(Cardinal.left(dir), 3);
+		s.add(Cardinal.UP, 3);
+		e.add(Cardinal.right(dir), 3);
+		e.add(Cardinal.DOWN, 3);
+		RectSolid.fill(editor, rand, s, e, theme.getPrimaryWall());
+	}
+	
 	public void construct(IWorldEditor editor, Random rand, LevelSettings settings){
-		
+
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		
 		IBlockFactory wallBlocks = settings.getTheme().getPrimaryWall();
 		IBlockFactory floor = settings.getTheme().getPrimaryFloor();
 		BlockJumble bridgeBlocks = new BlockJumble();
+		Coord s;
+		Coord e;
+		
 		bridgeBlocks.addBlock(floor);
 		bridgeBlocks.addBlock(air);
 		
-		Coord s = new Coord(this.start);
+		s = new Coord(this.start);
 		s.add(Cardinal.NORTH);
 		s.add(Cardinal.EAST);
-		Coord e = new Coord(this.end);
+		e = new Coord(this.end);
 		e.add(Cardinal.SOUTH);
 		e.add(Cardinal.WEST);
 		e.add(Cardinal.UP, 2);
