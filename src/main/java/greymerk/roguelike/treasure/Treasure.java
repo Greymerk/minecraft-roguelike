@@ -81,7 +81,7 @@ public enum Treasure {
 		for (Coord block : space){
 			
 			if(count == numChests){
-				break;
+				return chests;
 			}
 			
 			if (isValidChestSpace(editor, block)) {

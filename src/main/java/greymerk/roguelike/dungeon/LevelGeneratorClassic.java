@@ -75,7 +75,6 @@ public class LevelGeneratorClassic implements ILevelGenerator{
 			// TODO: Find way to check available space when picking room
 			IDungeonRoom toGenerate = this.level.getSettings().getRooms().get(rand);
 			node.setDungeon(toGenerate);
-			toGenerate.generate(editor, rand, this.level.getSettings(), node.getEntrances(), node.getPosition());
 		}
 		
 		if(RogueConfig.getBoolean(RogueConfig.ENCASE)){

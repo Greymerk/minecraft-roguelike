@@ -1,5 +1,6 @@
 package greymerk.roguelike.worldgen.blocks;
 
+import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.MetaBlock;
 import net.minecraft.block.BlockAnvil;
@@ -10,6 +11,10 @@ public enum Anvil {
 	NEW_ANVIL, DAMAGED_ANVIL, VERY_DAMAGED_ANVIL;
 	
 	public static MetaBlock get(Anvil damage, Cardinal dir){
+		
+		if(!RogueConfig.getBoolean(RogueConfig.FURNITURE)){
+			return BlockType.get(BlockType.ANDESITE_POLISHED);
+		}
 		
 		MetaBlock anvil = new MetaBlock(Blocks.ANVIL);
 		
