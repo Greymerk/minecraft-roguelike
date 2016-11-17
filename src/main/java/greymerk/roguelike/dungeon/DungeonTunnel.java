@@ -5,7 +5,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
-import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.dungeon.segment.ISegment;
 import greymerk.roguelike.dungeon.segment.ISegmentGenerator;
 import greymerk.roguelike.dungeon.settings.LevelSettings;

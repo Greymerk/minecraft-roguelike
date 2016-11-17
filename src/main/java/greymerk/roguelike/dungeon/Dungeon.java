@@ -75,6 +75,10 @@ public class Dungeon implements IDungeon{
 		Random rand = getRandom(editor, this.pos.getX(), this.pos.getZ());
 		TreasureManager treasure = editor.getTreasure();
 		ILoot loot = Loot.getLoot();
+		List<ITreasureChest> chests = treasure.getChests();
+		for(ITreasureChest chest : chests){
+			//chest.setSlot(1, new ItemStack(Items.BED));
+		}
 		settings.getLootRules().process(rand, loot, treasure);
 		
 		Book book = new Book("Greymerk", "Statistics");

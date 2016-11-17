@@ -59,7 +59,9 @@ public class TreasureManager {
 		
 		for(int i = 0; i < amount; ++i){
 			ITreasureChest chest = chests.get(rand.nextInt(chests.size()));
-			chest.setRandomEmptySlot(item.get(rand));
+			if(!chest.setRandomEmptySlot(item.get(rand))){
+				System.out.println(chest.toString());
+			}
 		}
 	}
 	

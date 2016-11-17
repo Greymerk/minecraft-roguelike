@@ -8,7 +8,6 @@ import greymerk.roguelike.treasure.loot.Enchant;
 import greymerk.roguelike.treasure.loot.provider.ItemWeapon;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.EntitySkeleton;
-import net.minecraft.entity.monster.SkeletonType;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.world.World;
 
@@ -19,7 +18,7 @@ public class ProfileWither implements IMonsterProfile {
 		
 		EntitySkeleton skeleton = ((EntitySkeleton) mob);
 		
-		skeleton.func_189768_a(SkeletonType.WITHER);
+		//skeleton.func_189768_a(SkeletonType.WITHER);
 
 		mob.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, ItemWeapon.getSword(rand, level, Enchant.canEnchant(world.getDifficulty(), rand, level)));
 		MonsterProfile.get(MonsterProfile.TALLMOB).addEquipment(world, rand, level, mob);

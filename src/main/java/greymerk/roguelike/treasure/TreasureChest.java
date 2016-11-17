@@ -28,7 +28,9 @@ public class TreasureChest implements ITreasureChest{
 		
 		MetaBlock chestType = new MetaBlock(trapped ? Blocks.TRAPPED_CHEST : Blocks.CHEST);
 		
-		if(!chestType.set(editor, pos)){
+		boolean success = chestType.set(editor, pos);
+		
+		if(!success){
 			return null;
 		}
 		
@@ -69,6 +71,11 @@ public class TreasureChest implements ITreasureChest{
 		if(level < 0) return 0;
 		if(level > 4) return 4;
 		return this.level;
+	}
+	
+	@Override
+	public String toString(){
+		return "slots: " + this.inventory.getInventorySize() + " type: " + this.type.toString();	
 	}
 
 }

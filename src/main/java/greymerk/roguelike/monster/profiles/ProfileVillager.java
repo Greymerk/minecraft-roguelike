@@ -18,7 +18,7 @@ public class ProfileVillager implements IMonsterProfile {
 		
 		List<VillagerProfession> professions = VillagerRegistry.instance().getRegistry().getValues();
 		VillagerProfession profession = professions.get(rand.nextInt(professions.size()));
-		zombie.setVillagerType(profession);
+		//zombie.setVillagerType(profession);
 	}
 
 }

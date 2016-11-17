@@ -31,4 +31,14 @@ public class LootRule {
 		if(!toEach && type != null) treasure.addItem(rand, type, level, item, amount);
 		if(!toEach && type == null) treasure.addItem(rand, level, item, amount);
 	}
+	
+	@Override
+	public String toString(){
+		
+		String type = this.type != null ? this.type.toString() : "NONE";
+		int level = this.level;
+		int amount = this.amount;
+		
+		return "type: " + type + " level: " + level + " amount: " + amount;
+	}
 }

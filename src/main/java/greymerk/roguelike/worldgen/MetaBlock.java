@@ -249,11 +249,6 @@ public class MetaBlock extends BlockBase implements IBlockState{
 	}
 
 	@Override
-	public AxisAlignedBB getCollisionBoundingBox(World worldIn, BlockPos pos) {
-		return this.state.getCollisionBoundingBox(worldIn, pos);
-	}
-
-	@Override
 	public boolean shouldSideBeRendered(IBlockAccess blockAccess, BlockPos pos, EnumFacing facing) {
 		return this.state.shouldSideBeRendered(blockAccess, pos, facing);
 	}
@@ -296,11 +291,6 @@ public class MetaBlock extends BlockBase implements IBlockState{
 	}
 
 	@Override
-	public void neighborChanged(World arg0, BlockPos arg1, Block arg2) {
-		this.state.neighborChanged(arg0, arg1, arg2);
-	}
-
-	@Override
 	public boolean onBlockEventReceived(World arg0, BlockPos arg1, int arg2, int arg3) {
 		return this.state.onBlockEventReceived(arg0, arg1, arg2, arg3);
 	}
@@ -312,12 +302,34 @@ public class MetaBlock extends BlockBase implements IBlockState{
 	}
 
 	@Override
-	public boolean func_189884_a(Entity arg0) {
-		return state.func_189884_a(arg0);
+	public void neighborChanged(World worldIn, BlockPos pos, Block blockIn, BlockPos p_189546_4_) {
+		this.state.neighborChanged(worldIn, pos, blockIn, p_189546_4_);
+		
 	}
 
+	@Override
+	public boolean canEntitySpawn(Entity entityIn) {
+		return this.state.canEntitySpawn(entityIn);
+	}
 
+	@Override
+	public boolean func_191057_i() {
+		return this.state.func_191057_i();
+	}
 
+	@Override
+	public AxisAlignedBB getCollisionBoundingBox(IBlockAccess worldIn, BlockPos pos) {
+		return this.state.getCollisionBoundingBox(worldIn, pos);
+	}
 
-	
+	@Override
+	public Vec3d func_191059_e(IBlockAccess p_191059_1_, BlockPos p_191059_2_) {
+		return this.state.func_191059_e(p_191059_1_, p_191059_2_);
+	}
+
+	@Override
+	public boolean func_191058_s() {
+		return this.state.func_191058_s();
+	}
+
 }

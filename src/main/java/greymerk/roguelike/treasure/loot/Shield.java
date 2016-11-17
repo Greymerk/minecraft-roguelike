@@ -3,10 +3,8 @@ package greymerk.roguelike.treasure.loot;
 import java.util.Random;
 
 import net.minecraft.init.Items;
-import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntityBanner;
 
 public class Shield {
 
@@ -23,11 +21,18 @@ public class Shield {
 	
 	public static void applyBanner(ItemStack banner, ItemStack shield){
 		
+        NBTTagCompound bannerNBT = banner.getSubCompound("BlockEntityTag");
+        NBTTagCompound shieldNBT = bannerNBT == null ? new NBTTagCompound() : bannerNBT.copy();
+        shieldNBT.setInteger("Base", banner.getMetadata() & 15);
+        shield.setTagInfo("BlockEntityTag", shieldNBT);
+        
+		/*
 		NBTTagCompound patterns = (NBTTagCompound)banner.getTagCompound().copy();
-		EnumDyeColor dye = EnumDyeColor.byDyeDamage(TileEntityBanner.getBaseColor(banner));
+		EnumDyeColor dye = TileEntityBanner.func_190616_d(banner);
 		
 		shield.setTagCompound(patterns);
 		TileEntityBanner.addBaseColorTag(shield, dye);
+		*/
 	}
 	
 }

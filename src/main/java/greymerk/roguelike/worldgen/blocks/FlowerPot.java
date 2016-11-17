@@ -10,7 +10,6 @@ import net.minecraft.block.BlockPlanks;
 import net.minecraft.block.BlockSapling;
 import net.minecraft.block.BlockTallGrass;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityFlowerPot;
@@ -32,39 +31,13 @@ public enum FlowerPot {
 		
 		TileEntityFlowerPot flower = (TileEntityFlowerPot)potEntity;
 		
-		setData(flower, type);
+		ItemStack flowerItem = getFlowerItem(type);
+		flower.func_190614_a(flowerItem);
 	}
 	
 	public static void generate(IWorldEditor editor, Random rand, Coord pos){
 		FlowerPot choice = FlowerPot.values()[rand.nextInt(FlowerPot.values().length)];
 		generate(editor, pos, choice);
-	}
-	
-	public static void setData(TileEntityFlowerPot pot, FlowerPot type){
-		switch(type){
-		case DANDELION: pot.setFlowerPotData(Item.getItemFromBlock(Blocks.YELLOW_FLOWER), 0); return;
-		case POPPY: pot.setFlowerPotData(Item.getItemFromBlock(Blocks.RED_FLOWER), 0); return;
-		case ORCHID: pot.setFlowerPotData(Item.getItemFromBlock(Blocks.RED_FLOWER), 1); return;
-		case ALLIUM: pot.setFlowerPotData(Item.getItemFromBlock(Blocks.RED_FLOWER), 2); return;
-		case BLUET: pot.setFlowerPotData(Item.getItemFromBlock(Blocks.RED_FLOWER), 3); return;
-		case REDTULIP: pot.setFlowerPotData(Item.getItemFromBlock(Blocks.RED_FLOWER), 4); return;
-		case ORANGETULIP: pot.setFlowerPotData(Item.getItemFromBlock(Blocks.RED_FLOWER), 5); return;
-		case WHITETULIP: pot.setFlowerPotData(Item.getItemFromBlock(Blocks.RED_FLOWER), 6); return;
-		case PINKTULIP: pot.setFlowerPotData(Item.getItemFromBlock(Blocks.RED_FLOWER), 7); return;
-		case DAISY: pot.setFlowerPotData(Item.getItemFromBlock(Blocks.RED_FLOWER), 8); return;
-		case REDMUSHROOM: pot.setFlowerPotData(Item.getItemFromBlock(Blocks.RED_MUSHROOM), 0); return;
-		case BROWNMUSHROOM: pot.setFlowerPotData(Item.getItemFromBlock(Blocks.BROWN_MUSHROOM), 0); return;
-		case CACTUS: pot.setFlowerPotData(Item.getItemFromBlock(Blocks.CACTUS), 0); return;
-		case OAK: pot.setFlowerPotData(Item.getItemFromBlock(Blocks.SAPLING), 0); return;
-		case SPRUCE: pot.setFlowerPotData(Item.getItemFromBlock(Blocks.SAPLING), 1); return;
-		case BIRCH: pot.setFlowerPotData(Item.getItemFromBlock(Blocks.SAPLING), 2); return;
-		case JUNGLE: pot.setFlowerPotData(Item.getItemFromBlock(Blocks.SAPLING), 3); return;
-		case ACACIA: pot.setFlowerPotData(Item.getItemFromBlock(Blocks.SAPLING), 4); return;
-		case DARKOAK: pot.setFlowerPotData(Item.getItemFromBlock(Blocks.SAPLING), 5); return;
-		case SHRUB: pot.setFlowerPotData(Item.getItemFromBlock(Blocks.TALLGRASS), 0); return;
-		case FERN: pot.setFlowerPotData(Item.getItemFromBlock(Blocks.TALLGRASS), 2); return;
-		default: pot.setFlowerPotData(Item.getItemFromBlock(Blocks.YELLOW_FLOWER), 0); return;
-		}
 	}
 	
 	public static ItemStack getFlowerItem(FlowerPot type){

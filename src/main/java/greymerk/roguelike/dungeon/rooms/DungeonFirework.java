@@ -170,7 +170,7 @@ public class DungeonFirework extends DungeonBase {
 		Dropper dropper = new Dropper();
 		dropper.generate(editor, Cardinal.UP, cursor);
 		for(int i = 0;i < 8; ++i){
-			ItemStack stick = new ItemStack(Items.STICK);
+			ItemStack stick = new ItemStack(Items.STICK, 1);
 			Loot.setItemName(stick, Integer.toString(i));
 			Loot.setItemLore(stick, "Random logic unit", TextFormat.DARKGRAY);
 			dropper.add(editor, cursor, i, stick);

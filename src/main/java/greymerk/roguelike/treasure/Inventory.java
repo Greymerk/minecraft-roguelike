@@ -37,7 +37,8 @@ public class Inventory {
 	
 	public boolean isEmptySlot(int slot){		
 		try{
-			return chest.getStackInSlot(slot) == null;
+			ItemStack item = chest.getStackInSlot(slot);
+			return item.func_190926_b();
 		} catch(NullPointerException e){
 			return false;
 		}

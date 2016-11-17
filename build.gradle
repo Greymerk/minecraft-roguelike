@@ -12,14 +12,19 @@ buildscript {
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-version = "1.10.2-1.5.4"
+version = "1.11-1.6.0"
 group= "ca.rivas.roguelike" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "RoguelikeDungeons"
 
+sourceCompatibility = targetCompatibility = "1.6" // Need this here so eclipse task generates correctly.
+compileJava {
+    sourceCompatibility = targetCompatibility = "1.6"
+}
+
 minecraft {
-    version = "1.10.2-12.18.0.2002-1.10.0"
+    version = "1.11-13.19.0.2130"
     runDir = "run"
-	mappings = "snapshot_20160518"
+	mappings = "snapshot_20161111"
 	makeObfSourceJar = false
 }
 

@@ -81,9 +81,9 @@ public enum Enchant {
 		return false;
 	}
 
-	public static void enchantItem(Random rand, ItemStack item, int enchantLevel) {
+	public static ItemStack enchantItem(Random rand, ItemStack item, int enchantLevel) {
 
-		if (item == null ) return;
+		if (item == null ) return null;
 		
 		List<EnchantmentData> enchants = null;
 		try{
@@ -95,7 +95,7 @@ public enum Enchant {
 		boolean isBook = item.getItem() == Items.BOOK;
 
 		if (isBook){
-			item.setItem(Items.ENCHANTED_BOOK);
+			item = new ItemStack(Items.ENCHANTED_BOOK);
 			if(enchants.size() > 1){
 				enchants.remove(rand.nextInt(enchants.size()));
 			}
@@ -108,5 +108,7 @@ public enum Enchant {
 				item.addEnchantment(toAdd.enchantmentobj, toAdd.enchantmentLevel);
 			}
 		}
+		
+		return item;
 	}
 }

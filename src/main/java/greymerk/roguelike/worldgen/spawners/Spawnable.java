@@ -15,6 +15,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.MobSpawnerBaseLogic;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityMobSpawner;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.WeightedSpawnerEntity;
 
 public class Spawnable {
@@ -70,7 +71,7 @@ public class Spawnable {
         TileEntityMobSpawner spawner = (TileEntityMobSpawner)tileentity;
         MobSpawnerBaseLogic spawnerLogic = spawner.getSpawnerBaseLogic();
         
-        spawnerLogic.setEntityName(this.name);
+        spawnerLogic.func_190894_a(new ResourceLocation(this.name));
         
         if(this.meta != null){
         	setMeta(spawnerLogic, this.meta);

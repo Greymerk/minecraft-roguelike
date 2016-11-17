@@ -7,7 +7,7 @@ import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.tileentity.TileEntityBanner.EnumBannerPattern;
+import net.minecraft.tileentity.BannerPattern;
 
 public class Banner {
 
@@ -23,13 +23,13 @@ public class Banner {
 	}
 	
 	public static ItemStack addPattern(ItemStack banner, Random rand){
-		EnumBannerPattern pattern = EnumBannerPattern.values()[rand.nextInt(EnumBannerPattern.values().length)];
+		BannerPattern pattern = BannerPattern.values()[rand.nextInt(BannerPattern.values().length)];
 		EnumDyeColor color = EnumDyeColor.values()[rand.nextInt(EnumDyeColor.values().length)];
 		
 		return addPattern(banner, pattern, color);
 	}
 	
-	public static ItemStack addPattern(ItemStack banner, EnumBannerPattern pattern, EnumDyeColor color){
+	public static ItemStack addPattern(ItemStack banner, BannerPattern pattern, EnumDyeColor color){
 		
 		NBTTagCompound nbt = banner.getTagCompound();
 		if(nbt == null){
@@ -57,7 +57,7 @@ public class Banner {
 				
 		NBTTagCompound toAdd = new NBTTagCompound();
 		toAdd.setInteger("Color", color.getDyeDamage());
-		toAdd.setString("Pattern", pattern.getPatternID());
+		toAdd.setString("Pattern", pattern.func_190997_a());
 		patterns.appendTag(toAdd);
 		
 		return banner;
