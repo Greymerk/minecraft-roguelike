@@ -32,7 +32,7 @@ public enum Spawner {
 	private static final Spawner[] common = {SPIDER, SKELETON, ZOMBIE};
 	
 	public static String getName(Spawner type) {
-		return type.name;
+		return "minecraft:" + type.name;
 	}
 	
 

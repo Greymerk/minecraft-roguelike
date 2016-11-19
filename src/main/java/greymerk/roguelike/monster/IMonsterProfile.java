@@ -7,6 +7,6 @@ import net.minecraft.world.World;
 
 public interface IMonsterProfile {
 	
-	public void addEquipment(World world, Random rand, int level, Entity mob);
+	public void addEquipment(World world, Random rand, int level, IEntity mob);
 	
 }

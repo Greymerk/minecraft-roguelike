@@ -22,7 +22,7 @@ compileJava {
 }
 
 minecraft {
-    version = "1.11-13.19.0.2130"
+    version = "1.11-13.19.0.2148"
     runDir = "run"
 	mappings = "snapshot_20161111"
 	makeObfSourceJar = false

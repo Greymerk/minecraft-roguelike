@@ -12,11 +12,10 @@ import greymerk.roguelike.worldgen.MetaBlock;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.NBTTagString;
 import net.minecraft.tileentity.MobSpawnerBaseLogic;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityMobSpawner;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.WeightedSpawnerEntity;
 
 public class Spawnable {
 
@@ -71,44 +70,52 @@ public class Spawnable {
         TileEntityMobSpawner spawner = (TileEntityMobSpawner)tileentity;
         MobSpawnerBaseLogic spawnerLogic = spawner.getSpawnerBaseLogic();
         
-        spawnerLogic.func_190894_a(new ResourceLocation(this.name));
+        //spawnerLogic.func_190894_a(new ResourceLocation(this.name));
         
+        /*
         if(this.meta != null){
-        	setMeta(spawnerLogic, this.meta);
+        	spawnerLogic.readFromNBT(nbt);
         	return;
         }
+        */
         
         if(!(RogueConfig.getBoolean(RogueConfig.ROGUESPAWNERS))) return;
         
         if(!this.equip) return;
-        	
-        NBTTagCompound nbt = getRoguelike(level, this.name);
+        
 
-        setMeta(spawnerLogic, nbt);
+        NBTTagCompound nbt = getRoguelike(level, this.name);
+        nbt.setInteger("x", pos.getX());
+        nbt.setInteger("y", pos.getY());
+        nbt.setInteger("z", pos.getZ());
+        
+        spawnerLogic.readFromNBT(nbt);
+        spawnerLogic.updateSpawner();
+        tileentity.markDirty();
         
 	}
 	
-	private static void setMeta(MobSpawnerBaseLogic logic, NBTTagCompound nbt){
-    	WeightedSpawnerEntity randomEntity = new WeightedSpawnerEntity(1, nbt);
-    	logic.setNextSpawnData(randomEntity);
-    	logic.updateSpawner();
-	}
-	
 	private NBTTagCompound getRoguelike(int level, String type){
-    	NBTTagCompound nbt = new NBTTagCompound();
-    	nbt.setString("id", type);
-   	
-    	NBTTagList activeEffects = new NBTTagList();
-    	nbt.setTag("ActiveEffects", activeEffects);
+		//String strg = "{SpawnData:{id:\"" + type + "\",ActiveEffects:[{Id:4,Duration:10,Amplifier:" + level + ",Ambient:0}]}}";
     	
-    	NBTTagCompound buff = new NBTTagCompound();
-    	activeEffects.appendTag(buff);
-    	
-    	buff.setByte("Id", (byte) 4);
-    	buff.setByte("Amplifier", (byte) level);
-    	buff.setInteger("Duration", 10);
-    	buff.setByte("Ambient", (byte) 0);
-    	
-    	return nbt;
+		NBTTagCompound nbt = new NBTTagCompound();
+		
+		NBTTagCompound spawnData = new NBTTagCompound();
+		nbt.setTag("SpawnData", spawnData);
+		
+		spawnData.setString("id", type);
+				
+		NBTTagList activeEffects = new NBTTagList();
+		spawnData.setTag("ActiveEffects", activeEffects);
+		
+		NBTTagCompound buff = new NBTTagCompound();
+		activeEffects.appendTag(buff);
+		
+		buff.setByte("Id", (byte) 4);
+		buff.setByte("Amplifier", (byte) level);
+		buff.setInteger("Duration", 10);
+		buff.setByte("Ambient", (byte) 0);
+
+		return nbt;
     }
 }

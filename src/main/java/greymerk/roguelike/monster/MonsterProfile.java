@@ -5,6 +5,7 @@ import java.util.Random;
 import greymerk.roguelike.monster.profiles.ProfileArcher;
 import greymerk.roguelike.monster.profiles.ProfileAshlea;
 import greymerk.roguelike.monster.profiles.ProfileBaby;
+import greymerk.roguelike.monster.profiles.ProfileHusk;
 import greymerk.roguelike.monster.profiles.ProfileMagicArcher;
 import greymerk.roguelike.monster.profiles.ProfilePoisonArcher;
 import greymerk.roguelike.monster.profiles.ProfileRleahy;
@@ -14,14 +15,13 @@ import greymerk.roguelike.monster.profiles.ProfileTallMob;
 import greymerk.roguelike.monster.profiles.ProfileVillager;
 import greymerk.roguelike.monster.profiles.ProfileWither;
 import greymerk.roguelike.monster.profiles.ProfileZombie;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.world.World;
 
 public enum MonsterProfile {
 
-	TALLMOB, ZOMBIE, SKELETON, VILLAGER, BABY, ASHLEA, RLEAHY, 
+	TALLMOB, ZOMBIE, SKELETON, VILLAGER, HUSK, BABY, ASHLEA, RLEAHY, 
 	ARCHER, WITHER, POISONARCHER, MAGICARCHER, SWORDSMAN;
 	
 	public static IMonsterProfile get(MonsterProfile profile){
@@ -30,6 +30,7 @@ public enum MonsterProfile {
 		case ZOMBIE: return new ProfileZombie();
 		case SKELETON: return new ProfileSkeleton();
 		case VILLAGER: return new ProfileVillager();
+		case HUSK: return new ProfileHusk();
 		case BABY: return new ProfileBaby();
 		case ASHLEA: return new ProfileAshlea();
 		case RLEAHY: return new ProfileRleahy();
@@ -42,17 +43,19 @@ public enum MonsterProfile {
 		}
 	}
 	
-	public static void equip(World world, Random rand, int level, Entity mob){
+	public static void equip(World world, Random rand, int level, IEntity mob){
 		
 		IMonsterProfile profile = null;
 		
-		if(mob instanceof EntityZombie) profile = get(ZOMBIE);
+		if(mob.instance(EntityZombie.class)) profile = get(ZOMBIE);
 		
-		if(mob instanceof EntitySkeleton) profile = get(SKELETON);
+		if(mob.instance(EntitySkeleton.class)) profile = get(SKELETON);
 		
 		if(profile == null) return;
 		
 		profile.addEquipment(world, rand, level, mob);
 	}
+	
+
 	
 }
