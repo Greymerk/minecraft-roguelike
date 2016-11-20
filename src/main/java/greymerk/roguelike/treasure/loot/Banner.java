@@ -57,7 +57,7 @@ public class Banner {
 				
 		NBTTagCompound toAdd = new NBTTagCompound();
 		toAdd.setInteger("Color", color.getDyeDamage());
-		toAdd.setString("Pattern", pattern.func_190997_a());
+		toAdd.setString("Pattern", pattern.func_190993_b());
 		patterns.appendTag(toAdd);
 		
 		return banner;
