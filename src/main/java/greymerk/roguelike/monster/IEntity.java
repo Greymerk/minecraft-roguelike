@@ -13,4 +13,6 @@ public interface IEntity {
 	
 	public boolean instance(Class<?> type);
 	
+	public void setName(String name);
+	
 }

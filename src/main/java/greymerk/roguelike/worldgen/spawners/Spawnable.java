@@ -12,7 +12,6 @@ import greymerk.roguelike.worldgen.MetaBlock;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.nbt.NBTTagString;
 import net.minecraft.tileentity.MobSpawnerBaseLogic;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityMobSpawner;
@@ -63,7 +62,6 @@ public class Spawnable {
         TileEntity tileentity = editor.getTileEntity(pos);
 
         if (!(tileentity instanceof TileEntityMobSpawner)){
-            System.out.println("Not a mob spawner.");
             return;
         }
         	
@@ -72,22 +70,21 @@ public class Spawnable {
         
         //spawnerLogic.func_190894_a(new ResourceLocation(this.name));
         
-        /*
         if(this.meta != null){
-        	spawnerLogic.readFromNBT(nbt);
-        	return;
+            this.meta.setInteger("x", pos.getX());
+            this.meta.setInteger("y", pos.getY());
+            this.meta.setInteger("z", pos.getZ());
+            spawnerLogic.readFromNBT(this.meta);
+            spawnerLogic.updateSpawner();
+            tileentity.markDirty();
+            return;
         }
-        */
         
-        if(!(RogueConfig.getBoolean(RogueConfig.ROGUESPAWNERS))) return;
-        
-        if(!this.equip) return;
-        
-
         NBTTagCompound nbt = getRoguelike(level, this.name);
         nbt.setInteger("x", pos.getX());
         nbt.setInteger("y", pos.getY());
         nbt.setInteger("z", pos.getZ());
+        
         
         spawnerLogic.readFromNBT(nbt);
         spawnerLogic.updateSpawner();
@@ -104,7 +101,10 @@ public class Spawnable {
 		nbt.setTag("SpawnData", spawnData);
 		
 		spawnData.setString("id", type);
-				
+		
+        if(!(RogueConfig.getBoolean(RogueConfig.ROGUESPAWNERS)
+        		&& this.equip)) return nbt;
+		
 		NBTTagList activeEffects = new NBTTagList();
 		spawnData.setTag("ActiveEffects", activeEffects);
 		

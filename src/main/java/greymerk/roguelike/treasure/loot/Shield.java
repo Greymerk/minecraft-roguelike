@@ -25,14 +25,7 @@ public class Shield {
         NBTTagCompound shieldNBT = bannerNBT == null ? new NBTTagCompound() : bannerNBT.copy();
         shieldNBT.setInteger("Base", banner.getMetadata() & 15);
         shield.setTagInfo("BlockEntityTag", shieldNBT);
-        
-		/*
-		NBTTagCompound patterns = (NBTTagCompound)banner.getTagCompound().copy();
-		EnumDyeColor dye = TileEntityBanner.func_190616_d(banner);
-		
-		shield.setTagCompound(patterns);
-		TileEntityBanner.addBaseColorTag(shield, dye);
-		*/
+
 	}
 	
 }

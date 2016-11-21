@@ -9,7 +9,6 @@ import greymerk.roguelike.treasure.loot.Quality;
 import greymerk.roguelike.treasure.loot.Slot;
 import greymerk.roguelike.treasure.loot.provider.ItemArmour;
 import greymerk.roguelike.treasure.loot.provider.ItemNovelty;
-import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;

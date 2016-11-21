@@ -85,7 +85,6 @@ public class LootRuleManager {
 			try{
 				item = new WeightedRandomLoot(data, weight);
 			} catch (Exception e){
-				System.err.println(e.getMessage());
 				item = new WeightedRandomLoot(Items.STICK, 1);
 			}
 			 

@@ -29,7 +29,7 @@ public class MetaEntity implements IEntity {
 		
 		this.mob = (Entity)newMob;
 		
-		if(oldMob instanceof EntityZombie){
+		if(newMob instanceof EntityZombie){
 			((EntityZombie)newMob).setChild(((EntityZombie)oldMob).isChild());
 		}
 		
@@ -53,6 +53,12 @@ public class MetaEntity implements IEntity {
 	@Override
 	public boolean instance(Class<?> type) {
 		return type.isInstance(this.mob);
+	}
+
+	@Override
+	public void setName(String name) {
+		this.mob.setCustomNameTag(name);
+		this.mob.setAlwaysRenderNameTag(true);
 	}
 
 }
