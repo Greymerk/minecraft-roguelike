@@ -1,12 +1,12 @@
 package greymerk.roguelike.theme;
 
+import greymerk.roguelike.util.DyeColor;
 import greymerk.roguelike.worldgen.BlockStripes;
 import greymerk.roguelike.worldgen.BlockWeightedRandom;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.MetaStair;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.ColorBlock;
-import greymerk.roguelike.worldgen.blocks.DyeColor;
 import greymerk.roguelike.worldgen.blocks.Slab;
 import greymerk.roguelike.worldgen.blocks.StairType;
 

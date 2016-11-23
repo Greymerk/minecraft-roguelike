@@ -4,6 +4,7 @@ import java.util.Random;
 
 import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.treasure.Treasure;
+import greymerk.roguelike.util.DyeColor;
 import greymerk.roguelike.worldgen.BlockStripes;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
@@ -16,7 +17,6 @@ import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.Cake;
 import greymerk.roguelike.worldgen.blocks.ColorBlock;
 import greymerk.roguelike.worldgen.blocks.Door;
-import greymerk.roguelike.worldgen.blocks.DyeColor;
 import greymerk.roguelike.worldgen.blocks.FlowerPot;
 import greymerk.roguelike.worldgen.blocks.Furnace;
 import greymerk.roguelike.worldgen.blocks.Slab;

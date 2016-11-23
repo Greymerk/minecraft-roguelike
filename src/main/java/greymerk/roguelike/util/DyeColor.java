@@ -1,4 +1,4 @@
-package greymerk.roguelike.worldgen.blocks;
+package greymerk.roguelike.util;
 
 import java.util.Random;
 

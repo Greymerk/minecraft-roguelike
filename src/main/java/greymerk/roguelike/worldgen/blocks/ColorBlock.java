@@ -1,5 +1,6 @@
 package greymerk.roguelike.worldgen.blocks;
 
+import greymerk.roguelike.util.DyeColor;
 import greymerk.roguelike.worldgen.MetaBlock;
 
 import java.util.Random;

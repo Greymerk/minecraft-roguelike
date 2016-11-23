@@ -1,6 +1,7 @@
 package greymerk.roguelike.worldgen.blocks;
 
 import greymerk.roguelike.config.RogueConfig;
+import greymerk.roguelike.util.DyeColor;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
