@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import greymerk.roguelike.util.DyeColor;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
@@ -23,6 +24,7 @@ public enum PotionMixture {
 			PotionEffect.addCustomEffect(potion, PotionEffect.FATIGUE, 1, 30 + rand.nextInt(60));
 			Loot.setItemName(potion, "Tequila");
 			ItemHideFlags.set(ItemHideFlags.EFFECTS, potion);
+			setColor(potion, DyeColor.RGBToColor(255, 232, 196));
 			return potion;
 		case LAUDANUM:
 			potion = Potion.getSpecific(PotionType.REGULAR, null, false, false);
@@ -34,6 +36,7 @@ public enum PotionMixture {
 			Loot.setItemName(potion, "Laudanum");
 			Loot.setItemLore(potion, "A medicinal tincture.");
 			ItemHideFlags.set(ItemHideFlags.EFFECTS, potion);
+			setColor(potion, DyeColor.RGBToColor(150, 50, 0));
 			return potion;
 		case MOONSHINE:
 			potion = Potion.getSpecific(PotionType.REGULAR, null, false, false);
@@ -42,6 +45,7 @@ public enum PotionMixture {
 			PotionEffect.addCustomEffect(potion, PotionEffect.RESISTANCE, 2, 30 + rand.nextInt(30));
 			Loot.setItemName(potion, "Moonshine");
 			ItemHideFlags.set(ItemHideFlags.EFFECTS, potion);
+			setColor(potion, DyeColor.RGBToColor(250, 240, 230));
 			return potion;
 		case ABSINTHE:
 			potion = Potion.getSpecific(PotionType.REGULAR, null, false, false);
@@ -50,6 +54,7 @@ public enum PotionMixture {
 			PotionEffect.addCustomEffect(potion, PotionEffect.JUMP, 3, 120);
 			Loot.setItemName(potion, "Absinthe");
 			ItemHideFlags.set(ItemHideFlags.EFFECTS, potion);
+			setColor(potion, DyeColor.RGBToColor(200, 250, 150));
 			return potion;
 		case VILE:
 			potion = Potion.getSpecific(
@@ -69,6 +74,7 @@ public enum PotionMixture {
 			Loot.setItemName(potion, "Animus");
 			Loot.setItemLore(potion, "An unstable mixture.");
 			ItemHideFlags.set(ItemHideFlags.EFFECTS, potion);
+			setColor(potion, DyeColor.RGBToColor(255, 0, 0));
 			return potion;
 		case STAMINA:
 			potion = Potion.getSpecific(PotionType.REGULAR, null, false, false);
@@ -79,6 +85,7 @@ public enum PotionMixture {
 			Loot.setItemName(potion, "Vitae");
 			Loot.setItemLore(potion, "Essence of life.");
 			ItemHideFlags.set(ItemHideFlags.EFFECTS, potion);
+			setColor(potion, DyeColor.RGBToColor(230, 50, 20));
 			return potion;
 		case STOUT:
 			potion = Potion.getSpecific(PotionType.REGULAR, null, false, false);
@@ -87,8 +94,9 @@ public enum PotionMixture {
 			PotionEffect.addCustomEffect(potion, PotionEffect.HEALTHBOOST, 2, 120);
 			PotionEffect.addCustomEffect(potion, PotionEffect.RESISTANCE, 1, 120);
 			Loot.setItemName(potion, "Stout");
-			Loot.setItemLore(potion, "\"Guinness is Good for You\"");
+			Loot.setItemLore(potion, "\"It's Good for You\"");
 			ItemHideFlags.set(ItemHideFlags.EFFECTS, potion);
+			setColor(potion, DyeColor.RGBToColor(50, 40, 20));
 			return potion;
 		case NECTAR:
 			potion = Potion.getSpecific(PotionType.REGULAR, null, false, false);
@@ -98,6 +106,7 @@ public enum PotionMixture {
 			Loot.setItemName(potion, "Nectar");
 			Loot.setItemLore(potion, "A Floral extract.");
 			ItemHideFlags.set(ItemHideFlags.EFFECTS, potion);
+			setColor(potion, DyeColor.RGBToColor(250, 150, 250));
 			return potion;
 		case COFFEE:
 			potion = Potion.getSpecific(PotionType.REGULAR, null, false, false);
@@ -106,6 +115,7 @@ public enum PotionMixture {
 			Loot.setItemName(potion, "Coffee");
 			Loot.setItemLore(potion, "A darkroast bean brew.");
 			ItemHideFlags.set(ItemHideFlags.EFFECTS, potion);
+			setColor(potion, DyeColor.RGBToColor(20, 20, 10));
 			return potion;
 		case AURA:
 			potion = Potion.getSpecific(PotionType.REGULAR, null, false, false);
@@ -113,6 +123,7 @@ public enum PotionMixture {
 			Loot.setItemName(potion, "Luma");
 			Loot.setItemLore(potion, "A glowstone extract.");
 			ItemHideFlags.set(ItemHideFlags.EFFECTS, potion);
+			setColor(potion, DyeColor.RGBToColor(250, 250, 0));
 			return potion;
 		default:
 		}
@@ -158,5 +169,9 @@ public enum PotionMixture {
 			
 			PotionEffect.addCustomEffect(potion, type, rand.nextInt(3), duration);
 		}	
+	}
+	
+	public static void setColor(ItemStack potion, int color){
+		potion.getTagCompound().setInteger("CustomPotionColor", color);
 	}
 }

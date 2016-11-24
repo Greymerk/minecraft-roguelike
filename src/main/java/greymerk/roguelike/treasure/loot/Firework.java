@@ -2,6 +2,7 @@ package greymerk.roguelike.treasure.loot;
 
 import java.util.Random;
 
+import greymerk.roguelike.util.DyeColor;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -29,7 +30,7 @@ public class Firework {
 		int size = rand.nextInt(4) + 1;
 		int[] colorArr = new int[size];
 		for(int i = 0; i < size; ++i){
-			colorArr[i] = rand.nextInt(256) << 16 | rand.nextInt(255) << 8 | rand.nextInt(255) << 0;
+			colorArr[i] = DyeColor.HSLToColor(rand.nextFloat(), (float)1.0, (float)0.5);
 		}
 		
 		NBTTagIntArray colors = new NBTTagIntArray(colorArr);
