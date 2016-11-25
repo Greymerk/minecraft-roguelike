@@ -14,12 +14,12 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-@Mod(modid="Roguelike", name="Roguelike Dungeons", version=Roguelike.version, acceptableRemoteVersions="*")
+@Mod(modid="roguelike", name="Roguelike Dungeons", version=Roguelike.version, acceptableRemoteVersions="*")
 
 public class Roguelike {
 
 	// The instance of your mod that Forge uses.
-	@Instance("Roguelike")
+	@Instance("roguelike")
 	public static Roguelike instance;
 	public static final String version = "1.5.4";
 	
