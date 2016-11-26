@@ -77,7 +77,7 @@ public class Dungeon implements IDungeon{
 		ILoot loot = Loot.getLoot();
 
 		settings.getLootRules().process(rand, loot, treasure);
-		
+		 // TODO: Change start book details
 		Book book = new Book("Greymerk", "Statistics");
 		book.addPage("~Architect's Resource Notes~\n\n"
 			+ "StoneBrick: " + editor.getStat(Blocks.STONEBRICK) + "\n"
@@ -89,7 +89,7 @@ public class Dungeon implements IDungeon{
 			+ "TNT: " + editor.getStat(Blocks.TNT) + "\n"
 			+ "\n-Greymerk");
 		book.addPage("Roguelike Dungeons v" + Roguelike.version + "\n"
-			+ "June 29th 2016\n\n"
+			+ "November 25th <current_year>\n\n"
 			+ "Credits\n\n"
 			+ "Author: Greymerk\n\n"
 			+ "Bits: Drainedsoul\n\n"
