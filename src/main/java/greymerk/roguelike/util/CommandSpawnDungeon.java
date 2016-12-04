@@ -3,6 +3,7 @@ package greymerk.roguelike.util;
 
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import greymerk.roguelike.citadel.Citadel;
 import greymerk.roguelike.config.RogueConfig;
@@ -26,7 +27,6 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
-import net.minecraftforge.common.BiomeDictionary.Type;
 
 public class CommandSpawnDungeon extends CommandBase
 {
@@ -69,10 +69,10 @@ public class CommandSpawnDungeon extends CommandBase
 			
 			Biome biome = editor.getBiome(pos);
 			sender.addChatMessage(new TextComponentString(TextFormat.apply(biome.getBiomeName(), TextFormat.GOLD)));
-			Type[] biomeTypes = BiomeDictionary.getTypesForBiome(biome);
+			Set<BiomeDictionary.Type> biomeTypes = BiomeDictionary.getTypes(biome);
 			String types = "";
 			for(BiomeDictionary.Type type : biomeTypes){
-				types += type.name() + " ";
+				types += type.getName() + " ";
 			}
 			sender.addChatMessage(new TextComponentString(TextFormat.apply(types, TextFormat.GOLD)));
 			return;

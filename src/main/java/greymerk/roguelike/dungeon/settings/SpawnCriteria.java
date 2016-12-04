@@ -39,7 +39,9 @@ public class SpawnCriteria {
 			this.biomeTypes = new ArrayList<BiomeDictionary.Type>();
 			for(JsonElement e : biomeTypeList){
 				String type = e.getAsString();
-				this.biomeTypes.add(BiomeDictionary.Type.valueOf(type));
+				// TODO: Find better way to interact with BiomeType Dictionary.
+				BiomeDictionary.Type t = BiomeDictionary.Type.getType(type, new BiomeDictionary.Type[0]);
+				if(BiomeDictionary.getBiomes(t).size() > 0) this.biomeTypes.add(t);
 			}
 		}
 	}
@@ -71,7 +73,7 @@ public class SpawnCriteria {
 		
 		if(this.biomeTypes != null){
 			for(BiomeDictionary.Type type : this.biomeTypes){
-				if(BiomeDictionary.isBiomeOfType(biome, type)) biomeFound = true;
+				if(BiomeDictionary.hasType(biome, type)) biomeFound = true;
 			}
 		}
 		

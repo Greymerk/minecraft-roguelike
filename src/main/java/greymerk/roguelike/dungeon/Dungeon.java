@@ -89,7 +89,7 @@ public class Dungeon implements IDungeon{
 			+ "TNT: " + editor.getStat(Blocks.TNT) + "\n"
 			+ "\n-Greymerk");
 		book.addPage("Roguelike Dungeons v" + Roguelike.version + "\n"
-			+ "November 25th <current_year>\n\n"
+			+ "December 3rd 2016\n\n"
 			+ "Credits\n\n"
 			+ "Author: Greymerk\n\n"
 			+ "Bits: Drainedsoul\n\n"
@@ -168,7 +168,7 @@ public class Dungeon implements IDungeon{
 		};
 		
 		for(Type type : invalidBiomes){
-			if(BiomeDictionary.isBiomeOfType(biome, type)) return false;
+			if(BiomeDictionary.hasType(biome, type)) return false;
 		}
 				
 		int upperLimit = RogueConfig.getInt(RogueConfig.UPPERLIMIT);
