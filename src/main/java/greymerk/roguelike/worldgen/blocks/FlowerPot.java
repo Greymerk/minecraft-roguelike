@@ -32,7 +32,7 @@ public enum FlowerPot {
 		TileEntityFlowerPot flower = (TileEntityFlowerPot)potEntity;
 		
 		ItemStack flowerItem = getFlowerItem(type);
-		flower.func_190614_a(flowerItem);
+		flower.setItemStack(flowerItem);
 	}
 	
 	public static void generate(IWorldEditor editor, Random rand, Coord pos){

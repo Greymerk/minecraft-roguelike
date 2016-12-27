@@ -213,10 +213,7 @@ public class MetaBlock extends BlockBase implements IBlockState{
 		return this.state.getSelectedBoundingBox(p_185890_1_, p_185890_2_);
 	}
 
-	@Override
-	public Collection<IProperty<?>> getPropertyNames() {
-		return this.state.getPropertyNames();
-	}
+
 
 	@Override
 	public ImmutableMap<IProperty<?>, Comparable<?>> getProperties() {
@@ -253,10 +250,7 @@ public class MetaBlock extends BlockBase implements IBlockState{
 		return this.state.shouldSideBeRendered(blockAccess, pos, facing);
 	}
 
-	@Override
-	public void addCollisionBoxToList(World worldIn, BlockPos pos, AxisAlignedBB p_185908_3_, List<AxisAlignedBB> p_185908_4_, Entity p_185908_5_) {
-		this.state.addCollisionBoxToList(worldIn, pos, p_185908_3_, p_185908_4_, p_185908_5_);
-	}
+
 
 	@Override
 	public AxisAlignedBB getBoundingBox(IBlockAccess blockAccess, BlockPos pos) {
@@ -313,23 +307,33 @@ public class MetaBlock extends BlockBase implements IBlockState{
 	}
 
 	@Override
-	public boolean func_191057_i() {
-		return this.state.func_191057_i();
-	}
-
-	@Override
 	public AxisAlignedBB getCollisionBoundingBox(IBlockAccess worldIn, BlockPos pos) {
 		return this.state.getCollisionBoundingBox(worldIn, pos);
 	}
 
 	@Override
-	public Vec3d func_191059_e(IBlockAccess p_191059_1_, BlockPos p_191059_2_) {
-		return this.state.func_191059_e(p_191059_1_, p_191059_2_);
+	public boolean hasCustomBreakingProgress() {
+		return this.state.hasCustomBreakingProgress();
 	}
 
 	@Override
-	public boolean func_191058_s() {
-		return this.state.func_191058_s();
+	public void addCollisionBoxToList(World worldIn, BlockPos pos, AxisAlignedBB entityBox,
+			List<AxisAlignedBB> collidingBoxes, Entity entityIn, boolean p_185908_6_) {
+		this.state.addCollisionBoxToList(worldIn, pos, entityBox, collidingBoxes, entityIn, p_185908_6_);
 	}
 
+	@Override
+	public Vec3d getOffset(IBlockAccess access, BlockPos pos) {
+		return this.state.getOffset(access, pos);
+	}
+
+	@Override
+	public boolean causesSuffocation() {
+		return this.state.causesSuffocation();
+	}
+
+	@Override
+	public Collection<IProperty<?>> getPropertyKeys() {
+		return this.state.getPropertyKeys();
+	}
 }

@@ -50,7 +50,7 @@ public class CommandSpawnDungeon extends CommandBase
 		ArgumentParser ap = new ArgumentParser(args);
 		
 		if(!ap.hasEntry(0)){
-			sender.addChatMessage(new TextComponentString(TextFormat.apply("Usage: roguelike [dungeon | give | config]", TextFormat.GRAY)));
+			sender.sendMessage(new TextComponentString(TextFormat.apply("Usage: roguelike [dungeon | give | config]", TextFormat.GRAY)));
 			return;
 		}
 		
@@ -65,27 +65,27 @@ public class CommandSpawnDungeon extends CommandBase
 				int z = parseInt(ap.get(2));
 				pos = new Coord(x, 0, z);
 			}
-			sender.addChatMessage(new TextComponentString(TextFormat.apply("Biome Information for " + pos.toString(), TextFormat.GOLD)));
+			sender.sendMessage(new TextComponentString(TextFormat.apply("Biome Information for " + pos.toString(), TextFormat.GOLD)));
 			
 			Biome biome = editor.getBiome(pos);
-			sender.addChatMessage(new TextComponentString(TextFormat.apply(biome.getBiomeName(), TextFormat.GOLD)));
+			sender.sendMessage(new TextComponentString(TextFormat.apply(biome.getBiomeName(), TextFormat.GOLD)));
 			Set<BiomeDictionary.Type> biomeTypes = BiomeDictionary.getTypes(biome);
 			String types = "";
 			for(BiomeDictionary.Type type : biomeTypes){
 				types += type.getName() + " ";
 			}
-			sender.addChatMessage(new TextComponentString(TextFormat.apply(types, TextFormat.GOLD)));
+			sender.sendMessage(new TextComponentString(TextFormat.apply(types, TextFormat.GOLD)));
 			return;
 		}
 		
 		if(ap.match(0, "config")){
 			if(!ap.hasEntry(1)){
-				sender.addChatMessage(new TextComponentString(TextFormat.apply("Usage: roguelike config reload", TextFormat.GRAY)));
+				sender.sendMessage(new TextComponentString(TextFormat.apply("Usage: roguelike config reload", TextFormat.GRAY)));
 				return;
 			}
 			if(ap.match(1, "reload")){
 				RogueConfig.reload(true);
-				sender.addChatMessage(new TextComponentString(TextFormat.apply("Success: Configurations Reloaded", TextFormat.GREEN)));
+				sender.sendMessage(new TextComponentString(TextFormat.apply("Success: Configurations Reloaded", TextFormat.GREEN)));
 				return;
 			}
 			return;
@@ -93,22 +93,22 @@ public class CommandSpawnDungeon extends CommandBase
 		
 		if(ap.match(0, "dim")){
 			int dim = sender.getEntityWorld().provider.getDimensionType().getId();
-			sender.addChatMessage(new TextComponentString(TextFormat.apply("Dimension id: " + Integer.toString(dim), TextFormat.GOLD)));
+			sender.sendMessage(new TextComponentString(TextFormat.apply("Dimension id: " + Integer.toString(dim), TextFormat.GOLD)));
 			return;
 		}
 		
 		if(ap.match(0, "settings")){
 			if(!ap.hasEntry(1)){
-				sender.addChatMessage(new TextComponentString(TextFormat.apply("Usage: roguelike settings [reload | list]", TextFormat.GRAY)));
+				sender.sendMessage(new TextComponentString(TextFormat.apply("Usage: roguelike settings [reload | list]", TextFormat.GRAY)));
 				return;
 			}
 			if(ap.match(1, "reload")){
 				Dungeon.initResolver();
-				sender.addChatMessage(new TextComponentString(TextFormat.apply("Success: Settings Reloaded", TextFormat.GREEN)));
+				sender.sendMessage(new TextComponentString(TextFormat.apply("Success: Settings Reloaded", TextFormat.GREEN)));
 				return;
 			}
 			if(ap.match(1, "list")){
-				sender.addChatMessage(new TextComponentString(TextFormat.apply(Dungeon.settingsResolver.toString(), TextFormat.GREEN)));
+				sender.sendMessage(new TextComponentString(TextFormat.apply(Dungeon.settingsResolver.toString(), TextFormat.GREEN)));
 				return;
 			}
 			
@@ -117,7 +117,7 @@ public class CommandSpawnDungeon extends CommandBase
 		
 		if(ap.match(0, "give")){
 			if(!ap.hasEntry(1)){
-				sender.addChatMessage(new TextComponentString(TextFormat.apply("Usage: roguelike give novelty_name", TextFormat.GRAY)));
+				sender.sendMessage(new TextComponentString(TextFormat.apply("Usage: roguelike give novelty_name", TextFormat.GRAY)));
 				return;
 			}
 			
@@ -125,24 +125,24 @@ public class CommandSpawnDungeon extends CommandBase
 			try {
 				player = getCommandSenderAsPlayer(sender);
 			} catch (PlayerNotFoundException e) {
-				sender.addChatMessage(new TextComponentString(TextFormat.apply("Failed: Player error", TextFormat.RED)));
+				sender.sendMessage(new TextComponentString(TextFormat.apply("Failed: Player error", TextFormat.RED)));
 				return;
 			}
 			ItemStack item = ItemNovelty.getItemByName(ap.get(1));
 			if(item == null){
-				sender.addChatMessage(new TextComponentString(TextFormat.apply("Failed: No such item", TextFormat.RED)));
+				sender.sendMessage(new TextComponentString(TextFormat.apply("Failed: No such item", TextFormat.RED)));
 				return;
 			}
 			EntityItem drop = player.entityDropItem(item, 0);
 			drop.setNoPickupDelay();
-			sender.addChatMessage(new TextComponentString(TextFormat.apply("Success: Given " + item.getDisplayName(), TextFormat.GREEN)));
+			sender.sendMessage(new TextComponentString(TextFormat.apply("Success: Given " + item.getDisplayName(), TextFormat.GREEN)));
 			return;
 		}
 		
 		if(ap.match(0, "dungeon")){
 			
 			if(!ap.hasEntry(1)){
-				sender.addChatMessage(new TextComponentString(TextFormat.apply("Usage: roguelike dungeon {X Z | here} [setting]", TextFormat.GRAY)));
+				sender.sendMessage(new TextComponentString(TextFormat.apply("Usage: roguelike dungeon {X Z | here} [setting]", TextFormat.GRAY)));
 				return;
 			}
 			
@@ -157,7 +157,7 @@ public class CommandSpawnDungeon extends CommandBase
 				try {
 					player = getCommandSenderAsPlayer(sender);
 				} catch (PlayerNotFoundException e) {
-					sender.addChatMessage(new TextComponentString(TextFormat.apply("Failure: Cannot find player", TextFormat.RED)));
+					sender.sendMessage(new TextComponentString(TextFormat.apply("Failure: Cannot find player", TextFormat.RED)));
 					return;
 				}
 				x = (int) player.posX;
@@ -171,7 +171,7 @@ public class CommandSpawnDungeon extends CommandBase
 				try {
 					player = getCommandSenderAsPlayer(sender);
 				} catch (PlayerNotFoundException e) {
-					sender.addChatMessage(new TextComponentString(TextFormat.apply("Failure: Cannot find player", TextFormat.RED)));
+					sender.sendMessage(new TextComponentString(TextFormat.apply("Failure: Cannot find player", TextFormat.RED)));
 					return;
 				}
 				
@@ -183,35 +183,35 @@ public class CommandSpawnDungeon extends CommandBase
 					try {
 						num = parseInt(ap.get(2));
 					} catch (NumberInvalidException e) {
-						sender.addChatMessage(new TextComponentString(TextFormat.apply("Failure: Third argument must be a whole number", TextFormat.RED)));
+						sender.sendMessage(new TextComponentString(TextFormat.apply("Failure: Third argument must be a whole number", TextFormat.RED)));
 						return;
 					}
 					
 					if(num <= 0){
-						sender.addChatMessage(new TextComponentString(TextFormat.apply("Failure: Third argument must be greater than zero.", TextFormat.RED)));
+						sender.sendMessage(new TextComponentString(TextFormat.apply("Failure: Third argument must be greater than zero.", TextFormat.RED)));
 						return;
 					}
 					
 					for(int i = 0; i < num; ++i){
 						
-						IWorldEditor editor = new WorldEditor(player.worldObj);
+						IWorldEditor editor = new WorldEditor(player.world);
 						Dungeon toGenerate = new Dungeon(editor);
 						Random rand = new Random();
 						toGenerate.generateNear(rand, x, z);
 					}
-					sender.addChatMessage(new TextComponentString(TextFormat.apply("Success: Dungeons generated all over the place!", TextFormat.GREEN)));
+					sender.sendMessage(new TextComponentString(TextFormat.apply("Success: Dungeons generated all over the place!", TextFormat.GREEN)));
 					return;
 				}
 
-				IWorldEditor editor = new WorldEditor(player.worldObj);
+				IWorldEditor editor = new WorldEditor(player.world);
 				Dungeon toGenerate = new Dungeon(editor);
 				Random rand = Dungeon.getRandom(editor, x, z);
 				toGenerate.generateNear(rand, x, z);
 				
 				try {
-					sender.addChatMessage(new TextComponentString(TextFormat.apply("Success: Dungeon generated at " + toGenerate.getPosition().toString(), TextFormat.GREEN)));
+					sender.sendMessage(new TextComponentString(TextFormat.apply("Success: Dungeon generated at " + toGenerate.getPosition().toString(), TextFormat.GREEN)));
 				} catch (Exception e) {
-					sender.addChatMessage(new TextComponentString(TextFormat.apply("Failure: Unable to generate dungeon", TextFormat.RED)));
+					sender.sendMessage(new TextComponentString(TextFormat.apply("Failure: Unable to generate dungeon", TextFormat.RED)));
 				}
 				return;
 				
@@ -221,7 +221,7 @@ public class CommandSpawnDungeon extends CommandBase
 					x = parseInt(ap.get(1));
 					z = parseInt(ap.get(2));
 				} catch (NumberInvalidException e) {
-					sender.addChatMessage(new TextComponentString(TextFormat.apply("Failure: Invalid Coords: X Z", TextFormat.RED)));
+					sender.sendMessage(new TextComponentString(TextFormat.apply("Failure: Invalid Coords: X Z", TextFormat.RED)));
 					return;
 				}
 				
@@ -238,16 +238,16 @@ public class CommandSpawnDungeon extends CommandBase
 				ISettings settings = Dungeon.settingsResolver.getWithDefault(settingName);
 				 
 				if(settings == null){
-					sender.addChatMessage(new TextComponentString(TextFormat.apply("Failed: " + settingName + " not found.", TextFormat.RED)));
+					sender.sendMessage(new TextComponentString(TextFormat.apply("Failed: " + settingName + " not found.", TextFormat.RED)));
 					return;
 				}
 				
 				Dungeon dungeon = new Dungeon(editor);
 				dungeon.generate(settings, x, z);
 				try {
-					sender.addChatMessage(new TextComponentString(TextFormat.apply("Success: \"" + settingName + "\" Dungeon generated at " + dungeon.getPosition().toString(), TextFormat.GREEN)));
+					sender.sendMessage(new TextComponentString(TextFormat.apply("Success: \"" + settingName + "\" Dungeon generated at " + dungeon.getPosition().toString(), TextFormat.GREEN)));
 				} catch (Exception e) {
-					sender.addChatMessage(new TextComponentString(TextFormat.apply("Failure: Unable to generate dungeon", TextFormat.RED)));
+					sender.sendMessage(new TextComponentString(TextFormat.apply("Failure: Unable to generate dungeon", TextFormat.RED)));
 				}
 				return;
 			}
@@ -257,13 +257,13 @@ public class CommandSpawnDungeon extends CommandBase
 			if(settings != null){
 				IDungeon dungeon = new Dungeon(editor);
 				dungeon.generate(settings, x, z);
-				sender.addChatMessage(new TextComponentString(TextFormat.apply("Success: Dungeon generated at " + Integer.toString(x) + " " + Integer.toString(z), TextFormat.GREEN)));
+				sender.sendMessage(new TextComponentString(TextFormat.apply("Success: Dungeon generated at " + Integer.toString(x) + " " + Integer.toString(z), TextFormat.GREEN)));
 				return;
 			}
 			
 			IDungeon dungeon = new Dungeon(editor);
 			dungeon.generate(Dungeon.settingsResolver.getDefaultSettings(), x, z);
-			sender.addChatMessage(new TextComponentString(TextFormat.apply("Success: Dungeon generated at " + Integer.toString(x) + " " + Integer.toString(z), TextFormat.GREEN)));
+			sender.sendMessage(new TextComponentString(TextFormat.apply("Success: Dungeon generated at " + Integer.toString(x) + " " + Integer.toString(z), TextFormat.GREEN)));
 			return;
 		}
 		
@@ -274,7 +274,7 @@ public class CommandSpawnDungeon extends CommandBase
 				x = parseInt(ap.get(1));
 				z = parseInt(ap.get(2));
 			} catch (NumberInvalidException e) {
-				sender.addChatMessage(new TextComponentString(TextFormat.apply("Failure: Invalid Coords: X Z", TextFormat.RED)));
+				sender.sendMessage(new TextComponentString(TextFormat.apply("Failure: Invalid Coords: X Z", TextFormat.RED)));
 				return;
 			}
 			
@@ -284,7 +284,7 @@ public class CommandSpawnDungeon extends CommandBase
 		}
 		
 		// user typed an invalid first argument
-		sender.addChatMessage(new TextComponentString(TextFormat.apply("Usage: roguelike [dungeon | give | config]", TextFormat.GRAY)));
+		sender.sendMessage(new TextComponentString(TextFormat.apply("Usage: roguelike [dungeon | give | config]", TextFormat.GRAY)));
 		
 	}
 
@@ -301,5 +301,15 @@ public class CommandSpawnDungeon extends CommandBase
 	 */
 	public boolean isUsernameIndex(String[] par1ArrayOfStr, int par2){
 		return par2 == 0;
+	}
+
+	@Override
+	public String getName() {
+		return "roguelike";
+	}
+
+	@Override
+	public String getUsage(ICommandSender sender) {
+		return "";
 	}
 }

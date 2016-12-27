@@ -3,9 +3,9 @@
 		"modid" : "roguelike",
 		"name" : "Roguelike Dungeons",
 		"description" : "Adds randomized dungeons to the world",
-		"version" : "1.6.1",
+		"version" : "${version}",
+		"mcversion": "${mcversion}",
 		"url" : "github.com/Greymerk/minecraft-roguelike",
 		"authorList" : ["Greymerk"],
-		"mcversion" : "1.11"
 	}
 ]

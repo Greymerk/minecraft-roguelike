@@ -23,7 +23,7 @@ public class MetaEntity implements IEntity {
 	public void setMobClass(MobType type, boolean clear) {
 		
 		EntityLiving oldMob = (EntityLiving)this.mob;
-		EntityLiving newMob = (EntityLiving)MobType.getEntity(this.mob.worldObj, type);
+		EntityLiving newMob = (EntityLiving)MobType.getEntity(this.mob.world, type);
 
 		newMob.copyLocationAndAnglesFrom(oldMob);
 		
@@ -39,8 +39,8 @@ public class MetaEntity implements IEntity {
 		}
 		
 		
-		oldMob.worldObj.removeEntity(oldMob);
-		newMob.worldObj.spawnEntityInWorld(newMob);
+		oldMob.world.removeEntity(oldMob);
+		newMob.world.spawnEntity(newMob);
 	}
 
 	@Override
