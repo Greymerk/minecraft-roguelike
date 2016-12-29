@@ -65,6 +65,7 @@ public class TreasureManager {
 	
 	public void addItem(Random rand, Treasure type, int level, IWeighted<ItemStack> item, int amount){
 		List<ITreasureChest> chests = getChests(type, level);
+		if(chests.isEmpty()) return;
 		
 		for(int i = 0; i < amount; ++i){
 			ITreasureChest chest = chests.get(rand.nextInt(chests.size()));
