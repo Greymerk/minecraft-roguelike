@@ -6,6 +6,6 @@
 		"version" : "${version}",
 		"mcversion": "${mcversion}",
 		"url" : "github.com/Greymerk/minecraft-roguelike",
-		"authorList" : ["Greymerk"],
+		"authorList" : ["Greymerk"]
 	}
 ]
