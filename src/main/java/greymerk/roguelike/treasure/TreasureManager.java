@@ -20,51 +20,40 @@ public class TreasureManager {
 	}
 	
 	public void addItemToAll(Random rand, Treasure type, int level, IWeighted<ItemStack> item, int amount){
-		for(ITreasureChest chest : this.getChests(type, level)){
-			for(int i = 0; i < amount; ++i){
-				chest.setRandomEmptySlot(item.get(rand));
-			}
-		}
+		addItemToAll(rand, this.getChests(type, level), item, amount);
 	}
 	
 	public void addItemToAll(Random rand, int level, IWeighted<ItemStack> item, int amount){
-		for(ITreasureChest chest : this.getChests(level)){
+		addItemToAll(rand, this.getChests(level), item, amount);
+	}
+	
+	public void addItemToAll(Random rand, Treasure type, IWeighted<ItemStack> item, int amount){		
+		addItemToAll(rand, this.getChests(type), item, amount);
+	}
+	
+	private void addItemToAll(Random rand, List<ITreasureChest> chests, IWeighted<ItemStack> item, int amount){
+		for(ITreasureChest chest : chests){
 			for(int i = 0; i < amount; ++i){
 				chest.setRandomEmptySlot(item.get(rand));
 			}
 		}
 	}
 	
-	public void addItemToAll(Random rand, Treasure type, IWeighted<ItemStack> item, int amount){
-		for(ITreasureChest chest : this.getChests(type)){
-			for(int i = 0; i < amount; ++i){
-				chest.setRandomEmptySlot(item.get(rand));
-			}
-		}
-	}
 	
 	public void addItem(Random rand, int level, IWeighted<ItemStack> item, int amount){
-		List<ITreasureChest> chests = getChests(level);
-		if(chests.isEmpty()) return;
-		
-		for(int i = 0; i < amount; ++i){
-			ITreasureChest chest = chests.get(rand.nextInt(chests.size()));
-			chest.setRandomEmptySlot(item.get(rand));
-		}
+		this.addItem(rand, getChests(level), item, amount);
 	}
 	
 	public void addItem(Random rand, Treasure type, IWeighted<ItemStack> item, int amount){
-		List<ITreasureChest> chests = getChests(type);
-		if(chests.isEmpty()) return;
-		
-		for(int i = 0; i < amount; ++i){
-			ITreasureChest chest = chests.get(rand.nextInt(chests.size()));
-			chest.setRandomEmptySlot(item.get(rand));
-		}
+		this.addItem(rand, getChests(type), item, amount);
 	}
 	
 	public void addItem(Random rand, Treasure type, int level, IWeighted<ItemStack> item, int amount){
-		List<ITreasureChest> chests = getChests(type, level);
+		this.addItem(rand, getChests(type, level), item, amount);
+	}
+	
+	private void addItem(Random rand, List<ITreasureChest> chests, IWeighted<ItemStack> item, int amount){
+		if(chests.isEmpty()) return;
 		
 		for(int i = 0; i < amount; ++i){
 			ITreasureChest chest = chests.get(rand.nextInt(chests.size()));
