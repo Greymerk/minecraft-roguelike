@@ -336,4 +336,10 @@ public class MetaBlock extends BlockBase implements IBlockState{
 	public Collection<IProperty<?>> getPropertyKeys() {
 		return this.state.getPropertyKeys();
 	}
+	
+	@Override
+	public boolean equals(Object other){
+		MetaBlock otherBlock = (MetaBlock)other;
+		return this.state.equals(otherBlock.state);
+	}
 }
