@@ -77,7 +77,7 @@ public class WorldEditor implements IWorldEditor{
 	
 	@Override
 	public Biome getBiome(Coord pos){
-		return world.getBiomeGenForCoords(pos.getBlockPos());
+		return world.getBiome(pos.getBlockPos());
 	}
 	
 	@Override

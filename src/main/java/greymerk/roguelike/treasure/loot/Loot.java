@@ -121,7 +121,7 @@ public enum Loot {
 				VillagerProfession profession = professions.get(rand.nextInt(professions.size()));
 				zombie.setVillagerType(profession);
 			} else if(level > 1 && rand.nextInt(10) == 0){
-				zombie.func_189778_a(ZombieType.HUSK);
+				zombie.setZombieType(ZombieType.HUSK);
 			}
 			
 			if(level > 1 && rand.nextInt(40) == 0){
@@ -153,11 +153,11 @@ public enum Loot {
 		if(mob instanceof EntitySkeleton){
 			
 			if(rand.nextInt(10) == 0 && level > 1){
-				((EntitySkeleton) mob).func_189768_a(SkeletonType.WITHER);
+				((EntitySkeleton) mob).setSkeletonType(SkeletonType.WITHER);
 				mob.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, ItemWeapon.getSword(rand, level, Enchant.canEnchant(world.getDifficulty(), rand, level)));
 			} else {
 				if(rand.nextInt(10) == 0){
-					((EntitySkeleton)mob).func_189768_a(SkeletonType.STRAY);
+					((EntitySkeleton)mob).setSkeletonType(SkeletonType.STRAY);
 				}
 				if(rand.nextInt(20) == 0){
 					if(level > 2 && rand.nextInt(10) == 0){

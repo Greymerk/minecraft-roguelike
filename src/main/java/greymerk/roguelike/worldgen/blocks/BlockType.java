@@ -188,11 +188,11 @@ public enum BlockType {
 		case PURPUR_DOUBLE_SLAB: return new MetaBlock(Blocks.PURPUR_DOUBLE_SLAB);
 		case PURPUR_SLAB: return new MetaBlock(Blocks.PURPUR_SLAB);
 		case ENDER_BRICK: return new MetaBlock(Blocks.END_BRICKS);
-		case MAGMA: return new MetaBlock(Blocks.field_189877_df);
-		case RED_NETHERBRICK: return new MetaBlock(Blocks.field_189879_dh);
-		case NETHER_WART_BLOCK: return new MetaBlock(Blocks.field_189878_dg);
+		case MAGMA: return new MetaBlock(Blocks.MAGMA);
+		case RED_NETHERBRICK: return new MetaBlock(Blocks.RED_NETHER_BRICK);
+		case NETHER_WART_BLOCK: return new MetaBlock(Blocks.NETHER_WART_BLOCK);
 		case BONE_BLOCK:
-			block = new MetaBlock(Blocks.field_189880_di);
+			block = new MetaBlock(Blocks.BONE_BLOCK);
 			block.withProperty(BlockBone.AXIS, EnumFacing.UP.getAxis());
 			return block;
 		default: return new MetaBlock(Blocks.AIR);

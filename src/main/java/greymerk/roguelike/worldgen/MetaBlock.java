@@ -312,11 +312,9 @@ public class MetaBlock extends BlockBase implements IBlockState{
 	}
 
 	@Override
-	public boolean func_189884_a(Entity arg0) {
-		return state.func_189884_a(arg0);
+	public boolean canEntitySpawn(Entity entityIn) {
+		return this.state.canEntitySpawn(entityIn);
 	}
-
-
 
 
 	
