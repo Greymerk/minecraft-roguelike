@@ -17,12 +17,18 @@ public class SpawnCriteria {
 	int weight;
 	List<String> biomes;
 	List<BiomeDictionary.Type> biomeTypes;
+	boolean everywhere;
 
 	public SpawnCriteria(){
 		this.weight = 1;
+		this.biomes = new ArrayList<String>();
+		this.biomeTypes = new ArrayList<BiomeDictionary.Type>();
+		this.everywhere = false;
 	}
 	
 	public SpawnCriteria(JsonObject data){
+		this();
+		
 		this.weight = data.has("weight") ? data.get("weight").getAsInt() : 1;
 		
 		if(data.has("biomes")){
@@ -44,6 +50,8 @@ public class SpawnCriteria {
 				if(BiomeDictionary.getBiomes(t).size() > 0) this.biomeTypes.add(t);
 			}
 		}
+		
+		this.everywhere = this.biomes.isEmpty() && this.biomeTypes.isEmpty();
 	}
 	
 	public void setWeight(int weight){
@@ -52,16 +60,18 @@ public class SpawnCriteria {
 	
 	public void setbiomes(List<String> biomes){
 		this.biomes = biomes;
+		this.everywhere = this.biomes.isEmpty() && this.biomeTypes.isEmpty();
 	}
 	
 	public void setBiomeTypes(List<BiomeDictionary.Type> biomeTypes){
 		this.biomeTypes = biomeTypes;
+		this.everywhere = this.biomes.isEmpty() && this.biomeTypes.isEmpty();
 	}
 	
 	
 	public boolean isValid(IWorldEditor editor, Coord pos){
 		
-		if(this.biomes == null && this.biomeTypes == null) return true;
+		if(this.everywhere) return true;
 		
 		boolean biomeFound = false;
 		

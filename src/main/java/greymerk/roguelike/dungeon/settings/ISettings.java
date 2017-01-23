@@ -12,7 +12,7 @@ public interface ISettings {
 
 	public boolean isValid(IWorldEditor editor, Coord pos);
 	
-	public List<String> getInherits(Random rand);
+	public List<String> getInherits();
 	
 	public LevelSettings getLevelSettings(int level);
 	
