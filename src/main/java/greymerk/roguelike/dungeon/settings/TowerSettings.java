@@ -1,12 +1,12 @@
 package greymerk.roguelike.dungeon.settings;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
 import greymerk.roguelike.dungeon.towers.Tower;
 import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.theme.Theme;
-import greymerk.roguelike.theme.ThemeOak;
-
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
+import greymerk.roguelike.theme.ThemeTower;
 
 public class TowerSettings {
 
@@ -21,16 +21,45 @@ public class TowerSettings {
 	public TowerSettings(JsonElement e) {
 
 		JsonObject data = e.getAsJsonObject();
-		this.tower = data.has("type") ? Tower.valueOf(data.get("type").getAsString()) : Tower.ROGUE;
-		this.theme = data.has("theme") ? Theme.create(data.get("theme").getAsJsonObject()) : new ThemeOak();
+		this.tower = data.has("type") ? Tower.valueOf(data.get("type").getAsString()) : null;
+		this.theme = data.has("theme") ? Theme.create(data.get("theme").getAsJsonObject()) : null;
 
 	}
+
+	public TowerSettings(TowerSettings base, TowerSettings override){
+		if(base == null){
+			this.tower = override.tower;
+			this.theme = override.theme;
+			return;
+		}
+		
+		if(override == null){
+			this.tower = base.tower;
+			this.theme = base.theme;
+			return;
+		}
+		
+		this.tower = override.tower == null ? base.tower : override.tower;
+		this.theme = override.theme == null ? base.theme : override.theme;
+		
+	}
 	
-	public ITheme getTheme(){
-		return this.theme;
+	public TowerSettings(TowerSettings toCopy){
+		this.tower = toCopy.tower;
+		this.theme = toCopy.theme;
 	}
 	
 	public Tower getTower(){
+		if (this.tower == null) return Tower.ROGUE;
+		
 		return this.tower;
 	}
+	
+	public ITheme getTheme(){
+		if (this.theme == null) return new ThemeTower();
+		
+		return this.theme;
+	}
+	
+
 }

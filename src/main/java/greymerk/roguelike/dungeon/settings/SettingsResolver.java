@@ -152,19 +152,8 @@ public class SettingsResolver {
 		
 		DungeonSettings custom = new SettingsBlank();
 		for(DungeonSettings setting : this.settings.values()){
-			if(!setting.isValid(editor, pos)){
-				continue;
-			}
-			
-			// generate an inherit base and then apply inherited aspects.
-			for(String name : setting.getInherits(rand)){
-				if(this.settings.containsKey(name)){
-					setting = new DungeonSettings(setting, this.settings.get(name));
-				} else {
-					System.err.println(name + " setting inherited before creation in " + setting.getName());
-				}
-			}
-			
+			if(!setting.isValid(editor, pos)) continue;
+			setting = processInheritance(setting, settings);
 			custom = new DungeonSettings(custom, setting);
 		}
 		
@@ -176,9 +165,27 @@ public class SettingsResolver {
 	}
 
 	public ISettings getWithDefault(String name) {
-		DungeonSettings custom = this.settings.get(name);
-		if(custom == null) return null;
+		if(!this.settings.containsKey(name)) return null;
+		DungeonSettings custom = new DungeonSettings(this.settings.get(name));
+		custom = processInheritance(custom, this.settings);
 		return new DungeonSettings(this.base, custom);
+	}
+	
+	public static DungeonSettings processInheritance(DungeonSettings toProcess, Map<String, DungeonSettings> settings){
+		DungeonSettings setting = new DungeonSettings(toProcess);
+		
+		for(String name : toProcess.getInherits()){
+			if(settings.containsKey(name)){
+				DungeonSettings custom = new DungeonSettings(settings.get(name));
+				if(!custom.getInherits().isEmpty()){
+					custom = processInheritance(custom, settings);
+				}
+				
+				setting = new DungeonSettings(toProcess, custom);
+			}
+		}
+		
+		return setting;
 	}
 	
 	@Override

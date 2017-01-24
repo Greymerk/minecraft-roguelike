@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -20,8 +19,8 @@ import greymerk.roguelike.worldgen.IWorldEditor;
 public class DungeonSettings implements ISettings{
 	
 	public static final int MAX_NUM_LEVELS = 5;
-	private String name;
-	private List<String> inherit;
+	protected String name;
+	protected List<String> inherit;
 	protected TowerSettings towerSettings;
 	protected Map<Integer, LevelSettings> levels;
 	protected SpawnCriteria criteria;
@@ -112,10 +111,13 @@ public class DungeonSettings implements ISettings{
 		}
 		this.lootRules.add(other.lootRules);
 		
-		if(other.towerSettings == null){
-			this.towerSettings = base.towerSettings;
-		} else {
-			this.towerSettings = other.towerSettings;
+		this.inherit = new ArrayList<String>();
+		for(String i : other.inherit){
+			this.inherit.add(i);
+		}
+		
+		if(base.towerSettings != null || other.towerSettings != null){
+			this.towerSettings = new TowerSettings(base.towerSettings, other.towerSettings);
 		}
 		
 		for(int i = 0; i < MAX_NUM_LEVELS; ++i){
@@ -141,8 +143,13 @@ public class DungeonSettings implements ISettings{
 		
 		this.levels = new HashMap<Integer, LevelSettings>();
 		
-		this.towerSettings = toCopy.towerSettings;
+		this.towerSettings = toCopy.towerSettings != null ? new TowerSettings(toCopy.towerSettings) : null;
 		this.lootRules = toCopy.lootRules;
+		
+		this.inherit = new ArrayList<String>();
+		for(String i : toCopy.inherit){
+			this.inherit.add(i);
+		}
 		
 		for(int i = 0; i < MAX_NUM_LEVELS; ++i){
 			LevelSettings level = toCopy.levels.get(i);
@@ -157,7 +164,7 @@ public class DungeonSettings implements ISettings{
 		if(toCopy.overrides != null) this.overrides.addAll(toCopy.overrides);
 	}
 
-	public List<String> getInherits(Random rand){
+	public List<String> getInherits(){
 		return this.inherit;
 	}
 	
