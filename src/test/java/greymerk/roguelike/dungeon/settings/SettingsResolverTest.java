@@ -105,6 +105,55 @@ public class SettingsResolverTest {
 
 	}
 
+	@Test
+	public void ResolveInheritTwoLevelMultiple(){
+		DungeonSettings main = new DungeonSettings();
+		DungeonSettings child = new DungeonSettings();
+		DungeonSettings sibling = new DungeonSettings();
+		DungeonSettings grandchild = new DungeonSettings();
+		
+		Map<String, DungeonSettings> settings = new HashMap<String, DungeonSettings>();
+		
+		main.name = "main";
+		child.name = "child";
+		sibling.name = "sibling";
+		grandchild.name = "grandchild";
+		settings.put(main.name, main);
+		settings.put(child.name, child);
+		settings.put(sibling.name, sibling);
+		settings.put(grandchild.name, grandchild);
+		
+		main.inherit.add(child.name);
+		main.inherit.add(sibling.name);
+		child.inherit.add(grandchild.name);
+		
+		ItemStack stick = new ItemStack(Items.STICK);
+		ItemStack coal = new ItemStack(Items.COAL);
+		ItemStack diamond = new ItemStack(Items.DIAMOND);
+		
+		child.lootRules.add(Treasure.REWARD, new WeightedChoice<ItemStack>(stick , 1), 0, true, 1);
+		sibling.lootRules.add(Treasure.REWARD, new WeightedChoice<ItemStack>(coal , 1), 0, true, 1);
+		grandchild.lootRules.add(Treasure.REWARD, new WeightedChoice<ItemStack>(diamond , 1), 0, true, 1);
+		
+		DungeonSettings assembled = SettingsResolver.processInheritance(main, settings);
+		
+		TreasureManager treasure = new TreasureManager();
+		MockChest chest = new MockChest(Treasure.REWARD, 0);
+		treasure.add(chest);
+		
+		assertTrue(chest.count(stick) == 0);
+		assertTrue(chest.count(coal) == 0);
+		assertTrue(chest.count(diamond) == 0);
+		
+		assembled.lootRules.process(new Random(), new LootProvider(), treasure);
+		
+		assertTrue(chest.count(new ItemStack(Items.BOAT)) == 0);
+		assertTrue(chest.count(coal) == 1);
+		assertTrue(chest.count(stick) == 1);
+		assertTrue(chest.count(diamond) == 1);
+		
+	}
+	
 	private class MockChest implements ITreasureChest{
 		
 		Treasure type;

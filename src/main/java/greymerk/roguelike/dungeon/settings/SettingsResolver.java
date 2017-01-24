@@ -181,7 +181,7 @@ public class SettingsResolver {
 					custom = processInheritance(custom, settings);
 				}
 				
-				setting = new DungeonSettings(toProcess, custom);
+				setting = new DungeonSettings(setting, custom);
 			}
 		}
 		
