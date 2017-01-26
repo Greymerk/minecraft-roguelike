@@ -45,9 +45,14 @@ public class Spawnable {
 	public Spawnable(JsonObject data){
 		name = data.get("name").getAsString();
 		equip = data.has("equip") ? data.get("equip").getAsBoolean() : true;
-		if(data.has("meta")){
-			JsonObject metadata = data.get("meta").getAsJsonObject();
-			this.meta = JsonNBT.jsonToCompound(metadata);
+		
+		if(!data.has("meta")) return;
+		
+		JsonObject metadata = data.get("meta").getAsJsonObject();
+		this.meta = JsonNBT.jsonToCompound(metadata);
+		
+		if(!this.meta.hasKey("id")){
+			this.meta.setString("id", this.name);
 		}
 	}
 		
@@ -70,28 +75,20 @@ public class Spawnable {
         TileEntityMobSpawner spawner = (TileEntityMobSpawner)tileentity;
         MobSpawnerBaseLogic spawnerLogic = spawner.getSpawnerBaseLogic();
         
-        //spawnerLogic.func_190894_a(new ResourceLocation(this.name));
-        
-        if(this.meta != null){
-            this.meta.setInteger("x", pos.getX());
-            this.meta.setInteger("y", pos.getY());
-            this.meta.setInteger("z", pos.getZ());
-            spawnerLogic.readFromNBT(this.meta);
-            spawnerLogic.updateSpawner();
-            tileentity.markDirty();
-            return;
-        }
-        
         NBTTagCompound nbt = new NBTTagCompound();
-        NBTTagList potentials = getSpawnPotentials(rand, level, this.name);
-
-    	NBTTagCompound spawn = potentials.getCompoundTagAt(0);
-    	nbt.setTag("SpawnData", spawn.getTag("Entity"));        
-       	nbt.setTag("SpawnPotentials", potentials);	
         
         nbt.setInteger("x", pos.getX());
         nbt.setInteger("y", pos.getY());
         nbt.setInteger("z", pos.getZ());
+        
+        if(this.meta == null){
+        	NBTTagList potentials = getSpawnPotentials(rand, level, this.name);
+        	NBTTagCompound spawn = potentials.getCompoundTagAt(0);
+        	nbt.setTag("SpawnPotentials", potentials);
+        	nbt.setTag("SpawnData", spawn.getTag("Entity"));
+        } else {
+        	nbt.setTag("SpawnData", this.meta);
+        }
         
         spawnerLogic.readFromNBT(nbt);
         spawnerLogic.updateSpawner();
