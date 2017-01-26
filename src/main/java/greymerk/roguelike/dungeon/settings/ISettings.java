@@ -1,7 +1,6 @@
 package greymerk.roguelike.dungeon.settings;
 
 import java.util.List;
-import java.util.Random;
 
 import greymerk.roguelike.treasure.loot.LootRuleManager;
 import greymerk.roguelike.worldgen.Coord;
