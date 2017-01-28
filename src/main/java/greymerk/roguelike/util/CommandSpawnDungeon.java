@@ -103,8 +103,12 @@ public class CommandSpawnDungeon extends CommandBase
 				return;
 			}
 			if(ap.match(1, "reload")){
-				Dungeon.initResolver();
-				sender.sendMessage(new TextComponentString(TextFormat.apply("Success: Settings Reloaded", TextFormat.GREEN)));
+				try{
+					Dungeon.initResolver();
+					sender.sendMessage(new TextComponentString(TextFormat.apply("Success: Settings Reloaded", TextFormat.GREEN)));
+				} catch(Exception e) {
+					sender.sendMessage(new TextComponentString(TextFormat.apply("Failure: " + e.getMessage(), TextFormat.RED)));
+				}
 				return;
 			}
 			if(ap.match(1, "list")){
@@ -234,7 +238,12 @@ public class CommandSpawnDungeon extends CommandBase
 			IWorldEditor editor = new WorldEditor(world);
 			
 			if(settingName != null){
-				Dungeon.initResolver();
+				try{
+					Dungeon.initResolver();
+				} catch(Exception e) {
+					System.err.println(e.getMessage());
+					return;
+				}
 				ISettings settings = Dungeon.settingsResolver.getWithDefault(settingName);
 				 
 				if(settings == null){

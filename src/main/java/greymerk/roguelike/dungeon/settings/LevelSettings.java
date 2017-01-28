@@ -78,7 +78,7 @@ public class LevelSettings {
 		this.generator = override.generator == null? base.generator : override.generator;
 	}
 	
-	public LevelSettings(JsonObject data){
+	public LevelSettings(JsonObject data) throws Exception{
 		this.numRooms = data.has("numRooms") ? data.get("numRooms").getAsInt() : RogueConfig.getInt(RogueConfig.LEVELMAXROOMS);
 		this.range = data.has("range") ? data.get("range").getAsInt() : RogueConfig.getInt(RogueConfig.LEVELRANGE);
 		this.scatter = data.has("scatter") ? data.get("scatter").getAsInt() : RogueConfig.getInt(RogueConfig.LEVELSCATTER);

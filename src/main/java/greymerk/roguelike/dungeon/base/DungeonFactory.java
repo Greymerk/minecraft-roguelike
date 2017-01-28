@@ -6,6 +6,7 @@ import greymerk.roguelike.util.WeightedChoice;
 import greymerk.roguelike.util.WeightedRandomizer;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -29,18 +30,29 @@ public class DungeonFactory implements IDungeonFactory {
 		this(DungeonRoom.CORNER);
 	}
 	
-	public DungeonFactory(JsonArray json) {
+	public DungeonFactory(JsonArray json) throws Exception {
 		this();
 		
 		for(JsonElement e : json){
 			JsonObject entry = e.getAsJsonObject();
-			String mode = entry.get("mode").getAsString();
+			String mode = (entry.get("mode").getAsString()).toLowerCase();
+			
+			String type = (entry.get("type").getAsString()).toUpperCase();
+			
+			DungeonRoom[] rooms = DungeonRoom.values();
+			
+			if(!Arrays.asList(rooms).contains(type)){
+				throw new Exception("No such dungeon: " + type);
+			}
+			
+			DungeonRoom toAdd = DungeonRoom.valueOf(entry.get("type").getAsString());
+			
 			if(mode.equals("single")){
-				this.addSingle(DungeonRoom.valueOf(entry.get("type").getAsString()));
+				this.addSingle(toAdd);
 			}
 			
 			if(mode.equals("random")){
-				this.addRandom(DungeonRoom.valueOf(entry.get("type").getAsString()), entry.get("weight").getAsInt());
+				this.addRandom(toAdd, entry.get("weight").getAsInt());
 			}
 		}
 	}

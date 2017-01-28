@@ -1,21 +1,15 @@
 package greymerk.roguelike.dungeon.settings;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import com.google.common.base.Charsets;
-import com.google.common.io.Files;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 
-import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsDesertTheme;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsForestTheme;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsGenerator;
@@ -38,12 +32,12 @@ import greymerk.roguelike.worldgen.IWorldEditor;
 
 public class SettingsResolver {
 
-	private static final String SETTINGS_DIRECTORY = RogueConfig.configDirName + "/settings";
+	
 	private Map<String, DungeonSettings> settings;
 	private List<DungeonSettings> builtin;
 	private DungeonSettings base;
 	
-	public SettingsResolver(){
+	public SettingsResolver() throws Exception{
 		settings = new HashMap<String, DungeonSettings>();
 		DungeonSettings base = new SettingsBlank();
 		base = new DungeonSettings(base, new SettingsRooms());
@@ -66,34 +60,24 @@ public class SettingsResolver {
 		this.builtin.add(new SettingsMesaTheme());
 		this.builtin.add(new SettingsIceTheme());
 		
-		File settingsDir = new File(SETTINGS_DIRECTORY);
-		if(!settingsDir.exists() || !settingsDir.isDirectory()) return;
-		File[] settingsFiles = settingsDir.listFiles();
-		Arrays.sort(settingsFiles);
-		
-		for(int i = 0; i < settingsFiles.length; ++i){
-			File toParse = settingsFiles[i];
+
+
+	}
+	
+	public void parseCustomSettings(Map<String, String> files) throws Exception{
+		for(String name : files.keySet()){
 			DungeonSettings toAdd = null;
 			try{
-				toAdd = parseFile(toParse);
+				toAdd = parseFile(files.get(name));
 			} catch (Exception e){
-				System.err.println("Error found in file " + toParse.getName());
-				System.err.println(e.getMessage());
-				continue; // skip this setting
+				throw new Exception("Error in: " + name + " : " + e.getMessage());
 			}
 			settings.put(toAdd.getName(), toAdd);
 		}
 	}
 	
-	private DungeonSettings parseFile(File toParse) throws Exception{
-		String content;
-		
-		try {
-			content = Files.toString(toParse, Charsets.UTF_8);
-		} catch (IOException e) {
-			throw new Exception("Error reading file");
-		}
-		
+	private DungeonSettings parseFile(String content) throws Exception{
+				
 		JsonParser jParser = new JsonParser();
 		JsonObject root = null;
 		DungeonSettings toAdd = null;
@@ -101,18 +85,13 @@ public class SettingsResolver {
 		try {
 			root = (JsonObject)jParser.parse(content);
 		} catch (JsonSyntaxException e){
-			
 			Throwable cause = e.getCause();
 			throw new Exception(cause.getMessage());
 		} catch (Exception e){
 			throw new Exception("An unknown error occurred while parsing json");
 		}
 		
-		try {
-			toAdd = new DungeonSettings(root);
-		} catch (Exception e){
-			throw new Exception("An error occured while adding " + toAdd.getName());
-		}
+		toAdd = new DungeonSettings(root);
 		
 		return toAdd;
 	}
