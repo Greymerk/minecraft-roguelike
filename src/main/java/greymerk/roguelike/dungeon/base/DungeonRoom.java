@@ -91,4 +91,11 @@ public enum DungeonRoom {
 		default: return null;
 		}
 	}
+	
+	public static boolean contains(String name){
+		for(DungeonRoom value : values()){
+			if(value.toString().equals(name)) return true;
+		}
+		return false;
+	}
 }

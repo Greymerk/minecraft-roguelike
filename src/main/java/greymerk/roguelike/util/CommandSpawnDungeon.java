@@ -50,7 +50,7 @@ public class CommandSpawnDungeon extends CommandBase
 		ArgumentParser ap = new ArgumentParser(args);
 		
 		if(!ap.hasEntry(0)){
-			sender.sendMessage(new TextComponentString(TextFormat.apply("Usage: roguelike [dungeon | give | config]", TextFormat.GRAY)));
+			sender.sendMessage(new TextComponentString(TextFormat.apply("Usage: roguelike [dungeon | give | config | settings]", TextFormat.GRAY)));
 			return;
 		}
 		

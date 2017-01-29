@@ -1,18 +1,19 @@
 package greymerk.roguelike.dungeon.base;
 
 
-import greymerk.roguelike.config.RogueConfig;
-import greymerk.roguelike.util.WeightedChoice;
-import greymerk.roguelike.util.WeightedRandomizer;
-
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Random;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+
+import greymerk.roguelike.config.RogueConfig;
+import greymerk.roguelike.util.WeightedChoice;
+import greymerk.roguelike.util.WeightedRandomizer;
 
 public class DungeonFactory implements IDungeonFactory {
 
@@ -37,11 +38,9 @@ public class DungeonFactory implements IDungeonFactory {
 			JsonObject entry = e.getAsJsonObject();
 			String mode = (entry.get("mode").getAsString()).toLowerCase();
 			
-			String type = (entry.get("type").getAsString()).toUpperCase();
+			String type = (entry.get("type").getAsString()).toUpperCase();			
 			
-			DungeonRoom[] rooms = DungeonRoom.values();
-			
-			if(!Arrays.asList(rooms).contains(type)){
+			if(!DungeonRoom.contains(type)){
 				throw new Exception("No such dungeon: " + type);
 			}
 			
