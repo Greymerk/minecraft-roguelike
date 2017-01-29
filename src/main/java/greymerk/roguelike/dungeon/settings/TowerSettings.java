@@ -18,10 +18,11 @@ public class TowerSettings {
 		this.theme = theme;
 	}
 	
-	public TowerSettings(JsonElement e) {
+	public TowerSettings(JsonElement e) throws Exception {
 
 		JsonObject data = e.getAsJsonObject();
-		this.tower = data.has("type") ? Tower.valueOf(data.get("type").getAsString()) : null;
+		
+		this.tower = data.has("type") ? Tower.get(data.get("type").getAsString()) : null;
 		this.theme = data.has("theme") ? Theme.create(data.get("theme").getAsJsonObject()) : null;
 
 	}

@@ -45,5 +45,18 @@ public enum Tower {
 		return new Coord(pos.getX(), pos.getY() + yOffset, pos.getZ());
 	}
 
+	public static Tower get(String name) throws Exception{
+		if(!contains(name.toUpperCase())){
+			throw new Exception("No such tower type: " + name);
+		}
+		
+		return valueOf(name.toUpperCase());
+	}
 	
+	public static boolean contains(String name){
+		for(Tower value : Tower.values()){
+			if(value.toString().equals(name)) return true;
+		}
+		return false;
+	}
 }

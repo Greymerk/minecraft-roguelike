@@ -55,7 +55,7 @@ public enum Theme {
 		return theme;
 	}
 	
-	public static ITheme create(JsonObject json){
+	public static ITheme create(JsonObject json) throws Exception{
 				
 		ITheme theme;
 		BlockSet primary = null;
@@ -72,15 +72,29 @@ public enum Theme {
 			JsonObject data = json.get("secondary").getAsJsonObject();		
 			secondary = new BlockSet(data);
 		}
-	
 
-		
 		if(json.has("base")){
-			theme = Theme.getTheme(Theme.valueOf(json.get("base").getAsString()));
-			return new ThemeBase((ThemeBase) theme, primary, secondary);
+			theme = Theme.getTheme(Theme.get(json.get("base").getAsString()));
 		} else {
 			theme = Theme.getTheme(Theme.OAK);
-			return new ThemeBase((ThemeBase) theme, primary, secondary);
 		}
+		
+		return new ThemeBase((ThemeBase) theme, primary, secondary);
 	}
+	
+	public static Theme get(String name) throws Exception{
+		if(!contains(name.toUpperCase())){
+			throw new Exception("No such theme: " + name);
+		}
+		
+		return valueOf(name.toUpperCase());
+	}
+	
+	public static boolean contains(String name){
+		for(Theme value : values()){
+			if(value.toString().equals(name)) return true;
+		}
+		return false;
+	}
+	
 }
