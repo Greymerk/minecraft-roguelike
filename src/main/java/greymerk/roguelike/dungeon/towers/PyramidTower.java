@@ -19,7 +19,7 @@ public class PyramidTower implements ITower{
 
 		Coord floor = Tower.getBaseCoord(editor, dungeon);
 		floor.add(Cardinal.UP);
-		IBlockFactory blocks = theme.getPrimaryWall();
+		IBlockFactory blocks = theme.getPrimary().getWall();
 		Coord cursor;
 		Coord start;
 		Coord end;
@@ -53,14 +53,14 @@ public class PyramidTower implements ITower{
 		spire(editor, rand, theme, cursor);
 		
 		for(int i = floor.getY() + 3; i >= y; --i){
-			editor.spiralStairStep(rand, new Coord(x, i, z), theme.getPrimaryStair(), theme.getPrimaryPillar());
+			editor.spiralStairStep(rand, new Coord(x, i, z), theme.getPrimary().getStair(), theme.getPrimary().getPillar());
 		}
 		
 	}
 	
 	private void entrance(IWorldEditor editor, Random rand, ITheme theme, Cardinal dir, Coord origin) {
 
-		IBlockFactory blocks = theme.getPrimaryWall();
+		IBlockFactory blocks = theme.getPrimary().getWall();
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		Coord cursor;
 		Coord start;
@@ -133,7 +133,7 @@ public class PyramidTower implements ITower{
 	}
 
 	private void spire(IWorldEditor editor, Random rand, ITheme theme, Coord origin) {
-		IBlockFactory blocks = theme.getPrimaryWall();
+		IBlockFactory blocks = theme.getPrimary().getWall();
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		Coord cursor;
 		Coord start;
@@ -220,7 +220,7 @@ public class PyramidTower implements ITower{
 	}
 
 	private void wall(IWorldEditor editor, Random rand, ITheme theme, Cardinal dir, Coord pos) {
-		IBlockFactory blocks = theme.getPrimaryWall();
+		IBlockFactory blocks = theme.getPrimary().getWall();
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		Coord cursor;
 		Coord start;
@@ -284,7 +284,7 @@ public class PyramidTower implements ITower{
 
 	private void corner(IWorldEditor editor, Random rand, ITheme theme, Cardinal dir, Coord pos){
 		
-		IBlockFactory blocks = theme.getPrimaryWall();
+		IBlockFactory blocks = theme.getPrimary().getWall();
 		Coord cursor;
 		Coord start;
 		Coord end;

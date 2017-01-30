@@ -12,7 +12,6 @@ import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.ColorBlock;
-import greymerk.roguelike.worldgen.blocks.Door;
 import greymerk.roguelike.worldgen.shapes.RectHollow;
 import greymerk.roguelike.worldgen.shapes.RectSolid;
 
@@ -21,9 +20,9 @@ public class WitchTower implements ITower {
 	@Override
 	public void generate(IWorldEditor editor, Random rand, ITheme theme, Coord origin) {
 		
-		IBlockFactory blocks = theme.getPrimaryWall();
-		IBlockFactory pillar = theme.getPrimaryPillar();
-		IStair stair = theme.getPrimaryStair();
+		IBlockFactory blocks = theme.getPrimary().getWall();
+		IBlockFactory pillar = theme.getPrimary().getPillar();
+		IStair stair = theme.getPrimary().getStair();
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		MetaBlock glass = ColorBlock.get(ColorBlock.GLASS, DyeColor.BLACK);
 		
@@ -253,7 +252,7 @@ public class WitchTower implements ITower {
 		
 		
 		for(int i = thirdFloor.getY() - 1; i >= 50; --i){
-			editor.spiralStairStep(rand, new Coord(origin.getX(), i, origin.getZ()), theme.getPrimaryStair(), theme.getPrimaryPillar());
+			editor.spiralStairStep(rand, new Coord(origin.getX(), i, origin.getZ()), theme.getPrimary().getStair(), theme.getPrimary().getPillar());
 		}
 		
 		// attic
@@ -341,7 +340,7 @@ public class WitchTower implements ITower {
 			if(editor.isAirBlock(cursor)){
 				cursor = new Coord(main);
 				cursor.add(dir, 3);
-				Door.generate(editor, cursor, dir, Door.OAK);
+				theme.getPrimary().getDoor().generate(editor, cursor, dir);
 				cursor.add(dir);
 				start = new Coord(cursor);
 				end = new Coord(start);
@@ -364,7 +363,7 @@ public class WitchTower implements ITower {
 		
 		Coord cursor;
 		
-		IStair stair = theme.getPrimaryStair();
+		IStair stair = theme.getPrimary().getStair();
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		
 		cursor = new Coord(origin);
@@ -388,8 +387,8 @@ public class WitchTower implements ITower {
 		Coord start;
 		Coord end;
 		
-		IStair stair = theme.getPrimaryStair();
-		IBlockFactory blocks = theme.getPrimaryWall();
+		IStair stair = theme.getPrimary().getStair();
+		IBlockFactory blocks = theme.getPrimary().getWall();
 		
 		Cardinal[] orth = Cardinal.orthogonal(dir);
 		

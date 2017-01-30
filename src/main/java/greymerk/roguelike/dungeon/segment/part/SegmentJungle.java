@@ -19,7 +19,7 @@ public class SegmentJungle extends SegmentBase {
 	@Override
 	protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal wallDirection, ITheme theme, Coord origin) {
 		
-		IStair stair = theme.getSecondaryStair();
+		IStair stair = theme.getSecondary().getStair();
 		
 		MetaBlock leaves = Leaves.get(Leaves.JUNGLE, false);
 		

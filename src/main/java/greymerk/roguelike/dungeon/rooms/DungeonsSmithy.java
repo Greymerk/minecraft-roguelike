@@ -65,9 +65,9 @@ public class DungeonsSmithy extends DungeonBase {
 		Coord start;
 		Coord end;
 		
-		IBlockFactory wall = theme.getPrimaryWall();
-		IBlockFactory pillar = theme.getPrimaryPillar();
-		IStair stair = theme.getPrimaryStair();
+		IBlockFactory wall = theme.getPrimary().getWall();
+		IBlockFactory pillar = theme.getPrimary().getPillar();
+		IStair stair = theme.getPrimary().getStair();
 		
 		for(Cardinal side : Cardinal.orthogonal(dir)){
 			
@@ -113,7 +113,7 @@ public class DungeonsSmithy extends DungeonBase {
 	
 	private void clearBoxes(IWorldEditor editor, Random rand, ITheme theme, Cardinal dir, Coord origin){
 		
-		IBlockFactory wall = theme.getPrimaryWall();
+		IBlockFactory wall = theme.getPrimary().getWall();
 		
 		
 		Coord cursor;
@@ -171,7 +171,7 @@ public class DungeonsSmithy extends DungeonBase {
 	private void mainRoom(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal dir, Coord origin){
 		
 		ITheme theme = settings.getTheme();
-		IBlockFactory wall = theme.getPrimaryWall();
+		IBlockFactory wall = theme.getPrimary().getWall();
 		Coord cursor;
 		Coord start;
 		Coord end;
@@ -210,9 +210,9 @@ public class DungeonsSmithy extends DungeonBase {
 	}
 	
 	private void mainPillar(IWorldEditor editor, Random rand, ITheme theme, Cardinal dir, Coord origin){
-		IBlockFactory wall = theme.getPrimaryWall();
-		IBlockFactory pillar = theme.getPrimaryPillar();
-		IStair stair = theme.getPrimaryStair();
+		IBlockFactory wall = theme.getPrimary().getWall();
+		IBlockFactory pillar = theme.getPrimary().getPillar();
+		IStair stair = theme.getPrimary().getStair();
 		Coord cursor;
 		Coord start;
 		Coord end;
@@ -252,7 +252,7 @@ public class DungeonsSmithy extends DungeonBase {
 	private void smelterSide(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal dir, Coord origin){
 		
 		ITheme theme = settings.getTheme();
-		IBlockFactory wall = theme.getPrimaryWall();
+		IBlockFactory wall = theme.getPrimary().getWall();
 		
 		Coord cursor;
 		Coord start;
@@ -266,7 +266,7 @@ public class DungeonsSmithy extends DungeonBase {
 		RectSolid.fill(editor, rand, start, end, wall);
 		start.add(Cardinal.reverse(dir));
 		end.add(Cardinal.reverse(dir));
-		IStair stair = theme.getPrimaryStair();
+		IStair stair = theme.getPrimary().getStair();
 		stair = stair.setOrientation(Cardinal.reverse(dir), false);
 		RectSolid.fill(editor, rand, start, end, stair);
 		
@@ -425,8 +425,8 @@ public class DungeonsSmithy extends DungeonBase {
 	private void anvilRoom(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal dir, Coord origin){
 		
 		ITheme theme = settings.getTheme();
-		IStair stair = theme.getPrimaryStair();
-		IBlockFactory wall = theme.getPrimaryWall();
+		IStair stair = theme.getPrimary().getStair();
+		IBlockFactory wall = theme.getPrimary().getWall();
 		
 		
 		Coord cursor;
@@ -475,7 +475,7 @@ public class DungeonsSmithy extends DungeonBase {
 	private void overheadLight(IWorldEditor editor, Random rand, LevelSettings settings, Coord origin){
 		
 		ITheme theme = settings.getTheme();
-		IStair stair = theme.getPrimaryStair();
+		IStair stair = theme.getPrimary().getStair();
 		
 		Coord cursor;
 		

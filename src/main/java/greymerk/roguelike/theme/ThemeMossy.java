@@ -7,6 +7,8 @@ import greymerk.roguelike.worldgen.MetaStair;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.SilverfishBlock;
 import greymerk.roguelike.worldgen.blocks.StairType;
+import greymerk.roguelike.worldgen.blocks.door.Door;
+import greymerk.roguelike.worldgen.blocks.door.DoorType;
 
 public class ThemeMossy extends ThemeBase{
 
@@ -39,7 +41,9 @@ public class ThemeMossy extends ThemeBase{
 		
 		MetaStair stair = new MetaStair(StairType.COBBLE);
 		
-		this.primary = new BlockSet(floor, walls, stair, walls);
+		this.primary = new BlockSet(floor, walls, stair, walls, 
+				new Door(DoorType.IRON)
+				);
 		this.secondary = this.primary;
 	}
 }

@@ -25,9 +25,9 @@ public class DungeonsCrypt extends DungeonBase {
 		
 		ITheme theme = settings.getTheme();
 		MetaBlock air = BlockType.get(BlockType.AIR);
-		IStair stair = theme.getPrimaryStair();
-		IBlockFactory walls = theme.getPrimaryWall();
-		IBlockFactory floor = theme.getPrimaryFloor();
+		IStair stair = theme.getPrimary().getStair();
+		IBlockFactory walls = theme.getPrimary().getWall();
+		IBlockFactory floor = theme.getPrimary().getFloor();
 		
 		Coord cursor;
 		Coord start;
@@ -133,8 +133,8 @@ public class DungeonsCrypt extends DungeonBase {
 		
 		ITheme theme = settings.getTheme();
 		
-		IBlockFactory walls = theme.getPrimaryWall();
-		IStair stair = theme.getPrimaryStair();
+		IBlockFactory walls = theme.getPrimary().getWall();
+		IStair stair = theme.getPrimary().getStair();
 		
 		Coord cursor;
 		Coord start;
@@ -223,8 +223,8 @@ public class DungeonsCrypt extends DungeonBase {
 		
 		ITheme theme = settings.getTheme();
 		
-		IBlockFactory walls = theme.getPrimaryWall();
-		IStair stair = theme.getPrimaryStair();
+		IBlockFactory walls = theme.getPrimary().getWall();
+		IStair stair = theme.getPrimary().getStair();
 		
 		Coord cursor;
 		Coord start;
@@ -283,7 +283,7 @@ public class DungeonsCrypt extends DungeonBase {
 	private void mausoleumWall(IWorldEditor editor, Random rand, LevelSettings settings, Coord origin, Cardinal dir){
 		
 		ITheme theme = settings.getTheme();
-		IBlockFactory walls = theme.getPrimaryWall();
+		IBlockFactory walls = theme.getPrimary().getWall();
 		
 		Coord cursor;
 		Coord start;
@@ -320,8 +320,8 @@ public class DungeonsCrypt extends DungeonBase {
 		
 		ITheme theme = settings.getTheme();
 		
-		IBlockFactory walls = theme.getPrimaryWall();
-		IStair stair = theme.getPrimaryStair();
+		IBlockFactory walls = theme.getPrimary().getWall();
+		IStair stair = theme.getPrimary().getStair();
 		
 		Coord cursor;
 		Coord start;
@@ -345,7 +345,7 @@ public class DungeonsCrypt extends DungeonBase {
 		ITheme theme = settings.getTheme();
 		Coord cursor;
 		
-		IStair stair = theme.getPrimaryStair();
+		IStair stair = theme.getPrimary().getStair();
 		MetaBlock tombStone = BlockType.get(BlockType.QUARTZ);
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		

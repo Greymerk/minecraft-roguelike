@@ -7,6 +7,10 @@ import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.MetaStair;
+import greymerk.roguelike.worldgen.blocks.BlockType;
+import greymerk.roguelike.worldgen.blocks.door.Door;
+import greymerk.roguelike.worldgen.blocks.door.DoorType;
+import greymerk.roguelike.worldgen.blocks.door.IDoor;
 
 public class BlockSet implements IBlockSet {
 
@@ -14,13 +18,38 @@ public class BlockSet implements IBlockSet {
 	private IBlockFactory walls;
 	private IStair stair;
 	private IBlockFactory pillar;
+	private IDoor door;
+	private IBlockFactory lightblock;
+	private IBlockFactory liquid;
 	
-	public BlockSet(IBlockFactory floor, IBlockFactory walls, IStair stair, IBlockFactory pillar){
+	public BlockSet(IBlockFactory floor, IBlockFactory walls, IStair stair, IBlockFactory pillar,
+					IDoor door, IBlockFactory lightblock, IBlockFactory liquid){
+		
 		this.floor = floor;
 		this.walls = walls;
 		this.stair = stair;
 		this.pillar = pillar;
+		this.door = door;
+		this.lightblock = lightblock;
+		this.liquid = liquid;
+		
 	}
+
+	public BlockSet(IBlockFactory floor, IBlockFactory walls, IStair stair, IBlockFactory pillar,
+			IDoor door){
+		this(floor, walls, stair, pillar, door,
+			new MetaBlock(BlockType.get(BlockType.GLOWSTONE)),
+			new MetaBlock(BlockType.get(BlockType.WATER_FLOWING))
+		);
+	}
+	
+	public BlockSet(IBlockFactory floor, IBlockFactory walls, IStair stair, IBlockFactory pillar){
+		this(floor, walls, stair, pillar,
+			new Door(DoorType.get(DoorType.OAK))
+		);
+	}
+
+
 	
 	public BlockSet(IBlockFactory walls, IStair stair, IBlockFactory pillar){
 		this(walls, walls, stair, pillar);
@@ -41,11 +70,34 @@ public class BlockSet implements IBlockSet {
 				? new MetaStair(new MetaBlock(stair.get("data").getAsJsonObject()))
 				: new MetaStair(new MetaBlock(stair));
 		
-		this.pillar = BlockProvider.create(json.get("pillar").getAsJsonObject());
+		if(json.has("pillar")){
+			this.pillar = BlockProvider.create(json.get("pillar").getAsJsonObject());
+		} else {
+			this.pillar = this.walls;
+		}
+		
+		if(json.has("door")){
+			this.door = new Door(json.get("door").getAsJsonObject());
+		} else {
+			this.door = new Door(DoorType.get(DoorType.OAK));
+		}
+		
+		if(json.has("lightblock")){
+			this.lightblock = BlockProvider.create(json.get("lightblock").getAsJsonObject());
+		} else {
+			this.lightblock = BlockType.get(BlockType.GLOWSTONE);
+		}
+		
+		if(json.has("liquid")){
+			this.liquid = BlockProvider.create(json.get("liquid").getAsJsonObject());
+		} else {
+			this.liquid = BlockType.get(BlockType.WATER_FLOWING);
+		}
+		
 	}
 	
 	@Override
-	public IBlockFactory getFill() {
+	public IBlockFactory getWall() {
 		return walls;
 	}
 
@@ -62,5 +114,20 @@ public class BlockSet implements IBlockSet {
 	@Override
 	public IBlockFactory getFloor() {
 		return this.floor;
+	}
+
+	@Override
+	public IDoor getDoor() {
+		return this.door;
+	}
+
+	@Override
+	public IBlockFactory getLightBlock() {
+		return this.lightblock;
+	}
+
+	@Override
+	public IBlockFactory getLiquid() {
+		return this.liquid;
 	}
 }

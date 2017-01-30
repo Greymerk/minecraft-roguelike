@@ -19,8 +19,8 @@ public class SegmentFireArch extends SegmentBase {
 	@Override
 	protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, Coord origin) {
 		
-		IStair stair = theme.getPrimaryStair();
-		IBlockFactory walls = theme.getPrimaryWall();
+		IStair stair = theme.getPrimary().getStair();
+		IBlockFactory walls = theme.getPrimary().getWall();
 		
 		Coord start;
 		Coord end;

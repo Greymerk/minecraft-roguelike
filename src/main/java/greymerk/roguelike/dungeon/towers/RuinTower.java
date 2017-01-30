@@ -17,8 +17,8 @@ public class RuinTower implements ITower {
 	public void generate(IWorldEditor editor, Random rand, ITheme theme, Coord origin) {
 
 		IBlockFactory air = BlockType.get(BlockType.AIR);
-		IBlockFactory blocks = theme.getPrimaryWall();
-		IStair stair = theme.getPrimaryStair();
+		IBlockFactory blocks = theme.getPrimary().getWall();
+		IStair stair = theme.getPrimary().getStair();
 		Coord floor = Tower.getBaseCoord(editor, origin);
 		
 		Coord cursor;
@@ -41,7 +41,7 @@ public class RuinTower implements ITower {
 				blocks, false, true);
 		
 		for(int i = floor.getY(); i >= origin.getY(); --i){
-			editor.spiralStairStep(rand, new Coord(origin.getX(), i, origin.getZ()), stair, theme.getPrimaryPillar());
+			editor.spiralStairStep(rand, new Coord(origin.getX(), i, origin.getZ()), stair, theme.getPrimary().getPillar());
 		}
 		
 		for(Cardinal dir : Cardinal.directions){

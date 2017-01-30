@@ -30,11 +30,11 @@ public class DungeonsCreeperDen extends DungeonBase {
 		MetaBlock tnt = BlockType.get(BlockType.TNT);
 		
 		BlockWeightedRandom mossy = new BlockWeightedRandom();
-		mossy.addBlock(theme.getPrimaryWall(), 3);
+		mossy.addBlock(theme.getPrimary().getWall(), 3);
 		mossy.addBlock(BlockType.get(BlockType.COBBLESTONE_MOSSY), 1);
 		
 		BlockWeightedRandom floor = new BlockWeightedRandom();
-		floor.addBlock(theme.getPrimaryFloor(), 1);
+		floor.addBlock(theme.getPrimary().getFloor(), 1);
 		mossy.addBlock(BlockType.get(BlockType.COBBLESTONE_MOSSY), 1);
 		floor.addBlock(BlockType.get(BlockType.GRAVEL), 3);
 		

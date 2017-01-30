@@ -7,6 +7,8 @@ import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.MetaStair;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.StairType;
+import greymerk.roguelike.worldgen.blocks.door.Door;
+import greymerk.roguelike.worldgen.blocks.door.DoorType;
 
 public class ThemeCrypt extends ThemeBase{
 
@@ -28,7 +30,7 @@ public class ThemeCrypt extends ThemeBase{
 
 		MetaStair stair = new MetaStair(StairType.STONEBRICK);
 		
-		this.primary = new BlockSet(walls, stair, pillar);
+		this.primary = new BlockSet(walls, walls, stair, pillar, new Door(DoorType.IRON));
 		this.secondary = this.primary;
 
 	}

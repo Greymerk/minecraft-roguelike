@@ -21,7 +21,7 @@ public class SegmentSquareArch extends SegmentBase {
 		Coord end;
 		
 		MetaBlock air = BlockType.get(BlockType.AIR);
-		IBlockFactory pillar = level.getSettings().getTheme().getPrimaryPillar();
+		IBlockFactory pillar = level.getSettings().getTheme().getPrimary().getPillar();
 		
 		start = new Coord(origin);
 		start.add(dir, 2);

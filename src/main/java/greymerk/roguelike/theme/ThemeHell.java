@@ -2,10 +2,14 @@ package greymerk.roguelike.theme;
 
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.worldgen.BlockWeightedRandom;
+import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.MetaStair;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.StairType;
+import greymerk.roguelike.worldgen.blocks.door.Door;
+import greymerk.roguelike.worldgen.blocks.door.DoorType;
+import greymerk.roguelike.worldgen.blocks.door.IDoor;
 
 public class ThemeHell extends ThemeBase{
 
@@ -29,8 +33,13 @@ public class ThemeHell extends ThemeBase{
 		MetaStair stair = new MetaStair(StairType.NETHERBRICK);
 		MetaBlock pillar = BlockType.get(BlockType.OBSIDIAN);
 		
-		this.primary = new BlockSet(floor, walls, stair, pillar);
-		this.secondary = new BlockSet(floor, BlockType.get(BlockType.RED_NETHERBRICK), stair, BlockType.get(BlockType.MAGMA));
+		IDoor door = new Door(DoorType.IRON);
+		IBlockFactory lightstone = BlockType.get(BlockType.GLOWSTONE);
+		IBlockFactory liquid = BlockType.get(BlockType.LAVA_FLOWING);
+		
+		this.primary = new BlockSet(floor, walls, stair, pillar, door, lightstone, liquid);
+		this.secondary = new BlockSet(floor, BlockType.get(BlockType.RED_NETHERBRICK), stair, BlockType.get(BlockType.MAGMA),
+				door, lightstone, liquid);
 
 	}
 }

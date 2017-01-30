@@ -26,12 +26,12 @@ public class DungeonsMusic extends DungeonBase {
 
 	public boolean generate(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
 		ITheme theme = settings.getTheme();
-		IBlockFactory wall = theme.getPrimaryWall();
-		IStair stair = theme.getSecondaryStair();
-		IBlockFactory panel = theme.getSecondaryWall();
-		IBlockFactory pillar = theme.getSecondaryPillar();
+		IBlockFactory wall = theme.getPrimary().getWall();
+		IStair stair = theme.getSecondary().getStair();
+		IBlockFactory panel = theme.getSecondary().getWall();
+		IBlockFactory pillar = theme.getSecondary().getPillar();
 		MetaBlock air = BlockType.get(BlockType.AIR);
-		IBlockFactory floor = theme.getSecondaryFloor();
+		IBlockFactory floor = theme.getSecondary().getFloor();
 		
 		Coord start;
 		Coord end;
@@ -158,9 +158,9 @@ public class DungeonsMusic extends DungeonBase {
 	
 	private void pillar(IWorldEditor editor, Random rand, LevelSettings settings, Coord origin){
 		ITheme theme = settings.getTheme();
-		IStair stair = theme.getSecondaryStair();
-		IBlockFactory panel = theme.getSecondaryWall();
-		IBlockFactory pillar = theme.getSecondaryPillar();
+		IStair stair = theme.getSecondary().getStair();
+		IBlockFactory panel = theme.getSecondary().getWall();
+		IBlockFactory pillar = theme.getSecondary().getPillar();
 		
 		Coord start;
 		Coord end;

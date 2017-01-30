@@ -1,8 +1,5 @@
 package greymerk.roguelike.theme;
 
-import greymerk.roguelike.worldgen.IBlockFactory;
-import greymerk.roguelike.worldgen.IStair;
-
 public class ThemeBase implements ITheme {
 	
 	protected IBlockSet primary;
@@ -19,44 +16,15 @@ public class ThemeBase implements ITheme {
 	}
 	
 	public ThemeBase(){}
-	
+
 	@Override
-	public IBlockFactory getPrimaryWall() {
-		return primary.getFill();
-	}
-	
-	@Override
-	public IStair getPrimaryStair() {
-		return primary.getStair();
+	public IBlockSet getPrimary() {
+		return this.primary;
 	}
 
 	@Override
-	public IBlockFactory getPrimaryPillar() {
-		return primary.getPillar();
+	public IBlockSet getSecondary() {
+		return this.secondary;
 	}
 	
-	@Override
-	public IBlockFactory getSecondaryPillar() {
-		return secondary.getPillar();
-	}
-	
-	@Override
-	public IBlockFactory getSecondaryWall() {
-		return secondary.getFill();
-	}
-
-	@Override
-	public IStair getSecondaryStair() {
-		return secondary.getStair();
-	}
-
-	@Override
-	public IBlockFactory getPrimaryFloor() {
-		return primary.getFloor();
-	}
-
-	@Override
-	public IBlockFactory getSecondaryFloor() {
-		return secondary.getFloor();
-	}
 }

@@ -26,9 +26,9 @@ public class JungleTower implements ITower{
 		
 		Coord origin = Tower.getBaseCoord(editor, dungeon);
 		origin.add(Cardinal.UP);
-		IBlockFactory pillar = theme.getPrimaryPillar();
-		IBlockFactory walls = theme.getPrimaryWall();
-		IStair stair = theme.getPrimaryStair();
+		IBlockFactory pillar = theme.getPrimary().getPillar();
+		IBlockFactory walls = theme.getPrimary().getWall();
+		IStair stair = theme.getPrimary().getStair();
 		MetaBlock grass = BlockType.get(BlockType.GRASS);
 		
 		Coord start;
@@ -505,8 +505,8 @@ public class JungleTower implements ITower{
 	
 	private void pillar(IWorldEditor editor, Random rand, ITheme theme, Coord origin){
 		
-		IBlockFactory pillar = theme.getPrimaryPillar();
-		IStair stair = theme.getPrimaryStair();
+		IBlockFactory pillar = theme.getPrimary().getPillar();
+		IStair stair = theme.getPrimary().getStair();
 		Coord cursor;
 		
 		editor.fillDown(rand, new Coord(origin), pillar);

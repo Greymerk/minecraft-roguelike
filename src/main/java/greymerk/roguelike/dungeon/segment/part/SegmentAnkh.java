@@ -23,7 +23,7 @@ public class SegmentAnkh extends SegmentBase{
 		Coord cursor;
 		
 		MetaBlock air = BlockType.get(BlockType.AIR);
-		IStair stair = theme.getSecondaryStair();
+		IStair stair = theme.getSecondary().getStair();
 		DyeColor color = DyeColor.get(rand);
 		MetaBlock glass = ColorBlock.get(ColorBlock.GLASS, color);
 		MetaBlock back = ColorBlock.get(ColorBlock.CLAY, color);

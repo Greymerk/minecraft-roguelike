@@ -20,7 +20,7 @@ public class SegmentCave extends SegmentBase {
 		
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		
-		IBlockFactory wall = theme.getPrimaryWall();
+		IBlockFactory wall = theme.getPrimary().getWall();
 		BlockJumble fill = new BlockJumble();
 		fill.addBlock(air);
 		fill.addBlock(wall);

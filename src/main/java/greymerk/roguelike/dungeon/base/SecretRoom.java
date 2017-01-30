@@ -49,7 +49,7 @@ public class SecretRoom implements ISecretRoom {
 		end.add(Cardinal.orthogonal(dir)[1]);
 		end.add(dir, size + 5);
 		end.add(Cardinal.UP, 2);
-		RectSolid.fill(editor, rand, start, end, settings.getTheme().getPrimaryWall(), false, true);
+		RectSolid.fill(editor, rand, start, end, settings.getTheme().getPrimary().getWall(), false, true);
 		
 		start = new Coord(pos);
 		end = new Coord(pos);

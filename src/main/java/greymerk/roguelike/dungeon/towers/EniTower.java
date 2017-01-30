@@ -11,7 +11,6 @@ import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.ColorBlock;
-import greymerk.roguelike.worldgen.blocks.Door;
 import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 public class EniTower implements ITower {
@@ -23,9 +22,9 @@ public class EniTower implements ITower {
 		
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		
-		IBlockFactory blocks = theme.getPrimaryWall();
+		IBlockFactory blocks = theme.getPrimary().getWall();
 		
-		IStair stair = theme.getPrimaryStair();
+		IStair stair = theme.getPrimary().getStair();
 		
 		Coord floor = Tower.getBaseCoord(editor, dungeon);
 		
@@ -178,13 +177,13 @@ public class EniTower implements ITower {
 				
 				// section 4 roof
 				
-				IStair roof = theme.getSecondaryStair();
+				IStair roof = theme.getSecondary().getStair();
 				start = new Coord(floor);
 				start.add(Cardinal.UP, 29);
 				start.add(dir, 3);
 				end = new Coord(start);
 				end.add(dir, 2);
-				RectSolid.fill(editor, rand, start, end, theme.getSecondaryWall());
+				RectSolid.fill(editor, rand, start, end, theme.getSecondary().getWall());
 				start.add(orth);
 				end.add(orth);
 				RectSolid.fill(editor, rand, start, end, roof.setOrientation(orth, false));
@@ -207,7 +206,7 @@ public class EniTower implements ITower {
 				
 				cursor.add(Cardinal.reverse(dir), 3);
 				cursor.add(orth);
-				theme.getSecondaryWall().set(editor, rand, cursor);
+				theme.getSecondary().getWall().set(editor, rand, cursor);
 				
 				// tower top
 				start = new Coord(floor);
@@ -229,31 +228,31 @@ public class EniTower implements ITower {
 				roof.setOrientation(dir, false).set(editor, cursor);
 				cursor.add(Cardinal.reverse(dir));
 				cursor.add(orth);
-				theme.getSecondaryWall().set(editor, rand, cursor);
+				theme.getSecondary().getWall().set(editor, rand, cursor);
 				cursor.add(Cardinal.reverse(orth));
 				cursor.add(Cardinal.UP);
 				roof.setOrientation(orth, false).set(editor, cursor);
 				cursor.add(Cardinal.reverse(orth));
-				theme.getSecondaryWall().set(editor, rand, cursor);
+				theme.getSecondary().getWall().set(editor, rand, cursor);
 				cursor.add(Cardinal.UP);
 				roof.setOrientation(dir, false).set(editor, cursor);
 				cursor.add(Cardinal.reverse(dir));
-				theme.getSecondaryWall().set(editor, rand, cursor);
+				theme.getSecondary().getWall().set(editor, rand, cursor);
 				cursor.add(Cardinal.DOWN);
-				theme.getSecondaryWall().set(editor, rand, cursor);
+				theme.getSecondary().getWall().set(editor, rand, cursor);
 				cursor.add(orth);
-				theme.getSecondaryWall().set(editor, rand, cursor);
+				theme.getSecondary().getWall().set(editor, rand, cursor);
 				cursor.add(Cardinal.UP);
-				theme.getSecondaryWall().set(editor, rand, cursor);
+				theme.getSecondary().getWall().set(editor, rand, cursor);
 				cursor.add(Cardinal.UP);
 				cursor.add(Cardinal.reverse(orth));
-				theme.getSecondaryWall().set(editor, rand, cursor);
+				theme.getSecondary().getWall().set(editor, rand, cursor);
 				cursor.add(Cardinal.UP);
 				roof.setOrientation(dir, false).set(editor, cursor);
 				cursor.add(Cardinal.reverse(dir));
-				theme.getSecondaryWall().set(editor, rand, cursor);
+				theme.getSecondary().getWall().set(editor, rand, cursor);
 				cursor.add(Cardinal.UP);
-				theme.getSecondaryWall().set(editor, rand, cursor);
+				theme.getSecondary().getWall().set(editor, rand, cursor);
 			}
 		}
 
@@ -366,7 +365,7 @@ public class EniTower implements ITower {
 		RectSolid.fill(editor, rand, start, end, blocks);
 		
 		for(int i = (floor.getY() + 22); i >= 50; --i){
-			editor.spiralStairStep(rand, new Coord(x, i, z), stair, theme.getPrimaryPillar());
+			editor.spiralStairStep(rand, new Coord(x, i, z), stair, theme.getPrimary().getPillar());
 		}
 		
 		
@@ -378,7 +377,7 @@ public class EniTower implements ITower {
 				cursor = new Coord(floor);
 				cursor.add(Cardinal.UP);
 				cursor.add(dir, 5);
-				Door.generate(editor, cursor, dir, Door.OAK);
+				theme.getPrimary().getDoor().generate(editor, cursor, dir, false);
 				cursor.add(dir);
 				start = new Coord(cursor);
 				end = new Coord(start);

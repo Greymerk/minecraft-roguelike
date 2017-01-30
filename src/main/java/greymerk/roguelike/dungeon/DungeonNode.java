@@ -44,7 +44,7 @@ public class DungeonNode {
 		e.add(Cardinal.SOUTH, size);
 		e.add(Cardinal.EAST, size);
 		e.add(Cardinal.UP, 8);
-		RectSolid.fill(editor, rand, s, e, theme.getPrimaryWall());
+		RectSolid.fill(editor, rand, s, e, theme.getPrimary().getWall());
 	}
 	
 	public Cardinal[] getEntrances(){

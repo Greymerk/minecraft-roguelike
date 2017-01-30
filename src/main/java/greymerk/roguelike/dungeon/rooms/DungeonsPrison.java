@@ -69,9 +69,9 @@ public class DungeonsPrison extends DungeonBase {
 		Coord cursor;
 		
 		MetaBlock air = BlockType.get(BlockType.AIR);
-		IStair stair = settings.getTheme().getPrimaryStair();
+		IStair stair = settings.getTheme().getPrimary().getStair();
 		
-		IBlockFactory wall = settings.getTheme().getPrimaryWall();
+		IBlockFactory wall = settings.getTheme().getPrimary().getWall();
 		start = new Coord(origin);
 		start.add(Cardinal.UP, 6);
 		end = new Coord(start);
@@ -81,7 +81,7 @@ public class DungeonsPrison extends DungeonBase {
 		end.add(Cardinal.WEST, 3);
 		RectSolid.fill(editor, rand, start, end, wall, false, true);
 		
-		IBlockFactory floor = settings.getTheme().getPrimaryFloor();
+		IBlockFactory floor = settings.getTheme().getPrimary().getFloor();
 		start = new Coord(origin);
 		start.add(Cardinal.DOWN);
 		end = new Coord(start);
@@ -107,7 +107,7 @@ public class DungeonsPrison extends DungeonBase {
 		end.add(Cardinal.SOUTH, 4);
 		end.add(Cardinal.EAST, 4);
 		end.add(Cardinal.UP, 5);
-		settings.getTheme().getPrimaryWall().fill(editor, rand, new RectHollow(start, end), false, true);
+		settings.getTheme().getPrimary().getWall().fill(editor, rand, new RectHollow(start, end), false, true);
 
 		for(Cardinal dir : Cardinal.directions){
 			cursor = new Coord(origin);
@@ -152,10 +152,10 @@ public class DungeonsPrison extends DungeonBase {
 		Coord cursor;
 		
 		MetaBlock air = BlockType.get(BlockType.AIR);
-		IStair stair = settings.getTheme().getPrimaryStair();
+		IStair stair = settings.getTheme().getPrimary().getStair();
 		int height = 3;
 		
-		IBlockFactory wall = settings.getTheme().getPrimaryWall();
+		IBlockFactory wall = settings.getTheme().getPrimary().getWall();
 		start = new Coord(origin);
 		start.add(Cardinal.UP, 6);
 		end = new Coord(start);
@@ -165,7 +165,7 @@ public class DungeonsPrison extends DungeonBase {
 		end.add(Cardinal.WEST, 3);
 		RectSolid.fill(editor, rand, start, end, wall, false, true);
 		
-		IBlockFactory floor = settings.getTheme().getPrimaryFloor();
+		IBlockFactory floor = settings.getTheme().getPrimary().getFloor();
 		start = new Coord(origin);
 		start.add(Cardinal.DOWN);
 		end = new Coord(start);
@@ -191,7 +191,7 @@ public class DungeonsPrison extends DungeonBase {
 		end.add(Cardinal.SOUTH, 4);
 		end.add(Cardinal.EAST, 4);
 		end.add(Cardinal.UP, height + 1);
-		settings.getTheme().getPrimaryWall().fill(editor, rand, new RectHollow(start, end), false, true);
+		settings.getTheme().getPrimary().getWall().fill(editor, rand, new RectHollow(start, end), false, true);
 		
 		start = new Coord(origin);
 		start.add(Cardinal.UP, 4);
@@ -259,8 +259,8 @@ public class DungeonsPrison extends DungeonBase {
 	
 	private void pillar(IWorldEditor editor, Random rand, LevelSettings settings, Coord origin, int height){
 		Coord cursor;
-		IBlockFactory pillar = settings.getTheme().getPrimaryPillar();
-		IStair stair = settings.getTheme().getPrimaryStair();
+		IBlockFactory pillar = settings.getTheme().getPrimary().getPillar();
+		IStair stair = settings.getTheme().getPrimary().getStair();
 		
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.UP, height - 1);
@@ -283,7 +283,7 @@ public class DungeonsPrison extends DungeonBase {
 		cursor.add(Cardinal.DOWN);
 		if(editor.isAirBlock(cursor)) return;
 		
-		IBlockFactory wall = settings.getTheme().getPrimaryWall();
+		IBlockFactory wall = settings.getTheme().getPrimary().getWall();
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		MetaBlock bar = BlockType.get(BlockType.IRON_BAR);
 		
@@ -297,7 +297,7 @@ public class DungeonsPrison extends DungeonBase {
 		end.add(Cardinal.UP, 4);
 		RectHollow.fill(editor, rand, start, end, wall, false, true);
 		
-		IBlockFactory floor = settings.getTheme().getPrimaryFloor();
+		IBlockFactory floor = settings.getTheme().getPrimary().getFloor();
 		start = new Coord(origin);
 		start.add(Cardinal.DOWN);
 		end = new Coord(start);

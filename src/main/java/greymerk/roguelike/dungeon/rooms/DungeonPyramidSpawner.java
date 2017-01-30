@@ -30,8 +30,8 @@ public class DungeonPyramidSpawner extends DungeonBase {
 		
 		ITheme theme = settings.getTheme();
 		
-		IBlockFactory blocks = theme.getPrimaryWall();
-		IBlockFactory pillar = theme.getPrimaryPillar();
+		IBlockFactory blocks = theme.getPrimary().getWall();
+		IBlockFactory pillar = theme.getPrimary().getPillar();
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		
 		// fill air inside
@@ -43,7 +43,7 @@ public class DungeonPyramidSpawner extends DungeonBase {
 		RectSolid.fill(editor, rand, new Coord(x - 3, y + 4, z - 3), new Coord(x + 3, y + 6, z + 3), blocks, false, true);
 		RectSolid.fill(editor, rand, new Coord(x - 2, y + 4, z - 2), new Coord(x + 2, y + 4, z + 2), air);
 
-		RectSolid.fill(editor, rand, new Coord(x - 4, y - 1, z - 4), new Coord(x + 4, y - 1, z + 4), theme.getPrimaryFloor(), false, true);
+		RectSolid.fill(editor, rand, new Coord(x - 4, y - 1, z - 4), new Coord(x + 4, y - 1, z + 4), theme.getPrimary().getFloor(), false, true);
 		
 		Coord start;
 		Coord end;

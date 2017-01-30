@@ -20,7 +20,7 @@ public class SegmentSewerDrain extends SegmentBase {
 		
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		MetaBlock water = BlockType.get(BlockType.WATER_FLOWING);
-		IStair stair = theme.getSecondaryStair();
+		IStair stair = theme.getSecondary().getStair();
 		MetaBlock bars = BlockType.get(BlockType.IRON_BAR);
 		
 		Coord cursor;

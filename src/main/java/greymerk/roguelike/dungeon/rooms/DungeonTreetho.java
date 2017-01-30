@@ -28,7 +28,7 @@ public class DungeonTreetho extends DungeonBase{
 	public boolean generate(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
 
 		ITheme theme = settings.getTheme();
-		IBlockFactory wall = theme.getPrimaryWall();
+		IBlockFactory wall = theme.getPrimary().getWall();
 		Cardinal dir = entrances[0];
 		
 		
@@ -148,8 +148,8 @@ public class DungeonTreetho extends DungeonBase{
 	private void pillar(IWorldEditor editor, Random rand, LevelSettings settings, Coord origin){
 		
 		ITheme theme = settings.getTheme();
-		IBlockFactory pillar = theme.getPrimaryPillar();
-		IStair stair = theme.getPrimaryStair();
+		IBlockFactory pillar = theme.getPrimary().getPillar();
+		IStair stair = theme.getPrimary().getStair();
 		
 		Coord cursor = new Coord(origin);
 		editor.fillDown(rand, cursor, pillar);

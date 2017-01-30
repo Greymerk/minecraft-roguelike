@@ -17,10 +17,10 @@ public class EthoTower implements ITower {
 	@Override
 	public void generate(IWorldEditor editor, Random rand, ITheme theme, Coord dungeon) {
 		
-		IBlockFactory primary = theme.getPrimaryWall();
-		IBlockFactory pillar = theme.getSecondaryPillar();
+		IBlockFactory primary = theme.getPrimary().getWall();
+		IBlockFactory pillar = theme.getSecondary().getPillar();
 		
-		IStair stair = theme.getSecondaryStair();
+		IStair stair = theme.getSecondary().getStair();
 		
 		Coord floor = Tower.getBaseCoord(editor, dungeon);
 		
@@ -214,7 +214,7 @@ public class EthoTower implements ITower {
 		
 		
 		for(int i = floor.getY() - 1; i >= 50; --i){
-			editor.spiralStairStep(rand, new Coord(x, i, z), stair, theme.getPrimaryPillar());
+			editor.spiralStairStep(rand, new Coord(x, i, z), stair, theme.getPrimary().getPillar());
 		}
 	}
 	
@@ -225,8 +225,8 @@ public class EthoTower implements ITower {
 		Coord start;
 		Coord end;
 		
-		IStair stair = theme.getPrimaryStair();
-		IBlockFactory blocks = theme.getPrimaryWall();
+		IStair stair = theme.getPrimary().getStair();
+		IBlockFactory blocks = theme.getPrimary().getWall();
 		
 		Cardinal[] orth = Cardinal.orthogonal(dir);
 		

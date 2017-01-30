@@ -22,8 +22,8 @@ public class SegmentLamp extends SegmentBase{
 	@Override
 	protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, Coord origin) {
 		
-		IStair stair = theme.getPrimaryStair();
-		IBlockFactory wall = theme.getPrimaryWall();
+		IStair stair = theme.getPrimary().getStair();
+		IBlockFactory wall = theme.getPrimary().getWall();
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		
 		Coord cursor;
@@ -99,7 +99,7 @@ public class SegmentLamp extends SegmentBase{
 	
 	private void overheadLight(IWorldEditor editor, Random rand, ITheme theme, Coord origin){
 		
-		IStair stair = theme.getPrimaryStair();
+		IStair stair = theme.getPrimary().getStair();
 		
 		Coord cursor;
 		

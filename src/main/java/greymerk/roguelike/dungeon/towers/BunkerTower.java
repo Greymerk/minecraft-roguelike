@@ -26,9 +26,9 @@ public class BunkerTower implements ITower{
 		Coord start;
 		Coord end;
 		
-		IBlockFactory walls = theme.getPrimaryWall();
-		IBlockFactory pillar = theme.getPrimaryPillar();
-		IStair stair = theme.getPrimaryStair();
+		IBlockFactory walls = theme.getPrimary().getWall();
+		IBlockFactory pillar = theme.getPrimary().getPillar();
+		IStair stair = theme.getPrimary().getStair();
 		MetaBlock window = ColorBlock.get(ColorBlock.PANE, DyeColor.GRAY);
 		
 		start = new Coord(origin);

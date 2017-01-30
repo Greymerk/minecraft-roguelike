@@ -22,7 +22,7 @@ public class SegmentMushrooms extends SegmentBase {
 	@Override
 	protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal wallDirection, ITheme theme, Coord origin) {
 		
-		IStair stair = theme.getSecondaryStair();
+		IStair stair = theme.getSecondary().getStair();
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		
 		mushrooms = new BlockWeightedRandom();

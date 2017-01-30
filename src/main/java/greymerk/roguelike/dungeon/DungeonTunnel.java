@@ -49,15 +49,15 @@ public class DungeonTunnel implements Iterable<Coord>{
 		s.add(Cardinal.UP, 3);
 		e.add(Cardinal.right(dir), 3);
 		e.add(Cardinal.DOWN, 3);
-		RectSolid.fill(editor, rand, s, e, theme.getPrimaryWall());
+		RectSolid.fill(editor, rand, s, e, theme.getPrimary().getWall());
 	}
 	
 	public void construct(IWorldEditor editor, Random rand, LevelSettings settings){
 
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		
-		IBlockFactory wallBlocks = settings.getTheme().getPrimaryWall();
-		IBlockFactory floor = settings.getTheme().getPrimaryFloor();
+		IBlockFactory wallBlocks = settings.getTheme().getPrimary().getWall();
+		IBlockFactory floor = settings.getTheme().getPrimary().getFloor();
 		BlockJumble bridgeBlocks = new BlockJumble();
 		Coord s;
 		Coord e;

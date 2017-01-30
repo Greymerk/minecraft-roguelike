@@ -21,10 +21,10 @@ public class DungeonLinkerTop extends DungeonBase{
 		
 		ITheme theme = settings.getTheme();
 		
-		IBlockFactory pillar = theme.getPrimaryPillar();
-		IBlockFactory wall = theme.getPrimaryWall();
-		IBlockFactory floor = theme.getPrimaryFloor();
-		IStair stair = theme.getPrimaryStair();
+		IBlockFactory pillar = theme.getPrimary().getPillar();
+		IBlockFactory wall = theme.getPrimary().getWall();
+		IBlockFactory floor = theme.getPrimary().getFloor();
+		IStair stair = theme.getPrimary().getStair();
 		
 		Coord start;
 		Coord end;

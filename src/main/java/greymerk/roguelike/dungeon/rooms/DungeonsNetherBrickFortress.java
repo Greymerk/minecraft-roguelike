@@ -25,8 +25,8 @@ public class DungeonsNetherBrickFortress extends DungeonBase {
 	
 	public boolean generate(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
 		ITheme theme = settings.getTheme();
-		IBlockFactory wall = theme.getPrimaryWall();
-		IStair stair = theme.getPrimaryStair();
+		IBlockFactory wall = theme.getPrimary().getWall();
+		IStair stair = theme.getPrimary().getStair();
 		MetaBlock lava = BlockType.get(BlockType.LAVA_FLOWING);
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		BlockWeightedRandom netherwart = new BlockWeightedRandom();
@@ -140,8 +140,8 @@ public class DungeonsNetherBrickFortress extends DungeonBase {
 	private void supportPillar(IWorldEditor editor, Random rand, LevelSettings settings, Coord origin){
 		
 		ITheme theme = settings.getTheme();
-		IBlockFactory pillar = theme.getPrimaryPillar();
-		IStair stair = theme.getPrimaryStair();
+		IBlockFactory pillar = theme.getPrimary().getPillar();
+		IStair stair = theme.getPrimary().getStair();
 		MetaBlock lava = BlockType.get(BlockType.LAVA_FLOWING);
 		
 		Coord start;
@@ -171,9 +171,9 @@ public class DungeonsNetherBrickFortress extends DungeonBase {
 	
 	private void pillar(IWorldEditor editor, Random rand, LevelSettings settings, Coord origin){
 		ITheme theme = settings.getTheme();
-		IBlockFactory wall = theme.getPrimaryWall();
-		IBlockFactory pillar = theme.getPrimaryPillar();
-		IStair stair = theme.getPrimaryStair();
+		IBlockFactory wall = theme.getPrimary().getWall();
+		IBlockFactory pillar = theme.getPrimary().getPillar();
+		IStair stair = theme.getPrimary().getStair();
 		
 		Coord start;
 		Coord end;

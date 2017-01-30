@@ -23,9 +23,9 @@ public class DungeonsFire extends DungeonBase {
 		
 		ITheme theme = settings.getTheme();
 
-		IBlockFactory wall = theme.getPrimaryWall();
-		IStair stair = theme.getPrimaryStair();
-		IBlockFactory pillar = theme.getPrimaryPillar();
+		IBlockFactory wall = theme.getPrimary().getWall();
+		IStair stair = theme.getPrimary().getStair();
+		IBlockFactory pillar = theme.getPrimary().getPillar();
 		
 		Coord cursor;
 		Coord start;
@@ -50,7 +50,7 @@ public class DungeonsFire extends DungeonBase {
 		start.add(Cardinal.WEST, 8);
 		end.add(Cardinal.SOUTH, 8);
 		end.add(Cardinal.EAST, 8);
-		RectSolid.fill(editor, rand, start, end, theme.getPrimaryFloor(), false, true);
+		RectSolid.fill(editor, rand, start, end, theme.getPrimary().getFloor(), false, true);
 		
 		for(Cardinal dir : Cardinal.directions){
 			for(Cardinal orth : Cardinal.orthogonal(dir)){
@@ -151,9 +151,9 @@ public class DungeonsFire extends DungeonBase {
 	
 	public static void genFire(IWorldEditor editor, Random rand, ITheme theme, Coord origin){
 		
-		IBlockFactory wall = theme.getPrimaryWall();
-		IBlockFactory pillar = theme.getPrimaryPillar();
-		IStair stair = theme.getPrimaryStair();
+		IBlockFactory wall = theme.getPrimary().getWall();
+		IBlockFactory pillar = theme.getPrimary().getPillar();
+		IStair stair = theme.getPrimary().getStair();
 		
 		
 		Coord cursor;

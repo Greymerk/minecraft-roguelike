@@ -37,7 +37,7 @@ public class SegmentWheat extends SegmentBase {
 		end.add(orth[1]);
 		start.add(Cardinal.UP, 2);
 		end.add(dir);
-		RectSolid.fill(editor, rand, start, end, theme.getSecondaryWall());
+		RectSolid.fill(editor, rand, start, end, theme.getSecondary().getWall());
 		
 		start = new Coord(origin);
 		start.add(dir, 2);
@@ -64,7 +64,7 @@ public class SegmentWheat extends SegmentBase {
 		MetaBlock pumpkin = Crops.getPumpkin(Cardinal.reverse(dir), true);		
 		pumpkin.set(editor, cursor);
 		
-		IStair stair = theme.getSecondaryStair();
+		IStair stair = theme.getSecondary().getStair();
 		
 		for(Cardinal d : orth){
 			cursor = new Coord(origin);

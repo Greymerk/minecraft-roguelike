@@ -23,10 +23,10 @@ public class DungeonDarkHall extends DungeonBase{
 		
 		ITheme theme = settings.getTheme();
 		
-		IBlockFactory outerWall = theme.getPrimaryWall();
-		IBlockFactory wall = theme.getSecondaryWall();
-		IBlockFactory pillar = theme.getSecondaryPillar();
-		IStair stair = theme.getSecondaryStair();
+		IBlockFactory outerWall = theme.getPrimary().getWall();
+		IBlockFactory wall = theme.getSecondary().getWall();
+		IBlockFactory pillar = theme.getSecondary().getPillar();
+		IStair stair = theme.getSecondary().getStair();
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		
 		Coord cursor;
@@ -67,7 +67,7 @@ public class DungeonDarkHall extends DungeonBase{
 		start.add(Cardinal.DOWN);
 		end.add(Cardinal.DOWN);
 		
-		RectSolid.fill(editor, rand, start, end, theme.getPrimaryFloor(), false, true);
+		RectSolid.fill(editor, rand, start, end, theme.getPrimary().getFloor(), false, true);
 		
 		for (Cardinal dir : entrances){
 			Cardinal[] orth = Cardinal.orthogonal(dir);
@@ -76,7 +76,7 @@ public class DungeonDarkHall extends DungeonBase{
 			end = new Coord(origin);
 			end.add(orth[1]);
 			end.add(dir, 7);
-			RectSolid.fill(editor, rand, start, end, theme.getSecondaryFloor(), false, true);
+			RectSolid.fill(editor, rand, start, end, theme.getSecondary().getFloor(), false, true);
 		}
 		
 		for(Cardinal dir : Cardinal.directions){
@@ -183,9 +183,9 @@ public class DungeonDarkHall extends DungeonBase{
 		
 		ITheme theme = settings.getTheme();
 
-		IBlockFactory wall = theme.getSecondaryWall();
-		IBlockFactory pillar = theme.getSecondaryPillar();
-		IStair stair = theme.getSecondaryStair();
+		IBlockFactory wall = theme.getSecondary().getWall();
+		IBlockFactory pillar = theme.getSecondary().getPillar();
+		IStair stair = theme.getSecondary().getStair();
 		
 		Coord cursor;
 		Coord start;

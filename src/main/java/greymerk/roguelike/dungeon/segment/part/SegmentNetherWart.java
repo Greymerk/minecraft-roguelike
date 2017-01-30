@@ -18,8 +18,8 @@ public class SegmentNetherWart extends SegmentBase{
 	@Override
 	protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, Coord origin) {
 		
-		IStair step = theme.getSecondaryStair();
-		IBlockFactory wall = theme.getSecondaryWall();
+		IStair step = theme.getSecondary().getStair();
+		IBlockFactory wall = theme.getSecondary().getWall();
 		MetaBlock air = BlockType.get(BlockType.AIR);
 
 		Coord cursor;

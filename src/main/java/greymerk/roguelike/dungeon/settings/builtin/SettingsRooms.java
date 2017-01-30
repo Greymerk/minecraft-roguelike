@@ -56,7 +56,7 @@ public class SettingsRooms extends DungeonSettings{
 				factory.addSingle(DungeonRoom.PRISON);
 				factory.addSingle(DungeonRoom.DARKHALL);
 				factory.addSingle(DungeonRoom.NETHERFORT);
-				factory.addRandom(DungeonRoom.CORNER, 10);
+				factory.addRandom(DungeonRoom.SLIME, 10);
 				factory.addRandom(DungeonRoom.BLAZE, 3);
 				factory.addRandom(DungeonRoom.NETHER, 3);
 				factory.addRandom(DungeonRoom.SPIDER, 2);

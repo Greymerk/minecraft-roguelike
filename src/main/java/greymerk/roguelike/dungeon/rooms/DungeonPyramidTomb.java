@@ -27,8 +27,8 @@ public class DungeonPyramidTomb extends DungeonBase{
 		
 
 		ITheme theme = settings.getTheme();
-		IBlockFactory pillar = theme.getPrimaryPillar();
-		IBlockFactory blocks = theme.getPrimaryWall();
+		IBlockFactory pillar = theme.getPrimary().getPillar();
+		IBlockFactory blocks = theme.getPrimary().getWall();
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		
 
@@ -98,7 +98,7 @@ public class DungeonPyramidTomb extends DungeonBase{
 		start.add(Cardinal.WEST, 6);
 		end.add(Cardinal.SOUTH, 6);
 		end.add(Cardinal.EAST, 6);
-		RectSolid.fill(editor, rand, start, end, theme.getPrimaryFloor());
+		RectSolid.fill(editor, rand, start, end, theme.getPrimary().getFloor());
 		
 		// pillars
 		
@@ -162,7 +162,7 @@ public class DungeonPyramidTomb extends DungeonBase{
 		RectSolid.fill(editor, rand, start, end, air, true, true);
 		start.add(Cardinal.UP);
 		end.add(Cardinal.UP);
-		RectSolid.fill(editor, rand, start, end, theme.getPrimaryWall(), true, true);
+		RectSolid.fill(editor, rand, start, end, theme.getPrimary().getWall(), true, true);
 		
 		for (Cardinal o : Cardinal.orthogonal(dir)){
 			for (int i = 0; i <= width / 2; ++i){
@@ -185,11 +185,11 @@ public class DungeonPyramidTomb extends DungeonBase{
 	}
 	
 	private void tile(IWorldEditor editor, Random rand, ITheme theme, Cardinal dir, Coord origin){
-		IStair stair = theme.getPrimaryStair();
+		IStair stair = theme.getPrimary().getStair();
 		stair.setOrientation(dir, true).set(editor, origin);
 		Coord cursor = new Coord(origin);
 		cursor.add(Cardinal.UP);
-		theme.getPrimaryPillar().set(editor, rand, cursor);
+		theme.getPrimary().getPillar().set(editor, rand, cursor);
 	}
 	
 	

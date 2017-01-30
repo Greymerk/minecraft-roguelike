@@ -27,11 +27,11 @@ public class DungeonsEnchant extends DungeonBase {
 		Cardinal dir = entrances[0];
 		
 		ITheme theme = settings.getTheme();
-		IBlockFactory wall = theme.getPrimaryWall();
-		IBlockFactory pillar = theme.getPrimaryPillar();
+		IBlockFactory wall = theme.getPrimary().getWall();
+		IBlockFactory pillar = theme.getPrimary().getPillar();
 		MetaBlock panel = ColorBlock.get(ColorBlock.CLAY, DyeColor.PURPLE);
 		MetaBlock air = BlockType.get(BlockType.AIR);
-		IStair stair = theme.getPrimaryStair();
+		IStair stair = theme.getPrimary().getStair();
 		
 		List<Coord> chests = new ArrayList<Coord>();
 		
@@ -79,7 +79,7 @@ public class DungeonsEnchant extends DungeonBase {
 		end.add(Cardinal.right(dir), 4);
 		start.add(Cardinal.reverse(dir), 2);
 		end.add(dir, 2);
-		theme.getPrimaryFloor().fill(editor, rand, new RectSolid(start, end));
+		theme.getPrimary().getFloor().fill(editor, rand, new RectSolid(start, end));
 		
 		start = new Coord(origin);
 		start.add(Cardinal.reverse(dir), 4);

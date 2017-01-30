@@ -21,9 +21,9 @@ public class DungeonLinker extends DungeonBase{
 		
 		ITheme theme = settings.getTheme();
 		
-		IBlockFactory pillar = theme.getPrimaryPillar();
-		IBlockFactory wall = theme.getPrimaryWall();
-		IBlockFactory floor = theme.getPrimaryFloor();
+		IBlockFactory pillar = theme.getPrimary().getPillar();
+		IBlockFactory wall = theme.getPrimary().getWall();
+		IBlockFactory floor = theme.getPrimary().getFloor();
 		MetaBlock bars = BlockType.get(BlockType.IRON_BAR);
 
 		Coord start;

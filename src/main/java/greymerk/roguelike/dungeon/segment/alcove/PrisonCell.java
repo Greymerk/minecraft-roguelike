@@ -11,7 +11,6 @@ import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.blocks.BlockType;
-import greymerk.roguelike.worldgen.blocks.Door;
 import greymerk.roguelike.worldgen.shapes.RectHollow;
 import greymerk.roguelike.worldgen.shapes.RectSolid;
 import greymerk.roguelike.worldgen.spawners.Spawner;
@@ -25,7 +24,7 @@ public class PrisonCell implements IAlcove{
 	public void generate(IWorldEditor editor, Random rand, LevelSettings settings, Coord origin, Cardinal dir) {
 		
 		this.theme = settings.getTheme();
-		IBlockFactory walls = theme.getPrimaryWall();
+		IBlockFactory walls = theme.getPrimary().getWall();
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		MetaBlock plate = BlockType.get(BlockType.PRESSURE_PLATE_STONE);
 		
@@ -50,8 +49,7 @@ public class PrisonCell implements IAlcove{
 		
 		cursor = new Coord(origin);
 		cursor.add(dir, 3);
-		Door.generate(editor, cursor, Cardinal.reverse(dir), Door.IRON);
-		
+		theme.getSecondary().getDoor().generate(editor, cursor, Cardinal.reverse(dir));
 	}
 
 	@Override

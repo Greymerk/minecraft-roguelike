@@ -24,7 +24,7 @@ public class SegmentTomb extends SegmentBase {
 	protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, Coord origin) {
 		
 		MetaBlock air = BlockType.get(BlockType.AIR);
-		IStair stair = theme.getPrimaryStair();
+		IStair stair = theme.getPrimary().getStair();
 		
 		Coord cursor = new Coord(origin);
 		Coord start;
@@ -42,7 +42,7 @@ public class SegmentTomb extends SegmentBase {
 		
 		start.add(dir, 1);
 		end.add(dir, 1);
-		RectSolid.fill(editor, rand, start, end, theme.getSecondaryWall(), false, true);
+		RectSolid.fill(editor, rand, start, end, theme.getSecondary().getWall(), false, true);
 
 		cursor.add(Cardinal.UP, 2);
 		for(Cardinal d : orth){
@@ -82,7 +82,7 @@ public class SegmentTomb extends SegmentBase {
 			if(!editor.getBlock(c).getMaterial().isSolid()) return;
 		}
 		
-		RectHollow.fill(editor, rand, start, end, theme.getPrimaryWall());
+		RectHollow.fill(editor, rand, start, end, theme.getPrimary().getWall());
 		if(!(rand.nextInt(3) == 0)) return;
 		cursor = new Coord(pos);
 		cursor.add(Cardinal.UP);

@@ -19,7 +19,7 @@ public class SegmentMineShaft extends SegmentBase {
 		
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		
-		IBlockFactory wall = theme.getSecondaryWall();
+		IBlockFactory wall = theme.getSecondary().getWall();
 		
 		Cardinal[] orth = Cardinal.orthogonal(dir);
 		

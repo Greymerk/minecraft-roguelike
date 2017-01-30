@@ -25,9 +25,9 @@ public class RogueTower implements ITower{
 		
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		
-		IBlockFactory blocks = theme.getPrimaryWall();
+		IBlockFactory blocks = theme.getPrimary().getWall();
 		
-		IStair stair = theme.getPrimaryStair();
+		IStair stair = theme.getPrimary().getStair();
 		
 		Coord floor = Tower.getBaseCoord(editor, dungeon);
 		int ground = floor.getY() - 1;
@@ -42,7 +42,7 @@ public class RogueTower implements ITower{
 		Coord end;
 		Coord cursor;
 		
-		RectSolid.fill(editor, rand, new Coord(x - 3, main, z - 3), new Coord(x + 3, main, z + 3), theme.getSecondaryWall(), true, true);
+		RectSolid.fill(editor, rand, new Coord(x - 3, main, z - 3), new Coord(x + 3, main, z + 3), theme.getSecondary().getWall(), true, true);
 		RectSolid.fill(editor, rand, new Coord(x - 3, roof, z - 3), new Coord(x + 3, roof, z + 3), blocks);
 		
 		for(Cardinal dir : Cardinal.directions){
@@ -222,7 +222,7 @@ public class RogueTower implements ITower{
 		}
 		
 		for(int i = main; i >= y; --i){
-			editor.spiralStairStep(rand, new Coord(x, i, z), stair, theme.getPrimaryPillar());
+			editor.spiralStairStep(rand, new Coord(x, i, z), stair, theme.getPrimary().getPillar());
 		}
 	}
 	

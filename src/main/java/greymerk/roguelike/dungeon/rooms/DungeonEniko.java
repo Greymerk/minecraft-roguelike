@@ -29,9 +29,9 @@ public class DungeonEniko extends DungeonBase {
 		
 		ITheme theme = settings.getTheme();
 		MetaBlock air = BlockType.get(BlockType.AIR);
-		IStair stair = theme.getPrimaryStair();
-		IBlockFactory walls = theme.getPrimaryWall();
-		IBlockFactory floor = theme.getPrimaryFloor();
+		IStair stair = theme.getPrimary().getStair();
+		IBlockFactory walls = theme.getPrimary().getWall();
+		IBlockFactory floor = theme.getPrimary().getFloor();
 		Coord start;
 		Coord end;
 		Coord cursor;
@@ -47,7 +47,7 @@ public class DungeonEniko extends DungeonBase {
 		end = new Coord(origin);
 		start.add(new Coord(6, 4, 6));
 		end.add(new Coord(-6, 5, -6));
-		RectSolid.fill(editor, rand, start, end, theme.getSecondaryWall(), false, true);
+		RectSolid.fill(editor, rand, start, end, theme.getSecondary().getWall(), false, true);
 		
 		start = new Coord(origin);
 		end = new Coord(origin);
@@ -105,8 +105,8 @@ public class DungeonEniko extends DungeonBase {
 	
 	private static void pillar(IWorldEditor editor, Random rand, ITheme theme, Coord origin){
 		
-		IStair stair = theme.getPrimaryStair();
-		IBlockFactory pillar = theme.getPrimaryPillar();
+		IStair stair = theme.getPrimary().getStair();
+		IBlockFactory pillar = theme.getPrimary().getPillar();
 		Coord start;
 		Coord end;
 		Coord cursor;
