@@ -7,6 +7,9 @@ import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.Log;
 import greymerk.roguelike.worldgen.blocks.StairType;
 import greymerk.roguelike.worldgen.blocks.Wood;
+import greymerk.roguelike.worldgen.blocks.door.Door;
+import greymerk.roguelike.worldgen.blocks.door.DoorType;
+import greymerk.roguelike.worldgen.blocks.door.IDoor;
 
 public class ThemeDarkHall extends ThemeBase{
 
@@ -27,8 +30,10 @@ public class ThemeDarkHall extends ThemeBase{
 		MetaStair stair2 = new MetaStair(StairType.DARKOAK);
 		MetaBlock pillar2 = Log.getLog(Wood.DARKOAK);
 		
-		this.primary = new BlockSet(walls, stair, pillar);
-		this.secondary = new BlockSet(walls2, stair2, pillar2);
+		IDoor door = new Door(DoorType.DARKOAK);
+		
+		this.primary = new BlockSet(walls, walls, stair, pillar, door);
+		this.secondary = new BlockSet(walls2, walls2, stair2, pillar2, door);
 
 	}
 }

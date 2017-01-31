@@ -46,7 +46,7 @@ public class SettingsDesertTheme extends DungeonSettings{
 			if(i == 0){
 				level.setDifficulty(2);
 				SegmentGenerator segments = new SegmentGenerator(Segment.SQUAREARCH);
-				segments.add(Segment.DOOR, 10);
+				segments.add(Segment.WALL, 10);
 				segments.add(Segment.ANKH, 5);
 				segments.add(Segment.SKULL, 2);
 				segments.add(Segment.TOMB, 1);
@@ -69,7 +69,7 @@ public class SettingsDesertTheme extends DungeonSettings{
 				level.setDifficulty(2);
 				SegmentGenerator segments = new SegmentGenerator(Segment.SQUAREARCH);
 				segments.add(Segment.SPAWNER, 1);
-				segments.add(Segment.DOOR, 10);
+				segments.add(Segment.WALL, 10);
 				segments.add(Segment.INSET, 5);
 				segments.add(Segment.SHELF, 5);
 				segments.add(Segment.CHEST, 1);
@@ -91,7 +91,7 @@ public class SettingsDesertTheme extends DungeonSettings{
 				level.setDifficulty(2);
 				SegmentGenerator segments = new SegmentGenerator(Segment.SQUAREARCH);
 				segments.add(Segment.SPAWNER, 1);
-				segments.add(Segment.DOOR, 10);
+				segments.add(Segment.WALL, 10);
 				segments.add(Segment.INSET, 5);
 				segments.add(Segment.SHELF, 5);
 				segments.add(Segment.CHEST, 1);
@@ -116,7 +116,7 @@ public class SettingsDesertTheme extends DungeonSettings{
 				level.setDifficulty(2);
 				SegmentGenerator segments = new SegmentGenerator(Segment.SQUAREARCH);
 				segments.add(Segment.SPAWNER, 1);
-				segments.add(Segment.DOOR, 10);
+				segments.add(Segment.WALL, 10);
 				segments.add(Segment.INSET, 5);
 				segments.add(Segment.SHELF, 5);
 				segments.add(Segment.CHEST, 1);
