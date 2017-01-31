@@ -7,6 +7,7 @@ import greymerk.roguelike.dungeon.Dungeon;
 import greymerk.roguelike.dungeon.base.DungeonBase;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.theme.ITheme;
+import greymerk.roguelike.treasure.ChestPlacementException;
 import greymerk.roguelike.treasure.Treasure;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
@@ -286,14 +287,26 @@ public class DungeonsSmithy extends DungeonBase {
 	
 	private void smelter(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal dir, Coord origin){
 		Coord cursor;
-		Treasure.generate(editor, rand, origin, Treasure.EMPTY, 1, false);
+		try {
+			Treasure.generate(editor, rand, origin, Treasure.EMPTY, 1, false);
+		} catch (ChestPlacementException cpe){
+			// do nothing
+		}
 		cursor = new Coord(origin);
 		cursor.add(dir, 2);
 		cursor.add(Cardinal.UP, 2);
-		Treasure.generate(editor, rand, cursor, Treasure.EMPTY, 1, false);
+		try {
+			Treasure.generate(editor, rand, cursor, Treasure.EMPTY, 1, false);
+		} catch (ChestPlacementException cpe){
+			// do nothing
+		}
 		cursor.add(Cardinal.UP);
 		cursor.add(Cardinal.reverse(dir));
-		Treasure.generate(editor, rand, cursor, Treasure.EMPTY, 1, false);
+		try {
+			Treasure.generate(editor, rand, cursor, Treasure.EMPTY, 1, false);
+		} catch (ChestPlacementException cpe){
+			// do nothing
+		}
 		
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.UP);
@@ -466,7 +479,11 @@ public class DungeonsSmithy extends DungeonBase {
 		stair.setOrientation(Cardinal.right(dir), true);
 		RectSolid.fill(editor, rand, start, end, stair);
 		cursor.add(Cardinal.UP);
-		Treasure.generate(editor, rand, cursor, Treasure.SMITH, Dungeon.getLevel(cursor.getY()));
+		try {
+			Treasure.generate(editor, rand, cursor, Treasure.SMITH, Dungeon.getLevel(cursor.getY()));
+		} catch (ChestPlacementException cpe){
+			// do nothing
+		}
 		
 		cursor = new Coord(origin);
 	}

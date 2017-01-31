@@ -3,8 +3,8 @@ package greymerk.roguelike.treasure;
 import java.util.Random;
 
 import greymerk.roguelike.worldgen.Coord;
-import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.IWorldEditor;
+import greymerk.roguelike.worldgen.MetaBlock;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityChest;
@@ -21,7 +21,7 @@ public class TreasureChest implements ITreasureChest{
 		this.level = 0;
 	}
 	
-	public ITreasureChest generate(IWorldEditor editor, Random rand, Coord pos, int level, boolean trapped) {
+	public ITreasureChest generate(IWorldEditor editor, Random rand, Coord pos, int level, boolean trapped) throws ChestPlacementException {
 
 		this.rand = rand;
 		this.level = level;
@@ -31,7 +31,7 @@ public class TreasureChest implements ITreasureChest{
 		boolean success = chestType.set(editor, pos);
 		
 		if(!success){
-			return null;
+			throw new ChestPlacementException("Failed to place chest in world");
 		}
 		
 		TileEntityChest chest = (TileEntityChest) editor.getTileEntity(pos);

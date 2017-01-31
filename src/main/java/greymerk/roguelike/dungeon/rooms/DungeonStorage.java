@@ -128,8 +128,10 @@ public class DungeonStorage extends DungeonBase {
 		
 		List<Coord> spaces = new ArrayList<Coord>(chestSpaces);
 		Collections.shuffle(spaces);
-		Treasure.generate(editor, rand, spaces.remove(0), Treasure.SUPPLIES, settings.getDifficulty(origin));
-		Treasure.generate(editor, rand, spaces.remove(0), Treasure.BLOCKS, settings.getDifficulty(origin));
+		List<Treasure> types = new ArrayList<Treasure>();
+		types.add(Treasure.SUPPLIES);
+		types.add(Treasure.BLOCKS);
+		Treasure.createChests(editor, rand, 2, spaces, types, settings.getDifficulty(origin));
 		return true;
 	}
 

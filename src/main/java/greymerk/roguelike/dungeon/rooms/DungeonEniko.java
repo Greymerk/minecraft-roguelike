@@ -2,7 +2,6 @@ package greymerk.roguelike.dungeon.rooms;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -14,8 +13,8 @@ import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.IStair;
-import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.IWorldEditor;
+import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.shapes.RectHollow;
 import greymerk.roguelike.worldgen.shapes.RectSolid;
@@ -95,9 +94,7 @@ public class DungeonEniko extends DungeonBase {
 		}
 		
 		Spawner.generate(editor, rand, settings, origin);
-		
-		Collections.shuffle(chests);
-		Treasure.generate(editor, rand, chests.remove(0), settings.getDifficulty(origin), false);
+		Treasure.createChests(editor, rand, 1, chests, settings.getDifficulty(origin));
 		
 		return true;
 	}

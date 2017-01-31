@@ -7,6 +7,7 @@ import greymerk.roguelike.dungeon.Dungeon;
 import greymerk.roguelike.dungeon.base.DungeonBase;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.theme.ITheme;
+import greymerk.roguelike.treasure.ChestPlacementException;
 import greymerk.roguelike.treasure.Treasure;
 import greymerk.roguelike.worldgen.BlockJumble;
 import greymerk.roguelike.worldgen.Cardinal;
@@ -220,7 +221,11 @@ public class DungeonObsidian extends DungeonBase {
 				chestPos.add(orth, 2);
 				chestPos.add(Cardinal.DOWN, 3);
 				Treasure[] types = {Treasure.WEAPONS, Treasure.ARMOUR, Treasure.ORE};
-				Treasure.generate(editor, rand, chestPos, types[rand.nextInt(types.length)], Dungeon.getLevel(chestPos.getY()));
+				try{
+					Treasure.generate(editor, rand, chestPos, types[rand.nextInt(types.length)], Dungeon.getLevel(chestPos.getY()));
+				} catch (ChestPlacementException cpe){
+					// do nothing
+				}
 			}
 		}
 		

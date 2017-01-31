@@ -6,6 +6,7 @@ import greymerk.roguelike.dungeon.Dungeon;
 import greymerk.roguelike.dungeon.base.DungeonBase;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.theme.ITheme;
+import greymerk.roguelike.treasure.ChestPlacementException;
 import greymerk.roguelike.treasure.Treasure;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
@@ -202,7 +203,11 @@ public class DungeonPyramidTomb extends DungeonBase{
 		cursor = new Coord(origin);
 		blocks.set(editor, cursor);
 		cursor.add(Cardinal.UP);
-		Treasure.generate(editor, rand, cursor, Treasure.ORE, Dungeon.getLevel(cursor.getY()));
+		try {
+			Treasure.generate(editor, rand, cursor, Treasure.ORE, Dungeon.getLevel(cursor.getY()));
+		} catch (ChestPlacementException cpe){
+			// do nothing
+		}
 		cursor.add(Cardinal.UP);
 		blocks.set(editor, cursor);
 		

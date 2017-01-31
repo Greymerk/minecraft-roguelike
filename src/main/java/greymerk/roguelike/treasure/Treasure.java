@@ -19,17 +19,17 @@ public enum Treasure {
 	
 	private static final List<Treasure> common = new ArrayList<Treasure>(Arrays.asList(TOOLS, ARMOUR, WEAPONS));
 
-	public static ITreasureChest generate(IWorldEditor editor, Random rand, Coord pos, Treasure type, int level, boolean trapped){
+	public static ITreasureChest generate(IWorldEditor editor, Random rand, Coord pos, Treasure type, int level, boolean trapped) throws ChestPlacementException{
 		ITreasureChest chest = new TreasureChest(type);
 		return chest.generate(editor, rand, pos, level, trapped);
 	}
 	
-	public static ITreasureChest generate(IWorldEditor editor, Random rand, Coord pos, int level, boolean trapped){
+	public static ITreasureChest generate(IWorldEditor editor, Random rand, Coord pos, int level, boolean trapped) throws ChestPlacementException{
 		Treasure type = getChestType(rand, level);
 		return generate(editor, rand, pos, type, level, trapped);
 	}
 	
-	public static ITreasureChest generate(IWorldEditor editor, Random rand, Coord pos, Treasure type, int level){
+	public static ITreasureChest generate(IWorldEditor editor, Random rand, Coord pos, Treasure type, int level) throws ChestPlacementException{
 		return generate(editor, rand, pos, type, level, false);
 	}
 	
@@ -56,9 +56,13 @@ public enum Treasure {
 			}
 			
 			if (isValidChestSpace(editor, block)) {
-				ITreasureChest chest = generate(editor, rand, block, getChestType(rand, level), level);
-				chests.add(chest);
-				count++;
+				try {
+					ITreasureChest chest = generate(editor, rand, block, getChestType(rand, level), level);
+					chests.add(chest);
+					count++;
+				} catch(ChestPlacementException cpe){
+					// do nothing
+				}
 			}
 		}
 		
@@ -80,9 +84,13 @@ public enum Treasure {
 			}
 			
 			if (isValidChestSpace(editor, block)) {
-				ITreasureChest chest = generate(editor, rand, block, types.get(rand.nextInt(types.size())), level);
-				chests.add(chest);
-				count++;
+				try {
+					ITreasureChest chest = generate(editor, rand, block, types.get(rand.nextInt(types.size())), level);
+					chests.add(chest);
+					count++;
+				} catch (ChestPlacementException cpe){
+					// do nothing
+				}
 			}
 		}
 		

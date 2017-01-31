@@ -6,6 +6,7 @@ import greymerk.roguelike.dungeon.Dungeon;
 import greymerk.roguelike.dungeon.base.DungeonBase;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.theme.ITheme;
+import greymerk.roguelike.treasure.ChestPlacementException;
 import greymerk.roguelike.treasure.Treasure;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
@@ -124,7 +125,11 @@ public class DungeonBedRoom extends DungeonBase {
 		cursor = new Coord(origin);
 		cursor.add(dir);
 		cursor.add(side, 3);
-		Treasure.generate(editor, rand, cursor, Treasure.STARTER, Dungeon.getLevel(cursor.getY()));
+		try {
+			Treasure.generate(editor, rand, cursor, Treasure.STARTER, Dungeon.getLevel(cursor.getY()));
+		} catch (ChestPlacementException cpe) {
+			// do nothing
+		}
 		cursor.add(Cardinal.reverse(side), 6);
 		if(rand.nextBoolean()){
 			cursor.add(Cardinal.UP);

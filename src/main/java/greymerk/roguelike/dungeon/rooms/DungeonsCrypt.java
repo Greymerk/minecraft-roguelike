@@ -4,10 +4,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-import greymerk.roguelike.dungeon.Dungeon;
 import greymerk.roguelike.dungeon.base.DungeonBase;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.theme.ITheme;
+import greymerk.roguelike.treasure.ChestPlacementException;
 import greymerk.roguelike.treasure.Treasure;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
@@ -375,7 +375,11 @@ public class DungeonsCrypt extends DungeonBase {
 		cursor.add(dir);
 		Treasure[] types = {Treasure.ARMOUR, Treasure.WEAPONS};
 		Treasure chestType = types[rand.nextInt(types.length)];
-		Treasure.generate(editor, rand, cursor, chestType, Dungeon.getLevel(cursor.getY()), false);
+		try {
+			Treasure.generate(editor, rand, cursor, chestType, settings.getDifficulty(cursor), false);
+		} catch (ChestPlacementException cpe){
+			// do nothing
+		}
 		
 	}
 	

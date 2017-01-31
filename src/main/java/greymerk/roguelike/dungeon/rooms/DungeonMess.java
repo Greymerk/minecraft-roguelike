@@ -9,6 +9,7 @@ import java.util.Random;
 import greymerk.roguelike.dungeon.base.DungeonBase;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.theme.ITheme;
+import greymerk.roguelike.treasure.ChestPlacementException;
 import greymerk.roguelike.treasure.Treasure;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
@@ -146,7 +147,11 @@ public class DungeonMess extends DungeonBase {
 		cursor.add(entrances[1], 5);
 		cursor.add(entrances[0], 2);
 		cursor.add(Cardinal.UP);
-		Treasure.generate(editor, rand, cursor, Treasure.FOOD, settings.getDifficulty(cursor));
+		try {
+			Treasure.generate(editor, rand, cursor, Treasure.FOOD, settings.getDifficulty(cursor));
+		} catch (ChestPlacementException cpe){
+			// do nothing
+		}
 		
 		cursor = new Coord(origin);
 		cursor.add(entrances[0], 5);
@@ -422,7 +427,11 @@ public class DungeonMess extends DungeonBase {
 		cursor.add(dir, 7);
 		stair.setOrientation(Cardinal.reverse(dir), true).set(editor, cursor);
 		cursor.add(Cardinal.UP);
-		Treasure.generate(editor, rand, cursor, Treasure.FOOD, settings.getDifficulty(origin));
+		try {
+			Treasure.generate(editor, rand, cursor, Treasure.FOOD, settings.getDifficulty(origin));
+		} catch (ChestPlacementException cpe){
+			// do nothing
+		}
 		cursor.add(Cardinal.left(dir));
 		Furnace.generate(editor, dir, cursor);
 		cursor.add(Cardinal.right(dir), 2);
