@@ -36,6 +36,16 @@ public class SecretRoom implements ISecretRoom {
 	}
 	
 	@Override
+	public void add(int count){
+		this.count += count;
+	}
+	
+	@Override
+	public int getCount(){
+		return this.count;
+	}
+	
+	@Override
 	public IDungeonRoom genRoom(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal dir, Coord pos){
 		if(!isValid(editor, rand, dir, pos)) return null;
 		
@@ -65,5 +75,17 @@ public class SecretRoom implements ISecretRoom {
 		this.prototype = DungeonRoom.getInstance(this.type);
 		
 		return generated;
+	}
+	
+	@Override
+	public boolean equals(Object o){
+		
+		SecretRoom other = (SecretRoom)o;
+		
+		if(this.type != other.type) return false;
+		
+		if(this.count != other.count) return false;
+		
+		return true;
 	}
 }

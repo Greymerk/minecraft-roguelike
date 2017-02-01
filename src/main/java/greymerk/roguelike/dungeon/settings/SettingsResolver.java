@@ -96,19 +96,20 @@ public class SettingsResolver {
 		return toAdd;
 	}
 	
-	public DungeonSettings getByName(String name){
-		DungeonSettings override = this.settings.get(name);
-		if(override == null) return null;
-		return new DungeonSettings(this.base, override);
-	}
+
 	
 	public ISettings getSettings(IWorldEditor editor, Random rand, Coord pos){
 		
 		DungeonSettings regular = new DungeonSettings(this.base, this.getBuiltin(editor, rand, pos));
 		DungeonSettings custom = this.getCustom(editor, rand, pos);
-		
 		return new DungeonSettings(regular, custom);
 		
+	}
+	
+	public ISettings getWithName(String name, IWorldEditor editor, Random rand, Coord pos){
+		DungeonSettings regular = new DungeonSettings(this.base, this.getBuiltin(editor, rand, pos));
+		DungeonSettings custom = this.getByName(name);
+		return new DungeonSettings(regular, custom);
 	}
 	
 	private DungeonSettings getBuiltin(IWorldEditor editor, Random rand, Coord pos){
@@ -145,6 +146,12 @@ public class SettingsResolver {
 		return new DungeonSettings(base);
 	}
 
+	public DungeonSettings getByName(String name){
+		if(!this.settings.containsKey(name)) return null;
+		DungeonSettings custom = new DungeonSettings(this.settings.get(name));
+		return processInheritance(custom, this.settings);
+	}
+	
 	public ISettings getWithDefault(String name) {
 		if(!this.settings.containsKey(name)) return null;
 		DungeonSettings custom = new DungeonSettings(this.settings.get(name));

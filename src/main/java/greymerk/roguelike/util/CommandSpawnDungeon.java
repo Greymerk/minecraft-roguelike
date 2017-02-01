@@ -244,8 +244,11 @@ public class CommandSpawnDungeon extends CommandBase
 					System.err.println(e.getMessage());
 					return;
 				}
-				ISettings settings = Dungeon.settingsResolver.getWithDefault(settingName);
-				 
+				
+				Random rand = Dungeon.getRandom(editor, x, z);
+				ISettings settings = Dungeon.settingsResolver.getWithName(settingName, editor, rand, new Coord(x, 0, z));
+
+				
 				if(settings == null){
 					sender.sendMessage(new TextComponentString(TextFormat.apply("Failed: " + settingName + " not found.", TextFormat.RED)));
 					return;

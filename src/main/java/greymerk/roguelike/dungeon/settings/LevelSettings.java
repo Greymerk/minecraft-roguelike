@@ -62,11 +62,7 @@ public class LevelSettings {
 					: new DungeonFactory(override.rooms);
 		}
 		
-		if(base.secrets != null || override.secrets != null){
-			this.secrets = override.secrets == null
-					? new SecretFactory(base.secrets) 
-					: new SecretFactory(override.secrets);
-		}
+		this.secrets = new SecretFactory(base.secrets, override.secrets);
 		
 		this.theme = override.theme == null ? base.theme : override.theme;
 		

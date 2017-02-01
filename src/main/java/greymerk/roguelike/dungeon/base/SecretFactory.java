@@ -1,8 +1,7 @@
 package greymerk.roguelike.dungeon.base;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 import com.google.gson.JsonArray;
@@ -14,43 +13,47 @@ import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IWorldEditor;
 
-public class SecretFactory implements ISecretRoom{
+public class SecretFactory{
 
-	private int count;
-	private List<ISecretRoom> secrets;
+	private Map<DungeonRoom, ISecretRoom> secrets;
 
 	
 	public SecretFactory(){
-		count = 0;
-		secrets = new ArrayList<ISecretRoom>();
+		secrets = new HashMap<DungeonRoom, ISecretRoom>();
 	}
 	
 	public SecretFactory(SecretFactory toCopy){
-		secrets = new ArrayList<ISecretRoom>();
-		this.count = toCopy.count;
-		
-		for(ISecretRoom room : toCopy.secrets){
-			
-			ISecretRoom toAdd;
-			
-			if(room instanceof SecretFactory){
-				toAdd = new SecretFactory((SecretFactory)room);
-			} else {
-				toAdd = new SecretRoom((SecretRoom)room);
+		this();
+		for(DungeonRoom type : toCopy.secrets.keySet()){
+			int count = toCopy.secrets.get(type).getCount();
+			this.addRoom(type, count);			
+		}
+	}
+	
+	public SecretFactory(SecretFactory base, SecretFactory override){
+		this();
+		if(base != null){
+			for(DungeonRoom type : base.secrets.keySet()){
+				int count = base.secrets.get(type).getCount();
+				this.addRoom(type, count);
 			}
-			
-			this.secrets.add(toAdd);
+		}
+		
+		if(override != null){
+			for(DungeonRoom type : override.secrets.keySet()){
+				int count = override.secrets.get(type).getCount();
+				this.addRoom(type, count);
+			}	
 		}
 	}
 	
 	public SecretFactory(JsonArray data){
-		secrets = new ArrayList<ISecretRoom>();
+		this();
 		for(JsonElement e : data){
 			JsonObject room = e.getAsJsonObject();
 			String type = room.get("type").getAsString();
 			int num = room.get("num").getAsInt();
-			this.count += num;
-			secrets.add(new SecretRoom(DungeonRoom.valueOf(type), num));
+			this.addRoom(DungeonRoom.valueOf(type), num);
 		}
 	}
 	
@@ -59,28 +62,21 @@ public class SecretFactory implements ISecretRoom{
 	}
 	
 	public void addRoom(DungeonRoom type, int count){
-		secrets.add(new SecretRoom(type, count));
-		this.count += count;
-	}
-	
-	public void addRoom(List<DungeonRoom> rooms, int count){
 		
-		SecretFactory toAdd = new SecretFactory();
+		ISecretRoom room;
 		
-		for(DungeonRoom type : rooms){
-			toAdd.addRoom(type);
+		if(this.secrets.containsKey(type)){
+			room = this.secrets.get(type);
+			room.add(count);
 		}
 		
-		this.secrets.add(toAdd);
-		this.count += count;
+		room = new SecretRoom(type, count);
+		this.secrets.put(type, room);
 	}
 	
 	public IDungeonRoom genRoom(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal dir, Coord pos){
-		if(count <= 0) return null;
 		
-		Collections.shuffle(this.secrets, rand);
-		
-		for(ISecretRoom room : secrets){
+		for(ISecretRoom room : this.secrets.values()){
 			IDungeonRoom generated = room.genRoom(editor, rand, settings, dir, pos);
 			if(generated != null){
 				return generated;
@@ -88,5 +84,19 @@ public class SecretFactory implements ISecretRoom{
 		}
 		
 		return null;
+	}
+	
+	@Override
+	public boolean equals(Object o){
+		
+		SecretFactory other = (SecretFactory)o;
+		
+		if(!this.secrets.keySet().equals(other.secrets.keySet())) return false;
+		
+		for(DungeonRoom type : this.secrets.keySet()){
+			if(!this.secrets.get(type).equals(other.secrets.get(type))) return false;
+		}
+		
+		return true;
 	}
 }

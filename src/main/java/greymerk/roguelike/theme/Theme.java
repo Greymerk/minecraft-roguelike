@@ -57,29 +57,31 @@ public enum Theme {
 	
 	public static ITheme create(JsonObject json) throws Exception{
 				
-		ITheme theme;
+		ITheme base;
+		
+		if(json.has("base")){
+			base = Theme.getTheme(Theme.get(json.get("base").getAsString()));
+		} else {
+			base = Theme.getTheme(Theme.OAK);
+		}
+		
+		
 		BlockSet primary = null;
 		BlockSet secondary = null;
 
 		// primary blocks
 		if(json.has("primary")){
 			JsonObject data = json.get("primary").getAsJsonObject();		
-			primary = new BlockSet(data);
+			primary = new BlockSet(data, base.getPrimary());
 		}
 		
 		// secondary blocks
 		if(json.has("secondary")){
 			JsonObject data = json.get("secondary").getAsJsonObject();		
-			secondary = new BlockSet(data);
+			secondary = new BlockSet(data, base.getSecondary());
 		}
 
-		if(json.has("base")){
-			theme = Theme.getTheme(Theme.get(json.get("base").getAsString()));
-		} else {
-			theme = Theme.getTheme(Theme.OAK);
-		}
-		
-		return new ThemeBase((ThemeBase) theme, primary, secondary);
+		return new ThemeBase((ThemeBase) base, primary, secondary);
 	}
 	
 	public static Theme get(String name) throws Exception{

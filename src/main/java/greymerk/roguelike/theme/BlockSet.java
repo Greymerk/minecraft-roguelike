@@ -55,43 +55,52 @@ public class BlockSet implements IBlockSet {
 		this(walls, walls, stair, pillar);
 	}
 	
-	public BlockSet(JsonObject json){
+	public BlockSet(JsonObject json, IBlockSet base){
 		
-		this.walls = BlockProvider.create(json.get("walls").getAsJsonObject());
+		if(json.has("walls")){
+			this.walls = BlockProvider.create(json.get("walls").getAsJsonObject());	
+		} else {
+			this.walls = base.getWall();
+		}
+		
 
 		if(json.has("floor")){
 			this.floor = BlockProvider.create(json.get("floor").getAsJsonObject());
 		} else {
-			this.floor = this.walls;
+			this.floor = base.getFloor();
 		}
 		
-		JsonObject stair = json.get("stair").getAsJsonObject();
-		this.stair = stair.has("data")
-				? new MetaStair(new MetaBlock(stair.get("data").getAsJsonObject()))
-				: new MetaStair(new MetaBlock(stair));
-		
+		if(json.has("stair")){
+			JsonObject stair = json.get("stair").getAsJsonObject();
+			this.stair = stair.has("data")
+					? new MetaStair(new MetaBlock(stair.get("data").getAsJsonObject()))
+					: new MetaStair(new MetaBlock(stair));
+		} else {
+			this.stair = base.getStair();
+		}
+
 		if(json.has("pillar")){
 			this.pillar = BlockProvider.create(json.get("pillar").getAsJsonObject());
 		} else {
-			this.pillar = this.walls;
+			this.pillar = base.getPillar();
 		}
 		
 		if(json.has("door")){
 			this.door = new Door(json.get("door").getAsJsonObject());
 		} else {
-			this.door = new Door(DoorType.get(DoorType.OAK));
+			this.door = base.getDoor();
 		}
 		
 		if(json.has("lightblock")){
 			this.lightblock = BlockProvider.create(json.get("lightblock").getAsJsonObject());
 		} else {
-			this.lightblock = BlockType.get(BlockType.GLOWSTONE);
+			this.lightblock = base.getLightBlock();
 		}
 		
 		if(json.has("liquid")){
 			this.liquid = BlockProvider.create(json.get("liquid").getAsJsonObject());
 		} else {
-			this.liquid = BlockType.get(BlockType.WATER_FLOWING);
+			this.liquid = base.getLiquid();
 		}
 		
 	}
