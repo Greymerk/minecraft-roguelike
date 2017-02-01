@@ -68,6 +68,7 @@ public class SecretFactory{
 		if(this.secrets.containsKey(type)){
 			room = this.secrets.get(type);
 			room.add(count);
+			return;
 		}
 		
 		room = new SecretRoom(type, count);

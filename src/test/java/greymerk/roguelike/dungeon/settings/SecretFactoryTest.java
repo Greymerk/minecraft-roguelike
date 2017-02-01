@@ -8,6 +8,21 @@ import greymerk.roguelike.dungeon.base.SecretFactory;
 public class SecretFactoryTest {
 	
 	@Test
+	public void testAdd(){
+		
+		SecretFactory threeBeds = new SecretFactory();
+		threeBeds.addRoom(DungeonRoom.BEDROOM, 3);
+		
+		SecretFactory test = new SecretFactory();
+		test.addRoom(DungeonRoom.BEDROOM);
+		test.addRoom(DungeonRoom.BEDROOM);
+		test.addRoom(DungeonRoom.BEDROOM);
+		
+		assert(test.equals(threeBeds));
+	}
+	
+	
+	@Test
 	public void testEquals(){
 		
 		SecretFactory secrets1 = new SecretFactory();
