@@ -19,12 +19,13 @@ public class DungeonSettingsTest {
 		DungeonSettings base = new DungeonSettings();
 		DungeonSettings other = new DungeonSettings();
 		other.overrides.add(SettingsType.LOOTRULES);
+		assert(other.overrides.contains(SettingsType.LOOTRULES));
 		
 		DungeonSettings merge = new DungeonSettings(base, other);
-		assertTrue(merge.overrides.contains(SettingsType.LOOTRULES));
+		assert(merge.overrides.contains(SettingsType.LOOTRULES));
 		
 		merge = new DungeonSettings(other, base);
-		assertTrue(merge.overrides.contains(SettingsType.LOOTRULES));
+		assert(!merge.overrides.contains(SettingsType.LOOTRULES));
 	}
 	
 	@Test

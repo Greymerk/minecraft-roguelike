@@ -1,5 +1,7 @@
 package greymerk.roguelike.dungeon.settings;
 
+import java.util.Set;
+
 import com.google.gson.JsonObject;
 
 import greymerk.roguelike.config.RogueConfig;
@@ -36,42 +38,57 @@ public class LevelSettings {
 	}
 	
 	public LevelSettings(LevelSettings toCopy){
-		this.numRooms = toCopy.numRooms;
-		this.range = toCopy.range;
-		this.scatter = toCopy.scatter;
-		this.levelDifficulty = toCopy.levelDifficulty;
-		this.rooms = toCopy.rooms != null ? new DungeonFactory(toCopy.rooms) : null;
-		this.secrets = toCopy.secrets != null ? new SecretFactory(toCopy.secrets) : null;
-		this.theme = toCopy.theme != null ? toCopy.theme : null;
-		this.segments = toCopy.segments != null ? new SegmentGenerator(toCopy.segments) : null;
-		this.spawners = toCopy.spawners;
-		this.generator = toCopy.generator;
+		apply(toCopy);
 	}
 	
-	public LevelSettings(LevelSettings base, LevelSettings override){
+	public LevelSettings(LevelSettings base, LevelSettings other, Set<SettingsType> overrides){
+		this();
 		
-		this.numRooms = override.numRooms != base.numRooms && override.numRooms != RogueConfig.getInt(RogueConfig.LEVELMAXROOMS) ? override.numRooms : base.numRooms;
-		this.range = override.range != base.range && override.range != RogueConfig.getInt(RogueConfig.LEVELRANGE) ? override.range : base.range;
-		this.scatter = override.scatter != base.scatter && override.scatter != RogueConfig.getInt(RogueConfig.LEVELSCATTER) ? override.scatter : base.scatter;
+		if(base == null && other == null){
+			return;
+		}
 		
-		this.levelDifficulty = (base.levelDifficulty != override.levelDifficulty && override.levelDifficulty != -1) || base.levelDifficulty == -1 ? override.levelDifficulty : base.levelDifficulty;
+		if(base == null && other != null){
+			apply(other); return;
+		}
 		
-		if(base.rooms != null || override.rooms != null){
-			this.rooms = override.rooms == null 
+		if(base != null && other == null){
+			apply(base); return;
+		}
+		
+		this.numRooms = other.numRooms != base.numRooms && other.numRooms != RogueConfig.getInt(RogueConfig.LEVELMAXROOMS) 
+				? other.numRooms 
+				: base.numRooms;
+		
+		this.range = other.range != base.range && other.range != RogueConfig.getInt(RogueConfig.LEVELRANGE) ? other.range : base.range;
+		this.scatter = other.scatter != base.scatter && other.scatter != RogueConfig.getInt(RogueConfig.LEVELSCATTER) ? other.scatter : base.scatter;
+		
+		this.levelDifficulty = (base.levelDifficulty != other.levelDifficulty && other.levelDifficulty != -1) || base.levelDifficulty == -1 ? other.levelDifficulty : base.levelDifficulty;
+		
+		if(base.rooms != null || other.rooms != null){
+			this.rooms = other.rooms == null 
 					? new DungeonFactory(base.rooms) 
-					: new DungeonFactory(override.rooms);
+					: new DungeonFactory(other.rooms);
+		}
+
+		if(overrides.contains(SettingsType.SECRETS)){
+			this.secrets = new SecretFactory(other.secrets);
+		} else {
+			this.secrets = new SecretFactory(base.secrets, other.secrets);
+		}
+
+		if(other.theme != null){
+			this.theme = Theme.create(other.theme);
+		} else if(base.theme != null){
+			this.theme = Theme.create(base.theme);
 		}
 		
-		this.secrets = new SecretFactory(base.secrets, override.secrets);
-		
-		this.theme = override.theme == null ? base.theme : override.theme;
-		
-		if(base.segments != null || override.segments != null){
-			this.segments = override.segments == null ? new SegmentGenerator(base.segments) : new SegmentGenerator(override.segments);
+		if(base.segments != null || other.segments != null){
+			this.segments = other.segments == null ? new SegmentGenerator(base.segments) : new SegmentGenerator(other.segments);
 		}
 		
-		this.spawners = override.spawners == null ? base.spawners : override.spawners;
-		this.generator = override.generator == null? base.generator : override.generator;
+		this.spawners = other.spawners == null ? base.spawners : other.spawners;
+		this.generator = other.generator == null? base.generator : other.generator;
 	}
 	
 	public LevelSettings(JsonObject data) throws Exception{
@@ -175,5 +192,18 @@ public class LevelSettings {
 	
 	public void setRange(int range){
 		this.range = range;
+	}
+	
+	private void apply(LevelSettings toCopy){
+		this.numRooms = toCopy.numRooms;
+		this.range = toCopy.range;
+		this.scatter = toCopy.scatter;
+		this.levelDifficulty = toCopy.levelDifficulty;
+		this.rooms = toCopy.rooms != null ? new DungeonFactory(toCopy.rooms) : null;
+		this.secrets = toCopy.secrets != null ? new SecretFactory(toCopy.secrets) : null;
+		this.theme = toCopy.theme != null ? toCopy.theme : null;
+		this.segments = toCopy.segments != null ? new SegmentGenerator(toCopy.segments) : null;
+		this.spawners = toCopy.spawners;
+		this.generator = toCopy.generator;
 	}
 }

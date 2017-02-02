@@ -1,6 +1,7 @@
 package greymerk.roguelike.dungeon.settings;
 
 import java.util.List;
+import java.util.Set;
 
 import greymerk.roguelike.treasure.loot.LootRuleManager;
 import greymerk.roguelike.worldgen.Coord;
@@ -21,5 +22,5 @@ public interface ISettings {
 	
 	public int getNumLevels();
 	
-	public List<SettingsType> getOverrides();
+	public Set<SettingsType> getOverrides();
 }

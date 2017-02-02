@@ -84,6 +84,17 @@ public enum Theme {
 		return new ThemeBase((ThemeBase) base, primary, secondary);
 	}
 	
+	public static ITheme create(ITheme toCopy){
+		
+		ITheme base = Theme.getTheme(Theme.OAK);
+		
+		BlockSet primary = new BlockSet(toCopy.getPrimary());
+		BlockSet secondary = new BlockSet(toCopy.getSecondary());
+		
+		return new ThemeBase((ThemeBase) base, primary, secondary);
+		
+	}
+	
 	public static Theme get(String name) throws Exception{
 		if(!contains(name.toUpperCase())){
 			throw new Exception("No such theme: " + name);

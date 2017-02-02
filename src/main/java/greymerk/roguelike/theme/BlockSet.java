@@ -105,6 +105,16 @@ public class BlockSet implements IBlockSet {
 		
 	}
 	
+	public BlockSet(IBlockSet toCopy){
+		this.walls = toCopy.getWall();
+		this.floor = toCopy.getFloor();
+		this.stair = toCopy.getStair();
+		this.pillar = toCopy.getPillar();
+		this.door = toCopy.getDoor();
+		this.lightblock = toCopy.getLightBlock();
+		this.liquid = toCopy.getLiquid();
+	}
+	
 	@Override
 	public IBlockFactory getWall() {
 		return walls;
