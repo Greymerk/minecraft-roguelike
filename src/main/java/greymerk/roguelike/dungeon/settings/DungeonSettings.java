@@ -21,8 +21,9 @@ import greymerk.roguelike.worldgen.IWorldEditor;
 public class DungeonSettings implements ISettings{
 	
 	public static final int MAX_NUM_LEVELS = 5;
-	protected String name;
-	protected List<String> inherit;
+	protected SettingIdentifier id;
+	protected List<SettingIdentifier> inherit;
+	protected boolean exclusive;
 	protected TowerSettings towerSettings;
 	protected Map<Integer, LevelSettings> levels;
 	protected SpawnCriteria criteria;
@@ -31,8 +32,9 @@ public class DungeonSettings implements ISettings{
 	protected Set<SettingsType> overrides;
 	
 	public DungeonSettings(){
-		this.inherit = new ArrayList<String>();
+		this.inherit = new ArrayList<SettingIdentifier>();
 		this.levels = new HashMap<Integer, LevelSettings>();
+		this.exclusive = false;
 		this.lootRules = new LootRuleManager();
 		this.depth = 0;
 		this.overrides = new HashSet<SettingsType>();
@@ -41,7 +43,15 @@ public class DungeonSettings implements ISettings{
 	public DungeonSettings(JsonObject root) throws Exception{
 		this();
 		
-		this.name = root.get("name").getAsString();
+		if(root.has("namespace")){
+			String name = root.get("name").getAsString();
+			String namespace = root.get("namespace").getAsString();
+			this.id = new SettingIdentifier(namespace, name);
+		} else {
+			this.id = new SettingIdentifier(root.get("name").getAsString());
+		}
+		
+		if(root.has("exclusive")) this.exclusive = root.get("exclusive").getAsBoolean();
 		if(root.has("criteria")) this.criteria = new SpawnCriteria(root.get("criteria").getAsJsonObject());
 		if(root.has("tower")) this.towerSettings = new TowerSettings(root.get("tower"));
 		if(root.has("loot_rules")) this.lootRules = new LootRuleManager(root.get("loot_rules"));
@@ -64,7 +74,7 @@ public class DungeonSettings implements ISettings{
 		if(root.has("inherit")){
 			JsonArray inherit = root.get("inherit").getAsJsonArray();
 			for(JsonElement e : inherit){
-				this.inherit.add(e.getAsString());
+				this.inherit.add(new SettingIdentifier(e.getAsString()));
 			}
 		}
 		
@@ -106,9 +116,11 @@ public class DungeonSettings implements ISettings{
 		}
 		this.lootRules.add(other.lootRules);
 		
-		for(String i : other.inherit){
+		for(SettingIdentifier i : other.inherit){
 			this.inherit.add(i);
 		}
+		
+		this.exclusive = other.exclusive;
 		
 		if(overrides.contains(SettingsType.TOWER) && other.towerSettings != null){
 			this.towerSettings = new TowerSettings(other.towerSettings);
@@ -130,9 +142,11 @@ public class DungeonSettings implements ISettings{
 		this.towerSettings = toCopy.towerSettings != null ? new TowerSettings(toCopy.towerSettings) : null;
 		this.lootRules = toCopy.lootRules;
 		
-		for(String i : toCopy.inherit){
+		for(SettingIdentifier i : toCopy.inherit){
 			this.inherit.add(i);
 		}
+		
+		this.exclusive = toCopy.exclusive;
 		
 		for(int i = 0; i < MAX_NUM_LEVELS; ++i){
 			LevelSettings level = toCopy.levels.get(i);
@@ -146,12 +160,16 @@ public class DungeonSettings implements ISettings{
 		if(toCopy.overrides != null) this.overrides.addAll(toCopy.overrides);
 	}
 
-	public List<String> getInherits(){
+	public List<SettingIdentifier> getInherits(){
 		return this.inherit;
 	}
 	
+	public String getNameSpace(){
+		return this.id.getNamespace();
+	}
+	
 	public String getName(){
-		return this.name;
+		return this.id.getName();
 	}
 	
 	public void setCriteria(SpawnCriteria criteria){
@@ -194,14 +212,10 @@ public class DungeonSettings implements ISettings{
 	public Set<SettingsType> getOverrides() {
 		return this.overrides;
 	}
-	
+
 	@Override
-	public String toString(){
-		String strg = "";
-		if(this.name != null){
-			strg += this.name + " : ";
-		}
-		strg += this.lootRules != null ? this.lootRules.toString() : 0; 
-		return strg;
+	public boolean isExclusive() {
+		return this.exclusive;
 	}
+	
 }

@@ -149,7 +149,6 @@ public class CommandSpawnDungeon extends CommandBase
 				sender.sendMessage(new TextComponentString(TextFormat.apply("Usage: roguelike dungeon {X Z | here} [setting]", TextFormat.GRAY)));
 				return;
 			}
-			
 
 			int x;
 			int z;
@@ -241,7 +240,7 @@ public class CommandSpawnDungeon extends CommandBase
 				try{
 					Dungeon.initResolver();
 				} catch(Exception e) {
-					System.err.println(e.getMessage());
+					sender.sendMessage(new TextComponentString(TextFormat.apply("Failure: " + e.getMessage(), TextFormat.RED)));
 					return;
 				}
 				

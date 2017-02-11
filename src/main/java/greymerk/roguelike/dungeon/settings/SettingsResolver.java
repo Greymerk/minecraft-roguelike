@@ -1,8 +1,5 @@
 package greymerk.roguelike.dungeon.settings;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -33,12 +30,11 @@ import greymerk.roguelike.worldgen.IWorldEditor;
 public class SettingsResolver {
 
 	
-	private Map<String, DungeonSettings> settings;
-	private List<DungeonSettings> builtin;
+	private SettingsContainer settings;
 	private DungeonSettings base;
 	
 	public SettingsResolver() throws Exception{
-		settings = new HashMap<String, DungeonSettings>();
+		settings = new SettingsContainer();
 		DungeonSettings base = new SettingsBlank();
 		base = new DungeonSettings(base, new SettingsRooms());
 		base = new DungeonSettings(base, new SettingsSecrets());
@@ -50,17 +46,14 @@ public class SettingsResolver {
 		base.setCriteria(new SpawnCriteria());
 		this.base = base;
 
-		this.builtin = new ArrayList<DungeonSettings>();
-		this.builtin.add(new SettingsDesertTheme());
-		this.builtin.add(new SettingsGrasslandTheme());
-		this.builtin.add(new SettingsJungleTheme());
-		this.builtin.add(new SettingsSwampTheme());
-		this.builtin.add(new SettingsMountainTheme());
-		this.builtin.add(new SettingsForestTheme());
-		this.builtin.add(new SettingsMesaTheme());
-		this.builtin.add(new SettingsIceTheme());
-		
-
+		this.settings.put(SettingsContainer.BUILTIN_NAMESPACE, new SettingsDesertTheme());
+		this.settings.put(SettingsContainer.BUILTIN_NAMESPACE, new SettingsGrasslandTheme());
+		this.settings.put(SettingsContainer.BUILTIN_NAMESPACE, new SettingsJungleTheme());
+		this.settings.put(SettingsContainer.BUILTIN_NAMESPACE, new SettingsSwampTheme());
+		this.settings.put(SettingsContainer.BUILTIN_NAMESPACE, new SettingsMountainTheme());
+		this.settings.put(SettingsContainer.BUILTIN_NAMESPACE, new SettingsForestTheme());
+		this.settings.put(SettingsContainer.BUILTIN_NAMESPACE, new SettingsMesaTheme());
+		this.settings.put(SettingsContainer.BUILTIN_NAMESPACE, new SettingsIceTheme());
 
 	}
 	
@@ -72,12 +65,73 @@ public class SettingsResolver {
 			} catch (Exception e){
 				throw new Exception("Error in: " + name + " : " + e.getMessage());
 			}
-			settings.put(toAdd.getName(), toAdd);
+			settings.put(toAdd);
 		}
+	}
+
+	// called from Dungeon class
+	public ISettings getSettings(IWorldEditor editor, Random rand, Coord pos){
+		DungeonSettings builtin = this.getBuiltin(editor, rand, pos);
+		DungeonSettings custom = this.getCustom(editor, rand, pos);
+		
+		// there are no valid dungeons for this location
+		if(builtin == null && custom == null) return null;
+		
+		DungeonSettings exclusive = (custom != null) ? custom : builtin;
+				
+		return new DungeonSettings(this.base, applyInclusives(exclusive, editor, rand, pos));
+	}
+	
+	public ISettings getWithName(String name, IWorldEditor editor, Random rand, Coord pos){
+		DungeonSettings byName = this.getByName(name);
+		DungeonSettings withInclusives = applyInclusives(byName, editor, rand, pos);
+		return new DungeonSettings(this.base, withInclusives);
+	}
+	
+	public ISettings getDefaultSettings(){
+		return new DungeonSettings(base);
+	}
+
+	public DungeonSettings getByName(String name){
+		SettingIdentifier id;
+		
+		try{
+			id = new SettingIdentifier(name);
+		} catch (Exception e){
+			return null;
+		}
+		
+		if(!this.settings.contains(id)) return null;
+		DungeonSettings custom = new DungeonSettings(this.settings.get(id));
+		return processInheritance(custom, this.settings);
+	}
+	
+	public ISettings getWithDefault(SettingIdentifier id) {
+		if(!this.settings.contains(id)) return null;
+		DungeonSettings custom = new DungeonSettings(this.settings.get(id));
+		custom = processInheritance(custom, this.settings);
+		return new DungeonSettings(this.base, custom);
+	}
+	
+	public static DungeonSettings processInheritance(DungeonSettings toProcess, SettingsContainer settings){
+		DungeonSettings setting = new DungeonSettings(toProcess);
+		
+		for(SettingIdentifier id : toProcess.getInherits()){
+			if(settings.contains(id)){
+				DungeonSettings custom = new DungeonSettings(settings.get(id));
+				if(!custom.getInherits().isEmpty()){
+					custom = processInheritance(custom, settings);
+				}
+				
+				setting = new DungeonSettings(setting, custom);
+			}
+		}
+		
+		return setting;
 	}
 	
 	private DungeonSettings parseFile(String content) throws Exception{
-				
+		
 		JsonParser jParser = new JsonParser();
 		JsonObject root = null;
 		DungeonSettings toAdd = null;
@@ -96,26 +150,10 @@ public class SettingsResolver {
 		return toAdd;
 	}
 	
-
-	
-	public ISettings getSettings(IWorldEditor editor, Random rand, Coord pos){
-		
-		DungeonSettings regular = new DungeonSettings(this.base, this.getBuiltin(editor, rand, pos));
-		DungeonSettings custom = this.getCustom(editor, rand, pos);
-		return new DungeonSettings(regular, custom);
-		
-	}
-	
-	public ISettings getWithName(String name, IWorldEditor editor, Random rand, Coord pos){
-		DungeonSettings regular = new DungeonSettings(this.base, this.getBuiltin(editor, rand, pos));
-		DungeonSettings custom = this.getByName(name);
-		return new DungeonSettings(regular, custom);
-	}
-	
 	private DungeonSettings getBuiltin(IWorldEditor editor, Random rand, Coord pos){
 		WeightedRandomizer<DungeonSettings> settingsRandomizer = new WeightedRandomizer<DungeonSettings>();
 
-		for(DungeonSettings setting : this.builtin){
+		for(DungeonSettings setting : settings.getBuiltinSettings()){
 			if(setting.isValid(editor, pos)){
 				settingsRandomizer.add(new WeightedChoice<DungeonSettings>(setting, setting.criteria.weight));
 			}
@@ -123,65 +161,36 @@ public class SettingsResolver {
 		
 		DungeonSettings picked = settingsRandomizer.get(rand);
 		
-		if(picked == null){
-			return new DungeonSettings(this.base);
-		}
-		
 		return picked;
 	}
 	
 	private DungeonSettings getCustom(IWorldEditor editor, Random rand, Coord pos){
 		
-		DungeonSettings custom = new SettingsBlank();
-		for(DungeonSettings setting : this.settings.values()){
-			if(!setting.isValid(editor, pos)) continue;
-			setting = processInheritance(setting, settings);
-			custom = new DungeonSettings(custom, setting);
-		}
+		WeightedRandomizer<DungeonSettings> settingsRandomizer = new WeightedRandomizer<DungeonSettings>();
 		
-		return custom;
-	}
-	
-	public ISettings getDefaultSettings(){
-		return new DungeonSettings(base);
-	}
-
-	public DungeonSettings getByName(String name){
-		if(!this.settings.containsKey(name)) return null;
-		DungeonSettings custom = new DungeonSettings(this.settings.get(name));
-		return processInheritance(custom, this.settings);
-	}
-	
-	public ISettings getWithDefault(String name) {
-		if(!this.settings.containsKey(name)) return null;
-		DungeonSettings custom = new DungeonSettings(this.settings.get(name));
-		custom = processInheritance(custom, this.settings);
-		return new DungeonSettings(this.base, custom);
-	}
-	
-	public static DungeonSettings processInheritance(DungeonSettings toProcess, Map<String, DungeonSettings> settings){
-		DungeonSettings setting = new DungeonSettings(toProcess);
-		
-		for(String name : toProcess.getInherits()){
-			if(settings.containsKey(name)){
-				DungeonSettings custom = new DungeonSettings(settings.get(name));
-				if(!custom.getInherits().isEmpty()){
-					custom = processInheritance(custom, settings);
-				}
-				
-				setting = new DungeonSettings(setting, custom);
+		for(DungeonSettings setting : settings.getCustomSettings()){
+			if(setting.isValid(editor, pos) && setting.isExclusive()){
+				settingsRandomizer.add(new WeightedChoice<DungeonSettings>(setting, setting.criteria.weight));
 			}
 		}
 		
-		return setting;
+		DungeonSettings chosen = settingsRandomizer.get(rand);
+		
+		if(chosen == null) return null;
+		
+		return processInheritance(chosen, settings);
 	}
 	
-	@Override
-	public String toString(){
-		String s = "";
-		for(String key : this.settings.keySet()){
-			s += key += " ";
+	private DungeonSettings applyInclusives(DungeonSettings setting, IWorldEditor editor, Random rand, Coord pos){
+		
+		DungeonSettings toReturn = new DungeonSettings(setting);
+		
+		for(DungeonSettings s : settings.getCustomSettings()){
+			if(!s.isValid(editor, pos)) continue;
+			if(s.isExclusive()) continue;
+			toReturn = new DungeonSettings(toReturn, s);
 		}
-		return s;
+		
+		return toReturn;
 	}
 }

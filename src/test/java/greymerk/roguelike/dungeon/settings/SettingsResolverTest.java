@@ -35,14 +35,14 @@ public class SettingsResolverTest {
 		DungeonSettings main = new DungeonSettings();
 		DungeonSettings toInherit = new DungeonSettings();
 		
-		Map<String, DungeonSettings> settings = new HashMap<String, DungeonSettings>();
+		SettingsContainer settings = new SettingsContainer();
 		
-		main.name = "main";
-		toInherit.name = "inherit";
-		settings.put(main.name, main);
-		settings.put(toInherit.name, toInherit);
+		main.id = new SettingIdentifier("main");
+		toInherit.id = new SettingIdentifier("inherit");
+		settings.put(main);
+		settings.put(toInherit);
 		
-		main.inherit.add(toInherit.name);
+		main.inherit.add(toInherit.id);
 		
 		ItemStack stick = new ItemStack(Items.STICK);
 		
@@ -70,17 +70,17 @@ public class SettingsResolverTest {
 		DungeonSettings child = new DungeonSettings();
 		DungeonSettings grandchild = new DungeonSettings();
 		
-		Map<String, DungeonSettings> settings = new HashMap<String, DungeonSettings>();
+		SettingsContainer settings = new SettingsContainer();
 		
-		main.name = "main";
-		child.name = "child";
-		grandchild.name = "grandchild";
-		settings.put(main.name, main);
-		settings.put(child.name, child);
-		settings.put(grandchild.name, grandchild);
+		main.id = new SettingIdentifier("main");
+		child.id = new SettingIdentifier("child");
+		grandchild.id = new SettingIdentifier("grandchild");
+		settings.put(main);
+		settings.put(child);
+		settings.put(grandchild);
 		
-		main.inherit.add(child.name);
-		child.inherit.add(grandchild.name);
+		main.inherit.add(child.id);
+		child.inherit.add(grandchild.id);
 		
 		ItemStack stick = new ItemStack(Items.STICK);
 		ItemStack diamond = new ItemStack(Items.DIAMOND);
@@ -112,20 +112,20 @@ public class SettingsResolverTest {
 		DungeonSettings sibling = new DungeonSettings();
 		DungeonSettings grandchild = new DungeonSettings();
 		
-		Map<String, DungeonSettings> settings = new HashMap<String, DungeonSettings>();
+		SettingsContainer settings = new SettingsContainer();
 		
-		main.name = "main";
-		child.name = "child";
-		sibling.name = "sibling";
-		grandchild.name = "grandchild";
-		settings.put(main.name, main);
-		settings.put(child.name, child);
-		settings.put(sibling.name, sibling);
-		settings.put(grandchild.name, grandchild);
+		main.id = new SettingIdentifier("main");
+		child.id = new SettingIdentifier("child");
+		sibling.id = new SettingIdentifier("sibling");
+		grandchild.id = new SettingIdentifier("grandchild");
+		settings.put(main);
+		settings.put(child);
+		settings.put(sibling);
+		settings.put(grandchild);
 		
-		main.inherit.add(child.name);
-		main.inherit.add(sibling.name);
-		child.inherit.add(grandchild.name);
+		main.inherit.add(child.id);
+		main.inherit.add(sibling.id);
+		child.inherit.add(grandchild.id);
 		
 		ItemStack stick = new ItemStack(Items.STICK);
 		ItemStack coal = new ItemStack(Items.COAL);

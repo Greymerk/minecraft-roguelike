@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import greymerk.roguelike.dungeon.settings.DungeonSettings;
+import greymerk.roguelike.dungeon.settings.SettingIdentifier;
+import greymerk.roguelike.dungeon.settings.SettingsContainer;
 import greymerk.roguelike.dungeon.settings.SpawnCriteria;
 import greymerk.roguelike.dungeon.settings.TowerSettings;
 import greymerk.roguelike.dungeon.towers.Tower;
@@ -14,6 +16,7 @@ public class SettingsIceTheme extends DungeonSettings{
 	
 	public SettingsIceTheme(){
 		
+		this.id = new SettingIdentifier(SettingsContainer.BUILTIN_NAMESPACE, "ice");
 		this.criteria = new SpawnCriteria();
 		List<BiomeDictionary.Type> biomes = new ArrayList<BiomeDictionary.Type>();
 		biomes.add(BiomeDictionary.Type.SNOWY);
