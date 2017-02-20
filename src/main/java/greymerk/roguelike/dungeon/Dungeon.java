@@ -49,13 +49,21 @@ public class Dungeon implements IDungeon{
 		try{
 			initResolver();
 		} catch(Exception e) {
-			// do nothing
+			System.err.println(e.getMessage());
 		}
 	}
 	
 	public static void initResolver() throws Exception{
 		File settingsDir = new File(SETTINGS_DIRECTORY);
-		if(!settingsDir.exists() || !settingsDir.isDirectory()) return;
+		
+		if(settingsDir.exists() && !settingsDir.isDirectory()){
+			throw new Exception("Settings directory is a file");
+		}
+		
+		if(!settingsDir.exists()){
+			settingsDir.mkdir();
+		}
+		
 		File[] settingsFiles = settingsDir.listFiles();
 		Arrays.sort(settingsFiles);
 		
@@ -84,13 +92,14 @@ public class Dungeon implements IDungeon{
 	
 	public void generateNear(Random rand, int x, int z){
 		int attempts = 50;
+		SettingsResolver resolver = Dungeon.settingsResolver;
 		
 		for(int i = 0;i < attempts;i++){
 			Coord location = getNearbyCoord(rand, x, z, 40, 100);
 			
 			if(!validLocation(rand, location.getX(), location.getZ())) continue;
 			
-			ISettings setting = settingsResolver.getSettings(editor, rand, location);
+			ISettings setting = resolver.getSettings(editor, rand, location);
 			
 			if(setting == null) return;
 			

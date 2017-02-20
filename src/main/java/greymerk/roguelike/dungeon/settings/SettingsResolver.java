@@ -154,7 +154,7 @@ public class SettingsResolver {
 	private DungeonSettings getBuiltin(IWorldEditor editor, Random rand, Coord pos){
 		WeightedRandomizer<DungeonSettings> settingsRandomizer = new WeightedRandomizer<DungeonSettings>();
 
-		for(DungeonSettings setting : settings.getBuiltinSettings()){
+		for(DungeonSettings setting : settings.getBuiltinSettings()){			
 			if(setting.isValid(editor, pos)){
 				settingsRandomizer.add(new WeightedChoice<DungeonSettings>(setting, setting.criteria.weight));
 			}
