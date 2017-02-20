@@ -33,13 +33,16 @@ public class SettingIdentifier {
 		return this.name;
 	}
 	
-	
-	
 	@Override
 	public boolean equals(Object o){
 		SettingIdentifier other = (SettingIdentifier)o;
 		if(this.namespace != other.namespace) return false;
 		if(this.name != other.name) return false;
 		return true;
+	}
+	
+	@Override
+	public String toString(){
+		return this.getNamespace() + ":" + this.getName();
 	}
 }

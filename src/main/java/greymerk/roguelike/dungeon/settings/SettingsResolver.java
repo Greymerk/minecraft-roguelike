@@ -46,14 +46,14 @@ public class SettingsResolver {
 		base.setCriteria(new SpawnCriteria());
 		this.base = base;
 
-		this.settings.put(SettingsContainer.BUILTIN_NAMESPACE, new SettingsDesertTheme());
-		this.settings.put(SettingsContainer.BUILTIN_NAMESPACE, new SettingsGrasslandTheme());
-		this.settings.put(SettingsContainer.BUILTIN_NAMESPACE, new SettingsJungleTheme());
-		this.settings.put(SettingsContainer.BUILTIN_NAMESPACE, new SettingsSwampTheme());
-		this.settings.put(SettingsContainer.BUILTIN_NAMESPACE, new SettingsMountainTheme());
-		this.settings.put(SettingsContainer.BUILTIN_NAMESPACE, new SettingsForestTheme());
-		this.settings.put(SettingsContainer.BUILTIN_NAMESPACE, new SettingsMesaTheme());
-		this.settings.put(SettingsContainer.BUILTIN_NAMESPACE, new SettingsIceTheme());
+		this.settings.put(new SettingsDesertTheme());
+		this.settings.put(new SettingsGrasslandTheme());
+		this.settings.put(new SettingsJungleTheme());
+		this.settings.put(new SettingsSwampTheme());
+		this.settings.put(new SettingsMountainTheme());
+		this.settings.put(new SettingsForestTheme());
+		this.settings.put(new SettingsMesaTheme());
+		this.settings.put(new SettingsIceTheme());
 
 	}
 	
@@ -84,6 +84,7 @@ public class SettingsResolver {
 	
 	public ISettings getWithName(String name, IWorldEditor editor, Random rand, Coord pos){
 		DungeonSettings byName = this.getByName(name);
+		if(byName == null) return null;
 		DungeonSettings withInclusives = applyInclusives(byName, editor, rand, pos);
 		return new DungeonSettings(this.base, withInclusives);
 	}
@@ -102,15 +103,15 @@ public class SettingsResolver {
 		}
 		
 		if(!this.settings.contains(id)) return null;
-		DungeonSettings custom = new DungeonSettings(this.settings.get(id));
-		return processInheritance(custom, this.settings);
+		DungeonSettings setting = new DungeonSettings(this.settings.get(id));
+		return processInheritance(setting, this.settings);
 	}
 	
 	public ISettings getWithDefault(SettingIdentifier id) {
 		if(!this.settings.contains(id)) return null;
-		DungeonSettings custom = new DungeonSettings(this.settings.get(id));
-		custom = processInheritance(custom, this.settings);
-		return new DungeonSettings(this.base, custom);
+		DungeonSettings setting = new DungeonSettings(this.settings.get(id));
+		setting = processInheritance(setting, this.settings);
+		return new DungeonSettings(this.base, setting);
 	}
 	
 	public static DungeonSettings processInheritance(DungeonSettings toProcess, SettingsContainer settings){
@@ -123,7 +124,7 @@ public class SettingsResolver {
 					custom = processInheritance(custom, settings);
 				}
 				
-				setting = new DungeonSettings(setting, custom);
+				setting = new DungeonSettings(custom, setting);
 			}
 		}
 		
@@ -192,5 +193,10 @@ public class SettingsResolver {
 		}
 		
 		return toReturn;
+	}
+	
+	@Override
+	public String toString(){
+		return this.settings.toString();		
 	}
 }

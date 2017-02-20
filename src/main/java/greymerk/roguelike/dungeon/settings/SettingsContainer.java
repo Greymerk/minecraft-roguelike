@@ -19,15 +19,8 @@ public class SettingsContainer {
 	
 	public void put(DungeonSettings setting){
 		String namespace = setting.getNameSpace() != null ? setting.getNameSpace() : DEFAULT_NAMESPACE;
-		put(namespace, setting);
-	}
-	
-	public void put(String namespace, DungeonSettings setting){
 		String name = setting.getName();
-		put(namespace, name, setting);
-	}
-	
-	public void put(String namespace, String name, DungeonSettings setting){
+		
 		if(!settingsByNamespace.containsKey(namespace)){
 			settingsByNamespace.put(namespace, new HashMap<String, DungeonSettings>());
 		}
@@ -78,5 +71,19 @@ public class SettingsContainer {
 		if(!settings.containsKey(id.getName())) return false;
 		
 		return true;
+	}
+	
+	@Override
+	public String toString(){
+		String strg = "";
+		for(String namespace : settingsByNamespace.keySet()){
+			Map<String, DungeonSettings> settings = settingsByNamespace.get(namespace); 
+				
+			for(DungeonSettings setting : settings.values()){
+				strg += setting.id.toString() + " ";
+			}
+		}
+		
+		return strg;
 	}
 }
