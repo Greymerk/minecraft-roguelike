@@ -80,11 +80,11 @@ public class DungeonFactory implements IDungeonFactory {
 		}
 		
 		for(DungeonRoom room : other.singles.keySet()){
-			this.singles.put(room, base.singles.get(room));
+			this.singles.put(room, other.singles.get(room));
 		}
 		
 		for(DungeonRoom room : other.multiple.keySet()){
-			this.multiple.put(room, base.multiple.get(room));
+			this.multiple.put(room, other.multiple.get(room));
 		}
 		
 	}
@@ -132,21 +132,14 @@ public class DungeonFactory implements IDungeonFactory {
 		Set<DungeonRoom> keyset = this.singles.keySet();
 		if(keyset.isEmpty()) return null;
 		
-		int choice = rand.nextInt(keyset.size());
-		DungeonRoom type = null;
-		for(DungeonRoom t : keyset){
-			if(choice == 0){
-				type = t;
-				break;
-			}
-			--choice;
-		}
+		DungeonRoom[] rooms = keyset.toArray(new DungeonRoom[0]);
+		DungeonRoom type = rooms[rand.nextInt(rooms.length)];
 		
-		if(singles.get(type) <= 1){
-			singles.remove(type);
+		if(this.singles.get(type) <= 1){
+			this.singles.remove(type);
+		} else {
+			this.singles.put(type, this.singles.get(type) - 1);	
 		}
-		
-		singles.put(type, singles.get(type) - 1);
 		
 		return DungeonRoom.getInstance(type);
 	}

@@ -1,11 +1,17 @@
 package greymerk.roguelike.dungeon.settings;
 
+import java.util.Random;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.dungeon.base.DungeonFactory;
 import greymerk.roguelike.dungeon.base.DungeonRoom;
+import greymerk.roguelike.dungeon.base.IDungeonRoom;
+import greymerk.roguelike.dungeon.rooms.DungeonCorner;
+import greymerk.roguelike.dungeon.rooms.DungeonsPit;
+import greymerk.roguelike.dungeon.rooms.DungeonsWood;
 import net.minecraft.init.Bootstrap;
 
 public class DungeonFactoryTest {
@@ -96,5 +102,23 @@ public class DungeonFactoryTest {
 		third.addSingle(DungeonRoom.CREEPER, 2);
 		
 		assert(third.equals(merge));
+	}
+	
+	@Test
+	public void testGetSingle(){
+		
+		Random rand = new Random();
+		
+		DungeonFactory rooms = new DungeonFactory(DungeonRoom.CORNER);
+		assert(rooms.get(rand) instanceof DungeonCorner);	
+		
+		rooms.addSingle(DungeonRoom.CAKE, 2);
+		assert(rooms.get(rand) instanceof DungeonsWood);
+		assert(rooms.get(rand) instanceof DungeonsWood);
+		assert(rooms.get(rand) instanceof DungeonCorner);	
+		
+		rooms = new DungeonFactory(DungeonRoom.CORNER);
+		rooms.addSingle(DungeonRoom.PIT); 
+		assert(rooms.get(rand) instanceof DungeonsPit);		
 	}
 }
