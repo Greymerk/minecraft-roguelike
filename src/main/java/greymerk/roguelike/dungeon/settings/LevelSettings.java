@@ -34,6 +34,8 @@ public class LevelSettings {
 		numRooms = RogueConfig.getInt(RogueConfig.LEVELMAXROOMS);
 		range = RogueConfig.getInt(RogueConfig.LEVELRANGE);
 		scatter = RogueConfig.getInt(RogueConfig.LEVELSCATTER);
+		rooms = new DungeonFactory();
+		secrets = new SecretFactory();
 		levelDifficulty = -1;
 	}
 	
@@ -65,12 +67,12 @@ public class LevelSettings {
 		
 		this.levelDifficulty = (base.levelDifficulty != other.levelDifficulty && other.levelDifficulty != -1) || base.levelDifficulty == -1 ? other.levelDifficulty : base.levelDifficulty;
 		
-		if(base.rooms != null || other.rooms != null){
-			this.rooms = other.rooms == null 
-					? new DungeonFactory(base.rooms) 
-					: new DungeonFactory(other.rooms);
+		if(overrides.contains(SettingsType.ROOMS)){
+			this.rooms = new DungeonFactory(base.rooms);
+		} else {
+			this.rooms = new DungeonFactory(base.rooms, other.rooms);			
 		}
-
+		
 		if(overrides.contains(SettingsType.SECRETS)){
 			this.secrets = new SecretFactory(other.secrets);
 		} else {
@@ -96,8 +98,8 @@ public class LevelSettings {
 		this.range = data.has("range") ? data.get("range").getAsInt() : RogueConfig.getInt(RogueConfig.LEVELRANGE);
 		this.scatter = data.has("scatter") ? data.get("scatter").getAsInt() : RogueConfig.getInt(RogueConfig.LEVELSCATTER);
 		this.levelDifficulty = data.has("diff") ? data.get("diff").getAsInt() : -1;
-		this.rooms = data.has("rooms") ? new DungeonFactory(data.get("rooms").getAsJsonArray()) : null;
-		this.secrets = data.has("secrets") ? new SecretFactory(data.get("secrets").getAsJsonArray()) : null;
+		if(data.has("rooms")) this.rooms = new DungeonFactory(data.get("rooms").getAsJsonArray());
+		if(data.has("secrets")) this.secrets = new SecretFactory(data.get("secrets").getAsJsonArray());
 		this.theme = data.has("theme") ? Theme.create(data.get("theme").getAsJsonObject()) : null;
 		this.segments = data.has("segments") ? new SegmentGenerator(data.get("segments").getAsJsonObject()) : null;
 		this.spawners = data.has("spawners") ? new SpawnerSettings(data.get("spawners").getAsJsonObject()) : null;
@@ -205,5 +207,14 @@ public class LevelSettings {
 		this.segments = toCopy.segments != null ? new SegmentGenerator(toCopy.segments) : null;
 		this.spawners = toCopy.spawners;
 		this.generator = toCopy.generator;
+	}
+	
+	@Override
+	public boolean equals(Object o){
+		LevelSettings other = (LevelSettings) o;
+		if(other.generator != this.generator) return false;
+		if(!this.secrets.equals(other.secrets)) return false;
+		if(!this.rooms.equals(other.rooms)) return false;
+		return true;
 	}
 }

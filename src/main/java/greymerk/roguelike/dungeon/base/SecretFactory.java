@@ -30,7 +30,7 @@ public class SecretFactory{
 		}
 	}
 	
-	public SecretFactory(SecretFactory base, SecretFactory override){
+	public SecretFactory(SecretFactory base, SecretFactory other){
 		this();
 		if(base != null){
 			for(DungeonRoom type : base.secrets.keySet()){
@@ -39,9 +39,9 @@ public class SecretFactory{
 			}
 		}
 		
-		if(override != null){
-			for(DungeonRoom type : override.secrets.keySet()){
-				int count = override.secrets.get(type).getCount();
+		if(other != null){
+			for(DungeonRoom type : other.secrets.keySet()){
+				int count = other.secrets.get(type).getCount();
 				this.addRoom(type, count);
 			}	
 		}

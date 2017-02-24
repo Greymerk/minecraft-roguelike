@@ -28,5 +28,4 @@ public class SecretRoomTest {
 		assert(!twoBeds.equals(twoCakes));
 		
 	}
-
 }

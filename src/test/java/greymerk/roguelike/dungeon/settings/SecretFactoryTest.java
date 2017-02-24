@@ -62,8 +62,10 @@ public class SecretFactoryTest {
 		secrets3.addRoom(DungeonRoom.BEDROOM);
 		
 		assert(secrets1.equals(secrets3));
-		
-		
 	}
 	
+	@Test
+	public void testMerge(){
+		
+	}
 }
