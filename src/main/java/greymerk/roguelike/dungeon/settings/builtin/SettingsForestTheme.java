@@ -36,7 +36,6 @@ public class SettingsForestTheme extends DungeonSettings{
 			
 			switch(i){
 			case 0:
-				secrets.addRoom(DungeonRoom.BEDROOM);
 				secrets.addRoom(DungeonRoom.SMITH);
 				break;
 			case 1:

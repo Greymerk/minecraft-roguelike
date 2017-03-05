@@ -89,13 +89,39 @@ public enum Theme {
 		return new ThemeBase(primary, secondary);
 	}
 	
-	public static ITheme create(ITheme base, ITheme override){
-		BlockSet primary = override.getPrimary() != null
-				? new BlockSet(base.getPrimary(), override.getPrimary())
-				: new BlockSet(base.getPrimary());
-		BlockSet secondary = override.getSecondary() != null
-				? new BlockSet(base.getSecondary(), override.getSecondary())
-				: new BlockSet(base.getSecondary());
+	public static ITheme create(ITheme base, ITheme other){
+		if(base == null && other == null){
+			return null;
+		}
+		
+		if(other == null && base != null){
+			return create(base);
+		}
+		
+		if(other != null && base == null){
+			return create(other);
+		}
+		
+		BlockSet primary = other.getPrimary() != null
+				? new BlockSet(
+						base.getPrimary() != null 
+							? new BlockSet(base.getPrimary()) 
+							: null,
+						other.getPrimary()
+						)
+				: base.getPrimary() != null 
+					? new BlockSet(base.getPrimary())
+					: null;
+		BlockSet secondary = other.getSecondary() != null
+				? new BlockSet(
+						base.getPrimary() != null 
+							? new BlockSet(base.getPrimary()) 
+							: null,
+						other.getSecondary()
+						)
+				: base.getSecondary() != null
+					? new BlockSet(base.getSecondary())
+					: null;
 		return new ThemeBase(primary, secondary);
 	}
 	

@@ -155,7 +155,7 @@ public class LevelSettingsTest {
 	}
 	
 	@Test
-	public void testJson() throws Exception{
+	public void testJsonThemePrimary() throws Exception{
 		
 		LevelSettings level;
 		
@@ -175,6 +175,32 @@ public class LevelSettingsTest {
 		
 		ITheme t = level.getTheme();
 		IBlockSet bs = t.getPrimary();
+		IBlockFactory f = bs.getFloor();
+		assert(f.equals(BlockType.get(BlockType.DIRT)));
+		
+	}
+	
+	@Test
+	public void testJsonThemeSecondary() throws Exception{
+		
+		LevelSettings level;
+		
+		JsonObject json = new JsonObject();
+		
+		JsonObject theme = new JsonObject();
+		json.add("theme", theme);
+		
+		JsonObject secondary = new JsonObject();
+		theme.add("secondary", secondary);
+		
+		JsonObject floor = new JsonObject();
+		secondary.add("floor", floor);
+		floor.addProperty("name", "minecraft:dirt");
+		
+		level = new LevelSettings(json);
+		
+		ITheme t = level.getTheme();
+		IBlockSet bs = t.getSecondary();
 		IBlockFactory f = bs.getFloor();
 		assert(f.equals(BlockType.get(BlockType.DIRT)));
 		

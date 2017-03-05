@@ -7,6 +7,7 @@ import com.google.gson.JsonObject;
 
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.worldgen.blocks.BlockType;
+import greymerk.roguelike.worldgen.blocks.Stair;
 import net.minecraft.init.Bootstrap;
 
 public class ThemeTest {
@@ -41,7 +42,7 @@ public class ThemeTest {
 	}
 	
 	@Test
-	public void noSecondary() throws Exception{
+	public void noSecondary() throws Exception {
 		JsonObject json = new JsonObject();
 		JsonObject primary = new JsonObject();
 		json.add("primary", primary);
@@ -52,5 +53,33 @@ public class ThemeTest {
 		
 		ITheme t = Theme.create(json);
 		assert(t.getPrimary().getFloor().equals(BlockType.get(BlockType.DIRT)));
+	}
+	
+	@Test
+	public void noPrimary() throws Exception {
+		JsonObject json = new JsonObject();
+		JsonObject secondary = new JsonObject();
+		json.add("secondary", secondary);
+		
+		JsonObject floor = new JsonObject();
+		secondary.add("floor", floor);
+		floor.addProperty("name", "minecraft:dirt");
+		
+		ITheme t = Theme.create(json);
+		assert(t.getSecondary().getFloor().equals(BlockType.get(BlockType.DIRT)));
+	}
+	
+	@Test
+	public void merge() throws Exception {
+		
+		IBlockSet bs = new BlockSet(BlockType.get(BlockType.DIRT), null, null);
+		
+		ITheme base = new ThemeBase(bs, null);
+		ITheme other = new ThemeBase(null, bs);
+		
+		ITheme merge = Theme.create(null, null);
+		merge = Theme.create(base, null);
+		merge = Theme.create(null, other);
+		merge = Theme.create(base, other);
 	}
 }
