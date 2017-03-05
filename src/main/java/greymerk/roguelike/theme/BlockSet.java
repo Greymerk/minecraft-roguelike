@@ -57,16 +57,17 @@ public class BlockSet implements IBlockSet {
 	
 	public BlockSet(JsonObject json, IBlockSet base){
 		
+		
 		if(json.has("walls")){
 			this.walls = BlockProvider.create(json.get("walls").getAsJsonObject());	
-		} else {
+		} else if(base != null){
 			this.walls = base.getWall();
 		}
 		
 
 		if(json.has("floor")){
 			this.floor = BlockProvider.create(json.get("floor").getAsJsonObject());
-		} else {
+		} else if(base != null){
 			this.floor = base.getFloor();
 		}
 		
@@ -75,31 +76,31 @@ public class BlockSet implements IBlockSet {
 			this.stair = stair.has("data")
 					? new MetaStair(new MetaBlock(stair.get("data").getAsJsonObject()))
 					: new MetaStair(new MetaBlock(stair));
-		} else {
+		} else if(base != null){
 			this.stair = base.getStair();
 		}
 
 		if(json.has("pillar")){
 			this.pillar = BlockProvider.create(json.get("pillar").getAsJsonObject());
-		} else {
+		} else if(base != null){
 			this.pillar = base.getPillar();
 		}
 		
 		if(json.has("door")){
 			this.door = new Door(json.get("door").getAsJsonObject());
-		} else {
+		} else if(base != null){
 			this.door = base.getDoor();
 		}
 		
 		if(json.has("lightblock")){
 			this.lightblock = BlockProvider.create(json.get("lightblock").getAsJsonObject());
-		} else {
+		} else if(base != null){
 			this.lightblock = base.getLightBlock();
 		}
 		
 		if(json.has("liquid")){
 			this.liquid = BlockProvider.create(json.get("liquid").getAsJsonObject());
-		} else {
+		} else if(base != null){
 			this.liquid = base.getLiquid();
 		}
 		
@@ -113,6 +114,16 @@ public class BlockSet implements IBlockSet {
 		this.door = toCopy.getDoor();
 		this.lightblock = toCopy.getLightBlock();
 		this.liquid = toCopy.getLiquid();
+	}
+	
+	public BlockSet(IBlockSet base, IBlockSet other){
+		this.walls = other.getWall() != null ? other.getWall() : base.getWall();
+		this.floor = other.getFloor() != null ? other.getFloor() : base.getFloor();
+		this.stair = other.getStair() != null ? other.getStair() : base.getStair();
+		this.pillar = other.getPillar() != null ? other.getPillar() : base.getPillar();
+		this.door = other.getDoor() != null ? other.getDoor() : base.getDoor();
+		this.lightblock = other.getLightBlock() != null ? other.getLightBlock() : base.getLightBlock();
+		this.liquid = other.getLiquid() != null ? other.getLiquid() : base.getLiquid();
 	}
 	
 	@Override

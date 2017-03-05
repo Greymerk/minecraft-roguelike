@@ -57,14 +57,9 @@ public enum Theme {
 	
 	public static ITheme create(JsonObject json) throws Exception{
 				
-		ITheme base;
-		
-		if(json.has("base")){
-			base = Theme.getTheme(Theme.get(json.get("base").getAsString()));
-		} else {
-			base = Theme.getTheme(Theme.OAK);
-		}
-		
+		ITheme base = json.has("base")
+			? Theme.getTheme(Theme.get(json.get("base").getAsString()))
+			: null;
 		
 		BlockSet primary = null;
 		BlockSet secondary = null;
@@ -72,27 +67,36 @@ public enum Theme {
 		// primary blocks
 		if(json.has("primary")){
 			JsonObject data = json.get("primary").getAsJsonObject();		
-			primary = new BlockSet(data, base.getPrimary());
+			primary = new BlockSet(data, base != null ? base.getPrimary() : null);
 		}
 		
 		// secondary blocks
 		if(json.has("secondary")){
 			JsonObject data = json.get("secondary").getAsJsonObject();		
-			secondary = new BlockSet(data, base.getSecondary());
+			secondary = new BlockSet(data, base != null ? base.getSecondary() : null);
 		}
 
+		if(base == null){
+			return new ThemeBase(primary, secondary);
+		}
+		
 		return new ThemeBase((ThemeBase) base, primary, secondary);
 	}
 	
 	public static ITheme create(ITheme toCopy){
-		
-		ITheme base = Theme.getTheme(Theme.OAK);
-		
-		BlockSet primary = new BlockSet(toCopy.getPrimary());
-		BlockSet secondary = new BlockSet(toCopy.getSecondary());
-		
-		return new ThemeBase((ThemeBase) base, primary, secondary);
-		
+		BlockSet primary = toCopy.getPrimary() != null ? new BlockSet(toCopy.getPrimary()) : null;
+		BlockSet secondary = toCopy.getSecondary() != null ? new BlockSet(toCopy.getSecondary()) : null;
+		return new ThemeBase(primary, secondary);
+	}
+	
+	public static ITheme create(ITheme base, ITheme override){
+		BlockSet primary = override.getPrimary() != null
+				? new BlockSet(base.getPrimary(), override.getPrimary())
+				: new BlockSet(base.getPrimary());
+		BlockSet secondary = override.getSecondary() != null
+				? new BlockSet(base.getSecondary(), override.getSecondary())
+				: new BlockSet(base.getSecondary());
+		return new ThemeBase(primary, secondary);
 	}
 	
 	public static Theme get(String name) throws Exception{

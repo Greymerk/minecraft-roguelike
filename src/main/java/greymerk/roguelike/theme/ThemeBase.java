@@ -14,7 +14,7 @@ public class ThemeBase implements ITheme {
 		this.primary = primary == null ? base.primary : primary;
 		this.secondary = secondary == null ? base.secondary : secondary;
 	}
-	
+		
 	public ThemeBase(){}
 
 	@Override

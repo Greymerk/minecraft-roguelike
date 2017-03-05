@@ -36,7 +36,6 @@ public class DungeonFactory implements IDungeonFactory {
 		for(JsonElement e : json){
 			JsonObject entry = e.getAsJsonObject();
 			String mode = (entry.get("mode").getAsString()).toLowerCase();
-			
 			String type = (entry.get("type").getAsString()).toUpperCase();			
 			
 			if(!DungeonRoom.contains(type)){

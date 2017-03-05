@@ -6,11 +6,17 @@ import java.util.Set;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.google.gson.JsonObject;
+
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.dungeon.LevelGenerator;
 import greymerk.roguelike.dungeon.base.DungeonFactory;
 import greymerk.roguelike.dungeon.base.DungeonRoom;
 import greymerk.roguelike.dungeon.base.SecretFactory;
+import greymerk.roguelike.theme.IBlockSet;
+import greymerk.roguelike.theme.ITheme;
+import greymerk.roguelike.worldgen.IBlockFactory;
+import greymerk.roguelike.worldgen.blocks.BlockType;
 import net.minecraft.init.Bootstrap;
 
 public class LevelSettingsTest {
@@ -148,5 +154,29 @@ public class LevelSettingsTest {
 		
 	}
 	
-	
+	@Test
+	public void testJson() throws Exception{
+		
+		LevelSettings level;
+		
+		JsonObject json = new JsonObject();
+		
+		JsonObject theme = new JsonObject();
+		json.add("theme", theme);
+		
+		JsonObject primary = new JsonObject();
+		theme.add("primary", primary);
+		
+		JsonObject floor = new JsonObject();
+		primary.add("floor", floor);
+		floor.addProperty("name", "minecraft:dirt");
+		
+		level = new LevelSettings(json);
+		
+		ITheme t = level.getTheme();
+		IBlockSet bs = t.getPrimary();
+		IBlockFactory f = bs.getFloor();
+		assert(f.equals(BlockType.get(BlockType.DIRT)));
+		
+	}
 }

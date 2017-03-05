@@ -40,7 +40,7 @@ public class LevelSettings {
 	}
 	
 	public LevelSettings(LevelSettings toCopy){
-		apply(toCopy);
+		init(toCopy);
 	}
 	
 	public LevelSettings(LevelSettings base, LevelSettings other, Set<SettingsType> overrides){
@@ -51,11 +51,11 @@ public class LevelSettings {
 		}
 		
 		if(base == null && other != null){
-			apply(other); return;
+			init(other); return;
 		}
 		
 		if(base != null && other == null){
-			apply(base); return;
+			init(base); return;
 		}
 		
 		this.numRooms = other.numRooms != base.numRooms && other.numRooms != RogueConfig.getInt(RogueConfig.LEVELMAXROOMS) 
@@ -80,7 +80,11 @@ public class LevelSettings {
 		}
 
 		if(other.theme != null){
-			this.theme = Theme.create(other.theme);
+			if(base.theme == null || overrides.contains(SettingsType.THEMES)){
+				this.theme = Theme.create(other.theme);
+			} else {
+				this.theme = Theme.create(base.theme, other.theme);
+			}
 		} else if(base.theme != null){
 			this.theme = Theme.create(base.theme);
 		}
@@ -197,7 +201,7 @@ public class LevelSettings {
 		this.range = range;
 	}
 	
-	private void apply(LevelSettings toCopy){
+	private void init(LevelSettings toCopy){
 		this.numRooms = toCopy.numRooms;
 		this.range = toCopy.range;
 		this.scatter = toCopy.scatter;
