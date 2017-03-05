@@ -55,32 +55,89 @@ public enum Theme {
 		return theme;
 	}
 	
-	public static ITheme create(JsonObject json){
+	public static ITheme create(JsonObject json) throws Exception{
 				
-		ITheme theme;
+		ITheme base = json.has("base")
+			? Theme.getTheme(Theme.get(json.get("base").getAsString()))
+			: null;
+		
 		BlockSet primary = null;
 		BlockSet secondary = null;
 
 		// primary blocks
 		if(json.has("primary")){
 			JsonObject data = json.get("primary").getAsJsonObject();		
-			primary = new BlockSet(data);
+			primary = new BlockSet(data, base != null ? base.getPrimary() : null);
 		}
 		
 		// secondary blocks
 		if(json.has("secondary")){
 			JsonObject data = json.get("secondary").getAsJsonObject();		
-			secondary = new BlockSet(data);
+			secondary = new BlockSet(data, base != null ? base.getSecondary() : null);
 		}
-	
 
-		
-		if(json.has("base")){
-			theme = Theme.getTheme(Theme.valueOf(json.get("base").getAsString()));
-			return new ThemeBase((ThemeBase) theme, primary, secondary);
-		} else {
-			theme = Theme.getTheme(Theme.OAK);
-			return new ThemeBase((ThemeBase) theme, primary, secondary);
+		if(base == null){
+			return new ThemeBase(primary, secondary);
 		}
+		
+		return new ThemeBase((ThemeBase) base, primary, secondary);
 	}
+	
+	public static ITheme create(ITheme toCopy){
+		BlockSet primary = toCopy.getPrimary() != null ? new BlockSet(toCopy.getPrimary()) : null;
+		BlockSet secondary = toCopy.getSecondary() != null ? new BlockSet(toCopy.getSecondary()) : null;
+		return new ThemeBase(primary, secondary);
+	}
+	
+	public static ITheme create(ITheme base, ITheme other){
+		if(base == null && other == null){
+			return null;
+		}
+		
+		if(other == null && base != null){
+			return create(base);
+		}
+		
+		if(other != null && base == null){
+			return create(other);
+		}
+		
+		BlockSet primary = other.getPrimary() != null
+				? new BlockSet(
+						base.getPrimary() != null 
+							? new BlockSet(base.getPrimary()) 
+							: null,
+						other.getPrimary()
+						)
+				: base.getPrimary() != null 
+					? new BlockSet(base.getPrimary())
+					: null;
+		BlockSet secondary = other.getSecondary() != null
+				? new BlockSet(
+						base.getPrimary() != null 
+							? new BlockSet(base.getPrimary()) 
+							: null,
+						other.getSecondary()
+						)
+				: base.getSecondary() != null
+					? new BlockSet(base.getSecondary())
+					: null;
+		return new ThemeBase(primary, secondary);
+	}
+	
+	public static Theme get(String name) throws Exception{
+		if(!contains(name.toUpperCase())){
+			throw new Exception("No such theme: " + name);
+		}
+		
+		return valueOf(name.toUpperCase());
+	}
+	
+	public static boolean contains(String name){
+		for(Theme value : values()){
+			if(value.toString().equals(name)) return true;
+		}
+		return false;
+	}
+	
 }

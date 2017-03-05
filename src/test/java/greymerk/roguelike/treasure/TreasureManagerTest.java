@@ -2,20 +2,29 @@ package greymerk.roguelike.treasure;
 
 import java.util.Random;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import greymerk.roguelike.util.WeightedChoice;
 import greymerk.roguelike.util.WeightedRandomizer;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IWorldEditor;
+import net.minecraft.init.Bootstrap;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
 public class TreasureManagerTest {
 
+	@Before
+	public void setup(){
+		Bootstrap.register();
+	}
+	
 	@Test
 	public void addItem() {
+		
 		Random rand = new Random();
-		WeightedChoice<ItemStack> stick = new WeightedChoice<ItemStack>(null, 1);
+		WeightedChoice<ItemStack> stick = new WeightedChoice<ItemStack>(new ItemStack(Items.STICK), 1);
 		WeightedRandomizer<ItemStack> loot = new WeightedRandomizer<ItemStack>();
 		loot.add(stick);
 		
@@ -58,7 +67,7 @@ public class TreasureManagerTest {
 
 		@Override
 		public boolean setSlot(int slot, ItemStack item) {
-			return false;
+			return true;
 		}
 
 		@Override

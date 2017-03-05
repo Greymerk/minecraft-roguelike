@@ -19,7 +19,7 @@ public class SegmentFlowers extends SegmentBase {
 	protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, Coord origin) {
 		
 		MetaBlock air = BlockType.get(BlockType.AIR);
-		IStair stair = theme.getSecondaryStair();
+		IStair stair = theme.getSecondary().getStair();
 		
 		Coord cursor = new Coord(origin);
 		Coord start;
@@ -32,11 +32,11 @@ public class SegmentFlowers extends SegmentBase {
 		start.add(orth[0], 1);
 		end = new Coord(cursor);
 		end.add(orth[1], 1);
-		RectSolid.fill(editor, rand, start, end, theme.getSecondaryWall(), false, true);
+		RectSolid.fill(editor, rand, start, end, theme.getSecondary().getWall(), false, true);
 		start.add(dir, 1);
 		end.add(dir, 1);
 		end.add(Cardinal.UP, 2);
-		RectSolid.fill(editor, rand, start, end, theme.getSecondaryWall(), false, true);
+		RectSolid.fill(editor, rand, start, end, theme.getSecondary().getWall(), false, true);
 		start.add(Cardinal.reverse(dir), 1);
 		start.add(Cardinal.UP, 1);
 		end.add(Cardinal.reverse(dir), 1);

@@ -11,4 +11,8 @@ public interface ISecretRoom {
 	
 	public IDungeonRoom genRoom(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal dir, Coord pos);
 	
+	public int getCount();
+	
+	public void add(int count);
+	
 }

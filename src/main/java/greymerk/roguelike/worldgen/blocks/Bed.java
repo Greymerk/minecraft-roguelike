@@ -1,5 +1,7 @@
 package greymerk.roguelike.worldgen.blocks;
 
+import greymerk.roguelike.config.RogueConfig;
+import greymerk.roguelike.util.DyeColor;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
@@ -13,15 +15,24 @@ public class Bed {
 		
 		Coord cursor = new Coord(pos);
 
-		MetaBlock head = new MetaBlock(Blocks.BED);
-		head.withProperty(BlockBed.PART, BlockBed.EnumPartType.HEAD);
-		head.withProperty(BlockBed.FACING, Cardinal.facing(dir));
-		head.set(editor, cursor);
 		
-		MetaBlock foot = new MetaBlock(Blocks.BED);
-		foot.withProperty(BlockBed.PART, BlockBed.EnumPartType.FOOT);
-		foot.withProperty(BlockBed.FACING, Cardinal.facing(dir));
+		if(RogueConfig.getBoolean(RogueConfig.FURNITURE)){
+			MetaBlock head = new MetaBlock(Blocks.BED);
+			head.withProperty(BlockBed.PART, BlockBed.EnumPartType.HEAD);
+			head.withProperty(BlockBed.FACING, Cardinal.facing(dir));
+			head.set(editor, cursor);
+		} else {
+			ColorBlock.get(ColorBlock.WOOL, DyeColor.WHITE).set(editor, cursor);
+		}
+		
 		cursor.add(dir);
-		foot.set(editor, cursor);
+		if(RogueConfig.getBoolean(RogueConfig.FURNITURE)){
+			MetaBlock foot = new MetaBlock(Blocks.BED);
+			foot.withProperty(BlockBed.PART, BlockBed.EnumPartType.FOOT);
+			foot.withProperty(BlockBed.FACING, Cardinal.facing(dir));
+			foot.set(editor, cursor);
+		} else {
+			ColorBlock.get(ColorBlock.WOOL, DyeColor.RED).set(editor, cursor);
+		}
 	}
 }

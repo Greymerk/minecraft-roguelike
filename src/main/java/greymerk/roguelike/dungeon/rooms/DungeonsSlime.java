@@ -21,11 +21,11 @@ public class DungeonsSlime extends DungeonBase {
 
 	public boolean generate(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
 		ITheme theme = settings.getTheme();
-		IBlockFactory wall = theme.getPrimaryWall();
+		IBlockFactory wall = theme.getPrimary().getWall();
 		MetaBlock bars = BlockType.get(BlockType.IRON_BAR);
-		MetaBlock water = BlockType.get(BlockType.WATER_FLOWING);
+		IBlockFactory liquid = theme.getPrimary().getLiquid();
 		MetaBlock air = BlockType.get(BlockType.AIR);
-		IStair stair = theme.getPrimaryStair();
+		IStair stair = theme.getPrimary().getStair();
 		
 		Coord start;
 		Coord end;
@@ -69,7 +69,7 @@ public class DungeonsSlime extends DungeonBase {
 				RectSolid.fill(editor, rand, start, end, air);
 				start.add(Cardinal.DOWN);
 				end.add(Cardinal.DOWN);
-				RectSolid.fill(editor, rand, start, end, water);
+				RectSolid.fill(editor, rand, start, end, liquid);
 				start.add(Cardinal.DOWN);
 				end.add(Cardinal.DOWN);
 				RectSolid.fill(editor, rand, start, end, wall);
@@ -88,7 +88,7 @@ public class DungeonsSlime extends DungeonBase {
 				wall.set(editor, rand, cursor);
 				cursor.add(Cardinal.DOWN);
 				cursor.add(dir);
-				water.set(editor, cursor);
+				liquid.set(editor, rand, cursor);
 				for(Cardinal o : Cardinal.orthogonal(dir)){
 					cursor = new Coord(origin);
 					cursor.add(dir, 7);
@@ -109,11 +109,11 @@ public class DungeonsSlime extends DungeonBase {
 	
 	private void corner(IWorldEditor editor, Random rand, LevelSettings settings, Coord origin){
 		ITheme theme = settings.getTheme();
-		IBlockFactory wall = theme.getPrimaryWall();
-		IBlockFactory pillar = theme.getPrimaryPillar();
-		IStair stair = theme.getPrimaryStair();
+		IBlockFactory wall = theme.getPrimary().getWall();
+		IBlockFactory pillar = theme.getPrimary().getPillar();
+		IStair stair = theme.getPrimary().getStair();
 		MetaBlock bars = BlockType.get(BlockType.IRON_BAR);
-		MetaBlock water = BlockType.get(BlockType.WATER_FLOWING);
+		IBlockFactory water = theme.getPrimary().getLiquid();
 		
 		
 		Coord start;

@@ -17,9 +17,9 @@ public class SegmentNetherArch extends SegmentBase {
 	@Override
 	protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, Coord origin) {
 		
-		IStair step = theme.getSecondaryStair();
+		IStair step = theme.getSecondary().getStair();
 		step.setOrientation(Cardinal.reverse(dir), true);
-		IBlockFactory pillar = theme.getSecondaryPillar();
+		IBlockFactory pillar = theme.getSecondary().getPillar();
 		
 
 		Coord cursor;

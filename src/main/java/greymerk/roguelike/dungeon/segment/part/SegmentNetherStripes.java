@@ -19,7 +19,7 @@ public class SegmentNetherStripes extends SegmentBase {
 	@Override
 	protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, Coord origin) {
 		
-		IStair step = theme.getSecondaryStair();
+		IStair step = theme.getSecondary().getStair();
 
 		Coord start;
 		Coord end;

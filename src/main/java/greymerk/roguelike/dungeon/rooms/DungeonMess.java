@@ -9,6 +9,7 @@ import java.util.Random;
 import greymerk.roguelike.dungeon.base.DungeonBase;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.theme.ITheme;
+import greymerk.roguelike.treasure.ChestPlacementException;
 import greymerk.roguelike.treasure.Treasure;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
@@ -29,10 +30,10 @@ public class DungeonMess extends DungeonBase {
 	public boolean generate(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
 
 		ITheme theme = settings.getTheme();
-		IBlockFactory wall = theme.getPrimaryWall();
-		IBlockFactory panel = theme.getSecondaryWall();
-		IBlockFactory pillar = theme.getPrimaryPillar();
-		IStair stair = theme.getPrimaryStair();
+		IBlockFactory wall = theme.getPrimary().getWall();
+		IBlockFactory panel = theme.getSecondary().getWall();
+		IBlockFactory pillar = theme.getPrimary().getPillar();
+		IStair stair = theme.getPrimary().getStair();
 		
 		Coord start;
 		Coord end;
@@ -120,10 +121,10 @@ public class DungeonMess extends DungeonBase {
 	
 	private void supplyCorner(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin){
 		ITheme theme = settings.getTheme();
-		IBlockFactory wall = theme.getPrimaryWall();
-		IBlockFactory pillar = theme.getPrimaryPillar();
-		IBlockFactory panel = theme.getSecondaryWall();
-		IStair stair = theme.getPrimaryStair();
+		IBlockFactory wall = theme.getPrimary().getWall();
+		IBlockFactory pillar = theme.getPrimary().getPillar();
+		IBlockFactory panel = theme.getSecondary().getWall();
+		IStair stair = theme.getPrimary().getStair();
 		Coord cursor;
 		Coord start;
 		Coord end;
@@ -146,7 +147,11 @@ public class DungeonMess extends DungeonBase {
 		cursor.add(entrances[1], 5);
 		cursor.add(entrances[0], 2);
 		cursor.add(Cardinal.UP);
-		Treasure.generate(editor, rand, cursor, Treasure.FOOD, settings.getDifficulty(cursor));
+		try {
+			Treasure.generate(editor, rand, cursor, Treasure.FOOD, settings.getDifficulty(cursor));
+		} catch (ChestPlacementException cpe){
+			// do nothing
+		}
 		
 		cursor = new Coord(origin);
 		cursor.add(entrances[0], 5);
@@ -203,11 +208,11 @@ public class DungeonMess extends DungeonBase {
 	
 	private void corner(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin){
 		ITheme theme = settings.getTheme();
-		IBlockFactory wall = theme.getPrimaryWall();
-		IBlockFactory pillar = theme.getPrimaryPillar();
-		IBlockFactory panel = theme.getSecondaryWall();
-		IStair stair = theme.getPrimaryStair();
-		IStair table = theme.getSecondaryStair();
+		IBlockFactory wall = theme.getPrimary().getWall();
+		IBlockFactory pillar = theme.getPrimary().getPillar();
+		IBlockFactory panel = theme.getSecondary().getWall();
+		IStair stair = theme.getPrimary().getStair();
+		IStair table = theme.getSecondary().getStair();
 		Coord cursor;
 		Coord start;
 		Coord end;
@@ -286,9 +291,9 @@ public class DungeonMess extends DungeonBase {
 	
 	private void doorway(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal dir, Coord origin){
 		ITheme theme = settings.getTheme();
-		IBlockFactory wall = theme.getPrimaryWall();
-		IBlockFactory panel = theme.getSecondaryWall();
-		IStair stair = theme.getPrimaryStair();
+		IBlockFactory wall = theme.getPrimary().getWall();
+		IBlockFactory panel = theme.getSecondary().getWall();
+		IStair stair = theme.getPrimary().getStair();
 		Coord cursor;
 		Coord start;
 		Coord end;
@@ -341,8 +346,8 @@ public class DungeonMess extends DungeonBase {
 	
 	private void fireplace(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal dir, Coord origin){
 		ITheme theme = settings.getTheme();
-		IBlockFactory wall = theme.getPrimaryWall();
-		IStair stair = theme.getPrimaryStair();
+		IBlockFactory wall = theme.getPrimary().getWall();
+		IStair stair = theme.getPrimary().getStair();
 		MetaBlock bars = BlockType.get(BlockType.IRON_BAR);
 		MetaBlock netherrack = BlockType.get(BlockType.NETHERRACK);
 		MetaBlock fire = BlockType.get(BlockType.FIRE);
@@ -414,7 +419,7 @@ public class DungeonMess extends DungeonBase {
 	
 	private void supplies(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal dir, Coord origin){
 		ITheme theme = settings.getTheme();
-		IStair stair = theme.getPrimaryStair();
+		IStair stair = theme.getPrimary().getStair();
 		Coord cursor;
 
 		
@@ -422,7 +427,11 @@ public class DungeonMess extends DungeonBase {
 		cursor.add(dir, 7);
 		stair.setOrientation(Cardinal.reverse(dir), true).set(editor, cursor);
 		cursor.add(Cardinal.UP);
-		Treasure.generate(editor, rand, cursor, Treasure.FOOD, settings.getDifficulty(origin));
+		try {
+			Treasure.generate(editor, rand, cursor, Treasure.FOOD, settings.getDifficulty(origin));
+		} catch (ChestPlacementException cpe){
+			// do nothing
+		}
 		cursor.add(Cardinal.left(dir));
 		Furnace.generate(editor, dir, cursor);
 		cursor.add(Cardinal.right(dir), 2);
@@ -444,7 +453,7 @@ public class DungeonMess extends DungeonBase {
 	
 	private void sideTable(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal dir, Coord origin){
 		ITheme theme = settings.getTheme();
-		IStair table = theme.getSecondaryStair();
+		IStair table = theme.getSecondary().getStair();
 		Coord cursor = new Coord(origin);
 		
 		cursor.add(dir, 5);

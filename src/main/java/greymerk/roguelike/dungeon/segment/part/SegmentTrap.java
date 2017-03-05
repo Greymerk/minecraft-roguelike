@@ -28,8 +28,8 @@ public class SegmentTrap extends SegmentBase{
 		MetaBlock wire = BlockType.get(BlockType.REDSTONE_WIRE);
 		MetaBlock vine = BlockType.get(BlockType.VINE);
 		MetaBlock air = BlockType.get(BlockType.AIR);
-		IStair stair = theme.getPrimaryStair();
-		IBlockFactory wall = theme.getPrimaryWall();
+		IStair stair = theme.getPrimary().getStair();
+		IBlockFactory wall = theme.getPrimary().getWall();
 		
 		Cardinal[] orth = Cardinal.orthogonal(dir);
 		

@@ -14,15 +14,15 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-@Mod(modid="Roguelike", name="Roguelike Dungeons", version=Roguelike.version, acceptableRemoteVersions="*")
+@Mod(modid="roguelike", name="Roguelike Dungeons", version=Roguelike.version, acceptableRemoteVersions="*")
 
 public class Roguelike {
 
 	// The instance of your mod that Forge uses.
-	@Instance("Roguelike")
+	@Instance("roguelike")
 	public static Roguelike instance;
-	public static final String version = "1.5.6";
-	public static final String date = "Jan 25th 2017";
+	public static final String version = "1.5.7";
+	public static final String date = "Mar 4th 2017";
 	
 	// Says where the client and server 'proxy' code is loaded.
 	@SidedProxy(clientSide="greymerk.roguelike.ClientProxy", serverSide="greymerk.roguelike.CommonProxy")

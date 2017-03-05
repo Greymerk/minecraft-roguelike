@@ -5,6 +5,7 @@ import java.util.Random;
 import greymerk.roguelike.dungeon.base.DungeonBase;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.theme.ITheme;
+import greymerk.roguelike.util.DyeColor;
 import greymerk.roguelike.util.mst.MinimumSpanningTree;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
@@ -15,7 +16,6 @@ import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.ColorBlock;
 import greymerk.roguelike.worldgen.blocks.Crops;
-import greymerk.roguelike.worldgen.blocks.DyeColor;
 import greymerk.roguelike.worldgen.blocks.Slab;
 import greymerk.roguelike.worldgen.blocks.Wood;
 import greymerk.roguelike.worldgen.shapes.RectHollow;
@@ -28,7 +28,7 @@ public class DungeonTreetho extends DungeonBase{
 	public boolean generate(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
 
 		ITheme theme = settings.getTheme();
-		IBlockFactory wall = theme.getPrimaryWall();
+		IBlockFactory wall = theme.getPrimary().getWall();
 		Cardinal dir = entrances[0];
 		
 		
@@ -148,8 +148,8 @@ public class DungeonTreetho extends DungeonBase{
 	private void pillar(IWorldEditor editor, Random rand, LevelSettings settings, Coord origin){
 		
 		ITheme theme = settings.getTheme();
-		IBlockFactory pillar = theme.getPrimaryPillar();
-		IStair stair = theme.getPrimaryStair();
+		IBlockFactory pillar = theme.getPrimary().getPillar();
+		IStair stair = theme.getPrimary().getStair();
 		
 		Coord cursor = new Coord(origin);
 		editor.fillDown(rand, cursor, pillar);

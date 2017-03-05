@@ -7,6 +7,8 @@ import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.StairType;
 import greymerk.roguelike.worldgen.blocks.Wood;
 import greymerk.roguelike.worldgen.blocks.WoodBlock;
+import greymerk.roguelike.worldgen.blocks.door.Door;
+import greymerk.roguelike.worldgen.blocks.door.DoorType;
 
 public class ThemeOak extends ThemeBase{
 
@@ -21,13 +23,12 @@ public class ThemeOak extends ThemeBase{
 		
 		MetaStair stair = new MetaStair(StairType.STONEBRICK);
 
-		this.primary = new BlockSet(walls, stair, walls);
-		
+		this.primary = new BlockSet(walls, walls, stair, walls, new Door(DoorType.SPRUCE));
 		
 		MetaBlock pillar = Wood.get(WoodBlock.LOG);
 		MetaBlock segmentWall = Wood.get(Wood.OAK, WoodBlock.PLANK);
 		MetaStair segmentStair = new MetaStair(StairType.OAK);
 		
-		this.secondary =  new BlockSet(segmentWall, segmentStair, pillar);
+		this.secondary =  new BlockSet(segmentWall, segmentWall, segmentStair, pillar, new Door(DoorType.SPRUCE));
 	}
 }

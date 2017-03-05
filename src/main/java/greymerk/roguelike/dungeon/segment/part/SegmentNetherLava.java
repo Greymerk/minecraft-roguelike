@@ -18,7 +18,7 @@ public class SegmentNetherLava extends SegmentBase {
 	@Override
 	protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, Coord origin) {
 		
-		IStair step = theme.getSecondaryStair();
+		IStair step = theme.getSecondary().getStair();
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		MetaBlock lava = BlockType.get(BlockType.LAVA_FLOWING);
 		
@@ -36,7 +36,7 @@ public class SegmentNetherLava extends SegmentBase {
 		cursor.add(dir, 5);
 		boolean isAir = editor.isAirBlock(cursor);
 		boolean isLava = true;
-		IBlockFactory wall = theme.getSecondaryWall();
+		IBlockFactory wall = theme.getSecondary().getWall();
 		
 		for(Cardinal orth : Cardinal.orthogonal(dir)){
 			start = new Coord(origin);

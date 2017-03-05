@@ -20,7 +20,7 @@ public class SegmentSilverfish extends SegmentBase {
 	protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, Coord origin) {
 		
 		MetaBlock air = BlockType.get(BlockType.AIR);
-		IStair stair = theme.getSecondaryStair();
+		IStair stair = theme.getSecondary().getStair();
 		
 		Coord cursor = new Coord(origin);
 		Coord start;
@@ -39,7 +39,7 @@ public class SegmentSilverfish extends SegmentBase {
 		// front wall
 		start.add(dir, 1);
 		end.add(dir, 1);
-		RectSolid.fill(editor, rand, start, end, theme.getPrimaryWall(), false, true);
+		RectSolid.fill(editor, rand, start, end, theme.getPrimary().getWall(), false, true);
 
 		// stairs
 		cursor.add(Cardinal.UP, 2);
@@ -50,7 +50,7 @@ public class SegmentSilverfish extends SegmentBase {
 			stair.set(editor, c);
 		}
 		
-		stair = theme.getPrimaryStair();
+		stair = theme.getPrimary().getStair();
 		
 		cursor = new Coord(origin);
 		cursor.add(dir, 3);

@@ -74,16 +74,16 @@ public enum Enchant {
 		switch(difficulty){
 		case PEACEFUL: return false;
 		case EASY: return rand.nextInt(6) == 0;
-		case NORMAL: return level >= 2 && rand.nextInt(4) == 0;
+		case NORMAL: return level >= 1 && rand.nextInt(4) == 0;
 		case HARD: return rand.nextBoolean();
 		}
 		
 		return false;
 	}
 
-	public static void enchantItem(Random rand, ItemStack item, int enchantLevel) {
+	public static ItemStack enchantItem(Random rand, ItemStack item, int enchantLevel) {
 
-		if (item == null ) return;
+		if (item == null ) return null;
 		
 		List<EnchantmentData> enchants = null;
 		try{
@@ -95,7 +95,7 @@ public enum Enchant {
 		boolean isBook = item.getItem() == Items.BOOK;
 
 		if (isBook){
-			item.setItem(Items.ENCHANTED_BOOK);
+			item = new ItemStack(Items.ENCHANTED_BOOK);
 			if(enchants.size() > 1){
 				enchants.remove(rand.nextInt(enchants.size()));
 			}
@@ -108,5 +108,7 @@ public enum Enchant {
 				item.addEnchantment(toAdd.enchantmentobj, toAdd.enchantmentLevel);
 			}
 		}
+		
+		return item;
 	}
 }

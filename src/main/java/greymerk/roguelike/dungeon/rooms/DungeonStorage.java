@@ -39,7 +39,7 @@ public class DungeonStorage extends DungeonBase {
 		Coord start;
 		Coord end;
 		
-		IBlockFactory blocks = theme.getPrimaryWall();
+		IBlockFactory blocks = theme.getPrimary().getWall();
 		
 		RectSolid.fill(editor, rand, new Coord(x - 6, y - 1, z - 6), new Coord(x + 6, y - 1, z + 6), blocks);
 		RectSolid.fill(editor, rand, new Coord(x - 5, y + 4, z - 5), new Coord(x + 5, y + 4, z + 5), blocks);
@@ -99,7 +99,7 @@ public class DungeonStorage extends DungeonBase {
 				cursor = new Coord(x, y, z);
 				cursor.add(dir, 6);
 				cursor.add(orth, 3);
-				IStair step = theme.getSecondaryStair();
+				IStair step = theme.getSecondary().getStair();
 				step.setOrientation(Cardinal.reverse(dir), true);
 				step.set(editor, cursor);
 				cursor.add(orth, 1);
@@ -116,7 +116,7 @@ public class DungeonStorage extends DungeonBase {
 				end = new Coord(start);
 				end.add(dir, 3);
 				end.add(orth, 1);
-				RectSolid.fill(editor, rand, start, end, theme.getSecondaryFloor());
+				RectSolid.fill(editor, rand, start, end, theme.getSecondary().getFloor());
 				
 				cursor = new Coord(x, y, z);
 				cursor.add(dir, 5);
@@ -128,8 +128,10 @@ public class DungeonStorage extends DungeonBase {
 		
 		List<Coord> spaces = new ArrayList<Coord>(chestSpaces);
 		Collections.shuffle(spaces);
-		Treasure.generate(editor, rand, spaces.remove(0), Treasure.SUPPLIES, settings.getDifficulty(origin));
-		Treasure.generate(editor, rand, spaces.remove(0), Treasure.BLOCKS, settings.getDifficulty(origin));
+		List<Treasure> types = new ArrayList<Treasure>();
+		types.add(Treasure.SUPPLIES);
+		types.add(Treasure.BLOCKS);
+		Treasure.createChests(editor, rand, 2, spaces, types, settings.getDifficulty(origin));
 		return true;
 	}
 
@@ -139,7 +141,7 @@ public class DungeonStorage extends DungeonBase {
 	}
 
 	private static void pillarTop(IWorldEditor editor, Random rand, ITheme theme, Coord cursor){
-		IStair step = theme.getSecondaryStair();
+		IStair step = theme.getSecondary().getStair();
 		for(Cardinal dir : Cardinal.directions){
 			step.setOrientation(dir, true);
 			cursor.add(dir, 1);
@@ -151,6 +153,6 @@ public class DungeonStorage extends DungeonBase {
 	private static void pillar(IWorldEditor editor, Random rand, Coord base, ITheme theme, int height){
 		Coord top = new Coord(base);
 		top.add(Cardinal.UP, height);
-		RectSolid.fill(editor, rand, base, top, theme.getSecondaryPillar());
+		RectSolid.fill(editor, rand, base, top, theme.getSecondary().getPillar());
 	}	
 }

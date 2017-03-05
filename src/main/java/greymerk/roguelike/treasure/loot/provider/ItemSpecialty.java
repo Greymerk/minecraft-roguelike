@@ -92,7 +92,7 @@ public class ItemSpecialty extends ItemBase {
 			item = new ItemStack(Items.DIAMOND_SHOVEL);
 			item.addEnchantment(Enchant.getEnchant(Enchant.EFFICIENCY), 3 + rand.nextInt(3));
 			item.addEnchantment(Enchant.getEnchant(Enchant.UNBREAKING), getUnbreakingLevel(quality, rand));
-			Loot.setItemName(item, "Soulsand Spade");
+			Loot.setItemName(item, "Soul Spade");
 			return item;
 		} else {
 			item = new ItemStack(Items.IRON_SHOVEL);
@@ -110,13 +110,13 @@ public class ItemSpecialty extends ItemBase {
 			item = new ItemStack(Items.DIAMOND_AXE);
 			item.addEnchantment(Enchant.getEnchant(Enchant.EFFICIENCY), 3 + rand.nextInt(3));
 			item.addEnchantment(Enchant.getEnchant(Enchant.UNBREAKING), getUnbreakingLevel(quality, rand));
-			Loot.setItemName(item, "Hellsteel Axe");
+			Loot.setItemName(item, "Crystal Head Axe");
 			return item;
 		} else {
 			item = new ItemStack(Items.IRON_AXE);
 			item.addEnchantment(Enchant.getEnchant(Enchant.EFFICIENCY), 1 + rand.nextInt(2));
 			item.addEnchantment(Enchant.getEnchant(Enchant.UNBREAKING), getUnbreakingLevel(quality, rand));
-			Loot.setItemName(item, "Lumberjack's Hatchet");
+			Loot.setItemName(item, "Woodland Hatchet");
 			return item;
 		}
 	}
@@ -515,7 +515,7 @@ public class ItemSpecialty extends ItemBase {
 		case STONE: return "Riveted";
 		case IRON: return "Gothic";
 		case GOLD: return "Jewelled";
-		case DIAMOND: return "Shiny";
+		case DIAMOND: return "Crystal";
 		default: return "Strange";
 		}
 	}

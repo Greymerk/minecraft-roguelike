@@ -36,6 +36,16 @@ public class SecretRoom implements ISecretRoom {
 	}
 	
 	@Override
+	public void add(int count){
+		this.count += count;
+	}
+	
+	@Override
+	public int getCount(){
+		return this.count;
+	}
+	
+	@Override
 	public IDungeonRoom genRoom(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal dir, Coord pos){
 		if(!isValid(editor, rand, dir, pos)) return null;
 		
@@ -49,7 +59,7 @@ public class SecretRoom implements ISecretRoom {
 		end.add(Cardinal.orthogonal(dir)[1]);
 		end.add(dir, size + 5);
 		end.add(Cardinal.UP, 2);
-		RectSolid.fill(editor, rand, start, end, settings.getTheme().getPrimaryWall(), false, true);
+		RectSolid.fill(editor, rand, start, end, settings.getTheme().getPrimary().getWall(), false, true);
 		
 		start = new Coord(pos);
 		end = new Coord(pos);
@@ -65,5 +75,17 @@ public class SecretRoom implements ISecretRoom {
 		this.prototype = DungeonRoom.getInstance(this.type);
 		
 		return generated;
+	}
+	
+	@Override
+	public boolean equals(Object o){
+		
+		SecretRoom other = (SecretRoom)o;
+		
+		if(this.type != other.type) return false;
+		
+		if(this.count != other.count) return false;
+		
+		return true;
 	}
 }

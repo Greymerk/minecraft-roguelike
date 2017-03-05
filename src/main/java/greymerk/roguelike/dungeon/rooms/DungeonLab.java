@@ -7,7 +7,9 @@ import greymerk.roguelike.dungeon.Dungeon;
 import greymerk.roguelike.dungeon.base.DungeonBase;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.theme.ITheme;
+import greymerk.roguelike.treasure.ChestPlacementException;
 import greymerk.roguelike.treasure.Treasure;
+import greymerk.roguelike.util.DyeColor;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
@@ -19,13 +21,14 @@ import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.BrewingStand;
 import greymerk.roguelike.worldgen.blocks.ColorBlock;
 import greymerk.roguelike.worldgen.blocks.Crops;
-import greymerk.roguelike.worldgen.blocks.DyeColor;
 import greymerk.roguelike.worldgen.blocks.FlowerPot;
 import greymerk.roguelike.worldgen.blocks.Slab;
 import greymerk.roguelike.worldgen.blocks.StairType;
 import greymerk.roguelike.worldgen.redstone.Torch;
 import greymerk.roguelike.worldgen.shapes.RectHollow;
 import greymerk.roguelike.worldgen.shapes.RectSolid;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 
 public class DungeonLab extends DungeonBase {
 
@@ -37,14 +40,14 @@ public class DungeonLab extends DungeonBase {
 		int z = origin.getZ();
 		ITheme theme = settings.getTheme();
 		
-		IBlockFactory blocks = theme.getPrimaryWall();
+		IBlockFactory blocks = theme.getPrimary().getWall();
 		
 		
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		// Air
 		air.fill(editor, rand, new RectSolid(new Coord(x - 7, y, z - 7), new Coord(x + 7, y + 3, z + 7)));
 
-		IBlockFactory roof = theme.getSecondaryWall();
+		IBlockFactory roof = theme.getSecondary().getWall();
 		// Wood upper Roof
 		RectSolid.fill(editor, rand, new Coord(x - 6, y + 5, z - 6), new Coord(x + 6, y + 5, z + 6), roof);
 		RectSolid.fill(editor, rand, new Coord(x - 1, y + 4, z - 1), new Coord(x + 1, y + 4, z + 1), air);
@@ -55,7 +58,7 @@ public class DungeonLab extends DungeonBase {
 		
 		// shell
 		RectHollow.fill(editor, rand, new Coord(x - 8, y - 1, z - 8), new Coord(x + 8, y + 4, z + 8), blocks, false, true);
-		RectSolid.fill(editor, rand, new Coord(x - 8, y - 1, z - 8), new Coord(x + 8, y - 1, z + 8), theme.getPrimaryFloor(), false, true);
+		RectSolid.fill(editor, rand, new Coord(x - 8, y - 1, z - 8), new Coord(x + 8, y - 1, z + 8), theme.getPrimary().getFloor(), false, true);
 		
 		
 		// corner rooms
@@ -69,7 +72,7 @@ public class DungeonLab extends DungeonBase {
 		RectSolid.fill(editor, rand, new Coord(x + 8, y, z - 7), new Coord(x + 8, y + 3, z - 7), blocks);
 		RectSolid.fill(editor, rand, new Coord(x + 8, y, z - 7), new Coord(x + 8, y + 3, z - 7), blocks);
 		
-		IBlockFactory backWalls = theme.getSecondaryWall();
+		IBlockFactory backWalls = theme.getSecondary().getWall();
 		
 		// wall planks
 		RectSolid.fill(editor, rand, new Coord(x - 8, y + 1, z - 6), new Coord(x - 8, y + 3, z - 3), backWalls);
@@ -124,17 +127,22 @@ public class DungeonLab extends DungeonBase {
 		
 		corner(editor, rand, theme, x, y, z);
 		
-		IStair stair = theme.getSecondaryStair();
+		IStair stair = theme.getSecondary().getStair();
 		stair.setOrientation(Cardinal.NORTH, true);
 		RectSolid.fill(editor, rand, new Coord(x + 1, y, z + 5), new Coord(x + 4, y, z + 5), stair);
 		stair.setOrientation(Cardinal.EAST, true);
 		RectSolid.fill(editor, rand, new Coord(x, y, z + 1), new Coord(x, y, z + 4), stair);
 		
 		if(RogueConfig.getBoolean(RogueConfig.GENEROUS)){
-			BrewingStand.get().set(editor, new Coord(x + 1, y + 1, z + 5));
+			Coord bs = new Coord(x + 1, y + 1, z + 5);
+			BrewingStand.generate(editor, bs);
+			BrewingStand.add(editor, bs, BrewingStand.FUEL, new ItemStack(Items.BLAZE_POWDER));
 		}
-		
-		Treasure.generate(editor, rand, new Coord(x, y + 1, z + 4), Treasure.POTIONS, Dungeon.getLevel(y));
+		try {
+			Treasure.generate(editor, rand, new Coord(x, y + 1, z + 4), Treasure.POTIONS, Dungeon.getLevel(y));
+		} catch (ChestPlacementException cpe){
+			// do nothing
+		}
 	}
 	
 	// fountains
@@ -252,9 +260,9 @@ public class DungeonLab extends DungeonBase {
 	
 	private static void pillar(IWorldEditor editor, Random rand, ITheme theme, int x, int y, int z){
 		
-		theme.getSecondaryPillar().fill(editor, rand, new RectSolid(new Coord(x, y, z), new Coord(x, y + 2, z)));
-		theme.getPrimaryWall().set(editor, rand, new Coord(x, y + 3, z));
-		IStair stair = theme.getSecondaryStair();
+		theme.getSecondary().getPillar().fill(editor, rand, new RectSolid(new Coord(x, y, z), new Coord(x, y + 2, z)));
+		theme.getPrimary().getWall().set(editor, rand, new Coord(x, y + 3, z));
+		IStair stair = theme.getSecondary().getStair();
 		stair.setOrientation(Cardinal.EAST, true).set(editor, new Coord(x + 1, y + 3, z));
 		stair.setOrientation(Cardinal.WEST, true).set(editor, new Coord(x - 1, y + 3, z));
 		stair.setOrientation(Cardinal.SOUTH, true).set(editor, new Coord(x, y + 3, z + 1));

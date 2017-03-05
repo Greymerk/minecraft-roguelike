@@ -32,19 +32,19 @@ public class CityGrounds {
 		start.add(new Coord(Citadel.EDGE_LENGTH * -3, 10, Citadel.EDGE_LENGTH * -3));
 		end = new Coord(pos);
 		end.add(new Coord(Citadel.EDGE_LENGTH * 3, 20, Citadel.EDGE_LENGTH * 3));
-		RectSolid.fill(editor, rand, start, end, theme.getPrimaryWall(), true, true);
+		RectSolid.fill(editor, rand, start, end, theme.getPrimary().getWall(), true, true);
 		
 		start = new Coord(pos);
 		start.add(new Coord(Citadel.EDGE_LENGTH * -2, 20, Citadel.EDGE_LENGTH * -2));
 		end = new Coord(pos);
 		end.add(new Coord(Citadel.EDGE_LENGTH * 2, 30, Citadel.EDGE_LENGTH * 2));
-		RectSolid.fill(editor, rand, start, end, theme.getPrimaryWall(), true, true);
+		RectSolid.fill(editor, rand, start, end, theme.getPrimary().getWall(), true, true);
 		
 		start = new Coord(pos);
 		start.add(new Coord(Citadel.EDGE_LENGTH * -1, 30, Citadel.EDGE_LENGTH * -1));
 		end = new Coord(pos);
 		end.add(new Coord(Citadel.EDGE_LENGTH, 40, Citadel.EDGE_LENGTH));
-		RectSolid.fill(editor, rand, start, end, theme.getPrimaryWall(), true, true);
+		RectSolid.fill(editor, rand, start, end, theme.getPrimary().getWall(), true, true);
 		
 		Coord cursor = new Coord(pos);
 		cursor.add(Cardinal.UP, 20);
@@ -55,7 +55,7 @@ public class CityGrounds {
 			end = e.getPoints()[1].getPosition();
 			end.add(cursor);
 			end.add(Cardinal.DOWN, 20);
-			RectSolid.fill(editor, rand, start, end, theme.getPrimaryWall(), true, true);
+			RectSolid.fill(editor, rand, start, end, theme.getPrimary().getWall(), true, true);
 		}
 		
 		

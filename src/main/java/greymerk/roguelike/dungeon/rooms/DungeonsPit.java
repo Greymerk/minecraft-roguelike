@@ -49,7 +49,7 @@ public class DungeonsPit extends DungeonBase {
 		originY = origin.getY();
 		originZ = origin.getZ();
 
-		blocks = theme.getPrimaryWall();
+		blocks = theme.getPrimary().getWall();
 		
 		buildWalls();
 		buildFloor();
@@ -153,7 +153,7 @@ public class DungeonsPit extends DungeonBase {
 	
 	private void setTrap(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal dir, Coord origin){
 		ITheme theme = settings.getTheme();
-		IBlockFactory walls = theme.getPrimaryWall();
+		IBlockFactory walls = theme.getPrimary().getWall();
 		MetaBlock plate = BlockType.get(BlockType.PRESSURE_PLATE_STONE);
 		MetaBlock wire = BlockType.get(BlockType.REDSTONE_WIRE);
 		Coord start;

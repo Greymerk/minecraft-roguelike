@@ -7,6 +7,7 @@ import greymerk.roguelike.dungeon.Dungeon;
 import greymerk.roguelike.dungeon.base.DungeonBase;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.theme.ITheme;
+import greymerk.roguelike.treasure.ChestPlacementException;
 import greymerk.roguelike.treasure.Treasure;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
@@ -65,9 +66,9 @@ public class DungeonsSmithy extends DungeonBase {
 		Coord start;
 		Coord end;
 		
-		IBlockFactory wall = theme.getPrimaryWall();
-		IBlockFactory pillar = theme.getPrimaryPillar();
-		IStair stair = theme.getPrimaryStair();
+		IBlockFactory wall = theme.getPrimary().getWall();
+		IBlockFactory pillar = theme.getPrimary().getPillar();
+		IStair stair = theme.getPrimary().getStair();
 		
 		for(Cardinal side : Cardinal.orthogonal(dir)){
 			
@@ -113,7 +114,7 @@ public class DungeonsSmithy extends DungeonBase {
 	
 	private void clearBoxes(IWorldEditor editor, Random rand, ITheme theme, Cardinal dir, Coord origin){
 		
-		IBlockFactory wall = theme.getPrimaryWall();
+		IBlockFactory wall = theme.getPrimary().getWall();
 		
 		
 		Coord cursor;
@@ -171,7 +172,7 @@ public class DungeonsSmithy extends DungeonBase {
 	private void mainRoom(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal dir, Coord origin){
 		
 		ITheme theme = settings.getTheme();
-		IBlockFactory wall = theme.getPrimaryWall();
+		IBlockFactory wall = theme.getPrimary().getWall();
 		Coord cursor;
 		Coord start;
 		Coord end;
@@ -210,9 +211,9 @@ public class DungeonsSmithy extends DungeonBase {
 	}
 	
 	private void mainPillar(IWorldEditor editor, Random rand, ITheme theme, Cardinal dir, Coord origin){
-		IBlockFactory wall = theme.getPrimaryWall();
-		IBlockFactory pillar = theme.getPrimaryPillar();
-		IStair stair = theme.getPrimaryStair();
+		IBlockFactory wall = theme.getPrimary().getWall();
+		IBlockFactory pillar = theme.getPrimary().getPillar();
+		IStair stair = theme.getPrimary().getStair();
 		Coord cursor;
 		Coord start;
 		Coord end;
@@ -252,7 +253,7 @@ public class DungeonsSmithy extends DungeonBase {
 	private void smelterSide(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal dir, Coord origin){
 		
 		ITheme theme = settings.getTheme();
-		IBlockFactory wall = theme.getPrimaryWall();
+		IBlockFactory wall = theme.getPrimary().getWall();
 		
 		Coord cursor;
 		Coord start;
@@ -266,7 +267,7 @@ public class DungeonsSmithy extends DungeonBase {
 		RectSolid.fill(editor, rand, start, end, wall);
 		start.add(Cardinal.reverse(dir));
 		end.add(Cardinal.reverse(dir));
-		IStair stair = theme.getPrimaryStair();
+		IStair stair = theme.getPrimary().getStair();
 		stair = stair.setOrientation(Cardinal.reverse(dir), false);
 		RectSolid.fill(editor, rand, start, end, stair);
 		
@@ -286,14 +287,26 @@ public class DungeonsSmithy extends DungeonBase {
 	
 	private void smelter(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal dir, Coord origin){
 		Coord cursor;
-		Treasure.generate(editor, rand, origin, Treasure.EMPTY, 1, false);
+		try {
+			Treasure.generate(editor, rand, origin, Treasure.EMPTY, 1, false);
+		} catch (ChestPlacementException cpe){
+			// do nothing
+		}
 		cursor = new Coord(origin);
 		cursor.add(dir, 2);
 		cursor.add(Cardinal.UP, 2);
-		Treasure.generate(editor, rand, cursor, Treasure.EMPTY, 1, false);
+		try {
+			Treasure.generate(editor, rand, cursor, Treasure.EMPTY, 1, false);
+		} catch (ChestPlacementException cpe){
+			// do nothing
+		}
 		cursor.add(Cardinal.UP);
 		cursor.add(Cardinal.reverse(dir));
-		Treasure.generate(editor, rand, cursor, Treasure.EMPTY, 1, false);
+		try {
+			Treasure.generate(editor, rand, cursor, Treasure.EMPTY, 1, false);
+		} catch (ChestPlacementException cpe){
+			// do nothing
+		}
 		
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.UP);
@@ -425,8 +438,8 @@ public class DungeonsSmithy extends DungeonBase {
 	private void anvilRoom(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal dir, Coord origin){
 		
 		ITheme theme = settings.getTheme();
-		IStair stair = theme.getPrimaryStair();
-		IBlockFactory wall = theme.getPrimaryWall();
+		IStair stair = theme.getPrimary().getStair();
+		IBlockFactory wall = theme.getPrimary().getWall();
 		
 		
 		Coord cursor;
@@ -466,7 +479,11 @@ public class DungeonsSmithy extends DungeonBase {
 		stair.setOrientation(Cardinal.right(dir), true);
 		RectSolid.fill(editor, rand, start, end, stair);
 		cursor.add(Cardinal.UP);
-		Treasure.generate(editor, rand, cursor, Treasure.SMITH, Dungeon.getLevel(cursor.getY()));
+		try {
+			Treasure.generate(editor, rand, cursor, Treasure.SMITH, Dungeon.getLevel(cursor.getY()));
+		} catch (ChestPlacementException cpe){
+			// do nothing
+		}
 		
 		cursor = new Coord(origin);
 	}
@@ -475,7 +492,7 @@ public class DungeonsSmithy extends DungeonBase {
 	private void overheadLight(IWorldEditor editor, Random rand, LevelSettings settings, Coord origin){
 		
 		ITheme theme = settings.getTheme();
-		IStair stair = theme.getPrimaryStair();
+		IStair stair = theme.getPrimary().getStair();
 		
 		Coord cursor;
 		

@@ -1,5 +1,6 @@
 package greymerk.roguelike.worldgen.blocks;
 
+import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.worldgen.MetaBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBone;
@@ -170,7 +171,9 @@ public enum BlockType {
 		case REDSTONE_WIRE: return new MetaBlock(Blocks.REDSTONE_WIRE);
 		case COCAO: return new MetaBlock(Blocks.COCOA);
 		case REEDS: return new MetaBlock(Blocks.REEDS);
-		case CRAFTING_TABLE: return new MetaBlock(Blocks.CRAFTING_TABLE);
+		case CRAFTING_TABLE:
+			if(!RogueConfig.getBoolean(RogueConfig.FURNITURE)) return Wood.getPlank(Wood.OAK);
+			return new MetaBlock(Blocks.CRAFTING_TABLE);
 		case NOTEBLOCK: return new MetaBlock(Blocks.NOTEBLOCK);
 		case REDSTONE_LAMP: return new MetaBlock(Blocks.REDSTONE_LAMP);
 		case REDSTONE_LAMP_LIT: return new MetaBlock(Blocks.LIT_REDSTONE_LAMP.getDefaultState());

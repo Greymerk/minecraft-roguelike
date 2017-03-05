@@ -1,5 +1,6 @@
 package greymerk.roguelike.worldgen.blocks;
 
+import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.MetaBlock;
@@ -25,6 +26,8 @@ public class Furnace {
 	
 	public static void generate(IWorldEditor editor, ItemStack fuel, boolean lit, Cardinal dir, Coord pos){
 
+		if(!RogueConfig.getBoolean(RogueConfig.FURNITURE)) return;
+		
 		MetaBlock furnace;
 		
 		if(lit){

@@ -19,7 +19,7 @@ public class SegmentInset extends SegmentBase {
 	protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, Coord origin) {
 		
 		MetaBlock air = BlockType.get(BlockType.AIR);
-		IStair stair = theme.getSecondaryStair();
+		IStair stair = theme.getSecondary().getStair();
 		
 		
 		Coord cursor;
@@ -37,7 +37,7 @@ public class SegmentInset extends SegmentBase {
 		RectSolid.fill(editor, rand, start, end, air);
 		start.add(dir, 1);
 		end.add(dir, 1);
-		RectSolid.fill(editor, rand, start, end, theme.getSecondaryWall());
+		RectSolid.fill(editor, rand, start, end, theme.getSecondary().getWall());
 		
 		for(Cardinal d : orth){
 			cursor = new Coord(origin);

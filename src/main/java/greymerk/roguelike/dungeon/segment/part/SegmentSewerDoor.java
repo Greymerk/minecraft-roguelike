@@ -12,7 +12,6 @@ import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.blocks.BlockType;
-import greymerk.roguelike.worldgen.blocks.Door;
 import greymerk.roguelike.worldgen.blocks.Leaves;
 import greymerk.roguelike.worldgen.shapes.RectSolid;
 
@@ -22,7 +21,7 @@ public class SegmentSewerDoor extends SegmentBase {
 	protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, Coord origin) {
 		
 		MetaBlock air = BlockType.get(BlockType.AIR);
-		IStair stair = theme.getSecondaryStair();
+		IStair stair = theme.getSecondary().getStair();
 		MetaBlock bars = BlockType.get(BlockType.IRON_BAR);
 		MetaBlock water = BlockType.get(BlockType.WATER_FLOWING);
 		MetaBlock leaves = Leaves.get(Leaves.SPRUCE, false);
@@ -74,7 +73,7 @@ public class SegmentSewerDoor extends SegmentBase {
 		
 		start.add(dir, 1);
 		end.add(dir, 1);
-		RectSolid.fill(editor, rand, start, end, theme.getSecondaryWall(), false, true);
+		RectSolid.fill(editor, rand, start, end, theme.getSecondary().getWall(), false, true);
 
 		cursor.add(Cardinal.UP, 2);
 		for(Cardinal d : orth){
@@ -87,7 +86,7 @@ public class SegmentSewerDoor extends SegmentBase {
 		if(room != null){
 			cursor = new Coord(origin);
 			cursor.add(dir, 3);
-			Door.generate(editor, cursor, Cardinal.reverse(dir), Door.IRON);
+			theme.getSecondary().getDoor().generate(editor, cursor, Cardinal.reverse(dir));
 		}
 	}	
 }

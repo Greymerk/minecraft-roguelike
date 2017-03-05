@@ -3,6 +3,7 @@ package greymerk.roguelike.dungeon.towers;
 import java.util.Random;
 
 import greymerk.roguelike.theme.ITheme;
+import greymerk.roguelike.util.DyeColor;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
@@ -11,7 +12,6 @@ import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.ColorBlock;
-import greymerk.roguelike.worldgen.blocks.DyeColor;
 import greymerk.roguelike.worldgen.shapes.RectHollow;
 import greymerk.roguelike.worldgen.shapes.RectSolid;
 
@@ -26,9 +26,9 @@ public class BunkerTower implements ITower{
 		Coord start;
 		Coord end;
 		
-		IBlockFactory walls = theme.getPrimaryWall();
-		IBlockFactory pillar = theme.getPrimaryPillar();
-		IStair stair = theme.getPrimaryStair();
+		IBlockFactory walls = theme.getPrimary().getWall();
+		IBlockFactory pillar = theme.getPrimary().getPillar();
+		IStair stair = theme.getPrimary().getStair();
 		MetaBlock window = ColorBlock.get(ColorBlock.PANE, DyeColor.GRAY);
 		
 		start = new Coord(origin);

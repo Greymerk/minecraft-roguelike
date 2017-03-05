@@ -36,11 +36,11 @@ public enum LevelGenerator {
 		IDungeonRoom upstairs = new DungeonLinkerTop();
 		upstairs.generate(editor, rand, settings, oldEnd.getEntrances(), oldEnd.getPosition());
 		
-		IStair stair = settings.getTheme().getPrimaryStair();
+		IStair stair = settings.getTheme().getPrimary().getStair();
 		
 		Coord cursor = new Coord(start);
 		for (int i = 0; i < oldEnd.getPosition().getY() - start.getY(); i++){
-			editor.spiralStairStep(rand, cursor, stair, settings.getTheme().getPrimaryPillar());
+			editor.spiralStairStep(rand, cursor, stair, settings.getTheme().getPrimary().getPillar());
 			cursor.add(Cardinal.UP);
 		}	
 	}

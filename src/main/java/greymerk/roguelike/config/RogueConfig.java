@@ -11,7 +11,7 @@ import net.minecraft.util.Tuple;
 public enum RogueConfig {
 
 	DONATURALSPAWN, LEVELRANGE, LEVELMAXROOMS, LEVELSCATTER, SPAWNFREQUENCY, GENEROUS, MOBDROPS, DIMENSIONWL, DIMENSIONBL, 
-	PRECIOUSBLOCKS, LOOTING, DONOVELTYSPAWN, UPPERLIMIT, LOWERLIMIT, ROGUESPAWNERS;
+	PRECIOUSBLOCKS, LOOTING, DONOVELTYSPAWN, UPPERLIMIT, LOWERLIMIT, ROGUESPAWNERS, ENCASE, FURNITURE;
 	
 	public static final String configDirName = "config/roguelike_dungeons";
 	public static final String configFileName = "roguelike.cfg";
@@ -35,6 +35,8 @@ public enum RogueConfig {
 		case UPPERLIMIT: return "upperLimit";
 		case LOWERLIMIT: return "lowerLimit";
 		case ROGUESPAWNERS: return "rogueSpawners";
+		case ENCASE: return "encase";
+		case FURNITURE: return "furniture";
 		default: return null;
 		}
 	}
@@ -59,6 +61,8 @@ public enum RogueConfig {
 		case UPPERLIMIT: return new Tuple<String, Integer>(getName(option), 100);
 		case LOWERLIMIT: return new Tuple<String, Integer>(getName(option), 60);
 		case ROGUESPAWNERS: return new Tuple<String, Boolean>(getName(option), true);
+		case ENCASE: return new Tuple<String, Boolean>(getName(option), false);
+		case FURNITURE: return new Tuple<String, Boolean>(getName(option), true);
 		default: return null;
 		}
 	}
@@ -79,6 +83,8 @@ public enum RogueConfig {
 		if(!instance.ContainsKey(getName(UPPERLIMIT)))setInt(UPPERLIMIT, (Integer) getDefault(UPPERLIMIT).getSecond());
 		if(!instance.ContainsKey(getName(LOWERLIMIT)))setInt(LOWERLIMIT, (Integer) getDefault(LOWERLIMIT).getSecond());
 		if(!instance.ContainsKey(getName(ROGUESPAWNERS))) setBoolean(ROGUESPAWNERS, (Boolean)getDefault(ROGUESPAWNERS).getSecond());
+		if(!instance.ContainsKey(getName(ENCASE))) setBoolean(ENCASE, (Boolean)getDefault(ENCASE).getSecond());
+		if(!instance.ContainsKey(getName(FURNITURE))) setBoolean(FURNITURE, (Boolean)getDefault(FURNITURE).getSecond());
 	}
 	
 	public static double getDouble(RogueConfig option){
@@ -173,6 +179,4 @@ public enum RogueConfig {
 			init();
 		}
 	}
-
-	
 }

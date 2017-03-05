@@ -76,9 +76,9 @@ public class SegmentGeneratorBase implements ISegmentGenerator{
 	private void addSupport(IWorldEditor editor, Random rand, ITheme theme, int x, int y, int z){
 		if(!editor.isAirBlock(new Coord(x, y - 2, z))) return;
 		
-		editor.fillDown(rand, new Coord(x, y - 2, z), theme.getPrimaryPillar());
+		editor.fillDown(rand, new Coord(x, y - 2, z), theme.getPrimary().getPillar());
 		
-		IStair stair = theme.getPrimaryStair();
+		IStair stair = theme.getPrimary().getStair();
 		stair.setOrientation(Cardinal.WEST, true);
 		stair.set(editor, new Coord(x - 1, y - 2, z));
 		

@@ -25,15 +25,17 @@ public class ItemJunk extends ItemBase{
 			return new ItemStack(Items.SADDLE);
 		}
 
+		if(rand.nextInt(100) == 0) return PotionMixture.getRandom(rand);
+		
 		if(level > 1 && rand.nextInt(100) == 0) return new ItemStack(Items.GHAST_TEAR);
 
-		if(rand.nextInt(70) == 0) return Shield.get(rand);
+		if(level < 3 && rand.nextInt(80) == 0) return new ItemStack(Items.BOOK);
 		
-		if(level > 1 && rand.nextInt(40) == 0){
-			return TippedArrow.get(rand, 4 + rand.nextInt(level) * 2);
-		}
+		if(rand.nextInt(80) == 0) return Shield.get(rand);
 		
-		if(level > 1 && rand.nextInt(40) == 0){			
+		if(level > 1 && rand.nextInt(60) == 0) return TippedArrow.get(rand, 4 + rand.nextInt(level) * 2);
+		
+		if(level > 1 && rand.nextInt(50) == 0){			
 			switch(rand.nextInt(6)){
 			case 0: return new ItemStack(Items.GUNPOWDER, 1 + rand.nextInt(3));
 			case 1: return new ItemStack(Items.BLAZE_POWDER, 1 + rand.nextInt(3));
@@ -44,16 +46,9 @@ public class ItemJunk extends ItemBase{
 			}
 		}
 
-		if(level < 3 && rand.nextInt(80) == 0) return new ItemStack(Items.BOOK);
-
-		if(rand.nextInt(60) == 0){
-			if(level > 2 && rand.nextBoolean()) return PotionMixture.getPotion(rand, PotionMixture.VILE);
-			return PotionMixture.getPotion(rand, PotionMixture.LAUDANUM);	
-		}
+		if(rand.nextInt(60) == 0) return PotionMixture.getPotion(rand, PotionMixture.LAUDANUM);
 		
-		if(rand.nextInt(15) == 0){
-			return new ItemStack(Blocks.TORCH, 3 + rand.nextInt(8));
-		}
+		if(rand.nextInt(30) == 0) return new ItemStack(Blocks.TORCH, 6 + rand.nextInt(20));
 
 		if(level > 0 && rand.nextInt(8) == 0){
 			switch(rand.nextInt(8)){
@@ -68,7 +63,7 @@ public class ItemJunk extends ItemBase{
 			}
 		}
 
-		switch(rand.nextInt(6)){
+		switch(rand.nextInt(7)){
 		case 0: return new ItemStack(Items.BONE);
 		case 1: return new ItemStack(Items.ROTTEN_FLESH);
 		case 2: return new ItemStack(Items.SPIDER_EYE);

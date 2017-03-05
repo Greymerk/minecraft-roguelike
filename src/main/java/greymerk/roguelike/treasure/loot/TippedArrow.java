@@ -21,10 +21,19 @@ public class TippedArrow {
 		return get(type, 1);
 	}
 	
+	public static ItemStack get(net.minecraft.potion.PotionType type){
+		return get(type, 1);
+	}
+	
 	public static ItemStack get(Potion type, int amount){
 		
 		net.minecraft.potion.PotionType pot = Potion.getEffect(type, false, false);
-		String id = net.minecraft.potion.PotionType.REGISTRY.getNameForObject(pot).toString();
+		return get(pot, amount);
+
+	}
+	
+	public static ItemStack get(net.minecraft.potion.PotionType type, int amount){
+		String id = net.minecraft.potion.PotionType.REGISTRY.getNameForObject(type).toString();
 		
 		ItemStack arrow = new ItemStack(Items.TIPPED_ARROW, amount);
 		
@@ -32,7 +41,7 @@ public class TippedArrow {
 		nbt.setString("Potion", id);
 		
 		arrow.setTagCompound(nbt);
-        
+		
 		return arrow;
 	}
 	

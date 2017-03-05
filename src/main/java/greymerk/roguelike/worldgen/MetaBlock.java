@@ -316,6 +316,10 @@ public class MetaBlock extends BlockBase implements IBlockState{
 		return this.state.canEntitySpawn(entityIn);
 	}
 
-
+	@Override
+	public boolean equals(Object other){
+		MetaBlock otherBlock = (MetaBlock)other;
+		return this.state.equals(otherBlock.state);
+	}
 	
 }

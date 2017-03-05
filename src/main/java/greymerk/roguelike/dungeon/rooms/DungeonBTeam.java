@@ -5,12 +5,15 @@ import java.util.Random;
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.dungeon.base.DungeonBase;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
+import greymerk.roguelike.treasure.ChestPlacementException;
 import greymerk.roguelike.treasure.ITreasureChest;
 import greymerk.roguelike.treasure.Treasure;
 import greymerk.roguelike.treasure.loot.Loot;
+import greymerk.roguelike.treasure.loot.PotionMixture;
 import greymerk.roguelike.treasure.loot.Record;
 import greymerk.roguelike.treasure.loot.provider.ItemArmour;
 import greymerk.roguelike.treasure.loot.provider.ItemNovelty;
+import greymerk.roguelike.util.DyeColor;
 import greymerk.roguelike.worldgen.BlockCheckers;
 import greymerk.roguelike.worldgen.BlockJumble;
 import greymerk.roguelike.worldgen.Cardinal;
@@ -23,7 +26,6 @@ import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.BrewingStand;
 import greymerk.roguelike.worldgen.blocks.ColorBlock;
 import greymerk.roguelike.worldgen.blocks.Crops;
-import greymerk.roguelike.worldgen.blocks.DyeColor;
 import greymerk.roguelike.worldgen.blocks.Log;
 import greymerk.roguelike.worldgen.blocks.Slab;
 import greymerk.roguelike.worldgen.blocks.StairType;
@@ -166,32 +168,46 @@ public class DungeonBTeam extends DungeonBase {
 		cursor.add(Cardinal.right(dir), 5);
 		BlockType.get(BlockType.SHELF).set(editor, cursor);
 		cursor.add(Cardinal.UP);
-		BrewingStand.get().set(editor, cursor);
+		BrewingStand.generate(editor, cursor);
+		BrewingStand.add(editor, cursor, BrewingStand.MIDDLE, PotionMixture.getPotion(rand, PotionMixture.MOONSHINE));
 		
 		cursor = new Coord(origin);
 		cursor.add(dir, 4);
 		cursor.add(Cardinal.left(dir), 4);
 		BlockType.get(BlockType.JUKEBOX).set(editor, cursor);
 		cursor.add(Cardinal.left(dir));
+		try{
 		ITreasureChest stal = Treasure.generate(editor, rand, cursor, Treasure.EMPTY, settings.getDifficulty(cursor));
 		stal.setSlot(stal.getSize() / 2, Record.getRecord(Record.STAL));
+		} catch (ChestPlacementException cpe) {
+			// do nothing
+		}
 		
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.reverse(dir), 3);
 		cursor.add(Cardinal.left(dir), 4);
-		ITreasureChest bdub = Treasure.generate(editor, rand, cursor, Treasure.EMPTY, settings.getDifficulty(cursor));
-		bdub.setSlot((bdub.getSize() / 2) - 2, ItemNovelty.getItem(ItemNovelty.BDOUBLEO));
-		ItemStack shirt = new ItemStack(Items.LEATHER_CHESTPLATE);
-		Loot.setItemName(shirt, "Pink Sweater", null);
-		Loot.setItemLore(shirt, "\"It's chinese red!\"");
-		ItemArmour.dyeArmor(shirt, 250, 96, 128);
-		bdub.setSlot((bdub.getSize() / 2) + 2, shirt);
+		try {
+			ITreasureChest bdub = Treasure.generate(editor, rand, cursor, Treasure.EMPTY, settings.getDifficulty(cursor));
+			bdub.setSlot((bdub.getSize() / 2) - 2, ItemNovelty.getItem(ItemNovelty.BDOUBLEO));
+			ItemStack shirt = new ItemStack(Items.LEATHER_CHESTPLATE);
+			Loot.setItemName(shirt, "Pink Sweater", null);
+			Loot.setItemLore(shirt, "\"It's chinese red!\"");
+			ItemArmour.dyeArmor(shirt, 250, 96, 128);
+			bdub.setSlot((bdub.getSize() / 2) + 2, shirt);
+		} catch (ChestPlacementException cpe) {
+			// do nothing
+		}
 		
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.reverse(dir), 3);
 		cursor.add(Cardinal.right(dir), 4);
-		ITreasureChest genny = Treasure.generate(editor, rand, cursor, Treasure.EMPTY, settings.getDifficulty(cursor));
-		genny.setSlot(genny.getSize() / 2, ItemNovelty.getItem(ItemNovelty.GENERIKB));
+		try {
+			ITreasureChest genny = Treasure.generate(editor, rand, cursor, Treasure.EMPTY, settings.getDifficulty(cursor));
+			genny.setSlot(genny.getSize() / 2, ItemNovelty.getItem(ItemNovelty.GENERIKB));
+		} catch (ChestPlacementException cpe) {
+			// do nothing
+		}
+		
 		
 		return true;
 	}

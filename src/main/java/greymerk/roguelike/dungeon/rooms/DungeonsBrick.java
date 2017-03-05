@@ -32,9 +32,9 @@ public class DungeonsBrick extends DungeonBase {
 		
 		ITheme theme = settings.getTheme();
 		
-		IStair stair = theme.getPrimaryStair();
-		IBlockFactory blocks = theme.getPrimaryWall();
-		IBlockFactory pillar = theme.getPrimaryPillar();
+		IStair stair = theme.getPrimary().getStair();
+		IBlockFactory blocks = theme.getPrimary().getWall();
+		IBlockFactory pillar = theme.getPrimary().getPillar();
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		
 		// fill air inside
@@ -44,7 +44,7 @@ public class DungeonsBrick extends DungeonBase {
 		// shell
 		RectHollow.fill(editor, rand, new Coord(x - 4, y - 1, z - 4), new Coord(x + 4, y + 4, z + 4), blocks, false, true);
 
-		RectSolid.fill(editor, rand, new Coord(x - 4, y - 1, z - 4), new Coord(x + 4, y - 1, z + 4), theme.getPrimaryFloor(), false, true);
+		RectSolid.fill(editor, rand, new Coord(x - 4, y - 1, z - 4), new Coord(x + 4, y - 1, z + 4), theme.getPrimary().getFloor(), false, true);
 		
 		Coord start;
 		Coord end;

@@ -111,7 +111,7 @@ public class WeightedRandomLoot implements Comparable<WeightedRandomLoot>, IWeig
 		try{
 			if(this.enchLevel > 0 && this.enchLevel <= 30) Enchant.enchantItem(rand, item, this.enchLevel);
 		} catch (NullPointerException e){
-			System.err.println("error occurred while attempting to enchant " + this.name);
+			// ignore
 		}
 		if(this.nbt != null) item.setTagCompound(this.nbt);
 		return item;

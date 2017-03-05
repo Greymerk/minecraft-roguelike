@@ -17,7 +17,7 @@ public class SegmentSewerArch extends SegmentBase {
 	@Override
 	protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, Coord origin) {
 			
-		IStair stair = theme.getSecondaryStair(); 
+		IStair stair = theme.getSecondary().getStair(); 
 		stair.setOrientation(Cardinal.reverse(dir), true);
 		MetaBlock water = BlockType.get(BlockType.WATER_FLOWING);
 		MetaBlock air = BlockType.get(BlockType.AIR);
@@ -64,11 +64,11 @@ public class SegmentSewerArch extends SegmentBase {
 			cursor = new Coord(origin);
 			cursor.add(o, 1);
 			cursor.add(dir, 2);
-			theme.getSecondaryPillar().set(editor, rand, cursor);
+			theme.getSecondary().getPillar().set(editor, rand, cursor);
 			cursor.add(Cardinal.UP, 1);
-			theme.getSecondaryPillar().set(editor, rand, cursor);
+			theme.getSecondary().getPillar().set(editor, rand, cursor);
 			cursor.add(Cardinal.UP, 1);
-			theme.getPrimaryWall().set(editor, rand, cursor);
+			theme.getPrimary().getWall().set(editor, rand, cursor);
 			cursor.add(Cardinal.reverse(dir), 1);
 			stair.set(editor, cursor);			
 		}

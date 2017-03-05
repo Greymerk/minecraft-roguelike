@@ -21,8 +21,8 @@ public class DungeonOssuary extends DungeonBase {
 	@Override
 	public boolean generate(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
 		ITheme theme = settings.getTheme();
-		IBlockFactory walls = theme.getPrimaryWall();
-		IStair stair = theme.getPrimaryStair();
+		IBlockFactory walls = theme.getPrimary().getWall();
+		IStair stair = theme.getPrimary().getStair();
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		
 		Coord start;

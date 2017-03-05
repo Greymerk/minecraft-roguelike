@@ -2,7 +2,9 @@ package greymerk.roguelike;
 
 import java.util.Collection;
 
-import greymerk.roguelike.treasure.loot.Loot;
+import greymerk.roguelike.monster.IEntity;
+import greymerk.roguelike.monster.MetaEntity;
+import greymerk.roguelike.monster.MonsterProfile;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.monster.EntityMob;
@@ -32,7 +34,10 @@ public class EntityJoinWorld {
 		for(Object buff : effects){
 			if(Potion.getIdFromPotion(((PotionEffect) buff).getPotion()) == 4){
 				int level = ((PotionEffect) buff).getAmplifier();
-				Loot.addEquipment(world, level, entity);
+				
+				IEntity metaEntity = new MetaEntity((Entity)mob);
+				MonsterProfile.equip(world, world.rand, level, metaEntity);
+				if(entity.isDead) event.setCanceled(true);
 				return;
 			}
 		}

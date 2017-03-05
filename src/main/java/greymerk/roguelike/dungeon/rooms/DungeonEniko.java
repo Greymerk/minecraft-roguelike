@@ -2,7 +2,6 @@ package greymerk.roguelike.dungeon.rooms;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -14,8 +13,8 @@ import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.IStair;
-import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.IWorldEditor;
+import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.shapes.RectHollow;
 import greymerk.roguelike.worldgen.shapes.RectSolid;
@@ -29,9 +28,9 @@ public class DungeonEniko extends DungeonBase {
 		
 		ITheme theme = settings.getTheme();
 		MetaBlock air = BlockType.get(BlockType.AIR);
-		IStair stair = theme.getPrimaryStair();
-		IBlockFactory walls = theme.getPrimaryWall();
-		IBlockFactory floor = theme.getPrimaryFloor();
+		IStair stair = theme.getPrimary().getStair();
+		IBlockFactory walls = theme.getPrimary().getWall();
+		IBlockFactory floor = theme.getPrimary().getFloor();
 		Coord start;
 		Coord end;
 		Coord cursor;
@@ -47,7 +46,7 @@ public class DungeonEniko extends DungeonBase {
 		end = new Coord(origin);
 		start.add(new Coord(6, 4, 6));
 		end.add(new Coord(-6, 5, -6));
-		RectSolid.fill(editor, rand, start, end, theme.getSecondaryWall(), false, true);
+		RectSolid.fill(editor, rand, start, end, theme.getSecondary().getWall(), false, true);
 		
 		start = new Coord(origin);
 		end = new Coord(origin);
@@ -95,9 +94,7 @@ public class DungeonEniko extends DungeonBase {
 		}
 		
 		Spawner.generate(editor, rand, settings, origin);
-		
-		Collections.shuffle(chests);
-		Treasure.generate(editor, rand, chests.remove(0), settings.getDifficulty(origin), false);
+		Treasure.createChests(editor, rand, 1, chests, settings.getDifficulty(origin));
 		
 		return true;
 	}
@@ -105,8 +102,8 @@ public class DungeonEniko extends DungeonBase {
 	
 	private static void pillar(IWorldEditor editor, Random rand, ITheme theme, Coord origin){
 		
-		IStair stair = theme.getPrimaryStair();
-		IBlockFactory pillar = theme.getPrimaryPillar();
+		IStair stair = theme.getPrimary().getStair();
+		IBlockFactory pillar = theme.getPrimary().getPillar();
 		Coord start;
 		Coord end;
 		Coord cursor;

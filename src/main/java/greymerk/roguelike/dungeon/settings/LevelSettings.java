@@ -1,5 +1,7 @@
 package greymerk.roguelike.dungeon.settings;
 
+import java.util.Set;
+
 import com.google.gson.JsonObject;
 
 import greymerk.roguelike.config.RogueConfig;
@@ -32,55 +34,77 @@ public class LevelSettings {
 		numRooms = RogueConfig.getInt(RogueConfig.LEVELMAXROOMS);
 		range = RogueConfig.getInt(RogueConfig.LEVELRANGE);
 		scatter = RogueConfig.getInt(RogueConfig.LEVELSCATTER);
+		rooms = new DungeonFactory();
+		secrets = new SecretFactory();
 		levelDifficulty = -1;
 	}
 	
 	public LevelSettings(LevelSettings toCopy){
-		this.numRooms = toCopy.numRooms;
-		this.range = toCopy.range;
-		this.scatter = toCopy.scatter;
-		this.levelDifficulty = toCopy.levelDifficulty;
-		this.rooms = toCopy.rooms != null ? new DungeonFactory(toCopy.rooms) : null;
-		this.secrets = toCopy.secrets != null ? new SecretFactory(toCopy.secrets) : null;
-		this.theme = toCopy.theme != null ? toCopy.theme : null;
-		this.segments = toCopy.segments != null ? new SegmentGenerator(toCopy.segments) : null;
-		this.spawners = toCopy.spawners;
-		this.generator = toCopy.generator;
+		init(toCopy);
 	}
 	
-	public LevelSettings(LevelSettings base, LevelSettings override){
+	public LevelSettings(LevelSettings base, LevelSettings other, Set<SettingsType> overrides){
+		this();
 		
-		this.numRooms = override.numRooms != base.numRooms && override.numRooms != RogueConfig.getInt(RogueConfig.LEVELMAXROOMS) ? override.numRooms : base.numRooms;
-		this.range = override.range != base.range && override.range != RogueConfig.getInt(RogueConfig.LEVELRANGE) ? override.range : base.range;
-		this.scatter = override.scatter != base.scatter && override.scatter != RogueConfig.getInt(RogueConfig.LEVELSCATTER) ? override.scatter : base.scatter;
-		
-		this.levelDifficulty = (base.levelDifficulty != override.levelDifficulty && override.levelDifficulty != -1) || base.levelDifficulty == -1 ? override.levelDifficulty : base.levelDifficulty;
-		
-		if(base.rooms != null || override.rooms != null){
-			this.rooms = override.rooms == null ? new DungeonFactory(base.rooms) : new DungeonFactory(override.rooms);
+		if(base == null && other == null){
+			return;
 		}
 		
-		if(base.secrets != null || override.secrets != null){
-			this.secrets = override.secrets == null ? new SecretFactory(base.secrets) : new SecretFactory(override.secrets);
+		if(base == null && other != null){
+			init(other); return;
 		}
 		
-		this.theme = override.theme == null ? base.theme : override.theme;
-		
-		if(base.segments != null || override.segments != null){
-			this.segments = override.segments == null ? new SegmentGenerator(base.segments) : new SegmentGenerator(override.segments);
+		if(base != null && other == null){
+			init(base); return;
 		}
 		
-		this.spawners = override.spawners == null ? base.spawners : override.spawners;
-		this.generator = override.generator == null? base.generator : override.generator;
+		this.numRooms = other.numRooms != base.numRooms && other.numRooms != RogueConfig.getInt(RogueConfig.LEVELMAXROOMS) 
+				? other.numRooms 
+				: base.numRooms;
+		
+		this.range = other.range != base.range && other.range != RogueConfig.getInt(RogueConfig.LEVELRANGE) ? other.range : base.range;
+		this.scatter = other.scatter != base.scatter && other.scatter != RogueConfig.getInt(RogueConfig.LEVELSCATTER) ? other.scatter : base.scatter;
+		
+		this.levelDifficulty = (base.levelDifficulty != other.levelDifficulty && other.levelDifficulty != -1) || base.levelDifficulty == -1 ? other.levelDifficulty : base.levelDifficulty;
+		
+		if(overrides.contains(SettingsType.ROOMS)){
+			this.rooms = new DungeonFactory(base.rooms);
+		} else {
+			this.rooms = new DungeonFactory(base.rooms, other.rooms);			
+		}
+		
+		if(overrides.contains(SettingsType.SECRETS)){
+			this.secrets = new SecretFactory(other.secrets);
+		} else {
+			this.secrets = new SecretFactory(base.secrets, other.secrets);
+		}
+
+		if(other.theme != null){
+			if(base.theme == null || overrides.contains(SettingsType.THEMES)){
+				this.theme = Theme.create(other.theme);
+			} else {
+				this.theme = Theme.create(base.theme, other.theme);
+			}
+		} else if(base.theme != null){
+			this.theme = Theme.create(base.theme);
+		}
+		
+		if(base.segments != null || other.segments != null){
+			this.segments = other.segments == null ? new SegmentGenerator(base.segments) : new SegmentGenerator(other.segments);
+		}
+		
+		this.spawners = other.spawners == null ? base.spawners : other.spawners;
+		this.generator = other.generator == null? base.generator : other.generator;
 	}
 	
-	public LevelSettings(JsonObject data){
+	public LevelSettings(JsonObject data) throws Exception{
+		this();
 		this.numRooms = data.has("numRooms") ? data.get("numRooms").getAsInt() : RogueConfig.getInt(RogueConfig.LEVELMAXROOMS);
 		this.range = data.has("range") ? data.get("range").getAsInt() : RogueConfig.getInt(RogueConfig.LEVELRANGE);
 		this.scatter = data.has("scatter") ? data.get("scatter").getAsInt() : RogueConfig.getInt(RogueConfig.LEVELSCATTER);
 		this.levelDifficulty = data.has("diff") ? data.get("diff").getAsInt() : -1;
-		this.rooms = data.has("rooms") ? new DungeonFactory(data.get("rooms").getAsJsonArray()) : null;
-		this.secrets = data.has("secrets") ? new SecretFactory(data.get("secrets").getAsJsonArray()) : null;
+		if(data.has("rooms")) this.rooms = new DungeonFactory(data.get("rooms").getAsJsonArray());
+		if(data.has("secrets")) this.secrets = new SecretFactory(data.get("secrets").getAsJsonArray());
 		this.theme = data.has("theme") ? Theme.create(data.get("theme").getAsJsonObject()) : null;
 		this.segments = data.has("segments") ? new SegmentGenerator(data.get("segments").getAsJsonObject()) : null;
 		this.spawners = data.has("spawners") ? new SpawnerSettings(data.get("spawners").getAsJsonObject()) : null;
@@ -175,5 +199,27 @@ public class LevelSettings {
 	
 	public void setRange(int range){
 		this.range = range;
+	}
+	
+	private void init(LevelSettings toCopy){
+		this.numRooms = toCopy.numRooms;
+		this.range = toCopy.range;
+		this.scatter = toCopy.scatter;
+		this.levelDifficulty = toCopy.levelDifficulty;
+		this.rooms = toCopy.rooms != null ? new DungeonFactory(toCopy.rooms) : null;
+		this.secrets = toCopy.secrets != null ? new SecretFactory(toCopy.secrets) : null;
+		this.theme = toCopy.theme != null ? toCopy.theme : null;
+		this.segments = toCopy.segments != null ? new SegmentGenerator(toCopy.segments) : null;
+		this.spawners = toCopy.spawners;
+		this.generator = toCopy.generator;
+	}
+	
+	@Override
+	public boolean equals(Object o){
+		LevelSettings other = (LevelSettings) o;
+		if(other.generator != this.generator) return false;
+		if(!this.secrets.equals(other.secrets)) return false;
+		if(!this.rooms.equals(other.rooms)) return false;
+		return true;
 	}
 }

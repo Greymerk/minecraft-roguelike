@@ -18,7 +18,7 @@ public class SegmentBooks extends SegmentBase {
 	protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, Coord origin) {
 		
 		MetaBlock air = BlockType.get(BlockType.AIR);
-		IStair stair = theme.getSecondaryStair();
+		IStair stair = theme.getSecondary().getStair();
 		
 		Coord cursor = new Coord(origin);
 		Coord start;
@@ -38,7 +38,7 @@ public class SegmentBooks extends SegmentBase {
 		
 		start.add(dir, 1);
 		end.add(dir, 1);
-		RectSolid.fill(editor, rand, start, end, theme.getSecondaryWall(), false, true);
+		RectSolid.fill(editor, rand, start, end, theme.getSecondary().getWall(), false, true);
 
 		cursor.add(Cardinal.UP, 2);
 		for(Cardinal d : orth){

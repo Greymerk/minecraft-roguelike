@@ -7,6 +7,7 @@ import greymerk.roguelike.dungeon.Dungeon;
 import greymerk.roguelike.dungeon.base.DungeonBase;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.theme.ITheme;
+import greymerk.roguelike.treasure.ChestPlacementException;
 import greymerk.roguelike.treasure.Treasure;
 import greymerk.roguelike.worldgen.BlockJumble;
 import greymerk.roguelike.worldgen.Cardinal;
@@ -35,8 +36,8 @@ public class DungeonObsidian extends DungeonBase {
 		
 		HashSet<Coord> spawners = new HashSet<Coord>();
 		MetaBlock air = BlockType.get(BlockType.AIR);
-		IBlockFactory primaryWall = theme.getPrimaryWall();
-		IBlockFactory secondaryWall = theme.getSecondaryWall();
+		IBlockFactory primaryWall = theme.getPrimary().getWall();
+		IBlockFactory secondaryWall = theme.getSecondary().getWall();
 		
 		// space
 		RectSolid.fill(editor, rand, new Coord(x - 10, y - 3, z - 10), new Coord(x + 10, y + 3, z + 10), air);
@@ -220,7 +221,11 @@ public class DungeonObsidian extends DungeonBase {
 				chestPos.add(orth, 2);
 				chestPos.add(Cardinal.DOWN, 3);
 				Treasure[] types = {Treasure.WEAPONS, Treasure.ARMOUR, Treasure.ORE};
-				Treasure.generate(editor, rand, chestPos, types[rand.nextInt(types.length)], Dungeon.getLevel(chestPos.getY()));
+				try{
+					Treasure.generate(editor, rand, chestPos, types[rand.nextInt(types.length)], Dungeon.getLevel(chestPos.getY()));
+				} catch (ChestPlacementException cpe){
+					// do nothing
+				}
 			}
 		}
 		
@@ -273,7 +278,7 @@ public class DungeonObsidian extends DungeonBase {
 	
 	private static void outerPillar(IWorldEditor editor, Random rand, ITheme theme, Coord pillarLocation, Cardinal dir){
 		
-		IBlockFactory secondaryWall = theme.getSecondaryPillar();
+		IBlockFactory secondaryWall = theme.getSecondary().getPillar();
 		
 		int x = pillarLocation.getX();
 		int y = pillarLocation.getY();
@@ -294,7 +299,7 @@ public class DungeonObsidian extends DungeonBase {
 	
 	private static void innerPillars(IWorldEditor editor, Random rand, ITheme theme, int x, int y, int z){
 		
-		IBlockFactory secondaryWall = theme.getSecondaryPillar();
+		IBlockFactory secondaryWall = theme.getSecondary().getPillar();
 		
 		for(Cardinal dir : Cardinal.directions){			
 			for (Cardinal orth : Cardinal.orthogonal(dir)){
@@ -313,7 +318,7 @@ public class DungeonObsidian extends DungeonBase {
 				start.add(dir, 2);
 				Coord end = new Coord(start);
 				end.add(dir, 5);
-				RectSolid.fill(editor, rand, start, end, theme.getPrimaryPillar());
+				RectSolid.fill(editor, rand, start, end, theme.getPrimary().getPillar());
 
 				start = new Coord(x, y, z);
 				start.add(Cardinal.DOWN, 1);

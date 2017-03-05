@@ -6,7 +6,7 @@ import greymerk.roguelike.worldgen.IWorldEditor;
 
 public enum Tower {
 
-	ROGUE, ENIKO, ETHO, PYRAMID, JUNGLE, WITCH, HOUSE, BUNKER;
+	ROGUE, ENIKO, ETHO, PYRAMID, JUNGLE, WITCH, HOUSE, BUNKER, RUIN, HOLE;
 	
 	public static ITower get(Tower type){
 		
@@ -19,6 +19,8 @@ public enum Tower {
 		case WITCH: return new WitchTower();
 		case HOUSE: return new HouseTower();
 		case BUNKER: return new BunkerTower();
+		case RUIN: return new RuinTower();
+		case HOLE: return new HoleTower();
 		default: return new RogueTower();
 		}
 	}
@@ -43,5 +45,18 @@ public enum Tower {
 		return new Coord(pos.getX(), pos.getY() + yOffset, pos.getZ());
 	}
 
+	public static Tower get(String name) throws Exception{
+		if(!contains(name.toUpperCase())){
+			throw new Exception("No such tower type: " + name);
+		}
+		
+		return valueOf(name.toUpperCase());
+	}
 	
+	public static boolean contains(String name){
+		for(Tower value : Tower.values()){
+			if(value.toString().equals(name)) return true;
+		}
+		return false;
+	}
 }

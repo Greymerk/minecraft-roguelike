@@ -6,6 +6,7 @@ import greymerk.roguelike.dungeon.base.DungeonBase;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.treasure.loot.Firework;
 import greymerk.roguelike.treasure.loot.Loot;
+import greymerk.roguelike.util.DyeColor;
 import greymerk.roguelike.util.TextFormat;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
@@ -13,7 +14,6 @@ import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.ColorBlock;
-import greymerk.roguelike.worldgen.blocks.DyeColor;
 import greymerk.roguelike.worldgen.redstone.Comparator;
 import greymerk.roguelike.worldgen.redstone.Dispenser;
 import greymerk.roguelike.worldgen.redstone.Dropper;
@@ -170,7 +170,7 @@ public class DungeonFirework extends DungeonBase {
 		Dropper dropper = new Dropper();
 		dropper.generate(editor, Cardinal.UP, cursor);
 		for(int i = 0;i < 8; ++i){
-			ItemStack stick = new ItemStack(Items.STICK);
+			ItemStack stick = new ItemStack(Items.STICK, 1);
 			Loot.setItemName(stick, Integer.toString(i));
 			Loot.setItemLore(stick, "Random logic unit", TextFormat.DARKGRAY);
 			dropper.add(editor, cursor, i, stick);

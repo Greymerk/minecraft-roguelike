@@ -25,9 +25,9 @@ public class DungeonCorner extends DungeonBase {
 		int z = origin.getZ();
 		ITheme theme = settings.getTheme();
 		
-		IStair stair = theme.getPrimaryStair();
-		IBlockFactory blocks = theme.getPrimaryWall();
-		IBlockFactory pillar = theme.getPrimaryPillar();
+		IStair stair = theme.getPrimary().getStair();
+		IBlockFactory blocks = theme.getPrimary().getWall();
+		IBlockFactory pillar = theme.getPrimary().getPillar();
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		
 		// fill air inside
@@ -37,7 +37,7 @@ public class DungeonCorner extends DungeonBase {
 		RectHollow.fill(editor, rand, new Coord(x - 3, y - 1, z - 3), new Coord(x + 3, y + 4, z + 3), blocks, false, true);
 		
 		// floor
-		RectSolid.fill(editor, rand, new Coord(x - 3, y - 1, z - 3), new Coord(x + 3, y - 1, z + 3), theme.getPrimaryFloor(), false, true);
+		RectSolid.fill(editor, rand, new Coord(x - 3, y - 1, z - 3), new Coord(x + 3, y - 1, z + 3), theme.getPrimary().getFloor(), false, true);
 		
 		Coord start;
 		Coord end;

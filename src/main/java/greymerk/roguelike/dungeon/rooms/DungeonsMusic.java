@@ -10,6 +10,7 @@ import greymerk.roguelike.dungeon.base.DungeonBase;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.treasure.Treasure;
+import greymerk.roguelike.util.DyeColor;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
@@ -18,7 +19,6 @@ import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.ColorBlock;
-import greymerk.roguelike.worldgen.blocks.DyeColor;
 import greymerk.roguelike.worldgen.shapes.RectHollow;
 import greymerk.roguelike.worldgen.shapes.RectSolid;
 
@@ -26,12 +26,12 @@ public class DungeonsMusic extends DungeonBase {
 
 	public boolean generate(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
 		ITheme theme = settings.getTheme();
-		IBlockFactory wall = theme.getPrimaryWall();
-		IStair stair = theme.getSecondaryStair();
-		IBlockFactory panel = theme.getSecondaryWall();
-		IBlockFactory pillar = theme.getSecondaryPillar();
+		IBlockFactory wall = theme.getPrimary().getWall();
+		IStair stair = theme.getSecondary().getStair();
+		IBlockFactory panel = theme.getSecondary().getWall();
+		IBlockFactory pillar = theme.getSecondary().getPillar();
 		MetaBlock air = BlockType.get(BlockType.AIR);
-		IBlockFactory floor = theme.getSecondaryFloor();
+		IBlockFactory floor = theme.getSecondary().getFloor();
 		
 		Coord start;
 		Coord end;
@@ -158,9 +158,9 @@ public class DungeonsMusic extends DungeonBase {
 	
 	private void pillar(IWorldEditor editor, Random rand, LevelSettings settings, Coord origin){
 		ITheme theme = settings.getTheme();
-		IStair stair = theme.getSecondaryStair();
-		IBlockFactory panel = theme.getSecondaryWall();
-		IBlockFactory pillar = theme.getSecondaryPillar();
+		IStair stair = theme.getSecondary().getStair();
+		IBlockFactory panel = theme.getSecondary().getWall();
+		IBlockFactory pillar = theme.getSecondary().getPillar();
 		
 		Coord start;
 		Coord end;

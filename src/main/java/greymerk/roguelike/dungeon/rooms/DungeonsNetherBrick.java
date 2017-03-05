@@ -31,11 +31,11 @@ public class DungeonsNetherBrick extends DungeonBase {
 		int length = 2 + rand.nextInt(3);
 		int width = 2 + rand.nextInt(3);
 		
-		IBlockFactory walls = theme.getPrimaryWall();
+		IBlockFactory walls = theme.getPrimary().getWall();
 		RectHollow.fill(editor, rand, new Coord(x - length - 1, y - 1, z - width - 1), new Coord(x + length + 1, y + height + 1, z + width + 1), walls, false, true);
 		
 		
-		IBlockFactory floor = theme.getPrimaryFloor();
+		IBlockFactory floor = theme.getPrimary().getFloor();
 		RectSolid.fill(editor, rand, new Coord(x - length - 1, y - 1, z - width - 1), new Coord(x + length + 1, y - 1, z + width + 1), floor);
 
 		// lava crap under the floor
