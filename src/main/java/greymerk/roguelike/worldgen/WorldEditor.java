@@ -120,7 +120,7 @@ public class WorldEditor implements IWorldEditor{
 
 		Coord cursor = new Coord(origin);
 		
-		while(!getBlock(cursor).getBlock().isVisuallyOpaque() && cursor.getY() > 1){
+		while(!getBlock(cursor).isOpaqueCube() && cursor.getY() > 1){
 			blocks.set(this, rand, cursor);
 			cursor.add(Cardinal.DOWN);
 		}

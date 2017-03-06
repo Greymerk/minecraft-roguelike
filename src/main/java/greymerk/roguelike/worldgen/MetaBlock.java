@@ -35,19 +35,24 @@ public class MetaBlock extends BlockBase implements IBlockState{
 	private int flag;
     
 	public MetaBlock(Block block){
-		this.state = block.getDefaultState();
+		this.setState(block.getDefaultState());
+		flag = 2;
+	}
+	
+	public MetaBlock(MetaBlock block){
+		this.setState(block);
 		flag = 2;
 	}
 	
 	public MetaBlock(IBlockState state){
-		this.state = state;
+		this.setState(state);
 		flag = 2;
 	}
 	
 	
 	public MetaBlock(Block block, IProperty<?> ... properties){
 		BlockStateContainer s = new BlockStateContainer(block, properties);
-		this.state = s.getBaseState();
+		this.setState(s.getBaseState());
 	}
 	
 	@SuppressWarnings("deprecation")
@@ -57,11 +62,16 @@ public class MetaBlock extends BlockBase implements IBlockState{
 		ResourceLocation location = new ResourceLocation(name);
 		Block block = (Block) Block.REGISTRY.getObject(location);
 		int meta = json.has("meta") ? json.get("meta").getAsInt() : 0;
-		this.state = block.getStateFromMeta(meta);
+		this.setState(block.getStateFromMeta(meta));
 		flag = json.has("flag") ? json.get("flag").getAsInt() : 2;
 	}
 	
 	public void setState(IBlockState state){
+		if(state instanceof MetaBlock){
+			this.state = ((MetaBlock)state).state;
+			return;
+		}
+		
 		this.state = state;
 	}
 
@@ -91,12 +101,16 @@ public class MetaBlock extends BlockBase implements IBlockState{
 	}
 
 	public IBlockState getState(){
+		if(this.state instanceof MetaBlock){
+			return ((MetaBlock)this.state).getState();
+		}
+		
 		return this.state;
 	}
 	
 	@Override
 	public Block getBlock() {
-		return this.state.getBlock();
+		return this.getState().getBlock();
 	}
 	
 	public int getFlag(){
@@ -213,10 +227,7 @@ public class MetaBlock extends BlockBase implements IBlockState{
 		return this.state.getSelectedBoundingBox(p_185890_1_, p_185890_2_);
 	}
 
-	@Override
-	public Collection<IProperty<?>> getPropertyNames() {
-		return this.state.getPropertyNames();
-	}
+
 
 	@Override
 	public ImmutableMap<IProperty<?>, Comparable<?>> getProperties() {
@@ -249,19 +260,11 @@ public class MetaBlock extends BlockBase implements IBlockState{
 	}
 
 	@Override
-	public AxisAlignedBB getCollisionBoundingBox(World worldIn, BlockPos pos) {
-		return this.state.getCollisionBoundingBox(worldIn, pos);
-	}
-
-	@Override
 	public boolean shouldSideBeRendered(IBlockAccess blockAccess, BlockPos pos, EnumFacing facing) {
 		return this.state.shouldSideBeRendered(blockAccess, pos, facing);
 	}
 
-	@Override
-	public void addCollisionBoxToList(World worldIn, BlockPos pos, AxisAlignedBB p_185908_3_, List<AxisAlignedBB> p_185908_4_, Entity p_185908_5_) {
-		this.state.addCollisionBoxToList(worldIn, pos, p_185908_3_, p_185908_4_, p_185908_5_);
-	}
+
 
 	@Override
 	public AxisAlignedBB getBoundingBox(IBlockAccess blockAccess, BlockPos pos) {
@@ -296,11 +299,6 @@ public class MetaBlock extends BlockBase implements IBlockState{
 	}
 
 	@Override
-	public void neighborChanged(World arg0, BlockPos arg1, Block arg2) {
-		this.state.neighborChanged(arg0, arg1, arg2);
-	}
-
-	@Override
 	public boolean onBlockEventReceived(World arg0, BlockPos arg1, int arg2, int arg3) {
 		return this.state.onBlockEventReceived(arg0, arg1, arg2, arg3);
 	}
@@ -316,13 +314,33 @@ public class MetaBlock extends BlockBase implements IBlockState{
 		return this.state.canEntitySpawn(entityIn);
 	}
 
+
+	
+
+
+	@Override
+	public void neighborChanged(World worldIn, BlockPos pos, Block blockIn) {
+		this.neighborChanged(worldIn, pos, blockIn);
+	}
+
+	@Override
+	public AxisAlignedBB getCollisionBoundingBox(World worldIn, BlockPos pos) {
+		return this.getCollisionBoundingBox(worldIn, pos);
+	}
+
+	@Override
+	public void addCollisionBoxToList(World worldIn, BlockPos pos, AxisAlignedBB p_185908_3_,
+			List<AxisAlignedBB> p_185908_4_, Entity p_185908_5_) {
+		this.state.addCollisionBoxToList(worldIn, pos, p_185908_3_, p_185908_4_, p_185908_5_);
+	}
+
+	@Override
+	public Collection<IProperty<?>> getPropertyNames() {
+		return this.state.getPropertyNames();
+	}
+	
 	@Override
 	public boolean equals(Object other){
-		if(!(other instanceof MetaBlock)){
-			IBlockState otherBlock = (IBlockState)other;
-			return this.state.equals(otherBlock);
-		}
-		
 		MetaBlock otherBlock = (MetaBlock)other;
 		return this.state.equals(otherBlock.state);
 	}
