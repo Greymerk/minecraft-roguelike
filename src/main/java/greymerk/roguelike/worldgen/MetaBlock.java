@@ -339,6 +339,11 @@ public class MetaBlock extends BlockBase implements IBlockState{
 	
 	@Override
 	public boolean equals(Object other){
+		if(!(other instanceof MetaBlock)){
+			IBlockState otherBlock = (IBlockState)other;
+			return this.state.equals(otherBlock);
+		}		
+		
 		MetaBlock otherBlock = (MetaBlock)other;
 		return this.state.equals(otherBlock.state);
 	}

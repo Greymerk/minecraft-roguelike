@@ -7,7 +7,6 @@ import com.google.gson.JsonObject;
 
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.worldgen.blocks.BlockType;
-import greymerk.roguelike.worldgen.blocks.Stair;
 import net.minecraft.init.Bootstrap;
 
 public class ThemeTest {
