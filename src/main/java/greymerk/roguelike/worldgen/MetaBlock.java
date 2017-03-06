@@ -35,19 +35,24 @@ public class MetaBlock extends BlockBase implements IBlockState{
 	private int flag;
     
 	public MetaBlock(Block block){
-		this.state = block.getDefaultState();
+		this.setState(block.getDefaultState());
+		flag = 2;
+	}
+	
+	public MetaBlock(MetaBlock block){
+		this.setState(block);
 		flag = 2;
 	}
 	
 	public MetaBlock(IBlockState state){
-		this.state = state;
+		this.setState(state);
 		flag = 2;
 	}
 	
 	
 	public MetaBlock(Block block, IProperty<?> ... properties){
 		BlockStateContainer s = new BlockStateContainer(block, properties);
-		this.state = s.getBaseState();
+		this.setState(s.getBaseState());
 	}
 	
 	@SuppressWarnings("deprecation")
@@ -57,11 +62,16 @@ public class MetaBlock extends BlockBase implements IBlockState{
 		ResourceLocation location = new ResourceLocation(name);
 		Block block = (Block) Block.REGISTRY.getObject(location);
 		int meta = json.has("meta") ? json.get("meta").getAsInt() : 0;
-		this.state = block.getStateFromMeta(meta);
+		this.setState(block.getStateFromMeta(meta));
 		flag = json.has("flag") ? json.get("flag").getAsInt() : 2;
 	}
 	
 	public void setState(IBlockState state){
+		if(state instanceof MetaBlock){
+			this.state = ((MetaBlock)state).state;
+			return;
+		}
+		
 		this.state = state;
 	}
 
@@ -91,12 +101,16 @@ public class MetaBlock extends BlockBase implements IBlockState{
 	}
 
 	public IBlockState getState(){
+		if(this.state instanceof MetaBlock){
+			return ((MetaBlock)this.state).getState();
+		}
+		
 		return this.state;
 	}
 	
 	@Override
 	public Block getBlock() {
-		return this.state.getBlock();
+		return this.getState().getBlock();
 	}
 	
 	public int getFlag(){
