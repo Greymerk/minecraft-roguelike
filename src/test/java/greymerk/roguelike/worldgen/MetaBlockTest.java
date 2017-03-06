@@ -8,7 +8,9 @@ import org.junit.Test;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirt;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Bootstrap;
 
@@ -44,8 +46,12 @@ public class MetaBlockTest {
 	
 	@Test
 	public void equalsTest(){
+		IBlockState dirtState = Blocks.DIRT.getDefaultState();
+		
 		MetaBlock dirt = new MetaBlock(Blocks.DIRT);
-		MetaBlock stone = new MetaBlock(Blocks.STONE);
+		MetaBlock stone = new MetaBlock(Blocks.STONE);		
+		
+		assert(dirt.equals(dirtState));
 		
 		assertTrue(!dirt.equals(stone));
 		

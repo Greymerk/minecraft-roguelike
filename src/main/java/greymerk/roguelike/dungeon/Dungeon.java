@@ -47,6 +47,7 @@ public class Dungeon implements IDungeon{
 	
 	static{
 		try{
+			RogueConfig.reload(false);
 			initResolver();
 		} catch(Exception e) {
 			System.err.println(e.getMessage());

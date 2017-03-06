@@ -11,7 +11,6 @@ import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.shapes.RectSolid;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
@@ -29,7 +28,7 @@ public class WorldEditor implements IWorldEditor{
 		this.chests = new TreasureManager();
 	}
 	
-	private boolean setBlock(Coord pos, IBlockState block, int flags, boolean fillAir, boolean replaceSolid){
+	private boolean setBlock(Coord pos, MetaBlock block, int flags, boolean fillAir, boolean replaceSolid){
 		
 		MetaBlock currentBlock = getBlock(pos);
 		
@@ -43,7 +42,7 @@ public class WorldEditor implements IWorldEditor{
 		if(!replaceSolid && !isAir)	return false;
 		
 		try{
-			world.setBlockState(pos.getBlockPos(), block, flags);
+			world.setBlockState(pos.getBlockPos(), block.getState(), flags);
 		} catch(NullPointerException npe){
 			//ignore it.
 		}
@@ -62,7 +61,7 @@ public class WorldEditor implements IWorldEditor{
 	
 	@Override
 	public boolean setBlock(Coord pos, MetaBlock block, boolean fillAir, boolean replaceSolid){
-		return this.setBlock(pos, block.getState(), block.getFlag(), fillAir, replaceSolid);
+		return this.setBlock(pos, block, block.getFlag(), fillAir, replaceSolid);
 	}
 	
 	@Override

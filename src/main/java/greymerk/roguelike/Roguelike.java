@@ -21,8 +21,8 @@ public class Roguelike {
 	// The instance of your mod that Forge uses.
 	@Instance("roguelike")
 	public static Roguelike instance;
-	public static final String version = "1.5.7";
-	public static final String date = "Mar 4th 2017";
+	public static final String version = "1.5.8";
+	public static final String date = "Mar 6th 2017";
 	
 	// Says where the client and server 'proxy' code is loaded.
 	@SidedProxy(clientSide="greymerk.roguelike.ClientProxy", serverSide="greymerk.roguelike.CommonProxy")
