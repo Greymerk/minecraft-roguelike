@@ -42,8 +42,11 @@ public class MetaBlockTest {
 		assertTrue(test.equals(podzol));
 	}
 	
+
 	@Test
-	public void equalsTest(){
-				
+	public void testEquals(){
+		MetaBlock dirt = new MetaBlock(Blocks.DIRT);
+		MetaBlock dirt2 = new MetaBlock(Blocks.DIRT);
+		assert(dirt.equals(dirt2));
 	}
 }

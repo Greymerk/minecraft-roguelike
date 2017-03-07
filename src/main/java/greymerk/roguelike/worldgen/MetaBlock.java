@@ -13,6 +13,7 @@ import net.minecraft.block.material.EnumPushReaction;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.state.BlockStateBase;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -67,8 +68,9 @@ public class MetaBlock extends BlockBase implements IBlockState{
 	}
 	
 	public void setState(IBlockState state){
+		
 		if(state instanceof MetaBlock){
-			this.state = ((MetaBlock)state).state;
+			this.state = ((MetaBlock)state).getState();
 			return;
 		}
 		
@@ -101,11 +103,12 @@ public class MetaBlock extends BlockBase implements IBlockState{
 	}
 
 	public IBlockState getState(){
+		
 		if(this.state instanceof MetaBlock){
 			return ((MetaBlock)this.state).getState();
 		}
 		
-		return this.state;
+		return (BlockStateBase)this.state;
 	}
 	
 	@Override
@@ -353,12 +356,11 @@ public class MetaBlock extends BlockBase implements IBlockState{
 	
 	@Override
 	public boolean equals(Object other){
-		if(!(other instanceof MetaBlock)){
-			IBlockState otherBlock = (IBlockState)other;
-			return this.state.equals(otherBlock);
-		}		
+		if(other == this) return true; 
+		if(other == null) return false;
+		if(!(other instanceof MetaBlock)) return false;		
 		
 		MetaBlock otherBlock = (MetaBlock)other;
-		return this.state.equals(otherBlock.state);
+		return this.getState().equals(otherBlock.getState());
 	}
 }
