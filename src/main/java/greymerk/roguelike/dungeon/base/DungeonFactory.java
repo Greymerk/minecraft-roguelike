@@ -156,4 +156,18 @@ public class DungeonFactory implements IDungeonFactory {
 		
 		return true;
 	}
+
+	public static DungeonFactory getRandom(Random rand, int numRooms) {
+		DungeonFactory rooms = new DungeonFactory();
+		rooms.base = DungeonRoom.CORNER;
+		for(int i = 0; i < numRooms; ++i){
+			DungeonRoom type = DungeonRoom.getRandomRoom(rand);
+			if(rand.nextBoolean()){
+				rooms.addRandom(type, 1);	
+			} else {
+				rooms.addSingle(type, 1);
+			}
+		}
+		return rooms;
+	}
 }

@@ -111,4 +111,12 @@ public class SegmentGenerator implements ISegmentGenerator{
 		stair.setOrientation(Cardinal.NORTH, true);
 		stair.set(editor, new Coord(x, y - 2, z - 1));	
 	}
+
+	public static SegmentGenerator getRandom(Random rand, int count) {
+		SegmentGenerator segments = new SegmentGenerator(Segment.ARCH);
+		for(int i = 0; i < count; ++i){
+			segments.add(Segment.getRandom(rand), 1);
+		}
+		return segments;
+	}
 }

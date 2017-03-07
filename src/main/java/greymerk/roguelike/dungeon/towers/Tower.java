@@ -1,5 +1,7 @@
 package greymerk.roguelike.dungeon.towers;
 
+import java.util.Random;
+
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IWorldEditor;
@@ -58,5 +60,9 @@ public enum Tower {
 			if(value.toString().equals(name)) return true;
 		}
 		return false;
+	}
+
+	public static Tower getRandom(Random rand) {
+		return Tower.values()[rand.nextInt(Tower.values().length)];
 	}
 }

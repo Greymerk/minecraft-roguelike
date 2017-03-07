@@ -1,5 +1,6 @@
 package greymerk.roguelike.dungeon.settings;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
@@ -7,6 +8,10 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 
+import greymerk.roguelike.dungeon.LevelGenerator;
+import greymerk.roguelike.dungeon.base.DungeonFactory;
+import greymerk.roguelike.dungeon.base.SecretFactory;
+import greymerk.roguelike.dungeon.segment.SegmentGenerator;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsDesertTheme;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsForestTheme;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsGenerator;
@@ -22,6 +27,8 @@ import greymerk.roguelike.dungeon.settings.builtin.SettingsSegments;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsSize;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsSwampTheme;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsTheme;
+import greymerk.roguelike.dungeon.towers.Tower;
+import greymerk.roguelike.theme.Theme;
 import greymerk.roguelike.util.WeightedChoice;
 import greymerk.roguelike.util.WeightedRandomizer;
 import greymerk.roguelike.worldgen.Coord;
@@ -83,6 +90,10 @@ public class SettingsResolver {
 	}
 	
 	public ISettings getWithName(String name, IWorldEditor editor, Random rand, Coord pos){
+		if(name.equals("random")){
+			return generateRandom(editor, rand, pos);
+		}
+		
 		DungeonSettings byName = this.getByName(name);
 		if(byName == null) return null;
 		DungeonSettings withInclusives = applyInclusives(byName, editor, rand, pos);
@@ -193,6 +204,45 @@ public class SettingsResolver {
 		}
 		
 		return toReturn;
+	}
+	
+	public ISettings generateRandom(IWorldEditor editor, Random rand, Coord pos){
+	
+		DungeonSettings setting = new SettingsBlank();
+		
+		setting.towerSettings = new TowerSettings(
+				Tower.getRandom(rand),
+				Theme.getRandom(rand));
+		
+		Map<Integer, LevelSettings> levels = new HashMap<Integer, LevelSettings>();
+		
+		for(int i = 0; i < 5; ++i){
+			LevelSettings level = new LevelSettings();
+			
+			level.setDifficulty(i);
+			level.setGenerator(LevelGenerator.CLASSIC);
+			level.setNumRooms(15);
+			level.setRange(60);
+			
+			DungeonFactory rooms = DungeonFactory.getRandom(rand, 8);
+			level.setRooms(rooms);
+			
+			level.setScatter(15);
+			
+			SecretFactory secrets = SecretFactory.getRandom(rand, 2);
+			level.setSecrets(secrets);
+			
+			SegmentGenerator segments = SegmentGenerator.getRandom(rand, 12);
+			level.setSegments(segments);
+			
+			level.setTheme(Theme.getRandom(rand));
+			levels.put(i, level);
+		}
+		
+		setting.levels = levels;
+		
+		return new DungeonSettings(this.base, setting);
+		
 	}
 	
 	@Override

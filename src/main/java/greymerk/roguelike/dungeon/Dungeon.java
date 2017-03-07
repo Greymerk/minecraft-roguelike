@@ -100,7 +100,7 @@ public class Dungeon implements IDungeon{
 			
 			if(!validLocation(rand, location.getX(), location.getZ())) continue;
 			
-			ISettings setting = resolver.getSettings(editor, rand, location);
+			ISettings setting = resolver.getSettings(editor, rand, location); 
 			
 			if(setting == null) return;
 			

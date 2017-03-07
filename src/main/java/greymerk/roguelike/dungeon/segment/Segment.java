@@ -1,5 +1,7 @@
 package greymerk.roguelike.dungeon.segment;
 
+import java.util.Random;
+
 import greymerk.roguelike.dungeon.segment.part.SegmentAnkh;
 import greymerk.roguelike.dungeon.segment.part.SegmentArch;
 import greymerk.roguelike.dungeon.segment.part.SegmentBooks;
@@ -43,6 +45,13 @@ public enum Segment {
 	SEWER, SEWERARCH, SEWERDOOR, SEWERDRAIN, MINESHAFT, LAMP, ARROW, SQUAREARCH,
 	CELL, WALL, PLANT;
 	
+	public static Segment[] segments = {
+			FIREPLACE, SHELF, INSET, MOSSYARCH, MUSHROOM,
+			NETHERSTRIPE, NETHERWART, NETHERLAVA, JUNGLE, BOOKS, SPAWNER, 
+			WHEAT, TOMB, CHEST, SILVERFISH, SKULL, FLOWERS, DOOR, ANKH, CAVE,
+			SEWER, SEWERARCH, SEWERDOOR, SEWERDRAIN, MINESHAFT, LAMP, ARROW, SQUAREARCH,
+			CELL, WALL, PLANT
+		};
 	
 	public static ISegment getSegment(Segment choice){
 		
@@ -85,5 +94,9 @@ public enum Segment {
 		
 		return null;
 		
+	}
+
+	public static Segment getRandom(Random rand) {
+		return segments[rand.nextInt(segments.length)];
 	}
 }
