@@ -21,8 +21,6 @@ import greymerk.roguelike.treasure.ITreasureChest;
 import greymerk.roguelike.treasure.Treasure;
 import greymerk.roguelike.treasure.TreasureManager;
 import greymerk.roguelike.treasure.loot.Book;
-import greymerk.roguelike.treasure.loot.ILoot;
-import greymerk.roguelike.treasure.loot.Loot;
 import greymerk.roguelike.util.WeightedChoice;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
@@ -50,7 +48,7 @@ public class Dungeon implements IDungeon{
 			RogueConfig.reload(false);
 			initResolver();
 		} catch(Exception e) {
-			System.err.println(e.getMessage());
+			// do nothing
 		}
 	}
 	
@@ -76,7 +74,7 @@ public class Dungeon implements IDungeon{
 			try {
 				String content = Files.toString(file, Charsets.UTF_8);
 				files.put(file.getName(), content); 
-			} catch (IOException e) {
+			} catch (IOException e) {				
 				throw new Exception("Error reading file : " + file.getName());
 			}
 		}
@@ -92,15 +90,16 @@ public class Dungeon implements IDungeon{
 	}
 	
 	public void generateNear(Random rand, int x, int z){
+		if(Dungeon.settingsResolver == null) return;
+		
 		int attempts = 50;
-		SettingsResolver resolver = Dungeon.settingsResolver;
 		
 		for(int i = 0;i < attempts;i++){
 			Coord location = getNearbyCoord(rand, x, z, 40, 100);
 			
 			if(!validLocation(rand, location.getX(), location.getZ())) continue;
 			
-			ISettings setting = resolver.getSettings(editor, rand, location); 
+			ISettings setting = Dungeon.settingsResolver.getSettings(editor, rand, location); 
 			
 			if(setting == null) return;
 			
@@ -115,9 +114,8 @@ public class Dungeon implements IDungeon{
 
 		Random rand = getRandom(editor, this.pos.getX(), this.pos.getZ());
 		TreasureManager treasure = editor.getTreasure();
-		ILoot loot = Loot.getLoot();
 
-		settings.getLootRules().process(rand, loot, treasure);
+		settings.getLootRules().process(rand, treasure);
 		 // TODO: Change start book details
 		Book book = new Book("Greymerk", "Statistics");
 		book.addPage("~Architect's Resource Notes~\n\n"

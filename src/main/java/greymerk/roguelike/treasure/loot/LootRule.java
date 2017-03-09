@@ -25,7 +25,7 @@ public class LootRule {
 	
 	
 	
-	public void process(Random rand, ILoot loot, TreasureManager treasure){
+	public void process(Random rand, TreasureManager treasure){
 		if(toEach && type != null) treasure.addItemToAll(rand, type, level, item, amount);		
 		if(toEach && type == null) treasure.addItemToAll(rand, level, item, amount);
 		if(!toEach && type != null) treasure.addItem(rand, type, level, item, amount);

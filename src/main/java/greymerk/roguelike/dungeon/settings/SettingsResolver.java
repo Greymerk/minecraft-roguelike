@@ -38,7 +38,6 @@ public class SettingsResolver {
 
 	
 	private SettingsContainer settings;
-	private DungeonSettings base;
 	
 	public SettingsResolver() throws Exception{
 		settings = new SettingsContainer();
@@ -50,9 +49,9 @@ public class SettingsResolver {
 		base = new DungeonSettings(base, new SettingsTheme());
 		base = new DungeonSettings(base, new SettingsGenerator());
 		base = new DungeonSettings(base, new SettingsLootRules());
-		base.setCriteria(new SpawnCriteria());
-		this.base = base;
-
+		base.id = new SettingIdentifier(SettingsContainer.BUILTIN_NAMESPACE, "base");
+		
+		this.settings.put(base);
 		this.settings.put(new SettingsDesertTheme());
 		this.settings.put(new SettingsGrasslandTheme());
 		this.settings.put(new SettingsJungleTheme());
@@ -78,6 +77,7 @@ public class SettingsResolver {
 
 	// called from Dungeon class
 	public ISettings getSettings(IWorldEditor editor, Random rand, Coord pos){
+		
 		DungeonSettings builtin = this.getBuiltin(editor, rand, pos);
 		DungeonSettings custom = this.getCustom(editor, rand, pos);
 		
@@ -86,7 +86,7 @@ public class SettingsResolver {
 		
 		DungeonSettings exclusive = (custom != null) ? custom : builtin;
 				
-		return new DungeonSettings(this.base, applyInclusives(exclusive, editor, rand, pos));
+		return new DungeonSettings(applyInclusives(exclusive, editor, rand, pos));
 	}
 	
 	public ISettings getWithName(String name, IWorldEditor editor, Random rand, Coord pos){
@@ -97,11 +97,11 @@ public class SettingsResolver {
 		DungeonSettings byName = this.getByName(name);
 		if(byName == null) return null;
 		DungeonSettings withInclusives = applyInclusives(byName, editor, rand, pos);
-		return new DungeonSettings(this.base, withInclusives);
+		return new DungeonSettings(withInclusives);
 	}
 	
 	public ISettings getDefaultSettings(){
-		return new DungeonSettings(base);
+		return new DungeonSettings(settings.get(new SettingIdentifier(SettingsContainer.BUILTIN_NAMESPACE, "base")));
 	}
 
 	public DungeonSettings getByName(String name){
@@ -122,7 +122,7 @@ public class SettingsResolver {
 		if(!this.settings.contains(id)) return null;
 		DungeonSettings setting = new DungeonSettings(this.settings.get(id));
 		setting = processInheritance(setting, this.settings);
-		return new DungeonSettings(this.base, setting);
+		return new DungeonSettings(setting);
 	}
 	
 	public static DungeonSettings processInheritance(DungeonSettings toProcess, SettingsContainer settings){
@@ -171,9 +171,9 @@ public class SettingsResolver {
 			}
 		}
 		
-		DungeonSettings picked = settingsRandomizer.get(rand);
+		DungeonSettings chosen = settingsRandomizer.get(rand);
 		
-		return picked;
+		return processInheritance(chosen, settings);
 	}
 	
 	private DungeonSettings getCustom(IWorldEditor editor, Random rand, Coord pos){
@@ -241,7 +241,7 @@ public class SettingsResolver {
 		
 		setting.levels = levels;
 		
-		return new DungeonSettings(this.base, setting);
+		return setting;
 		
 	}
 	

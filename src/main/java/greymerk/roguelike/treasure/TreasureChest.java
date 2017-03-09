@@ -72,10 +72,4 @@ public class TreasureChest implements ITreasureChest{
 		if(level > 4) return 4;
 		return this.level;
 	}
-	
-	@Override
-	public String toString(){
-		return "slots: " + this.inventory.getInventorySize() + " type: " + this.type.toString();	
-	}
-
 }

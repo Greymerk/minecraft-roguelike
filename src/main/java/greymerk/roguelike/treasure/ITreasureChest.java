@@ -21,4 +21,5 @@ public interface ITreasureChest {
 	public int getSize();
 	
 	public int getLevel();
+
 }

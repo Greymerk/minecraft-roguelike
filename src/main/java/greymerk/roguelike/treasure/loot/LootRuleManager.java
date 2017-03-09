@@ -62,14 +62,18 @@ public class LootRuleManager {
 		this.rules.add(new LootRule(type, item, level, toEach, amount));
 	}
 	
+	public void add(LootRule toAdd){
+		this.rules.add(toAdd);
+	}
+	
 	public void add(LootRuleManager other){
 		if(other == null) return;
 		this.rules.addAll(other.rules);
 	}
 	
-	public void process(Random rand, ILoot loot, TreasureManager treasure){
+	public void process(Random rand, TreasureManager treasure){
 		for(LootRule rule : this.rules){
-			rule.process(rand, loot, treasure);
+			rule.process(rand, treasure);
 		}
 	}
 	

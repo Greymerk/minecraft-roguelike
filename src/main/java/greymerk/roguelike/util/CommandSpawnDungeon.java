@@ -107,7 +107,11 @@ public class CommandSpawnDungeon extends CommandBase
 					Dungeon.initResolver();
 					sender.sendMessage(new TextComponentString(TextFormat.apply("Success: Settings Reloaded", TextFormat.GREEN)));
 				} catch(Exception e) {
-					sender.sendMessage(new TextComponentString(TextFormat.apply("Failure: " + e.getMessage(), TextFormat.RED)));
+					if(e.getMessage() == null){
+						sender.sendMessage(new TextComponentString(TextFormat.apply("Failure: Uncaught Exception", TextFormat.RED)));
+					} else {
+						sender.sendMessage(new TextComponentString(TextFormat.apply("Failure: " + e.getMessage(), TextFormat.RED)));	
+					}
 				}
 				return;
 			}

@@ -23,6 +23,8 @@ public class SettingsJungleTheme extends DungeonSettings{
 	public SettingsJungleTheme(){
 		
 		this.id = new SettingIdentifier(SettingsContainer.BUILTIN_NAMESPACE, "jungle");
+		this.inherit.add(new SettingIdentifier(SettingsContainer.BUILTIN_NAMESPACE, "base"));
+		
 		this.criteria = new SpawnCriteria();
 		List<BiomeDictionary.Type> biomes = new ArrayList<BiomeDictionary.Type>();
 		biomes.add(BiomeDictionary.Type.JUNGLE);
