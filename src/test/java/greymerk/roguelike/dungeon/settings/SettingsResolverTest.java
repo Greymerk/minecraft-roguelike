@@ -13,7 +13,6 @@ import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.treasure.ITreasureChest;
 import greymerk.roguelike.treasure.Treasure;
 import greymerk.roguelike.treasure.TreasureManager;
-import greymerk.roguelike.treasure.loot.LootProvider;
 import greymerk.roguelike.util.WeightedChoice;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IWorldEditor;
@@ -56,7 +55,7 @@ public class SettingsResolverTest {
 		
 		assertTrue(chest.count(stick) == 0);
 		
-		assembled.lootRules.process(new Random(), new LootProvider(), treasure);
+		assembled.lootRules.process(new Random(), treasure);
 		
 		assertTrue(chest.count(stick) == 1);
 		
@@ -97,7 +96,7 @@ public class SettingsResolverTest {
 		assertTrue(chest.count(stick) == 0);
 		assertTrue(chest.count(diamond) == 0);
 		
-		assembled.lootRules.process(new Random(), new LootProvider(), treasure);
+		assembled.lootRules.process(new Random(), treasure);
 		
 		assertTrue(chest.count(stick) == 1);
 		assertTrue(chest.count(new ItemStack(Items.BOAT)) == 0);
@@ -145,7 +144,7 @@ public class SettingsResolverTest {
 		assertTrue(chest.count(coal) == 0);
 		assertTrue(chest.count(diamond) == 0);
 		
-		assembled.lootRules.process(new Random(), new LootProvider(), treasure);
+		assembled.lootRules.process(new Random(), treasure);
 		
 		assertTrue(chest.count(new ItemStack(Items.BOAT)) == 0);
 		assertTrue(chest.count(coal) == 1);

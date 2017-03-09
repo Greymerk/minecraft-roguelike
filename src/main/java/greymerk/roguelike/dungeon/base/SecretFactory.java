@@ -100,4 +100,12 @@ public class SecretFactory{
 		
 		return true;
 	}
+
+	public static SecretFactory getRandom(Random rand, int count) {
+		SecretFactory secrets = new SecretFactory();
+		for(int i = 0; i < count; ++i){
+			secrets.addRoom(DungeonRoom.getRandomSecret(rand));	
+		}
+		return secrets;
+	}
 }

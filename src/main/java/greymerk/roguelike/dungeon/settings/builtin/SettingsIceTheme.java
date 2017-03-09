@@ -17,6 +17,8 @@ public class SettingsIceTheme extends DungeonSettings{
 	public SettingsIceTheme(){
 		
 		this.id = new SettingIdentifier(SettingsContainer.BUILTIN_NAMESPACE, "ice");
+		this.inherit.add(new SettingIdentifier(SettingsContainer.BUILTIN_NAMESPACE, "base"));
+		
 		this.criteria = new SpawnCriteria();
 		List<BiomeDictionary.Type> biomes = new ArrayList<BiomeDictionary.Type>();
 		biomes.add(BiomeDictionary.Type.SNOWY);

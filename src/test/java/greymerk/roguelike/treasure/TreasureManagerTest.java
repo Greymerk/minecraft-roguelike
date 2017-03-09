@@ -7,8 +7,6 @@ import org.junit.Test;
 
 import greymerk.roguelike.util.WeightedChoice;
 import greymerk.roguelike.util.WeightedRandomizer;
-import greymerk.roguelike.worldgen.Coord;
-import greymerk.roguelike.worldgen.IWorldEditor;
 import net.minecraft.init.Bootstrap;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -47,54 +45,5 @@ public class TreasureManagerTest {
 		
 		treasure.addItem(rand, 1, loot, 1);
 		
-	}
-
-	
-	private class MockChest implements ITreasureChest{
-		
-		Treasure type;
-		int level;
-		
-		public MockChest(Treasure type, int level){
-			this.type = type;
-			this.level = level;
-		}
-		
-		@Override
-		public ITreasureChest generate(IWorldEditor editor, Random rand, Coord pos, int level, boolean trapped) {
-			return this;
-		}
-
-		@Override
-		public boolean setSlot(int slot, ItemStack item) {
-			return true;
-		}
-
-		@Override
-		public boolean setRandomEmptySlot(ItemStack item) {
-			return true;
-		}
-
-		@Override
-		public boolean isEmptySlot(int slot) {
-			return true;
-		}
-
-		@Override
-		public Treasure getType() {
-			return this.type;
-		}
-
-		@Override
-		public int getSize() {
-			return 1;
-		}
-
-		@Override
-		public int getLevel() {
-			return this.level;
-		}
-		
-	}
-	
+	}	
 }

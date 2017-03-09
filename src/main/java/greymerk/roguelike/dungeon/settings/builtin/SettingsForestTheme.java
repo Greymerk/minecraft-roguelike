@@ -21,6 +21,8 @@ public class SettingsForestTheme extends DungeonSettings{
 	public SettingsForestTheme(){
 		
 		this.id = new SettingIdentifier(SettingsContainer.BUILTIN_NAMESPACE, "forest");
+		this.inherit.add(new SettingIdentifier(SettingsContainer.BUILTIN_NAMESPACE, "base"));
+		
 		this.criteria = new SpawnCriteria();
 		List<BiomeDictionary.Type> biomes = new ArrayList<BiomeDictionary.Type>();
 		biomes.add(BiomeDictionary.Type.FOREST);

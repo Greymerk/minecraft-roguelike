@@ -50,6 +50,7 @@ public class CommandSpawnDungeon extends CommandBase
 		ArgumentParser ap = new ArgumentParser(args);
 		
 		if(!ap.hasEntry(0)){
+			
 			sender.addChatMessage(new TextComponentString(TextFormat.apply("Usage: roguelike [dungeon | give | config | settings]", TextFormat.GRAY)));
 			return;
 		}
@@ -107,7 +108,11 @@ public class CommandSpawnDungeon extends CommandBase
 					Dungeon.initResolver();
 					sender.addChatMessage(new TextComponentString(TextFormat.apply("Success: Settings Reloaded", TextFormat.GREEN)));
 				} catch(Exception e) {
-					sender.addChatMessage(new TextComponentString(TextFormat.apply("Failure: " + e.getMessage(), TextFormat.RED)));
+					if(e.getMessage() == null){
+						sender.addChatMessage(new TextComponentString(TextFormat.apply("Failure: Uncaught Exception", TextFormat.RED)));
+					} else {
+						sender.addChatMessage(new TextComponentString(TextFormat.apply("Failure: " + e.getMessage(), TextFormat.RED)));	
+					}
 				}
 				return;
 			}

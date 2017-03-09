@@ -1,6 +1,8 @@
 package greymerk.roguelike.dungeon.base;
 
 
+import java.util.Random;
+
 import greymerk.roguelike.dungeon.rooms.DungeonAshlea;
 import greymerk.roguelike.dungeon.rooms.DungeonAvidya;
 import greymerk.roguelike.dungeon.rooms.DungeonBTeam;
@@ -47,6 +49,16 @@ public enum DungeonRoom {
 	SLIME, SMITH, SPIDER, CAKE, LAB, CORNER, MESS, ETHO, ENIKO, BTEAM, OSSUARY, OBSIDIAN,
 	AVIDYA, STORAGE, ASHLEA, FIREWORK, BEDROOM, REWARD, LIBRARY, PYRAMIDTOMB, DARKHALL,
 	TREETHO, LINKER, LINKERTOP, PYRAMIDSPAWNER, PYRAMIDCORNER, BLAZE;
+	
+	public static DungeonRoom[] intersectionRooms = {
+			BRICK, CREEPER, CRYPT, ENDER, FIRE, MUSIC, NETHER, NETHERFORT, PIT, PRISON,
+			SLIME, SPIDER, CAKE, LAB, MESS, OSSUARY, OBSIDIAN, STORAGE, PYRAMIDTOMB,
+			DARKHALL, PYRAMIDSPAWNER, PYRAMIDCORNER, BLAZE
+		};
+	
+	public static DungeonRoom[] secrets = {
+			ENCHANT, SMITH, CAKE, BEDROOM
+		};
 	
 	public static IDungeonRoom getInstance(DungeonRoom choice){
 		switch(choice){
@@ -97,5 +109,13 @@ public enum DungeonRoom {
 			if(value.toString().equals(name)) return true;
 		}
 		return false;
+	}
+
+	public static DungeonRoom getRandomRoom(Random rand) {
+		return intersectionRooms[rand.nextInt(intersectionRooms.length)];
+	}
+
+	public static DungeonRoom getRandomSecret(Random rand) {
+		return secrets[rand.nextInt(secrets.length)];
 	}
 }

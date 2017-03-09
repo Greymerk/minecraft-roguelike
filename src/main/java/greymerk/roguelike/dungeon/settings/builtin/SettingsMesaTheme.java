@@ -18,6 +18,8 @@ public class SettingsMesaTheme extends DungeonSettings{
 	public SettingsMesaTheme(){
 		
 		this.id = new SettingIdentifier(SettingsContainer.BUILTIN_NAMESPACE, "mesa");
+		this.inherit.add(new SettingIdentifier(SettingsContainer.BUILTIN_NAMESPACE, "base"));
+		
 		this.criteria = new SpawnCriteria();
 		List<BiomeDictionary.Type> biomes = new ArrayList<BiomeDictionary.Type>();
 		biomes.add(BiomeDictionary.Type.MESA);

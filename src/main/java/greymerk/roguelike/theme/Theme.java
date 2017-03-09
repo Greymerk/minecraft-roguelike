@@ -1,5 +1,7 @@
 package greymerk.roguelike.theme;
 
+import java.util.Random;
+
 import com.google.gson.JsonObject;
 
 public enum Theme {
@@ -138,6 +140,10 @@ public enum Theme {
 			if(value.toString().equals(name)) return true;
 		}
 		return false;
+	}
+
+	public static ITheme getRandom(Random rand) {
+		return Theme.getTheme(Theme.values()[rand.nextInt(Theme.values().length)]);
 	}
 	
 }
