@@ -29,7 +29,7 @@ public class SettingsResolverTest {
 	}
 
 	@Test
-	public void ResolveInheritOneLevel() {
+	public void ResolveInheritOneLevel() throws Exception {
 		
 		DungeonSettings main = new DungeonSettings();
 		DungeonSettings toInherit = new DungeonSettings();
@@ -63,7 +63,7 @@ public class SettingsResolverTest {
 	}
 	
 	@Test
-	public void ResolveInheritTwoLevel(){
+	public void ResolveInheritTwoLevel() throws Exception{
 		
 		DungeonSettings main = new DungeonSettings();
 		DungeonSettings child = new DungeonSettings();
@@ -105,7 +105,7 @@ public class SettingsResolverTest {
 	}
 
 	@Test
-	public void ResolveInheritTwoLevelMultiple(){
+	public void ResolveInheritTwoLevelMultiple() throws Exception{
 		DungeonSettings main = new DungeonSettings();
 		DungeonSettings child = new DungeonSettings();
 		DungeonSettings sibling = new DungeonSettings();

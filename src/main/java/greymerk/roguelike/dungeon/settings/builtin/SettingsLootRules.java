@@ -1,6 +1,8 @@
 package greymerk.roguelike.dungeon.settings.builtin;
 
 import greymerk.roguelike.dungeon.settings.DungeonSettings;
+import greymerk.roguelike.dungeon.settings.SettingIdentifier;
+import greymerk.roguelike.dungeon.settings.SettingsContainer;
 import greymerk.roguelike.treasure.Treasure;
 import greymerk.roguelike.treasure.loot.Equipment;
 import greymerk.roguelike.treasure.loot.ILoot;
@@ -12,7 +14,10 @@ import greymerk.roguelike.treasure.loot.provider.ItemSpecialty;
 
 public class SettingsLootRules extends DungeonSettings{
 	
+	public static final SettingIdentifier ID = new SettingIdentifier(SettingsContainer.BUILTIN_NAMESPACE, "loot");
+	
 	public SettingsLootRules(){
+		this.id = ID;
 		this.lootRules = new LootRuleManager();
 		ILoot loot = Loot.getLoot();
 		lootRules.add(Treasure.STARTER, loot.get(Loot.WEAPON, 0),  0, true, 2);
