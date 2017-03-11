@@ -15,7 +15,7 @@ public class BlockJumble extends BlockBase {
 		blocks = new ArrayList<IBlockFactory>();
 	}
 	
-	public BlockJumble(JsonElement data) {
+	public BlockJumble(JsonElement data) throws Exception {
 		this();
 		for(JsonElement entry : (JsonArray)data){
 			this.addBlock(BlockProvider.create(entry.getAsJsonObject()));

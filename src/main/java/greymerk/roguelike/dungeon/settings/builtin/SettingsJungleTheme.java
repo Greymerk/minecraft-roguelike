@@ -20,10 +20,12 @@ import net.minecraftforge.common.BiomeDictionary;
 
 public class SettingsJungleTheme extends DungeonSettings{
 	
+	public static final SettingIdentifier ID = new SettingIdentifier(SettingsContainer.BUILTIN_NAMESPACE, "jungle");
+	
 	public SettingsJungleTheme(){
 		
-		this.id = new SettingIdentifier(SettingsContainer.BUILTIN_NAMESPACE, "jungle");
-		this.inherit.add(new SettingIdentifier(SettingsContainer.BUILTIN_NAMESPACE, "base"));
+		this.id = ID;
+		this.inherit.add(SettingsBase.ID);
 		
 		this.criteria = new SpawnCriteria();
 		List<BiomeDictionary.Type> biomes = new ArrayList<BiomeDictionary.Type>();

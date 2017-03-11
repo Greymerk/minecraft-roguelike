@@ -18,7 +18,7 @@ public class MetaBlockTest {
 	}
 	
 	@Test
-	public void jsonArgs() {
+	public void jsonArgs() throws Exception {
 		
 		MetaBlock dirt = new MetaBlock(Blocks.DIRT);
 		MetaBlock stone = new MetaBlock(Blocks.STONE);

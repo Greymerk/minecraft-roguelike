@@ -15,10 +15,12 @@ import net.minecraftforge.common.BiomeDictionary;
 
 public class SettingsMesaTheme extends DungeonSettings{
 	
+	public static final SettingIdentifier ID = new SettingIdentifier(SettingsContainer.BUILTIN_NAMESPACE, "mesa");
+	
 	public SettingsMesaTheme(){
 		
-		this.id = new SettingIdentifier(SettingsContainer.BUILTIN_NAMESPACE, "mesa");
-		this.inherit.add(new SettingIdentifier(SettingsContainer.BUILTIN_NAMESPACE, "base"));
+		this.id = ID;
+		this.inherit.add(SettingsBase.ID);
 		
 		this.criteria = new SpawnCriteria();
 		List<BiomeDictionary.Type> biomes = new ArrayList<BiomeDictionary.Type>();

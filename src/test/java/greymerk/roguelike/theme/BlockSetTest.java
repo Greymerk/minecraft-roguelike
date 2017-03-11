@@ -19,7 +19,7 @@ public class BlockSetTest {
 	}
 
 	@Test
-	public void jsonNoBase() {
+	public void jsonNoBase() throws Exception {
 		
 		JsonObject json = new JsonObject();
 		JsonObject floor = new JsonObject();

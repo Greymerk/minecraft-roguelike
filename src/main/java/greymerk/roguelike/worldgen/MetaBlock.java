@@ -56,10 +56,13 @@ public class MetaBlock extends BlockBase implements IBlockState{
 	}
 	
 	@SuppressWarnings("deprecation")
-	public MetaBlock(JsonElement e){
+	public MetaBlock(JsonElement e) throws Exception{
 		JsonObject json = (JsonObject)e;
 		String name = json.get("name").getAsString();
 		ResourceLocation location = new ResourceLocation(name);
+		if(!Block.REGISTRY.containsKey(location)){
+			throw new Exception("No such block: " + name);
+		}
 		Block block = (Block) Block.REGISTRY.getObject(location);
 		int meta = json.has("meta") ? json.get("meta").getAsInt() : 0;
 		this.setState(block.getStateFromMeta(meta));

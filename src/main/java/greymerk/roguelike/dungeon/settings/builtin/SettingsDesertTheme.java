@@ -24,11 +24,13 @@ import net.minecraftforge.common.BiomeDictionary;
 
 public class SettingsDesertTheme extends DungeonSettings{
 	
+	public static final SettingIdentifier ID = new SettingIdentifier(SettingsContainer.BUILTIN_NAMESPACE, "desert");
+	
 	public SettingsDesertTheme(){
 		
-		this.id = new SettingIdentifier(SettingsContainer.BUILTIN_NAMESPACE, "desert");
+		this.id = ID;
 		
-		this.inherit.add(new SettingIdentifier(SettingsContainer.BUILTIN_NAMESPACE, "base"));
+		this.inherit.add(SettingsBase.ID);
 		
 		this.criteria = new SpawnCriteria();
 		List<BiomeDictionary.Type> biomes = new ArrayList<BiomeDictionary.Type>();

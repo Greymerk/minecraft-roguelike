@@ -7,7 +7,7 @@ public enum BlockProvider {
 	
 	METABLOCK, WEIGHTED, CHECKERS, JUMBLE, STRIPES, LAYERS, COLUMNS;
 
-	public static IBlockFactory create(JsonObject block) {
+	public static IBlockFactory create(JsonObject block) throws Exception {
 		
 		BlockProvider type;
 		

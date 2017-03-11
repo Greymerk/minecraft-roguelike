@@ -55,7 +55,7 @@ public class BlockSet implements IBlockSet {
 		this(walls, walls, stair, pillar);
 	}
 	
-	public BlockSet(JsonObject json, IBlockSet base){
+	public BlockSet(JsonObject json, IBlockSet base) throws Exception{
 		
 		
 		if(json.has("walls")){
