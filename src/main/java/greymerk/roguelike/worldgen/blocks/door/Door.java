@@ -21,7 +21,7 @@ public class Door implements IDoor {
 		this.block = DoorType.get(type);
 	}
 	
-	public Door(JsonElement e){
+	public Door(JsonElement e) throws Exception{
 		this.block = new MetaBlock(e);
 	}
 

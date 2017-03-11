@@ -17,7 +17,7 @@ public class BlockCheckers extends BlockBase {
 		this.fillTwo = fillTwo;
 	}
 	
-	public BlockCheckers(JsonElement json) {
+	public BlockCheckers(JsonElement json) throws Exception {
 		JsonArray arr = (JsonArray)json;
 		List<IBlockFactory> blocks = new ArrayList<IBlockFactory>(); 
 		

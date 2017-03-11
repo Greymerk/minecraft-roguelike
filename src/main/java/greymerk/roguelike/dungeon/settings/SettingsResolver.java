@@ -86,7 +86,7 @@ public class SettingsResolver {
 		
 		DungeonSettings exclusive = (custom != null) ? custom : builtin;
 				
-		return new DungeonSettings(new SettingsBlank(), applyInclusives(exclusive, editor, rand, pos));
+		return applyInclusives(exclusive, editor, rand, pos);
 	}
 	
 	public ISettings getWithName(String name, IWorldEditor editor, Random rand, Coord pos) throws Exception{
@@ -115,17 +115,17 @@ public class SettingsResolver {
 		
 		if(!this.settings.contains(id)) return null;
 		DungeonSettings setting = new DungeonSettings(this.settings.get(id));
-		return new DungeonSettings(new SettingsBlank(), processInheritance(setting, this.settings));
+		return processInheritance(setting, this.settings);
 	}
 	
 	public ISettings getWithDefault(SettingIdentifier id) throws Exception {
 		if(!this.settings.contains(id)) return null;
 		DungeonSettings setting = new DungeonSettings(this.settings.get(id));
-		return new DungeonSettings(new SettingsBlank(), processInheritance(setting, this.settings));
+		return processInheritance(setting, this.settings);
 	}
 	
 	public static DungeonSettings processInheritance(DungeonSettings toProcess, SettingsContainer settings) throws Exception{
-		DungeonSettings setting = new DungeonSettings(toProcess);
+		DungeonSettings setting = new SettingsBlank();
 		
 		for(SettingIdentifier id : toProcess.getInherits()){
 			if(settings.contains(id)){
@@ -140,7 +140,7 @@ public class SettingsResolver {
 			}
 		}
 		
-		return new DungeonSettings(new SettingsBlank(), setting);
+		return new DungeonSettings(setting, toProcess);
 	}
 	
 	private DungeonSettings parseFile(String content) throws Exception{

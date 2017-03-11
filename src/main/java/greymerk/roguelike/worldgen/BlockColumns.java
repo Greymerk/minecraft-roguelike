@@ -15,7 +15,7 @@ public class BlockColumns extends BlockBase{
 		blocks = new ArrayList<IBlockFactory>();
 	}
 	
-	public BlockColumns(JsonElement data) {
+	public BlockColumns(JsonElement data) throws Exception {
 		this();
 		for(JsonElement entry : (JsonArray)data){
 			this.addBlock(BlockProvider.create(entry.getAsJsonObject()));

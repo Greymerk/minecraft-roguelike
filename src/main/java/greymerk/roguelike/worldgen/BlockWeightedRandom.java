@@ -17,7 +17,7 @@ public class BlockWeightedRandom extends BlockBase {
 		blocks = new WeightedRandomizer<IBlockFactory>();
 	}
 	
-	public BlockWeightedRandom(JsonElement data) {
+	public BlockWeightedRandom(JsonElement data) throws Exception {
 		this();
 		for(JsonElement entry : (JsonArray)data){
 			JsonObject d = entry.getAsJsonObject();
