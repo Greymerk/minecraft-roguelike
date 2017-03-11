@@ -1,35 +1,7 @@
 package greymerk.roguelike.dungeon.settings;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.JsonSyntaxException;
-
-import greymerk.roguelike.dungeon.LevelGenerator;
-import greymerk.roguelike.dungeon.base.DungeonFactory;
-import greymerk.roguelike.dungeon.base.SecretFactory;
-import greymerk.roguelike.dungeon.segment.SegmentGenerator;
-import greymerk.roguelike.dungeon.settings.builtin.SettingsBase;
-import greymerk.roguelike.dungeon.settings.builtin.SettingsDesertTheme;
-import greymerk.roguelike.dungeon.settings.builtin.SettingsForestTheme;
-import greymerk.roguelike.dungeon.settings.builtin.SettingsGenerator;
-import greymerk.roguelike.dungeon.settings.builtin.SettingsGrasslandTheme;
-import greymerk.roguelike.dungeon.settings.builtin.SettingsIceTheme;
-import greymerk.roguelike.dungeon.settings.builtin.SettingsJungleTheme;
-import greymerk.roguelike.dungeon.settings.builtin.SettingsLootRules;
-import greymerk.roguelike.dungeon.settings.builtin.SettingsMesaTheme;
-import greymerk.roguelike.dungeon.settings.builtin.SettingsMountainTheme;
-import greymerk.roguelike.dungeon.settings.builtin.SettingsRooms;
-import greymerk.roguelike.dungeon.settings.builtin.SettingsSecrets;
-import greymerk.roguelike.dungeon.settings.builtin.SettingsSegments;
-import greymerk.roguelike.dungeon.settings.builtin.SettingsSize;
-import greymerk.roguelike.dungeon.settings.builtin.SettingsSwampTheme;
-import greymerk.roguelike.dungeon.settings.builtin.SettingsTheme;
-import greymerk.roguelike.dungeon.towers.Tower;
-import greymerk.roguelike.theme.Theme;
 import greymerk.roguelike.util.WeightedChoice;
 import greymerk.roguelike.util.WeightedRandomizer;
 import greymerk.roguelike.worldgen.Coord;
@@ -38,43 +10,12 @@ import greymerk.roguelike.worldgen.IWorldEditor;
 public class SettingsResolver {
 
 	
-	private SettingsContainer settings;
+	private ISettingsContainer settings;
 	
-	public SettingsResolver() throws Exception{
-		settings = new SettingsContainer();
-		
-		this.settings.put(new SettingsRooms());
-		this.settings.put(new SettingsSecrets());
-		this.settings.put(new SettingsSegments());
-		this.settings.put(new SettingsSize());
-		this.settings.put(new SettingsTheme());
-		this.settings.put(new SettingsGenerator());
-		this.settings.put(new SettingsLootRules());
-		this.settings.put(new SettingsBase());
-		
-		this.settings.put(new SettingsDesertTheme());
-		this.settings.put(new SettingsGrasslandTheme());
-		this.settings.put(new SettingsJungleTheme());
-		this.settings.put(new SettingsSwampTheme());
-		this.settings.put(new SettingsMountainTheme());
-		this.settings.put(new SettingsForestTheme());
-		this.settings.put(new SettingsMesaTheme());
-		this.settings.put(new SettingsIceTheme());
-
+	public SettingsResolver(ISettingsContainer settings) throws Exception{
+		this.settings = settings;
 	}
 	
-	public void parseCustomSettings(Map<String, String> files) throws Exception{
-		for(String name : files.keySet()){
-			DungeonSettings toAdd = null;
-			try{
-				toAdd = parseFile(files.get(name));
-			} catch (Exception e){
-				throw new Exception("Error in: " + name + " : " + e.getMessage());
-			}
-			settings.put(toAdd);
-		}
-	}
-
 	// called from Dungeon class
 	public ISettings getSettings(IWorldEditor editor, Random rand, Coord pos) throws Exception{
 		
@@ -90,9 +31,7 @@ public class SettingsResolver {
 	}
 	
 	public ISettings getWithName(String name, IWorldEditor editor, Random rand, Coord pos) throws Exception{
-		if(name.equals("random")){
-			return generateRandom(editor, rand, pos);
-		}
+		if(name.equals("random")) return new SettingsRandom(rand);
 		
 		DungeonSettings byName = this.getByName(name);
 		if(byName == null) return null;
@@ -100,31 +39,7 @@ public class SettingsResolver {
 		return new DungeonSettings(new SettingsBlank(), withInclusives);
 	}
 	
-	public ISettings getDefaultSettings(){
-		return new DungeonSettings(settings.get(new SettingIdentifier(SettingsContainer.BUILTIN_NAMESPACE, "base")));
-	}
-
-	public DungeonSettings getByName(String name) throws Exception{
-		SettingIdentifier id;
-		
-		try{
-			id = new SettingIdentifier(name);
-		} catch (Exception e){
-			throw new Exception("Malformed Setting ID String: " + name);
-		}
-		
-		if(!this.settings.contains(id)) return null;
-		DungeonSettings setting = new DungeonSettings(this.settings.get(id));
-		return processInheritance(setting, this.settings);
-	}
-	
-	public ISettings getWithDefault(SettingIdentifier id) throws Exception {
-		if(!this.settings.contains(id)) return null;
-		DungeonSettings setting = new DungeonSettings(this.settings.get(id));
-		return processInheritance(setting, this.settings);
-	}
-	
-	public static DungeonSettings processInheritance(DungeonSettings toProcess, SettingsContainer settings) throws Exception{
+	public static DungeonSettings processInheritance(DungeonSettings toProcess, ISettingsContainer settings) throws Exception{
 		DungeonSettings setting = new SettingsBlank();
 		
 		for(SettingIdentifier id : toProcess.getInherits()){
@@ -143,24 +58,22 @@ public class SettingsResolver {
 		return new DungeonSettings(setting, toProcess);
 	}
 	
-	private DungeonSettings parseFile(String content) throws Exception{
+	public ISettings getDefaultSettings(){
+		return new DungeonSettings(settings.get(new SettingIdentifier(SettingsContainer.BUILTIN_NAMESPACE, "base")));
+	}
+	
+	private DungeonSettings getByName(String name) throws Exception{
+		SettingIdentifier id;
 		
-		JsonParser jParser = new JsonParser();
-		JsonObject root = null;
-		DungeonSettings toAdd = null;
-		
-		try {
-			root = (JsonObject)jParser.parse(content);
-		} catch (JsonSyntaxException e){
-			Throwable cause = e.getCause();
-			throw new Exception(cause.getMessage());
+		try{
+			id = new SettingIdentifier(name);
 		} catch (Exception e){
-			throw new Exception("An unknown error occurred while parsing json");
+			throw new Exception("Malformed Setting ID String: " + name);
 		}
 		
-		toAdd = new DungeonSettings(root);
-		
-		return toAdd;
+		if(!this.settings.contains(id)) return null;
+		DungeonSettings setting = new DungeonSettings(this.settings.get(id));
+		return processInheritance(setting, this.settings);
 	}
 	
 	private DungeonSettings getBuiltin(IWorldEditor editor, Random rand, Coord pos) throws Exception{
@@ -205,45 +118,6 @@ public class SettingsResolver {
 		}
 		
 		return toReturn;
-	}
-	
-	public ISettings generateRandom(IWorldEditor editor, Random rand, Coord pos){
-	
-		DungeonSettings setting = new SettingsBlank();
-		
-		setting.towerSettings = new TowerSettings(
-				Tower.getRandom(rand),
-				Theme.getRandom(rand));
-		
-		Map<Integer, LevelSettings> levels = new HashMap<Integer, LevelSettings>();
-		
-		for(int i = 0; i < 5; ++i){
-			LevelSettings level = new LevelSettings();
-			
-			level.setDifficulty(i);
-			level.setGenerator(LevelGenerator.CLASSIC);
-			level.setNumRooms(15);
-			level.setRange(60);
-			
-			DungeonFactory rooms = DungeonFactory.getRandom(rand, 8);
-			level.setRooms(rooms);
-			
-			level.setScatter(15);
-			
-			SecretFactory secrets = SecretFactory.getRandom(rand, 2);
-			level.setSecrets(secrets);
-			
-			SegmentGenerator segments = SegmentGenerator.getRandom(rand, 12);
-			level.setSegments(segments);
-			
-			level.setTheme(Theme.getRandom(rand));
-			levels.put(i, level);
-		}
-		
-		setting.levels = levels;
-		
-		return setting;
-		
 	}
 	
 	@Override

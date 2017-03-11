@@ -15,6 +15,7 @@ import com.google.common.io.Files;
 import greymerk.roguelike.Roguelike;
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.dungeon.settings.ISettings;
+import greymerk.roguelike.dungeon.settings.SettingsContainer;
 import greymerk.roguelike.dungeon.settings.SettingsResolver;
 import greymerk.roguelike.dungeon.settings.SpawnCriteria;
 import greymerk.roguelike.treasure.ITreasureChest;
@@ -66,7 +67,8 @@ public class Dungeon implements IDungeon{
 		File[] settingsFiles = settingsDir.listFiles();
 		Arrays.sort(settingsFiles);
 		
-		settingsResolver = new SettingsResolver();
+		SettingsContainer settings = new SettingsContainer();
+		settingsResolver = new SettingsResolver(settings);
 		
 		Map<String, String> files = new HashMap<String, String>();
 		
@@ -79,7 +81,7 @@ public class Dungeon implements IDungeon{
 			}
 		}
 
-		settingsResolver.parseCustomSettings(files);
+		settings.parseCustomSettings(files);
 				
 	}
 		

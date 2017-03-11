@@ -27,7 +27,6 @@ public class DungeonSettings implements ISettings{
 	protected TowerSettings towerSettings;
 	protected Map<Integer, LevelSettings> levels;
 	protected SpawnCriteria criteria;
-	protected int depth;
 	protected LootRuleManager lootRules;
 	protected Set<SettingsType> overrides;
 	
@@ -36,7 +35,6 @@ public class DungeonSettings implements ISettings{
 		this.levels = new HashMap<Integer, LevelSettings>();
 		this.exclusive = false;
 		this.lootRules = new LootRuleManager();
-		this.depth = 0;
 		this.overrides = new HashSet<SettingsType>();
 	}
 	
@@ -55,13 +53,6 @@ public class DungeonSettings implements ISettings{
 		if(root.has("criteria")) this.criteria = new SpawnCriteria(root.get("criteria").getAsJsonObject());
 		if(root.has("tower")) this.towerSettings = new TowerSettings(root.get("tower"));
 		if(root.has("loot_rules")) this.lootRules = new LootRuleManager(root.get("loot_rules"));
-		
-		if(root.has("depth")){
-			int depth = root.get("depth").getAsInt();
-			if(depth < 1) this.depth = 1;
-			if(depth > 5) this.depth = 5;
-			this.depth = depth;
-		}
 		
 		if(root.has("overrides")){
 			JsonArray overrides = root.get("overrides").getAsJsonArray();
@@ -101,12 +92,6 @@ public class DungeonSettings implements ISettings{
 	
 	public DungeonSettings(DungeonSettings base, DungeonSettings other){
 		this();
-
-		if(other.depth != 0){
-			depth = other.depth;
-		} else {
-			depth = base.depth;
-		}
 		
 		if(other.overrides != null) this.overrides.addAll(other.overrides);
 		
@@ -137,7 +122,6 @@ public class DungeonSettings implements ISettings{
 	
 	public DungeonSettings(DungeonSettings toCopy){
 		this();
-		this.depth = toCopy.depth;
 		
 		this.towerSettings = toCopy.towerSettings != null ? new TowerSettings(toCopy.towerSettings) : null;
 		this.lootRules = toCopy.lootRules;
@@ -196,11 +180,7 @@ public class DungeonSettings implements ISettings{
 
 	@Override
 	public int getNumLevels() {
-		
-		if(depth < 0) return 0;
-		if(depth > MAX_NUM_LEVELS) return MAX_NUM_LEVELS;
-		
-		return depth;
+		return MAX_NUM_LEVELS;
 	}
 
 	@Override

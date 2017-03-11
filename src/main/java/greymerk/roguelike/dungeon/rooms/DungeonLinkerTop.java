@@ -38,7 +38,7 @@ public class DungeonLinkerTop extends DungeonBase{
 		
 		cursor = new Coord(origin);
 		cursor.add(Cardinal.UP, 5);
-		BlockType.get(BlockType.GLOWSTONE).set(editor, cursor);
+		settings.getTheme().getPrimary().getLightBlock().set(editor, rand, cursor);
 		
 		start = new Coord(origin);
 		end = new Coord(origin);

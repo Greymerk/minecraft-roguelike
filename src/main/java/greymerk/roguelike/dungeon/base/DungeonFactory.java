@@ -38,6 +38,8 @@ public class DungeonFactory implements IDungeonFactory {
 			String mode = (entry.get("mode").getAsString()).toLowerCase();
 			String type = (entry.get("type").getAsString()).toUpperCase();			
 			
+			int weight = entry.has("weight") ? entry.get("weight").getAsInt() : 1;
+			
 			if(!DungeonRoom.contains(type)){
 				throw new Exception("No such dungeon: " + type);
 			}
@@ -49,7 +51,7 @@ public class DungeonFactory implements IDungeonFactory {
 			}
 			
 			if(mode.equals("random")){
-				this.addRandom(toAdd, entry.get("weight").getAsInt());
+				this.addRandom(toAdd, weight);
 			}
 		}
 	}

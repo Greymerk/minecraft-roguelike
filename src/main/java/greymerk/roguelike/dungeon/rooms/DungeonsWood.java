@@ -10,6 +10,7 @@ import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.treasure.Treasure;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
+import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.blocks.BlockType;
@@ -34,7 +35,7 @@ public class DungeonsWood extends DungeonBase {
 		MetaBlock pillar = Log.getLog(Wood.values()[rand.nextInt(Wood.values().length)]);
 		MetaBlock planks = Wood.getPlank(Wood.OAK);
 		
-		MetaBlock glowstone = BlockType.get(BlockType.GLOWSTONE);
+		IBlockFactory glowstone = settings.getTheme().getPrimary().getLightBlock();
 		MetaBlock air = BlockType.get(BlockType.AIR);
 		
 		
@@ -48,10 +49,10 @@ public class DungeonsWood extends DungeonBase {
 		RectSolid.fill(editor, rand, new Coord(x + WIDTH, y, z + LENGTH), new Coord(x + WIDTH, y + HEIGHT, z + LENGTH), pillar);
 
 		// glowstone
-		glowstone.set(editor, new Coord(x - WIDTH + 1, y - 1, z - LENGTH + 1));
-		glowstone.set(editor, new Coord(x - WIDTH + 1, y - 1, z + LENGTH - 1));
-		glowstone.set(editor, new Coord(x + WIDTH - 1, y - 1, z - LENGTH + 1));
-		glowstone.set(editor, new Coord(x + WIDTH - 1, y - 1, z + LENGTH - 1));
+		glowstone.set(editor, rand, new Coord(x - WIDTH + 1, y - 1, z - LENGTH + 1));
+		glowstone.set(editor, rand, new Coord(x - WIDTH + 1, y - 1, z + LENGTH - 1));
+		glowstone.set(editor, rand, new Coord(x + WIDTH - 1, y - 1, z - LENGTH + 1));
+		glowstone.set(editor, rand, new Coord(x + WIDTH - 1, y - 1, z + LENGTH - 1));
 		
 		planks.set(editor, rand, new Coord(x, y, z));
 		Cake.get().set(editor, new Coord(x, y + 1, z));
