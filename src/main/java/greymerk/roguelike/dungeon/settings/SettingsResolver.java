@@ -194,14 +194,14 @@ public class SettingsResolver {
 		return processInheritance(chosen, settings);
 	}
 	
-	private DungeonSettings applyInclusives(DungeonSettings setting, IWorldEditor editor, Random rand, Coord pos){
+	private DungeonSettings applyInclusives(DungeonSettings setting, IWorldEditor editor, Random rand, Coord pos) throws Exception{
 		
 		DungeonSettings toReturn = new DungeonSettings(setting);
 		
 		for(DungeonSettings s : settings.getCustomSettings()){
 			if(!s.isValid(editor, pos)) continue;
 			if(s.isExclusive()) continue;
-			toReturn = new DungeonSettings(toReturn, s);
+			toReturn = new DungeonSettings(toReturn, processInheritance(s, settings));
 		}
 		
 		return toReturn;
