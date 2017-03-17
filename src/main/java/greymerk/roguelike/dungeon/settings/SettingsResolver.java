@@ -2,6 +2,7 @@ package greymerk.roguelike.dungeon.settings;
 
 import java.util.Random;
 
+import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.util.WeightedChoice;
 import greymerk.roguelike.util.WeightedRandomizer;
 import greymerk.roguelike.worldgen.Coord;
@@ -18,6 +19,7 @@ public class SettingsResolver {
 	
 	// called from Dungeon class
 	public ISettings getSettings(IWorldEditor editor, Random rand, Coord pos) throws Exception{
+		if(RogueConfig.getBoolean(RogueConfig.RANDOM)) return new SettingsRandom(rand);
 		
 		DungeonSettings builtin = this.getBuiltin(editor, rand, pos);
 		DungeonSettings custom = this.getCustom(editor, rand, pos);
@@ -107,14 +109,14 @@ public class SettingsResolver {
 		return processInheritance(chosen, settings);
 	}
 	
-	private DungeonSettings applyInclusives(DungeonSettings setting, IWorldEditor editor, Random rand, Coord pos){
+	private DungeonSettings applyInclusives(DungeonSettings setting, IWorldEditor editor, Random rand, Coord pos) throws Exception{
 		
 		DungeonSettings toReturn = new DungeonSettings(setting);
 		
 		for(DungeonSettings s : settings.getCustomSettings()){
 			if(!s.isValid(editor, pos)) continue;
 			if(s.isExclusive()) continue;
-			toReturn = new DungeonSettings(toReturn, s);
+			toReturn = new DungeonSettings(toReturn, processInheritance(s, settings));
 		}
 		
 		return toReturn;

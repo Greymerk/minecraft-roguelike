@@ -39,5 +39,7 @@ public interface IWorldEditor {
 	TreasureManager getTreasure();
 
 	void addChest(ITreasureChest chest);
+	
+	IPositionInfo getInfo(Coord pos);
 
 }

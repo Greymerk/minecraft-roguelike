@@ -7,8 +7,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import greymerk.roguelike.worldgen.Coord;
-import greymerk.roguelike.worldgen.IWorldEditor;
+import greymerk.roguelike.worldgen.IPositionInfo;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
 
@@ -69,13 +68,13 @@ public class SpawnCriteria {
 	}
 	
 	
-	public boolean isValid(IWorldEditor editor, Coord pos){
+	public boolean isValid(IPositionInfo info){
 		
 		if(this.everywhere) return true;
 		
 		boolean biomeFound = false;
 		
-		Biome biome = editor.getBiome(pos);
+		Biome biome = info.getBiome();
 		
 		if(this.biomes != null){
 			if(this.biomes.contains(biome.getBiomeName())) biomeFound = true;

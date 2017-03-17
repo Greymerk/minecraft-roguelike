@@ -163,7 +163,7 @@ public class DungeonSettings implements ISettings{
 	@Override
 	public boolean isValid(IWorldEditor editor, Coord pos) {
 		if(this.criteria == null) this.criteria = new SpawnCriteria();
-		return this.criteria.isValid(editor, pos);
+		return this.criteria.isValid(editor.getInfo(pos));
 	}
 
 	@Override
