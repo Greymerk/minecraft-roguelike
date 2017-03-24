@@ -15,6 +15,10 @@ public enum VanillaStructure {
 		default: return null;
 		}
 	}
+	
+	public static VanillaStructure getType(String name){
+		return VanillaStructure.valueOf(name.toUpperCase());
+	}
 }
 
 

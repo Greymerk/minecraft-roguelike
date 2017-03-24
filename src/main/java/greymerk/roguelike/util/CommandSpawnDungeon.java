@@ -13,6 +13,7 @@ import greymerk.roguelike.dungeon.settings.ISettings;
 import greymerk.roguelike.treasure.loot.provider.ItemNovelty;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IWorldEditor;
+import greymerk.roguelike.worldgen.VanillaStructure;
 import greymerk.roguelike.worldgen.WorldEditor;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -23,10 +24,8 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
 
@@ -56,14 +55,28 @@ public class CommandSpawnDungeon extends CommandBase
 			return;
 		}
 		
-		if(ap.match(0, "stronghold")){
+		if(ap.match(0, "structure")){
+			String name = ap.hasEntry(1) ? ap.get(1) : VanillaStructure.getName(VanillaStructure.STRONGHOLD);			
 			World world = sender.getEntityWorld();
 			
-			BlockPos bp = ((WorldServer)world).getChunkProvider().getStrongholdGen(world, "Stronghold", new BlockPos(sender.getPosition()), false);
-			Coord stronghold = new Coord(bp.getX(), bp.getY(), bp.getZ());
-			sender.sendMessage(new TextComponentString(TextFormat.apply("Nearest Stronghold: " + stronghold.toString(), TextFormat.GOLD)));
-			Coord here = new Coord(sender.getPosition().getX(), sender.getPosition().getY(), sender.getPosition().getZ());
-			sender.sendMessage(new TextComponentString(TextFormat.apply("Distance: " + here.distance(stronghold), TextFormat.GOLD)));
+			IWorldEditor editor = new WorldEditor(world);
+			
+			VanillaStructure type = VanillaStructure.getType(name);
+			if(type == null){
+				sender.sendMessage(new TextComponentString(TextFormat.apply(name + " type name invalid", TextFormat.RED)));
+				return;
+			}
+			
+			Coord here = new Coord(sender.getPosition());
+			Coord structure = editor.findNearestStructure(type, here);
+			
+			if(structure == null){
+				sender.sendMessage(new TextComponentString(TextFormat.apply(name + " not found", TextFormat.RED)));
+				return;
+			}
+			
+			sender.sendMessage(new TextComponentString(TextFormat.apply("Nearest " + name + ": " + structure.toString(), TextFormat.GOLD)));
+			sender.sendMessage(new TextComponentString(TextFormat.apply("Distance: " + here.distance(structure), TextFormat.GOLD)));
 			return;
 		}
 		
