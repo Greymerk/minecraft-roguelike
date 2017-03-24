@@ -22,6 +22,12 @@ public class Coord{
 		this.z = toClone.z;
 	}
 	
+	public Coord(BlockPos bp){
+		this.x = bp.getX();
+		this.y = bp.getY();
+		this.z = bp.getZ();
+	}
+	
 	public int getX(){
 		return x;
 	}

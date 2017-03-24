@@ -13,7 +13,9 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import net.minecraft.world.biome.Biome;
 
 public class WorldEditor implements IWorldEditor{
@@ -191,6 +193,14 @@ public class WorldEditor implements IWorldEditor{
 	@Override
 	public IPositionInfo getInfo(Coord pos) {
 		return new PositionInfo(this, pos);
+	}
+
+	@Override
+	public Coord findNearestStructure(VanillaStructure type, Coord pos) {
+		BlockPos structurebp = ((WorldServer)world).getChunkProvider().getStrongholdGen(world, VanillaStructure.getName(type), pos.getBlockPos(), false);
+		if(structurebp == null) return null;
+		
+		return new Coord(structurebp);		
 	}
 }
 

@@ -42,4 +42,6 @@ public interface IWorldEditor {
 	
 	IPositionInfo getInfo(Coord pos);
 
+	Coord findNearestStructure(VanillaStructure type, Coord pos);
+	
 }

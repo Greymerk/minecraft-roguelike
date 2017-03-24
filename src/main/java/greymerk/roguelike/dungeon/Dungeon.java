@@ -26,6 +26,7 @@ import greymerk.roguelike.util.WeightedChoice;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IWorldEditor;
+import greymerk.roguelike.worldgen.VanillaStructure;
 import greymerk.roguelike.worldgen.shapes.RectSolid;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
@@ -217,6 +218,12 @@ public class Dungeon implements IDungeon{
 		
 		for(Type type : invalidBiomes){
 			if(BiomeDictionary.hasType(biome, type)) return false;
+		}
+		
+		Coord stronghold = editor.findNearestStructure(VanillaStructure.STRONGHOLD, pos);
+		if(stronghold != null){
+			double strongholdDistance = pos.distance(stronghold);
+			if(strongholdDistance < 300) return false;
 		}
 				
 		int upperLimit = RogueConfig.getInt(RogueConfig.UPPERLIMIT);
