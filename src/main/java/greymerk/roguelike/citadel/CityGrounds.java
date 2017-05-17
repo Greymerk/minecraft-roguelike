@@ -7,7 +7,9 @@ import greymerk.roguelike.dungeon.towers.ITower;
 import greymerk.roguelike.dungeon.towers.Tower;
 import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.theme.Theme;
-import greymerk.roguelike.util.mst.Edge;
+import greymerk.roguelike.util.graph.Edge;
+import greymerk.roguelike.util.graph.Graph;
+import greymerk.roguelike.util.mst.MSTPoint;
 import greymerk.roguelike.util.mst.MinimumSpanningTree;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
@@ -49,17 +51,17 @@ public class CityGrounds {
 		Coord cursor = new Coord(pos);
 		cursor.add(Cardinal.UP, 20);
 		
-		for(Edge e : mst.getEdges()){
-			start = e.getPoints()[0].getPosition();
+		for(Edge<MSTPoint> e : mst.getEdges()){
+			start = e.getStart().getPosition();
 			start.add(cursor);
-			end = e.getPoints()[1].getPosition();
+			end = e.getEnd().getPosition();
 			end.add(cursor);
 			end.add(Cardinal.DOWN, 20);
 			RectSolid.fill(editor, rand, start, end, theme.getPrimary().getWall(), true, true);
 		}
 		
-		
-		List<Coord> towers = mst.getPointPositions();
+		Graph<Coord> layout = mst.getGraph();
+		List<Coord> towers = layout.getPoints();
 		for(Coord c : towers){
 			c.add(pos);
 			rand = Citadel.getRandom(editor, c.getX(), c.getZ());

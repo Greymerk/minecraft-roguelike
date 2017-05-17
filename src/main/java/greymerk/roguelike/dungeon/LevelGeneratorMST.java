@@ -6,9 +6,9 @@ import java.util.Random;
 
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.dungeon.base.IDungeonRoom;
-import greymerk.roguelike.util.mst.Edge;
+import greymerk.roguelike.util.graph.Edge;
+import greymerk.roguelike.util.graph.Graph;
 import greymerk.roguelike.util.mst.MinimumSpanningTree;
-import greymerk.roguelike.util.mst.Point;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IWorldEditor;
@@ -35,19 +35,20 @@ public class LevelGeneratorMST implements ILevelGenerator{
 	@Override
 	public void generate(Coord start, DungeonNode oldEnd) {
 		MinimumSpanningTree mst = new MinimumSpanningTree(rand, 7, 17, new Coord(start));
-		List<Edge> edges = mst.getEdges();
-		List<Coord> vertices = mst.getPointPositions();
-		List<Edge> used = new ArrayList<Edge>();
+		Graph<Coord> layout = mst.getGraph();
+		List<Edge<Coord>> edges = layout.getEdges();
+		List<Coord> vertices = layout.getPoints();
+		List<Edge<Coord>> used = new ArrayList<Edge<Coord>>();
 		
 		for(Coord c : vertices){
-			for(Edge e : edges){
+			for(Edge<Coord> e : edges){
 				if(used.contains(e)) continue;
-				Point[] ends = e.getPoints(); 
-				for(Point p : ends){
-					if(p.getPosition().equals(c)){
+				Coord[] ends = new Coord[]{e.getStart(), e.getEnd()};
+				for(Coord p : ends){
+					if(p.equals(c)){
 						Cardinal dir = getDirection(ends, p);
-						Coord tStart = ends[0].getPosition();
-						Coord tEnd = ends[1].getPosition();
+						Coord tStart = ends[0];
+						Coord tEnd = ends[1];
 						this.tunnels.add(new DungeonTunnel(editor, tStart, tEnd, dir));
 						used.add(e);
 					}
@@ -129,16 +130,17 @@ public class LevelGeneratorMST implements ILevelGenerator{
 		return this.end;
 	}
 	
-	private Cardinal getDirection(Point[] ends, Point p){
+	private Cardinal getDirection(Coord[] ends, Coord p){
+		
 		Coord c1;
 		Coord c2;
 		
-		if(p.getPosition().equals(ends[0].getPosition())){
-			c1 = ends[0].getPosition();
-			c2 = ends[1].getPosition();
+		if(p.equals(ends[0])){
+			c1 = ends[0];
+			c2 = ends[1];
 		} else {
-			c1 = ends[1].getPosition();
-			c2 = ends[0].getPosition();
+			c1 = ends[1];
+			c2 = ends[0];
 		}
 		
 		if(c2.getX() - c1.getX() == 0){

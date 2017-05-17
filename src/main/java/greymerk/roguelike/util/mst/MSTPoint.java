@@ -5,14 +5,14 @@ import greymerk.roguelike.worldgen.Coord;
 
 import java.util.Random;
 
-public class Point {
+public class MSTPoint {
 	
 	private Coord position;
 	private Coord adjusted;
 	private int rank;
-	private Point parent;
+	private MSTPoint parent;
 	
-	public Point(Coord pos, Random rand){
+	public MSTPoint(Coord pos, Random rand){
 		this.position = new Coord(pos);
 		this.adjusted = new Coord(pos);
 		this.adjusted.add(Cardinal.directions[rand.nextInt(Cardinal.directions.length)]);
@@ -21,7 +21,7 @@ public class Point {
 		this.parent = this;
 	}
 	
-	public double distance(Point other){
+	public double distance(MSTPoint other){
 		return adjusted.distance(other.adjusted);
 	}
 	
@@ -37,11 +37,11 @@ public class Point {
 		++rank;
 	}
 	
-	public void setParent(Point p){
+	public void setParent(MSTPoint p){
 		this.parent = p;
 	}
 	
-	public Point getParent(){
+	public MSTPoint getParent(){
 		return this.parent;
 	}
 	
