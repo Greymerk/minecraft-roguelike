@@ -1,0 +1,131 @@
+{
+	"name" : "cyclic",
+	"criteria" : {},
+	"loot_rules" : [
+		{
+			"type" : "STARTER",
+			"each" : true,
+			"level" : 0,
+			"quantity" : 1,
+			"loot" : [
+				{
+					"data" : {
+						"name" : "cyclicmagic:horse_upgrade_variant"
+					}
+				}
+			]
+		},
+		{
+			"type" : "ARMOUR",
+			"each" : false,
+			"level" : 0,
+			"quantity" : 1,
+			"loot" : [
+				{
+					"data" : {
+						"name" : "cyclicmagic:emerald_chestplate"
+					}
+				},
+								{
+					"data" : {
+						"name" : "cyclicmagic:emerald_leggings"
+					}
+				},
+								{
+					"data" : {
+						"name" : "cyclicmagic:emerald_boots"
+					}
+				},
+								{
+					"data" : {
+						"name" : "cyclicmagic:emerald_helmet"
+					}
+				}
+			]
+		},
+		{
+			"type" : "TOOLS",
+			"each" : false,
+			"level" : 0,
+			"quantity" : 1,
+			"loot" : [
+				{
+					"data" : {
+						"name" : "cyclicmagic:emerald_pickaxe"
+					}
+				},
+				{
+					"data" : {
+						"name" : "cyclicmagic:emerald_spade"
+					}
+				},
+								{
+					"data" : {
+						"name" : "cyclicmagic:emerald_axe"
+					}
+				}
+			]
+		},
+		{
+			"type" : "WEAPONS",
+			"each" : false,
+			"level" : 0,
+			"quantity" : 1,
+			"loot" : [
+				{
+					"data" : {
+						"name" : "cyclicmagic:emerald_sword"
+					}
+				}
+			]
+		},
+		{
+			"each" : false,
+			"level" : 0,
+			"quantity" : 2,
+			"loot" : [
+				{
+					"data" : {
+						"name" : "cyclicmagic:charm_air"	
+					},
+					"weight" : 3
+				},
+				{
+					"data" : {
+						"name" : "cyclicmagic:charm_wing"
+					}
+				},
+				{
+					"data" : {
+						"name" : "cyclicmagic:charm_void"
+					}
+				},
+								{
+					"data" : {
+						"name" : "cyclicmagic:charm_fire"
+					}
+				},
+								{
+					"data" : {
+						"name" : "cyclicmagic:charm_water"
+					}
+				},
+								{
+					"data" : {
+						"name" : "cyclicmagic:charm_speed"
+					}
+				},
+								{
+					"data" : {
+						"name" : "cyclicmagic:charm_antidote"
+					}
+				},
+				{
+					"data" : {
+						"name" : "cyclicmagic:charm_boat"
+					}
+				}
+			]
+		}
+	]
+}
