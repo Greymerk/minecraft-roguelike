@@ -10,6 +10,7 @@ import greymerk.roguelike.dungeon.segment.ISegmentGenerator;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.worldgen.BlockJumble;
+import greymerk.roguelike.worldgen.BoundingBox;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
@@ -131,5 +132,17 @@ public class DungeonTunnel implements Iterable<Coord>{
 	
 	public List<ISegment> getSegments(){
 		return this.segments;
+	}
+	
+	public BoundingBox getBoundingBox(){
+		Coord s;
+		Coord e;
+		s = new Coord(this.start);
+		e = new Coord(this.end);
+		s.add(Cardinal.left(dir), 2);
+		s.add(Cardinal.UP, 3);
+		e.add(Cardinal.right(dir), 2);
+		e.add(Cardinal.DOWN, 1);
+		return new BoundingBox(s, e);
 	}
 }

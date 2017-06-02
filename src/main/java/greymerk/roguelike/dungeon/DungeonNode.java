@@ -4,13 +4,13 @@ import java.util.Random;
 
 import greymerk.roguelike.dungeon.base.IDungeonRoom;
 import greymerk.roguelike.theme.ITheme;
+import greymerk.roguelike.worldgen.BoundingBox;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 public class DungeonNode {
-
 
 	private Coord pos;
 	private IDungeonRoom toGenerate;
@@ -26,9 +26,7 @@ public class DungeonNode {
 	}
 	
 	public int getSize(){
-		if(toGenerate == null){
-			return 6;
-		}
+		if(toGenerate == null) return 6;
 		
 		return toGenerate.getSize();
 	}
@@ -57,5 +55,22 @@ public class DungeonNode {
 	
 	public IDungeonRoom getRoom(){
 		return toGenerate;
+	}
+	
+	public BoundingBox getBoundingBox(){
+		Coord start = new Coord(this.pos);
+		Coord end = new Coord(this.pos);
+		
+		int size = this.getSize();
+		
+		start.add(Cardinal.NORTH, size);
+		start.add(Cardinal.WEST, size);
+		start.add(Cardinal.DOWN, 1);
+		
+		end.add(Cardinal.SOUTH, size);
+		end.add(Cardinal.EAST, size);
+		end.add(Cardinal.UP, 8);
+		
+		return new BoundingBox(start, end);
 	}
 }
