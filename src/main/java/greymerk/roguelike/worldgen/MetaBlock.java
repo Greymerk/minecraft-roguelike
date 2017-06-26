@@ -13,6 +13,7 @@ import net.minecraft.block.material.EnumPushReaction;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateBase;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -141,11 +142,6 @@ public class MetaBlock extends BlockBase implements IBlockState{
 	@Override
 	public boolean useNeighborBrightness() {
 		return this.state.useNeighborBrightness();
-	}
-
-	@Override
-	public MapColor getMapColor() {
-		return this.state.getMapColor();
 	}
 
 	@Override
@@ -292,12 +288,7 @@ public class MetaBlock extends BlockBase implements IBlockState{
 		return this.state.isSideSolid(world, pos, side);
 	}
 
-	@SuppressWarnings("deprecation")
-	@Override
-	public boolean isFullyOpaque() {
-		return this.state.isFullyOpaque();
-	}
-	
+
 	@SuppressWarnings("deprecation")
 	@Override
 	public int getLightOpacity() {
@@ -365,5 +356,21 @@ public class MetaBlock extends BlockBase implements IBlockState{
 		
 		MetaBlock otherBlock = (MetaBlock)other;
 		return this.getState().equals(otherBlock.getState());
+	}
+
+	@Override
+	public MapColor getMapColor(IBlockAccess p_185909_1_, BlockPos p_185909_2_) {
+		return this.state.getMapColor(p_185909_1_, p_185909_2_);
+	}
+
+	@SuppressWarnings("deprecation")
+	@Override
+	public boolean isTopSolid() {
+		return this.state.isTopSolid();
+	}
+
+	@Override
+	public BlockFaceShape getBlockFaceShape(IBlockAccess p_193401_1_, BlockPos p_193401_2_, EnumFacing p_193401_3_) {
+		return this.state.getBlockFaceShape(p_193401_1_, p_193401_2_, p_193401_3_);
 	}
 }

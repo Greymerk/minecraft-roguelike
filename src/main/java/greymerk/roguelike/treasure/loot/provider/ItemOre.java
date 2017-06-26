@@ -48,7 +48,7 @@ public class ItemOre extends ItemBase{
 				randomizer.add(new WeightedRandomLoot(Items.GOLD_INGOT, 0, 1, 3, 5));
 				randomizer.add(new WeightedRandomLoot(Items.GOLD_NUGGET, 0, 1, 4, 10));
 				randomizer.add(new WeightedRandomLoot(Items.IRON_INGOT, 0, 1, 2, 5));
-				randomizer.add(new WeightedRandomLoot(Items.field_191525_da, 0, 1, 5, 20));
+				randomizer.add(new WeightedRandomLoot(Items.IRON_NUGGET, 0, 1, 5, 20));
 				randomizer.add(new WeightedRandomLoot(Items.COAL, 0, 2, 5, 20));
 				randomizer.add(new WeightedRandomLoot(Items.LEATHER, 0, 3, 9, 10));
 				break;
@@ -57,7 +57,7 @@ public class ItemOre extends ItemBase{
 				randomizer.add(new WeightedRandomLoot(Items.GOLD_INGOT, 0, 1, 1, 3));
 				randomizer.add(new WeightedRandomLoot(Items.GOLD_NUGGET, 0, 1, 2, 15));
 				randomizer.add(new WeightedRandomLoot(Items.IRON_INGOT, 0, 1, 1, 10));
-				randomizer.add(new WeightedRandomLoot(Items.field_191525_da, 0, 1, 5, 30));
+				randomizer.add(new WeightedRandomLoot(Items.IRON_NUGGET, 0, 1, 5, 30));
 				randomizer.add(new WeightedRandomLoot(Items.COAL, 0, 1, 3, 40));
 				randomizer.add(new WeightedRandomLoot(Items.LEATHER, 0, 1, 7, 15));
 				break;

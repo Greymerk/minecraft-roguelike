@@ -7,6 +7,7 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.init.Items;
+import net.minecraft.item.ItemEnchantedBook;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.EnumDifficulty;
 
@@ -103,9 +104,9 @@ public enum Enchant {
 
 		for (EnchantmentData toAdd : enchants){
 			if (isBook){
-				Items.ENCHANTED_BOOK.addEnchantment(item, toAdd);
+				ItemEnchantedBook.addEnchantment(item, toAdd);
 			} else {
-				item.addEnchantment(toAdd.enchantmentobj, toAdd.enchantmentLevel);
+				item.addEnchantment(toAdd.enchantment, toAdd.enchantmentLevel);
 			}
 		}
 		

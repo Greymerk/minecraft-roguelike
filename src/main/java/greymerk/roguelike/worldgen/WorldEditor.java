@@ -17,6 +17,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.gen.ChunkProviderServer;
 
 public class WorldEditor implements IWorldEditor{
 	
@@ -197,7 +198,12 @@ public class WorldEditor implements IWorldEditor{
 
 	@Override
 	public Coord findNearestStructure(VanillaStructure type, Coord pos) {
-		BlockPos structurebp = ((WorldServer)world).getChunkProvider().getStrongholdGen(world, VanillaStructure.getName(type), pos.getBlockPos(), false);
+		ChunkProviderServer chunkProvider = ((WorldServer)world).getChunkProvider();
+		BlockPos bp = pos.getBlockPos();
+		String structureName = VanillaStructure.getName(type);
+		
+		BlockPos structurebp = chunkProvider.getNearestStructurePos(world, structureName, bp, false);
+		
 		if(structurebp == null) return null;
 		
 		return new Coord(structurebp);		

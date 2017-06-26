@@ -1,10 +1,10 @@
 package greymerk.roguelike.worldgen.blocks;
 
-import greymerk.roguelike.util.DyeColor;
-import greymerk.roguelike.worldgen.MetaBlock;
-
 import java.util.Random;
 
+import greymerk.roguelike.util.DyeColor;
+import greymerk.roguelike.worldgen.Cardinal;
+import greymerk.roguelike.worldgen.MetaBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockColored;
 import net.minecraft.init.Blocks;
