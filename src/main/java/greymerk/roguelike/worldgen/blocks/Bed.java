@@ -8,11 +8,11 @@ import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.IWorldEditor;
 import net.minecraft.block.BlockBed;
 import net.minecraft.init.Blocks;
+import net.minecraft.tileentity.TileEntityBed;
 
 public class Bed {
 
-	public static void generate(IWorldEditor editor, Cardinal dir, Coord pos){
-		
+	public static void generate(IWorldEditor editor, Cardinal dir, Coord pos, DyeColor color){
 		Coord cursor = new Coord(pos);
 
 		
@@ -21,6 +21,8 @@ public class Bed {
 			head.withProperty(BlockBed.PART, BlockBed.EnumPartType.HEAD);
 			head.withProperty(BlockBed.FACING, Cardinal.facing(dir));
 			head.set(editor, cursor);
+			TileEntityBed bed = (TileEntityBed) editor.getTileEntity(cursor);
+			bed.setColor(DyeColor.get(color));
 		} else {
 			ColorBlock.get(ColorBlock.WOOL, DyeColor.WHITE).set(editor, cursor);
 		}
@@ -31,8 +33,14 @@ public class Bed {
 			foot.withProperty(BlockBed.PART, BlockBed.EnumPartType.FOOT);
 			foot.withProperty(BlockBed.FACING, Cardinal.facing(dir));
 			foot.set(editor, cursor);
+			TileEntityBed bed = (TileEntityBed) editor.getTileEntity(cursor);
+			bed.setColor(DyeColor.get(color));
 		} else {
 			ColorBlock.get(ColorBlock.WOOL, DyeColor.RED).set(editor, cursor);
 		}
+	}
+	
+	public static void generate(IWorldEditor editor, Cardinal dir, Coord pos){
+		generate(editor, dir, pos, DyeColor.RED);
 	}
 }
