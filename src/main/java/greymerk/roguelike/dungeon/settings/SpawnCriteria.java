@@ -8,19 +8,20 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import greymerk.roguelike.worldgen.IPositionInfo;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
 
 public class SpawnCriteria {
 
 	int weight;
-	List<String> biomes;
+	List<ResourceLocation> biomes;
 	List<BiomeDictionary.Type> biomeTypes;
 	boolean everywhere;
 
 	public SpawnCriteria(){
 		this.weight = 1;
-		this.biomes = new ArrayList<String>();
+		this.biomes = new ArrayList<ResourceLocation>();
 		this.biomeTypes = new ArrayList<BiomeDictionary.Type>();
 		this.everywhere = false;
 	}
@@ -32,10 +33,10 @@ public class SpawnCriteria {
 		
 		if(data.has("biomes")){
 			JsonArray biomeList = data.get("biomes").getAsJsonArray();
-			this.biomes = new ArrayList<String>();
+			this.biomes = new ArrayList<ResourceLocation>();
 			for(JsonElement e : biomeList){
 				String name = e.getAsString();
-				this.biomes.add(name);
+				this.biomes.add(new ResourceLocation(name));
 			}
 		}
 		
@@ -57,7 +58,7 @@ public class SpawnCriteria {
 		this.weight = weight;
 	}
 	
-	public void setbiomes(List<String> biomes){
+	public void setbiomes(List<ResourceLocation> biomes){
 		this.biomes = biomes;
 		this.everywhere = this.biomes.isEmpty() && this.biomeTypes.isEmpty();
 	}
@@ -77,7 +78,7 @@ public class SpawnCriteria {
 		Biome biome = info.getBiome();
 		
 		if(this.biomes != null){
-			if(this.biomes.contains(biome.getBiomeName())) biomeFound = true;
+			if(this.biomes.contains(biome.getRegistryName())) biomeFound = true;
 		}
 		
 		if(this.biomeTypes != null){
