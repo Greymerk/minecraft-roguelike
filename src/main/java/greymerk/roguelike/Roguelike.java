@@ -22,8 +22,8 @@ public class Roguelike {
 	@Instance("roguelike")
 	public static Roguelike instance;
 	// TODO: change version number
-	public static final String version = "1.7.1";
-	public static final String date = "Aug 2nd 2017";
+	public static final String version = "1.7.2";
+	public static final String date = "Sept 21 2017";
 	
 	// Says where the client and server 'proxy' code is loaded.
 	@SidedProxy(clientSide="greymerk.roguelike.ClientProxy", serverSide="greymerk.roguelike.CommonProxy")
