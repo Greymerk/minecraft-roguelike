@@ -198,11 +198,19 @@ public class WorldEditor implements IWorldEditor{
 
 	@Override
 	public Coord findNearestStructure(VanillaStructure type, Coord pos) {
+		
 		ChunkProviderServer chunkProvider = ((WorldServer)world).getChunkProvider();
+		
 		BlockPos bp = pos.getBlockPos();
 		String structureName = VanillaStructure.getName(type);
 		
-		BlockPos structurebp = chunkProvider.getNearestStructurePos(world, structureName, bp, false);
+		BlockPos structurebp = null;
+		
+		try{
+			structurebp = chunkProvider.getNearestStructurePos(world, structureName, bp, false);	
+		} catch(NullPointerException e){
+			// happens for some reason if structure type is disabled in Chunk Generator Settings
+		}
 		
 		if(structurebp == null) return null;
 		
