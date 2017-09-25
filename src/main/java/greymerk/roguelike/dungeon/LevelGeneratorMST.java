@@ -63,9 +63,9 @@ public class LevelGeneratorMST implements ILevelGenerator{
 			for(DungeonTunnel tunnel : this.tunnels){
 				Coord[] ends = tunnel.getEnds();
 				if(ends[0].equals(c)){
-					entrances.add(tunnel.getDirection());
+					entrances.add(ends[0].dirTo(ends[1]));
 				} else if(ends[1].equals(c)) {
-					entrances.add(Cardinal.reverse(tunnel.getDirection()));
+					entrances.add(ends[1].dirTo(ends[0]));
 				}
 			}
 			

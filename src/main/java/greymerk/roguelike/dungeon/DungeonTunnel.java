@@ -24,7 +24,6 @@ public class DungeonTunnel implements Iterable<Coord>{
 
 	private Coord start;
 	private Coord end;
-	private Cardinal dir;
 	private List<ISegment> segments;
 	private List<Coord> tunnel;
 	
@@ -32,7 +31,6 @@ public class DungeonTunnel implements Iterable<Coord>{
 		this.start = start;
 		this.end = end;
 		this.tunnel = new RectSolid(start, end).get();
-		this.dir = dir;
 		this.segments = new ArrayList<ISegment>();
 	}
 
@@ -44,6 +42,8 @@ public class DungeonTunnel implements Iterable<Coord>{
 	public void encase(IWorldEditor editor, Random rand, ITheme theme){
 		Coord s;
 		Coord e;
+		Cardinal dir = this.getDirection();
+		
 		s = new Coord(this.start);
 		e = new Coord(this.end);
 		s.add(Cardinal.left(dir), 3);
@@ -94,6 +94,8 @@ public class DungeonTunnel implements Iterable<Coord>{
 		RectSolid.fill(editor, rand, s, e, floor, false, true);
 		RectSolid.fill(editor, rand, s, e, bridgeBlocks, true, false);
 		
+		Cardinal dir = this.getDirection();
+		
 		// end of the tunnel;
 		Coord location = new Coord(end);
 		location.add(dir, 1);
@@ -118,14 +120,14 @@ public class DungeonTunnel implements Iterable<Coord>{
 	}
 	
 	public Cardinal getDirection(){
-		return this.dir;
+		return this.start.dirTo(this.end);
 	}
 
 	public void genSegments(IWorldEditor editor, Random rand, IDungeonLevel level) {
 		LevelSettings settings = level.getSettings();
 		ISegmentGenerator segGen = settings.getSegments();
 		for(Coord c : this){
-			this.segments.addAll(segGen.genSegment(editor, rand, level, dir, c));
+			this.segments.addAll(segGen.genSegment(editor, rand, level, this.getDirection(), c));
 		}
 		
 	}
@@ -137,6 +139,7 @@ public class DungeonTunnel implements Iterable<Coord>{
 	public BoundingBox getBoundingBox(){
 		Coord s;
 		Coord e;
+		Cardinal dir = this.getDirection();
 		s = new Coord(this.start);
 		e = new Coord(this.end);
 		s.add(Cardinal.left(dir), 2);

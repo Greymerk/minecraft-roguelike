@@ -86,4 +86,26 @@ public class CoordTest {
 		assertTrue(test.equals(new Coord(90, 0, 0)));
 		
 	}
+	
+	@Test
+	public void dirTo(){
+		Coord one = new Coord(0,0,0);
+		
+		Coord two = new Coord(one);
+		two.add(Cardinal.NORTH);
+		assert(one.dirTo(two) == Cardinal.NORTH);
+		
+		two = new Coord(one);
+		two.add(Cardinal.SOUTH);
+		assert(one.dirTo(two) == Cardinal.SOUTH);
+		
+		two = new Coord(one);
+		two.add(Cardinal.WEST);
+		assert(one.dirTo(two) == Cardinal.WEST);
+		
+		two = new Coord(one);
+		two.add(Cardinal.EAST);
+		assert(one.dirTo(two) == Cardinal.EAST);
+	}
+	
 }

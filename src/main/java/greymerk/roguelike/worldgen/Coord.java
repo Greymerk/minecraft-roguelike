@@ -78,6 +78,25 @@ public class Coord{
 		return Math.sqrt((side1 * side1) + (side2 * side2));
 	}
 	
+	public Cardinal dirTo(Coord other){
+		int xdiff = other.x - x;
+		int zdiff = other.z - z;
+		
+		if (Math.abs(xdiff) < Math.abs(zdiff)){
+			if(zdiff < 0){
+				return Cardinal.NORTH;
+			} else {
+				return Cardinal.SOUTH;
+			}
+		} else {
+			if(xdiff < 0){
+				return Cardinal.WEST;
+			} else {
+				return Cardinal.EAST;
+			}
+		}
+	}
+	
 	// Arranges two coords so that the they create a positive cube.
 	// used in fill routines.
 	public static void correct(Coord one, Coord two){
