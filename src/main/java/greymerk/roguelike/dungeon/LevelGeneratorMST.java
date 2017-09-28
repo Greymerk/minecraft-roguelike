@@ -129,34 +129,6 @@ public class LevelGeneratorMST implements ILevelGenerator{
 		return this.end;
 	}
 	
-	private Cardinal getDirection(Coord[] ends, Coord p){
-		
-		Coord c1;
-		Coord c2;
-		
-		if(p.equals(ends[0])){
-			c1 = ends[0];
-			c2 = ends[1];
-		} else {
-			c1 = ends[1];
-			c2 = ends[0];
-		}
-		
-		if(c2.getX() - c1.getX() == 0){
-			if(c2.getZ() - c1.getZ() < 0){
-				return Cardinal.NORTH;
-			} else {
-				return Cardinal.SOUTH;
-			}
-		} else {
-			if(c2.getX() - c1.getX() < 0){
-				return Cardinal.WEST;
-			} else {
-				return Cardinal.EAST;
-			}
-		}
-	}
-	
 	@Override
 	public List<DungeonNode> getNodes() {
 		return this.nodes;
