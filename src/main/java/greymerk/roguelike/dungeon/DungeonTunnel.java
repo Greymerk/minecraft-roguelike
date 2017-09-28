@@ -27,7 +27,7 @@ public class DungeonTunnel implements Iterable<Coord>{
 	private List<ISegment> segments;
 	private List<Coord> tunnel;
 	
-	public DungeonTunnel(IWorldEditor editor, Coord start, Coord end, Cardinal dir){
+	public DungeonTunnel(Coord start, Coord end){
 		this.start = start;
 		this.end = end;
 		this.tunnel = new RectSolid(start, end).get();

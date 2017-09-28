@@ -21,6 +21,8 @@ public class EntityJoinWorld {
 	public void OnEntityJoinWorld(EntityJoinWorldEvent event) {
 		
 		World world = event.getWorld();
+		if(world.isRemote) return;
+		
 		Entity entity = event.getEntity();
 		
 		// slimes do not extend EntityMob for some reason

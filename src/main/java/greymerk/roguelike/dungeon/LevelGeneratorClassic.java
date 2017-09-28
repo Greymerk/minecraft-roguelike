@@ -218,7 +218,7 @@ public class LevelGeneratorClassic implements ILevelGenerator{
 		}
 		
 		public DungeonTunnel createTunnel(){
-			return new DungeonTunnel(editor, new Coord(this.start), new Coord(this.end), this.dir);
+			return new DungeonTunnel(new Coord(this.start), new Coord(this.end));
 		}
 	}
 	

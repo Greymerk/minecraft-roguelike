@@ -46,10 +46,9 @@ public class LevelGeneratorMST implements ILevelGenerator{
 				Coord[] ends = new Coord[]{e.getStart(), e.getEnd()};
 				for(Coord p : ends){
 					if(p.equals(c)){
-						Cardinal dir = getDirection(ends, p);
 						Coord tStart = ends[0];
 						Coord tEnd = ends[1];
-						this.tunnels.add(new DungeonTunnel(editor, tStart, tEnd, dir));
+						this.tunnels.add(new DungeonTunnel(tStart, tEnd));
 						used.add(e);
 					}
 				}
