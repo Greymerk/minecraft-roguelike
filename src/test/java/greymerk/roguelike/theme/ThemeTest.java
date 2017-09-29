@@ -76,6 +76,7 @@ public class ThemeTest {
 		ITheme base = new ThemeBase(bs, null);
 		ITheme other = new ThemeBase(null, bs);
 		
+		@SuppressWarnings("unused")
 		ITheme merge = Theme.create(null, null);
 		merge = Theme.create(base, null);
 		merge = Theme.create(null, other);

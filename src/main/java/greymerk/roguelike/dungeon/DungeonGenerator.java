@@ -7,6 +7,7 @@ import java.util.Random;
 import greymerk.roguelike.dungeon.settings.ISettings;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.dungeon.towers.Tower;
+import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IWorldEditor;
 
@@ -14,24 +15,18 @@ public class DungeonGenerator {
 	public static final int VERTICAL_SPACING = 10;
 	public static final int TOPLEVEL = 50;
 	
+	private Coord origin;
 	private List<IDungeonLevel> levels;
 	
 	public DungeonGenerator(){
 		this.levels = new ArrayList<IDungeonLevel>();
 	}
 	
-	public void generate(IWorldEditor editor, ISettings settings, int inX, int inZ){
-		
-		int x = inX;
-		int y = TOPLEVEL;
-		int z = inZ;
-		
-		Random rand = Dungeon.getRandom(editor, inX, inZ);
-
+	public void generate(IWorldEditor editor, ISettings settings, Coord pos){
+		this.origin = new Coord(pos.getX(), TOPLEVEL, pos.getZ());
+		Coord start = new Coord(this.origin);
+		Random rand = Dungeon.getRandom(editor, start);
 		int numLevels = settings.getNumLevels();
-		
-		Coord start = new Coord(x, y, z);
-		
 		DungeonNode oldEnd = null;
 		
 		for (int i = 0; i < numLevels; ++i){
@@ -45,21 +40,31 @@ public class DungeonGenerator {
 				e.printStackTrace();
 			}
 			
-			rand = Dungeon.getRandom(editor, start.getX(), start.getZ());
-			oldEnd = generator.getEnd();			
-			x = oldEnd.getPosition().getX();
-			y = y - VERTICAL_SPACING;
-			z = oldEnd.getPosition().getZ();
-			start = new Coord(x, y, z);
+			rand = Dungeon.getRandom(editor, start);
+			oldEnd = generator.getEnd();
+			start = new Coord(oldEnd.getPosition());
+			start.add(Cardinal.DOWN, VERTICAL_SPACING);
 			levels.add(level);
 		}
 		
 		Tower tower = settings.getTower().getTower();
-		rand = Dungeon.getRandom(editor, inX, inZ);
-		Tower.get(tower).generate(editor, rand, settings.getTower().getTheme(), new Coord(inX, TOPLEVEL, inZ));
+		rand = Dungeon.getRandom(editor, new Coord(this.origin));
+		Tower.get(tower).generate(editor, rand, settings.getTower().getTheme(), new Coord(this.origin));
 	}
 	
 	public List<IDungeonLevel> getLevels(){
 		return this.levels;
+	}
+	
+	public boolean isGenerated(){
+		return this.origin != null;
+	}
+	
+	public Coord getPosition(){
+		if(!this.isGenerated()){
+			return null;
+		}
+		
+		return new Coord(this.origin);
 	}
 }

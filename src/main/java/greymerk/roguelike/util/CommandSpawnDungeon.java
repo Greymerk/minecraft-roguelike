@@ -238,7 +238,7 @@ public class CommandSpawnDungeon extends CommandBase
 
 				IWorldEditor editor = new WorldEditor(player.world);
 				Dungeon toGenerate = new Dungeon(editor);
-				Random rand = Dungeon.getRandom(editor, x, z);
+				Random rand = Dungeon.getRandom(editor, new Coord(x, 0, z));
 				toGenerate.generateNear(rand, x, z);
 				
 				try {
@@ -274,7 +274,7 @@ public class CommandSpawnDungeon extends CommandBase
 					return;
 				}
 				
-				Random rand = Dungeon.getRandom(editor, x, z);
+				Random rand = Dungeon.getRandom(editor, new Coord(x, 0, z));
 				ISettings settings = null; 
 						
 				try{
@@ -291,7 +291,7 @@ public class CommandSpawnDungeon extends CommandBase
 				}
 				
 				Dungeon dungeon = new Dungeon(editor);
-				dungeon.generate(settings, x, z);
+				dungeon.generate(settings, new Coord(x, 0, z));
 				try {
 					sender.sendMessage(new TextComponentString(TextFormat.apply("Success: \"" + settingName + "\" Dungeon generated at " + dungeon.getPosition().toString(), TextFormat.GREEN)));
 				} catch (Exception e) {
@@ -300,7 +300,7 @@ public class CommandSpawnDungeon extends CommandBase
 				return;
 			}
 			
-			Random rand = Dungeon.getRandom(editor, x, z);
+			Random rand = Dungeon.getRandom(editor, new Coord(x, 0, z));
 			
 			ISettings settings = null; 
 					
@@ -312,13 +312,13 @@ public class CommandSpawnDungeon extends CommandBase
 			
 			if(settings != null){
 				IDungeon dungeon = new Dungeon(editor);
-				dungeon.generate(settings, x, z);
+				dungeon.generate(settings, new Coord(x, 0, z));
 				sender.sendMessage(new TextComponentString(TextFormat.apply("Success: Dungeon generated at " + Integer.toString(x) + " " + Integer.toString(z), TextFormat.GREEN)));
 				return;
 			}
 			
 			IDungeon dungeon = new Dungeon(editor);
-			dungeon.generate(Dungeon.settingsResolver.getDefaultSettings(), x, z);
+			dungeon.generate(Dungeon.settingsResolver.getDefaultSettings(), new Coord(x, 0, z));
 			sender.sendMessage(new TextComponentString(TextFormat.apply("Success: Dungeon generated at " + Integer.toString(x) + " " + Integer.toString(z), TextFormat.GREEN)));
 			return;
 		}

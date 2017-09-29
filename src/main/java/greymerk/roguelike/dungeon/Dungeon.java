@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
 
@@ -42,7 +44,6 @@ public class Dungeon implements IDungeon{
 	public static SettingsResolver settingsResolver;
 	
 	private DungeonGenerator generator;
-	private Coord pos;
 	private IWorldEditor editor;
 	
 	static{
@@ -100,7 +101,7 @@ public class Dungeon implements IDungeon{
 		for(int i = 0;i < attempts;i++){
 			Coord location = getNearbyCoord(rand, x, z, 40, 100);
 			
-			if(!validLocation(rand, location.getX(), location.getZ())) continue;
+			if(!validLocation(rand, location)) continue;
 			
 			ISettings setting;
 			
@@ -113,16 +114,15 @@ public class Dungeon implements IDungeon{
 			
 			if(setting == null) return;
 			
-			generate(setting, location.getX(), location.getZ());
+			generate(setting, location);
 			return;
 		}
 	}
 	
-	public void generate(ISettings settings, int inX, int inZ){
-		generator.generate(editor, settings, inX, inZ);
-		this.pos = new Coord(inX, 50, inZ);
+	public void generate(ISettings settings, Coord pos){
+		generator.generate(editor, settings, pos);
 
-		Random rand = getRandom(editor, this.pos.getX(), this.pos.getZ());
+		Random rand = getRandom(editor, generator.getPosition());
 		TreasureManager treasure = editor.getTreasure();
 
 		settings.getLootRules().process(rand, treasure);
@@ -204,10 +204,9 @@ public class Dungeon implements IDungeon{
 		return 0;
 	}
 	
-	public boolean validLocation(Random rand, int x, int z){
+	public boolean validLocation(Random rand, Coord column){
 		
-		Coord pos = new Coord(x, 0, z);
-		Biome biome = editor.getBiome(pos);
+		Biome biome = editor.getBiome(column);
 
 		Type[] invalidBiomes = new Type[]{
 				BiomeDictionary.Type.RIVER,
@@ -220,16 +219,16 @@ public class Dungeon implements IDungeon{
 			if(BiomeDictionary.hasType(biome, type)) return false;
 		}
 		
-		Coord stronghold = editor.findNearestStructure(VanillaStructure.STRONGHOLD, pos);
+		Coord stronghold = editor.findNearestStructure(VanillaStructure.STRONGHOLD, column);
 		if(stronghold != null){
-			double strongholdDistance = pos.distance(stronghold);
+			double strongholdDistance = column.distance(stronghold);
 			if(strongholdDistance < 300) return false;
 		}
 				
 		int upperLimit = RogueConfig.getInt(RogueConfig.UPPERLIMIT);
 		int lowerLimit = RogueConfig.getInt(RogueConfig.LOWERLIMIT);
 		
-		Coord cursor = new Coord(x, upperLimit, z);
+		Coord cursor = new Coord(column.getX(), upperLimit, column.getZ());
 		
 		if(!editor.isAirBlock(cursor)){
 			return false;
@@ -241,14 +240,25 @@ public class Dungeon implements IDungeon{
 			if(editor.getBlock(cursor).getMaterial() == Material.WATER) return false;
 		}
 
-		for (Coord c : new RectSolid(new Coord(x - 4, cursor.getY() + 4, z - 4), new Coord(x + 4, cursor.getY() + 4, z + 4))){
+		Coord start;
+		Coord end;
+		start = new Coord(cursor);
+		end = new Coord(cursor);
+		start.add(new Coord(-4, 4, -4));
+		end.add(new Coord(4, 4, 4));
+		
+		for (Coord c : new RectSolid(start, end)){
 			if(editor.validGroundBlock(c)){
 				return false;
 			}
 		}
 		
+		start = new Coord(cursor);
+		end = new Coord(cursor);
+		start.add(new Coord(-4, -3, -4));
+		end.add(new Coord(4, -3, 4));
 		int airCount = 0;
-		for (Coord c : new RectSolid(new Coord(x - 4, cursor.getY() - 3, z - 4), new Coord(x + 4, cursor.getY() - 3, z + 4))){
+		for (Coord c : new RectSolid(start, end)){
 			if(!editor.validGroundBlock(c)){
 				airCount++;
 			}
@@ -273,10 +283,13 @@ public class Dungeon implements IDungeon{
 		return nearby;
 	}
 	
-	public static Random getRandom(IWorldEditor editor, int x, int z){
-		long seed = editor.getSeed() * x * z;
+	public static Random getRandom(IWorldEditor editor, Coord pos){
+		HashCodeBuilder hasher = new HashCodeBuilder(17, 31)
+				.append(pos.hashCode())
+				.append(editor.getSeed());
+		
 		Random rand = new Random();
-		rand.setSeed(seed);
+		rand.setSeed(hasher.toHashCode());
 		return rand;
 	}
 
@@ -286,9 +299,9 @@ public class Dungeon implements IDungeon{
 	}
 
 	public Coord getPosition() throws Exception {
-		if(this.pos == null){
+		if(!this.generator.isGenerated()){
 			throw new Exception("Dungeon not yet generated");
 		}
-		return this.pos;
+		return this.generator.getPosition();
 	}
 }
