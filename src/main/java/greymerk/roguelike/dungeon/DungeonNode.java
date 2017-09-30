@@ -32,8 +32,7 @@ public class DungeonNode {
 	}
 	
 	public void encase(IWorldEditor editor, Random rand, ITheme theme){
-		IDungeonRoom room = this.getRoom();
-		int size = room.getSize();
+		int size = this.getSize();
 		Coord s = new Coord(this.getPosition());
 		Coord e = new Coord(s);
 		s.add(Cardinal.NORTH, size);

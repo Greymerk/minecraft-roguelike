@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import greymerk.roguelike.config.RogueConfig;
-import greymerk.roguelike.dungeon.base.IDungeonRoom;
+import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.util.graph.Edge;
 import greymerk.roguelike.util.graph.Graph;
 import greymerk.roguelike.util.mst.MinimumSpanningTree;
@@ -17,23 +16,18 @@ public class LevelGeneratorMST implements ILevelGenerator{
 
 	IWorldEditor editor;
 	Random rand;
-	IDungeonLevel level;
-	private DungeonNode end;
+	LevelSettings settings;	
+	private LevelLayout layout;
 	
-	private List<DungeonNode> nodes;
-	private List<DungeonTunnel> tunnels;
-	
-	public LevelGeneratorMST(IWorldEditor editor, Random rand, IDungeonLevel level){
+	public LevelGeneratorMST(IWorldEditor editor, Random rand, LevelSettings settings){
 		this.editor = editor;
 		this.rand = rand;
-		this.level = level;
-		
-		nodes = new ArrayList<DungeonNode>();
-		tunnels = new ArrayList<DungeonTunnel>();
+		this.settings = settings;
+		this.layout = new LevelLayout();
 	}	
 	
 	@Override
-	public void generate(Coord start, DungeonNode oldEnd) {
+	public void generate(Coord start) {
 		MinimumSpanningTree mst = new MinimumSpanningTree(rand, 7, 17, new Coord(start));
 		Graph<Coord> layout = mst.getGraph();
 		List<Edge<Coord>> edges = layout.getEdges();
@@ -48,7 +42,7 @@ public class LevelGeneratorMST implements ILevelGenerator{
 					if(p.equals(c)){
 						Coord tStart = ends[0];
 						Coord tEnd = ends[1];
-						this.tunnels.add(new DungeonTunnel(tStart, tEnd));
+						this.layout.addTunnel(new DungeonTunnel(tStart, tEnd));
 						used.add(e);
 					}
 				}
@@ -59,7 +53,7 @@ public class LevelGeneratorMST implements ILevelGenerator{
 		
 		for(Coord c : vertices){
 			List<Cardinal> entrances = new ArrayList<Cardinal>();
-			for(DungeonTunnel tunnel : this.tunnels){
+			for(DungeonTunnel tunnel : this.layout.getTunnels()){
 				Coord[] ends = tunnel.getEnds();
 				if(ends[0].equals(c)){
 					entrances.add(ends[0].dirTo(ends[1]));
@@ -70,73 +64,20 @@ public class LevelGeneratorMST implements ILevelGenerator{
 			
 			Cardinal[] ents = new Cardinal[entrances.size()];
 			DungeonNode toAdd = new DungeonNode(entrances.toArray(ents), c);
-			this.nodes.add(toAdd);
+			this.layout.addNode(toAdd);
 			
 			if(c.equals(start)){
 				startDungeonNode = toAdd; 
 			}
 		}
 		
-		int attempts = 0;
+		this.layout.setStartEnd(rand, startDungeonNode);
 		
-		do{
-			end = this.nodes.get(rand.nextInt(this.nodes.size()));
-			attempts++;
-		} while(end == startDungeonNode || end.getPosition().distance(start) > (16 + attempts * 2));
-		
-		// assign dungeons
-		for (DungeonNode node : nodes){
-			
-			if(node == end || node == startDungeonNode) continue;
-			
-			// TODO: Find way to check available space when picking room
-			IDungeonRoom toGenerate = this.level.getSettings().getRooms().get(rand);
-			node.setDungeon(toGenerate);
-		}
-		
-		if(RogueConfig.getBoolean(RogueConfig.ENCASE)){
-			for (DungeonNode node : nodes){
-				if(node == end || node == startDungeonNode) continue;
-				node.encase(editor, rand, this.level.getSettings().getTheme());
-			}
-			
-			for(DungeonTunnel t : this.getTunnels()){
-				t.encase(editor, rand, this.level.getSettings().getTheme());
-			}
-		}
-		
-		for(DungeonTunnel t : this.getTunnels()){
-			t.construct(editor, rand, this.level.getSettings());
-		}
-		
-		for (DungeonNode node : nodes){
-			if(node == end || node == startDungeonNode) continue;
-			IDungeonRoom toGenerate = node.getRoom();
-			toGenerate.generate(editor, rand, this.level.getSettings(), node.getEntrances(), node.getPosition());
-		}
-		
-		
-		for(DungeonTunnel tunnel : this.getTunnels()){
-			tunnel.genSegments(editor, rand, this.level);
-		}
-		
-		LevelGenerator.generateLevelLink(editor, rand, this.level.getSettings(), start, oldEnd);
-	}
-	
-
-	
-	public DungeonNode getEnd(){
-		return this.end;
-	}
-	
-	@Override
-	public List<DungeonNode> getNodes() {
-		return this.nodes;
 	}
 
 	@Override
-	public List<DungeonTunnel> getTunnels() {
-		return this.tunnels;
+	public LevelLayout getLayout(){
+		return this.layout;
 	}
 
 }

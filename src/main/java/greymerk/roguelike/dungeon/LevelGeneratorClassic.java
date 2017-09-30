@@ -1,12 +1,9 @@
 package greymerk.roguelike.dungeon;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import greymerk.roguelike.config.RogueConfig;
-import greymerk.roguelike.dungeon.base.IDungeonRoom;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
@@ -16,26 +13,21 @@ public class LevelGeneratorClassic implements ILevelGenerator{
 
 	private IWorldEditor editor;
 	private Random rand;
-	private IDungeonLevel level;
-
-	private List<DungeonNode> nodes;
-	private List<DungeonTunnel> tunnels;
-	private DungeonNode end;
+	private LevelLayout layout;
+	private LevelSettings settings;
+	private Coord start;
 	
-	
-	public LevelGeneratorClassic(IWorldEditor editor, Random rand, IDungeonLevel level){
+	public LevelGeneratorClassic(IWorldEditor editor, Random rand, LevelSettings settings){
 		this.editor = editor;
 		this.rand = rand;
-		this.level = level;
-	
-		
-		nodes = new ArrayList<DungeonNode>();
-		tunnels = new ArrayList<DungeonTunnel>();
+		this.layout = new LevelLayout();
+		this.settings = settings;
 	}	
 		
-	public void generate(Coord start, DungeonNode oldEnd){
+	public void generate(Coord start){
+		this.start = start;
 		List<Node> gNodes = new ArrayList<Node>();
-		Node startNode = new Node(this, level.getSettings(), Cardinal.directions[rand.nextInt(Cardinal.directions.length)], start);
+		Node startNode = new Node(Cardinal.directions[rand.nextInt(Cardinal.directions.length)], start);
 		gNodes.add(startNode);
 		
 		while(!this.isDone(gNodes)){
@@ -53,63 +45,14 @@ public class LevelGeneratorClassic implements ILevelGenerator{
 			if(n == startNode){
 				startDungeonNode = nToAdd;
 			}
-			this.nodes.add(nToAdd);
-			this.tunnels.addAll(n.createTunnels(editor));
-		}
-					
-		int attempts = 0;
-		
-		do{
-			end = this.nodes.get(rand.nextInt(this.nodes.size()));
-			attempts++;
-		} while(end == startDungeonNode || end.getPosition().distance(start) > (16 + attempts * 2));
-		
-		List<DungeonNode> nodes = this.getNodes();
-		Collections.shuffle(nodes, rand);
-		
-		// assign dungeons
-		for (DungeonNode node : nodes){
-			
-			if(node == end || node == startDungeonNode) continue;
-			
-			// TODO: Find way to check available space when picking room
-			IDungeonRoom toGenerate = this.level.getSettings().getRooms().get(rand);
-			node.setDungeon(toGenerate);
+			this.layout.addNode(nToAdd);
+			this.layout.addTunnels(n.createTunnels(editor));
 		}
 		
-		if(RogueConfig.getBoolean(RogueConfig.ENCASE)){
-			for (DungeonNode node : nodes){
-				if(node == end || node == startDungeonNode) continue;
-				node.encase(editor, rand, this.level.getSettings().getTheme());
-			}
-			
-			for(DungeonTunnel t : this.getTunnels()){
-				t.encase(editor, rand, this.level.getSettings().getTheme());
-			}
-			
-		}
-		
-		for(DungeonTunnel t : this.getTunnels()){
-			t.construct(editor, rand, this.level.getSettings());
-		}
-		
-		for (DungeonNode node : nodes){
-			if(node == end || node == startDungeonNode) continue;
-			IDungeonRoom toGenerate = node.getRoom();
-			toGenerate.generate(editor, rand, this.level.getSettings(), node.getEntrances(), node.getPosition());
-		}
-		
-		
-		for(DungeonTunnel tunnel : this.getTunnels()){
-			tunnel.genSegments(editor, rand, this.level);
-		}
-		
-		LevelGenerator.generateLevelLink(editor, rand, this.level.getSettings(), start, oldEnd);
-
+		this.layout.setStartEnd(rand, startDungeonNode);
 	}
 	
 	public void update(List<Node> nodes){
-		
 		if(!this.full(nodes)){
 			for (int i = 0; i < nodes.size(); i++){
 				nodes.get(i).update(nodes);
@@ -130,12 +73,11 @@ public class LevelGeneratorClassic implements ILevelGenerator{
 	}
 	
 	private boolean full(List<Node> nodes){
-		return nodes.size() >= this.level.getSettings().getNumRooms();
+		return nodes.size() >= this.settings.getNumRooms();
 	}
 	
 	public void spawnNode(List<Node> nodes, Tunneler tunneler){		
-		Node toAdd = new Node(this, this.level.getSettings(), tunneler.getDirection(), tunneler.getPosition());
-		
+		Node toAdd = new Node(tunneler.getDirection(), tunneler.getPosition());
 		nodes.add(toAdd);
 	}
 	
@@ -149,39 +91,22 @@ public class LevelGeneratorClassic implements ILevelGenerator{
 		return false;
 	}
 	
-	public IDungeonLevel getLevel(){
-		return this.level;
-	}
-	
 	@Override
-	public List<DungeonNode> getNodes() {
-		return this.nodes;
-	}
-
-	@Override
-	public List<DungeonTunnel> getTunnels() {
-		return this.tunnels;
-	}
-	
-	public DungeonNode getEnd(){
-		return this.end;
+	public LevelLayout getLayout(){
+		return this.layout;
 	}
 
 	private class Tunneler{
 		
 		private boolean done;
 		private Cardinal dir;
-		private LevelSettings settings;
-		private LevelGeneratorClassic generator;
 		private Coord start;
 		private Coord end;
 		private int extend;
 		
-		public Tunneler(Cardinal dir, LevelSettings settings, LevelGeneratorClassic generator, Coord start){
+		public Tunneler(Cardinal dir, Coord start){
 			this.done = false;
 			this.dir = dir;
-			this.settings = settings;
-			this.generator = generator;
 			this.start = new Coord(start);
 			this.end = new Coord(start);
 			this.extend = settings.getScatter() * 2;
@@ -192,11 +117,11 @@ public class LevelGeneratorClassic implements ILevelGenerator{
 				return;
 			}
 			
-			if(this.generator.hasNearbyNode(nodes, end, settings.getScatter())){
+			if(hasNearbyNode(nodes, end, settings.getScatter())){
 				end.add(dir);
 			} else {
 				if(rand.nextInt(extend) == 0){
-					generator.spawnNode(nodes, this);
+					spawnNode(nodes, this);
 					this.done = true;
 				} else {
 					end.add(dir);
@@ -225,15 +150,11 @@ public class LevelGeneratorClassic implements ILevelGenerator{
 	private class Node{
 		
 		private List<Tunneler> tunnelers;
-		private LevelGeneratorClassic level;
-		private LevelSettings settings;
 		private Cardinal direction;
 		private Coord pos;
 		
-		public Node(LevelGeneratorClassic level, LevelSettings settings, Cardinal direction, Coord pos){
+		public Node(Cardinal direction, Coord pos){
 			this.tunnelers = new ArrayList<Tunneler>();
-			this.level = level;
-			this.settings = settings;
 			this.direction = direction;
 			this.pos = pos;
 			
@@ -242,7 +163,7 @@ public class LevelGeneratorClassic implements ILevelGenerator{
 		
 		private void spawnTunnelers(){
 			
-			if(!this.level.level.inRange(pos)){
+			if(start.distance(pos) > settings.getRange()){
 				return;
 			}
 			
@@ -252,7 +173,7 @@ public class LevelGeneratorClassic implements ILevelGenerator{
 					continue;
 				}
 				
-				this.tunnelers.add(new Tunneler(dir, this.settings, this.level, new Coord(this.pos)));
+				this.tunnelers.add(new Tunneler(dir, new Coord(this.pos)));
 			}
 		}
 		

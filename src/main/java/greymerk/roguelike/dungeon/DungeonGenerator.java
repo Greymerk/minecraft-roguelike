@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import greymerk.roguelike.config.RogueConfig;
+import greymerk.roguelike.dungeon.base.IDungeonRoom;
 import greymerk.roguelike.dungeon.settings.ISettings;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.dungeon.towers.Tower;
@@ -27,29 +29,94 @@ public class DungeonGenerator {
 		Coord start = new Coord(this.origin);
 		Random rand = Dungeon.getRandom(editor, start);
 		int numLevels = settings.getNumLevels();
-		DungeonNode oldEnd = null;
 		
+		// create level objects
 		for (int i = 0; i < numLevels; ++i){
 			LevelSettings levelSettings = settings.getLevelSettings(i);
 			DungeonLevel level = new DungeonLevel(editor, rand, levelSettings, new Coord(start));
+			this.levels.add(level);
+		}
+		
+		// generate level layouts
+		for(IDungeonLevel level : this.levels){
+			ILevelGenerator generator = LevelGenerator.getGenerator(editor, rand, level.getSettings().getGenerator(), level);
 			
-			ILevelGenerator generator = LevelGenerator.getGenerator(editor, rand, levelSettings.getGenerator(), level);
 			try{
-				level.generate(generator, new Coord(start), oldEnd);
+				level.generate(generator, start);
 			} catch(Exception e){
 				e.printStackTrace();
 			}
 			
+			LevelLayout layout = generator.getLayout();
 			rand = Dungeon.getRandom(editor, start);
-			oldEnd = generator.getEnd();
-			start = new Coord(oldEnd.getPosition());
+			start = new Coord(layout.getEnd().getPosition());
 			start.add(Cardinal.DOWN, VERTICAL_SPACING);
-			levels.add(level);
 		}
 		
+		// encase
+		if(RogueConfig.getBoolean(RogueConfig.ENCASE)){
+			for(IDungeonLevel level : this.levels){
+				level.encase(editor, rand);
+			}	
+		}
+		
+		// assign dungeon rooms
+		for(IDungeonLevel level : this.levels){
+			LevelLayout layout = level.getLayout();
+			List<DungeonNode> nodes = layout.getNodes();
+			DungeonNode startRoom = layout.getStart();
+			DungeonNode endRoom = layout.getEnd();
+			
+			for (DungeonNode node : nodes){
+				if(node == startRoom || node == endRoom) continue;
+				IDungeonRoom toGenerate = level.getSettings().getRooms().get(rand);
+				node.setDungeon(toGenerate);
+			}
+		}
+		
+		// generate tunnels
+		for(IDungeonLevel level : this.levels){
+			for(DungeonTunnel t : level.getLayout().getTunnels()){
+				t.construct(editor, rand, level.getSettings());
+			}
+		}
+		
+		// generate rooms
+		for(IDungeonLevel level : this.levels){
+			LevelLayout layout = level.getLayout();
+			List<DungeonNode> nodes = layout.getNodes();
+			DungeonNode startRoom = layout.getStart();
+			DungeonNode endRoom = layout.getEnd();
+			for (DungeonNode node : nodes){
+				if(node == startRoom || node == endRoom) continue;
+				IDungeonRoom toGenerate = node.getRoom();
+				toGenerate.generate(editor, rand, level.getSettings(), node.getEntrances(), node.getPosition());	
+			}
+		}
+		
+		// generate segments
+		for(IDungeonLevel level : this.levels){
+			for(DungeonTunnel tunnel : level.getLayout().getTunnels()){
+				tunnel.genSegments(editor, rand, level);
+			}
+		}
+		
+		// generate level links
+		IDungeonLevel previous = null;
+		for(IDungeonLevel level : this.levels){
+			DungeonNode upper = previous == null ? null : previous.getLayout().getEnd();
+			DungeonNode lower = level.getLayout().getStart();
+			LevelGenerator.generateLevelLink(editor, rand, level.getSettings(), lower, upper);
+			previous = level;
+		}
+		
+		tower(editor, settings, origin);
+	}
+	
+	private void tower(IWorldEditor editor, ISettings settings, Coord pos){
 		Tower tower = settings.getTower().getTower();
-		rand = Dungeon.getRandom(editor, new Coord(this.origin));
-		Tower.get(tower).generate(editor, rand, settings.getTower().getTheme(), new Coord(this.origin));
+		Random rand = Dungeon.getRandom(editor, new Coord(pos));
+		Tower.get(tower).generate(editor, rand, settings.getTower().getTheme(), new Coord(pos));
 	}
 	
 	public List<IDungeonLevel> getLevels(){

@@ -18,13 +18,14 @@ public class DungeonLevel implements IDungeonLevel{
 		this.origin = origin;
 	}
 	
-	public void generate(ILevelGenerator generator, Coord start, DungeonNode oldEnd){
+	@Override
+	public void generate(ILevelGenerator generator, Coord start){
 		this.generator = generator;
-		generator.generate(start, oldEnd);
+		generator.generate(start);
 	}
 	
 	public int nodeCount(){
-		return this.getNodes().size();
+		return this.generator.getLayout().getNodes().size();
 	}
 
 	@Override
@@ -33,19 +34,9 @@ public class DungeonLevel implements IDungeonLevel{
 	}
 
 	@Override
-	public List<DungeonNode> getNodes() {
-		return this.generator.getNodes();
-	}
-
-	@Override
-	public List<DungeonTunnel> getTunnels() {
-		return this.generator.getTunnels();
-	}
-	
-	@Override
 	public boolean hasNearbyNode(Coord pos){
 		
-		for (DungeonNode node : this.getNodes()){
+		for (DungeonNode node : this.generator.getLayout().getNodes()){
 			int dist = (int) node.getPosition().distance(pos);
 
 			if(dist < node.getSize()){
@@ -60,5 +51,26 @@ public class DungeonLevel implements IDungeonLevel{
 		int dist = (int) this.origin.distance(pos);
 		return dist < this.settings.getRange();
 	}
-
+	
+	@Override
+	public LevelLayout getLayout(){
+		return this.generator.getLayout();
+	}
+	
+	@Override
+	public void encase(IWorldEditor editor, Random rand){
+		List<DungeonNode> nodes = this.generator.getLayout().getNodes();
+		List<DungeonTunnel> tunnels = this.generator.getLayout().getTunnels();
+		DungeonNode start = this.generator.getLayout().getStart();
+		DungeonNode end = this.generator.getLayout().getEnd();
+		
+		for (DungeonNode node : nodes){
+			if(node == start || node == end) continue;
+			node.encase(editor, rand, this.settings.getTheme());
+		}
+		
+		for(DungeonTunnel t : tunnels){
+			t.encase(editor, rand, this.settings.getTheme());
+		}
+	}
 }
