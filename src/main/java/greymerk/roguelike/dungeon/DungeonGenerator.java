@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import greymerk.roguelike.config.RogueConfig;
+import greymerk.roguelike.dungeon.base.IDungeonFactory;
 import greymerk.roguelike.dungeon.base.IDungeonRoom;
 import greymerk.roguelike.dungeon.settings.ISettings;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
@@ -37,6 +38,8 @@ public class DungeonGenerator {
 			this.levels.add(level);
 		}
 		
+		/**** Create layouts and assign rooms ****/
+		
 		// generate level layouts
 		for(IDungeonLevel level : this.levels){
 			ILevelGenerator generator = LevelGenerator.getGenerator(editor, rand, level.getSettings().getGenerator(), level);
@@ -53,25 +56,26 @@ public class DungeonGenerator {
 			start.add(Cardinal.DOWN, VERTICAL_SPACING);
 		}
 		
+		
+		// assign dungeon rooms
+		for(IDungeonLevel level : this.levels){
+			LevelLayout layout = level.getLayout();
+			IDungeonFactory rooms = level.getSettings().getRooms();
+			
+			while(layout.hasEmptyRooms()){
+				IDungeonRoom toGenerate = rooms.get(rand);
+				DungeonNode node = layout.getBestFit(toGenerate);
+				node.setDungeon(toGenerate);
+			}
+		}
+		
+		/**** Do actual worldgen tasks ****/
+		
 		// encase
 		if(RogueConfig.getBoolean(RogueConfig.ENCASE)){
 			for(IDungeonLevel level : this.levels){
 				level.encase(editor, rand);
 			}	
-		}
-		
-		// assign dungeon rooms
-		for(IDungeonLevel level : this.levels){
-			LevelLayout layout = level.getLayout();
-			List<DungeonNode> nodes = layout.getNodes();
-			DungeonNode startRoom = layout.getStart();
-			DungeonNode endRoom = layout.getEnd();
-			
-			for (DungeonNode node : nodes){
-				if(node == startRoom || node == endRoom) continue;
-				IDungeonRoom toGenerate = level.getSettings().getRooms().get(rand);
-				node.setDungeon(toGenerate);
-			}
 		}
 		
 		// generate tunnels
@@ -100,6 +104,8 @@ public class DungeonGenerator {
 				tunnel.genSegments(editor, rand, level);
 			}
 		}
+		
+		/**** Create level links & tower ****/
 		
 		// generate level links
 		IDungeonLevel previous = null;

@@ -7,10 +7,11 @@ import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.worldgen.BoundingBox;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
+import greymerk.roguelike.worldgen.IBounded;
 import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.shapes.RectSolid;
 
-public class DungeonNode {
+public class DungeonNode implements IBounded{
 
 	private Coord pos;
 	private IDungeonRoom toGenerate;
@@ -31,7 +32,7 @@ public class DungeonNode {
 		return toGenerate.getSize();
 	}
 	
-	public void encase(IWorldEditor editor, Random rand, ITheme theme){
+	public void encase(IWorldEditor editor, Random rand, ITheme theme){		
 		int size = this.getSize();
 		Coord s = new Coord(this.getPosition());
 		Coord e = new Coord(s);
@@ -56,11 +57,9 @@ public class DungeonNode {
 		return toGenerate;
 	}
 	
-	public BoundingBox getBoundingBox(){
+	public BoundingBox getBoundingBox(int size){
 		Coord start = new Coord(this.pos);
 		Coord end = new Coord(this.pos);
-		
-		int size = this.getSize();
 		
 		start.add(Cardinal.NORTH, size);
 		start.add(Cardinal.WEST, size);
@@ -71,5 +70,18 @@ public class DungeonNode {
 		end.add(Cardinal.UP, 8);
 		
 		return new BoundingBox(start, end);
+	}
+	
+	public BoundingBox getBoundingBox(){
+		return this.getBoundingBox(this.getSize());
+	}
+
+	public boolean connectsTo(DungeonTunnel tunnel){
+		return tunnel.hasEnd(this.pos);
+	}
+	
+	@Override
+	public boolean collide(IBounded other) {
+		return this.getBoundingBox().collide(other);
 	}
 }

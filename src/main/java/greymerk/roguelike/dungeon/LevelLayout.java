@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import greymerk.roguelike.dungeon.base.IDungeonRoom;
+
 public class LevelLayout {
 
 	private List<DungeonNode> nodes;
@@ -62,5 +64,54 @@ public class LevelLayout {
 			end = this.nodes.get(rand.nextInt(this.nodes.size()));
 			attempts++;
 		} while(end == this.start || end.getPosition().distance(start.getPosition()) > (16 + attempts * 2));
+	}
+	
+	public boolean overlaps(DungeonNode node, int size){
+		
+		for(DungeonTunnel tunnel : this.getTunnels()){
+			if(node.connectsTo(tunnel)) continue;
+			
+			if(node.getBoundingBox(size).collide(tunnel)) return true;
+		}
+		
+		for(DungeonNode n : this.getNodes()){
+			if(node == n) continue;
+			
+			if(node.getBoundingBox(size).collide(n)) return true;
+		}
+		
+		return false;
+	}
+	
+	public DungeonNode getBestFit(IDungeonRoom room){ 
+		
+		for(DungeonNode node : this.getNodes()){
+			if(node == start || node == end) continue;
+			
+			if(node.getRoom() != null) continue;
+			
+			if(overlaps(node, room.getSize())) continue;
+			
+			return node;
+		}
+		
+		for(DungeonNode node : this.getNodes()){
+			if(node == start || node == end) continue;
+			
+			if(node.getRoom() != null) continue;
+			return node;
+		}
+		
+		return null;
+	}
+	
+	public boolean hasEmptyRooms(){
+		for(DungeonNode node : this.nodes){
+			if(node == start || node == end) continue;
+			
+			if(node.getRoom() == null) return true;
+		}
+		
+		return false;
 	}
 }

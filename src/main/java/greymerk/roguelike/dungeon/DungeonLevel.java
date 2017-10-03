@@ -9,13 +9,11 @@ import greymerk.roguelike.worldgen.IWorldEditor;
 
 public class DungeonLevel implements IDungeonLevel{
 
-	private Coord origin;
 	private LevelSettings settings;
 	private ILevelGenerator generator;
 	
 	public DungeonLevel(IWorldEditor editor, Random rand, LevelSettings settings, Coord origin){
 		this.settings = settings;
-		this.origin = origin;
 	}
 	
 	@Override
@@ -46,12 +44,6 @@ public class DungeonLevel implements IDungeonLevel{
 		return false;
 	}
 
-	@Override
-	public boolean inRange(Coord pos) {		
-		int dist = (int) this.origin.distance(pos);
-		return dist < this.settings.getRange();
-	}
-	
 	@Override
 	public LevelLayout getLayout(){
 		return this.generator.getLayout();

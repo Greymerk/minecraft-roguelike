@@ -1,6 +1,6 @@
 package greymerk.roguelike.worldgen;
 
-public class BoundingBox {
+public class BoundingBox implements IBounded{
 
 	private Coord start;
 	private Coord end;
@@ -12,16 +12,22 @@ public class BoundingBox {
 		Coord.correct(this.start, this.end);
 	}
 	
-	public boolean collide(BoundingBox other){
+	public BoundingBox getBoundingBox(){
+		return this;
+	}
+	
+	public boolean collide(IBounded other){
 		
-		if(end.getX() < other.start.getX()
-			|| other.end.getX() < start.getX()) return false; 
+		BoundingBox otherBox = other.getBoundingBox();
 		
-		if(end.getY() < other.start.getY()
-			|| other.end.getY() < start.getY()) return false; 
+		if(end.getX() < otherBox.start.getX()
+			|| otherBox.end.getX() < start.getX()) return false; 
 		
-		if(end.getZ() < other.start.getZ()
-			|| other.end.getZ() < start.getZ()) return false; 
+		if(end.getY() < otherBox.start.getY()
+			|| otherBox.end.getY() < start.getY()) return false; 
+		
+		if(end.getZ() < otherBox.start.getZ()
+			|| otherBox.end.getZ() < start.getZ()) return false; 
 		
 		return true;
 	}

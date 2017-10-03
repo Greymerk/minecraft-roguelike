@@ -14,13 +14,14 @@ import greymerk.roguelike.worldgen.BoundingBox;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
+import greymerk.roguelike.worldgen.IBounded;
 import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.shapes.RectHollow;
 import greymerk.roguelike.worldgen.shapes.RectSolid;
 
-public class DungeonTunnel implements Iterable<Coord>{
+public class DungeonTunnel implements Iterable<Coord>, IBounded{
 
 	private Coord start;
 	private Coord end;
@@ -147,5 +148,14 @@ public class DungeonTunnel implements Iterable<Coord>{
 		e.add(Cardinal.right(dir), 2);
 		e.add(Cardinal.DOWN, 1);
 		return new BoundingBox(s, e);
+	}
+
+	public boolean hasEnd(Coord pos){
+		return pos.equals(this.start) || pos.equals(this.end);
+	}
+	
+	@Override
+	public boolean collide(IBounded other) {
+		return this.getBoundingBox().collide(other);
 	}
 }

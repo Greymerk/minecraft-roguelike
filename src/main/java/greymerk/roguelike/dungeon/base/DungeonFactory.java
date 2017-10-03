@@ -2,7 +2,9 @@ package greymerk.roguelike.dungeon.base;
 
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.PriorityQueue;
 import java.util.Random;
 import java.util.Set;
 
@@ -14,10 +16,13 @@ import greymerk.roguelike.util.WeightedChoice;
 import greymerk.roguelike.util.WeightedRandomizer;
 
 public class DungeonFactory implements IDungeonFactory {
-
+	
 	private Map<DungeonRoom, Integer> singles;
 	private Map<DungeonRoom, Integer> multiple;
 	private DungeonRoom base;
+	
+	private Iterator<IDungeonRoom> singleRooms;
+	
 	
 	
 	public DungeonFactory(){
@@ -90,6 +95,24 @@ public class DungeonFactory implements IDungeonFactory {
 		
 	}
 	
+	public IDungeonRoom get(Random rand){
+		
+		if(this.singleRooms == null) this.singleRooms = new RoomIterator();
+		
+		if(this.singleRooms.hasNext()) return this.singleRooms.next();
+		
+		Set<DungeonRoom> keyset = this.multiple.keySet();
+		if(keyset.isEmpty()) return DungeonRoom.getInstance(base);
+		
+		WeightedRandomizer<DungeonRoom> randomizer = new WeightedRandomizer<DungeonRoom>();
+		for(DungeonRoom room : keyset){
+			randomizer.add(new WeightedChoice<DungeonRoom>(room, multiple.get(room)));
+		}
+		
+		DungeonRoom choice = randomizer.get(rand);
+		return DungeonRoom.getInstance(choice);
+	}
+	
 	public void addSingle(DungeonRoom type){
 		this.addSingle(type, 1);
 	}
@@ -110,43 +133,6 @@ public class DungeonFactory implements IDungeonFactory {
 	}
 	
 	@Override
-	public IDungeonRoom get(Random rand) {
-		if(!singles.isEmpty()) return this.getSingle(rand);
-		if(!multiple.isEmpty()) return this.getRandom(rand);
-		return DungeonRoom.getInstance(base);
-	}
-	
-	private IDungeonRoom getRandom(Random rand){
-		Set<DungeonRoom> keyset = this.multiple.keySet();
-		if(keyset.isEmpty()) return null;
-		
-		WeightedRandomizer<DungeonRoom> randomizer = new WeightedRandomizer<DungeonRoom>();
-		for(DungeonRoom room : keyset){
-			randomizer.add(new WeightedChoice<DungeonRoom>(room, multiple.get(room)));
-		}
-		
-		DungeonRoom choice = randomizer.get(rand);
-		return DungeonRoom.getInstance(choice);
-	}
-	
-	private IDungeonRoom getSingle(Random rand){
-		Set<DungeonRoom> keyset = this.singles.keySet();
-		if(keyset.isEmpty()) return null;
-		
-		DungeonRoom[] rooms = keyset.toArray(new DungeonRoom[0]);
-		DungeonRoom type = rooms[rand.nextInt(rooms.length)];
-		
-		if(this.singles.get(type) <= 1){
-			this.singles.remove(type);
-		} else {
-			this.singles.put(type, this.singles.get(type) - 1);	
-		}
-		
-		return DungeonRoom.getInstance(type);
-	}
-	
-	
-	@Override
 	public boolean equals(Object o){
 		DungeonFactory other = (DungeonFactory)o;
 		
@@ -158,7 +144,7 @@ public class DungeonFactory implements IDungeonFactory {
 		
 		return true;
 	}
-
+	
 	public static DungeonFactory getRandom(Random rand, int numRooms) {
 		DungeonFactory rooms = new DungeonFactory();
 		rooms.base = DungeonRoom.CORNER;
@@ -171,5 +157,31 @@ public class DungeonFactory implements IDungeonFactory {
 			}
 		}
 		return rooms;
+	}
+	
+	private class RoomIterator implements Iterator<IDungeonRoom>{
+		private PriorityQueue<IDungeonRoom> rooms;
+		
+		public RoomIterator(){
+			
+			rooms = new PriorityQueue<IDungeonRoom>();
+			
+			Set<DungeonRoom> keyset = singles.keySet();
+			for(DungeonRoom type : keyset){
+				for(int i = 0; i < singles.get(type); ++i){
+					rooms.add(DungeonRoom.getInstance(type));
+				}
+			}
+		}
+		
+		@Override
+		public boolean hasNext() {
+			return !rooms.isEmpty();
+		}
+
+		@Override
+		public IDungeonRoom next() {
+			return rooms.poll();
+		}
 	}
 }

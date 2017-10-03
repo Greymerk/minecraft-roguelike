@@ -9,7 +9,7 @@ import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.shapes.RectHollow;
 
-public abstract class DungeonBase implements IDungeonRoom{
+public abstract class DungeonBase implements IDungeonRoom, Comparable<DungeonBase>{
 
 	@Override
 	public abstract boolean generate(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin);
@@ -30,5 +30,10 @@ public abstract class DungeonBase implements IDungeonRoom{
 		}
 		
 		return true;
+	}
+	
+	@Override
+	public int compareTo(DungeonBase other) {
+		return this.getSize() - other.getSize();
 	}
 }
