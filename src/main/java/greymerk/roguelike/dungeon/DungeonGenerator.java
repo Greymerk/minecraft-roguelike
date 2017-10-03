@@ -12,7 +12,9 @@ import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.dungeon.towers.Tower;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
+import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.IWorldEditor;
+import greymerk.roguelike.worldgen.blocks.BlockType;
 
 public class DungeonGenerator {
 	public static final int VERTICAL_SPACING = 10;
@@ -117,6 +119,20 @@ public class DungeonGenerator {
 		}
 		
 		tower(editor, settings, origin);
+		/*
+		for(IDungeonLevel level : this.levels){
+			LevelLayout layout = level.getLayout();
+			IBlockFactory blocks = BlockType.get(BlockType.SEA_LANTERN);
+
+			for(DungeonNode node : layout.getNodes()){
+				node.getBoundingBox().generate(editor, rand, blocks);
+			}
+			
+			for(DungeonTunnel tunnel : layout.getTunnels()){
+				tunnel.getBoundingBox().generate(editor, rand, blocks);
+			}
+		}
+		*/
 	}
 	
 	private void tower(IWorldEditor editor, ISettings settings, Coord pos){
