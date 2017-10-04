@@ -120,7 +120,7 @@ public class DungeonGenerator {
 		
 		tower(editor, settings, origin);
 		
-		renderWireframe(editor, rand);
+		//renderWireframe(editor, rand);
 		
 	}
 	
