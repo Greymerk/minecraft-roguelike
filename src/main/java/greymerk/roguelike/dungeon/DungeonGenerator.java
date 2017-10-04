@@ -10,9 +10,9 @@ import greymerk.roguelike.dungeon.base.IDungeonRoom;
 import greymerk.roguelike.dungeon.settings.ISettings;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.dungeon.towers.Tower;
+import greymerk.roguelike.worldgen.BoundingBox;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
-import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 
@@ -119,20 +119,9 @@ public class DungeonGenerator {
 		}
 		
 		tower(editor, settings, origin);
-		/*
-		for(IDungeonLevel level : this.levels){
-			LevelLayout layout = level.getLayout();
-			IBlockFactory blocks = BlockType.get(BlockType.SEA_LANTERN);
-
-			for(DungeonNode node : layout.getNodes()){
-				node.getBoundingBox().generate(editor, rand, blocks);
-			}
-			
-			for(DungeonTunnel tunnel : layout.getTunnels()){
-				tunnel.getBoundingBox().generate(editor, rand, blocks);
-			}
-		}
-		*/
+		
+		renderWireframe(editor, rand);
+		
 	}
 	
 	private void tower(IWorldEditor editor, ISettings settings, Coord pos){
@@ -155,5 +144,23 @@ public class DungeonGenerator {
 		}
 		
 		return new Coord(this.origin);
+	}
+	
+	private void renderWireframe(IWorldEditor editor, Random rand){
+		for(IDungeonLevel level : this.levels){
+			LevelLayout layout = level.getLayout();
+			
+			for(DungeonNode node : layout.getNodes()){
+				Coord offset = new Coord(0, 100 + node.getPosition().getY() / 10 * 5,0);
+				BoundingBox box = node.getBoundingBox();
+				box.generate(editor, rand, BlockType.get(BlockType.SEA_LANTERN), offset);
+			}
+			
+			for(DungeonTunnel tunnel : layout.getTunnels()){
+				Coord offset = new Coord(0, 100 + tunnel.getEnds()[0].getY() / 10 * 5, 0);
+				BoundingBox box = tunnel.getBoundingBox();
+				box.generate(editor, rand, BlockType.get(BlockType.GLOWSTONE), offset);
+			}
+		}
 	}
 }

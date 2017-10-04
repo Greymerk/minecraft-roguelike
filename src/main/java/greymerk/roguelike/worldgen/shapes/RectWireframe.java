@@ -9,7 +9,6 @@ import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.IWorldEditor;
-import greymerk.roguelike.worldgen.blocks.BlockType;
 
 public class RectWireframe implements IShape {
 
@@ -40,13 +39,6 @@ public class RectWireframe implements IShape {
 		for(Coord c : this){
 			block.set(editor, rand, c, fillAir, replaceSolid);
 		}
-		
-		Coord innerStart = new Coord(start);
-		Coord innerEnd = new Coord(end);
-		Coord.correct(innerStart, innerEnd);
-		innerStart.add(new Coord(1, 1, 1));
-		innerEnd.add(new Coord(-1, -1, -1));
-		RectSolid.fill(editor, rand, innerStart, innerEnd, BlockType.get(BlockType.AIR));
 	}
 
 	@Override

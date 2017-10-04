@@ -36,11 +36,11 @@ public class BoundingBox implements IBounded{
 		return true;
 	}
 	
-	public void generate(IWorldEditor editor, Random rand, IBlockFactory blocks){
+	public void generate(IWorldEditor editor, Random rand, IBlockFactory blocks, Coord offset){
 		Coord s = new Coord(start);
-		Coord e = new Coord(end);
-		s.add(Cardinal.UP, 100);
-		e.add(Cardinal.UP, 100);
-		RectWireframe.fill(editor, rand, s, e, blocks);
+		Coord e = new Coord(end);		
+		s.add(offset);
+		e.add(offset);
+		RectWireframe.fill(editor, rand, s, e, blocks, true, false);
 	}
 }
