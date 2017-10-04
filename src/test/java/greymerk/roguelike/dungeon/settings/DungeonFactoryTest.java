@@ -111,6 +111,7 @@ public class DungeonFactoryTest {
 		DungeonFactory rooms = new DungeonFactory(DungeonRoom.CORNER);
 		assert(rooms.get(rand) instanceof DungeonCorner);	
 		
+		rooms = new DungeonFactory(DungeonRoom.CORNER);
 		rooms.addSingle(DungeonRoom.CAKE, 2);
 		assert(rooms.get(rand) instanceof DungeonsWood);
 		assert(rooms.get(rand) instanceof DungeonsWood);
