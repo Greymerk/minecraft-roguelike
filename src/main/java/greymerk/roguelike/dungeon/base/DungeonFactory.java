@@ -39,25 +39,7 @@ public class DungeonFactory implements IDungeonFactory {
 		this();
 		
 		for(JsonElement e : json){
-			JsonObject entry = e.getAsJsonObject();
-			String mode = (entry.get("mode").getAsString()).toLowerCase();
-			String type = (entry.get("type").getAsString()).toUpperCase();			
-			
-			int weight = entry.has("weight") ? entry.get("weight").getAsInt() : 1;
-			
-			if(!DungeonRoom.contains(type)){
-				throw new Exception("No such dungeon: " + type);
-			}
-			
-			DungeonRoom toAdd = DungeonRoom.valueOf(entry.get("type").getAsString());
-			
-			if(mode.equals("single")){
-				this.addSingle(toAdd);
-			}
-			
-			if(mode.equals("random")){
-				this.addRandom(toAdd, weight);
-			}
+			this.add(e.getAsJsonObject());
 		}
 	}
 	
@@ -77,22 +59,46 @@ public class DungeonFactory implements IDungeonFactory {
 	public DungeonFactory(DungeonFactory base, DungeonFactory other){
 		this();
 		this.base = other.base;
-		for(DungeonRoom room : base.singles.keySet()){
-			this.singles.put(room, base.singles.get(room));
+		if(other.singles.keySet().isEmpty()){
+			for(DungeonRoom room : base.singles.keySet()){
+				this.singles.put(room, base.singles.get(room));
+			}	
+		} else {
+			for(DungeonRoom room : other.singles.keySet()){
+				this.singles.put(room, other.singles.get(room));
+			}	
 		}
 		
-		for(DungeonRoom room : base.multiple.keySet()){
-			this.multiple.put(room, base.multiple.get(room));
+		if(other.multiple.keySet().isEmpty()){
+			for(DungeonRoom room : base.multiple.keySet()){
+				this.multiple.put(room, base.multiple.get(room));
+			}	
+		} else {
+			for(DungeonRoom room : other.multiple.keySet()){
+				this.multiple.put(room, other.multiple.get(room));
+			}	
+		}
+	}
+	
+	public void add(JsonObject entry) throws Exception{
+		String mode = (entry.get("mode").getAsString()).toLowerCase();
+		String type = (entry.get("type").getAsString()).toUpperCase();			
+		
+		int weight = entry.has("weight") ? entry.get("weight").getAsInt() : 1;
+		
+		if(!DungeonRoom.contains(type)){
+			throw new Exception("No such dungeon: " + type);
 		}
 		
-		for(DungeonRoom room : other.singles.keySet()){
-			this.singles.put(room, other.singles.get(room));
+		DungeonRoom toAdd = DungeonRoom.valueOf(entry.get("type").getAsString());
+		
+		if(mode.equals("single")){
+			this.addSingle(toAdd);
 		}
 		
-		for(DungeonRoom room : other.multiple.keySet()){
-			this.multiple.put(room, other.multiple.get(room));
+		if(mode.equals("random")){
+			this.addRandom(toAdd, weight);
 		}
-		
 	}
 	
 	public IDungeonRoom get(Random rand){

@@ -7,6 +7,7 @@ import java.util.Random;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import greymerk.roguelike.config.RogueConfig;
@@ -19,6 +20,7 @@ import greymerk.roguelike.treasure.loot.LootRuleManager;
 import greymerk.roguelike.util.WeightedChoice;
 import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.blocks.BlockType;
+import net.minecraft.init.Bootstrap;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
@@ -27,6 +29,7 @@ public class DungeonSettingsTest {
 	@Before
 	public void before(){
 		RogueConfig.testing = true;
+		Bootstrap.register();
 	}
 	
 	@Test
@@ -60,14 +63,15 @@ public class DungeonSettingsTest {
 		JsonObject json = new JsonObject();
 		json.addProperty("name", "test");
 		
-		JsonObject levels = new JsonObject();
-		json.add("levels", levels);
-		
-		JsonObject allLevels = new JsonObject();
-		levels.add("all", allLevels);
-		
 		JsonObject theme = new JsonObject();
-		allLevels.add("theme", theme);
+		
+		
+		JsonArray levels = new JsonArray();
+		for(int i = 0; i < 5; ++i){
+			levels.add(i);	
+		}
+		
+		theme.add("level", levels);
 		
 		JsonObject primary = new JsonObject();
 		theme.add("primary", primary);
@@ -76,6 +80,10 @@ public class DungeonSettingsTest {
 		primary.add("floor", floor);
 		floor.addProperty("name", "minecraft:dirt");
 		
+		JsonArray themes = new JsonArray();
+		themes.add(theme);
+		json.add("themes", themes);
+				
 		setting = new DungeonSettings(json);
 		
 		LevelSettings level = setting.getLevelSettings(0);

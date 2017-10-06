@@ -28,8 +28,10 @@ public class SettingsResolver {
 		if(builtin == null && custom == null) return null;
 		
 		DungeonSettings exclusive = (custom != null) ? custom : builtin;
-				
-		return applyInclusives(exclusive, editor, rand, pos);
+		
+		DungeonSettings complete = applyInclusives(exclusive, editor, rand, pos); 
+		
+		return complete;
 	}
 	
 	public ISettings getWithName(String name, IWorldEditor editor, Random rand, Coord pos) throws Exception{

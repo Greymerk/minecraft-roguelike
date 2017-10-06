@@ -51,10 +51,14 @@ public class SecretFactory{
 		this();
 		for(JsonElement e : data){
 			JsonObject room = e.getAsJsonObject();
-			String type = room.get("type").getAsString();
-			int num = room.get("num").getAsInt();
-			this.addRoom(DungeonRoom.valueOf(type), num);
+			this.add(room);
 		}
+	}
+	
+	public void add(JsonObject room){
+		String type = room.get("type").getAsString();
+		int count = room.get("count").getAsInt();
+		this.addRoom(DungeonRoom.valueOf(type), count);
 	}
 	
 	public void addRoom(DungeonRoom type){

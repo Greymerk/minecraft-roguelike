@@ -22,6 +22,10 @@ public class SegmentGenerator implements ISegmentGenerator{
 	protected Segment arch;
 	protected WeightedRandomizer<Segment> segments;
 	
+	public SegmentGenerator(){
+		this(Segment.ARCH);
+	}
+	
 	public SegmentGenerator(Segment arch){
 		this.segments = new WeightedRandomizer<Segment>();
 		this.arch = arch;
@@ -40,11 +44,24 @@ public class SegmentGenerator implements ISegmentGenerator{
 		JsonArray segmentList = json.get("segments").getAsJsonArray();
 		for(JsonElement e : segmentList){
 			JsonObject segData = e.getAsJsonObject();
-			String segType = segData.get("type").getAsString();
-			int weight = segData.get("weight").getAsInt();
-			Segment type = Segment.valueOf(segType);
-			this.segments.add(new WeightedChoice<Segment>(type, weight));
+			this.add(segData);
 		}
+	}
+	
+	public void add(JsonObject entry){
+
+		String segType = entry.get("type").getAsString();
+		Segment type = Segment.valueOf(segType);
+		
+		if(entry.has("arch")){
+			boolean a = entry.get("arch").getAsBoolean();
+			if(a) this.arch = type;
+			return;
+		}
+		
+		int weight = entry.has("weight") ? entry.get("weight").getAsInt() : 1; 
+		
+		this.segments.add(new WeightedChoice<Segment>(type, weight));
 	}
 	
 	public void add(Segment toAdd, int weight){

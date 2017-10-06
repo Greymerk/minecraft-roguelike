@@ -146,6 +146,7 @@ public class DungeonGenerator {
 		return new Coord(this.origin);
 	}
 	
+	@SuppressWarnings("unused")
 	private void renderWireframe(IWorldEditor editor, Random rand){
 		for(IDungeonLevel level : this.levels){
 			LevelLayout layout = level.getLayout();
