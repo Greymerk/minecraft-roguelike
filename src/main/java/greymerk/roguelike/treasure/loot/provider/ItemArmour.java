@@ -2,6 +2,8 @@ package greymerk.roguelike.treasure.loot.provider;
 
 import java.util.Random;
 
+import com.google.gson.JsonObject;
+
 import greymerk.roguelike.treasure.loot.Enchant;
 import greymerk.roguelike.treasure.loot.Equipment;
 import greymerk.roguelike.treasure.loot.Quality;
@@ -12,15 +14,51 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public class ItemArmour extends ItemBase {
 
+	private Equipment type;
+	private boolean enchant;
+	private Quality quality;
+	
 	public ItemArmour(int weight, int level) {
 		super(weight, level);
 	}
 	
+	public ItemArmour(JsonObject data, int weight) throws Exception{
+		super(weight);
+		
+		this.enchant = data.has("ench") ? data.get("ench").getAsBoolean() : true;
+		if(!data.has("level")) throw new Exception("Armour requires a level");
+		this.level = data.get("level").getAsInt();
+		
+		if(data.has("equipment")){
+			try{
+				this.type = Equipment.valueOf(data.get("equipment").getAsString().toUpperCase());
+			} catch(Exception e) {
+				throw new Exception("No such Equipment as: " + data.get("equipment").getAsString());
+			}	
+		}
+		
+		if(data.has("quality")){
+			this.level = data.get("level").getAsInt();
+			
+			try{
+				this.quality = Quality.valueOf(data.get("quality").getAsString().toUpperCase());
+			} catch(Exception e){
+				throw new Exception("No such Quality as: " + data.get("quality").getAsString());
+			}	
+		}
+	}
+	
 	@Override
 	public ItemStack getLootItem(Random rand, int level) {
+		if(type != null || quality != null) return get(rand, level, quality, type, enchant);
 		return getRandom(rand, level, true);
 	}
 
+	public static ItemStack get(Random rand, int level, Quality quality, Equipment type, boolean enchant){
+		ItemStack tool = Equipment.get(type, quality == null ? Quality.get(level) : quality);
+		return enchant ? Enchant.enchantItem(rand, tool, Enchant.getLevel(rand, level)) : tool;
+	}
+	
 	public static ItemStack getRandom(Random rand, int level, boolean enchant){
 		return getRandom(rand, level,
 				Slot.getSlotByNumber(rand.nextInt(4) + 1),

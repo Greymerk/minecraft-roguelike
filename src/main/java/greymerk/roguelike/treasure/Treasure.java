@@ -15,7 +15,7 @@ import net.minecraft.init.Blocks;
 public enum Treasure {
 
 	ARMOUR, WEAPONS, BLOCKS, ENCHANTING, FOOD, ORE, POTIONS,
-	STARTER, TOOLS, SUPPLIES, SMITH, MUSIC, REWARD, EMPTY;
+	STARTER, TOOLS, SUPPLIES, SMITH, MUSIC, REWARD, EMPTY, BREWING;
 	
 	private static final List<Treasure> common = new ArrayList<Treasure>(Arrays.asList(TOOLS, ARMOUR, WEAPONS));
 

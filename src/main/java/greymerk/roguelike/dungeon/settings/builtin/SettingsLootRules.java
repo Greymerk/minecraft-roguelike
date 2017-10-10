@@ -39,6 +39,7 @@ public class SettingsLootRules extends DungeonSettings{
 			lootRules.add(Treasure.FOOD, loot.get(Loot.FOOD, i),  i, true, 8);
 			lootRules.add(Treasure.ORE, loot.get(Loot.ORE, i),  i, true, 5);
 			lootRules.add(Treasure.POTIONS, loot.get(Loot.POTION, i),  i, true, 6);
+			lootRules.add(Treasure.BREWING, loot.get(Loot.BREWING, i),  i, true, 8);
 			lootRules.add(Treasure.TOOLS, loot.get(Loot.ORE, i),  i, true, 1);
 			lootRules.add(Treasure.TOOLS, loot.get(Loot.TOOL, i),  i, true, 1);
 			lootRules.add(Treasure.TOOLS, loot.get(Loot.BLOCK, i),  i, true, 1);

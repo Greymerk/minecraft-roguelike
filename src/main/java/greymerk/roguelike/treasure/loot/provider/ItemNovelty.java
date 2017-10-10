@@ -4,6 +4,8 @@ package greymerk.roguelike.treasure.loot.provider;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.google.gson.JsonObject;
+
 import greymerk.roguelike.treasure.loot.Enchant;
 import greymerk.roguelike.treasure.loot.Loot;
 import greymerk.roguelike.util.IWeighted;
@@ -57,8 +59,16 @@ public enum ItemNovelty {
 		return getItem(names.get(name));
 	}
 	
-	public static IWeighted<ItemStack> get(ItemNovelty choice){
-		return new WeightedChoice<ItemStack>(getItem(choice), 0);
+	public static IWeighted<ItemStack> get(JsonObject data, int weight) throws Exception{
+		if(!data.has("name")) throw new Exception("Novelty item requires a name");
+		String name = data.get("name").getAsString();
+		ItemStack item = getItemByName(name);
+		if(item == null) throw new Exception("No such novelty name: " + name);
+		return new WeightedChoice<ItemStack>(item, weight);
+	}
+	
+	public static IWeighted<ItemStack> get(ItemNovelty choice, int weight){
+		return new WeightedChoice<ItemStack>(getItem(choice), weight);
 	}
 	
 	public static ItemStack getItem(ItemNovelty choice){

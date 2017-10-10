@@ -2,9 +2,14 @@ package greymerk.roguelike.treasure.loot;
 
 import java.util.Random;
 
+import com.google.gson.JsonObject;
+
+import greymerk.roguelike.util.IWeighted;
+import greymerk.roguelike.util.WeightedChoice;
 import net.minecraft.init.Items;
 import net.minecraft.init.PotionTypes;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.PotionType;
 import net.minecraft.potion.PotionUtils;
 
 public enum Potion {
@@ -17,14 +22,25 @@ public enum Potion {
 	}
 	
 	public static ItemStack getSpecific(Random rand, Potion effect){
-		return getSpecific(PotionType.REGULAR, effect, rand.nextBoolean(), rand.nextBoolean());
+		return getSpecific(PotionForm.REGULAR, effect, rand.nextBoolean(), rand.nextBoolean());
 	}
 	
-	public static ItemStack getSpecific(Random rand, PotionType type, Potion effect){
+	public static ItemStack getSpecific(Random rand, PotionForm type, Potion effect){
 		return getSpecific(type, effect, rand.nextBoolean(), rand.nextBoolean());
 	}
-
-	public static ItemStack getSpecific(PotionType type, Potion effect, boolean upgrade, boolean extend){
+	
+	public static IWeighted<ItemStack> get(JsonObject data, int weight) throws Exception{
+		if(!data.has("name")) throw new Exception("Potion missing name field");
+		String nameString = data.get("name").getAsString();
+		PotionType type = net.minecraft.potion.PotionType.getPotionTypeForName(nameString);
+		ItemStack item = !data.has("form") ? new ItemStack(Items.POTIONITEM)
+				: data.get("form").getAsString().toLowerCase().equals("splash") ? new ItemStack(Items.SPLASH_POTION)
+				: data.get("form").getAsString().toLowerCase().equals("lingering") ? new ItemStack(Items.LINGERING_POTION)
+				: new ItemStack(Items.POTIONITEM);
+		return new WeightedChoice<ItemStack>(PotionUtils.addPotionToItemStack(item, type), weight);
+	}
+	
+	public static ItemStack getSpecific(PotionForm type, Potion effect, boolean upgrade, boolean extend){
 		
 		ItemStack potion;
 		
@@ -35,12 +51,12 @@ public enum Potion {
 		default: potion = new ItemStack(Items.POTIONITEM); break;
 		}
 		
-		net.minecraft.potion.PotionType data = getEffect(effect, upgrade, extend);
+		PotionType data = getEffect(effect, upgrade, extend);
 		
 		return PotionUtils.addPotionToItemStack(potion, data);
 	}
 	
-	public static net.minecraft.potion.PotionType getEffect(Potion effect, boolean upgrade, boolean extend){
+	public static PotionType getEffect(Potion effect, boolean upgrade, boolean extend){
 		
 		if(effect == null) return PotionTypes.AWKWARD;
 		

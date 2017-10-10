@@ -94,17 +94,17 @@ public class SegmentGenerator implements ISegmentGenerator{
 		int z = pos.getZ();
 		
 		if((dir == Cardinal.NORTH || dir == Cardinal.SOUTH) && z % 3 == 0){
-			if(z % 6 == 0){
-				return Segment.getSegment(arch);
-			}
-			return Segment.getSegment(this.segments.get(rand));
+			if(z % 6 == 0) return Segment.getSegment(arch);
+			return this.segments.isEmpty() 
+				? Segment.getSegment(Segment.WALL) 
+				: Segment.getSegment(this.segments.get(rand));
 		}
 		
 		if((dir == Cardinal.WEST || dir == Cardinal.EAST) && x % 3 == 0){
-			if(x % 6 == 0){
-				return Segment.getSegment(arch);
-			}
-			return Segment.getSegment(this.segments.get(rand));
+			if(x % 6 == 0) return Segment.getSegment(arch);
+			return this.segments.isEmpty() 
+				? Segment.getSegment(Segment.WALL)
+				: Segment.getSegment(this.segments.get(rand));
 		}
 		
 		return null;

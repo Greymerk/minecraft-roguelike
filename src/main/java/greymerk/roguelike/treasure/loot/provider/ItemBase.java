@@ -11,6 +11,11 @@ public abstract class ItemBase implements IWeighted<ItemStack> {
 	private int weight;
 	int level;
 	
+	public ItemBase(int weight){
+		this.weight = weight;
+		this.level = 0;
+	}
+	
 	public ItemBase(int weight, int level){
 		this.weight = weight;
 		this.level = level;

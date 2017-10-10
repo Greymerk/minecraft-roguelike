@@ -2,9 +2,28 @@ package greymerk.roguelike.treasure.loot;
 
 import java.util.Random;
 
+import com.google.gson.JsonObject;
+
 import greymerk.roguelike.treasure.loot.provider.ItemArmour;
+import greymerk.roguelike.treasure.loot.provider.ItemBlock;
+import greymerk.roguelike.treasure.loot.provider.ItemBrewing;
+import greymerk.roguelike.treasure.loot.provider.ItemEnchBonus;
+import greymerk.roguelike.treasure.loot.provider.ItemEnchBook;
+import greymerk.roguelike.treasure.loot.provider.ItemFood;
+import greymerk.roguelike.treasure.loot.provider.ItemJunk;
+import greymerk.roguelike.treasure.loot.provider.ItemMixture;
+import greymerk.roguelike.treasure.loot.provider.ItemNovelty;
+import greymerk.roguelike.treasure.loot.provider.ItemOre;
+import greymerk.roguelike.treasure.loot.provider.ItemPotion;
+import greymerk.roguelike.treasure.loot.provider.ItemRecord;
+import greymerk.roguelike.treasure.loot.provider.ItemSmithy;
+import greymerk.roguelike.treasure.loot.provider.ItemSpecialty;
+import greymerk.roguelike.treasure.loot.provider.ItemSupply;
+import greymerk.roguelike.treasure.loot.provider.ItemTool;
 import greymerk.roguelike.treasure.loot.provider.ItemWeapon;
+import greymerk.roguelike.util.IWeighted;
 import greymerk.roguelike.util.TextFormat;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -14,7 +33,7 @@ import net.minecraft.nbt.NBTTagString;
 public enum Loot {
 	
 	WEAPON, ARMOUR, BLOCK, JUNK, ORE, TOOL, POTION, FOOD, ENCHANTBOOK,
-	ENCHANTBONUS, SUPPLY, MUSIC, SMITHY, SPECIAL, REWARD, STARTER;
+	ENCHANTBONUS, SUPPLY, MUSIC, SMITHY, SPECIAL, REWARD, BREWING;
 
 	public static ILoot getLoot(){
 		
@@ -24,6 +43,47 @@ public enum Loot {
 		}
 		
 		return loot;
+	}
+	
+	public static IWeighted<ItemStack> get(JsonObject data, int weight) throws Exception{
+		
+		if(!data.has("type")) return new WeightedRandomLoot(data, weight);
+		
+		String type = data.get("type").getAsString().toLowerCase();
+		
+		switch(type){
+		case "potion": return Potion.get(data, weight);
+		case "mixture" : return new ItemMixture(data, weight);
+		case "weapon": return new ItemWeapon(data, weight);
+		case "specialty": return new ItemSpecialty(data, weight);
+		case "novelty" : return ItemNovelty.get(data, weight);
+		case "tool" : return new ItemTool(data, weight);
+		case "armour" : return new ItemArmour(data, weight);
+		default: throw new Exception("No such loot type as: " + type);
+		}
+	}
+	
+	public static IWeighted<ItemStack> getProvider(Loot type, int level){
+		switch(type){
+		case WEAPON: return new ItemWeapon(0, level);
+		case ARMOUR: return new ItemArmour(0, level);
+		case BLOCK: return new ItemBlock(0, level);
+		case JUNK: return new ItemJunk(0, level);
+		case ORE: return new ItemOre(0, level);
+		case TOOL: return new ItemTool(0, level);
+		case POTION: return new ItemPotion(0, level);
+		case BREWING: return new ItemBrewing(0, level);
+		case FOOD: return new ItemFood(0, level);
+		case ENCHANTBOOK: return new ItemEnchBook(0, level);
+		case ENCHANTBONUS: return new ItemEnchBonus(0, level);
+		case SUPPLY: return new ItemSupply(0, level);
+		case MUSIC: return new ItemRecord(0, level);
+		case SMITHY: return new ItemSmithy(0, level);
+		case SPECIAL: return new ItemSpecialty(0, level);
+		case REWARD:
+		}
+		
+		return new WeightedRandomLoot(Items.STICK, 0, 1);
 	}
 	
 	public static ItemStack getEquipmentBySlot(Random rand, EntityEquipmentSlot slot, int level, boolean enchant){

@@ -2,6 +2,8 @@ package greymerk.roguelike.treasure.loot.provider;
 
 import java.util.Random;
 
+import com.google.gson.JsonObject;
+
 import greymerk.roguelike.treasure.loot.Enchant;
 import greymerk.roguelike.treasure.loot.Equipment;
 import greymerk.roguelike.treasure.loot.Loot;
@@ -17,6 +19,26 @@ public class ItemSpecialty extends ItemBase {
 	
 	public ItemSpecialty(int weight, int level){
 		super(weight, level);
+	}
+	
+	public ItemSpecialty(JsonObject data, int weight) throws Exception{
+		super(weight);
+		if(!data.has("level")) throw new Exception("Item requires a level");
+		this.level = data.get("level").getAsInt();
+		
+		if(!data.has("quality")) throw new Exception("Specialty item requires a quality");
+		try{
+			this.quality = Quality.valueOf(data.get("quality").getAsString().toUpperCase());
+		} catch(Exception e){
+			throw new Exception("No such Quality as: " + data.get("quality").getAsString());
+		}
+		
+		if(!data.has("equipment")) throw new Exception("Specialty item requires equipment field");
+		try{
+			this.type = Equipment.valueOf(data.get("equipment").getAsString().toUpperCase());
+		} catch(Exception e) {
+			throw new Exception("No such Equipment as: " + data.get("equipment").getAsString());
+		}
 	}
 	
 	public ItemSpecialty(int weight, int level, Equipment type, Quality q){

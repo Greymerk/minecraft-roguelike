@@ -1,6 +1,6 @@
 package greymerk.roguelike.treasure.loot;
 
-public enum PotionType {
+public enum PotionForm {
 
 	REGULAR, SPLASH, LINGERING;
 	

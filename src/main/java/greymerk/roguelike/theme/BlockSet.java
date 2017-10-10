@@ -8,6 +8,7 @@ import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.MetaStair;
 import greymerk.roguelike.worldgen.blocks.BlockType;
+import greymerk.roguelike.worldgen.blocks.StairType;
 import greymerk.roguelike.worldgen.blocks.door.Door;
 import greymerk.roguelike.worldgen.blocks.door.DoorType;
 import greymerk.roguelike.worldgen.blocks.door.IDoor;
@@ -21,6 +22,10 @@ public class BlockSet implements IBlockSet {
 	private IDoor door;
 	private IBlockFactory lightblock;
 	private IBlockFactory liquid;
+	
+	public BlockSet(){
+		
+	}
 	
 	public BlockSet(IBlockFactory floor, IBlockFactory walls, IStair stair, IBlockFactory pillar,
 					IDoor door, IBlockFactory lightblock, IBlockFactory liquid){
@@ -128,36 +133,36 @@ public class BlockSet implements IBlockSet {
 	
 	@Override
 	public IBlockFactory getWall() {
-		return walls;
+		return walls != null ? walls : BlockType.get(BlockType.STONE_BRICK);
 	}
 
 	@Override
 	public IStair getStair() {
-		return stair;
+		return stair != null ? this.stair : new MetaStair(StairType.STONEBRICK);
 	}
 
 	@Override
 	public IBlockFactory getPillar() {
-		return pillar;
+		return pillar != null ? this.pillar : this.getWall();
 	}
 
 	@Override
 	public IBlockFactory getFloor() {
-		return this.floor;
+		return this.floor != null ? this.floor : this.getWall();
 	}
 
 	@Override
 	public IDoor getDoor() {
-		return this.door;
+		return this.door != null ? this.door : new Door(DoorType.OAK);
 	}
 
 	@Override
 	public IBlockFactory getLightBlock() {
-		return this.lightblock;
+		return this.lightblock != null ? this.lightblock : BlockType.get(BlockType.GLOWSTONE);
 	}
 
 	@Override
 	public IBlockFactory getLiquid() {
-		return this.liquid;
+		return this.liquid != null ? this.liquid : BlockType.get(BlockType.WATER_FLOWING);
 	}
 }

@@ -19,7 +19,7 @@ public enum PotionMixture {
 		ItemStack potion;
 		switch(type){
 		case TEQUILA:
-			potion = Potion.getSpecific(PotionType.REGULAR, null, false, false);
+			potion = Potion.getSpecific(PotionForm.REGULAR, null, false, false);
 			PotionEffect.addCustomEffect(potion, PotionEffect.STRENGTH, 3, 30 + rand.nextInt(60));
 			PotionEffect.addCustomEffect(potion, PotionEffect.FATIGUE, 1, 30 + rand.nextInt(60));
 			Loot.setItemName(potion, "Tequila");
@@ -27,7 +27,7 @@ public enum PotionMixture {
 			setColor(potion, DyeColor.RGBToColor(255, 232, 196));
 			return potion;
 		case LAUDANUM:
-			potion = Potion.getSpecific(PotionType.REGULAR, null, false, false);
+			potion = Potion.getSpecific(PotionForm.REGULAR, null, false, false);
 			PotionEffect.addCustomEffect(potion, PotionEffect.REGEN, 3, 8);
 			PotionEffect.addCustomEffect(potion, PotionEffect.WEAKNESS, 2, 5);
 			PotionEffect.addCustomEffect(potion, PotionEffect.SLOWNESS, 2, 5);
@@ -39,7 +39,7 @@ public enum PotionMixture {
 			setColor(potion, DyeColor.RGBToColor(150, 50, 0));
 			return potion;
 		case MOONSHINE:
-			potion = Potion.getSpecific(PotionType.REGULAR, null, false, false);
+			potion = Potion.getSpecific(PotionForm.REGULAR, null, false, false);
 			PotionEffect.addCustomEffect(potion, PotionEffect.DAMAGE, 1, 1);
 			PotionEffect.addCustomEffect(potion, PotionEffect.BLINDNESS, 1, 30 + rand.nextInt(60));
 			PotionEffect.addCustomEffect(potion, PotionEffect.RESISTANCE, 2, 30 + rand.nextInt(30));
@@ -48,7 +48,7 @@ public enum PotionMixture {
 			setColor(potion, DyeColor.RGBToColor(250, 240, 230));
 			return potion;
 		case ABSINTHE:
-			potion = Potion.getSpecific(PotionType.REGULAR, null, false, false);
+			potion = Potion.getSpecific(PotionForm.REGULAR, null, false, false);
 			PotionEffect.addCustomEffect(potion, PotionEffect.POISON, 1, 3);
 			PotionEffect.addCustomEffect(potion, PotionEffect.NIGHTVISION, 1, 120);
 			PotionEffect.addCustomEffect(potion, PotionEffect.JUMP, 3, 120);
@@ -59,7 +59,7 @@ public enum PotionMixture {
 		case VILE:
 			potion = Potion.getSpecific(
 					rand,
-					PotionType.values()[rand.nextInt(PotionType.values().length)],
+					PotionForm.values()[rand.nextInt(PotionForm.values().length)],
 					Potion.values()[rand.nextInt(Potion.values().length)]
 					);
 			addRandomEffects(rand, potion, 2 + rand.nextInt(2));
@@ -67,7 +67,7 @@ public enum PotionMixture {
 			ItemHideFlags.set(ItemHideFlags.EFFECTS, potion);
 			return potion;
 		case RAGE:
-			potion = Potion.getSpecific(PotionType.REGULAR, null, false, false);
+			potion = Potion.getSpecific(PotionForm.REGULAR, null, false, false);
 			PotionEffect.addCustomEffect(potion, PotionEffect.STRENGTH, 3, 20);
 			PotionEffect.addCustomEffect(potion, PotionEffect.BLINDNESS, 1, 10);
 			PotionEffect.addCustomEffect(potion, PotionEffect.WITHER, 1, 3);
@@ -77,7 +77,7 @@ public enum PotionMixture {
 			setColor(potion, DyeColor.RGBToColor(255, 0, 0));
 			return potion;
 		case STAMINA:
-			potion = Potion.getSpecific(PotionType.REGULAR, null, false, false);
+			potion = Potion.getSpecific(PotionForm.REGULAR, null, false, false);
 			PotionEffect.addCustomEffect(potion, PotionEffect.SATURATION, 10, 1);
 			PotionEffect.addCustomEffect(potion, PotionEffect.SPEED, 2, 120);
 			PotionEffect.addCustomEffect(potion, PotionEffect.HASTE, 2, 120);
@@ -88,7 +88,7 @@ public enum PotionMixture {
 			setColor(potion, DyeColor.RGBToColor(230, 50, 20));
 			return potion;
 		case STOUT:
-			potion = Potion.getSpecific(PotionType.REGULAR, null, false, false);
+			potion = Potion.getSpecific(PotionForm.REGULAR, null, false, false);
 			PotionEffect.addCustomEffect(potion, PotionEffect.REGEN, 1, 5);
 			PotionEffect.addCustomEffect(potion, PotionEffect.SATURATION, 2, 1);
 			PotionEffect.addCustomEffect(potion, PotionEffect.HEALTHBOOST, 2, 120);
@@ -99,7 +99,7 @@ public enum PotionMixture {
 			setColor(potion, DyeColor.RGBToColor(50, 40, 20));
 			return potion;
 		case NECTAR:
-			potion = Potion.getSpecific(PotionType.REGULAR, null, false, false);
+			potion = Potion.getSpecific(PotionForm.REGULAR, null, false, false);
 			PotionEffect.addCustomEffect(potion, PotionEffect.ABSORPTION, 10, 20);
 			PotionEffect.addCustomEffect(potion, PotionEffect.RESISTANCE, 3, 20);
 			PotionEffect.addCustomEffect(potion, PotionEffect.HEALTH, 2, 1);
@@ -109,7 +109,7 @@ public enum PotionMixture {
 			setColor(potion, DyeColor.RGBToColor(250, 150, 250));
 			return potion;
 		case COFFEE:
-			potion = Potion.getSpecific(PotionType.REGULAR, null, false, false);
+			potion = Potion.getSpecific(PotionForm.REGULAR, null, false, false);
 			PotionEffect.addCustomEffect(potion, PotionEffect.HASTE, 2, 600);
 			PotionEffect.addCustomEffect(potion, PotionEffect.SPEED, 1, 600);
 			Loot.setItemName(potion, "Coffee");
@@ -118,7 +118,7 @@ public enum PotionMixture {
 			setColor(potion, DyeColor.RGBToColor(20, 20, 10));
 			return potion;
 		case AURA:
-			potion = Potion.getSpecific(PotionType.REGULAR, null, false, false);
+			potion = Potion.getSpecific(PotionForm.REGULAR, null, false, false);
 			PotionEffect.addCustomEffect(potion, PotionEffect.GLOWING, 1, 20*60);
 			Loot.setItemName(potion, "Luma");
 			Loot.setItemLore(potion, "A glowstone extract.");

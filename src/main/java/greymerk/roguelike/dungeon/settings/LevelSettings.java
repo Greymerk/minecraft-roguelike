@@ -112,12 +112,7 @@ public class LevelSettings {
 	}
 	
 	public LevelGenerator getGenerator(){
-		
-		if(this.generator == null){
-			return LevelGenerator.CLASSIC;
-		}
-		
-		return this.generator;
+		return this.generator != null ? this.generator : LevelGenerator.CLASSIC;
 	}
 	
 	public void setGenerator(LevelGenerator type){
@@ -154,7 +149,7 @@ public class LevelSettings {
 	}
 	
 	public IDungeonFactory getRooms(){
-		return rooms;
+		return rooms != null ? rooms : new DungeonFactory();
 	}
 	
 	public void setRooms(DungeonFactory rooms){
@@ -162,7 +157,7 @@ public class LevelSettings {
 	}
 	
 	public SecretFactory getSecrets(){
-		return secrets;
+		return secrets != null ? secrets : new SecretFactory();
 	}
 	
 	public void setSecrets(SecretFactory secrets){
@@ -170,7 +165,7 @@ public class LevelSettings {
 	}
 	
 	public ISegmentGenerator getSegments(){
-		return segments;
+		return segments != null ? segments : new SegmentGenerator();
 	}
 	
 	public void setSegments(SegmentGenerator segments){
@@ -178,7 +173,7 @@ public class LevelSettings {
 	}
 	
 	public ITheme getTheme(){
-		return theme;
+		return theme != null ? theme : Theme.getTheme(Theme.STONE);
 	}
 	
 	public void setTheme(ITheme theme){

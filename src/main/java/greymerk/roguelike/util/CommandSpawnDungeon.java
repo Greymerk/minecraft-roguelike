@@ -308,6 +308,7 @@ public class CommandSpawnDungeon extends CommandBase
 				settings = Dungeon.settingsResolver.getSettings(editor, rand, new Coord(x, 0, z));
 			} catch(Exception e){
 				sender.sendMessage(new TextComponentString(TextFormat.apply("Failure: " + e.getMessage(), TextFormat.RED)));
+				e.printStackTrace();
 			}
 			
 			if(settings != null){

@@ -139,7 +139,7 @@ public class DungeonLab extends DungeonBase {
 			BrewingStand.add(editor, bs, BrewingStand.FUEL, new ItemStack(Items.BLAZE_POWDER));
 		}
 		try {
-			Treasure.generate(editor, rand, new Coord(x, y + 1, z + 4), Treasure.POTIONS, Dungeon.getLevel(y));
+			Treasure.generate(editor, rand, new Coord(x, y + 1, z + 4), Treasure.BREWING, Dungeon.getLevel(y));
 		} catch (ChestPlacementException cpe){
 			// do nothing
 		}

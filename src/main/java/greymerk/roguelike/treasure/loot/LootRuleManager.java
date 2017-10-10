@@ -83,9 +83,7 @@ public class LootRuleManager {
 		
 		if(lootItem.get("data").isJsonObject()){
 			JsonObject data = lootItem.get("data").getAsJsonObject();
-			WeightedRandomLoot item = null;
-			item = new WeightedRandomLoot(data, weight);
-			return item;
+			return Loot.get(data, weight);
 		}
 
 		JsonArray data = lootItem.get("data").getAsJsonArray();

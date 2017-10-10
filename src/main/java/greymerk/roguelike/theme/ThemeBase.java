@@ -19,12 +19,12 @@ public class ThemeBase implements ITheme {
 
 	@Override
 	public IBlockSet getPrimary() {
-		return this.primary;
+		return this.primary != null ? primary : new BlockSet();
 	}
 
 	@Override
 	public IBlockSet getSecondary() {
-		return this.secondary;
+		return this.secondary != null ? secondary : primary;
 	}
 	
 }

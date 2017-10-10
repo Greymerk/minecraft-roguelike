@@ -80,6 +80,24 @@ public class DungeonSettings implements ISettings{
 			this.levels.put(i, setting);
 		}
 		
+		if(root.has("num_rooms")){
+			JsonArray arr = root.get("num_rooms").getAsJsonArray();
+			for(int i = 0; i < arr.size(); ++i){
+				JsonElement e = arr.get(i);
+				LevelSettings setting = this.levels.get(i);
+				setting.setNumRooms(e.getAsInt());
+			}
+		}
+		
+		if(root.has("scatter")){
+			JsonArray arr = root.get("scatter").getAsJsonArray();
+			for(int i = 0; i < arr.size(); ++i){
+				JsonElement e = arr.get(i);
+				LevelSettings setting = this.levels.get(i);
+				setting.setScatter(e.getAsInt());
+			}
+		}
+		
 		// parse level layouts
 		if(root.has("layouts")){
 			JsonArray layouts = root.get("layouts").getAsJsonArray();
@@ -254,7 +272,7 @@ public class DungeonSettings implements ISettings{
 	}
 	
 	public List<SettingIdentifier> getInherits(){
-		return this.inherit;
+		return this.inherit != null ? this.inherit : new ArrayList<SettingIdentifier>();
 	}
 	
 	public String getNameSpace(){
@@ -282,7 +300,7 @@ public class DungeonSettings implements ISettings{
 	
 	@Override
 	public TowerSettings getTower(){
-		if(this.towerSettings == null) return new TowerSettings(Tower.ROGUE, Theme.getTheme(Theme.PURPUR));
+		if(this.towerSettings == null) return new TowerSettings(Tower.ROGUE, Theme.getTheme(Theme.STONE));
 		
 		return this.towerSettings;
 	}
