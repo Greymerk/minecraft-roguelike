@@ -87,6 +87,10 @@ public class TreasureManager {
 	}
 	
 	public List<ITreasureChest> getChests(){
-		return this.chests;
+		ArrayList<ITreasureChest> c = new ArrayList<ITreasureChest>();
+		for(ITreasureChest chest : this.chests){
+			if(chest.getType() != Treasure.EMPTY) c.add(chest);
+		}
+		return c;
 	}
 }

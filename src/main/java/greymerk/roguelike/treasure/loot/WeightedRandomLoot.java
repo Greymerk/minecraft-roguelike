@@ -6,10 +6,10 @@ import java.util.Random;
 import com.google.gson.JsonObject;
 
 import greymerk.roguelike.util.IWeighted;
-import greymerk.roguelike.util.JsonNBT;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.JsonToNBT;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 
@@ -82,10 +82,8 @@ public class WeightedRandomLoot implements Comparable<WeightedRandomLoot>, IWeig
 			max = 1;
 		}
 		
-		if(json.has("nbt")){
-			JsonObject nbtdata = json.get("nbt").getAsJsonObject();
-			this.nbt = JsonNBT.jsonToCompound(nbtdata);
-		}
+		if(json.has("nbt")) this.nbt = JsonToNBT.getTagFromJson(json.get("nbt").getAsString());
+		
 	}
 
 	public WeightedRandomLoot(Block block, int i) {

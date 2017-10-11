@@ -5,6 +5,7 @@ import java.util.Random;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IWorldEditor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 
 public interface ITreasureChest {
 		
@@ -13,6 +14,8 @@ public interface ITreasureChest {
 	public boolean setSlot(int slot, ItemStack item);
 	
 	public boolean setRandomEmptySlot(ItemStack item);
+	
+	public void setLootTable(ResourceLocation table);
 	
 	public boolean isEmptySlot(int slot);
 	

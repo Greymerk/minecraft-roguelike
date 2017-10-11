@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 
 import com.google.gson.JsonArray;
@@ -18,7 +19,9 @@ import greymerk.roguelike.dungeon.segment.SegmentGenerator;
 import greymerk.roguelike.dungeon.towers.Tower;
 import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.theme.Theme;
+import greymerk.roguelike.treasure.TreasureManager;
 import greymerk.roguelike.treasure.loot.LootRuleManager;
+import greymerk.roguelike.treasure.loot.LootTableRule;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IWorldEditor;
 
@@ -33,6 +36,7 @@ public class DungeonSettings implements ISettings{
 	protected Map<Integer, LevelSettings> levels;
 	protected SpawnCriteria criteria;
 	protected LootRuleManager lootRules;
+	protected List<LootTableRule> lootTables;
 	protected Set<SettingsType> overrides;
 	
 	public DungeonSettings(){
@@ -40,6 +44,7 @@ public class DungeonSettings implements ISettings{
 		this.levels = new HashMap<Integer, LevelSettings>();
 		this.exclusive = false;
 		this.lootRules = new LootRuleManager();
+		this.lootTables = new ArrayList<LootTableRule>();
 		this.overrides = new HashSet<SettingsType>();
 	}
 	
@@ -78,6 +83,13 @@ public class DungeonSettings implements ISettings{
 		for(int i = 0; i < MAX_NUM_LEVELS; ++i){
 			LevelSettings setting = new LevelSettings();
 			this.levels.put(i, setting);
+		}
+		
+		if(root.has("loot_tables")){
+			JsonArray arr = root.get("loot_tables").getAsJsonArray();
+			for(JsonElement e : arr){
+				this.lootTables.add(new LootTableRule(e.getAsJsonObject()));
+			}
 		}
 		
 		if(root.has("num_rooms")){
@@ -212,6 +224,9 @@ public class DungeonSettings implements ISettings{
 		}
 		this.lootRules.add(other.lootRules);
 		
+		this.lootTables.addAll(base.lootTables);
+		this.lootTables.addAll(other.lootTables);
+		
 		for(SettingIdentifier i : other.inherit){
 			this.inherit.add(i);
 		}
@@ -236,6 +251,7 @@ public class DungeonSettings implements ISettings{
 		
 		this.towerSettings = toCopy.towerSettings != null ? new TowerSettings(toCopy.towerSettings) : null;
 		this.lootRules = toCopy.lootRules;
+		this.lootTables.addAll(toCopy.lootTables);
 		
 		for(SettingIdentifier i : toCopy.inherit){
 			this.inherit.add(i);
@@ -311,11 +327,6 @@ public class DungeonSettings implements ISettings{
 	}
 
 	@Override
-	public LootRuleManager getLootRules() {
-		return this.lootRules;
-	}
-
-	@Override
 	public Set<SettingsType> getOverrides() {
 		return this.overrides;
 	}
@@ -324,5 +335,19 @@ public class DungeonSettings implements ISettings{
 	public boolean isExclusive() {
 		return this.exclusive;
 	}
+
+	@Override
+	public void processLoot(Random rand, TreasureManager treasure) {
+		this.lootRules.process(rand, treasure);
+		
+		if(!this.lootTables.isEmpty()){
+			for(LootTableRule table : this.lootTables){
+				table.process(treasure);
+			}
+		}
+	}
 	
+	public LootRuleManager getLootRules(){
+		return this.lootRules;
+	}
 }

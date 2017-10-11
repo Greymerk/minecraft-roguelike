@@ -76,6 +76,7 @@ public class WorldEditor implements IWorldEditor{
 	public long getSeed(){
 		return this.world.getSeed();
 	}
+
 	
 	@Override
 	public Biome getBiome(Coord pos){

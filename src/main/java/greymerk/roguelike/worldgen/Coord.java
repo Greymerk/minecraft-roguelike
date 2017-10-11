@@ -1,6 +1,6 @@
 package greymerk.roguelike.worldgen;
 
-import org.apache.commons.lang3.builder.HashCodeBuilder;
+import java.util.Objects;
 
 import net.minecraft.util.math.BlockPos;
 
@@ -124,11 +124,7 @@ public class Coord{
 	
 	@Override
 	public int hashCode(){
-		 return new HashCodeBuilder(17, 31)
-		 .append(x)
-		 .append(y)
-		 .append(z)
-		 .toHashCode();
+			return Objects.hash(x, y, z);
 	}
 	
 	@Override

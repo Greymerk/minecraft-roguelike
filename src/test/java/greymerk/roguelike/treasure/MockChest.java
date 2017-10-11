@@ -6,6 +6,7 @@ import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IWorldEditor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityChest;
+import net.minecraft.util.ResourceLocation;
 
 public class MockChest implements ITreasureChest {
 		
@@ -73,6 +74,11 @@ public class MockChest implements ITreasureChest {
 		if(item.getItem() != other.getItem()) return false;
 		if(item.getItemDamage() != other.getItemDamage()) return false;
 		return true;
+	}
+
+	@Override
+	public void setLootTable(ResourceLocation table) {
+		
 	}
 	
 }

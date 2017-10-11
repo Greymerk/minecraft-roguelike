@@ -13,7 +13,6 @@ import net.minecraft.item.ItemStack;
 
 public class ItemWeapon extends ItemBase{
 	
-	private boolean custom;
 	private Equipment type;
 	private boolean enchant;
 	private Quality quality;

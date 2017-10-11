@@ -1,5 +1,6 @@
 package greymerk.roguelike.treasure;
 
+import java.util.Objects;
 import java.util.Random;
 
 import greymerk.roguelike.worldgen.Coord;
@@ -8,12 +9,15 @@ import greymerk.roguelike.worldgen.MetaBlock;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityChest;
+import net.minecraft.util.ResourceLocation;
 
 public class TreasureChest implements ITreasureChest{
 
 	protected Inventory inventory;
 	protected Treasure type;
 	protected Random rand;
+	private long seed;
+	private TileEntityChest chest;
 	private int level;
 
 	public TreasureChest(Treasure type){
@@ -34,9 +38,10 @@ public class TreasureChest implements ITreasureChest{
 			throw new ChestPlacementException("Failed to place chest in world");
 		}
 		
-		TileEntityChest chest = (TileEntityChest) editor.getTileEntity(pos);
+		this.chest = (TileEntityChest) editor.getTileEntity(pos);
 		this.inventory = new Inventory(rand, chest);
-
+		this.seed = (long)Objects.hash(pos.hashCode(), editor.getSeed());
+		
 		editor.addChest(this);
 		return this;
 	}
@@ -71,5 +76,10 @@ public class TreasureChest implements ITreasureChest{
 		if(level < 0) return 0;
 		if(level > 4) return 4;
 		return this.level;
+	}
+
+	@Override
+	public void setLootTable(ResourceLocation table) {
+		this.chest.setLootTable(table, seed);
 	}
 }

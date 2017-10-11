@@ -309,6 +309,7 @@ public class CommandSpawnDungeon extends CommandBase
 			} catch(Exception e){
 				sender.sendMessage(new TextComponentString(TextFormat.apply("Failure: " + e.getMessage(), TextFormat.RED)));
 				e.printStackTrace();
+				return;
 			}
 			
 			if(settings != null){

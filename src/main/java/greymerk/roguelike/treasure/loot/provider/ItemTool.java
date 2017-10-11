@@ -34,7 +34,7 @@ public class ItemTool extends ItemBase {
 				this.type = Equipment.valueOf(data.get("equipment").getAsString().toUpperCase());
 			} catch(Exception e) {
 				throw new Exception("No such Equipment as: " + data.get("equipment").getAsString());
-			}	
+			}
 		}
 		
 		if(data.has("quality")){

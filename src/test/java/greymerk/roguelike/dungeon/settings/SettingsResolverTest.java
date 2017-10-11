@@ -19,6 +19,7 @@ import greymerk.roguelike.worldgen.IWorldEditor;
 import net.minecraft.init.Bootstrap;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 
 public class SettingsResolverTest {
 
@@ -219,6 +220,9 @@ public class SettingsResolverTest {
 			
 			return count;
 		}
+
+		@Override
+		public void setLootTable(ResourceLocation table) {}
 		
 	}
 	

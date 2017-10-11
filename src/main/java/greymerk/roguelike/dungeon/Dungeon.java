@@ -108,6 +108,7 @@ public class Dungeon implements IDungeon{
 			try{
 				setting = Dungeon.settingsResolver.getSettings(editor, rand, location);	
 			} catch(Exception e){
+				e.printStackTrace();
 				return;
 			}
 			 
@@ -125,7 +126,8 @@ public class Dungeon implements IDungeon{
 		Random rand = getRandom(editor, generator.getPosition());
 		TreasureManager treasure = editor.getTreasure();
 
-		settings.getLootRules().process(rand, treasure);
+		settings.processLoot(rand, treasure);
+		
 		 // TODO: Change start book details
 		Book book = new Book("Greymerk", "Statistics");
 		book.addPage("~Architect's Resource Notes~\n\n"
