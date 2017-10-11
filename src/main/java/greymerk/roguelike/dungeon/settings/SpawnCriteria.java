@@ -7,9 +7,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import greymerk.roguelike.worldgen.IPositionInfo;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
 
 public class SpawnCriteria {
@@ -44,8 +42,7 @@ public class SpawnCriteria {
 			JsonArray biomeTypeList = data.get("biomeTypes").getAsJsonArray();
 			this.biomeTypes = new ArrayList<BiomeDictionary.Type>();
 			for(JsonElement e : biomeTypeList){
-				String type = e.getAsString();
-				// TODO: Find better way to interact with BiomeType Dictionary.
+				String type = e.getAsString().toUpperCase();
 				BiomeDictionary.Type t = BiomeDictionary.Type.getType(type, new BiomeDictionary.Type[0]);
 				if(BiomeDictionary.getBiomes(t).size() > 0) this.biomeTypes.add(t);
 			}
@@ -69,33 +66,22 @@ public class SpawnCriteria {
 	}
 	
 	
-	public boolean isValid(IPositionInfo info){
+	public boolean isValid(ISpawnContext context){
 		
 		if(this.everywhere) return true;
 		
 		boolean biomeFound = false;
 		
-		Biome biome = info.getBiome();
+		if(this.biomes != null)	biomeFound = context.includesBiome(biomes);
 		
-		if(this.biomes != null){
-			if(this.biomes.contains(biome.getRegistryName())) biomeFound = true;
-		}
-		
-		if(this.biomeTypes != null){
-			for(BiomeDictionary.Type type : this.biomeTypes){
-				if(BiomeDictionary.hasType(biome, type)) biomeFound = true;
-			}
-		}
+		if(this.biomeTypes != null) biomeFound = context.includesBiomeType(this.biomeTypes);
 		
 		return biomeFound;
 	}
 	
 	public static boolean isValidDimension(int dim, List<Integer> wl, List<Integer> bl){
-		
 		if(bl.contains(dim)) return false;
-		
 		if(wl.isEmpty()) return true;
-		
 		return wl.contains(dim);
 	}
 	

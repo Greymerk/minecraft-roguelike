@@ -10,7 +10,7 @@ import net.minecraft.nbt.NBTTagString;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 
-public class Book {
+public class Book implements IBook{
 
 	private List<String> pages;
 	private String author;
@@ -38,6 +38,7 @@ public class Book {
 		this.pages.add(page);
 	}
 	
+	@Override
 	public ItemStack get(){
 		ItemStack book = new ItemStack(Items.WRITTEN_BOOK, 1);
 		

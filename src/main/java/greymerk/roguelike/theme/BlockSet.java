@@ -92,7 +92,7 @@ public class BlockSet implements IBlockSet {
 		}
 		
 		if(json.has("door")){
-			this.door = new Door(json.get("door").getAsJsonObject());
+			this.door = new Door(json.get("door"));
 		} else if(base != null){
 			this.door = base.getDoor();
 		}

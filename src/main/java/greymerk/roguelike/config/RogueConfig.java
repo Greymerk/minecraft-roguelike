@@ -11,7 +11,7 @@ import net.minecraft.util.Tuple;
 public enum RogueConfig {
 
 	DONATURALSPAWN, LEVELRANGE, LEVELMAXROOMS, LEVELSCATTER, SPAWNFREQUENCY, GENEROUS, MOBDROPS, DIMENSIONWL, DIMENSIONBL, 
-	PRECIOUSBLOCKS, LOOTING, DONOVELTYSPAWN, UPPERLIMIT, LOWERLIMIT, ROGUESPAWNERS, ENCASE, FURNITURE, RANDOM;
+	PRECIOUSBLOCKS, LOOTING, UPPERLIMIT, LOWERLIMIT, ROGUESPAWNERS, ENCASE, FURNITURE, RANDOM, SPAWNBUILTIN;
 	
 	public static final String configDirName = "config/roguelike_dungeons";
 	public static final String configFileName = "roguelike.cfg";
@@ -22,7 +22,6 @@ public enum RogueConfig {
 	public static String getName(RogueConfig option){
 		switch(option){
 		case DONATURALSPAWN: return "doNaturalSpawn";
-		case DONOVELTYSPAWN: return "doNoveltySpawn";
 		case LEVELRANGE: return "levelRange";
 		case LEVELMAXROOMS: return "levelMaxRooms";
 		case LEVELSCATTER: return "levelScatter";
@@ -38,6 +37,7 @@ public enum RogueConfig {
 		case ENCASE: return "encase";
 		case FURNITURE: return "furniture";
 		case RANDOM: return "random";
+		case SPAWNBUILTIN: return "doBuiltinSpawn";
 		default: return null;
 		}
 	}
@@ -45,7 +45,6 @@ public enum RogueConfig {
 	public static Tuple<String, ?> getDefault(RogueConfig option){
 		switch(option){
 		case DONATURALSPAWN: return new Tuple<String, Boolean>(getName(option), true);
-		case DONOVELTYSPAWN: return new Tuple<String, Boolean>(getName(option), true);
 		case LEVELRANGE: return new Tuple<String, Integer>(getName(option), 80);
 		case LEVELMAXROOMS: return new Tuple<String, Integer>(getName(option), 30);
 		case LEVELSCATTER: return new Tuple<String, Integer>(getName(option), 10);
@@ -65,6 +64,7 @@ public enum RogueConfig {
 		case ENCASE: return new Tuple<String, Boolean>(getName(option), false);
 		case FURNITURE: return new Tuple<String, Boolean>(getName(option), true);
 		case RANDOM: return new Tuple<String, Boolean>(getName(option), false);
+		case SPAWNBUILTIN: return new Tuple<String, Boolean>(getName(option), true);
 		default: return null;
 		}
 	}
@@ -72,7 +72,6 @@ public enum RogueConfig {
 	@SuppressWarnings("unchecked")
 	private static void setDefaults(){
 		if(!instance.ContainsKey(getName(DONATURALSPAWN))) setBoolean(DONATURALSPAWN, (Boolean)getDefault(DONATURALSPAWN).getSecond());
-		if(!instance.ContainsKey(getName(DONOVELTYSPAWN))) setBoolean(DONOVELTYSPAWN, (Boolean)getDefault(DONOVELTYSPAWN).getSecond());
 		if(!instance.ContainsKey(getName(LEVELRANGE)))setInt(LEVELRANGE, (Integer)getDefault(LEVELRANGE).getSecond());
 		if(!instance.ContainsKey(getName(LEVELMAXROOMS)))setInt(LEVELMAXROOMS, (Integer)getDefault(LEVELMAXROOMS).getSecond());
 		if(!instance.ContainsKey(getName(LEVELSCATTER)))setInt(LEVELSCATTER, (Integer)getDefault(LEVELSCATTER).getSecond());
@@ -88,6 +87,7 @@ public enum RogueConfig {
 		if(!instance.ContainsKey(getName(ENCASE))) setBoolean(ENCASE, (Boolean)getDefault(ENCASE).getSecond());
 		if(!instance.ContainsKey(getName(FURNITURE))) setBoolean(FURNITURE, (Boolean)getDefault(FURNITURE).getSecond());
 		if(!instance.ContainsKey(getName(RANDOM))) setBoolean(RANDOM, (Boolean)getDefault(RANDOM).getSecond());
+		if(!instance.ContainsKey(getName(SPAWNBUILTIN))) setBoolean(SPAWNBUILTIN, (Boolean)getDefault(SPAWNBUILTIN).getSecond());
 	}
 	
 	public static double getDouble(RogueConfig option){

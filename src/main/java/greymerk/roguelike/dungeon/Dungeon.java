@@ -7,14 +7,14 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Random;
 
-import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.io.FilenameUtils;
 
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
 
-import greymerk.roguelike.Roguelike;
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.dungeon.settings.ISettings;
 import greymerk.roguelike.dungeon.settings.SettingsContainer;
@@ -23,7 +23,8 @@ import greymerk.roguelike.dungeon.settings.SpawnCriteria;
 import greymerk.roguelike.treasure.ITreasureChest;
 import greymerk.roguelike.treasure.Treasure;
 import greymerk.roguelike.treasure.TreasureManager;
-import greymerk.roguelike.treasure.loot.Book;
+import greymerk.roguelike.treasure.loot.IBook;
+import greymerk.roguelike.treasure.loot.books.BookStarter;
 import greymerk.roguelike.util.WeightedChoice;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
@@ -31,7 +32,6 @@ import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.VanillaStructure;
 import greymerk.roguelike.worldgen.shapes.RectSolid;
 import net.minecraft.block.material.Material;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
@@ -75,6 +75,9 @@ public class Dungeon implements IDungeon{
 		Map<String, String> files = new HashMap<String, String>();
 		
 		for(File file : Arrays.asList(settingsFiles)){
+			
+			if(!FilenameUtils.getExtension(file.getName()).equals("json")) continue;
+			
 			try {
 				String content = Files.toString(file, Charsets.UTF_8);
 				files.put(file.getName(), content); 
@@ -124,27 +127,12 @@ public class Dungeon implements IDungeon{
 		generator.generate(editor, settings, pos);
 
 		Random rand = getRandom(editor, generator.getPosition());
-		TreasureManager treasure = editor.getTreasure();
 
+		TreasureManager treasure = editor.getTreasure();
 		settings.processLoot(rand, treasure);
 		
 		 // TODO: Change start book details
-		Book book = new Book("Greymerk", "Statistics");
-		book.addPage("~Architect's Resource Notes~\n\n"
-			+ "StoneBrick: " + editor.getStat(Blocks.STONEBRICK) + "\n"
-			+ "Cobblestone: " + editor.getStat(Blocks.COBBLESTONE) + "\n"
-			+ "Logs: " + (editor.getStat(Blocks.LOG) + editor.getStat(Blocks.LOG2)) + "\n"
-			+ "Iron Bars: " + editor.getStat(Blocks.IRON_BARS) + "\n"
-			+ "Chests: " + (editor.getStat(Blocks.CHEST) + editor.getStat(Blocks.TRAPPED_CHEST)) + "\n"
-			+ "Mob Spawners: " + editor.getStat(Blocks.MOB_SPAWNER) + "\n"
-			+ "TNT: " + editor.getStat(Blocks.TNT) + "\n"
-			+ "\n-Greymerk");
-		book.addPage("Roguelike Dungeons v" + Roguelike.version + "\n"
-			+ Roguelike.date + "\n\n"
-			+ "Credits\n\n"
-			+ "Author: Greymerk\n\n"
-			+ "Bits: Drainedsoul\n\n"
-			+ "Ideas: Eniko @enichan");
+		IBook book = new BookStarter(editor);
 		treasure.addItemToAll(rand, Treasure.STARTER, new WeightedChoice<ItemStack>(book.get(), 1), 1);
 	}
 	
@@ -286,13 +274,7 @@ public class Dungeon implements IDungeon{
 	}
 	
 	public static Random getRandom(IWorldEditor editor, Coord pos){
-		HashCodeBuilder hasher = new HashCodeBuilder(17, 31)
-				.append(pos.hashCode())
-				.append(editor.getSeed());
-		
-		Random rand = new Random();
-		rand.setSeed(hasher.toHashCode());
-		return rand;
+		return new Random(Objects.hash(editor.getSeed(), pos));
 	}
 
 	@Override

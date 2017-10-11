@@ -120,7 +120,7 @@ public class DungeonSettings implements ISettings{
 					for(Integer level : levels){
 						if(this.levels.containsKey(level)){
 							LevelSettings setting = this.levels.get(level);
-							setting.setGenerator(LevelGenerator.valueOf(layout.get("type").getAsString()));
+							setting.setGenerator(LevelGenerator.valueOf(layout.get("type").getAsString().toUpperCase()));
 						}
 					}
 				}
@@ -209,6 +209,7 @@ public class DungeonSettings implements ISettings{
 		
 		// parse spawner settings
 		if(root.has("spawners")){
+			throw new Exception("Spawner settings not implemented");
 			//TODO: reimplement spawner settings
 		}
 	}
@@ -306,7 +307,8 @@ public class DungeonSettings implements ISettings{
 	@Override
 	public boolean isValid(IWorldEditor editor, Coord pos) {
 		if(this.criteria == null) this.criteria = new SpawnCriteria();
-		return this.criteria.isValid(editor.getInfo(pos));
+		ISpawnContext context = new SpawnContext(editor.getInfo(pos));
+		return this.criteria.isValid(context);
 	}
 
 	@Override

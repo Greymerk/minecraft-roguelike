@@ -81,6 +81,8 @@ public class SettingsResolver {
 	}
 	
 	private DungeonSettings getBuiltin(IWorldEditor editor, Random rand, Coord pos) throws Exception{
+		if(!RogueConfig.getBoolean(RogueConfig.SPAWNBUILTIN)) return null;
+		
 		WeightedRandomizer<DungeonSettings> settingsRandomizer = new WeightedRandomizer<DungeonSettings>();
 
 		for(DungeonSettings setting : settings.getBuiltinSettings()){			
