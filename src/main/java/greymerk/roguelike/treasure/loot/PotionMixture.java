@@ -119,7 +119,7 @@ public enum PotionMixture {
 			return potion;
 		case AURA:
 			potion = Potion.getSpecific(PotionForm.REGULAR, null, false, false);
-			PotionEffect.addCustomEffect(potion, PotionEffect.GLOWING, 1, 20*60);
+			PotionEffect.addCustomEffect(potion, PotionEffect.GLOWING, 1, 600);
 			Loot.setItemName(potion, "Luma");
 			Loot.setItemLore(potion, "A glowstone extract.");
 			ItemHideFlags.set(ItemHideFlags.EFFECTS, potion);

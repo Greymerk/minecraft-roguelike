@@ -23,7 +23,7 @@ import greymerk.roguelike.dungeon.settings.builtin.SettingsMountainTheme;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsRooms;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsSecrets;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsSegments;
-import greymerk.roguelike.dungeon.settings.builtin.SettingsSize;
+import greymerk.roguelike.dungeon.settings.builtin.SettingsLayout;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsSwampTheme;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsTheme;
 
@@ -40,7 +40,7 @@ public class SettingsContainer implements ISettingsContainer{
 		this.put(new SettingsRooms());
 		this.put(new SettingsSecrets());
 		this.put(new SettingsSegments());
-		this.put(new SettingsSize());
+		this.put(new SettingsLayout());
 		this.put(new SettingsTheme());
 		this.put(new SettingsGenerator());
 		this.put(new SettingsLootRules());
