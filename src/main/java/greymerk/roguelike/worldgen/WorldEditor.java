@@ -85,7 +85,7 @@ public class WorldEditor implements IWorldEditor{
 	
 	@Override
 	public int getDimension(){
-		return world.provider.getDimensionType().getId();
+		return world.provider.getDimension();
 	}
 	
 	@Override
