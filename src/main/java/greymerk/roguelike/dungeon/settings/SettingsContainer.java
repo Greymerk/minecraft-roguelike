@@ -13,17 +13,16 @@ import com.google.gson.JsonSyntaxException;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsBase;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsDesertTheme;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsForestTheme;
-import greymerk.roguelike.dungeon.settings.builtin.SettingsGenerator;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsGrasslandTheme;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsIceTheme;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsJungleTheme;
+import greymerk.roguelike.dungeon.settings.builtin.SettingsLayout;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsLootRules;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsMesaTheme;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsMountainTheme;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsRooms;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsSecrets;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsSegments;
-import greymerk.roguelike.dungeon.settings.builtin.SettingsLayout;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsSwampTheme;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsTheme;
 
@@ -42,7 +41,6 @@ public class SettingsContainer implements ISettingsContainer{
 		this.put(new SettingsSegments());
 		this.put(new SettingsLayout());
 		this.put(new SettingsTheme());
-		this.put(new SettingsGenerator());
 		this.put(new SettingsLootRules());
 		this.put(new SettingsBase());
 		
