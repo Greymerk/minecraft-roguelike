@@ -1,5 +1,6 @@
 package greymerk.roguelike.dungeon.settings;
 
+import java.util.Collection;
 import java.util.Random;
 
 import greymerk.roguelike.config.RogueConfig;
@@ -46,6 +47,8 @@ public class SettingsResolver {
 	public static DungeonSettings processInheritance(DungeonSettings toProcess, ISettingsContainer settings) throws Exception{
 		DungeonSettings setting = new SettingsBlank();
 		
+		if(toProcess == null) throw new Exception("Process Inheritance called with null settings object");
+		
 		for(SettingIdentifier id : toProcess.getInherits()){
 			if(settings.contains(id)){
 				DungeonSettings inherited = new DungeonSettings(settings.get(id));
@@ -91,6 +94,8 @@ public class SettingsResolver {
 			}
 		}
 		
+		if(settingsRandomizer.isEmpty()) return new SettingsBlank();
+		
 		DungeonSettings chosen = settingsRandomizer.get(rand);
 		
 		return processInheritance(chosen, settings);
@@ -121,6 +126,18 @@ public class SettingsResolver {
 			if(!s.isValid(editor, pos)) continue;
 			if(s.isExclusive()) continue;
 			toReturn = new DungeonSettings(toReturn, processInheritance(s, settings));
+		}
+		
+		return toReturn;
+	}
+	
+	public String toString(String namespace){
+		Collection<DungeonSettings> byNamespace = this.settings.getByNamespace(namespace);
+		if(byNamespace.isEmpty()) return "";
+		
+		String toReturn = "";
+		for(DungeonSettings setting : byNamespace){
+			toReturn += setting.id.toString() + " ";
 		}
 		
 		return toReturn;

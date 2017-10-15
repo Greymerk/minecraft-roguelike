@@ -1,44 +1,38 @@
 package greymerk.roguelike.dungeon.settings;
 
+import net.minecraft.util.ResourceLocation;
+
 public class SettingIdentifier {
 
-	private String namespace;
-	private String name;
+	private ResourceLocation identifier;
 	
 	public SettingIdentifier(String namespace, String name){
-		this.namespace = namespace;
-		this.name = name;
+		this.identifier = new ResourceLocation(namespace, name);
 	}
 	
 	public SettingIdentifier(String name){
-		
 		String[] parts;
 		parts = name.split(":");
 		if(parts.length > 1){
-			this.namespace = parts[0];
-			this.name = parts[1];
+			this.identifier = new ResourceLocation(parts[0], parts[1]);
 			return;
 		}
 		
-		this.namespace = SettingsContainer.DEFAULT_NAMESPACE;
-		this.name = name;
+		this.identifier = new ResourceLocation(SettingsContainer.DEFAULT_NAMESPACE, name);
 	}
 	
 	public String getNamespace(){
-		if(namespace == null) return SettingsContainer.DEFAULT_NAMESPACE;
-		return this.namespace;
+		return this.identifier.getResourceDomain();
 	}
 	
 	public String getName(){
-		return this.name;
+		return this.identifier.getResourcePath();
 	}
 	
 	@Override
 	public boolean equals(Object o){
-		SettingIdentifier other = (SettingIdentifier)o;
-		if(this.namespace != other.namespace) return false;
-		if(this.name != other.name) return false;
-		return true;
+		if(!(o instanceof SettingIdentifier)) return false;
+		return this.identifier.equals(((SettingIdentifier)o).identifier);
 	}
 	
 	@Override

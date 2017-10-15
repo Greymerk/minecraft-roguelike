@@ -142,6 +142,11 @@ public class CommandSpawnDungeon extends CommandBase
 				return;
 			}
 			if(ap.match(1, "list")){
+				if(ap.hasEntry(2)){
+					String namespace = ap.get(2);
+					sender.sendMessage(new TextComponentString(TextFormat.apply(Dungeon.settingsResolver.toString(namespace), TextFormat.GREEN)));
+					return;
+				}
 				sender.sendMessage(new TextComponentString(TextFormat.apply(Dungeon.settingsResolver.toString(), TextFormat.GREEN)));
 				return;
 			}

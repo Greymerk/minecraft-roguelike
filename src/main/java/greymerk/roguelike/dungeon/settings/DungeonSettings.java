@@ -51,6 +51,8 @@ public class DungeonSettings implements ISettings{
 	public DungeonSettings(JsonObject root) throws Exception{
 		this();
 		
+		if(!root.has("name")) throw new Exception("Setting missing name");
+		
 		if(root.has("namespace")){
 			String name = root.get("name").getAsString();
 			String namespace = root.get("namespace").getAsString();
@@ -132,40 +134,26 @@ public class DungeonSettings implements ISettings{
 			JsonArray roomArray = root.get("rooms").getAsJsonArray();
 			for(int i : this.levels.keySet()){
 				LevelSettings level = this.levels.get(i);
-				DungeonFactory factory = new DungeonFactory();
-
+				DungeonFactory rooms = new DungeonFactory();
+				SecretFactory secrets = new SecretFactory();
+				
 				for(JsonElement e : roomArray){
 					JsonObject room = e.getAsJsonObject();
 					if(room.has("level")){
 						List<Integer> levels = this.parseLevels(room.get("level"));
 						if(levels.contains(i)){
-							factory.add(room);
+							if(room.has("mode") 
+								&& room.get("mode").getAsString().equals("secret")){
+								secrets.add(room);
+								continue;
+							}
+							rooms.add(room);	
 						}
 					}
 				}
 				
-				level.setRooms(factory);
-			}
-		}
-		
-		// parse level secrets
-		if(root.has("secrets")){
-			JsonArray roomArray = root.get("secrets").getAsJsonArray();
-			for(int i : this.levels.keySet()){
-				LevelSettings level = this.levels.get(i);
-				SecretFactory factory = new SecretFactory();
-
-				for(JsonElement e : roomArray){
-					JsonObject room = e.getAsJsonObject();
-					if(room.has("level")){
-						List<Integer> levels = this.parseLevels(room.get("level"));
-						if(levels.contains(i)){
-							factory.add(room);
-						}
-					}
-				}
-				
-				level.setSecrets(factory);
+				level.setRooms(rooms);
+				level.setSecrets(secrets);
 			}
 		}
 		
