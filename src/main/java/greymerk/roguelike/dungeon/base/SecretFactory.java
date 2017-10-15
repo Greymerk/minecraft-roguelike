@@ -56,7 +56,7 @@ public class SecretFactory{
 	}
 	
 	public void add(JsonObject room){
-		String type = room.get("type").getAsString();
+		String type = room.get("name").getAsString();
 		int count = room.get("count").getAsInt();
 		this.addRoom(DungeonRoom.valueOf(type), count);
 	}

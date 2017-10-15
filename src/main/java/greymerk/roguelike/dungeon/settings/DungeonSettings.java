@@ -142,8 +142,8 @@ public class DungeonSettings implements ISettings{
 					if(room.has("level")){
 						List<Integer> levels = this.parseLevels(room.get("level"));
 						if(levels.contains(i)){
-							if(room.has("mode") 
-								&& room.get("mode").getAsString().equals("secret")){
+							if(room.has("type") 
+								&& room.get("type").getAsString().equals("secret")){
 								secrets.add(room);
 								continue;
 							}

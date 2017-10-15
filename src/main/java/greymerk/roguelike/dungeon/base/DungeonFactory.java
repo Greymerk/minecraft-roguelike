@@ -81,8 +81,8 @@ public class DungeonFactory implements IDungeonFactory {
 	}
 	
 	public void add(JsonObject entry) throws Exception{
-		String mode = (entry.get("mode").getAsString()).toLowerCase();
-		String type = (entry.get("type").getAsString()).toUpperCase();			
+		String mode = (entry.get("type").getAsString()).toLowerCase();
+		String type = (entry.get("name").getAsString()).toUpperCase();			
 		
 		int weight = entry.has("weight") ? entry.get("weight").getAsInt() : 1;
 		
@@ -90,7 +90,7 @@ public class DungeonFactory implements IDungeonFactory {
 			throw new Exception("No such dungeon: " + type);
 		}
 		
-		DungeonRoom toAdd = DungeonRoom.valueOf(entry.get("type").getAsString());
+		DungeonRoom toAdd = DungeonRoom.valueOf(entry.get("name").getAsString());
 		
 		if(mode.equals("single")){
 			this.addSingle(toAdd);
