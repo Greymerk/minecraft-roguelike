@@ -18,17 +18,22 @@ public class LevelGeneratorMST implements ILevelGenerator{
 	Random rand;
 	LevelSettings settings;	
 	private LevelLayout layout;
+	private int length;
+	private int scatter;
+	
 	
 	public LevelGeneratorMST(IWorldEditor editor, Random rand, LevelSettings settings){
 		this.editor = editor;
 		this.rand = rand;
 		this.settings = settings;
+		this.length = (int) Math.ceil(Math.sqrt(settings.getNumRooms()));
+		this.scatter = settings.getScatter() % 2 == 0 ? settings.getScatter() + 1 : settings.getScatter();  
 		this.layout = new LevelLayout();
 	}	
 	
 	@Override
 	public void generate(Coord start) {
-		MinimumSpanningTree mst = new MinimumSpanningTree(rand, 7, 17, new Coord(start));
+		MinimumSpanningTree mst = new MinimumSpanningTree(rand, length, scatter, new Coord(start));
 		Graph<Coord> layout = mst.getGraph();
 		List<Edge<Coord>> edges = layout.getEdges();
 		List<Coord> vertices = layout.getPoints();
