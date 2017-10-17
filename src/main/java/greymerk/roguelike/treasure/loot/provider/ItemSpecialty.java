@@ -26,18 +26,20 @@ public class ItemSpecialty extends ItemBase {
 		if(!data.has("level")) throw new Exception("Item requires a level");
 		this.level = data.get("level").getAsInt();
 		
-		if(!data.has("quality")) throw new Exception("Specialty item requires a quality");
-		try{
-			this.quality = Quality.valueOf(data.get("quality").getAsString().toUpperCase());
-		} catch(Exception e){
-			throw new Exception("No such Quality as: " + data.get("quality").getAsString());
+		if(data.has("quality")){
+			try{
+				this.quality = Quality.valueOf(data.get("quality").getAsString().toUpperCase());
+			} catch(Exception e){
+				throw new Exception("No such Quality as: " + data.get("quality").getAsString());
+			}
 		}
 		
-		if(!data.has("equipment")) throw new Exception("Specialty item requires equipment field");
-		try{
-			this.type = Equipment.valueOf(data.get("equipment").getAsString().toUpperCase());
-		} catch(Exception e) {
-			throw new Exception("No such Equipment as: " + data.get("equipment").getAsString());
+		if(data.has("equipment")){
+			try{
+				this.type = Equipment.valueOf(data.get("equipment").getAsString().toUpperCase());
+			} catch(Exception e) {
+				throw new Exception("No such Equipment as: " + data.get("equipment").getAsString());
+			}	
 		}
 	}
 	
@@ -54,13 +56,9 @@ public class ItemSpecialty extends ItemBase {
 	
 	@Override
 	public ItemStack get(Random rand){
-		if(this.type == null && quality != null){
-			return getRandomItem(Equipment.values()[rand.nextInt(Equipment.values().length)], rand, this.quality);
-		}
-		if(this.type == null || quality == null){
-			return getRandomItem(rand, this.level);
-		}
-		return getRandomItem(this.type, rand, this.quality);
+		Equipment t = this.type == null ? Equipment.values()[rand.nextInt(Equipment.values().length)] : this.type;
+		Quality q = this.quality == null ? Quality.get(rand, level, t) : this.quality;
+		return getRandomItem(t, rand, q);
 	}
 		
 	public static ItemStack getRandomItem(Random rand, int level){
