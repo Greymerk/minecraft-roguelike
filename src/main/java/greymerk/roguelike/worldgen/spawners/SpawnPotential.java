@@ -8,6 +8,7 @@ import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.treasure.loot.Equipment;
 import greymerk.roguelike.treasure.loot.Quality;
 import greymerk.roguelike.util.JsonNBT;
+import net.minecraft.nbt.JsonToNBT;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 
@@ -16,7 +17,7 @@ public class SpawnPotential {
 	String name;
 	int weight;
 	boolean equip;
-	NBTTagCompound meta;
+	NBTTagCompound nbt;
 	
 	
 	public SpawnPotential(String name){
@@ -31,28 +32,31 @@ public class SpawnPotential {
 		this(name, equip, weight, null);
 	}
 	
-	public SpawnPotential(String name, boolean equip, int weight, NBTTagCompound meta){
+	public SpawnPotential(String name, boolean equip, int weight, NBTTagCompound nbt){
 		this.name = name;
 		this.equip = equip;
 		this.weight = weight;
-		this.meta = meta;
+		this.nbt = nbt;
 	}
 	
 	public SpawnPotential(JsonObject entry) throws Exception{
+		this.weight = entry.has("weight") ? entry.get("weight").getAsInt() : 1;
 		if(!entry.has("name")){
 			throw new Exception("Spawn potential missing name");
 		}
 		
 		this.name = entry.get("name").getAsString();
-		this.weight = entry.has("weight") ? entry.get("weight").getAsInt() : 1;
-		if(entry.has("meta")){
-			JsonObject metadata = entry.get("meta").getAsJsonObject();
-			this.meta = JsonNBT.jsonToCompound(metadata);
+		this.equip = entry.has("equip") ? entry.get("equip").getAsBoolean() : false;
+		
+		if(entry.has("nbt")){
+			String metadata = entry.get("nbt").getAsString();
+			this.nbt = JsonToNBT.getTagFromJson(metadata);
 		}
 	}
 	
 	public NBTTagCompound get(int level){
-		return getPotential(getRoguelike(level, this.name, new NBTTagCompound()));
+		NBTTagCompound nbt = this.nbt == null ? new NBTTagCompound() : this.nbt.copy();
+		return getPotential(getRoguelike(level, this.name, nbt));
 	}
 	
 	public NBTTagList get(Random rand, int level){

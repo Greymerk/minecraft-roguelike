@@ -29,25 +29,13 @@ public class Spawnable {
 		this.type = type;
 	}
 	
-	public Spawnable(JsonElement data){
+	public Spawnable(JsonElement data) throws Exception{
 		this.potentials = new ArrayList<SpawnPotential>();
 		
 		JsonArray arr = data.getAsJsonArray();
 		for(JsonElement e : arr){
-			JsonObject potential = e.getAsJsonObject();
-			String name = potential.get("name").getAsString();
-			boolean equip = potential.has("equip") ? potential.get("equip").getAsBoolean() : true;
-			int weight = potential.has("weight") ? potential.get("weight").getAsInt() : 1;
-			
-			if(potential.has("meta")){
-				JsonObject metadata = potential.get("meta").getAsJsonObject();
-				NBTTagCompound meta = JsonNBT.jsonToCompound(metadata);
-				SpawnPotential toAdd = new SpawnPotential(name, equip, weight, meta);
-				this.potentials.add(toAdd);	
-			} else {
-				SpawnPotential toAdd = new SpawnPotential(name, equip, weight);
-				this.potentials.add(toAdd);	
-			}
+			SpawnPotential potential = new SpawnPotential(e.getAsJsonObject());
+			this.potentials.add(potential);
 		}
 	}
 		
