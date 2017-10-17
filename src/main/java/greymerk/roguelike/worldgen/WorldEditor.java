@@ -1,7 +1,9 @@
 package greymerk.roguelike.worldgen;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -24,6 +26,18 @@ public class WorldEditor implements IWorldEditor{
 	World world;
 	private Map<Block, Integer> stats;
 	private TreasureManager chests;
+	private static List<Material> invalid;
+	{
+		invalid = new ArrayList<Material>();
+		invalid.add(Material.WOOD);
+		invalid.add(Material.WATER);
+		invalid.add(Material.CACTUS);
+		invalid.add(Material.SNOW);
+		invalid.add(Material.GRASS);
+		invalid.add(Material.GOURD);
+		invalid.add(Material.LEAVES);
+		invalid.add(Material.PLANTS);
+	};
 	
 	public WorldEditor(World world){
 		this.world = world;
@@ -142,21 +156,9 @@ public class WorldEditor implements IWorldEditor{
 	
 	@Override
 	public boolean validGroundBlock(Coord pos){
-		
 		if(isAirBlock(pos)) return false;
-		
 		MetaBlock block = this.getBlock(pos);
-		
-		if(block.getMaterial() == Material.WOOD) return false;
-		if(block.getMaterial() == Material.WATER) return false;
-		if(block.getMaterial() == Material.CACTUS) return false;
-		if(block.getMaterial() == Material.SNOW) return false;
-		if(block.getMaterial() == Material.GRASS) return false;
-		if(block.getMaterial() == Material.GOURD) return false;
-		if(block.getMaterial() == Material.LEAVES) return false;
-		if(block.getMaterial() == Material.PLANTS) return false;
-		
-		return true;
+		return !invalid.contains(block.getMaterial());
 	}
 	
 	@Override
@@ -201,14 +203,12 @@ public class WorldEditor implements IWorldEditor{
 	public Coord findNearestStructure(VanillaStructure type, Coord pos) {
 		
 		ChunkProviderServer chunkProvider = ((WorldServer)world).getChunkProvider();
-		
-		BlockPos bp = pos.getBlockPos();
 		String structureName = VanillaStructure.getName(type);
 		
 		BlockPos structurebp = null;
 		
 		try{
-			structurebp = chunkProvider.getNearestStructurePos(world, structureName, bp, false);	
+			structurebp = chunkProvider.getNearestStructurePos(world, structureName, pos.getBlockPos(), false);	
 		} catch(NullPointerException e){
 			// happens for some reason if structure type is disabled in Chunk Generator Settings
 		}

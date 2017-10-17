@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import greymerk.roguelike.worldgen.spawners.Spawnable;
-
 public class WeightedRandomizer<T> implements IWeighted<T>{
 
 	private int weight;

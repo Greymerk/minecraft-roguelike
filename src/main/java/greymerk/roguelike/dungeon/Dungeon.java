@@ -147,6 +147,16 @@ public class Dungeon implements IDungeon{
 		bl.addAll(RogueConfig.getIntList(RogueConfig.DIMENSIONBL));
 		if(!SpawnCriteria.isValidDimension(dim, wl, bl)) return false;
 		
+		if(!isVillageChunk(editor, chunkX, chunkZ)) return false;
+		
+		double spawnChance = RogueConfig.getDouble(RogueConfig.SPAWNCHANCE);
+		Random rand = new Random(Objects.hash(chunkX, chunkZ, 31));
+		
+		return rand.nextFloat() < spawnChance;
+		
+	}
+	
+	public static boolean isVillageChunk(IWorldEditor editor, int chunkX, int chunkZ){
 		int frequency = RogueConfig.getInt(RogueConfig.SPAWNFREQUENCY);
 		int min = 8 * frequency / 10;
 		int max = 32 * frequency / 10;
@@ -168,11 +178,7 @@ public class Dungeon implements IDungeon{
 		m += r.nextInt(max - min);
 		n += r.nextInt(max - min);
 		
-		if(!(chunkX == m && chunkZ == n)){
-			return false;
-		}
-		
-		return true;
+		return chunkX == m && chunkZ == n;
 	}
 	
 	public void spawnInChunk(Random rand, int chunkX, int chunkZ) {

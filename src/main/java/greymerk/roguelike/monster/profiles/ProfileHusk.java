@@ -23,5 +23,4 @@ public class ProfileHusk implements IMonsterProfile {
 		mob.setSlot(EntityEquipmentSlot.OFFHAND, Shield.get(rand));
 		MonsterProfile.get(MonsterProfile.TALLMOB).addEquipment(world, rand, level, mob);
 	}
-
 }

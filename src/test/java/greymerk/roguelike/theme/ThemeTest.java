@@ -33,8 +33,7 @@ public class ThemeTest {
 		JsonObject walls = new JsonObject();
 		secondary.add("walls", walls);
 		walls.addProperty("name", "minecraft:stone");
-		
-		
+
 		ITheme t = Theme.create(json);
 		assert(t.getPrimary().getFloor().equals(BlockType.get(BlockType.DIRT)));
 		

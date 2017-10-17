@@ -2,8 +2,6 @@ package greymerk.roguelike.dungeon.settings;
 
 import java.util.Set;
 
-import com.google.gson.JsonObject;
-
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.dungeon.Dungeon;
 import greymerk.roguelike.dungeon.LevelGenerator;
@@ -96,21 +94,6 @@ public class LevelSettings {
 		
 		this.spawners = new SpawnerSettings(base.spawners, other.spawners);
 		this.generator = other.generator == null? base.generator : other.generator;
-	}
-	
-	@Deprecated
-	public LevelSettings(JsonObject data) throws Exception{
-		this();
-		this.numRooms = data.has("numRooms") ? data.get("numRooms").getAsInt() : RogueConfig.getInt(RogueConfig.LEVELMAXROOMS);
-		this.range = data.has("range") ? data.get("range").getAsInt() : RogueConfig.getInt(RogueConfig.LEVELRANGE);
-		this.scatter = data.has("scatter") ? data.get("scatter").getAsInt() : RogueConfig.getInt(RogueConfig.LEVELSCATTER);
-		this.levelDifficulty = data.has("diff") ? data.get("diff").getAsInt() : -1;
-		if(data.has("rooms")) this.rooms = new DungeonFactory(data.get("rooms").getAsJsonArray());
-		if(data.has("secrets")) this.secrets = new SecretFactory(data.get("secrets").getAsJsonArray());
-		this.theme = data.has("theme") ? Theme.create(data.get("theme").getAsJsonObject()) : null;
-		this.segments = data.has("segments") ? new SegmentGenerator(data.get("segments").getAsJsonObject()) : null;
-		this.spawners = data.has("spawners") ? new SpawnerSettings(data.get("spawners").getAsJsonObject()) : null;
-		this.generator = data.has("generator") ? LevelGenerator.valueOf(data.get("generator").getAsString()) : null;
 	}
 	
 	public LevelGenerator getGenerator(){
