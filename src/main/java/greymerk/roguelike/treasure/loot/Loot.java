@@ -59,6 +59,7 @@ public enum Loot {
 		case "novelty" : return ItemNovelty.get(data, weight);
 		case "tool" : return new ItemTool(data, weight);
 		case "armour" : return new ItemArmour(data, weight);
+		case "enchanted_book" : return new ItemEnchBook(data, weight);
 		default: throw new Exception("No such loot type as: " + type);
 		}
 	}
