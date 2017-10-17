@@ -38,35 +38,25 @@ public class Spawnable {
 	}
 		
 	public void generate(IWorldEditor editor, Random rand, Coord cursor, int level){
-		
 		Coord pos = new Coord(cursor);
+		editor.setBlock(pos, new MetaBlock(Blocks.MOB_SPAWNER.getDefaultState()), true,	true);
 		
-		editor.setBlock(
-				pos,
-				new MetaBlock(Blocks.MOB_SPAWNER.getDefaultState()),
-				true,
-				true);
+		TileEntity tileentity = editor.getTileEntity(pos);
+		if (!(tileentity instanceof TileEntityMobSpawner)) return;
 		
-        TileEntity tileentity = editor.getTileEntity(pos);
-
-        if (!(tileentity instanceof TileEntityMobSpawner)){
-            return;
-        }
-        	
-        TileEntityMobSpawner spawner = (TileEntityMobSpawner)tileentity;
-        MobSpawnerBaseLogic spawnerLogic = spawner.getSpawnerBaseLogic();
-        
-        NBTTagCompound nbt = new NBTTagCompound();
-        nbt.setInteger("x", pos.getX());
-        nbt.setInteger("y", pos.getY());
-        nbt.setInteger("z", pos.getZ());
-
-        nbt.setTag("SpawnPotentials", getSpawnPotentials(rand, level));
-        
-        spawnerLogic.readFromNBT(nbt);
-        spawnerLogic.updateSpawner();
-        tileentity.markDirty();
-        
+		TileEntityMobSpawner spawner = (TileEntityMobSpawner)tileentity;
+		MobSpawnerBaseLogic spawnerLogic = spawner.getSpawnerBaseLogic();
+		
+		NBTTagCompound nbt = new NBTTagCompound();
+		nbt.setInteger("x", pos.getX());
+		nbt.setInteger("y", pos.getY());
+		nbt.setInteger("z", pos.getZ());
+		
+		nbt.setTag("SpawnPotentials", getSpawnPotentials(rand, level));
+		
+		spawnerLogic.readFromNBT(nbt);
+		spawnerLogic.updateSpawner();
+		tileentity.markDirty();
 	}
 	
 	private NBTTagList getSpawnPotentials(Random rand, int level){
@@ -85,15 +75,4 @@ public class Spawnable {
 		
 		return potentials;
 	}
-
-	
-
-	
-
-
-
-
-
-	
-
 }
