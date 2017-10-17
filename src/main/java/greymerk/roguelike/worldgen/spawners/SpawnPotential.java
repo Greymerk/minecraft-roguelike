@@ -100,7 +100,7 @@ public class SpawnPotential {
 	private NBTTagCompound getPotential(NBTTagCompound mob){
 		NBTTagCompound potential = new NBTTagCompound();
 		potential.setTag("Entity", mob);
-		potential.setInteger("Weight", 1);
+		potential.setInteger("Weight", this.weight);
 		return potential;
 	}
 	

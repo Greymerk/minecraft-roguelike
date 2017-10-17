@@ -29,25 +29,25 @@ public class Spawnable {
 		this.type = type;
 	}
 	
-	public Spawnable(JsonObject data){
+	public Spawnable(JsonElement data){
 		this.potentials = new ArrayList<SpawnPotential>();
 		
-		JsonArray arr = data.get("spawns").getAsJsonArray();
+		JsonArray arr = data.getAsJsonArray();
 		for(JsonElement e : arr){
-			JsonObject spawn = e.getAsJsonObject();
-			String name = spawn.get("name").getAsString();
-			boolean equip = spawn.has("equip") ? spawn.get("equip").getAsBoolean() : true;
-			int weight = spawn.has("weight") ? spawn.get("weight").getAsInt() : 1;
-			if(!data.has("meta")){
+			JsonObject potential = e.getAsJsonObject();
+			String name = potential.get("name").getAsString();
+			boolean equip = potential.has("equip") ? potential.get("equip").getAsBoolean() : true;
+			int weight = potential.has("weight") ? potential.get("weight").getAsInt() : 1;
+			
+			if(potential.has("meta")){
+				JsonObject metadata = potential.get("meta").getAsJsonObject();
+				NBTTagCompound meta = JsonNBT.jsonToCompound(metadata);
+				SpawnPotential toAdd = new SpawnPotential(name, equip, weight, meta);
+				this.potentials.add(toAdd);	
+			} else {
 				SpawnPotential toAdd = new SpawnPotential(name, equip, weight);
-				this.potentials.add(toAdd);
+				this.potentials.add(toAdd);	
 			}
-			
-			JsonObject metadata = data.get("meta").getAsJsonObject();
-			NBTTagCompound meta = JsonNBT.jsonToCompound(metadata);
-			SpawnPotential toAdd = new SpawnPotential(name, equip, weight, meta);
-			this.potentials.add(toAdd);
-			
 		}
 	}
 		

@@ -24,6 +24,7 @@ import greymerk.roguelike.treasure.loot.LootRuleManager;
 import greymerk.roguelike.treasure.loot.LootTableRule;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IWorldEditor;
+import greymerk.roguelike.worldgen.spawners.SpawnerSettings;
 
 
 public class DungeonSettings implements ISettings{
@@ -197,8 +198,18 @@ public class DungeonSettings implements ISettings{
 		
 		// parse spawner settings
 		if(root.has("spawners")){
-			throw new Exception("Spawner settings not implemented");
-			//TODO: reimplement spawner settings
+			JsonArray arr = root.get("spawners").getAsJsonArray();
+			for(JsonElement e : arr){
+				JsonObject entry = e.getAsJsonObject();
+				List<Integer> lvls = this.parseLevels(entry.get("level"));
+				for(int i : lvls){
+					if(this.levels.containsKey(i)){
+						LevelSettings level = this.levels.get(i);
+						SpawnerSettings spawners = level.getSpawners();
+						spawners.add(entry);
+					}
+				}
+			}
 		}
 	}
 	
@@ -253,7 +264,7 @@ public class DungeonSettings implements ISettings{
 			if(level == null){
 				this.levels.put(i, new LevelSettings());
 			} else {
-				this.levels.put(i, new LevelSettings(toCopy.levels.get(i)));
+				this.levels.put(i, new LevelSettings(level));
 			}
 		}
 		

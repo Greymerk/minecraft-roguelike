@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import greymerk.roguelike.worldgen.spawners.Spawnable;
+
 public class WeightedRandomizer<T> implements IWeighted<T>{
 
 	private int weight;
@@ -23,6 +25,17 @@ public class WeightedRandomizer<T> implements IWeighted<T>{
 		for(IWeighted<T> e : toCopy.items){
 			items.add(e);
 		}
+	}
+	
+	public WeightedRandomizer(WeightedRandomizer<T> base, WeightedRandomizer<T> other){
+		this();
+		for(IWeighted<T> item : base.items){
+			this.add(item);
+		}
+	
+		for(IWeighted<T> item : other.items){
+			this.add(item);
+		}		
 	}
 	
 	public WeightedRandomizer(){
@@ -55,5 +68,11 @@ public class WeightedRandomizer<T> implements IWeighted<T>{
 		}
 		
 		return null;
+	}
+
+	public void merge(WeightedRandomizer<T> toMerge) {
+		for(IWeighted<T> item : toMerge.items){
+			this.add(item);
+		}
 	}
 }

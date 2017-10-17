@@ -32,6 +32,8 @@ public class SettingsResolver {
 		
 		DungeonSettings complete = applyInclusives(exclusive, editor, rand, pos); 
 		
+		//if(true) throw new Exception(complete.levels.get(0).getSpawners().toString());
+		
 		return complete;
 	}
 	
@@ -39,8 +41,11 @@ public class SettingsResolver {
 		if(name.equals("random")) return new SettingsRandom(rand);
 		
 		DungeonSettings byName = this.getByName(name);
+		
 		if(byName == null) return null;
 		DungeonSettings withInclusives = applyInclusives(byName, editor, rand, pos);
+		
+		//if(true) throw new Exception(withInclusives.levels.get(0).getSpawners().toString());
 		return new DungeonSettings(new SettingsBlank(), withInclusives);
 	}
 	
@@ -52,11 +57,14 @@ public class SettingsResolver {
 		for(SettingIdentifier id : toProcess.getInherits()){
 			if(settings.contains(id)){
 				DungeonSettings inherited = new DungeonSettings(settings.get(id));
+				
 				if(!inherited.getInherits().isEmpty()){
 					inherited = processInheritance(inherited, settings);
 				}
 				
 				setting = new DungeonSettings(setting, inherited);
+				//if(id.getName().equals("spawners")) throw new Exception(setting.levels.get(0).getSpawners().toString());
+				
 			} else {
 				throw new Exception("Setting not found: " + id.toString());
 			}
@@ -80,6 +88,7 @@ public class SettingsResolver {
 		
 		if(!this.settings.contains(id)) return null;
 		DungeonSettings setting = new DungeonSettings(this.settings.get(id));
+		
 		return processInheritance(setting, this.settings);
 	}
 	

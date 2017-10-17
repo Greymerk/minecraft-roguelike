@@ -34,6 +34,7 @@ public class LevelSettings {
 		numRooms = RogueConfig.getInt(RogueConfig.LEVELMAXROOMS);
 		range = RogueConfig.getInt(RogueConfig.LEVELRANGE);
 		scatter = RogueConfig.getInt(RogueConfig.LEVELSCATTER);
+		spawners = new SpawnerSettings();
 		rooms = new DungeonFactory();
 		secrets = new SecretFactory();
 		levelDifficulty = -1;
@@ -93,10 +94,11 @@ public class LevelSettings {
 			this.segments = other.segments == null ? new SegmentGenerator(base.segments) : new SegmentGenerator(other.segments);
 		}
 		
-		this.spawners = other.spawners == null ? base.spawners : other.spawners;
+		this.spawners = new SpawnerSettings(base.spawners, other.spawners);
 		this.generator = other.generator == null? base.generator : other.generator;
 	}
 	
+	@Deprecated
 	public LevelSettings(JsonObject data) throws Exception{
 		this();
 		this.numRooms = data.has("numRooms") ? data.get("numRooms").getAsInt() : RogueConfig.getInt(RogueConfig.LEVELMAXROOMS);
@@ -183,10 +185,6 @@ public class LevelSettings {
 	public SpawnerSettings getSpawners(){
 		return this.spawners;
 	}
-	
-	public void setSpawners(SpawnerSettings spawners){
-		this.spawners = spawners;
-	}
 
 	public int getRange() {
 		return this.range;
@@ -205,7 +203,7 @@ public class LevelSettings {
 		this.secrets = toCopy.secrets != null ? new SecretFactory(toCopy.secrets) : null;
 		this.theme = toCopy.theme != null ? toCopy.theme : null;
 		this.segments = toCopy.segments != null ? new SegmentGenerator(toCopy.segments) : null;
-		this.spawners = toCopy.spawners;
+		this.spawners = new SpawnerSettings(toCopy.spawners);
 		this.generator = toCopy.generator;
 	}
 	
