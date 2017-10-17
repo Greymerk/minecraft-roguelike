@@ -131,7 +131,6 @@ public class Dungeon implements IDungeon{
 		TreasureManager treasure = editor.getTreasure();
 		settings.processLoot(rand, treasure);
 		
-		 // TODO: Change start book details
 		IBook book = new BookStarter(editor);
 		treasure.addItemToAll(rand, Treasure.STARTER, new WeightedChoice<ItemStack>(book.get(), 1), 1);
 	}

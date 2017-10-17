@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import greymerk.roguelike.config.RogueConfig;
+import greymerk.roguelike.dungeon.base.DungeonRoom;
 import greymerk.roguelike.dungeon.base.IDungeonFactory;
 import greymerk.roguelike.dungeon.base.IDungeonRoom;
 import greymerk.roguelike.dungeon.settings.ISettings;
@@ -64,10 +65,14 @@ public class DungeonGenerator {
 			LevelLayout layout = level.getLayout();
 			IDungeonFactory rooms = level.getSettings().getRooms();
 			
+			int count = 0;
 			while(layout.hasEmptyRooms()){
-				IDungeonRoom toGenerate = rooms.get(rand);
+				IDungeonRoom toGenerate = count < level.getSettings().getNumRooms()
+						? rooms.get(rand)
+						: DungeonRoom.getInstance(DungeonRoom.CORNER);
 				DungeonNode node = layout.getBestFit(toGenerate);
 				node.setDungeon(toGenerate);
+				++count;
 			}
 		}
 		

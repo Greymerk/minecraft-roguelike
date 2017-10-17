@@ -14,8 +14,9 @@ public class SettingsLayout extends DungeonSettings{
 		
 		this.id = ID;
 		
-		int[] numRooms = {10, 15, 30, 20, 15};
-		int[] range = {40, 50, 80, 60, 50};
+		int[] numRooms = {10, 15, 15, 20, 15};
+		int[] scatter = {15, 15, 17, 12, 15};
+		int[] range = {50, 50, 80, 70, 50};
 		
 		LevelGenerator[] generator = {
 				LevelGenerator.CLASSIC,
@@ -29,7 +30,7 @@ public class SettingsLayout extends DungeonSettings{
 			LevelSettings level = new LevelSettings();
 			level.setNumRooms(numRooms[i]);
 			level.setRange(range[i]);
-			level.setScatter(12);
+			level.setScatter(scatter[i]);
 			level.setGenerator(generator[i]);
 			levels.put(i, level);
 		}
