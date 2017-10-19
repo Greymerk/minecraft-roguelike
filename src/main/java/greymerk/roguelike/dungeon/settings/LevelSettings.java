@@ -1,5 +1,7 @@
 package greymerk.roguelike.dungeon.settings;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import greymerk.roguelike.config.RogueConfig;
@@ -13,6 +15,7 @@ import greymerk.roguelike.dungeon.segment.SegmentGenerator;
 import greymerk.roguelike.theme.ITheme;
 import greymerk.roguelike.theme.Theme;
 import greymerk.roguelike.worldgen.Coord;
+import greymerk.roguelike.worldgen.filter.Filter;
 import greymerk.roguelike.worldgen.spawners.SpawnerSettings;
 
 public class LevelSettings {
@@ -27,6 +30,7 @@ public class LevelSettings {
 	private SegmentGenerator segments;
 	private SpawnerSettings spawners;
 	private LevelGenerator generator;
+	private List<Filter> filters;
 	
 	public LevelSettings(){
 		numRooms = RogueConfig.getInt(RogueConfig.LEVELMAXROOMS);
@@ -35,6 +39,7 @@ public class LevelSettings {
 		spawners = new SpawnerSettings();
 		rooms = new DungeonFactory();
 		secrets = new SecretFactory();
+		this.filters = new ArrayList<Filter>();
 		levelDifficulty = -1;
 	}
 	
@@ -94,6 +99,9 @@ public class LevelSettings {
 		
 		this.spawners = new SpawnerSettings(base.spawners, other.spawners);
 		this.generator = other.generator == null? base.generator : other.generator;
+		
+		this.filters.addAll(base.filters);
+		this.filters.addAll(other.filters);
 	}
 	
 	public LevelGenerator getGenerator(){
@@ -177,6 +185,14 @@ public class LevelSettings {
 		this.range = range;
 	}
 	
+	public List<Filter> getFilters(){
+		return this.filters;
+	}
+	
+	public void addFilter(Filter filter){
+		this.filters.add(filter);
+	}
+	
 	private void init(LevelSettings toCopy){
 		this.numRooms = toCopy.numRooms;
 		this.range = toCopy.range;
@@ -187,6 +203,8 @@ public class LevelSettings {
 		this.theme = toCopy.theme != null ? toCopy.theme : null;
 		this.segments = toCopy.segments != null ? new SegmentGenerator(toCopy.segments) : null;
 		this.spawners = new SpawnerSettings(toCopy.spawners);
+		this.filters = new ArrayList<Filter>();
+		this.filters.addAll(toCopy.filters);
 		this.generator = toCopy.generator;
 	}
 	

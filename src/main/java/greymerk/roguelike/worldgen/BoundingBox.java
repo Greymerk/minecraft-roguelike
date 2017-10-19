@@ -1,8 +1,7 @@
 package greymerk.roguelike.worldgen;
 
-import java.util.Random;
-
-import greymerk.roguelike.worldgen.shapes.RectWireframe;
+import greymerk.roguelike.worldgen.shapes.IShape;
+import greymerk.roguelike.worldgen.shapes.Shape;
 
 public class BoundingBox implements IBounded{
 
@@ -35,12 +34,19 @@ public class BoundingBox implements IBounded{
 		
 		return true;
 	}
-	
-	public void generate(IWorldEditor editor, Random rand, IBlockFactory blocks, Coord offset){
-		Coord s = new Coord(start);
-		Coord e = new Coord(end);		
-		s.add(offset);
-		e.add(offset);
-		RectWireframe.fill(editor, rand, s, e, blocks, true, false);
+
+	@Override
+	public IShape getShape(Shape type) {
+		return Shape.get(type, start, end);
+	}
+
+	@Override
+	public Coord getStart() {
+		return new Coord(start);
+	}
+
+	@Override
+	public Coord getEnd() {
+		return new Coord(end);
 	}
 }

@@ -13,7 +13,6 @@ import greymerk.roguelike.worldgen.IStair;
 import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.blocks.BlockType;
-import greymerk.roguelike.worldgen.blocks.Vine;
 import greymerk.roguelike.worldgen.shapes.RectHollow;
 import greymerk.roguelike.worldgen.shapes.RectSolid;
 
@@ -125,12 +124,6 @@ public class DungeonsSlime extends DungeonBase {
 		start.add(new Coord(-1, -1, -1));
 		end.add(new Coord(1, -1, 1));
 		RectSolid.fill(editor, rand, start, end, water);
-		
-		start = new Coord(origin);
-		end = new Coord(origin);
-		start.add(new Coord(-1, 4, -1));
-		end.add(new Coord(1, 4, 1));
-		Vine.fill(editor, rand, start, end);
 		
 		start = new Coord(origin);
 		end = new Coord(origin);

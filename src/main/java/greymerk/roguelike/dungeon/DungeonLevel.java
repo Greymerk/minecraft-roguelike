@@ -5,7 +5,10 @@ import java.util.Random;
 
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.worldgen.Coord;
+import greymerk.roguelike.worldgen.IBounded;
 import greymerk.roguelike.worldgen.IWorldEditor;
+import greymerk.roguelike.worldgen.filter.Filter;
+import greymerk.roguelike.worldgen.filter.IFilter;
 
 public class DungeonLevel implements IDungeonLevel{
 
@@ -63,6 +66,21 @@ public class DungeonLevel implements IDungeonLevel{
 		
 		for(DungeonTunnel t : tunnels){
 			t.encase(editor, rand, this.settings.getTheme());
+		}
+	}
+	
+	@Override
+	public void applyFilters(IWorldEditor editor, Random rand){
+		for(Filter type : this.settings.getFilters()){
+			IFilter filter = Filter.get(type);
+			this.filter(editor, rand, filter);
+		}
+	}
+
+	@Override
+	public void filter(IWorldEditor editor, Random rand, IFilter filter) {
+		for(IBounded box : this.generator.getLayout().getBoundingBoxes()){
+			filter.apply(editor, rand, settings.getTheme(), box);
 		}
 	}
 }

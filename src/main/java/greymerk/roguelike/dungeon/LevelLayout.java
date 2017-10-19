@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import greymerk.roguelike.dungeon.base.IDungeonRoom;
+import greymerk.roguelike.worldgen.IBounded;
 
 public class LevelLayout {
 
@@ -113,5 +114,12 @@ public class LevelLayout {
 		}
 		
 		return false;
+	}
+	
+	public List<IBounded> getBoundingBoxes(){
+		List<IBounded> boxes = new ArrayList<IBounded>();
+		boxes.addAll(nodes);
+		boxes.addAll(tunnels);
+		return boxes;
 	}
 }

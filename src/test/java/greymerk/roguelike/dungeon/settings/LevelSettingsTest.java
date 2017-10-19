@@ -11,6 +11,7 @@ import greymerk.roguelike.dungeon.LevelGenerator;
 import greymerk.roguelike.dungeon.base.DungeonFactory;
 import greymerk.roguelike.dungeon.base.DungeonRoom;
 import greymerk.roguelike.dungeon.base.SecretFactory;
+import greymerk.roguelike.worldgen.filter.Filter;
 import net.minecraft.init.Bootstrap;
 
 public class LevelSettingsTest {
@@ -145,6 +146,30 @@ public class LevelSettingsTest {
 		LevelSettings merge2 = new LevelSettings(other, base, overrides);
 		
 		assert(merge2.equals(compare));
+		
+	}
+	
+	@Test
+	public void testFilterMerge(){
+		Set<SettingsType> overrides = new HashSet<SettingsType>();
+		
+		LevelSettings compare = new LevelSettings();
+		assert(compare.getFilters().isEmpty());
+		compare.addFilter(Filter.VINE);
+		assert(compare.getFilters().contains(Filter.VINE));
+		
+		LevelSettings base = new LevelSettings();
+		base.addFilter(Filter.VINE);
+		
+		assert((new LevelSettings(base)).getFilters().contains(Filter.VINE));
+		
+		LevelSettings other = new LevelSettings();
+		
+		assert(!(new LevelSettings(other, other, overrides)).getFilters().contains(Filter.VINE));
+		
+		assert((new LevelSettings(base, other, overrides)).getFilters().contains(Filter.VINE));
+		
+		assert((new LevelSettings(other, base, overrides)).getFilters().contains(Filter.VINE));
 		
 	}
 }

@@ -84,4 +84,5 @@ public class LevelGeneratorMST implements ILevelGenerator{
 	public LevelLayout getLayout(){
 		return this.layout;
 	}
+
 }

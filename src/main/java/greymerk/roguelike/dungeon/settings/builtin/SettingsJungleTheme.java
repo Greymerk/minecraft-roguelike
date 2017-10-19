@@ -15,6 +15,7 @@ import greymerk.roguelike.dungeon.towers.Tower;
 import greymerk.roguelike.theme.Theme;
 import greymerk.roguelike.treasure.loot.LootRuleManager;
 import greymerk.roguelike.treasure.loot.WeightedRandomLoot;
+import greymerk.roguelike.worldgen.filter.Filter;
 import net.minecraft.init.Items;
 import net.minecraftforge.common.BiomeDictionary;
 
@@ -59,12 +60,11 @@ public class SettingsJungleTheme extends DungeonSettings{
 				segments.add(Segment.CHEST, 1);
 				segments.add(Segment.SPAWNER, 2);
 				level.setSegments(segments);
+				level.addFilter(Filter.VINE);
 			}
 						
 			level.setTheme(Theme.getTheme(themes[i]));
 			levels.put(i, level);
 		}
 	}
-
-	
 }

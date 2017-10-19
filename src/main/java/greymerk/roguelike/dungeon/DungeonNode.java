@@ -9,7 +9,9 @@ import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IBounded;
 import greymerk.roguelike.worldgen.IWorldEditor;
+import greymerk.roguelike.worldgen.shapes.IShape;
 import greymerk.roguelike.worldgen.shapes.RectSolid;
+import greymerk.roguelike.worldgen.shapes.Shape;
 
 public class DungeonNode implements IBounded{
 
@@ -83,5 +85,20 @@ public class DungeonNode implements IBounded{
 	@Override
 	public boolean collide(IBounded other) {
 		return this.getBoundingBox().collide(other);
+	}
+
+	@Override
+	public IShape getShape(Shape type) {
+		return this.getBoundingBox().getShape(type);
+	}
+
+	@Override
+	public Coord getStart() {
+		return this.getBoundingBox().getStart();
+	}
+
+	@Override
+	public Coord getEnd() {
+		return this.getBoundingBox().getEnd();
 	}
 }

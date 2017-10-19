@@ -119,6 +119,7 @@ public class Dungeon implements IDungeon{
 			if(setting == null) return;
 			
 			generate(setting, location);
+			
 			return;
 		}
 	}
@@ -133,6 +134,9 @@ public class Dungeon implements IDungeon{
 		
 		IBook book = new BookStarter(editor);
 		treasure.addItemToAll(rand, Treasure.STARTER, new WeightedChoice<ItemStack>(book.get(), 1), 1);
+		
+		generator.applyFilters(editor, rand);
+		
 	}
 	
 	public static boolean canSpawnInChunk(int chunkX, int chunkZ, IWorldEditor editor){
