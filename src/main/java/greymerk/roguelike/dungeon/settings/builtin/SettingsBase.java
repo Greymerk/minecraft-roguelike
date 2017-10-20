@@ -20,6 +20,5 @@ public class SettingsBase extends DungeonSettings{
 		this.inherit.add(SettingsLayout.ID);
 		this.inherit.add(SettingsTheme.ID);
 		this.inherit.add(SettingsLootRules.ID);
-		
 	}
 }

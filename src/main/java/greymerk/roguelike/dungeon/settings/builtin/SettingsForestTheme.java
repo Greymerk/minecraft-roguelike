@@ -14,6 +14,7 @@ import greymerk.roguelike.dungeon.settings.SpawnCriteria;
 import greymerk.roguelike.dungeon.settings.TowerSettings;
 import greymerk.roguelike.dungeon.towers.Tower;
 import greymerk.roguelike.theme.Theme;
+import greymerk.roguelike.worldgen.filter.Filter;
 import net.minecraftforge.common.BiomeDictionary;
 
 public class SettingsForestTheme extends DungeonSettings{
@@ -65,6 +66,6 @@ public class SettingsForestTheme extends DungeonSettings{
 			level.setSecrets(secrets);
 			levels.put(i, level);
 		}
-		
+		levels.get(3).addFilter(Filter.VINE);
 	}
 }

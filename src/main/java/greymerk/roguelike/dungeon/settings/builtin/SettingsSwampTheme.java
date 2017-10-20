@@ -98,5 +98,8 @@ public class SettingsSwampTheme extends DungeonSettings{
 			
 			levels.put(i, level);
 		}
+		
+		levels.get(2).addFilter(Filter.VINE);
+		levels.get(3).addFilter(Filter.VINE);
 	}
 }
