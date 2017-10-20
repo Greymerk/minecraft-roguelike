@@ -40,17 +40,16 @@ public class Coord{
 		return z;
 	}
 	
-	public void add(Cardinal dir, int amount){
-		
+	public Coord add(Cardinal dir, int amount){
 		switch(dir){
-		case EAST: x += amount; return;
-		case WEST: x -= amount; return;
-		case UP: y += amount; return;
-		case DOWN: y -= amount; return;
-		case NORTH: z -= amount; return;
-		case SOUTH: z += amount; return;
-
-		}		
+		case EAST: x += amount; return this;
+		case WEST: x -= amount; return this;
+		case UP: y += amount; return this;
+		case DOWN: y -= amount; return this;
+		case NORTH: z -= amount; return this;
+		case SOUTH: z += amount; return this;
+		}
+		return this;
 	}
 	
 	public Coord add(Coord other){
@@ -67,8 +66,9 @@ public class Coord{
 		return this;
 	}
 	
-	public void add(Cardinal dir){
+	public Coord add(Cardinal dir){
 		add(dir, 1);
+		return this;
 	}
 
 	public double distance(Coord other){

@@ -1,7 +1,9 @@
 package greymerk.roguelike.dungeon.rooms;
 
+import java.util.List;
 import java.util.Random;
 
+import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.dungeon.base.DungeonBase;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.worldgen.BlockCheckers;
@@ -10,9 +12,12 @@ import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.blocks.BlockType;
+import greymerk.roguelike.worldgen.blocks.EnderChest;
 import greymerk.roguelike.worldgen.blocks.Quartz;
+import greymerk.roguelike.worldgen.shapes.IShape;
 import greymerk.roguelike.worldgen.shapes.RectSolid;
 import greymerk.roguelike.worldgen.spawners.Spawner;
+import net.minecraft.init.Blocks;
 
 public class DungeonsEnder extends DungeonBase {
 
@@ -64,10 +69,31 @@ public class DungeonsEnder extends DungeonBase {
 		
 		BlockCheckers checkers = new BlockCheckers(black, white);
 		RectSolid.fill(editor, inRandom, start, end, checkers);
-		// TODO: add ender chest
+		
+		start = new Coord(origin);
+		end = new Coord(origin);
+		start.add(new Coord(-4, 0, -4));
+		end.add(new Coord(4, 0, 4));
+		if(RogueConfig.getBoolean(RogueConfig.GENEROUS)) addEnderChest(editor, new RectSolid(start, end));
 		Spawner.generate(editor, inRandom, settings, origin, Spawner.ENDERMAN);
 
 		return true;
+	}
+	
+	private void addEnderChest(IWorldEditor editor, IShape area){
+		for(Coord pos : area){
+			if(!editor.isAirBlock(pos)) continue;
+			
+			Coord cursor = new Coord(pos); 
+			for(Cardinal dir : Cardinal.values()){
+				cursor.add(dir);
+				if(editor.getBlock(cursor).isOpaqueCube()){
+					EnderChest.set(editor, Cardinal.reverse(dir), pos);
+					return;
+				}
+				cursor.add(Cardinal.reverse(dir));
+			}
+		}
 	}
 	
 	
