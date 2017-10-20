@@ -10,8 +10,8 @@ import net.minecraft.util.Tuple;
 
 public enum RogueConfig {
 
-	DONATURALSPAWN, LEVELRANGE, LEVELMAXROOMS, LEVELSCATTER, SPAWNFREQUENCY, GENEROUS, MOBDROPS, DIMENSIONWL, DIMENSIONBL, 
-	PRECIOUSBLOCKS, LOOTING, UPPERLIMIT, LOWERLIMIT, ROGUESPAWNERS, ENCASE, FURNITURE, RANDOM, SPAWNBUILTIN, SPAWNCHANCE;
+	DONATURALSPAWN, SPAWNFREQUENCY, GENEROUS, MOBDROPS, DIMENSIONWL, DIMENSIONBL, PRECIOUSBLOCKS, LOOTING, 
+	UPPERLIMIT, LOWERLIMIT, ROGUESPAWNERS, ENCASE, FURNITURE, RANDOM, SPAWNBUILTIN, SPAWNCHANCE;
 	
 	public static final String configDirName = "config/roguelike_dungeons";
 	public static final String configFileName = "roguelike.cfg";
@@ -22,9 +22,6 @@ public enum RogueConfig {
 	public static String getName(RogueConfig option){
 		switch(option){
 		case DONATURALSPAWN: return "doNaturalSpawn";
-		case LEVELRANGE: return "levelRange";
-		case LEVELMAXROOMS: return "levelMaxRooms";
-		case LEVELSCATTER: return "levelScatter";
 		case SPAWNFREQUENCY: return "spawnFrequency";
 		case SPAWNCHANCE: return "spawnChance";
 		case GENEROUS: return "generous";
@@ -46,9 +43,6 @@ public enum RogueConfig {
 	public static Tuple<String, ?> getDefault(RogueConfig option){
 		switch(option){
 		case DONATURALSPAWN: return new Tuple<String, Boolean>(getName(option), true);
-		case LEVELRANGE: return new Tuple<String, Integer>(getName(option), 80);
-		case LEVELMAXROOMS: return new Tuple<String, Integer>(getName(option), 30);
-		case LEVELSCATTER: return new Tuple<String, Integer>(getName(option), 10);
 		case SPAWNCHANCE: return new Tuple<String, Double>(getName(option), 1.0);
 		case SPAWNFREQUENCY: return new Tuple<String, Integer>(getName(option), 10);
 		case GENEROUS: return new Tuple<String, Boolean>(getName(option), true);
@@ -74,9 +68,6 @@ public enum RogueConfig {
 	@SuppressWarnings("unchecked")
 	private static void setDefaults(){
 		if(!instance.ContainsKey(getName(DONATURALSPAWN))) setBoolean(DONATURALSPAWN, (Boolean)getDefault(DONATURALSPAWN).getSecond());
-		if(!instance.ContainsKey(getName(LEVELRANGE)))setInt(LEVELRANGE, (Integer)getDefault(LEVELRANGE).getSecond());
-		if(!instance.ContainsKey(getName(LEVELMAXROOMS)))setInt(LEVELMAXROOMS, (Integer)getDefault(LEVELMAXROOMS).getSecond());
-		if(!instance.ContainsKey(getName(LEVELSCATTER)))setInt(LEVELSCATTER, (Integer)getDefault(LEVELSCATTER).getSecond());
 		if(!instance.ContainsKey(getName(SPAWNFREQUENCY)))setInt(SPAWNFREQUENCY, (Integer)getDefault(SPAWNFREQUENCY).getSecond());
 		if(!instance.ContainsKey(getName(SPAWNCHANCE)))setDouble(SPAWNCHANCE, (Double)getDefault(SPAWNCHANCE).getSecond());
 		if(!instance.ContainsKey(getName(GENEROUS))) setBoolean(GENEROUS, (Boolean)getDefault(GENEROUS).getSecond());

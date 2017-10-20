@@ -18,6 +18,7 @@ import greymerk.roguelike.theme.Theme;
 import greymerk.roguelike.treasure.loot.LootRuleManager;
 import greymerk.roguelike.treasure.loot.WeightedRandomLoot;
 import greymerk.roguelike.util.WeightedRandomizer;
+import greymerk.roguelike.worldgen.filter.Filter;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.BiomeDictionary;
@@ -71,6 +72,7 @@ public class SettingsSwampTheme extends DungeonSettings{
 				factory.addRandom(DungeonRoom.BRICK, 10);
 				factory.addRandom(DungeonRoom.CORNER, 3);
 				level.setRooms(factory);
+				level.addFilter(Filter.MUD);
 			}
 			
 			if(i == 1){
@@ -91,7 +93,7 @@ public class SettingsSwampTheme extends DungeonSettings{
 				factory.addRandom(DungeonRoom.BRICK, 10);
 				factory.addRandom(DungeonRoom.CORNER, 3);
 				level.setRooms(factory);
-				
+				level.addFilter(Filter.MUD);
 			}
 			
 			levels.put(i, level);

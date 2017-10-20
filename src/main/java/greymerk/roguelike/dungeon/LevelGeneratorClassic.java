@@ -11,6 +11,8 @@ import greymerk.roguelike.worldgen.IWorldEditor;
 
 public class LevelGeneratorClassic implements ILevelGenerator{
 
+	private static final int MIN_ROOMS = 6;
+	
 	private IWorldEditor editor;
 	private Random rand;
 	private LevelLayout layout;
@@ -73,7 +75,7 @@ public class LevelGeneratorClassic implements ILevelGenerator{
 	}
 	
 	private boolean full(List<Node> nodes){
-		return nodes.size() >= this.settings.getNumRooms();
+		return nodes.size() >= Math.max(this.settings.getNumRooms(), MIN_ROOMS);
 	}
 	
 	public void spawnNode(List<Node> nodes, Tunneler tunneler){		

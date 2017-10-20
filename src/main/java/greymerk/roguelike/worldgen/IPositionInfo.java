@@ -8,8 +8,4 @@ public interface IPositionInfo {
 	
 	Biome getBiome();
 	
-	boolean validGroundBlock();
-	
-	MetaBlock getBlock();
-	
 }

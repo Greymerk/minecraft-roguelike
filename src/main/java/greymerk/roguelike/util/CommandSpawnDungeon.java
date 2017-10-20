@@ -93,7 +93,7 @@ public class CommandSpawnDungeon extends CommandBase
 			}
 			sender.sendMessage(new TextComponentString(TextFormat.apply("Biome Information for " + pos.toString(), TextFormat.GOLD)));
 			
-			Biome biome = editor.getBiome(pos);
+			Biome biome = editor.getInfo(pos).getBiome();
 			sender.sendMessage(new TextComponentString(TextFormat.apply(biome.getBiomeName(), TextFormat.GOLD)));
 			Set<BiomeDictionary.Type> biomeTypes = BiomeDictionary.getTypes(biome);
 			String types = "";

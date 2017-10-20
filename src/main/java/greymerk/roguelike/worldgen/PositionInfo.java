@@ -1,34 +1,25 @@
 package greymerk.roguelike.worldgen;
 
+import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 
 public class PositionInfo implements IPositionInfo {
 
-	private IWorldEditor editor;
+	private World world;
 	private Coord pos;
 	
-	public PositionInfo(IWorldEditor editor, Coord pos){
-		this.editor = editor;
+	public PositionInfo(World world, Coord pos){
+		this.world = world;
 		this.pos = pos;
 	}
 	
 	@Override
 	public int getDimension() {
-		return this.editor.getDimension();
+		return world.provider.getDimension();
 	}
 
 	@Override
 	public Biome getBiome() {
-		return editor.getBiome(pos);
-	}
-
-	@Override
-	public boolean validGroundBlock() {
-		return editor.validGroundBlock(pos);
-	}
-
-	@Override
-	public MetaBlock getBlock() {
-		return editor.getBlock(pos);
+		return world.getBiome(pos.getBlockPos());
 	}
 }

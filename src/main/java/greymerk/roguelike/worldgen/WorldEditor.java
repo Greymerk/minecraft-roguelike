@@ -18,7 +18,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
-import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.ChunkProviderServer;
 
 public class WorldEditor implements IWorldEditor{
@@ -90,17 +89,6 @@ public class WorldEditor implements IWorldEditor{
 	public long getSeed(){
 		return this.world.getSeed();
 	}
-
-	
-	@Override
-	public Biome getBiome(Coord pos){
-		return world.getBiome(pos.getBlockPos());
-	}
-	
-	@Override
-	public int getDimension(){
-		return world.provider.getDimension();
-	}
 	
 	@Override
 	public Random getSeededRandom(int a, int b, int c){
@@ -162,17 +150,6 @@ public class WorldEditor implements IWorldEditor{
 	}
 	
 	@Override
-	public String toString(){
-		String toReturn = "";
-
-		for(Map.Entry<Block, Integer> pair : stats.entrySet()){
-			toReturn += pair.getKey().getLocalizedName() + ": " + pair.getValue() + "\n";
-		}
-		
-		return toReturn;
-	}
-	
-	@Override
 	public int getStat(Block type){
 		if(!this.stats.containsKey(type)) return 0;
 		return this.stats.get(type);
@@ -196,7 +173,7 @@ public class WorldEditor implements IWorldEditor{
 
 	@Override
 	public IPositionInfo getInfo(Coord pos) {
-		return new PositionInfo(this, pos);
+		return new PositionInfo(this.world, pos);
 	}
 
 	@Override
@@ -216,6 +193,17 @@ public class WorldEditor implements IWorldEditor{
 		if(structurebp == null) return null;
 		
 		return new Coord(structurebp);		
+	}
+	
+	@Override
+	public String toString(){
+		String toReturn = "";
+
+		for(Map.Entry<Block, Integer> pair : stats.entrySet()){
+			toReturn += pair.getKey().getLocalizedName() + ": " + pair.getValue() + "\n";
+		}
+		
+		return toReturn;
 	}
 }
 

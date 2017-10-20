@@ -6,7 +6,6 @@ import greymerk.roguelike.treasure.ITreasureChest;
 import greymerk.roguelike.treasure.TreasureManager;
 import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.biome.Biome;
 
 public interface IWorldEditor {
 
@@ -17,10 +16,6 @@ public interface IWorldEditor {
 	boolean isAirBlock(Coord pos);
 	
 	TileEntity getTileEntity(Coord pos);
-
-	Biome getBiome(Coord pos);
-	
-	int getDimension();
 	
 	long getSeed();
 	

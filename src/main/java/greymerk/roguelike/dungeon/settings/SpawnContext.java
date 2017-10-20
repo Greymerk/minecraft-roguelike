@@ -41,6 +41,11 @@ public class SpawnContext implements ISpawnContext{
 		return false;
 	}
 
+	@Override
+	public int getDimension() {
+		return this.info.getDimension();
+	}
+
 	
 	
 }

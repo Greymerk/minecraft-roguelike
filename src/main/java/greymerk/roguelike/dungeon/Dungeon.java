@@ -143,7 +143,7 @@ public class Dungeon implements IDungeon{
 		
 		if(!RogueConfig.getBoolean(RogueConfig.DONATURALSPAWN)) return false;
 		
-		int dim = editor.getDimension();
+		int dim = editor.getInfo(new Coord(chunkX * 16, 0, chunkZ * 16)).getDimension();
 		List<Integer> wl = new ArrayList<Integer>();
 		wl.addAll(RogueConfig.getIntList(RogueConfig.DIMENSIONWL));
 		List<Integer> bl = new ArrayList<Integer>();
@@ -185,7 +185,6 @@ public class Dungeon implements IDungeon{
 	}
 	
 	public void spawnInChunk(Random rand, int chunkX, int chunkZ) {
-		
 		if(Dungeon.canSpawnInChunk(chunkX, chunkZ, editor)){
 			int x = chunkX * 16 + 4;
 			int z = chunkZ * 16 + 4;
@@ -205,7 +204,7 @@ public class Dungeon implements IDungeon{
 	
 	public boolean validLocation(Random rand, Coord column){
 		
-		Biome biome = editor.getBiome(column);
+		Biome biome = editor.getInfo(column).getBiome();
 
 		Type[] invalidBiomes = new Type[]{
 				BiomeDictionary.Type.RIVER,

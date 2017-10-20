@@ -1,10 +1,10 @@
 package greymerk.roguelike.dungeon.settings;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.dungeon.Dungeon;
 import greymerk.roguelike.dungeon.LevelGenerator;
 import greymerk.roguelike.dungeon.base.DungeonFactory;
@@ -20,6 +20,10 @@ import greymerk.roguelike.worldgen.spawners.SpawnerSettings;
 
 public class LevelSettings {
 
+	private static final int NUM_ROOMS = 12;
+	private static final int LEVEL_RANGE = 80;
+	private static final int SCATTER = 12;
+	
 	private int numRooms;
 	private int range;
 	private int scatter;
@@ -30,21 +34,36 @@ public class LevelSettings {
 	private SegmentGenerator segments;
 	private SpawnerSettings spawners;
 	private LevelGenerator generator;
-	private List<Filter> filters;
+	private Set<Filter> filters;
 	
 	public LevelSettings(){
-		numRooms = RogueConfig.getInt(RogueConfig.LEVELMAXROOMS);
-		range = RogueConfig.getInt(RogueConfig.LEVELRANGE);
-		scatter = RogueConfig.getInt(RogueConfig.LEVELSCATTER);
+		numRooms = NUM_ROOMS;
+		range = LEVEL_RANGE;
+		scatter = SCATTER;
 		spawners = new SpawnerSettings();
 		rooms = new DungeonFactory();
 		secrets = new SecretFactory();
-		this.filters = new ArrayList<Filter>();
+		this.filters = new HashSet<Filter>();
 		levelDifficulty = -1;
 	}
 	
 	public LevelSettings(LevelSettings toCopy){
 		init(toCopy);
+	}
+	
+	private void init(LevelSettings toCopy){
+		this.numRooms = toCopy.numRooms;
+		this.range = toCopy.range;
+		this.scatter = toCopy.scatter;
+		this.levelDifficulty = toCopy.levelDifficulty;
+		this.rooms = toCopy.rooms != null ? new DungeonFactory(toCopy.rooms) : null;
+		this.secrets = toCopy.secrets != null ? new SecretFactory(toCopy.secrets) : null;
+		this.theme = toCopy.theme != null ? toCopy.theme : null;
+		this.segments = toCopy.segments != null ? new SegmentGenerator(toCopy.segments) : null;
+		this.spawners = new SpawnerSettings(toCopy.spawners);
+		this.filters = new HashSet<Filter>();
+		this.filters.addAll(toCopy.filters);
+		this.generator = toCopy.generator;
 	}
 	
 	public LevelSettings(LevelSettings base, LevelSettings other, Set<SettingsType> overrides){
@@ -62,14 +81,21 @@ public class LevelSettings {
 			init(base); return;
 		}
 		
-		this.numRooms = other.numRooms != base.numRooms && other.numRooms != RogueConfig.getInt(RogueConfig.LEVELMAXROOMS) 
-				? other.numRooms 
-				: base.numRooms;
+		this.numRooms = other.numRooms != base.numRooms 
+				&& other.numRooms != NUM_ROOMS 
+				? other.numRooms : base.numRooms;
 		
-		this.range = other.range != base.range && other.range != RogueConfig.getInt(RogueConfig.LEVELRANGE) ? other.range : base.range;
-		this.scatter = other.scatter != base.scatter && other.scatter != RogueConfig.getInt(RogueConfig.LEVELSCATTER) ? other.scatter : base.scatter;
+		this.range = other.range != base.range 
+				&& other.range != LEVEL_RANGE
+				? other.range : base.range;
 		
-		this.levelDifficulty = (base.levelDifficulty != other.levelDifficulty && other.levelDifficulty != -1) || base.levelDifficulty == -1 ? other.levelDifficulty : base.levelDifficulty;
+		this.scatter = other.scatter != base.scatter 
+				&& other.scatter != SCATTER
+				? other.scatter : base.scatter;
+		
+		this.levelDifficulty = (base.levelDifficulty != other.levelDifficulty 
+				&& other.levelDifficulty != -1) || base.levelDifficulty == -1 
+				? other.levelDifficulty : base.levelDifficulty;
 		
 		if(overrides.contains(SettingsType.ROOMS)){
 			this.rooms = new DungeonFactory(base.rooms);
@@ -186,27 +212,15 @@ public class LevelSettings {
 	}
 	
 	public List<Filter> getFilters(){
-		return this.filters;
+		List<Filter> toReturn = new ArrayList<Filter>();
+		toReturn.addAll(this.filters);
+		return toReturn;
 	}
 	
 	public void addFilter(Filter filter){
 		this.filters.add(filter);
 	}
-	
-	private void init(LevelSettings toCopy){
-		this.numRooms = toCopy.numRooms;
-		this.range = toCopy.range;
-		this.scatter = toCopy.scatter;
-		this.levelDifficulty = toCopy.levelDifficulty;
-		this.rooms = toCopy.rooms != null ? new DungeonFactory(toCopy.rooms) : null;
-		this.secrets = toCopy.secrets != null ? new SecretFactory(toCopy.secrets) : null;
-		this.theme = toCopy.theme != null ? toCopy.theme : null;
-		this.segments = toCopy.segments != null ? new SegmentGenerator(toCopy.segments) : null;
-		this.spawners = new SpawnerSettings(toCopy.spawners);
-		this.filters = new ArrayList<Filter>();
-		this.filters.addAll(toCopy.filters);
-		this.generator = toCopy.generator;
-	}
+
 	
 	@Override
 	public boolean equals(Object o){

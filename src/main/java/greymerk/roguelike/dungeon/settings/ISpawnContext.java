@@ -17,6 +17,6 @@ public interface ISpawnContext {
 
 	public boolean includesBiomeType(List<Type> biomeTypes);
 	
-	
+	public int getDimension();
 	
 }
