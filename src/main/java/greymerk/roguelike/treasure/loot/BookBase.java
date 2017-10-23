@@ -10,17 +10,17 @@ import net.minecraft.nbt.NBTTagString;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 
-public class Book implements IBook{
+public class BookBase implements IBook{
 
 	private List<String> pages;
 	private String author;
 	private String title;
 	
-	public Book(){
+	public BookBase(){
 		this.pages = new ArrayList<String>();
 	}
 	
-	public Book(String author, String title){
+	public BookBase(String author, String title){
 		this.pages = new ArrayList<String>();
 		this.author = author;
 		this.title = title;

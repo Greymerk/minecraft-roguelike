@@ -1,11 +1,11 @@
 package greymerk.roguelike.treasure.loot.books;
 
 import greymerk.roguelike.Roguelike;
-import greymerk.roguelike.treasure.loot.Book;
+import greymerk.roguelike.treasure.loot.BookBase;
 import greymerk.roguelike.worldgen.IWorldEditor;
 import net.minecraft.init.Blocks;
 
-public class BookStarter extends Book{
+public class BookStarter extends BookBase{
 
 	public BookStarter(IWorldEditor editor){
 		super("greymerk", "statistics");
