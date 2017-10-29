@@ -3,11 +3,13 @@ package greymerk.roguelike.dungeon.towers;
 import java.util.Random;
 
 import greymerk.roguelike.theme.ITheme;
+import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.Log;
 import greymerk.roguelike.worldgen.blocks.Wood;
+import greymerk.roguelike.worldgen.shapes.Line;
 import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 public class TreeTower implements ITower{
@@ -33,5 +35,13 @@ public class TreeTower implements ITower{
 		for(Coord p : new RectSolid(ground, pos)){
 			editor.spiralStairStep(rand, p, theme.getPrimary().getStair(), Log.getLog(Wood.OAK));
 		}
+		
+		start = new Coord(ground);
+		start.add(Cardinal.UP, 10);
+		end = new Coord(start);
+		end.add(Cardinal.UP, 15);
+		end.add(Cardinal.NORTH, 8);
+		end.add(Cardinal.EAST, 4);
+		new Line(start, end).fill(editor, rand, theme.getPrimary().getLightBlock());
 	}
 }
