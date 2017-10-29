@@ -17,7 +17,6 @@ public class Line implements IShape{
 	public Line(Coord start, Coord end){
 		this.start = new Coord(start);
 		this.end = new Coord(end);
-		Coord.correct(start, end);
 	}
 
 	@Override
@@ -54,6 +53,7 @@ public class Line implements IShape{
 		int x_inc; int y_inc; int z_inc;
 		int err_1; int err_2;
 		int dx2; int dy2; int dz2;
+		int i;
 		
 		public LineIterator(){
 			
@@ -73,6 +73,7 @@ public class Line implements IShape{
 			dx2 = l << 1;
 			dy2 = m << 1;
 			dz2 = n << 1;
+			i = 0;
 			
 			if(l >= m && l >= n){
 				err_1 = dy2 - l;
@@ -88,8 +89,14 @@ public class Line implements IShape{
 		}
 		
 		@Override
-		public boolean hasNext() {
-			return !new Coord(x, y, z).equals(end);
+		public boolean hasNext() {			
+			if(l >= m && l >= n){
+				return i < l;
+			} else if(m >= l && m >= n){
+				return i < m;
+			} else {
+				return i < n;
+			}
 		}
 
 		@Override
@@ -131,6 +138,9 @@ public class Line implements IShape{
 				err_2 += dx2;
 				z += z_inc;
 			}
+			
+			++i;
+			
 			return new Coord(x, y, z);
 		}
 	}

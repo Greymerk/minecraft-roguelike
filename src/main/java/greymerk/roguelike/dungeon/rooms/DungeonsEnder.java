@@ -1,6 +1,5 @@
 package greymerk.roguelike.dungeon.rooms;
 
-import java.util.List;
 import java.util.Random;
 
 import greymerk.roguelike.config.RogueConfig;
@@ -17,7 +16,6 @@ import greymerk.roguelike.worldgen.blocks.Quartz;
 import greymerk.roguelike.worldgen.shapes.IShape;
 import greymerk.roguelike.worldgen.shapes.RectSolid;
 import greymerk.roguelike.worldgen.spawners.Spawner;
-import net.minecraft.init.Blocks;
 
 public class DungeonsEnder extends DungeonBase {
 

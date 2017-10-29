@@ -3,10 +3,13 @@ package greymerk.roguelike.dungeon.towers;
 import java.util.Random;
 
 import greymerk.roguelike.theme.ITheme;
+import greymerk.roguelike.util.DyeColor;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
+import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.blocks.BlockType;
+import greymerk.roguelike.worldgen.blocks.ColorBlock;
 import greymerk.roguelike.worldgen.blocks.Log;
 import greymerk.roguelike.worldgen.blocks.Wood;
 import greymerk.roguelike.worldgen.shapes.Line;
@@ -24,7 +27,7 @@ public class TreeTower implements ITower{
 		Coord end = new Coord(ground);
 		end.add(new Coord(4, 10, 4));
 		
-		Log.getLog(Wood.OAK).fill(editor, rand, new RectSolid(start, end));
+		//Log.getLog(Wood.OAK).fill(editor, rand, new RectSolid(start, end));
 		
 		start = new Coord(ground);
 		start.add(new Coord(-2, 0, -2));
@@ -37,11 +40,16 @@ public class TreeTower implements ITower{
 		}
 		
 		start = new Coord(ground);
-		start.add(Cardinal.UP, 10);
+		start.add(Cardinal.UP, 40);
 		end = new Coord(start);
-		end.add(Cardinal.UP, 15);
-		end.add(Cardinal.NORTH, 8);
-		end.add(Cardinal.EAST, 4);
-		new Line(start, end).fill(editor, rand, theme.getPrimary().getLightBlock());
+		start.add(new Coord(-30, 0, -30));
+		end.add(new Coord(30, 0, 30));
+		
+		for(Coord c : new RectSolid(start, end)){
+			if(c.getX() % 5 != 0 || c.getZ() % 5 != 0) continue;	
+			IBlockFactory glass = ColorBlock.get(ColorBlock.GLASS, DyeColor.values()[rand.nextInt(DyeColor.values().length)]);
+			new Line(ground, c).fill(editor, rand, glass);	
+		}
+		
 	}
 }
