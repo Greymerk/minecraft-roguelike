@@ -16,6 +16,7 @@ import greymerk.roguelike.worldgen.blocks.ColorBlock;
 import greymerk.roguelike.worldgen.blocks.Leaves;
 import greymerk.roguelike.worldgen.blocks.Quartz;
 import greymerk.roguelike.worldgen.blocks.StairType;
+import greymerk.roguelike.worldgen.blocks.Wood;
 import greymerk.roguelike.worldgen.shapes.RectHollow;
 import greymerk.roguelike.worldgen.shapes.RectSolid;
 
@@ -220,7 +221,7 @@ public class DungeonAvidya extends DungeonBase {
 				cursor.add(dir, 8);
 				cursor.add(orth, 3);
 				BlockType.get(BlockType.GRASS).set(editor, cursor);
-				MetaBlock leaves = Leaves.get(Leaves.OAK, false);
+				MetaBlock leaves = Leaves.get(Wood.OAK, false);
 				
 				leaves.set(editor, cursor);
 				cursor.add(orth, 1);

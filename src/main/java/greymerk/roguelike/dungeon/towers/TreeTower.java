@@ -23,7 +23,6 @@ import greymerk.roguelike.worldgen.shapes.Sphere;
 public class TreeTower implements ITower{
 
 	public static final Wood WOOD_TYPE = Wood.OAK;
-	public static final Leaves LEAF_TYPE = Leaves.OAK;
 	
 	@Override
 	public void generate(IWorldEditor editor, Random rand, ITheme theme, Coord origin) {
@@ -197,7 +196,7 @@ public class TreeTower implements ITower{
 			getLeafShape(leafShape, rand);
 			
 			BlockWeightedRandom leaves = new BlockWeightedRandom();
-			leaves.addBlock(Leaves.get(LEAF_TYPE, true), 1);
+			leaves.addBlock(Leaves.get(WOOD_TYPE, true), 1);
 			leaves.addBlock(BlockType.get(BlockType.AIR), 1);
 			
 			leafShape.fill(editor, rand, leaves, true, false);

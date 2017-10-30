@@ -8,11 +8,9 @@ import net.minecraft.block.BlockOldLeaf;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.init.Blocks;
 
-public enum Leaves {
+public class Leaves {
 	
-	OAK, SPRUCE, BIRCH, JUNGLE, ACACIA, DARKOAK;
-	
-	public static MetaBlock get(Leaves type, boolean decay){
+	public static MetaBlock get(Wood type, boolean decay){
 		
 		Block base = getBlockId(type);
 		
@@ -32,7 +30,7 @@ public enum Leaves {
 		
 	}
 	
-	public static Block getBlockId(Leaves type){
+	public static Block getBlockId(Wood type){
 		switch(type){
 		case OAK: return Blocks.LEAVES;
 		case SPRUCE: return Blocks.LEAVES;
@@ -44,7 +42,7 @@ public enum Leaves {
 		}
 	}
 	
-	private static BlockPlanks.EnumType getType(Leaves type){
+	private static BlockPlanks.EnumType getType(Wood type){
 		
 		switch(type){
 		case OAK: return BlockPlanks.EnumType.OAK;
