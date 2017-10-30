@@ -16,6 +16,7 @@ import greymerk.roguelike.worldgen.blocks.Leaves;
 import greymerk.roguelike.worldgen.blocks.Log;
 import greymerk.roguelike.worldgen.blocks.Wood;
 import greymerk.roguelike.worldgen.shapes.Line;
+import greymerk.roguelike.worldgen.shapes.MultiShape;
 import greymerk.roguelike.worldgen.shapes.RectSolid;
 import greymerk.roguelike.worldgen.shapes.Sphere;
 
@@ -43,6 +44,7 @@ public class TreeTower implements ITower{
 		Branch tree = new Branch(rand, start);
 		tree.genWood(editor, rand);
 		tree.genLeaves(editor, rand);
+
 		
 		start = new Coord(ground);
 		start.add(new Coord(-3, -3, -3));
@@ -117,8 +119,8 @@ public class TreeTower implements ITower{
 		public Branch(Random rand, Coord start){
 			this.start = new Coord(start);
 			this.branches = new ArrayList<Branch>();
-			int counter = 8;
-			double length = 12;
+			int counter = 7;
+			double length = 11;
 			this.thickness = 7;
 			int mainBranches = 6;
 			int density = 4;
@@ -135,7 +137,7 @@ public class TreeTower implements ITower{
 						counter,
 						length,
 						thickness,
-						3,
+						4,
 						noise,
 						pitch + ((Math.PI * 2 / density) * i),
 						yaw + (rand.nextDouble() - 0.5) * noise
@@ -160,7 +162,7 @@ public class TreeTower implements ITower{
 						new Coord(end),
 						counter - (rand.nextInt(2) + 1),
 						length < 1 ? 1 : length * 0.88,
-						thickness * 0.75,
+						thickness * 0.72,
 						density,
 						noise + (thickness/5)*0.55,
 						pitch + (rand.nextDouble() - 0.5) * noise,
@@ -179,32 +181,42 @@ public class TreeTower implements ITower{
 			if(thickness == 1){
 				new Line(start, end).fill(editor, rand, log, true, false);
 			} else if(thickness > 1){
+				MultiShape shape = new MultiShape();
 				for(Coord pos : new Line(start, end)){
 					Coord s = new Coord(pos);
 					Coord e = new Coord(s);
 					e.add(new Coord((int)thickness, (int)thickness, (int)thickness));
-					new Sphere(s, e).fill(editor, rand, log, true, false);
+					shape.addShape(new Sphere(s, e));
 				}
+				shape.fill(editor, rand, log);
 			}
 		}
 		
 		public void genLeaves(IWorldEditor editor, Random rand){
+			MultiShape leafShape = new MultiShape();
+			getLeafShape(leafShape, rand);
+			
+			BlockWeightedRandom leaves = new BlockWeightedRandom();
+			leaves.addBlock(Leaves.get(LEAF_TYPE, true), 1);
+			leaves.addBlock(BlockType.get(BlockType.AIR), 1);
+			
+			leafShape.fill(editor, rand, leaves, true, false);
+		}
+		
+		public void getLeafShape(MultiShape leaves, Random rand){
 			if(!this.branches.isEmpty()){
 				for(Branch b : this.branches){
-					b.genLeaves(editor, rand);
+					b.getLeafShape(leaves, rand);
 				}
 				return;
 			}
 			
-			BlockWeightedRandom leaves = new BlockWeightedRandom();
-			leaves.addBlock(Leaves.get(LEAF_TYPE, false), 1);
-			leaves.addBlock(BlockType.get(BlockType.AIR), 3);
-			
 			Coord s = new Coord(end);
 			Coord e = new Coord(s);
 			final int size = 2;
-			e.add(new Coord(size + rand.nextInt(3), size + rand.nextInt(3), size + rand.nextInt(3)));
-			new Sphere(s, e).fill(editor, rand, leaves, true, false);
+			final int noise = 2;
+			e.add(new Coord(size + rand.nextInt(noise), size + rand.nextInt(noise), size + rand.nextInt(noise)));
+			leaves.addShape(new Sphere(s, e));
 		}
 		
 		private Coord getEnd(Coord start, double length, double pitch, double yaw){

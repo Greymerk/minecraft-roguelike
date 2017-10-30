@@ -52,7 +52,8 @@ public class WorldEditor implements IWorldEditor{
 		if(currentBlock.getBlock() == Blocks.TRAPPED_CHEST) return false;
 		if(currentBlock.getBlock() == Blocks.MOB_SPAWNER) return false;
 		
-		boolean isAir = world.isAirBlock(pos.getBlockPos());
+		//boolean isAir = world.isAirBlock(pos.getBlockPos());
+		boolean isAir = currentBlock.getBlock() == Blocks.AIR;
 		
 		if(!fillAir && isAir) return false;
 		if(!replaceSolid && !isAir)	return false;
