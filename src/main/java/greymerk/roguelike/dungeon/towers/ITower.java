@@ -8,6 +8,6 @@ import java.util.Random;
 
 public interface ITower {
 
-	public void generate(IWorldEditor editor, Random rand, ITheme theme, Coord pos);
+	public void generate(IWorldEditor editor, Random rand, ITheme theme, Coord origin);
 	
 }
