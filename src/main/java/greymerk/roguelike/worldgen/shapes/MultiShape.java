@@ -14,20 +14,22 @@ import greymerk.roguelike.worldgen.IBlockFactory;
 import greymerk.roguelike.worldgen.IWorldEditor;
 
 public class MultiShape implements IShape {
-
-	private List<IShape> shapes;
+	
+	private Set<Coord> shape;
 	
 	public MultiShape(){
-		this.shapes = new ArrayList<IShape>();
+		shape = new HashSet<Coord>();
 	}
 	
-	public void addShape(IShape shape){
-		this.shapes.add(shape);
+	public void addShape(IShape toAdd){
+		for(Coord pos : toAdd){
+			shape.add(pos);
+		}
 	}
 	
 	@Override
 	public Iterator<Coord> iterator() {
-		return new MultiShapeIterator(shapes);
+		return shape.iterator();
 	}
 
 	@Override
@@ -45,39 +47,9 @@ public class MultiShape implements IShape {
 	@Override
 	public List<Coord> get() {
 		List<Coord> coords = new ArrayList<Coord>();
-		for(Coord c : this){
-			coords.add(c);
+		for(Coord pos : this.shape){
+			coords.add(new Coord(pos));
 		}
 		return coords;
-	}
-	
-	private class MultiShapeIterator implements Iterator<Coord>{
-		
-		Set<Coord> index;
-		Queue<IShape> shapes;
-		Iterator<Coord> multishape;
-		
-		
-		public MultiShapeIterator(List<IShape> shapes){
-			this.index = new HashSet<Coord>();
-			this.shapes = new LinkedList<IShape>();
-			this.shapes.addAll(shapes);
-			for(IShape shape : shapes){
-				for(Coord pos : shape){
-					index.add(pos);
-				}
-			}
-			this.multishape = index.iterator();
-		}
-
-		@Override
-		public boolean hasNext() {
-			return multishape.hasNext();
-		}
-
-		@Override
-		public Coord next() {
-			return multishape.next();
-		}
 	}
 }
