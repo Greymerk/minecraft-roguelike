@@ -23,8 +23,7 @@ import greymerk.roguelike.dungeon.settings.SpawnCriteria;
 import greymerk.roguelike.treasure.ITreasureChest;
 import greymerk.roguelike.treasure.Treasure;
 import greymerk.roguelike.treasure.TreasureManager;
-import greymerk.roguelike.treasure.loot.IBook;
-import greymerk.roguelike.treasure.loot.books.BookStarter;
+import greymerk.roguelike.treasure.loot.books.BookStatistics;
 import greymerk.roguelike.util.WeightedChoice;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
@@ -132,9 +131,7 @@ public class Dungeon implements IDungeon{
 		TreasureManager treasure = editor.getTreasure();
 		settings.processLoot(rand, treasure);
 		
-		IBook book = new BookStarter(editor);
-		treasure.addItemToAll(rand, Treasure.STARTER, new WeightedChoice<ItemStack>(book.get(), 1), 1);
-		
+		treasure.addItem(rand, Treasure.STARTER, new WeightedChoice<ItemStack>(new BookStatistics(editor).get(), 0), 1);
 		generator.applyFilters(editor, rand);
 		
 	}

@@ -1,5 +1,6 @@
 package greymerk.roguelike.worldgen;
 
+import java.util.Map;
 import java.util.Random;
 
 import greymerk.roguelike.treasure.ITreasureChest;
@@ -30,6 +31,8 @@ public interface IWorldEditor {
 	void spiralStairStep(Random rand, Coord pos, IStair stair, IBlockFactory pillar);
 
 	int getStat(Block block);
+	
+	Map<Block, Integer> getStats();
 
 	TreasureManager getTreasure();
 

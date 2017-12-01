@@ -157,6 +157,11 @@ public class WorldEditor implements IWorldEditor{
 	}
 	
 	@Override
+	public Map<Block, Integer> getStats(){
+		return this.stats;
+	}
+	
+	@Override
 	public void addChest(ITreasureChest toAdd){
 		this.chests.add(toAdd);
 	}

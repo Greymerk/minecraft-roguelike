@@ -4,11 +4,13 @@ import greymerk.roguelike.dungeon.settings.DungeonSettings;
 import greymerk.roguelike.dungeon.settings.SettingIdentifier;
 import greymerk.roguelike.dungeon.settings.SettingsContainer;
 import greymerk.roguelike.treasure.Treasure;
+import greymerk.roguelike.treasure.loot.Book;
 import greymerk.roguelike.treasure.loot.Equipment;
 import greymerk.roguelike.treasure.loot.ILoot;
 import greymerk.roguelike.treasure.loot.Loot;
 import greymerk.roguelike.treasure.loot.LootRuleManager;
 import greymerk.roguelike.treasure.loot.Quality;
+import greymerk.roguelike.treasure.loot.provider.ItemBook;
 import greymerk.roguelike.treasure.loot.provider.ItemEnchBook;
 import greymerk.roguelike.treasure.loot.provider.ItemSpecialty;
 
@@ -20,6 +22,7 @@ public class SettingsLootRules extends DungeonSettings{
 		this.id = ID;
 		this.lootRules = new LootRuleManager();
 		ILoot loot = Loot.getLoot();
+		lootRules.add(Treasure.STARTER, new ItemBook(Book.CREDITS), 0, true, 1);
 		lootRules.add(Treasure.STARTER, loot.get(Loot.WEAPON, 0),  0, true, 2);
 		lootRules.add(Treasure.STARTER, loot.get(Loot.FOOD, 0),  0, true, 2);
 		lootRules.add(Treasure.STARTER, loot.get(Loot.TOOL, 0),  0, true, 2);
