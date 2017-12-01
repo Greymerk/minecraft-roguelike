@@ -1,6 +1,6 @@
 package greymerk.roguelike;
 
-import greymerk.roguelike.util.CommandSpawnDungeon;
+import greymerk.roguelike.command.CommandSpawnDungeon;
 import net.minecraft.command.ICommandManager;
 import net.minecraft.command.ServerCommandManager;
 import net.minecraft.server.MinecraftServer;

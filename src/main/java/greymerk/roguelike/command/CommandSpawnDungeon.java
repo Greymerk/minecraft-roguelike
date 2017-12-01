@@ -1,4 +1,4 @@
-package greymerk.roguelike.util;
+package greymerk.roguelike.command;
 
 
 import java.util.List;
@@ -14,6 +14,8 @@ import greymerk.roguelike.dungeon.towers.ITower;
 import greymerk.roguelike.dungeon.towers.Tower;
 import greymerk.roguelike.theme.Theme;
 import greymerk.roguelike.treasure.loot.provider.ItemNovelty;
+import greymerk.roguelike.util.ArgumentParser;
+import greymerk.roguelike.util.TextFormat;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.VanillaStructure;
