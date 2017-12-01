@@ -16,6 +16,11 @@ public class ArgumentParser {
 		}
 	}
 	
+	public ArgumentParser(List<String> args){
+		this.args = new ArrayList<String>();
+		this.args.addAll(args);
+	}
+	
 	public boolean hasEntry(int index){
 		return index < this.args.size();
 	}
@@ -31,5 +36,10 @@ public class ArgumentParser {
 		
 		if(!this.hasEntry(index)) return null;
 		return this.args.get(index); 
+	}
+	
+	@Override
+	public String toString(){
+		return this.args.toString();
 	}
 }

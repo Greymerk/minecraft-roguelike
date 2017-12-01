@@ -1,6 +1,6 @@
 package greymerk.roguelike;
 
-import greymerk.roguelike.command.CommandSpawnDungeon;
+import greymerk.roguelike.command.CommandRoguelike;
 import net.minecraft.command.ICommandManager;
 import net.minecraft.command.ServerCommandManager;
 import net.minecraft.server.MinecraftServer;
@@ -45,6 +45,6 @@ public class Roguelike {
 		MinecraftServer server = event.getServer();
 		ICommandManager command = server.getCommandManager();
 		ServerCommandManager serverCommand = ((ServerCommandManager) command);
-		serverCommand.registerCommand(new CommandSpawnDungeon());
+		serverCommand.registerCommand(new CommandRoguelike());
 	}
 }
