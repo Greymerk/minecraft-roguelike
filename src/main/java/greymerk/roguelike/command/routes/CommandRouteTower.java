@@ -2,10 +2,8 @@ package greymerk.roguelike.command.routes;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.http.util.TextUtils;
 
 import greymerk.roguelike.command.CommandRouteBase;
 import greymerk.roguelike.dungeon.Dungeon;
@@ -13,6 +11,7 @@ import greymerk.roguelike.dungeon.towers.ITower;
 import greymerk.roguelike.dungeon.towers.Tower;
 import greymerk.roguelike.theme.Theme;
 import greymerk.roguelike.util.ArgumentParser;
+import greymerk.roguelike.util.EnumTools;
 import greymerk.roguelike.util.TextFormat;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IWorldEditor;
@@ -32,11 +31,10 @@ public class CommandRouteTower extends CommandRouteBase{
 		ArgumentParser ap = new ArgumentParser(args);
 		
 		if(!ap.hasEntry(0)){
-			List<String> towers = Stream.of(Tower.values())
-                    .map(Tower::name)
-                    .map(String::toLowerCase)
-                    .collect(Collectors.toList());
-			
+			List<String> towers = EnumTools.valuesToStrings(Tower.class)
+					.stream()
+					.map(String::toLowerCase)
+					.collect(Collectors.toList());
 			sender.sendMessage(new TextComponentString(TextFormat.apply("Tower types: " + StringUtils.join(towers, " "), TextFormat.GRAY)));
 
 			return;
@@ -63,8 +61,23 @@ public class CommandRouteTower extends CommandRouteBase{
 		World world = sender.getEntityWorld();
 		IWorldEditor editor = new WorldEditor(world);
 		tower.generate(editor, Dungeon.getRandom(editor, here), Theme.getTheme(Theme.OAK), here);
-		sender.sendMessage(new TextComponentString(TextFormat.apply("Success: Dungeon generated at " + here.toString(), TextFormat.GREEN)));
+		sender.sendMessage(new TextComponentString(TextFormat.apply("Success: " + towerName + " Tower generated at " + here.toString(), TextFormat.GREEN)));
+		
 		return;
+	}
+	
+	@Override
+	public List<String> getTabCompletion(List<String> args) {
+		List<String> towers = EnumTools.valuesToStrings(Tower.class)
+				.stream()
+				.map(String::toLowerCase)
+				.collect(Collectors.toList());
+		
+		if(args.size() > 0){
+			return this.getListTabOptions(args.get(0).toLowerCase(), towers);
+		}
+		
+		return towers;
 	}
 	
 }

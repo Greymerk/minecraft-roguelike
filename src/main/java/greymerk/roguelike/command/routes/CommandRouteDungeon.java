@@ -32,89 +32,21 @@ public class CommandRouteDungeon extends CommandRouteBase{
 			sender.sendMessage(new TextComponentString(TextFormat.apply("Usage: roguelike dungeon {X Z | here} [setting]", TextFormat.GRAY)));
 			return;
 		}
-
-		int x;
-		int z;
 		
-		String settingName = null;
-		
-		if(ap.match(0, "here")){
-			EntityPlayerMP player = null;
-			try {
-				player = CommandBase.getCommandSenderAsPlayer(sender);
-			} catch (PlayerNotFoundException e) {
-				sender.sendMessage(new TextComponentString(TextFormat.apply("Failure: Cannot find player", TextFormat.RED)));
-				return;
-			}
-			x = (int) player.posX;
-			z = (int) player.posZ;
-			
-			if(ap.hasEntry(1)){
-				settingName = ap.get(1);
-			}
-		} else if(ap.match(0, "nearby")){
-			EntityPlayerMP player = null;
-			try {
-				player = CommandBase.getCommandSenderAsPlayer(sender);
-			} catch (PlayerNotFoundException e) {
-				sender.sendMessage(new TextComponentString(TextFormat.apply("Failure: Cannot find player", TextFormat.RED)));
-				return;
-			}
-			
-			x = (int) player.posX;
-			z = (int) player.posZ;
-			
-			if(ap.hasEntry(1)){
-				int num = 0;
-				try {
-					num = CommandBase.parseInt(ap.get(1));
-				} catch (NumberInvalidException e) {
-					sender.sendMessage(new TextComponentString(TextFormat.apply("Failure: Third argument must be a whole number", TextFormat.RED)));
-					return;
-				}
-				
-				if(num <= 0){
-					sender.sendMessage(new TextComponentString(TextFormat.apply("Failure: Third argument must be greater than zero.", TextFormat.RED)));
-					return;
-				}
-				
-				for(int i = 0; i < num; ++i){
-					IWorldEditor editor = new WorldEditor(player.world);
-					Dungeon toGenerate = new Dungeon(editor);
-					Random rand = new Random();
-					toGenerate.generateNear(rand, x, z);
-				}
-				sender.sendMessage(new TextComponentString(TextFormat.apply("Success: Dungeons generated all over the place!", TextFormat.GREEN)));
-				return;
-			}
-
-			IWorldEditor editor = new WorldEditor(player.world);
-			Dungeon toGenerate = new Dungeon(editor);
-			Random rand = Dungeon.getRandom(editor, new Coord(x, 0, z));
-			toGenerate.generateNear(rand, x, z);
-			
-			try {
-				sender.sendMessage(new TextComponentString(TextFormat.apply("Success: Dungeon generated at " + toGenerate.getPosition().toString(), TextFormat.GREEN)));
-			} catch (Exception e) {
-				sender.sendMessage(new TextComponentString(TextFormat.apply("Failure: Unable to generate dungeon", TextFormat.RED)));
-			}
+		Coord pos;
+		try{
+			pos = getLocation(sender, args);	
+		} catch(Exception e){
 			return;
-			
-		} else {
-			
-			try {
-				x = CommandBase.parseInt(ap.get(0));
-				z = CommandBase.parseInt(ap.get(1));
-			} catch (NumberInvalidException e) {
-				sender.sendMessage(new TextComponentString(TextFormat.apply("Failure: Invalid Coords: X Z", TextFormat.RED)));
-				return;
-			}
-			
-			if(ap.hasEntry(2)){
-				settingName = ap.get(2);
-			}
 		}
-		
+
+		String settingName = null;
+		if(ap.match(0, "here") || ap.match(0, "nearby")){
+			settingName = ap.get(1);
+		} else {
+			settingName = ap.get(2);
+		}
+
 		World world = sender.getEntityWorld();
 		IWorldEditor editor = new WorldEditor(world);
 		
@@ -126,11 +58,11 @@ public class CommandRouteDungeon extends CommandRouteBase{
 				return;
 			}
 			
-			Random rand = Dungeon.getRandom(editor, new Coord(x, 0, z));
+			Random rand = Dungeon.getRandom(editor, pos);
 			ISettings settings = null; 
 					
 			try{
-				settings = Dungeon.settingsResolver.getWithName(settingName, editor, rand, new Coord(x, 0, z));	
+				settings = Dungeon.settingsResolver.getWithName(settingName, editor, rand, pos);	
 			} catch(Exception e) {
 				sender.sendMessage(new TextComponentString(TextFormat.apply("Failure: " + e.getMessage(), TextFormat.RED)));
 				return;
@@ -143,7 +75,7 @@ public class CommandRouteDungeon extends CommandRouteBase{
 			}
 			
 			Dungeon dungeon = new Dungeon(editor);
-			dungeon.generate(settings, new Coord(x, 0, z));
+			dungeon.generate(settings, pos);
 			try {
 				sender.sendMessage(new TextComponentString(TextFormat.apply("Success: \"" + settingName + "\" Dungeon generated at " + dungeon.getPosition().toString(), TextFormat.GREEN)));
 			} catch (Exception e) {
@@ -152,12 +84,12 @@ public class CommandRouteDungeon extends CommandRouteBase{
 			return;
 		}
 		
-		Random rand = Dungeon.getRandom(editor, new Coord(x, 0, z));
+		Random rand = Dungeon.getRandom(editor, pos);
 		
 		ISettings settings = null; 
 				
 		try{
-			settings = Dungeon.settingsResolver.getSettings(editor, rand, new Coord(x, 0, z));
+			settings = Dungeon.settingsResolver.getSettings(editor, rand, pos);
 		} catch(Exception e){
 			sender.sendMessage(new TextComponentString(TextFormat.apply("Failure: " + e.getMessage(), TextFormat.RED)));
 			e.printStackTrace();
@@ -166,14 +98,39 @@ public class CommandRouteDungeon extends CommandRouteBase{
 		
 		if(settings != null){
 			IDungeon dungeon = new Dungeon(editor);
-			dungeon.generate(settings, new Coord(x, 0, z));
-			sender.sendMessage(new TextComponentString(TextFormat.apply("Success: Dungeon generated at " + Integer.toString(x) + " " + Integer.toString(z), TextFormat.GREEN)));
+			dungeon.generate(settings, pos);
+			sender.sendMessage(new TextComponentString(TextFormat.apply("Success: Dungeon generated at " + pos.toString(), TextFormat.GREEN)));
 			return;
 		}
 		
 		IDungeon dungeon = new Dungeon(editor);
-		dungeon.generate(Dungeon.settingsResolver.getDefaultSettings(), new Coord(x, 0, z));
-		sender.sendMessage(new TextComponentString(TextFormat.apply("Success: Dungeon generated at " + Integer.toString(x) + " " + Integer.toString(z), TextFormat.GREEN)));
+		dungeon.generate(Dungeon.settingsResolver.getDefaultSettings(), pos);
+		sender.sendMessage(new TextComponentString(TextFormat.apply("Success: Dungeon generated at " + pos.toString(), TextFormat.GREEN)));
 		return;
+	}
+	
+	public static Coord getLocation(ICommandSender sender, List<String> args) throws NumberInvalidException, PlayerNotFoundException{
+		ArgumentParser ap = new ArgumentParser(args);
+		
+		EntityPlayerMP player = null;
+		try {
+			player = CommandBase.getCommandSenderAsPlayer(sender);
+		} catch (PlayerNotFoundException e) {
+			sender.sendMessage(new TextComponentString(TextFormat.apply("Failure: Cannot find player", TextFormat.RED)));
+			throw(e);
+		}
+		
+		if(ap.match(0, "here") || ap.match(0, "nearby")){
+			return new Coord((int) player.posX, 0, (int) player.posZ);
+		} else {
+			try {
+				int x = CommandBase.parseInt(ap.get(0));
+				int z = CommandBase.parseInt(ap.get(1));
+				return new Coord(x, 0, z);
+			} catch (NumberInvalidException e) {
+				sender.sendMessage(new TextComponentString(TextFormat.apply("Failure: Invalid Coords: X Z", TextFormat.RED)));
+				throw(e);
+			}
+		}
 	}
 }
