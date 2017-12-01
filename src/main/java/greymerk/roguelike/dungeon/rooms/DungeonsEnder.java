@@ -83,7 +83,7 @@ public class DungeonsEnder extends DungeonBase {
 			if(!editor.isAirBlock(pos)) continue;
 			
 			Coord cursor = new Coord(pos); 
-			for(Cardinal dir : Cardinal.values()){
+			for(Cardinal dir : Cardinal.directions){
 				cursor.add(dir);
 				if(editor.getBlock(cursor).isOpaqueCube()){
 					EnderChest.set(editor, Cardinal.reverse(dir), pos);

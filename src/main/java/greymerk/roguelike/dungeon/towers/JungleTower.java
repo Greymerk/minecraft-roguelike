@@ -449,7 +449,7 @@ public class JungleTower implements ITower{
 	
 	private void tree(IWorldEditor editor, Random rand, ITheme theme, Coord origin){
 		
-		MetaBlock leaves = Leaves.get(Leaves.JUNGLE, false);
+		MetaBlock leaves = Leaves.get(Wood.JUNGLE, false);
 		
 		Coord cursor = new Coord(origin);
 		Log.getLog(Wood.JUNGLE).set(editor, cursor);
@@ -482,7 +482,7 @@ public class JungleTower implements ITower{
 	
 	public void leafSpill(IWorldEditor editor, Random rand, ITheme theme, Coord origin, int count){
 		if(count < 0) return;
-		MetaBlock leaves = Leaves.get(Leaves.JUNGLE, false);
+		MetaBlock leaves = Leaves.get(Wood.JUNGLE, false);
 		leaves.set(editor, origin);
 		Coord cursor = new Coord(origin);
 		cursor.add(Cardinal.DOWN);

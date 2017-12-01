@@ -13,6 +13,7 @@ import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.Leaves;
+import greymerk.roguelike.worldgen.blocks.Wood;
 import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 public class SegmentSewerDoor extends SegmentBase {
@@ -24,7 +25,7 @@ public class SegmentSewerDoor extends SegmentBase {
 		IStair stair = theme.getSecondary().getStair();
 		MetaBlock bars = BlockType.get(BlockType.IRON_BAR);
 		MetaBlock water = BlockType.get(BlockType.WATER_FLOWING);
-		MetaBlock leaves = Leaves.get(Leaves.SPRUCE, false);
+		MetaBlock leaves = Leaves.get(Wood.SPRUCE, false);
 		MetaBlock glowstone = BlockType.get(BlockType.GLOWSTONE);
 		
 		Coord cursor;

@@ -6,6 +6,8 @@ import java.util.List;
 import greymerk.roguelike.dungeon.base.DungeonFactory;
 import greymerk.roguelike.dungeon.base.DungeonRoom;
 import greymerk.roguelike.dungeon.base.SecretFactory;
+import greymerk.roguelike.dungeon.segment.Segment;
+import greymerk.roguelike.dungeon.segment.SegmentGenerator;
 import greymerk.roguelike.dungeon.settings.DungeonSettings;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.dungeon.settings.SettingIdentifier;
@@ -31,27 +33,63 @@ public class SettingsForestTheme extends DungeonSettings{
 		biomes.add(BiomeDictionary.Type.FOREST);
 		this.criteria.setBiomeTypes(biomes);
 		
-		this.towerSettings = new TowerSettings(Tower.HOUSE, Theme.getTheme(Theme.HOUSE));
+		this.towerSettings = new TowerSettings(Tower.TREE, Theme.getTheme(Theme.ETHO));
+		
+		
 		
 		for(int i = 0; i < 5; ++i){
 			
 			LevelSettings level = new LevelSettings();
-			SecretFactory secrets = new SecretFactory();
+			SecretFactory secrets; 
 			DungeonFactory rooms;
+			SegmentGenerator segments;
+			
 			
 			switch(i){
 			case 0:
-				secrets.addRoom(DungeonRoom.SMITH);
+				rooms = new DungeonFactory();
+				rooms.addRandom(DungeonRoom.CORNER, 10);
+				rooms.addRandom(DungeonRoom.BRICK, 3);
+				rooms.addSingle(DungeonRoom.CAKE);
+				rooms.addSingle(DungeonRoom.DARKHALL);
+				rooms.addSingle(DungeonRoom.LIBRARY);
+				rooms.addSingle(DungeonRoom.SLIME, 2);
+				level.setRooms(rooms);
+				secrets = new SecretFactory();
+				//secrets.addRoom(DungeonRoom.SMITH);
+				secrets.addRoom(DungeonRoom.BEDROOM, 2);
+				secrets.addRoom(DungeonRoom.FIREWORK);
+				level.setSecrets(secrets);
+				level.setTheme(Theme.getTheme(Theme.ETHO));
+				segments = new SegmentGenerator(Segment.ARCH);
+				segments.add(Segment.DOOR, 8);
+				segments.add(Segment.LAMP, 2);
+				segments.add(Segment.WHEAT, 3);
+				segments.add(Segment.FLOWERS, 2);
+				segments.add(Segment.INSET, 1);
+				segments.add(Segment.PLANT, 2);
+				segments.add(Segment.SHELF, 1);
+				segments.add(Segment.CHEST, 1);
+				level.setSegments(segments);
 				break;
 			case 1:
 				rooms = new DungeonFactory();
 				rooms.addSingle(DungeonRoom.MUSIC);
 				rooms.addSingle(DungeonRoom.PIT);
-				rooms.addSingle(DungeonRoom.MESS);
 				rooms.addSingle(DungeonRoom.LAB);
+				rooms.addSingle(DungeonRoom.SLIME, 2);
 				rooms.addRandom(DungeonRoom.CORNER, 10);
 				rooms.addRandom(DungeonRoom.BRICK, 3);
 				level.setRooms(rooms);
+				level.setTheme(Theme.getTheme(Theme.ETHO));
+				segments = new SegmentGenerator(Segment.ARCH);
+				segments.add(Segment.DOOR, 10);
+				segments.add(Segment.FLOWERS, 2);
+				segments.add(Segment.INSET, 2);
+				segments.add(Segment.PLANT, 2);
+				segments.add(Segment.SHELF, 2);
+				segments.add(Segment.CHEST, 1);
+				level.setSegments(segments);
 				break;
 			case 2:
 				break;
@@ -63,7 +101,7 @@ public class SettingsForestTheme extends DungeonSettings{
 				break;
 			}
 			
-			level.setSecrets(secrets);
+			
 			levels.put(i, level);
 		}
 		levels.get(3).addFilter(Filter.VINE);

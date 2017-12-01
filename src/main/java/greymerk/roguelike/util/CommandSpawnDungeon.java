@@ -10,6 +10,9 @@ import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.dungeon.Dungeon;
 import greymerk.roguelike.dungeon.IDungeon;
 import greymerk.roguelike.dungeon.settings.ISettings;
+import greymerk.roguelike.dungeon.towers.ITower;
+import greymerk.roguelike.dungeon.towers.Tower;
+import greymerk.roguelike.theme.Theme;
 import greymerk.roguelike.treasure.loot.provider.ItemNovelty;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IWorldEditor;
@@ -343,6 +346,37 @@ public class CommandSpawnDungeon extends CommandBase
 			
 			World world = sender.getEntityWorld();
 			Citadel.generate(new WorldEditor(world), x, z);
+			return;
+		}
+		
+		if(ap.match(0, "tower")){
+			if(!ap.hasEntry(1)){
+				sender.sendMessage(new TextComponentString(TextFormat.apply("Failure: Missing tower type", TextFormat.RED)));
+				return;
+			}
+			String towerName = ap.get(1);
+			Tower type;
+			try{
+				type = Tower.get(towerName.toUpperCase());	
+			} catch(Exception e){
+				sender.sendMessage(new TextComponentString(TextFormat.apply("Failure: No such tower type: " + towerName, TextFormat.RED)));
+				return;
+			}
+			
+			EntityPlayerMP player = null;
+			try {
+				player = getCommandSenderAsPlayer(sender);
+			} catch (PlayerNotFoundException e) {
+				sender.sendMessage(new TextComponentString(TextFormat.apply("Failure: Cannot find player", TextFormat.RED)));
+				return;
+			}
+			
+			Coord here = new Coord ((int) player.posX, 50, (int) player.posZ);
+			ITower tower = Tower.get(type);
+			World world = sender.getEntityWorld();
+			IWorldEditor editor = new WorldEditor(world);
+			tower.generate(editor, Dungeon.getRandom(editor, here), Theme.getTheme(Theme.OAK), here);
+			sender.sendMessage(new TextComponentString(TextFormat.apply("Success: Dungeon generated at " + here.toString(), TextFormat.GREEN)));
 			return;
 		}
 		

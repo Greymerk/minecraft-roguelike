@@ -80,7 +80,15 @@ public class Coord{
 	
 	public Cardinal dirTo(Coord other){
 		int xdiff = other.x - x;
+		int ydiff = other.y - y;
 		int zdiff = other.z - z;
+		
+		if(
+			Math.abs(ydiff) > Math.abs(xdiff)
+			&& Math.abs(ydiff) > Math.abs(zdiff)){
+				return Cardinal.UP;		
+		}
+		
 		
 		if (Math.abs(xdiff) < Math.abs(zdiff)){
 			if(zdiff < 0){

@@ -11,6 +11,7 @@ import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.MetaBlock;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.Leaves;
+import greymerk.roguelike.worldgen.blocks.Wood;
 import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 public class SegmentJungle extends SegmentBase {
@@ -21,7 +22,7 @@ public class SegmentJungle extends SegmentBase {
 		
 		IStair stair = theme.getSecondary().getStair();
 		
-		MetaBlock leaves = Leaves.get(Leaves.JUNGLE, false);
+		MetaBlock leaves = Leaves.get(Wood.JUNGLE, false);
 		
 		Coord cursor;
 		Coord start;
