@@ -4,38 +4,33 @@ import java.util.List;
 import java.util.Random;
 
 import greymerk.roguelike.command.CommandRouteBase;
+import greymerk.roguelike.command.ICommandContext;
+import greymerk.roguelike.command.MessageType;
 import greymerk.roguelike.dungeon.Dungeon;
 import greymerk.roguelike.dungeon.IDungeon;
 import greymerk.roguelike.dungeon.settings.ISettings;
 import greymerk.roguelike.util.ArgumentParser;
-import greymerk.roguelike.util.TextFormat;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IWorldEditor;
-import greymerk.roguelike.worldgen.WorldEditor;
 import net.minecraft.command.CommandBase;
-import net.minecraft.command.ICommandSender;
 import net.minecraft.command.NumberInvalidException;
 import net.minecraft.command.PlayerNotFoundException;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.text.TextComponentString;
-import net.minecraft.world.World;
 
 public class CommandRouteDungeon extends CommandRouteBase{
 
 	@Override
-	public void execute(MinecraftServer server, ICommandSender sender, List<String> args) {
+	public void execute(ICommandContext context, List<String> args) {
 		
 		ArgumentParser ap = new ArgumentParser(args);
 		
 		if(!ap.hasEntry(0)){
-			sender.sendMessage(new TextComponentString(TextFormat.apply("Usage: roguelike dungeon {X Z | here} [setting]", TextFormat.GRAY)));
+			context.sendMessage("Usage: roguelike dungeon {X Z | here} [setting]", MessageType.INFO);
 			return;
 		}
 		
 		Coord pos;
 		try{
-			pos = getLocation(sender, args);	
+			pos = getLocation(context, args);	
 		} catch(Exception e){
 			return;
 		}
@@ -47,14 +42,13 @@ public class CommandRouteDungeon extends CommandRouteBase{
 			settingName = ap.get(2);
 		}
 
-		World world = sender.getEntityWorld();
-		IWorldEditor editor = new WorldEditor(world);
+		IWorldEditor editor = context.createEditor();
 		
 		if(settingName != null){
 			try{
 				Dungeon.initResolver();
 			} catch(Exception e) {
-				sender.sendMessage(new TextComponentString(TextFormat.apply("Failure: " + e.getMessage(), TextFormat.RED)));
+				context.sendMessage("Failure: " + e.getMessage(), MessageType.ERROR);
 				return;
 			}
 			
@@ -64,22 +58,22 @@ public class CommandRouteDungeon extends CommandRouteBase{
 			try{
 				settings = Dungeon.settingsResolver.getWithName(settingName, editor, rand, pos);	
 			} catch(Exception e) {
-				sender.sendMessage(new TextComponentString(TextFormat.apply("Failure: " + e.getMessage(), TextFormat.RED)));
+				context.sendMessage("Failure: " + e.getMessage(), MessageType.ERROR);
 				return;
 			}
 			
 			
 			if(settings == null){
-				sender.sendMessage(new TextComponentString(TextFormat.apply("Failed: " + settingName + " not found.", TextFormat.RED)));
+				context.sendMessage("Failed: " + settingName + " not found.", MessageType.ERROR);
 				return;
 			}
 			
 			Dungeon dungeon = new Dungeon(editor);
 			dungeon.generate(settings, pos);
 			try {
-				sender.sendMessage(new TextComponentString(TextFormat.apply("Success: \"" + settingName + "\" Dungeon generated at " + dungeon.getPosition().toString(), TextFormat.GREEN)));
+				context.sendMessage("Success: \"" + settingName + "\" Dungeon generated at " + dungeon.getPosition().toString(), MessageType.ERROR);
 			} catch (Exception e) {
-				sender.sendMessage(new TextComponentString(TextFormat.apply("Failure: Unable to generate dungeon", TextFormat.RED)));
+				context.sendMessage("Failure: Unable to generate dungeon", MessageType.ERROR);
 			}
 			return;
 		}
@@ -91,7 +85,7 @@ public class CommandRouteDungeon extends CommandRouteBase{
 		try{
 			settings = Dungeon.settingsResolver.getSettings(editor, rand, pos);
 		} catch(Exception e){
-			sender.sendMessage(new TextComponentString(TextFormat.apply("Failure: " + e.getMessage(), TextFormat.RED)));
+			context.sendMessage("Failure: " + e.getMessage(), MessageType.ERROR);
 			e.printStackTrace();
 			return;
 		}
@@ -99,36 +93,30 @@ public class CommandRouteDungeon extends CommandRouteBase{
 		if(settings != null){
 			IDungeon dungeon = new Dungeon(editor);
 			dungeon.generate(settings, pos);
-			sender.sendMessage(new TextComponentString(TextFormat.apply("Success: Dungeon generated at " + pos.toString(), TextFormat.GREEN)));
+			context.sendMessage("Success: Dungeon generated at " + pos.toString(), MessageType.SUCCESS);
 			return;
 		}
 		
 		IDungeon dungeon = new Dungeon(editor);
 		dungeon.generate(Dungeon.settingsResolver.getDefaultSettings(), pos);
-		sender.sendMessage(new TextComponentString(TextFormat.apply("Success: Dungeon generated at " + pos.toString(), TextFormat.GREEN)));
+		context.sendMessage("Success: Dungeon generated at " + pos.toString(), MessageType.SUCCESS);
 		return;
 	}
 	
-	public static Coord getLocation(ICommandSender sender, List<String> args) throws NumberInvalidException, PlayerNotFoundException{
+	public static Coord getLocation(ICommandContext context, List<String> args) throws NumberInvalidException, PlayerNotFoundException{
 		ArgumentParser ap = new ArgumentParser(args);
-		
-		EntityPlayerMP player = null;
-		try {
-			player = CommandBase.getCommandSenderAsPlayer(sender);
-		} catch (PlayerNotFoundException e) {
-			sender.sendMessage(new TextComponentString(TextFormat.apply("Failure: Cannot find player", TextFormat.RED)));
-			throw(e);
-		}
+
+		Coord pos = context.getPos();
 		
 		if(ap.match(0, "here") || ap.match(0, "nearby")){
-			return new Coord((int) player.posX, 0, (int) player.posZ);
+			return new Coord((int) pos.getX(), 0, (int) pos.getZ());
 		} else {
 			try {
 				int x = CommandBase.parseInt(ap.get(0));
 				int z = CommandBase.parseInt(ap.get(1));
 				return new Coord(x, 0, z);
 			} catch (NumberInvalidException e) {
-				sender.sendMessage(new TextComponentString(TextFormat.apply("Failure: Invalid Coords: X Z", TextFormat.RED)));
+				context.sendMessage("Failure: Invalid Coords: X Z", MessageType.ERROR);
 				throw(e);
 			}
 		}

@@ -3,10 +3,8 @@ package greymerk.roguelike.command.routes;
 import java.util.List;
 
 import greymerk.roguelike.command.CommandRouteBase;
-import greymerk.roguelike.util.TextFormat;
-import net.minecraft.command.ICommandSender;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.text.TextComponentString;
+import greymerk.roguelike.command.ICommandContext;
+import greymerk.roguelike.command.MessageType;
 
 public class CommandRouteRoguelike extends CommandRouteBase{
 
@@ -22,10 +20,11 @@ public class CommandRouteRoguelike extends CommandRouteBase{
 	}
 	
 	@Override
-	public void execute(MinecraftServer server, ICommandSender sender, List<String> args) {
+	public void execute(ICommandContext context, List<String> args) {
 		if(args.size() == 0){
-			sender.sendMessage(new TextComponentString(TextFormat.apply("Usage: roguelike [dungeon | give | config | settings]", TextFormat.GRAY)));
+			context.sendMessage("Usage: roguelike [dungeon | give | config | settings | tower]", MessageType.INFO);
 		}
-		super.execute(server, sender, args);
+		
+		super.execute(context, args);
 	}
 }

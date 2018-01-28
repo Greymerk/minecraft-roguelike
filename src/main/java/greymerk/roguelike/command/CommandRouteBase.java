@@ -8,8 +8,6 @@ import java.util.List;
 import java.util.Map;
 
 import net.minecraft.command.CommandBase;
-import net.minecraft.command.ICommandSender;
-import net.minecraft.server.MinecraftServer;
 
 public abstract class CommandRouteBase implements ICommandRouter{
 
@@ -32,13 +30,13 @@ public abstract class CommandRouteBase implements ICommandRouter{
 	}
 	
 	@Override
-	public void execute(MinecraftServer server, ICommandSender sender, List<String> args) {
+	public void execute(ICommandContext context, List<String> args) {
 		if(args.size() > 0){
 			if(this.routes.containsKey(args.get(0))){
 				List<String> tail = new ArrayList<String>();
 				tail.addAll(args);
 				String head = tail.remove(0);
-				this.routes.get(head).execute(server, sender, tail);	
+				this.routes.get(head).execute(context, tail);	
 			}
 		}
 	}

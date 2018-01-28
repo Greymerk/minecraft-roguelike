@@ -33,7 +33,8 @@ public class CommandRoguelike extends CommandBase {
 
 	@Override
 	public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-		router.execute(server, sender, Arrays.asList(args));
+		ICommandContext context = new CommandContext(server, sender);
+		router.execute(context, Arrays.asList(args));
 	}
 	
 	@Override

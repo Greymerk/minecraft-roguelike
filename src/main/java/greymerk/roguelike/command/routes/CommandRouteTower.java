@@ -6,28 +6,21 @@ import java.util.stream.Collectors;
 import org.apache.commons.lang3.StringUtils;
 
 import greymerk.roguelike.command.CommandRouteBase;
+import greymerk.roguelike.command.ICommandContext;
+import greymerk.roguelike.command.MessageType;
 import greymerk.roguelike.dungeon.Dungeon;
 import greymerk.roguelike.dungeon.towers.ITower;
 import greymerk.roguelike.dungeon.towers.Tower;
 import greymerk.roguelike.theme.Theme;
 import greymerk.roguelike.util.ArgumentParser;
 import greymerk.roguelike.util.EnumTools;
-import greymerk.roguelike.util.TextFormat;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IWorldEditor;
-import greymerk.roguelike.worldgen.WorldEditor;
-import net.minecraft.command.CommandBase;
-import net.minecraft.command.ICommandSender;
-import net.minecraft.command.PlayerNotFoundException;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.text.TextComponentString;
-import net.minecraft.world.World;
 
 public class CommandRouteTower extends CommandRouteBase{
 
 	@Override
-	public void execute(MinecraftServer server, ICommandSender sender, List<String> args) {
+	public void execute(ICommandContext context, List<String> args) {
 		ArgumentParser ap = new ArgumentParser(args);
 		
 		if(!ap.hasEntry(0)){
@@ -35,7 +28,7 @@ public class CommandRouteTower extends CommandRouteBase{
 					.stream()
 					.map(String::toLowerCase)
 					.collect(Collectors.toList());
-			sender.sendMessage(new TextComponentString(TextFormat.apply("Tower types: " + StringUtils.join(towers, " "), TextFormat.GRAY)));
+			context.sendMessage("Tower types: " + StringUtils.join(towers, " "), MessageType.INFO);
 
 			return;
 		}
@@ -44,24 +37,16 @@ public class CommandRouteTower extends CommandRouteBase{
 		try{
 			type = Tower.get(towerName.toUpperCase());	
 		} catch(Exception e){
-			sender.sendMessage(new TextComponentString(TextFormat.apply("Failure: No such tower type: " + towerName, TextFormat.RED)));
+			context.sendMessage("Failure: No such tower type: " + towerName, MessageType.ERROR);
 			return;
 		}
 		
-		EntityPlayerMP player = null;
-		try {
-			player = CommandBase.getCommandSenderAsPlayer(sender);
-		} catch (PlayerNotFoundException e) {
-			sender.sendMessage(new TextComponentString(TextFormat.apply("Failure: Cannot find player", TextFormat.RED)));
-			return;
-		}
-		
-		Coord here = new Coord ((int) player.posX, 50, (int) player.posZ);
+		Coord here = new Coord (context.getPos().getX(), 50, context.getPos().getZ());
 		ITower tower = Tower.get(type);
-		World world = sender.getEntityWorld();
-		IWorldEditor editor = new WorldEditor(world);
+		
+		IWorldEditor editor = context.createEditor();
 		tower.generate(editor, Dungeon.getRandom(editor, here), Theme.getTheme(Theme.OAK), here);
-		sender.sendMessage(new TextComponentString(TextFormat.apply("Success: " + towerName + " Tower generated at " + here.toString(), TextFormat.GREEN)));
+		context.sendMessage("Success: " + towerName + " Tower generated at " + here.toString(), MessageType.SUCCESS);
 		
 		return;
 	}
