@@ -11,7 +11,6 @@ import greymerk.roguelike.worldgen.IWorldEditor;
 
 public class SettingsResolver {
 
-	
 	private ISettingsContainer settings;
 	
 	public SettingsResolver(ISettingsContainer settings) throws Exception{
@@ -32,8 +31,6 @@ public class SettingsResolver {
 		
 		DungeonSettings complete = applyInclusives(exclusive, editor, rand, pos); 
 		
-		//if(true) throw new Exception(complete.levels.get(0).getSpawners().toString());
-		
 		return complete;
 	}
 	
@@ -45,7 +42,6 @@ public class SettingsResolver {
 		if(byName == null) return null;
 		DungeonSettings withInclusives = applyInclusives(byName, editor, rand, pos);
 		
-		//if(true) throw new Exception(withInclusives.levels.get(0).getSpawners().toString());
 		return new DungeonSettings(new SettingsBlank(), withInclusives);
 	}
 	
@@ -63,7 +59,6 @@ public class SettingsResolver {
 				}
 				
 				setting = new DungeonSettings(setting, inherited);
-				//if(id.getName().equals("spawners")) throw new Exception(setting.levels.get(0).getSpawners().toString());
 				
 			} else {
 				throw new Exception("Setting not found: " + id.toString());

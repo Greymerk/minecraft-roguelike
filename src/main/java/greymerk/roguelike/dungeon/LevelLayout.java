@@ -7,7 +7,7 @@ import java.util.Random;
 import greymerk.roguelike.dungeon.base.IDungeonRoom;
 import greymerk.roguelike.worldgen.IBounded;
 
-public class LevelLayout {
+public class LevelLayout implements ILevelLayout{
 
 	private List<DungeonNode> nodes;
 	private List<DungeonTunnel> tunnels;
@@ -29,10 +29,12 @@ public class LevelLayout {
 		this.addNode(end);
 	}
 	
+	@Override
 	public DungeonNode getStart(){
 		return this.start;
 	}
 	
+	@Override
 	public DungeonNode getEnd(){
 		return this.end;
 	}
@@ -49,10 +51,12 @@ public class LevelLayout {
 		this.tunnels.addAll(tunnels);
 	}
 	
+	@Override
 	public List<DungeonNode> getNodes(){
 		return this.nodes;
 	}
 	
+	@Override
 	public List<DungeonTunnel> getTunnels(){
 		return this.tunnels;
 	}
@@ -84,6 +88,7 @@ public class LevelLayout {
 		return false;
 	}
 	
+	@Override
 	public DungeonNode getBestFit(IDungeonRoom room){ 
 		
 		for(DungeonNode node : this.getNodes()){
@@ -106,6 +111,7 @@ public class LevelLayout {
 		return null;
 	}
 	
+	@Override
 	public boolean hasEmptyRooms(){
 		for(DungeonNode node : this.nodes){
 			if(node == start || node == end) continue;
@@ -116,6 +122,7 @@ public class LevelLayout {
 		return false;
 	}
 	
+	@Override
 	public List<IBounded> getBoundingBoxes(){
 		List<IBounded> boxes = new ArrayList<IBounded>();
 		boxes.addAll(nodes);

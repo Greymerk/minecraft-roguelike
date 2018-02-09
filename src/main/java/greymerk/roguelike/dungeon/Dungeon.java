@@ -20,29 +20,34 @@ import greymerk.roguelike.dungeon.settings.ISettings;
 import greymerk.roguelike.dungeon.settings.SettingsContainer;
 import greymerk.roguelike.dungeon.settings.SettingsResolver;
 import greymerk.roguelike.dungeon.settings.SpawnCriteria;
+import greymerk.roguelike.dungeon.tasks.DungeonTaskEncase;
+import greymerk.roguelike.dungeon.tasks.DungeonTaskLayout;
+import greymerk.roguelike.dungeon.tasks.DungeonTaskRegistry;
+import greymerk.roguelike.dungeon.tasks.DungeonTaskRooms;
+import greymerk.roguelike.dungeon.tasks.DungeonTaskSegments;
+import greymerk.roguelike.dungeon.tasks.DungeonTaskTunnels;
 import greymerk.roguelike.treasure.ITreasureChest;
-import greymerk.roguelike.treasure.Treasure;
-import greymerk.roguelike.treasure.TreasureManager;
-import greymerk.roguelike.treasure.loot.books.BookStatistics;
-import greymerk.roguelike.util.WeightedChoice;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.VanillaStructure;
 import greymerk.roguelike.worldgen.shapes.RectSolid;
 import net.minecraft.block.material.Material;
-import net.minecraft.item.ItemStack;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeDictionary.Type;
 
-
 public class Dungeon implements IDungeon{
-		
+	public static final int VERTICAL_SPACING = 10;
+	public static final int TOPLEVEL = 50;
+	
 	private static final String SETTINGS_DIRECTORY = RogueConfig.configDirName + "/settings";
 	public static SettingsResolver settingsResolver;
+	public static DungeonTaskRegistry tasks;
 	
-	private DungeonGenerator generator;
+	private Coord origin;
+	private List<IDungeonLevel> levels;
+
 	private IWorldEditor editor;
 	
 	static{
@@ -52,6 +57,15 @@ public class Dungeon implements IDungeon{
 		} catch(Exception e) {
 			// do nothing
 		}
+	}
+	
+	public static DungeonTaskRegistry getTaskRegistry(){
+		if(tasks == null){
+			tasks = new DungeonTaskRegistry();
+
+		}
+		
+		return tasks;
 	}
 	
 	public static void initResolver() throws Exception{
@@ -85,14 +99,12 @@ public class Dungeon implements IDungeon{
 			}
 		}
 
-		settings.parseCustomSettings(files);
-				
+		settings.parseCustomSettings(files);			
 	}
-		
 	
 	public Dungeon(IWorldEditor editor){
-		this.generator = new DungeonGenerator();
 		this.editor = editor;
+		this.levels = new ArrayList<IDungeonLevel>();
 	}
 	
 	public void generateNear(Random rand, int x, int z){
@@ -124,16 +136,8 @@ public class Dungeon implements IDungeon{
 	}
 	
 	public void generate(ISettings settings, Coord pos){
-		generator.generate(editor, settings, pos);
-
-		Random rand = getRandom(editor, generator.getPosition());
-
-		TreasureManager treasure = editor.getTreasure();
-		settings.processLoot(rand, treasure);
-		
-		treasure.addItem(rand, Treasure.STARTER, new WeightedChoice<ItemStack>(new BookStatistics(editor).get(), 0), 1);
-		generator.applyFilters(editor, rand);
-		
+		this.origin = new Coord(pos.getX(), Dungeon.TOPLEVEL, pos.getZ());
+		DungeonGenerator.generate(editor, this, settings);		
 	}
 	
 	public static boolean canSpawnInChunk(int chunkX, int chunkZ, IWorldEditor editor){
@@ -287,10 +291,13 @@ public class Dungeon implements IDungeon{
 		return this.editor.getTreasure().getChests();
 	}
 
-	public Coord getPosition() throws Exception {
-		if(!this.generator.isGenerated()){
-			throw new Exception("Dungeon not yet generated");
-		}
-		return this.generator.getPosition();
+	@Override
+	public Coord getPosition(){
+		return new Coord(this.origin);
+	}
+
+	@Override
+	public List<IDungeonLevel> getLevels(){
+		return this.levels;
 	}
 }

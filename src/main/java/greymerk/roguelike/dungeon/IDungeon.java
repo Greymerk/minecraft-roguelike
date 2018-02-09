@@ -13,6 +13,10 @@ public interface IDungeon {
 	
 	public void spawnInChunk(Random rand, int chunkX, int chunkZ);
 	
+	public Coord getPosition();
+	
+	public List<IDungeonLevel> getLevels();
+	
 	public List<ITreasureChest> getChests();
 	
 }

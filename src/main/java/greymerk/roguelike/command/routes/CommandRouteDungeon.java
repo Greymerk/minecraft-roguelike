@@ -71,7 +71,7 @@ public class CommandRouteDungeon extends CommandRouteBase{
 			Dungeon dungeon = new Dungeon(editor);
 			dungeon.generate(settings, pos);
 			try {
-				context.sendMessage("Success: \"" + settingName + "\" Dungeon generated at " + dungeon.getPosition().toString(), MessageType.ERROR);
+				context.sendMessage("Success: \"" + settingName + "\" Dungeon generated at " + dungeon.getPosition().toString(), MessageType.SUCCESS);
 			} catch (Exception e) {
 				context.sendMessage("Failure: Unable to generate dungeon", MessageType.ERROR);
 			}
