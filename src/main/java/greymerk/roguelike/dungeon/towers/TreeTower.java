@@ -119,11 +119,11 @@ public class TreeTower implements ITower{
 			this.start = new Coord(start);
 			this.branches = new ArrayList<Branch>();
 			int counter = 7;
-			double length = 11;
+			double length = 12;
 			this.thickness = 7;
-			int mainBranches = 6;
-			int density = 4;
-			double noise = 0.2;
+			int mainBranches = 5;
+			int density = 3;
+			double noise = 0.15;
 			double pitch = 0;
 			double yaw = Math.PI / 2;
 			this.end = getEnd(start, 4, pitch, yaw);
@@ -196,7 +196,7 @@ public class TreeTower implements ITower{
 			getLeafShape(leafShape, rand);
 			
 			BlockWeightedRandom leaves = new BlockWeightedRandom();
-			leaves.addBlock(Leaves.get(WOOD_TYPE, true), 1);
+			leaves.addBlock(Leaves.get(WOOD_TYPE, true), 5);
 			leaves.addBlock(BlockType.get(BlockType.AIR), 1);
 			
 			leafShape.fill(editor, rand, leaves, true, false);

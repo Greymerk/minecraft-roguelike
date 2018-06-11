@@ -98,7 +98,7 @@ public class SettingsResolver {
 			}
 		}
 		
-		if(settingsRandomizer.isEmpty()) return new SettingsBlank();
+		if(settingsRandomizer.isEmpty()) return null;
 		
 		DungeonSettings chosen = settingsRandomizer.get(rand);
 		

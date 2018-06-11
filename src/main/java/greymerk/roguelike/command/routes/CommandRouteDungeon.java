@@ -90,15 +90,13 @@ public class CommandRouteDungeon extends CommandRouteBase{
 			return;
 		}
 		
-		if(settings != null){
-			IDungeon dungeon = new Dungeon(editor);
-			dungeon.generate(settings, pos);
-			context.sendMessage("Success: Dungeon generated at " + pos.toString(), MessageType.SUCCESS);
+		if(settings == null){
+			context.sendMessage("Failure: No valid dungeon for location: " + pos.toString(), MessageType.WARNING);
 			return;
 		}
 		
 		IDungeon dungeon = new Dungeon(editor);
-		dungeon.generate(Dungeon.settingsResolver.getDefaultSettings(), pos);
+		dungeon.generate(settings, pos);
 		context.sendMessage("Success: Dungeon generated at " + pos.toString(), MessageType.SUCCESS);
 		return;
 	}

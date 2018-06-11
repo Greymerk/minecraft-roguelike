@@ -20,12 +20,7 @@ import greymerk.roguelike.dungeon.settings.ISettings;
 import greymerk.roguelike.dungeon.settings.SettingsContainer;
 import greymerk.roguelike.dungeon.settings.SettingsResolver;
 import greymerk.roguelike.dungeon.settings.SpawnCriteria;
-import greymerk.roguelike.dungeon.tasks.DungeonTaskEncase;
-import greymerk.roguelike.dungeon.tasks.DungeonTaskLayout;
 import greymerk.roguelike.dungeon.tasks.DungeonTaskRegistry;
-import greymerk.roguelike.dungeon.tasks.DungeonTaskRooms;
-import greymerk.roguelike.dungeon.tasks.DungeonTaskSegments;
-import greymerk.roguelike.dungeon.tasks.DungeonTaskTunnels;
 import greymerk.roguelike.treasure.ITreasureChest;
 import greymerk.roguelike.worldgen.Cardinal;
 import greymerk.roguelike.worldgen.Coord;
@@ -43,7 +38,7 @@ public class Dungeon implements IDungeon{
 	
 	private static final String SETTINGS_DIRECTORY = RogueConfig.configDirName + "/settings";
 	public static SettingsResolver settingsResolver;
-	public static DungeonTaskRegistry tasks;
+	
 	
 	private Coord origin;
 	private List<IDungeonLevel> levels;
@@ -57,15 +52,6 @@ public class Dungeon implements IDungeon{
 		} catch(Exception e) {
 			// do nothing
 		}
-	}
-	
-	public static DungeonTaskRegistry getTaskRegistry(){
-		if(tasks == null){
-			tasks = new DungeonTaskRegistry();
-
-		}
-		
-		return tasks;
 	}
 	
 	public static void initResolver() throws Exception{
@@ -137,7 +123,7 @@ public class Dungeon implements IDungeon{
 	
 	public void generate(ISettings settings, Coord pos){
 		this.origin = new Coord(pos.getX(), Dungeon.TOPLEVEL, pos.getZ());
-		DungeonGenerator.generate(editor, this, settings);		
+		DungeonGenerator.generate(editor, this, settings, DungeonTaskRegistry.getTaskRegistry());	
 	}
 	
 	public static boolean canSpawnInChunk(int chunkX, int chunkZ, IWorldEditor editor){

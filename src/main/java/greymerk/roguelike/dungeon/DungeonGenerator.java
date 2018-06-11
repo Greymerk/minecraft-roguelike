@@ -6,12 +6,13 @@ import java.util.Random;
 import greymerk.roguelike.dungeon.settings.ISettings;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.dungeon.tasks.IDungeonTask;
+import greymerk.roguelike.dungeon.tasks.IDungeonTaskRegistry;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IWorldEditor;
 
 public class DungeonGenerator {
 	
-	public static void generate(IWorldEditor editor, IDungeon dungeon, ISettings settings){
+	public static void generate(IWorldEditor editor, IDungeon dungeon, ISettings settings, IDungeonTaskRegistry tasks){
 		Coord start = dungeon.getPosition();
 		Random rand = Dungeon.getRandom(editor, start);
 		List<IDungeonLevel> levels = dungeon.getLevels();
@@ -25,8 +26,7 @@ public class DungeonGenerator {
 		}
 
 		for(DungeonStage stage : DungeonStage.values()){
-			List<IDungeonTask> tasks = Dungeon.getTaskRegistry().getTasks(stage);
-			for(IDungeonTask task : tasks){
+			for(IDungeonTask task : tasks.getTasks(stage)){
 				task.execute(editor, rand, dungeon, settings);
 			}
 		}

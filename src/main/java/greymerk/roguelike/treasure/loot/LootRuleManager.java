@@ -11,6 +11,7 @@ import com.google.gson.JsonObject;
 import greymerk.roguelike.treasure.Treasure;
 import greymerk.roguelike.treasure.TreasureManager;
 import greymerk.roguelike.util.IWeighted;
+import greymerk.roguelike.util.WeightedChoice;
 import greymerk.roguelike.util.WeightedRandomizer;
 import net.minecraft.item.ItemStack;
 
@@ -60,6 +61,11 @@ public class LootRuleManager {
 
 	public void add(Treasure type, IWeighted<ItemStack> item, int level, boolean toEach, int amount){
 		this.rules.add(new LootRule(type, item, level, toEach, amount));
+	}
+	
+	public void add(Treasure type, ItemStack item, int level, boolean toEach, int amount){
+		IWeighted<ItemStack> toAdd = new WeightedChoice<ItemStack>(item, 1);
+		this.rules.add(new LootRule(type, toAdd, level, toEach, amount));
 	}
 	
 	public void add(LootRule toAdd){

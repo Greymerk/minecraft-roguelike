@@ -7,8 +7,9 @@ import java.util.Map;
 
 import greymerk.roguelike.dungeon.DungeonStage;
 
-public class DungeonTaskRegistry {
+public class DungeonTaskRegistry implements IDungeonTaskRegistry{
 
+	public static DungeonTaskRegistry registry;
 	private Map<DungeonStage, List<IDungeonTask>> tasks;
 	
 	public DungeonTaskRegistry(){
@@ -37,5 +38,13 @@ public class DungeonTaskRegistry {
 			return new ArrayList<IDungeonTask>();
 		}
 		return this.tasks.get(stage);
+	}
+	
+	public static IDungeonTaskRegistry getTaskRegistry(){
+		if(registry == null){
+			registry = new DungeonTaskRegistry();
+		}
+		
+		return registry;
 	}
 }

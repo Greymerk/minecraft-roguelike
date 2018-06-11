@@ -1,15 +1,16 @@
 package greymerk.roguelike.treasure.loot;
 
 import greymerk.roguelike.treasure.loot.books.BookStarter;
+import net.minecraft.item.ItemStack;
 
 public enum Book {
 
 	CREDITS;
 	
-	public static IBook get(Book type){
+	public static ItemStack get(Book type){
 		switch(type){
 		
-		default: return new BookStarter();
+		default: return new BookStarter().get();
 		}
 	}
 	

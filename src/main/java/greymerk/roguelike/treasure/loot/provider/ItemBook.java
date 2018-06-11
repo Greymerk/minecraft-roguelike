@@ -20,7 +20,7 @@ public class ItemBook extends ItemBase{
 
 	@Override
 	public ItemStack getLootItem(Random rand, int level) {
-		return Book.get(type).get();
+		return Book.get(type);
 	}
 	
 }
