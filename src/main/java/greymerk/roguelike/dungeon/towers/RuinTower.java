@@ -75,8 +75,6 @@ public class RuinTower implements ITower {
 					new Coord(cursor.getX(), origin.getY() + 20, cursor.getZ()), 
 					new Coord(cursor.getX(), floor.getY() + 2 + rand.nextInt(4), cursor.getZ()), 
 					blocks, true, false);
-		}
-
+		}	
 	}
-
 }

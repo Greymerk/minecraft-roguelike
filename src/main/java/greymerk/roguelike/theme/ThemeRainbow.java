@@ -15,8 +15,7 @@ public class ThemeRainbow extends ThemeBase{
 	
 		BlockStripes rainbow = new BlockStripes();
 		for(DyeColor color : DyeColor.values()){
-			MetaBlock clay = ColorBlock.get(ColorBlock.CLAY, color);
-			rainbow.addBlock(clay);
+			rainbow.addBlock(ColorBlock.get(ColorBlock.CONCRETE, color));
 		}
 		
 		MetaStair stair = new MetaStair(StairType.ACACIA);

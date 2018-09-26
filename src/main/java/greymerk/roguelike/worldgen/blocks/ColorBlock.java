@@ -11,7 +11,7 @@ import net.minecraft.item.EnumDyeColor;
 
 public enum ColorBlock {
 
-	CLAY, WOOL, CARPET, GLASS, PANE;
+	CLAY, WOOL, CARPET, GLASS, PANE, CONCRETE, POWDER;
 	
 	public static MetaBlock get(ColorBlock type, DyeColor color){
 		Block b = getBlock(type);
@@ -33,6 +33,8 @@ public enum ColorBlock {
 		case CARPET: return Blocks.CARPET;
 		case GLASS: return Blocks.STAINED_GLASS;
 		case PANE: return Blocks.STAINED_GLASS_PANE;
+		case CONCRETE: return Blocks.CONCRETE;
+		case POWDER: return Blocks.CONCRETE_POWDER;
 		default: return Blocks.WOOL;
 		}
 	}

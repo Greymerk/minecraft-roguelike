@@ -18,7 +18,7 @@ import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IWorldEditor;
 
 public class CommandRouteTower extends CommandRouteBase{
-
+	
 	@Override
 	public void execute(ICommandContext context, List<String> args) {
 		ArgumentParser ap = new ArgumentParser(args);
@@ -45,7 +45,7 @@ public class CommandRouteTower extends CommandRouteBase{
 		ITower tower = Tower.get(type);
 		
 		IWorldEditor editor = context.createEditor();
-		tower.generate(editor, Dungeon.getRandom(editor, here), Theme.getTheme(Theme.OAK), here);
+		tower.generate(editor, Dungeon.getRandom(editor, here), Theme.getTheme(Tower.getDefaultTheme(type)), here);
 		context.sendMessage("Success: " + towerName + " Tower generated at " + here.toString(), MessageType.SUCCESS);
 		
 		return;
