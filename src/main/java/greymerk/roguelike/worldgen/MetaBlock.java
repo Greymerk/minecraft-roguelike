@@ -376,6 +376,6 @@ public class MetaBlock extends BlockBase implements IBlockState{
 
 	@Override
 	public boolean doesSideBlockChestOpening(IBlockAccess world, BlockPos pos, EnumFacing side) {
-		return this.doesSideBlockChestOpening(world, pos, side);
+		return this.state.doesSideBlockChestOpening(world, pos, side);
 	}
 }
