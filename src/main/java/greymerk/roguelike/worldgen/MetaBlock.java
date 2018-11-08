@@ -373,4 +373,9 @@ public class MetaBlock extends BlockBase implements IBlockState{
 	public BlockFaceShape getBlockFaceShape(IBlockAccess p_193401_1_, BlockPos p_193401_2_, EnumFacing p_193401_3_) {
 		return this.state.getBlockFaceShape(p_193401_1_, p_193401_2_, p_193401_3_);
 	}
+
+	@Override
+	public boolean doesSideBlockChestOpening(IBlockAccess world, BlockPos pos, EnumFacing side) {
+		return this.doesSideBlockChestOpening(world, pos, side);
+	}
 }
