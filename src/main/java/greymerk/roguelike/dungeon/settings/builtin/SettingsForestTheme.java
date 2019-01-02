@@ -14,6 +14,7 @@ import greymerk.roguelike.dungeon.settings.SettingIdentifier;
 import greymerk.roguelike.dungeon.settings.SettingsContainer;
 import greymerk.roguelike.dungeon.settings.SpawnCriteria;
 import greymerk.roguelike.dungeon.settings.TowerSettings;
+import greymerk.roguelike.dungeon.settings.base.SettingsBase;
 import greymerk.roguelike.dungeon.towers.Tower;
 import greymerk.roguelike.theme.Theme;
 import greymerk.roguelike.worldgen.filter.Filter;
@@ -33,7 +34,7 @@ public class SettingsForestTheme extends DungeonSettings{
 		biomes.add(BiomeDictionary.Type.FOREST);
 		this.criteria.setBiomeTypes(biomes);
 		
-		this.towerSettings = new TowerSettings(Tower.HOUSE, Theme.getTheme(Theme.HOUSE));
+		this.towerSettings = new TowerSettings(Tower.ROGUE, Theme.getTheme(Theme.TOWER));
 				
 		for(int i = 0; i < 5; ++i){
 			
@@ -46,19 +47,17 @@ public class SettingsForestTheme extends DungeonSettings{
 			switch(i){
 			case 0:
 				rooms = new DungeonFactory();
-				rooms.addRandom(DungeonRoom.CORNER, 10);
+				rooms.addRandom(DungeonRoom.CORNER, 8);
 				rooms.addRandom(DungeonRoom.BRICK, 3);
 				rooms.addSingle(DungeonRoom.CAKE);
 				rooms.addSingle(DungeonRoom.DARKHALL);
 				rooms.addSingle(DungeonRoom.LIBRARY);
-				rooms.addSingle(DungeonRoom.SLIME, 2);
 				level.setRooms(rooms);
 				secrets = new SecretFactory();
-				//secrets.addRoom(DungeonRoom.SMITH);
+				secrets.addRoom(DungeonRoom.SMITH);
 				secrets.addRoom(DungeonRoom.BEDROOM, 2);
-				secrets.addRoom(DungeonRoom.FIREWORK);
 				level.setSecrets(secrets);
-				level.setTheme(Theme.getTheme(Theme.ETHO));
+				level.setTheme(Theme.getTheme(Theme.SPRUCE));
 				segments = new SegmentGenerator(Segment.ARCH);
 				segments.add(Segment.DOOR, 8);
 				segments.add(Segment.LAMP, 2);

@@ -1,4 +1,4 @@
-package greymerk.roguelike.dungeon.settings.builtin;
+package greymerk.roguelike.dungeon.settings.base;
 
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.dungeon.settings.SettingIdentifier;

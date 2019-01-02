@@ -1,4 +1,4 @@
-package greymerk.roguelike.dungeon.settings.builtin;
+package greymerk.roguelike.dungeon.settings.base;
 
 import greymerk.roguelike.dungeon.base.SecretFactory;
 import greymerk.roguelike.dungeon.settings.DungeonSettings;
