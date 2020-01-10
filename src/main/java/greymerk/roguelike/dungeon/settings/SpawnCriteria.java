@@ -13,9 +13,9 @@ import net.minecraftforge.common.BiomeDictionary;
 public class SpawnCriteria {
 
 	private int weight;
-	List<ResourceLocation> biomes;
-	List<BiomeDictionary.Type> biomeTypes;
-	boolean everywhere;
+	private List<ResourceLocation> biomes;
+	private List<BiomeDictionary.Type> biomeTypes;
+	private boolean everywhere;
 
 	public SpawnCriteria(){
 		this.weight = 1;
