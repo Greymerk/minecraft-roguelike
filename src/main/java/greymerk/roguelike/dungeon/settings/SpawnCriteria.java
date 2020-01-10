@@ -12,7 +12,7 @@ import net.minecraftforge.common.BiomeDictionary;
 
 public class SpawnCriteria {
 
-	int weight;
+	private int weight;
 	List<ResourceLocation> biomes;
 	List<BiomeDictionary.Type> biomeTypes;
 	boolean everywhere;
@@ -50,7 +50,11 @@ public class SpawnCriteria {
 		
 		this.everywhere = this.biomes.isEmpty() && this.biomeTypes.isEmpty();
 	}
-	
+
+	public int getWeight() {
+		return weight;
+	}
+
 	public void setWeight(int weight){
 		this.weight = weight;
 	}

@@ -94,7 +94,7 @@ public class SettingsResolver {
 
 		for(DungeonSettings setting : settings.getBuiltinSettings()){			
 			if(setting.isValid(editor, pos)){
-				settingsRandomizer.add(new WeightedChoice<DungeonSettings>(setting, setting.criteria.weight));
+				settingsRandomizer.add(new WeightedChoice<DungeonSettings>(setting, setting.criteria.getWeight()));
 			}
 		}
 		
@@ -111,7 +111,7 @@ public class SettingsResolver {
 		
 		for(DungeonSettings setting : settings.getCustomSettings()){
 			if(setting.isValid(editor, pos) && setting.isExclusive()){
-				settingsRandomizer.add(new WeightedChoice<DungeonSettings>(setting, setting.criteria.weight));
+				settingsRandomizer.add(new WeightedChoice<DungeonSettings>(setting, setting.criteria.getWeight()));
 			}
 		}
 		
