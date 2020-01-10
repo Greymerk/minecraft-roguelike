@@ -15,38 +15,38 @@ public class SpawnCriteria {
   private int weight;
   private List<ResourceLocation> biomes = new ArrayList<>();
   private List<BiomeDictionary.Type> biomeTypes = new ArrayList<>();
-  private boolean everywhere;
 
   public SpawnCriteria() {
-    this.weight = 1;
-    this.everywhere = false;
+    this(new JsonObject());
   }
 
   public SpawnCriteria(JsonObject data) {
-    this();
+    weight = data.has("weight") ? data.get("weight").getAsInt() : 1;
+    addBiomeCriteria(data);
+    addBiomeTypeCriteria(data);
+  }
 
-    this.weight = data.has("weight") ? data.get("weight").getAsInt() : 1;
-
+  private void addBiomeCriteria(JsonObject data) {
     if (data.has("biomes")) {
-      JsonArray biomeList = data.get("biomes").getAsJsonArray();
-      for (JsonElement e : biomeList) {
-        String name = e.getAsString();
-        this.biomes.add(new ResourceLocation(name));
+      for (JsonElement biome : data.get("biomes").getAsJsonArray()) {
+        biomes.add(new ResourceLocation(biome.getAsString()));
       }
     }
+  }
 
+  private void addBiomeTypeCriteria(JsonObject data) {
     if (data.has("biomeTypes")) {
-      JsonArray biomeTypeList = data.get("biomeTypes").getAsJsonArray();
-      for (JsonElement e : biomeTypeList) {
-        String type = e.getAsString().toUpperCase();
-        BiomeDictionary.Type t = BiomeDictionary.Type.getType(type);
+      for (JsonElement biomeType : data.get("biomeTypes").getAsJsonArray()) {
+        BiomeDictionary.Type t = BiomeDictionary.Type.getType(biomeType.getAsString().toUpperCase());
         if (BiomeDictionary.getBiomes(t).size() > 0) {
-          this.biomeTypes.add(t);
+          biomeTypes.add(t);
         }
       }
     }
+  }
 
-    this.everywhere = this.biomes.isEmpty() && this.biomeTypes.isEmpty();
+  private boolean isEverywhere() {
+    return biomes.isEmpty() && biomeTypes.isEmpty();
   }
 
   public int getWeight() {
@@ -59,37 +59,22 @@ public class SpawnCriteria {
 
   public void setBiomeTypes(List<BiomeDictionary.Type> biomeTypes) {
     this.biomeTypes = biomeTypes;
-    this.everywhere = this.biomes.isEmpty() && this.biomeTypes.isEmpty();
   }
 
-
-  public boolean isValid(ISpawnContext context) {
-
-    if (this.everywhere) {
-      return true;
-    }
-
-    boolean biomeFound = false;
-
-    if (this.biomes != null) {
-      biomeFound = context.includesBiome(biomes);
-    }
-
-    if (this.biomeTypes != null) {
-      biomeFound = context.includesBiomeType(this.biomeTypes);
-    }
-
-    return biomeFound;
+  public boolean isValid(ISpawnContext spawnContext) {
+    return isEverywhere() || isBiomeValid(spawnContext) && isBiomeTypeValid(spawnContext);
   }
 
-  public static boolean isValidDimension(int dim, List<Integer> wl, List<Integer> bl) {
-    if (bl.contains(dim)) {
-      return false;
-    }
-    if (wl.isEmpty()) {
-      return true;
-    }
-    return wl.contains(dim);
+  private boolean isBiomeValid(ISpawnContext spawnContext) {
+    return biomes.isEmpty() || spawnContext.includesBiome(biomes);
+  }
+
+  private boolean isBiomeTypeValid(ISpawnContext spawnContext) {
+    return biomeTypes.isEmpty() || spawnContext.includesBiomeType(biomeTypes);
+  }
+
+  public static boolean isValidDimension(int dim, List<Integer> whiteList, List<Integer> blackList) {
+    return !blackList.contains(dim) && (whiteList.isEmpty() || whiteList.contains(dim));
   }
 
 }
