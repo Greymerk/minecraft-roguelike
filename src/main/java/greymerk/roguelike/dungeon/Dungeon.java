@@ -33,6 +33,8 @@ import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.VanillaStructure;
 import greymerk.roguelike.worldgen.shapes.RectSolid;
 
+import static java.lang.Math.*;
+
 public class Dungeon implements IDungeon {
   public static final int VERTICAL_SPACING = 10;
   public static final int TOPLEVEL = 50;
@@ -55,7 +57,7 @@ public class Dungeon implements IDungeon {
 
   public Dungeon(IWorldEditor editor) {
     this.editor = editor;
-    this.levels = new ArrayList<IDungeonLevel>();
+    this.levels = new ArrayList<>();
   }
 
   public static void initResolver() throws Exception {
@@ -75,7 +77,7 @@ public class Dungeon implements IDungeon {
     SettingsContainer settings = new SettingsContainer();
     settingsResolver = new SettingsResolver(settings);
 
-    Map<String, String> files = new HashMap<String, String>();
+    Map<String, String> files = new HashMap<>();
 
     for (File file : settingsFiles) {
 
@@ -101,11 +103,9 @@ public class Dungeon implements IDungeon {
     }
 
     int dim = editor.getInfo(new Coord(chunkX * 16, 0, chunkZ * 16)).getDimension();
-    List<Integer> wl = new ArrayList<Integer>();
-    wl.addAll(RogueConfig.getIntList(RogueConfig.DIMENSIONWL));
-    List<Integer> bl = new ArrayList<Integer>();
-    bl.addAll(RogueConfig.getIntList(RogueConfig.DIMENSIONBL));
-    if (!SpawnCriteria.isValidDimension(dim, wl, bl)) {
+    List<Integer> whiteList = new ArrayList<>(RogueConfig.getIntList(RogueConfig.DIMENSIONWL));
+    List<Integer> blackList = new ArrayList<>(RogueConfig.getIntList(RogueConfig.DIMENSIONBL));
+    if (!SpawnCriteria.isValidDimension(dim, whiteList, blackList)) {
       return false;
     }
 
@@ -125,8 +125,8 @@ public class Dungeon implements IDungeon {
     int min = 8 * frequency / 10;
     int max = 32 * frequency / 10;
 
-    min = min < 2 ? 2 : min;
-    max = max < 8 ? 8 : max;
+    min = max(min, 2);
+    max = max(max, 8);
 
     int tempX = chunkX < 0 ? chunkX - (max - 1) : chunkX;
     int tempZ = chunkZ < 0 ? chunkZ - (max - 1) : chunkZ;
@@ -166,10 +166,10 @@ public class Dungeon implements IDungeon {
 
     int distance = min + rand.nextInt(max - min);
 
-    double angle = rand.nextDouble() * 2 * Math.PI;
+    double angle = rand.nextDouble() * 2 * PI;
 
-    int xOffset = (int) (Math.cos(angle) * distance);
-    int zOffset = (int) (Math.sin(angle) * distance);
+    int xOffset = (int) (cos(angle) * distance);
+    int zOffset = (int) (sin(angle) * distance);
 
     Coord nearby = new Coord(x + xOffset, 0, z + zOffset);
     return nearby;

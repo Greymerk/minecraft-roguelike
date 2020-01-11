@@ -1,10 +1,6 @@
 package greymerk.roguelike.dungeon.settings.builtin;
 
 import net.minecraft.init.Items;
-import net.minecraftforge.common.BiomeDictionary;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import greymerk.roguelike.dungeon.LevelGenerator;
 import greymerk.roguelike.dungeon.base.DungeonFactory;
@@ -24,6 +20,9 @@ import greymerk.roguelike.theme.Theme;
 import greymerk.roguelike.treasure.loot.LootRuleManager;
 import greymerk.roguelike.treasure.loot.WeightedRandomLoot;
 
+import static com.google.common.collect.Lists.newArrayList;
+import static net.minecraftforge.common.BiomeDictionary.Type.SANDY;
+
 public class SettingsDesertTheme extends DungeonSettings {
 
   public static final SettingIdentifier ID = new SettingIdentifier(SettingsContainer.BUILTIN_NAMESPACE, "desert");
@@ -35,9 +34,7 @@ public class SettingsDesertTheme extends DungeonSettings {
     this.inherit.add(SettingsBase.ID);
 
     this.criteria = new SpawnCriteria();
-    List<BiomeDictionary.Type> biomes = new ArrayList<>();
-    biomes.add(BiomeDictionary.Type.SANDY);
-    this.criteria.setBiomeTypes(biomes);
+    this.criteria.setBiomeTypes(newArrayList(SANDY));
 
     this.towerSettings = new TowerSettings(Tower.PYRAMID, Theme.PYRAMID);
 
