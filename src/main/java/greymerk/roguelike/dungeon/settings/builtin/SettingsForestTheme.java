@@ -9,7 +9,6 @@ import greymerk.roguelike.dungeon.settings.DungeonSettings;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.dungeon.settings.SettingIdentifier;
 import greymerk.roguelike.dungeon.settings.SettingsContainer;
-import greymerk.roguelike.dungeon.settings.SpawnCriteria;
 import greymerk.roguelike.dungeon.settings.TowerSettings;
 import greymerk.roguelike.dungeon.settings.base.SettingsBase;
 import greymerk.roguelike.dungeon.towers.Tower;
@@ -27,10 +26,7 @@ public class SettingsForestTheme extends DungeonSettings {
 
     this.id = ID;
     this.inherit.add(SettingsBase.ID);
-
-    this.criteria = new SpawnCriteria();
     this.criteria.setBiomeTypes(newArrayList(FOREST));
-
     this.towerSettings = new TowerSettings(Tower.ROGUE, Theme.TOWER);
 
     for (int i = 0; i < 5; ++i) {

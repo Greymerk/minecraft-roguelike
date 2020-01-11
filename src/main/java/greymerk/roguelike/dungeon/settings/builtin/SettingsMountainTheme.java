@@ -9,7 +9,6 @@ import greymerk.roguelike.dungeon.settings.DungeonSettings;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.dungeon.settings.SettingIdentifier;
 import greymerk.roguelike.dungeon.settings.SettingsContainer;
-import greymerk.roguelike.dungeon.settings.SpawnCriteria;
 import greymerk.roguelike.dungeon.settings.TowerSettings;
 import greymerk.roguelike.dungeon.settings.base.SettingsBase;
 import greymerk.roguelike.dungeon.towers.Tower;
@@ -27,10 +26,7 @@ public class SettingsMountainTheme extends DungeonSettings {
 
     this.id = ID;
     this.inherit.add(SettingsBase.ID);
-
-    this.criteria = new SpawnCriteria();
     this.criteria.setBiomeTypes(newArrayList(MOUNTAIN));
-
     this.towerSettings = new TowerSettings(Tower.ENIKO, Theme.OAK);
 
     Theme[] themes = {Theme.ENIKO, Theme.ENIKO2, Theme.SEWER, Theme.MOSSY, Theme.NETHER};

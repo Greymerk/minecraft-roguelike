@@ -8,7 +8,6 @@ import greymerk.roguelike.dungeon.segment.Segment;
 import greymerk.roguelike.dungeon.segment.SegmentGenerator;
 import greymerk.roguelike.dungeon.settings.DungeonSettings;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
-import greymerk.roguelike.dungeon.settings.SpawnCriteria;
 import greymerk.roguelike.dungeon.settings.TowerSettings;
 import greymerk.roguelike.dungeon.towers.Tower;
 import greymerk.roguelike.theme.Theme;
@@ -16,8 +15,6 @@ import greymerk.roguelike.theme.Theme;
 public class SettingsCustomBase extends DungeonSettings {
 
   public SettingsCustomBase() {
-
-    this.criteria = new SpawnCriteria();
 
     this.towerSettings = new TowerSettings(Tower.ROGUE, Theme.QUARTZ);
 

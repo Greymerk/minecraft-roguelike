@@ -6,7 +6,6 @@ import greymerk.roguelike.dungeon.settings.DungeonSettings;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.dungeon.settings.SettingIdentifier;
 import greymerk.roguelike.dungeon.settings.SettingsContainer;
-import greymerk.roguelike.dungeon.settings.SpawnCriteria;
 import greymerk.roguelike.dungeon.settings.TowerSettings;
 import greymerk.roguelike.dungeon.settings.base.SettingsBase;
 
@@ -22,12 +21,8 @@ public class SettingsIceTheme extends DungeonSettings {
   public SettingsIceTheme() {
     id = ID;
     inherit.add(SettingsBase.ID);
-
-    criteria = new SpawnCriteria();
     criteria.setBiomeTypes(newArrayList(SNOWY));
-
     towerSettings = new TowerSettings(PYRAMID, ICE);
-
     IntStream.range(0, 5)
         .forEach(i -> levels.put(i, generateLevelSettings(i)));
   }

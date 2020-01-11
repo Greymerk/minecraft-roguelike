@@ -45,6 +45,7 @@ public class DungeonSettings implements ISettings {
     this.inherit = new ArrayList<>();
     this.levels = new HashMap<>();
     this.exclusive = false;
+    this.criteria = new SpawnCriteria();
     this.lootRules = new LootRuleManager();
     this.lootTables = new ArrayList<>();
     this.overrides = new HashSet<>();
@@ -339,11 +340,7 @@ public class DungeonSettings implements ISettings {
 
   @Override
   public boolean isValid(IWorldEditor editor, Coord pos) {
-    if (this.criteria == null) {
-      this.criteria = new SpawnCriteria();
-    }
-    ISpawnContext context = new SpawnContext(editor.getInfo(pos));
-    return this.criteria.isValid(context);
+    return this.criteria.isValid(new SpawnContext(editor.getInfo(pos)));
   }
 
   @Override
