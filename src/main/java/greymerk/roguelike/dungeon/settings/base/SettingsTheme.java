@@ -16,13 +16,13 @@ public class SettingsTheme extends DungeonSettings {
 
     this.id = ID;
 
-    this.towerSettings = new TowerSettings(Tower.ROGUE, Theme.getTheme(Theme.TOWER));
+    this.towerSettings = new TowerSettings(Tower.ROGUE, Theme.TOWER.getThemeBase());
 
     Theme[] themes = {Theme.OAK, Theme.SPRUCE, Theme.CRYPT, Theme.MOSSY, Theme.HELL};
 
     for (int i = 0; i < 5; ++i) {
       LevelSettings level = new LevelSettings();
-      level.setTheme(Theme.getTheme(themes[i]));
+      level.setTheme(themes[i].getThemeBase());
       levels.put(i, level);
     }
   }

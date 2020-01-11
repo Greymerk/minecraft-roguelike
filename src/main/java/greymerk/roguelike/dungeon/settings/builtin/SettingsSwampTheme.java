@@ -39,7 +39,7 @@ public class SettingsSwampTheme extends DungeonSettings {
     biomes.add(BiomeDictionary.Type.SWAMP);
     this.criteria.setBiomeTypes(biomes);
 
-    this.towerSettings = new TowerSettings(Tower.WITCH, Theme.getTheme(Theme.DARKOAK));
+    this.towerSettings = new TowerSettings(Tower.WITCH, Theme.DARKOAK.getThemeBase());
 
     Theme[] themes = {Theme.DARKHALL, Theme.DARKHALL, Theme.MUDDY, Theme.MOSSY, Theme.NETHER};
 
@@ -57,7 +57,7 @@ public class SettingsSwampTheme extends DungeonSettings {
     for (int i = 0; i < 5; ++i) {
 
       LevelSettings level = new LevelSettings();
-      level.setTheme(Theme.getTheme(themes[i]));
+      level.setTheme(themes[i].getThemeBase());
 
       if (i == 0) {
 

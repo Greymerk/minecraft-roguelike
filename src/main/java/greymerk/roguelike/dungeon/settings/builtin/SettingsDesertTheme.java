@@ -39,7 +39,7 @@ public class SettingsDesertTheme extends DungeonSettings {
     biomes.add(BiomeDictionary.Type.SANDY);
     this.criteria.setBiomeTypes(biomes);
 
-    this.towerSettings = new TowerSettings(Tower.PYRAMID, Theme.getTheme(Theme.PYRAMID));
+    this.towerSettings = new TowerSettings(Tower.PYRAMID, Theme.PYRAMID.getThemeBase());
 
     this.lootRules = new LootRuleManager();
     for (int i = 0; i < 5; ++i) {
@@ -51,7 +51,7 @@ public class SettingsDesertTheme extends DungeonSettings {
     for (int i = 0; i < 5; ++i) {
 
       LevelSettings level = new LevelSettings();
-      level.setTheme(Theme.getTheme(themes[i]));
+      level.setTheme(themes[i].getThemeBase());
 
       if (i == 0) {
         level.setDifficulty(2);

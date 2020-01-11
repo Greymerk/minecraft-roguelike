@@ -35,7 +35,7 @@ public class SettingsJungleTheme extends DungeonSettings {
     biomes.add(BiomeDictionary.Type.JUNGLE);
     this.criteria.setBiomeTypes(biomes);
 
-    this.towerSettings = new TowerSettings(Tower.JUNGLE, Theme.getTheme(Theme.JUNGLE));
+    this.towerSettings = new TowerSettings(Tower.JUNGLE, Theme.JUNGLE.getThemeBase());
 
     this.lootRules = new LootRuleManager();
     for (int i = 0; i < 5; ++i) {
@@ -65,7 +65,7 @@ public class SettingsJungleTheme extends DungeonSettings {
         level.addFilter(Filter.VINE);
       }
 
-      level.setTheme(Theme.getTheme(themes[i]));
+      level.setTheme(themes[i].getThemeBase());
       levels.put(i, level);
     }
   }

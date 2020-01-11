@@ -35,7 +35,7 @@ public class SettingsForestTheme extends DungeonSettings {
     biomes.add(BiomeDictionary.Type.FOREST);
     this.criteria.setBiomeTypes(biomes);
 
-    this.towerSettings = new TowerSettings(Tower.ROGUE, Theme.getTheme(Theme.TOWER));
+    this.towerSettings = new TowerSettings(Tower.ROGUE, Theme.TOWER.getThemeBase());
 
     for (int i = 0; i < 5; ++i) {
 
@@ -58,7 +58,7 @@ public class SettingsForestTheme extends DungeonSettings {
           secrets.addRoom(DungeonRoom.SMITH);
           secrets.addRoom(DungeonRoom.BEDROOM, 2);
           level.setSecrets(secrets);
-          level.setTheme(Theme.getTheme(Theme.SPRUCE));
+          level.setTheme(Theme.SPRUCE.getThemeBase());
           segments = new SegmentGenerator(Segment.ARCH);
           segments.add(Segment.DOOR, 8);
           segments.add(Segment.LAMP, 2);
@@ -79,7 +79,7 @@ public class SettingsForestTheme extends DungeonSettings {
           rooms.addRandom(DungeonRoom.CORNER, 10);
           rooms.addRandom(DungeonRoom.BRICK, 3);
           level.setRooms(rooms);
-          level.setTheme(Theme.getTheme(Theme.DARKHALL));
+          level.setTheme(Theme.DARKHALL.getThemeBase());
           segments = new SegmentGenerator(Segment.ARCH);
           segments.add(Segment.DOOR, 10);
           segments.add(Segment.FLOWERS, 2);

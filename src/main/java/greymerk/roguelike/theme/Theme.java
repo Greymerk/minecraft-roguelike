@@ -6,175 +6,59 @@ import java.util.Random;
 
 public enum Theme {
 
-  OAK,
-  SPRUCE,
-  CRYPT,
-  MOSSY,
-  MUDDY,
-  NETHER,
-  SANDSTONE,
-  QUARTZ,
-  BLING,
-  CHECKER,
-  RAINBOW,
-  SNOW,
-  JUNGLE,
-  BRICK,
-  DARKOAK,
-  ICE,
-  ENIKO,
-  ENIKO2,
-  ENIQUARTZ,
-  ENIICE,
-  TOWER,
-  ETHO,
-  CAVE,
-  SEWER,
-  ENDER,
-  MINESHAFT,
-  ETHOTOWER,
-  PYRAMID,
-  DARKHALL,
-  TEMPLE,
-  SANDSTONERED,
-  HOUSE,
-  GREY,
-  PURPUR,
-  HELL,
-  TERRACOTTA,
-  STONE,
-  BUMBO;
+  OAK(new ThemeOak()),
+  SPRUCE(new ThemeSpruce()),
+  CRYPT(new ThemeCrypt()),
+  MOSSY(new ThemeMossy()),
+  MUDDY(new ThemeMuddy()),
+  NETHER(new ThemeNether()),
+  SANDSTONE(new ThemeSandstone()),
+  QUARTZ(new ThemeQuartz()),
+  BLING(new ThemeBling()),
+  CHECKER(new ThemeChecker()),
+  RAINBOW(new ThemeRainbow()),
+  SNOW(new ThemeSnow()),
+  JUNGLE(new ThemeJungle()),
+  BRICK(new ThemeBrick()),
+  DARKOAK(new ThemeDarkOak()),
+  ICE(new ThemeIce()),
+  ENIKO(new ThemeEniko()),
+  ENIKO2(new ThemeEniko2()),
+  ENIQUARTZ(new ThemeEniQuartz()),
+  ENIICE(new ThemeEniIce()),
+  TOWER(new ThemeTower()),
+  ETHO(new ThemeEtho()),
+  CAVE(new ThemeCave()),
+  SEWER(new ThemeSewer()),
+  ENDER(new ThemeEnder()),
+  MINESHAFT(new ThemeMineShaft()),
+  ETHOTOWER(new ThemeEthoTower()),
+  PYRAMID(new ThemePyramid()),
+  DARKHALL(new ThemeDarkHall()),
+  TEMPLE(new ThemeTemple()),
+  SANDSTONERED(new ThemeSandstoneRed()),
+  HOUSE(new ThemeHouse()),
+  GREY(new ThemeGrey()),
+  PURPUR(new ThemePurpur()),
+  HELL(new ThemeHell()),
+  TERRACOTTA(new ThemeTerracotta()),
+  STONE(new ThemeStone()),
+  BUMBO(new ThemeBumbo());
 
-  public static ITheme getTheme(Theme type) {
+  private final ThemeBase themeBase;
 
-    ITheme theme;
+  Theme(ThemeBase themeBase) {
+    this.themeBase = themeBase;
+  }
 
-    switch (type) {
-      case OAK:
-        theme = new ThemeOak();
-        break;
-      case SPRUCE:
-        theme = new ThemeSpruce();
-        break;
-      case CRYPT:
-        theme = new ThemeCrypt();
-        break;
-      case MOSSY:
-        theme = new ThemeMossy();
-        break;
-      case MUDDY:
-        theme = new ThemeMuddy();
-        break;
-      case NETHER:
-        theme = new ThemeNether();
-        break;
-      case SANDSTONE:
-        theme = new ThemeSandstone();
-        break;
-      case QUARTZ:
-        theme = new ThemeQuartz();
-        break;
-      case BLING:
-        theme = new ThemeBling();
-        break;
-      case CHECKER:
-        theme = new ThemeChecker();
-        break;
-      case RAINBOW:
-        theme = new ThemeRainbow();
-        break;
-      case SNOW:
-        theme = new ThemeSnow();
-        break;
-      case JUNGLE:
-        theme = new ThemeJungle();
-        break;
-      case BRICK:
-        theme = new ThemeBrick();
-        break;
-      case DARKOAK:
-        theme = new ThemeDarkOak();
-        break;
-      case ICE:
-        theme = new ThemeIce();
-        break;
-      case ENIKO:
-        theme = new ThemeEniko();
-        break;
-      case ENIKO2:
-        theme = new ThemeEniko2();
-        break;
-      case ENIQUARTZ:
-        theme = new ThemeEniQuartz();
-        break;
-      case ENIICE:
-        theme = new ThemeEniIce();
-        break;
-      case TOWER:
-        theme = new ThemeTower();
-        break;
-      case ETHO:
-        theme = new ThemeEtho();
-        break;
-      case CAVE:
-        theme = new ThemeCave();
-        break;
-      case SEWER:
-        theme = new ThemeSewer();
-        break;
-      case ENDER:
-        theme = new ThemeEnder();
-        break;
-      case MINESHAFT:
-        theme = new ThemeMineShaft();
-        break;
-      case ETHOTOWER:
-        theme = new ThemeEthoTower();
-        break;
-      case PYRAMID:
-        theme = new ThemePyramid();
-        break;
-      case DARKHALL:
-        theme = new ThemeDarkHall();
-        break;
-      case TEMPLE:
-        theme = new ThemeTemple();
-        break;
-      case SANDSTONERED:
-        theme = new ThemeSandstoneRed();
-        break;
-      case HOUSE:
-        theme = new ThemeHouse();
-        break;
-      case GREY:
-        theme = new ThemeGrey();
-        break;
-      case PURPUR:
-        theme = new ThemePurpur();
-        break;
-      case HELL:
-        theme = new ThemeHell();
-        break;
-      case TERRACOTTA:
-        theme = new ThemeTerracotta();
-        break;
-      case STONE:
-        theme = new ThemeStone();
-        break;
-      case BUMBO:
-        theme = new ThemeBumbo();
-        break;
-      default:
-        return null;
-    }
-
-    return theme;
+  public ThemeBase getThemeBase() {
+    return themeBase;
   }
 
   public static ITheme create(JsonObject json) throws Exception {
 
     ITheme base = json.has("base")
-        ? Theme.getTheme(Theme.get(json.get("base").getAsString()))
+        ? Theme.get(json.get("base").getAsString()).getThemeBase()
         : null;
 
     BlockSet primary = null;
@@ -259,7 +143,7 @@ public enum Theme {
   }
 
   public static ITheme getRandom(Random rand) {
-    return Theme.getTheme(Theme.values()[rand.nextInt(Theme.values().length)]);
+    return Theme.values()[rand.nextInt(Theme.values().length)].getThemeBase();
   }
 
 }

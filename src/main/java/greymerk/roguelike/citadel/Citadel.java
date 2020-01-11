@@ -18,7 +18,7 @@ public class Citadel {
     MinimumSpanningTree mst = new MinimumSpanningTree(rand, 7, EDGE_LENGTH);
     //mst.generate(world, rand, new MetaBlock(Blocks.glowstone), new Coord(x, 100, z));
 
-    CityGrounds.generate(editor, rand, mst, Theme.getTheme(Theme.OAK), new Coord(x, 50, z));
+    CityGrounds.generate(editor, rand, mst, Theme.OAK.getThemeBase(), new Coord(x, 50, z));
   }
 
 

@@ -11,7 +11,6 @@ import greymerk.roguelike.command.MessageType;
 import greymerk.roguelike.dungeon.Dungeon;
 import greymerk.roguelike.dungeon.towers.ITower;
 import greymerk.roguelike.dungeon.towers.Tower;
-import greymerk.roguelike.theme.Theme;
 import greymerk.roguelike.util.ArgumentParser;
 import greymerk.roguelike.util.EnumTools;
 import greymerk.roguelike.worldgen.Coord;
@@ -45,7 +44,7 @@ public class CommandRouteTower extends CommandRouteBase {
     ITower tower = Tower.get(type);
 
     IWorldEditor editor = context.createEditor();
-    tower.generate(editor, Dungeon.getRandom(editor, here), Theme.getTheme(Tower.getDefaultTheme(type)), here);
+    tower.generate(editor, Dungeon.getRandom(editor, here), Tower.getDefaultTheme(type).getThemeBase(), here);
     context.sendMessage("Success: " + towerName + " Tower generated at " + here.toString(), MessageType.SUCCESS);
 
     return;

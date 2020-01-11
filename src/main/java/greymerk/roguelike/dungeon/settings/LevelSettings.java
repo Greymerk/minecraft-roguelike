@@ -194,7 +194,7 @@ public class LevelSettings {
   }
 
   public ITheme getTheme() {
-    return theme != null ? theme : Theme.getTheme(Theme.STONE);
+    return theme != null ? theme : Theme.STONE.getThemeBase();
   }
 
   public void setTheme(ITheme theme) {

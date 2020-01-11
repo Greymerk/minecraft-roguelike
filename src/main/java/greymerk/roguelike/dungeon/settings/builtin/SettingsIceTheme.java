@@ -28,6 +28,6 @@ public class SettingsIceTheme extends DungeonSettings {
     biomes.add(BiomeDictionary.Type.SNOWY);
     this.criteria.setBiomeTypes(biomes);
 
-    this.towerSettings = new TowerSettings(Tower.PYRAMID, Theme.getTheme(Theme.ICE));
+    this.towerSettings = new TowerSettings(Tower.PYRAMID, Theme.ICE.getThemeBase());
   }
 }

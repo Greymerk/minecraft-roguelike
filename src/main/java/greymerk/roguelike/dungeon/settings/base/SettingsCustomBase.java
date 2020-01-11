@@ -19,11 +19,11 @@ public class SettingsCustomBase extends DungeonSettings {
 
     this.criteria = new SpawnCriteria();
 
-    this.towerSettings = new TowerSettings(Tower.ROGUE, Theme.getTheme(Theme.QUARTZ));
+    this.towerSettings = new TowerSettings(Tower.ROGUE, Theme.QUARTZ.getThemeBase());
 
     for (int i = 0; i < 5; ++i) {
       LevelSettings level = new LevelSettings();
-      level.setTheme(Theme.getTheme(Theme.QUARTZ));
+      level.setTheme(Theme.QUARTZ.getThemeBase());
 
       SegmentGenerator segments = new SegmentGenerator(Segment.ARCH);
       segments.add(Segment.DOOR, 10);

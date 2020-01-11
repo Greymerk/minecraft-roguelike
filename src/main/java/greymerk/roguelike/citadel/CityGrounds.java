@@ -66,7 +66,7 @@ public class CityGrounds {
       c.add(pos);
       rand = Citadel.getRandom(editor, c.getX(), c.getZ());
       ITower tower = Tower.get(Tower.values()[rand.nextInt(Tower.values().length)]);
-      tower.generate(editor, rand, Theme.getTheme(Theme.values()[rand.nextInt(Theme.values().length)]), new Coord(c.getX(), 50, c.getZ()));
+      tower.generate(editor, rand, Theme.values()[rand.nextInt(Theme.values().length)].getThemeBase(), new Coord(c.getX(), 50, c.getZ()));
     }
 
   }

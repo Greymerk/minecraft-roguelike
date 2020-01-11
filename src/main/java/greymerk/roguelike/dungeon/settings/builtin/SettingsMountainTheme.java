@@ -35,13 +35,13 @@ public class SettingsMountainTheme extends DungeonSettings {
     biomes.add(BiomeDictionary.Type.MOUNTAIN);
     this.criteria.setBiomeTypes(biomes);
 
-    this.towerSettings = new TowerSettings(Tower.ENIKO, Theme.getTheme(Theme.OAK));
+    this.towerSettings = new TowerSettings(Tower.ENIKO, Theme.OAK.getThemeBase());
 
     Theme[] themes = {Theme.ENIKO, Theme.ENIKO2, Theme.SEWER, Theme.MOSSY, Theme.NETHER};
 
     for (int i = 0; i < 5; ++i) {
       LevelSettings level = new LevelSettings();
-      level.setTheme(Theme.getTheme(themes[i]));
+      level.setTheme(themes[i].getThemeBase());
 
       if (i == 0) {
         level.setScatter(16);
