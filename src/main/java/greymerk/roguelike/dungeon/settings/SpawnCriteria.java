@@ -1,6 +1,5 @@
 package greymerk.roguelike.dungeon.settings;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
@@ -24,6 +23,10 @@ public class SpawnCriteria {
     weight = data.has("weight") ? data.get("weight").getAsInt() : 1;
     addBiomeCriteria(data);
     addBiomeTypeCriteria(data);
+  }
+
+  public static boolean isValidDimension(int dim, List<Integer> whiteList, List<Integer> blackList) {
+    return !blackList.contains(dim) && (whiteList.isEmpty() || whiteList.contains(dim));
   }
 
   private void addBiomeCriteria(JsonObject data) {
@@ -71,10 +74,6 @@ public class SpawnCriteria {
 
   private boolean isBiomeTypeValid(ISpawnContext spawnContext) {
     return biomeTypes.isEmpty() || spawnContext.includesBiomeType(biomeTypes);
-  }
-
-  public static boolean isValidDimension(int dim, List<Integer> whiteList, List<Integer> blackList) {
-    return !blackList.contains(dim) && (whiteList.isEmpty() || whiteList.contains(dim));
   }
 
 }

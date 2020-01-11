@@ -9,13 +9,13 @@ import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IWorldEditor;
 
 public class DungeonAshlea extends DungeonBase {
-	
-	@Override
-	public boolean generate(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
-		return false;
-	}
-	
-	public int getSize(){
-		return 10;
-	}
+
+  @Override
+  public boolean generate(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
+    return false;
+  }
+
+  public int getSize() {
+    return 10;
+  }
 }

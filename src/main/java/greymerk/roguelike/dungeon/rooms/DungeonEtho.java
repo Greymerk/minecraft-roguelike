@@ -10,13 +10,13 @@ import greymerk.roguelike.worldgen.IWorldEditor;
 
 public class DungeonEtho extends DungeonBase {
 
-	@Override
-	public boolean generate(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
-		return false;
-	}
-	
-	public int getSize(){
-		return 8;
-	}
+  @Override
+  public boolean generate(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
+    return false;
+  }
+
+  public int getSize() {
+    return 8;
+  }
 
 }

@@ -4,6 +4,6 @@ import net.minecraft.item.ItemStack;
 
 public interface IBook {
 
-	ItemStack get();
+  ItemStack get();
 
 }

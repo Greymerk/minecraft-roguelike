@@ -7,19 +7,19 @@ import greymerk.roguelike.worldgen.blocks.StairType;
 import greymerk.roguelike.worldgen.blocks.Wood;
 import greymerk.roguelike.worldgen.blocks.WoodBlock;
 
-public class ThemeEtho extends ThemeBase{
+public class ThemeEtho extends ThemeBase {
 
-	public ThemeEtho(){
-		
-		MetaBlock floor = BlockType.get(BlockType.GRASS);
-		
-		MetaBlock walls = Wood.get(WoodBlock.PLANK);
+  public ThemeEtho() {
 
-		MetaStair stair = new MetaStair(StairType.OAK);
-		MetaBlock pillar = Wood.get(WoodBlock.LOG);
-		
-		this.primary = new BlockSet(floor, walls, stair, pillar);
-		
-		this.secondary =  primary;
-	}
+    MetaBlock floor = BlockType.get(BlockType.GRASS);
+
+    MetaBlock walls = Wood.get(WoodBlock.PLANK);
+
+    MetaStair stair = new MetaStair(StairType.OAK);
+    MetaBlock pillar = Wood.get(WoodBlock.LOG);
+
+    this.primary = new BlockSet(floor, walls, stair, pillar);
+
+    this.secondary = primary;
+  }
 }

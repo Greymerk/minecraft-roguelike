@@ -1,12 +1,13 @@
 package greymerk.roguelike.worldgen.blocks;
 
-import greymerk.roguelike.worldgen.MetaBlock;
 import net.minecraft.init.Blocks;
 
+import greymerk.roguelike.worldgen.MetaBlock;
+
 public class Cake {
-	
-	public static MetaBlock get(){
-		return new MetaBlock(Blocks.CAKE);
-	}
-	
+
+  public static MetaBlock get() {
+    return new MetaBlock(Blocks.CAKE);
+  }
+
 }

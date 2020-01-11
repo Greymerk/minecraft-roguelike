@@ -4,6 +4,6 @@ import java.util.Random;
 
 public interface IDungeonFactory {
 
-	public IDungeonRoom get(Random rand);
-	
+  IDungeonRoom get(Random rand);
+
 }

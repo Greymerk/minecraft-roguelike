@@ -8,6 +8,6 @@ import greymerk.roguelike.worldgen.IWorldEditor;
 
 public interface IFilter {
 
-	public void apply(IWorldEditor editor, Random rand, ITheme theme, IBounded box);
-	
+  void apply(IWorldEditor editor, Random rand, ITheme theme, IBounded box);
+
 }

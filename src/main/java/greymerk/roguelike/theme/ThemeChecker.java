@@ -7,20 +7,20 @@ import greymerk.roguelike.worldgen.MetaStair;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 import greymerk.roguelike.worldgen.blocks.StairType;
 
-public class ThemeChecker extends ThemeBase{
+public class ThemeChecker extends ThemeBase {
 
-	public ThemeChecker(){
-	
-		MetaBlock one = BlockType.get(BlockType.OBSIDIAN);
-		MetaBlock two = BlockType.get(BlockType.QUARTZ);
-		
-		IBlockFactory checks = new BlockCheckers(one, two);
-		
-		MetaStair stair = new MetaStair(StairType.QUARTZ);
-		
-		this.primary = new BlockSet(checks, stair, checks);
-		
-		this.secondary = primary;
+  public ThemeChecker() {
 
-	}
+    MetaBlock one = BlockType.get(BlockType.OBSIDIAN);
+    MetaBlock two = BlockType.get(BlockType.QUARTZ);
+
+    IBlockFactory checks = new BlockCheckers(one, two);
+
+    MetaStair stair = new MetaStair(StairType.QUARTZ);
+
+    this.primary = new BlockSet(checks, stair, checks);
+
+    this.secondary = primary;
+
+  }
 }

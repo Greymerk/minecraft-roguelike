@@ -6,11 +6,11 @@ import java.util.stream.Collectors;
 
 public class EnumTools {
 
-	public static List<String> valuesToStrings(Class<? extends Enum<?>> e){
-		return Arrays.stream(e.getEnumConstants())
-				.map(Enum::name)
-				.collect(Collectors.toList()
-				);
-	}
-	
+  public static List<String> valuesToStrings(Class<? extends Enum<?>> e) {
+    return Arrays.stream(e.getEnumConstants())
+        .map(Enum::name)
+        .collect(Collectors.toList()
+        );
+  }
+
 }

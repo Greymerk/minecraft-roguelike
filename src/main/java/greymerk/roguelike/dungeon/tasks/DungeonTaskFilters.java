@@ -10,13 +10,13 @@ import greymerk.roguelike.worldgen.IWorldEditor;
 
 public class DungeonTaskFilters implements IDungeonTask {
 
-	@Override
-	public void execute(IWorldEditor editor, Random rand, IDungeon dungeon, ISettings settings) {
-		
-		List<IDungeonLevel> levels = dungeon.getLevels();
-		
-		for(IDungeonLevel level : levels){
-			level.applyFilters(editor, rand);
-		}
-	}
+  @Override
+  public void execute(IWorldEditor editor, Random rand, IDungeon dungeon, ISettings settings) {
+
+    List<IDungeonLevel> levels = dungeon.getLevels();
+
+    for (IDungeonLevel level : levels) {
+      level.applyFilters(editor, rand);
+    }
+  }
 }

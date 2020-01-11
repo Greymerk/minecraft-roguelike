@@ -2,23 +2,23 @@ package greymerk.roguelike.util;
 
 import java.util.Random;
 
-public class WeightedChoice<T> implements IWeighted<T>{
+public class WeightedChoice<T> implements IWeighted<T> {
 
-	private T item;
-	private int weight;
-	
-	public WeightedChoice(T toAdd, int weight){
-		item = toAdd;
-		this.weight = weight;
-	}
+  private T item;
+  private int weight;
 
-	@Override
-	public int getWeight() {
-		return this.weight;
-	}
+  public WeightedChoice(T toAdd, int weight) {
+    item = toAdd;
+    this.weight = weight;
+  }
 
-	@Override
-	public T get(Random rand) {
-		return item;
-	}
+  @Override
+  public int getWeight() {
+    return this.weight;
+  }
+
+  @Override
+  public T get(Random rand) {
+    return item;
+  }
 }

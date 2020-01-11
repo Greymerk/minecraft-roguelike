@@ -1,17 +1,18 @@
 package greymerk.roguelike.command;
 
+import net.minecraft.item.ItemStack;
+
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IWorldEditor;
-import net.minecraft.item.ItemStack;
 
 public interface ICommandContext {
 
-	public void sendMessage(String message, MessageType type);
-	
-	public IWorldEditor createEditor();
-	
-	public Coord getPos();
-	
-	public void give(ItemStack item);
-	
+  void sendMessage(String message, MessageType type);
+
+  IWorldEditor createEditor();
+
+  Coord getPos();
+
+  void give(ItemStack item);
+
 }

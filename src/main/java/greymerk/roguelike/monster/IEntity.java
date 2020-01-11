@@ -5,14 +5,14 @@ import net.minecraft.item.ItemStack;
 
 public interface IEntity {
 
-	public void setSlot(EntityEquipmentSlot slot, ItemStack item);
-	
-	public void setMobClass(MobType type, boolean clear);
-	
-	public void setChild(boolean child);
-	
-	public boolean instance(Class<?> type);
-	
-	public void setName(String name);
-	
+  void setSlot(EntityEquipmentSlot slot, ItemStack item);
+
+  void setMobClass(MobType type, boolean clear);
+
+  void setChild(boolean child);
+
+  boolean instance(Class<?> type);
+
+  void setName(String name);
+
 }

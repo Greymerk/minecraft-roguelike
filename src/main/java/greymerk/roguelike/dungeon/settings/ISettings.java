@@ -11,19 +11,19 @@ import greymerk.roguelike.worldgen.IWorldEditor;
 
 public interface ISettings {
 
-	public boolean isValid(IWorldEditor editor, Coord pos);
-	
-	public List<SettingIdentifier> getInherits();
-	
-	public boolean isExclusive();
-	
-	public LevelSettings getLevelSettings(int level);
-	
-	public TowerSettings getTower();
-	
-	public void processLoot(Random rand, TreasureManager treasure);
-		
-	public int getNumLevels();
-	
-	public Set<SettingsType> getOverrides();
+  boolean isValid(IWorldEditor editor, Coord pos);
+
+  List<SettingIdentifier> getInherits();
+
+  boolean isExclusive();
+
+  LevelSettings getLevelSettings(int level);
+
+  TowerSettings getTower();
+
+  void processLoot(Random rand, TreasureManager treasure);
+
+  int getNumLevels();
+
+  Set<SettingsType> getOverrides();
 }
