@@ -112,7 +112,7 @@ public enum Tower {
     return false;
   }
 
-  public static Tower getRandom(Random rand) {
+  public static Tower randomTower(Random rand) {
     return Tower.values()[rand.nextInt(Tower.values().length)];
   }
 

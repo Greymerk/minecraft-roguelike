@@ -45,6 +45,7 @@ public enum Theme {
   STONE(new ThemeStone()),
   BUMBO(new ThemeBumbo());
 
+  private static final Random random = new Random();
   private final ThemeBase themeBase;
 
   Theme(ThemeBase themeBase) {
@@ -58,7 +59,7 @@ public enum Theme {
   public static ITheme create(JsonObject json) throws Exception {
 
     ITheme base = json.has("base")
-        ? Theme.get(json.get("base").getAsString()).getThemeBase()
+        ? get(json.get("base").getAsString()).getThemeBase()
         : null;
 
     BlockSet primary = null;
@@ -94,11 +95,11 @@ public enum Theme {
       return null;
     }
 
-    if (other == null && base != null) {
+    if (other == null) {
       return create(base);
     }
 
-    if (other != null && base == null) {
+    if (base == null) {
       return create(other);
     }
 
@@ -142,8 +143,8 @@ public enum Theme {
     return false;
   }
 
-  public static ITheme getRandom(Random rand) {
-    return Theme.values()[rand.nextInt(Theme.values().length)].getThemeBase();
+  public static Theme randomTheme() {
+    return values()[random.nextInt(values().length)];
   }
 
 }

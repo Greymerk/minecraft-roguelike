@@ -1,10 +1,6 @@
 package greymerk.roguelike.dungeon.settings.builtin;
 
 import net.minecraft.init.Items;
-import net.minecraftforge.common.BiomeDictionary;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import greymerk.roguelike.dungeon.segment.Segment;
 import greymerk.roguelike.dungeon.segment.SegmentGenerator;
@@ -21,6 +17,9 @@ import greymerk.roguelike.treasure.loot.LootRuleManager;
 import greymerk.roguelike.treasure.loot.WeightedRandomLoot;
 import greymerk.roguelike.worldgen.filter.Filter;
 
+import static com.google.common.collect.Lists.newArrayList;
+import static net.minecraftforge.common.BiomeDictionary.Type.JUNGLE;
+
 public class SettingsJungleTheme extends DungeonSettings {
 
   public static final SettingIdentifier ID = new SettingIdentifier(SettingsContainer.BUILTIN_NAMESPACE, "jungle");
@@ -31,11 +30,9 @@ public class SettingsJungleTheme extends DungeonSettings {
     this.inherit.add(SettingsBase.ID);
 
     this.criteria = new SpawnCriteria();
-    List<BiomeDictionary.Type> biomes = new ArrayList<BiomeDictionary.Type>();
-    biomes.add(BiomeDictionary.Type.JUNGLE);
-    this.criteria.setBiomeTypes(biomes);
+    this.criteria.setBiomeTypes(newArrayList(JUNGLE));
 
-    this.towerSettings = new TowerSettings(Tower.JUNGLE, Theme.JUNGLE.getThemeBase());
+    this.towerSettings = new TowerSettings(Tower.JUNGLE, Theme.JUNGLE);
 
     this.lootRules = new LootRuleManager();
     for (int i = 0; i < 5; ++i) {

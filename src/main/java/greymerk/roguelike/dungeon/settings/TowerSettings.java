@@ -13,9 +13,9 @@ public class TowerSettings {
   private Tower tower;
   private ITheme theme;
 
-  public TowerSettings(Tower tower, ITheme theme) {
+  public TowerSettings(Tower tower, Theme theme) {
     this.tower = tower;
-    this.theme = theme;
+    this.theme = theme.getThemeBase();
   }
 
   public TowerSettings(JsonElement e) throws Exception {

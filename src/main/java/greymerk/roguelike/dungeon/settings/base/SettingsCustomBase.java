@@ -19,7 +19,7 @@ public class SettingsCustomBase extends DungeonSettings {
 
     this.criteria = new SpawnCriteria();
 
-    this.towerSettings = new TowerSettings(Tower.ROGUE, Theme.QUARTZ.getThemeBase());
+    this.towerSettings = new TowerSettings(Tower.ROGUE, Theme.QUARTZ);
 
     for (int i = 0; i < 5; ++i) {
       LevelSettings level = new LevelSettings();

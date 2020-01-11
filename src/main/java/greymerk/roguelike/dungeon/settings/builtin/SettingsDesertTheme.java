@@ -39,7 +39,7 @@ public class SettingsDesertTheme extends DungeonSettings {
     biomes.add(BiomeDictionary.Type.SANDY);
     this.criteria.setBiomeTypes(biomes);
 
-    this.towerSettings = new TowerSettings(Tower.PYRAMID, Theme.PYRAMID.getThemeBase());
+    this.towerSettings = new TowerSettings(Tower.PYRAMID, Theme.PYRAMID);
 
     this.lootRules = new LootRuleManager();
     for (int i = 0; i < 5; ++i) {

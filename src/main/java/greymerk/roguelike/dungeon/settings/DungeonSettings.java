@@ -354,7 +354,7 @@ public class DungeonSettings implements ISettings {
   @Override
   public TowerSettings getTower() {
     if (this.towerSettings == null) {
-      return new TowerSettings(Tower.ROGUE, Theme.STONE.getThemeBase());
+      return new TowerSettings(Tower.ROGUE, Theme.STONE);
     }
 
     return this.towerSettings;

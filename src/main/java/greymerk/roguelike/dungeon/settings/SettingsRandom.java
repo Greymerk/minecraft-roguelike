@@ -9,7 +9,6 @@ import greymerk.roguelike.dungeon.base.DungeonFactory;
 import greymerk.roguelike.dungeon.base.SecretFactory;
 import greymerk.roguelike.dungeon.segment.SegmentGenerator;
 import greymerk.roguelike.dungeon.towers.Tower;
-import greymerk.roguelike.theme.Theme;
 import greymerk.roguelike.treasure.Treasure;
 import greymerk.roguelike.treasure.loot.Equipment;
 import greymerk.roguelike.treasure.loot.ILoot;
@@ -19,13 +18,13 @@ import greymerk.roguelike.treasure.loot.Quality;
 import greymerk.roguelike.treasure.loot.provider.ItemEnchBook;
 import greymerk.roguelike.treasure.loot.provider.ItemSpecialty;
 
+import static greymerk.roguelike.theme.Theme.randomTheme;
+
 public class SettingsRandom extends DungeonSettings {
 
   public SettingsRandom(Random rand) {
 
-    this.towerSettings = new TowerSettings(
-        Tower.getRandom(rand),
-        Theme.getRandom(rand));
+    this.towerSettings = new TowerSettings(Tower.randomTower(rand), randomTheme());
 
     Map<Integer, LevelSettings> levels = new HashMap<>();
 
@@ -48,7 +47,7 @@ public class SettingsRandom extends DungeonSettings {
       SegmentGenerator segments = SegmentGenerator.getRandom(rand, 12);
       level.setSegments(segments);
 
-      level.setTheme(Theme.getRandom(rand));
+      level.setTheme(randomTheme());
       levels.put(i, level);
     }
 

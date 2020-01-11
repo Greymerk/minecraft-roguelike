@@ -1,10 +1,5 @@
 package greymerk.roguelike.dungeon.settings.builtin;
 
-import net.minecraftforge.common.BiomeDictionary;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import greymerk.roguelike.dungeon.base.DungeonFactory;
 import greymerk.roguelike.dungeon.base.DungeonRoom;
 import greymerk.roguelike.dungeon.base.SecretFactory;
@@ -21,6 +16,9 @@ import greymerk.roguelike.dungeon.towers.Tower;
 import greymerk.roguelike.theme.Theme;
 import greymerk.roguelike.worldgen.filter.Filter;
 
+import static com.google.common.collect.Lists.newArrayList;
+import static net.minecraftforge.common.BiomeDictionary.Type.FOREST;
+
 public class SettingsForestTheme extends DungeonSettings {
 
   public static final SettingIdentifier ID = new SettingIdentifier(SettingsContainer.BUILTIN_NAMESPACE, "forest");
@@ -31,11 +29,9 @@ public class SettingsForestTheme extends DungeonSettings {
     this.inherit.add(SettingsBase.ID);
 
     this.criteria = new SpawnCriteria();
-    List<BiomeDictionary.Type> biomes = new ArrayList<BiomeDictionary.Type>();
-    biomes.add(BiomeDictionary.Type.FOREST);
-    this.criteria.setBiomeTypes(biomes);
+    this.criteria.setBiomeTypes(newArrayList(FOREST));
 
-    this.towerSettings = new TowerSettings(Tower.ROGUE, Theme.TOWER.getThemeBase());
+    this.towerSettings = new TowerSettings(Tower.ROGUE, Theme.TOWER);
 
     for (int i = 0; i < 5; ++i) {
 

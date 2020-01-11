@@ -201,6 +201,10 @@ public class LevelSettings {
     this.theme = theme;
   }
 
+  public void setTheme(Theme theme) {
+    this.theme = theme.getThemeBase();
+  }
+
   public SpawnerSettings getSpawners() {
     return this.spawners;
   }

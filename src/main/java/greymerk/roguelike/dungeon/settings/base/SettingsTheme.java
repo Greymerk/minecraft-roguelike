@@ -16,7 +16,7 @@ public class SettingsTheme extends DungeonSettings {
 
     this.id = ID;
 
-    this.towerSettings = new TowerSettings(Tower.ROGUE, Theme.TOWER.getThemeBase());
+    this.towerSettings = new TowerSettings(Tower.ROGUE, Theme.TOWER);
 
     Theme[] themes = {Theme.OAK, Theme.SPRUCE, Theme.CRYPT, Theme.MOSSY, Theme.HELL};
 

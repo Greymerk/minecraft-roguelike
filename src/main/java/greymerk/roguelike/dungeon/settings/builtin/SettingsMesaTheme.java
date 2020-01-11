@@ -1,10 +1,5 @@
 package greymerk.roguelike.dungeon.settings.builtin;
 
-import net.minecraftforge.common.BiomeDictionary;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import greymerk.roguelike.dungeon.settings.DungeonSettings;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.dungeon.settings.SettingIdentifier;
@@ -14,6 +9,9 @@ import greymerk.roguelike.dungeon.settings.TowerSettings;
 import greymerk.roguelike.dungeon.settings.base.SettingsBase;
 import greymerk.roguelike.dungeon.towers.Tower;
 import greymerk.roguelike.theme.Theme;
+
+import static com.google.common.collect.Lists.newArrayList;
+import static net.minecraftforge.common.BiomeDictionary.Type.MESA;
 
 public class SettingsMesaTheme extends DungeonSettings {
 
@@ -25,11 +23,9 @@ public class SettingsMesaTheme extends DungeonSettings {
     this.inherit.add(SettingsBase.ID);
 
     this.criteria = new SpawnCriteria();
-    List<BiomeDictionary.Type> biomes = new ArrayList<>();
-    biomes.add(BiomeDictionary.Type.MESA);
-    this.criteria.setBiomeTypes(biomes);
+    this.criteria.setBiomeTypes(newArrayList(MESA));
 
-    this.towerSettings = new TowerSettings(Tower.ETHO, Theme.ETHOTOWER.getThemeBase());
+    this.towerSettings = new TowerSettings(Tower.ETHO, Theme.ETHOTOWER);
 
     Theme[] themes = {Theme.ETHOTOWER, Theme.ETHOTOWER, Theme.CRYPT, Theme.CRYPT, Theme.NETHER};
     for (int i = 0; i < 5; ++i) {
