@@ -24,7 +24,11 @@ public enum DyeColor {
   BLACK;
 
   public static EnumDyeColor get(DyeColor color) {
-    return EnumDyeColor.valueOf(color.toString());
+    try {
+      return EnumDyeColor.valueOf(color.toString());
+    } catch(IllegalArgumentException illegalArgumentException) {
+      return EnumDyeColor.WHITE;
+    }
   }
 
   public static DyeColor get(Random rand) {
