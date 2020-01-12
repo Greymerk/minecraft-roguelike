@@ -23,8 +23,7 @@ public class SettingsMountainTheme extends DungeonSettings {
   public static final SettingIdentifier ID = new SettingIdentifier(SettingsContainer.BUILTIN_NAMESPACE, "mountain");
 
   public SettingsMountainTheme() {
-
-    this.id = ID;
+    super(ID);
     this.inherit.add(SettingsBase.ID);
     this.criteria.setBiomeTypes(newArrayList(MOUNTAIN));
     this.towerSettings = new TowerSettings(Tower.ENIKO, Theme.OAK);

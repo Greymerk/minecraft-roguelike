@@ -11,9 +11,7 @@ public class SettingsLayout extends DungeonSettings {
   public static final SettingIdentifier ID = new SettingIdentifier(SettingsContainer.BUILTIN_NAMESPACE, "layout");
 
   public SettingsLayout() {
-
-    this.id = ID;
-
+    super(ID);
     int[] numRooms = {10, 15, 15, 20, 15};
     int[] scatter = {15, 15, 17, 12, 15};
     int[] range = {50, 50, 80, 70, 50};

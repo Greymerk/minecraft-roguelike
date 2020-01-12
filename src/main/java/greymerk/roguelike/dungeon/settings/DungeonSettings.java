@@ -31,24 +31,29 @@ import greymerk.roguelike.worldgen.spawners.SpawnerSettings;
 public class DungeonSettings implements ISettings {
 
   public static final int MAX_NUM_LEVELS = 5;
-  protected SettingIdentifier id;
-  protected List<SettingIdentifier> inherit;
+  private SettingIdentifier id;
+  protected List<SettingIdentifier> inherit = new ArrayList<>();
   protected boolean exclusive;
   protected TowerSettings towerSettings;
-  protected Map<Integer, LevelSettings> levels;
+  protected Map<Integer, LevelSettings> levels = new HashMap<>();
   protected SpawnCriteria criteria;
   protected LootRuleManager lootRules;
-  protected List<LootTableRule> lootTables;
-  protected Set<SettingsType> overrides;
+  protected List<LootTableRule> lootTables = new ArrayList<>();
+  protected Set<SettingsType> overrides = new HashSet<>();
 
   public DungeonSettings() {
-    this.inherit = new ArrayList<>();
-    this.levels = new HashMap<>();
     this.exclusive = false;
     this.criteria = new SpawnCriteria();
     this.lootRules = new LootRuleManager();
-    this.lootTables = new ArrayList<>();
-    this.overrides = new HashSet<>();
+  }
+
+  public DungeonSettings(String id) {
+    this(new SettingIdentifier(id));
+  }
+
+  public DungeonSettings(SettingIdentifier id) {
+    this();
+    this.id = id;
   }
 
   public DungeonSettings(JsonObject root) throws Exception {
@@ -61,9 +66,9 @@ public class DungeonSettings implements ISettings {
     if (root.has("namespace")) {
       String name = root.get("name").getAsString();
       String namespace = root.get("namespace").getAsString();
-      this.id = new SettingIdentifier(namespace, name);
+      this.setId(new SettingIdentifier(namespace, name));
     } else {
-      this.id = new SettingIdentifier(root.get("name").getAsString());
+      this.setId(new SettingIdentifier(root.get("name").getAsString()));
     }
 
     if (root.has("exclusive")) {
@@ -306,6 +311,14 @@ public class DungeonSettings implements ISettings {
     }
   }
 
+  public SettingIdentifier getId() {
+    return id;
+  }
+
+  public void setId(SettingIdentifier id) {
+    this.id = id;
+  }
+
   private List<Integer> parseLevels(JsonElement e) {
 
     List<Integer> levels = new ArrayList<>();
@@ -327,11 +340,11 @@ public class DungeonSettings implements ISettings {
   }
 
   public String getNameSpace() {
-    return this.id.getNamespace();
+    return this.getId().getNamespace();
   }
 
   public String getName() {
-    return this.id.getName();
+    return this.getId().getName();
   }
 
   public void setCriteria(SpawnCriteria criteria) {

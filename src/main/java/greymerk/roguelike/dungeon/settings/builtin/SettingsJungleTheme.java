@@ -24,8 +24,7 @@ public class SettingsJungleTheme extends DungeonSettings {
   public static final SettingIdentifier ID = new SettingIdentifier(SettingsContainer.BUILTIN_NAMESPACE, "jungle");
 
   public SettingsJungleTheme() {
-
-    this.id = ID;
+    super(ID);
     this.inherit.add(SettingsBase.ID);
     this.criteria.setBiomeTypes(newArrayList(JUNGLE));
     this.towerSettings = new TowerSettings(Tower.JUNGLE, Theme.JUNGLE);

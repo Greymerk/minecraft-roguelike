@@ -11,9 +11,7 @@ public class SettingsSecrets extends DungeonSettings {
   public static final SettingIdentifier ID = new SettingIdentifier(SettingsContainer.BUILTIN_NAMESPACE, "secrets");
 
   public SettingsSecrets() {
-
-    this.id = ID;
-
+    super(ID);
     for (int i = 0; i < 5; ++i) {
 
       SecretFactory factory = new SecretFactory();

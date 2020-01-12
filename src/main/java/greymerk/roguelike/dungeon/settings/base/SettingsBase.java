@@ -11,8 +11,7 @@ public class SettingsBase extends DungeonSettings {
   public static final SettingIdentifier ID = new SettingIdentifier(SettingsContainer.BUILTIN_NAMESPACE, "base");
 
   public SettingsBase() {
-
-    this.id = ID;
+    super(ID);
     this.inherit = new ArrayList<>();
     this.inherit.add(SettingsRooms.ID);
     this.inherit.add(SettingsSecrets.ID);

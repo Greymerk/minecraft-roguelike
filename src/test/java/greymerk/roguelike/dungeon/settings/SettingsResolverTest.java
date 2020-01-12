@@ -33,17 +33,14 @@ public class SettingsResolverTest {
   @Test
   public void ResolveInheritOneLevel() throws Exception {
 
-    DungeonSettings main = new DungeonSettings();
-    DungeonSettings toInherit = new DungeonSettings();
+    DungeonSettings main = new DungeonSettings("main");
+    DungeonSettings toInherit = new DungeonSettings("inherit");
 
     SettingsContainer settings = new SettingsContainer();
-
-    main.id = new SettingIdentifier("main");
-    toInherit.id = new SettingIdentifier("inherit");
     settings.put(main);
     settings.put(toInherit);
 
-    main.inherit.add(toInherit.id);
+    main.inherit.add(toInherit.getId());
 
     ItemStack stick = new ItemStack(Items.STICK);
 
@@ -65,21 +62,18 @@ public class SettingsResolverTest {
   @Test
   public void ResolveInheritTwoLevel() throws Exception {
 
-    DungeonSettings main = new DungeonSettings();
-    DungeonSettings child = new DungeonSettings();
-    DungeonSettings grandchild = new DungeonSettings();
+    DungeonSettings main = new DungeonSettings("main");
+    DungeonSettings child = new DungeonSettings("child");
+    DungeonSettings grandchild = new DungeonSettings("grandchild");
 
     SettingsContainer settings = new SettingsContainer();
 
-    main.id = new SettingIdentifier("main");
-    child.id = new SettingIdentifier("child");
-    grandchild.id = new SettingIdentifier("grandchild");
     settings.put(main);
     settings.put(child);
     settings.put(grandchild);
 
-    main.inherit.add(child.id);
-    child.inherit.add(grandchild.id);
+    main.inherit.add(child.getId());
+    child.inherit.add(grandchild.getId());
 
     ItemStack stick = new ItemStack(Items.STICK);
     ItemStack diamond = new ItemStack(Items.DIAMOND);
@@ -106,25 +100,21 @@ public class SettingsResolverTest {
 
   @Test
   public void ResolveInheritTwoLevelMultiple() throws Exception {
-    DungeonSettings main = new DungeonSettings();
-    DungeonSettings child = new DungeonSettings();
-    DungeonSettings sibling = new DungeonSettings();
-    DungeonSettings grandchild = new DungeonSettings();
+    DungeonSettings main = new DungeonSettings("main");
+    DungeonSettings child = new DungeonSettings("child");
+    DungeonSettings sibling = new DungeonSettings("sibling");
+    DungeonSettings grandchild = new DungeonSettings("grandchild");
 
     SettingsContainer settings = new SettingsContainer();
 
-    main.id = new SettingIdentifier("main");
-    child.id = new SettingIdentifier("child");
-    sibling.id = new SettingIdentifier("sibling");
-    grandchild.id = new SettingIdentifier("grandchild");
     settings.put(main);
     settings.put(child);
     settings.put(sibling);
     settings.put(grandchild);
 
-    main.inherit.add(child.id);
-    main.inherit.add(sibling.id);
-    child.inherit.add(grandchild.id);
+    main.inherit.add(child.getId());
+    main.inherit.add(sibling.getId());
+    child.inherit.add(grandchild.getId());
 
     ItemStack stick = new ItemStack(Items.STICK);
     ItemStack coal = new ItemStack(Items.COAL);
@@ -153,7 +143,7 @@ public class SettingsResolverTest {
 
   }
 
-  private class MockChest implements ITreasureChest {
+  private static class MockChest implements ITreasureChest {
 
     Treasure type;
     int level;

@@ -9,7 +9,7 @@ public class SettingsBlank extends DungeonSettings {
   public static final SettingIdentifier ID = new SettingIdentifier(SettingsContainer.BUILTIN_NAMESPACE, "blank");
 
   public SettingsBlank() {
-    this.id = ID;
+    super(ID);
     levels = new HashMap<>();
     this.lootRules = new LootRuleManager();
   }

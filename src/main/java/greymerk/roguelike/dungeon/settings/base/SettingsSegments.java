@@ -12,9 +12,7 @@ public class SettingsSegments extends DungeonSettings {
   public static final SettingIdentifier ID = new SettingIdentifier(SettingsContainer.BUILTIN_NAMESPACE, "segments");
 
   public SettingsSegments() {
-
-    this.id = ID;
-
+    super(ID);
     for (int i = 0; i < 5; ++i) {
 
       SegmentGenerator segments;

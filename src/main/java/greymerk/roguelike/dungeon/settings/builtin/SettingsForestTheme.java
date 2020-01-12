@@ -23,8 +23,7 @@ public class SettingsForestTheme extends DungeonSettings {
   public static final SettingIdentifier ID = new SettingIdentifier(SettingsContainer.BUILTIN_NAMESPACE, "forest");
 
   public SettingsForestTheme() {
-
-    this.id = ID;
+    super(ID);
     this.inherit.add(SettingsBase.ID);
     this.criteria.setBiomeTypes(newArrayList(FOREST));
     this.towerSettings = new TowerSettings(Tower.ROGUE, Theme.TOWER);

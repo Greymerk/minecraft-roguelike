@@ -13,9 +13,7 @@ public class SettingsTheme extends DungeonSettings {
   public static final SettingIdentifier ID = new SettingIdentifier(SettingsContainer.BUILTIN_NAMESPACE, "theme");
 
   public SettingsTheme() {
-
-    this.id = ID;
-
+    super(ID);
     this.towerSettings = new TowerSettings(Tower.ROGUE, Theme.TOWER);
 
     Theme[] themes = {Theme.OAK, Theme.SPRUCE, Theme.CRYPT, Theme.MOSSY, Theme.HELL};

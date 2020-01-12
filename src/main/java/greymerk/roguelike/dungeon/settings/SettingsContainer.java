@@ -146,7 +146,7 @@ public class SettingsContainer implements ISettingsContainer {
   public String toString() {
     return settingsByNamespace.keySet().stream()
         .flatMap(namespace -> settingsByNamespace.get(namespace).values().stream())
-        .map(setting -> setting.id.toString() + " ")
+        .map(setting -> setting.getId().toString() + " ")
         .collect(joining());
   }
 }

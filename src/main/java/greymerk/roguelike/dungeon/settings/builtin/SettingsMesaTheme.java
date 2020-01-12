@@ -17,8 +17,7 @@ public class SettingsMesaTheme extends DungeonSettings {
   public static final SettingIdentifier ID = new SettingIdentifier(SettingsContainer.BUILTIN_NAMESPACE, "mesa");
 
   public SettingsMesaTheme() {
-
-    this.id = ID;
+    super(ID);
     this.inherit.add(SettingsBase.ID);
     this.criteria.setBiomeTypes(newArrayList(MESA));
     this.towerSettings = new TowerSettings(Tower.ETHO, Theme.ETHOTOWER);

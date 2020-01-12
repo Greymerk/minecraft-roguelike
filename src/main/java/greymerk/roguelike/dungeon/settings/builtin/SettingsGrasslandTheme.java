@@ -7,7 +7,6 @@ import greymerk.roguelike.dungeon.settings.DungeonSettings;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.dungeon.settings.SettingIdentifier;
 import greymerk.roguelike.dungeon.settings.SettingsContainer;
-import greymerk.roguelike.dungeon.settings.SpawnCriteria;
 import greymerk.roguelike.dungeon.settings.TowerSettings;
 import greymerk.roguelike.dungeon.settings.base.SettingsBase;
 import greymerk.roguelike.dungeon.towers.Tower;
@@ -23,7 +22,7 @@ public class SettingsGrasslandTheme extends DungeonSettings {
 
   public SettingsGrasslandTheme() {
 
-    this.id = ID;
+    super(ID);
     this.inherit.add(SettingsBase.ID);
     this.criteria.setBiomeTypes(newArrayList(PLAINS));
 

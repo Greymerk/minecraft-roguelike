@@ -12,9 +12,7 @@ public class SettingsRooms extends DungeonSettings {
   public static final SettingIdentifier ID = new SettingIdentifier(SettingsContainer.BUILTIN_NAMESPACE, "rooms");
 
   public SettingsRooms() {
-
-    this.id = ID;
-
+    super(ID);
     for (int i = 0; i < 5; ++i) {
 
       DungeonFactory factory;

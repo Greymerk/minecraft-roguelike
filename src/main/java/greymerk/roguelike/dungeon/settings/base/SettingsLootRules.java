@@ -18,7 +18,7 @@ public class SettingsLootRules extends DungeonSettings {
   public static final SettingIdentifier ID = new SettingIdentifier(SettingsContainer.BUILTIN_NAMESPACE, "loot");
 
   public SettingsLootRules() {
-    this.id = ID;
+    super(ID);
     this.lootRules = new LootRuleManager();
     ILoot loot = Loot.getLoot();
     lootRules.add(Treasure.STARTER, Book.get(Book.CREDITS), 0, true, 1);

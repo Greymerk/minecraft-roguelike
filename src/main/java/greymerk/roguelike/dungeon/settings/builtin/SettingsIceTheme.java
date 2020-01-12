@@ -19,7 +19,7 @@ public class SettingsIceTheme extends DungeonSettings {
   public static final SettingIdentifier ID = new SettingIdentifier(SettingsContainer.BUILTIN_NAMESPACE, "ice");
 
   public SettingsIceTheme() {
-    id = ID;
+    super(ID);
     inherit.add(SettingsBase.ID);
     criteria.setBiomeTypes(newArrayList(SNOWY));
     towerSettings = new TowerSettings(PYRAMID, ICE);

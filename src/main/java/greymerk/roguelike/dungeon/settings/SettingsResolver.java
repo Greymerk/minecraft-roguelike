@@ -165,7 +165,7 @@ public class SettingsResolver {
     }
 
     return byNamespace.stream()
-        .map(setting -> setting.id.toString() + " ")
+        .map(setting -> setting.getId().toString() + " ")
         .collect(joining());
   }
 

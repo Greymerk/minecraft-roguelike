@@ -33,8 +33,7 @@ public class SettingsSwampTheme extends DungeonSettings {
   public static final SettingIdentifier ID = new SettingIdentifier(SettingsContainer.BUILTIN_NAMESPACE, "swamp");
 
   public SettingsSwampTheme() {
-
-    this.id = ID;
+    super(ID);
     this.inherit.add(SettingsBase.ID);
     this.criteria.setBiomeTypes(newArrayList(SWAMP));
     this.towerSettings = new TowerSettings(WITCH, DARKOAK);
