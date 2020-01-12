@@ -10,11 +10,7 @@ import greymerk.roguelike.util.IWeighted;
 
 public class TreasureManager {
 
-  List<ITreasureChest> chests;
-
-  public TreasureManager() {
-    this.chests = new ArrayList<>();
-  }
+  List<ITreasureChest> chests = new ArrayList<>();
 
   public void add(ITreasureChest toAdd) {
     this.chests.add(toAdd);

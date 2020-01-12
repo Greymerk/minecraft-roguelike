@@ -21,7 +21,7 @@ public class SettingsLootRules extends DungeonSettings {
     super(ID);
     this.lootRules = new LootRuleManager();
     ILoot loot = Loot.getLoot();
-    lootRules.add(Treasure.STARTER, Book.get(Book.CREDITS), 0, true, 1);
+    lootRules.add(Treasure.STARTER, Book.get(Book.CREDITS));
     lootRules.add(Treasure.STARTER, loot.get(Loot.WEAPON, 0), 0, true, 2);
     lootRules.add(Treasure.STARTER, loot.get(Loot.FOOD, 0), 0, true, 2);
     lootRules.add(Treasure.STARTER, loot.get(Loot.TOOL, 0), 0, true, 2);

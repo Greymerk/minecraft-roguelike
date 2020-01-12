@@ -1,6 +1,5 @@
 package greymerk.roguelike.treasure.loot;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
@@ -13,79 +12,124 @@ import greymerk.roguelike.treasure.ITreasureChest;
 import greymerk.roguelike.treasure.Treasure;
 import greymerk.roguelike.treasure.TreasureManager;
 
+import static com.google.common.collect.Lists.newArrayList;
+
 public class LootTableRule {
 
-  List<Integer> level;
+  List<Integer> levels = newArrayList();
   private ResourceLocation table;
-  private List<Treasure> type;
+  private List<Treasure> types = newArrayList();
+
+  public LootTableRule() { }
+
+  public LootTableRule(
+      List<Integer> levels,
+      ResourceLocation table,
+      List<Treasure> types
+  ) {
+    this.levels = levels;
+    this.table = table;
+    this.types = types;
+  }
 
   public LootTableRule(JsonObject json) throws Exception {
+    this(
+        parseLevels(json),
+        parseTable(json),
+        parseType(json)
+    );
+  }
+
+  public static LootTableRule newLootTableRule(
+      int level,
+      String table,
+      Treasure treasure
+  ) {
+    LootTableRule lootTableRule = new LootTableRule();
+    lootTableRule.addLevel(level);
+    lootTableRule.setTable(table);
+    lootTableRule.addTreasureType(treasure);
+    return lootTableRule;
+  }
+
+  public void addLevel(int level) {
+    this.levels.add(level);
+  }
+
+  public void setTable(ResourceLocation table) {
+    this.table = table;
+  }
+
+  public void setTable(String table) {
+    this.table = new ResourceLocation(table);
+  }
+
+  public void addTreasureType(Treasure type) {
+    this.types.add(type);
+  }
+
+  private static List<Integer> parseLevels(JsonObject json) {
+    if (!json.has("level")) {
+      return null;
+    }
+    JsonElement level = json.get("level");
+    List<Integer> levels = new ArrayList<>();
+    if (!level.isJsonArray()) {
+      levels.add(level.getAsInt());
+    } else {
+      for (JsonElement i : level.getAsJsonArray()) {
+        levels.add(i.getAsInt());
+      }
+    }
+    return levels;
+
+  }
+
+  private static ResourceLocation parseTable(JsonObject json) throws Exception {
     if (!json.has("table")) {
       throw new Exception("Loot table requires a table field");
     }
-    this.table = new ResourceLocation(json.get("table").getAsString());
-    if (json.has("type")) {
-      type = new ArrayList<>();
-      JsonElement typeElement = json.get("type");
-      if (typeElement.isJsonArray()) {
-        JsonArray arr = typeElement.getAsJsonArray();
-        for (JsonElement e : arr) {
-          this.type.add(Treasure.valueOf(e.getAsString()));
-        }
-      } else {
-        this.type.add(Treasure.valueOf(typeElement.getAsString()));
+    return new ResourceLocation(json.get("table").getAsString());
+  }
+
+  private static List<Treasure> parseType(JsonObject json) {
+    List<Treasure> type = newArrayList();
+    if (!json.has("type")) {
+      return type;
+    }
+    JsonElement typeElement = json.get("type");
+    if (!typeElement.isJsonArray()) {
+      type.add(Treasure.valueOf(typeElement.getAsString()));
+    } else {
+      for (JsonElement treasure : typeElement.getAsJsonArray()) {
+        type.add(Treasure.valueOf(treasure.getAsString()));
       }
     }
-
-    if (json.has("level")) {
-      this.level = parseLevels(json.get("level"));
-    }
+    return type;
   }
 
   public void process(TreasureManager treasure) {
-    List<ITreasureChest> chests = getMatching(treasure);
-    for (ITreasureChest chest : chests) {
-      if (chest.getType() != Treasure.EMPTY) {
-        chest.setLootTable(table);
-      }
-    }
+    getMatching(treasure).stream()
+        .filter(chest -> chest.getType() != Treasure.EMPTY)
+        .forEach(chest -> chest.setLootTable(table));
   }
 
   private List<ITreasureChest> getMatching(TreasureManager treasure) {
-    if (this.type == null && this.level == null) {
+    if (types == null && levels == null) {
       return treasure.getChests();
     }
 
     List<ITreasureChest> chests = new ArrayList<>();
-    if (this.type == null) {
-      for (int level : this.level) {
+    if (types == null) {
+      for (int level : levels) {
         chests.addAll(treasure.getChests(level));
       }
     }
 
-    if (this.level == null) {
-      for (Treasure type : this.type) {
-        chests.addAll(treasure.getChests(type));
-      }
+    if (levels == null) {
+      types.stream().map(treasure::getChests).forEach(chests::addAll);
     }
-
     return chests;
-  }
-
-  private List<Integer> parseLevels(JsonElement e) {
-
-    List<Integer> levels = new ArrayList<>();
-
-    if (e.isJsonArray()) {
-      JsonArray arr = e.getAsJsonArray();
-      for (JsonElement i : arr) {
-        levels.add(i.getAsInt());
-      }
-      return levels;
-    }
-
-    levels.add(e.getAsInt());
-    return levels;
   }
 
 }

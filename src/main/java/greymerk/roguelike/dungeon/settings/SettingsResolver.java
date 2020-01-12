@@ -19,7 +19,10 @@ public class SettingsResolver {
     this.settings = settings;
   }
 
-  public static DungeonSettings processInheritance(DungeonSettings toProcess, ISettingsContainer settings) throws Exception {
+  public static DungeonSettings processInheritance(
+      DungeonSettings toProcess,
+      ISettingsContainer settingsContainer
+  ) throws Exception {
     DungeonSettings setting = new SettingsBlank();
 
     if (toProcess == null) {
@@ -27,11 +30,11 @@ public class SettingsResolver {
     }
 
     for (SettingIdentifier id : toProcess.getInherits()) {
-      if (settings.contains(id)) {
-        DungeonSettings inherited = new DungeonSettings(settings.get(id));
+      if (settingsContainer.contains(id)) {
+        DungeonSettings inherited = new DungeonSettings(settingsContainer.get(id));
 
         if (!inherited.getInherits().isEmpty()) {
-          inherited = processInheritance(inherited, settings);
+          inherited = processInheritance(inherited, settingsContainer);
         }
 
         setting = new DungeonSettings(setting, inherited);
