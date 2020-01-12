@@ -1,9 +1,5 @@
 package greymerk.roguelike.dungeon.settings;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.JsonSyntaxException;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -27,6 +23,7 @@ import greymerk.roguelike.dungeon.settings.builtin.SettingsMesaTheme;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsMountainTheme;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsSwampTheme;
 
+import static greymerk.roguelike.dungeon.settings.DungeonSettingsParser.parseFile;
 import static java.util.stream.Collectors.joining;
 
 public class SettingsContainer implements ISettingsContainer {
@@ -69,17 +66,6 @@ public class SettingsContainer implements ISettingsContainer {
     }
   }
 
-  private DungeonSettings parseFile(String content) throws Exception {
-    try {
-      return new DungeonSettings((JsonObject) new JsonParser().parse(content));
-    } catch (JsonSyntaxException e) {
-      Throwable cause = e.getCause();
-      throw new Exception(cause.getMessage());
-    } catch (Exception e) {
-      throw new Exception("An unknown error occurred while parsing json");
-    }
-  }
-
   private void put(DungeonSettings setting) {
     String namespace = setting.getNameSpace() != null ? setting.getNameSpace() : DEFAULT_NAMESPACE;
     String name = setting.getName();
@@ -88,7 +74,7 @@ public class SettingsContainer implements ISettingsContainer {
       settingsByNamespace.put(namespace, new HashMap<>());
     }
 
-    Map<String, DungeonSettings> settings = this.settingsByNamespace.get(namespace);
+    Map<String, DungeonSettings> settings = settingsByNamespace.get(namespace);
     settings.put(name, setting);
   }
 
@@ -101,10 +87,10 @@ public class SettingsContainer implements ISettingsContainer {
   }
 
   public Collection<DungeonSettings> getByNamespace(String namespace) {
-    if (!this.settingsByNamespace.containsKey(namespace)) {
+    if (!settingsByNamespace.containsKey(namespace)) {
       return new ArrayList<>();
     }
-    return this.settingsByNamespace.get(namespace).values();
+    return settingsByNamespace.get(namespace).values();
   }
 
   public Collection<DungeonSettings> getBuiltinSettings() {

@@ -85,7 +85,7 @@ public class DungeonSettingsTest {
     themes.add(theme);
     json.add("themes", themes);
 
-    setting = new DungeonSettings(json);
+    setting = DungeonSettingsParser.parseDungeonSettings(json);
 
     LevelSettings level = setting.getLevelSettings(0);
     ITheme t = level.getTheme();
