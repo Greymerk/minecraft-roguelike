@@ -23,10 +23,10 @@ public class SettingsGrasslandTheme extends DungeonSettings {
   public SettingsGrasslandTheme() {
 
     super(ID);
-    this.inherit.add(SettingsBase.ID);
-    this.criteria.setBiomeTypes(newArrayList(PLAINS));
+    getInherit().add(SettingsBase.ID);
+    getCriteria().setBiomeTypes(newArrayList(PLAINS));
 
-    this.towerSettings = new TowerSettings(Tower.ROGUE, Theme.TOWER);
+    setTowerSettings(new TowerSettings(Tower.ROGUE, Theme.TOWER));
 
     for (int i = 0; i < 5; ++i) {
 
@@ -61,10 +61,10 @@ public class SettingsGrasslandTheme extends DungeonSettings {
         default:
           break;
       }
-      levels.put(i, level);
+      getLevels().put(i, level);
     }
 
-    levels.get(3).addFilter(Filter.VINE);
+    getLevels().get(3).addFilter(Filter.VINE);
   }
 
 

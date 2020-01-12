@@ -24,9 +24,9 @@ public class SettingsMountainTheme extends DungeonSettings {
 
   public SettingsMountainTheme() {
     super(ID);
-    this.inherit.add(SettingsBase.ID);
-    this.criteria.setBiomeTypes(newArrayList(MOUNTAIN));
-    this.towerSettings = new TowerSettings(Tower.ENIKO, Theme.OAK);
+    getInherit().add(SettingsBase.ID);
+    getCriteria().setBiomeTypes(newArrayList(MOUNTAIN));
+    setTowerSettings(new TowerSettings(Tower.ENIKO, Theme.OAK));
 
     Theme[] themes = {Theme.ENIKO, Theme.ENIKO2, Theme.SEWER, Theme.MOSSY, Theme.NETHER};
 
@@ -103,8 +103,8 @@ public class SettingsMountainTheme extends DungeonSettings {
         level.setRooms(factory);
       }
 
-      levels.put(i, level);
+      getLevels().put(i, level);
     }
-    levels.get(3).addFilter(Filter.VINE);
+    getLevels().get(3).addFilter(Filter.VINE);
   }
 }

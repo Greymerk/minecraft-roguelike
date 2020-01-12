@@ -53,8 +53,8 @@ public class SettingsResolver {
       return new SettingsRandom(rand);
     }
 
-    DungeonSettings builtin = this.getBuiltin(editor, rand, pos);
-    DungeonSettings custom = this.getCustom(editor, rand, pos);
+    DungeonSettings builtin = getBuiltin(editor, rand, pos);
+    DungeonSettings custom = getCustom(editor, rand, pos);
 
     // there are no valid dungeons for this location
     if (builtin == null && custom == null) {
@@ -71,7 +71,7 @@ public class SettingsResolver {
       return new SettingsRandom(rand);
     }
 
-    DungeonSettings byName = this.getByName(name);
+    DungeonSettings byName = getByName(name);
 
     if (byName == null) {
       return null;
@@ -94,12 +94,12 @@ public class SettingsResolver {
       throw new Exception("Malformed Setting ID String: " + name);
     }
 
-    if (!this.settings.contains(id)) {
+    if (!settings.contains(id)) {
       return null;
     }
-    DungeonSettings setting = new DungeonSettings(this.settings.get(id));
+    DungeonSettings setting = new DungeonSettings(settings.get(id));
 
-    return processInheritance(setting, this.settings);
+    return processInheritance(setting, settings);
   }
 
   private DungeonSettings getBuiltin(IWorldEditor editor, Random rand, Coord pos) throws Exception {
@@ -111,7 +111,7 @@ public class SettingsResolver {
 
     for (DungeonSettings setting : settings.getBuiltinSettings()) {
       if (setting.isValid(editor, pos)) {
-        settingsRandomizer.add(new WeightedChoice<>(setting, setting.criteria.getWeight()));
+        settingsRandomizer.add(new WeightedChoice<>(setting, setting.getCriteria().getWeight()));
       }
     }
 
@@ -130,7 +130,7 @@ public class SettingsResolver {
 
     for (DungeonSettings setting : settings.getCustomSettings()) {
       if (setting.isValid(editor, pos) && setting.isExclusive()) {
-        settingsRandomizer.add(new WeightedChoice<>(setting, setting.criteria.getWeight()));
+        settingsRandomizer.add(new WeightedChoice<>(setting, setting.getCriteria().getWeight()));
       }
     }
 
@@ -161,7 +161,7 @@ public class SettingsResolver {
   }
 
   public String toString(String namespace) {
-    Collection<DungeonSettings> byNamespace = this.settings.getByNamespace(namespace);
+    Collection<DungeonSettings> byNamespace = settings.getByNamespace(namespace);
 
     if (byNamespace.isEmpty()) {
       return "";
@@ -174,6 +174,6 @@ public class SettingsResolver {
 
   @Override
   public String toString() {
-    return this.settings.toString();
+    return settings.toString();
   }
 }

@@ -16,7 +16,7 @@ public class SettingsCustomBase extends DungeonSettings {
 
   public SettingsCustomBase() {
 
-    this.towerSettings = new TowerSettings(Tower.ROGUE, Theme.QUARTZ);
+    setTowerSettings(new TowerSettings(Tower.ROGUE, Theme.QUARTZ));
 
     for (int i = 0; i < 5; ++i) {
       LevelSettings level = new LevelSettings();
@@ -41,7 +41,7 @@ public class SettingsCustomBase extends DungeonSettings {
       level.setRange(50);
       level.setScatter(15);
 
-      levels.put(i, level);
+      getLevels().put(i, level);
     }
   }
 }

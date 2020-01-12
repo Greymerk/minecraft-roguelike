@@ -24,9 +24,9 @@ public class SettingsForestTheme extends DungeonSettings {
 
   public SettingsForestTheme() {
     super(ID);
-    this.inherit.add(SettingsBase.ID);
-    this.criteria.setBiomeTypes(newArrayList(FOREST));
-    this.towerSettings = new TowerSettings(Tower.ROGUE, Theme.TOWER);
+    getInherit().add(SettingsBase.ID);
+    getCriteria().setBiomeTypes(newArrayList(FOREST));
+    setTowerSettings(new TowerSettings(Tower.ROGUE, Theme.TOWER));
 
     for (int i = 0; i < 5; ++i) {
 
@@ -91,8 +91,8 @@ public class SettingsForestTheme extends DungeonSettings {
       }
 
 
-      levels.put(i, level);
+      getLevels().put(i, level);
     }
-    levels.get(3).addFilter(Filter.VINE);
+    getLevels().get(3).addFilter(Filter.VINE);
   }
 }

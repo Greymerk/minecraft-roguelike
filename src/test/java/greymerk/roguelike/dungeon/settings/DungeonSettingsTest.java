@@ -37,23 +37,23 @@ public class DungeonSettingsTest {
   public void overridesMerge() {
     DungeonSettings base = new DungeonSettings();
     DungeonSettings other = new DungeonSettings();
-    other.overrides.add(SettingsType.LOOTRULES);
-    assert (other.overrides.contains(SettingsType.LOOTRULES));
+    other.getOverrides().add(SettingsType.LOOTRULES);
+    assert (other.getOverrides().contains(SettingsType.LOOTRULES));
 
     DungeonSettings merge = new DungeonSettings(base, other);
-    assert (merge.overrides.contains(SettingsType.LOOTRULES));
+    assert (merge.getOverrides().contains(SettingsType.LOOTRULES));
 
     merge = new DungeonSettings(other, base);
-    assert (!merge.overrides.contains(SettingsType.LOOTRULES));
+    assert (!merge.getOverrides().contains(SettingsType.LOOTRULES));
   }
 
   @Test
   public void overridesCopy() {
     DungeonSettings setting = new DungeonSettings();
-    setting.overrides.add(SettingsType.LOOTRULES);
+    setting.getOverrides().add(SettingsType.LOOTRULES);
 
     DungeonSettings copy = new DungeonSettings(setting);
-    assertTrue(copy.overrides.contains(SettingsType.LOOTRULES));
+    assertTrue(copy.getOverrides().contains(SettingsType.LOOTRULES));
   }
 
   @Test
@@ -98,10 +98,10 @@ public class DungeonSettingsTest {
   @Test
   public void testLootSettingsMerge() {
     DungeonSettings base = new DungeonSettings();
-    base.lootRules.add(Treasure.STARTER, new WeightedChoice<ItemStack>(new ItemStack(Items.SHEARS), 1), 0, true, 1);
+    base.getLootRules().add(Treasure.STARTER, new WeightedChoice<>(new ItemStack(Items.SHEARS), 1), 0, true, 1);
 
     DungeonSettings other = new DungeonSettings();
-    other.lootRules.add(Treasure.STARTER, new WeightedChoice<ItemStack>(new ItemStack(Items.APPLE), 1), 0, true, 1);
+    other.getLootRules().add(Treasure.STARTER, new WeightedChoice<>(new ItemStack(Items.APPLE), 1), 0, true, 1);
 
     DungeonSettings merge = new DungeonSettings(base, other);
     LootRuleManager rules = merge.getLootRules();
@@ -120,11 +120,11 @@ public class DungeonSettingsTest {
   @Test
   public void testLootSettingsOverride() {
     DungeonSettings base = new DungeonSettings();
-    base.lootRules.add(Treasure.STARTER, new WeightedChoice<ItemStack>(new ItemStack(Items.SHEARS), 1), 0, true, 1);
+    base.getLootRules().add(Treasure.STARTER, new WeightedChoice<>(new ItemStack(Items.SHEARS), 1), 0, true, 1);
 
     DungeonSettings other = new DungeonSettings();
-    other.overrides.add(SettingsType.LOOTRULES);
-    other.lootRules.add(Treasure.STARTER, new WeightedChoice<ItemStack>(new ItemStack(Items.APPLE), 1), 0, true, 1);
+    other.getOverrides().add(SettingsType.LOOTRULES);
+    other.getLootRules().add(Treasure.STARTER, new WeightedChoice<>(new ItemStack(Items.APPLE), 1), 0, true, 1);
 
     DungeonSettings merge = new DungeonSettings(base, other);
     LootRuleManager rules = merge.getLootRules();

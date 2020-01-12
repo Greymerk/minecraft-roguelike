@@ -25,14 +25,14 @@ public class SettingsJungleTheme extends DungeonSettings {
 
   public SettingsJungleTheme() {
     super(ID);
-    this.inherit.add(SettingsBase.ID);
-    this.criteria.setBiomeTypes(newArrayList(JUNGLE));
-    this.towerSettings = new TowerSettings(Tower.JUNGLE, Theme.JUNGLE);
+    getInherit().add(SettingsBase.ID);
+    getCriteria().setBiomeTypes(newArrayList(JUNGLE));
+    setTowerSettings(new TowerSettings(Tower.JUNGLE, Theme.JUNGLE));
 
-    this.lootRules = new LootRuleManager();
+    setLootRules(new LootRuleManager());
     for (int i = 0; i < 5; ++i) {
-      this.lootRules.add(null, new WeightedRandomLoot(Items.EMERALD, 0, 1, 1 + i, 1), i, false, 6);
-      this.lootRules.add(null, new WeightedRandomLoot(Items.DIAMOND, 1), i, false, 3 + i * 3);
+      getLootRules().add(null, new WeightedRandomLoot(Items.EMERALD, 0, 1, 1 + i, 1), i, false, 6);
+      getLootRules().add(null, new WeightedRandomLoot(Items.DIAMOND, 1), i, false, 3 + i * 3);
     }
 
 
@@ -58,7 +58,7 @@ public class SettingsJungleTheme extends DungeonSettings {
       }
 
       level.setTheme(themes[i].getThemeBase());
-      levels.put(i, level);
+      getLevels().put(i, level);
     }
   }
 }

@@ -73,7 +73,7 @@ public class SettingsRooms extends DungeonSettings {
 
       LevelSettings level = new LevelSettings();
       level.setRooms(factory);
-      levels.put(i, level);
+      getLevels().put(i, level);
     }
   }
 }

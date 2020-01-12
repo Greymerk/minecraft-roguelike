@@ -34,9 +34,9 @@ public class SettingsSwampTheme extends DungeonSettings {
 
   public SettingsSwampTheme() {
     super(ID);
-    this.inherit.add(SettingsBase.ID);
-    this.criteria.setBiomeTypes(newArrayList(SWAMP));
-    this.towerSettings = new TowerSettings(WITCH, DARKOAK);
+    getInherit().add(SettingsBase.ID);
+    getCriteria().setBiomeTypes(newArrayList(SWAMP));
+    setTowerSettings(new TowerSettings(WITCH, DARKOAK));
 
     Theme[] themes = {DARKHALL, DARKHALL, MUDDY, MOSSY, NETHER};
 
@@ -46,10 +46,10 @@ public class SettingsSwampTheme extends DungeonSettings {
     brewing.add(new WeightedRandomLoot(Items.SPECKLED_MELON, 0, 1, 3, 1));
     brewing.add(new WeightedRandomLoot(Items.BLAZE_POWDER, 0, 1, 3, 1));
     brewing.add(new WeightedRandomLoot(Items.SUGAR, 0, 1, 3, 1));
-    this.lootRules = new LootRuleManager();
+    setLootRules(new LootRuleManager());
     for (int i = 0; i < 5; ++i) {
-      this.lootRules.add(null, brewing, i, true, 2);
-      this.lootRules.add(null, new WeightedRandomLoot(Items.SLIME_BALL, 0, 1, 1 + i, 1), i, false, 4 + i * 3);
+      getLootRules().add(null, brewing, i, true, 2);
+      getLootRules().add(null, new WeightedRandomLoot(Items.SLIME_BALL, 0, 1, 1 + i, 1), i, false, 4 + i * 3);
     }
     for (int i = 0; i < 5; ++i) {
 
@@ -95,10 +95,10 @@ public class SettingsSwampTheme extends DungeonSettings {
         level.addFilter(Filter.MUD);
       }
 
-      levels.put(i, level);
+      getLevels().put(i, level);
     }
 
-    levels.get(2).addFilter(Filter.VINE);
-    levels.get(3).addFilter(Filter.VINE);
+    getLevels().get(2).addFilter(Filter.VINE);
+    getLevels().get(3).addFilter(Filter.VINE);
   }
 }

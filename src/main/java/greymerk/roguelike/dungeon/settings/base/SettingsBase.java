@@ -12,12 +12,12 @@ public class SettingsBase extends DungeonSettings {
 
   public SettingsBase() {
     super(ID);
-    this.inherit = new ArrayList<>();
-    this.inherit.add(SettingsRooms.ID);
-    this.inherit.add(SettingsSecrets.ID);
-    this.inherit.add(SettingsSegments.ID);
-    this.inherit.add(SettingsLayout.ID);
-    this.inherit.add(SettingsTheme.ID);
-    this.inherit.add(SettingsLootRules.ID);
+    setInherit(new ArrayList<>());
+    getInherit().add(SettingsRooms.ID);
+    getInherit().add(SettingsSecrets.ID);
+    getInherit().add(SettingsSegments.ID);
+    getInherit().add(SettingsLayout.ID);
+    getInherit().add(SettingsTheme.ID);
+    getInherit().add(SettingsLootRules.ID);
   }
 }

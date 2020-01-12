@@ -18,15 +18,15 @@ public class SettingsMesaTheme extends DungeonSettings {
 
   public SettingsMesaTheme() {
     super(ID);
-    this.inherit.add(SettingsBase.ID);
-    this.criteria.setBiomeTypes(newArrayList(MESA));
-    this.towerSettings = new TowerSettings(Tower.ETHO, Theme.ETHOTOWER);
+    getInherit().add(SettingsBase.ID);
+    getCriteria().setBiomeTypes(newArrayList(MESA));
+    setTowerSettings(new TowerSettings(Tower.ETHO, Theme.ETHOTOWER));
 
     Theme[] themes = {Theme.ETHOTOWER, Theme.ETHOTOWER, Theme.CRYPT, Theme.CRYPT, Theme.NETHER};
     for (int i = 0; i < 5; ++i) {
       LevelSettings level = new LevelSettings();
       level.setTheme(themes[i].getThemeBase());
-      levels.put(i, level);
+      getLevels().put(i, level);
     }
   }
 }

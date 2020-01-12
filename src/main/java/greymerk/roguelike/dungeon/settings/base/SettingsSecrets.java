@@ -33,7 +33,7 @@ public class SettingsSecrets extends DungeonSettings {
 
       LevelSettings level = new LevelSettings();
       level.setSecrets(factory);
-      levels.put(i, level);
+      getLevels().put(i, level);
     }
   }
 }

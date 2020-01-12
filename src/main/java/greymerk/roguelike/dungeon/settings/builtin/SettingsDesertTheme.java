@@ -28,12 +28,12 @@ public class SettingsDesertTheme extends DungeonSettings {
 
   public SettingsDesertTheme() {
     super(ID);
-    this.inherit.add(SettingsBase.ID);
-    this.criteria.setBiomeTypes(newArrayList(SANDY));
-    this.towerSettings = new TowerSettings(Tower.PYRAMID, Theme.PYRAMID);
-    this.lootRules = new LootRuleManager();
+    getInherit().add(SettingsBase.ID);
+    getCriteria().setBiomeTypes(newArrayList(SANDY));
+    setTowerSettings(new TowerSettings(Tower.PYRAMID, Theme.PYRAMID));
+    setLootRules(new LootRuleManager());
     for (int i = 0; i < 5; ++i) {
-      this.lootRules.add(null, new WeightedRandomLoot(Items.GOLD_INGOT, 0, 1, 1 + i, 1), i, false, 6);
+      getLootRules().add(null, new WeightedRandomLoot(Items.GOLD_INGOT, 0, 1, 1 + i, 1), i, false, 6);
     }
 
     Theme[] themes = {Theme.PYRAMID, Theme.SANDSTONE, Theme.SANDSTONERED, Theme.ENDER, Theme.NETHER};
@@ -136,7 +136,7 @@ public class SettingsDesertTheme extends DungeonSettings {
         level.setGenerator(LevelGenerator.CLASSIC);
       }
 
-      levels.put(i, level);
+      getLevels().put(i, level);
     }
   }
 }

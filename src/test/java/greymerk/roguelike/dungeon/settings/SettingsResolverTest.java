@@ -50,11 +50,11 @@ public class SettingsResolverTest {
 
     settingsContainer.put(main, toInherit);
 
-    main.inherit.add(toInherit.getId());
+    main.getInherit().add(toInherit.getId());
 
     ItemStack stick = new ItemStack(STICK);
 
-    toInherit.lootRules.add(REWARD, new WeightedChoice<>(stick, 1), 0, true, 1);
+    toInherit.getLootRules().add(REWARD, new WeightedChoice<>(stick, 1), 0, true, 1);
 
     DungeonSettings assembled = SettingsResolver.processInheritance(main, settingsContainer);
 
@@ -62,7 +62,7 @@ public class SettingsResolverTest {
     treasureManager.add(chest);
 
     assertEquals(0, chest.count(stick));
-    assembled.lootRules.process(new Random(), treasureManager);
+    assembled.getLootRules().process(new Random(), treasureManager);
     assertEquals(1, chest.count(stick));
   }
 
@@ -74,14 +74,14 @@ public class SettingsResolverTest {
 
     settingsContainer.put(main, child, grandchild);
 
-    main.inherit.add(child.getId());
-    child.inherit.add(grandchild.getId());
+    main.getInherit().add(child.getId());
+    child.getInherit().add(grandchild.getId());
 
     ItemStack stick = new ItemStack(STICK);
     ItemStack diamond = new ItemStack(DIAMOND);
 
-    child.lootRules.add(REWARD, stick);
-    grandchild.lootRules.add(REWARD, diamond);
+    child.getLootRules().add(REWARD, stick);
+    grandchild.getLootRules().add(REWARD, diamond);
 
     DungeonSettings assembled = SettingsResolver.processInheritance(main, settingsContainer);
 
@@ -91,7 +91,7 @@ public class SettingsResolverTest {
     assertEquals(0, chest.count(stick));
     assertEquals(0, chest.count(diamond));
 
-    assembled.lootRules.process(new Random(), treasureManager);
+    assembled.getLootRules().process(new Random(), treasureManager);
 
     assertEquals(1, chest.count(stick));
     assertEquals(0, chest.count(new ItemStack(BOAT)));
@@ -107,17 +107,17 @@ public class SettingsResolverTest {
 
     settingsContainer.put(main, child, sibling, grandchild);
 
-    main.inherit.add(child.getId());
-    main.inherit.add(sibling.getId());
-    child.inherit.add(grandchild.getId());
+    main.getInherit().add(child.getId());
+    main.getInherit().add(sibling.getId());
+    child.getInherit().add(grandchild.getId());
 
     ItemStack stick = new ItemStack(STICK);
     ItemStack coal = new ItemStack(COAL);
     ItemStack diamond = new ItemStack(DIAMOND);
 
-    child.lootRules.add(REWARD, stick);
-    sibling.lootRules.add(REWARD, coal);
-    grandchild.lootRules.add(REWARD, diamond);
+    child.getLootRules().add(REWARD, stick);
+    sibling.getLootRules().add(REWARD, coal);
+    grandchild.getLootRules().add(REWARD, diamond);
 
     DungeonSettings assembled = SettingsResolver.processInheritance(main, settingsContainer);
 
@@ -128,7 +128,7 @@ public class SettingsResolverTest {
     assertEquals(0, chest.count(coal));
     assertEquals(0, chest.count(diamond));
 
-    assembled.lootRules.process(new Random(), treasureManager);
+    assembled.getLootRules().process(new Random(), treasureManager);
 
     assertEquals(0, chest.count(new ItemStack(BOAT)));
     assertEquals(1, chest.count(coal));
@@ -142,11 +142,11 @@ public class SettingsResolverTest {
     ItemStack coal = new ItemStack(COAL);
 
     DungeonSettings parent = new DungeonSettings("parent");
-    parent.lootRules.add(REWARD, stick);
+    parent.getLootRules().add(REWARD, stick);
     settingsContainer.put(parent);
 
     DungeonSettings child = new DungeonSettings("child");
-    child.lootRules.add(REWARD, coal);
+    child.getLootRules().add(REWARD, coal);
     child.getInherits().add(parent.getId());
     settingsContainer.put(child);
 
@@ -154,7 +154,7 @@ public class SettingsResolverTest {
 
     MockChest chest = new MockChest(REWARD, 0);
     treasureManager.add(chest);
-    actual.lootRules.process(new Random(), treasureManager);
+    actual.getLootRules().process(new Random(), treasureManager);
 
     assertEquals(1, chest.count(coal));
     assertEquals(1, chest.count(stick));
@@ -167,22 +167,22 @@ public class SettingsResolverTest {
 
     DungeonSettings parent = new DungeonSettings("parent");
     LootTableRule rewardDungeonLootTable = newLootTableRule(0, "minecraft:dungeon", REWARD);
-    parent.lootTables.add(rewardDungeonLootTable);
-    parent.lootRules.add(REWARD, stick);
+    parent.getLootTables().add(rewardDungeonLootTable);
+    parent.getLootRules().add(REWARD, stick);
     settingsContainer.put(parent);
 
     DungeonSettings child = new DungeonSettings("child");
-    child.lootRules.add(REWARD, coal);
+    child.getLootRules().add(REWARD, coal);
     child.getInherits().add(parent.getId());
     settingsContainer.put(child);
 
     DungeonSettings actual = SettingsResolver.processInheritance(child, settingsContainer);
 
-    assertThat(actual.lootTables).contains(rewardDungeonLootTable);
+    assertThat(actual.getLootTables()).contains(rewardDungeonLootTable);
 
     MockChest chest = new MockChest(REWARD, 0);
     treasureManager.add(chest);
-    actual.lootRules.process(new Random(), treasureManager);
+    actual.getLootRules().process(new Random(), treasureManager);
 
     assertEquals(1, chest.count(coal));
     assertEquals(1, chest.count(stick));
@@ -207,17 +207,17 @@ public class SettingsResolverTest {
 
     @Override
     public boolean setSlot(int slot, ItemStack item) {
-      this.loot.put(slot, item);
+      loot.put(slot, item);
       return true;
     }
 
     @Override
     public boolean setRandomEmptySlot(ItemStack item) {
-      for (int i = 0; i < this.getSize(); ++i) {
-        if (!this.isEmptySlot(i)) {
+      for (int i = 0; i < getSize(); ++i) {
+        if (!isEmptySlot(i)) {
           continue;
         }
-        this.setSlot(i, item);
+        setSlot(i, item);
         return true;
       }
 
@@ -226,12 +226,12 @@ public class SettingsResolverTest {
 
     @Override
     public boolean isEmptySlot(int slot) {
-      return !this.loot.containsKey(slot);
+      return !loot.containsKey(slot);
     }
 
     @Override
     public Treasure getType() {
-      return this.type;
+      return type;
     }
 
     @Override
@@ -241,17 +241,17 @@ public class SettingsResolverTest {
 
     @Override
     public int getLevel() {
-      return this.level;
+      return level;
     }
 
     public int count(ItemStack type) {
       int count = 0;
 
-      for (int i = 0; i < this.getSize(); ++i) {
-        if (!this.loot.containsKey(i)) {
+      for (int i = 0; i < getSize(); ++i) {
+        if (!loot.containsKey(i)) {
           continue;
         }
-        ItemStack item = this.loot.get(i);
+        ItemStack item = loot.get(i);
         if (item.getItem() != type.getItem()) {
           continue;
         }
