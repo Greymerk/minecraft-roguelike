@@ -36,9 +36,7 @@ public class SettingsResolverTest {
     DungeonSettings main = new DungeonSettings("main");
     DungeonSettings toInherit = new DungeonSettings("inherit");
 
-    SettingsContainer settings = new SettingsContainer();
-    settings.put(main);
-    settings.put(toInherit);
+    SettingsContainer settings = new SettingsContainer(main, toInherit);
 
     main.inherit.add(toInherit.getId());
 
@@ -66,11 +64,7 @@ public class SettingsResolverTest {
     DungeonSettings child = new DungeonSettings("child");
     DungeonSettings grandchild = new DungeonSettings("grandchild");
 
-    SettingsContainer settings = new SettingsContainer();
-
-    settings.put(main);
-    settings.put(child);
-    settings.put(grandchild);
+    SettingsContainer settingsContainer = new SettingsContainer(main, child, grandchild);
 
     main.inherit.add(child.getId());
     child.inherit.add(grandchild.getId());
@@ -81,7 +75,7 @@ public class SettingsResolverTest {
     child.lootRules.add(Treasure.REWARD, new WeightedChoice<>(stick, 1), 0, true, 1);
     grandchild.lootRules.add(Treasure.REWARD, new WeightedChoice<>(diamond, 1), 0, true, 1);
 
-    DungeonSettings assembled = SettingsResolver.processInheritance(main, settings);
+    DungeonSettings assembled = SettingsResolver.processInheritance(main, settingsContainer);
 
     TreasureManager treasure = new TreasureManager();
     MockChest chest = new MockChest(Treasure.REWARD, 0);
@@ -105,12 +99,7 @@ public class SettingsResolverTest {
     DungeonSettings sibling = new DungeonSettings("sibling");
     DungeonSettings grandchild = new DungeonSettings("grandchild");
 
-    SettingsContainer settings = new SettingsContainer();
-
-    settings.put(main);
-    settings.put(child);
-    settings.put(sibling);
-    settings.put(grandchild);
+    SettingsContainer settingsContainer = new SettingsContainer(main, child, sibling, grandchild);
 
     main.inherit.add(child.getId());
     main.inherit.add(sibling.getId());
@@ -124,7 +113,7 @@ public class SettingsResolverTest {
     sibling.lootRules.add(Treasure.REWARD, new WeightedChoice<>(coal, 1), 0, true, 1);
     grandchild.lootRules.add(Treasure.REWARD, new WeightedChoice<>(diamond, 1), 0, true, 1);
 
-    DungeonSettings assembled = SettingsResolver.processInheritance(main, settings);
+    DungeonSettings assembled = SettingsResolver.processInheritance(main, settingsContainer);
 
     TreasureManager treasure = new TreasureManager();
     MockChest chest = new MockChest(Treasure.REWARD, 0);

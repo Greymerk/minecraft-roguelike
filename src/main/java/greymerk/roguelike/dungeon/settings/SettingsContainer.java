@@ -5,6 +5,7 @@ import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -33,33 +34,35 @@ public class SettingsContainer implements ISettingsContainer {
   public static final String DEFAULT_NAMESPACE = "default";
   public static final String BUILTIN_NAMESPACE = "builtin";
 
-  private Map<String, Map<String, DungeonSettings>> settingsByNamespace;
+  private Map<String, Map<String, DungeonSettings>> settingsByNamespace = new HashMap<>();
 
-  public SettingsContainer() {
-    this.settingsByNamespace = new HashMap<>();
+  public SettingsContainer(DungeonSettings... dungeonSettings) {
+    put(
+        new SettingsRooms(),
+        new SettingsSecrets(),
+        new SettingsSegments(),
+        new SettingsLayout(),
+        new SettingsTheme(),
+        new SettingsLootRules(),
+        new SettingsBase(),
 
-    this.put(new SettingsRooms());
-    this.put(new SettingsSecrets());
-    this.put(new SettingsSegments());
-    this.put(new SettingsLayout());
-    this.put(new SettingsTheme());
-    this.put(new SettingsLootRules());
-    this.put(new SettingsBase());
+        new SettingsDesertTheme(),
+        new SettingsGrasslandTheme(),
+        new SettingsJungleTheme(),
+        new SettingsSwampTheme(),
+        new SettingsMountainTheme(),
+        new SettingsForestTheme(),
+        new SettingsMesaTheme(),
+        new SettingsIceTheme()
+    );
 
-    this.put(new SettingsDesertTheme());
-    this.put(new SettingsGrasslandTheme());
-    this.put(new SettingsJungleTheme());
-    this.put(new SettingsSwampTheme());
-    this.put(new SettingsMountainTheme());
-    this.put(new SettingsForestTheme());
-    this.put(new SettingsMesaTheme());
-    this.put(new SettingsIceTheme());
+    put(dungeonSettings);
   }
 
   public void parseCustomSettings(Map<String, String> files) throws Exception {
     for (String name : files.keySet()) {
       try {
-        this.put(parseFile(files.get(name)));
+        put(parseFile(files.get(name)));
       } catch (Exception e) {
         throw new Exception("Error in: " + name + " : " + e.getMessage());
       }
@@ -75,10 +78,9 @@ public class SettingsContainer implements ISettingsContainer {
     } catch (Exception e) {
       throw new Exception("An unknown error occurred while parsing json");
     }
-
   }
 
-  public void put(DungeonSettings setting) {
+  private void put(DungeonSettings setting) {
     String namespace = setting.getNameSpace() != null ? setting.getNameSpace() : DEFAULT_NAMESPACE;
     String name = setting.getName();
 
@@ -88,6 +90,14 @@ public class SettingsContainer implements ISettingsContainer {
 
     Map<String, DungeonSettings> settings = this.settingsByNamespace.get(namespace);
     settings.put(name, setting);
+  }
+
+  public void put(DungeonSettings... dungeonSettings) {
+    Arrays.stream(dungeonSettings).forEach(this::put);
+  }
+
+  public void put(List<DungeonSettings> dungeonSettings) {
+    dungeonSettings.forEach(this::put);
   }
 
   public Collection<DungeonSettings> getByNamespace(String namespace) {
