@@ -33,6 +33,7 @@ public class SettingsResolverTest {
 
   private SettingsContainer settingsContainer;
   private TreasureManager treasureManager;
+  private SettingsResolver settingsResolver;
 
   @Before
   public void setUp() {
@@ -41,6 +42,8 @@ public class SettingsResolverTest {
 
     settingsContainer = new SettingsContainer();
     treasureManager = new TreasureManager();
+
+    settingsResolver = new SettingsResolver(settingsContainer);
   }
 
   @Test
@@ -56,7 +59,7 @@ public class SettingsResolverTest {
 
     toInherit.getLootRules().add(REWARD, new WeightedChoice<>(stick, 1), 0, true, 1);
 
-    DungeonSettings assembled = SettingsResolver.processInheritance(main, settingsContainer);
+    DungeonSettings assembled = settingsResolver.processInheritance(main);
 
     MockChest chest = new MockChest(REWARD, 0);
     treasureManager.add(chest);
@@ -83,7 +86,7 @@ public class SettingsResolverTest {
     child.getLootRules().add(REWARD, stick);
     grandchild.getLootRules().add(REWARD, diamond);
 
-    DungeonSettings assembled = SettingsResolver.processInheritance(main, settingsContainer);
+    DungeonSettings assembled = settingsResolver.processInheritance(main);
 
     MockChest chest = new MockChest(REWARD, 0);
     treasureManager.add(chest);
@@ -119,7 +122,7 @@ public class SettingsResolverTest {
     sibling.getLootRules().add(REWARD, coal);
     grandchild.getLootRules().add(REWARD, diamond);
 
-    DungeonSettings assembled = SettingsResolver.processInheritance(main, settingsContainer);
+    DungeonSettings assembled = settingsResolver.processInheritance(main);
 
     MockChest chest = new MockChest(REWARD, 0);
     treasureManager.add(chest);
@@ -150,7 +153,7 @@ public class SettingsResolverTest {
     child.getInherits().add(parent.getId());
     settingsContainer.put(child);
 
-    DungeonSettings actual = SettingsResolver.processInheritance(child, settingsContainer);
+    DungeonSettings actual = settingsResolver.processInheritance(child);
 
     MockChest chest = new MockChest(REWARD, 0);
     treasureManager.add(chest);
@@ -176,7 +179,7 @@ public class SettingsResolverTest {
     child.getInherits().add(parent.getId());
     settingsContainer.put(child);
 
-    DungeonSettings actual = SettingsResolver.processInheritance(child, settingsContainer);
+    DungeonSettings actual = settingsResolver.processInheritance(child);
 
     assertThat(actual.getLootTables()).contains(rewardDungeonLootTable);
 

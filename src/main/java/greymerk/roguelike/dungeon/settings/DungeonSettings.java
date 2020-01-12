@@ -16,6 +16,9 @@ import greymerk.roguelike.treasure.loot.LootTableRule;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IWorldEditor;
 
+import static greymerk.roguelike.dungeon.settings.SettingsContainer.DEFAULT_NAMESPACE;
+import static java.util.Optional.ofNullable;
+
 
 public class DungeonSettings implements ISettings {
 
@@ -119,8 +122,8 @@ public class DungeonSettings implements ISettings {
     return getInherit() != null ? getInherit() : new ArrayList<>();
   }
 
-  public String getNameSpace() {
-    return getId().getNamespace();
+  public String getNamespace() {
+    return ofNullable(getId().getNamespace()).orElse(DEFAULT_NAMESPACE);
   }
 
   public String getName() {
@@ -225,4 +228,9 @@ public class DungeonSettings implements ISettings {
   public void setOverrides(Set<SettingsType> overrides) {
     this.overrides = overrides;
   }
+
+  boolean isInclusive() {
+    return !isExclusive();
+  }
+
 }
