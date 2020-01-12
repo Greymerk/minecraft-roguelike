@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="minecraft_merged-1.12.2">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraft/minecraft_merged/1.12.2/minecraft_merged-1.12.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

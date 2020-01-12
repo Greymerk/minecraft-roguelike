@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="1.12">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.gradle/caches/minecraft/net/minecraft/minecraft_merged/1.12.2" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+    <jarDirectory url="file://$USER_HOME$/.gradle/caches/minecraft/net/minecraft/minecraft_merged/1.12.2" recursive="false" />
+  </library>
+</component>
