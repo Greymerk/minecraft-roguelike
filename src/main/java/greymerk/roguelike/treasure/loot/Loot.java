@@ -174,7 +174,7 @@ public enum Loot {
   }
 
   public static void setItemLore(ItemStack item, String loreText, TextFormat option) {
-    setItemLore(item, TextFormat.apply(loreText, option));
+    setItemLore(item, option.apply(loreText));
   }
 
   public static void setItemName(ItemStack item, String name, TextFormat option) {
@@ -184,7 +184,7 @@ public enum Loot {
       return;
     }
 
-    item.setStackDisplayName(TextFormat.apply(name, option));
+    item.setStackDisplayName(option.apply(name));
   }
 
   public static void setItemName(ItemStack item, String name) {

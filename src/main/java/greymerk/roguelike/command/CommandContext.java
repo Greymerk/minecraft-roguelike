@@ -9,7 +9,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 
-import greymerk.roguelike.util.TextFormat;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.WorldEditor;
@@ -25,8 +24,7 @@ public class CommandContext implements ICommandContext {
   }
 
   public void sendMessage(String message, MessageType type) {
-    TextFormat format = MessageType.getFormat(type);
-    String formattedMessage = TextFormat.apply(message, format);
+    String formattedMessage = type.apply(message);
     TextComponentString text = new TextComponentString(formattedMessage);
     sender.sendMessage(text);
   }
