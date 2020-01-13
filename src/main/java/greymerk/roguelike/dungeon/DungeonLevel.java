@@ -1,11 +1,9 @@
 package greymerk.roguelike.dungeon;
 
-import java.util.List;
 import java.util.Random;
 
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.worldgen.Coord;
-import greymerk.roguelike.worldgen.IBounded;
 import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.filter.Filter;
 import greymerk.roguelike.worldgen.filter.IFilter;
@@ -26,63 +24,63 @@ public class DungeonLevel implements IDungeonLevel {
   }
 
   public int nodeCount() {
-    return this.generator.getLayout().getNodes().size();
+    return generator.getLayout().getNodes().size();
   }
 
   @Override
   public LevelSettings getSettings() {
-    return this.settings;
+    return settings;
   }
 
   @Override
   public boolean hasNearbyNode(Coord pos) {
+    return generator
+        .getLayout()
+        .getNodes().stream()
+        .anyMatch(node -> isNearby(pos, node));
+  }
 
-    for (DungeonNode node : this.generator.getLayout().getNodes()) {
-      int dist = (int) node.getPosition().distance(pos);
-
-      if (dist < node.getSize()) {
-        return true;
-      }
-    }
-    return false;
+  private boolean isNearby(Coord pos, DungeonNode node) {
+    return (int) node.getPosition().distance(pos) < node.getSize();
   }
 
   @Override
   public ILevelLayout getLayout() {
-    return this.generator.getLayout();
+    return generator.getLayout();
   }
 
   @Override
   public void encase(IWorldEditor editor, Random rand) {
-    List<DungeonNode> nodes = this.generator.getLayout().getNodes();
-    List<DungeonTunnel> tunnels = this.generator.getLayout().getTunnels();
-    DungeonNode start = this.generator.getLayout().getStart();
-    DungeonNode end = this.generator.getLayout().getEnd();
+    encaseNodes(editor, rand);
+    encaseTunnels(editor, rand);
+  }
 
-    for (DungeonNode node : nodes) {
-      if (node == start || node == end) {
-        continue;
-      }
-      node.encase(editor, rand, this.settings.getTheme());
-    }
+  private void encaseNodes(IWorldEditor editor, Random rand) {
+    DungeonNode start = generator.getLayout().getStart();
+    DungeonNode end = generator.getLayout().getEnd();
 
-    for (DungeonTunnel t : tunnels) {
-      t.encase(editor, rand, this.settings.getTheme());
-    }
+    generator.getLayout().getNodes().stream()
+        .filter(node -> node != start && node != end)
+        .forEach(node -> node.encase(editor, rand, settings.getTheme()));
+  }
+
+  private void encaseTunnels(IWorldEditor editor, Random rand) {
+    generator.getLayout()
+        .getTunnels()
+        .forEach(t -> t.encase(editor, rand, settings.getTheme()));
   }
 
   @Override
   public void applyFilters(IWorldEditor editor, Random rand) {
-    for (Filter type : this.settings.getFilters()) {
-      IFilter filter = Filter.get(type);
-      this.filter(editor, rand, filter);
-    }
+    settings.getFilters().stream()
+        .map(Filter::get)
+        .forEach(filter -> filter(editor, rand, filter));
   }
 
   @Override
   public void filter(IWorldEditor editor, Random rand, IFilter filter) {
-    for (IBounded box : this.generator.getLayout().getBoundingBoxes()) {
-      filter.apply(editor, rand, settings.getTheme(), box);
-    }
+    generator.getLayout()
+        .getBoundingBoxes()
+        .forEach(box -> filter.apply(editor, rand, settings.getTheme(), box));
   }
 }
