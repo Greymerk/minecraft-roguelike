@@ -2,6 +2,7 @@ package greymerk.roguelike.dungeon;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 import greymerk.roguelike.dungeon.base.IDungeonRoom;
@@ -9,14 +10,12 @@ import greymerk.roguelike.worldgen.IBounded;
 
 public class LevelLayout implements ILevelLayout {
 
-  private List<DungeonNode> nodes;
-  private List<DungeonTunnel> tunnels;
+  private List<DungeonNode> nodes = new ArrayList<>();
+  private List<DungeonTunnel> tunnels = new ArrayList<>();
   private DungeonNode start;
   private DungeonNode end;
 
   public LevelLayout() {
-    nodes = new ArrayList<>();
-    tunnels = new ArrayList<>();
   }
 
   @Override
@@ -71,77 +70,51 @@ public class LevelLayout implements ILevelLayout {
     } while (end == this.start || end.getPosition().distance(start.getPosition()) > (16 + attempts * 2));
   }
 
-  public boolean overlaps(DungeonNode node, int size) {
+  private boolean anyTunnelsOverlap(DungeonNode node, int size) {
+    return getTunnels().stream()
+        .anyMatch(tunnel -> node.overlaps(size, tunnel));
+  }
 
-    for (DungeonTunnel tunnel : getTunnels()) {
-      if (node.connectsTo(tunnel)) {
-        continue;
-      }
-
-      if (node.getBoundingBox(size).collide(tunnel)) {
-        return true;
-      }
-    }
-
-    for (DungeonNode n : getNodes()) {
-      if (node == n) {
-        continue;
-      }
-
-      if (node.getBoundingBox(size).collide(n)) {
-        return true;
-      }
-    }
-
-    return false;
+  private boolean anyNodesOverlap(DungeonNode node, int size) {
+    return getNodes().stream()
+        .anyMatch(other -> node.overlaps(size, other));
   }
 
   @Override
   public DungeonNode getBestFit(IDungeonRoom room) {
+    return getNonOverlappingConnectingNode(room)
+        .orElseGet(this::getConnectingNode);
+  }
 
-    for (DungeonNode node : getNodes()) {
-      if (node == start || node == end) {
-        continue;
-      }
+  private Optional<DungeonNode> getNonOverlappingConnectingNode(IDungeonRoom room) {
+    return getNodes().stream()
+        .filter(this::isConnectingNode)
+        .filter(DungeonNode::isNotYetGenerated)
+        .filter(node -> !overlaps(node, room.getSize()))
+        .findFirst();
+  }
 
-      if (node.getRoom() != null) {
-        continue;
-      }
+  private DungeonNode getConnectingNode() {
+    return getNodes().stream()
+        .filter(this::isConnectingNode)
+        .filter(DungeonNode::isNotYetGenerated)
+        .findFirst()
+        .orElse(null);
+  }
 
-      if (overlaps(node, room.getSize())) {
-        continue;
-      }
+  private boolean overlaps(DungeonNode node, int size) {
+    return anyTunnelsOverlap(node, size) || anyNodesOverlap(node, size);
+  }
 
-      return node;
-    }
-
-    for (DungeonNode node : getNodes()) {
-      if (node == start || node == end) {
-        continue;
-      }
-
-      if (node.getRoom() != null) {
-        continue;
-      }
-      return node;
-    }
-
-    return null;
+  private boolean isConnectingNode(DungeonNode node) {
+    return node != start && node != end;
   }
 
   @Override
   public boolean hasEmptyRooms() {
-    for (DungeonNode node : nodes) {
-      if (node == start || node == end) {
-        continue;
-      }
-
-      if (node.getRoom() == null) {
-        return true;
-      }
-    }
-
-    return false;
+    return nodes.stream()
+        .filter(this::isConnectingNode)
+        .anyMatch(DungeonNode::isNotYetGenerated);
   }
 
   @Override

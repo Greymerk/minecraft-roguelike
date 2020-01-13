@@ -21,7 +21,7 @@ public class DungeonNode implements IBounded {
 
   public DungeonNode(Cardinal[] entrances, Coord origin) {
     this.entrances = entrances;
-    this.pos = new Coord(origin);
+    pos = new Coord(origin);
   }
 
   public void setDungeon(IDungeonRoom toGenerate) {
@@ -37,8 +37,8 @@ public class DungeonNode implements IBounded {
   }
 
   public void encase(IWorldEditor editor, Random rand, ITheme theme) {
-    int size = this.getSize();
-    Coord s = new Coord(this.getPosition());
+    int size = getSize();
+    Coord s = new Coord(getPosition());
     Coord e = new Coord(s);
     s.add(Cardinal.NORTH, size);
     s.add(Cardinal.WEST, size);
@@ -50,11 +50,11 @@ public class DungeonNode implements IBounded {
   }
 
   public Cardinal[] getEntrances() {
-    return this.entrances;
+    return entrances;
   }
 
   public Coord getPosition() {
-    return new Coord(this.pos);
+    return new Coord(pos);
   }
 
   public IDungeonRoom getRoom() {
@@ -62,8 +62,8 @@ public class DungeonNode implements IBounded {
   }
 
   public BoundingBox getBoundingBox(int size) {
-    Coord start = new Coord(this.pos);
-    Coord end = new Coord(this.pos);
+    Coord start = new Coord(pos);
+    Coord end = new Coord(pos);
 
     start.add(Cardinal.NORTH, size);
     start.add(Cardinal.WEST, size);
@@ -77,30 +77,42 @@ public class DungeonNode implements IBounded {
   }
 
   public BoundingBox getBoundingBox() {
-    return this.getBoundingBox(this.getSize());
+    return getBoundingBox(getSize());
   }
 
   public boolean connectsTo(DungeonTunnel tunnel) {
-    return tunnel.hasEnd(this.pos);
+    return tunnel.hasEnd(pos);
   }
 
   @Override
   public boolean collide(IBounded other) {
-    return this.getBoundingBox().collide(other);
+    return getBoundingBox().collide(other);
   }
 
   @Override
   public IShape getShape(Shape type) {
-    return this.getBoundingBox().getShape(type);
+    return getBoundingBox().getShape(type);
   }
 
   @Override
   public Coord getStart() {
-    return this.getBoundingBox().getStart();
+    return getBoundingBox().getStart();
   }
 
   @Override
   public Coord getEnd() {
-    return this.getBoundingBox().getEnd();
+    return getBoundingBox().getEnd();
+  }
+
+  boolean overlaps(int size, DungeonNode other) {
+    return this != other && getBoundingBox(size).collide(other);
+  }
+
+  boolean overlaps(int size, DungeonTunnel tunnel) {
+    return !connectsTo(tunnel) && getBoundingBox(size).collide(tunnel);
+  }
+
+  boolean isNotYetGenerated() {
+    return getRoom() == null;
   }
 }
