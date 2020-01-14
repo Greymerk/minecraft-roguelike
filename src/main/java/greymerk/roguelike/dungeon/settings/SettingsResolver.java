@@ -27,13 +27,13 @@ public class SettingsResolver {
   }
 
   public DungeonSettings processInheritance(
-      DungeonSettings toProcess
+      DungeonSettings dungeonSettings
   ) {
-    return toProcess.getInherits().stream()
+    return dungeonSettings.getInherits().stream()
         .peek(this::throwIfNotFound)
         .map(settingsContainer::get)
         .map(DungeonSettings::new)
-        .reduce(toProcess, inherit());
+        .reduce(dungeonSettings, inherit());
   }
 
   private BinaryOperator<DungeonSettings> inherit() {
@@ -130,10 +130,9 @@ public class SettingsResolver {
       Collection<DungeonSettings> dungeonSettingsCollection,
       Predicate<DungeonSettings>... predicates
   ) {
-    Predicate<DungeonSettings> satisfiesAllPredicates = dungeonSettings -> stream(predicates).allMatch(predicate -> predicate.test(dungeonSettings));
     WeightedRandomizer<DungeonSettings> settingsRandomizer = new WeightedRandomizer<>();
     dungeonSettingsCollection.stream()
-        .filter(satisfiesAllPredicates)
+        .filter(stream(predicates).reduce(x -> true, Predicate::and))
         .map(setting -> new WeightedChoice<>(setting, setting.getCriteria().getWeight()))
         .forEach(settingsRandomizer::add);
     return settingsRandomizer;
