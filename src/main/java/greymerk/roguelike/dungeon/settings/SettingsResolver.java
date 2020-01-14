@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.Random;
 import java.util.function.BinaryOperator;
+import java.util.function.Predicate;
 
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.util.WeightedChoice;
@@ -11,9 +12,9 @@ import greymerk.roguelike.util.WeightedRandomizer;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IWorldEditor;
 
+import static java.util.Arrays.stream;
 import static java.util.Optional.ofNullable;
 import static java.util.stream.Collectors.joining;
-import static java.util.stream.Collectors.toList;
 
 public class SettingsResolver {
 
@@ -103,7 +104,7 @@ public class SettingsResolver {
       return null;
     }
 
-    WeightedRandomizer<DungeonSettings> settingsRandomizer = newWeightedRandomizer(settingsContainer.getBuiltinSettings(), editor, pos);
+    WeightedRandomizer<DungeonSettings> settingsRandomizer = newWeightedRandomizer(settingsContainer.getBuiltinSettings(), isValid(editor, pos));
 
     if (settingsRandomizer.isEmpty()) {
       return null;
@@ -114,39 +115,39 @@ public class SettingsResolver {
 
   private DungeonSettings getCustom(IWorldEditor editor, Random rand, Coord pos) {
     Collection<DungeonSettings> custom = settingsContainer.getCustomSettings();
-    Collection<DungeonSettings> exclusive = filterExclusive(custom);
-    WeightedRandomizer<DungeonSettings> settingsRandomizer = newWeightedRandomizer(exclusive, editor, pos);
+    WeightedRandomizer<DungeonSettings> settingsRandomizer = newWeightedRandomizer(
+        custom,
+        DungeonSettings::isExclusive,
+        isValid(editor, pos)
+    );
     return ofNullable(settingsRandomizer.get(rand))
         .map(this::processInheritance)
         .orElse(null);
   }
 
-  private WeightedRandomizer<DungeonSettings> newWeightedRandomizer(
+  @SafeVarargs
+  private final WeightedRandomizer<DungeonSettings> newWeightedRandomizer(
       Collection<DungeonSettings> dungeonSettingsCollection,
-      IWorldEditor editor,
-      Coord pos
+      Predicate<DungeonSettings>... predicates
   ) {
+    Predicate<DungeonSettings> satisfiesAllPredicates = dungeonSettings -> stream(predicates).allMatch(predicate -> predicate.test(dungeonSettings));
     WeightedRandomizer<DungeonSettings> settingsRandomizer = new WeightedRandomizer<>();
     dungeonSettingsCollection.stream()
-        .filter(setting -> setting.isValid(editor, pos))
+        .filter(satisfiesAllPredicates)
         .map(setting -> new WeightedChoice<>(setting, setting.getCriteria().getWeight()))
         .forEach(settingsRandomizer::add);
     return settingsRandomizer;
   }
 
-  private Collection<DungeonSettings> filterExclusive(
-      Collection<DungeonSettings> dungeonSettingsCollection
-  ) {
-    return dungeonSettingsCollection.stream()
-        .filter(DungeonSettings::isExclusive)
-        .collect(toList());
-  }
-
   private DungeonSettings applyInclusions(DungeonSettings dungeonSettings, IWorldEditor editor, Coord pos) {
     return settingsContainer.getCustomSettings().stream()
         .filter(DungeonSettings::isInclusive)
-        .filter(customDungeonSettings -> customDungeonSettings.isValid(editor, pos))
+        .filter(isValid(editor, pos))
         .reduce(dungeonSettings, this::inherit);
+  }
+
+  private Predicate<DungeonSettings> isValid(IWorldEditor editor, Coord pos) {
+    return setting -> setting.isValid(editor, pos);
   }
 
   private DungeonSettings inherit(DungeonSettings ds0, DungeonSettings ds1) {
