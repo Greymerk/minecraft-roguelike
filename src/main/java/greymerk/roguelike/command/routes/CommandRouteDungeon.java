@@ -58,7 +58,7 @@ public class CommandRouteDungeon extends CommandRouteBase {
 
   private DungeonSettings resolveNamedDungeonSettings(Coord pos, IWorldEditor editor, String settingName) throws Exception {
     Dungeon.initResolver();
-    DungeonSettings dungeonSettings = Dungeon.settingsResolver.getWithName(settingName, editor, Dungeon.getRandom(editor, pos), pos);
+    DungeonSettings dungeonSettings = Dungeon.settingsResolver.getWithName(settingName, Dungeon.getRandom(editor, pos));
     return Optional.ofNullable(dungeonSettings)
         .orElseThrow(() -> new SettingNameNotFoundException(settingName));
   }

@@ -37,12 +37,10 @@ public class SettingsResolver {
     if (!builtin.isPresent() && !custom.isPresent()) {
       return null;
     }
-    DungeonSettings dungeonSettings = custom.orElseGet(builtin::get);
-
-    return applyInclusions(dungeonSettings, editor, pos);
+    return custom.orElseGet(builtin::get);
   }
 
-  public DungeonSettings getWithName(String name, IWorldEditor editor, Random rand, Coord pos) {
+  public DungeonSettings getWithName(String name, Random rand) {
     if (name.equals("random")) {
       return new SettingsRandom(rand);
     }
@@ -50,8 +48,7 @@ public class SettingsResolver {
     if (byName == null) {
       return null;
     }
-    DungeonSettings withInclusions = applyInclusions(byName, editor, pos);
-    return new DungeonSettings(new SettingsBlank(), withInclusions);
+    return new DungeonSettings(new SettingsBlank(), byName);
   }
 
   public ISettings getDefaultSettings() {
@@ -136,14 +133,6 @@ public class SettingsResolver {
         .map(setting -> new WeightedChoice<>(setting, setting.getSpawnCriteria().getWeight()))
         .forEach(settingsRandomizer::add);
     return settingsRandomizer;
-  }
-
-  private DungeonSettings applyInclusions(DungeonSettings dungeonSettings, IWorldEditor editor, Coord pos) {
-    return dungeonSettings;
-//    return settingsContainer.getCustomSettings().stream()
-//        .filter(DungeonSettings::isInclusive)
-//        .filter(isValid(editor, pos))
-//        .reduce(dungeonSettings, this::inherit);
   }
 
   private Predicate<DungeonSettings> isValid(IWorldEditor editor, Coord pos) {
