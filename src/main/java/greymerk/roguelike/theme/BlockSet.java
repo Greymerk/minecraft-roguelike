@@ -63,16 +63,16 @@ public class BlockSet implements IBlockSet {
 
 
     if (json.has("walls")) {
-      this.walls = BlockProvider.create(json.get("walls").getAsJsonObject());
+      walls = BlockProvider.create(json.get("walls").getAsJsonObject());
     } else if (base != null) {
-      this.walls = base.getWall();
+      walls = base.getWall();
     }
 
 
     if (json.has("floor")) {
-      this.floor = BlockProvider.create(json.get("floor").getAsJsonObject());
+      floor = BlockProvider.create(json.get("floor").getAsJsonObject());
     } else if (base != null) {
-      this.floor = base.getFloor();
+      floor = base.getFloor();
     }
 
     if (json.has("stair")) {
@@ -81,53 +81,53 @@ public class BlockSet implements IBlockSet {
           ? new MetaStair(new MetaBlock(stair.get("data").getAsJsonObject()))
           : new MetaStair(new MetaBlock(stair));
     } else if (base != null) {
-      this.stair = base.getStair();
+      stair = base.getStair();
     }
 
     if (json.has("pillar")) {
-      this.pillar = BlockProvider.create(json.get("pillar").getAsJsonObject());
+      pillar = BlockProvider.create(json.get("pillar").getAsJsonObject());
     } else if (base != null) {
-      this.pillar = base.getPillar();
+      pillar = base.getPillar();
     }
 
     if (json.has("door")) {
-      this.door = new Door(json.get("door"));
+      door = new Door(json.get("door"));
     } else if (base != null) {
-      this.door = base.getDoor();
+      door = base.getDoor();
     }
 
     if (json.has("lightblock")) {
-      this.lightblock = BlockProvider.create(json.get("lightblock").getAsJsonObject());
+      lightblock = BlockProvider.create(json.get("lightblock").getAsJsonObject());
     } else if (base != null) {
-      this.lightblock = base.getLightBlock();
+      lightblock = base.getLightBlock();
     }
 
     if (json.has("liquid")) {
-      this.liquid = BlockProvider.create(json.get("liquid").getAsJsonObject());
+      liquid = BlockProvider.create(json.get("liquid").getAsJsonObject());
     } else if (base != null) {
-      this.liquid = base.getLiquid();
+      liquid = base.getLiquid();
     }
 
   }
 
   public BlockSet(IBlockSet toCopy) {
-    this.walls = toCopy.getWall();
-    this.floor = toCopy.getFloor();
-    this.stair = toCopy.getStair();
-    this.pillar = toCopy.getPillar();
-    this.door = toCopy.getDoor();
-    this.lightblock = toCopy.getLightBlock();
-    this.liquid = toCopy.getLiquid();
+    walls = toCopy.getWall();
+    floor = toCopy.getFloor();
+    stair = toCopy.getStair();
+    pillar = toCopy.getPillar();
+    door = toCopy.getDoor();
+    lightblock = toCopy.getLightBlock();
+    liquid = toCopy.getLiquid();
   }
 
-  public BlockSet(IBlockSet base, IBlockSet other) {
-    this.walls = other.getWall() != null ? other.getWall() : base.getWall();
-    this.floor = other.getFloor() != null ? other.getFloor() : base.getFloor();
-    this.stair = other.getStair() != null ? other.getStair() : base.getStair();
-    this.pillar = other.getPillar() != null ? other.getPillar() : base.getPillar();
-    this.door = other.getDoor() != null ? other.getDoor() : base.getDoor();
-    this.lightblock = other.getLightBlock() != null ? other.getLightBlock() : base.getLightBlock();
-    this.liquid = other.getLiquid() != null ? other.getLiquid() : base.getLiquid();
+  public BlockSet(IBlockSet parent, IBlockSet child) {
+    walls = child.getWall() != null ? child.getWall() : parent.getWall();
+    floor = child.getFloor() != null ? child.getFloor() : parent.getFloor();
+    stair = child.getStair() != null ? child.getStair() : parent.getStair();
+    pillar = child.getPillar() != null ? child.getPillar() : parent.getPillar();
+    door = child.getDoor() != null ? child.getDoor() : parent.getDoor();
+    lightblock = child.getLightBlock() != null ? child.getLightBlock() : parent.getLightBlock();
+    liquid = child.getLiquid() != null ? child.getLiquid() : parent.getLiquid();
   }
 
   @Override
@@ -137,31 +137,31 @@ public class BlockSet implements IBlockSet {
 
   @Override
   public IStair getStair() {
-    return stair != null ? this.stair : new MetaStair(StairType.STONEBRICK);
+    return stair != null ? stair : new MetaStair(StairType.STONEBRICK);
   }
 
   @Override
   public IBlockFactory getPillar() {
-    return pillar != null ? this.pillar : this.getWall();
+    return pillar != null ? pillar : getWall();
   }
 
   @Override
   public IBlockFactory getFloor() {
-    return this.floor != null ? this.floor : this.getWall();
+    return floor != null ? floor : getWall();
   }
 
   @Override
   public IDoor getDoor() {
-    return this.door != null ? this.door : new Door(DoorType.OAK);
+    return door != null ? door : new Door(DoorType.OAK);
   }
 
   @Override
   public IBlockFactory getLightBlock() {
-    return this.lightblock != null ? this.lightblock : BlockType.get(BlockType.GLOWSTONE);
+    return lightblock != null ? lightblock : BlockType.get(BlockType.GLOWSTONE);
   }
 
   @Override
   public IBlockFactory getLiquid() {
-    return this.liquid != null ? this.liquid : BlockType.get(BlockType.WATER_FLOWING);
+    return liquid != null ? liquid : BlockType.get(BlockType.WATER_FLOWING);
   }
 }
