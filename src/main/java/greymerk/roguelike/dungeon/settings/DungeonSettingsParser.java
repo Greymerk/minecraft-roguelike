@@ -51,7 +51,7 @@ public class DungeonSettingsParser {
       dungeonSettings.setExclusive(root.get("exclusive").getAsBoolean());
     }
     if (root.has("criteria")) {
-      dungeonSettings.setCriteria(new SpawnCriteria(root.get("criteria").getAsJsonObject()));
+      dungeonSettings.setSpawnCriteria(new SpawnCriteria(root.get("criteria").getAsJsonObject()));
     }
     if (root.has("tower")) {
       dungeonSettings.setTowerSettings(new TowerSettings(root.get("tower")));

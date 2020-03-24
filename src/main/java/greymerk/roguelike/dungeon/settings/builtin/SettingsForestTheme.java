@@ -25,7 +25,7 @@ public class SettingsForestTheme extends DungeonSettings {
   public SettingsForestTheme() {
     super(ID);
     getInherit().add(SettingsBase.ID);
-    getCriteria().setBiomeTypes(newArrayList(FOREST));
+    getSpawnCriteria().setBiomeTypes(newArrayList(FOREST));
     setTowerSettings(new TowerSettings(Tower.ROGUE, Theme.TOWER));
 
     for (int i = 0; i < 5; ++i) {

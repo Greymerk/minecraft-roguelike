@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
+import java.util.stream.IntStream;
 
 import greymerk.roguelike.dungeon.towers.Tower;
 import greymerk.roguelike.theme.Theme;
@@ -16,6 +17,7 @@ import greymerk.roguelike.treasure.loot.LootTableRule;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IWorldEditor;
 
+import static com.google.common.collect.Sets.newHashSet;
 import static greymerk.roguelike.dungeon.settings.SettingsContainer.DEFAULT_NAMESPACE;
 import static java.util.Optional.ofNullable;
 
@@ -28,15 +30,12 @@ public class DungeonSettings implements ISettings {
   private boolean exclusive;
   private TowerSettings towerSettings;
   private Map<Integer, LevelSettings> levels = new HashMap<>();
-  private SpawnCriteria criteria;
-  private LootRuleManager lootRules;
+  private SpawnCriteria spawnCriteria = new SpawnCriteria();
+  private LootRuleManager lootRules = new LootRuleManager();
   private List<LootTableRule> lootTables = new ArrayList<>();
   private Set<SettingsType> overrides = new HashSet<>();
 
   public DungeonSettings() {
-    setExclusive(false);
-    setCriteria(new SpawnCriteria());
-    setLootRules(new LootRuleManager());
   }
 
   public DungeonSettings(String id) {
@@ -44,46 +43,40 @@ public class DungeonSettings implements ISettings {
   }
 
   public DungeonSettings(SettingIdentifier id) {
-    this();
     setId(id);
   }
 
-  public DungeonSettings(DungeonSettings base, DungeonSettings other) {
-    this();
-
-    if (other.getOverrides() != null) {
-      getOverrides().addAll(other.getOverrides());
-    }
+  public DungeonSettings(DungeonSettings parent, DungeonSettings child) {
+    getOverrides().addAll(ofNullable(child.getOverrides()).orElse(newHashSet()));
 
     setLootRules(new LootRuleManager());
     if (!getOverrides().contains(SettingsType.LOOTRULES)) {
-      getLootRules().add(base.getLootRules());
+      getLootRules().add(parent.getLootRules());
+      getLootTables().addAll(parent.getLootTables());
     }
-    getLootRules().add(other.getLootRules());
+    getLootRules().add(child.getLootRules());
+    getLootTables().addAll(child.getLootTables());
+    getInherit().addAll(child.getInherit());
 
-    getLootTables().addAll(base.getLootTables());
-    getLootTables().addAll(other.getLootTables());
+    setExclusive(child.isExclusive());
 
-    getInherit().addAll(other.getInherit());
+    setTowerSettings(getTowerSettings(parent, child));
 
-    setExclusive(other.isExclusive());
+    IntStream.range(0, getMaxNumLevels())
+        .forEach(i -> getLevels().put(i, new LevelSettings(parent.getLevels().get(i), child.getLevels().get(i), getOverrides())));
+  }
 
-    if (getOverrides().contains(SettingsType.TOWER) && other.getTowerSettings() != null) {
-      setTowerSettings(new TowerSettings(other.getTowerSettings()));
+  private TowerSettings getTowerSettings(DungeonSettings parent, DungeonSettings child) {
+    if (getOverrides().contains(SettingsType.TOWER) && child.getTowerSettings() != null) {
+      return new TowerSettings(child.getTowerSettings());
+    } else if (parent.getTowerSettings() != null || child.getTowerSettings() != null) {
+      return new TowerSettings(parent.getTowerSettings(), child.getTowerSettings());
     } else {
-      if (base.getTowerSettings() != null || other.getTowerSettings() != null) {
-        setTowerSettings(new TowerSettings(base.getTowerSettings(), other.getTowerSettings()));
-      }
-    }
-
-    for (int i = 0; i < getMaxNumLevels(); ++i) {
-      getLevels().put(i, new LevelSettings(base.getLevels().get(i), other.getLevels().get(i), getOverrides()));
+      return null;
     }
   }
 
   public DungeonSettings(DungeonSettings toCopy) {
-    this();
-
     setTowerSettings(toCopy.getTowerSettings() != null ? new TowerSettings(toCopy.getTowerSettings()) : null);
     setLootRules(toCopy.getLootRules());
     getLootTables().addAll(toCopy.getLootTables());
@@ -130,13 +123,13 @@ public class DungeonSettings implements ISettings {
     return getId().getName();
   }
 
-  public void setCriteria(SpawnCriteria criteria) {
-    this.criteria = criteria;
+  public void setSpawnCriteria(SpawnCriteria spawnCriteria) {
+    this.spawnCriteria = spawnCriteria;
   }
 
   @Override
   public boolean isValid(IWorldEditor editor, Coord pos) {
-    return getCriteria().isValid(new SpawnContext(editor.getInfo(pos)));
+    return getSpawnCriteria().isValid(new SpawnContext(editor.getInfo(pos)));
   }
 
   @Override
@@ -209,8 +202,8 @@ public class DungeonSettings implements ISettings {
     this.levels = levels;
   }
 
-  public SpawnCriteria getCriteria() {
-    return criteria;
+  public SpawnCriteria getSpawnCriteria() {
+    return spawnCriteria;
   }
 
   public void setLootRules(LootRuleManager lootRules) {
@@ -219,18 +212,6 @@ public class DungeonSettings implements ISettings {
 
   public List<LootTableRule> getLootTables() {
     return lootTables;
-  }
-
-  public void setLootTables(List<LootTableRule> lootTables) {
-    this.lootTables = lootTables;
-  }
-
-  public void setOverrides(Set<SettingsType> overrides) {
-    this.overrides = overrides;
-  }
-
-  boolean isInclusive() {
-    return !isExclusive();
   }
 
 }

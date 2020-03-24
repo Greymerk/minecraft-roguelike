@@ -4,6 +4,7 @@ import com.google.common.base.Charsets;
 import com.google.common.io.Files;
 
 import net.minecraft.block.material.Material;
+import net.minecraft.client.Minecraft;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeDictionary.Type;
@@ -18,10 +19,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Random;
+import java.util.stream.IntStream;
 
 import greymerk.roguelike.config.RogueConfig;
-import greymerk.roguelike.dungeon.settings.ISettings;
+import greymerk.roguelike.dungeon.settings.DungeonSettings;
+import greymerk.roguelike.dungeon.settings.SettingIdentifier;
 import greymerk.roguelike.dungeon.settings.SettingsContainer;
 import greymerk.roguelike.dungeon.settings.SettingsResolver;
 import greymerk.roguelike.dungeon.settings.SpawnCriteria;
@@ -33,7 +37,11 @@ import greymerk.roguelike.worldgen.IWorldEditor;
 import greymerk.roguelike.worldgen.VanillaStructure;
 import greymerk.roguelike.worldgen.shapes.RectSolid;
 
-import static java.lang.Math.*;
+import static java.lang.Math.PI;
+import static java.lang.Math.cos;
+import static java.lang.Math.max;
+import static java.lang.Math.sin;
+import static java.util.Optional.ofNullable;
 
 public class Dungeon implements IDungeon {
   public static final int VERTICAL_SPACING = 10;
@@ -57,7 +65,7 @@ public class Dungeon implements IDungeon {
 
   public Dungeon(IWorldEditor editor) {
     this.editor = editor;
-    this.levels = new ArrayList<>();
+    levels = new ArrayList<>();
   }
 
   public static void initResolver() throws Exception {
@@ -163,16 +171,11 @@ public class Dungeon implements IDungeon {
   }
 
   public static Coord getNearbyCoord(Random rand, int x, int z, int min, int max) {
-
     int distance = min + rand.nextInt(max - min);
-
     double angle = rand.nextDouble() * 2 * PI;
-
     int xOffset = (int) (cos(angle) * distance);
     int zOffset = (int) (sin(angle) * distance);
-
-    Coord nearby = new Coord(x + xOffset, 0, z + zOffset);
-    return nearby;
+    return new Coord(x + xOffset, 0, z + zOffset);
   }
 
   public static Random getRandom(IWorldEditor editor, Coord pos) {
@@ -183,39 +186,37 @@ public class Dungeon implements IDungeon {
     if (Dungeon.settingsResolver == null) {
       return;
     }
+    selectLocation(rand, x, z)
+        .ifPresent(coord -> generateDungeon(rand, coord));
+  }
 
-    int attempts = 50;
+  private Optional<Coord> selectLocation(Random rand, int x, int z) {
+    return IntStream.range(0, 50)
+        .mapToObj(i -> getNearbyCoord(rand, x, z, 40, 100))
+        .filter(this::canGenerateDungeonHere)
+        .findFirst();
+  }
 
-    for (int i = 0; i < attempts; i++) {
-      Coord location = getNearbyCoord(rand, x, z, 40, 100);
-
-      if (!validLocation(rand, location)) {
-        continue;
+  private void generateDungeon(Random rand, Coord coord) {
+    try {
+      DungeonSettings dungeonSettings = Dungeon.settingsResolver.chooseDungeonSettingsToGenerate(editor, rand, coord);
+      if (dungeonSettings != null) {
+        generate(dungeonSettings, coord);
       }
-
-      ISettings setting;
-
-      try {
-        setting = Dungeon.settingsResolver.getSettings(editor, rand, location);
-      } catch (Exception e) {
-        e.printStackTrace();
-        return;
-      }
-
-
-      if (setting == null) {
-        return;
-      }
-
-      generate(setting, location);
-
-      return;
+    } catch (Exception e) {
+      e.printStackTrace();
     }
   }
 
-  public void generate(ISettings settings, Coord pos) {
-    this.origin = new Coord(pos.getX(), Dungeon.TOPLEVEL, pos.getZ());
-    DungeonGenerator.generate(editor, this, settings, DungeonTaskRegistry.getTaskRegistry());
+  private void printDungeonName(DungeonSettings dungeonSettings) {
+    Optional<SettingIdentifier> id = ofNullable(dungeonSettings.getId());
+    String string = id.isPresent() ? id.toString() : dungeonSettings.toString();
+    Minecraft.getMinecraft().player.sendChatMessage(string);
+  }
+
+  public void generate(DungeonSettings dungeonSettings, Coord pos) {
+    origin = new Coord(pos.getX(), Dungeon.TOPLEVEL, pos.getZ());
+    DungeonGenerator.generate(editor, this, dungeonSettings, DungeonTaskRegistry.getTaskRegistry());
   }
 
   public void spawnInChunk(Random rand, int chunkX, int chunkZ) {
@@ -227,7 +228,7 @@ public class Dungeon implements IDungeon {
     }
   }
 
-  public boolean validLocation(Random rand, Coord column) {
+  public boolean canGenerateDungeonHere(Coord column) {
 
     Biome biome = editor.getInfo(column).getBiome();
 
@@ -303,16 +304,16 @@ public class Dungeon implements IDungeon {
 
   @Override
   public List<ITreasureChest> getChests() {
-    return this.editor.getTreasure().getChests();
+    return editor.getTreasure().getChests();
   }
 
   @Override
   public Coord getPosition() {
-    return new Coord(this.origin);
+    return new Coord(origin);
   }
 
   @Override
   public List<IDungeonLevel> getLevels() {
-    return this.levels;
+    return levels;
   }
 }

@@ -19,7 +19,7 @@ public class SettingsMesaTheme extends DungeonSettings {
   public SettingsMesaTheme() {
     super(ID);
     getInherit().add(SettingsBase.ID);
-    getCriteria().setBiomeTypes(newArrayList(MESA));
+    getSpawnCriteria().setBiomeTypes(newArrayList(MESA));
     setTowerSettings(new TowerSettings(Tower.ETHO, Theme.ETHOTOWER));
 
     Theme[] themes = {Theme.ETHOTOWER, Theme.ETHOTOWER, Theme.CRYPT, Theme.CRYPT, Theme.NETHER};

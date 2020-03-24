@@ -26,38 +26,14 @@ public class SettingsResolver {
     this.settingsContainer = settingsContainer;
   }
 
-  public DungeonSettings processInheritance(
-      DungeonSettings dungeonSettings
-  ) {
-    return dungeonSettings.getInherits().stream()
-        .peek(this::throwIfNotFound)
-        .map(settingsContainer::get)
-        .map(DungeonSettings::new)
-        .reduce(dungeonSettings, inherit());
-  }
-
-  private BinaryOperator<DungeonSettings> inherit() {
-    return (DungeonSettings acc, DungeonSettings element) -> {
-      DungeonSettings inherited = element.getInherits().isEmpty()
-          ? element
-          : processInheritance(element);
-      return new DungeonSettings(acc, inherited);
-    };
-  }
-
-  private void throwIfNotFound(SettingIdentifier settingIdentifier) {
-    if (!settingsContainer.contains(settingIdentifier)) {
-      throw new RuntimeException("Setting not found: " + settingIdentifier.toString());
-    }
-  }
-
   // called from Dungeon class
-  public ISettings getSettings(IWorldEditor editor, Random rand, Coord pos) throws Exception {
+
+  public DungeonSettings chooseDungeonSettingsToGenerate(IWorldEditor editor, Random random, Coord pos) throws Exception {
     if (RogueConfig.getBoolean(RogueConfig.RANDOM)) {
-      return new SettingsRandom(rand);
+      return new SettingsRandom(random);
     }
-    Optional<DungeonSettings> builtin = ofNullable(getBuiltin(editor, rand, pos));
-    Optional<DungeonSettings> custom = ofNullable(getCustom(editor, rand, pos));
+    Optional<DungeonSettings> builtin = ofNullable(getBuiltin(editor, random, pos));
+    Optional<DungeonSettings> custom = chooseRandomCustomDungeonIfPossible(editor, random, pos);
     if (!builtin.isPresent() && !custom.isPresent()) {
       return null;
     }
@@ -66,7 +42,7 @@ public class SettingsResolver {
     return applyInclusions(dungeonSettings, editor, pos);
   }
 
-  public ISettings getWithName(String name, IWorldEditor editor, Random rand, Coord pos) {
+  public DungeonSettings getWithName(String name, IWorldEditor editor, Random rand, Coord pos) {
     if (name.equals("random")) {
       return new SettingsRandom(rand);
     }
@@ -99,30 +75,54 @@ public class SettingsResolver {
     return processInheritance(setting);
   }
 
+  public DungeonSettings processInheritance(
+      DungeonSettings dungeonSettings
+  ) {
+    return dungeonSettings.getInherits().stream()
+        .peek(this::throwIfNotFound)
+        .map(settingsContainer::get)
+        .map(DungeonSettings::new)
+        .reduce(dungeonSettings, inherit());
+  }
+
+  private void throwIfNotFound(SettingIdentifier settingIdentifier) {
+    if (!settingsContainer.contains(settingIdentifier)) {
+      throw new RuntimeException("Setting not found: " + settingIdentifier.toString());
+    }
+  }
+
+  private BinaryOperator<DungeonSettings> inherit() {
+    return (DungeonSettings acc, DungeonSettings element) -> {
+      DungeonSettings inherited = element.getInherits().isEmpty()
+          ? element
+          : processInheritance(element);
+      return new DungeonSettings(inherited, acc);
+    };
+  }
+
   private DungeonSettings getBuiltin(IWorldEditor editor, Random rand, Coord pos) {
     if (!RogueConfig.getBoolean(RogueConfig.SPAWNBUILTIN)) {
       return null;
     }
-
     WeightedRandomizer<DungeonSettings> settingsRandomizer = newWeightedRandomizer(settingsContainer.getBuiltinSettings(), isValid(editor, pos));
-
     if (settingsRandomizer.isEmpty()) {
       return null;
     }
-
     return processInheritance(settingsRandomizer.get(rand));
   }
 
-  private DungeonSettings getCustom(IWorldEditor editor, Random rand, Coord pos) {
-    Collection<DungeonSettings> custom = settingsContainer.getCustomSettings();
+  private Optional<DungeonSettings> chooseRandomCustomDungeonIfPossible(
+      IWorldEditor editor,
+      Random rand,
+      Coord pos
+  ) {
     WeightedRandomizer<DungeonSettings> settingsRandomizer = newWeightedRandomizer(
-        custom,
+        settingsContainer.getCustomSettings(),
         DungeonSettings::isExclusive,
         isValid(editor, pos)
     );
     return ofNullable(settingsRandomizer.get(rand))
-        .map(this::processInheritance)
-        .orElse(null);
+        .map(this::processInheritance);
   }
 
   @SafeVarargs
@@ -133,16 +133,17 @@ public class SettingsResolver {
     WeightedRandomizer<DungeonSettings> settingsRandomizer = new WeightedRandomizer<>();
     dungeonSettingsCollection.stream()
         .filter(stream(predicates).reduce(x -> true, Predicate::and))
-        .map(setting -> new WeightedChoice<>(setting, setting.getCriteria().getWeight()))
+        .map(setting -> new WeightedChoice<>(setting, setting.getSpawnCriteria().getWeight()))
         .forEach(settingsRandomizer::add);
     return settingsRandomizer;
   }
 
   private DungeonSettings applyInclusions(DungeonSettings dungeonSettings, IWorldEditor editor, Coord pos) {
-    return settingsContainer.getCustomSettings().stream()
-        .filter(DungeonSettings::isInclusive)
-        .filter(isValid(editor, pos))
-        .reduce(dungeonSettings, this::inherit);
+    return dungeonSettings;
+//    return settingsContainer.getCustomSettings().stream()
+//        .filter(DungeonSettings::isInclusive)
+//        .filter(isValid(editor, pos))
+//        .reduce(dungeonSettings, this::inherit);
   }
 
   private Predicate<DungeonSettings> isValid(IWorldEditor editor, Coord pos) {
