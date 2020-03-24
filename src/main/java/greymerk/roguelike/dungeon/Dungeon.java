@@ -27,6 +27,7 @@ import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.dungeon.settings.DungeonSettings;
 import greymerk.roguelike.dungeon.settings.SettingIdentifier;
 import greymerk.roguelike.dungeon.settings.SettingsContainer;
+import greymerk.roguelike.dungeon.settings.SettingsRandom;
 import greymerk.roguelike.dungeon.settings.SettingsResolver;
 import greymerk.roguelike.dungeon.settings.SpawnCriteria;
 import greymerk.roguelike.dungeon.tasks.DungeonTaskRegistry;
@@ -170,9 +171,9 @@ public class Dungeon implements IDungeon {
     return 0;
   }
 
-  public static Coord getNearbyCoord(Random rand, int x, int z, int min, int max) {
-    int distance = min + rand.nextInt(max - min);
-    double angle = rand.nextDouble() * 2 * PI;
+  public static Coord getNearbyCoord(Random random, int x, int z, int min, int max) {
+    int distance = min + random.nextInt(max - min);
+    double angle = random.nextDouble() * 2 * PI;
     int xOffset = (int) (cos(angle) * distance);
     int zOffset = (int) (sin(angle) * distance);
     return new Coord(x + xOffset, 0, z + zOffset);
@@ -183,11 +184,11 @@ public class Dungeon implements IDungeon {
   }
 
   public void generateNear(Random rand, int x, int z) {
-    if (Dungeon.settingsResolver == null) {
+    if (settingsResolver == null) {
       return;
     }
     selectLocation(rand, x, z)
-        .ifPresent(coord -> generateDungeon(rand, coord));
+        .ifPresent(this::generateDungeon);
   }
 
   private Optional<Coord> selectLocation(Random rand, int x, int z) {
@@ -197,9 +198,14 @@ public class Dungeon implements IDungeon {
         .findFirst();
   }
 
-  private void generateDungeon(Random rand, Coord coord) {
+  private void generateDungeon(Coord coord) {
     try {
-      DungeonSettings dungeonSettings = Dungeon.settingsResolver.getDungeonSettingsAllowingRandomOverride(editor, rand, coord);
+      DungeonSettings dungeonSettings;
+      if (RogueConfig.getBoolean(RogueConfig.RANDOM)) {
+        dungeonSettings = new SettingsRandom(getRandom(editor, coord));
+      } else {
+        dungeonSettings = settingsResolver.getAnyCustomDungeonSettings(editor, coord);
+      }
       if (dungeonSettings != null) {
         generate(dungeonSettings, coord);
       }
@@ -215,12 +221,12 @@ public class Dungeon implements IDungeon {
   }
 
   public void generate(DungeonSettings dungeonSettings, Coord pos) {
-    origin = new Coord(pos.getX(), Dungeon.TOPLEVEL, pos.getZ());
+    origin = new Coord(pos.getX(), TOPLEVEL, pos.getZ());
     DungeonGenerator.generate(editor, this, dungeonSettings, DungeonTaskRegistry.getTaskRegistry());
   }
 
   public void spawnInChunk(Random rand, int chunkX, int chunkZ) {
-    if (Dungeon.canSpawnInChunk(chunkX, chunkZ, editor)) {
+    if (canSpawnInChunk(chunkX, chunkZ, editor)) {
       int x = chunkX * 16 + 4;
       int z = chunkZ * 16 + 4;
 

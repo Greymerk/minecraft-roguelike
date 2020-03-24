@@ -66,7 +66,7 @@ public class CommandRouteDungeon extends CommandRouteBase {
   }
 
   private DungeonSettings resolveAnyCustomDungeonSettings(Coord pos, IWorldEditor editor) throws Exception {
-    DungeonSettings dungeonSettings = Dungeon.settingsResolver.getAnyCustomDungeonSettings(editor, Dungeon.getRandom(editor, pos), pos);
+    DungeonSettings dungeonSettings = Dungeon.settingsResolver.getAnyCustomDungeonSettings(editor, pos);
     return Optional.ofNullable(dungeonSettings)
         .orElseThrow(() -> new NoValidLocationException(pos));
   }

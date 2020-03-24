@@ -7,6 +7,7 @@ import java.util.function.BinaryOperator;
 import java.util.function.Predicate;
 
 import greymerk.roguelike.config.RogueConfig;
+import greymerk.roguelike.dungeon.Dungeon;
 import greymerk.roguelike.util.WeightedChoice;
 import greymerk.roguelike.util.WeightedRandomizer;
 import greymerk.roguelike.worldgen.Coord;
@@ -26,16 +27,9 @@ public class SettingsResolver {
     this.settingsContainer = settingsContainer;
   }
 
-  public DungeonSettings getDungeonSettingsAllowingRandomOverride(IWorldEditor editor, Random random, Coord pos) throws Exception {
-    if (RogueConfig.getBoolean(RogueConfig.RANDOM)) {
-      return new SettingsRandom(random);
-    }
-    return getAnyCustomDungeonSettings(editor, random, pos);
-  }
-
-  public DungeonSettings getAnyCustomDungeonSettings(IWorldEditor editor, Random random, Coord pos) {
-    Optional<DungeonSettings> builtin = ofNullable(getBuiltin(editor, random, pos));
-    Optional<DungeonSettings> custom = chooseRandomCustomDungeonIfPossible(editor, random, pos);
+  public DungeonSettings getAnyCustomDungeonSettings(IWorldEditor editor, Coord coord) {
+    Optional<DungeonSettings> builtin = ofNullable(getBuiltin(editor, coord));
+    Optional<DungeonSettings> custom = chooseRandomCustomDungeonIfPossible(editor, coord);
     if (builtin.isPresent() || custom.isPresent()) {
       return custom.orElseGet(builtin::get);
     }
@@ -87,28 +81,29 @@ public class SettingsResolver {
     };
   }
 
-  private DungeonSettings getBuiltin(IWorldEditor editor, Random rand, Coord pos) {
+  private DungeonSettings getBuiltin(IWorldEditor editor, Coord coord) {
     if (!RogueConfig.getBoolean(RogueConfig.SPAWNBUILTIN)) {
       return null;
     }
-    WeightedRandomizer<DungeonSettings> settingsRandomizer = newWeightedRandomizer(settingsContainer.getBuiltinSettings(), isValid(editor, pos));
+    WeightedRandomizer<DungeonSettings> settingsRandomizer = newWeightedRandomizer(settingsContainer.getBuiltinSettings(), isValid(editor, coord));
     if (settingsRandomizer.isEmpty()) {
       return null;
     }
-    return processInheritance(settingsRandomizer.get(rand));
+    Random random = Dungeon.getRandom(editor, coord);
+    return processInheritance(settingsRandomizer.get(random));
   }
 
   private Optional<DungeonSettings> chooseRandomCustomDungeonIfPossible(
       IWorldEditor editor,
-      Random rand,
-      Coord pos
+      Coord coord
   ) {
     WeightedRandomizer<DungeonSettings> settingsRandomizer = newWeightedRandomizer(
         settingsContainer.getCustomSettings(),
         DungeonSettings::isExclusive,
-        isValid(editor, pos)
+        isValid(editor, coord)
     );
-    return ofNullable(settingsRandomizer.get(rand))
+    Random random = Dungeon.getRandom(editor, coord);
+    return ofNullable(settingsRandomizer.get(random))
         .map(this::processInheritance);
   }
 
