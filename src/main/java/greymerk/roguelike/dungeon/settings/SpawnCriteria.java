@@ -9,6 +9,10 @@ import net.minecraftforge.common.BiomeDictionary;
 import java.util.ArrayList;
 import java.util.List;
 
+import greymerk.roguelike.config.RogueConfig;
+import greymerk.roguelike.worldgen.Coord;
+import greymerk.roguelike.worldgen.IWorldEditor;
+
 public class SpawnCriteria {
 
   private int weight;
@@ -23,6 +27,15 @@ public class SpawnCriteria {
     weight = data.has("weight") ? data.get("weight").getAsInt() : 1;
     addBiomeCriteria(data);
     addBiomeTypeCriteria(data);
+  }
+
+  public static boolean isValidDimension(IWorldEditor editor, int chunkX, int chunkZ) {
+    int dimension = getDimension(editor, chunkX, chunkZ);
+    return isValidDimension(dimension, RogueConfig.getIntList(RogueConfig.DIMENSIONWL), RogueConfig.getIntList(RogueConfig.DIMENSIONBL));
+  }
+
+  private static int getDimension(IWorldEditor editor, int chunkX, int chunkZ) {
+    return editor.getInfo(new Coord(chunkX * 16, 0, chunkZ * 16)).getDimension();
   }
 
   public static boolean isValidDimension(int dim, List<Integer> whiteList, List<Integer> blackList) {

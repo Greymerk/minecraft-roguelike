@@ -44,7 +44,7 @@ public class WorldEditor implements IWorldEditor {
   public WorldEditor(World world) {
     this.world = world;
     stats = new HashMap<>();
-    this.chests = new TreasureManager();
+    chests = new TreasureManager();
   }
 
   private boolean setBlock(Coord pos, MetaBlock block, int flags, boolean fillAir, boolean replaceSolid) {
@@ -85,7 +85,7 @@ public class WorldEditor implements IWorldEditor {
 
   @Override
   public boolean setBlock(Coord pos, MetaBlock block, boolean fillAir, boolean replaceSolid) {
-    return this.setBlock(pos, block, block.getFlag(), fillAir, replaceSolid);
+    return setBlock(pos, block, block.getFlag(), fillAir, replaceSolid);
   }
 
   @Override
@@ -95,7 +95,7 @@ public class WorldEditor implements IWorldEditor {
 
   @Override
   public long getSeed() {
-    return this.world.getSeed();
+    return world.getSeed();
   }
 
   @Override
@@ -155,36 +155,35 @@ public class WorldEditor implements IWorldEditor {
     if (isAirBlock(pos)) {
       return false;
     }
-    MetaBlock block = this.getBlock(pos);
-    return !invalid.contains(block.getMaterial());
+    return !invalid.contains(getBlock(pos).getMaterial());
   }
 
   @Override
   public int getStat(Block type) {
-    if (!this.stats.containsKey(type)) {
+    if (!stats.containsKey(type)) {
       return 0;
     }
-    return this.stats.get(type);
+    return stats.get(type);
   }
 
   @Override
   public Map<Block, Integer> getStats() {
-    return this.stats;
+    return stats;
   }
 
   @Override
   public void addChest(ITreasureChest toAdd) {
-    this.chests.add(toAdd);
+    chests.add(toAdd);
   }
 
   @Override
   public TreasureManager getTreasure() {
-    return this.chests;
+    return chests;
   }
 
   @Override
   public boolean canPlace(MetaBlock block, Coord pos, Cardinal dir) {
-    if (!this.isAirBlock(pos)) {
+    if (!isAirBlock(pos)) {
       return false;
     }
     return block.getBlock().canPlaceBlockOnSide(world, pos.getBlockPos(), Cardinal.facing(dir));
@@ -192,7 +191,7 @@ public class WorldEditor implements IWorldEditor {
 
   @Override
   public IPositionInfo getInfo(Coord pos) {
-    return new PositionInfo(this.world, pos);
+    return new PositionInfo(world, pos);
   }
 
   @Override

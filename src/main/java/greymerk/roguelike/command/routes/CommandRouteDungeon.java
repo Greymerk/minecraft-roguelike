@@ -83,10 +83,10 @@ public class CommandRouteDungeon extends CommandRouteBase {
         .orElseThrow(() -> new SettingNameNotFoundException(settingName));
   }
 
-  private void generateDungeon(ICommandContext context, Coord pos, IWorldEditor editor, DungeonSettings dungeonSettings) {
+  private void generateDungeon(ICommandContext context, Coord coord, IWorldEditor editor, DungeonSettings dungeonSettings) {
     Dungeon dungeon = new Dungeon(editor);
-    dungeon.generate(dungeonSettings, pos);
-    context.sendMessage("Success: Dungeon generated at " + pos.toString(), MessageType.SUCCESS);
+    dungeon.generate(dungeonSettings, coord);
+    context.sendMessage("Success: Dungeon generated at " + coord.toString(), MessageType.SUCCESS);
   }
 
   private String getSettingName(ArgumentParser argumentParser) {

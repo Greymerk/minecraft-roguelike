@@ -61,12 +61,11 @@ public class Dungeon implements IDungeon {
   }
 
   private Coord origin;
-  private List<IDungeonLevel> levels;
+  private List<IDungeonLevel> levels = new ArrayList<>();
   private IWorldEditor editor;
 
   public Dungeon(IWorldEditor editor) {
     this.editor = editor;
-    levels = new ArrayList<>();
   }
 
   public static void initResolver() throws Exception {
@@ -106,27 +105,10 @@ public class Dungeon implements IDungeon {
   }
 
   public static boolean canSpawnInChunk(int chunkX, int chunkZ, IWorldEditor editor) {
-
-    if (!RogueConfig.getBoolean(RogueConfig.DONATURALSPAWN)) {
-      return false;
-    }
-
-    int dim = editor.getInfo(new Coord(chunkX * 16, 0, chunkZ * 16)).getDimension();
-    List<Integer> whiteList = new ArrayList<>(RogueConfig.getIntList(RogueConfig.DIMENSIONWL));
-    List<Integer> blackList = new ArrayList<>(RogueConfig.getIntList(RogueConfig.DIMENSIONBL));
-    if (!SpawnCriteria.isValidDimension(dim, whiteList, blackList)) {
-      return false;
-    }
-
-    if (!isVillageChunk(editor, chunkX, chunkZ)) {
-      return false;
-    }
-
-    double spawnChance = RogueConfig.getDouble(RogueConfig.SPAWNCHANCE);
-    Random rand = new Random(Objects.hash(chunkX, chunkZ, 31));
-
-    return rand.nextFloat() < spawnChance;
-
+    return RogueConfig.getBoolean(RogueConfig.DONATURALSPAWN)
+        && SpawnCriteria.isValidDimension(editor, chunkX, chunkZ)
+        && isVillageChunk(editor, chunkX, chunkZ)
+        && isSpawnChanceHit(chunkX, chunkZ);
   }
 
   public static boolean isVillageChunk(IWorldEditor editor, int chunkX, int chunkZ) {
@@ -154,21 +136,24 @@ public class Dungeon implements IDungeon {
     return chunkX == m && chunkZ == n;
   }
 
-  public static int getLevel(int y) {
+  private static boolean isSpawnChanceHit(int chunkX, int chunkZ) {
+    double spawnChance = RogueConfig.getDouble(RogueConfig.SPAWNCHANCE);
+    Random rand = new Random(Objects.hash(chunkX, chunkZ, 31));
+    return rand.nextFloat() < spawnChance;
+  }
 
+  public static int getLevel(int y) {
     if (y < 15) {
       return 4;
-    }
-    if (y < 25) {
+    } else if (y < 25) {
       return 3;
-    }
-    if (y < 35) {
+    } else if (y < 35) {
       return 2;
-    }
-    if (y < 45) {
+    } else if (y < 45) {
       return 1;
+    } else {
+      return 0;
     }
-    return 0;
   }
 
   public static Coord getNearbyCoord(Random random, int x, int z, int min, int max) {
@@ -183,35 +168,11 @@ public class Dungeon implements IDungeon {
     return new Random(Objects.hash(editor.getSeed(), pos));
   }
 
-  public void generateNear(Random rand, int x, int z) {
-    if (settingsResolver == null) {
-      return;
-    }
-    selectLocation(rand, x, z)
-        .ifPresent(this::generateDungeon);
-  }
-
   private Optional<Coord> selectLocation(Random rand, int x, int z) {
     return IntStream.range(0, 50)
         .mapToObj(i -> getNearbyCoord(rand, x, z, 40, 100))
         .filter(this::canGenerateDungeonHere)
         .findFirst();
-  }
-
-  private void generateDungeon(Coord coord) {
-    try {
-      DungeonSettings dungeonSettings;
-      if (RogueConfig.getBoolean(RogueConfig.RANDOM)) {
-        dungeonSettings = new SettingsRandom(getRandom(editor, coord));
-      } else {
-        dungeonSettings = settingsResolver.getAnyCustomDungeonSettings(editor, coord);
-      }
-      if (dungeonSettings != null) {
-        generate(dungeonSettings, coord);
-      }
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
   }
 
   private void printDungeonName(DungeonSettings dungeonSettings) {
@@ -220,9 +181,23 @@ public class Dungeon implements IDungeon {
     Minecraft.getMinecraft().player.sendChatMessage(string);
   }
 
-  public void generate(DungeonSettings dungeonSettings, Coord pos) {
-    origin = new Coord(pos.getX(), TOPLEVEL, pos.getZ());
-    DungeonGenerator.generate(editor, this, dungeonSettings, DungeonTaskRegistry.getTaskRegistry());
+  public void generate(DungeonSettings dungeonSettings, Coord coord) {
+    try {
+      Random random = getRandom(editor, coord);
+
+      origin = new Coord(coord.getX(), TOPLEVEL, coord.getZ());
+      Coord start = getPosition();
+      IntStream.range(0, dungeonSettings.getNumLevels())
+          .mapToObj(dungeonSettings::getLevelSettings)
+          .map(levelSettings -> new DungeonLevel(editor, random, levelSettings, new Coord(start)))
+          .forEach(levels::add);
+
+      Arrays.stream(DungeonStage.values())
+          .flatMap(stage -> DungeonTaskRegistry.getTaskRegistry().getTasks(stage).stream())
+          .forEach(task -> task.execute(editor, random, this, dungeonSettings));
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 
   public void spawnInChunk(Random rand, int chunkX, int chunkZ) {
@@ -230,44 +205,63 @@ public class Dungeon implements IDungeon {
       int x = chunkX * 16 + 4;
       int z = chunkZ * 16 + 4;
 
-      generateNear(rand, x, z);
+      selectLocation(rand, x, z)
+          .ifPresent(coord ->
+              getDungeonSettingsMaybe(coord)
+                  .ifPresent(dungeonSettings ->
+                      generate(dungeonSettings, coord)));
     }
   }
 
-  public boolean canGenerateDungeonHere(Coord column) {
-
-    Biome biome = editor.getInfo(column).getBiome();
-
-    Type[] invalidBiomes = new Type[]{
-        BiomeDictionary.Type.RIVER,
-        BiomeDictionary.Type.BEACH,
-        BiomeDictionary.Type.MUSHROOM,
-        BiomeDictionary.Type.OCEAN
-    };
-
-    for (Type type : invalidBiomes) {
-      if (BiomeDictionary.hasType(biome, type)) {
-        return false;
-      }
+  private Optional<DungeonSettings> getDungeonSettingsMaybe(Coord coord) {
+    if (RogueConfig.getBoolean(RogueConfig.RANDOM)) {
+      return Optional.of(new SettingsRandom(getRandom(editor, coord)));
+    } else if (settingsResolver != null) {
+      return Optional.ofNullable(settingsResolver.getAnyCustomDungeonSettings(editor, coord));
+    } else {
+      return Optional.empty();
     }
+  }
 
-    Coord stronghold = editor.findNearestStructure(VanillaStructure.STRONGHOLD, column);
-    if (stronghold != null) {
-      double strongholdDistance = column.distance(stronghold);
-      if (strongholdDistance < 300) {
-        return false;
-      }
+  public boolean canGenerateDungeonHere(Coord coord) {
+    if (isInvalidBiome(coord) || hasStrongholdTooCloseBy(coord)) {
+      return false;
     }
 
     int upperLimit = RogueConfig.getInt(RogueConfig.UPPERLIMIT);
     int lowerLimit = RogueConfig.getInt(RogueConfig.LOWERLIMIT);
+    Coord cursor = new Coord(coord.getX(), upperLimit, coord.getZ());
 
-    Coord cursor = new Coord(column.getX(), upperLimit, column.getZ());
+    return editor.isAirBlock(cursor)
+        && canFindStartingCoord(lowerLimit, cursor)
+        && isFreeOverhead(cursor)
+        && isSolidBelow(cursor);
+  }
 
-    if (!editor.isAirBlock(cursor)) {
+  private boolean isInvalidBiome(Coord coord) {
+    Biome biome = editor.getInfo(coord).getBiome();
+
+    Type[] invalidBiomes = new Type[]{
+        Type.RIVER,
+        Type.BEACH,
+        Type.MUSHROOM,
+        Type.OCEAN
+    };
+
+    return Arrays.stream(invalidBiomes)
+        .anyMatch(type -> BiomeDictionary.hasType(biome, type));
+  }
+
+  private boolean hasStrongholdTooCloseBy(Coord coord) {
+    Coord stronghold = editor.findNearestStructure(VanillaStructure.STRONGHOLD, coord);
+    if (stronghold == null) {
       return false;
     }
+    double strongholdDistance = coord.distance(stronghold);
+    return strongholdDistance < 300;
+  }
 
+  private boolean canFindStartingCoord(int lowerLimit, Coord cursor) {
     while (!editor.validGroundBlock(cursor)) {
       cursor.add(Cardinal.DOWN);
       if (cursor.getY() < lowerLimit) {
@@ -277,26 +271,26 @@ public class Dungeon implements IDungeon {
         return false;
       }
     }
+    return true;
+  }
 
-    Coord start;
-    Coord end;
-    start = new Coord(cursor);
-    end = new Coord(cursor);
-    start.add(new Coord(-4, 4, -4));
-    end.add(new Coord(4, 4, 4));
+  private boolean isFreeOverhead(Coord cursor) {
+    Coord start = new Coord(cursor).add(new Coord(-4, 4, -4));
+    Coord end = new Coord(cursor).add(new Coord(4, 4, 4));
 
     for (Coord c : new RectSolid(start, end)) {
       if (editor.validGroundBlock(c)) {
         return false;
       }
     }
+    return true;
+  }
 
-    start = new Coord(cursor);
-    end = new Coord(cursor);
-    start.add(new Coord(-4, -3, -4));
-    end.add(new Coord(4, -3, 4));
+  private boolean isSolidBelow(Coord cursor) {
+    Coord start1 = new Coord(cursor).add(new Coord(-4, -3, -4));
+    Coord end1 = new Coord(cursor).add(new Coord(4, -3, 4));
     int airCount = 0;
-    for (Coord c : new RectSolid(start, end)) {
+    for (Coord c : new RectSolid(start1, end1)) {
       if (!editor.validGroundBlock(c)) {
         airCount++;
       }
@@ -304,7 +298,6 @@ public class Dungeon implements IDungeon {
         return false;
       }
     }
-
     return true;
   }
 
