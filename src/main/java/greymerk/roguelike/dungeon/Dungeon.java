@@ -199,7 +199,7 @@ public class Dungeon implements IDungeon {
 
   private void generateDungeon(Random rand, Coord coord) {
     try {
-      DungeonSettings dungeonSettings = Dungeon.settingsResolver.chooseDungeonSettingsToGenerate(editor, rand, coord);
+      DungeonSettings dungeonSettings = Dungeon.settingsResolver.getDungeonSettingsAllowingRandomOverride(editor, rand, coord);
       if (dungeonSettings != null) {
         generate(dungeonSettings, coord);
       }

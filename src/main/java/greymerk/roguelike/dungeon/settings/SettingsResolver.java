@@ -26,50 +26,40 @@ public class SettingsResolver {
     this.settingsContainer = settingsContainer;
   }
 
-  // called from Dungeon class
-
-  public DungeonSettings chooseDungeonSettingsToGenerate(IWorldEditor editor, Random random, Coord pos) throws Exception {
+  public DungeonSettings getDungeonSettingsAllowingRandomOverride(IWorldEditor editor, Random random, Coord pos) throws Exception {
     if (RogueConfig.getBoolean(RogueConfig.RANDOM)) {
       return new SettingsRandom(random);
     }
-    Optional<DungeonSettings> builtin = ofNullable(getBuiltin(editor, random, pos));
-    Optional<DungeonSettings> custom = chooseRandomCustomDungeonIfPossible(editor, random, pos);
-    if (!builtin.isPresent() && !custom.isPresent()) {
-      return null;
-    }
-    return custom.orElseGet(builtin::get);
+    return getAnyCustomDungeonSettings(editor, random, pos);
   }
 
-  public DungeonSettings getWithName(String name, Random rand) {
-    if (name.equals("random")) {
-      return new SettingsRandom(rand);
+  public DungeonSettings getAnyCustomDungeonSettings(IWorldEditor editor, Random random, Coord pos) {
+    Optional<DungeonSettings> builtin = ofNullable(getBuiltin(editor, random, pos));
+    Optional<DungeonSettings> custom = chooseRandomCustomDungeonIfPossible(editor, random, pos);
+    if (builtin.isPresent() || custom.isPresent()) {
+      return custom.orElseGet(builtin::get);
     }
-    DungeonSettings byName = getByName(name);
-    if (byName == null) {
+    return null;
+  }
+
+  public DungeonSettings getByName(String name) {
+    try {
+      SettingIdentifier id = new SettingIdentifier(name);
+      if (settingsContainer.contains(id)) {
+        DungeonSettings setting = new DungeonSettings(settingsContainer.get(id));
+        DungeonSettings byName = processInheritance(setting);
+        if (byName != null) {
+          return new DungeonSettings(new SettingsBlank(), byName);
+        }
+      }
       return null;
+    } catch (Exception e) {
+      throw new RuntimeException("Malformed Setting ID String: " + name);
     }
-    return new DungeonSettings(new SettingsBlank(), byName);
   }
 
   public ISettings getDefaultSettings() {
     return new DungeonSettings(settingsContainer.get(new SettingIdentifier(SettingsContainer.BUILTIN_NAMESPACE, "base")));
-  }
-
-  private DungeonSettings getByName(String name) {
-    SettingIdentifier id;
-
-    try {
-      id = new SettingIdentifier(name);
-    } catch (Exception e) {
-      throw new RuntimeException("Malformed Setting ID String: " + name);
-    }
-
-    if (!settingsContainer.contains(id)) {
-      return null;
-    }
-    DungeonSettings setting = new DungeonSettings(settingsContainer.get(id));
-
-    return processInheritance(setting);
   }
 
   public DungeonSettings processInheritance(

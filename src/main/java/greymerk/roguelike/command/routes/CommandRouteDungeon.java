@@ -13,6 +13,7 @@ import greymerk.roguelike.command.routes.exception.NoValidLocationException;
 import greymerk.roguelike.command.routes.exception.SettingNameNotFoundException;
 import greymerk.roguelike.dungeon.Dungeon;
 import greymerk.roguelike.dungeon.settings.DungeonSettings;
+import greymerk.roguelike.dungeon.settings.SettingsRandom;
 import greymerk.roguelike.util.ArgumentParser;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IWorldEditor;
@@ -47,26 +48,39 @@ public class CommandRouteDungeon extends CommandRouteBase {
     try {
       Coord pos = getLocation(context, args);
       IWorldEditor editor = context.createEditor();
-      DungeonSettings dungeonSettings = settingName == null
-          ? resolveAnyDungeonSettings(pos, editor)
-          : resolveNamedDungeonSettings(pos, editor, settingName);
+      DungeonSettings dungeonSettings = chooseDungeonSettings(settingName, pos, editor);
       generateDungeon(context, pos, editor, dungeonSettings);
     } catch (Exception e) {
       context.sendMessage("Failure: " + e.getMessage(), MessageType.ERROR);
     }
   }
 
-  private DungeonSettings resolveNamedDungeonSettings(Coord pos, IWorldEditor editor, String settingName) throws Exception {
-    Dungeon.initResolver();
-    DungeonSettings dungeonSettings = Dungeon.settingsResolver.getWithName(settingName, Dungeon.getRandom(editor, pos));
-    return Optional.ofNullable(dungeonSettings)
-        .orElseThrow(() -> new SettingNameNotFoundException(settingName));
+  private DungeonSettings chooseDungeonSettings(String settingName, Coord pos, IWorldEditor editor) throws Exception {
+    if (settingName == null) {
+      return resolveAnyCustomDungeonSettings(pos, editor);
+    } else if (settingName.equals("random")) {
+      return resolveRandomDungeon(pos, editor);
+    } else {
+      return resolveNamedDungeonSettings(settingName);
+    }
   }
 
-  private DungeonSettings resolveAnyDungeonSettings(Coord pos, IWorldEditor editor) throws Exception {
-    DungeonSettings dungeonSettings = Dungeon.settingsResolver.chooseDungeonSettingsToGenerate(editor, Dungeon.getRandom(editor, pos), pos);
+  private DungeonSettings resolveAnyCustomDungeonSettings(Coord pos, IWorldEditor editor) throws Exception {
+    DungeonSettings dungeonSettings = Dungeon.settingsResolver.getAnyCustomDungeonSettings(editor, Dungeon.getRandom(editor, pos), pos);
     return Optional.ofNullable(dungeonSettings)
         .orElseThrow(() -> new NoValidLocationException(pos));
+  }
+
+  private DungeonSettings resolveRandomDungeon(Coord pos, IWorldEditor editor) throws Exception {
+    Dungeon.initResolver();
+    return new SettingsRandom(Dungeon.getRandom(editor, pos));
+  }
+
+  private DungeonSettings resolveNamedDungeonSettings(String settingName) throws Exception {
+    Dungeon.initResolver();
+    DungeonSettings dungeonSettings = Dungeon.settingsResolver.getByName(settingName);
+    return Optional.ofNullable(dungeonSettings)
+        .orElseThrow(() -> new SettingNameNotFoundException(settingName));
   }
 
   private void generateDungeon(ICommandContext context, Coord pos, IWorldEditor editor, DungeonSettings dungeonSettings) {
