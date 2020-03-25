@@ -119,13 +119,13 @@ public class LevelSettings {
     Optional<ITheme> parentTheme = ofNullable(parent.theme);
     Optional<ITheme> childTheme = ofNullable(child.theme);
     if (overrides.contains(THEMES) && childTheme.isPresent()) {
-      return Theme.create(childTheme.get());
+      return childTheme.get();
     } else if (parentTheme.isPresent() && childTheme.isPresent()) {
       return Theme.create(parentTheme.get(), childTheme.get());
     } else if (childTheme.isPresent()) {
-      return Theme.create(childTheme.get());
+      return childTheme.get();
     } else if (parentTheme.isPresent()) {
-      return Theme.create(parentTheme.get());
+      return parentTheme.get();
     } else {
       return null;
     }

@@ -85,21 +85,15 @@ public enum Theme {
     return new ThemeBase((ThemeBase) base, primary, secondary);
   }
 
-  public static ITheme create(ITheme toCopy) {
-    BlockSet primary = toCopy.getPrimary() != null ? new BlockSet(toCopy.getPrimary()) : null;
-    BlockSet secondary = toCopy.getSecondary() != null ? new BlockSet(toCopy.getSecondary()) : null;
-    return new ThemeBase(primary, secondary);
-  }
-
   public static ITheme create(ITheme parent, ITheme child) {
     if (parent == null && child == null) {
       return null;
     }
     if (child == null) {
-      return create(parent);
+      return parent;
     }
     if (parent == null) {
-      return create(child);
+      return child;
     }
     return new ThemeBase(
         getPrimaryBlockSet(parent, child),
