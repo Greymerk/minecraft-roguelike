@@ -7,26 +7,22 @@ public class SettingIdentifier {
   private ResourceLocation identifier;
 
   public SettingIdentifier(String namespace, String name) {
-    this.identifier = new ResourceLocation(namespace, name);
+    identifier = new ResourceLocation(namespace, name);
   }
 
   public SettingIdentifier(String name) {
-    String[] parts;
-    parts = name.split(":");
-    if (parts.length > 1) {
-      this.identifier = new ResourceLocation(parts[0], parts[1]);
-      return;
-    }
-
-    this.identifier = new ResourceLocation(SettingsContainer.DEFAULT_NAMESPACE, name);
+    String[] parts = name.split(":");
+    String namespace = parts.length > 1 ? parts[0] : SettingsContainer.DEFAULT_NAMESPACE;
+    String uniqueName = parts.length > 1 ? parts[1] : name;
+    identifier = new ResourceLocation(namespace, uniqueName);
   }
 
   public String getNamespace() {
-    return this.identifier.getResourceDomain();
+    return identifier.getResourceDomain();
   }
 
   public String getName() {
-    return this.identifier.getResourcePath();
+    return identifier.getResourcePath();
   }
 
   @Override
@@ -34,11 +30,11 @@ public class SettingIdentifier {
     if (!(o instanceof SettingIdentifier)) {
       return false;
     }
-    return this.identifier.equals(((SettingIdentifier) o).identifier);
+    return identifier.equals(((SettingIdentifier) o).identifier);
   }
 
   @Override
   public String toString() {
-    return this.getNamespace() + ":" + this.getName();
+    return getNamespace() + ":" + getName();
   }
 }
