@@ -101,16 +101,11 @@ public enum Theme {
   }
 
   private static IBlockSet getPrimaryBlockSet(ITheme parent, ITheme child) {
-    return child.getPrimary() == null
-        ? parent.getPrimary()
-        : new BlockSet(parent.getPrimary(), child.getPrimary());
+    return new BlockSet(parent.getPrimary(), child.getPrimary());
   }
 
   private static IBlockSet getSecondaryBlockSet(ITheme parent, ITheme child) {
-    IBlockSet parentBackup = parent.getSecondary() == null ? parent.getPrimary() : parent.getSecondary();
-    return child.getSecondary() == null
-        ? parentBackup
-        : new BlockSet(parentBackup, child.getSecondary());
+    return new BlockSet(parent.getSecondary(), child.getSecondary());
   }
 
   public static Theme get(String name) throws Exception {
