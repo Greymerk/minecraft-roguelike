@@ -1,9 +1,8 @@
 package greymerk.roguelike.theme;
 
-import com.google.gson.JsonObject;
-
-import java.util.Arrays;
 import java.util.Random;
+
+import static java.util.Optional.ofNullable;
 
 public enum Theme {
 
@@ -57,34 +56,6 @@ public enum Theme {
     return themeBase;
   }
 
-  public static ITheme create(JsonObject json) throws Exception {
-
-    ITheme base = json.has("base")
-        ? get(json.get("base").getAsString()).getThemeBase()
-        : null;
-
-    BlockSet primary = null;
-    BlockSet secondary = null;
-
-    // primary blocks
-    if (json.has("primary")) {
-      JsonObject data = json.get("primary").getAsJsonObject();
-      primary = new BlockSet(data, base != null ? base.getPrimary() : null);
-    }
-
-    // secondary blocks
-    if (json.has("secondary")) {
-      JsonObject data = json.get("secondary").getAsJsonObject();
-      secondary = new BlockSet(data, base != null ? base.getSecondary() : null);
-    }
-
-    if (base == null) {
-      return new ThemeBase(primary, secondary);
-    }
-
-    return new ThemeBase((ThemeBase) base, primary, secondary);
-  }
-
   public static ITheme create(ITheme parent, ITheme child) {
     if (parent == null && child == null) {
       return null;
@@ -101,24 +72,26 @@ public enum Theme {
   }
 
   private static IBlockSet getPrimaryBlockSet(ITheme parent, ITheme child) {
-    return new BlockSet(parent.getPrimary(), child.getPrimary());
+    return newBlockSet(
+        parent.getPrimary(),
+        child.getPrimary());
   }
 
   private static IBlockSet getSecondaryBlockSet(ITheme parent, ITheme child) {
-    return new BlockSet(parent.getSecondary(), child.getSecondary());
+    return newBlockSet(
+        parent.getSecondary(),
+        child.getSecondary());
   }
 
-  public static Theme get(String name) throws Exception {
-    if (!contains(name.toUpperCase())) {
-      throw new Exception("No such theme: " + name);
-    }
-
-    return valueOf(name.toUpperCase());
-  }
-
-  public static boolean contains(String name) {
-    return Arrays.stream(values())
-        .anyMatch(value -> value.toString().equals(name));
+  private static BlockSet newBlockSet(IBlockSet parent, IBlockSet child) {
+    return new BlockSet(
+        ofNullable(child.getFloor()).orElse(parent.getFloor()),
+        ofNullable(child.getWall()).orElse(parent.getWall()),
+        ofNullable(child.getStair()).orElse(parent.getStair()),
+        ofNullable(child.getPillar()).orElse(parent.getPillar()),
+        ofNullable(child.getDoor()).orElse(parent.getDoor()),
+        ofNullable(child.getLightBlock()).orElse(parent.getLightBlock()),
+        ofNullable(child.getLiquid()).orElse(parent.getLiquid()));
   }
 
   public static Theme randomTheme() {

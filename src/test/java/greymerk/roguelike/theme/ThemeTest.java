@@ -10,6 +10,8 @@ import org.junit.Test;
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.worldgen.blocks.BlockType;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 public class ThemeTest {
 
   @Before
@@ -35,7 +37,7 @@ public class ThemeTest {
     secondary.add("walls", walls);
     walls.addProperty("name", "minecraft:stone");
 
-    ITheme t = Theme.create(json);
+    ITheme t = ThemeParser.parse(json);
     assert (t.getPrimary().getFloor().equals(BlockType.get(BlockType.DIRT)));
 
   }
@@ -50,7 +52,7 @@ public class ThemeTest {
     primary.add("floor", floor);
     floor.addProperty("name", "minecraft:dirt");
 
-    ITheme t = Theme.create(json);
+    ITheme t = ThemeParser.parse(json);
     assert (t.getPrimary().getFloor().equals(BlockType.get(BlockType.DIRT)));
   }
 
@@ -64,22 +66,20 @@ public class ThemeTest {
     secondary.add("floor", floor);
     floor.addProperty("name", "minecraft:dirt");
 
-    ITheme t = Theme.create(json);
+    ITheme t = ThemeParser.parse(json);
     assert (t.getSecondary().getFloor().equals(BlockType.get(BlockType.DIRT)));
   }
 
   @Test
   public void merge() {
+    IBlockSet blockSet = new BlockSet(BlockType.get(BlockType.DIRT), null, null);
 
-    IBlockSet bs = new BlockSet(BlockType.get(BlockType.DIRT), null, null);
+    ITheme base = new ThemeBase(blockSet, null);
+    ITheme other = new ThemeBase(null, blockSet);
 
-    ITheme base = new ThemeBase(bs, null);
-    ITheme other = new ThemeBase(null, bs);
-
-    @SuppressWarnings("unused")
-    ITheme merge = Theme.create(null, null);
-    merge = Theme.create(base, null);
-    merge = Theme.create(null, other);
-    merge = Theme.create(base, other);
+    assertThat(Theme.create(null, null)).isNull();
+    assertThat(Theme.create(base, null)).isNotNull();
+    assertThat(Theme.create(null, other)).isNotNull();
+    assertThat(Theme.create(base, other)).isNotNull();
   }
 }

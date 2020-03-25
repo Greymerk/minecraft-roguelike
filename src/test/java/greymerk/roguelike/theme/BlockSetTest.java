@@ -8,6 +8,8 @@ import net.minecraft.init.Bootstrap;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Optional;
+
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.worldgen.MetaBlock;
 
@@ -28,7 +30,7 @@ public class BlockSetTest {
 
     floor.addProperty("name", "minecraft:dirt");
 
-    BlockSet test = new BlockSet(json, null);
+    BlockSet test = BlockSetParser.parseBlockSet(json, Optional.empty());
 
     assert (test.getFloor().equals(new MetaBlock(Blocks.DIRT)));
   }

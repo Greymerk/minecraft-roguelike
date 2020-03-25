@@ -14,7 +14,7 @@ import greymerk.roguelike.dungeon.base.DungeonFactory;
 import greymerk.roguelike.dungeon.base.SecretFactory;
 import greymerk.roguelike.dungeon.segment.SegmentGenerator;
 import greymerk.roguelike.theme.ITheme;
-import greymerk.roguelike.theme.Theme;
+import greymerk.roguelike.theme.ThemeParser;
 import greymerk.roguelike.treasure.loot.LootRuleManager;
 import greymerk.roguelike.treasure.loot.LootTableRule;
 import greymerk.roguelike.worldgen.filter.Filter;
@@ -165,7 +165,7 @@ public class DungeonSettingsParser {
         for (int i : lvls) {
           if (dungeonSettings.getLevels().containsKey(i)) {
             LevelSettings settings = dungeonSettings.getLevels().get(i);
-            ITheme theme = Theme.create(entry);
+            ITheme theme = ThemeParser.parse(entry);
             settings.setTheme(theme);
           }
         }
