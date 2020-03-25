@@ -1,5 +1,7 @@
 package greymerk.roguelike.theme;
 
+import java.util.Optional;
+
 public class ThemeBase implements ITheme {
 
   protected IBlockSet primary;
@@ -11,8 +13,8 @@ public class ThemeBase implements ITheme {
   }
 
   public ThemeBase(ThemeBase base, IBlockSet primary, IBlockSet secondary) {
-    this.primary = primary == null ? base.primary : primary;
-    this.secondary = secondary == null ? base.secondary : secondary;
+    this.primary = Optional.ofNullable(primary).orElse(base.getPrimary());
+    this.secondary = Optional.ofNullable(secondary).orElse(base.getSecondary());
   }
 
   public ThemeBase() {
@@ -20,12 +22,12 @@ public class ThemeBase implements ITheme {
 
   @Override
   public IBlockSet getPrimary() {
-    return this.primary != null ? primary : new BlockSet();
+    return Optional.ofNullable(primary).orElse(new BlockSet());
   }
 
   @Override
   public IBlockSet getSecondary() {
-    return this.secondary != null ? secondary : primary;
+    return Optional.ofNullable(secondary).orElse(getPrimary());
   }
 
 }
