@@ -101,7 +101,7 @@ public class Dungeon implements IDungeon {
       }
     }
 
-    settings.parseCustomSettings(files);
+    settings.put(files);
   }
 
   public static boolean canSpawnInChunk(int chunkX, int chunkZ, IWorldEditor editor) {
@@ -189,7 +189,7 @@ public class Dungeon implements IDungeon {
       Coord start = getPosition();
       IntStream.range(0, dungeonSettings.getNumLevels())
           .mapToObj(dungeonSettings::getLevelSettings)
-          .map(levelSettings -> new DungeonLevel(editor, random, levelSettings, new Coord(start)))
+          .map(levelSettings -> new DungeonLevel(levelSettings))
           .forEach(levels::add);
 
       Arrays.stream(DungeonStage.values())

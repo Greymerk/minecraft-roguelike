@@ -23,7 +23,7 @@ import greymerk.roguelike.dungeon.settings.builtin.SettingsMountainTheme;
 import greymerk.roguelike.dungeon.settings.builtin.SettingsSwampTheme;
 
 import static com.google.common.base.Predicates.not;
-import static greymerk.roguelike.dungeon.settings.DungeonSettingsParser.parseFile;
+import static greymerk.roguelike.dungeon.settings.DungeonSettingsParser.parseJson;
 import static java.util.Arrays.stream;
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
@@ -58,15 +58,27 @@ public class SettingsContainer implements ISettingsContainer {
     put(dungeonSettings);
   }
 
-  public void parseCustomSettings(Map<String, String> files) throws Exception {
-    for (String name : files.keySet()) {
+  public void put(Map<String, String> dungeonSettingsJsonByFileName) throws Exception {
+    for (String fileName : dungeonSettingsJsonByFileName.keySet()) {
       try {
-        DungeonSettings dungeonSettings = parseFile(files.get(name));
-        put(dungeonSettings);
+        String dungeonSettingsJson = dungeonSettingsJsonByFileName.get(fileName);
+        put(dungeonSettingsJson);
       } catch (Exception e) {
-        throw new Exception("Error in: " + name + " : " + e.getMessage());
+        throw new Exception("Error in: " + fileName + " : " + e.getMessage(), e);
       }
     }
+  }
+
+  public void put(String dungeonSettingsJson) throws Exception {
+    put(parseJson(dungeonSettingsJson));
+  }
+
+  public void put(DungeonSettings... dungeonSettings) {
+    stream(dungeonSettings).forEach(this::put);
+  }
+
+  public void put(List<DungeonSettings> dungeonSettings) {
+    dungeonSettings.forEach(this::put);
   }
 
   private void put(DungeonSettings dungeonSettings) {
@@ -77,14 +89,6 @@ public class SettingsContainer implements ISettingsContainer {
     }
 
     settingsByNamespace.get(namespace).put(dungeonSettings.getName(), dungeonSettings);
-  }
-
-  public void put(DungeonSettings... dungeonSettings) {
-    stream(dungeonSettings).forEach(this::put);
-  }
-
-  public void put(List<DungeonSettings> dungeonSettings) {
-    dungeonSettings.forEach(this::put);
   }
 
   public Collection<DungeonSettings> getByNamespace(String namespace) {

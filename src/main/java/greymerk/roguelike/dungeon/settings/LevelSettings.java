@@ -116,16 +116,19 @@ public class LevelSettings {
   }
 
   private ITheme selectTheme(LevelSettings parent, LevelSettings child, Set<SettingsType> overrides) {
-    Optional<ITheme> parentTheme = ofNullable(parent.getTheme());
-    Optional<ITheme> childTheme = ofNullable(child.getTheme());
+    Optional<ITheme> parentTheme = ofNullable(parent.theme);
+    Optional<ITheme> childTheme = ofNullable(child.theme);
     if (overrides.contains(THEMES) && childTheme.isPresent()) {
       return Theme.create(childTheme.get());
     } else if (parentTheme.isPresent() && childTheme.isPresent()) {
-      return Theme.create(parentTheme.get());
-    } else if (parentTheme.isPresent()) {
       return Theme.create(parentTheme.get(), childTheme.get());
+    } else if (childTheme.isPresent()) {
+      return Theme.create(childTheme.get());
+    } else if (parentTheme.isPresent()) {
+      return Theme.create(parentTheme.get());
+    } else {
+      return null;
     }
-    return null;
   }
 
   private void init(LevelSettings toCopy) {
@@ -205,6 +208,8 @@ public class LevelSettings {
   }
 
   public ITheme getTheme() {
+    // return theme;
+    // todo: not rely on this class to provide default as it's an inverted dependency
     return theme != null ? theme : Theme.STONE.getThemeBase();
   }
 

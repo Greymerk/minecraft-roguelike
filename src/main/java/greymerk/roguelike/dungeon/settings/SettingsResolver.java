@@ -1,9 +1,11 @@
 package greymerk.roguelike.dungeon.settings;
 
+import net.minecraft.client.Minecraft;
+
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.Random;
-import java.util.function.BinaryOperator;
 import java.util.function.Predicate;
 
 import greymerk.roguelike.config.RogueConfig;
@@ -43,27 +45,28 @@ public class SettingsResolver {
         DungeonSettings setting = new DungeonSettings(settingsContainer.get(id));
         DungeonSettings byName = processInheritance(setting);
         if (byName != null) {
+          // todo: Remove SettingsBlank. This is data and should be treated like a constant instance
+          // todo: also consider eliminating usage of the merge constructor here.
+          // todo: also consider eliminating usage of the copy constructor here.
           return new DungeonSettings(new SettingsBlank(), byName);
         }
       }
       return null;
     } catch (Exception e) {
-      throw new RuntimeException("Malformed Setting ID String: " + name);
+      Minecraft.getMinecraft().player.sendChatMessage(Arrays.toString(e.getStackTrace()));
+      throw new RuntimeException(e.getMessage());
+//      throw new RuntimeException("Malformed Setting ID String: " + name);
     }
-  }
-
-  public ISettings getDefaultSettings() {
-    return new DungeonSettings(settingsContainer.get(new SettingIdentifier(SettingsContainer.BUILTIN_NAMESPACE, "base")));
   }
 
   public DungeonSettings processInheritance(
       DungeonSettings dungeonSettings
   ) {
-    return dungeonSettings.getInherits().stream()
+    DungeonSettings inflatedMeta = dungeonSettings.getInherits().stream()
         .peek(this::throwIfNotFound)
         .map(settingsContainer::get)
-        .map(DungeonSettings::new)
-        .reduce(dungeonSettings, inherit());
+        .reduce(new SettingsBlank(), this::inherit);
+    return inherit(dungeonSettings, inflatedMeta);
   }
 
   private void throwIfNotFound(SettingIdentifier settingIdentifier) {
@@ -72,13 +75,11 @@ public class SettingsResolver {
     }
   }
 
-  private BinaryOperator<DungeonSettings> inherit() {
-    return (DungeonSettings acc, DungeonSettings element) -> {
-      DungeonSettings inherited = element.getInherits().isEmpty()
-          ? element
-          : processInheritance(element);
-      return new DungeonSettings(inherited, acc);
-    };
+  private DungeonSettings inherit(DungeonSettings child, DungeonSettings parent) {
+    DungeonSettings inflatedParent = parent.getInherits().isEmpty()
+        ? parent
+        : processInheritance(parent);
+    return new DungeonSettings(inflatedParent, child);
   }
 
   private DungeonSettings getBuiltin(IWorldEditor editor, Coord coord) {
@@ -122,10 +123,6 @@ public class SettingsResolver {
 
   private Predicate<DungeonSettings> isValid(IWorldEditor editor, Coord pos) {
     return setting -> setting.isValid(editor, pos);
-  }
-
-  private DungeonSettings inherit(DungeonSettings ds0, DungeonSettings ds1) {
-    return new DungeonSettings(ds0, processInheritance(ds1));
   }
 
   public String toString(String namespace) {

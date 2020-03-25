@@ -13,7 +13,7 @@ public class DungeonLevel implements IDungeonLevel {
   private LevelSettings settings;
   private ILevelGenerator generator;
 
-  public DungeonLevel(IWorldEditor editor, Random rand, LevelSettings settings, Coord origin) {
+  public DungeonLevel(LevelSettings settings) {
     this.settings = settings;
   }
 

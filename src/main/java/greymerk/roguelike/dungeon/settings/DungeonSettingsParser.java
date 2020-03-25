@@ -22,7 +22,7 @@ import greymerk.roguelike.worldgen.spawners.SpawnerSettings;
 
 public class DungeonSettingsParser {
 
-  public static DungeonSettings parseFile(String content) throws Exception {
+  public static DungeonSettings parseJson(String content) throws Exception {
     try {
       return parseDungeonSettings((JsonObject) new JsonParser().parse(content));
     } catch (JsonSyntaxException e) {

@@ -2,6 +2,7 @@ package greymerk.roguelike.theme;
 
 import com.google.gson.JsonObject;
 
+import java.util.Arrays;
 import java.util.Random;
 
 public enum Theme {
@@ -90,40 +91,32 @@ public enum Theme {
     return new ThemeBase(primary, secondary);
   }
 
-  public static ITheme create(ITheme base, ITheme other) {
-    if (base == null && other == null) {
+  public static ITheme create(ITheme parent, ITheme child) {
+    if (parent == null && child == null) {
       return null;
     }
-
-    if (other == null) {
-      return create(base);
+    if (child == null) {
+      return create(parent);
     }
-
-    if (base == null) {
-      return create(other);
+    if (parent == null) {
+      return create(child);
     }
+    return new ThemeBase(
+        getPrimaryBlockSet(parent, child),
+        getSecondaryBlockSet(parent, child));
+  }
 
-    BlockSet primary = other.getPrimary() != null
-        ? new BlockSet(
-        base.getPrimary() != null
-            ? new BlockSet(base.getPrimary())
-            : null,
-        other.getPrimary()
-    )
-        : base.getPrimary() != null
-            ? new BlockSet(base.getPrimary())
-            : null;
-    BlockSet secondary = other.getSecondary() != null
-        ? new BlockSet(
-        base.getPrimary() != null
-            ? new BlockSet(base.getPrimary())
-            : null,
-        other.getSecondary()
-    )
-        : base.getSecondary() != null
-            ? new BlockSet(base.getSecondary())
-            : null;
-    return new ThemeBase(primary, secondary);
+  private static IBlockSet getPrimaryBlockSet(ITheme parent, ITheme child) {
+    return child.getPrimary() == null
+        ? parent.getPrimary()
+        : new BlockSet(parent.getPrimary(), child.getPrimary());
+  }
+
+  private static IBlockSet getSecondaryBlockSet(ITheme parent, ITheme child) {
+    IBlockSet parentBackup = parent.getSecondary() == null ? parent.getPrimary() : parent.getSecondary();
+    return child.getSecondary() == null
+        ? parentBackup
+        : new BlockSet(parentBackup, child.getSecondary());
   }
 
   public static Theme get(String name) throws Exception {
@@ -135,12 +128,8 @@ public enum Theme {
   }
 
   public static boolean contains(String name) {
-    for (Theme value : values()) {
-      if (value.toString().equals(name)) {
-        return true;
-      }
-    }
-    return false;
+    return Arrays.stream(values())
+        .anyMatch(value -> value.toString().equals(name));
   }
 
   public static Theme randomTheme() {
