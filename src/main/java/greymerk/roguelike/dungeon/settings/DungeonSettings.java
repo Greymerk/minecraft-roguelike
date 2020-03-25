@@ -47,6 +47,7 @@ public class DungeonSettings implements ISettings {
   }
 
   public DungeonSettings(DungeonSettings parent, DungeonSettings child) {
+    // todo: can this just become merge(parent) or inheritFrom(parent) ?
     getOverrides().addAll(ofNullable(child.getOverrides()).orElse(newHashSet()));
 
     setLootRules(new LootRuleManager());

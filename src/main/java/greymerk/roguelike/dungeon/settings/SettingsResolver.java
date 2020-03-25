@@ -75,10 +75,7 @@ public class SettingsResolver {
   }
 
   private DungeonSettings inherit(DungeonSettings child, DungeonSettings parent) {
-    DungeonSettings inflatedParent = parent.getInherits().isEmpty()
-        ? parent
-        : processInheritance(parent);
-    return new DungeonSettings(inflatedParent, child);
+    return new DungeonSettings(processInheritance(parent), child);
   }
 
   private DungeonSettings getBuiltin(IWorldEditor editor, Coord coord) {
