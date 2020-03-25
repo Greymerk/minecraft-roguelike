@@ -62,11 +62,10 @@ public class SettingsResolver {
   public DungeonSettings processInheritance(
       DungeonSettings dungeonSettings
   ) {
-    DungeonSettings inflatedMeta = dungeonSettings.getInherits().stream()
+    return dungeonSettings.getInherits().stream()
         .peek(this::throwIfNotFound)
         .map(settingsContainer::get)
-        .reduce(new SettingsBlank(), this::inherit);
-    return inherit(dungeonSettings, inflatedMeta);
+        .reduce(dungeonSettings, this::inherit);
   }
 
   private void throwIfNotFound(SettingIdentifier settingIdentifier) {
