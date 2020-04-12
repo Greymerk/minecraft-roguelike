@@ -27,6 +27,7 @@ public class EntityJoinWorld {
 		for(Object buff : effects){
 			if(((PotionEffect) buff).getPotionID() == 4){
 				int level = ((PotionEffect) buff).getAmplifier();
+				if(level<=0)return;
 				Loot.addEquipment(event.world, level, event.entity);
 				return;
 			}
