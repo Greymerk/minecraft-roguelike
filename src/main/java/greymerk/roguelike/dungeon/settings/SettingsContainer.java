@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -108,7 +109,8 @@ public class SettingsContainer implements ISettingsContainer{
 		
 		for(String namespace : settingsByNamespace.keySet()){
 			if(!namespace.equals(SettingsContainer.BUILTIN_NAMESPACE)) continue;
-			settings.addAll(settingsByNamespace.get(namespace).values());
+			settings.addAll(settingsByNamespace.get(namespace).values().stream()
+											   .filter(s -> !s.getInherits().isEmpty()).collect(Collectors.toList()));
 		}
 		
 		return settings;
@@ -120,7 +122,8 @@ public class SettingsContainer implements ISettingsContainer{
 		
 		for(String namespace : settingsByNamespace.keySet()){
 			if(namespace.equals(SettingsContainer.BUILTIN_NAMESPACE)) continue;
-			settings.addAll(settingsByNamespace.get(namespace).values());
+			settings.addAll(settingsByNamespace.get(namespace).values().stream()
+											   .filter(s -> !s.getInherits().isEmpty()).collect(Collectors.toList()));
 		}
 		
 		return settings;

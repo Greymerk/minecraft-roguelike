@@ -114,6 +114,8 @@ public class SettingsResolver {
 				settingsRandomizer.add(new WeightedChoice<DungeonSettings>(setting, setting.criteria.weight));
 			}
 		}
+
+		if(settingsRandomizer.isEmpty()) return null;
 		
 		DungeonSettings chosen = settingsRandomizer.get(rand);
 		
