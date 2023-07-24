@@ -1,0 +1,40 @@
+{
+	"schemaVersion": 1,
+	"id": "roguelike",
+	"version": "${version}",
+	"name": "Roguelike Dungeons",
+	"description": "dunjuns!",
+	"authors": [
+		"Greymerk"
+	],
+	"contact": {
+		"homepage": "https://greymerk.com",
+		"sources": "https://github.com/greymerk"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/modid/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.greymerk.roguelike.Roguelike"
+		],
+		"client": [
+		]
+	},
+	"mixins": [
+		"roguelike.mixins.json",
+		{
+			"config": "modid.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.14.21",
+		"minecraft": "~1.20.1",
+		"java": ">=17",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}

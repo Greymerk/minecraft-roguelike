@@ -1,29 +1,40 @@
-*.class
+# gradle
 
-/.gradle/
-/.metadata/
-/.settings/
-/assets/
-/bin/
-/run/
-/build/
-/config/
-/crash-reports/
-/logs/
-/mods/
-/debug/
-/resourcepacks/
-/saves/
-/.classpath
-/.project
-/options.txt
-/screenshots
-/*.txt
-/*.log
-/server.properties
-/world
-/usernamecache.json
-/usercache.json
-/asm
-/eclipse/
+.gradle/
+build/
+out/
+classes/
+
+# eclipse
+
 *.launch
+
+# idea
+
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# vscode
+
+.settings/
+.vscode/
+bin/
+.classpath
+.project
+
+# macos
+
+*.DS_Store
+
+# fabric
+
+run/
+
+# java
+
+hs_err_*.log
+replay_*.log
+*.hprof
+*.jfr
