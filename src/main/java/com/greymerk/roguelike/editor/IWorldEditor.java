@@ -10,23 +10,29 @@ public interface IWorldEditor {
 	
 	public boolean set(Coord pos, MetaBlock metaBlock);
 	
-	MetaBlock getBlock(Coord pos);
+	public MetaBlock getBlock(Coord pos);
 
-	boolean isAir(Coord pos);
+	public boolean isAir(Coord pos);
 	
 	//TileEntity getTileEntity(Coord pos);
 	
-	long getSeed();
+	public long getSeed();
+	
+	public Random getRandom(Coord pos);
 		
-	void fillDown(Random rand, Coord pos, IBlockFactory pillar);
+	public void fillDown(Random rand, Coord pos, IBlockFactory pillar);
 	
 	public Coord findSurface(Coord pos);
+	
+	public boolean isChunkLoaded(Coord pos);
 	
 	public boolean isGround(Coord pos);
 	//boolean validGroundBlock(Coord pos);
 
-	void spiralStairStep(Random rand, Coord pos, IStair stair, IBlockFactory pillar);
+	public void spiralStairStep(Random rand, Coord pos, IStair stair, IBlockFactory pillar);
 
+	public boolean isOverworld();
+	
 	//int getStat(Block block);
 
 	//TreasureManager getTreasure();

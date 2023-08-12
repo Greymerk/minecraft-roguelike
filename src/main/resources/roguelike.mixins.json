@@ -3,7 +3,8 @@
 	"package": "com.greymerk.roguelike.mixin",
 	"compatibilityLevel": "JAVA_17",
 	"mixins": [
-		"ChunkFeatureMixin"
+		"ChunkFeatureMixin",
+		"TickChunkMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

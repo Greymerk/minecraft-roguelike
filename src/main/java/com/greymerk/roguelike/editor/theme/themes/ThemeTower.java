@@ -7,9 +7,11 @@ import com.greymerk.roguelike.editor.blocks.stair.StairType;
 import com.greymerk.roguelike.editor.factories.BlockJumble;
 import com.greymerk.roguelike.editor.factories.BlockWeightedRandom;
 import com.greymerk.roguelike.editor.theme.BlockSet;
+import com.greymerk.roguelike.editor.theme.ITheme;
+import com.greymerk.roguelike.editor.theme.Theme;
 import com.greymerk.roguelike.editor.theme.ThemeBase;
 
-public class ThemeTower extends ThemeBase{
+public class ThemeTower extends ThemeBase implements ITheme {
 
 	public ThemeTower(){
 	
@@ -29,6 +31,9 @@ public class ThemeTower extends ThemeBase{
 		IBlockFactory pillar = BlockType.get(BlockType.ANDESITE_POLISHED);
 		this.primary = new BlockSet(walls, stair, pillar);
 		this.secondary = this.primary;
-
+	}
+	
+	public String getName() {
+		return Theme.TOWER.name();
 	}
 }

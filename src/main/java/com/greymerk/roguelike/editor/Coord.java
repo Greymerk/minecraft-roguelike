@@ -2,6 +2,9 @@ package com.greymerk.roguelike.editor;
 
 import java.util.Objects;
 
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
+import net.minecraft.nbt.NbtInt;
 import net.minecraft.util.math.BlockPos;
 
 public class Coord {
@@ -15,10 +18,16 @@ public class Coord {
 		this.z = z;
 	}
 	
-	public Coord(Coord toClone){
-		this.x = toClone.x;
-		this.y = toClone.y;
-		this.z = toClone.z;
+	public Coord(Coord other) {
+		this.x = other.getX();
+		this.y = other.getY();
+		this.z = other.getZ();
+	}
+	
+	public Coord(NbtCompound tag){
+		this.x = tag.getInt("x");
+		this.y = tag.getInt("y");
+		this.z = tag.getInt("z");
 	}
 	
 	public Coord(BlockPos bp){
@@ -68,6 +77,17 @@ public class Coord {
 	public Coord add(Cardinal dir){
 		add(dir, 1);
 		return this;
+	}
+	
+	public Coord mul(Coord other) {
+		return new Coord(x * other.x, y * other.y, z * other.z);
+	}
+	
+	public Coord unit() {
+		return new Coord(
+			x == 0 ? 0 : x / Math.abs(x),
+			y == 0 ? 0 : y / Math.abs(y),
+			z == 0 ? 0 : z / Math.abs(z));
 	}
 
 	public double distance(Coord other){
@@ -156,5 +176,13 @@ public class Coord {
 	
 	public BlockPos getBlockPos(){
 		return new BlockPos(this.x, this.y, this.z);
+	}
+
+	public NbtElement getNbt() {
+		NbtCompound nbt = new NbtCompound();
+		nbt.put("x", NbtInt.of(x));
+		nbt.put("y", NbtInt.of(y));
+		nbt.put("z", NbtInt.of(z));
+		return nbt;
 	}
 }

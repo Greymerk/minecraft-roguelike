@@ -9,7 +9,7 @@ import com.greymerk.roguelike.editor.theme.Theme;
 
 public enum Tower {
 
-	ROGUE, ENIKO, ETHO, PYRAMID, JUNGLE, WITCH, HOUSE, BUNKER, RUIN, HOLE, TREE, BUMBO;
+	ROGUE;
 	
 	public static ITower get(Tower type){
 		
@@ -63,6 +63,4 @@ public enum Tower {
 	public static Tower getRandom(Random rand) {
 		return Tower.values()[rand.nextInt(Tower.values().length)];
 	}
-	
-
 }

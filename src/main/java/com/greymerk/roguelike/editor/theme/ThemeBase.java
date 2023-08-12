@@ -27,4 +27,7 @@ public class ThemeBase implements ITheme {
 		return this.secondary != null ? secondary : primary;
 	}
 	
+	public String getName() {
+		return Theme.TOWER.name();
+	}
 }

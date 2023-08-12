@@ -1,0 +1,175 @@
+package com.greymerk.roguelike.dungeon;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+
+import com.greymerk.roguelike.dungeon.cell.Cell;
+import com.greymerk.roguelike.dungeon.cell.CellManager;
+import com.greymerk.roguelike.dungeon.cell.CellState;
+import com.greymerk.roguelike.dungeon.room.Corridor;
+import com.greymerk.roguelike.dungeon.room.IRoom;
+import com.greymerk.roguelike.dungeon.room.Stairway;
+import com.greymerk.roguelike.editor.Cardinal;
+import com.greymerk.roguelike.editor.Coord;
+import com.greymerk.roguelike.editor.IWorldEditor;
+import com.greymerk.roguelike.editor.shapes.Line;
+import com.greymerk.roguelike.editor.shapes.MultiShape;
+import com.greymerk.roguelike.editor.theme.ITheme;
+
+public class Floor {
+
+	private Coord origin;
+	private List<IRoom> rooms;
+	private CellManager cells;
+	private ITheme theme;
+	
+	public Floor(ITheme theme, Coord origin) {
+		this.rooms = new ArrayList<IRoom>();
+		this.cells = new CellManager();
+		this.theme = theme;
+		this.origin = origin;
+	}
+	
+	public boolean addRandomBranch(Random rand, int range) {
+		Coord toAdd = new Coord(0,0,0);
+
+		int min = 2;
+		int max = range;
+		
+		Cardinal randomDir = Cardinal.directions[rand.nextInt(4)];
+		toAdd.add(randomDir, rand.nextInt(min, max));
+		toAdd.add(Cardinal.orthogonal(randomDir)[rand.nextInt(2)], rand.nextInt(min, max));
+		
+		Cell current = cells.get(toAdd);
+		if(current.getState() == CellState.OBSTRUCTED) return false;
+		if(current.getState() == CellState.CORRIDOR) return false;
+		
+		Cell nearest = cells.getNearestPotential(toAdd);
+		//System.out.println("toAdd: " + toAdd.toString() + " nearest: " + nearest.getFloorPos().toString());
+		
+		MultiShape lines = new MultiShape();
+		
+		Coord corner = rand.nextBoolean() 
+				? new Coord(nearest.getFloorPos().getX(), 0, toAdd.getZ())
+				: new Coord(toAdd.getX(), 0, nearest.getFloorPos().getZ());
+		
+		Coord start = new Coord(toAdd);
+		Coord end = new Coord(corner);
+		lines.addShape(new Line(start, end));
+		
+		start = new Coord(nearest.getFloorPos());
+		end = new Coord(corner);
+		lines.addShape(new Line(start, end));
+		
+		for(Coord fp : lines) {
+			CellState state = cells.get(fp).getState();
+			if(state == CellState.OBSTRUCTED) return false;
+		}
+		
+		for(Coord fp : lines) {
+			Coord wp = new Coord(fp);
+			wp = wp.mul(new Coord(Cell.SIZE, 0, Cell.SIZE));
+			wp.add(origin);
+			this.addRoom(new Corridor(theme, fp, wp));
+		}
+		
+		return true;
+	}
+	
+	public void addStair(Random rand) {
+		
+		List<Cell> potentials = cells.getCells(CellState.POTENTIAL);
+		if(potentials.isEmpty()) {
+			System.out.println("no potentials: " + this.origin.toString());
+			return;
+		}
+		
+		Collections.shuffle(potentials, rand);
+		
+		Cell c = findValidStair(potentials);
+		Cardinal stairDir = this.findStairDir(c);
+		
+		Stairway stairs = new Stairway(theme, c.getFloorPos(), c.getWorldPos(origin), stairDir);
+		this.addRoom(stairs);
+		
+	}
+	
+	public Cardinal findStairDir(Cell cell) {
+		for(Cardinal dir : Cardinal.directions) {
+			Coord p = cell.getFloorPos();
+			p.add(dir);
+			if(this.cells.get(p).getState() == CellState.OBSTRUCTED
+				|| this.cells.get(p).getState() == CellState.CORRIDOR) {
+				return Cardinal.reverse(dir);
+			}
+		}
+		return Cardinal.EAST;
+	}
+	
+	public Cell findValidStair(List<Cell> potentials) {
+		for(Cell c : potentials) {
+			int count = 0;
+			for(Cardinal dir : Cardinal.directions) {
+				Coord p = c.getFloorPos();
+				p.add(dir);
+				if(this.cells.get(p).getState() == CellState.OBSTRUCTED
+					|| this.cells.get(p).getState() == CellState.CORRIDOR) {
+					count++;
+				}
+			}
+			if(count == 1) {
+				return c;
+			}
+		}
+		return potentials.get(0);
+	}
+	
+	public void addRoom(IRoom room) {
+		this.rooms.add(room);
+		List<Cell> roomCells = room.getCells();
+		this.cells.addCells(roomCells, room.getFloorPos());
+	}
+	
+	public void generate(IWorldEditor editor) {
+		for(IRoom room : this.rooms) {
+			room.generate(editor);
+		}
+	}
+	
+	public List<IRoom> getRooms(){
+		return this.rooms;
+	}
+	
+	public List<Cell> getCells(){
+		return this.cells.getCells();
+	}
+	
+	public List<Cell> getCells(CellState type){
+		return this.cells.getCells(type);
+	}
+	
+	public ITheme getTheme() {
+		return this.theme;
+	}
+	
+	public List<Cell> getOffsetCells(){
+		List<Cell> cells = new ArrayList<Cell>();
+		for(IRoom room : this.rooms) {
+			for(Cell c : room.getCells()) {
+				Coord cpos = c.getFloorPos();
+				if(cpos.getY() == -1) {
+					Coord fp = new Coord(room.getFloorPos());
+					fp.add(new Coord(cpos.getX(), 0, cpos.getZ()));
+					cells.add(new Cell(fp, c.getState()));
+				}
+			}
+		}
+		return cells;
+	}
+	
+	public void addCells(List<Cell> toAdd) {
+		this.cells.addCells(toAdd);
+	}
+}

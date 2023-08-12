@@ -2,6 +2,7 @@ package com.greymerk.roguelike.editor;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Random;
 
 import com.greymerk.roguelike.editor.blocks.BlockType;
@@ -12,11 +13,16 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.registry.tag.BlockTags;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.world.World;
+import net.minecraft.world.WorldAccess;
+import net.minecraft.world.chunk.ChunkStatus;
 
 public class WorldEditor implements IWorldEditor{
 
-	StructureWorldAccess world;
+	WorldAccess world;
 	private Map<Block, Integer> stats;
 	//private TreasureManager chests;
 	
@@ -24,6 +30,11 @@ public class WorldEditor implements IWorldEditor{
 		this.world = world;
 		stats = new HashMap<Block, Integer>();
 		//this.chests = new TreasureManager();
+	}
+
+	public WorldEditor(World world) {
+		this.world = world;
+		stats = new HashMap<Block, Integer>();
 	}
 
 	@Override
@@ -75,9 +86,20 @@ public class WorldEditor implements IWorldEditor{
 
 	@Override
 	public long getSeed() {
-		return world.getSeed();
+		MinecraftServer server = this.world.getServer();
+		ServerWorld sw = server.getOverworld();
+		return sw.getSeed();
+	}
+	
+	@Override
+	public Random getRandom(Coord pos) {
+		return new Random(Objects.hash(getSeed(), pos.hashCode()));
 	}
 
+	public boolean isChunkLoaded(Coord pos) {
+		return world.getChunk(pos.getBlockPos()).getStatus() == ChunkStatus.FULL;
+	}
+	
 	@Override
 	public void fillDown(Random rand, Coord origin, IBlockFactory blocks) {
 		Coord cursor = new Coord(origin);
@@ -146,5 +168,8 @@ public class WorldEditor implements IWorldEditor{
 		stair.setOrientation(Cardinal.reverse(dir), true).set(this, cursor);
 	}
 	
+	public boolean isOverworld() {
+		return this.world.getDimension().hasSkyLight();
+	}
 	
 }

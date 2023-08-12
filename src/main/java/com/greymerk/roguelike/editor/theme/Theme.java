@@ -2,14 +2,12 @@ package com.greymerk.roguelike.editor.theme;
 
 import java.util.Random;
 
+import com.greymerk.roguelike.editor.theme.themes.ThemeStone;
 import com.greymerk.roguelike.editor.theme.themes.ThemeTower;
 
 public enum Theme {
 
-	OAK, SPRUCE, CRYPT, MOSSY, MUDDY, NETHER, SANDSTONE, QUARTZ, BLING, CHECKER,
-	RAINBOW, SNOW, JUNGLE, BRICK, DARKOAK, ICE, ENIKO, ENIKO2, ENIQUARTZ, ENIICE, TOWER,
-	ETHO, CAVE, SEWER, ENDER, MINESHAFT, ETHOTOWER, PYRAMID, DARKHALL, TEMPLE, SANDSTONERED,
-	HOUSE, GREY, PURPUR, HELL, TERRACOTTA, STONE, BUMBO;
+	TOWER, STONE;
 	
 	public static ITheme getTheme(Theme type){
 		
@@ -17,6 +15,7 @@ public enum Theme {
 		
 		switch(type){
 		case TOWER: theme = new ThemeTower(); break;
+		case STONE: theme = new ThemeStone(); break;
 		default: return new ThemeTower();
 		}
 		
@@ -65,17 +64,14 @@ public enum Theme {
 		return new ThemeBase(primary, secondary);
 	}
 	
-	public static Theme get(String name) throws Exception{
-		if(!contains(name.toUpperCase())){
-			throw new Exception("No such theme: " + name);
-		}
-		
-		return valueOf(name.toUpperCase());
+	public static ITheme get(String name){
+		Theme type = Theme.valueOf(name.toUpperCase());
+		return getTheme(type);
 	}
 	
 	public static boolean contains(String name){
 		for(Theme value : values()){
-			if(value.toString().equals(name)) return true;
+			if(value.name().equals(name)) return true;
 		}
 		return false;
 	}
