@@ -10,7 +10,6 @@ import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
-import com.greymerk.roguelike.editor.blocks.BlockType;
 import com.greymerk.roguelike.editor.blocks.stair.IStair;
 import com.greymerk.roguelike.editor.boundingbox.IBounded;
 import com.greymerk.roguelike.editor.shapes.RectHollow;
@@ -66,8 +65,6 @@ public class Corridor extends AbstractRoom implements IRoom{
 			}
 			
 			this.clearDoors(editor, rand, theme, new Coord(worldPos));
-			
-			//BlockType.get(BlockType.GLOWSTONE).set(editor, worldPos);
 			
 			start = new Coord(worldPos);
 			start.add(Cardinal.DOWN);

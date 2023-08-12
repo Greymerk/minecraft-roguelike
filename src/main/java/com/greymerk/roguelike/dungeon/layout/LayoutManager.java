@@ -35,17 +35,23 @@ public class LayoutManager {
 				floor.addCells(potentials);
 			}
 			
-			for(int i = 0; i < lvl; ++i) {
+			for(int i = 0; i < lvl * 3; ++i) {
 				floor.addRandomBranch(rand, 3 + lvl/2);
 			}
 			
-			for(int i = 0; i < lvl / 4; ++i) {
+			if(lvl < this.floors.size() - 1) {
+				for(int i = 0; i < lvl / 4; ++i) {
+					floor.addStair(rand);
+				}
 				floor.addStair(rand);
 			}
-			floor.addStair(rand);
 			
 			lvl++;
 			previous = floor;
+		}
+		
+		for(Floor floor : this.floors) {
+			floor.convertCorridors();
 		}
 	}
 	

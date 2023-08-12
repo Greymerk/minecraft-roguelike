@@ -47,7 +47,6 @@ public class Floor {
 		if(current.getState() == CellState.CORRIDOR) return false;
 		
 		Cell nearest = cells.getNearestPotential(toAdd);
-		//System.out.println("toAdd: " + toAdd.toString() + " nearest: " + nearest.getFloorPos().toString());
 		
 		MultiShape lines = new MultiShape();
 		
@@ -69,13 +68,29 @@ public class Floor {
 		}
 		
 		for(Coord fp : lines) {
-			Coord wp = new Coord(fp);
-			wp = wp.mul(new Coord(Cell.SIZE, 0, Cell.SIZE));
-			wp.add(origin);
-			this.addRoom(new Corridor(theme, fp, wp));
+			this.addCorridorCell(fp);
 		}
 		
 		return true;
+	}
+	
+	public void addCorridorCell(Coord fp) {
+		if(cells.get(fp).getState() == CellState.OBSTRUCTED) return;
+		
+		this.cells.addCell(new Cell((fp), CellState.CORRIDOR));
+		for(Cardinal dir : Cardinal.directions) {
+			this.cells.addCell(new Cell(new Coord(fp).add(dir), CellState.POTENTIAL));
+		}
+	}
+	
+	public void convertCorridors() {
+		List<Cell> corridors = this.cells.getCells(CellState.CORRIDOR);
+		for(Cell c : corridors) {
+			Coord fp = c.getFloorPos();
+			Coord wp = c.getWorldPos(this.origin);
+			IRoom toAdd = new Corridor(this.theme, fp, wp);
+			this.addRoom(toAdd);
+		}
 	}
 	
 	public void addStair(Random rand) {
