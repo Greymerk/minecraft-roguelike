@@ -11,20 +11,9 @@ import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.blocks.BlockType;
 import com.greymerk.roguelike.editor.blocks.stair.IStair;
-import com.greymerk.roguelike.editor.boundingbox.IBounded;
 import com.greymerk.roguelike.editor.shapes.RectSolid;
-import com.greymerk.roguelike.editor.theme.ITheme;
 
 public class Stairway extends AbstractRoom implements IRoom {
-	
-	public Stairway(ITheme theme, Coord floorPos, Coord worldPos, Cardinal dir) {
-		super(theme, floorPos, worldPos);
-		this.direction = dir;
-	}
-	
-	public Stairway(ITheme theme, IBounded box, Coord pos, Cardinal dir) {
-		super(theme, box, pos, dir);
-	}
 	
 	@Override
 	public void generate(IWorldEditor editor) {

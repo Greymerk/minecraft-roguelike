@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Random;
 
 import com.greymerk.roguelike.dungeon.layout.LayoutManager;
-import com.greymerk.roguelike.dungeon.room.EntranceRoom;
 import com.greymerk.roguelike.dungeon.room.IRoom;
 import com.greymerk.roguelike.dungeon.room.Room;
 import com.greymerk.roguelike.dungeon.tower.RogueTower;
@@ -64,10 +63,10 @@ public class Dungeon implements Iterable<IRoom>{
 		Coord firstFloor = new Coord(this.origin.getX(), entranceY, this.origin.getZ());
 
 		LayoutManager layout = new LayoutManager(firstFloor);
-		IRoom entrance = new EntranceRoom(Theme.getTheme(Theme.STONE), new Coord(0, 0, 0), firstFloor);
+		IRoom entrance = Room.getInstance(Room.ENTRANCE, Theme.getTheme(Theme.STONE), new Coord(0, 0, 0), firstFloor);
 		entrance.generate(editor);
 		entrance.setGenerated(true);
-		layout.addRoom(entrance, 0);
+		layout.addRoom(entrance, new Coord(0,0,0), firstFloor, 0);
 		layout.generate(editor);
 		this.rooms = layout.getRooms();
 		

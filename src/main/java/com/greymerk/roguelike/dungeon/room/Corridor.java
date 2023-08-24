@@ -11,22 +11,11 @@ import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.blocks.stair.IStair;
-import com.greymerk.roguelike.editor.boundingbox.IBounded;
 import com.greymerk.roguelike.editor.shapes.RectHollow;
 import com.greymerk.roguelike.editor.shapes.RectSolid;
-import com.greymerk.roguelike.editor.theme.ITheme;
 
 public class Corridor extends AbstractRoom implements IRoom{
 
-
-
-	public Corridor(ITheme theme, IBounded box, Coord pos) {
-		super(theme, box, pos);
-	}
-
-	public Corridor(ITheme theme, Coord fp, Coord wp) {
-		super(theme, fp, wp);
-	}
 
 	@Override
 	public void generate(IWorldEditor editor) {

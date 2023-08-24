@@ -22,21 +22,12 @@ public abstract class AbstractRoom implements IRoom{
 	protected Coord floorPos;
 	protected Coord worldPos;
 	protected ITheme theme;
-	protected IBounded box;
 	protected Cardinal direction;
 	protected boolean generated;
 	
-	public AbstractRoom(ITheme theme, Coord floorPos, Coord worldPos) {
-		this(theme, floorPos, worldPos, Cardinal.DOWN);
-	}
-	
-	public AbstractRoom(ITheme theme, Coord floorPos, Coord worldPos, Cardinal dir) {
-		this.floorPos = floorPos;
-		this.worldPos = worldPos;
-		this.theme = theme;
-		this.box = createBox(3);
+	public AbstractRoom() {
+		this.direction = Cardinal.DOWN;
 		this.generated = false;
-		this.direction = dir;
 	}
 	
 	public AbstractRoom(ITheme theme, IBounded box, Coord worldPos) {
@@ -45,7 +36,6 @@ public abstract class AbstractRoom implements IRoom{
 	
 	public AbstractRoom(ITheme theme, IBounded box, Coord worldPos, Cardinal dir) {
 		this.theme = theme;
-		this.box = box;
 		this.worldPos = worldPos;
 		this.generated = false;
 		this.direction = dir;
@@ -53,7 +43,6 @@ public abstract class AbstractRoom implements IRoom{
 	
 	public AbstractRoom(NbtCompound tag) {
 		this.theme = Theme.get(tag.getString("theme"));
-		this.box = new BoundingBox(tag.getCompound("box")); 
 		this.worldPos = new Coord(tag.getCompound("pos"));
 		this.generated = tag.getBoolean("generated");
 		this.direction = Cardinal.directions[tag.getInt("dir")];
@@ -63,32 +52,23 @@ public abstract class AbstractRoom implements IRoom{
 	public NbtCompound getNbt() {
 		ITheme theme = this.getTheme();
 		Coord pos = this.getWorldPos();
-		IBounded box = this.getBoundingBox();
 		
 		NbtCompound nbt = new NbtCompound();
 		nbt.put("type", NbtString.of(getName()));
 		nbt.put("theme", NbtString.of(theme.getName()));
 		nbt.put("pos", pos.getNbt());
-		nbt.put("box", box.getNbt());
 		nbt.putBoolean("generated", this.generated);
 		nbt.putInt("dir", Arrays.asList(Cardinal.directions).indexOf(this.direction));
 		return nbt;
 	}
 	
-	public IBounded createBox(int size) {
-		Coord start = new Coord(worldPos);
-		start.add(Cardinal.DOWN);
-		start.add(Cardinal.NORTH, size);
-		start.add(Cardinal.WEST, size);
-		Coord end = new Coord(worldPos);
-		end.add(Cardinal.UP, 10);
-		end.add(Cardinal.SOUTH, size);
-		end.add(Cardinal.EAST, size);
-		return new BoundingBox(start, end);
-	}
-	
 	public int getSize() {
 		return 3;
+	}
+	
+	@Override
+	public void setFloorPos(Coord floorPos) {
+		this.floorPos = floorPos;
 	}
 	
 	@Override
@@ -97,26 +77,51 @@ public abstract class AbstractRoom implements IRoom{
 	}
 	
 	@Override
+	public void setWorldPos(Coord worldPos) {
+		this.worldPos = worldPos;
+	}
+	
+	@Override
 	public Coord getWorldPos() {
 		return new Coord(this.worldPos);
 	}
 
 	@Override
+	public void setTheme(ITheme theme) {
+		this.theme = theme;
+	}
+	
+	@Override
 	public ITheme getTheme() {
 		return this.theme;
 	}
-
+	
 	@Override
 	public IBounded getBoundingBox() {
-		return this.box;
+		Coord start = new Coord(worldPos);
+		start.add(Cardinal.DOWN);
+		start.add(Cardinal.NORTH, this.getSize());
+		start.add(Cardinal.WEST, this.getSize());
+		Coord end = new Coord(worldPos);
+		end.add(Cardinal.UP, 10);
+		end.add(Cardinal.SOUTH, this.getSize());
+		end.add(Cardinal.EAST, this.getSize());
+		return new BoundingBox(start, end);
 	}
 	
+	@Override
 	public void setGenerated(boolean generated) {
 		this.generated = generated;
 	}
 	
+	@Override
 	public boolean isGenerated() {
 		return this.generated;
+	}
+	
+	@Override
+	public void setDirection(Cardinal dir) {
+		this.direction = dir;
 	}
 	
 	public void clearDoors(IWorldEditor editor, Random rand, ITheme theme, Coord origin) {

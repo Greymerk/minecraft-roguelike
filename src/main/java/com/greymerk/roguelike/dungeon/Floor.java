@@ -8,9 +8,8 @@ import java.util.Random;
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellManager;
 import com.greymerk.roguelike.dungeon.cell.CellState;
-import com.greymerk.roguelike.dungeon.room.Corridor;
 import com.greymerk.roguelike.dungeon.room.IRoom;
-import com.greymerk.roguelike.dungeon.room.Stairway;
+import com.greymerk.roguelike.dungeon.room.Room;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
@@ -88,7 +87,7 @@ public class Floor {
 		for(Cell c : corridors) {
 			Coord fp = c.getFloorPos();
 			Coord wp = c.getWorldPos(this.origin);
-			IRoom toAdd = new Corridor(this.theme, fp, wp);
+			IRoom toAdd = Room.getInstance(Room.CORRIDOR, this.theme, fp, wp);
 			this.addRoom(toAdd);
 		}
 	}
@@ -106,7 +105,7 @@ public class Floor {
 		Cell c = findValidStair(potentials);
 		Cardinal stairDir = this.findStairDir(c);
 		
-		Stairway stairs = new Stairway(theme, c.getFloorPos(), c.getWorldPos(origin), stairDir);
+		IRoom stairs = Room.getInstance(Room.STAIRWAY, this.theme, c.getFloorPos(), c.getWorldPos(origin), stairDir);
 		this.addRoom(stairs);
 		
 	}
@@ -143,8 +142,6 @@ public class Floor {
 	
 	public void addRoom(IRoom room) {
 		this.rooms.add(room);
-		List<Cell> roomCells = room.getCells();
-		this.cells.addCells(roomCells, room.getFloorPos());
 	}
 	
 	public void generate(IWorldEditor editor) {
@@ -163,6 +160,10 @@ public class Floor {
 	
 	public List<Cell> getCells(CellState type){
 		return this.cells.getCells(type);
+	}
+
+	public CellState getCellState(Coord floorPos) {
+		return cells.get(floorPos).getState();
 	}
 	
 	public ITheme getTheme() {
@@ -184,7 +185,32 @@ public class Floor {
 		return cells;
 	}
 	
+	public void addCell(Cell toAdd) {
+		this.cells.addCell(toAdd);
+	}
+	
 	public void addCells(List<Cell> toAdd) {
 		this.cells.addCells(toAdd);
+	}
+	
+	/*
+	public boolean doesRoomFit(IRoom room) {
+		Coord fp = room.getFloorPos();
+		List<Cell> cells = room.getCells();
+		for(Cell c : cells) {
+			if(c.getState() == CellState.OBSTRUCTED) {
+				Coord p = c.getFloorPos().add(fp);
+				if(this.cells.get(p).getState() == CellState.OBSTRUCTED) {
+					return false;
+				}
+			}
+		}
+		
+		return true;
+	}
+	*/
+	
+	public Coord getOrigin() {
+		return new Coord(this.origin);
 	}
 }

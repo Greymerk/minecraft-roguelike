@@ -27,6 +27,12 @@ public class Cell {
 		return new Coord(this.floorPos);
 	}
 	
+	public int getLevelOffset() {
+		// the floors are counted from zero, but down is negative in position
+		// for now i'm just reversing the position value to get the level offset
+		return this.floorPos.getY() * -1;
+	}
+	
 	public Coord getWorldPos(Coord origin) {
 		Coord wp = new Coord(this.floorPos);
 		wp = wp.mul(new Coord(Cell.SIZE, 1, Cell.SIZE));

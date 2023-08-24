@@ -13,7 +13,7 @@ import net.minecraft.nbt.NbtCompound;
 
 public enum Room {
 
-	CORRIDOR, ENTRANCE, STAIRWAY;
+	CORRIDOR, ENTRANCE, STAIRWAY, CROSS;
 	
 	public static IRoom createFromNBT(NbtCompound tag) {
 		Room type = get(tag.get("type").asString());
@@ -21,13 +21,7 @@ public enum Room {
 		IBounded box = new BoundingBox(tag.getCompound("box"));
 		Coord pos = new Coord(tag.getCompound("pos"));
 		Cardinal dir = Arrays.asList(Cardinal.directions).get(tag.getInt("dir"));
-		
-		switch(type) {
-		case CORRIDOR: return new Corridor(theme, box, pos);
-		case ENTRANCE: return new EntranceRoom(theme, box, pos);
-		case STAIRWAY: return new Stairway(theme, box, pos, dir);
-		default: return new Corridor(theme, box, pos);
-		}
+		return getInstance(type, theme, box, pos, dir);
 	}
 	
 	public static Room get(String name) {
@@ -42,5 +36,43 @@ public enum Room {
 			if(type.toString().equals(name)) return true;
 		}
 		return false;
+	}
+	
+	public static IRoom getInstance(Room type, ITheme theme) {
+		IRoom room = fromType(type);
+		room.setTheme(theme);
+		return room;
+	}
+	
+	public static IRoom getInstance(Room type, ITheme theme, Coord floorPos, Coord worldPos) {
+		IRoom room = fromType(type);
+		room.setTheme(theme);
+		room.setFloorPos(floorPos);
+		room.setWorldPos(worldPos);
+		return room;
+	}
+	
+	public static IRoom getInstance(Room type, ITheme theme, Coord floorPos, Coord worldPos, Cardinal dir) {
+		IRoom room = getInstance(type, theme, floorPos, worldPos);
+		room.setDirection(dir);
+		return room;
+	}
+	
+	public static IRoom getInstance(Room type, ITheme theme, IBounded box, Coord pos, Cardinal dir) {
+		IRoom room = fromType(type);
+		room.setTheme(theme);
+		room.setWorldPos(pos);
+		room.setDirection(dir);
+		return room;
+	}
+	
+	public static IRoom fromType(Room type) {
+		switch(type) {
+		case CORRIDOR: return new Corridor();
+		case ENTRANCE: return new EntranceRoom();
+		case STAIRWAY: return new Stairway();
+		case CROSS: return new CrossRoom();
+		default: return new Corridor();
+		}
 	}
 }

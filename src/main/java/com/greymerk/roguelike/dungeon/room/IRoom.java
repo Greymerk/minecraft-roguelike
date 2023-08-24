@@ -3,6 +3,7 @@ package com.greymerk.roguelike.dungeon.room;
 import java.util.List;
 
 import com.greymerk.roguelike.dungeon.cell.Cell;
+import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.boundingbox.IBounded;
@@ -22,15 +23,27 @@ public interface IRoom {
 	
 	public NbtCompound getNbt();
 	
+	public void setFloorPos(Coord floorPos);
+	
 	public Coord getFloorPos();
 	
+	public void setWorldPos(Coord worldPos);
+	
 	public Coord getWorldPos();
+	
+	public void setTheme(ITheme theme);
 	
 	public ITheme getTheme();
 	
 	public IBounded getBoundingBox();
 	
+	public void setDirection(Cardinal dir);
+	
 	public String getName();
+
+	
+
+	
 	
 	
 }

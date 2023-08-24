@@ -10,20 +10,11 @@ import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.blocks.stair.IStair;
-import com.greymerk.roguelike.editor.boundingbox.IBounded;
 import com.greymerk.roguelike.editor.shapes.RectHollow;
 import com.greymerk.roguelike.editor.shapes.RectSolid;
-import com.greymerk.roguelike.editor.theme.ITheme;
 
 public class EntranceRoom  extends AbstractRoom implements IRoom{
 
-	public EntranceRoom(ITheme theme, IBounded box, Coord pos) {
-		super(theme, box, pos);
-	}
-
-	public EntranceRoom(ITheme theme, Coord fp, Coord wp) {
-		super(theme, fp, wp);
-	}
 
 	@Override
 	public void generate(IWorldEditor editor) {		
@@ -114,6 +105,11 @@ public class EntranceRoom  extends AbstractRoom implements IRoom{
 		}
 		
 		return cells;
+	}
+	
+	@Override
+	public int getSize() {
+		return 5;
 	}
 	
 	@Override
