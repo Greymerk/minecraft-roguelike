@@ -10,6 +10,7 @@ import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
+import com.greymerk.roguelike.editor.blocks.BlockType;
 import com.greymerk.roguelike.editor.blocks.stair.IStair;
 import com.greymerk.roguelike.editor.shapes.RectHollow;
 import com.greymerk.roguelike.editor.shapes.RectSolid;
@@ -53,16 +54,26 @@ public class Corridor extends AbstractRoom implements IRoom{
 				stairs.setOrientation(Cardinal.reverse(orth), true).set(editor, pos);
 			}
 			
-			this.clearDoors(editor, rand, theme, new Coord(worldPos));
-			
-			start = new Coord(worldPos);
-			start.add(Cardinal.DOWN);
-			end = new Coord(start);
-			start.add(Cardinal.NORTH, 3);
-			start.add(Cardinal.WEST, 3);
-			end.add(Cardinal.SOUTH, 3);
-			end.add(Cardinal.EAST, 3);
-			RectSolid.fill(editor, rand, start, end, theme.getPrimary().getFloor());
+		}
+		
+		start = new Coord(worldPos);
+		start.add(Cardinal.DOWN);
+		end = new Coord(start);
+		start.add(Cardinal.NORTH, 3);
+		start.add(Cardinal.WEST, 3);
+		end.add(Cardinal.SOUTH, 3);
+		end.add(Cardinal.EAST, 3);
+		RectSolid.fill(editor, rand, start, end, theme.getPrimary().getFloor());
+		
+		for(Cardinal dir : Cardinal.directions) {
+			if(this.entrances.contains(dir)) {
+				this.door(editor, rand, theme, worldPos, dir);
+			} else {
+				Coord pos = new Coord(worldPos);
+				pos.add(Cardinal.UP);
+				pos.add(dir, 2);
+				editor.set(pos, BlockType.get(BlockType.GLOWSTONE));	
+			}
 		}
 	}
 

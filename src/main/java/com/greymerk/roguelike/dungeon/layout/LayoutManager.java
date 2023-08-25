@@ -10,6 +10,7 @@ import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellState;
 import com.greymerk.roguelike.dungeon.room.IRoom;
 import com.greymerk.roguelike.dungeon.room.Room;
+import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.boundingbox.IBounded;
@@ -39,7 +40,7 @@ public class LayoutManager {
 			}
 			
 			for(int i = 0; i < lvl * 3; ++i) {
-				floor.addRandomBranch(rand, 3 + lvl/2);
+				floor.addRandomBranch(rand, 3, 5 + lvl/2);
 			}
 			
 			if(lvl < this.floors.size() - 1) {
@@ -54,6 +55,12 @@ public class LayoutManager {
 		}
 		
 		for(int i = 0; i < this.floors.size(); ++i) {
+			Floor floor = this.floors.get(i);
+			floor.addCellWalls();
+		}
+		
+		
+		for(int i = 0; i < this.floors.size(); ++i) {
 			this.addRooms(editor, rand, i);
 		}
 		
@@ -64,8 +71,10 @@ public class LayoutManager {
 	
 	public void addRooms(IWorldEditor editor, Random rand, int level) {
 		Floor floor = this.floors.get(level);
-		IRoom room = Room.getInstance(Room.CROSS, floor.getTheme());
-		this.placeRoom(room, rand, level);
+		for(int i = 0; i < 10; ++i) {
+			IRoom room = Room.getInstance(Room.CROSS, floor.getTheme());
+			this.placeRoom(room, rand, level);	
+		}
 	}
 	
 	public void addRoom(IRoom toAdd, Coord fp, Coord wp, int level) {
@@ -125,8 +134,18 @@ public class LayoutManager {
 			Coord fp = new Coord(cell.getFloorPos().getX(), 0, cell.getFloorPos().getZ());
 			fp.add(floorPos);
 			CellState state = floor.getCellState(fp);
-			
 			if(state == CellState.OBSTRUCTED) return false;
+			
+			if(!cell.getWalls().isEmpty()) {
+				for(Cardinal dir : cell.getWalls()) {
+					Coord pos = new Coord(fp);
+					pos.add(dir);
+					Cell other = floor.getCell(pos);
+					if(!(other.getState() == CellState.CORRIDOR
+						|| other.getState() == CellState.OBSTRUCTED)) continue;
+					if(!other.getWalls().contains(Cardinal.reverse(dir))) return false;
+				}
+			}
 		}
 		return true;
 		

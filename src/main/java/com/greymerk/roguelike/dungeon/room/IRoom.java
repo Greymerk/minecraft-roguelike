@@ -37,6 +37,8 @@ public interface IRoom {
 	
 	public IBounded getBoundingBox();
 	
+	public void addEntrance(Cardinal dir);
+	
 	public void setDirection(Cardinal dir);
 	
 	public String getName();

@@ -31,11 +31,8 @@ public class Floor {
 		this.origin = origin;
 	}
 	
-	public boolean addRandomBranch(Random rand, int range) {
+	public boolean addRandomBranch(Random rand, int min, int max) {
 		Coord toAdd = new Coord(0,0,0);
-
-		int min = 2;
-		int max = range;
 		
 		Cardinal randomDir = Cardinal.directions[rand.nextInt(4)];
 		toAdd.add(randomDir, rand.nextInt(min, max));
@@ -88,8 +85,18 @@ public class Floor {
 			Coord fp = c.getFloorPos();
 			Coord wp = c.getWorldPos(this.origin);
 			IRoom toAdd = Room.getInstance(Room.CORRIDOR, this.theme, fp, wp);
+			List<Cardinal> walls = c.getWalls();
+			for(Cardinal dir : Cardinal.directions) {
+				if(!walls.contains(dir)) {
+					toAdd.addEntrance(dir);
+				}
+			}
 			this.addRoom(toAdd);
 		}
+	}
+	
+	public Cell getCell(Coord floorPos) {
+		return this.cells.get(floorPos);
 	}
 	
 	public void addStair(Random rand) {
@@ -107,7 +114,14 @@ public class Floor {
 		
 		IRoom stairs = Room.getInstance(Room.STAIRWAY, this.theme, c.getFloorPos(), c.getWorldPos(origin), stairDir);
 		this.addRoom(stairs);
-		
+		for(Cell rc : stairs.getCells()) {
+			if(rc.getFloorPos().getY() != 0) continue;
+			Coord fp = rc.getFloorPos();
+			fp.add(c.getFloorPos());
+			CellState state = rc.getState();
+			Cell toAdd = new Cell(fp, state);
+			this.addCell(toAdd);
+		}
 	}
 	
 	public Cardinal findStairDir(Cell cell) {
@@ -193,22 +207,9 @@ public class Floor {
 		this.cells.addCells(toAdd);
 	}
 	
-	/*
-	public boolean doesRoomFit(IRoom room) {
-		Coord fp = room.getFloorPos();
-		List<Cell> cells = room.getCells();
-		for(Cell c : cells) {
-			if(c.getState() == CellState.OBSTRUCTED) {
-				Coord p = c.getFloorPos().add(fp);
-				if(this.cells.get(p).getState() == CellState.OBSTRUCTED) {
-					return false;
-				}
-			}
-		}
-		
-		return true;
+	public void addCellWalls() {
+		this.cells.addCellWalls();
 	}
-	*/
 	
 	public Coord getOrigin() {
 		return new Coord(this.origin);

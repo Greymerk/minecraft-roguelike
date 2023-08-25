@@ -20,6 +20,7 @@ public class Stairway extends AbstractRoom implements IRoom {
 		Random rand = editor.getRandom(getWorldPos());
 		Coord origin = new Coord(this.worldPos);
 		buildCell(editor, rand, origin, direction);
+		this.door(editor, rand, theme, origin, Cardinal.reverse(direction));
 		this.buildSteps(editor, rand, origin);
 		Coord bottomCell = new Coord(origin).add(direction, 12).add(Cardinal.DOWN, 10);
 		buildCell(editor, rand, bottomCell, Cardinal.reverse(direction));
@@ -113,6 +114,8 @@ public class Stairway extends AbstractRoom implements IRoom {
 				stair.set(editor, rand, p, true, true);
 			}
 		}
+		
+		this.clearDoors(editor, rand, theme, pos);
 	}
 
 	@Override
@@ -126,11 +129,13 @@ public class Stairway extends AbstractRoom implements IRoom {
 		pos.add(direction);
 		cells.add(new Cell(new Coord(pos), CellState.OBSTRUCTED));
 		
+		/*
 		for(Cardinal dir : Cardinal.directions) {
 			if(dir == direction) continue;
 			Coord p = new Coord(origin);
 			cells.add(new Cell(new Coord(p), CellState.POTENTIAL));
 		}
+		*/
 		
 		pos = new Coord(origin);
 		pos.add(Cardinal.DOWN);

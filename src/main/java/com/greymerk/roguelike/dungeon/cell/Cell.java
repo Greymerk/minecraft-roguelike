@@ -1,7 +1,10 @@
 package com.greymerk.roguelike.dungeon.cell;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
+import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 
 public class Cell {
@@ -9,10 +12,12 @@ public class Cell {
 	public static final int SIZE = 6;
 	private CellState state;
 	private Coord floorPos;
+	private List<Cardinal> walls;
 	
 	public Cell(Coord floorPos, CellState state) {
 		this.floorPos = floorPos;
 		this.state = state;
+		this.walls = new ArrayList<Cardinal>();
 	}
 	
 	public CellState getState() {
@@ -38,6 +43,15 @@ public class Cell {
 		wp = wp.mul(new Coord(Cell.SIZE, 1, Cell.SIZE));
 		wp.add(origin);
 		return wp;
+	}
+	
+	public void addWall(Cardinal dir) {
+		if(this.walls.contains(dir)) return;
+		this.walls.add(dir);
+	}
+	
+	public List<Cardinal> getWalls(){
+		return this.walls;
 	}
 	
 	@Override

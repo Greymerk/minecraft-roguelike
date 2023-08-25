@@ -10,6 +10,7 @@ import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
+import com.greymerk.roguelike.editor.blocks.BlockType;
 import com.greymerk.roguelike.editor.blocks.stair.IStair;
 import com.greymerk.roguelike.editor.shapes.RectHollow;
 import com.greymerk.roguelike.editor.shapes.RectSolid;
@@ -109,16 +110,23 @@ public class CrossRoom extends AbstractRoom implements IRoom {
 			}
 		}
 		
-		this.clearDoors(editor, rand, theme, origin);
+		editor.set(origin, BlockType.get(BlockType.SEA_LANTERN));
+		
 	}
 	
 	@Override
 	public List<Cell> getCells() {
 		List<Cell> cells = new ArrayList<Cell>();
-		Coord start = new Coord(-1, 0, -1);
-		Coord end = new Coord(1, 0, 1);
-		for(Coord pos : new RectSolid(start, end).get()) {
-			cells.add(new Cell(pos, CellState.OBSTRUCTED));
+		cells.add(new Cell(new Coord(0,0,0), CellState.OBSTRUCTED));
+		for(Cardinal dir : Cardinal.directions) {
+			Coord pos = new Coord(0,0,0);
+			pos.add(dir);
+			cells.add(new Cell(new Coord(pos), CellState.OBSTRUCTED));
+			pos.add(Cardinal.left(dir));
+			Cell c = new Cell(new Coord(pos), CellState.OBSTRUCTED);
+			c.addWall(dir);
+			c.addWall(Cardinal.left(dir));
+			cells.add(c);
 		}
 		
 		for(Cardinal dir : Cardinal.directions) {

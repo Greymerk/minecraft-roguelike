@@ -1,6 +1,8 @@
 package com.greymerk.roguelike.dungeon.room;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 import com.greymerk.roguelike.editor.Cardinal;
@@ -24,10 +26,12 @@ public abstract class AbstractRoom implements IRoom{
 	protected ITheme theme;
 	protected Cardinal direction;
 	protected boolean generated;
+	protected List<Cardinal> entrances;
 	
 	public AbstractRoom() {
 		this.direction = Cardinal.DOWN;
 		this.generated = false;
+		this.entrances = new ArrayList<Cardinal>();
 	}
 	
 	public AbstractRoom(ITheme theme, IBounded box, Coord worldPos) {
@@ -39,6 +43,7 @@ public abstract class AbstractRoom implements IRoom{
 		this.worldPos = worldPos;
 		this.generated = false;
 		this.direction = dir;
+		this.entrances = new ArrayList<Cardinal>();
 	}
 	
 	public AbstractRoom(NbtCompound tag) {
@@ -46,6 +51,12 @@ public abstract class AbstractRoom implements IRoom{
 		this.worldPos = new Coord(tag.getCompound("pos"));
 		this.generated = tag.getBoolean("generated");
 		this.direction = Cardinal.directions[tag.getInt("dir")];
+		this.entrances = new ArrayList<Cardinal>();
+		int[] ent = tag.getIntArray("entrances");
+		for(int e : ent) {
+			Cardinal dir = Cardinal.directions[e];
+			this.entrances.add(dir);
+		}
 	}
 	
 	@Override
@@ -59,6 +70,13 @@ public abstract class AbstractRoom implements IRoom{
 		nbt.put("pos", pos.getNbt());
 		nbt.putBoolean("generated", this.generated);
 		nbt.putInt("dir", Arrays.asList(Cardinal.directions).indexOf(this.direction));
+		int[] ent;
+		List<Integer> c = new ArrayList<Integer>();
+		for(Cardinal dir : this.entrances) {
+			c.add(Arrays.asList(Cardinal.directions).indexOf(dir));
+		}
+		ent = c.stream().mapToInt(Integer::intValue).toArray();
+		nbt.putIntArray("entrances", ent);
 		return nbt;
 	}
 	
@@ -122,6 +140,11 @@ public abstract class AbstractRoom implements IRoom{
 	@Override
 	public void setDirection(Cardinal dir) {
 		this.direction = dir;
+	}
+	
+	@Override
+	public void addEntrance(Cardinal dir) {
+		this.entrances.add(dir);
 	}
 	
 	public void clearDoors(IWorldEditor editor, Random rand, ITheme theme, Coord origin) {
