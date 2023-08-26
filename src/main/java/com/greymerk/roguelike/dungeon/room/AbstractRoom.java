@@ -149,36 +149,33 @@ public abstract class AbstractRoom implements IRoom{
 	
 	public void clearDoors(IWorldEditor editor, Random rand, ITheme theme, Coord origin) {
 		for(Cardinal dir : Cardinal.directions) {
+			if(!(this.entrances.contains(dir))) continue;
 			door(editor, rand, theme, origin, dir);	
 		}
 	}
 	
 	public void door(IWorldEditor editor, Random rand, ITheme theme, Coord origin, Cardinal dir) {
 		Coord start = new Coord(origin);
-		start.add(dir, 4);
+		start.add(dir, 3);
 		Coord end = new Coord(start);
-		start.add(Cardinal.left(dir), 1);
-		end.add(Cardinal.right(dir), 1);
-		end.add(Cardinal.UP);
-		RectSolid r = new RectSolid(start, end);
-		for(Coord c : r) {
-			if(!editor.isAir(c)) return;
-		}
-		
-		start.add(Cardinal.reverse(dir));
-		start.add(Cardinal.left(dir));
-		end.add(Cardinal.reverse(dir));
-		end.add(Cardinal.right(dir));
-		end.add(Cardinal.UP, 2);
+		start.add(Cardinal.left(dir), 2);
+		end.add(Cardinal.right(dir), 2);
+		end.add(Cardinal.UP, 3);
 		RectSolid.fill(editor, rand, start, end, BlockType.get(BlockType.AIR));
 		
 		for(Cardinal o : Cardinal.orthogonal(dir)) {
 			Coord pos = new Coord(origin);
 			pos.add(dir, 3);
-			pos.add(Cardinal.UP, 3);
+			pos.add(Cardinal.UP, 2);
 			pos.add(o, 2);
 			IStair stair = theme.getPrimary().getStair();
 			stair.setOrientation(Cardinal.reverse(o), true);
+			stair.set(editor, pos);
+			
+			pos.add(Cardinal.UP);
+			theme.getPrimary().getWall().set(editor, rand, pos);
+			
+			pos.add(Cardinal.reverse(o));
 			stair.set(editor, pos);
 		}
 	}

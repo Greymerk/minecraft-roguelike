@@ -104,9 +104,9 @@ public enum Theme {
 		if(y >= 20) return Theme.getTheme(Theme.CRUMBLEDSTONE);
 		if(y >= 10) return Theme.getTheme(Theme.MOSSY);
 		if(y >= 0) return Theme.getTheme(Theme.CRUMBLEDMOSSY);
-		if(y >= -10) return Theme.getTheme(Theme.TILEDSLATE);
-		if(y >= -20) return Theme.getTheme(Theme.NETHER);
-		if(y >= -30) return Theme.getTheme(Theme.REDNETHER);
+		if(y >= -10) return Theme.getTheme(Theme.SLATE);
+		if(y >= -20) return Theme.getTheme(Theme.TILEDSLATE);
+		if(y >= -30) return Theme.getTheme(Theme.NETHER);
 		if(y >= -40) return Theme.getTheme(Theme.WARPED);
 		if(y >= -50) return Theme.getTheme(Theme.BLACK);
 		return Theme.getTheme(Theme.STONE);

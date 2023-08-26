@@ -36,7 +36,7 @@ public class ThemeMossy extends ThemeBase implements ITheme {
 		floor.addBlock(BlockType.get(BlockType.COBBLESTONE), 2);
 		floor.addBlock(BlockType.get(BlockType.GRAVEL), 1);
 		
-		MetaStair stair = new MetaStair(StairType.COBBLE);
+		MetaStair stair = new MetaStair(StairType.MOSSY_STONEBRICK);
 		
 		this.primary = new BlockSet(floor, walls, stair, walls, 
 				new Door(DoorType.IRON)

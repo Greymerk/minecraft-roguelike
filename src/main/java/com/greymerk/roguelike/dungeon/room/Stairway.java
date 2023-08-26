@@ -20,7 +20,6 @@ public class Stairway extends AbstractRoom implements IRoom {
 		Random rand = editor.getRandom(getWorldPos());
 		Coord origin = new Coord(this.worldPos);
 		buildCell(editor, rand, origin, direction);
-		this.door(editor, rand, theme, origin, Cardinal.reverse(direction));
 		this.buildSteps(editor, rand, origin);
 		Coord bottomCell = new Coord(origin).add(direction, 12).add(Cardinal.DOWN, 10);
 		buildCell(editor, rand, bottomCell, Cardinal.reverse(direction));
@@ -95,11 +94,7 @@ public class Stairway extends AbstractRoom implements IRoom {
 			end.add(Cardinal.UP, 3);
 			RectSolid.fill(editor, rand, start, end, theme.getPrimary().getPillar());
 			
-			if(dir != entrance) {
-				this.door(editor, rand, theme, pos, dir);
-			} else {
-				continue;
-			}
+			if(dir == entrance) continue;
 			
 			start = new Coord(end);
 			end.add(Cardinal.right(dir), 3);
@@ -114,8 +109,6 @@ public class Stairway extends AbstractRoom implements IRoom {
 				stair.set(editor, rand, p, true, true);
 			}
 		}
-		
-		this.clearDoors(editor, rand, theme, pos);
 	}
 
 	@Override
@@ -125,23 +118,33 @@ public class Stairway extends AbstractRoom implements IRoom {
 		Coord pos = new Coord(origin);
 		cells.add(new Cell(new Coord(pos), CellState.OBSTRUCTED));
 		pos.add(direction);
-		cells.add(new Cell(new Coord(pos), CellState.OBSTRUCTED));
-		pos.add(direction);
-		cells.add(new Cell(new Coord(pos), CellState.OBSTRUCTED));
-		
-		/*
-		for(Cardinal dir : Cardinal.directions) {
-			if(dir == direction) continue;
-			Coord p = new Coord(origin);
-			cells.add(new Cell(new Coord(p), CellState.POTENTIAL));
+		Cell topMid = new Cell(new Coord(pos), CellState.OBSTRUCTED);
+		for(Cardinal dir : Cardinal.orthogonal(direction)) {
+			topMid.addWall(dir);
 		}
-		*/
-		
+		cells.add(topMid);
+		pos.add(direction);
+		Cell topEnd = new Cell(new Coord(pos), CellState.OBSTRUCTED);
+		for(Cardinal dir : Cardinal.directions) {
+			if(dir == Cardinal.reverse(direction)) continue;
+			topEnd.addWall(dir);
+		}
+		cells.add(topEnd);
+				
 		pos = new Coord(origin);
 		pos.add(Cardinal.DOWN);
-		cells.add(new Cell(new Coord(pos), CellState.OBSTRUCTED));
+		Cell bottomEnd = new Cell(new Coord(pos), CellState.OBSTRUCTED);
+		for(Cardinal dir : Cardinal.directions) {
+			if(dir == direction) continue;
+			bottomEnd.addWall(dir);
+		}
+		cells.add(bottomEnd);
 		pos.add(direction);
-		cells.add(new Cell(new Coord(pos), CellState.OBSTRUCTED));
+		Cell bottomMid = new Cell(new Coord(pos), CellState.OBSTRUCTED);
+		for(Cardinal dir : Cardinal.orthogonal(direction)) {
+			bottomMid.addWall(dir);
+		}
+		cells.add(bottomMid);
 		pos.add(direction);
 		cells.add(new Cell(new Coord(pos), CellState.OBSTRUCTED));
 		

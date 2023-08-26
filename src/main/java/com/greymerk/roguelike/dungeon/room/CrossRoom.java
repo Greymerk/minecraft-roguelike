@@ -10,12 +10,12 @@ import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
-import com.greymerk.roguelike.editor.blocks.Bed;
-import com.greymerk.roguelike.editor.blocks.BlockType;
+import com.greymerk.roguelike.editor.MetaBlock;
 import com.greymerk.roguelike.editor.blocks.stair.IStair;
 import com.greymerk.roguelike.editor.shapes.RectHollow;
 import com.greymerk.roguelike.editor.shapes.RectSolid;
-import com.greymerk.roguelike.util.Color;
+
+import net.minecraft.block.Blocks;
 
 public class CrossRoom extends AbstractRoom implements IRoom {
 
@@ -74,7 +74,9 @@ public class CrossRoom extends AbstractRoom implements IRoom {
 			
 			Coord pos = new Coord(origin);
 			pos.add(dir, 6);
-			this.door(editor, rand, theme, pos, dir);
+			if(this.entrances.contains(dir)) {
+				this.door(editor, rand, theme, pos, dir);
+			}
 			pos.add(Cardinal.left(dir), 6);
 			cornerCell(editor, rand, pos);
 		}
@@ -112,7 +114,10 @@ public class CrossRoom extends AbstractRoom implements IRoom {
 			}
 		}
 		
-		editor.set(origin, BlockType.get(BlockType.SEA_LANTERN));
+		Coord pos = new Coord(origin);
+		pos.add(Cardinal.UP, 3);
+		MetaBlock lamp = new MetaBlock(Blocks.LANTERN);
+		editor.set(pos, lamp);
 		
 	}
 	

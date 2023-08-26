@@ -71,7 +71,7 @@ public class Corridor extends AbstractRoom implements IRoom{
 			} else {
 				Coord pos = new Coord(worldPos);
 				pos.add(Cardinal.UP);
-				pos.add(dir, 2);
+				pos.add(dir, 3);
 				editor.set(pos, BlockType.get(BlockType.GLOWSTONE));	
 			}
 		}

@@ -97,6 +97,10 @@ public class CellManager {
 					|| other.getState() == CellState.POTENTIAL) {
 					c.addWall(dir);
 				}
+				if(other.getState() == CellState.OBSTRUCTED
+					&& other.getWalls().contains(Cardinal.reverse(dir))) {
+					c.addWall(dir);
+				}
 			}
 		}
 	}
