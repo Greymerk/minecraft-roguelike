@@ -12,6 +12,7 @@ import com.greymerk.roguelike.editor.shapes.RectSolid;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerWorld;
@@ -123,6 +124,7 @@ public class WorldEditor implements IWorldEditor{
 		return cursor;
 	}
 	
+	@Override
 	public boolean isSolid(Coord pos) {
 		return this.world.getBlockState(pos.getBlockPos()).isSolidBlock(world, pos.getBlockPos());
 	}
@@ -170,6 +172,11 @@ public class WorldEditor implements IWorldEditor{
 	
 	public boolean isOverworld() {
 		return this.world.getDimension().hasSkyLight();
+	}
+
+	@Override
+	public BlockEntity getBlockEntity(Coord pos) {
+		return world.getBlockEntity(pos.getBlockPos());
 	}
 	
 }

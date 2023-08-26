@@ -10,10 +10,12 @@ import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
+import com.greymerk.roguelike.editor.blocks.Bed;
 import com.greymerk.roguelike.editor.blocks.BlockType;
 import com.greymerk.roguelike.editor.blocks.stair.IStair;
 import com.greymerk.roguelike.editor.shapes.RectHollow;
 import com.greymerk.roguelike.editor.shapes.RectSolid;
+import com.greymerk.roguelike.util.Color;
 
 public class CrossRoom extends AbstractRoom implements IRoom {
 
@@ -76,6 +78,8 @@ public class CrossRoom extends AbstractRoom implements IRoom {
 			pos.add(Cardinal.left(dir), 6);
 			cornerCell(editor, rand, pos);
 		}
+		
+		Bed.generate(editor, Cardinal.EAST, origin, Color.MAGENTA);
 	}
 
 	private void cornerCell(IWorldEditor editor, Random rand, Coord origin) {

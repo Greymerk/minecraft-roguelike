@@ -63,6 +63,18 @@ public enum Cardinal {
 		}
 	}
 
+	public static Direction.Axis axis(Cardinal dir){
+		switch(dir) {
+		case NORTH: return Direction.Axis.Z;
+		case EAST: return Direction.Axis.X;
+		case WEST: return Direction.Axis.X;
+		case SOUTH: return Direction.Axis.Z;
+		case UP: return Direction.Axis.Y;
+		case DOWN: return Direction.Axis.Y;
+		default: return Direction.Axis.Y;
+		}
+	}
+	
 	/*
 	
 	public static EnumOrientation orientation(Cardinal dir){

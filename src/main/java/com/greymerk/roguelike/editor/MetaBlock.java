@@ -4,6 +4,8 @@ import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.state.State;
+import net.minecraft.state.property.Property;
 
 public class MetaBlock extends BlockBase{
 
@@ -45,7 +47,12 @@ public class MetaBlock extends BlockBase{
 	public int getFlag(){
 		return 2;
 	}
-
+	
+	public <T extends Comparable<T>, V extends T> State<?, BlockState> withProperty(Property<T> property, V value) {
+		this.state = this.state.with(property, value);
+		return this.state;
+	}
+	
 	@Override
 	public boolean equals(Object other){
 		if(other == this) return true; 

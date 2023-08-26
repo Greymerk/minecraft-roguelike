@@ -4,6 +4,8 @@ import java.util.Random;
 
 import com.greymerk.roguelike.editor.blocks.stair.IStair;
 
+import net.minecraft.block.entity.BlockEntity;
+
 public interface IWorldEditor {
 	
 	public boolean set(Coord pos, MetaBlock metaBlock, boolean fillAir, boolean replaceSolid);
@@ -14,7 +16,7 @@ public interface IWorldEditor {
 
 	public boolean isAir(Coord pos);
 	
-	//TileEntity getTileEntity(Coord pos);
+	public BlockEntity getBlockEntity(Coord pos);
 	
 	public long getSeed();
 	
@@ -27,11 +29,12 @@ public interface IWorldEditor {
 	public boolean isChunkLoaded(Coord pos);
 	
 	public boolean isGround(Coord pos);
-	//boolean validGroundBlock(Coord pos);
-
+	
 	public void spiralStairStep(Random rand, Coord pos, IStair stair, IBlockFactory pillar);
 
 	public boolean isOverworld();
+
+	boolean isSolid(Coord pos);
 	
 	//int getStat(Block block);
 
