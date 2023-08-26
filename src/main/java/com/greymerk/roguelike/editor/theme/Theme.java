@@ -3,27 +3,29 @@ package com.greymerk.roguelike.editor.theme;
 import java.util.Random;
 
 import com.greymerk.roguelike.editor.theme.themes.ThemeBlack;
-import com.greymerk.roguelike.editor.theme.themes.ThemeChiseledSlate;
 import com.greymerk.roguelike.editor.theme.themes.ThemeCrumbledMossy;
 import com.greymerk.roguelike.editor.theme.themes.ThemeCrumbledStone;
 import com.greymerk.roguelike.editor.theme.themes.ThemeDarkOak;
+import com.greymerk.roguelike.editor.theme.themes.ThemeDefault;
 import com.greymerk.roguelike.editor.theme.themes.ThemeMossy;
 import com.greymerk.roguelike.editor.theme.themes.ThemeNether;
 import com.greymerk.roguelike.editor.theme.themes.ThemeOak;
 import com.greymerk.roguelike.editor.theme.themes.ThemeRedNether;
 import com.greymerk.roguelike.editor.theme.themes.ThemeSlate;
 import com.greymerk.roguelike.editor.theme.themes.ThemeStone;
+import com.greymerk.roguelike.editor.theme.themes.ThemeTiledSlate;
 import com.greymerk.roguelike.editor.theme.themes.ThemeTower;
 import com.greymerk.roguelike.editor.theme.themes.ThemeWarped;
 
 public enum Theme {
 
-	TOWER, STONE, OAK, DARKOAK, CRUMBLEDSTONE, MOSSY, CRUMBLEDMOSSY,
-	SLATE, CHISELEDSLATE, NETHER, REDNETHER, WARPED, BLACK;
+	DEFAULT, TOWER, STONE, OAK, DARKOAK, CRUMBLEDSTONE, MOSSY, CRUMBLEDMOSSY,
+	SLATE, TILEDSLATE, NETHER, REDNETHER, WARPED, BLACK;
 	
 	public static ITheme getTheme(Theme type){
 		
 		switch(type){
+		case DEFAULT: return new ThemeDefault();
 		case TOWER: return new ThemeTower();
 		case OAK: return new ThemeOak();
 		case DARKOAK: return new ThemeDarkOak();
@@ -32,12 +34,12 @@ public enum Theme {
 		case MOSSY: return new ThemeMossy();
 		case CRUMBLEDMOSSY: return new ThemeCrumbledMossy();
 		case SLATE: return new ThemeSlate();
-		case CHISELEDSLATE: return new ThemeChiseledSlate();
+		case TILEDSLATE: return new ThemeTiledSlate();
 		case NETHER: return new ThemeNether();
 		case REDNETHER: return new ThemeRedNether();
 		case WARPED: return new ThemeWarped();
 		case BLACK: return new ThemeBlack();
-		default: return new ThemeTower();
+		default: return new ThemeDefault();
 		}
 	}
 	
@@ -95,14 +97,14 @@ public enum Theme {
 		return false;
 	}
 
-	public static ITheme getFromDepth(Random rand, int y) {
+	public static ITheme getFromDepth(int y) {
 		if(y >= 50) return Theme.getTheme(Theme.OAK);
 		if(y >= 40) return Theme.getTheme(Theme.DARKOAK);
 		if(y >= 30) return Theme.getTheme(Theme.STONE);
 		if(y >= 20) return Theme.getTheme(Theme.CRUMBLEDSTONE);
 		if(y >= 10) return Theme.getTheme(Theme.MOSSY);
 		if(y >= 0) return Theme.getTheme(Theme.CRUMBLEDMOSSY);
-		if(y >= -10) return Theme.getTheme(Theme.CHISELEDSLATE);
+		if(y >= -10) return Theme.getTheme(Theme.TILEDSLATE);
 		if(y >= -20) return Theme.getTheme(Theme.NETHER);
 		if(y >= -30) return Theme.getTheme(Theme.REDNETHER);
 		if(y >= -40) return Theme.getTheme(Theme.WARPED);

@@ -95,8 +95,8 @@ public class LayoutManager {
 	private List<Floor> createFloors() {
 		int depth = -50;
 		List<Floor> floors = new ArrayList<Floor>();
-		ITheme theme = Theme.getTheme(Theme.STONE);
 		for(int y = origin.getY(); y >= depth; y -= 10) {
+			ITheme theme = Theme.getFromDepth(y);
 			floors.add(new Floor(theme, new Coord(this.origin.getX(), y, this.origin.getZ())));
 		}
 		return floors;

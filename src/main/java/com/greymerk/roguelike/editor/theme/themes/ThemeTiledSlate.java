@@ -9,9 +9,9 @@ import com.greymerk.roguelike.editor.theme.ITheme;
 import com.greymerk.roguelike.editor.theme.Theme;
 import com.greymerk.roguelike.editor.theme.ThemeBase;
 
-public class ThemeSlate extends ThemeBase implements ITheme {
+public class ThemeTiledSlate extends ThemeBase implements ITheme {
 
-	public ThemeSlate() {
+	public ThemeTiledSlate() {
 		
 		BlockWeightedRandom floor = new BlockWeightedRandom();
 		floor.addBlock(Deepslate.get(Deepslate.COBBLED), 30);
@@ -37,6 +37,7 @@ public class ThemeSlate extends ThemeBase implements ITheme {
 	
 	@Override
 	public String getName() {
-		return Theme.SLATE.name();
+		return Theme.TILEDSLATE.name();
 	}
+	
 }

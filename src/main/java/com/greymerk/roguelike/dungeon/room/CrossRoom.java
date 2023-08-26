@@ -78,8 +78,6 @@ public class CrossRoom extends AbstractRoom implements IRoom {
 			pos.add(Cardinal.left(dir), 6);
 			cornerCell(editor, rand, pos);
 		}
-		
-		Bed.generate(editor, Cardinal.EAST, origin, Color.MAGENTA);
 	}
 
 	private void cornerCell(IWorldEditor editor, Random rand, Coord origin) {
