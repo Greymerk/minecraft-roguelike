@@ -7,6 +7,9 @@ import java.util.Objects;
 import com.greymerk.roguelike.editor.blocks.BlockType;
 import com.greymerk.roguelike.editor.blocks.stair.IStair;
 import com.greymerk.roguelike.editor.shapes.RectSolid;
+import com.greymerk.roguelike.treasure.ITreasureChest;
+import com.greymerk.roguelike.treasure.loot.rules.LootRuleManager;
+import com.greymerk.roguelike.treasure.loot.rules.RoguelikeLootRules;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -28,17 +31,18 @@ public class WorldEditor implements IWorldEditor{
 
 	WorldAccess world;
 	private Map<Block, Integer> stats;
-	//private TreasureManager chests;
+	private LootRuleManager loot;
 	
 	public WorldEditor(StructureWorldAccess world){
 		this.world = world;
 		stats = new HashMap<Block, Integer>();
-		//this.chests = new TreasureManager();
+		this.loot = RoguelikeLootRules.getLoot();
 	}
 
 	public WorldEditor(World world) {
 		this.world = world;
 		stats = new HashMap<Block, Integer>();
+		this.loot = RoguelikeLootRules.getLoot();
 	}
 
 	@Override
@@ -191,5 +195,10 @@ public class WorldEditor implements IWorldEditor{
 		boolean isShapeSquare = Block.isFaceFullSquare(shape, facing);
 		boolean isCollisionSquare = Block.isFaceFullSquare(collision, facing);
 		return isShapeSquare || isCollisionSquare;
+	}
+
+	@Override
+	public void fillChest(ITreasureChest chest, Random rand) {
+		this.loot.process(rand, chest);
 	}
 }

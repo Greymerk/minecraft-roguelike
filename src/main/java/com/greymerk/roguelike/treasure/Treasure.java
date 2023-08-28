@@ -14,34 +14,34 @@ import net.minecraft.util.math.random.Random;
 
 public enum Treasure {
 
-	ARMOUR, WEAPONS, BLOCKS, ENCHANTING, FOOD, ORE, POTIONS,
+	ALL, ARMOUR, WEAPONS, BLOCKS, ENCHANTING, FOOD, ORE, POTIONS,
 	STARTER, TOOLS, SUPPLIES, SMITH, MUSIC, REWARD, EMPTY, BREWING;
 	
 	private static final List<Treasure> common = new ArrayList<Treasure>(Arrays.asList(TOOLS, ARMOUR, WEAPONS));
 
-	public static ITreasureChest generate(IWorldEditor editor, Random rand, Coord pos, Treasure type, int level, boolean trapped) throws ChestPlacementException{
+	public static void generate(IWorldEditor editor, Random rand, Coord pos, Treasure type, int level, boolean trapped){
+		try {
+			create(editor, rand, pos, type, level, trapped);
+		} catch (ChestPlacementException e) {
+			// do nothing
+		}
+	}
+	
+	public static ITreasureChest create(IWorldEditor editor, Random rand, Coord pos, Treasure type, int level, boolean trapped) throws ChestPlacementException{
 		ITreasureChest chest = new TreasureChest(type);
 		return chest.generate(editor, rand, pos, level, trapped);
+		
 	}
 	
-	public static ITreasureChest generate(IWorldEditor editor, Random rand, Coord pos, int level, boolean trapped) throws ChestPlacementException{
-		Treasure type = getChestType(rand, level);
-		return generate(editor, rand, pos, type, level, trapped);
+	public static ITreasureChest create(IWorldEditor editor, Random rand, Coord pos, Treasure type, int level) throws ChestPlacementException{
+		return create(editor, rand, pos, type, level, false);
 	}
 	
-	public static ITreasureChest generate(IWorldEditor editor, Random rand, Coord pos, Treasure type, int level) throws ChestPlacementException{
-		return generate(editor, rand, pos, type, level, false);
-	}
-	
-	public static List<ITreasureChest> generate(IWorldEditor editor, Random rand, List<Coord> space, Treasure type, int level){
-		return createChests(editor, rand, 1, space, new ArrayList<Treasure>(Arrays.asList(type)), level);
-	}
-	
-	public static List<ITreasureChest> createChests(IWorldEditor editor, Random rand, int numChests, List<Coord> space, int level){
+	public static List<ITreasureChest> createChests(IWorldEditor editor, Random rand, int numChests, List<Coord> space, int level) throws ChestPlacementException{
 		return createChests(editor, rand, numChests, space, level, false);
 	}
 	
-	public static List<ITreasureChest> createChests(IWorldEditor editor, Random rand, int numChests, List<Coord> space, int level, boolean trapped){
+	public static List<ITreasureChest> createChests(IWorldEditor editor, Random rand, int numChests, List<Coord> space, int level, boolean trapped) throws ChestPlacementException{
 		
 		List<ITreasureChest> chests = new ArrayList<ITreasureChest>();
 		
@@ -56,20 +56,14 @@ public enum Treasure {
 			}
 			
 			if (isValidChestSpace(editor, block)) {
-				try {
-					ITreasureChest chest = generate(editor, rand, block, getChestType(rand, level), level);
-					chests.add(chest);
-					count++;
-				} catch(ChestPlacementException cpe){
-					// do nothing
-				}
+				create(editor, rand, block, getChestType(rand, level), level);		
 			}
 		}
 		
 		return chests;
 	}
 	
-	public static List<ITreasureChest> createChests(IWorldEditor editor, Random rand, int numChests, List<Coord> space, List<Treasure> types, int level){
+	public static List<ITreasureChest> createChests(IWorldEditor editor, Random rand, int numChests, List<Coord> space, List<Treasure> types, int level) throws ChestPlacementException{
 		
 		List<ITreasureChest> chests = new ArrayList<ITreasureChest>();
 		
@@ -83,14 +77,10 @@ public enum Treasure {
 				return chests;
 			}
 			
-			if (isValidChestSpace(editor, block)) {
-				try {
-					ITreasureChest chest = generate(editor, rand, block, types.get(rand.nextInt(types.size())), level);
-					chests.add(chest);
-					count++;
-				} catch (ChestPlacementException cpe){
-					// do nothing
-				}
+			if (isValidChestSpace(editor, block)) {		
+				ITreasureChest chest = create(editor, rand, block, types.get(rand.nextInt(types.size())), level);
+				chests.add(chest);
+				count++;
 			}
 		}
 		

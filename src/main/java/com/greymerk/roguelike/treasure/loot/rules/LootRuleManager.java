@@ -1,8 +1,9 @@
-package com.greymerk.roguelike.treasure.loot;
+package com.greymerk.roguelike.treasure.loot.rules;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import com.greymerk.roguelike.treasure.ITreasureChest;
 import com.greymerk.roguelike.treasure.Treasure;
 import com.greymerk.roguelike.treasure.TreasureManager;
 import com.greymerk.roguelike.util.IWeighted;
@@ -40,6 +41,12 @@ public class LootRuleManager {
 	public void process(Random rand, TreasureManager treasure){
 		for(LootRule rule : this.rules){
 			rule.process(rand, treasure);
+		}
+	}
+	
+	public void process(Random rand, ITreasureChest chest) {
+		for(LootRule rule : this.rules) {
+			rule.process(rand, chest);
 		}
 	}
 	

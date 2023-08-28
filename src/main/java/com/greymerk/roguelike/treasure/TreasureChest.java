@@ -43,7 +43,7 @@ public class TreasureChest implements ITreasureChest{
 		this.inventory = new Inventory(rand, chest);
 		this.seed = (long)Objects.hash(pos.hashCode(), editor.getSeed());
 		
-		//editor.addChest(this);
+		editor.fillChest(this, rand);
 		return this;
 	}
 	

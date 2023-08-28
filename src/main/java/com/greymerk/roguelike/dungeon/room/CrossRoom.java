@@ -8,6 +8,7 @@ import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellState;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
+import com.greymerk.roguelike.editor.Difficulty;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.MetaBlock;
@@ -15,6 +16,7 @@ import com.greymerk.roguelike.editor.blocks.spawners.Spawner;
 import com.greymerk.roguelike.editor.blocks.stair.IStair;
 import com.greymerk.roguelike.editor.shapes.RectHollow;
 import com.greymerk.roguelike.editor.shapes.RectSolid;
+import com.greymerk.roguelike.treasure.Treasure;
 
 import net.minecraft.block.Blocks;
 
@@ -80,6 +82,8 @@ public class CrossRoom extends AbstractRoom implements IRoom {
 			}
 			pos.add(Cardinal.left(dir), 6);
 			cornerCell(editor, rand, pos);
+			
+			Treasure.generate(editor, rand, origin, Treasure.WEAPONS, Difficulty.fromY(origin.getY()), false);
 		}
 	}
 

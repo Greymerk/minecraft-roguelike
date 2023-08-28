@@ -1,5 +1,6 @@
-package com.greymerk.roguelike.treasure.loot;
+package com.greymerk.roguelike.treasure.loot.rules;
 
+import com.greymerk.roguelike.treasure.ITreasureChest;
 import com.greymerk.roguelike.treasure.Treasure;
 import com.greymerk.roguelike.treasure.TreasureManager;
 import com.greymerk.roguelike.util.IWeighted;
@@ -23,14 +24,26 @@ public class LootRule {
 		this.amount = amount;
 	}
 	
-	
-	
 	public void process(Random rand, TreasureManager treasure){
 		if(toEach && type != null) treasure.addItemToAll(rand, type, level, item, amount);		
 		if(toEach && type == null) treasure.addItemToAll(rand, level, item, amount);
 		if(!toEach && type != null) treasure.addItem(rand, type, level, item, amount);
 		if(!toEach && type == null) treasure.addItem(rand, level, item, amount);
 	}
+
+	public void process(Random rand, ITreasureChest chest) {
+		if(chest.getLevel() != this.level) return;
+		if(this.type == Treasure.ALL) addItems(rand, chest);
+		if(this.type == chest.getType()) addItems(rand, chest);
+	}
+	
+	public void addItems(Random rand, ITreasureChest chest) {
+		for(int i = 0; i < amount; ++i) {
+			chest.setRandomEmptySlot(item.get(rand));
+		}
+	}
+	
+	
 	
 	@Override
 	public String toString(){

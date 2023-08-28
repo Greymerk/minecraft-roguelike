@@ -1,6 +1,7 @@
 package com.greymerk.roguelike.editor;
 
 import com.greymerk.roguelike.editor.blocks.stair.IStair;
+import com.greymerk.roguelike.treasure.ITreasureChest;
 
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.util.math.random.Random;
@@ -36,6 +37,8 @@ public interface IWorldEditor {
 	public boolean isSolid(Coord pos);
 		
 	public boolean isFaceFullSquare(Coord pos, Cardinal dir);
+	
+	public void fillChest(ITreasureChest chest, Random rand);
 	
 	//int getStat(Block block);
 
