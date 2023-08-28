@@ -14,7 +14,7 @@ public class VineFilter implements IFilter{
 	@Override
 	public void apply(IWorldEditor editor, Random rand, ITheme theme, IBounded box) {
 		for(Coord pos : box.getShape(Shape.RECTSOLID)){
-			if(rand.nextInt(10) == 0) Vine.set(editor, pos);
+			if(rand.nextInt(5) == 0) Vine.set(editor, pos);
 		}
 	}
 }

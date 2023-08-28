@@ -42,6 +42,8 @@ public interface IRoom {
 	public void setDirection(Cardinal dir);
 	
 	public String getName();
+	
+	public void applyFilters(IWorldEditor editor);
 
 	
 

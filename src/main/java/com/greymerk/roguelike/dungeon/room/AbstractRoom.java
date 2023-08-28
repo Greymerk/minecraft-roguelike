@@ -121,7 +121,7 @@ public abstract class AbstractRoom implements IRoom{
 		start.add(Cardinal.NORTH, this.getSize());
 		start.add(Cardinal.WEST, this.getSize());
 		Coord end = new Coord(worldPos);
-		end.add(Cardinal.UP, 10);
+		end.add(Cardinal.UP, 8);
 		end.add(Cardinal.SOUTH, this.getSize());
 		end.add(Cardinal.EAST, this.getSize());
 		return new BoundingBox(start, end);
@@ -178,5 +178,10 @@ public abstract class AbstractRoom implements IRoom{
 			pos.add(Cardinal.reverse(o));
 			stair.set(editor, pos);
 		}
+	}
+	
+	public void applyFilters(IWorldEditor editor) {
+		Random rand = editor.getRandom(this.getWorldPos());
+		this.getTheme().applyFilters(editor, rand, getBoundingBox());
 	}
 }

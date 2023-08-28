@@ -1,6 +1,6 @@
 package com.greymerk.roguelike.editor.blocks;
 
-import net.minecraft.util.math.random.Random;
+import java.util.Arrays;
 
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
@@ -8,7 +8,12 @@ import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.MetaBlock;
 import com.greymerk.roguelike.editor.shapes.RectSolid;
 
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.VineBlock;
+import net.minecraft.state.property.BooleanProperty;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.random.Random;
 
 public class Vine {
 
@@ -19,43 +24,37 @@ public class Vine {
 	}
 	
 	public static void set(IWorldEditor editor, Coord origin){
-		if(!editor.isAir(origin)) return;
-		MetaBlock vine = BlockType.get(BlockType.VINE);
-		if(!canPlace(editor, vine, origin)) return;
-		setSides(editor, vine, origin);
-		vine.set(editor, origin);
+		if(!canPlace(editor, origin)) return;
+		setSides(editor, origin);
 	}
 	
-	public static boolean canPlace(IWorldEditor editor, MetaBlock vine, Coord origin) {
-		for(Cardinal dir : Cardinal.values()) {
+	public static boolean canPlace(IWorldEditor editor, Coord origin) {
+		if(!editor.isAir(origin)) return false;
+		for(Cardinal dir : Cardinal.directions) {
 			Coord pos = new Coord(origin);
 			pos.add(dir);
-			if(editor.isSolid(pos)) return true;
+			if(editor.isFaceFullSquare(pos, Cardinal.reverse(dir))) return true;
 		}
 		return false;
 	}
 	
-	public static MetaBlock setSides(IWorldEditor editor, MetaBlock vine, Coord origin){
+	public static void setSides(IWorldEditor editor, Coord origin){
 		for(Cardinal dir : Cardinal.values()) {
-			if(dir == Cardinal.DOWN) continue;
-			Coord pos = new Coord(origin);
-			pos.add(dir);
-			boolean solid = editor.isSolid(pos);
-			if(!solid) continue;
-			addFace(vine, dir);
+			if(dir == Cardinal.DOWN) return;
+			setFace(editor, origin, Cardinal.reverse(dir));
 		}
-		return vine;
 	}
 	
-	public static MetaBlock addFace(MetaBlock vine, Cardinal dir) {
-		switch(dir) {
-		case NORTH: vine.withProperty(VineBlock.NORTH, true);
-		case SOUTH: vine.withProperty(VineBlock.SOUTH, true);
-		case EAST: vine.withProperty(VineBlock.EAST, true);
-		case WEST: vine.withProperty(VineBlock.WEST, true);
-		case UP: vine.withProperty(VineBlock.UP, true);
-		default:
-		}
-		return vine;
+	public static void setFace(IWorldEditor editor, Coord origin, Cardinal dir) {
+		Coord pos = new Coord(origin);
+		pos.add(dir);
+		if(!editor.isFaceFullSquare(pos, dir)) return;
+		Direction facing = Arrays.asList(Cardinal.directions).contains(dir) 
+				? Cardinal.facing(Cardinal.reverse(dir))
+				: Cardinal.facing(dir);
+		BooleanProperty facingProperty = VineBlock.getFacingProperty(facing);
+		if(facingProperty == null) return;
+		BlockState vine = (BlockState)Blocks.VINE.getDefaultState().with(facingProperty, true);
+		editor.set(origin, new MetaBlock(vine));
 	}
 }

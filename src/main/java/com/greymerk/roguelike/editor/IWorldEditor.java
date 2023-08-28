@@ -33,8 +33,10 @@ public interface IWorldEditor {
 
 	public boolean isOverworld();
 
-	boolean isSolid(Coord pos);
+	public boolean isSolid(Coord pos);
 		
+	public boolean isFaceFullSquare(Coord pos, Cardinal dir);
+	
 	//int getStat(Block block);
 
 	//TreasureManager getTreasure();

@@ -23,7 +23,6 @@ public class TickChunkMixin{
 	
 	@Inject(at = @At("HEAD"), method = "tickChunk(Lnet/minecraft/world/chunk/WorldChunk;I)V")
 	private void tickChunk(WorldChunk chunk, int randomTickSpeed, CallbackInfo info) {
-		//System.out.println("chunktick");
 		MinecraftServer server = chunk.getWorld().getServer();
 		RoguelikeState state = RoguelikeState.getServerState(server);
 		
@@ -34,11 +33,11 @@ public class TickChunkMixin{
 		
 		for(IRoom room : rooms) {
 			room.generate(editor);
+			room.applyFilters(editor);
 			room.setGenerated(true);
 		}
 		
 		state.update();
-		//System.out.println("chunktick end");
 	}
 	
 	private boolean surroundingChunksLoaded(World world, ChunkPos cpos) {

@@ -1,21 +1,18 @@
 package com.greymerk.roguelike.editor.theme;
 
-public class ThemeBase implements ITheme {
+import java.util.List;
+
+import com.greymerk.roguelike.editor.IWorldEditor;
+import com.greymerk.roguelike.editor.boundingbox.IBounded;
+import com.greymerk.roguelike.editor.filter.IFilter;
+
+import net.minecraft.util.math.random.Random;
+
+public abstract class ThemeBase implements ITheme {
 	
 	protected IBlockSet primary;
 	protected IBlockSet secondary;
-	
-	public ThemeBase(IBlockSet primary, IBlockSet secondary){
-		this.primary = primary;
-		this.secondary = secondary;
-	}
-	
-	public ThemeBase(ThemeBase base, IBlockSet primary, IBlockSet secondary){
-		this.primary = primary == null ? base.primary : primary;
-		this.secondary = secondary == null ? base.secondary : secondary;
-	}
-		
-	public ThemeBase(){}
+	protected List<IFilter> filters;
 
 	@Override
 	public IBlockSet getPrimary() {
@@ -27,7 +24,11 @@ public class ThemeBase implements ITheme {
 		return this.secondary != null ? secondary : primary;
 	}
 	
-	public String getName() {
-		return Theme.TOWER.name();
+	@Override
+	public void applyFilters(IWorldEditor editor, Random rand, IBounded box) {
+		if(this.filters == null) return;
+		for(IFilter filter : this.filters) {
+			filter.apply(editor, rand, this, box);
+		}
 	}
 }

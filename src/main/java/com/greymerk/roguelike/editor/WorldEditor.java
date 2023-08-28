@@ -15,8 +15,10 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.CheckedRandom;
 import net.minecraft.util.math.random.Random;
+import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
@@ -178,5 +180,16 @@ public class WorldEditor implements IWorldEditor{
 	@Override
 	public BlockEntity getBlockEntity(Coord pos) {
 		return world.getBlockEntity(pos.getBlockPos());
+	}
+	
+	@Override
+	public boolean isFaceFullSquare(Coord pos, Cardinal dir) {
+		BlockState b = this.world.getBlockState(pos.getBlockPos());
+		Direction facing = Cardinal.facing(dir);
+		VoxelShape shape = b.getSidesShape(world, pos.getBlockPos());
+		VoxelShape collision = b.getCollisionShape(world, pos.getBlockPos());
+		boolean isShapeSquare = Block.isFaceFullSquare(shape, facing);
+		boolean isCollisionSquare = Block.isFaceFullSquare(collision, facing);
+		return isShapeSquare || isCollisionSquare;
 	}
 }

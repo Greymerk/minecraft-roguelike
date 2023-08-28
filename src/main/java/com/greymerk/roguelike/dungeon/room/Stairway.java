@@ -2,7 +2,6 @@ package com.greymerk.roguelike.dungeon.room;
 
 import java.util.ArrayList;
 import java.util.List;
-import net.minecraft.util.math.random.Random;
 
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellState;
@@ -11,7 +10,11 @@ import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.blocks.BlockType;
 import com.greymerk.roguelike.editor.blocks.stair.IStair;
+import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
+import com.greymerk.roguelike.editor.boundingbox.IBounded;
 import com.greymerk.roguelike.editor.shapes.RectSolid;
+
+import net.minecraft.util.math.random.Random;
 
 public class Stairway extends AbstractRoom implements IRoom {
 	
@@ -158,6 +161,21 @@ public class Stairway extends AbstractRoom implements IRoom {
 		return cells;
 	}
 
+	@Override
+	public IBounded getBoundingBox() {
+		Coord origin = new Coord(this.getWorldPos());
+		Coord start = new Coord(origin);
+		start.add(Cardinal.reverse(direction), 3);
+		start.add(Cardinal.UP, 3);
+		start.add(Cardinal.left(direction), 4);
+		
+		Coord end = new Coord(origin);
+		end.add(direction, 13);
+		end.add(Cardinal.DOWN, 10);
+		end.add(Cardinal.right(direction), 4);
+		
+		return new BoundingBox(start, end);
+	}
 	
 
 	@Override

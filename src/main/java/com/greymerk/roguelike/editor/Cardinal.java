@@ -74,20 +74,4 @@ public enum Cardinal {
 		default: return Direction.Axis.Y;
 		}
 	}
-	
-	/*
-	
-	public static EnumOrientation orientation(Cardinal dir){
-		
-		switch(dir){
-		case NORTH: return EnumOrientation.SOUTH;
-		case EAST: return EnumOrientation.WEST;
-		case WEST: return EnumOrientation.EAST;
-		case SOUTH: return EnumOrientation.NORTH;
-		case UP: return EnumOrientation.UP_X;
-		case DOWN: return EnumOrientation.DOWN_X;
-		default: return null;
-		}
-	}
-	*/
 }
