@@ -1,9 +1,7 @@
 package com.greymerk.roguelike.dungeon.layout;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 import com.greymerk.roguelike.dungeon.Floor;
 import com.greymerk.roguelike.dungeon.cell.Cell;
@@ -16,6 +14,9 @@ import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.boundingbox.IBounded;
 import com.greymerk.roguelike.editor.theme.ITheme;
 import com.greymerk.roguelike.editor.theme.Theme;
+import com.greymerk.roguelike.util.math.RandHelper;
+
+import net.minecraft.util.math.random.Random;
 
 public class LayoutManager {
 
@@ -113,7 +114,7 @@ public class LayoutManager {
 	public boolean placeRoom(IRoom room, Random rand, int level) {
 		Floor floor = this.floors.get(level);
 		List<Cell> corridors = floor.getCells(CellState.CORRIDOR);
-		Collections.shuffle(corridors, rand);
+		RandHelper.shuffle(corridors, rand);
 		for(Cell c : corridors) {
 			boolean fit = doesRoomFit(room, c.getFloorPos(), level);
 			if(fit) this.addRoom(room, c.getFloorPos(), c.getWorldPos(floor.getOrigin()), level);

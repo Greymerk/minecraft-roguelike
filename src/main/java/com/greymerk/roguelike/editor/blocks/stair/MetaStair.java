@@ -1,6 +1,6 @@
 package com.greymerk.roguelike.editor.blocks.stair;
 
-import java.util.Random;
+import net.minecraft.util.math.random.Random;
 
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;

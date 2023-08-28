@@ -1,6 +1,6 @@
 package com.greymerk.roguelike.dungeon.tower;
 
-import java.util.Random;
+import net.minecraft.util.math.random.Random;
 
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;

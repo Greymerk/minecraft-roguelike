@@ -1,6 +1,6 @@
 package com.greymerk.roguelike.editor.theme;
 
-import java.util.Random;
+import net.minecraft.util.math.random.Random;
 
 import com.greymerk.roguelike.editor.theme.themes.ThemeBlack;
 import com.greymerk.roguelike.editor.theme.themes.ThemeCrumbledMossy;

@@ -2,7 +2,7 @@ package com.greymerk.roguelike.util;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.minecraft.util.math.random.Random;
 
 public class WeightedRandomizer<T> implements IWeighted<T>{
 

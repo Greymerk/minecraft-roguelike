@@ -1,6 +1,6 @@
 package com.greymerk.roguelike.util;
 
-import java.util.Random;
+import net.minecraft.util.math.random.Random;
 
 import net.minecraft.util.DyeColor;
 

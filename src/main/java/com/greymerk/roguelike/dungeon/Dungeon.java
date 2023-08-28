@@ -3,7 +3,7 @@ package com.greymerk.roguelike.dungeon;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
+import net.minecraft.util.math.random.Random;
 
 import com.greymerk.roguelike.dungeon.layout.LayoutManager;
 import com.greymerk.roguelike.dungeon.room.IRoom;
@@ -55,8 +55,7 @@ public class Dungeon implements Iterable<IRoom>{
 	}
 	
 	public void generate(IWorldEditor editor) {
-		long seed = editor.getSeed() * this.origin.getBlockPos().asLong();
-		Random rand = new Random(seed);
+		Random rand = editor.getRandom(origin);
 		
 		Coord surface = editor.findSurface(this.origin);
 		int entranceY = (surface.getY() - surface.getY() % 10) - 10;

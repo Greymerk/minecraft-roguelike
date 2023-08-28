@@ -2,7 +2,7 @@ package com.greymerk.roguelike.dungeon.room;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.minecraft.util.math.random.Random;
 
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellState;
@@ -11,6 +11,7 @@ import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.MetaBlock;
+import com.greymerk.roguelike.editor.blocks.spawners.Spawner;
 import com.greymerk.roguelike.editor.blocks.stair.IStair;
 import com.greymerk.roguelike.editor.shapes.RectHollow;
 import com.greymerk.roguelike.editor.shapes.RectSolid;
@@ -115,6 +116,8 @@ public class CrossRoom extends AbstractRoom implements IRoom {
 		}
 		
 		Coord pos = new Coord(origin);
+		Spawner.generate(editor, rand, pos);
+		
 		pos.add(Cardinal.UP, 3);
 		MetaBlock lamp = new MetaBlock(Blocks.LANTERN);
 		editor.set(pos, lamp);

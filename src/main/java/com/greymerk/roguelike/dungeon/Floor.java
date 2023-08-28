@@ -1,9 +1,7 @@
 package com.greymerk.roguelike.dungeon;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellManager;
@@ -16,6 +14,9 @@ import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.shapes.Line;
 import com.greymerk.roguelike.editor.shapes.MultiShape;
 import com.greymerk.roguelike.editor.theme.ITheme;
+import com.greymerk.roguelike.util.math.RandHelper;
+
+import net.minecraft.util.math.random.Random;
 
 public class Floor {
 
@@ -35,8 +36,8 @@ public class Floor {
 		Coord toAdd = new Coord(0,0,0);
 		
 		Cardinal randomDir = Cardinal.directions[rand.nextInt(4)];
-		toAdd.add(randomDir, rand.nextInt(min, max));
-		toAdd.add(Cardinal.orthogonal(randomDir)[rand.nextInt(2)], rand.nextInt(min, max));
+		toAdd.add(randomDir, rand.nextBetween(min, max));
+		toAdd.add(Cardinal.orthogonal(randomDir)[rand.nextInt(2)], rand.nextBetween(min, max));
 		
 		Cell current = cells.get(toAdd);
 		if(current.getState() == CellState.OBSTRUCTED) return false;
@@ -107,7 +108,7 @@ public class Floor {
 			return;
 		}
 		
-		Collections.shuffle(potentials, rand);
+		RandHelper.shuffle(potentials, rand);
 		
 		Cell c = findValidStair(potentials);
 		Cardinal stairDir = this.findStairDir(c);

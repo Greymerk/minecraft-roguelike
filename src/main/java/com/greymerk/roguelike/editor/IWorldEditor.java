@@ -1,10 +1,9 @@
 package com.greymerk.roguelike.editor;
 
-import java.util.Random;
-
 import com.greymerk.roguelike.editor.blocks.stair.IStair;
 
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.util.math.random.Random;
 
 public interface IWorldEditor {
 	
@@ -35,7 +34,7 @@ public interface IWorldEditor {
 	public boolean isOverworld();
 
 	boolean isSolid(Coord pos);
-	
+		
 	//int getStat(Block block);
 
 	//TreasureManager getTreasure();

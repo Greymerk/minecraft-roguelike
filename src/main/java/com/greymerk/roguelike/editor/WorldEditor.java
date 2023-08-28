@@ -3,7 +3,6 @@ package com.greymerk.roguelike.editor;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Random;
 
 import com.greymerk.roguelike.editor.blocks.BlockType;
 import com.greymerk.roguelike.editor.blocks.stair.IStair;
@@ -16,6 +15,8 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.math.random.CheckedRandom;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
@@ -94,7 +95,7 @@ public class WorldEditor implements IWorldEditor{
 	
 	@Override
 	public Random getRandom(Coord pos) {
-		return new Random(Objects.hash(getSeed(), pos.hashCode()));
+		return new CheckedRandom(Objects.hash(getSeed(), pos.hashCode()));
 	}
 
 	public boolean isChunkLoaded(Coord pos) {
@@ -178,5 +179,4 @@ public class WorldEditor implements IWorldEditor{
 	public BlockEntity getBlockEntity(Coord pos) {
 		return world.getBlockEntity(pos.getBlockPos());
 	}
-	
 }
