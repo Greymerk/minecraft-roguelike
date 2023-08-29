@@ -4,7 +4,8 @@
 	"compatibilityLevel": "JAVA_17",
 	"mixins": [
 		"ChunkFeatureMixin",
-		"TickChunkMixin"
+		"TickChunkMixin",
+		"EntityTickMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
