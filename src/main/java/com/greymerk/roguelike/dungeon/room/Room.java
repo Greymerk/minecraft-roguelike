@@ -20,7 +20,8 @@ public enum Room {
 		ITheme theme = Theme.get(tag.getString("theme"));
 		IBounded box = new BoundingBox(tag.getCompound("box"));
 		Coord pos = new Coord(tag.getCompound("pos"));
-		Cardinal dir = Arrays.asList(Cardinal.directions).get(tag.getInt("dir"));
+		int dirValue = tag.getInt("dir");
+		Cardinal dir = Arrays.asList(Cardinal.values()).get(dirValue);
 		return getInstance(type, theme, box, pos, dir);
 	}
 	

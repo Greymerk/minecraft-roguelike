@@ -8,12 +8,14 @@ import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellState;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
+import com.greymerk.roguelike.editor.Difficulty;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.blocks.BlockType;
 import com.greymerk.roguelike.editor.blocks.stair.IStair;
 import com.greymerk.roguelike.editor.shapes.RectHollow;
 import com.greymerk.roguelike.editor.shapes.RectSolid;
+import com.greymerk.roguelike.treasure.Treasure;
 
 public class Corridor extends AbstractRoom implements IRoom{
 
@@ -64,6 +66,8 @@ public class Corridor extends AbstractRoom implements IRoom{
 		end.add(Cardinal.SOUTH, 3);
 		end.add(Cardinal.EAST, 3);
 		RectSolid.fill(editor, rand, start, end, theme.getPrimary().getFloor());
+		
+		Treasure.generate(editor, rand, worldPos, Treasure.ARMOUR, Difficulty.fromY(worldPos.getY()), false);
 		
 		for(Cardinal dir : Cardinal.directions) {
 			if(this.entrances.contains(dir)) {

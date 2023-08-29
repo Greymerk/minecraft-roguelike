@@ -6,6 +6,7 @@ import com.greymerk.roguelike.treasure.loot.Enchant;
 import com.greymerk.roguelike.treasure.loot.Equipment;
 import com.greymerk.roguelike.treasure.loot.Quality;
 import com.greymerk.roguelike.treasure.loot.Slot;
+import com.greymerk.roguelike.treasure.loot.trim.Trim;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -33,43 +34,41 @@ public class ItemArmour extends ItemBase {
 	}
 	
 	public static ItemStack getRandom(Random rand, int level, boolean enchant){
-		return getRandom(rand, level,
+		ItemStack item = getRandom(rand, level,
 				Slot.getSlotByNumber(rand.nextInt(4) + 1),
 				enchant ? Enchant.getLevel(rand, level) : 0);
+		return item;
 	}
 	
 	public static ItemStack getRandom(Random rand, int level, Slot slot, boolean enchant){
 		return getRandom(rand, level, slot, enchant ? Enchant.getLevel(rand, level) : 0);
 	}
 	
-	@SuppressWarnings("incomplete-switch")
 	public static ItemStack getRandom(Random rand, int level, Slot slot, int enchantLevel){
-
+		
 		if(enchantLevel > 0 && rand.nextInt(20 + (level * 10)) == 0){
 			switch(slot){
 			case HEAD: return ItemSpecialty.getRandomItem(Equipment.HELMET, rand, level); 
 			case CHEST: return ItemSpecialty.getRandomItem(Equipment.CHEST, rand, level); 
 			case LEGS: return ItemSpecialty.getRandomItem(Equipment.LEGS, rand, level); 
 			case FEET: return ItemSpecialty.getRandomItem(Equipment.FEET, rand, level);
+			default: return new ItemStack(Items.STICK);
 			}
 		}
 
 		ItemStack item = get(rand, slot, Quality.getArmourQuality(rand, level));
-		
+		Trim.addRandom(item, rand);
 		if(enchantLevel > 0) Enchant.enchantItem(rand, item, enchantLevel);
-		
 		return item;
-		
 	}
 	
-	@SuppressWarnings("incomplete-switch")
 	public static ItemStack get(Random rand, Slot slot, Quality quality) {
 		
 		switch(slot){
 		
 		case HEAD:
 			switch (quality) {
-
+			case NETHERITE: return new ItemStack(Items.NETHERITE_HELMET);
 			case DIAMOND: return new ItemStack(Items.DIAMOND_HELMET);
 			case GOLD: return new ItemStack(Items.GOLDEN_HELMET);
 			case IRON: return new ItemStack(Items.IRON_HELMET);
@@ -83,6 +82,7 @@ public class ItemArmour extends ItemBase {
 		case FEET:
 			switch (quality) {
 
+			case NETHERITE: return new ItemStack(Items.NETHERITE_BOOTS);
 			case DIAMOND: return new ItemStack(Items.DIAMOND_BOOTS);
 			case GOLD: return new ItemStack(Items.GOLDEN_BOOTS);
 			case IRON: return new ItemStack(Items.IRON_BOOTS);
@@ -96,6 +96,7 @@ public class ItemArmour extends ItemBase {
 		case CHEST:
 			switch (quality) {
 
+			case NETHERITE: return new ItemStack(Items.NETHERITE_CHESTPLATE);
 			case DIAMOND: return new ItemStack(Items.DIAMOND_CHESTPLATE);
 			case GOLD: return new ItemStack(Items.GOLDEN_CHESTPLATE);
 			case IRON: return new ItemStack(Items.IRON_CHESTPLATE);
@@ -107,7 +108,8 @@ public class ItemArmour extends ItemBase {
 			}
 		case LEGS:
 			switch (quality) {
-	
+
+			case NETHERITE: return new ItemStack(Items.NETHERITE_LEGGINGS);
 			case DIAMOND: return new ItemStack(Items.DIAMOND_LEGGINGS);
 			case GOLD: return new ItemStack(Items.GOLDEN_LEGGINGS);
 			case IRON: return new ItemStack(Items.IRON_LEGGINGS);
@@ -117,8 +119,8 @@ public class ItemArmour extends ItemBase {
 				dyeArmor(item, rand.nextInt(256), rand.nextInt(255), rand.nextInt(255));
 				return item;
 			}
+		default: return new ItemStack(Items.STICK);
 		}
-		return null;
 	}
 	
 	public static ItemStack dyeArmor(ItemStack armor, int r, int g, int b){
@@ -126,22 +128,17 @@ public class ItemArmour extends ItemBase {
 		int color = r << 16 | g << 8 | b << 0;;
         
         NbtCompound nbtdata = armor.getNbt();
-
-        if (nbtdata == null)
-        {
+        if (nbtdata == null){
             nbtdata = new NbtCompound();
             armor.setNbt(nbtdata);
         }
 
         NbtCompound nbtDisplay = nbtdata.getCompound("display");
-
-        if (!nbtdata.contains("display"))
-        {
+        if (!nbtdata.contains("display")){
             nbtdata.put("display", nbtDisplay);
         }
 
         nbtDisplay.putInt("color", color);
-        
 		return armor;
 	}
 

@@ -26,12 +26,12 @@ public class ThemeOak extends ThemeBase implements ITheme {
 		
 		MetaStair stair = new MetaStair(StairType.STONEBRICK);
 
-		this.primary = new BlockSet(walls, walls, stair, walls, new Door(DoorType.SPRUCE));
 		
 		MetaBlock pillar = Wood.get(WoodBlock.LOG);
 		MetaBlock segmentWall = Wood.get(Wood.OAK, WoodBlock.PLANK);
 		MetaStair segmentStair = new MetaStair(StairType.OAK);
 		
+		this.primary = new BlockSet(walls, walls, stair, pillar, new Door(DoorType.SPRUCE));
 		this.secondary =  new BlockSet(segmentWall, segmentWall, segmentStair, pillar, new Door(DoorType.SPRUCE));
 	}
 	

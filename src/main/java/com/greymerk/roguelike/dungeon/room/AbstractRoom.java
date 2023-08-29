@@ -50,7 +50,7 @@ public abstract class AbstractRoom implements IRoom{
 		this.theme = Theme.get(tag.getString("theme"));
 		this.worldPos = new Coord(tag.getCompound("pos"));
 		this.generated = tag.getBoolean("generated");
-		this.direction = Cardinal.directions[tag.getInt("dir")];
+		this.direction = Cardinal.values()[tag.getInt("dir")];
 		this.entrances = new ArrayList<Cardinal>();
 		int[] ent = tag.getIntArray("entrances");
 		for(int e : ent) {
@@ -69,7 +69,7 @@ public abstract class AbstractRoom implements IRoom{
 		nbt.put("theme", NbtString.of(theme.getName()));
 		nbt.put("pos", pos.getNbt());
 		nbt.putBoolean("generated", this.generated);
-		nbt.putInt("dir", Arrays.asList(Cardinal.directions).indexOf(this.direction));
+		nbt.putInt("dir", Arrays.asList(Cardinal.values()).indexOf(this.direction));
 		int[] ent;
 		List<Integer> c = new ArrayList<Integer>();
 		for(Cardinal dir : this.entrances) {

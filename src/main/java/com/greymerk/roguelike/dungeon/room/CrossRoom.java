@@ -2,13 +2,11 @@ package com.greymerk.roguelike.dungeon.room;
 
 import java.util.ArrayList;
 import java.util.List;
-import net.minecraft.util.math.random.Random;
 
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellState;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
-import com.greymerk.roguelike.editor.Difficulty;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.MetaBlock;
@@ -19,6 +17,7 @@ import com.greymerk.roguelike.editor.shapes.RectSolid;
 import com.greymerk.roguelike.treasure.Treasure;
 
 import net.minecraft.block.Blocks;
+import net.minecraft.util.math.random.Random;
 
 public class CrossRoom extends AbstractRoom implements IRoom {
 
@@ -83,7 +82,7 @@ public class CrossRoom extends AbstractRoom implements IRoom {
 			pos.add(Cardinal.left(dir), 6);
 			cornerCell(editor, rand, pos);
 			
-			Treasure.generate(editor, rand, origin, Treasure.WEAPONS, Difficulty.fromY(origin.getY()), false);
+			Treasure.generate(editor, rand, origin, Treasure.STARTER, 0, false);
 		}
 	}
 

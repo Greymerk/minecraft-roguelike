@@ -16,13 +16,14 @@ public class ProfileTallMob implements IMonsterProfile {
 
 	@Override
 	public void addEquipment(World world, Random rand, int level, IEntity mob) {
+		int ilvl = level <= 2 ? level : 2 + rand.nextInt(3);
 		for(EquipmentSlot slot : new EquipmentSlot[]{
 				EquipmentSlot.HEAD,
 				EquipmentSlot.CHEST,
 				EquipmentSlot.LEGS,
 				EquipmentSlot.FEET
 				}){
-			ItemStack item = Loot.getEquipmentBySlot(rand, Slot.getSlot(slot), level, Enchant.canEnchant(world.getDifficulty(), rand, level));
+			ItemStack item = Loot.getEquipmentBySlot(rand, Slot.getSlot(slot), ilvl, Enchant.canEnchant(world.getDifficulty(), rand, level));
 			mob.setSlot(slot, item);
 		}
 

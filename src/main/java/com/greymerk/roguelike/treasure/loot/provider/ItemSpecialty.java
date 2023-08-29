@@ -6,6 +6,7 @@ import com.greymerk.roguelike.treasure.loot.Enchant;
 import com.greymerk.roguelike.treasure.loot.Equipment;
 import com.greymerk.roguelike.treasure.loot.Loot;
 import com.greymerk.roguelike.treasure.loot.Quality;
+import com.greymerk.roguelike.treasure.loot.trim.Trim;
 import com.greymerk.roguelike.util.TextFormat;
 
 import net.minecraft.item.ItemStack;
@@ -371,6 +372,7 @@ public class ItemSpecialty extends ItemBase {
 		switch(quality){
 		case WOOD:
 			item = new ItemStack(Items.LEATHER_LEGGINGS);
+			Trim.addRandom(item, rand);
 			ItemArmour.dyeArmor(item, rand.nextInt(256), rand.nextInt(255), rand.nextInt(255));
 			canonical = "Pantaloons";
 			break;
@@ -498,6 +500,7 @@ public class ItemSpecialty extends ItemBase {
 			value += rand.nextInt(3);
 			break;
 		case DIAMOND:
+		case NETHERITE:
 			value += 2 + rand.nextInt(2);
 			break;
 		}
@@ -513,6 +516,7 @@ public class ItemSpecialty extends ItemBase {
 		case IRON: return "Gothic";
 		case GOLD: return "Jewelled";
 		case DIAMOND: return "Crystal";
+		case NETHERITE: return "Ornate";
 		default: return "Strange";
 		}
 	}
