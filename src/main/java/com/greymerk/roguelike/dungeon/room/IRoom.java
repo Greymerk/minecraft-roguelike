@@ -2,6 +2,7 @@ package com.greymerk.roguelike.dungeon.room;
 
 import java.util.List;
 
+import com.greymerk.roguelike.dungeon.Floor;
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
@@ -36,6 +37,8 @@ public interface IRoom {
 	public ITheme getTheme();
 	
 	public IBounded getBoundingBox();
+	
+	public void determineEntrances(Floor f, Coord floorPos);
 	
 	public void addEntrance(Cardinal dir);
 	

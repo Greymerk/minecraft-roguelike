@@ -13,7 +13,18 @@ import net.minecraft.nbt.NbtCompound;
 
 public enum Room {
 
-	CORRIDOR, ENTRANCE, STAIRWAY, CROSS;
+	CORRIDOR, ENTRANCE, STAIRWAY, CROSS, LARGE;
+	
+	public static IRoom fromType(Room type) {
+		switch(type) {
+		case CORRIDOR: return new Corridor();
+		case ENTRANCE: return new EntranceRoom();
+		case STAIRWAY: return new Stairway();
+		case CROSS: return new CrossRoom();
+		case LARGE: return new LargeRoom();
+		default: return new Corridor();
+		}
+	}
 	
 	public static IRoom createFromNBT(NbtCompound tag) {
 		Room type = get(tag.get("type").asString());
@@ -65,15 +76,5 @@ public enum Room {
 		room.setWorldPos(pos);
 		room.setDirection(dir);
 		return room;
-	}
-	
-	public static IRoom fromType(Room type) {
-		switch(type) {
-		case CORRIDOR: return new Corridor();
-		case ENTRANCE: return new EntranceRoom();
-		case STAIRWAY: return new Stairway();
-		case CROSS: return new CrossRoom();
-		default: return new Corridor();
-		}
 	}
 }

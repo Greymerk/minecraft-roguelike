@@ -62,7 +62,7 @@ public class Dungeon implements Iterable<IRoom>{
 		Coord firstFloor = new Coord(this.origin.getX(), entranceY, this.origin.getZ());
 
 		LayoutManager layout = new LayoutManager(firstFloor);
-		IRoom entrance = Room.getInstance(Room.ENTRANCE, Theme.getTheme(Theme.STONE), new Coord(0, 0, 0), firstFloor);
+		IRoom entrance = Room.getInstance(Room.ENTRANCE, Theme.getTheme(Theme.OAK), new Coord(0, 0, 0), firstFloor);
 		entrance.generate(editor);
 		entrance.setGenerated(true);
 		layout.addRoom(entrance, new Coord(0,0,0), firstFloor, 0);

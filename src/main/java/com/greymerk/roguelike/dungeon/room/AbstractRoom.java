@@ -3,8 +3,8 @@ package com.greymerk.roguelike.dungeon.room;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import net.minecraft.util.math.random.Random;
 
+import com.greymerk.roguelike.dungeon.Floor;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
@@ -18,6 +18,7 @@ import com.greymerk.roguelike.editor.theme.Theme;
 
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtString;
+import net.minecraft.util.math.random.Random;
 
 public abstract class AbstractRoom implements IRoom{
 	
@@ -140,6 +141,11 @@ public abstract class AbstractRoom implements IRoom{
 	@Override
 	public void setDirection(Cardinal dir) {
 		this.direction = dir;
+	}
+	
+	@Override
+	public void determineEntrances(Floor f, Coord fp) {
+		
 	}
 	
 	@Override

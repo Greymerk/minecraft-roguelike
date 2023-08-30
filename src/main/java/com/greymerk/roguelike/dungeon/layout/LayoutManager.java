@@ -73,12 +73,13 @@ public class LayoutManager {
 	public void addRooms(IWorldEditor editor, Random rand, int level) {
 		Floor floor = this.floors.get(level);
 		for(int i = 0; i < 10; ++i) {
-			IRoom room = Room.getInstance(Room.CROSS, floor.getTheme());
+			IRoom room = Room.getInstance(Room.LARGE, floor.getTheme());
 			this.placeRoom(room, rand, level);	
 		}
 	}
 	
 	public void addRoom(IRoom toAdd, Coord fp, Coord wp, int level) {
+		toAdd.determineEntrances(this.floors.get(level), fp);
 		toAdd.setFloorPos(fp);
 		toAdd.setWorldPos(wp);
 		this.floors.get(level).addRoom(toAdd);

@@ -21,10 +21,11 @@ public class ThemeCrumbledMossy extends ThemeBase implements ITheme {
 	public ThemeCrumbledMossy() {
 		BlockWeightedRandom walls = new BlockWeightedRandom();
 		walls.addBlock(BlockType.get(BlockType.COBBLESTONE), 60);
-		walls.addBlock(BlockType.get(BlockType.STONE_BRICK_MOSSY), 30);
+		walls.addBlock(BlockType.get(BlockType.STONE_BRICK_MOSSY), 20);
 		walls.addBlock(BlockType.get(BlockType.STONE_BRICK), 10);
+		walls.addBlock(BlockType.get(BlockType.STONE_BRICK_CRACKED), 10);
 		walls.addBlock(SilverfishBlock.getJumble(), 5);
-		walls.addBlock(BlockType.get(BlockType.COBBLESTONE_MOSSY), 10);
+		walls.addBlock(BlockType.get(BlockType.COBBLESTONE_MOSSY), 20);
 		walls.addBlock(BlockType.get(BlockType.GRAVEL), 15);
 		
 		BlockWeightedRandom pillar = new BlockWeightedRandom();

@@ -21,7 +21,8 @@ public class ThemeCrumbledStone extends ThemeBase implements ITheme {
 		walls.addBlock(BlockType.get(BlockType.STONE_BRICK_CRACKED), 10);
 		walls.addBlock(BlockType.get(BlockType.STONE_BRICK_MOSSY), 10);
 		walls.addBlock(BlockType.get(BlockType.COBBLESTONE), 10);
-		walls.addBlock(BlockType.get(BlockType.GRAVEL), 3);
+		walls.addBlock(BlockType.get(BlockType.GRAVEL), 5);
+		walls.addBlock(BlockType.get(BlockType.COBBLESTONE_MOSSY), 2);
 		walls.addBlock(SilverfishBlock.getJumble(), 2);
 		
 		MetaStair stair = Stair.get(StairType.STONEBRICK);

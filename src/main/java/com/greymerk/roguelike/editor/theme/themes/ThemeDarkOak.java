@@ -18,10 +18,10 @@ public class ThemeDarkOak extends ThemeBase implements ITheme {
 
 	public ThemeDarkOak() {
 		BlockWeightedRandom walls = new BlockWeightedRandom();
-		walls.addBlock(BlockType.get(BlockType.STONE_BRICK), 30);
+		walls.addBlock(BlockType.get(BlockType.STONE_BRICK), 60);
 		walls.addBlock(BlockType.get(BlockType.STONE_BRICK_CRACKED), 20);
-		walls.addBlock(BlockType.get(BlockType.COBBLESTONE), 10);
-		walls.addBlock(BlockType.get(BlockType.GRAVEL), 3);
+		walls.addBlock(BlockType.get(BlockType.STONE_BRICK_MOSSY), 5);
+		walls.addBlock(BlockType.get(BlockType.COBBLESTONE), 3);
 		
 		MetaStair stair = new MetaStair(StairType.STONEBRICK);
 

@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
+import com.greymerk.roguelike.editor.Difficulty;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.util.math.RandHelper;
 
@@ -19,6 +20,11 @@ public enum Treasure {
 	
 	private static final List<Treasure> common = new ArrayList<Treasure>(Arrays.asList(TOOLS, ARMOUR, WEAPONS));
 
+	public static void generate(IWorldEditor editor, Random rand, Coord pos, Treasure type) {
+		int level = Difficulty.fromY(pos.getY());
+		Treasure.generate(editor, rand, pos, type, level, false);
+	}
+	
 	public static void generate(IWorldEditor editor, Random rand, Coord pos, Treasure type, int level, boolean trapped){
 		try {
 			create(editor, rand, pos, type, level, trapped);

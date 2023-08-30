@@ -1,7 +1,5 @@
 package com.greymerk.roguelike.editor.blocks;
 
-import net.minecraft.util.math.random.Random;
-
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
@@ -10,15 +8,16 @@ import com.greymerk.roguelike.editor.MetaBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.SkullBlock;
+import net.minecraft.util.math.random.Random;
 
 public enum Skull {
 
 	SKELETON, WITHER, ZOMBIE, STEVE, CREEPER;
 	
 	public static void set(IWorldEditor editor, Random rand, Coord origin, Cardinal dir, Skull type){
-		MetaBlock skullBlock = new MetaBlock(Skull.fromType(type));
+		MetaBlock skullBlock = new MetaBlock(Skull.fromType(type).getDefaultState());
 		setRotation(rand, skullBlock, dir);
-		if(!skullBlock.set(editor, origin)) return;
+		skullBlock.set(editor, origin);
 	}
 	
 	public static void setRotation(Random rand, MetaBlock skull, Cardinal dir){
@@ -28,7 +27,8 @@ public enum Skull {
 		directionValue += -1 + rand.nextInt(3);
 		
 		// make sure the skull direction value is less than 16
-		directionValue = directionValue % 16;
+		//directionValue = directionValue % 16;
+		directionValue = Math.floorMod(directionValue, 16);
 		
 		skull.withProperty(SkullBlock.ROTATION, directionValue);
 	}

@@ -2,20 +2,19 @@ package com.greymerk.roguelike.dungeon.room;
 
 import java.util.ArrayList;
 import java.util.List;
-import net.minecraft.util.math.random.Random;
 
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellState;
+import com.greymerk.roguelike.dungeon.fragment.wall.WallShelf;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
-import com.greymerk.roguelike.editor.Difficulty;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
-import com.greymerk.roguelike.editor.blocks.BlockType;
 import com.greymerk.roguelike.editor.blocks.stair.IStair;
 import com.greymerk.roguelike.editor.shapes.RectHollow;
 import com.greymerk.roguelike.editor.shapes.RectSolid;
-import com.greymerk.roguelike.treasure.Treasure;
+
+import net.minecraft.util.math.random.Random;
 
 public class Corridor extends AbstractRoom implements IRoom{
 
@@ -67,16 +66,12 @@ public class Corridor extends AbstractRoom implements IRoom{
 		end.add(Cardinal.EAST, 3);
 		RectSolid.fill(editor, rand, start, end, theme.getPrimary().getFloor());
 		
-		Treasure.generate(editor, rand, worldPos, Treasure.ARMOUR, Difficulty.fromY(worldPos.getY()), false);
-		
 		for(Cardinal dir : Cardinal.directions) {
 			if(this.entrances.contains(dir)) {
 				this.door(editor, rand, theme, worldPos, dir);
 			} else {
 				Coord pos = new Coord(worldPos);
-				pos.add(Cardinal.UP);
-				pos.add(dir, 3);
-				editor.set(pos, BlockType.get(BlockType.GLOWSTONE));	
+				new WallShelf().generate(editor, rand, theme, pos, dir);
 			}
 		}
 	}

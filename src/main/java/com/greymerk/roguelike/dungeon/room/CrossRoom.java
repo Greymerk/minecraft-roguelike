@@ -3,6 +3,7 @@ package com.greymerk.roguelike.dungeon.room;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.greymerk.roguelike.dungeon.Floor;
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellState;
 import com.greymerk.roguelike.editor.Cardinal;
@@ -14,7 +15,6 @@ import com.greymerk.roguelike.editor.blocks.spawners.Spawner;
 import com.greymerk.roguelike.editor.blocks.stair.IStair;
 import com.greymerk.roguelike.editor.shapes.RectHollow;
 import com.greymerk.roguelike.editor.shapes.RectSolid;
-import com.greymerk.roguelike.treasure.Treasure;
 
 import net.minecraft.block.Blocks;
 import net.minecraft.util.math.random.Random;
@@ -79,10 +79,10 @@ public class CrossRoom extends AbstractRoom implements IRoom {
 			if(this.entrances.contains(dir)) {
 				this.door(editor, rand, theme, pos, dir);
 			}
-			pos.add(Cardinal.left(dir), 6);
-			cornerCell(editor, rand, pos);
 			
-			Treasure.generate(editor, rand, origin, Treasure.STARTER, 0, false);
+			pos.add(Cardinal.left(dir), 6);
+			cornerCell(editor, rand, pos);	
+		
 		}
 	}
 
@@ -151,6 +151,20 @@ public class CrossRoom extends AbstractRoom implements IRoom {
 		return cells;
 	}
 
+	@Override
+	public void determineEntrances(Floor f, Coord fp) {
+		for(Cardinal dir : Cardinal.directions) {
+			Coord pos = new Coord(fp);
+			pos.add(dir, 2);
+			Cell c = f.getCell(pos);
+			if(c.getState() != CellState.CORRIDOR) continue;
+			List<Cardinal> walls = c.getWalls();
+			if(!walls.contains(Cardinal.reverse(dir))) {
+				this.addEntrance(dir);
+			}
+		}
+	}
+	
 	@Override
 	public int getSize() {
 		return 9;
