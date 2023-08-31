@@ -3,6 +3,7 @@ package com.greymerk.roguelike.dungeon.room;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.greymerk.roguelike.dungeon.Floor;
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellState;
 import com.greymerk.roguelike.dungeon.fragment.wall.WallShelf;
@@ -92,6 +93,9 @@ public class Corridor extends AbstractRoom implements IRoom{
 	public String getName() {
 		return Room.CORRIDOR.name();
 	}
+
+	@Override
+	public void determineEntrances(Floor f, Coord floorPos) {}
 
 
 

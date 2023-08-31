@@ -72,10 +72,18 @@ public class LayoutManager {
 	
 	public void addRooms(IWorldEditor editor, Random rand, int level) {
 		Floor floor = this.floors.get(level);
-		for(int i = 0; i < 10; ++i) {
-			IRoom room = Room.getInstance(Room.LARGE, floor.getTheme());
-			this.placeRoom(room, rand, level);	
+		if(level < 2) {
+			for(int i = 0; i < 2; ++i) {
+				IRoom bedroom = Room.getInstance(Room.BEDROOM, floor.getTheme());
+				this.placeRoom(bedroom, rand, level);	
+			}
 		}
+		
+		for(int i = 0; i < 10; ++i) {
+			IRoom room = Room.getInstance(Room.CROSS, floor.getTheme());
+			this.placeRoom(room, rand, level);
+		}
+		
 	}
 	
 	public void addRoom(IRoom toAdd, Coord fp, Coord wp, int level) {
@@ -117,9 +125,13 @@ public class LayoutManager {
 		List<Cell> corridors = floor.getCells(CellState.CORRIDOR);
 		RandHelper.shuffle(corridors, rand);
 		for(Cell c : corridors) {
-			boolean fit = doesRoomFit(room, c.getFloorPos(), level);
-			if(fit) this.addRoom(room, c.getFloorPos(), c.getWorldPos(floor.getOrigin()), level);
-			return true;
+			for(Cardinal dir : Cardinal.randDirs(rand)) {
+				if(!c.getWalls().contains(dir)) continue;
+				room.setDirection(dir);
+				boolean fit = doesRoomFit(room, c.getFloorPos(), level);
+				if(fit) this.addRoom(room, c.getFloorPos(), c.getWorldPos(floor.getOrigin()), level);
+				return true;	
+			}
 		}
 		return false;
 	}
@@ -152,6 +164,7 @@ public class LayoutManager {
 		return true;
 		
 	}
+	
 	
 	public IBounded getBounds() {
 		//@TODO: implement me

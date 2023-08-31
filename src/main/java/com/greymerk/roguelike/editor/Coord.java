@@ -36,6 +36,10 @@ public class Coord {
 		this.z = bp.getZ();
 	}
 	
+	public Coord copy() {
+		return new Coord(this);
+	}
+	
 	public int getX(){
 		return x;
 	}

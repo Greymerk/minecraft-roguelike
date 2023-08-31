@@ -24,16 +24,8 @@ public class ChunkFeatureMixin {
 	
 	@Inject(at = @At("HEAD"), method = "generateFeatures")
 	public void generateFeatures(StructureWorldAccess world, Chunk chunk, StructureAccessor structureAccessor, CallbackInfo info) {
-		//System.out.println("feature: " + chunk.getPos().toString());
 		IWorldEditor editor = new WorldEditor(world);
 		RoguelikeState state = RoguelikeState.getServerState(world.getServer());
-		
-		/*
-		List<IRoom> toGenerate = state.getFromChunk(chunk.getPos());
-		for(IRoom room : toGenerate) {
-			room.generate(editor);
-		}
-		*/
 		
 		ChunkPos cpos = chunk.getPos();
 		Coord pos = new Coord(cpos.getCenterX(), 200, cpos.getCenterZ());
@@ -43,16 +35,11 @@ public class ChunkFeatureMixin {
 			return;
 		}
 	
-		if(!Dungeon.canSpawn(editor, new Coord(pos))) {
-			//System.out.println("no dungeon: " + chunk.getPos().toString());
-			return;
-		}
+		if(!Dungeon.canSpawn(editor, new Coord(pos))) return;
 		
-		//System.out.println("dungeon: " + chunk.getPos().toString());
 		Dungeon donjon = new Dungeon(new Coord(pos));
 		donjon.generate(editor);
 		
 		state.addDungeon(donjon);
-		
 	}
 }

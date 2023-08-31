@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.greymerk.roguelike.dungeon.Floor;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
@@ -141,11 +140,6 @@ public abstract class AbstractRoom implements IRoom{
 	@Override
 	public void setDirection(Cardinal dir) {
 		this.direction = dir;
-	}
-	
-	@Override
-	public void determineEntrances(Floor f, Coord fp) {
-		
 	}
 	
 	@Override

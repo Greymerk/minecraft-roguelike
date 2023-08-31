@@ -3,41 +3,14 @@ package com.greymerk.roguelike.dungeon.room;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.greymerk.roguelike.dungeon.Floor;
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellState;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
-import com.greymerk.roguelike.editor.IWorldEditor;
-import com.greymerk.roguelike.editor.shapes.RectHollow;
 import com.greymerk.roguelike.editor.shapes.RectSolid;
 
-import net.minecraft.util.math.random.Random;
-
-public class LargeRoom extends AbstractRoom implements IRoom {
-
-	@Override
-	public void generate(IWorldEditor editor) {
-		Coord origin = new Coord(this.getWorldPos());
-		Random rand = editor.getRandom(origin);
-		
-		Coord start = new Coord(origin);
-		int size = 15;
-		start.add(Cardinal.NORTH, size);
-		start.add(Cardinal.WEST, size);
-		start.add(Cardinal.DOWN);
-		Coord end = new Coord(origin);
-		end.add(Cardinal.SOUTH, size);
-		end.add(Cardinal.EAST, size);
-		end.add(Cardinal.UP, 5);
-		RectHollow box = new RectHollow(start, end);
-		box.fill(editor, rand, this.getTheme().getPrimary().getWall());
-		
-		for(Cardinal dir : Cardinal.directions) {
-			Coord pos = new Coord(origin);
-			pos.add(dir, 12);
-			this.door(editor, rand, theme, pos, dir);
-		}
-	}
+public abstract class AbstractLargeRoom extends AbstractRoom implements IRoom {
 
 	@Override
 	public List<Cell> getCells() {
@@ -67,10 +40,17 @@ public class LargeRoom extends AbstractRoom implements IRoom {
 		return cells;
 	}
 	
-
 	@Override
-	public String getName() {
-		return Room.LARGE.name();
+	public void determineEntrances(Floor f, Coord fp) {
+		for(Cardinal dir : Cardinal.directions) {
+			Coord pos = new Coord(fp);
+			pos.add(dir, 3);
+			Cell c = f.getCell(pos);
+			if(c.getState() != CellState.CORRIDOR) continue;
+			List<Cardinal> walls = c.getWalls();
+			if(!walls.contains(Cardinal.reverse(dir))) {
+				this.addEntrance(dir);
+			}
+		}
 	}
-
 }

@@ -1,7 +1,5 @@
 package com.greymerk.roguelike.editor.blocks.stair;
 
-import net.minecraft.util.math.random.Random;
-
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
@@ -50,7 +48,7 @@ public class MetaStair extends MetaBlock implements IStair{
 		return editor.set(pos, this, true, true);
 	}
 	
-	public boolean set(IWorldEditor editor, Random rand, Coord pos, boolean fillAir, boolean replaceSolid) {
+	public boolean set(IWorldEditor editor, Coord pos, boolean fillAir, boolean replaceSolid) {
 		StairShape shape = getStairShape(this.getState(), editor, pos.getBlockPos());
 		this.setShape(shape);
 		return editor.set(pos, this, fillAir, replaceSolid);

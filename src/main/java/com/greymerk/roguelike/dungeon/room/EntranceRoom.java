@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.util.math.random.Random;
 
+import com.greymerk.roguelike.dungeon.Floor;
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellState;
 import com.greymerk.roguelike.editor.Cardinal;
@@ -116,4 +117,7 @@ public class EntranceRoom  extends AbstractRoom implements IRoom{
 	public String getName() {
 		return Room.ENTRANCE.name();
 	}
+
+	@Override
+	public void determineEntrances(Floor f, Coord floorPos) {}
 }

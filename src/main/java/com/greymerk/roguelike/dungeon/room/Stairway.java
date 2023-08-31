@@ -3,6 +3,7 @@ package com.greymerk.roguelike.dungeon.room;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.greymerk.roguelike.dungeon.Floor;
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellState;
 import com.greymerk.roguelike.editor.Cardinal;
@@ -109,7 +110,7 @@ public class Stairway extends AbstractRoom implements IRoom {
 				p.add(Cardinal.UP, 2);
 				p.add(o);
 				stair.setOrientation(Cardinal.reverse(o), true);
-				stair.set(editor, rand, p, true, true);
+				stair.set(editor, p, true, true);
 			}
 		}
 	}
@@ -182,5 +183,8 @@ public class Stairway extends AbstractRoom implements IRoom {
 	public String getName() {
 		return Room.STAIRWAY.name();
 	}
+
+	@Override
+	public void determineEntrances(Floor f, Coord floorPos) {}
 
 }

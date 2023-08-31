@@ -1,11 +1,16 @@
 package com.greymerk.roguelike.editor;
 
+import java.util.Arrays;
+
+import com.greymerk.roguelike.util.math.RandHelper;
+
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.random.Random;
 
 public enum Cardinal {
 	NORTH, EAST, WEST, SOUTH, UP, DOWN;
 	
-	public static Cardinal[] directions = {NORTH, EAST, SOUTH, WEST};
+	public static final Cardinal[] directions = {NORTH, EAST, SOUTH, WEST};
 	
 	public static Cardinal reverse(Cardinal dir){
 		switch(dir){
@@ -73,5 +78,11 @@ public enum Cardinal {
 		case DOWN: return Direction.Axis.Y;
 		default: return Direction.Axis.Y;
 		}
+	}
+	
+	public static Cardinal[] randDirs(Random rand){
+		Cardinal[] dirs = Arrays.copyOf(Cardinal.directions, Cardinal.directions.length);
+		RandHelper.shuffle(Arrays.asList(dirs), rand);
+		return dirs;
 	}
 }
