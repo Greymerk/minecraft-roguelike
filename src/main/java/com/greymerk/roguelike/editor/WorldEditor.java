@@ -121,6 +121,10 @@ public class WorldEditor implements IWorldEditor{
 		Coord cursor = new Coord(pos.getX(), 256, pos.getZ());
 		
 		while(cursor.getY() > 60) {
+			MetaBlock m = this.getBlock(cursor);
+			if(m.getState().isIn(BlockTags.LOGS)) continue;
+			if(m.getState().isIn(BlockTags.LEAVES)) continue;
+			
 			if(!isAir(cursor) && !isPlant(cursor)) return cursor;
 			cursor.add(Cardinal.DOWN);
 		}
@@ -142,9 +146,11 @@ public class WorldEditor implements IWorldEditor{
 	
 	public boolean isGround(Coord pos) {
 		MetaBlock m = getBlock(pos);
+		
 		if(isPlant(pos)) return false;
 		if(m.getState().isIn(BlockTags.BASE_STONE_OVERWORLD)) return true;
 		if(m.getState().isIn(BlockTags.DIRT)) return true;
+		if(m.getState().isIn(BlockTags.SAND)) return true;
 		return false;
 	}
 	

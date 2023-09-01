@@ -6,6 +6,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtInt;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
 
 public class Coord {
 	private int x;
@@ -87,6 +88,40 @@ public class Coord {
 		return new Coord(x * other.x, y * other.y, z * other.z);
 	}
 	
+	public int dot(Coord other) {
+		int xp = this.x * other.x;
+		int yp = this.y * other.y;
+		int zp = this.z * other.z;
+		return xp + yp + zp;
+	}
+	
+	public Coord project(Coord onto) {
+		double dot = (double)this.copy().dot(onto);
+		double mag = onto.magnitude();
+		double proj = dot / (Math.pow(mag, 2));
+		double px = proj * onto.x;
+		double py = proj * onto.y;
+		double pz = proj * onto.z;
+		return new Coord(
+					(int)Math.floor(px), 
+					(int)Math.floor(py),
+					(int)Math.floor(pz));
+	}
+	
+	public double scalar(Coord onto) {
+		int dot = this.copy().dot(onto);
+		double mag = onto.magnitude();
+		return (double)dot / mag;
+	}
+	
+	public double magnitude() {
+		double xS = Math.pow((double)this.x, 2);
+		double yS = Math.pow((double)this.y, 2);
+		double zS = Math.pow((double)this.z, 2);
+		double sumOfSquares = xS + yS + zS;
+		return Math.sqrt(sumOfSquares);
+	}
+	
 	public Coord unit() {
 		return new Coord(
 			x == 0 ? 0 : x / Math.abs(x),
@@ -99,6 +134,13 @@ public class Coord {
 		double side2 = Math.abs(this.getZ() - other.getZ());
 		
 		return Math.sqrt((side1 * side1) + (side2 * side2));
+	}
+	
+	public int manhattanDistance(Coord other) {
+		int xdiff = Math.abs(this.x - other.x);
+		int ydiff = Math.abs(this.y - other.y);
+		int zdiff = Math.abs(this.z - other.z);
+		return xdiff + ydiff + zdiff;
 	}
 	
 	public Cardinal dirTo(Coord other){
@@ -182,6 +224,10 @@ public class Coord {
 		return new BlockPos(this.x, this.y, this.z);
 	}
 
+	public ChunkPos getChunkPos() {
+		return new ChunkPos(this.x >> 4, this.z >> 4);
+	}
+	
 	public NbtElement getNbt() {
 		NbtCompound nbt = new NbtCompound();
 		nbt.put("x", NbtInt.of(x));
