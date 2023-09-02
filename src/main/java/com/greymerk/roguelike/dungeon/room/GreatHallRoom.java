@@ -35,8 +35,7 @@ public class GreatHallRoom extends AbstractLargeRoom implements IRoom {
 	
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+		return Room.HALL.name();
 	}
 
 }

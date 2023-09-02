@@ -25,14 +25,9 @@ public enum Treasure {
 		Treasure.generate(editor, rand, pos, type, level, false);
 	}
 	
-	public static void generate(IWorldEditor editor, Random rand, Coord pos, Treasure type, int level, boolean trapped) {
-		Treasure.generate(editor, rand, pos, type, level, false);
-	}
-	
-	
-	public static void generate(IWorldEditor editor, Random rand, Coord pos, Cardinal dir, Treasure type, int level, boolean trapped){
+	public static void generate(IWorldEditor editor, Random rand, Coord pos, Treasure type, int level, boolean trapped){
 		try {
-			create(editor, rand, pos, dir, type, level, trapped);
+			create(editor, rand, pos, type, level, trapped);
 		} catch (ChestPlacementException e) {
 			// do nothing
 		}

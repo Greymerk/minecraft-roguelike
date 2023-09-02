@@ -73,18 +73,33 @@ public class LayoutManager {
 	
 	public void addRooms(IWorldEditor editor, Random rand, int level) {
 		Floor floor = this.floors.get(level);
-		if(level < 2) {
+		if(floor.getOrigin().getY() == 50) {
 			for(int i = 0; i < 2; ++i) {
 				IRoom bedroom = Room.getInstance(Room.BEDROOM, floor.getTheme());
 				this.placeRoom(bedroom, rand, level);	
 			}
 		}
 		
-		for(int i = 0; i < 10; ++i) {
-			IRoom room = Room.getInstance(Room.CROSS, floor.getTheme());
-			this.placeRoom(room, rand, level);
+		if(floor.getOrigin().getY() == 40) {
+			for(int i = 0; i < 5; ++i) {
+				IRoom room = Room.getInstance(Room.CROSS, floor.getTheme());
+				this.placeRoom(room, rand, level);	
+			}
 		}
 		
+		if(floor.getOrigin().getY() == 30) {
+			for(int i = 0; i < 5; ++i) {
+				IRoom room = Room.getInstance(Room.CRYPT, floor.getTheme());
+				this.placeRoom(room, rand, level);	
+			}
+		}
+		
+		if(floor.getOrigin().getY() == 20) {
+			for(int i = 0; i < 5; ++i) {
+				IRoom room = Room.getInstance(Room.CRYPT, floor.getTheme());
+				this.placeRoom(room, rand, level);	
+			}
+		}
 	}
 	
 	public void addRoom(IRoom toAdd, Coord fp, Coord wp, int level) {

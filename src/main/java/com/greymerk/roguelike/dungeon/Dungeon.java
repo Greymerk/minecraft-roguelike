@@ -71,9 +71,11 @@ public class Dungeon implements Iterable<IRoom>{
 		
 		RogueTower tower = new RogueTower();
 		tower.generate(editor, rand, Theme.getTheme(Theme.TOWER), firstFloor);
-		
-		
-
+	}
+	
+	public static int getLevelFromY(int y) {
+		if(y >= 60) return 0;
+		return Math.abs((int)(y / 10 - 6));
 	}
 	
 	@Override

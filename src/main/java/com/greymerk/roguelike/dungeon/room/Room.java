@@ -13,7 +13,7 @@ import net.minecraft.nbt.NbtCompound;
 
 public enum Room {
 
-	CORRIDOR, ENTRANCE, STAIRWAY, CROSS, BEDROOM;
+	CORRIDOR, ENTRANCE, STAIRWAY, CROSS, BEDROOM, HALL, CRYPT;
 	
 	public static IRoom fromType(Room type) {
 		switch(type) {
@@ -22,6 +22,8 @@ public enum Room {
 		case STAIRWAY: return new Stairway();
 		case CROSS: return new CrossRoom();
 		case BEDROOM: return new BedRoom();
+		case HALL: return new GreatHallRoom();
+		case CRYPT: return new CryptRoom();
 		default: return new Corridor();
 		}
 	}
