@@ -155,13 +155,21 @@ public abstract class AbstractRoom implements IRoom{
 	}
 	
 	public void door(IWorldEditor editor, Random rand, ITheme theme, Coord origin, Cardinal dir) {
-		Coord start = new Coord(origin);
+		Coord start = origin.copy();
 		start.add(dir, 3);
-		Coord end = new Coord(start);
+		Coord end = start.copy();
 		start.add(Cardinal.left(dir), 2);
 		end.add(Cardinal.right(dir), 2);
 		end.add(Cardinal.UP, 3);
 		RectSolid.fill(editor, rand, start, end, BlockType.get(BlockType.AIR));
+		
+		start = origin.copy();
+		start.add(dir, 3);
+		start.add(Cardinal.DOWN);
+		end = start.copy();
+		start.add(Cardinal.left(dir), 2);
+		end.add(Cardinal.right(dir), 2);
+		RectSolid.fill(editor, rand, start, end, theme.getPrimary().getFloor());
 		
 		for(Cardinal o : Cardinal.orthogonal(dir)) {
 			Coord pos = new Coord(origin);

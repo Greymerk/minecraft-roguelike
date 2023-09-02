@@ -41,6 +41,7 @@ public class LayoutManager {
 			}
 			
 			for(int i = 0; i < lvl * 3; ++i) {
+				if(floor.getOrigin().getY() > 50) continue;
 				floor.addRandomBranch(rand, 3, 5 + lvl/2);
 			}
 			

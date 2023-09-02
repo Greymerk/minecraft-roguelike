@@ -110,7 +110,7 @@ public class Floor {
 		
 		RandHelper.shuffle(potentials, rand);
 		
-		Cell c = findValidStair(potentials);
+		Cell c = findValidStair(potentials, rand);
 		Cardinal stairDir = this.findStairDir(c);
 		
 		IRoom stairs = Room.getInstance(Room.STAIRWAY, this.theme, c.getFloorPos(), c.getWorldPos(origin), stairDir);
@@ -122,6 +122,18 @@ public class Floor {
 			CellState state = rc.getState();
 			Cell toAdd = new Cell(fp, state);
 			this.addCell(toAdd);
+			
+			for(Cardinal dir : Cardinal.directions) {
+				if(rc.getWalls().contains(dir)) continue;
+				if(dir == stairDir) continue;
+				Coord pos = rc.getFloorPos().copy();
+				pos.add(dir);
+				Cell other = this.getCell(pos);
+				if(!other.isRoom()) continue;
+				if(!other.getWalls().contains(Cardinal.reverse(dir))) {
+					stairs.addEntrance(dir);
+				}
+			}
 		}
 	}
 	
@@ -129,22 +141,20 @@ public class Floor {
 		for(Cardinal dir : Cardinal.directions) {
 			Coord p = cell.getFloorPos();
 			p.add(dir);
-			if(this.cells.get(p).getState() == CellState.OBSTRUCTED
-				|| this.cells.get(p).getState() == CellState.CORRIDOR) {
+			if(this.cells.get(p).isRoom()) {
 				return Cardinal.reverse(dir);
 			}
 		}
 		return Cardinal.EAST;
 	}
 	
-	public Cell findValidStair(List<Cell> potentials) {
+	public Cell findValidStair(List<Cell> potentials, Random rand) {
 		for(Cell c : potentials) {
 			int count = 0;
-			for(Cardinal dir : Cardinal.directions) {
+			for(Cardinal dir : Cardinal.randDirs(rand)) {
 				Coord p = c.getFloorPos();
 				p.add(dir);
-				if(this.cells.get(p).getState() == CellState.OBSTRUCTED
-					|| this.cells.get(p).getState() == CellState.CORRIDOR) {
+				if(this.cells.get(p).isRoom()) {
 					count++;
 				}
 			}

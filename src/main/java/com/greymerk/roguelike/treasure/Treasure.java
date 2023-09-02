@@ -25,23 +25,40 @@ public enum Treasure {
 		Treasure.generate(editor, rand, pos, type, level, false);
 	}
 	
-	public static void generate(IWorldEditor editor, Random rand, Coord pos, Treasure type, int level, boolean trapped){
+	public static void generate(IWorldEditor editor, Random rand, Coord pos, Treasure type, int level, boolean trapped) {
+		Treasure.generate(editor, rand, pos, type, level, false);
+	}
+	
+	
+	public static void generate(IWorldEditor editor, Random rand, Coord pos, Cardinal dir, Treasure type, int level, boolean trapped){
 		try {
-			create(editor, rand, pos, type, level, trapped);
+			create(editor, rand, pos, dir, type, level, trapped);
 		} catch (ChestPlacementException e) {
 			// do nothing
 		}
 	}
 	
+	public static ITreasureChest create(IWorldEditor editor, Random rand, Coord pos, Cardinal dir, Treasure type, int level, boolean trapped) throws ChestPlacementException{
+		ITreasureChest chest = new TreasureChest(type);
+		return chest.generate(editor, rand, pos, dir, level, trapped);
+		
+	}
+
 	public static ITreasureChest create(IWorldEditor editor, Random rand, Coord pos, Treasure type, int level, boolean trapped) throws ChestPlacementException{
 		ITreasureChest chest = new TreasureChest(type);
 		return chest.generate(editor, rand, pos, level, trapped);
 		
 	}
+
+	
+	public static ITreasureChest create(IWorldEditor editor, Random rand, Coord pos, Cardinal dir, Treasure type, int level) throws ChestPlacementException{
+		return create(editor, rand, pos, dir, type, level, false);
+	}
 	
 	public static ITreasureChest create(IWorldEditor editor, Random rand, Coord pos, Treasure type, int level) throws ChestPlacementException{
 		return create(editor, rand, pos, type, level, false);
 	}
+
 	
 	public static List<ITreasureChest> createChests(IWorldEditor editor, Random rand, int numChests, List<Coord> space, int level) throws ChestPlacementException{
 		return createChests(editor, rand, numChests, space, level, false);
@@ -55,14 +72,14 @@ public enum Treasure {
 		
 		int count = 0;
 		
-		for (Coord block : space){
+		for (Coord pos : space){
 			
 			if(count == numChests){
 				break;
 			}
 			
-			if (isValidChestSpace(editor, block)) {
-				create(editor, rand, block, getChestType(rand, level), level);		
+			if (isValidChestSpace(editor, pos)) {
+				create(editor, rand, pos, getChestType(rand, level), level);		
 			}
 		}
 		
@@ -77,14 +94,14 @@ public enum Treasure {
 		
 		int count = 0;
 		
-		for (Coord block : space){
+		for (Coord pos : space){
 			
 			if(count == numChests){
 				return chests;
 			}
 			
-			if (isValidChestSpace(editor, block)) {		
-				ITreasureChest chest = create(editor, rand, block, types.get(rand.nextInt(types.size())), level);
+			if (isValidChestSpace(editor, pos)) {		
+				ITreasureChest chest = create(editor, rand, pos, types.get(rand.nextInt(types.size())), level);
 				chests.add(chest);
 				count++;
 			}

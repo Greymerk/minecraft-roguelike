@@ -1,6 +1,8 @@
 package com.greymerk.roguelike.editor;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -16,6 +18,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.registry.tag.BlockTags;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.Direction;
@@ -107,11 +110,11 @@ public class WorldEditor implements IWorldEditor{
 	
 	@Override
 	public void fillDown(Random rand, Coord origin, IBlockFactory blocks) {
-		Coord cursor = new Coord(origin);
+		Coord pos = origin.copy();
 		
-		while(!isSolid(cursor) && cursor.getY() > 1){
-			blocks.set(this, rand, cursor);
-			cursor.add(Cardinal.DOWN);
+		while(!isSolid(pos) && pos.getY() > this.world.getBottomY() + 5){
+			blocks.set(this, rand, pos);
+			pos.add(Cardinal.DOWN);
 		}
 	}
 	
@@ -145,12 +148,21 @@ public class WorldEditor implements IWorldEditor{
 	}
 	
 	public boolean isGround(Coord pos) {
+		if(isPlant(pos)) return false;
+		if(this.isAir(pos)) return false;
+		
+		List<TagKey<Block>> tags = new ArrayList<TagKey<Block>>();
+		tags.add(BlockTags.BASE_STONE_OVERWORLD);
+		tags.add(BlockTags.DIRT);
+		tags.add(BlockTags.SAND);
+		tags.add(BlockTags.SNOW);
+		tags.add(BlockTags.STONE_ORE_REPLACEABLES);
+		
 		MetaBlock m = getBlock(pos);
 		
-		if(isPlant(pos)) return false;
-		if(m.getState().isIn(BlockTags.BASE_STONE_OVERWORLD)) return true;
-		if(m.getState().isIn(BlockTags.DIRT)) return true;
-		if(m.getState().isIn(BlockTags.SAND)) return true;
+		for(TagKey<Block> tag : tags) {
+			if(m.getState().isIn(tag)) return true;
+		}
 		return false;
 	}
 	

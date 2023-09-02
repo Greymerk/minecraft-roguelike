@@ -1,5 +1,6 @@
 package com.greymerk.roguelike.dungeon.room;
 
+import com.greymerk.roguelike.dungeon.fragment.Fragment;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IBlockFactory;
@@ -84,6 +85,7 @@ public class CrossRoom extends AbstractMediumRoom implements IRoom {
 		IBlockFactory pillar = theme.getPrimary().getPillar();
 		IStair stair = theme.getPrimary().getStair();
 		
+		Fragment.generate(Fragment.CELL_SUPPORT, editor, rand, theme, origin.copy());
 		
 		for(Cardinal dir : Cardinal.directions) {
 			Coord start = new Coord(origin);

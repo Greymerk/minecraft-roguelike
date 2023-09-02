@@ -14,9 +14,9 @@ public class ThemeTiledSlate extends ThemeBase implements ITheme {
 	public ThemeTiledSlate() {
 		
 		BlockWeightedRandom floor = new BlockWeightedRandom();
-		floor.addBlock(Deepslate.get(Deepslate.COBBLED), 30);
+		floor.addBlock(Deepslate.get(Deepslate.COBBLED), 50);
 		floor.addBlock(Deepslate.get(Deepslate.GOLD), 3);
-		floor.addBlock(Deepslate.get(Deepslate.DIAMOND), 3);
+		floor.addBlock(Deepslate.get(Deepslate.DIAMOND), 1);
 		
 		BlockWeightedRandom walls = new BlockWeightedRandom();
 		walls.addBlock(Deepslate.get(Deepslate.TILE), 30);

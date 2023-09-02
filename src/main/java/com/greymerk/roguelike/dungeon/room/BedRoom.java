@@ -232,7 +232,7 @@ public class BedRoom extends AbstractRoom implements IRoom {
 		pos = origin.copy();
 		pos.add(direction, 10);
 		pos.add(Cardinal.right(direction), 3);
-		Treasure.generate(editor, rand, pos, Treasure.STARTER, 0, false);
+		Treasure.generate(editor, rand, pos, Cardinal.left(direction), Treasure.STARTER, 0, false);
 		pos.add(direction);
 		BlockType.get(BlockType.CRAFTING_TABLE).set(editor, pos);
 		pos.add(direction);

@@ -6,6 +6,7 @@ import java.util.List;
 import com.greymerk.roguelike.dungeon.Floor;
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellState;
+import com.greymerk.roguelike.dungeon.fragment.Fragment;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
@@ -22,13 +23,22 @@ public class Stairway extends AbstractRoom implements IRoom {
 	@Override
 	public void generate(IWorldEditor editor) {
 		Random rand = editor.getRandom(getWorldPos());
-		Coord origin = new Coord(this.worldPos);
+		Coord origin = this.worldPos.copy();
 		buildCell(editor, rand, origin, direction);
 		this.buildSteps(editor, rand, origin);
-		Coord bottomCell = new Coord(origin).add(direction, 12).add(Cardinal.DOWN, 10);
+		Coord bottomCell = origin.copy().add(direction, 12).add(Cardinal.DOWN, 10);
 		buildCell(editor, rand, bottomCell, Cardinal.reverse(direction));
+		this.addDoors(editor, rand);
 	}
 
+	private void addDoors(IWorldEditor editor, Random rand) {
+		this.door(editor, rand, theme, this.worldPos.copy(), Cardinal.reverse(direction));
+		
+		for(Cardinal dir : this.entrances) {
+			this.door(editor, rand, theme, this.worldPos.copy(), dir);
+		}
+	}
+	
 	private void buildSteps(IWorldEditor editor, Random rand, Coord origin) {
 		for(int i = 0; i < 10; ++i) {
 			this.oneStep(editor, rand, origin, i);
@@ -77,8 +87,9 @@ public class Stairway extends AbstractRoom implements IRoom {
 		});;
 	}
 	
-	private void buildCell(IWorldEditor editor, Random rand, Coord pos, Cardinal entrance) {
+	private void buildCell(IWorldEditor editor, Random rand, Coord pos, Cardinal cellEntry) {
 		IStair stair = theme.getPrimary().getStair();
+		Fragment.generate(Fragment.CELL_SUPPORT, editor, rand, theme, pos.copy());
 		
 		Coord start = new Coord(pos);
 		start.add(new Coord(-2, 0, -2));
@@ -98,7 +109,7 @@ public class Stairway extends AbstractRoom implements IRoom {
 			end.add(Cardinal.UP, 3);
 			RectSolid.fill(editor, rand, start, end, theme.getPrimary().getPillar());
 			
-			if(dir == entrance) continue;
+			if(dir == cellEntry) continue;
 			
 			start = new Coord(end);
 			end.add(Cardinal.right(dir), 3);
@@ -119,10 +130,10 @@ public class Stairway extends AbstractRoom implements IRoom {
 	public List<Cell> getCells() {
 		List<Cell> cells = new ArrayList<Cell>();
 		Coord origin = new Coord(0,0,0);
-		Coord pos = new Coord(origin);
-		cells.add(new Cell(new Coord(pos), CellState.OBSTRUCTED));
+		Coord pos = origin.copy();
+		cells.add(new Cell(pos.copy(), CellState.OBSTRUCTED));
 		pos.add(direction);
-		Cell topMid = new Cell(new Coord(pos), CellState.OBSTRUCTED);
+		Cell topMid = new Cell(pos.copy(), CellState.OBSTRUCTED);
 		for(Cardinal dir : Cardinal.orthogonal(direction)) {
 			topMid.addWall(dir);
 		}

@@ -41,7 +41,8 @@ public abstract class AbstractMediumRoom extends AbstractRoom implements IRoom{
 			Coord pos = new Coord(fp);
 			pos.add(dir, 2);
 			Cell c = f.getCell(pos);
-			if(c.getState() != CellState.CORRIDOR) continue;
+			if(!(c.getState() == CellState.CORRIDOR
+				|| c.getState() == CellState.OBSTRUCTED)) continue;
 			List<Cardinal> walls = c.getWalls();
 			if(!walls.contains(Cardinal.reverse(dir))) {
 				this.addEntrance(dir);

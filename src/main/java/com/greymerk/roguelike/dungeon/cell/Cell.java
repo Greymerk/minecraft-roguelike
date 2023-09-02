@@ -28,6 +28,12 @@ public class Cell {
 		this.state = state;
 	}
 	
+	public boolean isRoom() {
+		if(this.state == CellState.CORRIDOR) return true;
+		if(this.state == CellState.OBSTRUCTED) return true;
+		return false;
+	}
+	
 	public Coord getFloorPos() {
 		return new Coord(this.floorPos);
 	}

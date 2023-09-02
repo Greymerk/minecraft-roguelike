@@ -14,6 +14,8 @@ import com.greymerk.roguelike.editor.theme.ITheme;
 import com.greymerk.roguelike.editor.theme.Theme;
 import com.greymerk.roguelike.editor.theme.ThemeBase;
 
+import net.minecraft.block.Blocks;
+
 public class ThemeNether extends ThemeBase implements ITheme {
 
 	public ThemeNether() {
@@ -28,7 +30,8 @@ public class ThemeNether extends ThemeBase implements ITheme {
 		BlockWeightedRandom floor = new BlockWeightedRandom();
 		floor.addBlock(walls, 1500);
 		floor.addBlock(BlockType.get(BlockType.NETHERBRICK), 1000);
-		floor.addBlock(BlockType.get(BlockType.REDSTONE_BLOCK), 50);
+		floor.addBlock(new MetaBlock(Blocks.CRIMSON_NYLIUM), 100);
+		floor.addBlock(BlockType.get(BlockType.REDSTONE_BLOCK), 10);
 		floor.addBlock(BlockType.get(BlockType.GOLD_BLOCK), 2);
 		floor.addBlock(BlockType.get(BlockType.DIAMOND_BLOCK), 1);
 		

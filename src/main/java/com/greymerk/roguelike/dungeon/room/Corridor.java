@@ -6,6 +6,7 @@ import java.util.List;
 import com.greymerk.roguelike.dungeon.Floor;
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellState;
+import com.greymerk.roguelike.dungeon.fragment.Fragment;
 import com.greymerk.roguelike.dungeon.fragment.wall.WallShelf;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
@@ -27,44 +28,51 @@ public class Corridor extends AbstractRoom implements IRoom{
 		IBlockFactory blocks = theme.getPrimary().getWall();
 		IStair stairs = theme.getPrimary().getStair();
 		
-		Coord start = new Coord(worldPos);
+		Coord start = worldPos.copy();
 		start.add(new Coord(-3, -1, -3));
-		Coord end = new Coord(worldPos);
+		Coord end = worldPos.copy();
 		end.add(new Coord(3, 4, 3));
 		
 		RectHollow.fill(editor, rand, start, end, blocks, false, true);
 		
 		for(Cardinal dir : Cardinal.directions) {
-			start = new Coord(worldPos);
+			start = worldPos.copy();
 			start.add(dir, 2);
 			start.add(Cardinal.left(dir), 2);
-			end = new Coord(start);
+			end = start.copy();
 			end.add(Cardinal.UP, 3);
 			RectSolid.fill(editor, rand, start, end, theme.getPrimary().getPillar());
-			Coord pos = new Coord(start);
-			pos.add(Cardinal.DOWN);
-			editor.fillDown(rand, pos, theme.getPrimary().getPillar());
-			start = new Coord(end);
+			start = end.copy();
 			end.add(Cardinal.right(dir), 3);
 			RectSolid.fill(editor, rand, start, end, blocks);
 			
+			/*
+			Coord pos = worldPos.copy();
+			pos.add(dir, 2);
+			pos.add(Cardinal.left(dir), 2);
+			pos.add(Cardinal.DOWN, 2);
+			editor.fillDown(rand, pos, theme.getPrimary().getPillar());
+			*/
+			
 			for(Cardinal orth : Cardinal.orthogonal(dir)) {
-				pos = new Coord(worldPos);
+				Coord pos = worldPos.copy();
 				pos.add(dir, 2);
 				pos.add(orth);
 				pos.add(Cardinal.UP, 2);
 				stairs.setOrientation(Cardinal.reverse(orth), true).set(editor, pos);
 			}
 			
+			Fragment.generate(Fragment.CELL_SUPPORT, editor, rand, theme, worldPos.copy());
+			
 		}
 		
 		start = new Coord(worldPos);
 		start.add(Cardinal.DOWN);
 		end = new Coord(start);
-		start.add(Cardinal.NORTH, 3);
-		start.add(Cardinal.WEST, 3);
-		end.add(Cardinal.SOUTH, 3);
-		end.add(Cardinal.EAST, 3);
+		start.add(Cardinal.NORTH, 2);
+		start.add(Cardinal.WEST, 2);
+		end.add(Cardinal.SOUTH, 2);
+		end.add(Cardinal.EAST, 2);
 		RectSolid.fill(editor, rand, start, end, theme.getPrimary().getFloor());
 		
 		for(Cardinal dir : Cardinal.directions) {

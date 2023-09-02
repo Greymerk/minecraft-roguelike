@@ -8,16 +8,11 @@ import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.WorldEditor;
 
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.world.ServerChunkManager;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.random.CheckedRandom;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.gen.chunk.placement.RandomSpreadStructurePlacement;
-import net.minecraft.world.gen.chunk.placement.SpreadType;
-import net.minecraft.world.gen.chunk.placement.StructurePlacement;
-import net.minecraft.world.gen.chunk.placement.StructurePlacementCalculator;
 
 public class DungeonPlacement {
 
@@ -75,42 +70,34 @@ public class DungeonPlacement {
 		return null;
 	}
 	
-	
-
-	public static boolean hasVillage(ServerWorld overworld, long seed, ChunkPos cpos) {
-		ServerChunkManager cm = overworld.getChunkManager();
-		StructurePlacement placement = (StructurePlacement)new RandomSpreadStructurePlacement(34, 8, SpreadType.LINEAR, 10387312);
-		StructurePlacementCalculator calc = cm.getStructurePlacementCalculator();
-		return placement.shouldGenerate(calc, cpos.x, cpos.z);
-	}
-	
-	// Kudos to amidst
 	public static boolean hasVillage(long seed, ChunkPos cpos) {
 		int chunkX = cpos.x;
-		int chunkY = cpos.z;
+		int chunkZ = cpos.z;
 		
-		//byte villageParam1 = 32;
-		byte villageParam1 = 34;
-		byte villageParam2 = 8;
+		byte spacing = 34; // used to be 32
+		byte separation = 8;
+		long magicNumber1 = 341873128712L;
+		long magicNumber2 = 132897987541L;
+		long salt = 10387312L;
 		
-		int k = chunkX;
-		int m = chunkY;
-		if (chunkX < 0) chunkX -= villageParam1 - 1;
-		if (chunkY < 0) chunkY -= villageParam1 - 1;
+		int x = chunkX;
+		int z = chunkZ;
+		if (chunkX < 0) chunkX -= spacing - 1;
+		if (chunkZ < 0) chunkZ -= spacing - 1;
 		
-		int n = chunkX / villageParam1;
-		int i1 = chunkY / villageParam1;
+		int xMod = chunkX / spacing;
+		int zMod = chunkZ / spacing;
 		
-		long positionSeed = n * 341873128712L + i1 * 132897987541L + seed + 10387312L;
+		long positionSeed = xMod * magicNumber1 + zMod * magicNumber2 + seed + salt;
 		Random rand = new CheckedRandom(positionSeed);
 		
-		n *= villageParam1;
-		i1 *= villageParam1;
-		n += rand.nextInt(villageParam1 - villageParam2);
-		i1 += rand.nextInt(villageParam1 - villageParam2);
-		chunkX = k;
-		chunkY = m;
-		return ((chunkX == n) && (chunkY == i1));
+		xMod *= spacing;
+		zMod *= spacing;
+		xMod += rand.nextInt(spacing - separation);
+		zMod += rand.nextInt(spacing - separation);
+		chunkX = x;
+		chunkZ = z;
+		return ((chunkX == xMod) && (chunkZ == zMod));
 	}
 	
 }
