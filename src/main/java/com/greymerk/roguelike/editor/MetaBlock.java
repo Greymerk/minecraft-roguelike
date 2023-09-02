@@ -7,6 +7,14 @@ import net.minecraft.block.BlockState;
 import net.minecraft.state.State;
 import net.minecraft.state.property.Property;
 
+/**
+A Wrapper for Mojang's BlockState objects
+
+MetaBlocks implement IBlockFactory and may
+therefore be used interchangably and
+recursively with other IBlockFactory containers
+such as BlockWeightedRandom
+**/
 public class MetaBlock extends BlockBase{
 
 	private BlockState state;

@@ -8,6 +8,9 @@ import net.minecraft.nbt.NbtInt;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 
+/**
+Mutable Coordinate 3DVector
+**/
 public class Coord {
 	private int x;
 	private int y;

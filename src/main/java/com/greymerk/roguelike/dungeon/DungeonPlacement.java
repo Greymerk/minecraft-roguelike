@@ -21,7 +21,7 @@ public class DungeonPlacement {
 		MinecraftServer server = world.getServer();
 		ServerWorld overworld = server.getOverworld();
 		
-		int range = 6;
+		int range = 10;
 		ChunkPos start = new ChunkPos(cpos.x - range, cpos.z - range);
 		ChunkPos end = new ChunkPos(cpos.x + range, cpos.z + range);
 		List<ChunkPos> chunks = new ArrayList<ChunkPos>();
@@ -41,7 +41,7 @@ public class DungeonPlacement {
 		Coord chunkVillage = new Coord(villageChunk.x, 0, villageChunk.z);
 		
 		int chunkDist = chunkFrom.manhattanDistance(chunkVillage);
-		if(chunkDist != 5) return false;
+		if(chunkDist != 6) return false;
 
 		Coord dirToDungeon = new Coord(
 				rand.nextBetween(-100, 100),

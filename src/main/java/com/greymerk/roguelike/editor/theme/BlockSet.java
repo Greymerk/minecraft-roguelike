@@ -9,17 +9,18 @@ import com.greymerk.roguelike.editor.blocks.door.IDoor;
 import com.greymerk.roguelike.editor.blocks.stair.IStair;
 import com.greymerk.roguelike.editor.blocks.stair.MetaStair;
 import com.greymerk.roguelike.editor.blocks.stair.StairType;
+import com.greymerk.roguelike.editor.factories.BlockFloor;
 
 
 public class BlockSet implements IBlockSet {
 
-	private IBlockFactory floor;
-	private IBlockFactory walls;
-	private IStair stair;
-	private IBlockFactory pillar;
-	private IDoor door;
-	private IBlockFactory lightblock;
-	private IBlockFactory liquid;
+	protected BlockFloor floor;
+	protected IBlockFactory walls;
+	protected IStair stair;
+	protected IBlockFactory pillar;
+	protected IDoor door;
+	protected IBlockFactory lightblock;
+	protected IBlockFactory liquid;
 	
 	public BlockSet(){
 		
@@ -28,7 +29,7 @@ public class BlockSet implements IBlockSet {
 	public BlockSet(IBlockFactory floor, IBlockFactory walls, IStair stair, IBlockFactory pillar,
 					IDoor door, IBlockFactory lightblock, IBlockFactory liquid){
 		
-		this.floor = floor;
+		this.floor = new BlockFloor(floor);
 		this.walls = walls;
 		this.stair = stair;
 		this.pillar = pillar;
@@ -58,7 +59,7 @@ public class BlockSet implements IBlockSet {
 		this(walls, walls, stair, pillar);
 	}	
 	
-	public BlockSet(IBlockSet toCopy){
+	public BlockSet(BlockSet toCopy){
 		this.walls = toCopy.getWall();
 		this.floor = toCopy.getFloor();
 		this.stair = toCopy.getStair();
@@ -68,7 +69,7 @@ public class BlockSet implements IBlockSet {
 		this.liquid = toCopy.getLiquid();
 	}
 	
-	public BlockSet(IBlockSet base, IBlockSet other){
+	public BlockSet(BlockSet base, BlockSet other){
 		this.walls = other.getWall() != null ? other.getWall() : base.getWall();
 		this.floor = other.getFloor() != null ? other.getFloor() : base.getFloor();
 		this.stair = other.getStair() != null ? other.getStair() : base.getStair();
@@ -94,8 +95,8 @@ public class BlockSet implements IBlockSet {
 	}
 
 	@Override
-	public IBlockFactory getFloor() {
-		return this.floor != null ? this.floor : this.getWall();
+	public BlockFloor getFloor() {
+		return this.floor != null ? this.floor : new BlockFloor(this.getWall());
 	}
 
 	@Override
