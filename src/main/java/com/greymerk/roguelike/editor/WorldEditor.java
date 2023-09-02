@@ -216,4 +216,9 @@ public class WorldEditor implements IWorldEditor{
 	public void fillChest(ITreasureChest chest, Random rand) {
 		this.loot.process(rand, chest);
 	}
+
+	@Override
+	public int getMaxDepth() {
+		return world.getBottomY();
+	}
 }

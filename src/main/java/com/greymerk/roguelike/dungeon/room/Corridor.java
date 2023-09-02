@@ -15,6 +15,7 @@ import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.blocks.stair.IStair;
 import com.greymerk.roguelike.editor.shapes.RectHollow;
 import com.greymerk.roguelike.editor.shapes.RectSolid;
+import com.greymerk.roguelike.editor.theme.ITheme;
 
 import net.minecraft.util.math.random.Random;
 
@@ -40,19 +41,12 @@ public class Corridor extends AbstractRoom implements IRoom{
 			start.add(dir, 2);
 			start.add(Cardinal.left(dir), 2);
 			end = start.copy();
+			start.add(Cardinal.DOWN);
 			end.add(Cardinal.UP, 3);
 			RectSolid.fill(editor, rand, start, end, theme.getPrimary().getPillar());
 			start = end.copy();
 			end.add(Cardinal.right(dir), 3);
 			RectSolid.fill(editor, rand, start, end, blocks);
-			
-			/*
-			Coord pos = worldPos.copy();
-			pos.add(dir, 2);
-			pos.add(Cardinal.left(dir), 2);
-			pos.add(Cardinal.DOWN, 2);
-			editor.fillDown(rand, pos, theme.getPrimary().getPillar());
-			*/
 			
 			for(Cardinal orth : Cardinal.orthogonal(dir)) {
 				Coord pos = worldPos.copy();
@@ -69,11 +63,18 @@ public class Corridor extends AbstractRoom implements IRoom{
 		start = new Coord(worldPos);
 		start.add(Cardinal.DOWN);
 		end = new Coord(start);
-		start.add(Cardinal.NORTH, 2);
-		start.add(Cardinal.WEST, 2);
-		end.add(Cardinal.SOUTH, 2);
-		end.add(Cardinal.EAST, 2);
+		start.add(Cardinal.NORTH);
+		start.add(Cardinal.WEST);
+		end.add(Cardinal.SOUTH);
+		end.add(Cardinal.EAST);
 		RectSolid.fill(editor, rand, start, end, theme.getPrimary().getFloor());
+		
+		for(Cardinal dir : Cardinal.directions) {
+			Coord pos = worldPos.copy();
+			pos.add(Cardinal.DOWN);
+			pos.add(dir, 2);
+			this.crossBar(editor, rand, theme, pos, dir);
+		}
 		
 		for(Cardinal dir : Cardinal.directions) {
 			if(this.entrances.contains(dir)) {
@@ -84,6 +85,22 @@ public class Corridor extends AbstractRoom implements IRoom{
 			}
 		}
 	}
+	
+	private void crossBar(IWorldEditor editor, Random rand, ITheme theme, Coord origin, Cardinal dir) {
+		IBlockFactory wall = theme.getPrimary().getWall();
+		IStair stair = theme.getPrimary().getStair();
+		
+		wall.set(editor, rand, origin, true, true);
+		for(Cardinal o : Cardinal.orthogonal(dir)) {
+			Coord pos = origin.copy();
+			pos.add(o);
+			wall.set(editor, rand, pos, true, true);
+			pos.add(Cardinal.DOWN);
+			stair.setOrientation(Cardinal.reverse(o), true);
+			stair.set(editor, pos, true, false);
+		}
+	}
+
 
 	@Override
 	public List<Cell> getCells() {

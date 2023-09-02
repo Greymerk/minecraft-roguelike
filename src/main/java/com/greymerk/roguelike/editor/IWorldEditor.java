@@ -40,10 +40,6 @@ public interface IWorldEditor {
 	
 	public void fillChest(ITreasureChest chest, Random rand);
 	
-	//int getStat(Block block);
-
-	//TreasureManager getTreasure();
-
-	//void addChest(ITreasureChest chest);
+	public int getMaxDepth();
 
 }
