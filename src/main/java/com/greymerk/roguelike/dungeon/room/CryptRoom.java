@@ -128,7 +128,7 @@ public class CryptRoom extends AbstractMediumRoom implements IRoom {
 		
 		Coord pos = origin.copy();
 		pos.add(dir, 6);
-		this.door(editor, rand, theme, pos, dir);
+		Fragment.generate(Fragment.ARCH, editor, rand, theme, pos, dir);
 	}
 
 	private void entrySideWall(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {

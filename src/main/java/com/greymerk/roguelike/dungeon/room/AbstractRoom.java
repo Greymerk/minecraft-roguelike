@@ -7,11 +7,8 @@ import java.util.List;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
-import com.greymerk.roguelike.editor.blocks.BlockType;
-import com.greymerk.roguelike.editor.blocks.stair.IStair;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.editor.boundingbox.IBounded;
-import com.greymerk.roguelike.editor.shapes.RectSolid;
 import com.greymerk.roguelike.editor.theme.ITheme;
 import com.greymerk.roguelike.editor.theme.Theme;
 
@@ -145,47 +142,6 @@ public abstract class AbstractRoom implements IRoom{
 	@Override
 	public void addEntrance(Cardinal dir) {
 		this.entrances.add(dir);
-	}
-	
-	public void clearDoors(IWorldEditor editor, Random rand, ITheme theme, Coord origin) {
-		for(Cardinal dir : Cardinal.directions) {
-			if(!(this.entrances.contains(dir))) continue;
-			door(editor, rand, theme, origin, dir);	
-		}
-	}
-	
-	public void door(IWorldEditor editor, Random rand, ITheme theme, Coord origin, Cardinal dir) {
-		Coord start = origin.copy();
-		start.add(dir, 3);
-		Coord end = start.copy();
-		start.add(Cardinal.left(dir), 2);
-		end.add(Cardinal.right(dir), 2);
-		end.add(Cardinal.UP, 3);
-		RectSolid.fill(editor, rand, start, end, BlockType.get(BlockType.AIR));
-		
-		start = origin.copy();
-		start.add(dir, 3);
-		start.add(Cardinal.DOWN);
-		end = start.copy();
-		start.add(Cardinal.left(dir), 2);
-		end.add(Cardinal.right(dir), 2);
-		RectSolid.fill(editor, rand, start, end, theme.getPrimary().getFloor());
-		
-		for(Cardinal o : Cardinal.orthogonal(dir)) {
-			Coord pos = new Coord(origin);
-			pos.add(dir, 3);
-			pos.add(Cardinal.UP, 2);
-			pos.add(o, 2);
-			IStair stair = theme.getPrimary().getStair();
-			stair.setOrientation(Cardinal.reverse(o), true);
-			stair.set(editor, pos);
-			
-			pos.add(Cardinal.UP);
-			theme.getPrimary().getWall().set(editor, rand, pos);
-			
-			pos.add(Cardinal.reverse(o));
-			stair.set(editor, pos);
-		}
 	}
 	
 	public void applyFilters(IWorldEditor editor) {

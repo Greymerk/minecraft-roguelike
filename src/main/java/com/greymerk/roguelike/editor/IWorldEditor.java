@@ -1,6 +1,5 @@
 package com.greymerk.roguelike.editor;
 
-import com.greymerk.roguelike.editor.blocks.stair.IStair;
 import com.greymerk.roguelike.treasure.ITreasureChest;
 
 import net.minecraft.block.entity.BlockEntity;
@@ -21,17 +20,13 @@ public interface IWorldEditor {
 	public long getSeed();
 	
 	public Random getRandom(Coord pos);
-		
-	public void fillDown(Random rand, Coord pos, IBlockFactory pillar);
-	
+			
 	public Coord findSurface(Coord pos);
 	
 	public boolean isChunkLoaded(Coord pos);
 	
 	public boolean isGround(Coord pos);
 	
-	public void spiralStairStep(Random rand, Coord pos, IStair stair, IBlockFactory pillar);
-
 	public boolean isOverworld();
 
 	public boolean isSolid(Coord pos);

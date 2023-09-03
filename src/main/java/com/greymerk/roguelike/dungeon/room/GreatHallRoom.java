@@ -1,5 +1,6 @@
 package com.greymerk.roguelike.dungeon.room;
 
+import com.greymerk.roguelike.dungeon.fragment.Fragment;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
@@ -29,7 +30,7 @@ public class GreatHallRoom extends AbstractLargeRoom implements IRoom {
 		for(Cardinal dir : Cardinal.directions) {
 			Coord pos = new Coord(origin);
 			pos.add(dir, 12);
-			this.door(editor, rand, theme, pos, dir);
+			Fragment.generate(Fragment.ARCH, editor, rand, theme, pos, dir);
 		}
 	}
 	

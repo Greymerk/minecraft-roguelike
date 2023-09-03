@@ -1,5 +1,6 @@
 package com.greymerk.roguelike.dungeon.fragment;
 
+import com.greymerk.roguelike.dungeon.fragment.parts.ArchWay;
 import com.greymerk.roguelike.dungeon.fragment.parts.CellSupportBeamFragment;
 import com.greymerk.roguelike.dungeon.fragment.parts.CryptFragment;
 import com.greymerk.roguelike.editor.Cardinal;
@@ -11,12 +12,11 @@ import net.minecraft.util.math.random.Random;
 
 public enum Fragment {
 
-	CRYPT, CELL_SUPPORT;
+	CRYPT, CELL_SUPPORT, ARCH;
 	
 	public static void generate(Fragment type, IWorldEditor editor, Random rand, ITheme theme, Coord pos) {
 		generate(type, editor, rand, theme, pos, Cardinal.DOWN);
 	}
-		
 	
 	public static void generate(Fragment type, IWorldEditor editor, Random rand, ITheme theme, Coord pos, Cardinal dir) {
 		IFragment fragment = fromType(type);
@@ -27,6 +27,7 @@ public enum Fragment {
 		switch(type) {
 		case CELL_SUPPORT: return new CellSupportBeamFragment();
 		case CRYPT: return new CryptFragment();
+		case ARCH: return new ArchWay();
 		default:
 			return null;
 		}

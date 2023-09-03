@@ -78,7 +78,7 @@ public class Corridor extends AbstractRoom implements IRoom{
 		
 		for(Cardinal dir : Cardinal.directions) {
 			if(this.entrances.contains(dir)) {
-				this.door(editor, rand, theme, worldPos, dir);
+				Fragment.generate(Fragment.ARCH, editor, rand, theme, worldPos, dir);
 			} else {
 				Coord pos = new Coord(worldPos);
 				new WallShelf().generate(editor, rand, theme, pos, dir);

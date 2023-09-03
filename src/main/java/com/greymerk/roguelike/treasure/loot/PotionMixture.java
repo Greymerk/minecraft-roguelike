@@ -101,8 +101,8 @@ public enum PotionMixture {
 			return potion;
 		case NECTAR:
 			potion = PotionItem.getSpecific(PotionForm.REGULAR, null, false, false);
-			PotionEffect.addCustomEffect(potion, PotionEffect.ABSORPTION, 10, 20);
-			PotionEffect.addCustomEffect(potion, PotionEffect.RESISTANCE, 3, 20);
+			PotionEffect.addCustomEffect(potion, PotionEffect.ABSORPTION, 4, 180);
+			PotionEffect.addCustomEffect(potion, PotionEffect.RESISTANCE, 3, 180);
 			PotionEffect.addCustomEffect(potion, PotionEffect.HEALTH, 2, 1);
 			Loot.setItemName(potion, "Nectar");
 			Loot.setItemLore(potion, "A Floral extract.");

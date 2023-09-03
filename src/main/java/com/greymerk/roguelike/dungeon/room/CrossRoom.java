@@ -71,7 +71,7 @@ public class CrossRoom extends AbstractMediumRoom implements IRoom {
 			Coord pos = new Coord(origin);
 			pos.add(dir, 6);
 			if(this.entrances.contains(dir)) {
-				this.door(editor, rand, theme, pos, dir);
+				Fragment.generate(Fragment.ARCH, editor, rand, theme, pos, dir);
 			}
 			
 			pos.add(Cardinal.left(dir), 6);

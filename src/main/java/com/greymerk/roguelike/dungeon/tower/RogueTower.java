@@ -1,7 +1,6 @@
 package com.greymerk.roguelike.dungeon.tower;
 
-import net.minecraft.util.math.random.Random;
-
+import com.greymerk.roguelike.dungeon.fragment.parts.SpiralStairCase;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IBlockFactory;
@@ -12,6 +11,8 @@ import com.greymerk.roguelike.editor.blocks.Torch;
 import com.greymerk.roguelike.editor.blocks.stair.IStair;
 import com.greymerk.roguelike.editor.shapes.RectSolid;
 import com.greymerk.roguelike.editor.theme.ITheme;
+
+import net.minecraft.util.math.random.Random;
 
 
 public class RogueTower implements ITower{
@@ -29,14 +30,14 @@ public class RogueTower implements ITower{
 		
 		IStair stair = theme.getPrimary().getStair();
 		
-		Coord floor = Tower.getBaseCoord(editor, dungeon);
-		int ground = floor.getY() - 1;
-		int main = floor.getY() + 4;
-		int roof = floor.getY() + 9;
+		Coord towerBase = Tower.getBaseCoord(editor, dungeon);
+		int ground = towerBase.getY() - 1;
+		int main = towerBase.getY() + 4;
+		int roof = towerBase.getY() + 9;
 		
-		RectSolid.fill(editor, rand, new Coord(x - 3, ground, z - 3), new Coord(x + 3, floor.getY() + 12, z + 3), air);
+		RectSolid.fill(editor, rand, new Coord(x - 3, ground, z - 3), new Coord(x + 3, towerBase.getY() + 12, z + 3), air);
 		
-		RectSolid.fill(editor, rand, new Coord(x - 2, y + 10, z - 2), new Coord(x + 2, floor.getY() - 1, z + 2), blocks, false, true);
+		RectSolid.fill(editor, rand, new Coord(x - 2, y + 10, z - 2), new Coord(x + 2, towerBase.getY() - 1, z + 2), blocks, false, true);
 
 		Coord start;
 		Coord end;
@@ -48,7 +49,7 @@ public class RogueTower implements ITower{
 		for(Cardinal dir : Cardinal.directions){
 			for (Cardinal orth : Cardinal.orthogonal(dir)){
 				// ground floor
-				start = new Coord(floor);
+				start = new Coord(towerBase);
 				start.add(Cardinal.DOWN, 1);
 				start.add(dir, 2);
 				end = new Coord(start);
@@ -60,7 +61,7 @@ public class RogueTower implements ITower{
 				end.add(orth, 2);
 				RectSolid.fill(editor, rand, start, end, blocks, true, true);
 				
-				cursor = new Coord(floor);
+				cursor = new Coord(towerBase);
 				cursor.add(dir, 5);
 				cursor.add(orth, 1);
 				start = new Coord(cursor);
@@ -76,28 +77,28 @@ public class RogueTower implements ITower{
 				stair.setOrientation(orth, false);
 				stair.set(editor, cursor);
 				
-				start = new Coord(floor);
+				start = new Coord(towerBase);
 				start.add(dir, 4);
 				end = new Coord(start);
 				end.add(Cardinal.UP, 9);
 				end.add(orth, 2);
 				RectSolid.fill(editor, rand, start, end, blocks);
 				
-				start = new Coord(floor);
+				start = new Coord(towerBase);
 				start.add(dir, 3);
 				start.add(orth, 3);
 				end = new Coord(start);
 				end.add(Cardinal.UP, 9);
 				RectSolid.fill(editor, rand, start, end, blocks);
 				
-				start = new Coord(floor);
+				start = new Coord(towerBase);
 				start.add(dir, 4);
 				end = new Coord(start);
 				end.add(dir, 1);
 				end.add(Cardinal.UP, 1);
 				RectSolid.fill(editor, rand, start, end, air);
 				
-				cursor = new Coord(floor);
+				cursor = new Coord(towerBase);
 				cursor.add(dir, 3);
 				cursor.add(orth, 2);
 				cursor.add(Cardinal.UP, 3);
@@ -107,7 +108,7 @@ public class RogueTower implements ITower{
 				stair.setOrientation(Cardinal.reverse(orth), true);
 				stair.set(editor, cursor);
 				
-				start = new Coord(floor);
+				start = new Coord(towerBase);
 				start.add(dir, 4);
 				start.add(orth, 3);
 				start.add(Cardinal.UP, 4);
@@ -119,7 +120,7 @@ public class RogueTower implements ITower{
 				end.add(Cardinal.UP, 4);
 				RectSolid.fill(editor, rand, start, end, blocks, true, true);
 				
-				start = new Coord(floor);
+				start = new Coord(towerBase);
 				start.add(dir, 5);
 				start.add(Cardinal.UP, 4);
 				stair.setOrientation(dir, true);
@@ -170,7 +171,7 @@ public class RogueTower implements ITower{
 				cursor.add(Cardinal.DOWN, 1);
 				blocks.set(editor, rand, cursor);
 				
-				cursor = new Coord(floor);
+				cursor = new Coord(towerBase);
 				cursor.add(dir, 6);
 				cursor.add(Cardinal.UP, 9);
 				
@@ -189,7 +190,7 @@ public class RogueTower implements ITower{
 				cursor.add(Cardinal.UP, 1);
 				this.addCrenellation(editor, rand, cursor, blocks);
 				
-				cursor = new Coord(floor);
+				cursor = new Coord(towerBase);
 				cursor.add(dir, 4);
 				cursor.add(Cardinal.UP, 5);
 				air.set(editor, cursor);
@@ -221,9 +222,11 @@ public class RogueTower implements ITower{
 			}
 		}
 		
-		for(int i = main; i >= y; --i){
-			editor.spiralStairStep(rand, new Coord(x, i, z), stair, theme.getPrimary().getPillar());
-		}
+		start = towerBase.copy();
+		start.add(Cardinal.UP, 4);
+		end = dungeon.copy();
+		SpiralStairCase stairCase = new SpiralStairCase(start, end);
+		stairCase.generate(editor, rand, theme);
 	}
 	
 	

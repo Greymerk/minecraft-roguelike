@@ -6,9 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import com.greymerk.roguelike.editor.blocks.BlockType;
-import com.greymerk.roguelike.editor.blocks.stair.IStair;
-import com.greymerk.roguelike.editor.shapes.RectSolid;
 import com.greymerk.roguelike.treasure.ITreasureChest;
 import com.greymerk.roguelike.treasure.loot.rules.LootRuleManager;
 import com.greymerk.roguelike.treasure.loot.rules.RoguelikeLootRules;
@@ -57,7 +54,7 @@ public class WorldEditor implements IWorldEditor{
 		if(currentBlock.getBlock() == Blocks.SPAWNER) return false;
 		
 		if(!fillAir && this.isAir(pos)) return false;
-		if(!replaceSolid && !this.isAir(pos))	return false;
+		if(!replaceSolid && this.isSolid(pos))	return false;
 		
 		try{
 			world.setBlockState(pos.getBlockPos(), block.getState(), block.getFlag());
@@ -107,17 +104,6 @@ public class WorldEditor implements IWorldEditor{
 	public boolean isChunkLoaded(Coord pos) {
 		return world.getChunk(pos.getBlockPos()).getStatus() == ChunkStatus.FULL;
 	}
-	
-	@Override
-	public void fillDown(Random rand, Coord origin, IBlockFactory blocks) {
-		Coord pos = origin.copy();
-		
-		while(!isSolid(pos) && pos.getY() > this.world.getBottomY() + 5){
-			blocks.set(this, rand, pos);
-			pos.add(Cardinal.DOWN);
-		}
-	}
-	
 
 	public Coord findSurface(Coord pos) {
 		
@@ -164,32 +150,6 @@ public class WorldEditor implements IWorldEditor{
 			if(m.getState().isIn(tag)) return true;
 		}
 		return false;
-	}
-	
-	@Override
-	public void spiralStairStep(Random rand, Coord origin, IStair stair, IBlockFactory fill){
-		
-		MetaBlock air = BlockType.get(BlockType.AIR);
-		Coord cursor;
-		Coord start;
-		Coord end;
-		
-		start = new Coord(origin);
-		start.add(new Coord(-1, 0, -1));
-		end = new Coord(origin);
-		end.add(new Coord(1, 0, 1));
-		
-		RectSolid.fill(this, rand, start, end, air);
-		fill.set(this, rand, origin);
-		
-		Cardinal dir = Cardinal.directions[origin.getY() % 4];
-		cursor = new Coord(origin);
-		cursor.add(dir);
-		stair.setOrientation(Cardinal.left(dir), false).set(this, cursor);
-		cursor.add(Cardinal.right(dir));
-		stair.setOrientation(Cardinal.right(dir), true).set(this, cursor);
-		cursor.add(Cardinal.reverse(dir));
-		stair.setOrientation(Cardinal.reverse(dir), true).set(this, cursor);
 	}
 	
 	public boolean isOverworld() {
