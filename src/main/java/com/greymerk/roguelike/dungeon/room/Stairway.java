@@ -133,8 +133,6 @@ public class Stairway extends AbstractRoom implements IRoom {
 			end.add(Cardinal.UP, 3);
 			RectSolid.fill(editor, rand, start, end, theme.getPrimary().getPillar());
 			
-			//if(dir == cellEntry) continue;
-			
 			start = new Coord(end);
 			end.add(Cardinal.right(dir), 3);
 			RectSolid.fill(editor, rand, start, end, theme.getPrimary().getWall());

@@ -43,7 +43,7 @@ public class Corridor extends AbstractRoom implements IRoom{
 			end = start.copy();
 			start.add(Cardinal.DOWN);
 			end.add(Cardinal.UP, 3);
-			RectSolid.fill(editor, rand, start, end, theme.getPrimary().getPillar());
+			RectSolid.fill(editor, rand, start, end, theme.getSecondary().getPillar());
 			start = end.copy();
 			end.add(Cardinal.right(dir), 3);
 			RectSolid.fill(editor, rand, start, end, blocks);

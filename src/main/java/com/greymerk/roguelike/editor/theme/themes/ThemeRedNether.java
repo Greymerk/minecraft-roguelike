@@ -33,15 +33,15 @@ public class ThemeRedNether extends ThemeBase implements ITheme {
 		floor.addBlock(BlockType.get(BlockType.DIAMOND_BLOCK), 2);
 		
 		MetaStair stair = new MetaStair(StairType.NETHERBRICK);
-		MetaBlock pillar = BlockType.get(BlockType.OBSIDIAN);
+		MetaBlock obsidian = BlockType.get(BlockType.OBSIDIAN);
+		MetaBlock redBrick = BlockType.get(BlockType.RED_NETHERBRICK);
 		
 		IDoor door = new Door(DoorType.IRON);
 		IBlockFactory lightstone = BlockType.get(BlockType.GLOWSTONE);
 		IBlockFactory liquid = BlockType.get(BlockType.LAVA_FLOWING);
 		
-		this.primary = new BlockSet(floor, walls, stair, pillar, door, lightstone, liquid);
-		this.secondary = new BlockSet(floor, BlockType.get(BlockType.RED_NETHERBRICK), stair, BlockType.get(BlockType.MAGMA),
-				door, lightstone, liquid);
+		this.primary = new BlockSet(floor, walls, stair, obsidian, door, lightstone, liquid);
+		this.secondary = new BlockSet(floor, redBrick, stair, obsidian, door, lightstone, liquid);
 
 	}
 	
