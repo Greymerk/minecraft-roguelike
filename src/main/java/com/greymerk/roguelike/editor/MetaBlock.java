@@ -53,7 +53,7 @@ public class MetaBlock extends BlockBase{
 	}
 	
 	public int getFlag(){
-		return 2;
+		return Block.NOTIFY_ALL;
 	}
 	
 	public <T extends Comparable<T>, V extends T> State<?, BlockState> withProperty(Property<T> property, V value) {

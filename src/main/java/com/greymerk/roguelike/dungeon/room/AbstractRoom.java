@@ -98,7 +98,7 @@ public abstract class AbstractRoom implements IRoom{
 	
 	@Override
 	public Coord getWorldPos() {
-		return new Coord(this.worldPos);
+		return worldPos.copy();
 	}
 
 	@Override

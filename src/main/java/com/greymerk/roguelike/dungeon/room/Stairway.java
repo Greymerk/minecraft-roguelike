@@ -3,6 +3,7 @@ package com.greymerk.roguelike.dungeon.room;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.greymerk.roguelike.dungeon.Dungeon;
 import com.greymerk.roguelike.dungeon.Floor;
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellState;
@@ -25,9 +26,13 @@ public class Stairway extends AbstractRoom implements IRoom {
 		Random rand = editor.getRandom(getWorldPos());
 		Coord origin = this.worldPos.copy();
 		buildCell(editor, rand, origin, direction);
-		this.buildSteps(editor, rand, origin);
+		Coord middleCell = origin.copy().add(direction, 6).add(Cardinal.DOWN, 6);
+		buildCell(editor, rand, middleCell, Cardinal.reverse(direction));
 		Coord bottomCell = origin.copy().add(direction, 12).add(Cardinal.DOWN, 10);
 		buildCell(editor, rand, bottomCell, Cardinal.reverse(direction));
+		Coord stairStart = origin.copy();
+		stairStart.add(Cardinal.reverse(direction));
+		this.buildSteps(editor, rand, stairStart);
 		this.addDoors(editor, rand);
 	}
 
@@ -87,36 +92,55 @@ public class Stairway extends AbstractRoom implements IRoom {
 		});;
 	}
 	
-	private void buildCell(IWorldEditor editor, Random rand, Coord pos, Cardinal cellEntry) {
+	private void buildCell(IWorldEditor editor, Random rand, Coord origin, Cardinal cellEntry) {
 		IStair stair = theme.getPrimary().getStair();
-		Fragment.generate(Fragment.CELL_SUPPORT, editor, rand, theme, pos.copy());
+		Fragment.generate(Fragment.CELL_SUPPORT, editor, rand, theme, origin.copy());
 		
-		Coord start = new Coord(pos);
+		Coord start = new Coord(origin);
 		start.add(new Coord(-2, 0, -2));
-		Coord end = new Coord(pos);
+		Coord end = new Coord(origin);
 		end.add(new Coord(2, 3, 2));
 		RectSolid.fill(editor, rand, start, end, BlockType.get(BlockType.AIR));
 		
-		start = new Coord(-2, -1, -2).add(pos);
-		end = new Coord(2, -1, 2).add(pos);
+		start = new Coord(-1, -1, -1).add(origin);
+		end = new Coord(1, -1, 1).add(origin);
 		RectSolid.fill(editor, rand, start, end, theme.getPrimary().getFloor());
 		
 		for(Cardinal dir : Cardinal.directions) {
-			start = new Coord(pos);
+			start = origin.copy();
+			start.add(Cardinal.DOWN);
+			start.add(dir, 2);
+			end = start.copy();
+			start.add(Cardinal.left(dir));
+			end.add(Cardinal.right(dir));
+			RectSolid.fill(editor, rand, start, end, theme.getPrimary().getWall());
+		}
+		
+		start = origin.copy();
+		start.add(cellEntry, 3);
+		start.add(Cardinal.DOWN);
+		end = start.copy();
+		start.add(Cardinal.left(cellEntry), 2);
+		end.add(Cardinal.right(cellEntry), 2);
+		RectSolid.fill(editor, rand, start, end, theme.getPrimary().getFloor());
+		
+		for(Cardinal dir : Cardinal.directions) {
+			start = new Coord(origin);
 			start.add(dir, 2);
 			start.add(Cardinal.left(dir), 2);
 			end = new Coord(start);
+			start.add(Cardinal.DOWN);
 			end.add(Cardinal.UP, 3);
 			RectSolid.fill(editor, rand, start, end, theme.getPrimary().getPillar());
 			
-			if(dir == cellEntry) continue;
+			//if(dir == cellEntry) continue;
 			
 			start = new Coord(end);
 			end.add(Cardinal.right(dir), 3);
 			RectSolid.fill(editor, rand, start, end, theme.getPrimary().getWall());
 			
 			for(Cardinal o : Cardinal.orthogonal(dir)) {
-				Coord p = new Coord(pos);
+				Coord p = new Coord(origin);
 				p.add(dir, 2);
 				p.add(Cardinal.UP, 2);
 				p.add(o);
@@ -163,13 +187,19 @@ public class Stairway extends AbstractRoom implements IRoom {
 		pos.add(direction);
 		cells.add(new Cell(new Coord(pos), CellState.OBSTRUCTED));
 		
-		for(Cardinal dir : Cardinal.directions) {
-			if(dir == Cardinal.reverse(direction)) continue;
-			Coord p = new Coord(pos);
-			p.add(dir);
-			cells.add(new Cell(new Coord(p), CellState.POTENTIAL));
+		// spiral above entry level, otherwise random directions
+		if(this.worldPos != null && Dungeon.getLevelFromY(this.worldPos.getY()) == 0) {
+			Coord p = pos.copy();
+			p.add(Cardinal.right(direction));
+			cells.add(new Cell(p.copy(), CellState.POTENTIAL));
+		} else {
+			for(Cardinal dir : Cardinal.directions) {
+				if(dir == Cardinal.reverse(direction)) continue;
+				Coord p = pos.copy();
+				p.add(dir);
+				cells.add(new Cell(p.copy(), CellState.POTENTIAL));
+			}
 		}
-		
 		return cells;
 	}
 

@@ -14,6 +14,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.server.MinecraftServer;
@@ -180,5 +181,10 @@ public class WorldEditor implements IWorldEditor{
 	@Override
 	public int getMaxDepth() {
 		return world.getBottomY();
+	}
+	
+	public DynamicRegistryManager getRegistryManager() {
+		DynamicRegistryManager reg = this.world.getRegistryManager();
+		return reg;
 	}
 }

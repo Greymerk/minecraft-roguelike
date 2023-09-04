@@ -2,6 +2,7 @@ package com.greymerk.roguelike.editor.theme;
 
 import net.minecraft.util.math.random.Random;
 
+import com.greymerk.roguelike.dungeon.Dungeon;
 import com.greymerk.roguelike.editor.theme.themes.ThemeBlack;
 import com.greymerk.roguelike.editor.theme.themes.ThemeCrumbledMossy;
 import com.greymerk.roguelike.editor.theme.themes.ThemeCrumbledStone;
@@ -56,17 +57,18 @@ public enum Theme {
 	}
 
 	public static ITheme getFromDepth(int y) {
-		if(y >= 50) return Theme.getTheme(Theme.OAK);
-		if(y >= 40) return Theme.getTheme(Theme.DARKOAK);
-		if(y >= 30) return Theme.getTheme(Theme.STONE);
-		if(y >= 20) return Theme.getTheme(Theme.CRUMBLEDSTONE);
-		if(y >= 10) return Theme.getTheme(Theme.MOSSY);
-		if(y >= 0) return Theme.getTheme(Theme.CRUMBLEDMOSSY);
-		if(y >= -10) return Theme.getTheme(Theme.SLATE);
-		if(y >= -20) return Theme.getTheme(Theme.TILEDSLATE);
-		if(y >= -30) return Theme.getTheme(Theme.TILEDSLATE);
-		if(y >= -40) return Theme.getTheme(Theme.NETHER);
-		if(y >= -50) return Theme.getTheme(Theme.BLACK);
+		if(Dungeon.getLevelFromY(y) == 0) return Theme.getTheme(Theme.OAK);
+		if(Dungeon.getLevelFromY(y) == 1) return Theme.getTheme(Theme.OAK);
+		if(Dungeon.getLevelFromY(y) == 2) return Theme.getTheme(Theme.DARKOAK);
+		if(Dungeon.getLevelFromY(y) == 3) return Theme.getTheme(Theme.STONE);
+		if(Dungeon.getLevelFromY(y) == 4) return Theme.getTheme(Theme.CRUMBLEDSTONE);
+		if(Dungeon.getLevelFromY(y) == 5) return Theme.getTheme(Theme.MOSSY);
+		if(Dungeon.getLevelFromY(y) == 6) return Theme.getTheme(Theme.CRUMBLEDMOSSY);
+		if(Dungeon.getLevelFromY(y) == 7) return Theme.getTheme(Theme.SLATE);
+		if(Dungeon.getLevelFromY(y) == 8) return Theme.getTheme(Theme.TILEDSLATE);
+		if(Dungeon.getLevelFromY(y) == 9) return Theme.getTheme(Theme.TILEDSLATE);
+		if(Dungeon.getLevelFromY(y) == 10) return Theme.getTheme(Theme.NETHER);
+		if(Dungeon.getLevelFromY(y) == 11) return Theme.getTheme(Theme.BLACK);
 		return Theme.getTheme(Theme.STONE);
 	}
 	

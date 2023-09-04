@@ -3,6 +3,7 @@ package com.greymerk.roguelike.dungeon.layout;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.greymerk.roguelike.dungeon.Dungeon;
 import com.greymerk.roguelike.dungeon.Floor;
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellState;
@@ -32,18 +33,20 @@ public class LayoutManager {
 	public void generate(IWorldEditor editor) {
 		Random rand = editor.getRandom(origin);
 		Floor previous = null;
-		int lvl = 0;
 		
 		for(Floor floor : this.floors) {
+			int lvl = Dungeon.getLevelFromY(floor.getOrigin().getY());
 			if(previous != null) {
 				List<Cell> potentials = previous.getOffsetCells();
 				floor.addCells(potentials);
 			}
 			
-			for(int i = 0; i < lvl * 3; ++i) {
-				if(floor.getOrigin().getY() > 50) continue;
-				floor.addRandomBranch(rand, 3, 5 + lvl/2);
+			if(lvl > 0) {
+				for(int i = 0; i < lvl * 3; ++i) {
+					floor.addRandomBranch(rand, 3, 5 + lvl/2);
+				}	
 			}
+			
 			
 			if(lvl < this.floors.size() - 1) {
 				for(int i = 0; i < lvl / 4; ++i) {
@@ -73,28 +76,22 @@ public class LayoutManager {
 	
 	public void addRooms(IWorldEditor editor, Random rand, int level) {
 		Floor floor = this.floors.get(level);
-		if(floor.getOrigin().getY() == 50) {
+		int y = floor.getOrigin().getY();
+		if((Dungeon.getLevelFromY(y) == 1)) {
 			for(int i = 0; i < 2; ++i) {
 				IRoom bedroom = Room.getInstance(Room.BEDROOM, floor.getTheme());
 				this.placeRoom(bedroom, rand, level);	
 			}
 		}
 		
-		if(floor.getOrigin().getY() == 40) {
+		if(Dungeon.getLevelFromY(y) == 2) {
 			for(int i = 0; i < 5; ++i) {
 				IRoom room = Room.getInstance(Room.CROSS, floor.getTheme());
 				this.placeRoom(room, rand, level);	
 			}
 		}
 		
-		if(floor.getOrigin().getY() == 30) {
-			for(int i = 0; i < 5; ++i) {
-				IRoom room = Room.getInstance(Room.CRYPT, floor.getTheme());
-				this.placeRoom(room, rand, level);	
-			}
-		}
-		
-		if(floor.getOrigin().getY() == 20) {
+		if(Dungeon.getLevelFromY(y) == 3 || Dungeon.getLevelFromY(y) == 4) {
 			for(int i = 0; i < 5; ++i) {
 				IRoom room = Room.getInstance(Room.CRYPT, floor.getTheme());
 				this.placeRoom(room, rand, level);	
