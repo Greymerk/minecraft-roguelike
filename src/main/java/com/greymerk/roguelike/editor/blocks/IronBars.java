@@ -14,6 +14,10 @@ public class IronBars {
 	private static Block IRON_BARS = Blocks.IRON_BARS;
 	
 	public static void set(IWorldEditor editor, Coord pos, Cardinal dir) {
+		get(dir).set(editor, pos);
+	}
+
+	public static MetaBlock get(Cardinal dir) {
 		MetaBlock bars = new MetaBlock(IRON_BARS);
 		switch(dir) {
 		case EAST:
@@ -29,6 +33,6 @@ public class IronBars {
 		default: break;
 		}
 		
-		editor.set(pos, bars);
+		return bars;
 	}
 }

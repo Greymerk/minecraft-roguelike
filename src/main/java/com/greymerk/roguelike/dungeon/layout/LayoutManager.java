@@ -42,8 +42,8 @@ public class LayoutManager {
 			}
 			
 			if(lvl > 0) {
-				for(int i = 0; i < lvl * 3; ++i) {
-					floor.addRandomBranch(rand, 3, 5 + lvl/2);
+				for(int i = 0; i < lvl * 2; ++i) {
+					floor.addRandomBranch(rand, 5, 7 + lvl/2);
 				}	
 			}
 			
@@ -92,14 +92,20 @@ public class LayoutManager {
 		}
 		
 		if(Dungeon.getLevelFromY(y) == 3 || Dungeon.getLevelFromY(y) == 4) {
-			for(int i = 0; i < 5; ++i) {
+			for(int i = 0; i < 10; ++i) {
 				IRoom room = Room.getInstance(Room.CRYPT, floor.getTheme());
 				this.placeRoom(room, rand, level);	
 			}
 		}
 		
-		IRoom room = Room.getInstance(Room.RESERVOIR, floor.getTheme());
-		this.placeRoom(room, rand, level);
+		if(Dungeon.getLevelFromY(y) == 5 || Dungeon.getLevelFromY(y) == 6) {
+			IRoom room = Room.getInstance(Room.RESERVOIR, floor.getTheme());
+			this.placeRoom(room, rand, level);
+			for(int i = 0; i < 10; ++i) {
+				room = Room.getInstance(Room.CISTERN, floor.getTheme());
+				this.placeRoom(room, rand, level);	
+			}
+		}
 	}
 	
 	public void addRoom(IRoom toAdd, Coord fp, Coord wp, int level) {
@@ -171,8 +177,7 @@ public class LayoutManager {
 					Coord pos = new Coord(fp);
 					pos.add(dir);
 					Cell other = floor.getCell(pos);
-					if(!(other.getState() == CellState.CORRIDOR
-						|| other.getState() == CellState.OBSTRUCTED)) continue;
+					if(!other.isRoom()) continue;
 					if(!other.getWalls().contains(Cardinal.reverse(dir))) return false;
 				}
 			}
@@ -183,7 +188,7 @@ public class LayoutManager {
 	
 	
 	public IBounded getBounds() {
-		//@TODO: implement me
+		//TODO: implement me
 		return null;
 	}
 	

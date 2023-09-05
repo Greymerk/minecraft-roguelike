@@ -35,9 +35,11 @@ public class WallShelf implements IFragment {
 				Skull.set(editor, rand, pos, Cardinal.reverse(dir), Skull.SKELETON);
 			}
 		}
+		
 		Coord pos = new Coord(origin);
 		pos.add(dir, 2);
 		pos.add(Cardinal.UP, 2);
 		Lantern.set(editor, pos);
+		
 	}
 }
