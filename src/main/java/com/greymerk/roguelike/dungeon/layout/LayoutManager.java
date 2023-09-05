@@ -97,6 +97,9 @@ public class LayoutManager {
 				this.placeRoom(room, rand, level);	
 			}
 		}
+		
+		IRoom room = Room.getInstance(Room.RESERVOIR, floor.getTheme());
+		this.placeRoom(room, rand, level);
 	}
 	
 	public void addRoom(IRoom toAdd, Coord fp, Coord wp, int level) {

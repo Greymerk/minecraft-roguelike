@@ -8,8 +8,8 @@ import net.minecraft.block.Blocks;
 public enum Warped {
 
 	STEM, HYPHAE, PLANK, SLAB, STAIRS, PLATE, BUTTON,
-	TRAPDOOR, DOOR, GATE, FENCE, SIGN,
-	NYLIUM, FUNGUS, WART, ROOT, VINE;
+	TRAPDOOR, DOOR, GATE, FENCE, SIGN, NYLIUM, 
+	FUNGUS, WART, ROOT, VINE;
 	
 	public static MetaBlock get(Warped type) {
 		return new MetaBlock(fromType(type));

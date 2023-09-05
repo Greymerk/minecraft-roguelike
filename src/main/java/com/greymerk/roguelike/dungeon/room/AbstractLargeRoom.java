@@ -46,7 +46,7 @@ public abstract class AbstractLargeRoom extends AbstractRoom implements IRoom {
 			Coord pos = new Coord(fp);
 			pos.add(dir, 3);
 			Cell c = f.getCell(pos);
-			if(c.getState() != CellState.CORRIDOR) continue;
+			if(!c.isRoom()) continue;
 			List<Cardinal> walls = c.getWalls();
 			if(!walls.contains(Cardinal.reverse(dir))) {
 				this.addEntrance(dir);

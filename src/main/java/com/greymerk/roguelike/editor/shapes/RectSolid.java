@@ -26,9 +26,7 @@ public class RectSolid implements IShape {
 	
 	public static void fill(IWorldEditor editor, Random rand, Coord start, Coord end, IBlockFactory block, boolean fillAir, boolean replaceSolid){
 		RectSolid rect = new RectSolid(start, end);
-		for(Coord c : rect){
-			block.set(editor, rand, c, fillAir, replaceSolid);
-		}
+		rect.forEach(c -> block.set(editor, rand, c, fillAir, replaceSolid));
 	}
 	
 	@Override
@@ -38,19 +36,13 @@ public class RectSolid implements IShape {
 	
 	@Override
 	public void fill(IWorldEditor editor, Random rand, IBlockFactory block, boolean fillAir, boolean replaceSolid) {
-		for(Coord c : this){
-			block.set(editor, rand, c, fillAir, replaceSolid);
-		}
+		this.forEach(c -> block.set(editor, rand, c, fillAir, replaceSolid));
 	}
 
 	@Override
 	public List<Coord> get(){
 		List<Coord> coords = new ArrayList<Coord>();
-		
-		for(Coord c : this){
-			coords.add(c);
-		}
-		
+		this.forEach(c -> coords.add(c));
 		return coords;
 	}
 	
