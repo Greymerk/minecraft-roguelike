@@ -24,7 +24,7 @@ public class SpiralStairCase implements IFragment {
 	
 	public void generate(IWorldEditor editor, Random rand, ITheme theme) {
 		for(Coord pos : stairWell) {
-			Cardinal dir = Cardinal.directions[pos.getY() % 4];
+			Cardinal dir = Cardinal.directions.get(pos.getY() % 4);
 			this.generate(editor, rand, theme, pos, dir);
 		}		
 	}

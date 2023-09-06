@@ -1,8 +1,6 @@
 package com.greymerk.roguelike.editor.blocks;
 
 
-import java.util.Arrays;
-
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
@@ -19,7 +17,7 @@ public enum Torch {
 	public static void generate(IWorldEditor editor, Torch type, Cardinal dir, Coord pos){
 		
 		BlockState torch;
-		boolean wall = Arrays.asList(Cardinal.directions).contains(dir);
+		boolean wall = Cardinal.directions.contains(dir);
 		
 		switch(type){
 		case WOODEN: torch = wall 

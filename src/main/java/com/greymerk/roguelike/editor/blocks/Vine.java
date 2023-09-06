@@ -1,7 +1,5 @@
 package com.greymerk.roguelike.editor.blocks;
 
-import java.util.Arrays;
-
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
@@ -49,7 +47,7 @@ public class Vine {
 		Coord pos = new Coord(origin);
 		pos.add(dir);
 		if(!editor.isFaceFullSquare(pos, dir)) return;
-		Direction facing = Arrays.asList(Cardinal.directions).contains(dir) 
+		Direction facing = Cardinal.directions.contains(dir) 
 				? Cardinal.facing(Cardinal.reverse(dir))
 				: Cardinal.facing(dir);
 		BooleanProperty facingProperty = VineBlock.getFacingProperty(facing);

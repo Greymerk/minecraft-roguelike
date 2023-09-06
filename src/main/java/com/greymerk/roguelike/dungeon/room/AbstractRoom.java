@@ -51,7 +51,7 @@ public abstract class AbstractRoom implements IRoom{
 		this.entrances = new ArrayList<Cardinal>();
 		int[] ent = tag.getIntArray("entrances");
 		for(int e : ent) {
-			Cardinal dir = Cardinal.directions[e];
+			Cardinal dir = Cardinal.directions.get(e);
 			this.entrances.add(dir);
 		}
 	}
@@ -70,7 +70,7 @@ public abstract class AbstractRoom implements IRoom{
 		int[] ent;
 		List<Integer> c = new ArrayList<Integer>();
 		for(Cardinal dir : this.entrances) {
-			c.add(Arrays.asList(Cardinal.directions).indexOf(dir));
+			c.add(Cardinal.directions.indexOf(dir));
 		}
 		ent = c.stream().mapToInt(Integer::intValue).toArray();
 		nbt.putIntArray("entrances", ent);

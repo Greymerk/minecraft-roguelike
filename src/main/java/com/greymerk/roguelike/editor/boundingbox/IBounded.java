@@ -4,7 +4,7 @@ import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.shapes.IShape;
 import com.greymerk.roguelike.editor.shapes.Shape;
 
-import net.minecraft.nbt.NbtElement;
+import net.minecraft.nbt.NbtCompound;
 
 public interface IBounded {
 	
@@ -20,6 +20,6 @@ public interface IBounded {
 	
 	public Coord getEnd();
 
-	public NbtElement getNbt();
+	public NbtCompound getNbt();
 	
 }

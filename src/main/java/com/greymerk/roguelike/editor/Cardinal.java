@@ -1,6 +1,7 @@
 package com.greymerk.roguelike.editor;
 
 import java.util.Arrays;
+import java.util.List;
 
 import com.greymerk.roguelike.util.math.RandHelper;
 
@@ -10,7 +11,7 @@ import net.minecraft.util.math.random.Random;
 public enum Cardinal {
 	NORTH, EAST, WEST, SOUTH, UP, DOWN;
 	
-	public static final Cardinal[] directions = {NORTH, EAST, SOUTH, WEST};
+	public static final List<Cardinal> directions = Arrays.asList(new Cardinal[] {NORTH, EAST, SOUTH, WEST});
 	
 	public static Cardinal reverse(Cardinal dir){
 		switch(dir){
@@ -44,14 +45,14 @@ public enum Cardinal {
 		}
 	}
 	
-	public static Cardinal[] orthogonal(Cardinal dir) {
+	public static List<Cardinal> orthogonal(Cardinal dir) {
 		
 		switch(dir){
-		case NORTH: return new Cardinal[] {WEST, EAST};
-		case SOUTH: return new Cardinal[] {EAST, WEST};
-		case EAST: return new Cardinal[] {NORTH, SOUTH};
-		case WEST: return new Cardinal[] {SOUTH, NORTH};
-		default: return new Cardinal[]{dir, dir};
+		case NORTH: return Arrays.asList(new Cardinal[] {WEST, EAST});
+		case SOUTH: return Arrays.asList(new Cardinal[] {EAST, WEST});
+		case EAST: return Arrays.asList(new Cardinal[] {NORTH, SOUTH});
+		case WEST: return Arrays.asList(new Cardinal[] {SOUTH, NORTH});
+		default: return Arrays.asList(new Cardinal[]{dir, dir});
 		}
 	}
 
@@ -80,8 +81,8 @@ public enum Cardinal {
 		}
 	}
 	
-	public static Cardinal[] randDirs(Random rand){
-		Cardinal[] dirs = Arrays.copyOf(Cardinal.directions, Cardinal.directions.length);
+	public static List<Cardinal> randDirs(Random rand){
+		List<Cardinal> dirs = Arrays.asList(new Cardinal[] {NORTH, EAST, SOUTH, WEST});
 		RandHelper.shuffle(Arrays.asList(dirs), rand);
 		return dirs;
 	}

@@ -35,9 +35,9 @@ public class Floor {
 	public boolean addRandomBranch(Random rand, int min, int max) {
 		Coord toAdd = new Coord(0,0,0);
 		
-		Cardinal randomDir = Cardinal.directions[rand.nextInt(4)];
+		Cardinal randomDir = Cardinal.directions.get(rand.nextInt(4));
 		toAdd.add(randomDir, rand.nextBetween(min, max));
-		toAdd.add(Cardinal.orthogonal(randomDir)[rand.nextInt(2)], rand.nextBetween(min, max));
+		toAdd.add(Cardinal.orthogonal(randomDir).get(rand.nextInt(2)), rand.nextBetween(min, max));
 		
 		Cell current = cells.get(toAdd);
 		if(current.getState() == CellState.OBSTRUCTED) return false;

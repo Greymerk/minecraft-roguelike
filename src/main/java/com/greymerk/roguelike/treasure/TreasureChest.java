@@ -34,7 +34,7 @@ public class TreasureChest implements ITreasureChest{
 				return this.generate(editor, rand, pos, dir, level, trapped);
 			}
 		}
-		Cardinal dir = Cardinal.randDirs(rand)[0];
+		Cardinal dir = Cardinal.randDirs(rand).get(0);
 		return this.generate(editor, rand, pos, dir, level, trapped);
 	}
 	
