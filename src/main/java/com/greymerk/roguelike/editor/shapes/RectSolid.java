@@ -3,12 +3,14 @@ package com.greymerk.roguelike.editor.shapes;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import net.minecraft.util.math.random.Random;
 
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
+import com.greymerk.roguelike.editor.boundingbox.IBounded;
+
+import net.minecraft.util.math.random.Random;
 
 public class RectSolid implements IShape {
 
@@ -25,8 +27,15 @@ public class RectSolid implements IShape {
 	}
 	
 	public static void fill(IWorldEditor editor, Random rand, Coord start, Coord end, IBlockFactory block, boolean fillAir, boolean replaceSolid){
-		RectSolid rect = new RectSolid(start, end);
-		rect.forEach(c -> block.set(editor, rand, c, fillAir, replaceSolid));
+		new RectSolid(start, end).fill(editor, rand, block, fillAir, replaceSolid);
+	}
+	
+	public static void fill(IWorldEditor editor, Random rand, IBounded box, IBlockFactory blocks) {
+		fill(editor, rand, box.getStart(), box.getEnd(), blocks, true, true);
+	}
+	
+	public static void fill(IWorldEditor editor, Random rand, IBounded box, IBlockFactory blocks, boolean fillAir, boolean replaceSolid) {
+		fill(editor, rand, box.getStart(), box.getEnd(), blocks, fillAir, replaceSolid);
 	}
 	
 	@Override

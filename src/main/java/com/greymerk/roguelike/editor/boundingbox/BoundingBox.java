@@ -56,11 +56,11 @@ public class BoundingBox implements IBounded{
 		return Shape.get(type, start, end);
 	}
 
-	public void grow(Cardinal dir) {
-		this.grow(dir, 1);
+	public BoundingBox grow(Cardinal dir) {
+		return this.grow(dir, 1);
 	}
 	
-	public void grow(Cardinal dir, int amount) {
+	public BoundingBox grow(Cardinal dir, int amount) {
 		switch(dir) {
 		case DOWN: 
 		case NORTH:
@@ -71,25 +71,29 @@ public class BoundingBox implements IBounded{
 		default:
 		}
 		Coord.correct(start, end);
+		return this;
 	}
 	
-	public void grow(Iterable<Cardinal> dirs) {
-		this.grow(dirs, 1);
+	public BoundingBox grow(Iterable<Cardinal> dirs) {
+		return this.grow(dirs, 1);
+		
 	}
 	
-	public void grow(Iterable<Cardinal> dirs, int amount) {
+	public BoundingBox grow(Iterable<Cardinal> dirs, int amount) {
 		for(Cardinal dir : dirs) {
 			this.grow(dir, amount);
 		}
+		return this;
 	}
 	
-	public void add(Cardinal dir) {
-		this.add(dir, 1);
+	public BoundingBox add(Cardinal dir) {
+		return this.add(dir, 1);
 	}
 	
-	public void add(Cardinal dir, int amount) {
+	public BoundingBox add(Cardinal dir, int amount) {
 		this.start.add(dir, amount);
 		this.end.add(dir, amount);
+		return this;
 	}
 	
 	@Override
