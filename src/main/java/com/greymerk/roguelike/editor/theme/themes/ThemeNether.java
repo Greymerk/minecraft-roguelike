@@ -6,6 +6,7 @@ import com.greymerk.roguelike.editor.blocks.BlockType;
 import com.greymerk.roguelike.editor.blocks.door.Door;
 import com.greymerk.roguelike.editor.blocks.door.DoorType;
 import com.greymerk.roguelike.editor.blocks.door.IDoor;
+import com.greymerk.roguelike.editor.blocks.slab.Slab;
 import com.greymerk.roguelike.editor.blocks.stair.MetaStair;
 import com.greymerk.roguelike.editor.blocks.stair.StairType;
 import com.greymerk.roguelike.editor.factories.BlockWeightedRandom;
@@ -43,8 +44,8 @@ public class ThemeNether extends ThemeBase implements ITheme {
 		IBlockFactory lightstone = BlockType.get(BlockType.GLOWSTONE);
 		IBlockFactory liquid = BlockType.get(BlockType.LAVA_FLOWING);
 		
-		this.primary = new BlockSet(floor, walls, stair, obsidian, door, lightstone, liquid);
-		this.secondary = new BlockSet(floor, redBrick, stair, obsidian,	door, lightstone, liquid);
+		this.primary = new BlockSet(floor, walls, obsidian, stair, Slab.get(Slab.NETHER_BRICK), door, lightstone, liquid);
+		this.secondary = new BlockSet(floor, redBrick, obsidian, stair, Slab.get(Slab.RED_NETHER_BRICK),	door, lightstone, liquid);
 	}
 	
 	@Override

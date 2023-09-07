@@ -6,6 +6,7 @@ import com.greymerk.roguelike.editor.blocks.Wood;
 import com.greymerk.roguelike.editor.blocks.WoodBlock;
 import com.greymerk.roguelike.editor.blocks.door.Door;
 import com.greymerk.roguelike.editor.blocks.door.DoorType;
+import com.greymerk.roguelike.editor.blocks.slab.Slab;
 import com.greymerk.roguelike.editor.blocks.stair.MetaStair;
 import com.greymerk.roguelike.editor.blocks.stair.StairType;
 import com.greymerk.roguelike.editor.factories.BlockWeightedRandom;
@@ -31,7 +32,9 @@ public class ThemeDarkOak extends ThemeBase implements ITheme {
 		MetaStair segmentStair = new MetaStair(StairType.DARKOAK);
 		
 		this.primary = new BlockSet(walls, walls, stair, walls, new Door(DoorType.DARKOAK));
+		this.primary.setSlab(Slab.get(Slab.STONEBRICK));
 		this.secondary =  new BlockSet(segmentWall, segmentWall, segmentStair, logs, new Door(DoorType.SPRUCE));
+		this.secondary.setSlab(Slab.get(Slab.DARK_OAK));
 	}
 	
 	@Override

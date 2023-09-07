@@ -1,6 +1,7 @@
 package com.greymerk.roguelike.editor.theme.themes;
 
 import com.greymerk.roguelike.editor.blocks.BlackStone;
+import com.greymerk.roguelike.editor.blocks.slab.Slab;
 import com.greymerk.roguelike.editor.blocks.stair.MetaStair;
 import com.greymerk.roguelike.editor.blocks.stair.StairType;
 import com.greymerk.roguelike.editor.factories.BlockWeightedRandom;
@@ -32,6 +33,8 @@ public class ThemeBlack extends ThemeBase implements ITheme {
 		this.primary = new BlockSet(floor, walls, stair, pillar);
 		this.secondary = this.primary;
 		
+		this.primary.setSlab(Slab.get(Slab.BLACKSTONE_BRICK));
+		this.secondary.setSlab(Slab.get(Slab.BLACKSTONE_BRICK));
 	}
 	
 	@Override

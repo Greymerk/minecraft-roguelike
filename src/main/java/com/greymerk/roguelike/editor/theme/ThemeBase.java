@@ -10,8 +10,8 @@ import net.minecraft.util.math.random.Random;
 
 public abstract class ThemeBase implements ITheme {
 	
-	protected IBlockSet primary;
-	protected IBlockSet secondary;
+	protected BlockSet primary;
+	protected BlockSet secondary;
 	protected List<IFilter> filters;
 
 	@Override

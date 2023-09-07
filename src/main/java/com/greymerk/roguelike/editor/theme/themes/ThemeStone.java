@@ -2,6 +2,7 @@ package com.greymerk.roguelike.editor.theme.themes;
 
 import com.greymerk.roguelike.editor.blocks.BlockType;
 import com.greymerk.roguelike.editor.blocks.SilverfishBlock;
+import com.greymerk.roguelike.editor.blocks.slab.Slab;
 import com.greymerk.roguelike.editor.blocks.stair.MetaStair;
 import com.greymerk.roguelike.editor.blocks.stair.Stair;
 import com.greymerk.roguelike.editor.blocks.stair.StairType;
@@ -26,6 +27,7 @@ public class ThemeStone extends ThemeBase{
 		MetaStair stair = Stair.get(StairType.STONEBRICK);
 		
 		this.primary = new BlockSet(walls, stair, walls);
+		this.primary.setSlab(Slab.get(Slab.STONEBRICK));
 		this.secondary = primary;
 	}
 	

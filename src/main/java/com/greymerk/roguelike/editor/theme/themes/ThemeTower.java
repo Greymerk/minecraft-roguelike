@@ -2,6 +2,7 @@ package com.greymerk.roguelike.editor.theme.themes;
 
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.blocks.BlockType;
+import com.greymerk.roguelike.editor.blocks.slab.Slab;
 import com.greymerk.roguelike.editor.blocks.stair.MetaStair;
 import com.greymerk.roguelike.editor.blocks.stair.StairType;
 import com.greymerk.roguelike.editor.factories.BlockJumble;
@@ -30,6 +31,7 @@ public class ThemeTower extends ThemeBase implements ITheme {
 		
 		IBlockFactory pillar = BlockType.get(BlockType.ANDESITE_POLISHED);
 		this.primary = new BlockSet(walls, stair, pillar);
+		this.primary.setSlab(Slab.get(Slab.COBBLE));
 		this.secondary = this.primary;
 	}
 	

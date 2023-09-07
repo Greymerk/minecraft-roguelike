@@ -1,6 +1,7 @@
 package com.greymerk.roguelike.editor.theme.themes;
 
 import com.greymerk.roguelike.editor.blocks.Deepslate;
+import com.greymerk.roguelike.editor.blocks.slab.Slab;
 import com.greymerk.roguelike.editor.blocks.stair.MetaStair;
 import com.greymerk.roguelike.editor.blocks.stair.StairType;
 import com.greymerk.roguelike.editor.factories.BlockWeightedRandom;
@@ -31,6 +32,7 @@ public class ThemeTiledSlate extends ThemeBase implements ITheme {
 		pillar.addBlock(Deepslate.get(Deepslate.CHISELED), 1);
 		
 		this.primary = new BlockSet(floor, walls, stair, pillar);
+		this.primary.setSlab(Slab.get(Slab.TILED_SLATE));
 		this.secondary = primary;
 		
 	}

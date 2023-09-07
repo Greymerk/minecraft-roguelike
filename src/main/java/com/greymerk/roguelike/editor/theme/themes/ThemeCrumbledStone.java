@@ -3,6 +3,7 @@ package com.greymerk.roguelike.editor.theme.themes;
 import com.greymerk.roguelike.editor.MetaBlock;
 import com.greymerk.roguelike.editor.blocks.BlockType;
 import com.greymerk.roguelike.editor.blocks.SilverfishBlock;
+import com.greymerk.roguelike.editor.blocks.slab.Slab;
 import com.greymerk.roguelike.editor.blocks.stair.MetaStair;
 import com.greymerk.roguelike.editor.blocks.stair.Stair;
 import com.greymerk.roguelike.editor.blocks.stair.StairType;
@@ -29,6 +30,7 @@ public class ThemeCrumbledStone extends ThemeBase implements ITheme {
 		MetaBlock pillar = BlockType.get(BlockType.ANDESITE_POLISHED);
 		
 		this.primary = new BlockSet(walls, stair, pillar);
+		this.primary.setSlab(Slab.get(Slab.STONEBRICK));
 		this.secondary = primary;
 	}
 	

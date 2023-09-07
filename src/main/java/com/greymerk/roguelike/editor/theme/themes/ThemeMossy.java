@@ -6,6 +6,7 @@ import com.greymerk.roguelike.editor.blocks.BlockType;
 import com.greymerk.roguelike.editor.blocks.SilverfishBlock;
 import com.greymerk.roguelike.editor.blocks.door.Door;
 import com.greymerk.roguelike.editor.blocks.door.DoorType;
+import com.greymerk.roguelike.editor.blocks.slab.Slab;
 import com.greymerk.roguelike.editor.blocks.stair.MetaStair;
 import com.greymerk.roguelike.editor.blocks.stair.StairType;
 import com.greymerk.roguelike.editor.factories.BlockWeightedRandom;
@@ -45,6 +46,7 @@ public class ThemeMossy extends ThemeBase implements ITheme {
 		this.primary = new BlockSet(floor, walls, stair, walls, 
 				new Door(DoorType.IRON)
 				);
+		this.primary.setSlab(Slab.get(Slab.MOSSY_COBBLE));
 		this.secondary = this.primary;
 		
 		this.filters = new ArrayList<IFilter>();

@@ -12,7 +12,9 @@ import com.greymerk.roguelike.dungeon.room.Room;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
+import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.editor.boundingbox.IBounded;
+import com.greymerk.roguelike.editor.shapes.Shape;
 import com.greymerk.roguelike.editor.theme.ITheme;
 import com.greymerk.roguelike.editor.theme.Theme;
 import com.greymerk.roguelike.util.math.RandHelper;
@@ -43,8 +45,8 @@ public class LayoutManager {
 			
 			if(lvl > 0) {
 				for(int i = 0; i < lvl * 2; ++i) {
-					floor.addRandomBranch(rand, 5, 7 + lvl/2);
-				}	
+					floor.addRandomBranch(rand, i/3 + 2, i/3 + 2 + lvl/2);
+				}
 			}
 			
 			
@@ -92,8 +94,15 @@ public class LayoutManager {
 		}
 		
 		if(Dungeon.getLevelFromY(y) == 3 || Dungeon.getLevelFromY(y) == 4) {
-			for(int i = 0; i < 10; ++i) {
+			for(int i = 0; i < 3; ++i) {
 				IRoom room = Room.getInstance(Room.CRYPT, floor.getTheme());
+				this.placeRoom(room, rand, level);	
+			}
+		}
+		
+		if(Dungeon.getLevelFromY(y) == 3 || Dungeon.getLevelFromY(y) == 4) {
+			for(int i = 0; i < 3; ++i) {
+				IRoom room = Room.getInstance(Room.OSSUARY, floor.getTheme());
 				this.placeRoom(room, rand, level);	
 			}
 		}
@@ -155,6 +164,15 @@ public class LayoutManager {
 				return true;	
 			}
 		}
+		
+		BoundingBox bb = new BoundingBox(new Coord(0,0,0));
+		bb.grow(Cardinal.directions, 20);
+		for(Coord fp : bb.getShape(Shape.RECTSOLID).get()) {
+			Cell cell = floor.getCell(fp);
+			boolean fit = doesRoomFit(room, fp, level);
+			if(fit) this.addRoom(room, fp, cell.getWorldPos(floor.getOrigin()), level);
+			return true;
+		}
 		return false;
 	}
 	
@@ -172,6 +190,7 @@ public class LayoutManager {
 			CellState state = floor.getCellState(fp);
 			if(state == CellState.OBSTRUCTED) return false;
 			
+			// check if a cell with a wall is blocking an opening
 			if(!cell.getWalls().isEmpty()) {
 				for(Cardinal dir : cell.getWalls()) {
 					Coord pos = new Coord(fp);
@@ -183,7 +202,6 @@ public class LayoutManager {
 			}
 		}
 		return true;
-		
 	}
 	
 	

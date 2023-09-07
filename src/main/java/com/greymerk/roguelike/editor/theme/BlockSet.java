@@ -6,6 +6,8 @@ import com.greymerk.roguelike.editor.blocks.BlockType;
 import com.greymerk.roguelike.editor.blocks.door.Door;
 import com.greymerk.roguelike.editor.blocks.door.DoorType;
 import com.greymerk.roguelike.editor.blocks.door.IDoor;
+import com.greymerk.roguelike.editor.blocks.slab.ISlab;
+import com.greymerk.roguelike.editor.blocks.slab.Slab;
 import com.greymerk.roguelike.editor.blocks.stair.IStair;
 import com.greymerk.roguelike.editor.blocks.stair.MetaStair;
 import com.greymerk.roguelike.editor.blocks.stair.StairType;
@@ -16,8 +18,9 @@ public class BlockSet implements IBlockSet {
 
 	protected BlockFloor floor;
 	protected IBlockFactory walls;
-	protected IStair stair;
 	protected IBlockFactory pillar;
+	protected IStair stair;
+	protected ISlab slab;
 	protected IDoor door;
 	protected IBlockFactory lightblock;
 	protected IBlockFactory liquid;
@@ -26,22 +29,25 @@ public class BlockSet implements IBlockSet {
 		
 	}
 	
-	public BlockSet(IBlockFactory floor, IBlockFactory walls, IStair stair, IBlockFactory pillar,
-					IDoor door, IBlockFactory lightblock, IBlockFactory liquid){
+	public BlockSet(IBlockFactory floor, IBlockFactory walls, IBlockFactory pillar,
+			IStair stair, ISlab slab, IDoor door, IBlockFactory lightblock, IBlockFactory liquid){
 		
 		this.floor = new BlockFloor(floor);
 		this.walls = walls;
-		this.stair = stair;
 		this.pillar = pillar;
+		this.stair = stair;
+		this.slab = slab;
 		this.door = door;
 		this.lightblock = lightblock;
 		this.liquid = liquid;
 		
 	}
 
-	public BlockSet(IBlockFactory floor, IBlockFactory walls, IStair stair, IBlockFactory pillar,
-			IDoor door){
-		this(floor, walls, stair, pillar, door,
+	public BlockSet(IBlockFactory floor, IBlockFactory walls, IStair stair,
+			IBlockFactory pillar, IDoor door){
+		this(floor, walls, pillar, stair, 
+			Slab.get(Slab.STONE),
+			door,
 			new MetaBlock(BlockType.get(BlockType.GLOWSTONE)),
 			new MetaBlock(BlockType.get(BlockType.WATER_FLOWING))
 		);
@@ -53,31 +59,9 @@ public class BlockSet implements IBlockSet {
 		);
 	}
 
-
-	
 	public BlockSet(IBlockFactory walls, IStair stair, IBlockFactory pillar){
 		this(walls, walls, stair, pillar);
 	}	
-	
-	public BlockSet(BlockSet toCopy){
-		this.walls = toCopy.getWall();
-		this.floor = toCopy.getFloor();
-		this.stair = toCopy.getStair();
-		this.pillar = toCopy.getPillar();
-		this.door = toCopy.getDoor();
-		this.lightblock = toCopy.getLightBlock();
-		this.liquid = toCopy.getLiquid();
-	}
-	
-	public BlockSet(BlockSet base, BlockSet other){
-		this.walls = other.getWall() != null ? other.getWall() : base.getWall();
-		this.floor = other.getFloor() != null ? other.getFloor() : base.getFloor();
-		this.stair = other.getStair() != null ? other.getStair() : base.getStair();
-		this.pillar = other.getPillar() != null ? other.getPillar() : base.getPillar();
-		this.door = other.getDoor() != null ? other.getDoor() : base.getDoor();
-		this.lightblock = other.getLightBlock() != null ? other.getLightBlock() : base.getLightBlock();
-		this.liquid = other.getLiquid() != null ? other.getLiquid() : base.getLiquid();
-	}
 	
 	@Override
 	public IBlockFactory getWall() {
@@ -112,5 +96,14 @@ public class BlockSet implements IBlockSet {
 	@Override
 	public IBlockFactory getLiquid() {
 		return this.liquid != null ? this.liquid : BlockType.get(BlockType.WATER_FLOWING);
+	}
+
+	public void setSlab(ISlab slab) {
+		this.slab = slab;
+	}
+	
+	@Override
+	public ISlab getSlab() {
+		return this.slab != null ? this.slab : Slab.get(Slab.STONE);
 	}
 }
