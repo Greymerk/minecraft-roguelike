@@ -2,6 +2,9 @@ package com.greymerk.roguelike.editor;
 
 import java.util.Objects;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtInt;
@@ -237,5 +240,13 @@ public class Coord {
 		nbt.put("y", NbtInt.of(y));
 		nbt.put("z", NbtInt.of(z));
 		return nbt;
+	}
+
+	public JsonElement asJson() {
+		JsonObject jsonCoord = new JsonObject();
+		jsonCoord.addProperty("x", this.x);
+		jsonCoord.addProperty("y", this.y);
+		jsonCoord.addProperty("z", this.z);
+		return jsonCoord;
 	}
 }

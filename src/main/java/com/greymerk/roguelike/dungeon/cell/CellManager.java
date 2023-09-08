@@ -3,6 +3,7 @@ package com.greymerk.roguelike.dungeon.cell;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gson.JsonArray;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 
@@ -88,6 +89,8 @@ public class CellManager {
 	
 	public void addCellWalls() {
 		for(Cell c : this.cells) {
+			if(c.getState() == CellState.POTENTIAL) continue;
+			
 			Coord fp = c.getFloorPos();
 			for(Cardinal dir : Cardinal.directions) {
 				Coord pos = new Coord(fp);
@@ -103,5 +106,11 @@ public class CellManager {
 				}
 			}
 		}
+	}
+
+	public JsonArray asJson() {
+		JsonArray jsonCells = new JsonArray();
+		this.cells.forEach(c -> jsonCells.add(c.asJson()));
+		return jsonCells;
 	}
 }

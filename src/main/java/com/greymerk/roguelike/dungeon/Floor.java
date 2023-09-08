@@ -3,6 +3,9 @@ package com.greymerk.roguelike.dungeon;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellManager;
 import com.greymerk.roguelike.dungeon.cell.CellState;
@@ -224,5 +227,12 @@ public class Floor {
 	
 	public Coord getOrigin() {
 		return new Coord(this.origin);
+	}
+
+	public JsonElement asJson() {
+		JsonObject jsonFloor = new JsonObject();
+		JsonArray jsonCells = this.cells.asJson();
+		jsonFloor.add("cells", jsonCells);
+		return jsonFloor;
 	}
 }

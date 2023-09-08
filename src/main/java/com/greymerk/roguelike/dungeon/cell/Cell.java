@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 
@@ -77,5 +80,15 @@ public class Cell {
 		Cell other = (Cell) obj;
 		return Objects.equals(floorPos, other.floorPos)
 				&& state == other.state;
+	}
+
+	public JsonElement asJson() {
+		JsonObject jsonCell = new JsonObject();
+		jsonCell.add("floorPos", this.floorPos.asJson());
+		jsonCell.addProperty("state", this.state.name());
+		JsonArray jsonWalls = new JsonArray();
+		this.walls.forEach(dir -> jsonWalls.add(dir.name()));
+		jsonCell.add("walls", jsonWalls);
+		return jsonCell;
 	}
 }

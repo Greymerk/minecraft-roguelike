@@ -1,5 +1,7 @@
 package com.greymerk.roguelike.editor;
 
+import java.nio.file.Path;
+
 import com.greymerk.roguelike.treasure.ITreasureChest;
 
 import net.minecraft.block.entity.BlockEntity;
@@ -36,5 +38,7 @@ public interface IWorldEditor {
 	public void fillChest(ITreasureChest chest, Random rand);
 	
 	public int getMaxDepth();
+	
+	public Path getWorldDirectory();
 
 }

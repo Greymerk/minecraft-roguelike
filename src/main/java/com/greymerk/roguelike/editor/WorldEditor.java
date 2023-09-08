@@ -1,5 +1,6 @@
 package com.greymerk.roguelike.editor;
 
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,6 +20,7 @@ import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.WorldSavePath;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.CheckedRandom;
 import net.minecraft.util.math.random.Random;
@@ -186,5 +188,9 @@ public class WorldEditor implements IWorldEditor{
 	public DynamicRegistryManager getRegistryManager() {
 		DynamicRegistryManager reg = this.world.getRegistryManager();
 		return reg;
+	}
+	
+	public Path getWorldDirectory() {
+		return this.world.getServer().getSavePath(WorldSavePath.ROOT);
 	}
 }

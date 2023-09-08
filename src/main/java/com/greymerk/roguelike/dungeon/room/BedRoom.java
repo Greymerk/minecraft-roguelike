@@ -283,7 +283,7 @@ public class BedRoom extends AbstractRoom implements IRoom {
 			Coord fp = floorPos.copy();
 			fp.add(dir);
 			Cell c = f.getCell(fp);
-			if(c.getState() != CellState.CORRIDOR) continue;
+			if(!c.isRoom()) continue;
 			if(!c.getWalls().contains(Cardinal.reverse(dir))){
 				this.addEntrance(dir);
 			}

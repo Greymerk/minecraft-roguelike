@@ -3,6 +3,9 @@ package com.greymerk.roguelike.dungeon.layout;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.greymerk.roguelike.debug.Debug;
 import com.greymerk.roguelike.dungeon.Dungeon;
 import com.greymerk.roguelike.dungeon.Floor;
 import com.greymerk.roguelike.dungeon.cell.Cell;
@@ -33,6 +36,7 @@ public class LayoutManager {
 	}
 	
 	public void generate(IWorldEditor editor) {
+		Debug debug = new Debug(editor.getWorldDirectory());
 		Random rand = editor.getRandom(origin);
 		Floor previous = null;
 		
@@ -66,6 +70,7 @@ public class LayoutManager {
 			floor.addCellWalls();
 		}
 		
+		//debug.toFile(origin.getX() + "_" + origin.getZ() + ".json", this.asJson());
 		
 		for(int i = 0; i < this.floors.size(); ++i) {
 			this.addRooms(editor, rand, i);
@@ -209,5 +214,15 @@ public class LayoutManager {
 		//TODO: implement me
 		return null;
 	}
+	
+	public JsonObject asJson() {
+		JsonObject json = new JsonObject();
+		JsonArray jsonFloors = new JsonArray();
+		json.add("floors", jsonFloors);
+		this.floors.forEach(f -> jsonFloors.add(f.asJson()));
+		return json;
+	}
+	
+	
 	
 }
