@@ -20,6 +20,8 @@ public interface IRoom {
 	
 	public boolean isGenerated();
 	
+	public boolean isDirectional();
+	
 	public List<Cell> getCells();
 	
 	public NbtCompound getNbt();

@@ -15,9 +15,7 @@ import com.greymerk.roguelike.dungeon.room.Room;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
-import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.editor.boundingbox.IBounded;
-import com.greymerk.roguelike.editor.shapes.Shape;
 import com.greymerk.roguelike.editor.theme.ITheme;
 import com.greymerk.roguelike.editor.theme.Theme;
 import com.greymerk.roguelike.util.math.RandHelper;
@@ -70,11 +68,13 @@ public class LayoutManager {
 			floor.addCellWalls();
 		}
 		
-		//debug.toFile(origin.getX() + "_" + origin.getZ() + ".json", this.asJson());
+		debug.toFile(origin.getX() + "_" + origin.getZ() + ".json", this.asJson());
 		
 		for(int i = 0; i < this.floors.size(); ++i) {
 			this.addRooms(editor, rand, i);
 		}
+		
+		debug.toFile(origin.getX() + "_" + origin.getZ() + ".json", this.asJson());
 		
 		for(Floor floor : this.floors) {
 			floor.convertCorridors();
@@ -134,7 +134,9 @@ public class LayoutManager {
 			CellState state = c.getState();
 			int offsetLevel = level + c.getLevelOffset();
 			Floor f = this.floors.get(offsetLevel);
-			f.addCell(new Cell(pos, state));
+			Cell copy = new Cell(pos, state);
+			c.getWalls().forEach(w -> copy.addWall(w));
+			f.addCell(copy);
 		}
 	}
 	
@@ -161,23 +163,24 @@ public class LayoutManager {
 		List<Cell> corridors = floor.getCells(CellState.CORRIDOR);
 		RandHelper.shuffle(corridors, rand);
 		for(Cell c : corridors) {
-			for(Cardinal dir : Cardinal.randDirs(rand)) {
-				if(!c.getWalls().contains(dir)) continue;
-				room.setDirection(dir);
+			if(room.isDirectional()) {
+				for(Cardinal dir : Cardinal.randDirs(rand)) {
+					if(!c.getWalls().contains(dir)) continue;
+					room.setDirection(dir);
+					boolean fit = doesRoomFit(room, c.getFloorPos(), level);
+					if(fit) this.addRoom(room, c.getFloorPos(), c.getWorldPos(floor.getOrigin()), level);
+					return true;	
+				}	
+			} else {
 				boolean fit = doesRoomFit(room, c.getFloorPos(), level);
 				if(fit) this.addRoom(room, c.getFloorPos(), c.getWorldPos(floor.getOrigin()), level);
-				return true;	
+				return true;
 			}
 		}
 		
-		BoundingBox bb = new BoundingBox(new Coord(0,0,0));
-		bb.grow(Cardinal.directions, 20);
-		for(Coord fp : bb.getShape(Shape.RECTSOLID).get()) {
-			Cell cell = floor.getCell(fp);
-			boolean fit = doesRoomFit(room, fp, level);
-			if(fit) this.addRoom(room, fp, cell.getWorldPos(floor.getOrigin()), level);
-			return true;
-		}
+		
+		
+		
 		return false;
 	}
 	
@@ -198,7 +201,7 @@ public class LayoutManager {
 			// check if a cell with a wall is blocking an opening
 			if(!cell.getWalls().isEmpty()) {
 				for(Cardinal dir : cell.getWalls()) {
-					Coord pos = new Coord(fp);
+					Coord pos = fp.copy();
 					pos.add(dir);
 					Cell other = floor.getCell(pos);
 					if(!other.isRoom()) continue;

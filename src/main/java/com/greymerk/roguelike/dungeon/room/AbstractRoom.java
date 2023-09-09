@@ -135,6 +135,11 @@ public abstract class AbstractRoom implements IRoom{
 	}
 	
 	@Override
+	public boolean isDirectional() {
+		return false;
+	}
+	
+	@Override
 	public void setDirection(Cardinal dir) {
 		this.direction = dir;
 	}

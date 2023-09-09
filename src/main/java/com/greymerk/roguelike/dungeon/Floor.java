@@ -124,6 +124,7 @@ public class Floor {
 			fp.add(c.getFloorPos());
 			CellState state = rc.getState();
 			Cell toAdd = new Cell(fp, state);
+			rc.getWalls().forEach(w -> toAdd.addWall(w));
 			this.addCell(toAdd);
 			
 			for(Cardinal dir : Cardinal.directions) {

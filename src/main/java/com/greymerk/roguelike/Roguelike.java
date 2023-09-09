@@ -16,6 +16,7 @@ public class Roguelike implements ModInitializer {
 	public static final String MODID = "roguelike";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
 	
+	public static final boolean DEBUG = false;
 	
 	@Override
 	public void onInitialize() {

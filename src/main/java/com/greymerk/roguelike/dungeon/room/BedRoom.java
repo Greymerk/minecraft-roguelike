@@ -249,6 +249,7 @@ public class BedRoom extends AbstractRoom implements IRoom {
 		pos.add(direction);
 		Cell cell = new Cell(pos.copy(), CellState.OBSTRUCTED);
 		cell.addWall(direction);
+		cells.add(cell);
 		for(Cardinal o : Cardinal.orthogonal(direction)) {
 			pos = new Coord(0,0,0);
 			pos.add(direction);
@@ -288,6 +289,11 @@ public class BedRoom extends AbstractRoom implements IRoom {
 				this.addEntrance(dir);
 			}
 		}
+	}
+	
+	@Override
+	public boolean isDirectional() {
+		return true;
 	}
 
 }
