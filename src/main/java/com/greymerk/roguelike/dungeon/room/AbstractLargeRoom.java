@@ -1,10 +1,10 @@
 package com.greymerk.roguelike.dungeon.room;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.greymerk.roguelike.dungeon.Floor;
 import com.greymerk.roguelike.dungeon.cell.Cell;
+import com.greymerk.roguelike.dungeon.cell.CellManager;
 import com.greymerk.roguelike.dungeon.cell.CellState;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
@@ -13,8 +13,8 @@ import com.greymerk.roguelike.editor.shapes.RectSolid;
 public abstract class AbstractLargeRoom extends AbstractRoom implements IRoom {
 
 	@Override
-	public List<Cell> getCells() {
-		List<Cell> cells = new ArrayList<Cell>();
+	public CellManager getCells() {
+		CellManager cells = new CellManager();
 		
 		Coord start = new Coord(-2,0,-2);
 		Coord end = new Coord(2, 0, 2);

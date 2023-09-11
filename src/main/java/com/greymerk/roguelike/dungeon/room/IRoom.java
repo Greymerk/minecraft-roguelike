@@ -1,9 +1,7 @@
 package com.greymerk.roguelike.dungeon.room;
 
-import java.util.List;
-
 import com.greymerk.roguelike.dungeon.Floor;
-import com.greymerk.roguelike.dungeon.cell.Cell;
+import com.greymerk.roguelike.dungeon.cell.CellManager;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
@@ -22,7 +20,9 @@ public interface IRoom {
 	
 	public boolean isDirectional();
 	
-	public List<Cell> getCells();
+	public Cardinal getDirection();
+	
+	public CellManager getCells();
 	
 	public NbtCompound getNbt();
 	

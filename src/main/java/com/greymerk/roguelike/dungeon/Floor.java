@@ -77,9 +77,9 @@ public class Floor {
 	public void addCorridorCell(Coord fp) {
 		if(cells.get(fp).getState() == CellState.OBSTRUCTED) return;
 		
-		this.cells.addCell(new Cell((fp), CellState.CORRIDOR));
+		this.cells.add(new Cell((fp), CellState.CORRIDOR));
 		for(Cardinal dir : Cardinal.directions) {
-			this.cells.addCell(new Cell(new Coord(fp).add(dir), CellState.POTENTIAL));
+			this.cells.add(new Cell(new Coord(fp).add(dir), CellState.POTENTIAL));
 		}
 	}
 	
@@ -207,7 +207,9 @@ public class Floor {
 				if(cpos.getY() == -1) {
 					Coord fp = new Coord(room.getFloorPos());
 					fp.add(new Coord(cpos.getX(), 0, cpos.getZ()));
-					cells.add(new Cell(fp, c.getState()));
+					Cell toAdd = new Cell(fp, c.getState());
+					c.getWalls().forEach(w -> toAdd.addWall(w));
+					cells.add(toAdd);
 				}
 			}
 		}
@@ -215,11 +217,11 @@ public class Floor {
 	}
 	
 	public void addCell(Cell toAdd) {
-		this.cells.addCell(toAdd);
+		this.cells.add(toAdd);
 	}
 	
 	public void addCells(List<Cell> toAdd) {
-		this.cells.addCells(toAdd);
+		this.cells.add(toAdd);
 	}
 	
 	public void addCellWalls() {

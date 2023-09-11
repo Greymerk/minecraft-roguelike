@@ -1,8 +1,7 @@
 package com.greymerk.roguelike.dungeon.room;
 
-import java.util.List;
-
 import com.greymerk.roguelike.dungeon.cell.Cell;
+import com.greymerk.roguelike.dungeon.cell.CellManager;
 import com.greymerk.roguelike.dungeon.cell.CellState;
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
 import com.greymerk.roguelike.editor.Cardinal;
@@ -308,8 +307,8 @@ public class ReservoirRoom extends AbstractLargeRoom implements IRoom {
 	}
 	
 	@Override
-	public List<Cell> getCells() {
-		List<Cell> cells = super.getCells();
+	public CellManager getCells() {
+		CellManager cells = super.getCells();
 		
 		Coord start = new Coord(-1, -1, -1);
 		Coord end = new Coord(1, -1, 1);

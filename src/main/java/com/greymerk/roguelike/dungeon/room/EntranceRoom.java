@@ -1,11 +1,8 @@
 package com.greymerk.roguelike.dungeon.room;
 
-import java.util.ArrayList;
-import java.util.List;
-import net.minecraft.util.math.random.Random;
-
 import com.greymerk.roguelike.dungeon.Floor;
 import com.greymerk.roguelike.dungeon.cell.Cell;
+import com.greymerk.roguelike.dungeon.cell.CellManager;
 import com.greymerk.roguelike.dungeon.cell.CellState;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
@@ -13,6 +10,8 @@ import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.blocks.stair.IStair;
 import com.greymerk.roguelike.editor.shapes.RectHollow;
 import com.greymerk.roguelike.editor.shapes.RectSolid;
+
+import net.minecraft.util.math.random.Random;
 
 public class EntranceRoom  extends AbstractRoom implements IRoom{
 
@@ -93,9 +92,9 @@ public class EntranceRoom  extends AbstractRoom implements IRoom{
 	}
 
 	@Override
-	public List<Cell> getCells() {
+	public CellManager getCells() {
 		
-		List<Cell> cells = new ArrayList<Cell>();
+		CellManager cells = new CellManager();
 		
 		cells.add(new Cell(new Coord(0,0,0), CellState.OBSTRUCTED));
 		

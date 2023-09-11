@@ -1,11 +1,9 @@
 package com.greymerk.roguelike.dungeon.room;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.greymerk.roguelike.dungeon.Dungeon;
 import com.greymerk.roguelike.dungeon.Floor;
 import com.greymerk.roguelike.dungeon.cell.Cell;
+import com.greymerk.roguelike.dungeon.cell.CellManager;
 import com.greymerk.roguelike.dungeon.cell.CellState;
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
 import com.greymerk.roguelike.editor.Cardinal;
@@ -149,16 +147,20 @@ public class Stairway extends AbstractRoom implements IRoom {
 	}
 
 	@Override
-	public List<Cell> getCells() {
-		List<Cell> cells = new ArrayList<Cell>();
+	public CellManager getCells() {
+		CellManager cells = new CellManager();
+		
 		Coord origin = new Coord(0,0,0);
+		Cell entry = new Cell(origin.copy().add(Cardinal.reverse(direction)), CellState.POTENTIAL);
+		cells.add(entry);
+		
 		Coord pos = origin.copy();
-		cells.add(new Cell(pos.copy(), CellState.OBSTRUCTED));
+		Cell topFirst = new Cell(pos.copy(), CellState.OBSTRUCTED);
+		Cardinal.orthogonal(direction).forEach(dir -> topFirst.addWall(dir));
+		cells.add(topFirst);
 		pos.add(direction);
 		Cell topMid = new Cell(pos.copy(), CellState.OBSTRUCTED);
-		for(Cardinal dir : Cardinal.orthogonal(direction)) {
-			topMid.addWall(dir);
-		}
+		Cardinal.orthogonal(direction).forEach(dir -> topMid.addWall(dir));
 		cells.add(topMid);
 		pos.add(direction);
 		Cell topEnd = new Cell(new Coord(pos), CellState.OBSTRUCTED);
@@ -221,6 +223,11 @@ public class Stairway extends AbstractRoom implements IRoom {
 	@Override
 	public String getName() {
 		return Room.STAIRWAY.name();
+	}
+	
+	@Override
+	public boolean isDirectional() {
+		return true;
 	}
 
 	@Override

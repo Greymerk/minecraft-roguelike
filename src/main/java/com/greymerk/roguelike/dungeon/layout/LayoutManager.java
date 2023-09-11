@@ -1,6 +1,8 @@
 package com.greymerk.roguelike.dungeon.layout;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import com.google.gson.JsonArray;
@@ -9,6 +11,7 @@ import com.greymerk.roguelike.debug.Debug;
 import com.greymerk.roguelike.dungeon.Dungeon;
 import com.greymerk.roguelike.dungeon.Floor;
 import com.greymerk.roguelike.dungeon.cell.Cell;
+import com.greymerk.roguelike.dungeon.cell.CellManager;
 import com.greymerk.roguelike.dungeon.cell.CellState;
 import com.greymerk.roguelike.dungeon.room.IRoom;
 import com.greymerk.roguelike.dungeon.room.Room;
@@ -36,98 +39,53 @@ public class LayoutManager {
 	public void generate(IWorldEditor editor) {
 		Debug debug = new Debug(editor.getWorldDirectory());
 		Random rand = editor.getRandom(origin);
-		Floor previous = null;
 		
 		for(Floor floor : this.floors) {
-			int lvl = Dungeon.getLevelFromY(floor.getOrigin().getY());
-			if(previous != null) {
-				List<Cell> potentials = previous.getOffsetCells();
-				floor.addCells(potentials);
-			}
-			
-			if(lvl > 0) {
-				for(int i = 0; i < lvl * 2; ++i) {
-					floor.addRandomBranch(rand, i/3 + 2, i/3 + 2 + lvl/2);
-				}
-			}
-			
-			
-			if(lvl < this.floors.size() - 1) {
-				for(int i = 0; i < lvl / 4; ++i) {
-					floor.addStair(rand);
-				}
-				floor.addStair(rand);
-			}
-			
-			lvl++;
-			previous = floor;
-		}
+			int level = Dungeon.getLevelFromY(floor.getOrigin().getY());
+			if(level > 0) this.addRooms(editor, rand, floor, 6);
+			if(floors.indexOf(floor) < floors.size() - 1) this.addStair(editor, rand, floor);		
+			if(level > 4) this.addRooms(editor, rand, floor, 6);	
+			if(level > 4 && floors.indexOf(floor) < floors.size() - 1) this.addStair(editor, rand, floor);		
+			if(level > 8) this.addRooms(editor, rand, floor, 6);	
+			if(level > 8 && floors.indexOf(floor) < floors.size() - 1) this.addStair(editor, rand, floor);
 		
-		for(int i = 0; i < this.floors.size(); ++i) {
-			Floor floor = this.floors.get(i);
-			floor.addCellWalls();
+			floor.getRooms().forEach(r -> r.determineEntrances(floor, r.getFloorPos()));
 		}
-		
 		debug.toFile(origin.getX() + "_" + origin.getZ() + ".json", this.asJson());
-		
-		for(int i = 0; i < this.floors.size(); ++i) {
-			this.addRooms(editor, rand, i);
-		}
-		
-		debug.toFile(origin.getX() + "_" + origin.getZ() + ".json", this.asJson());
-		
-		for(Floor floor : this.floors) {
-			floor.convertCorridors();
+	}
+	
+	private void addStair(IWorldEditor editor, Random rand, Floor floor) {
+		List<Cell> potentials = floor.getCells(CellState.POTENTIAL);
+		RandHelper.shuffle(potentials, rand);
+		Cell p = floor.findValidStair(potentials, rand);
+		Cardinal dir = floor.findStairDir(p);
+		Coord rfp = p.getFloorPos();
+		Coord rwp = p.getWorldPos(floor.getOrigin());
+		ITheme theme = floor.getTheme();
+		IRoom stair = Room.getInstance(Room.STAIRWAY, theme, rfp, rwp, dir);
+		this.addRoom(stair, rfp, rwp, floor);
+	}
+
+	public void addRooms(IWorldEditor editor, Random rand, Floor floor, int count) {
+		RoomRandomizer rooms = new RoomRandomizer();
+		int level = Dungeon.getLevelFromY(floor.getOrigin().getY());
+		for(int i = 0; i < count; ++i) {
+			IRoom room = Room.getInstance(rooms.get(rand, level), floor.getTheme());
+			this.placeRoom(room, rand, floor);
 		}
 	}
 	
-	public void addRooms(IWorldEditor editor, Random rand, int level) {
-		Floor floor = this.floors.get(level);
-		int y = floor.getOrigin().getY();
-		if((Dungeon.getLevelFromY(y) == 1)) {
-			for(int i = 0; i < 2; ++i) {
-				IRoom bedroom = Room.getInstance(Room.BEDROOM, floor.getTheme());
-				this.placeRoom(bedroom, rand, level);	
-			}
-		}
-		
-		if(Dungeon.getLevelFromY(y) == 2) {
-			for(int i = 0; i < 5; ++i) {
-				IRoom room = Room.getInstance(Room.CROSS, floor.getTheme());
-				this.placeRoom(room, rand, level);	
-			}
-		}
-		
-		if(Dungeon.getLevelFromY(y) == 3 || Dungeon.getLevelFromY(y) == 4) {
-			for(int i = 0; i < 3; ++i) {
-				IRoom room = Room.getInstance(Room.CRYPT, floor.getTheme());
-				this.placeRoom(room, rand, level);	
-			}
-		}
-		
-		if(Dungeon.getLevelFromY(y) == 3 || Dungeon.getLevelFromY(y) == 4) {
-			for(int i = 0; i < 3; ++i) {
-				IRoom room = Room.getInstance(Room.OSSUARY, floor.getTheme());
-				this.placeRoom(room, rand, level);	
-			}
-		}
-		
-		if(Dungeon.getLevelFromY(y) == 5 || Dungeon.getLevelFromY(y) == 6) {
-			IRoom room = Room.getInstance(Room.RESERVOIR, floor.getTheme());
-			this.placeRoom(room, rand, level);
-			for(int i = 0; i < 10; ++i) {
-				room = Room.getInstance(Room.CISTERN, floor.getTheme());
-				this.placeRoom(room, rand, level);	
-			}
-		}
+	public void addRoom(IRoom room, Coord fp, Coord wp, int level) {
+		this.addRoom(room, fp, wp, this.floors.get(level));
 	}
 	
-	public void addRoom(IRoom toAdd, Coord fp, Coord wp, int level) {
-		toAdd.determineEntrances(this.floors.get(level), fp);
+	public void addRoom(IRoom toAdd, Coord fp, Coord wp, Floor floor) {
+		int level = this.floors.indexOf(floor);
+		toAdd.determineEntrances(floor, fp);
 		toAdd.setFloorPos(fp);
 		toAdd.setWorldPos(wp);
-		this.floors.get(level).addRoom(toAdd);
-		List<Cell> cells = toAdd.getCells();
+		floor.addRoom(toAdd);
+		CellManager cells = toAdd.getCells();
 		for(Cell c : cells) {
 			Coord pos = new Coord(c.getFloorPos().getX(), 0, c.getFloorPos().getZ());
 			pos.add(fp);
@@ -158,58 +116,82 @@ public class LayoutManager {
 		return rooms;
 	}
 	
-	public boolean placeRoom(IRoom room, Random rand, int level) {
-		Floor floor = this.floors.get(level);
-		List<Cell> corridors = floor.getCells(CellState.CORRIDOR);
-		RandHelper.shuffle(corridors, rand);
-		for(Cell c : corridors) {
-			if(room.isDirectional()) {
+	public boolean placeRoom(IRoom room, Random rand, Floor floor) {
+		List<Cell> potentials = floor.getCells(CellState.POTENTIAL);
+		Collections.sort(potentials, new CenterSort());
+		CellManager roomCells = room.getCells();
+		List<Cell> roomPotentials = roomCells.getCells(CellState.POTENTIAL);
+		roomPotentials.removeIf(c -> c.getFloorPos().getY() != 0);
+		RandHelper.shuffle(roomPotentials, rand);
+		
+		if(room.isDirectional()) {
+			for(Cell p : potentials) {
 				for(Cardinal dir : Cardinal.randDirs(rand)) {
-					if(!c.getWalls().contains(dir)) continue;
 					room.setDirection(dir);
-					boolean fit = doesRoomFit(room, c.getFloorPos(), level);
-					if(fit) this.addRoom(room, c.getFloorPos(), c.getWorldPos(floor.getOrigin()), level);
-					return true;	
-				}	
-			} else {
-				boolean fit = doesRoomFit(room, c.getFloorPos(), level);
-				if(fit) this.addRoom(room, c.getFloorPos(), c.getWorldPos(floor.getOrigin()), level);
-				return true;
+					Coord fp = p.getFloorPos();
+					fp.add(Cardinal.reverse(dir));
+					Cell c = floor.getCell(fp);
+					if(c.getState() == CellState.OBSTRUCTED) {
+						if(c.getWalls().contains(dir)) continue;
+						Coord rfp = p.getFloorPos();
+						Coord rwp = p.getWorldPos(floor.getOrigin());
+						boolean fit = this.roomFits(room, rfp, floor);
+						if(fit) this.addRoom(room, rfp, rwp, floor);
+						return true;
+					}
+				}
 			}
+		} else {
+			for(Cell rp : roomPotentials) {			
+				for(Cell p : potentials) {
+					for(Cardinal dir : Cardinal.randDirs(rand)) {
+						room.setDirection(dir);
+						Coord pos = p.getFloorPos();
+						pos.add(Cardinal.reverse(room.getDirection()));
+						Cell c = floor.getCell(pos);
+						if(c.isRoom() && (!c.getWalls().contains(room.getDirection()))) {
+							Coord roomPos = c.getFloorPos().copy().add(rp.getFloorPos());
+							Cell roomCenter = floor.getCell(roomPos);
+							if(this.roomFits(room, roomPos, floor)) {
+								this.addRoom(room, roomPos, roomCenter.getWorldPos(floor.getOrigin()), floor);
+								return true;
+							}
+						}	
+					}
+				}
+			}	
 		}
-		
-		
-		
-		
 		return false;
 	}
 	
-	public boolean doesRoomFit(IRoom room, Coord floorPos, int level) {
+	public boolean roomFits(IRoom room, Coord floorPos, Floor floor) {
 		
-		List<Cell> cells = room.getCells();
-		for(Cell cell : cells) {
-			if(cell.getState() != CellState.OBSTRUCTED) continue;
+		int level = this.floors.indexOf(floor);
+		CellManager cells = room.getCells();
+		
+		for(Cell rc : cells) {
+			if(rc.getState() != CellState.OBSTRUCTED) continue;
+			if(rc.getLevelOffset() + level >= this.floors.size()) return false;
+			if(rc.getLevelOffset() != 0) continue;
 			
-			int offsetFloor = level + cell.getLevelOffset();
-			if(offsetFloor >= this.floors.size()) return false;
-			Floor floor = this.floors.get(offsetFloor);
-			Coord fp = new Coord(cell.getFloorPos().getX(), 0, cell.getFloorPos().getZ());
+			Coord fp = new Coord(rc.getFloorPos().getX(), 0, rc.getFloorPos().getZ());
 			fp.add(floorPos);
 			CellState state = floor.getCellState(fp);
 			if(state == CellState.OBSTRUCTED) return false;
-			
-			// check if a cell with a wall is blocking an opening
-			if(!cell.getWalls().isEmpty()) {
-				for(Cardinal dir : cell.getWalls()) {
-					Coord pos = fp.copy();
-					pos.add(dir);
-					Cell other = floor.getCell(pos);
-					if(!other.isRoom()) continue;
-					if(!other.getWalls().contains(Cardinal.reverse(dir))) return false;
-				}
-			}
 		}
 		return true;
+	}
+	
+	public boolean outerWallBlockingPassage(Cell cell, Coord fp, Floor f) {
+		if(cell.getWalls().isEmpty()) return false;
+		for(Cardinal dir : cell.getWalls()) {
+			Coord pos = fp.copy();
+			pos.add(dir);
+			Cell other = f.getCell(pos);
+			if(!other.isRoom()) continue;
+			if(!other.getWalls().contains(Cardinal.reverse(dir))) return true;
+		}
+		return false;
 	}
 	
 	
@@ -226,6 +208,14 @@ public class LayoutManager {
 		return json;
 	}
 	
-	
+	private class CenterSort implements Comparator<Cell>{
+		@Override
+		public int compare(Cell c, Cell other) {
+			Coord center = new Coord(0,0,0);			
+			int distC = (int) c.getFloorPos().distance(center);
+			int distOther = (int) other.getFloorPos().distance(center);
+			return distC - distOther;
+		}
+	}
 	
 }

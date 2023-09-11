@@ -1,10 +1,8 @@
 package com.greymerk.roguelike.dungeon.room;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.greymerk.roguelike.dungeon.Floor;
 import com.greymerk.roguelike.dungeon.cell.Cell;
+import com.greymerk.roguelike.dungeon.cell.CellManager;
 import com.greymerk.roguelike.dungeon.cell.CellState;
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
 import com.greymerk.roguelike.dungeon.fragment.wall.WallShelf;
@@ -103,9 +101,10 @@ public class Corridor extends AbstractRoom implements IRoom{
 
 
 	@Override
-	public List<Cell> getCells() {
-		List<Cell> cells = new ArrayList<Cell>();
-		cells.add(new Cell(new Coord(0,0,0), CellState.CORRIDOR));
+	public CellManager getCells() {
+		CellManager cells = new CellManager();
+
+		cells.add(new Cell(new Coord(0,0,0), CellState.OBSTRUCTED));
 		
 		for(Cardinal dir : Cardinal.directions) {
 			cells.add(new Cell(new Coord(0,0,0).add(dir), CellState.POTENTIAL));
@@ -120,7 +119,18 @@ public class Corridor extends AbstractRoom implements IRoom{
 	}
 
 	@Override
-	public void determineEntrances(Floor f, Coord floorPos) {}
+	public void determineEntrances(Floor f, Coord floorPos) {
+		
+		for(Cardinal dir : Cardinal.directions) {
+			Coord fp = floorPos.copy();
+			fp.add(dir);
+			Cell c = f.getCell(fp);
+			if(c.isRoom() && !c.getWalls().contains(Cardinal.reverse(dir))){
+				this.entrances.add(dir);
+			}
+		}
+		
+	}
 
 
 

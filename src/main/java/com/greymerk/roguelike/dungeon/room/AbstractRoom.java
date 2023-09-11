@@ -26,7 +26,7 @@ public abstract class AbstractRoom implements IRoom{
 	protected List<Cardinal> entrances;
 	
 	public AbstractRoom() {
-		this.direction = Cardinal.DOWN;
+		this.direction = Cardinal.EAST;
 		this.generated = false;
 		this.entrances = new ArrayList<Cardinal>();
 	}
@@ -137,6 +137,11 @@ public abstract class AbstractRoom implements IRoom{
 	@Override
 	public boolean isDirectional() {
 		return false;
+	}
+	
+	@Override
+	public Cardinal getDirection() {
+		return this.direction;
 	}
 	
 	@Override

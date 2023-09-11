@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.greymerk.roguelike.dungeon.Floor;
 import com.greymerk.roguelike.dungeon.cell.Cell;
+import com.greymerk.roguelike.dungeon.cell.CellManager;
 import com.greymerk.roguelike.dungeon.cell.CellState;
 import com.greymerk.roguelike.dungeon.fragment.wall.WallShelf;
 import com.greymerk.roguelike.editor.Cardinal;
@@ -240,8 +241,16 @@ public class BedRoom extends AbstractRoom implements IRoom {
 	}
 	
 	@Override
-	public List<Cell> getCells() {
-		List<Cell> cells = new ArrayList<Cell>();
+	public CellManager getCells() {
+		CellManager cells = new CellManager();
+		
+		for(Cardinal dir : Cardinal.directions) {
+			if(dir == this.direction) continue;
+			Coord fp = new Coord(0,0,0);
+			fp.add(dir);
+			cells.add(new Cell(fp, CellState.POTENTIAL));
+		}
+		
 		Coord pos = new Coord(0,0,0);
 		cells.add(new Cell(pos.copy(), CellState.OBSTRUCTED));
 		pos.add(direction);

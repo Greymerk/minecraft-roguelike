@@ -1,10 +1,10 @@
 package com.greymerk.roguelike.dungeon.room;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.greymerk.roguelike.dungeon.Floor;
 import com.greymerk.roguelike.dungeon.cell.Cell;
+import com.greymerk.roguelike.dungeon.cell.CellManager;
 import com.greymerk.roguelike.dungeon.cell.CellState;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
@@ -12,8 +12,8 @@ import com.greymerk.roguelike.editor.Coord;
 public abstract class AbstractMediumRoom extends AbstractRoom implements IRoom{
 
 	@Override
-	public List<Cell> getCells() {
-		List<Cell> cells = new ArrayList<Cell>();
+	public CellManager getCells() {
+		CellManager cells = new CellManager();
 		cells.add(new Cell(new Coord(0,0,0), CellState.OBSTRUCTED));
 		for(Cardinal dir : Cardinal.directions) {
 			Coord pos = new Coord(0,0,0);
@@ -41,8 +41,7 @@ public abstract class AbstractMediumRoom extends AbstractRoom implements IRoom{
 			Coord pos = new Coord(fp);
 			pos.add(dir, 2);
 			Cell c = f.getCell(pos);
-			if(!(c.getState() == CellState.CORRIDOR
-				|| c.getState() == CellState.OBSTRUCTED)) continue;
+			if(!c.isRoom()) continue;
 			List<Cardinal> walls = c.getWalls();
 			if(!walls.contains(Cardinal.reverse(dir))) {
 				this.addEntrance(dir);
