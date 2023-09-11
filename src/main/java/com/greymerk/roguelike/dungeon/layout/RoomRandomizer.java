@@ -24,8 +24,7 @@ public class RoomRandomizer {
 		
 		for(int i = 0; i < rooms.size(); ++i) {
 			WeightedRandomizer<Room> thisLevel = rooms.get(i);
-			if(i == 1) thisLevel.add(new WeightedChoice<Room>(Room.CROSS, 10));
-			if(i == 1) thisLevel.add(new WeightedChoice<Room>(Room.BEDROOM, 5));
+			if(i == 1) thisLevel.add(new WeightedChoice<Room>(Room.CROSS, 3));
 			if(i == 2) thisLevel.add(new WeightedChoice<Room>(Room.CROSS, 5));
 			if(i == 2) thisLevel.add(new WeightedChoice<Room>(Room.CRYPT, 1));
 			if(i == 3) thisLevel.add(new WeightedChoice<Room>(Room.CRYPT, 5));

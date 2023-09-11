@@ -48,7 +48,11 @@ public class LayoutManager {
 			if(level > 4 && floors.indexOf(floor) < floors.size() - 1) this.addStair(editor, rand, floor);		
 			if(level > 8) this.addRooms(editor, rand, floor, 6);	
 			if(level > 8 && floors.indexOf(floor) < floors.size() - 1) this.addStair(editor, rand, floor);
-		
+			if(level == 1) {
+				IRoom bedroom = Room.getInstance(Room.BEDROOM, floor.getTheme());
+				this.placeRoom(bedroom, rand, floor);
+			}
+			
 			floor.getRooms().forEach(r -> r.determineEntrances(floor, r.getFloorPos()));
 		}
 		debug.toFile(origin.getX() + "_" + origin.getZ() + ".json", this.asJson());
@@ -75,8 +79,11 @@ public class LayoutManager {
 		}
 	}
 	
-	public void addRoom(IRoom room, Coord fp, Coord wp, int level) {
-		this.addRoom(room, fp, wp, this.floors.get(level));
+	public void addEntrance(IRoom room) {
+		Floor f = this.floors.get(0);
+		Coord fp = new Coord(0,0,0);
+		Coord wp = f.getOrigin();
+		this.addRoom(room, fp, wp, f);
 	}
 	
 	public void addRoom(IRoom toAdd, Coord fp, Coord wp, Floor floor) {
@@ -176,7 +183,7 @@ public class LayoutManager {
 			
 			Coord fp = new Coord(rc.getFloorPos().getX(), 0, rc.getFloorPos().getZ());
 			fp.add(floorPos);
-			CellState state = floor.getCellState(fp);
+			CellState state = floor.getCell(fp).getState();
 			if(state == CellState.OBSTRUCTED) return false;
 		}
 		return true;

@@ -31,6 +31,12 @@ public class Cell {
 		this.state = state;
 	}
 	
+	public void replace(Cell other) {
+		this.floorPos = other.floorPos;
+		this.state = other.state;
+		this.walls = other.walls;
+	}
+	
 	public boolean isRoom() {
 		if(this.state == CellState.CORRIDOR) return true;
 		if(this.state == CellState.OBSTRUCTED) return true;

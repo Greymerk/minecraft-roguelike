@@ -40,15 +40,14 @@ public class CellManager implements Iterable<Cell>{
 		if(current.getState() == CellState.OBSTRUCTED) return;
 		
 		if(current.getState() == CellState.POTENTIAL) {
-			current.setState(toAdd.getState());
+			current.replace(toAdd);
 			return;
 		}
 		
 		if(toAdd.getState() == CellState.OBSTRUCTED) {
-			current.setState(CellState.OBSTRUCTED);
+			current.replace(toAdd);
 			return;
 		}
-
 	}
 	
 	public Cell get(Coord floorPos) {

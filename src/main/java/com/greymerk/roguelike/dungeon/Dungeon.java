@@ -65,7 +65,7 @@ public class Dungeon implements Iterable<IRoom>{
 		IRoom entrance = Room.getInstance(Room.ENTRANCE, Theme.getTheme(Theme.OAK), new Coord(0, 0, 0), firstFloor);
 		entrance.generate(editor);
 		entrance.setGenerated(true);
-		layout.addRoom(entrance, new Coord(0,0,0), firstFloor, 0);
+		layout.addEntrance(entrance);
 		layout.generate(editor);
 		this.rooms = layout.getRooms();
 		
