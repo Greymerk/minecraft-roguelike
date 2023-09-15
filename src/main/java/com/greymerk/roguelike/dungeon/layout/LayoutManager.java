@@ -15,12 +15,16 @@ import com.greymerk.roguelike.dungeon.cell.CellManager;
 import com.greymerk.roguelike.dungeon.cell.CellState;
 import com.greymerk.roguelike.dungeon.room.IRoom;
 import com.greymerk.roguelike.dungeon.room.Room;
+import com.greymerk.roguelike.dungeon.room.RoomProvider;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.boundingbox.IBounded;
 import com.greymerk.roguelike.editor.theme.ITheme;
 import com.greymerk.roguelike.editor.theme.Theme;
+import com.greymerk.roguelike.settings.IDungeonSettings;
+import com.greymerk.roguelike.settings.ILevelSettings;
+import com.greymerk.roguelike.settings.dungeon.DungeonSettingsDefault;
 import com.greymerk.roguelike.util.math.RandHelper;
 
 import net.minecraft.util.math.random.Random;
@@ -29,11 +33,13 @@ public class LayoutManager {
 
 	private Coord origin;
 	private List<Floor> floors;
+	private IDungeonSettings settings;
 	
 	
 	public LayoutManager(Coord origin) {
 		this.origin = origin;
-		this.floors = createFloors(); 
+		this.floors = createFloors();
+		this.settings = new DungeonSettingsDefault();
 	}
 	
 	public void generate(IWorldEditor editor) {
@@ -42,16 +48,15 @@ public class LayoutManager {
 		
 		for(Floor floor : this.floors) {
 			int level = Dungeon.getLevelFromY(floor.getOrigin().getY());
-			if(level > 0) this.addRooms(editor, rand, floor, 6);
+			RoomProvider rooms = this.settings.getLevel(floor.getOrigin().getY()).getRooms();
+			if(level > 0)this.addRooms(editor, rand, floor, rooms.getRoomsBefore());
+			if(level > 0) this.addRooms(editor, rand, floor, rooms, 6);
 			if(floors.indexOf(floor) < floors.size() - 1) this.addStair(editor, rand, floor);		
-			if(level > 4) this.addRooms(editor, rand, floor, 6);	
+			if(level > 4) this.addRooms(editor, rand, floor, rooms, 6);	
 			if(level > 4 && floors.indexOf(floor) < floors.size() - 1) this.addStair(editor, rand, floor);		
-			if(level > 8) this.addRooms(editor, rand, floor, 6);	
+			if(level > 8) this.addRooms(editor, rand, floor, rooms, 6);	
 			if(level > 8 && floors.indexOf(floor) < floors.size() - 1) this.addStair(editor, rand, floor);
-			if(level == 1) {
-				IRoom bedroom = Room.getInstance(Room.BEDROOM, floor.getTheme());
-				this.placeRoom(bedroom, rand, floor);
-			}
+			if(level > 0)this.addRooms(editor, rand, floor, rooms.getRoomsAfter());
 			
 			floor.getRooms().forEach(r -> r.determineEntrances(floor, r.getFloorPos()));
 		}
@@ -65,16 +70,21 @@ public class LayoutManager {
 		Cardinal dir = floor.findStairDir(p);
 		Coord rfp = p.getFloorPos();
 		Coord rwp = p.getWorldPos(floor.getOrigin());
-		ITheme theme = floor.getTheme();
-		IRoom stair = Room.getInstance(Room.STAIRWAY, theme, rfp, rwp, dir);
+		IRoom stair = Room.getInstance(Room.STAIRWAY, this.settings.getLevel(floor.getOrigin().getY()), rfp, rwp, dir);
 		this.addRoom(stair, rfp, rwp, floor);
 	}
 
-	public void addRooms(IWorldEditor editor, Random rand, Floor floor, int count) {
-		RoomRandomizer rooms = new RoomRandomizer();
-		int level = Dungeon.getLevelFromY(floor.getOrigin().getY());
+	public void addRooms(IWorldEditor editor, Random rand, Floor floor, List<Room> rooms) {
+		ILevelSettings ls = this.settings.getLevel(floor.getOrigin().getY());
+		for(Room type : rooms) {
+			IRoom room = Room.getInstance(type, ls);
+			this.placeRoom(room, rand, floor);
+		}
+	}
+	
+	public void addRooms(IWorldEditor editor, Random rand, Floor floor, RoomProvider rooms, int count) {
 		for(int i = 0; i < count; ++i) {
-			IRoom room = Room.getInstance(rooms.get(rand, level), floor.getTheme());
+			IRoom room = Room.getInstance(rooms.get(rand), this.settings.getLevel(floor.getOrigin().getY()));
 			this.placeRoom(room, rand, floor);
 		}
 	}

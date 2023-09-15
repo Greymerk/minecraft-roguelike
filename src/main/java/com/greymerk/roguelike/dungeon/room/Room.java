@@ -6,8 +6,8 @@ import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.editor.boundingbox.IBounded;
-import com.greymerk.roguelike.editor.theme.ITheme;
-import com.greymerk.roguelike.editor.theme.Theme;
+import com.greymerk.roguelike.settings.ILevelSettings;
+import com.greymerk.roguelike.settings.LevelSettings;
 
 import net.minecraft.nbt.NbtCompound;
 
@@ -34,12 +34,12 @@ public enum Room {
 	
 	public static IRoom createFromNBT(NbtCompound tag) {
 		Room type = get(tag.get("type").asString());
-		ITheme theme = Theme.get(tag.getString("theme"));
+		ILevelSettings settings = LevelSettings.get(tag.getString("settings"));
 		IBounded box = new BoundingBox(tag.getCompound("box"));
 		Coord pos = new Coord(tag.getCompound("pos"));
 		int dirValue = tag.getInt("dir");
 		Cardinal dir = Arrays.asList(Cardinal.values()).get(dirValue);
-		return getInstance(type, theme, box, pos, dir);
+		return getInstance(type, settings, box, pos, dir);
 	}
 	
 	public static Room get(String name) {
@@ -56,29 +56,29 @@ public enum Room {
 		return false;
 	}
 	
-	public static IRoom getInstance(Room type, ITheme theme) {
+	public static IRoom getInstance(Room type, ILevelSettings settings) {
 		IRoom room = fromType(type);
-		room.setTheme(theme);
+		room.setLevelSettings(settings);
 		return room;
 	}
 	
-	public static IRoom getInstance(Room type, ITheme theme, Coord floorPos, Coord worldPos) {
+	public static IRoom getInstance(Room type, ILevelSettings settings, Coord floorPos, Coord worldPos) {
 		IRoom room = fromType(type);
-		room.setTheme(theme);
+		room.setLevelSettings(settings);
 		room.setFloorPos(floorPos);
 		room.setWorldPos(worldPos);
 		return room;
 	}
 	
-	public static IRoom getInstance(Room type, ITheme theme, Coord floorPos, Coord worldPos, Cardinal dir) {
-		IRoom room = getInstance(type, theme, floorPos, worldPos);
+	public static IRoom getInstance(Room type, ILevelSettings settings, Coord floorPos, Coord worldPos, Cardinal dir) {
+		IRoom room = getInstance(type, settings, floorPos, worldPos);
 		room.setDirection(dir);
 		return room;
 	}
 	
-	public static IRoom getInstance(Room type, ITheme theme, IBounded box, Coord pos, Cardinal dir) {
+	public static IRoom getInstance(Room type, ILevelSettings settings, IBounded box, Coord pos, Cardinal dir) {
 		IRoom room = fromType(type);
-		room.setTheme(theme);
+		room.setLevelSettings(settings);
 		room.setWorldPos(pos);
 		room.setDirection(dir);
 		return room;

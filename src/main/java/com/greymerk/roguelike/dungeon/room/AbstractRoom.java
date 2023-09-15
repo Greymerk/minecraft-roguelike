@@ -11,6 +11,8 @@ import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.editor.boundingbox.IBounded;
 import com.greymerk.roguelike.editor.theme.ITheme;
 import com.greymerk.roguelike.editor.theme.Theme;
+import com.greymerk.roguelike.settings.ILevelSettings;
+import com.greymerk.roguelike.settings.LevelSettings;
 
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtString;
@@ -20,6 +22,7 @@ public abstract class AbstractRoom implements IRoom{
 	
 	protected Coord floorPos;
 	protected Coord worldPos;
+	protected ILevelSettings settings;
 	protected ITheme theme;
 	protected Cardinal direction;
 	protected boolean generated;
@@ -31,12 +34,13 @@ public abstract class AbstractRoom implements IRoom{
 		this.entrances = new ArrayList<Cardinal>();
 	}
 	
-	public AbstractRoom(ITheme theme, IBounded box, Coord worldPos) {
-		this(theme, box, worldPos, Cardinal.DOWN);
+	public AbstractRoom(ILevelSettings settings, IBounded box, Coord worldPos) {
+		this(settings, box, worldPos, Cardinal.DOWN);
 	}
 	
-	public AbstractRoom(ITheme theme, IBounded box, Coord worldPos, Cardinal dir) {
-		this.theme = theme;
+	public AbstractRoom(ILevelSettings settings, IBounded box, Coord worldPos, Cardinal dir) {
+		this.settings = settings;
+		this.theme = settings.getTheme();
 		this.worldPos = worldPos;
 		this.generated = false;
 		this.direction = dir;
@@ -44,6 +48,7 @@ public abstract class AbstractRoom implements IRoom{
 	}
 	
 	public AbstractRoom(NbtCompound tag) {
+		this.settings = LevelSettings.get(tag.getString("settings"));
 		this.theme = Theme.get(tag.getString("theme"));
 		this.worldPos = new Coord(tag.getCompound("pos"));
 		this.generated = tag.getBoolean("generated");
@@ -63,6 +68,7 @@ public abstract class AbstractRoom implements IRoom{
 		
 		NbtCompound nbt = new NbtCompound();
 		nbt.put("type", NbtString.of(getName()));
+		nbt.put("settings", NbtString.of(settings.getName()));
 		nbt.put("theme", NbtString.of(theme.getName()));
 		nbt.put("pos", pos.getNbt());
 		nbt.putBoolean("generated", this.generated);
@@ -101,9 +107,9 @@ public abstract class AbstractRoom implements IRoom{
 		return worldPos.copy();
 	}
 
-	@Override
-	public void setTheme(ITheme theme) {
-		this.theme = theme;
+	public void setLevelSettings(ILevelSettings settings) {
+		this.settings = settings;
+		this.theme = settings.getTheme();
 	}
 	
 	@Override

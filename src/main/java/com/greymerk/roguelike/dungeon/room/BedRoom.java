@@ -34,7 +34,7 @@ public class BedRoom extends AbstractRoom implements IRoom {
 		for(Cardinal ent : this.entrances) {
 			cor.addEntrance(ent);
 		}
-		cor.theme = this.theme;
+		cor.setLevelSettings(settings);
 		cor.worldPos = this.worldPos.copy();
 		cor.addEntrance(direction);
 		cor.generate(editor);

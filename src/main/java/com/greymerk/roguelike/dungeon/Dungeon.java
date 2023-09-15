@@ -12,6 +12,7 @@ import com.greymerk.roguelike.dungeon.tower.RogueTower;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.theme.Theme;
+import com.greymerk.roguelike.settings.LevelSettings;
 
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
@@ -62,7 +63,7 @@ public class Dungeon implements Iterable<IRoom>{
 		Coord firstFloor = new Coord(this.origin.getX(), entranceY, this.origin.getZ());
 
 		LayoutManager layout = new LayoutManager(firstFloor);
-		IRoom entrance = Room.getInstance(Room.ENTRANCE, Theme.getTheme(Theme.OAK), new Coord(0, 0, 0), firstFloor);
+		IRoom entrance = Room.getInstance(Room.ENTRANCE, LevelSettings.fromType(LevelSettings.OAK), new Coord(0, 0, 0), firstFloor);
 		entrance.generate(editor);
 		entrance.setGenerated(true);
 		layout.addEntrance(entrance);

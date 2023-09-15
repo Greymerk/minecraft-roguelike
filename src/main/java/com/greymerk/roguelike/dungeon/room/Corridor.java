@@ -5,7 +5,7 @@ import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellManager;
 import com.greymerk.roguelike.dungeon.cell.CellState;
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
-import com.greymerk.roguelike.dungeon.fragment.wall.WallShelf;
+import com.greymerk.roguelike.dungeon.fragment.IFragment;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IBlockFactory;
@@ -56,6 +56,7 @@ public class Corridor extends AbstractRoom implements IRoom{
 			
 			Fragment.generate(Fragment.CELL_SUPPORT, editor, rand, theme, worldPos.copy());
 			
+			
 		}
 		
 		start = new Coord(worldPos);
@@ -78,8 +79,8 @@ public class Corridor extends AbstractRoom implements IRoom{
 			if(this.entrances.contains(dir)) {
 				Fragment.generate(Fragment.ARCH, editor, rand, theme, worldPos, dir);
 			} else {
-				Coord pos = new Coord(worldPos);
-				new WallShelf().generate(editor, rand, theme, pos, dir);
+				IFragment wall = this.settings.getWallFragment(rand);
+				wall.generate(editor, rand, theme, worldPos.copy(), dir);
 			}
 		}
 	}

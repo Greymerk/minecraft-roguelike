@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
-import com.greymerk.roguelike.editor.Difficulty;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.util.math.RandHelper;
 

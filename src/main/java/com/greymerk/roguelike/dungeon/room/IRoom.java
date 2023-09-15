@@ -7,6 +7,7 @@ import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.boundingbox.IBounded;
 import com.greymerk.roguelike.editor.theme.ITheme;
+import com.greymerk.roguelike.settings.ILevelSettings;
 
 import net.minecraft.nbt.NbtCompound;
 
@@ -34,7 +35,7 @@ public interface IRoom {
 	
 	public Coord getWorldPos();
 	
-	public void setTheme(ITheme theme);
+	public void setLevelSettings(ILevelSettings settings);
 	
 	public ITheme getTheme();
 	

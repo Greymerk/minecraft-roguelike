@@ -1,4 +1,4 @@
-package com.greymerk.roguelike.editor;
+package com.greymerk.roguelike.dungeon;
 
 public enum Difficulty {
 

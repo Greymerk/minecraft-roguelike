@@ -102,6 +102,10 @@ public class BlockSet implements IBlockSet {
 		this.slab = slab;
 	}
 	
+	public void setLiquid(MetaBlock liquid) {
+		this.liquid = liquid;
+	}
+	
 	@Override
 	public ISlab getSlab() {
 		return this.slab != null ? this.slab : Slab.get(Slab.STONE);
