@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.greymerk.roguelike.dungeon.Floor;
+import com.greymerk.roguelike.dungeon.cell.Cell;
+import com.greymerk.roguelike.dungeon.cell.CellManager;
+import com.greymerk.roguelike.dungeon.cell.CellState;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
@@ -158,6 +162,34 @@ public abstract class AbstractRoom implements IRoom{
 	@Override
 	public void addEntrance(Cardinal dir) {
 		this.entrances.add(dir);
+	}
+	
+	@Override
+	public CellManager getCells() {
+		CellManager cells = new CellManager();
+
+		cells.add(new Cell(new Coord(0,0,0), CellState.OBSTRUCTED));
+		
+		for(Cardinal dir : Cardinal.directions) {
+			cells.add(new Cell(new Coord(0,0,0).add(dir), CellState.POTENTIAL));
+		}
+		
+		return cells;
+	}
+	
+
+	@Override
+	public void determineEntrances(Floor f, Coord floorPos) {
+		
+		for(Cardinal dir : Cardinal.directions) {
+			Coord fp = floorPos.copy();
+			fp.add(dir);
+			Cell c = f.getCell(fp);
+			if(c.isRoom() && !c.getWalls().contains(Cardinal.reverse(dir))){
+				this.entrances.add(dir);
+			}
+		}
+		
 	}
 	
 	public void applyFilters(IWorldEditor editor) {

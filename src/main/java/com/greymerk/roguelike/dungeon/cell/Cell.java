@@ -38,8 +38,7 @@ public class Cell {
 	}
 	
 	public boolean isRoom() {
-		if(this.state == CellState.CORRIDOR) return true;
-		if(this.state == CellState.OBSTRUCTED) return true;
+ 		if(this.state == CellState.OBSTRUCTED) return true;
 		return false;
 	}
 	

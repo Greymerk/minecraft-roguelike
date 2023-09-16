@@ -19,6 +19,7 @@ public class LevelSettingsMossy extends LevelSettingsBase implements ILevelSetti
 		rooms.addRandomChoice(Room.CORRIDOR, 10);
 		rooms.addRandomChoice(Room.CISTERN, 5);
 		rooms.addRandomChoice(Room.RESERVOIR, 1);
+		rooms.addRandomChoice(Room.CREEPER, 1);
 		rooms.addRandomChoice(Room.CROSS, 2);
 		rooms.addRandomChoice(Room.CRYPT, 2);
 		rooms.addRandomChoice(Room.OSSUARY, 2);
