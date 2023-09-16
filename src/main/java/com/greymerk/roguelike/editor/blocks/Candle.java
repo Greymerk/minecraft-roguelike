@@ -8,6 +8,7 @@ import com.greymerk.roguelike.util.Color;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.CandleBlock;
+import net.minecraft.util.math.random.Random;
 
 public class Candle {
 
@@ -29,6 +30,10 @@ public class Candle {
 		candle.withProperty(CandleBlock.CANDLES, numCandles);
 		candle.withProperty(CandleBlock.LIT, lit);
 		candle.set(editor, origin);
+	}
+	
+	public static void generate(IWorldEditor editor, Random rand, Coord origin, boolean lit) {
+		generate(editor, origin, Color.get(rand), rand.nextBetween(1, 4), lit);
 	}
 	
 	public static Block fromColor(Color color) {

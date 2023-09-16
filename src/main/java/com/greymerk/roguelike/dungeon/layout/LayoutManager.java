@@ -50,7 +50,7 @@ public class LayoutManager {
 			int level = Dungeon.getLevelFromY(floor.getOrigin().getY());
 			RoomProvider rooms = this.settings.getLevel(floor.getOrigin().getY()).getRooms();
 			if(level > 0)this.addRooms(editor, rand, floor, rooms.getRoomsBefore());
-			if(level > 0) this.addRooms(editor, rand, floor, rooms, 6);
+			if(level > 0) this.addRooms(editor, rand, floor, rooms, 8);
 			if(floors.indexOf(floor) < floors.size() - 1) this.addStair(editor, rand, floor);		
 			if(level > 4) this.addRooms(editor, rand, floor, rooms, 6);	
 			if(level > 4 && floors.indexOf(floor) < floors.size() - 1) this.addStair(editor, rand, floor);		
