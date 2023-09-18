@@ -35,6 +35,18 @@ public class OssuaryRoom extends AbstractMediumRoom implements IRoom {
 			}
 		}
 		this.floor(editor, rand, origin);
+		this.supports(editor, rand, origin);
+	}
+
+	private void supports(IWorldEditor editor, Random rand, Coord origin) {
+		Fragment.generate(Fragment.CELL_SUPPORT, editor, rand, theme, origin);
+		for(Cardinal dir : Cardinal.directions) {
+			Coord pos = origin.copy();
+			pos.add(dir, 6);
+			Fragment.generate(Fragment.CELL_SUPPORT, editor, rand, theme, pos);
+			pos.add(Cardinal.left(dir), 6);
+			Fragment.generate(Fragment.CELL_SUPPORT, editor, rand, theme, pos);
+		}
 	}
 
 	private void faceWall(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {

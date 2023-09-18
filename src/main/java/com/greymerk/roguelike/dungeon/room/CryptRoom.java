@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
+import com.greymerk.roguelike.dungeon.fragment.IFragment;
+import com.greymerk.roguelike.dungeon.fragment.parts.CryptFragment;
 import com.greymerk.roguelike.dungeon.fragment.wall.WallShelf;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
@@ -11,6 +13,7 @@ import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.blocks.BlockType;
 import com.greymerk.roguelike.editor.blocks.stair.IStair;
+import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.editor.shapes.RectHollow;
 import com.greymerk.roguelike.editor.shapes.RectSolid;
 
@@ -37,6 +40,8 @@ public class CryptRoom extends AbstractMediumRoom implements IRoom {
 			}
 		}
 		
+		Fragment.generate(Fragment.CELL_SUPPORT, editor, rand, theme, origin.copy());
+		
 		for(Cardinal dir : Cardinal.directions) {
 			if(this.entrances.contains(dir)) {				
 				this.entryWay(editor, rand, origin, dir);
@@ -45,6 +50,8 @@ public class CryptRoom extends AbstractMediumRoom implements IRoom {
 				pos.add(dir, 5);
 				this.cryptWall(editor, rand, pos, dir);
 			}
+			
+			Fragment.generate(Fragment.CELL_SUPPORT, editor, rand, theme, origin.copy().add(dir, 6));
 		}
 	}
 	
@@ -217,16 +224,6 @@ public class CryptRoom extends AbstractMediumRoom implements IRoom {
 			end.add(Cardinal.right(dir));
 			RectSolid.fill(editor, rand, start, end, theme.getPrimary().getWall());
 			
-			/*
-			start = origin.copy();
-			start.add(dir, 2);
-			end = start.copy();
-			start.add(Cardinal.left(dir));
-			end.add(Cardinal.right(dir));
-			end.add(Cardinal.UP, 2);
-			RectSolid.fill(editor, rand, start, end, BlockType.get(BlockType.AIR));
-			*/
-			
 			for(Cardinal o : Cardinal.orthogonal(dir)) {
 				
 				Coord pos = origin.copy();
@@ -302,39 +299,36 @@ public class CryptRoom extends AbstractMediumRoom implements IRoom {
 			stair.set(editor, p);
 		}
 
-		start = origin.copy();
-		start.add(Cardinal.DOWN);
-		end = start.copy();
-		start.add(Cardinal.NORTH, 5);
-		start.add(Cardinal.WEST, 5);
-		end.add(Cardinal.SOUTH, 5);
-		end.add(Cardinal.EAST, 5);
-		RectSolid.fill(editor, rand, start, end, theme.getPrimary().getFloor());
+		BoundingBox bb = new BoundingBox(origin.copy());
+		bb.add(Cardinal.DOWN).grow(Cardinal.directions, 4);
+		RectSolid.fill(editor, rand, bb, theme.getPrimary().getFloor());
 	}
 	
 	private void cryptWall(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
-		Coord start = origin.copy();
-		Coord end = origin.copy();
-		start.add(Cardinal.left(dir), 4);
-		end.add(Cardinal.right(dir), 4);
-		end.add(Cardinal.UP, 5);
-		end.add(dir, 3);
-		RectSolid.fill(editor, rand, start, end, this.theme.getPrimary().getWall());
+		BoundingBox bb = new BoundingBox(origin.copy());
+		bb.grow(Cardinal.orthogonal(dir), 4);
+		bb.grow(Cardinal.DOWN).grow(Cardinal.UP, 5);
+		bb.grow(dir, 3);
+		RectSolid.fill(editor, rand, bb, this.theme.getPrimary().getWall());
 		
 		Coord pos = origin.copy();
 		pos.add(Cardinal.UP);
-		Fragment.generate(Fragment.CRYPT, editor, rand, theme, pos, dir);
+		crypt(editor, rand, pos, dir);
 		pos.add(Cardinal.UP, 2);
-		Fragment.generate(Fragment.CRYPT, editor, rand, theme, pos, dir);
+		crypt(editor, rand, pos, dir);
 		for(Cardinal o : Cardinal.orthogonal(dir)) {
 			pos = origin.copy();
 			pos.add(o, 2);
 			pos.add(Cardinal.UP);
-			Fragment.generate(Fragment.CRYPT, editor, rand, theme, pos, dir);
+			crypt(editor, rand, pos, dir);
 			pos.add(Cardinal.UP, 2);
-			Fragment.generate(Fragment.CRYPT, editor, rand, theme, pos, dir);
-				
+			crypt(editor, rand, pos, dir);	
 		}
+	}
+	
+	private void crypt(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
+		IFragment crypt = new CryptFragment(rand.nextInt(3) != 0);
+		crypt.generate(editor, rand, theme, origin.copy(), dir);
 	}
 
 	@Override

@@ -21,6 +21,10 @@ public class CryptFragment implements IFragment {
 		empty = false;
 	}
 	
+	public CryptFragment(boolean empty) {
+		this.empty = empty;
+	}
+	
 	public void setEmpty(boolean e) {
 		this.empty = e;
 	}

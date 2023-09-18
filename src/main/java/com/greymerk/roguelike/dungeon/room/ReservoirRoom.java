@@ -11,6 +11,7 @@ import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.blocks.Air;
 import com.greymerk.roguelike.editor.blocks.Lantern;
 import com.greymerk.roguelike.editor.blocks.stair.IStair;
+import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.editor.shapes.RectSolid;
 
 import net.minecraft.util.math.random.Random;
@@ -21,9 +22,10 @@ public class ReservoirRoom extends AbstractLargeRoom implements IRoom {
 	public void generate(IWorldEditor editor) {
 		Coord origin = worldPos.copy();
 		Random rand = editor.getRandom(origin);
-		this.clearSpace(editor, rand, origin);
-		this.basin(editor, rand, origin);
+		this.clearUpper(editor, rand, origin);
 		this.buildCells(editor, rand, origin);
+		this.clearBasin(editor, rand, origin);
+		this.basin(editor, rand, origin);
 		this.ceiling(editor, rand, origin);
 		this.addArches(editor, rand, origin);
 		this.addLiquid(editor, rand, origin);
@@ -31,6 +33,30 @@ public class ReservoirRoom extends AbstractLargeRoom implements IRoom {
 		
 	}
 	
+	private void clearBasin(IWorldEditor editor, Random rand, Coord origin) {
+		BoundingBox bb = new BoundingBox(origin.copy());
+		bb.add(Cardinal.DOWN);
+		bb.grow(Cardinal.directions, 10);
+		bb.grow(Cardinal.DOWN, 6);
+		RectSolid.fill(editor, rand, bb, Air.get());
+	}
+
+	private void clearUpper(IWorldEditor editor, Random rand, Coord origin) {
+		for(Cardinal dir : Cardinal.directions) {
+			BoundingBox bb = new BoundingBox(origin.copy());
+			bb.add(dir, 10).grow(dir, 4);
+			bb.grow(Cardinal.left(dir), 9);
+			bb.grow(Cardinal.right(dir), 14);
+			bb.grow(Cardinal.UP, 3);
+			RectSolid.fill(editor, rand, bb, Air.get());
+		}
+		
+		BoundingBox bb = new BoundingBox(origin.copy());
+		bb.grow(Cardinal.directions, 10);
+		bb.grow(Cardinal.UP, 4);
+		RectSolid.fill(editor, rand, bb, Air.get());
+	}
+
 	private void doors(IWorldEditor editor, Random rand, Coord origin) {
 		for(Cardinal dir : this.entrances) {
 			Coord pos = origin.copy();
@@ -110,33 +136,6 @@ public class ReservoirRoom extends AbstractLargeRoom implements IRoom {
 		}
 	}
 
-	private void clearSpace(IWorldEditor editor, Random rand, Coord origin) {
-		
-		// clear upper level cell space
-		for(Cardinal dir : Cardinal.directions) {
-			Coord start = origin.copy();
-			start.add(dir, 10);
-			start.add(Cardinal.left(dir), 9);
-			Coord end = origin.copy();
-			end.add(dir, 14);
-			end.add(Cardinal.right(dir), 14);
-			end.add(Cardinal.UP, 3);
-			RectSolid.fill(editor, rand, start, end, Air.get());
-		}
-		
-		// clear basin
-		Coord start = origin.copy();
-		start.add(Cardinal.NORTH, 10);
-		start.add(Cardinal.WEST, 10);
-		start.add(Cardinal.DOWN, 6);
-		Coord end = origin.copy();
-		end.add(Cardinal.SOUTH, 10);
-		end.add(Cardinal.EAST, 10);
-		end.add(Cardinal.UP, 4);
-		RectSolid.fill(editor, rand, start, end, Air.get());
-		
-	}
-	
 	private void buildCells(IWorldEditor editor, Random rand, Coord origin) {
 		IBlockFactory wall = theme.getPrimary().getWall();
 		
@@ -214,32 +213,35 @@ public class ReservoirRoom extends AbstractLargeRoom implements IRoom {
 				stair.set(editor, pos);
 			}
 		}
+		Fragment.generate(Fragment.CELL_SUPPORT, editor, rand, theme, origin.copy());
 	}
 
 	private void basin(IWorldEditor editor, Random rand, Coord origin) {
 		IBlockFactory wall = theme.getPrimary().getWall();
 		
 		for(Cardinal dir : Cardinal.directions) {
-			Coord start = origin.copy();
-			start.add(dir, 13);
-			start.add(Cardinal.left(dir), 10);
-			start.add(Cardinal.DOWN);
-			Coord end = origin.copy();
-			end.add(dir, 11);
-			end.add(Cardinal.right(dir), 13);
-			end.add(Cardinal.DOWN, 8);
-			RectSolid.fill(editor, rand, start, end, wall);
+			BoundingBox bb = new BoundingBox(origin.copy());
+			bb.add(dir, 11).grow(dir, 2);
+			bb.grow(Cardinal.left(dir), 10).grow(Cardinal.right(dir), 13);
+			bb.add(Cardinal.DOWN).grow(Cardinal.DOWN, 8);
+			RectSolid.fill(editor, rand, bb, wall);	
 		}
-				
-		Coord start = origin.copy();
-		start.add(Cardinal.NORTH, 13);
-		start.add(Cardinal.WEST, 13);
-		start.add(Cardinal.DOWN, 7);
-		Coord end = origin.copy();
-		end.add(Cardinal.SOUTH, 13);
-		end.add(Cardinal.EAST, 13);
-		end.add(Cardinal.DOWN, 10);
-		RectSolid.fill(editor, rand, start, end, wall);
+			
+		BoundingBox bb = new BoundingBox(origin.copy());
+		bb.grow(Cardinal.directions, 13);
+		bb.add(Cardinal.DOWN, 7).grow(Cardinal.DOWN, 3);
+		RectSolid.fill(editor, rand, bb, wall);
+		
+		Coord pos = origin.copy();
+		pos.add(Cardinal.DOWN, 8);
+		Fragment.generate(Fragment.CELL_SUPPORT, editor, rand, theme, pos.copy());
+		
+		for(Cardinal dir : Cardinal.directions) {
+			pos = origin.copy().add(Cardinal.DOWN, 8).add(dir, 6);
+			Fragment.generate(Fragment.CELL_SUPPORT, editor, rand, theme, pos.copy());
+			pos.add(Cardinal.left(dir), 6);
+			Fragment.generate(Fragment.CELL_SUPPORT, editor, rand, theme, pos.copy());
+		}
 	}
 
 	private void addArches(IWorldEditor editor, Random rand, Coord origin) {

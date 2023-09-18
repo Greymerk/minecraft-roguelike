@@ -1,9 +1,5 @@
 package com.greymerk.roguelike.dungeon.room;
 
-import com.greymerk.roguelike.dungeon.Floor;
-import com.greymerk.roguelike.dungeon.cell.Cell;
-import com.greymerk.roguelike.dungeon.cell.CellManager;
-import com.greymerk.roguelike.dungeon.cell.CellState;
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
 import com.greymerk.roguelike.dungeon.fragment.IFragment;
 import com.greymerk.roguelike.editor.Cardinal;
@@ -100,39 +96,9 @@ public class Corridor extends AbstractRoom implements IRoom{
 		}
 	}
 
-
-	@Override
-	public CellManager getCells() {
-		CellManager cells = new CellManager();
-
-		cells.add(new Cell(new Coord(0,0,0), CellState.OBSTRUCTED));
-		
-		for(Cardinal dir : Cardinal.directions) {
-			cells.add(new Cell(new Coord(0,0,0).add(dir), CellState.POTENTIAL));
-		}
-		
-		return cells;
-	}
-
 	@Override
 	public String getName() {
 		return Room.CORRIDOR.name();
 	}
-
-	@Override
-	public void determineEntrances(Floor f, Coord floorPos) {
-		
-		for(Cardinal dir : Cardinal.directions) {
-			Coord fp = floorPos.copy();
-			fp.add(dir);
-			Cell c = f.getCell(fp);
-			if(c.isRoom() && !c.getWalls().contains(Cardinal.reverse(dir))){
-				this.entrances.add(dir);
-			}
-		}
-		
-	}
-
-
 
 }
