@@ -19,7 +19,7 @@ public class LevelSettingsStone extends LevelSettingsBase implements ILevelSetti
 		rooms.addRandomChoice(Room.CORRIDOR, 10);
 		rooms.addRandomChoice(Room.CRYPT, 5);
 		rooms.addRandomChoice(Room.OSSUARY, 2);
-		rooms.addRandomChoice(Room.ENDER, 3);
+		rooms.addRoomOnce(Room.ENDER);
 		
 		this.walls = new WeightedRandomizer<Fragment>();
 		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_FLOWER, 1));

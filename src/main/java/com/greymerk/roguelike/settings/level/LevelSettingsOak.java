@@ -16,9 +16,9 @@ public class LevelSettingsOak extends LevelSettingsBase implements ILevelSetting
 		this.theme = Theme.getTheme(Theme.OAK);
 		
 		this.rooms = new RoomProvider();
-		rooms.addRandomChoice(Room.CORRIDOR, 3);
-		rooms.addRandomChoice(Room.KITCHEN, 1);
-		rooms.addRandomChoice(Room.BEDROOM, 1);
+		rooms.addRandomChoice(Room.CORRIDOR, 1);
+		rooms.addRoomOnce(Room.KITCHEN);
+		rooms.addRoomOnce(Room.BEDROOM);
 		
 		this.walls = new WeightedRandomizer<Fragment>();
 		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_FLOWER, 1));
