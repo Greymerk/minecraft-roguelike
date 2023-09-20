@@ -42,7 +42,6 @@ public class TickChunkMixin{
 			room.generate(editor);
 			room.applyFilters(editor);
 			room.setGenerated(true);
-			
 		}
 		
 		state.update();

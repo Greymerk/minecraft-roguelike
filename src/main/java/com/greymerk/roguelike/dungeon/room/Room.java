@@ -4,7 +4,6 @@ import java.util.Arrays;
 
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
-import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.editor.boundingbox.IBounded;
 import com.greymerk.roguelike.settings.ILevelSettings;
 import com.greymerk.roguelike.settings.LevelSettings;
@@ -37,12 +36,18 @@ public enum Room {
 	
 	public static IRoom createFromNBT(NbtCompound tag) {
 		Room type = get(tag.get("type").asString());
-		ILevelSettings settings = LevelSettings.get(tag.getString("settings"));
-		IBounded box = new BoundingBox(tag.getCompound("box"));
-		Coord pos = new Coord(tag.getCompound("pos"));
+		IRoom room = fromType(type);
+		room.setLevelSettings(LevelSettings.get(tag.getString("settings")));
+		room.setWorldPos(new Coord(tag.getCompound("pos")));
 		int dirValue = tag.getInt("dir");
-		Cardinal dir = Arrays.asList(Cardinal.values()).get(dirValue);
-		return getInstance(type, settings, box, pos, dir);
+		room.setDirection(Arrays.asList(Cardinal.values()).get(dirValue));
+		room.setGenerated(tag.getBoolean("generated"));
+		int[] ent = tag.getIntArray("entrances");
+		for(int e : ent) {
+			Cardinal dir = Cardinal.directions.get(e);
+			room.addEntrance(dir);
+		}
+		return room;
 	}
 	
 	public static Room get(String name) {

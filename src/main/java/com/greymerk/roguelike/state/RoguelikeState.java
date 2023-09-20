@@ -47,10 +47,12 @@ public class RoguelikeState extends PersistentState {
 		IBounded box = new BoundingBox(start, end);
 		
 		for(Dungeon d : this.dungeons) {
-			for(IRoom r : d) {
-				if((!r.isGenerated()) && box.contains(r.getWorldPos())) {
-					rooms.add(r);
-				}
+			if(box.collide(d.getBounds())) {
+				for(IRoom r : d) {
+					if((!r.isGenerated()) && box.contains(r.getWorldPos())) {
+						rooms.add(r);
+					}
+				}	
 			}
 		}
 		
@@ -78,10 +80,11 @@ public class RoguelikeState extends PersistentState {
     }
     
     public static List<Dungeon> load(NbtList dungeonList){
-    	List<Dungeon> dungeons = new ArrayList<Dungeon>();
+    	List<Dungeon> dungeons = new CopyOnWriteArrayList<Dungeon>();
     	for(int i = 0; i < dungeonList.size(); i++) {
     		NbtCompound data = dungeonList.getCompound(i);
-    		dungeons.add(new Dungeon(data));
+    		Dungeon toAdd = new Dungeon(data);
+    		dungeons.add(toAdd);
     	}
     	
     	return dungeons;

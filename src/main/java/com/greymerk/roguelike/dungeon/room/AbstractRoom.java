@@ -14,9 +14,7 @@ import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.editor.boundingbox.IBounded;
 import com.greymerk.roguelike.editor.theme.ITheme;
-import com.greymerk.roguelike.editor.theme.Theme;
 import com.greymerk.roguelike.settings.ILevelSettings;
-import com.greymerk.roguelike.settings.LevelSettings;
 
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtString;
@@ -51,20 +49,6 @@ public abstract class AbstractRoom implements IRoom{
 		this.entrances = new ArrayList<Cardinal>();
 	}
 	
-	public AbstractRoom(NbtCompound tag) {
-		this.settings = LevelSettings.get(tag.getString("settings"));
-		this.theme = Theme.get(tag.getString("theme"));
-		this.worldPos = new Coord(tag.getCompound("pos"));
-		this.generated = tag.getBoolean("generated");
-		this.direction = Cardinal.values()[tag.getInt("dir")];
-		this.entrances = new ArrayList<Cardinal>();
-		int[] ent = tag.getIntArray("entrances");
-		for(int e : ent) {
-			Cardinal dir = Cardinal.directions.get(e);
-			this.entrances.add(dir);
-		}
-	}
-	
 	@Override
 	public NbtCompound getNbt() {
 		ITheme theme = this.getTheme();
@@ -85,10 +69,6 @@ public abstract class AbstractRoom implements IRoom{
 		ent = c.stream().mapToInt(Integer::intValue).toArray();
 		nbt.putIntArray("entrances", ent);
 		return nbt;
-	}
-	
-	public int getSize() {
-		return 3;
 	}
 	
 	@Override
@@ -123,15 +103,10 @@ public abstract class AbstractRoom implements IRoom{
 	
 	@Override
 	public IBounded getBoundingBox() {
-		Coord start = new Coord(worldPos);
-		start.add(Cardinal.DOWN);
-		start.add(Cardinal.NORTH, this.getSize());
-		start.add(Cardinal.WEST, this.getSize());
-		Coord end = new Coord(worldPos);
-		end.add(Cardinal.UP, 8);
-		end.add(Cardinal.SOUTH, this.getSize());
-		end.add(Cardinal.EAST, this.getSize());
-		return new BoundingBox(start, end);
+		BoundingBox bb = new BoundingBox(worldPos.copy());
+		bb.grow(Cardinal.directions, 4);
+		bb.grow(Cardinal.UP, 6).grow(Cardinal.DOWN, 3);
+		return bb;
 	}
 	
 	@Override

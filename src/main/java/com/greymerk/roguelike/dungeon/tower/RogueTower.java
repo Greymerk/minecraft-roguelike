@@ -10,6 +10,7 @@ import com.greymerk.roguelike.editor.blocks.BlockType;
 import com.greymerk.roguelike.editor.blocks.IronBars;
 import com.greymerk.roguelike.editor.blocks.Torch;
 import com.greymerk.roguelike.editor.blocks.stair.IStair;
+import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.editor.shapes.RectSolid;
 import com.greymerk.roguelike.editor.theme.ITheme;
 
@@ -19,7 +20,6 @@ import net.minecraft.util.math.random.Random;
 public class RogueTower implements ITower{
 
 	public void generate(IWorldEditor editor, Random rand, ITheme theme, Coord dungeon){
-		
 		
 		int x = dungeon.getX();
 		int y = dungeon.getY();
@@ -205,23 +205,18 @@ public class RogueTower implements ITower{
 		// wall down to entrance room
 		int entranceY = (ground - ground % 10) - 10;
 		for(Cardinal dir : Cardinal.directions){
+			start = new Coord(x, ground, z);
+			end = new Coord(x, entranceY, z);
+			BoundingBox bb = new BoundingBox(start, end);
+			bb.add(dir, 4).grow(Cardinal.orthogonal(dir), 2);
+			RectSolid.fill(editor, rand, bb, blocks, true, false);
+			
 			for (Cardinal orth : Cardinal.orthogonal(dir)){
 				start = new Coord(x, ground, z);
-				start.add(dir, 4);
 				end = new Coord(x, entranceY, z);
-				end.add(dir, 4);
-				start.add(Cardinal.reverse(orth), 2);
-				end.add(orth, 2);
+				bb = new BoundingBox(start, end);
+				bb.add(dir, 3).add(orth, 3);
 				RectSolid.fill(editor, rand, start, end, blocks, true, false);
-				
-				start = new Coord(x, ground, z);
-				start.add(dir, 3);
-				start.add(orth, 3);
-				end = new Coord(x, entranceY, z);
-				end.add(dir, 3);
-				end.add(orth, 3);
-				RectSolid.fill(editor, rand, start, end, blocks, true, false);
-				
 			}
 		}
 		

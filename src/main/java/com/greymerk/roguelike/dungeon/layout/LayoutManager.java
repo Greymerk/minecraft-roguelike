@@ -19,7 +19,6 @@ import com.greymerk.roguelike.dungeon.room.RoomProvider;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
-import com.greymerk.roguelike.editor.boundingbox.IBounded;
 import com.greymerk.roguelike.editor.theme.ITheme;
 import com.greymerk.roguelike.editor.theme.Theme;
 import com.greymerk.roguelike.settings.IDungeonSettings;
@@ -54,11 +53,11 @@ public class LayoutManager {
 			}
 			
 			RoomProvider roomProvider = this.settings.getLevel(floor.getOrigin().getY()).getRooms();
-			List<Room> rooms = roomProvider.getRooms(rand, level + 8);
+			List<Room> rooms = roomProvider.getRooms(rand, (level * 2) + 8);
 
 			int count = 0;
 			for(Room r : rooms) {
-				if(count >= 1 && count % 10 == 0) {
+				if(level > 6 && count == 10) {
 					 this.addStair(editor, rand, floor);
 				}
 				IRoom room = Room.getInstance(r, this.settings.getLevel(floor.getOrigin().getY()));
@@ -206,12 +205,6 @@ public class LayoutManager {
 			if(!other.getWalls().contains(Cardinal.reverse(dir))) return true;
 		}
 		return false;
-	}
-	
-	
-	public IBounded getBounds() {
-		//TODO: implement me
-		return null;
 	}
 	
 	public JsonObject asJson() {

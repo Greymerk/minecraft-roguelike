@@ -35,6 +35,12 @@ public class BoundingBox implements IBounded{
 		return this;
 	}
 	
+	public BoundingBox combine(IBounded other) {
+		Coord.correct(start, other.getStart().copy());
+		Coord.correct(other.getEnd().copy(), end);
+		return this;
+	}
+	
 	public boolean collide(IBounded other){
 		
 		BoundingBox otherBox = other.getBoundingBox();

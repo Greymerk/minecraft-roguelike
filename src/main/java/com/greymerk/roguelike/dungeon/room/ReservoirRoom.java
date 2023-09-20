@@ -35,9 +35,9 @@ public class ReservoirRoom extends AbstractLargeRoom implements IRoom {
 	
 	private void clearBasin(IWorldEditor editor, Random rand, Coord origin) {
 		BoundingBox bb = new BoundingBox(origin.copy());
-		bb.add(Cardinal.DOWN);
+		bb.add(Cardinal.DOWN, 2);
 		bb.grow(Cardinal.directions, 10);
-		bb.grow(Cardinal.DOWN, 6);
+		bb.grow(Cardinal.DOWN, 5);
 		RectSolid.fill(editor, rand, bb, Air.get());
 	}
 
@@ -54,6 +54,7 @@ public class ReservoirRoom extends AbstractLargeRoom implements IRoom {
 		BoundingBox bb = new BoundingBox(origin.copy());
 		bb.grow(Cardinal.directions, 10);
 		bb.grow(Cardinal.UP, 4);
+		bb.grow(Cardinal.DOWN);
 		RectSolid.fill(editor, rand, bb, Air.get());
 	}
 
@@ -140,43 +141,42 @@ public class ReservoirRoom extends AbstractLargeRoom implements IRoom {
 		IBlockFactory wall = theme.getPrimary().getWall();
 		
 		for(Cardinal dir : Cardinal.directions) {
-			Coord start = origin.copy();
-			start.add(dir, 11);
-			start.add(Cardinal.DOWN);
-			Coord end = start.copy();
-			end.add(dir, 2);
-			start.add(Cardinal.left(dir), 13);
-			end.add(Cardinal.right(dir), 9);
-			RectSolid.fill(editor, rand, start, end, theme.getPrimary().getFloor());
+			BoundingBox bb = new BoundingBox(origin.copy());
+			bb.add(dir, 10).add(Cardinal.DOWN);
+			bb.grow(dir, 3);
+			bb.grow(Cardinal.left(dir), 13);
+			bb.grow(Cardinal.right(dir), 9);
+			RectSolid.fill(editor, rand, bb, theme.getPrimary().getFloor());
 		}
 		
 		for(Cardinal dir : Cardinal.directions) {
 			Coord pos = origin.copy();
 			pos.add(dir, 12);
 			cell(editor, rand, pos.copy());
+			if(!entrances.contains(dir)) {
+				settings.getWallFragment(rand).generate(editor, rand, theme, pos.copy(), dir);
+			}
 			pos.add(Cardinal.left(dir), 6);
 			cell(editor, rand, pos.copy());
+			settings.getWallFragment(rand).generate(editor, rand, theme, pos.copy(), dir);
 			pos.add(Cardinal.right(dir), 12);
 			cell(editor, rand, pos.copy());
+			settings.getWallFragment(rand).generate(editor, rand, theme, pos.copy(), dir);
 			pos.add(Cardinal.right(dir), 6);
 			cell(editor, rand, pos.copy());
+			settings.getWallFragment(rand).generate(editor, rand, theme, pos.copy(), dir);
+			settings.getWallFragment(rand).generate(editor, rand, theme, pos.copy(), Cardinal.right(dir));
 			
-			Coord start = origin.copy();
-			start.add(dir, 10);
-			start.add(Cardinal.DOWN);
-			Coord end = start.copy();
-			start.add(Cardinal.left(dir), 14);
-			end.add(Cardinal.right(dir), 14);
-			RectSolid.fill(editor, rand, start, end, wall, true, false);
-			start.add(dir, 4);
-			end.add(dir, 4);
-			RectSolid.fill(editor, rand, start, end, wall, true, false);
-			start.add(Cardinal.UP, 4);
-			end.add(Cardinal.UP, 4);
-			RectSolid.fill(editor, rand, start, end, wall, true, false);
-			start.add(Cardinal.reverse(dir), 4);
-			end.add(Cardinal.reverse(dir), 4);
-			RectSolid.fill(editor, rand, start, end, wall, true, false);
+			BoundingBox bb = new BoundingBox(origin.copy());
+			bb.add(dir, 10).add(Cardinal.DOWN);
+			bb.grow(Cardinal.orthogonal(dir), 14);
+			RectSolid.fill(editor, rand, bb, wall, true, false);
+			bb.add(dir, 4);
+			RectSolid.fill(editor, rand, bb, wall, true, false);
+			bb.add(Cardinal.UP, 4);
+			RectSolid.fill(editor, rand, bb, wall, true, false);
+			bb.add(Cardinal.reverse(dir), 2);
+			RectSolid.fill(editor, rand, bb, wall, true, false);
 		}
 	}
 	
@@ -233,11 +233,11 @@ public class ReservoirRoom extends AbstractLargeRoom implements IRoom {
 		RectSolid.fill(editor, rand, bb, wall);
 		
 		Coord pos = origin.copy();
-		pos.add(Cardinal.DOWN, 8);
+		pos.add(Cardinal.DOWN, 9);
 		Fragment.generate(Fragment.CELL_SUPPORT, editor, rand, theme, pos.copy());
 		
 		for(Cardinal dir : Cardinal.directions) {
-			pos = origin.copy().add(Cardinal.DOWN, 8).add(dir, 6);
+			pos = origin.copy().add(Cardinal.DOWN, 9).add(dir, 6);
 			Fragment.generate(Fragment.CELL_SUPPORT, editor, rand, theme, pos.copy());
 			pos.add(Cardinal.left(dir), 6);
 			Fragment.generate(Fragment.CELL_SUPPORT, editor, rand, theme, pos.copy());
@@ -337,6 +337,14 @@ public class ReservoirRoom extends AbstractLargeRoom implements IRoom {
 		}
 		
 		return cells;
+	}
+	
+	@Override
+	public BoundingBox getBoundingBox() {
+		BoundingBox bb = new BoundingBox(worldPos.copy());
+		bb.grow(Cardinal.directions, 16);
+		bb.grow(Cardinal.UP, 6).grow(Cardinal.DOWN, 10);
+		return bb;
 	}
 	
 	@Override

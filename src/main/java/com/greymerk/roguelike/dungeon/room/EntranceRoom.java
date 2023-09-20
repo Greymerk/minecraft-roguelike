@@ -8,6 +8,7 @@ import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.blocks.stair.IStair;
+import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.editor.shapes.RectHollow;
 import com.greymerk.roguelike.editor.shapes.RectSolid;
 
@@ -18,75 +19,48 @@ public class EntranceRoom  extends AbstractRoom implements IRoom{
 
 	@Override
 	public void generate(IWorldEditor editor) {		
-		Coord pos = this.getWorldPos();
-		Random rand = editor.getRandom(pos);
+		Coord origin = this.getWorldPos();
+		Random rand = editor.getRandom(origin);
 		IStair stair = theme.getPrimary().getStair();
 		
-		Coord s = new Coord(pos);
-		s.add(new Coord(5, 5, 5));
-		Coord e = new Coord(pos);
-		e.add(new Coord(-5, -1, -5));
-		RectHollow.fill(editor, rand, s, e, theme.getPrimary().getWall(), false, true);
+		BoundingBox bb = new BoundingBox(origin.copy());
+		bb.grow(Cardinal.directions, 5).grow(Cardinal.UP, 5).grow(Cardinal.DOWN);
+		RectHollow.fill(editor, rand, bb, theme.getPrimary().getWall(), false, true);
 		
-		s = new Coord(-5, -1, -5);
-		s.add(pos);
-		e = new Coord(5, -1, 5);
-		e.add(pos);
-		RectSolid.fill(editor, rand, s, e, theme.getPrimary().getFloor());
+		bb = new BoundingBox(origin.copy());
+		bb.grow(Cardinal.directions, 4).add(Cardinal.DOWN);
+		RectSolid.fill(editor, rand, bb, theme.getPrimary().getFloor());
+		
+		bb = new BoundingBox(origin.copy());
+		bb.add(Cardinal.UP, 4).grow(Cardinal.directions, 4);
+		RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall());
 		
 		for(Cardinal dir : Cardinal.directions) {
-			s = new Coord(pos);
-			s.add(dir, 4);
-			s.add(Cardinal.left(dir), 4);
-			e = new Coord(s);
-			e.add(Cardinal.UP, 4);
-			RectSolid.fill(editor, rand, s, e, theme.getPrimary().getPillar());
-			s = new Coord(e);
-			s.add(Cardinal.DOWN);
-			s.add(Cardinal.right(dir), 7);
-			RectSolid.fill(editor, rand, s, e, theme.getPrimary().getWall());
+			bb = new BoundingBox(origin.copy());
+			bb.add(dir, 3).add(Cardinal.left(dir), 3).grow(Cardinal.UP);
+			RectSolid.fill(editor, rand, bb, theme.getSecondary().getPillar());
+			bb.add(Cardinal.UP, 2);
+			RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall());
+
+			bb = new BoundingBox(origin.copy());
+			bb.add(dir, 4).add(Cardinal.UP, 3);
+			bb.grow(Cardinal.orthogonal(dir), 2).grow(Cardinal.UP);
+			RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall());
 			
-			s = new Coord(pos);
-			s.add(dir, 3);
-			s.add(Cardinal.left(dir), 3);
-			s.add(Cardinal.UP, 4);
-			e = new Coord(s);
-			e.add(Cardinal.right(dir), 5);
-			RectSolid.fill(editor, rand, s, e, theme.getPrimary().getWall());
-			
-			for(Cardinal orth : Cardinal.orthogonal(dir)) {
-				Coord p = new Coord(pos);
-				p.add(dir, 4);
-				p.add(Cardinal.UP, 2);
-				p.add(orth);
-				stair.setOrientation(Cardinal.reverse(orth), true).set(editor, p);
+			for(Cardinal o : Cardinal.orthogonal(dir)) {
+				bb = new BoundingBox(origin.copy());
+				bb.add(dir, 4).add(o, 2);
+				bb.grow(Cardinal.UP, 4).grow(o, 1);
+				RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall());
 				
-				p = new Coord(pos);
-				p.add(dir, 3);
-				p.add(orth, 2);
-				p.add(Cardinal.UP, 2);
-				stair.setOrientation(Cardinal.reverse(dir), true).set(editor, p);
-				p.add(Cardinal.UP);
-				theme.getPrimary().getWall().set(editor, rand, p);
-				p.add(Cardinal.reverse(orth));
-				stair.setOrientation(Cardinal.reverse(orth), true).set(editor, pos);
-				
-				s = new Coord(pos);
-				s.add(dir, 4);
-				s.add(orth, 2);
-				e = new Coord(s);
-				e.add(Cardinal.UP, 3);
-				RectSolid.fill(editor, rand, s, e, theme.getPrimary().getPillar());
+				Coord pos = origin.copy().add(dir, 3).add(o, 2).add(Cardinal.UP, 2);
+				stair.setOrientation(Cardinal.reverse(o), true).set(editor, pos);
+				pos.add(Cardinal.UP);
+				theme.getPrimary().getWall().set(editor, rand, pos);
+				pos.add(Cardinal.reverse(o));
+				stair.setOrientation(Cardinal.reverse(o), true).set(editor, pos);
 			}
-		}
-		
-		for(Cardinal dir : Cardinal.directions) {
-			s = new Coord(pos);
-			s.add(Cardinal.left(dir));
-			e = new Coord(pos);
-			e.add(Cardinal.right(dir));
-			e.add(Cardinal.UP, 2);
-			e.add(dir, 9);
+			
 			
 		}
 	}
@@ -105,11 +79,6 @@ public class EntranceRoom  extends AbstractRoom implements IRoom{
 		}
 		
 		return cells;
-	}
-	
-	@Override
-	public int getSize() {
-		return 5;
 	}
 	
 	@Override

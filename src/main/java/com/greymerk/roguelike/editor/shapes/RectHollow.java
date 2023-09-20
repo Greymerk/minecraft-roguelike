@@ -3,15 +3,16 @@ package com.greymerk.roguelike.editor.shapes;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import net.minecraft.util.math.random.Random;
 
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.MetaBlock;
+import com.greymerk.roguelike.editor.boundingbox.IBounded;
 
 import net.minecraft.block.Blocks;
+import net.minecraft.util.math.random.Random;
 
 public class RectHollow implements IShape {
 
@@ -31,7 +32,15 @@ public class RectHollow implements IShape {
 		RectHollow rect = new RectHollow(start, end);
 		rect.fill(editor, rand, block, fillAir, replaceSolid);
 	}
+	
+	public static void fill(IWorldEditor editor, Random rand, IBounded bb, IBlockFactory block, boolean fillAir, boolean replaceSolid) {
+		bb.getShape(Shape.RECTHOLLOW).fill(editor, rand, block, fillAir, replaceSolid);
+	}
 
+	public static void fill(IWorldEditor editor, Random rand, IBounded bb, IBlockFactory block) {
+		bb.getShape(Shape.RECTHOLLOW).fill(editor, rand, block, true, true);
+	}
+	
 	@Override
 	public void fill(IWorldEditor editor, Random rand, IBlockFactory block){
 		fill(editor, rand, block, true, true);

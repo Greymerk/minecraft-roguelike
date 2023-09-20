@@ -8,6 +8,7 @@ import com.greymerk.roguelike.dungeon.cell.CellManager;
 import com.greymerk.roguelike.dungeon.cell.CellState;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
+import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 
 public abstract class AbstractMediumRoom extends AbstractRoom implements IRoom{
 
@@ -36,6 +37,14 @@ public abstract class AbstractMediumRoom extends AbstractRoom implements IRoom{
 	}
 
 	@Override
+	public BoundingBox getBoundingBox() {
+		BoundingBox bb = new BoundingBox(worldPos.copy());
+		bb.grow(Cardinal.directions, 10);
+		bb.grow(Cardinal.UP, 6).grow(Cardinal.DOWN, 3);
+		return bb;
+	}
+	
+	@Override
 	public void determineEntrances(Floor f, Coord fp) {
 		for(Cardinal dir : Cardinal.directions) {
 			Coord pos = new Coord(fp);
@@ -48,11 +57,4 @@ public abstract class AbstractMediumRoom extends AbstractRoom implements IRoom{
 			}
 		}
 	}
-	
-	@Override
-	public int getSize() {
-		return 9;
-	}
-
-
 }

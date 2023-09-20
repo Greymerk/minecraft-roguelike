@@ -1,5 +1,7 @@
 package com.greymerk.roguelike.editor.boundingbox;
 
+import java.util.Arrays;
+
 import org.junit.jupiter.api.Test;
 
 import com.greymerk.roguelike.editor.Cardinal;
@@ -158,5 +160,28 @@ class BoundingBoxTest {
 		assert(!bb.contains(new Coord(0,0,-10)));
 		
 	}
-
+	
+	@Test
+	void testCombine() {
+		Coord origin = new Coord(0,0,0);
+		
+		BoundingBox bb = new BoundingBox(origin.copy());
+		BoundingBox bb2 = new BoundingBox(origin.copy().add(Cardinal.SOUTH));
+		
+		bb.combine(bb2);
+		assert(bb.contains(origin.copy()));
+		assert(bb.contains(origin.copy().add(Cardinal.SOUTH)));
+		
+		bb = new BoundingBox(origin.copy());
+		bb.grow(Arrays.asList(Cardinal.values()), 10);
+		bb.add(Cardinal.NORTH, 10).add(Cardinal.WEST, 10).add(Cardinal.DOWN, 10);
+		bb2 = new BoundingBox(origin.copy());
+		bb2.grow(Arrays.asList(Cardinal.values()), 10);
+		bb2.add(Cardinal.SOUTH, 10).add(Cardinal.EAST, 10).add(Cardinal.UP, 10);
+		bb.combine(bb2);
+		assert(bb.contains(origin.copy().add(Cardinal.NORTH, 10).add(Cardinal.WEST, 10).add(Cardinal.UP, 10)));
+		assert(bb.contains(origin.copy().add(Cardinal.SOUTH, 10).add(Cardinal.EAST, 10).add(Cardinal.DOWN, 10)));
+		assert(bb.getStart().equals(new Coord(-20, -20, -20)));
+		assert(bb.getEnd().equals(new Coord(20, 20, 20)));
+	}
 }

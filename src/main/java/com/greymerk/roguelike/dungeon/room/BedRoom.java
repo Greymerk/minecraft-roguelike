@@ -14,6 +14,7 @@ import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.blocks.Bed;
 import com.greymerk.roguelike.editor.blocks.BlockType;
+import com.greymerk.roguelike.editor.blocks.Candle;
 import com.greymerk.roguelike.editor.blocks.Furnace;
 import com.greymerk.roguelike.editor.blocks.Lantern;
 import com.greymerk.roguelike.editor.blocks.stair.IStair;
@@ -225,6 +226,8 @@ public class BedRoom extends AbstractRoom implements IRoom {
 		Bed.generate(editor, Cardinal.right(direction), pos);
 		pos.add(direction);
 		BlockType.get(BlockType.SHELF).set(editor, pos);
+		pos.add(Cardinal.UP);
+		Candle.generate(editor, rand, pos, true);
 
 		pos = origin.copy();
 		pos.add(direction, 12);

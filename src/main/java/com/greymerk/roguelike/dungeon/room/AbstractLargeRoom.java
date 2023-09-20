@@ -8,6 +8,7 @@ import com.greymerk.roguelike.dungeon.cell.CellManager;
 import com.greymerk.roguelike.dungeon.cell.CellState;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
+import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.editor.shapes.RectSolid;
 
 public abstract class AbstractLargeRoom extends AbstractRoom implements IRoom {
@@ -38,6 +39,14 @@ public abstract class AbstractLargeRoom extends AbstractRoom implements IRoom {
 			cells.add(c);
 		}
 		return cells;
+	}
+	
+	@Override
+	public BoundingBox getBoundingBox() {
+		BoundingBox bb = new BoundingBox(worldPos.copy());
+		bb.grow(Cardinal.directions, 16);
+		bb.grow(Cardinal.UP, 6).grow(Cardinal.DOWN, 3);
+		return bb;
 	}
 	
 	@Override

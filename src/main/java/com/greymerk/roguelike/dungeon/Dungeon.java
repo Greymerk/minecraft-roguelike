@@ -3,7 +3,6 @@ package com.greymerk.roguelike.dungeon;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import net.minecraft.util.math.random.Random;
 
 import com.greymerk.roguelike.dungeon.layout.LayoutManager;
 import com.greymerk.roguelike.dungeon.room.IRoom;
@@ -11,14 +10,37 @@ import com.greymerk.roguelike.dungeon.room.Room;
 import com.greymerk.roguelike.dungeon.tower.RogueTower;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
+import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
+import com.greymerk.roguelike.editor.boundingbox.IBounded;
 import com.greymerk.roguelike.editor.theme.Theme;
 import com.greymerk.roguelike.settings.LevelSettings;
 
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
+import net.minecraft.util.math.random.Random;
 
 public class Dungeon implements Iterable<IRoom>{
+
+	List<IRoom> rooms;
+	Coord origin;
+	BoundingBox bb;
+	
+	public Dungeon(Coord pos) {
+		this.rooms = new ArrayList<IRoom>();
+		this.bb = new BoundingBox(pos.copy());
+		this.origin = pos;
+	}
+	
+	public Dungeon(NbtCompound tag) {
+		this.rooms = new ArrayList<IRoom>();
+		NbtList rooms = tag.getList("rooms", NbtElement.COMPOUND_TYPE);
+		for(NbtElement nbt : rooms) {
+			this.rooms.add(Room.createFromNBT((NbtCompound)nbt));
+		}
+		this.origin = new Coord(tag.getCompound("pos"));
+		this.bb = new BoundingBox(tag.getCompound("bounds"));
+	}
 
 	public static boolean canSpawn(IWorldEditor editor, Coord pos) {
 		if(!editor.isOverworld()) return false;
@@ -26,22 +48,6 @@ public class Dungeon implements Iterable<IRoom>{
 		Coord surface = editor.findSurface(pos);
 		if(!editor.isGround(surface)) return false;
 		return true;
-	}
-	
-	List<IRoom> rooms;
-	Coord origin;
-	
-	public Dungeon(Coord pos) {
-		this.rooms = new ArrayList<IRoom>();
-		this.origin = pos;
-	}
-	
-	public Dungeon(NbtCompound tag) {
-		NbtList rooms = tag.getList("rooms", NbtElement.COMPOUND_TYPE);
-		for(NbtElement nbt : rooms) {
-			this.rooms.add(Room.createFromNBT((NbtCompound)nbt));
-		}
-		this.origin = new Coord(tag.getCompound("pos"));
 	}
 	
 	public NbtCompound getNbt() {
@@ -52,6 +58,7 @@ public class Dungeon implements Iterable<IRoom>{
 		}
 		data.put("rooms", roomlist);
 		data.put("pos", this.origin.getNbt());
+		data.put("bounds", this.bb.getNbt());
 		return data;
 	}
 	
@@ -69,9 +76,21 @@ public class Dungeon implements Iterable<IRoom>{
 		layout.addEntrance(entrance);
 		layout.generate(editor);
 		this.rooms = layout.getRooms();
+		this.rooms.forEach(r -> bb.combine(r.getBoundingBox()));
 		
 		RogueTower tower = new RogueTower();
 		tower.generate(editor, rand, Theme.getTheme(Theme.TOWER), firstFloor);
+	}
+	
+	public boolean isGenerated() {
+		for(IRoom room : this.rooms) {
+			if(!room.isGenerated()) return false;
+		}
+		return true;
+	}
+	
+	public IBounded getBounds() {
+		return this.bb;
 	}
 	
 	public static int getLevelFromY(int y) {
