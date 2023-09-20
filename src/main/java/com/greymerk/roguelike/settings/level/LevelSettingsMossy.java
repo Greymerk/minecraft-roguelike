@@ -25,7 +25,9 @@ public class LevelSettingsMossy extends LevelSettingsBase implements ILevelSetti
 		rooms.addRoomOnce(Room.CREEPER);
 		
 		this.walls = new WeightedRandomizer<Fragment>();
-		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_FLOWER, 1));
+		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_EMPTY, 10));
+		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_SPAWNER, 1));
+		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_CHEST, 1));
 	}
 
 	@Override

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import net.minecraft.util.math.random.Random;
 
+import com.greymerk.roguelike.treasure.loot.PotionMixture;
 import com.greymerk.roguelike.treasure.loot.WeightedRandomLoot;
 import com.greymerk.roguelike.util.WeightedRandomizer;
 
@@ -23,38 +24,40 @@ public class ItemFood extends ItemBase{
 			
 			switch(i){
 			case 4:
-				randomizer.add(new WeightedRandomLoot(Items.GOLDEN_APPLE, 0, 1, 1, 1));
-				randomizer.add(new WeightedRandomLoot(Items.GOLDEN_CARROT, 0, 1, 1, 2));
-				randomizer.add(new WeightedRandomLoot(Items.COOKED_BEEF, 0, 1, 5, 3));
-				randomizer.add(new WeightedRandomLoot(Items.COOKED_PORKCHOP, 0, 1, 5, 3));
-				randomizer.add(new WeightedRandomLoot(Items.COOKED_MUTTON, 0, 1, 5, 3));
+				randomizer.add(new WeightedRandomLoot(Items.GOLDEN_APPLE, 1, 3, 1));
+				randomizer.add(new WeightedRandomLoot(Items.GOLDEN_CARROT, 2, 6, 1));
+				randomizer.add(new WeightedRandomLoot(Items.COOKED_BEEF, 3, 9, 5));
+				randomizer.add(new WeightedRandomLoot(Items.COOKED_PORKCHOP, 3, 9, 3));
+				randomizer.add(new WeightedRandomLoot(Items.COOKED_MUTTON, 3, 9, 3));
 				break;
 			case 3:
-				randomizer.add(new WeightedRandomLoot(Items.COOKED_BEEF, 0, 1, 3, 3));
-				randomizer.add(new WeightedRandomLoot(Items.COOKED_PORKCHOP, 0, 1, 3, 3));
-				randomizer.add(new WeightedRandomLoot(Items.COOKED_MUTTON, 0, 1, 3, 3));
-				randomizer.add(new WeightedRandomLoot(Items.COOKED_CHICKEN, 0, 1, 2, 1));
-				randomizer.add(new WeightedRandomLoot(Items.BAKED_POTATO, 0, 1, 2, 1));
+				randomizer.add(new WeightedRandomLoot(Items.COOKED_BEEF, 2, 7, 3));
+				randomizer.add(new WeightedRandomLoot(Items.COOKED_PORKCHOP, 2, 7, 3));
+				randomizer.add(new WeightedRandomLoot(Items.COOKED_MUTTON, 2, 7, 3));
+				randomizer.add(new WeightedRandomLoot(Items.COOKED_CHICKEN, 2, 7, 5));
+				randomizer.add(new WeightedRandomLoot(Items.BAKED_POTATO, 4, 9, 5));
 				break;
 			case 2:
-				randomizer.add(new WeightedRandomLoot(Items.COOKED_BEEF, 0, 1, 3, 1));
-				randomizer.add(new WeightedRandomLoot(Items.COOKED_PORKCHOP, 0, 1, 3, 1));
-				randomizer.add(new WeightedRandomLoot(Items.COOKED_MUTTON, 0, 1, 3, 1));
-				randomizer.add(new WeightedRandomLoot(Items.COOKED_CHICKEN, 0, 1, 2, 2));
-				randomizer.add(new WeightedRandomLoot(Items.BAKED_POTATO, 0, 1, 2, 2));
+				randomizer.add(new WeightedRandomLoot(Items.COOKED_BEEF, 2, 5, 3));
+				randomizer.add(new WeightedRandomLoot(Items.COOKED_PORKCHOP, 2, 5, 3));
+				randomizer.add(new WeightedRandomLoot(Items.COOKED_MUTTON, 2, 5, 3));
+				randomizer.add(new WeightedRandomLoot(Items.COOKED_CHICKEN, 4, 9, 5));
+				randomizer.add(new WeightedRandomLoot(Items.BAKED_POTATO, 4, 9, 5));
 				break;
 			case 1:	
-				randomizer.add(new WeightedRandomLoot(Items.BREAD, 0, 1, 3, 5));
-				randomizer.add(new WeightedRandomLoot(Items.COOKED_COD, 0, 1, 3, 5));
-				randomizer.add(new WeightedRandomLoot(Items.APPLE, 0, 1, 3, 2));
-				randomizer.add(new WeightedRandomLoot(Items.COOKED_CHICKEN, 0, 1, 2, 2));
-				randomizer.add(new WeightedRandomLoot(Items.BAKED_POTATO, 0, 1, 2, 2));
+				randomizer.add(new WeightedRandomLoot(Items.BREAD, 2, 5, 5));
+				randomizer.add(new WeightedRandomLoot(Items.COOKED_COD, 3, 7, 5));
+				randomizer.add(new WeightedRandomLoot(Items.COOKED_SALMON, 3, 7, 5));
+				randomizer.add(new WeightedRandomLoot(Items.APPLE, 1, 1, 1));
+				randomizer.add(new WeightedRandomLoot(Items.COOKED_CHICKEN, 2, 5, 5));
+				randomizer.add(new WeightedRandomLoot(Items.BAKED_POTATO, 3, 7, 5));
 				break;
 			case 0:
-				randomizer.add(new WeightedRandomLoot(Items.BREAD, 0, 1, 2, 5));
-				randomizer.add(new WeightedRandomLoot(Items.COOKED_COD, 0, 1, 2, 5));
-				randomizer.add(new WeightedRandomLoot(Items.APPLE, 0, 1, 2, 5));
-				randomizer.add(new WeightedRandomLoot(Items.COOKIE, 0, 1, 4, 1));
+				randomizer.add(new WeightedRandomLoot(Items.BREAD, 2, 6, 4));
+				randomizer.add(new WeightedRandomLoot(Items.COOKED_COD, 2, 6, 4));
+				randomizer.add(new WeightedRandomLoot(Items.APPLE, 1, 1, 2));
+				randomizer.add(new WeightedRandomLoot(Items.COOKED_CHICKEN, 2, 4, 1));
+				randomizer.add(new WeightedRandomLoot(Items.COOKIE, 1, 1, 1));
 				break;
 			default:
 				randomizer.add(new WeightedRandomLoot(Items.BREAD, 1));
@@ -66,6 +69,10 @@ public class ItemFood extends ItemBase{
 
 	@Override
 	public ItemStack getLootItem(Random rand, int level) {
+		if(level == 0 && rand.nextInt(10) == 0) {
+			return PotionMixture.getPotion(rand, PotionMixture.COFFEE);
+		}
+		
 		return this.loot.get(level).get(rand);
 	}
 

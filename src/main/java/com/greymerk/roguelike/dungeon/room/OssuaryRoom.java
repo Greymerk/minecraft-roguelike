@@ -281,19 +281,16 @@ public class OssuaryRoom extends AbstractMediumRoom implements IRoom {
 			pos.add(dir, 5);
 			pos.add(Cardinal.left(dir), 5);
 			pos.add(Cardinal.UP, 6);
-			Lantern.set(editor, pos, Lantern.SOUL, true);
 			for(Cardinal d : Cardinal.directions) {
 				Coord p = pos.copy();
 				p.add(d);
-				stair.setOrientation(Cardinal.reverse(d), true);
-				stair.set(editor, p);
+				stair.setOrientation(Cardinal.reverse(d), true).set(editor, p);
 			}
 			for(Cardinal d : Cardinal.directions) {
 				Coord p = pos.copy();
 				p.add(d);
 				p.add(Cardinal.left(d));
-				stair.setOrientation(Cardinal.reverse(d), true);
-				stair.set(editor, p);
+				stair.setOrientation(Cardinal.reverse(d), true).set(editor, p);
 			}
 		}
 	}

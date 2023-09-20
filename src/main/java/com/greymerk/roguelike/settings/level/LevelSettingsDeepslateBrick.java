@@ -22,7 +22,9 @@ public class LevelSettingsDeepslateBrick extends LevelSettingsBase implements IL
 		rooms.addRandomChoice(Room.OSSUARY, 2);
 		
 		this.walls = new WeightedRandomizer<Fragment>();
-		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_FLOWER, 1));
+		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_EMPTY, 10));
+		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_SPAWNER, 1));
+		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_CHEST, 1));
 	}
 
 	@Override

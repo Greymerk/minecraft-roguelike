@@ -1,12 +1,11 @@
 package com.greymerk.roguelike.dungeon.fragment.wall;
 
+import com.greymerk.roguelike.dungeon.fragment.FragmentBase;
 import com.greymerk.roguelike.dungeon.fragment.IFragment;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
-import com.greymerk.roguelike.editor.blocks.FlowerPot;
-import com.greymerk.roguelike.editor.blocks.Lantern;
-import com.greymerk.roguelike.editor.blocks.Skull;
+import com.greymerk.roguelike.editor.blocks.spawners.Spawner;
 import com.greymerk.roguelike.editor.blocks.stair.IStair;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.editor.shapes.IShape;
@@ -15,8 +14,8 @@ import com.greymerk.roguelike.editor.theme.ITheme;
 
 import net.minecraft.util.math.random.Random;
 
-public class WallShelf implements IFragment {
-	
+public class WallSpawner extends FragmentBase implements IFragment {
+
 	@Override
 	public void generate(IWorldEditor editor, Random rand, ITheme theme, Coord origin, Cardinal dir) {
 		BoundingBox bb = new BoundingBox(origin.copy());
@@ -26,17 +25,10 @@ public class WallShelf implements IFragment {
 		stair.setOrientation(Cardinal.reverse(dir), true);
 		for(Coord c : rect.get()) {
 			stair.set(editor, c);
-			Coord pos = c.copy().add(Cardinal.UP);
-			if(rand.nextInt(10) == 0) {
-				FlowerPot.generate(editor, rand, pos);
-			} else if(rand.nextInt(10) == 0) {
-				Skull.set(editor, rand, pos, Cardinal.reverse(dir), Skull.SKELETON);
-			}
 		}
 		
-		Coord pos = new Coord(origin);
-		pos.add(dir, 2).add(Cardinal.UP, 2);
-		Lantern.set(editor, pos);
-		
+		Coord pos = origin.copy().add(dir, 3).add(Cardinal.UP);
+		Spawner.generate(editor, rand, pos);
 	}
+
 }

@@ -7,7 +7,7 @@ import com.greymerk.roguelike.dungeon.Floor;
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellManager;
 import com.greymerk.roguelike.dungeon.cell.CellState;
-import com.greymerk.roguelike.dungeon.fragment.wall.WallShelf;
+import com.greymerk.roguelike.dungeon.fragment.wall.WallFlowers;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IBlockFactory;
@@ -217,7 +217,7 @@ public class BedRoom extends AbstractRoom implements IRoom {
 			Coord pos = origin.copy();
 			pos.add(direction, 7);
 			pos.add(o);
-			new WallShelf().generate(editor, rand, theme, pos, o);
+			new WallFlowers().generate(editor, rand, theme, pos, o);
 		}
 		
 		Coord pos = origin.copy();
@@ -231,7 +231,7 @@ public class BedRoom extends AbstractRoom implements IRoom {
 
 		pos = origin.copy();
 		pos.add(direction, 12);
-		new WallShelf().generate(editor, rand, theme, pos, direction);
+		new WallFlowers().generate(editor, rand, theme, pos, direction);
 		
 		pos = origin.copy();
 		pos.add(direction, 10);

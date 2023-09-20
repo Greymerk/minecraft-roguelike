@@ -6,7 +6,7 @@ import java.util.List;
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
 import com.greymerk.roguelike.dungeon.fragment.IFragment;
 import com.greymerk.roguelike.dungeon.fragment.parts.CryptFragment;
-import com.greymerk.roguelike.dungeon.fragment.wall.WallShelf;
+import com.greymerk.roguelike.dungeon.fragment.wall.WallFlowers;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IBlockFactory;
@@ -181,7 +181,7 @@ public class CryptRoom extends AbstractMediumRoom implements IRoom {
 			stair.set(editor, pos);
 		}
 		
-		WallShelf shelf = new WallShelf();
+		IFragment shelf = settings.getWallFragment(rand);
 		shelf.generate(editor, rand, theme, origin, dir);
 		
 		
@@ -242,7 +242,7 @@ public class CryptRoom extends AbstractMediumRoom implements IRoom {
 				end.add(Cardinal.right(dir), 2);
 				end.add(Cardinal.UP, 3);
 				RectSolid.fill(editor, rand, start, end, theme.getPrimary().getWall(), false, true);
-				WallShelf shelf = new WallShelf();
+				IFragment shelf = settings.getWallFragment(rand);
 				shelf.generate(editor, rand, theme, origin, dir);
 			}
 

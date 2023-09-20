@@ -1,11 +1,11 @@
 package com.greymerk.roguelike.treasure.loot.provider;
 
-import net.minecraft.util.math.random.Random;
-
-import com.greymerk.roguelike.treasure.loot.PotionItem;
 import com.greymerk.roguelike.treasure.loot.PotionForm;
+import com.greymerk.roguelike.treasure.loot.PotionItem;
+import com.greymerk.roguelike.treasure.loot.PotionMixture;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.random.Random;
 
 public class ItemPotion extends ItemBase{
 
@@ -15,6 +15,12 @@ public class ItemPotion extends ItemBase{
 
 	@Override
 	public ItemStack getLootItem(Random rand, int level) {
+		if(level > 2 && rand.nextBoolean()) {
+			return PotionMixture.getPotion(rand, PotionMixture.VILE);
+		} else if(level > 0 && rand.nextBoolean()) {
+			return PotionMixture.getRandom(rand);
+		}
+		
 		final PotionItem[] potions = new PotionItem[]{
 				PotionItem.HEALING,
 				PotionItem.STRENGTH,
