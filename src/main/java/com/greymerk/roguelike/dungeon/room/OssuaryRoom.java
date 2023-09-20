@@ -7,7 +7,6 @@ import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.blocks.Air;
 import com.greymerk.roguelike.editor.blocks.Candle;
-import com.greymerk.roguelike.editor.blocks.Lantern;
 import com.greymerk.roguelike.editor.blocks.Skull;
 import com.greymerk.roguelike.editor.blocks.slab.ISlab;
 import com.greymerk.roguelike.editor.blocks.stair.IStair;
@@ -281,6 +280,7 @@ public class OssuaryRoom extends AbstractMediumRoom implements IRoom {
 			pos.add(dir, 5);
 			pos.add(Cardinal.left(dir), 5);
 			pos.add(Cardinal.UP, 6);
+			Air.get().set(editor, pos);
 			for(Cardinal d : Cardinal.directions) {
 				Coord p = pos.copy();
 				p.add(d);

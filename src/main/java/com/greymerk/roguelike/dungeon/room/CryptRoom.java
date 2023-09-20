@@ -6,7 +6,6 @@ import java.util.List;
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
 import com.greymerk.roguelike.dungeon.fragment.IFragment;
 import com.greymerk.roguelike.dungeon.fragment.parts.CryptFragment;
-import com.greymerk.roguelike.dungeon.fragment.wall.WallFlowers;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IBlockFactory;

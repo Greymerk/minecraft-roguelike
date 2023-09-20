@@ -1,16 +1,6 @@
 package com.greymerk.roguelike.treasure.loot;
 
-import com.greymerk.roguelike.editor.Cardinal;
-import com.greymerk.roguelike.editor.Coord;
-import com.greymerk.roguelike.editor.IWorldEditor;
-import com.greymerk.roguelike.editor.MetaBlock;
-
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.HorizontalFacingBlock;
-import net.minecraft.block.entity.BannerBlockEntity;
 import net.minecraft.block.entity.BannerPattern;
-import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
@@ -30,24 +20,6 @@ public class Banner {
 		}
 		
 		return banner;
-	}
-	
-	public static void generate(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
-		Banner.generate(editor, Banner.get(rand), origin, dir);
-	}
-	
-	public static void generate(IWorldEditor editor, ItemStack banner, Coord origin, Cardinal dir) {
-		Block b = Blocks.BLACK_WALL_BANNER;
-		MetaBlock block = new MetaBlock(b);
-		block.withProperty(HorizontalFacingBlock.FACING, Cardinal.facing(dir));
-		block.set(editor, origin);
-		
-		BlockEntity be = editor.getBlockEntity(origin);
-		if(be == null) return;
-		if(!(be instanceof BannerBlockEntity)) return;
-		BannerBlockEntity bannerEntity = (BannerBlockEntity)be;
-		bannerEntity.readFrom(banner);
-		bannerEntity.markDirty();
 	}
 	
 	public static ItemStack addPattern(ItemStack banner, Random rand){

@@ -27,7 +27,7 @@ public class WallSpawner extends FragmentBase implements IFragment {
 			stair.set(editor, c);
 		}
 		
-		Coord pos = origin.copy().add(dir, 3).add(Cardinal.UP);
+		Coord pos = origin.copy().add(dir, 2).add(Cardinal.UP);
 		Spawner.generate(editor, rand, pos);
 	}
 
