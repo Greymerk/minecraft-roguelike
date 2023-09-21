@@ -2,6 +2,7 @@ package com.greymerk.roguelike.dungeon.room;
 
 import java.util.Arrays;
 
+import com.greymerk.roguelike.dungeon.layout.Entrance;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.boundingbox.IBounded;
@@ -42,10 +43,12 @@ public enum Room {
 		int dirValue = tag.getInt("dir");
 		room.setDirection(Arrays.asList(Cardinal.values()).get(dirValue));
 		room.setGenerated(tag.getBoolean("generated"));
-		int[] ent = tag.getIntArray("entrances");
-		for(int e : ent) {
-			Cardinal dir = Cardinal.directions.get(e);
-			room.addEntrance(dir);
+		NbtCompound entrances = tag.getCompound("entrances");
+		for(Cardinal dir : Cardinal.directions) {
+			if(!entrances.contains(dir.name())) continue;
+			String entName = entrances.getString(dir.name());
+			Entrance entType = Entrance.valueOf(entName);
+			room.addEntrance(dir, entType);
 		}
 		return room;
 	}

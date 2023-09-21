@@ -8,6 +8,7 @@ import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellManager;
 import com.greymerk.roguelike.dungeon.cell.CellState;
 import com.greymerk.roguelike.dungeon.fragment.wall.WallFlowers;
+import com.greymerk.roguelike.dungeon.layout.Entrance;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IBlockFactory;
@@ -32,12 +33,15 @@ public class BedRoom extends AbstractRoom implements IRoom {
 		Random rand = editor.getRandom(origin);
 		
 		Corridor cor = new Corridor();
-		for(Cardinal ent : this.entrances) {
-			cor.addEntrance(ent);
+		for(Cardinal dir : this.entrances.keySet()){
+			if(this.entrances.get(dir) == Entrance.DOOR) {
+				cor.addEntrance(dir, Entrance.DOOR);
+			}
 		}
+		
 		cor.setLevelSettings(settings);
 		cor.worldPos = this.worldPos.copy();
-		cor.addEntrance(direction);
+		cor.addEntrance(direction, Entrance.DOOR);
 		cor.generate(editor);
 		
 		Coord start = origin.copy();
@@ -298,7 +302,9 @@ public class BedRoom extends AbstractRoom implements IRoom {
 			Cell c = f.getCell(fp);
 			if(!c.isRoom()) continue;
 			if(!c.getWalls().contains(Cardinal.reverse(dir))){
-				this.addEntrance(dir);
+				this.addEntrance(dir, Entrance.DOOR);
+			} else {
+				this.addEntrance(dir, Entrance.WALL);
 			}
 		}
 	}

@@ -6,6 +6,7 @@ import java.util.List;
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
 import com.greymerk.roguelike.dungeon.fragment.IFragment;
 import com.greymerk.roguelike.dungeon.fragment.parts.CryptFragment;
+import com.greymerk.roguelike.dungeon.layout.Entrance;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IBlockFactory;
@@ -26,7 +27,7 @@ public class CryptRoom extends AbstractMediumRoom implements IRoom {
 		Random rand = editor.getRandom(origin);
 		roomCenter(editor, rand, origin);
 		for(Cardinal dir : Cardinal.directions) {
-			if(this.entrances.contains(dir)) {
+			if(this.getEntrance(dir) == Entrance.DOOR) {
 				Coord start = origin.copy();
 				start.add(dir, 5);
 				Coord end = start.copy();
@@ -42,7 +43,7 @@ public class CryptRoom extends AbstractMediumRoom implements IRoom {
 		Fragment.generate(Fragment.CELL_SUPPORT, editor, rand, theme, origin.copy());
 		
 		for(Cardinal dir : Cardinal.directions) {
-			if(this.entrances.contains(dir)) {				
+			if(this.getEntrance(dir) == Entrance.DOOR) {				
 				this.entryWay(editor, rand, origin, dir);
 			} else {
 				Coord pos = origin.copy();
@@ -110,7 +111,7 @@ public class CryptRoom extends AbstractMediumRoom implements IRoom {
 			stair.set(editor, pos);
 		}
 		
-		if(this.entrances.contains(Cardinal.left(dir))) {
+		if(this.getEntrance(Cardinal.left(dir)) == Entrance.DOOR) {
 			Coord pos = origin.copy();
 			pos.add(dir, 6);
 			pos.add(Cardinal.left(dir), 6);
@@ -125,7 +126,7 @@ public class CryptRoom extends AbstractMediumRoom implements IRoom {
 			this.entrySideWall(editor, rand, pos, Cardinal.left(dir));
 		}
 		
-		if(!this.entrances.contains(Cardinal.right(dir))) {
+		if(this.getEntrance(Cardinal.right(dir)) != Entrance.DOOR) {
 			Coord pos = origin.copy();
 			pos.add(dir, 6);
 			pos.add(Cardinal.right(dir), 2);

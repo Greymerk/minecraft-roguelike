@@ -1,6 +1,7 @@
 package com.greymerk.roguelike.dungeon.room;
 
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
+import com.greymerk.roguelike.dungeon.layout.Entrance;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IBlockFactory;
@@ -27,7 +28,7 @@ public class OssuaryRoom extends AbstractMediumRoom implements IRoom {
 		this.ceiling(editor, rand, origin);
 		this.skullShelves(editor, rand, origin);
 		for(Cardinal dir : Cardinal.directions) {
-			if(this.entrances.contains(dir)) {
+			if(this.entrances.get(dir) == Entrance.DOOR) {
 				this.entry(editor, rand, origin, dir);
 			} else {
 				this.faceWall(editor, rand, origin, dir);

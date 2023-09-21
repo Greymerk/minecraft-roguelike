@@ -4,6 +4,7 @@ import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellManager;
 import com.greymerk.roguelike.dungeon.cell.CellState;
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
+import com.greymerk.roguelike.dungeon.layout.Entrance;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IBlockFactory;
@@ -59,7 +60,7 @@ public class ReservoirRoom extends AbstractLargeRoom implements IRoom {
 	}
 
 	private void doors(IWorldEditor editor, Random rand, Coord origin) {
-		for(Cardinal dir : this.entrances) {
+		for(Cardinal dir : this.getEntrancesFromType(Entrance.DOOR)) {
 			Coord pos = origin.copy();
 			pos.add(dir, 12);
 			Fragment.generate(Fragment.ARCH, editor, rand, theme, pos, dir);
@@ -153,7 +154,7 @@ public class ReservoirRoom extends AbstractLargeRoom implements IRoom {
 			Coord pos = origin.copy();
 			pos.add(dir, 12);
 			cell(editor, rand, pos.copy());
-			if(!entrances.contains(dir)) {
+			if(!this.getEntrancesFromType(Entrance.DOOR).contains(dir)) {
 				settings.getWallFragment(rand).generate(editor, rand, theme, pos.copy(), dir);
 			}
 			pos.add(Cardinal.left(dir), 6);

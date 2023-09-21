@@ -6,6 +6,7 @@ import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellManager;
 import com.greymerk.roguelike.dungeon.cell.CellState;
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
+import com.greymerk.roguelike.dungeon.layout.Entrance;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
@@ -37,7 +38,7 @@ public class Stairway extends AbstractRoom implements IRoom {
 	private void addDoors(IWorldEditor editor, Random rand) {
 		Fragment.generate(Fragment.ARCH, editor, rand, theme, worldPos, Cardinal.reverse(direction));
 		
-		for(Cardinal dir : this.entrances) {
+		for(Cardinal dir : this.getEntrancesFromType(Entrance.DOOR)) {
 			Fragment.generate(Fragment.ARCH, editor, rand, theme, worldPos, dir);
 		}
 	}

@@ -1,6 +1,7 @@
 package com.greymerk.roguelike.dungeon.room;
 
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
+import com.greymerk.roguelike.dungeon.layout.Entrance;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IBlockFactory;
@@ -121,7 +122,7 @@ public class KitchenRoom extends AbstractMediumRoom implements IRoom {
 		}
 		
 		for(Cardinal dir : Cardinal.directions) {
-			if(this.entrances.contains(dir)) {
+			if(this.getEntrancesFromType(Entrance.DOOR).contains(dir)) {
 				Coord pos = origin.copy().add(dir, 6);
 				Fragment.generate(Fragment.ARCH, editor, rand, theme, pos, dir);
 			}

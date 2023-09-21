@@ -2,6 +2,7 @@ package com.greymerk.roguelike.dungeon.room;
 
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
 import com.greymerk.roguelike.dungeon.fragment.IFragment;
+import com.greymerk.roguelike.dungeon.layout.Entrance;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IBlockFactory;
@@ -72,7 +73,7 @@ public class Corridor extends AbstractRoom implements IRoom{
 		}
 		
 		for(Cardinal dir : Cardinal.directions) {
-			if(this.entrances.contains(dir)) {
+			if(this.getEntrance(dir) == Entrance.DOOR) {
 				Fragment.generate(Fragment.ARCH, editor, rand, theme, worldPos, dir);
 			} else {
 				IFragment wall = this.settings.getWallFragment(rand);

@@ -1,6 +1,7 @@
 package com.greymerk.roguelike.dungeon.room;
 
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
+import com.greymerk.roguelike.dungeon.layout.Entrance;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
@@ -49,7 +50,7 @@ public class EnderRoom extends AbstractMediumRoom implements IRoom {
 	}
 
 	private void doors(IWorldEditor editor, Random rand, Coord origin, IBlockSet blocks) {
-		for(Cardinal dir : this.entrances) {
+		for(Cardinal dir : this.getEntrancesFromType(Entrance.DOOR)) {
 			Coord pos = origin.copy();
 			pos.add(dir, 6);
 			Fragment.generate(Fragment.ARCH, editor, rand, theme, pos, dir);

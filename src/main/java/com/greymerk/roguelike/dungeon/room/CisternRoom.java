@@ -1,6 +1,7 @@
 package com.greymerk.roguelike.dungeon.room;
 
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
+import com.greymerk.roguelike.dungeon.layout.Entrance;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IBlockFactory;
@@ -86,7 +87,7 @@ public class CisternRoom extends AbstractMediumRoom implements IRoom {
 		bb.grow(Cardinal.directions);
 		RectSolid.fill(editor, rand, bb, floor);
 		
-		for(Cardinal dir : this.entrances) {
+		for(Cardinal dir : this.getEntrancesFromType(Entrance.DOOR)) {
 			bb = new BoundingBox(origin.copy());
 			bb.add(dir, 3);
 			bb.add(Cardinal.DOWN);
@@ -103,7 +104,7 @@ public class CisternRoom extends AbstractMediumRoom implements IRoom {
 			pos.add(Cardinal.left(dir), 2);
 			wall.set(editor, rand, pos);
 			
-			if(!this.entrances.contains(dir)) {
+			if(this.getEntrance(dir) != Entrance.DOOR) {
 				bb = new BoundingBox(origin.copy());
 				bb.add(dir, 2);
 				bb.grow(Cardinal.orthogonal(dir));
@@ -119,7 +120,7 @@ public class CisternRoom extends AbstractMediumRoom implements IRoom {
 			}
 		}
 		
-		for(Cardinal dir : this.entrances) {
+		for(Cardinal dir : this.getEntrancesFromType(Entrance.DOOR)) {
 			Coord pos = origin.copy();
 			pos.add(dir, 6);
 			Fragment.generate(Fragment.ARCH, editor, rand, theme, pos, dir);

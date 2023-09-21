@@ -6,6 +6,7 @@ import com.greymerk.roguelike.dungeon.Floor;
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellManager;
 import com.greymerk.roguelike.dungeon.cell.CellState;
+import com.greymerk.roguelike.dungeon.layout.Entrance;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
@@ -58,7 +59,9 @@ public abstract class AbstractLargeRoom extends AbstractRoom implements IRoom {
 			if(!c.isRoom()) continue;
 			List<Cardinal> walls = c.getWalls();
 			if(!walls.contains(Cardinal.reverse(dir))) {
-				this.addEntrance(dir);
+				this.addEntrance(dir, Entrance.DOOR);
+			} else {
+				this.addEntrance(dir, Entrance.WALL);
 			}
 		}
 	}

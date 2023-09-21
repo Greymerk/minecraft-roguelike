@@ -1,6 +1,7 @@
 package com.greymerk.roguelike.dungeon.room;
 
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
+import com.greymerk.roguelike.dungeon.layout.Entrance;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IBlockFactory;
@@ -70,7 +71,7 @@ public class CrossRoom extends AbstractMediumRoom implements IRoom {
 			
 			Coord pos = new Coord(origin);
 			pos.add(dir, 6);
-			if(this.entrances.contains(dir)) {
+			if(this.getEntrance(dir) == Entrance.DOOR) {
 				Fragment.generate(Fragment.ARCH, editor, rand, theme, pos, dir);
 			}
 			

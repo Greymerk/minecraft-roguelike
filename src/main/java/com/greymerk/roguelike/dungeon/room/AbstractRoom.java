@@ -2,12 +2,15 @@ package com.greymerk.roguelike.dungeon.room;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.greymerk.roguelike.dungeon.Floor;
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellManager;
 import com.greymerk.roguelike.dungeon.cell.CellState;
+import com.greymerk.roguelike.dungeon.layout.Entrance;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
@@ -28,12 +31,12 @@ public abstract class AbstractRoom implements IRoom{
 	protected ITheme theme;
 	protected Cardinal direction;
 	protected boolean generated;
-	protected List<Cardinal> entrances;
+	protected Map<Cardinal, Entrance> entrances;
 	
 	public AbstractRoom() {
 		this.direction = Cardinal.EAST;
 		this.generated = false;
-		this.entrances = new ArrayList<Cardinal>();
+		this.entrances = new HashMap<Cardinal, Entrance>();
 	}
 	
 	public AbstractRoom(ILevelSettings settings, IBounded box, Coord worldPos) {
@@ -46,7 +49,7 @@ public abstract class AbstractRoom implements IRoom{
 		this.worldPos = worldPos;
 		this.generated = false;
 		this.direction = dir;
-		this.entrances = new ArrayList<Cardinal>();
+		this.entrances = new HashMap<Cardinal, Entrance>();
 	}
 	
 	@Override
@@ -61,13 +64,11 @@ public abstract class AbstractRoom implements IRoom{
 		nbt.put("pos", pos.getNbt());
 		nbt.putBoolean("generated", this.generated);
 		nbt.putInt("dir", Arrays.asList(Cardinal.values()).indexOf(this.direction));
-		int[] ent;
-		List<Integer> c = new ArrayList<Integer>();
-		for(Cardinal dir : this.entrances) {
-			c.add(Cardinal.directions.indexOf(dir));
+		NbtCompound ent = new NbtCompound();
+		for(Cardinal dir : this.entrances.keySet()) {
+			ent.put(dir.name(), NbtString.of(this.entrances.get(dir).name()));
 		}
-		ent = c.stream().mapToInt(Integer::intValue).toArray();
-		nbt.putIntArray("entrances", ent);
+		nbt.put("entrances", ent);
 		return nbt;
 	}
 	
@@ -135,8 +136,8 @@ public abstract class AbstractRoom implements IRoom{
 	}
 	
 	@Override
-	public void addEntrance(Cardinal dir) {
-		this.entrances.add(dir);
+	public void addEntrance(Cardinal dir, Entrance type) {
+		this.entrances.put(dir, type);
 	}
 	
 	@Override
@@ -152,6 +153,22 @@ public abstract class AbstractRoom implements IRoom{
 		return cells;
 	}
 	
+	@Override
+	public Entrance getEntrance(Cardinal dir) {
+		if(!this.entrances.containsKey(dir)) return Entrance.BARE;
+		return this.entrances.get(dir);
+	}
+	
+	@Override
+	public List<Cardinal> getEntrancesFromType(Entrance type){
+		List<Cardinal> dirs = new ArrayList<Cardinal>();
+		for(Cardinal dir : this.entrances.keySet()) {
+			if(this.entrances.get(dir) == type) {
+				dirs.add(dir);
+			}
+		}
+		return dirs;
+	}
 
 	@Override
 	public void determineEntrances(Floor f, Coord floorPos) {
@@ -161,7 +178,9 @@ public abstract class AbstractRoom implements IRoom{
 			fp.add(dir);
 			Cell c = f.getCell(fp);
 			if(c.isRoom() && !c.getWalls().contains(Cardinal.reverse(dir))){
-				this.entrances.add(dir);
+				this.entrances.put(dir, Entrance.DOOR);
+			} else {
+				this.entrances.put(dir, Entrance.WALL);
 			}
 		}
 		
