@@ -98,10 +98,18 @@ public class RoguelikeState extends PersistentState {
         // Calling this reads the file from the disk if it exists, or creates a new one and saves it to the disk
         // You need to use a unique string as the key. You should already have a MODID variable defined by you somewhere in your code. Use that.
         RoguelikeState serverState = persistentStateManager.getOrCreate(
-                RoguelikeState::createFromNbt,
-                RoguelikeState::new,
-                Roguelike.MODID); 
- 
+        		getPersistentStateType(),
+        		Roguelike.MODID);
         return serverState;
     }
+    
+    public static PersistentState.Type<RoguelikeState> getPersistentStateType() {
+    	return new PersistentState.Type<RoguelikeState>(
+    			RoguelikeState::new,
+    			RoguelikeState::createFromNbt,
+    			null
+    			);
+    	
+    }
+        
 }
