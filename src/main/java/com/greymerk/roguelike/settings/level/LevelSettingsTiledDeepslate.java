@@ -12,6 +12,7 @@ import com.greymerk.roguelike.util.WeightedRandomizer;
 
 public class LevelSettingsTiledDeepslate extends LevelSettingsBase implements ILevelSettings {
 	public LevelSettingsTiledDeepslate() {
+		super();
 		this.theme = Theme.getTheme(Theme.TILEDSLATE);
 		
 		this.rooms = new RoomProvider();

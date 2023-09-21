@@ -13,6 +13,7 @@ import com.greymerk.roguelike.util.WeightedRandomizer;
 public class LevelSettingsMossy extends LevelSettingsBase implements ILevelSettings {
 
 	public LevelSettingsMossy() {
+		super();
 		this.theme = Theme.getTheme(Theme.MOSSY);
 		
 		this.rooms = new RoomProvider();
@@ -28,6 +29,9 @@ public class LevelSettingsMossy extends LevelSettingsBase implements ILevelSetti
 		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_EMPTY, 10));
 		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_SPAWNER, 1));
 		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_CHEST, 1));
+		
+		this.alcoves.add(new WeightedChoice<Fragment>(Fragment.WALL_EMPTY, 3));
+		this.alcoves.add(new WeightedChoice<Fragment>(Fragment.ALCOVE_SILVERFISH, 1));
 	}
 
 	@Override

@@ -13,6 +13,7 @@ import com.greymerk.roguelike.util.WeightedRandomizer;
 public class LevelSettingsCrumbledMossy extends LevelSettingsBase implements ILevelSettings {
 
 	public LevelSettingsCrumbledMossy() {
+		super();
 		this.theme = Theme.getTheme(Theme.CRUMBLEDMOSSY);
 		
 		this.rooms = new RoomProvider();

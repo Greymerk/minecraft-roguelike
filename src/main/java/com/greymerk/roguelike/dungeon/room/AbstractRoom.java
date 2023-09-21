@@ -155,7 +155,7 @@ public abstract class AbstractRoom implements IRoom{
 	
 	@Override
 	public Entrance getEntrance(Cardinal dir) {
-		if(!this.entrances.containsKey(dir)) return Entrance.BARE;
+		if(!this.entrances.containsKey(dir)) return Entrance.ALCOVE;
 		return this.entrances.get(dir);
 	}
 	
@@ -172,18 +172,21 @@ public abstract class AbstractRoom implements IRoom{
 
 	@Override
 	public void determineEntrances(Floor f, Coord floorPos) {
-		
 		for(Cardinal dir : Cardinal.directions) {
 			Coord fp = floorPos.copy();
 			fp.add(dir);
 			Cell c = f.getCell(fp);
 			if(c.isRoom() && !c.getWalls().contains(Cardinal.reverse(dir))){
 				this.entrances.put(dir, Entrance.DOOR);
+			} else if(c.getState() == CellState.POTENTIAL) {
+				this.entrances.put(dir, Entrance.ALCOVE);
+				Cell alcove = new Cell(fp, CellState.OBSTRUCTED);
+				Cardinal.directions.forEach(d -> alcove.addWall(d));
+				c.replace(alcove);
 			} else {
-				this.entrances.put(dir, Entrance.WALL);
+				this.entrances.put(dir, Entrance.WALL);	
 			}
 		}
-		
 	}
 	
 	public void applyFilters(IWorldEditor editor) {

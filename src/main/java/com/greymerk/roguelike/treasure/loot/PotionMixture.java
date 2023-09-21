@@ -165,7 +165,7 @@ public enum PotionMixture {
 			case HUNGER: duration = 5 + rand.nextInt(10); break;
 			case WITHER:
 			case POISON: duration = 5 + rand.nextInt(5); break;
-			default: duration = 60 + rand.nextInt(120);
+			default: duration = 10;
 			}
 			
 			PotionEffect.addCustomEffect(potion, type, rand.nextInt(3), duration);

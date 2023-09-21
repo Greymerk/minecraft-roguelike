@@ -74,7 +74,10 @@ public class Corridor extends AbstractRoom implements IRoom{
 		
 		for(Cardinal dir : Cardinal.directions) {
 			if(this.getEntrance(dir) == Entrance.DOOR) {
-				Fragment.generate(Fragment.ARCH, editor, rand, theme, worldPos, dir);
+				Fragment.generate(Fragment.ARCH, editor, rand, theme, worldPos.copy(), dir);
+			} else if(this.getEntrance(dir) == Entrance.ALCOVE){
+				IFragment alcove = this.settings.getAlcove(rand);
+				alcove.generate(editor, rand, theme, worldPos.copy(), dir);
 			} else {
 				IFragment wall = this.settings.getWallFragment(rand);
 				wall.generate(editor, rand, theme, worldPos.copy(), dir);

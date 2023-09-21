@@ -33,7 +33,6 @@ public enum ItemNovelty {
 		names.put("kurt", ItemNovelty.KURT);
 		names.put("amlp", ItemNovelty.AMLP);
 		names.put("cleo", ItemNovelty.CLEO);
-		names.put("enikosword", ItemNovelty.ENIKOSWORD);
 		names.put("enikobow", ItemNovelty.ENIKOBOW);
 		names.put("bdoubleo", ItemNovelty.BDOUBLEO);
 		names.put("guude", ItemNovelty.GUUDE);
@@ -86,7 +85,7 @@ public enum ItemNovelty {
 			return item;
 		case NEBRISCROWN:
 			item = new ItemStack(Items.GOLDEN_HELMET);
-			Loot.setItemName(item, "Nebrian Crown of Justice", null);
+			Loot.setItemName(item, "Crown of Justice", null);
 			Loot.setItemLore(item, "Adorned with precious gemstones", TextFormat.DARKGREEN);
 			item.addEnchantment(Enchant.getEnchant(Enchant.PROTECTION), 4);
 			item.addEnchantment(Enchant.getEnchant(Enchant.UNBREAKING), 3);
@@ -125,7 +124,7 @@ public enum ItemNovelty {
 			return item;
 		case ASHLEA:
 			item = new ItemStack(Items.COOKIE);
-			Loot.setItemName(item, "Ashlea's Oatmeal Cookie", TextFormat.DARKPURPLE);
+			Loot.setItemName(item, "Oatmeal Cookie", TextFormat.DARKPURPLE);
 			Loot.setItemLore(item, "Perfect for elevensies", TextFormat.DARKGREEN);
 			item.addEnchantment(Enchant.getEnchant(Enchant.SHARPNESS), 2);
 			item.addEnchantment(Enchant.getEnchant(Enchant.KNOCKBACK), 1);
@@ -149,7 +148,7 @@ public enum ItemNovelty {
 			return item;
 		case CLEO:
 			item = new ItemStack(Items.COD);
-			Loot.setItemName(item, "Cleophian Digging Feesh", TextFormat.DARKPURPLE);
+			Loot.setItemName(item, "Digging Feesh", TextFormat.DARKPURPLE);
 			Loot.setItemLore(item, "Feesh are not efeeshent for digging", TextFormat.DARKGREEN);
 			item.addEnchantment(Enchant.getEnchant(Enchant.EFFICIENCY), 10);
 			item.addEnchantment(Enchant.getEnchant(Enchant.KNOCKBACK), 5);
@@ -159,7 +158,7 @@ public enum ItemNovelty {
 		case BDOUBLEO:
 			item = new ItemStack(Items.DIAMOND_SHOVEL);
 			Loot.setItemName(item, "Dig Job", null);
-			Loot.setItemLore(item, "Recovered from hell's blazes", TextFormat.DARKGREEN);
+			Loot.setItemLore(item, "Lost in hell's blazes", TextFormat.DARKGREEN);
 			item.addEnchantment(Enchant.getEnchant(Enchant.EFFICIENCY), 5);
 			item.addEnchantment(Enchant.getEnchant(Enchant.UNBREAKING), 3);
 			return item;
@@ -173,7 +172,7 @@ public enum ItemNovelty {
 			return item;
 		case RLEAHY:
 			item = new ItemStack(Items.BREAD);
-			Loot.setItemName(item, "Rleahian battle sub", TextFormat.DARKPURPLE);
+			Loot.setItemName(item, "Battle Sub", TextFormat.DARKPURPLE);
 			Loot.setItemLore(item, "With extra pastrami", TextFormat.DARKGREEN);
 			item.addEnchantment(Enchant.getEnchant(Enchant.SHARPNESS), 2);
 			item.addEnchantment(Enchant.getEnchant(Enchant.KNOCKBACK), 1);
@@ -188,24 +187,16 @@ public enum ItemNovelty {
 			return item;
 		case ENIKOBOW:
 			item = new ItemStack(Items.BOW);
-			Loot.setItemName(item, "Eniko's String Theory", null);
+			Loot.setItemName(item, "String Theory", null);
 			Loot.setItemLore(item, "For Science!", TextFormat.DARKGREEN);
 			item.addEnchantment(Enchant.getEnchant(Enchant.POWER), 5);
 			item.addEnchantment(Enchant.getEnchant(Enchant.KNOCKBACK), 2);
 			item.addEnchantment(Enchant.getEnchant(Enchant.INFINITY), 1);
 			item.addEnchantment(Enchant.getEnchant(Enchant.UNBREAKING), 3);
 			return item;
-		case ENIKOSWORD:
-			item = new ItemStack(Items.DIAMOND_SWORD);
-			Loot.setItemName(item, "Eniko's Earring", null);
-			Loot.setItemLore(item, "\"She do the loot take boogie\"", TextFormat.DARKGREEN);
-			item.addEnchantment(Enchant.getEnchant(Enchant.SHARPNESS), 5);
-			item.addEnchantment(Enchant.getEnchant(Enchant.LOOTING), 3);
-			item.addEnchantment(Enchant.getEnchant(Enchant.UNBREAKING), 3);
-			return item;
 		case BAJ:
 			item = new ItemStack(Items.GOLDEN_HOE);
-			Loot.setItemName(item, "Baj's Last Resort", TextFormat.DARKPURPLE);
+			Loot.setItemName(item, "Last Resort", TextFormat.DARKPURPLE);
 			Loot.setItemLore(item, "\"Starvation could be fatal\"", TextFormat.DARKGREEN);
 			item.addEnchantment(Enchant.getEnchant(Enchant.SHARPNESS), 2);
 			item.addEnchantment(Enchant.getEnchant(Enchant.KNOCKBACK), 1);
@@ -241,7 +232,7 @@ public enum ItemNovelty {
 			return item;
 		case QUANTUMLEAP:
 			item = new ItemStack(Blocks.SPONGE);
-			Loot.setItemName(item, "QuantumLeap's Swiss Cheese", TextFormat.DARKPURPLE);
+			Loot.setItemName(item, "Swiss Cheese", TextFormat.DARKPURPLE);
 			Loot.setItemLore(item, "\"Oh boy\"",  TextFormat.DARKGREEN);
 			item.addEnchantment(Enchant.getEnchant(Enchant.SHARPNESS), 4);
 			return item;
@@ -255,14 +246,14 @@ public enum ItemNovelty {
 			return item;
 		case FOURLES:
 			item = new ItemStack(Items.COCOA_BEANS);
-			Loot.setItemName(item, "Fourles Darkroast Beans", TextFormat.DARKPURPLE);
+			Loot.setItemName(item, "Darkroast Beans", TextFormat.DARKPURPLE);
 			Loot.setItemLore(item, "\"Mmmm... Dark Roast\"",  TextFormat.DARKGREEN);
 			item.addEnchantment(Enchant.getEnchant(Enchant.FIREASPECT), 2);
 			item.addEnchantment(Enchant.getEnchant(Enchant.SHARPNESS), 2);
 			return item;
 		case DINNERBONE:
 			item = new ItemStack(Items.BONE, 1);
-			Loot.setItemName(item, "Old Dinnerbone", TextFormat.DARKPURPLE);
+			Loot.setItemName(item, "Old Bone", TextFormat.DARKPURPLE);
 			Loot.setItemLore(item, "\"Dang Skellies!\"",  TextFormat.DARKGREEN);
 			item.addEnchantment(Enchant.getEnchant(Enchant.SHARPNESS), 3);
 			item.addEnchantment(Enchant.getEnchant(Enchant.FIREASPECT), 2);
@@ -270,13 +261,13 @@ public enum ItemNovelty {
 		case GRIM:
 			item = new ItemStack(Items.ROTTEN_FLESH);
 			Loot.setItemName(item, "Grim chew-toy", TextFormat.DARKPURPLE);
-			Loot.setItemLore(item, "\"Come on Grim, let's do this!\"",  TextFormat.DARKGREEN);
+			Loot.setItemLore(item, "\"Let's do this!\"",  TextFormat.DARKGREEN);
 			item.addEnchantment(Enchant.getEnchant(Enchant.SMITE), 2);
 			item.addEnchantment(Enchant.getEnchant(Enchant.LOOTING), 1);
 			return item;
 		case MMILLSS:
 			item = new ItemStack(Blocks.CACTUS);
-			Loot.setItemName(item, "MMillssian spider bane", TextFormat.DARKPURPLE);
+			Loot.setItemName(item, "Spider bane", TextFormat.DARKPURPLE);
 			Loot.setItemLore(item, "\"I really don't need anymore string...\"",  TextFormat.DARKGREEN);
 			item.addEnchantment(Enchant.getEnchant(Enchant.ARTHOPODS), 4);
 			item.addEnchantment(Enchant.getEnchant(Enchant.THORNS), 2);
@@ -284,7 +275,7 @@ public enum ItemNovelty {
 			return item;
 		case VALANDRAH:
 			item = new ItemStack(Items.IRON_SWORD);
-			Loot.setItemName(item, "Valandrah's Kiss", null);
+			Loot.setItemName(item, "Kiss of Death", null);
 			Loot.setItemLore(item, "\"Feel the kiss of my blade\"",  TextFormat.DARKGREEN);
 			item.addEnchantment(Enchant.getEnchant(Enchant.SHARPNESS), 4);
 			item.addEnchantment(Enchant.getEnchant(Enchant.FIREASPECT), 1);
@@ -292,10 +283,7 @@ public enum ItemNovelty {
 			item.addEnchantment(Enchant.getEnchant(Enchant.UNBREAKING), 2);
 			return item;
 		default:
-			return null;
-		
+			return new ItemStack(Items.STICK);
 		}
 	}
-	
-	
 }

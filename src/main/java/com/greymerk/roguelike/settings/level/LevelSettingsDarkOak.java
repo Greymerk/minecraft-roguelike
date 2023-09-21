@@ -13,7 +13,7 @@ import com.greymerk.roguelike.util.WeightedRandomizer;
 public class LevelSettingsDarkOak extends LevelSettingsBase implements ILevelSettings {
 
 	public LevelSettingsDarkOak() {
-		
+		super();
 		this.theme = Theme.getTheme(Theme.DARKOAK);
 		
 		this.rooms = new RoomProvider();
@@ -22,8 +22,12 @@ public class LevelSettingsDarkOak extends LevelSettingsBase implements ILevelSet
 		this.walls = new WeightedRandomizer<Fragment>();
 		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_BANNER, 3));
 		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_CHEST, 1));
-		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_SPAWNER, 1));
 		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_CANDLES, 1));
+
+		this.alcoves.add(new WeightedChoice<Fragment>(Fragment.WALL_BANNER, 2));
+		this.alcoves.add(new WeightedChoice<Fragment>(Fragment.WALL_CHEST, 1));
+		this.alcoves.add(new WeightedChoice<Fragment>(Fragment.WALL_CANDLES, 1));
+		this.alcoves.add(new WeightedChoice<Fragment>(Fragment.ALCOVE_SAFETY, 2));
 	}
 
 	@Override

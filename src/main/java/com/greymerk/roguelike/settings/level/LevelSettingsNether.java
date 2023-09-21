@@ -13,6 +13,7 @@ import com.greymerk.roguelike.util.WeightedRandomizer;
 public class LevelSettingsNether extends LevelSettingsBase implements ILevelSettings {
 
 	public LevelSettingsNether() {
+		super();
 		this.theme = Theme.getTheme(Theme.NETHER);
 		
 		this.rooms = new RoomProvider();

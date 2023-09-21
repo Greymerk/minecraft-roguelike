@@ -13,6 +13,7 @@ import com.greymerk.roguelike.util.WeightedRandomizer;
 public class LevelSettingsOak extends LevelSettingsBase implements ILevelSettings {
 
 	public LevelSettingsOak() {
+		super();
 		this.theme = Theme.getTheme(Theme.OAK);
 		
 		this.rooms = new RoomProvider();

@@ -13,6 +13,7 @@ import com.greymerk.roguelike.util.WeightedRandomizer;
 public class LevelSettingsBlackstone extends LevelSettingsBase implements ILevelSettings {
 
 	public LevelSettingsBlackstone() {
+		super();
 		this.theme = Theme.getTheme(Theme.BLACK);
 		
 		this.rooms = new RoomProvider();

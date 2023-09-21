@@ -13,16 +13,26 @@ public abstract class LevelSettingsBase implements ILevelSettings {
 
 	protected ITheme theme;
 	protected WeightedRandomizer<Fragment> walls;
+	protected WeightedRandomizer<Fragment> alcoves;
 	protected RoomProvider rooms;
 	
 	public LevelSettingsBase() {
 		this.walls = new WeightedRandomizer<Fragment>();
+		this.alcoves = new WeightedRandomizer<Fragment>();
 		this.rooms = new RoomProvider();
 	}
 	
 	@Override
 	public IFragment getWallFragment(Random rand) {
+		if(this.walls.isEmpty()) return Fragment.fromType(Fragment.WALL_EMPTY);
 		Fragment type = this.walls.get(rand);
+		return Fragment.fromType(type);
+	}
+	
+	@Override
+	public IFragment getAlcove(Random rand) {
+		if(this.alcoves.isEmpty()) return Fragment.fromType(Fragment.WALL_EMPTY);
+		Fragment type = this.alcoves.get(rand);
 		return Fragment.fromType(type);
 	}
 	

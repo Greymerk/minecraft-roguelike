@@ -10,6 +10,8 @@ public interface ILevelSettings {
 
 	public IFragment getWallFragment(Random rand);
 	
+	public IFragment getAlcove(Random rand);
+	
 	public ITheme getTheme();
 	
 	public RoomProvider getRooms();
