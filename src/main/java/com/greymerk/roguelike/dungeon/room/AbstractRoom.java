@@ -191,6 +191,6 @@ public abstract class AbstractRoom implements IRoom{
 	
 	public void applyFilters(IWorldEditor editor) {
 		Random rand = editor.getRandom(this.getWorldPos());
-		this.getTheme().applyFilters(editor, rand, getBoundingBox());
+		this.settings.applyFilters(editor, rand, getBoundingBox());
 	}
 }

@@ -15,7 +15,7 @@ public class CobwebFilter implements IFilter{
 	@Override
 	public void apply(IWorldEditor editor, Random rand, ITheme theme, IBounded box) {
 		for(Coord pos : box.getShape(Shape.RECTSOLID)){
-			if(rand.nextInt(60) != 0) continue;
+			if(rand.nextInt(100) != 0) continue;
 			if(!editor.isAir(pos)) continue;
 			if(!validLocation(editor, pos)) continue;
 				

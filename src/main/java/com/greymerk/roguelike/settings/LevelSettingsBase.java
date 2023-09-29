@@ -1,8 +1,13 @@
 package com.greymerk.roguelike.settings;
 
+import java.util.List;
+
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
 import com.greymerk.roguelike.dungeon.fragment.IFragment;
 import com.greymerk.roguelike.dungeon.room.RoomProvider;
+import com.greymerk.roguelike.editor.IWorldEditor;
+import com.greymerk.roguelike.editor.boundingbox.IBounded;
+import com.greymerk.roguelike.editor.filter.IFilter;
 import com.greymerk.roguelike.editor.theme.ITheme;
 import com.greymerk.roguelike.editor.theme.Theme;
 import com.greymerk.roguelike.util.WeightedRandomizer;
@@ -15,6 +20,7 @@ public abstract class LevelSettingsBase implements ILevelSettings {
 	protected WeightedRandomizer<Fragment> walls;
 	protected WeightedRandomizer<Fragment> alcoves;
 	protected RoomProvider rooms;
+	protected List<IFilter> filters;
 	
 	public LevelSettingsBase() {
 		this.walls = new WeightedRandomizer<Fragment>();
@@ -45,6 +51,14 @@ public abstract class LevelSettingsBase implements ILevelSettings {
 	@Override
 	public RoomProvider getRooms() {
 		return this.rooms;
+	}
+	
+	@Override
+	public void applyFilters(IWorldEditor editor, Random rand, IBounded box) {
+		if(this.filters == null) return;
+		for(IFilter filter : this.filters) {
+			filter.apply(editor, rand, this.getTheme(), box);
+		}
 	}
 	
 }

@@ -1,8 +1,12 @@
 package com.greymerk.roguelike.settings.level;
 
+import java.util.ArrayList;
+
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
 import com.greymerk.roguelike.dungeon.room.Room;
 import com.greymerk.roguelike.dungeon.room.RoomProvider;
+import com.greymerk.roguelike.editor.filter.Filter;
+import com.greymerk.roguelike.editor.filter.IFilter;
 import com.greymerk.roguelike.editor.theme.Theme;
 import com.greymerk.roguelike.settings.ILevelSettings;
 import com.greymerk.roguelike.settings.LevelSettings;
@@ -32,6 +36,9 @@ public class LevelSettingsMossy extends LevelSettingsBase implements ILevelSetti
 		
 		this.alcoves.add(new WeightedChoice<Fragment>(Fragment.WALL_EMPTY, 3));
 		this.alcoves.add(new WeightedChoice<Fragment>(Fragment.ALCOVE_SILVERFISH, 1));
+		
+		this.filters = new ArrayList<IFilter>();
+		this.filters.add(Filter.get(Filter.VINE));
 	}
 
 	@Override

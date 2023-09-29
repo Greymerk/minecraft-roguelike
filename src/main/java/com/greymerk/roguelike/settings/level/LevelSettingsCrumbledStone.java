@@ -1,8 +1,12 @@
 package com.greymerk.roguelike.settings.level;
 
+import java.util.ArrayList;
+
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
 import com.greymerk.roguelike.dungeon.room.Room;
 import com.greymerk.roguelike.dungeon.room.RoomProvider;
+import com.greymerk.roguelike.editor.filter.Filter;
+import com.greymerk.roguelike.editor.filter.IFilter;
 import com.greymerk.roguelike.editor.theme.Theme;
 import com.greymerk.roguelike.settings.ILevelSettings;
 import com.greymerk.roguelike.settings.LevelSettings;
@@ -26,6 +30,9 @@ public class LevelSettingsCrumbledStone extends LevelSettingsBase implements ILe
 		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_EMPTY, 10));
 		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_SPAWNER, 1));
 		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_CHEST, 1));
+		
+		this.filters = new ArrayList<IFilter>();
+		this.filters.add(Filter.get(Filter.COBWEB));
 	}
 
 	@Override
