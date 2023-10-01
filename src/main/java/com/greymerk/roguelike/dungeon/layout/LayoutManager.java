@@ -19,8 +19,6 @@ import com.greymerk.roguelike.dungeon.room.RoomProvider;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
-import com.greymerk.roguelike.editor.theme.ITheme;
-import com.greymerk.roguelike.editor.theme.Theme;
 import com.greymerk.roguelike.settings.IDungeonSettings;
 import com.greymerk.roguelike.settings.dungeon.DungeonSettingsDefault;
 import com.greymerk.roguelike.util.math.RandHelper;
@@ -115,8 +113,7 @@ public class LayoutManager {
 		int depth = -50;
 		List<Floor> floors = new ArrayList<Floor>();
 		for(int y = origin.getY(); y >= depth; y -= 10) {
-			ITheme theme = Theme.getFromDepth(y);
-			floors.add(new Floor(theme, new Coord(this.origin.getX(), y, this.origin.getZ())));
+			floors.add(new Floor(new Coord(this.origin.getX(), y, this.origin.getZ())));
 		}
 		return floors;
 	}

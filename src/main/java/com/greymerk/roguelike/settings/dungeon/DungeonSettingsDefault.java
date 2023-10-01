@@ -11,12 +11,12 @@ public class DungeonSettingsDefault extends DungeonSettingsBase implements IDung
 		
 		this.set(0, LevelSettings.OAK); //60+
 		this.set(1, LevelSettings.OAK); //50
-		this.set(2, LevelSettings.DARK_OAK); //40
-		this.set(3, LevelSettings.STONE); //30
-		this.set(4, LevelSettings.CRUMBLED_STONE); //20
-		this.set(5, LevelSettings.MOSSY); //10
-		this.set(6, LevelSettings.CRUMBLED_MOSSY); //0
-		this.set(7, LevelSettings.SLATE); //-10
+		this.set(2, LevelSettings.SPRUCE); //40
+		this.set(3, LevelSettings.DARK_OAK); //30
+		this.set(4, LevelSettings.STONE); //20
+		this.set(5, LevelSettings.CRUMBLED_STONE); //10
+		this.set(6, LevelSettings.MOSSY); //0
+		this.set(7, LevelSettings.CRUMBLED_MOSSY); //-10
 		this.set(8, LevelSettings.SLATE); //-20
 		this.set(9, LevelSettings.TILED_SLATE); //-30
 		this.set(10, LevelSettings.NETHER); //-40

@@ -15,32 +15,31 @@ import com.greymerk.roguelike.editor.theme.ITheme;
 import com.greymerk.roguelike.editor.theme.Theme;
 import com.greymerk.roguelike.editor.theme.ThemeBase;
 
-public class ThemeDarkOak extends ThemeBase implements ITheme {
+public class ThemeSpruce extends ThemeBase implements ITheme {
 
-	public ThemeDarkOak() {
+	public ThemeSpruce() {
 		BlockWeightedRandom walls = new BlockWeightedRandom();
-		walls.addBlock(BlockType.get(BlockType.STONE_BRICK), 50);
-		walls.addBlock(BlockType.get(BlockType.STONE_BRICK_CRACKED), 30);
-		walls.addBlock(BlockType.get(BlockType.STONE_BRICK_MOSSY), 10);
-		walls.addBlock(BlockType.get(BlockType.COBBLESTONE), 5);
-		walls.addBlock(BlockType.get(BlockType.GRAVEL), 1);
+		walls.addBlock(BlockType.get(BlockType.STONE_BRICK), 40);
+		walls.addBlock(BlockType.get(BlockType.STONE_BRICK_CRACKED), 20);
+		walls.addBlock(BlockType.get(BlockType.STONE_BRICK_MOSSY), 5);
+		walls.addBlock(BlockType.get(BlockType.COBBLESTONE), 3);
 		
 		MetaStair stair = new MetaStair(StairType.STONEBRICK);
 
 		
-		MetaBlock logs = Wood.get(Wood.DARKOAK, WoodBlock.LOG);
-		MetaBlock segmentWall = Wood.get(Wood.DARKOAK, WoodBlock.PLANK);
-		MetaStair segmentStair = new MetaStair(StairType.DARKOAK);
+		MetaBlock logs = Wood.get(Wood.SPRUCE, WoodBlock.LOG);
+		MetaBlock segmentWall = Wood.get(Wood.SPRUCE, WoodBlock.PLANK);
+		MetaStair segmentStair = new MetaStair(StairType.SPRUCE);
 		
 		this.primary = new BlockSet(walls, walls, stair, walls, new Door(DoorType.DARKOAK));
 		this.primary.setSlab(Slab.get(Slab.STONEBRICK));
 		this.secondary =  new BlockSet(segmentWall, segmentWall, segmentStair, logs, new Door(DoorType.SPRUCE));
-		this.secondary.setSlab(Slab.get(Slab.DARK_OAK));
+		this.secondary.setSlab(Slab.get(Slab.SPRUCE));
 	}
 	
 	@Override
 	public String getName() {
-		return Theme.DARKOAK.name();
+		return Theme.SPRUCE.name();
 	}
-	
+
 }

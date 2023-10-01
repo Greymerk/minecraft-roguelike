@@ -20,7 +20,7 @@ public class ThemeOak extends ThemeBase implements ITheme {
 	public ThemeOak() {
 		BlockWeightedRandom walls = new BlockWeightedRandom();
 		walls.addBlock(BlockType.get(BlockType.STONE_BRICK), 50);
-		walls.addBlock(BlockType.get(BlockType.STONE_BRICK_CRACKED), 20);
+		walls.addBlock(BlockType.get(BlockType.STONE_BRICK_CRACKED), 10);
 		walls.addBlock(BlockType.get(BlockType.COBBLESTONE), 5);
 		walls.addBlock(BlockType.get(BlockType.STONE_BRICK_MOSSY), 1);
 		

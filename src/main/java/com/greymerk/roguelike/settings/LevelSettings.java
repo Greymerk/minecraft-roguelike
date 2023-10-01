@@ -9,12 +9,14 @@ import com.greymerk.roguelike.settings.level.LevelSettingsDefault;
 import com.greymerk.roguelike.settings.level.LevelSettingsMossy;
 import com.greymerk.roguelike.settings.level.LevelSettingsNether;
 import com.greymerk.roguelike.settings.level.LevelSettingsOak;
+import com.greymerk.roguelike.settings.level.LevelSettingsSpruce;
 import com.greymerk.roguelike.settings.level.LevelSettingsStone;
 import com.greymerk.roguelike.settings.level.LevelSettingsTiledDeepslate;
 
 public enum LevelSettings {
 	
-	DEFAULT, OAK, DARK_OAK, STONE, CRUMBLED_STONE, MOSSY, CRUMBLED_MOSSY,
+	DEFAULT, OAK, SPRUCE, DARK_OAK, 
+	STONE, CRUMBLED_STONE, MOSSY, CRUMBLED_MOSSY,
 	SLATE, TILED_SLATE, NETHER, BLACKSTONE;
 	
 	public static ILevelSettings fromType(LevelSettings type) {
@@ -29,6 +31,7 @@ public enum LevelSettings {
 		case NETHER: return new LevelSettingsNether();
 		case OAK: return new LevelSettingsOak();
 		case SLATE: return new LevelSettingsDeepslateBrick();
+		case SPRUCE: return new LevelSettingsSpruce();
 		case STONE: return new LevelSettingsStone();
 		case TILED_SLATE: return new LevelSettingsTiledDeepslate();
 		default: return new LevelSettingsDefault();

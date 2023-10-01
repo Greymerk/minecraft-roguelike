@@ -37,7 +37,7 @@ public class WeightedRandomizer<T> implements IWeighted<T>{
 	}
 	
 	public WeightedRandomizer(){
-		this(0);
+		this(1);
 	}
 	
 	@Override

@@ -13,7 +13,6 @@ import com.greymerk.roguelike.dungeon.room.IRoom;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
-import com.greymerk.roguelike.editor.theme.ITheme;
 
 import net.minecraft.util.math.random.Random;
 
@@ -22,12 +21,10 @@ public class Floor {
 	private Coord origin;
 	private List<IRoom> rooms;
 	private CellManager cells;
-	private ITheme theme;
 	
-	public Floor(ITheme theme, Coord origin) {
+	public Floor(Coord origin) {
 		this.rooms = new ArrayList<IRoom>();
 		this.cells = new CellManager();
-		this.theme = theme;
 		this.origin = origin;
 	}
 
@@ -83,10 +80,6 @@ public class Floor {
 
 	public Cell getCell(Coord floorPos) {
 		return this.cells.get(floorPos);
-	}
-		
-	public ITheme getTheme() {
-		return this.theme;
 	}
 	
 	public void addCell(Cell toAdd) {
