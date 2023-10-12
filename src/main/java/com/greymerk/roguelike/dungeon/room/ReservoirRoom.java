@@ -34,6 +34,7 @@ public class ReservoirRoom extends AbstractLargeRoom implements IRoom {
 		
 	}
 	
+
 	private void clearBasin(IWorldEditor editor, Random rand, Coord origin) {
 		BoundingBox bb = new BoundingBox(origin.copy());
 		bb.add(Cardinal.DOWN, 2);

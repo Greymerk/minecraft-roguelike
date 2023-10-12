@@ -14,7 +14,8 @@ import net.minecraft.nbt.NbtCompound;
 public enum Room {
 
 	CORRIDOR, ENTRANCE, STAIRWAY, CROSS, BEDROOM, HALL, CRYPT,
-	RESERVOIR, CISTERN, OSSUARY, KITCHEN, CREEPER, ENDER;
+	RESERVOIR, CISTERN, OSSUARY, KITCHEN, CREEPER, ENDER,
+	ABYSS;
 	
 	public static IRoom fromType(Room type) {
 		switch(type) {
@@ -31,6 +32,7 @@ public enum Room {
 		case KITCHEN: return new KitchenRoom();
 		case CREEPER: return new CreeperRoom();
 		case ENDER: return new EnderRoom();
+		case ABYSS: return new AbyssRoom();
 		default: return new Corridor();
 		}
 	}

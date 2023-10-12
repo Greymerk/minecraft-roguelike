@@ -17,6 +17,7 @@ public class LevelSettingsDeepslateBrick extends LevelSettingsBase implements IL
 		this.theme = Theme.getTheme(Theme.SLATE);
 		
 		this.rooms = new RoomProvider();
+		rooms.addRoomOnce(Room.ABYSS);
 		rooms.addRandomChoice(Room.CORRIDOR, 10);
 		rooms.addRandomChoice(Room.CROSS, 2);
 		rooms.addRandomChoice(Room.CRYPT, 2);

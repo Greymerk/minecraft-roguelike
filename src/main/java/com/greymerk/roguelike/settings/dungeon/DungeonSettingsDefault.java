@@ -17,10 +17,10 @@ public class DungeonSettingsDefault extends DungeonSettingsBase implements IDung
 		this.set(5, LevelSettings.CRUMBLED_STONE); //10
 		this.set(6, LevelSettings.MOSSY); //0
 		this.set(7, LevelSettings.CRUMBLED_MOSSY); //-10
-		this.set(8, LevelSettings.SLATE); //-20
-		this.set(9, LevelSettings.TILED_SLATE); //-30
-		this.set(10, LevelSettings.NETHER); //-40
-		this.set(11, LevelSettings.BLACKSTONE); //-50
+		this.set(8, LevelSettings.CRUMBLED_MOSSY); //-20
+		this.set(9, LevelSettings.SLATE); //-30
+		this.set(10, LevelSettings.TILED_SLATE); //-40
+		this.set(11, LevelSettings.TILED_SLATE); //-50
 	}
 	
 	private void set(Integer key, LevelSettings value) {
