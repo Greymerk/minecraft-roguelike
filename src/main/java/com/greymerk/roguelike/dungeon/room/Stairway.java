@@ -10,11 +10,13 @@ import com.greymerk.roguelike.dungeon.layout.Entrance;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
+import com.greymerk.roguelike.editor.blocks.Air;
 import com.greymerk.roguelike.editor.blocks.BlockType;
 import com.greymerk.roguelike.editor.blocks.stair.IStair;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.editor.boundingbox.IBounded;
 import com.greymerk.roguelike.editor.shapes.RectSolid;
+import com.greymerk.roguelike.editor.shapes.Shape;
 
 import net.minecraft.util.math.random.Random;
 
@@ -29,8 +31,7 @@ public class Stairway extends AbstractRoom implements IRoom {
 		buildCell(editor, rand, middleCell, Cardinal.reverse(direction));
 		Coord bottomCell = origin.copy().add(direction, 12).add(Cardinal.DOWN, 10);
 		buildCell(editor, rand, bottomCell, Cardinal.reverse(direction));
-		Coord stairStart = origin.copy();
-		stairStart.add(Cardinal.reverse(direction));
+		Coord stairStart = origin.copy(); //.add(Cardinal.reverse(direction));
 		this.buildSteps(editor, rand, stairStart);
 		this.addDoors(editor, rand);
 	}
@@ -52,6 +53,41 @@ public class Stairway extends AbstractRoom implements IRoom {
 	private void oneStep(IWorldEditor editor, Random rand, Coord origin, int step) {
 		IStair stair = theme.getPrimary().getStair();
 		
+		BoundingBox bb = new BoundingBox(origin.copy());
+		bb.add(direction, 2 + step).add(Cardinal.UP, 3 - step);
+		bb.grow(Cardinal.DOWN, 3).grow(Cardinal.orthogonal(direction));
+		RectSolid.fill(editor, rand, bb, Air.get());
+		
+		bb = new BoundingBox(origin.copy());
+		bb.add(direction, 2 + step).add(Cardinal.UP, 3 - step);
+		bb.grow(Cardinal.orthogonal(direction));
+		RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall());
+		
+		for(Cardinal o : Cardinal.orthogonal(direction)) {
+			Coord pos = origin.copy();
+			pos.add(direction, 2 + step);
+			pos.add(Cardinal.UP, 2 - step);
+			pos.add(o);
+			stair.setOrientation(Cardinal.reverse(o), true);
+			stair.set(editor, pos);
+		}
+		
+		bb = new BoundingBox(origin.copy());
+		bb.add(Cardinal.DOWN, 1 + step).add(direction, step - 2);
+		bb.grow(direction, 4).grow(Cardinal.orthogonal(direction));
+		RectSolid.fill(editor, rand, bb, Air.get());
+		
+		bb = new BoundingBox(origin.copy());
+		bb.add(Cardinal.DOWN, 1 + step).add(direction, step - 2);
+		bb.grow(Cardinal.orthogonal(direction));
+		RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall());
+		bb.add(direction);
+		stair.setOrientation(direction, false);
+		bb.getShape(Shape.RECTSOLID).forEach(p -> {
+			stair.set(editor, p);
+		});
+		
+		/*
 		Coord start = new Coord(origin);
 		start.add(direction, 2 + step);
 		start.add(Cardinal.UP, 3 - step);
@@ -89,6 +125,7 @@ public class Stairway extends AbstractRoom implements IRoom {
 		new RectSolid(start, end).get().forEach(p -> {
 			stair.set(editor, p);
 		});;
+		*/
 	}
 	
 	private void buildCell(IWorldEditor editor, Random rand, Coord origin, Cardinal cellEntry) {
