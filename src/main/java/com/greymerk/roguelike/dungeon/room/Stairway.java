@@ -86,46 +86,6 @@ public class Stairway extends AbstractRoom implements IRoom {
 		bb.getShape(Shape.RECTSOLID).forEach(p -> {
 			stair.set(editor, p);
 		});
-		
-		/*
-		Coord start = new Coord(origin);
-		start.add(direction, 2 + step);
-		start.add(Cardinal.UP, 3 - step);
-		Coord end = new Coord(start);
-		end.add(Cardinal.DOWN, 3);
-		start.add(Cardinal.left(direction));
-		end.add(Cardinal.right(direction));
-		RectSolid.fill(editor, rand, start, end, BlockType.get(BlockType.AIR));
-		end = new Coord(start);
-		end.add(Cardinal.right(direction), 2);
-		RectSolid.fill(editor, rand, start, end, theme.getPrimary().getWall());
-		for(Cardinal dir : Cardinal.orthogonal(direction)) {
-			Coord pos = new Coord(origin);
-			pos.add(direction, 2 + step);
-			pos.add(Cardinal.UP, 2 - step);
-			pos.add(dir);
-			stair.setOrientation(Cardinal.reverse(dir), true);
-			stair.set(editor, pos);
-		}
-		
-		start = new Coord(origin);
-		start.add(Cardinal.DOWN, 1 + step);
-		start.add(direction, -1 + step);
-		end = new Coord(start);
-		end.add(direction, 3);
-		start.add(Cardinal.left(direction));
-		end.add(Cardinal.right(direction));
-		RectSolid.fill(editor, rand, start, end, BlockType.get(BlockType.AIR));
-		end = new Coord(start);
-		end.add(Cardinal.right(direction), 2);
-		RectSolid.fill(editor, rand, start, end, theme.getPrimary().getWall());
-		start.add(direction);
-		end.add(direction);
-		stair.setOrientation(direction, false);
-		new RectSolid(start, end).get().forEach(p -> {
-			stair.set(editor, p);
-		});;
-		*/
 	}
 	
 	private void buildCell(IWorldEditor editor, Random rand, Coord origin, Cardinal cellEntry) {
