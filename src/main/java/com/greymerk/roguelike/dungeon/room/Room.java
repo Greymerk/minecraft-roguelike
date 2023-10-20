@@ -1,3 +1,4 @@
+
 package com.greymerk.roguelike.dungeon.room;
 
 import java.util.Arrays;
@@ -15,7 +16,7 @@ public enum Room {
 
 	CORRIDOR, ENTRANCE, STAIRWAY, CROSS, BEDROOM, HALL, CRYPT,
 	RESERVOIR, CISTERN, OSSUARY, KITCHEN, CREEPER, ENDER,
-	ABYSS;
+	ABYSS, PRISON;
 	
 	public static IRoom fromType(Room type) {
 		switch(type) {
@@ -33,6 +34,7 @@ public enum Room {
 		case CREEPER: return new CreeperRoom();
 		case ENDER: return new EnderRoom();
 		case ABYSS: return new AbyssRoom();
+		case PRISON: return new PrisonRoom();
 		default: return new Corridor();
 		}
 	}
