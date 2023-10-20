@@ -7,7 +7,7 @@ import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.blocks.Air;
-import com.greymerk.roguelike.editor.blocks.IronBars;
+import com.greymerk.roguelike.editor.blocks.IronBar;
 import com.greymerk.roguelike.editor.blocks.stair.IStair;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.editor.shapes.RectSolid;
@@ -108,14 +108,14 @@ public class CisternRoom extends AbstractMediumRoom implements IRoom {
 				bb = new BoundingBox(origin.copy());
 				bb.add(dir, 2);
 				bb.grow(Cardinal.orthogonal(dir));
-				RectSolid.fill(editor, rand, bb, IronBars.get(dir));
+				RectSolid.fill(editor, rand, bb, IronBar.get());
 			} else {
 				for(Cardinal o : Cardinal.orthogonal(dir)) {
 					bb = new BoundingBox(origin.copy());
 					bb.add(dir, 3);
 					bb.add(o, 2);
 					bb.grow(dir, 4);
-					RectSolid.fill(editor, rand, bb, IronBars.get(o));
+					RectSolid.fill(editor, rand, bb, IronBar.get());
 				}
 			}
 		}

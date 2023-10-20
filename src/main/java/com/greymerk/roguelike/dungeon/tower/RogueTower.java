@@ -7,7 +7,7 @@ import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.MetaBlock;
 import com.greymerk.roguelike.editor.blocks.BlockType;
-import com.greymerk.roguelike.editor.blocks.IronBars;
+import com.greymerk.roguelike.editor.blocks.IronBar;
 import com.greymerk.roguelike.editor.blocks.Torch;
 import com.greymerk.roguelike.editor.blocks.stair.IStair;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
@@ -198,7 +198,7 @@ public class RogueTower implements ITower{
 				cursor.add(Cardinal.UP, 1);
 				air.set(editor, cursor);
 				cursor.add(orth, 2);
-				IronBars.set(editor, cursor, dir);
+				IronBar.get().set(editor, cursor);
 			}
 		}
 		

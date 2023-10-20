@@ -9,7 +9,7 @@ import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.blocks.Air;
-import com.greymerk.roguelike.editor.blocks.IronBars;
+import com.greymerk.roguelike.editor.blocks.IronBar;
 import com.greymerk.roguelike.editor.blocks.stair.IStair;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.editor.factories.BlockWeightedRandom;
@@ -85,7 +85,7 @@ public class PrisonRoom extends AbstractMediumRoom implements IRoom {
 				bb.add(dir, 2).grow(Cardinal.orthogonal(dir)).grow(Cardinal.UP, 2);
 				
 				BlockWeightedRandom bars = new BlockWeightedRandom();
-				bars.addBlock(IronBars.get(dir), 3);
+				bars.addBlock(IronBar.get(), 3);
 				bars.addBlock(Air.get(), 1);
 				
 				RectSolid.fill(editor, rand, bb, bars);
@@ -109,7 +109,7 @@ public class PrisonRoom extends AbstractMediumRoom implements IRoom {
 
 	private void sideCell(IWorldEditor editor, Random rand, Coord origin, Cardinal cellDir) {
 		BlockWeightedRandom bars = new BlockWeightedRandom();
-		bars.addBlock(IronBars.get(cellDir), 2);
+		bars.addBlock(IronBar.get(), 2);
 		bars.addBlock(Air.get(), 1);
 		
 		for(Cardinal dir : Cardinal.directions) {
@@ -172,7 +172,7 @@ public class PrisonRoom extends AbstractMediumRoom implements IRoom {
 
 		for(Cardinal o : Cardinal.orthogonal(cellDir)) {
 			BlockWeightedRandom bars = new BlockWeightedRandom();
-			bars.addBlock(IronBars.get(o), 3);
+			bars.addBlock(IronBar.get(), 3);
 			bars.addBlock(Air.get(), 1);
 			
 			Coord pos = origin.copy();
@@ -191,7 +191,7 @@ public class PrisonRoom extends AbstractMediumRoom implements IRoom {
 		}
 
 		BlockWeightedRandom bars = new BlockWeightedRandom();
-		bars.addBlock(IronBars.get(cellDir), 2);
+		bars.addBlock(IronBar.get(), 2);
 		bars.addBlock(Air.get(), 1);
 		
 		BoundingBox bb = new BoundingBox(origin.copy());
