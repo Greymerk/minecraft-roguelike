@@ -11,6 +11,8 @@ import com.greymerk.roguelike.editor.shapes.IShape;
 import com.greymerk.roguelike.editor.shapes.Shape;
 import com.greymerk.roguelike.editor.theme.ITheme;
 import com.greymerk.roguelike.treasure.Treasure;
+import com.greymerk.roguelike.util.WeightedChoice;
+import com.greymerk.roguelike.util.WeightedRandomizer;
 
 import net.minecraft.util.math.random.Random;
 
@@ -27,8 +29,14 @@ public class WallChest extends FragmentBase implements IFragment {
 			stair.set(editor, c);
 		}
 		
+		WeightedRandomizer<Treasure> types = new WeightedRandomizer<Treasure>();
+		types.add(new WeightedChoice<Treasure>(Treasure.SUPPLIES, 3));
+		types.add(new WeightedChoice<Treasure>(Treasure.WEAPONS, 1));
+		types.add(new WeightedChoice<Treasure>(Treasure.ARMOUR, 1));
+		types.add(new WeightedChoice<Treasure>(Treasure.TOOLS, 1));
+		
 		Coord pos = origin.copy().add(dir, 2).add(Cardinal.UP);
-		Treasure.generate(editor, rand, pos, Treasure.SUPPLIES);
+		Treasure.generate(editor, rand, pos, types.get(rand));
 	}
 
 }

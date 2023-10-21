@@ -31,8 +31,7 @@ public class Stairway extends AbstractRoom implements IRoom {
 		buildCell(editor, rand, middleCell, Cardinal.reverse(direction));
 		Coord bottomCell = origin.copy().add(direction, 12).add(Cardinal.DOWN, 10);
 		buildCell(editor, rand, bottomCell, Cardinal.reverse(direction));
-		Coord stairStart = origin.copy(); //.add(Cardinal.reverse(direction));
-		this.buildSteps(editor, rand, stairStart);
+		this.buildSteps(editor, rand, origin.copy());
 		this.addDoors(editor, rand);
 	}
 

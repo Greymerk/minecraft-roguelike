@@ -1,12 +1,11 @@
 package com.greymerk.roguelike.editor.blocks.spawners;
 
-import net.minecraft.util.math.random.Random;
-
 import com.greymerk.roguelike.treasure.loot.Equipment;
 import com.greymerk.roguelike.treasure.loot.Quality;
 
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
+import net.minecraft.util.math.random.Random;
 
 public class SpawnPotential {
 	
@@ -125,15 +124,15 @@ public class SpawnPotential {
 		tag.putString("id", Spawner.getName(type));
 		
 		NbtList activeEffects = new NbtList();
-		tag.put("ActiveEffects", activeEffects);
+		tag.put("active_effects", activeEffects);
 		
 		NbtCompound buff = new NbtCompound();
 		activeEffects.add(buff);
 		
-		buff.putByte("Id", (byte) 4);
-		buff.putByte("Amplifier", (byte) level);
-		buff.putInt("Duration", 10);
-		buff.putByte("Ambient", (byte) 0);
+		buff.putString("id", "minecraft:mining_fatigue");
+		buff.putByte("amplifier", (byte) level);
+		buff.putInt("duration", 10);
+		buff.putByte("ambient", (byte) 0);
 
 		return tag;
     }
