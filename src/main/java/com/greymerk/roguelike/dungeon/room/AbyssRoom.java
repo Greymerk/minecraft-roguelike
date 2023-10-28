@@ -66,47 +66,33 @@ public class AbyssRoom extends AbstractLargeRoom implements IRoom {
 		bb.add(dir);
 		bb.grow(dir, 5).grow(Cardinal.orthogonal(dir), 2).grow(Cardinal.UP, 4);
 		RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall());
-		
-		if(rand.nextInt(3) == 0) {
-			this.tomb(editor, rand, origin, dir);	
-		} else {
-			this.skulls(editor, rand, origin, dir);
-		}
-		
-			
+		this.decorations(editor, rand, origin, dir);
 	}
 
-	private void skulls(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
+	private void decorations(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
 		for(Cardinal o : Cardinal.orthogonal(dir)) {
 			Coord pos = origin.copy();
 			pos.add(Cardinal.UP).add(o).add(dir);
-			if(rand.nextBoolean()) {
-				Candle.generate(editor, pos, Color.BLACK, rand.nextBetween(1, 3));
-			} else {
-				Skull.set(editor, rand, pos, Cardinal.reverse(dir), Skull.SKELETON);
-			}
+			this.deco(editor, rand, pos, dir);
 			pos.add(Cardinal.UP, 2);
-			if(rand.nextBoolean()) {
-				Candle.generate(editor, pos, Color.BLACK, rand.nextBetween(1, 3));
-			} else {
-				Skull.set(editor, rand, pos, Cardinal.reverse(dir), Skull.SKELETON);
-			}
-		}
+			this.deco(editor, rand, pos, dir);
+		}		
 	}
 
-	private void tomb(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
-		for(Cardinal o : Cardinal.orthogonal(dir)) {
-			Coord pos = origin.copy();
-			pos.add(Cardinal.UP).add(o).add(dir);
-			CryptFragment crypt = new CryptFragment();
-			crypt.setEmpty(rand.nextInt(3) != 0);
-			crypt.generate(editor, rand, theme, pos.copy(), dir);
-			pos.add(Cardinal.UP, 2);
-			crypt.setEmpty(rand.nextInt(3) != 0);
-			crypt.generate(editor, rand, theme, pos.copy(), dir);
-		}
-	}
+	private void deco(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
 
+		if(rand.nextBoolean()) {
+			if(rand.nextBoolean()) {
+				Candle.generate(editor, origin.copy(), Color.BLACK, rand.nextBetween(1, 3)); return;
+			} else {
+				Skull.set(editor, rand, origin.copy(), Cardinal.reverse(dir), Skull.SKELETON); return;	
+			}
+		}
+
+		CryptFragment crypt = new CryptFragment();
+		crypt.setEmpty(rand.nextInt(3) != 0);
+		crypt.generate(editor, rand, theme, origin.copy(), dir);
+	}
 	
 	private void bridge(IWorldEditor editor, Random rand, Coord origin) {
 		for(Cardinal dir : Cardinal.directions) {
