@@ -1,55 +1,21 @@
 package com.greymerk.roguelike.treasure.loot.provider;
 
-import net.minecraft.util.math.random.Random;
-
-import com.google.gson.JsonObject;
 import com.greymerk.roguelike.treasure.loot.Enchant;
 import com.greymerk.roguelike.treasure.loot.Equipment;
 import com.greymerk.roguelike.treasure.loot.Quality;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.util.math.random.Random;
 
 public class ItemTool extends ItemBase {
 
-	private Equipment type;
-	private boolean enchant;
-	private Quality quality;
-	
 	public ItemTool(int weight, int level) {
 		super(weight, level);
 	}
 	
-	public ItemTool(JsonObject data, int weight) throws Exception{
-		super(weight);
-		
-		this.enchant = data.has("ench") ? data.get("ench").getAsBoolean() : true;
-		
-		if(!data.has("level")) throw new Exception("Tool Loot requires a level");
-		this.level = data.get("level").getAsInt();
-		
-		
-		if(data.has("equipment")){
-			try{
-				this.type = Equipment.valueOf(data.get("equipment").getAsString().toUpperCase());
-			} catch(Exception e) {
-				throw new Exception("No such Equipment as: " + data.get("equipment").getAsString());
-			}
-		}
-		
-		if(data.has("quality")){
-			try{
-				this.quality = Quality.valueOf(data.get("quality").getAsString().toUpperCase());
-			} catch(Exception e){
-				throw new Exception("No such Quality as: " + data.get("quality").getAsString());
-			}	
-		}
-	}
-	
 	@Override
 	public ItemStack getLootItem(Random rand, int level) {
-		if(type != null) return getTool(rand, level, quality, type, enchant);
-		
 		return getRandom(rand, level, true);
 	}
 

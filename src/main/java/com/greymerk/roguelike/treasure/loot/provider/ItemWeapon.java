@@ -11,11 +11,6 @@ import net.minecraft.item.Items;
 
 public class ItemWeapon extends ItemBase{
 	
-	private Equipment type;
-	private boolean enchant;
-	private Quality quality;
-	
-	
 	public ItemWeapon(int weight, int level) {
 		super(weight, level);
 	}
@@ -23,13 +18,6 @@ public class ItemWeapon extends ItemBase{
 	
 	@Override
 	public ItemStack getLootItem(Random rand, int level) {
-		if(type != null){
-			switch(type){
-			case BOW: return getBow(rand, level, enchant);
-			case SWORD: return getSword(rand, level, enchant, quality);
-			default: return getSword(rand, level, enchant);
-			}
-		}
 		return getRandom(rand, level, true);
 	}
 

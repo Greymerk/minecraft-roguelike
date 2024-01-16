@@ -5,9 +5,6 @@ import java.util.List;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.nbt.NbtList;
-import net.minecraft.nbt.NbtString;
-import net.minecraft.text.Text;
 
 public class BookBase implements IBook{
 
@@ -39,6 +36,7 @@ public class BookBase implements IBook{
 	
 	@Override
 	public ItemStack get(){
+		/*
 		ItemStack book = new ItemStack(Items.WRITTEN_BOOK, 1);
 		
 		NbtList nbtPages = new NbtList();
@@ -55,5 +53,7 @@ public class BookBase implements IBook{
 		//book.setTagInfo("title", NbtString.of(this.title == null ? "Book" : this.title));
 		
 		return book;
+		*/
+		return new ItemStack(Items.BOOK);
 	}
 }

@@ -39,8 +39,6 @@ public class AbyssRoom extends AbstractLargeRoom implements IRoom {
 		this.fires(editor, rand, origin);
 		this.bridge(editor, rand, origin);
 		this.features(editor, rand, origin);
-		
-		
 	}
 
 	private void features(IWorldEditor editor, Random rand, Coord origin) {

@@ -1,7 +1,5 @@
 package com.greymerk.roguelike.treasure.loot.provider;
 
-import net.minecraft.util.math.random.Random;
-
 import com.greymerk.roguelike.treasure.loot.Enchant;
 import com.greymerk.roguelike.treasure.loot.Equipment;
 import com.greymerk.roguelike.treasure.loot.Quality;
@@ -11,12 +9,10 @@ import com.greymerk.roguelike.treasure.loot.trim.Trim;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.util.math.random.Random;
 
 public class ItemArmour extends ItemBase {
 
-	private Equipment type;
-	private boolean enchant;
-	private Quality quality;
 	
 	public ItemArmour(int weight, int level) {
 		super(weight, level);
@@ -24,7 +20,6 @@ public class ItemArmour extends ItemBase {
 	
 	@Override
 	public ItemStack getLootItem(Random rand, int level) {
-		if(type != null || quality != null) return get(rand, level, quality, type, enchant);
 		return getRandom(rand, level, true);
 	}
 

@@ -41,7 +41,7 @@ public enum BlockType {
 		case DIORITE_POLISHED: return new MetaBlock(Blocks.POLISHED_DIORITE);
 		case ANDESITE: return new MetaBlock(Blocks.ANDESITE);
 		case ANDESITE_POLISHED: return new MetaBlock(Blocks.POLISHED_ANDESITE);
-		case GRASS: return new MetaBlock(Blocks.GRASS);
+		case GRASS: return new MetaBlock(Blocks.GRASS_BLOCK);
 		case DIRT: return new MetaBlock(Blocks.DIRT);
 		case DIRT_COARSE: return new MetaBlock(Blocks.COARSE_DIRT);
 		case DIRT_PODZOL: return new MetaBlock(Blocks.PODZOL);
