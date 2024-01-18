@@ -1,6 +1,7 @@
 package com.greymerk.roguelike.dungeon.room;
 
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
+import com.greymerk.roguelike.dungeon.fragment.IFragment;
 import com.greymerk.roguelike.dungeon.layout.Entrance;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
@@ -74,37 +75,37 @@ public class CrossRoom extends AbstractMediumRoom implements IRoom {
 			}
 			
 			pos.add(Cardinal.left(dir), 6);
-			cornerCell(editor, rand, pos);	
+			cornerCell(editor, rand, pos, dir);	
 		
 		}
 	}
 
-	private void cornerCell(IWorldEditor editor, Random rand, Coord origin) {
+	private void cornerCell(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
 		IBlockFactory wall = theme.getPrimary().getWall();
 		IBlockFactory pillar = theme.getPrimary().getPillar();
 		IStair stair = theme.getPrimary().getStair();
 		
 		Fragment.generate(Fragment.CELL_SUPPORT, editor, rand, theme, origin.copy());
 		
-		for(Cardinal dir : Cardinal.directions) {
+		for(Cardinal d : Cardinal.directions) {
 			Coord start = new Coord(origin);
-			start.add(dir, 2);
-			start.add(Cardinal.left(dir), 2);
+			start.add(d, 2);
+			start.add(Cardinal.left(d), 2);
 			Coord end = new Coord(start);
 			end.add(Cardinal.UP, 3);
 			RectSolid.fill(editor, rand, start, end, pillar);
 			
 			start = new Coord(origin);
-			start.add(dir, 2);
+			start.add(d, 2);
 			start.add(Cardinal.UP, 3);
 			end = new Coord(start);
-			start.add(Cardinal.left(dir));
-			end.add(Cardinal.right(dir));
+			start.add(Cardinal.left(d));
+			end.add(Cardinal.right(d));
 			RectSolid.fill(editor, rand, start, end, wall);
 			
-			for(Cardinal orth : Cardinal.orthogonal(dir)) {
+			for(Cardinal orth : Cardinal.orthogonal(d)) {
 				Coord pos = new Coord(origin);
-				pos.add(dir, 2);
+				pos.add(d, 2);
 				pos.add(Cardinal.UP, 2);
 				pos.add(orth);
 				stair.setOrientation(Cardinal.reverse(orth), true);
@@ -112,8 +113,11 @@ public class CrossRoom extends AbstractMediumRoom implements IRoom {
 			}
 		}
 		
+		this.settings.getWallFragment(rand).generate(editor, rand, theme, origin, dir);
+		this.settings.getWallFragment(rand).generate(editor, rand, theme, origin, Cardinal.left(dir));
+		
 		Coord pos = new Coord(origin);
-		Spawner.generate(editor, rand, pos);		
+		if(rand.nextInt() == 0) Spawner.generate(editor, rand, pos);		
 	}
 	
 	@Override

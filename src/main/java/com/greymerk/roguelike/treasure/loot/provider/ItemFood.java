@@ -53,7 +53,7 @@ public class ItemFood extends ItemBase{
 				randomizer.add(new WeightedRandomLoot(Items.BAKED_POTATO, 3, 7, 5));
 				break;
 			case 0:
-				randomizer.add(new WeightedRandomLoot(Items.BREAD, 2, 6, 4));
+				randomizer.add(new WeightedRandomLoot(Items.BREAD, 3, 7, 4));
 				randomizer.add(new WeightedRandomLoot(Items.COOKED_COD, 2, 6, 4));
 				randomizer.add(new WeightedRandomLoot(Items.APPLE, 1, 1, 2));
 				randomizer.add(new WeightedRandomLoot(Items.COOKED_CHICKEN, 2, 4, 1));

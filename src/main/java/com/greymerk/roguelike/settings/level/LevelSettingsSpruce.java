@@ -21,11 +21,13 @@ public class LevelSettingsSpruce extends LevelSettingsBase implements ILevelSett
 		rooms.addRandomChoice(Room.CROSS, 1);
 		
 		this.walls = new WeightedRandomizer<Fragment>(10);
-		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_BANNER, 3));
-		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_CHEST, 1));
-		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_CANDLES, 1));
+		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_EMPTY, 3));
+		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_BANNER, 1));
+		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_CHEST, 2));
+		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_CANDLES, 2));
+		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_SPAWNER, 1));
 		
-		this.alcoves.add(new WeightedChoice<Fragment>(Fragment.ALCOVE_SAFETY, 2));
+		this.alcoves.add(new WeightedChoice<Fragment>(Fragment.ALCOVE_SAFETY, 1));
 		this.alcoves.add(walls);
 	}
 	

@@ -73,6 +73,7 @@ public class ItemWeapon extends ItemBase{
 	
 	private static ItemStack getSwordByQuality(Quality quality){
 		switch (quality) {
+		case NETHERITE: return new ItemStack(Items.NETHERITE_SWORD);
 		case DIAMOND: return new ItemStack(Items.DIAMOND_SWORD);
 		case GOLD: return new ItemStack(Items.GOLDEN_SWORD);
 		case IRON: return new ItemStack(Items.IRON_SWORD);

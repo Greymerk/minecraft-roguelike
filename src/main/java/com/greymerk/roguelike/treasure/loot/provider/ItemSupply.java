@@ -1,33 +1,50 @@
 package com.greymerk.roguelike.treasure.loot.provider;
 
-import net.minecraft.util.math.random.Random;
+import com.greymerk.roguelike.treasure.loot.WeightedRandomLoot;
+import com.greymerk.roguelike.util.WeightedRandomizer;
 
-import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.util.math.random.Random;
 
 public class ItemSupply extends ItemBase{
 
+	private WeightedRandomizer<ItemStack> loot;
+	
 	public ItemSupply(int weight, int level) {
 		super(weight, level);
+		this.loot = new WeightedRandomizer<ItemStack>();
+		
+		loot.add(new WeightedRandomLoot(Items.TORCH, 8, 48, 5));
+		loot.add(new WeightedRandomLoot(Items.WHEAT_SEEDS, 1, 8, 1));
+		loot.add(new WeightedRandomLoot(Items.PUMPKIN_SEEDS, 1, 4, 1));
+		loot.add(new WeightedRandomLoot(Items.MELON_SEEDS, 1, 4, 1));
+		loot.add(new WeightedRandomLoot(Items.BEETROOT_SEEDS, 1, 4, 1));
+		loot.add(new WeightedRandomLoot(Items.CHICKEN, 4, 12, 1));
+		loot.add(new WeightedRandomLoot(Items.PORKCHOP, 4, 12, 1));
+		loot.add(new WeightedRandomLoot(Items.MUTTON, 4, 12, 1));
+		loot.add(new WeightedRandomLoot(Items.RABBIT, 4, 12, 1));
+		loot.add(new WeightedRandomLoot(Items.RABBIT_HIDE, 1, 8, 1));
+		loot.add(new WeightedRandomLoot(Items.RABBIT_FOOT, 1, 4, 1));
+		loot.add(new WeightedRandomLoot(Items.SWEET_BERRIES, 1, 4, 1));
+		loot.add(new WeightedRandomLoot(Items.PAPER, 4, 32, 1));
+		loot.add(new WeightedRandomLoot(Items.SCUTE, 1, 1, 1));
+		loot.add(new WeightedRandomLoot(Items.WHEAT, 4, 32, 1));
+		loot.add(new WeightedRandomLoot(Items.POTATO, 2, 16, 1));
+		loot.add(new WeightedRandomLoot(Items.CARROT, 2, 16, 1));
+		loot.add(new WeightedRandomLoot(Items.STRING, 8, 32, 1));
+		loot.add(new WeightedRandomLoot(Items.COD, 2, 16, 1));
+		loot.add(new WeightedRandomLoot(Items.SALMON, 2, 16, 1));
+		loot.add(new WeightedRandomLoot(Items.STICK, 8, 64, 1));
+		loot.add(new WeightedRandomLoot(Items.LEATHER, 4, 24, 1));
+		loot.add(new WeightedRandomLoot(Items.CLAY_BALL, 8, 64, 1));
+		loot.add(new WeightedRandomLoot(Items.QUARTZ, 2, 16, 1));
+		loot.add(new WeightedRandomLoot(Items.INK_SAC, 2, 12, 1));
+		
 	}
 
 	@Override
 	public ItemStack getLootItem(Random rand, int level) {
-		
-		if(rand.nextInt(20) == 0) return new ItemStack(Items.CARROT, 1);
-		if(rand.nextInt(20) == 0) return new ItemStack(Items.POTATO, 1);
-
-		switch(rand.nextInt(8)){
-		case 0: return new ItemStack(Items.WHEAT_SEEDS, rand.nextInt(8) + 1);
-		case 1: return new ItemStack(Items.PUMPKIN_SEEDS, rand.nextInt(8) + 1);
-		case 2: return new ItemStack(Items.MELON_SEEDS, rand.nextInt(8) + 1);		
-		case 3: return new ItemStack(Items.WHEAT, rand.nextInt(8) + 1);
-		case 4: return new ItemStack(Blocks.TORCH, 10 + rand.nextInt(10));
-		case 5: return new ItemStack(Items.PAPER, rand.nextInt(8) + 1);
-		case 6:	return new ItemStack(Items.BOOK, rand.nextInt(4) + 1);
-		case 7:	return new ItemStack(Blocks.OAK_SAPLING, rand.nextInt(4) + 1);
-		default: return new ItemStack(Items.STICK, 1);
-		}
+		return loot.get(rand);
 	}
 }

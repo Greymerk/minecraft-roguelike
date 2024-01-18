@@ -327,7 +327,7 @@ public class CryptRoom extends AbstractMediumRoom implements IRoom {
 	}
 	
 	private void crypt(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
-		IFragment crypt = new CryptFragment(rand.nextInt(3) != 0);
+		IFragment crypt = new CryptFragment(rand.nextInt(5) != 0);
 		crypt.generate(editor, rand, theme, origin.copy(), dir);
 	}
 

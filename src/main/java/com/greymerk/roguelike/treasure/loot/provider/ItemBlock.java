@@ -1,12 +1,11 @@
 package com.greymerk.roguelike.treasure.loot.provider;
 
-import net.minecraft.util.math.random.Random;
-
-import com.greymerk.roguelike.editor.blocks.BlockType;
 import com.greymerk.roguelike.treasure.loot.WeightedRandomLoot;
 import com.greymerk.roguelike.util.WeightedRandomizer;
 
+import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.random.Random;
 
 public class ItemBlock extends ItemBase{
 	
@@ -15,13 +14,14 @@ public class ItemBlock extends ItemBase{
 	public ItemBlock(int weight, int level) {
 		super(weight, level);
 		this.loot = new WeightedRandomizer<ItemStack>();
-		this.loot.add(new WeightedRandomLoot(BlockType.get(BlockType.ANDESITE_POLISHED).getBlock(), 8, 32, 1));
-		this.loot.add(new WeightedRandomLoot(BlockType.get(BlockType.GRANITE_POLISHED).getBlock(), 8, 32, 1));
-		this.loot.add(new WeightedRandomLoot(BlockType.get(BlockType.DIORITE_POLISHED).getBlock(), 8, 32, 1));
-		this.loot.add(new WeightedRandomLoot(BlockType.get(BlockType.COBBLESTONE).getBlock(), 8, 32, 10));
-		this.loot.add(new WeightedRandomLoot(BlockType.get(BlockType.STONE_BRICK).getBlock(), 8, 32, 5));
-		this.loot.add(new WeightedRandomLoot(BlockType.get(BlockType.STONE_BRICK_MOSSY).getBlock(), 8, 32, 1));
-		this.loot.add(new WeightedRandomLoot(BlockType.get(BlockType.STONE_BRICK_CRACKED).getBlock(), 8, 32, 1));
+		this.loot.add(new WeightedRandomLoot(Blocks.COBBLESTONE, 8, 32, 20));
+		this.loot.add(new WeightedRandomLoot(Blocks.STONE, 8, 32, 10));
+		this.loot.add(new WeightedRandomLoot(Blocks.DIORITE, 8, 32, 5));
+		this.loot.add(new WeightedRandomLoot(Blocks.ANDESITE, 8, 32, 5));
+		this.loot.add(new WeightedRandomLoot(Blocks.GRANITE, 8, 32, 5));
+		this.loot.add(new WeightedRandomLoot(Blocks.OAK_LOG, 8, 32, 10));
+		this.loot.add(new WeightedRandomLoot(Blocks.GLASS, 8, 32, 5));
+		this.loot.add(new WeightedRandomLoot(Blocks.GLOWSTONE, 4, 16, 1));
 	}
 
 	@Override
