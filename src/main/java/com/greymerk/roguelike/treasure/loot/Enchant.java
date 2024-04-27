@@ -1,16 +1,16 @@
 package com.greymerk.roguelike.treasure.loot;
 
 import java.util.List;
-import net.minecraft.util.math.random.Random;
 
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentLevelEntry;
-import net.minecraft.item.EnchantedBookItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
+import net.minecraft.resource.featuretoggle.FeatureSet;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.Difficulty;
 
 public enum Enchant {
@@ -92,7 +92,7 @@ public enum Enchant {
 		
 		List<EnchantmentLevelEntry> enchants = null;
 		try{
-			enchants = EnchantmentHelper.generateEnchantments(rand, item, enchantLevel, false);
+			enchants = EnchantmentHelper.generateEnchantments(FeatureSet.empty(), rand, item, enchantLevel, false);
 		} catch(NullPointerException e){
 			throw e;
 		}
@@ -107,11 +107,7 @@ public enum Enchant {
 		}
 
 		for (EnchantmentLevelEntry toAdd : enchants){
-			if (isBook){
-				EnchantedBookItem.addEnchantment(item, toAdd);
-			} else {
-				item.addEnchantment(toAdd.enchantment, toAdd.level);
-			}
+			item.addEnchantment(toAdd.enchantment, toAdd.level);
 		}
 		
 		return item;

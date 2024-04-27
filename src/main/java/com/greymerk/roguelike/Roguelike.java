@@ -3,9 +3,11 @@ package com.greymerk.roguelike;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.greymerk.roguelike.events.EntityLoadEvent;
 import com.greymerk.roguelike.state.ServerLoadListener;
 
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents.Load;
 
@@ -30,6 +32,8 @@ public class Roguelike implements ModInitializer {
 		// Proceed with mild caution.
 		
 		//LOGGER.info("Hello Roguelike world!");
+		
+		ServerEntityEvents.ENTITY_LOAD.register(new EntityLoadEvent());
 		
 	}
 }

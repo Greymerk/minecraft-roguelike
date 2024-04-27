@@ -14,6 +14,7 @@ import com.greymerk.roguelike.editor.boundingbox.IBounded;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
+import net.minecraft.registry.RegistryWrapper.WrapperLookup;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.PersistentState;
@@ -60,7 +61,7 @@ public class RoguelikeState extends PersistentState {
 	}
 	
     @Override
-    public NbtCompound writeNbt(NbtCompound nbt) {
+    public NbtCompound writeNbt(NbtCompound nbt, WrapperLookup var2) {
     	NbtList dungeonData = new NbtList();
     	
     	for(Dungeon d : this.dungeons) {
@@ -105,11 +106,10 @@ public class RoguelikeState extends PersistentState {
     
     public static PersistentState.Type<RoguelikeState> getPersistentStateType() {
     	return new PersistentState.Type<RoguelikeState>(
-    			RoguelikeState::new,
-    			RoguelikeState::createFromNbt,
+    			() -> new RoguelikeState(),
+    			(nbt, registryLookup) -> createFromNbt(nbt),
     			null
     			);
     	
     }
-        
 }

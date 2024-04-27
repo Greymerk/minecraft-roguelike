@@ -1,15 +1,16 @@
 package com.greymerk.roguelike.monster.profiles;
 
-import net.minecraft.util.math.random.Random;
-
 import com.greymerk.roguelike.monster.IEntity;
 import com.greymerk.roguelike.monster.IMonsterProfile;
 import com.greymerk.roguelike.treasure.loot.Enchant;
 import com.greymerk.roguelike.treasure.loot.Loot;
 import com.greymerk.roguelike.treasure.loot.Slot;
+import com.greymerk.roguelike.treasure.loot.trim.Trim;
 
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.DynamicRegistryManager;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 
 public class ProfileTallMob implements IMonsterProfile {
@@ -24,6 +25,8 @@ public class ProfileTallMob implements IMonsterProfile {
 				EquipmentSlot.FEET
 				}){
 			ItemStack item = Loot.getEquipmentBySlot(rand, Slot.getSlot(slot), ilvl, Enchant.canEnchant(world.getDifficulty(), rand, level));
+			DynamicRegistryManager reg = world.getRegistryManager();
+			Trim.addRandom(reg, item, rand);
 			mob.setSlot(slot, item);
 		}
 

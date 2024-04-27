@@ -1,22 +1,15 @@
 package com.greymerk.roguelike.treasure.loot;
 
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
+import net.minecraft.util.Unit;
 
 public enum ItemHideFlags {
 
 	ENCHANTMENTS, ATTRIBUTES, UNBREAKABLE, CANDESTROY, CANPLACEON, EFFECTS;
 	
 	public static void set(ItemHideFlags[] flags, ItemStack item){
-		
-		int val = 0;
-		
-		for(ItemHideFlags flag : flags){
-			val += get(flag);
-		}
-		
-		NbtCompound nbt = item.getNbt();
-		nbt.putInt("HideFlags", val);
+		item.set(DataComponentTypes.HIDE_TOOLTIP, Unit.INSTANCE);
 	}
 	
 	public static void set(ItemHideFlags flag, ItemStack item){

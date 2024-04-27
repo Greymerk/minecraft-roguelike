@@ -1,18 +1,18 @@
 package com.greymerk.roguelike.monster;
 
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.Entity.RemovalReason;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.ZombieEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 
 public class MetaEntity implements IEntity {
 
-	private Entity mob;
+	private MobEntity mob;
 	
-	public MetaEntity(Entity mob){
+	public MetaEntity(MobEntity mob){
 		this.mob = mob;
 	}
 	
@@ -29,7 +29,7 @@ public class MetaEntity implements IEntity {
 
 		newMob.copyPositionAndRotation(oldMob);
 		
-		this.mob = (Entity)newMob;
+		this.mob = (MobEntity)newMob;
 		
 		if(newMob instanceof ZombieEntity){
 			((ZombieEntity)newMob).setBaby(((ZombieEntity)oldMob).isBaby());

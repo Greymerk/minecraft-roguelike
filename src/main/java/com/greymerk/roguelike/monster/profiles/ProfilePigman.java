@@ -20,7 +20,7 @@ public class ProfilePigman implements IMonsterProfile {
 		mob.setMobClass(MobType.PIGZOMBIE, true);
 		ItemStack weapon = ItemWeapon.getSword(rand, level, true);
 		mob.setSlot(EquipmentSlot.MAINHAND, weapon);
-		mob.setSlot(EquipmentSlot.OFFHAND, Shield.get(rand));
+		mob.setSlot(EquipmentSlot.OFFHAND, Shield.get(world.getRegistryManager(), rand));
 		MonsterProfile.get(MonsterProfile.TALLMOB).addEquipment(world, rand, level, mob);
 	}
 

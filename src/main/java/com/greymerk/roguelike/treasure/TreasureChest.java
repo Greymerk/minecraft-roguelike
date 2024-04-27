@@ -1,7 +1,5 @@
 package com.greymerk.roguelike.treasure;
 
-import java.util.Objects;
-
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
@@ -17,7 +15,6 @@ public class TreasureChest implements ITreasureChest{
 
 	private Inventory inventory;
 	private Treasure type;
-	private long seed;
 	private ChestBlockEntity chest;
 	private int level;
 
@@ -51,9 +48,7 @@ public class TreasureChest implements ITreasureChest{
 		}
 		
 		this.chest = (ChestBlockEntity) editor.getBlockEntity(pos);
-		this.inventory = new Inventory(rand, chest);
-		this.seed = (long)Objects.hash(pos.hashCode(), editor.getSeed());
-		
+		this.inventory = new Inventory(rand, chest);		
 		editor.fillChest(this, rand);
 		return this;
 	}
@@ -92,6 +87,6 @@ public class TreasureChest implements ITreasureChest{
 
 	@Override
 	public void setLootTable(Identifier table) {
-		this.chest.setLootTable(table, seed);
+		//this.chest.setLootTable(table, (long)Objects.hash(pos.hashCode(), editor.getSeed()));
 	}
 }

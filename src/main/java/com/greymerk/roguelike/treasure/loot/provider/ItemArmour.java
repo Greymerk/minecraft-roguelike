@@ -4,11 +4,11 @@ import com.greymerk.roguelike.treasure.loot.Enchant;
 import com.greymerk.roguelike.treasure.loot.Equipment;
 import com.greymerk.roguelike.treasure.loot.Quality;
 import com.greymerk.roguelike.treasure.loot.Slot;
-import com.greymerk.roguelike.treasure.loot.trim.Trim;
 
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.DyedColorComponent;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.random.Random;
 
 public class ItemArmour extends ItemBase {
@@ -52,7 +52,6 @@ public class ItemArmour extends ItemBase {
 		}
 
 		ItemStack item = get(rand, slot, Quality.getArmourQuality(rand, level));
-		Trim.addRandom(item, rand);
 		if(enchantLevel > 0) Enchant.enchantItem(rand, item, enchantLevel);
 		return item;
 	}
@@ -122,18 +121,8 @@ public class ItemArmour extends ItemBase {
 		
 		int color = r << 16 | g << 8 | b << 0;;
         
-        NbtCompound nbtdata = armor.getNbt();
-        if (nbtdata == null){
-            nbtdata = new NbtCompound();
-            armor.setNbt(nbtdata);
-        }
-
-        NbtCompound nbtDisplay = nbtdata.getCompound("display");
-        if (!nbtdata.contains("display")){
-            nbtdata.put("display", nbtDisplay);
-        }
-
-        nbtDisplay.putInt("color", color);
+		DyedColorComponent dye = new DyedColorComponent(color, false);
+		armor.set(DataComponentTypes.DYED_COLOR, dye);
 		return armor;
 	}
 

@@ -1,13 +1,12 @@
 package com.greymerk.roguelike.treasure.loot;
 
-import net.minecraft.util.math.random.Random;
-
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.PotionContentsComponent;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.potion.Potion;
-import net.minecraft.registry.Registries;
-import net.minecraft.util.Identifier;
+import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.util.math.random.Random;
 
 public class TippedArrow {
 
@@ -24,26 +23,22 @@ public class TippedArrow {
 		return get(type, 1);
 	}
 	
-	public static ItemStack get(Potion type){
+	public static ItemStack get(RegistryEntry<Potion> type){
 		return get(type, 1);
 	}
 	
 	public static ItemStack get(PotionItem type, int amount){
 		
-		Potion pot = PotionItem.getEffect(type, false, false);
+		RegistryEntry<Potion> pot = PotionItem.getEffect(type, false, false);
 		return get(pot, amount);
 
 	}
 	
-	public static ItemStack get(Potion type, int amount){
-		Identifier id = Registries.POTION.getId(type);
+	public static ItemStack get(RegistryEntry<Potion> type, int amount){
 		
 		ItemStack arrow = new ItemStack(Items.TIPPED_ARROW, amount);
-		
-		NbtCompound nbt = new NbtCompound();
-		nbt.putString("Potion", id.getPath());
-		
-		arrow.setNbt(nbt);
+		PotionContentsComponent contents = new PotionContentsComponent(type);
+		arrow.set(DataComponentTypes.POTION_CONTENTS, contents);
 		
 		return arrow;
 	}

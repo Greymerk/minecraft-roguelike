@@ -1,10 +1,12 @@
 package com.greymerk.roguelike.treasure.loot;
 
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.PotionContentsComponent;
 import net.minecraft.entity.effect.StatusEffect;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtList;
+import net.minecraft.registry.entry.RegistryEntry;
 
 public enum PotionEffect {
 	
@@ -54,7 +56,7 @@ public enum PotionEffect {
 		}
 	}
 	
-	public static StatusEffect getStatusEffect(PotionEffect type) {
+	public static RegistryEntry<StatusEffect> getStatusEffect(PotionEffect type) {
 		switch(type) {
 		case ABSORPTION: return StatusEffects.ABSORPTION;
 		case BAD_LUCK: return StatusEffects.UNLUCK;
@@ -89,31 +91,11 @@ public enum PotionEffect {
 	
 	public static void addCustomEffect(ItemStack potion, PotionEffect type, int amplifier, int duration){
 		
-		final String CUSTOM = "custom_potion_effects";
+		RegistryEntry<StatusEffect> effect = getStatusEffect(type);
+		PotionContentsComponent contents = potion.getOrDefault(DataComponentTypes.POTION_CONTENTS, PotionContentsComponent.DEFAULT);
+		StatusEffectInstance instance = new StatusEffectInstance(effect, duration, amplifier);
+		contents.with(instance);
 		
-		NbtCompound tag = potion.getNbt();
-		if(tag == null){
-			tag = new NbtCompound();
-			potion.setNbt(tag);
-		}
-		
-		
-		NbtList effects;
-		effects = tag.getList(CUSTOM, 10);
-		if (effects == null){
-			effects = new NbtList();
-			tag.put(CUSTOM, effects);
-		}
-		
-		NbtCompound toAdd = new NbtCompound();
-		
-		toAdd.putString("id", getEffectID(type));
-		toAdd.putByte("amplifier", (byte)(amplifier - 1));
-		toAdd.putInt("duration", duration * TICKS_PER_SECOND);
-		toAdd.putBoolean("ambient", true);
-		
-		effects.add(toAdd);
-		tag.put(CUSTOM, effects);
-		potion.setNbt(tag);
+		potion.set(DataComponentTypes.POTION_CONTENTS, contents);
 	}
 }

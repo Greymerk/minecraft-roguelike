@@ -173,6 +173,6 @@ public enum PotionMixture {
 	}
 	
 	public static void setColor(ItemStack potion, int color){
-		potion.getNbt().putInt("CustomPotionColor", color);
+		
 	}
 }

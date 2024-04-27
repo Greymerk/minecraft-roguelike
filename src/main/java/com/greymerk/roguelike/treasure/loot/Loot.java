@@ -1,5 +1,7 @@
 package com.greymerk.roguelike.treasure.loot;
 
+import java.util.List;
+
 import com.greymerk.roguelike.treasure.loot.provider.ItemArmour;
 import com.greymerk.roguelike.treasure.loot.provider.ItemBlock;
 import com.greymerk.roguelike.treasure.loot.provider.ItemBrewing;
@@ -18,12 +20,11 @@ import com.greymerk.roguelike.treasure.loot.provider.ItemWeapon;
 import com.greymerk.roguelike.util.IWeighted;
 import com.greymerk.roguelike.util.TextFormat;
 
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.LoreComponent;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtList;
-import net.minecraft.nbt.NbtString;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.random.Random;
 
@@ -84,32 +85,9 @@ public enum Loot {
 	}
 
 	public static void setItemLore(ItemStack item, String loreText){
-		
-		NbtCompound tag = item.getNbt(); 
-		
-		if (tag == null){
-			tag = new NbtCompound();
-			item.setNbt(tag);
-		}
-
-		if (!tag.contains("display")){
-			tag.put("display", new NbtCompound());
-		}
-		
-		NbtCompound display = tag.getCompound("display");
-		
-		if (!(display.contains("Lore")))
-		{
-			display.put("Lore", new NbtList());
-		}
-		
-		NbtList lore = display.getList("Lore", 0);
-		
-		NbtString toAdd = NbtString.of(loreText);
-		
-		lore.add(toAdd);
-		
-		display.put("Lore", lore);   
+		LoreComponent lore = new LoreComponent(List.of());
+		lore.with(Text.of(loreText));
+		item.set(DataComponentTypes.LORE, lore);  
 	}
 	
 	public static void setItemLore(ItemStack item, String loreText, TextFormat option){
@@ -119,12 +97,11 @@ public enum Loot {
 	public static void setItemName(ItemStack item, String name, TextFormat option){
 		
 		if(option == null){
-			Text n = Text.of(name);
-			item.setCustomName(n);
+			item.set(DataComponentTypes.CUSTOM_NAME, Text.literal(name));
 			return;
 		}
 		
-		item.setCustomName(TextFormat.apply(name, option));
+		item.set(DataComponentTypes.CUSTOM_NAME, TextFormat.apply(name, option));
 	}
 	
 	public static void setItemName(ItemStack item, String name){

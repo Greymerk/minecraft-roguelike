@@ -1,14 +1,12 @@
 package com.greymerk.roguelike.treasure.loot;
 
-import net.minecraft.util.math.random.Random;
-
 import com.greymerk.roguelike.util.IWeighted;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
+import net.minecraft.util.math.random.Random;
 
 public class WeightedRandomLoot implements Comparable<WeightedRandomLoot>, IWeighted<ItemStack>{
 	
@@ -18,7 +16,6 @@ public class WeightedRandomLoot implements Comparable<WeightedRandomLoot>, IWeig
 	private int enchLevel;
 	private int weight;
 	
-	private NbtCompound nbt; 
 	
 	public WeightedRandomLoot(Block block, int minStackSize, int maxStackSize, int weight){
 		this.item = (ItemConvertible)block;
@@ -63,7 +60,6 @@ public class WeightedRandomLoot implements Comparable<WeightedRandomLoot>, IWeig
 		} catch (NullPointerException e){
 			// ignore
 		}
-		if(this.nbt != null) item.setNbt(this.nbt);;
 		return item;
 	}
 

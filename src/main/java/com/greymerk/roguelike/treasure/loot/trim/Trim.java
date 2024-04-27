@@ -1,42 +1,46 @@
 package com.greymerk.roguelike.treasure.loot.trim;
 
+import java.util.List;
+
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtString;
+import net.minecraft.item.trim.ArmorTrim;
+import net.minecraft.item.trim.ArmorTrimMaterial;
+import net.minecraft.item.trim.ArmorTrimMaterials;
+import net.minecraft.item.trim.ArmorTrimPattern;
+import net.minecraft.item.trim.ArmorTrimPatterns;
+import net.minecraft.registry.DynamicRegistryManager;
+import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.math.random.Random;
 
 public class Trim {
 
-	public static ItemStack add(ItemStack item, TrimPattern pattern, TrimMaterial material) {
-		NbtCompound nbt = item.getNbt();
+    
+	public static ItemStack addRandom(DynamicRegistryManager registry, ItemStack item, Random rand) {
 
-        if (nbt == null){
-            nbt = new NbtCompound();
-            item.setNbt(nbt);
-        }
-        
-        Trim.setNbt(nbt, pattern, material);
-        return item;
-	}
-	
-	public static void setNbt(NbtCompound nbt, TrimPattern pattern, TrimMaterial material) {
+		List<RegistryKey<ArmorTrimPattern>> PATTERNS = List.of(ArmorTrimPatterns.SENTRY, ArmorTrimPatterns.DUNE, ArmorTrimPatterns.COAST, ArmorTrimPatterns.WILD, ArmorTrimPatterns.WARD, ArmorTrimPatterns.EYE, ArmorTrimPatterns.VEX, ArmorTrimPatterns.TIDE, ArmorTrimPatterns.SNOUT, ArmorTrimPatterns.RIB, ArmorTrimPatterns.SPIRE, ArmorTrimPatterns.WAYFINDER, ArmorTrimPatterns.SHAPER, ArmorTrimPatterns.SILENCE, ArmorTrimPatterns.RAISER, ArmorTrimPatterns.HOST);
+	    List<RegistryKey<ArmorTrimMaterial>> MATERIALS = List.of(ArmorTrimMaterials.QUARTZ, ArmorTrimMaterials.IRON, ArmorTrimMaterials.NETHERITE, ArmorTrimMaterials.REDSTONE, ArmorTrimMaterials.COPPER, ArmorTrimMaterials.GOLD, ArmorTrimMaterials.EMERALD, ArmorTrimMaterials.DIAMOND, ArmorTrimMaterials.LAPIS, ArmorTrimMaterials.AMETHYST);
 		
-		NbtCompound trim = nbt.getCompound("Trim");
-		if(!nbt.contains("Trim")) {
-			nbt.put("Trim", trim);
-		}
-		
-		NbtString m = TrimMaterial.getNbt(material);
-		trim.put("material", m);
-		NbtString p = TrimPattern.getNbt(pattern);
-		trim.put("pattern", p);
-		nbt.put("Trim", trim);
-	}
-	
-	public static ItemStack addRandom(ItemStack item, Random rand) {
-		TrimMaterial m = TrimMaterial.getRandom(rand);
-		TrimPattern p = TrimPattern.getRandom(rand);
-		return Trim.add(item, p, m);
+	    Registry<ArmorTrimPattern> patterns = registry.get(RegistryKeys.TRIM_PATTERN);
+	    Registry<ArmorTrimMaterial> materials = registry.get(RegistryKeys.TRIM_MATERIAL);
+
+	    int pk = rand.nextInt(PATTERNS.size());
+	    int mk = rand.nextInt(MATERIALS.size());
+	    
+	    RegistryKey<ArmorTrimPattern> pkey = PATTERNS.get(pk);
+	    RegistryKey<ArmorTrimMaterial> mkey = MATERIALS.get(mk);
+	    
+	    RegistryEntry<ArmorTrimPattern> pattern = patterns.getEntry(pkey).get();
+	    RegistryEntry<ArmorTrimMaterial> material = materials.getEntry(mkey).get();
+	    
+	    ArmorTrim at = new ArmorTrim(material, pattern);
+	    
+	    item.set(DataComponentTypes.TRIM, at);
+	    
+	    return item;
 	}
 	
 }
