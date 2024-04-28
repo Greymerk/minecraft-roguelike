@@ -11,39 +11,37 @@ import net.minecraft.component.type.DyedColorComponent;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.registry.DynamicRegistryManager;
+import net.minecraft.resource.featuretoggle.FeatureSet;
 import net.minecraft.util.math.random.Random;
 
 public class ItemArmour extends ItemBase {
 
 	private DynamicRegistryManager registry;
+	private FeatureSet features;
 	
-	public ItemArmour(int weight, int level, DynamicRegistryManager reg) {
+	public ItemArmour(int weight, int level, FeatureSet features, DynamicRegistryManager reg) {
 		super(weight, level);
+		this.features = features;
 		this.registry = reg;
 	}	
 	
 	@Override
 	public ItemStack getLootItem(Random rand, int level) {
-		return getRandom(this.registry, rand, level, true);
+		return getRandom(this.features, this.registry, rand, level, true);
 	}
 
-	public static ItemStack get(Random rand, int level, Quality quality, Equipment type, boolean enchant){
-		ItemStack tool = Equipment.get(type, quality == null ? Quality.get(level) : quality);
-		return enchant ? Enchant.enchantItem(rand, tool, Enchant.getLevel(rand, level)) : tool;
-	}
-	
-	public static ItemStack getRandom(DynamicRegistryManager reg, Random rand, int level, boolean enchant){
-		ItemStack item = getRandom(reg, rand, level,
+	public static ItemStack getRandom(FeatureSet features, DynamicRegistryManager reg, Random rand, int level, boolean enchant){
+		ItemStack item = getRandom(features, reg, rand, level,
 				Slot.getSlotByNumber(rand.nextInt(4) + 1),
 				enchant ? Enchant.getLevel(rand, level) : 0);
 		return item;
 	}
 	
-	public static ItemStack getRandom(DynamicRegistryManager reg, Random rand, int level, Slot slot, boolean enchant){
-		return getRandom(reg, rand, level, slot, enchant ? Enchant.getLevel(rand, level) : 0);
+	public static ItemStack getRandom(FeatureSet features, DynamicRegistryManager reg, Random rand, int level, Slot slot, boolean enchant){
+		return getRandom(features, reg, rand, level, slot, enchant ? Enchant.getLevel(rand, level) : 0);
 	}
 	
-	public static ItemStack getRandom(DynamicRegistryManager reg, Random rand, int level, Slot slot, int enchantLevel){
+	public static ItemStack getRandom(FeatureSet features, DynamicRegistryManager reg, Random rand, int level, Slot slot, int enchantLevel){
 		
 		if(enchantLevel > 0 && rand.nextInt(20 + (level * 10)) == 0){
 			switch(slot){
@@ -56,7 +54,7 @@ public class ItemArmour extends ItemBase {
 		}
 
 		ItemStack item = get(rand, slot, Quality.getArmourQuality(rand, level));
-		if(enchantLevel > 0) Enchant.enchantItem(rand, item, enchantLevel);
+		if(enchantLevel > 0) Enchant.enchantItem(features, rand, item, enchantLevel);
 		Trim.addRandom(reg, item, rand);
 		return item;
 	}

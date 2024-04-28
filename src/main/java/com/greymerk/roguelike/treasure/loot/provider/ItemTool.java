@@ -6,25 +6,29 @@ import com.greymerk.roguelike.treasure.loot.Quality;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.resource.featuretoggle.FeatureSet;
 import net.minecraft.util.math.random.Random;
 
 public class ItemTool extends ItemBase {
 
-	public ItemTool(int weight, int level) {
+	FeatureSet features;
+	
+	public ItemTool(FeatureSet features, int weight, int level) {
 		super(weight, level);
+		this.features = features;
 	}
 	
 	@Override
 	public ItemStack getLootItem(Random rand, int level) {
-		return getRandom(rand, level, true);
+		return getRandom(features, rand, level, true);
 	}
 
-	public static ItemStack getTool(Random rand, int level, Quality quality, Equipment type, boolean enchant){		
+	public static ItemStack getTool(FeatureSet features, Random rand, int level, Quality quality, Equipment type, boolean enchant){		
 		ItemStack tool = Equipment.get(type, quality == null ? Quality.get(level) : quality);
-		return enchant ? Enchant.enchantItem(rand, tool, Enchant.getLevel(rand, level)) : tool;
+		return enchant ? Enchant.enchantItem(features, rand, tool, Enchant.getLevel(rand, level)) : tool;
 	}
 	
-	public static ItemStack getRandom(Random rand, int level, boolean enchant){
+	public static ItemStack getRandom(FeatureSet features, Random rand, int level, boolean enchant){
 		
 		if(enchant && rand.nextInt(20 + (level * 10)) == 0){
 			switch(rand.nextInt(3)){
@@ -37,7 +41,7 @@ public class ItemTool extends ItemBase {
 		ItemStack tool = pickTool(rand, level);
 		
 		if(enchant && rand.nextInt(6 - level) == 0){
-			Enchant.enchantItem(rand, tool, Enchant.getLevel(rand, level));
+			Enchant.enchantItem(features, rand, tool, Enchant.getLevel(rand, level));
 		}
 		
 		return tool;

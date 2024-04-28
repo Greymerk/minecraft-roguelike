@@ -20,7 +20,7 @@ public class ProfileSwordsman implements IMonsterProfile {
 	public void addEquipment(World world, Random rand, int level, IEntity mob) {
 		ItemStack weapon = rand.nextInt(20) == 0
 				? ItemNovelty.getItem(ItemNovelty.VALANDRAH)
-				: ItemWeapon.getSword(rand, level, Enchant.canEnchant(world.getDifficulty(), rand, level));
+				: ItemWeapon.getSword(world.getEnabledFeatures(), rand, level, Enchant.canEnchant(world.getDifficulty(), rand, level));
 		
 		mob.setSlot(EquipmentSlot.MAINHAND, weapon);
 		mob.setSlot(EquipmentSlot.OFFHAND, Shield.get(world.getRegistryManager(), rand));

@@ -25,7 +25,7 @@ public class ProfilePoisonArcher implements IMonsterProfile {
 		mob.setMobClass(MobType.STRAY, false);
 		
 		mob.setSlot(EquipmentSlot.OFFHAND, TippedArrow.get(Potions.STRONG_POISON));
-		mob.setSlot(EquipmentSlot.MAINHAND, ItemWeapon.getBow(rand, level, Enchant.canEnchant(world.getDifficulty(), rand, level)));
+		mob.setSlot(EquipmentSlot.MAINHAND, ItemWeapon.getBow(world.getEnabledFeatures(), rand, level, Enchant.canEnchant(world.getDifficulty(), rand, level)));
 		
 		for(EquipmentSlot slot : new EquipmentSlot[]{
 				EquipmentSlot.HEAD,
@@ -34,7 +34,7 @@ public class ProfilePoisonArcher implements IMonsterProfile {
 				EquipmentSlot.FEET
 				}){
 			ItemStack item = ItemArmour.get(rand, Slot.getSlot(slot), Quality.WOOD);
-			Enchant.enchantItem(rand, item, 20);
+			Enchant.enchantItem(world.getEnabledFeatures(), rand, item, 20);
 			ItemArmour.dyeArmor(item, 178, 255, 102); //bright lime green
 			mob.setSlot(slot, item);
 		}

@@ -8,13 +8,14 @@ import com.greymerk.roguelike.treasure.loot.Quality;
 import com.greymerk.roguelike.treasure.loot.provider.ItemSpecialty;
 
 import net.minecraft.registry.DynamicRegistryManager;
+import net.minecraft.resource.featuretoggle.FeatureSet;
 
 public class RoguelikeLootRules {
 
-	public static LootRuleManager getLoot(DynamicRegistryManager reg) {
+	public static LootRuleManager getLoot(FeatureSet features, DynamicRegistryManager reg) {
 		
 		LootRuleManager lootRules = new LootRuleManager();
-		ILoot loot = Loot.getLoot(reg);
+		ILoot loot = Loot.getLoot(features, reg);
 		//lootRules.add(Treasure.STARTER, Book.get(Book.CREDITS), 0, true, 1);
 		lootRules.add(Treasure.STARTER, loot.get(Loot.WEAPON, 0),  0, true, 2);
 		lootRules.add(Treasure.STARTER, loot.get(Loot.FOOD, 0),  0, true, 2);

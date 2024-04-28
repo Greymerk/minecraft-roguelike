@@ -86,20 +86,18 @@ public enum Enchant {
 		return false;
 	}
 
-	public static ItemStack enchantItem(Random rand, ItemStack item, int enchantLevel) {
+	public static ItemStack enchantItem(FeatureSet features, Random rand, ItemStack item, int enchantLevel) {
 
 		if (item == null ) return null;
 		
 		List<EnchantmentLevelEntry> enchants = null;
 		try{
-			enchants = EnchantmentHelper.generateEnchantments(FeatureSet.empty(), rand, item, enchantLevel, false);
+			enchants = EnchantmentHelper.generateEnchantments(features, rand, item, enchantLevel, false);
 		} catch(NullPointerException e){
 			throw e;
 		}
-		
-		boolean isBook = item.getItem() == Items.BOOK;
 
-		if (isBook){
+		if (item.isOf(Items.BOOK)){
 			item = new ItemStack(Items.ENCHANTED_BOOK);
 			if(enchants.size() > 1){
 				enchants.remove(rand.nextInt(enchants.size()));

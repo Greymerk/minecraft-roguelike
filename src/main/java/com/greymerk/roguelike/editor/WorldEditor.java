@@ -39,13 +39,13 @@ public class WorldEditor implements IWorldEditor{
 	public WorldEditor(StructureWorldAccess world){
 		this.world = world;
 		stats = new HashMap<Block, Integer>();
-		this.loot = RoguelikeLootRules.getLoot(world.getRegistryManager());
+		this.loot = RoguelikeLootRules.getLoot(world.getEnabledFeatures(), world.getRegistryManager());
 	}
 
 	public WorldEditor(World world) {
 		this.world = world;
 		stats = new HashMap<Block, Integer>();
-		this.loot = RoguelikeLootRules.getLoot(world.getRegistryManager());
+		this.loot = RoguelikeLootRules.getLoot(world.getEnabledFeatures(), world.getRegistryManager());
 	}
 
 	@Override

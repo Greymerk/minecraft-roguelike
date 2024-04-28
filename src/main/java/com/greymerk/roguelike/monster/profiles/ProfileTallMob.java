@@ -9,6 +9,7 @@ import com.greymerk.roguelike.treasure.loot.Slot;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.DynamicRegistryManager;
+import net.minecraft.resource.featuretoggle.FeatureSet;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 
@@ -24,7 +25,8 @@ public class ProfileTallMob implements IMonsterProfile {
 				EquipmentSlot.FEET
 				}){
 			DynamicRegistryManager reg = world.getRegistryManager();
-			ItemStack item = Loot.getEquipmentBySlot(reg, rand, Slot.getSlot(slot), ilvl, Enchant.canEnchant(world.getDifficulty(), rand, level));
+			FeatureSet features = world.getEnabledFeatures();
+			ItemStack item = Loot.getEquipmentBySlot(features, reg, rand, Slot.getSlot(slot), ilvl, Enchant.canEnchant(world.getDifficulty(), rand, level));
 			mob.setSlot(slot, item);
 		}
 

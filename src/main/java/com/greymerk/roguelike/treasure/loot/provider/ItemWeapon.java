@@ -1,35 +1,38 @@
 package com.greymerk.roguelike.treasure.loot.provider;
 
-import net.minecraft.util.math.random.Random;
-
 import com.greymerk.roguelike.treasure.loot.Enchant;
 import com.greymerk.roguelike.treasure.loot.Equipment;
 import com.greymerk.roguelike.treasure.loot.Quality;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.resource.featuretoggle.FeatureSet;
+import net.minecraft.util.math.random.Random;
 
 public class ItemWeapon extends ItemBase{
 	
-	public ItemWeapon(int weight, int level) {
+	FeatureSet features;
+	
+	public ItemWeapon(FeatureSet features, int weight, int level) {
 		super(weight, level);
+		this.features = features;
 	}
 
 	
 	@Override
 	public ItemStack getLootItem(Random rand, int level) {
-		return getRandom(rand, level, true);
+		return getRandom(this.features, rand, level, true);
 	}
 
-	public static ItemStack getRandom(Random rand, int rank, boolean enchant){
+	public static ItemStack getRandom(FeatureSet features, Random rand, int rank, boolean enchant){
 		if(rand.nextInt(10) == 0){
-			return ItemWeapon.getBow(rand, rank, enchant);
+			return ItemWeapon.getBow(features, rand, rank, enchant);
 		} else {
-			return ItemWeapon.getSword(rand, rank, enchant);
+			return ItemWeapon.getSword(features, rand, rank, enchant);
 		}
 	}
 	
-	public static ItemStack getBow(Random rand, int level, boolean enchant){
+	public static ItemStack getBow(FeatureSet features, Random rand, int level, boolean enchant){
 		
 		if(rand.nextInt(20 + (level * 10)) == 0){
 			return ItemSpecialty.getRandomItem(Equipment.BOW, rand, level);
@@ -38,14 +41,14 @@ public class ItemWeapon extends ItemBase{
 		ItemStack bow = new ItemStack(Items.BOW);
 		
 		if(enchant && rand.nextInt(6 - level) == 0){
-			Enchant.enchantItem(rand, bow, Enchant.getLevel(rand, level));
+			Enchant.enchantItem(features, rand, bow, Enchant.getLevel(rand, level));
 		}
 		
 		return bow;
 		
 	}
 	
-	public static ItemStack getSword(Random rand, int level, boolean enchant){
+	public static ItemStack getSword(FeatureSet features, Random rand, int level, boolean enchant){
 		ItemStack sword;
 		
 		if(enchant && rand.nextInt(10 + (level * 10)) == 0){
@@ -55,15 +58,15 @@ public class ItemWeapon extends ItemBase{
 		sword = pickSword(rand, level);
 		
 		if(enchant && rand.nextInt(6 - level) == 0){
-			Enchant.enchantItem(rand, sword, Enchant.getLevel(rand, level));
+			Enchant.enchantItem(features, rand, sword, Enchant.getLevel(rand, level));
 		}
 		
 		return sword;		
 	}
 	
-	public static ItemStack getSword(Random rand, int level, boolean enchant, Quality quality){
+	public static ItemStack getSword(FeatureSet features, Random rand, int level, boolean enchant, Quality quality){
 		ItemStack sword = quality != null ? getSwordByQuality(quality) : pickSword(rand, level);
-		return enchant ? Enchant.enchantItem(rand, sword, Enchant.getLevel(rand, level)) : sword;
+		return enchant ? Enchant.enchantItem(features, rand, sword, Enchant.getLevel(rand, level)) : sword;
 	}
 	
 	private static ItemStack pickSword(Random rand, int level){
