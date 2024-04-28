@@ -5,6 +5,7 @@ import java.nio.file.Path;
 import com.greymerk.roguelike.treasure.ITreasureChest;
 
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.util.math.random.Random;
 
 public interface IWorldEditor {
@@ -38,6 +39,8 @@ public interface IWorldEditor {
 	public void fillChest(ITreasureChest chest, Random rand);
 	
 	public int getMaxDepth();
+	
+	public DynamicRegistryManager getRegistryManager();
 	
 	public Path getWorldDirectory();
 

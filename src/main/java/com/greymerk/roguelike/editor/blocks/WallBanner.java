@@ -18,7 +18,7 @@ import net.minecraft.util.math.random.Random;
 public class WallBanner {
 	
 	public static void generate(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
-		WallBanner.generate(editor, Banner.get(rand), origin, dir);
+		WallBanner.generate(editor, Banner.get(editor.getRegistryManager(), rand), origin, dir);
 	}
 	
 	public static void generate(IWorldEditor editor, ItemStack banner, Coord origin, Cardinal dir) {
