@@ -6,16 +6,17 @@ import java.util.Map;
 import com.greymerk.roguelike.util.IWeighted;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.util.math.random.Random;
 
 public class LootSettings {
 
 	private Map<Loot, IWeighted<ItemStack>> loot;
 	
-	public LootSettings(int level){
+	public LootSettings(int level, DynamicRegistryManager reg){
 		loot = new HashMap<Loot, IWeighted<ItemStack>>();
 		for(Loot type : Loot.values()){
-			loot.put(type, Loot.getProvider(type, level));
+			loot.put(type, Loot.getProvider(type, level, reg));
 		}
 	}
 	

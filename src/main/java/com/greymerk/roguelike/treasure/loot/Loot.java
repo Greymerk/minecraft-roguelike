@@ -25,6 +25,7 @@ import net.minecraft.component.type.LoreComponent;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.random.Random;
 
@@ -33,21 +34,21 @@ public enum Loot {
 	WEAPON, ARMOUR, BLOCK, JUNK, ORE, TOOL, POTION, FOOD, ENCHANTBOOK,
 	ENCHANTBONUS, SUPPLY, MUSIC, SMITHY, SPECIAL, REWARD, BREWING;
 
-	public static ILoot getLoot(){
+	public static ILoot getLoot(DynamicRegistryManager reg){
 		
 		LootProvider loot = new LootProvider();
 		for(int i = 0; i < 5; ++i){
-			loot.put(i, new LootSettings(i));
+			loot.put(i, new LootSettings(i, reg));
 		}
 		
 		return loot;
 	}
 	
 	
-	public static IWeighted<ItemStack> getProvider(Loot type, int level){
+	public static IWeighted<ItemStack> getProvider(Loot type, int level, DynamicRegistryManager reg){
 		switch(type){
 		case WEAPON: return new ItemWeapon(0, level);
-		case ARMOUR: return new ItemArmour(0, level);
+		case ARMOUR: return new ItemArmour(0, level, reg);
 		case BLOCK: return new ItemBlock(0, level);
 		case JUNK: return new ItemJunk(0, level);
 		case ORE: return new ItemOre(0, level);
@@ -67,21 +68,21 @@ public enum Loot {
 		return new WeightedRandomLoot(Items.STICK, 1);
 	}
 	
-	public static ItemStack getEquipmentBySlot(Random rand, EquipmentSlot slot, int level, boolean enchant){
+	public static ItemStack getEquipmentBySlot(DynamicRegistryManager reg, Random rand, EquipmentSlot slot, int level, boolean enchant){
 		if(slot == EquipmentSlot.MAINHAND){
 			return ItemWeapon.getRandom(rand, level, enchant);
 		}
 		
-		return ItemArmour.getRandom(rand, level, Slot.getSlot(slot), enchant);
+		return ItemArmour.getRandom(reg, rand, level, Slot.getSlot(slot), enchant);
 	}
 	
-	public static ItemStack getEquipmentBySlot(Random rand, Slot slot, int level, boolean enchant){
+	public static ItemStack getEquipmentBySlot(DynamicRegistryManager reg, Random rand, Slot slot, int level, boolean enchant){
 		
 		if(slot == Slot.WEAPON){
 			return ItemWeapon.getRandom(rand, level, enchant);
 		}
 		
-		return ItemArmour.getRandom(rand, level, slot, enchant);
+		return ItemArmour.getRandom(reg, rand, level, slot, enchant);
 	}
 
 	public static void setItemLore(ItemStack item, String loreText){

@@ -5,7 +5,6 @@ import com.greymerk.roguelike.monster.IMonsterProfile;
 import com.greymerk.roguelike.treasure.loot.Enchant;
 import com.greymerk.roguelike.treasure.loot.Loot;
 import com.greymerk.roguelike.treasure.loot.Slot;
-import com.greymerk.roguelike.treasure.loot.trim.Trim;
 
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.ItemStack;
@@ -24,9 +23,8 @@ public class ProfileTallMob implements IMonsterProfile {
 				EquipmentSlot.LEGS,
 				EquipmentSlot.FEET
 				}){
-			ItemStack item = Loot.getEquipmentBySlot(rand, Slot.getSlot(slot), ilvl, Enchant.canEnchant(world.getDifficulty(), rand, level));
 			DynamicRegistryManager reg = world.getRegistryManager();
-			Trim.addRandom(reg, item, rand);
+			ItemStack item = Loot.getEquipmentBySlot(reg, rand, Slot.getSlot(slot), ilvl, Enchant.canEnchant(world.getDifficulty(), rand, level));
 			mob.setSlot(slot, item);
 		}
 
