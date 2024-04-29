@@ -28,6 +28,8 @@ public interface IWorldEditor {
 	
 	public boolean isChunkLoaded(Coord pos);
 	
+	public boolean surroundingChunksLoaded(Coord pos);
+	
 	public boolean isGround(Coord pos);
 	
 	public boolean isOverworld();

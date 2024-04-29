@@ -8,6 +8,7 @@ import com.greymerk.roguelike.Roguelike;
 import com.greymerk.roguelike.dungeon.Dungeon;
 import com.greymerk.roguelike.dungeon.room.IRoom;
 import com.greymerk.roguelike.editor.Coord;
+import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.editor.boundingbox.IBounded;
 
@@ -38,6 +39,22 @@ public class RoguelikeState extends PersistentState {
 	
 	public void update() {
 		this.markDirty();
+	}
+	
+	public List<IRoom> getFromLoaded(IWorldEditor editor){
+		List<IRoom> loadedRooms = new ArrayList<IRoom>();
+		
+		for(Dungeon d : this.dungeons) {
+			for(IRoom r : d) {
+				if(r.isGenerated()) continue;
+				Coord pos = r.getWorldPos();
+				if(editor.surroundingChunksLoaded(pos)) {
+					loadedRooms.add(r);
+				}
+			}
+		}
+		
+		return loadedRooms;
 	}
 	
 	public List<IRoom> getFromChunk(ChunkPos cpos){

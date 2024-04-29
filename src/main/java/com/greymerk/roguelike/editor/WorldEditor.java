@@ -21,6 +21,7 @@ import net.minecraft.registry.tag.TagKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.WorldSavePath;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.CheckedRandom;
 import net.minecraft.util.math.random.Random;
@@ -28,6 +29,7 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
+import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkStatus;
 
 public class WorldEditor implements IWorldEditor{
@@ -105,7 +107,23 @@ public class WorldEditor implements IWorldEditor{
 	}
 
 	public boolean isChunkLoaded(Coord pos) {
-		return world.getChunk(pos.getBlockPos()).getStatus() == ChunkStatus.FULL;
+		ChunkPos cp = pos.getChunkPos();
+		return world.isChunkLoaded(cp.x, cp.z);
+	}
+	
+	public boolean surroundingChunksLoaded(Coord pos) {
+		ChunkPos cpos = pos.getChunkPos();
+		for(int x = cpos.x - 1; x <= cpos.x + 1; x++) {
+			for(int z = cpos.z - 1; z <= cpos.z + 1; z++) {
+				if(!world.isChunkLoaded(x, z)) return false;
+				Chunk chunk = world.getChunk(x, z);
+				ChunkStatus status = chunk.getStatus();
+				if(status != ChunkStatus.FULL) return false;
+			}
+		}
+		
+		return true;
+		
 	}
 
 	public Coord findSurface(Coord pos) {
