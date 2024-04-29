@@ -1,5 +1,9 @@
 package com.greymerk.roguelike.treasure.loot;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.PotionContentsComponent;
 import net.minecraft.entity.effect.StatusEffect;
@@ -91,11 +95,18 @@ public enum PotionEffect {
 	
 	public static void addCustomEffect(ItemStack potion, PotionEffect type, int amplifier, int duration){
 		
+		final int TICKS_PER_SECOND = 20;
+		
 		RegistryEntry<StatusEffect> effect = getStatusEffect(type);
 		PotionContentsComponent contents = potion.getOrDefault(DataComponentTypes.POTION_CONTENTS, PotionContentsComponent.DEFAULT);
-		StatusEffectInstance instance = new StatusEffectInstance(effect, duration, amplifier);
-		contents.with(instance);
+		List<StatusEffectInstance> effects = contents.customEffects();
+		StatusEffectInstance instance = new StatusEffectInstance(effect, duration * TICKS_PER_SECOND, Math.max(0, amplifier - 1));
 		
-		potion.set(DataComponentTypes.POTION_CONTENTS, contents);
+		List<StatusEffectInstance> flist = new ArrayList<StatusEffectInstance>();
+		flist.addAll(effects);
+		flist.add(instance);
+		
+		PotionContentsComponent replace = new PotionContentsComponent(Optional.empty(), contents.customColor(), flist);
+		potion.set(DataComponentTypes.POTION_CONTENTS, replace);
 	}
 }

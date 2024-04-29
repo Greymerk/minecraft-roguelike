@@ -3,10 +3,14 @@ package com.greymerk.roguelike.treasure.loot;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import com.greymerk.roguelike.util.Color;
 import com.greymerk.roguelike.util.math.RandHelper;
 
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.PotionContentsComponent;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.math.random.Random;
@@ -173,6 +177,9 @@ public enum PotionMixture {
 	}
 	
 	public static void setColor(ItemStack potion, int color){
-		
+		PotionContentsComponent contents = potion.getOrDefault(DataComponentTypes.POTION_CONTENTS, PotionContentsComponent.DEFAULT);
+		List<StatusEffectInstance> effects = contents.customEffects();
+		PotionContentsComponent c = new PotionContentsComponent(Optional.empty(), Optional.of(color), effects);
+		potion.set(DataComponentTypes.POTION_CONTENTS, c);
 	}
 }
