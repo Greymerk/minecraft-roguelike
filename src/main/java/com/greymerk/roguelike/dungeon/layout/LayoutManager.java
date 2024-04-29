@@ -53,15 +53,11 @@ public class LayoutManager {
 			RoomProvider roomProvider = this.settings.getLevel(floor.getOrigin().getY()).getRooms();
 			List<Room> rooms = roomProvider.getRooms(rand, (level * 2) + (13 - level));
 
-			int count = 0;
 			for(Room r : rooms) {
-				if(level > 6 && count == 10) {
-					 this.addStair(editor, rand, floor);
-				}
 				IRoom room = Room.getInstance(r, this.settings.getLevel(floor.getOrigin().getY()));
 				this.placeRoom(room, rand, floor);
-				++count;
 			}
+			
 			if(level > 0) this.addStair(editor, rand, floor);
 			
 			floor.getRooms().forEach(r -> r.determineEntrances(floor, r.getFloorPos()));
