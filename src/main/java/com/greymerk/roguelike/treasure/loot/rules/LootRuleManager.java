@@ -20,13 +20,13 @@ public class LootRuleManager {
 		this.rules = new ArrayList<LootRule>();
 	}
 
-	public void add(Treasure type, IWeighted<ItemStack> item, int level, boolean toEach, int amount){
-		this.rules.add(new LootRule(type, item, level, toEach, amount));
+	public void add(Treasure type, IWeighted<ItemStack> item, int level, int amount){
+		this.rules.add(new LootRule(type, item, level, amount));
 	}
 	
-	public void add(Treasure type, ItemStack item, int level, boolean toEach, int amount){
+	public void add(Treasure type, ItemStack item, int level, int amount){
 		IWeighted<ItemStack> toAdd = new WeightedChoice<ItemStack>(item, 1);
-		this.rules.add(new LootRule(type, toAdd, level, toEach, amount));
+		this.rules.add(new LootRule(type, toAdd, level, amount));
 	}
 	
 	public void add(LootRule toAdd){
