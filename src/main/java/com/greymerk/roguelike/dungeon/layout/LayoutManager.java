@@ -51,7 +51,7 @@ public class LayoutManager {
 			}
 			
 			RoomProvider roomProvider = this.settings.getLevel(floor.getOrigin().getY()).getRooms();
-			List<Room> rooms = roomProvider.getRooms(rand, (level * 2) + (13 - level));
+			List<Room> rooms = roomProvider.getRooms(rand, (level * 2) + (20 - level));
 
 			for(Room r : rooms) {
 				IRoom room = Room.getInstance(r, this.settings.getLevel(floor.getOrigin().getY()));

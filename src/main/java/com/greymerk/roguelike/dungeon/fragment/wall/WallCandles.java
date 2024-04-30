@@ -21,7 +21,7 @@ public class WallCandles extends FragmentBase implements IFragment {
 		BoundingBox bb = new BoundingBox(origin.copy());
 		bb.add(dir, 2).grow(Cardinal.orthogonal(dir));
 		IShape rect = bb.getShape(Shape.RECTSOLID);
-		IStair stair = theme.getPrimary().getStair();
+		IStair stair = theme.getSecondary().getStair();
 		stair.setOrientation(Cardinal.reverse(dir), true);
 		for(Coord c : rect.get()) {
 			stair.set(editor, c);
