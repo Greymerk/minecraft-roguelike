@@ -36,7 +36,7 @@ public class LevelSettingsCrumbledMossy extends LevelSettingsBase implements ILe
 		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_CHEST, 1));
 		
 		this.alcoves.add(walls);
-		this.alcoves.add(new WeightedChoice<Fragment>(Fragment.ALCOVE_SILVERFISH, 8));
+		this.alcoves.add(new WeightedChoice<Fragment>(Fragment.ALCOVE_SILVERFISH, 2));
 		
 		this.filters = new ArrayList<IFilter>();
 		this.filters.add(Filter.get(Filter.MUD));
