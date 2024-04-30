@@ -1,5 +1,6 @@
 package com.greymerk.roguelike.treasure.loot;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.greymerk.roguelike.treasure.loot.provider.ItemArmour;
@@ -28,6 +29,7 @@ import net.minecraft.item.Items;
 import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.resource.featuretoggle.FeatureSet;
 import net.minecraft.text.Text;
+import net.minecraft.util.Rarity;
 import net.minecraft.util.math.random.Random;
 
 public enum Loot {
@@ -86,10 +88,22 @@ public enum Loot {
 		return ItemArmour.getRandom(features, reg, rand, level, slot, enchant);
 	}
 
+	public static void setRarity(ItemStack item, Rarity type) {
+		switch(type) {
+		case COMMON: item.set(DataComponentTypes.RARITY, Rarity.COMMON); return;
+		case UNCOMMON: item.set(DataComponentTypes.RARITY, Rarity.UNCOMMON); return;
+		case RARE: item.set(DataComponentTypes.RARITY, Rarity.RARE); return;
+		case EPIC: item.set(DataComponentTypes.RARITY, Rarity.EPIC); return;
+		default: 
+		}
+		
+	}
+	
 	public static void setItemLore(ItemStack item, String loreText){
-		LoreComponent lore = new LoreComponent(List.of());
-		lore.with(Text.of(loreText));
-		item.set(DataComponentTypes.LORE, lore);  
+		List<Text> lines = new ArrayList<Text>();
+		lines.add(Text.of(loreText));
+		LoreComponent lore = new LoreComponent(lines);
+		item.set(DataComponentTypes.LORE, lore);
 	}
 	
 	public static void setItemLore(ItemStack item, String loreText, TextFormat option){

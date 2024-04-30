@@ -13,6 +13,7 @@ import net.minecraft.component.type.PotionContentsComponent;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.util.Rarity;
 import net.minecraft.util.math.random.Random;
 
 public enum PotionMixture {
@@ -28,6 +29,7 @@ public enum PotionMixture {
 			PotionEffect.addCustomEffect(potion, PotionEffect.STRENGTH, 3, 30 + rand.nextInt(60));
 			PotionEffect.addCustomEffect(potion, PotionEffect.FATIGUE, 1, 30 + rand.nextInt(60));
 			Loot.setItemName(potion, "Tequila");
+			Loot.setRarity(potion, Rarity.UNCOMMON);
 			ItemHideFlags.set(ItemHideFlags.EFFECTS, potion);
 			setColor(potion, Color.RGBToColor(255, 232, 196));
 			return potion;
@@ -40,6 +42,7 @@ public enum PotionMixture {
 			PotionEffect.addCustomEffect(potion, PotionEffect.NAUSIA, 1, 5);
 			Loot.setItemName(potion, "Laudanum");
 			Loot.setItemLore(potion, "A medicinal tincture.");
+			Loot.setRarity(potion, Rarity.UNCOMMON);
 			ItemHideFlags.set(ItemHideFlags.EFFECTS, potion);
 			setColor(potion, Color.RGBToColor(150, 50, 0));
 			return potion;
@@ -49,6 +52,7 @@ public enum PotionMixture {
 			PotionEffect.addCustomEffect(potion, PotionEffect.BLINDNESS, 1, 30 + rand.nextInt(60));
 			PotionEffect.addCustomEffect(potion, PotionEffect.RESISTANCE, 2, 30 + rand.nextInt(30));
 			Loot.setItemName(potion, "Moonshine");
+			Loot.setRarity(potion, Rarity.UNCOMMON);
 			ItemHideFlags.set(ItemHideFlags.EFFECTS, potion);
 			setColor(potion, Color.RGBToColor(250, 240, 230));
 			return potion;
@@ -58,6 +62,7 @@ public enum PotionMixture {
 			PotionEffect.addCustomEffect(potion, PotionEffect.NIGHTVISION, 1, 120);
 			PotionEffect.addCustomEffect(potion, PotionEffect.JUMP, 3, 120);
 			Loot.setItemName(potion, "Absinthe");
+			Loot.setRarity(potion, Rarity.UNCOMMON);
 			ItemHideFlags.set(ItemHideFlags.EFFECTS, potion);
 			setColor(potion, Color.RGBToColor(200, 250, 150));
 			return potion;
@@ -69,6 +74,7 @@ public enum PotionMixture {
 					);
 			addRandomEffects(rand, potion, 2 + rand.nextInt(2));
 			Loot.setItemName(potion, "Vile Mixture");
+			Loot.setRarity(potion, Rarity.UNCOMMON);
 			ItemHideFlags.set(ItemHideFlags.EFFECTS, potion);
 			return potion;
 		case RAGE:
@@ -78,6 +84,7 @@ public enum PotionMixture {
 			PotionEffect.addCustomEffect(potion, PotionEffect.WITHER, 1, 3);
 			Loot.setItemName(potion, "Animus");
 			Loot.setItemLore(potion, "An unstable mixture.");
+			Loot.setRarity(potion, Rarity.UNCOMMON);
 			ItemHideFlags.set(ItemHideFlags.EFFECTS, potion);
 			setColor(potion, Color.RGBToColor(255, 0, 0));
 			return potion;
@@ -89,6 +96,7 @@ public enum PotionMixture {
 			PotionEffect.addCustomEffect(potion, PotionEffect.JUMP, 3, 120);
 			Loot.setItemName(potion, "Vitae");
 			Loot.setItemLore(potion, "Essence of life.");
+			Loot.setRarity(potion, Rarity.UNCOMMON);
 			ItemHideFlags.set(ItemHideFlags.EFFECTS, potion);
 			setColor(potion, Color.RGBToColor(230, 50, 20));
 			return potion;
@@ -100,6 +108,7 @@ public enum PotionMixture {
 			PotionEffect.addCustomEffect(potion, PotionEffect.RESISTANCE, 1, 120);
 			Loot.setItemName(potion, "Stout");
 			Loot.setItemLore(potion, "\"It's Good for You\"");
+			Loot.setRarity(potion, Rarity.UNCOMMON);
 			ItemHideFlags.set(ItemHideFlags.EFFECTS, potion);
 			setColor(potion, Color.RGBToColor(50, 40, 20));
 			return potion;
@@ -110,6 +119,7 @@ public enum PotionMixture {
 			PotionEffect.addCustomEffect(potion, PotionEffect.HEALTH, 2, 1);
 			Loot.setItemName(potion, "Nectar");
 			Loot.setItemLore(potion, "A Floral extract.");
+			Loot.setRarity(potion, Rarity.UNCOMMON);
 			ItemHideFlags.set(ItemHideFlags.EFFECTS, potion);
 			setColor(potion, Color.RGBToColor(250, 150, 250));
 			return potion;
@@ -119,6 +129,7 @@ public enum PotionMixture {
 			PotionEffect.addCustomEffect(potion, PotionEffect.SPEED, 1, 600);
 			Loot.setItemName(potion, "Coffee");
 			Loot.setItemLore(potion, "A darkroast bean brew.");
+			Loot.setRarity(potion, Rarity.UNCOMMON);
 			ItemHideFlags.set(ItemHideFlags.EFFECTS, potion);
 			setColor(potion, Color.RGBToColor(20, 20, 10));
 			return potion;
@@ -127,6 +138,7 @@ public enum PotionMixture {
 			PotionEffect.addCustomEffect(potion, PotionEffect.GLOWING, 1, 600);
 			Loot.setItemName(potion, "Luma");
 			Loot.setItemLore(potion, "A glowstone extract.");
+			Loot.setRarity(potion, Rarity.UNCOMMON);
 			ItemHideFlags.set(ItemHideFlags.EFFECTS, potion);
 			setColor(potion, Color.RGBToColor(250, 250, 0));
 			return potion;

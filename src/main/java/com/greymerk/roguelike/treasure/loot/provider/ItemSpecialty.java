@@ -8,6 +8,7 @@ import com.greymerk.roguelike.util.TextFormat;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.util.Rarity;
 import net.minecraft.util.math.random.Random;
 
 public class ItemSpecialty extends ItemBase {
@@ -48,19 +49,23 @@ public class ItemSpecialty extends ItemBase {
 	
 	public static ItemStack getRandomItem(Equipment type, Random rand, Quality quality){
 		
-		switch(type){
+		ItemStack item;
 		
-		case SWORD: return getSword(rand, quality);
-		case BOW: return getBow(rand, quality);
-		case HELMET: return getHelmet(rand, quality);
-		case CHEST: return getChest(rand, quality);
-		case LEGS: return getLegs(rand, quality);
-		case FEET: return getBoots(rand, quality);
-		case PICK: return getPick(rand, quality);
-		case AXE: return getAxe(rand, quality);
-		case SHOVEL: return getShovel(rand, quality);		
+		switch(type){
+		case SWORD: item = getSword(rand, quality); break;
+		case BOW: item = getBow(rand, quality); break;
+		case HELMET: item = getHelmet(rand, quality); break;
+		case CHEST: item = getChest(rand, quality); break;
+		case LEGS: item = getLegs(rand, quality); break;
+		case FEET: item = getBoots(rand, quality); break;
+		case PICK: item = getPick(rand, quality); break;
+		case AXE: item = getAxe(rand, quality); break;
+		case SHOVEL: item = getShovel(rand, quality); break;	
 		default: return null;
 		}
+		
+		Loot.setRarity(item, Rarity.RARE);
+		return item;
 	}
 	
 	public static ItemStack getRandomArmour(Random rand, Quality quality){
