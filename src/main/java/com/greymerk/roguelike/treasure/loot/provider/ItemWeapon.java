@@ -57,10 +57,7 @@ public class ItemWeapon extends ItemBase{
 		
 		sword = pickSword(rand, level);
 		
-		if(enchant && rand.nextInt(6 - level) == 0){
-			Enchant.enchantItem(features, rand, sword, Enchant.getLevel(rand, level));
-		}
-		
+		if(enchant) Enchant.enchantItem(features, rand, sword, Enchant.getLevel(rand, level));
 		return sword;		
 	}
 	

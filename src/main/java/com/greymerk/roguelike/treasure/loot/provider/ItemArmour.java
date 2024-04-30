@@ -33,17 +33,12 @@ public class ItemArmour extends ItemBase {
 	public static ItemStack getRandom(FeatureSet features, DynamicRegistryManager reg, Random rand, int level, boolean enchant){
 		ItemStack item = getRandom(features, reg, rand, level,
 				Slot.getSlotByNumber(rand.nextInt(4) + 1),
-				enchant ? Enchant.getLevel(rand, level) : 0);
+				enchant);
 		return item;
 	}
 	
 	public static ItemStack getRandom(FeatureSet features, DynamicRegistryManager reg, Random rand, int level, Slot slot, boolean enchant){
-		return getRandom(features, reg, rand, level, slot, enchant ? Enchant.getLevel(rand, level) : 0);
-	}
-	
-	public static ItemStack getRandom(FeatureSet features, DynamicRegistryManager reg, Random rand, int level, Slot slot, int enchantLevel){
-		
-		if(enchantLevel > 0 && rand.nextInt(20 + (level * 10)) == 0){
+		if(enchant && rand.nextInt(20 + (level * 10)) == 0){
 			switch(slot){
 			case HEAD: return ItemSpecialty.getRandomItem(Equipment.HELMET, rand, level); 
 			case CHEST: return ItemSpecialty.getRandomItem(Equipment.CHEST, rand, level); 
@@ -54,7 +49,7 @@ public class ItemArmour extends ItemBase {
 		}
 
 		ItemStack item = get(rand, slot, Quality.getArmourQuality(rand, level));
-		if(enchantLevel > 0) Enchant.enchantItem(features, rand, item, enchantLevel);
+		if(enchant) Enchant.enchantItem(features, rand, item, Enchant.getLevel(rand, level));
 		Trim.addRandom(reg, item, rand);
 		return item;
 	}
