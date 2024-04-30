@@ -105,6 +105,8 @@ public class PrisonRoom extends AbstractMediumRoom implements IRoom {
 		for(Cardinal dir : Cardinal.directions) {
 			stair.setOrientation(dir, true).set(editor, pos.copy().add(dir), true, false);
 		}
+		
+		Fragment.generate(Fragment.CELL_SUPPORT, editor, rand, theme, origin.copy());
 	}
 
 	private void sideCell(IWorldEditor editor, Random rand, Coord origin, Cardinal cellDir) {
@@ -127,6 +129,8 @@ public class PrisonRoom extends AbstractMediumRoom implements IRoom {
 		RectSolid.fill(editor, rand, bb, bars);
 		
 		settings.getWallFragment(rand).generate(editor, rand, theme, origin, cellDir);
+		
+		Fragment.generate(Fragment.CELL_SUPPORT, editor, rand, theme, origin.copy());
 	}
 
 	private void closedCell(IWorldEditor editor, Random rand, Coord origin, List<Cardinal> doors) {
@@ -153,6 +157,8 @@ public class PrisonRoom extends AbstractMediumRoom implements IRoom {
 				settings.getWallFragment(rand).generate(editor, rand, theme, origin, dir);
 			}
 		}
+		
+		Fragment.generate(Fragment.CELL_SUPPORT, editor, rand, theme, origin.copy());
 	}
 
 	private void mainCell(IWorldEditor editor, Random rand, Coord origin, Cardinal cellDir) {
@@ -197,6 +203,8 @@ public class PrisonRoom extends AbstractMediumRoom implements IRoom {
 		BoundingBox bb = new BoundingBox(origin.copy());
 		bb.add(Cardinal.reverse(cellDir), 2).grow(Cardinal.UP, 2).grow(Cardinal.orthogonal(cellDir));
 		RectSolid.fill(editor, rand, bb, bars);
+		
+		Fragment.generate(Fragment.CELL_SUPPORT, editor, rand, theme, origin.copy());
 	}
 
 	private void doors(IWorldEditor editor, Random rand, Coord origin) {
