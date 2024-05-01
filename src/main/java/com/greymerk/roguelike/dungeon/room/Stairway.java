@@ -91,52 +91,38 @@ public class Stairway extends AbstractRoom implements IRoom {
 		IStair stair = theme.getPrimary().getStair();
 		Fragment.generate(Fragment.CELL_SUPPORT, editor, rand, theme, origin.copy());
 		
-		Coord start = new Coord(origin);
-		start.add(new Coord(-2, 0, -2));
-		Coord end = new Coord(origin);
-		end.add(new Coord(2, 3, 2));
-		RectSolid.fill(editor, rand, start, end, BlockType.get(BlockType.AIR));
+		BoundingBox bb = BoundingBox.of(origin);
+		bb.grow(Cardinal.directions, 2).grow(Cardinal.UP, 3);
+		RectSolid.fill(editor, rand, bb, BlockType.get(BlockType.AIR));
 		
-		start = new Coord(-1, -1, -1).add(origin);
-		end = new Coord(1, -1, 1).add(origin);
-		RectSolid.fill(editor, rand, start, end, theme.getPrimary().getFloor());
+		bb = BoundingBox.of(origin);
+		bb.grow(Cardinal.directions).add(Cardinal.DOWN);
+		RectSolid.fill(editor, rand, bb, theme.getPrimary().getFloor());
 		
 		for(Cardinal dir : Cardinal.directions) {
-			start = origin.copy();
-			start.add(Cardinal.DOWN);
-			start.add(dir, 2);
-			end = start.copy();
-			start.add(Cardinal.left(dir));
-			end.add(Cardinal.right(dir));
-			RectSolid.fill(editor, rand, start, end, theme.getPrimary().getWall());
+			bb = BoundingBox.of(origin);
+			bb.add(Cardinal.DOWN).add(dir, 2).grow(Cardinal.orthogonal(dir), 2);
+			RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall());
 		}
 		
-		start = origin.copy();
-		start.add(cellEntry, 3);
-		start.add(Cardinal.DOWN);
-		end = start.copy();
-		start.add(Cardinal.left(cellEntry), 2);
-		end.add(Cardinal.right(cellEntry), 2);
-		RectSolid.fill(editor, rand, start, end, theme.getPrimary().getFloor());
+		bb = BoundingBox.of(origin);
+		bb.add(cellEntry, 3).add(Cardinal.DOWN).grow(Cardinal.orthogonal(cellEntry), 2);
+		RectSolid.fill(editor, rand, bb, theme.getPrimary().getFloor());
 		
 		for(Cardinal dir : Cardinal.directions) {
-			start = new Coord(origin);
-			start.add(dir, 2);
-			start.add(Cardinal.left(dir), 2);
-			end = new Coord(start);
-			start.add(Cardinal.DOWN);
-			end.add(Cardinal.UP, 3);
-			RectSolid.fill(editor, rand, start, end, theme.getPrimary().getPillar());
+			bb = BoundingBox.of(origin);
+			bb.add(dir, 2).add(Cardinal.left(dir), 2).grow(Cardinal.UP);
+			RectSolid.fill(editor, rand, bb, theme.getPrimary().getPillar());
 			
-			start = new Coord(end);
-			end.add(Cardinal.right(dir), 3);
-			RectSolid.fill(editor, rand, start, end, theme.getPrimary().getWall());
+			theme.getPrimary().getWall().set(editor, rand, origin.copy().add(dir, 2).add(Cardinal.left(dir), 2).add(Cardinal.UP, 2));
+			
+			bb = BoundingBox.of(origin);
+			bb.add(dir, 2).add(Cardinal.left(dir), 2).add(Cardinal.UP, 3).grow(Cardinal.right(dir), 3);
+			RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall());
 			
 			for(Cardinal o : Cardinal.orthogonal(dir)) {
 				Coord p = new Coord(origin);
-				p.add(dir, 2);
-				p.add(Cardinal.UP, 2);
-				p.add(o);
+				p.add(dir, 2).add(Cardinal.UP, 2).add(o);
 				stair.setOrientation(Cardinal.reverse(o), true);
 				stair.set(editor, p, true, true);
 			}
