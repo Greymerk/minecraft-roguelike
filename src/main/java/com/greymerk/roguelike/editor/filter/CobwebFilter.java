@@ -24,12 +24,7 @@ public class CobwebFilter implements IFilter{
 	}
 	
 	private boolean validLocation(IWorldEditor editor, Coord pos){
-		for(Cardinal dir : Cardinal.values()){
-			Coord cursor = new Coord(pos);
-			cursor.add(dir);
-			if(!editor.isAir(cursor)) return true;
-		}
-		return false;
+		return !editor.isAir(pos.copy().add(Cardinal.UP));
 	}
 	
 	private void generate(IWorldEditor editor, Random rand, Coord pos, int count){
