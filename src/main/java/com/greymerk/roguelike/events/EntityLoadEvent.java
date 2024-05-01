@@ -36,7 +36,6 @@ public class EntityLoadEvent implements Load{
 		
 		IEntity monster = new MetaEntity(mob);
 		
-		System.out.println("level: " + amp);
 		MonsterProfile.equip(world, rand, amp, monster);
 	}
 }
