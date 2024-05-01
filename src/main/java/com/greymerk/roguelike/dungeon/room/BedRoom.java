@@ -13,14 +13,17 @@ import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
+import com.greymerk.roguelike.editor.blocks.Air;
 import com.greymerk.roguelike.editor.blocks.Bed;
 import com.greymerk.roguelike.editor.blocks.BlockType;
 import com.greymerk.roguelike.editor.blocks.Candle;
 import com.greymerk.roguelike.editor.blocks.Furnace;
 import com.greymerk.roguelike.editor.blocks.Lantern;
 import com.greymerk.roguelike.editor.blocks.stair.IStair;
+import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.editor.shapes.RectHollow;
 import com.greymerk.roguelike.editor.shapes.RectSolid;
+import com.greymerk.roguelike.editor.shapes.Shape;
 import com.greymerk.roguelike.treasure.Treasure;
 
 import net.minecraft.util.math.random.Random;
@@ -44,43 +47,26 @@ public class BedRoom extends AbstractRoom implements IRoom {
 		cor.addEntrance(direction, Entrance.DOOR);
 		cor.generate(editor);
 		
-		Coord start = origin.copy();
-		Coord end = origin.copy();
-		start.add(direction, 3);
-		start.add(Cardinal.left(direction), 4);
-		start.add(Cardinal.DOWN);
-		end.add(direction, 15);
-		end.add(Cardinal.right(direction), 4);
-		end.add(Cardinal.UP, 3);
-		RectHollow.fill(editor, rand, start, end, this.theme.getPrimary().getWall());
-
-		start = origin.copy();
-		start.add(direction, 5);
-		start.add(Cardinal.DOWN);
-		end = start.copy();
-		start.add(Cardinal.left(direction), 2);
-		end.add(Cardinal.right(direction), 2);
-		end.add(direction, 8);
-		RectSolid.fill(editor, rand, start, end, this.theme.getSecondary().getFloor());
-
 		
+		BoundingBox bb = BoundingBox.of(origin);
+		bb.add(direction, 3).grow(Cardinal.DOWN).grow(Cardinal.UP, 3);
+		bb.grow(direction, 12).grow(Cardinal.orthogonal(direction), 4);
+		RectHollow.fill(editor, rand, bb, this.theme.getPrimary().getWall());
+
+		bb = BoundingBox.of(origin);
+		bb.add(direction, 5).add(Cardinal.DOWN);
+		bb.grow(Cardinal.orthogonal(direction), 2).grow(direction, 8);
+		RectSolid.fill(editor, rand, bb, this.theme.getSecondary().getFloor());
+
 		for(Cardinal o : Cardinal.orthogonal(this.direction)) {
-			Coord pos = origin.copy();
-			pos.add(this.direction, 4);
-			pos.add(o, 3);
-			start = pos.copy();
-			end = start.copy();
-			end.add(Cardinal.UP, 4);
-			RectSolid.fill(editor, rand, start, end, this.theme.getPrimary().getWall());
-			pos.add(this.direction, 10);
-			start = pos.copy();
-			end = start.copy();
-			end.add(Cardinal.UP, 4);
-			RectSolid.fill(editor, rand, start, end, this.theme.getPrimary().getWall());
+			bb = BoundingBox.of(origin);
+			bb.add(this.direction, 4).add(o, 3).grow(Cardinal.UP, 4);
+			RectSolid.fill(editor, rand, bb, this.theme.getPrimary().getWall());
+			bb.add(this.direction, 10);
+			RectSolid.fill(editor, rand, bb, this.theme.getPrimary().getWall());
 		}
 		
-		Coord pos = origin.copy();
-		pos.add(direction, 3);
+		Coord pos = origin.copy().add(direction, 3);
 		this.theme.getPrimary().getDoor().generate(editor, pos, Cardinal.reverse(direction));
 		
 		this.setPillars(editor, rand, origin);
@@ -100,8 +86,7 @@ public class BedRoom extends AbstractRoom implements IRoom {
 		
 		for(Cardinal o : Cardinal.orthogonal(this.direction)) {
 			for(Coord p : stops) {
-				Coord c = p.copy();
-				c.add(o, 3);
+				Coord c = p.copy().add(o, 3);
 				this.pillar(editor, rand, c);
 			}
 		}
@@ -139,46 +124,33 @@ public class BedRoom extends AbstractRoom implements IRoom {
 	}
 	
 	private void ceiling(IWorldEditor editor, Random rand, Coord origin) {
-		Coord start = origin.copy();
-		start.add(direction, 5);
-		start.add(Cardinal.UP, 4);
-		Coord end = start.copy();
-		start.add(Cardinal.left(direction), 2);
-		end.add(direction, 8);
-		end.add(Cardinal.right(direction), 2);
-		RectSolid.fill(editor, rand, start, end, this.theme.getPrimary().getWall());
-		start.add(Cardinal.UP);
-		end.add(Cardinal.UP);
-		RectSolid.fill(editor, rand, start, end, this.theme.getSecondary().getWall());
+		BoundingBox bb = BoundingBox.of(origin);
+		bb.add(direction, 5).add(Cardinal.UP, 4);
+		bb.grow(Cardinal.orthogonal(direction), 2).grow(direction, 8);
+		RectSolid.fill(editor, rand, bb, this.theme.getPrimary().getWall());
+		bb.add(Cardinal.UP);
+		RectSolid.fill(editor, rand, bb, this.theme.getSecondary().getWall());
 		
-		Coord pos = origin.copy();
-		pos.add(direction, 7);
-		pos.add(Cardinal.UP, 3);
-		start = pos.copy();
-		end = pos.copy();
-		start.add(Cardinal.NORTH);
-		start.add(Cardinal.WEST);
-		end.add(Cardinal.SOUTH);
-		end.add(Cardinal.EAST);
-		end.add(Cardinal.UP);
-		RectSolid.fill(editor, rand, start, end, BlockType.get(BlockType.AIR));
-		start.add(direction, 4);
-		end.add(direction, 4);
-		RectSolid.fill(editor, rand, start, end, BlockType.get(BlockType.AIR));
+		bb = BoundingBox.of(origin);
+		bb.add(direction, 7).add(Cardinal.UP, 3);
+		bb.grow(Cardinal.directions).grow(Cardinal.UP);
+		RectSolid.fill(editor, rand, bb, BlockType.get(BlockType.AIR));
+		bb.add(direction, 4);
+		RectSolid.fill(editor, rand, bb, BlockType.get(BlockType.AIR));
+		
 		for(Cardinal dir : Cardinal.directions) {
 			if(dir == direction) continue;
-			start = pos.copy();
-			start.add(dir, 2);
-			end = start.copy();
-			start.add(Cardinal.left(dir));
-			end.add(Cardinal.right(dir));
+			bb = BoundingBox.of(origin);
+			bb.add(direction, 7).add(Cardinal.UP, 3).add(dir, 2);
+			bb.grow(Cardinal.orthogonal(dir));
 			IStair stair = this.theme.getPrimary().getStair();
 			stair.setOrientation(Cardinal.reverse(dir), true);
-			for(Coord c : new RectSolid(start, end).get()) {
+			for(Coord c : bb.getShape(Shape.RECTSOLID)) {
 				stair.set(editor, c);
 			}
 		}
 		
+		Coord pos = origin.copy().add(direction, 7).add(Cardinal.UP, 3);
 		pos.add(Cardinal.UP);
 		Lantern.set(editor, pos);
 		pos.add(direction, 4);
@@ -187,22 +159,19 @@ public class BedRoom extends AbstractRoom implements IRoom {
 		
 		for(Cardinal dir : Cardinal.directions) {
 			if(dir == Cardinal.reverse(direction)) continue;
-			start = pos.copy();
-			start.add(dir, 2);
-			end = start.copy();
-			start.add(Cardinal.left(dir));
-			end.add(Cardinal.right(dir));
+			
+			bb = BoundingBox.of(origin);
+			bb.add(direction, 7).add(Cardinal.UP, 3).add(dir, 2);
+			bb.grow(Cardinal.orthogonal(dir));
 			IStair stair = this.theme.getPrimary().getStair();
 			stair.setOrientation(Cardinal.reverse(dir), true);
-			for(Coord c : new RectSolid(start, end).get()) {
+			for(Coord c : bb.getShape(Shape.RECTSOLID)) {
 				stair.set(editor, c);
 			}
 		}
 		
-		pos = origin.copy();
-		pos.add(direction, 9);
-		pos.add(Cardinal.UP, 3);
-		BlockType.get(BlockType.AIR).set(editor, pos);
+		pos = origin.copy().add(direction, 9).add(Cardinal.UP, 3);
+		Air.get().set(editor, pos);
 		IStair stair = this.theme.getPrimary().getStair();
 		for(Cardinal o : Cardinal.orthogonal(direction)) {
 			Coord p = pos.copy();
