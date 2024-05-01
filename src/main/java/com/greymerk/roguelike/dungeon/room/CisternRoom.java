@@ -28,7 +28,7 @@ public class CisternRoom extends AbstractMediumRoom implements IRoom {
 		this.ceiling(editor, rand, origin);
 		this.supports(editor, rand, origin);
 	}
-
+	
 	private void supports(IWorldEditor editor, Random rand, Coord origin) {
 		Fragment.generate(Fragment.CELL_SUPPORT, editor, rand, theme, origin.copy().add(Cardinal.DOWN));
 		for(Cardinal dir : Cardinal.directions) {
@@ -173,6 +173,17 @@ public class CisternRoom extends AbstractMediumRoom implements IRoom {
 			bb.add(Cardinal.right(dir));
 			bb.add(Cardinal.UP, 3);
 			RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall());
+		}
+		
+		for(Cardinal dir : Cardinal.directions) {
+			Coord pos = origin.copy();
+			pos.add(dir, 6);
+			if(this.entrances.get(dir) == Entrance.WALL) {
+				settings.getWallFragment(rand).generate(editor, rand, theme, pos.copy(), dir);
+			}
+			pos.add(Cardinal.left(dir), 6);
+			settings.getWallFragment(rand).generate(editor, rand, theme, pos.copy(), dir);
+			settings.getWallFragment(rand).generate(editor, rand, theme, pos.copy(), Cardinal.left(dir));
 		}
 	}
 
