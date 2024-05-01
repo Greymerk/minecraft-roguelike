@@ -7,7 +7,7 @@ import net.minecraft.block.Blocks;
 public class Air {
 
 	public static MetaBlock get() {
-		return new MetaBlock(Blocks.AIR);
+		return new MetaBlock(Blocks.CAVE_AIR);
 	}
 	
 }

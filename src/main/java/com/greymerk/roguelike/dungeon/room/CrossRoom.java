@@ -8,6 +8,7 @@ import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.blocks.spawners.Spawner;
 import com.greymerk.roguelike.editor.blocks.stair.IStair;
+import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.editor.shapes.RectHollow;
 import com.greymerk.roguelike.editor.shapes.RectSolid;
 
@@ -20,62 +21,49 @@ public class CrossRoom extends AbstractMediumRoom implements IRoom {
 		Coord origin = this.getWorldPos();
 		Random rand = editor.getRandom(origin);
 		IBlockFactory wall = theme.getPrimary().getWall();
-		IBlockFactory pillar = theme.getPrimary().getPillar();
 		IStair stair = theme.getPrimary().getStair();
-		Coord start = new Coord(-9, -1, -9).add(origin);
-		Coord end = new Coord(9, 4, 9).add(origin);
-		RectHollow.fill(editor, rand, start, end, wall, false, true);
-		end = new Coord(9, -1, 9).add(origin);
-		RectSolid.fill(editor, rand, start, end, theme.getPrimary().getFloor());
+		
+		BoundingBox bb = BoundingBox.of(origin);
+		bb.grow(Cardinal.directions, 9).grow(Cardinal.DOWN).grow(Cardinal.UP, 4);
+		RectHollow.fill(editor, rand, bb, wall, false, true);
+		
+		bb = BoundingBox.of(origin);
+		bb.grow(Cardinal.directions, 9).add(Cardinal.DOWN);
+		RectSolid.fill(editor, rand, bb, theme.getPrimary().getFloor());
 		
 		for(Cardinal dir : Cardinal.directions) {
 			
-			start = new Coord(origin);
-			start.add(dir, 8);
-			start.add(Cardinal.UP, 3);
-			end = new Coord(start);
-			start.add(Cardinal.left(dir), 3);
-			end.add(Cardinal.right(dir), 3);
-			end.add(Cardinal.UP, 2);
-			RectSolid.fill(editor, rand, start, end, wall);
-			start.add(Cardinal.UP);
-			start.add(Cardinal.reverse(dir));
-			end.add(Cardinal.reverse(dir));
+			bb = BoundingBox.of(origin);
+			bb.add(dir, 8).add(Cardinal.UP, 3).grow(Cardinal.orthogonal(dir), 3).grow(Cardinal.UP, 2);
+			RectSolid.fill(editor, rand, bb, wall);
 			
 			for(Cardinal orth : Cardinal.orthogonal(dir)) {
-				Coord pos = new Coord(origin);
-				pos.add(dir, 8);
-				pos.add(orth, 2);
-				start = new Coord(pos);
-				end = new Coord(start);
-				end.add(Cardinal.UP, 3);
-				RectSolid.fill(editor, rand, start, end, pillar);
-				pos.add(Cardinal.UP, 2);
+				bb = BoundingBox.of(origin);
+				bb.add(dir, 8).add(orth, 2).grow(Cardinal.UP, 3);
+				RectSolid.fill(editor, rand, bb, theme.getPrimary().getPillar());
+				
+				Coord pos = origin.copy().add(dir, 8).add(orth, 2).add(Cardinal.UP, 2);
 				for(Cardinal d : Cardinal.directions) {
-					Coord p = new Coord(pos);
-					p.add(d);
-					stair.setOrientation(d, true);
-					stair.set(editor, p, true, false);
+					Coord p = pos.copy().add(d);
+					stair.setOrientation(d, true).set(editor, p, true, false);
+					p.add(Cardinal.UP);
+					wall.set(editor, rand, p, true, false);
 				}
-				pos.add(Cardinal.UP);
-				pos.add(Cardinal.reverse(dir));
+				
+				pos.add(Cardinal.UP).add(Cardinal.reverse(dir));
 				for(Cardinal d : Cardinal.directions) {
-					Coord p = new Coord(pos);
-					p.add(d);
-					stair.setOrientation(d, true);
-					stair.set(editor, p, true, false);
+					Coord p = pos.copy().add(d);
+					stair.setOrientation(d, true).set(editor, p, true, false);
 				}
 			}
 			
-			Coord pos = new Coord(origin);
-			pos.add(dir, 6);
+			Coord pos = origin.copy().add(dir, 6);
 			if(this.getEntrance(dir) == Entrance.DOOR) {
 				Fragment.generate(Fragment.ARCH, editor, rand, theme, pos, dir);
 			}
 			
 			pos.add(Cardinal.left(dir), 6);
-			cornerCell(editor, rand, pos, dir);	
-		
+			cornerCell(editor, rand, pos, dir);
 		}
 	}
 
@@ -87,36 +75,26 @@ public class CrossRoom extends AbstractMediumRoom implements IRoom {
 		Fragment.generate(Fragment.CELL_SUPPORT, editor, rand, theme, origin.copy());
 		
 		for(Cardinal d : Cardinal.directions) {
-			Coord start = new Coord(origin);
-			start.add(d, 2);
-			start.add(Cardinal.left(d), 2);
-			Coord end = new Coord(start);
-			end.add(Cardinal.UP, 3);
-			RectSolid.fill(editor, rand, start, end, pillar);
+			BoundingBox bb = BoundingBox.of(origin);
+			bb.add(d, 2).add(Cardinal.left(d), 2).grow(Cardinal.UP);
+			RectSolid.fill(editor, rand, bb, pillar);
+			bb.add(Cardinal.UP, 2);
+			RectSolid.fill(editor, rand, bb, wall);
 			
-			start = new Coord(origin);
-			start.add(d, 2);
-			start.add(Cardinal.UP, 3);
-			end = new Coord(start);
-			start.add(Cardinal.left(d));
-			end.add(Cardinal.right(d));
-			RectSolid.fill(editor, rand, start, end, wall);
+			bb = BoundingBox.of(origin);
+			bb.add(d, 2).add(Cardinal.UP, 3).grow(Cardinal.orthogonal(d));
+			RectSolid.fill(editor, rand, bb, wall);
 			
 			for(Cardinal orth : Cardinal.orthogonal(d)) {
-				Coord pos = new Coord(origin);
-				pos.add(d, 2);
-				pos.add(Cardinal.UP, 2);
-				pos.add(orth);
-				stair.setOrientation(Cardinal.reverse(orth), true);
-				stair.set(editor, pos);
+				Coord pos = origin.copy().add(d, 2).add(Cardinal.UP, 2).add(orth);
+				stair.setOrientation(Cardinal.reverse(orth), true).set(editor, pos);
 			}
 		}
 		
 		this.settings.getWallFragment(rand).generate(editor, rand, theme, origin, dir);
 		this.settings.getWallFragment(rand).generate(editor, rand, theme, origin, Cardinal.left(dir));
 		
-		Coord pos = new Coord(origin);
-		if(rand.nextInt() == 0) Spawner.generate(editor, rand, pos);		
+		if(rand.nextInt() == 0) Spawner.generate(editor, rand, origin.copy());		
 	}
 	
 	@Override
