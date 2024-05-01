@@ -14,6 +14,10 @@ public class BoundingBox implements IBounded{
 	private Coord start;
 	private Coord end;
 	
+	public static BoundingBox of(Coord origin) {
+		return new BoundingBox(origin);
+	}
+	
 	public BoundingBox(Coord origin) {
 		this.start = origin.copy();
 		this.end = origin.copy();

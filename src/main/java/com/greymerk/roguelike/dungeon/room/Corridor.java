@@ -7,7 +7,9 @@ import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
+import com.greymerk.roguelike.editor.blocks.Air;
 import com.greymerk.roguelike.editor.blocks.stair.IStair;
+import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.editor.shapes.RectHollow;
 import com.greymerk.roguelike.editor.shapes.RectSolid;
 import com.greymerk.roguelike.editor.theme.ITheme;
@@ -24,24 +26,30 @@ public class Corridor extends AbstractRoom implements IRoom{
 		IBlockFactory blocks = theme.getPrimary().getWall();
 		IStair stairs = theme.getPrimary().getStair();
 		
-		Coord start = worldPos.copy();
-		start.add(new Coord(-3, -1, -3));
-		Coord end = worldPos.copy();
-		end.add(new Coord(3, 4, 3));
+		BoundingBox bb = BoundingBox.of(worldPos);
+		bb.grow(Cardinal.directions, 3).grow(Cardinal.DOWN).grow(Cardinal.UP, 3);
+		RectHollow.fill(editor, rand, bb, blocks, false, true);
 		
-		RectHollow.fill(editor, rand, start, end, blocks, false, true);
+		bb = BoundingBox.of(worldPos);
+		bb.grow(Cardinal.directions).add(Cardinal.UP, 3);
+		RectSolid.fill(editor, rand, bb, Air.get());
 		
 		for(Cardinal dir : Cardinal.directions) {
-			start = worldPos.copy();
-			start.add(dir, 2);
-			start.add(Cardinal.left(dir), 2);
-			end = start.copy();
-			start.add(Cardinal.DOWN);
-			end.add(Cardinal.UP, 3);
-			RectSolid.fill(editor, rand, start, end, theme.getSecondary().getPillar());
-			start = end.copy();
-			end.add(Cardinal.right(dir), 3);
-			RectSolid.fill(editor, rand, start, end, blocks);
+			
+			bb = BoundingBox.of(worldPos);
+			bb.add(dir, 2).add(Cardinal.left(dir), 2).grow(Cardinal.UP, 2);
+			RectSolid.fill(editor, rand, bb, theme.getSecondary().getPillar());
+			
+			bb.add(Cardinal.UP, 2);
+			RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall());
+			
+			bb = BoundingBox.of(worldPos);
+			bb.add(dir, 2).add(Cardinal.UP, 3).grow(Cardinal.orthogonal(dir));
+			RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall());
+			
+			bb = BoundingBox.of(worldPos);
+			bb.add(dir, 2).add(Cardinal.DOWN).grow(Cardinal.orthogonal(dir)).grow(Cardinal.left(dir));
+			RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall());
 			
 			for(Cardinal orth : Cardinal.orthogonal(dir)) {
 				Coord pos = worldPos.copy();
@@ -56,14 +64,10 @@ public class Corridor extends AbstractRoom implements IRoom{
 			
 		}
 		
-		start = new Coord(worldPos);
-		start.add(Cardinal.DOWN);
-		end = new Coord(start);
-		start.add(Cardinal.NORTH);
-		start.add(Cardinal.WEST);
-		end.add(Cardinal.SOUTH);
-		end.add(Cardinal.EAST);
-		RectSolid.fill(editor, rand, start, end, theme.getPrimary().getFloor());
+		bb = BoundingBox.of(worldPos);
+		bb.add(Cardinal.DOWN);
+		bb.grow(Cardinal.directions);
+		RectSolid.fill(editor, rand, bb, theme.getPrimary().getFloor());
 		
 		for(Cardinal dir : Cardinal.directions) {
 			Coord pos = worldPos.copy();
@@ -104,5 +108,4 @@ public class Corridor extends AbstractRoom implements IRoom{
 	public String getName() {
 		return Room.CORRIDOR.name();
 	}
-
 }
