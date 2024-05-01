@@ -7,6 +7,8 @@ public interface IEntity {
 
 	public void setSlot(EquipmentSlot slot, ItemStack item);
 	
+	public void clear();
+	
 	public void setMobClass(MobType type, boolean clear);
 	
 	public void setChild(boolean child);

@@ -20,6 +20,16 @@ public class MetaEntity implements IEntity {
 	public void setSlot(EquipmentSlot slot, ItemStack item) {
 		mob.equipStack(slot, item);
 	}
+	
+	@Override
+	public void clear() {
+		mob.equipStack(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
+		mob.equipStack(EquipmentSlot.OFFHAND, ItemStack.EMPTY);
+		mob.equipStack(EquipmentSlot.HEAD, ItemStack.EMPTY);
+		mob.equipStack(EquipmentSlot.CHEST, ItemStack.EMPTY);
+		mob.equipStack(EquipmentSlot.LEGS, ItemStack.EMPTY);
+		mob.equipStack(EquipmentSlot.FEET, ItemStack.EMPTY);
+	}
 
 	@Override
 	public void setMobClass(MobType type, boolean clear) {

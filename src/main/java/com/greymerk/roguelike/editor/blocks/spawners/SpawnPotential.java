@@ -56,7 +56,7 @@ public class SpawnPotential {
 				default: tool = Equipment.PICK; break;
 				}
 				
-				mob = equipHands(mob, Equipment.getName(tool, Quality.getToolQuality(rand, level)), "minecraft:shield");
+				mob = equipHands(mob, Equipment.getName(tool, Quality.getToolQuality(rand, level)), null);
 				mob = equipArmour(mob, rand, level);
 				
 				potentials.add(getPotential(mob));

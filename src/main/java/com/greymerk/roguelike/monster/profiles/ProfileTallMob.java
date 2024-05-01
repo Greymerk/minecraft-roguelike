@@ -17,6 +17,9 @@ public class ProfileTallMob implements IMonsterProfile {
 
 	@Override
 	public void addEquipment(World world, Random rand, int level, IEntity mob) {
+		DynamicRegistryManager reg = world.getRegistryManager();
+		FeatureSet features = world.getEnabledFeatures();
+		
 		int ilvl = level <= 2 ? level : 2 + rand.nextInt(3);
 		for(EquipmentSlot slot : new EquipmentSlot[]{
 				EquipmentSlot.HEAD,
@@ -24,8 +27,6 @@ public class ProfileTallMob implements IMonsterProfile {
 				EquipmentSlot.LEGS,
 				EquipmentSlot.FEET
 				}){
-			DynamicRegistryManager reg = world.getRegistryManager();
-			FeatureSet features = world.getEnabledFeatures();
 			ItemStack item = Loot.getEquipmentBySlot(features, reg, rand, Slot.getSlot(slot), ilvl, Enchant.canEnchant(world.getDifficulty(), rand, level));
 			mob.setSlot(slot, item);
 		}

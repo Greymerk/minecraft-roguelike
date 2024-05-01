@@ -23,19 +23,20 @@ public class EntityLoadEvent implements Load{
 	@Override
 	public void onLoad(Entity entity, ServerWorld world) {
 		if(!(entity instanceof SkeletonEntity || entity instanceof ZombieEntity)) return;
+		Random rand = world.getRandom();
 		MobEntity mob = (MobEntity)entity;
 		
 		Map<RegistryEntry<StatusEffect>, StatusEffectInstance> effects = mob.getActiveStatusEffects();
 		if(!effects.containsKey(StatusEffects.MINING_FATIGUE)) return;
 		
 		StatusEffectInstance effect = effects.get(StatusEffects.MINING_FATIGUE);
-		int level = effect.getAmplifier();
+		int amp = effect.getAmplifier();
+		//int level = rand.nextInt(amp) + 1;
 		mob.removeStatusEffect(StatusEffects.MINING_FATIGUE);
 		
 		IEntity monster = new MetaEntity(mob);
-		Random random = world.getRandom();
-		MonsterProfile.equip(world, random, random.nextInt(level + 1), monster);
 		
-		//System.out.println("Set roguelike on " + mob.getType().toString());
+		System.out.println("level: " + amp);
+		MonsterProfile.equip(world, rand, amp, monster);
 	}
 }

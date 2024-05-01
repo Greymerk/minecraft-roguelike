@@ -1,5 +1,6 @@
 package com.greymerk.roguelike.editor.blocks.spawners;
 
+import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
 
@@ -67,7 +68,7 @@ public enum Spawner {
 	
 	public static void generate(IWorldEditor editor, Random rand, Coord pos, Spawner type) {
 		
-		int difficulty = 1;
+		int difficulty = Difficulty.fromY(pos.getY());
 		new Spawnable(type).generate(editor, rand, pos, difficulty);
 	
 	}

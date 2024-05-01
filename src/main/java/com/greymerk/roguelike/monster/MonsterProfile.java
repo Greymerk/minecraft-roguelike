@@ -67,7 +67,4 @@ public enum MonsterProfile {
 		
 		profile.addEquipment(world, rand, level, mob);
 	}
-	
-
-	
 }
