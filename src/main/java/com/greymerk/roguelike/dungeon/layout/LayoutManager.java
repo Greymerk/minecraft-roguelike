@@ -31,6 +31,7 @@ public class LayoutManager {
 	private List<Floor> floors;
 	private IDungeonSettings settings;
 	
+	final int ROOMS_PER_LEVEL = 20;
 	
 	public LayoutManager(Coord origin) {
 		this.origin = origin;
@@ -39,7 +40,7 @@ public class LayoutManager {
 	}
 	
 	public void generate(IWorldEditor editor) {
-		Debug debug = new Debug(editor.getWorldDirectory());
+		
 		Random rand = editor.getRandom(origin);
 		
 		for(Floor floor : this.floors) {
@@ -51,7 +52,8 @@ public class LayoutManager {
 			}
 			
 			RoomProvider roomProvider = this.settings.getLevel(floor.getOrigin().getY()).getRooms();
-			List<Room> rooms = roomProvider.getRooms(rand, (level * 2) + (20 - level));
+			
+			List<Room> rooms = roomProvider.getRooms(rand, ROOMS_PER_LEVEL);
 
 			for(Room r : rooms) {
 				IRoom room = Room.getInstance(r, this.settings.getLevel(floor.getOrigin().getY()));
@@ -62,7 +64,9 @@ public class LayoutManager {
 			
 			floor.getRooms().forEach(r -> r.determineEntrances(floor, r.getFloorPos()));
 		}
-		debug.toFile(origin.getX() + "_" + origin.getZ() + ".json", this.asJson());
+		
+		//Debug debug = new Debug(editor.getWorldDirectory());
+		//debug.toFile(origin.getX() + "_" + origin.getZ() + ".json", this.asJson());
 	}
 	
 	private void addStair(IWorldEditor editor, Random rand, Floor floor) {

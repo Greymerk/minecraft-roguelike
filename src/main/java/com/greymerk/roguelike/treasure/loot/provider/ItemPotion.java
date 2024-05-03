@@ -15,10 +15,17 @@ public class ItemPotion extends ItemBase{
 
 	@Override
 	public ItemStack getLootItem(Random rand, int level) {
+		
+		if(rand.nextInt(5) == 0) return PotionMixture.getPotion(rand, PotionMixture.LAUDANUM);
+		
 		if(level > 2 && rand.nextBoolean()) {
 			return PotionMixture.getPotion(rand, PotionMixture.VILE);
 		} else if(level > 0 && rand.nextBoolean()) {
 			return PotionMixture.getRandom(rand);
+		}
+		
+		if(rand.nextInt(10) == 0) {
+			return PotionMixture.getBooze(rand);
 		}
 		
 		final PotionItem[] potions = new PotionItem[]{

@@ -22,15 +22,15 @@ public class LevelSettingsMossy extends LevelSettingsBase implements ILevelSetti
 		
 		this.rooms = new RoomProvider();
 		rooms.addRandomChoice(Room.CORRIDOR, 10);
-		rooms.addRandomChoice(Room.CISTERN, 5);
-		rooms.addRandomChoice(Room.CROSS, 2);
+		rooms.addRandomChoice(Room.CISTERN, 3);
 		rooms.addRandomChoice(Room.CRYPT, 2);
-		rooms.addRandomChoice(Room.OSSUARY, 2);
+		rooms.addRoomOnce(Room.OSSUARY);
+		rooms.addRoomOnce(Room.CROSS);
 		rooms.addRoomOnce(Room.RESERVOIR);
 		rooms.addRoomOnce(Room.CREEPER);
 		
 		this.walls = new WeightedRandomizer<Fragment>(10);
-		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_EMPTY, 10));
+		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_EMPTY, 8));
 		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_SPAWNER, 1));
 		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_CHEST, 1));
 		

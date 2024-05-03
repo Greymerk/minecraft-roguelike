@@ -23,9 +23,9 @@ public class LevelSettingsCrumbledMossy extends LevelSettingsBase implements ILe
 		this.rooms = new RoomProvider();
 		rooms.addRandomChoice(Room.CORRIDOR, 10);
 		rooms.addRandomChoice(Room.CISTERN, 5);
-		rooms.addRandomChoice(Room.CROSS, 2);
 		rooms.addRandomChoice(Room.CRYPT, 2);
-		rooms.addRandomChoice(Room.OSSUARY, 2);
+		rooms.addRoomOnce(Room.CROSS);
+		rooms.addRoomOnce(Room.OSSUARY);
 		rooms.addRoomOnce(Room.RESERVOIR);
 		rooms.addRoomOnce(Room.CREEPER);
 		

@@ -17,8 +17,8 @@ public class LevelSettingsDarkOak extends LevelSettingsBase implements ILevelSet
 		this.theme = Theme.getTheme(Theme.DARKOAK);
 		
 		this.rooms = new RoomProvider();
-		rooms.addRandomChoice(Room.CORRIDOR, 1);
-		rooms.addRandomChoice(Room.CROSS, 1);
+		rooms.addRandomChoice(Room.CORRIDOR, 10);
+		rooms.addRandomChoice(Room.CROSS, 2);
 		
 		this.walls = new WeightedRandomizer<Fragment>(10);
 		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_EMPTY, 10));
