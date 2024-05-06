@@ -5,7 +5,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.google.gson.JsonArray;
-import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 
 public class CellManager implements Iterable<Cell>{
@@ -55,7 +54,7 @@ public class CellManager implements Iterable<Cell>{
 			if(c.getFloorPos().equals(floorPos)) return c;
 		}
 		
-		return new Cell(new Coord(floorPos), CellState.EMPTY);
+		return new Cell(floorPos.copy(), CellState.EMPTY);
 	}
 	
 	public List<Cell> getCells(){
@@ -70,44 +69,6 @@ public class CellManager implements Iterable<Cell>{
 		return cl;
 	}
 	
-	public Cell getNearestPotential(Coord floorPos) {
-		List<Cell> potentials = this.getCells(CellState.POTENTIAL);
-		if(potentials.size() == 0) return new Cell(floorPos, CellState.EMPTY);
-		
-		Cell nearest = potentials.get(0);
-		double dist = floorPos.distance(nearest.getFloorPos());
-		for(Cell cell : potentials) {
-			double d = floorPos.distance(cell.getFloorPos());
-			if(d < dist) {
-				dist = d;
-				nearest = cell;
-			}
-		}
-		
-		return nearest;
-	}
-	
-	public void addCellWalls() {
-		for(Cell c : this.cells) {
-			if(c.getState() == CellState.POTENTIAL) continue;
-			
-			Coord fp = c.getFloorPos();
-			for(Cardinal dir : Cardinal.directions) {
-				Coord pos = new Coord(fp);
-				pos.add(dir);
-				Cell other = this.get(pos);
-				if(other.getState() == CellState.EMPTY
-					|| other.getState() == CellState.POTENTIAL) {
-					c.addWall(dir);
-				}
-				if(other.getState() == CellState.OBSTRUCTED
-					&& other.getWalls().contains(Cardinal.reverse(dir))) {
-					c.addWall(dir);
-				}
-			}
-		}
-	}
-
 	public Iterator<Cell> iterator(){
 		return this.cells.iterator();
 	}

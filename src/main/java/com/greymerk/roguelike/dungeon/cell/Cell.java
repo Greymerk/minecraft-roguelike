@@ -64,6 +64,10 @@ public class Cell {
 		this.walls.add(dir);
 	}
 	
+	public boolean hasWall(Cardinal dir) {
+		return this.walls.contains(dir);
+	}
+	
 	public List<Cardinal> getWalls(){
 		return this.walls;
 	}

@@ -12,15 +12,21 @@ import net.minecraft.util.math.random.Random;
 public class RoomProvider {
 
 	List<Room> addOnce;
+	List<Room> addAfter;
 	WeightedRandomizer<Room> random;
 	
 	public RoomProvider() {
 		this.addOnce = new ArrayList<Room>();
+		this.addAfter = new ArrayList<Room>();
 		this.random = new WeightedRandomizer<Room>();
 	}
 	
 	public void addRoomOnce(Room room) {
 		this.addOnce.add(room);
+	}
+	
+	public void addRoomAfter(Room room) {
+		this.addAfter.add(room);
 	}
 	
 	public void addRandomChoice(Room room, int weight) {
@@ -36,6 +42,7 @@ public class RoomProvider {
 			rooms.add(random.get(rand));
 		}
 		RandHelper.shuffle(rooms, rand);
+		this.addAfter.forEach(room -> rooms.add(room));
 		return rooms;
 	}
 	

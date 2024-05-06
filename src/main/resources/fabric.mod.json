@@ -22,11 +22,7 @@
 		]
 	},
 	"mixins": [
-		"roguelike.mixins.json",
-		{
-			"config": "modid.client.mixins.json",
-			"environment": "client"
-		}
+		"roguelike.mixins.json"
 	],
 	"depends": {
 		"fabricloader": ">=0.14.22",

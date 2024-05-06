@@ -7,7 +7,6 @@ import java.util.List;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.greymerk.roguelike.debug.Debug;
 import com.greymerk.roguelike.dungeon.Dungeon;
 import com.greymerk.roguelike.dungeon.Floor;
 import com.greymerk.roguelike.dungeon.cell.Cell;
@@ -42,7 +41,7 @@ public class LayoutManager {
 	public void generate(IWorldEditor editor) {
 		
 		Random rand = editor.getRandom(origin);
-		
+				
 		for(Floor floor : this.floors) {
 			int level = Dungeon.getLevelFromY(floor.getOrigin().getY());
 			
@@ -55,10 +54,12 @@ public class LayoutManager {
 			
 			List<Room> rooms = roomProvider.getRooms(rand, ROOMS_PER_LEVEL);
 
-			for(Room r : rooms) {
+			rooms.forEach(r -> {
 				IRoom room = Room.getInstance(r, this.settings.getLevel(floor.getOrigin().getY()));
-				this.placeRoom(room, rand, floor);
-			}
+				if(!this.placeRoom(room, rand, floor)){
+					System.out.println("failed to place: " + room.getName());
+				};
+			});
 			
 			if(level > 0) this.addStair(editor, rand, floor);
 			
@@ -127,6 +128,9 @@ public class LayoutManager {
 	}
 	
 	public boolean placeRoom(IRoom room, Random rand, Floor floor) {
+		
+		if(room.isDirectional()) return this.placeDirectionalRoom(room, rand, floor);
+		
 		List<Cell> potentials = floor.getCells(CellState.POTENTIAL);
 		Collections.sort(potentials, new CenterSort());
 		CellManager roomCells = room.getCells();
@@ -134,52 +138,59 @@ public class LayoutManager {
 		roomPotentials.removeIf(c -> c.getFloorPos().getY() != 0);
 		RandHelper.shuffle(roomPotentials, rand);
 		
-		if(room.isDirectional()) {
+		for(Cell rp : roomPotentials) {			
 			for(Cell p : potentials) {
 				for(Cardinal dir : Cardinal.randDirs(rand)) {
 					room.setDirection(dir);
-					Coord fp = p.getFloorPos();
-					fp.add(Cardinal.reverse(dir));
-					Cell c = floor.getCell(fp);
-					if(c.getState() == CellState.OBSTRUCTED) {
-						if(c.getWalls().contains(dir)) continue;
-						Coord rfp = p.getFloorPos();
-						Coord rwp = p.getWorldPos(floor.getOrigin());
-						boolean fit = this.roomFits(room, rfp, floor);
-						if(fit) this.addRoom(room, rfp, rwp, floor);
-						return true;
-					}
+					Coord pos = p.getFloorPos();
+					pos.add(Cardinal.reverse(room.getDirection()));
+					Cell c = floor.getCell(pos);
+					if(c.isRoom() && (!c.hasWall(room.getDirection()))) {
+						Coord roomPos = c.getFloorPos().copy().add(rp.getFloorPos());
+						Cell roomCenter = floor.getCell(roomPos);
+						if(this.roomFits(room, roomPos, floor)) {
+							this.addRoom(room, roomPos, roomCenter.getWorldPos(floor.getOrigin()), floor);
+							return true;
+						}
+					}	
 				}
 			}
-		} else {
-			for(Cell rp : roomPotentials) {			
-				for(Cell p : potentials) {
-					for(Cardinal dir : Cardinal.randDirs(rand)) {
-						room.setDirection(dir);
-						Coord pos = p.getFloorPos();
-						pos.add(Cardinal.reverse(room.getDirection()));
-						Cell c = floor.getCell(pos);
-						if(c.isRoom() && (!c.getWalls().contains(room.getDirection()))) {
-							Coord roomPos = c.getFloorPos().copy().add(rp.getFloorPos());
-							Cell roomCenter = floor.getCell(roomPos);
-							if(this.roomFits(room, roomPos, floor)) {
-								this.addRoom(room, roomPos, roomCenter.getWorldPos(floor.getOrigin()), floor);
-								return true;
-							}
-						}	
-					}
-				}
-			}	
-		}
+		}	
+		
 		return false;
+	}
+	
+	public boolean placeDirectionalRoom(IRoom room, Random rand, Floor floor) {
+		List<Cell> potentials = floor.getCells(CellState.POTENTIAL);
+		Collections.sort(potentials, new CenterSort());
+		
+		for(Cell p : potentials) {
+			for(Cardinal dir : Cardinal.randDirs(rand)) {
+				room.setDirection(dir);
+				Coord pfp = p.getFloorPos();
+				pfp.add(Cardinal.reverse(dir));
+				Cell c = floor.getCell(pfp);
+				if(c.getState() == CellState.OBSTRUCTED) {
+					if(c.hasWall(dir)) continue;
+					Coord rfp = p.getFloorPos();
+					Coord rwp = p.getWorldPos(floor.getOrigin());
+					if(this.roomFits(room, rfp, floor)) {
+						this.addRoom(room, rfp, rwp, floor);	
+					}
+					return true;
+				}
+			}
+		}
+		
+		return true;
 	}
 	
 	public boolean roomFits(IRoom room, Coord floorPos, Floor floor) {
 		
 		int level = this.floors.indexOf(floor);
-		CellManager cells = room.getCells();
+		CellManager roomCells = room.getCells();
 		
-		for(Cell rc : cells) {
+		for(Cell rc : roomCells) {
 			if(rc.getState() != CellState.OBSTRUCTED) continue;
 			if(rc.getLevelOffset() + level >= this.floors.size()) return false;
 			if(rc.getLevelOffset() != 0) continue;
@@ -191,19 +202,7 @@ public class LayoutManager {
 		}
 		return true;
 	}
-	
-	public boolean outerWallBlockingPassage(Cell cell, Coord fp, Floor f) {
-		if(cell.getWalls().isEmpty()) return false;
-		for(Cardinal dir : cell.getWalls()) {
-			Coord pos = fp.copy();
-			pos.add(dir);
-			Cell other = f.getCell(pos);
-			if(!other.isRoom()) continue;
-			if(!other.getWalls().contains(Cardinal.reverse(dir))) return true;
-		}
-		return false;
-	}
-	
+		
 	public JsonObject asJson() {
 		JsonObject json = new JsonObject();
 		JsonArray jsonFloors = new JsonArray();
