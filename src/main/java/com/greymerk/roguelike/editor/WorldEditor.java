@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import com.greymerk.roguelike.treasure.ITreasureChest;
+import com.greymerk.roguelike.treasure.loot.Loot;
 import com.greymerk.roguelike.treasure.loot.rules.LootRuleManager;
 import com.greymerk.roguelike.treasure.loot.rules.RoguelikeLootRules;
 
@@ -15,6 +16,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.TagKey;
@@ -196,6 +198,10 @@ public class WorldEditor implements IWorldEditor{
 	@Override
 	public void fillChest(ITreasureChest chest, Random rand) {
 		this.loot.process(rand, chest);
+	}
+	
+	public ItemStack getLootItem(Loot type, Random rand, int level) {
+		return Loot.getProvider(type, level, this.world.getEnabledFeatures(), getRegistryManager()).get(rand);
 	}
 
 	@Override

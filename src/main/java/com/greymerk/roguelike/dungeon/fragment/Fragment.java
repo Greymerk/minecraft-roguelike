@@ -8,6 +8,7 @@ import com.greymerk.roguelike.dungeon.fragment.parts.CryptFragment;
 import com.greymerk.roguelike.dungeon.fragment.wall.WallBannerFragment;
 import com.greymerk.roguelike.dungeon.fragment.wall.WallCandles;
 import com.greymerk.roguelike.dungeon.fragment.wall.WallChest;
+import com.greymerk.roguelike.dungeon.fragment.wall.WallDecoratedPot;
 import com.greymerk.roguelike.dungeon.fragment.wall.WallEmpty;
 import com.greymerk.roguelike.dungeon.fragment.wall.WallFlowers;
 import com.greymerk.roguelike.dungeon.fragment.wall.WallSpawner;
@@ -22,7 +23,7 @@ public enum Fragment {
 
 	CRYPT, CELL_SUPPORT, ARCH,
 	WALL_FLOWER, WALL_BANNER, WALL_CHEST, WALL_SPAWNER, WALL_CANDLES,
-	WALL_EMPTY,
+	WALL_EMPTY, WALL_DECORATED_POT,
 	ALCOVE_SILVERFISH, ALCOVE_SAFETY;
 	
 	public static void generate(Fragment type, IWorldEditor editor, Random rand, ITheme theme, Coord pos) {
@@ -45,6 +46,7 @@ public enum Fragment {
 		case WALL_CHEST: return new WallChest();
 		case WALL_CANDLES: return new WallCandles();
 		case WALL_EMPTY: return new WallEmpty();
+		case WALL_DECORATED_POT: return new WallDecoratedPot();
 		case ALCOVE_SILVERFISH: return new SilverfishNest();
 		case ALCOVE_SAFETY: return new SafetyCell();
 		default: return null;
