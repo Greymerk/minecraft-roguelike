@@ -9,6 +9,7 @@ import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.blocks.spawners.Spawner;
 import com.greymerk.roguelike.editor.blocks.stair.IStair;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
+import com.greymerk.roguelike.editor.filter.DecoratedPotFilter;
 import com.greymerk.roguelike.editor.shapes.RectHollow;
 import com.greymerk.roguelike.editor.shapes.RectSolid;
 
@@ -65,6 +66,10 @@ public class CrossRoom extends AbstractMediumRoom implements IRoom {
 			pos.add(Cardinal.left(dir), 6);
 			cornerCell(editor, rand, pos, dir);
 		}
+		
+		bb = BoundingBox.of(origin);
+		bb.grow(Cardinal.directions, 8);
+		new DecoratedPotFilter().apply(editor, rand, theme, bb);
 	}
 
 	private void cornerCell(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {

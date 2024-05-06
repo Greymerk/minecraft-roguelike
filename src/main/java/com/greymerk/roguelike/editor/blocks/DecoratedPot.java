@@ -23,6 +23,10 @@ import net.minecraft.util.math.random.Random;
 public class DecoratedPot {
 
 	public static void set(IWorldEditor editor, Random rand, Coord origin) {
+		set(editor, rand, origin, Loot.JUNK);
+	}
+	
+	public static void set(IWorldEditor editor, Random rand, Coord origin, Loot type) {
 		
 		MetaBlock pot = new MetaBlock(Blocks.DECORATED_POT);
 
@@ -47,7 +51,7 @@ public class DecoratedPot {
 		
 		potEntity.readComponents(potEntity.getComponents(), changes.build());		
 
-		ItemStack loot = editor.getLootItem(Loot.JUNK, rand, Difficulty.fromY(origin.getY()));
+		ItemStack loot = editor.getLootItem(type, rand, Difficulty.fromY(origin.getY()));
 		potEntity.setStack(loot);
 		
 		potEntity.markDirty();
@@ -57,7 +61,7 @@ public class DecoratedPot {
 	private static IWeighted<Item> getFaceRoller(){
 		
 		WeightedRandomizer<Item> faceroll = new WeightedRandomizer<Item>();
-		faceroll.add(new WeightedChoice<Item>(Items.BRICK, 10));
+		faceroll.add(new WeightedChoice<Item>(Items.BRICK, 50));
 		faceroll.add(new WeightedChoice<Item>(Items.ANGLER_POTTERY_SHERD, 1));
 		faceroll.add(new WeightedChoice<Item>(Items.ARCHER_POTTERY_SHERD, 1));
 		faceroll.add(new WeightedChoice<Item>(Items.ARMS_UP_POTTERY_SHERD, 1));
