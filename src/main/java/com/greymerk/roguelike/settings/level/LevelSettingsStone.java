@@ -8,7 +8,6 @@ import com.greymerk.roguelike.settings.ILevelSettings;
 import com.greymerk.roguelike.settings.LevelSettings;
 import com.greymerk.roguelike.settings.LevelSettingsBase;
 import com.greymerk.roguelike.util.WeightedChoice;
-import com.greymerk.roguelike.util.WeightedRandomizer;
 
 public class LevelSettingsStone extends LevelSettingsBase implements ILevelSettings {
 
@@ -23,11 +22,13 @@ public class LevelSettingsStone extends LevelSettingsBase implements ILevelSetti
 		rooms.addRoomOnce(Room.CROSS);
 		rooms.addRoomOnce(Room.OSSUARY);
 		
-		this.walls = new WeightedRandomizer<Fragment>();
 		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_EMPTY, 10));
 		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_SPAWNER, 1));
 		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_CHEST, 1));
 		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_BOOK_SHELF, 1));
+		
+		this.alcoves.add(this.walls);
+		this.alcoves.add(new WeightedChoice<Fragment>(Fragment.ALCOVE_CRYPT, 1));
 	}
 
 	@Override

@@ -23,8 +23,8 @@ public abstract class LevelSettingsBase implements ILevelSettings {
 	protected List<IFilter> filters;
 	
 	public LevelSettingsBase() {
-		this.walls = new WeightedRandomizer<Fragment>();
-		this.alcoves = new WeightedRandomizer<Fragment>();
+		this.walls = new WeightedRandomizer<Fragment>(10);
+		this.alcoves = new WeightedRandomizer<Fragment>(10);
 		this.rooms = new RoomProvider();
 	}
 	
