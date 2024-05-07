@@ -20,6 +20,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.TagKey;
+import net.minecraft.resource.featuretoggle.FeatureSet;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.WorldSavePath;
@@ -212,6 +213,10 @@ public class WorldEditor implements IWorldEditor{
 	public DynamicRegistryManager getRegistryManager() {
 		DynamicRegistryManager reg = this.world.getRegistryManager();
 		return reg;
+	}
+	
+	public FeatureSet getFeatureSet() {
+		return this.world.getEnabledFeatures();
 	}
 	
 	public Path getWorldDirectory() {

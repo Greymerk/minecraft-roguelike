@@ -110,4 +110,17 @@ public enum Enchant {
 		
 		return item;
 	}
+	
+	public static ItemStack getBook(FeatureSet features, Random rand, int diff) {
+		ItemStack book = new ItemStack(Items.BOOK);
+		int level = getLevel(rand, diff);
+		return enchantItem(features, rand, book, level);
+	}
+	
+	public static ItemStack getBook(Enchant type, Random rand) {
+		Enchantment e = getEnchant(type);
+		ItemStack item = new ItemStack(Items.ENCHANTED_BOOK);
+		item.addEnchantment(e, e.getMaxLevel());
+		return item;
+	}
 }

@@ -8,6 +8,7 @@ import com.greymerk.roguelike.treasure.loot.Loot;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.DynamicRegistryManager;
+import net.minecraft.resource.featuretoggle.FeatureSet;
 import net.minecraft.util.math.random.Random;
 
 public interface IWorldEditor {
@@ -47,6 +48,8 @@ public interface IWorldEditor {
 	public int getMaxDepth();
 	
 	public DynamicRegistryManager getRegistryManager();
+	
+	public FeatureSet getFeatureSet();
 	
 	public Path getWorldDirectory();
 
