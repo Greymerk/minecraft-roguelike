@@ -14,7 +14,7 @@ import net.minecraft.nbt.NbtCompound;
 
 public enum Room {
 
-	CORRIDOR, ENTRANCE, STAIRWAY, CROSS, BEDROOM, HALL, CRYPT,
+	CORRIDOR, ENTRANCE, STAIRWAY, CROSS, BEDROOM, CRYPT,
 	RESERVOIR, CISTERN, OSSUARY, KITCHEN, CREEPER, ENDER,
 	ABYSS, PRISON;
 	
@@ -25,7 +25,6 @@ public enum Room {
 		case STAIRWAY: return new Stairway();
 		case CROSS: return new CrossRoom();
 		case BEDROOM: return new BedRoom();
-		case HALL: return new GreatHallRoom();
 		case CRYPT: return new CryptRoom();
 		case RESERVOIR: return new ReservoirRoom();
 		case CISTERN: return new CisternRoom();

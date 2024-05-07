@@ -56,5 +56,4 @@ public enum Fragment {
 		default: return null;
 		}
 	}
-	
 }

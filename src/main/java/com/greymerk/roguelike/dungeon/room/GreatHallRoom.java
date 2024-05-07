@@ -36,7 +36,7 @@ public class GreatHallRoom extends AbstractLargeRoom implements IRoom {
 	
 	@Override
 	public String getName() {
-		return Room.HALL.name();
+		return "";
 	}
 
 }
