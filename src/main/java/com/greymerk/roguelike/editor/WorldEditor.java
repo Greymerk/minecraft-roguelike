@@ -29,6 +29,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.CheckedRandom;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.world.GameRules;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
@@ -221,5 +222,11 @@ public class WorldEditor implements IWorldEditor{
 	
 	public Path getWorldDirectory() {
 		return this.world.getServer().getSavePath(WorldSavePath.ROOT);
+	}
+	
+	public GameRules getGameRules() {
+		MinecraftServer server = world.getServer();
+		GameRules rules = server.getGameRules();
+		return rules;
 	}
 }

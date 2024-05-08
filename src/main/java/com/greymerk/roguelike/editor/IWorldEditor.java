@@ -10,6 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.resource.featuretoggle.FeatureSet;
 import net.minecraft.util.math.random.Random;
+import net.minecraft.world.GameRules;
 
 public interface IWorldEditor {
 	
@@ -52,5 +53,6 @@ public interface IWorldEditor {
 	public FeatureSet getFeatureSet();
 	
 	public Path getWorldDirectory();
-
+	
+	public GameRules getGameRules();
 }
