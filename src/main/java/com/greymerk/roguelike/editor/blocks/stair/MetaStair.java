@@ -58,7 +58,7 @@ public class MetaStair extends MetaBlock implements IStair{
         Direction direction3;
         Direction direction2;
         Direction direction = state.get(StairsBlock.FACING);
-        BlockState blockState = world.getBlock(new Coord(pos.offset(direction))).getState();
+        BlockState blockState = world.getBlock(Coord.of(pos.offset(direction))).getState();
         if (StairsBlock.isStairs(blockState) 
         		&& state.get(StairsBlock.HALF) == blockState.get(StairsBlock.HALF) 
         		&& (direction2 = blockState.get(StairsBlock.FACING)).getAxis() != state.get(StairsBlock.FACING).getAxis() 
@@ -68,7 +68,7 @@ public class MetaStair extends MetaBlock implements IStair{
             }
             return StairShape.OUTER_RIGHT;
         }
-        BlockState blockState2 = world.getBlock(new Coord(pos.offset(direction.getOpposite()))).getState();
+        BlockState blockState2 = world.getBlock(Coord.of(pos.offset(direction.getOpposite()))).getState();
         if (StairsBlock.isStairs(blockState2) && state.get(StairsBlock.HALF) == blockState2.get(StairsBlock.HALF) 
         		&& (direction3 = blockState2.get(StairsBlock.FACING)).getAxis() != state.get(StairsBlock.FACING).getAxis() 
         		&& isDifferentOrientation(state, world, pos, direction3)) {
@@ -81,7 +81,7 @@ public class MetaStair extends MetaBlock implements IStair{
     }
 
     private static boolean isDifferentOrientation(BlockState state, IWorldEditor world, BlockPos pos, Direction dir) {
-        BlockState blockState = world.getBlock(new Coord(pos.offset(dir))).getState();
+        BlockState blockState = world.getBlock(Coord.of(pos.offset(dir))).getState();
         return !StairsBlock.isStairs(blockState) 
         		|| blockState.get(StairsBlock.FACING) != state.get(StairsBlock.FACING) 
         		|| blockState.get(StairsBlock.HALF) != state.get(StairsBlock.HALF);

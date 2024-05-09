@@ -2,6 +2,7 @@ package com.greymerk.roguelike.editor;
 
 import java.nio.file.Path;
 
+import com.greymerk.roguelike.state.RoguelikeState;
 import com.greymerk.roguelike.treasure.ITreasureChest;
 import com.greymerk.roguelike.treasure.loot.Loot;
 
@@ -55,4 +56,6 @@ public interface IWorldEditor {
 	public Path getWorldDirectory();
 	
 	public GameRules getGameRules();
+	
+	public RoguelikeState getState();
 }

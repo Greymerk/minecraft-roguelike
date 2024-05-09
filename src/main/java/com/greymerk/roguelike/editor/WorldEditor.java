@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import com.greymerk.roguelike.state.RoguelikeState;
 import com.greymerk.roguelike.treasure.ITreasureChest;
 import com.greymerk.roguelike.treasure.loot.Loot;
 import com.greymerk.roguelike.treasure.loot.rules.LootRuleManager;
@@ -228,5 +229,10 @@ public class WorldEditor implements IWorldEditor{
 		MinecraftServer server = world.getServer();
 		GameRules rules = server.getGameRules();
 		return rules;
+	}
+	
+	public RoguelikeState getState() {
+		MinecraftServer server = world.getServer();
+		return RoguelikeState.getServerState(server);
 	}
 }

@@ -42,7 +42,7 @@ public enum Room {
 		Room type = get(tag.get("type").asString());
 		IRoom room = fromType(type);
 		room.setLevelSettings(LevelSettings.get(tag.getString("settings")));
-		room.setWorldPos(new Coord(tag.getCompound("pos")));
+		room.setWorldPos(Coord.of(tag.getCompound("pos")));
 		int dirValue = tag.getInt("dir");
 		room.setDirection(Arrays.asList(Cardinal.values()).get(dirValue));
 		room.setGenerated(tag.getBoolean("generated"));

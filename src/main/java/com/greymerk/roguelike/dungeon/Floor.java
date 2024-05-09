@@ -87,7 +87,7 @@ public class Floor {
 	}
 			
 	public Coord getOrigin() {
-		return new Coord(this.origin);
+		return this.origin.copy();
 	}
 
 	public JsonElement asJson() {

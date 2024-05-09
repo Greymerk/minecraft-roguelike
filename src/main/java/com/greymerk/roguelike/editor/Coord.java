@@ -19,6 +19,17 @@ public class Coord {
 	private int y;
 	private int z;
 	
+	public static Coord of(BlockPos bp){
+		return new Coord(bp.getX(), bp.getY(), bp.getZ());
+	}
+	
+	public static Coord of(NbtCompound tag) {
+		int x = tag.getInt("x");
+		int y = tag.getInt("y");
+		int z = tag.getInt("z");
+		return new Coord(x, y, z);
+	}
+	
 	public Coord(int x, int y, int z){
 		this.x = x;
 		this.y = y;
@@ -31,17 +42,13 @@ public class Coord {
 		this.z = other.getZ();
 	}
 	
+	/*
 	public Coord(NbtCompound tag){
 		this.x = tag.getInt("x");
 		this.y = tag.getInt("y");
 		this.z = tag.getInt("z");
 	}
-	
-	public Coord(BlockPos bp){
-		this.x = bp.getX();
-		this.y = bp.getY();
-		this.z = bp.getZ();
-	}
+	*/
 	
 	public Coord copy() {
 		return new Coord(this);

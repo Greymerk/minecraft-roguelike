@@ -11,7 +11,6 @@ import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.WorldEditor;
 import com.greymerk.roguelike.gamerules.RoguelikeRules;
-import com.greymerk.roguelike.state.RoguelikeState;
 
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.StructureWorldAccess;
@@ -26,7 +25,6 @@ public class ChunkFeatureMixin {
 	public void generateFeatures(StructureWorldAccess world, Chunk chunk, StructureAccessor structureAccessor, CallbackInfo info) {
 		IWorldEditor editor = new WorldEditor(world);
 		if(!editor.getGameRules().getBoolean(RoguelikeRules.GEN_ROGUELIKE_DUNGEONS)) return;
-		RoguelikeState state = RoguelikeState.getServerState(world.getServer());
 		
 		ChunkPos cpos = chunk.getPos();
 		Coord pos = new Coord(cpos.getCenterX(), 200, cpos.getCenterZ());
@@ -34,8 +32,6 @@ public class ChunkFeatureMixin {
 		if(!DungeonPlacement.validChunkPos(world, cpos)) return;
 		if(!Dungeon.canSpawn(editor, new Coord(pos))) return;
 		
-		Dungeon donjon = new Dungeon(new Coord(pos));
-		donjon.generate(editor);
-		state.addDungeon(donjon);
+		Dungeon.generate(editor, pos);
 	}
 }

@@ -26,6 +26,12 @@ public class Dungeon implements Iterable<IRoom>{
 	Coord origin;
 	BoundingBox bb;
 	
+	public static void generate(IWorldEditor editor, Coord pos) {
+		Dungeon donjon = new Dungeon(pos.copy());
+		donjon.generate(editor);
+		editor.getState().addDungeon(donjon);
+	}
+	
 	public Dungeon(Coord pos) {
 		this.rooms = new ArrayList<IRoom>();
 		this.bb = new BoundingBox(pos.copy());
@@ -38,7 +44,7 @@ public class Dungeon implements Iterable<IRoom>{
 		for(NbtElement nbt : rooms) {
 			this.rooms.add(Room.createFromNBT((NbtCompound)nbt));
 		}
-		this.origin = new Coord(tag.getCompound("pos"));
+		this.origin = Coord.of(tag.getCompound("pos"));
 		this.bb = new BoundingBox(tag.getCompound("bounds"));
 	}
 

@@ -33,7 +33,7 @@ public class DungeonPlacement {
 		
 		ChunkPos villageChunk = findVillage(overworld.getSeed(), chunks); 
 		if(villageChunk == null) return false;
-		Coord village = new Coord(villageChunk.getCenterAtY(0));
+		Coord village = Coord.of(villageChunk.getCenterAtY(0));
 		IWorldEditor editor = new WorldEditor(world);
 		Random rand = editor.getRandom(village);
 		
@@ -48,7 +48,7 @@ public class DungeonPlacement {
 				0,
 				rand.nextBetween(-100, 100));
 		
-		Coord chunkCenter = new Coord(cpos.getCenterAtY(0));
+		Coord chunkCenter = Coord.of(cpos.getCenterAtY(0));
 		Coord dirToChunk = chunkCenter.copy().sub(village);
 		Coord projection = dirToChunk.project(dirToDungeon);
 		
