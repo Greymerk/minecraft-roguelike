@@ -3,7 +3,8 @@
 	"id": "roguelike",
 	"version": "${version}",
 	"name": "Roguelike Dungeons",
-	"description": "dunjuns!",
+	
+	"description": "Procedurally generated dungeons",
 	"authors": [
 		"Greymerk"
 	],
@@ -12,7 +13,7 @@
 		"sources": "https://github.com/greymerk"
 	},
 	"license": "CC0-1.0",
-	"icon": "assets/modid/icon.png",
+	"icon": "icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
