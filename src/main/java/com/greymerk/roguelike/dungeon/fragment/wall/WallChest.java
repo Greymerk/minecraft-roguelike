@@ -31,6 +31,7 @@ public class WallChest extends FragmentBase implements IFragment {
 		
 		WeightedRandomizer<Treasure> types = new WeightedRandomizer<Treasure>();
 		types.add(new WeightedChoice<Treasure>(Treasure.SUPPLIES, 3));
+		types.add(new WeightedChoice<Treasure>(Treasure.BLOCKS, 1));
 		types.add(new WeightedChoice<Treasure>(Treasure.WEAPONS, 1));
 		types.add(new WeightedChoice<Treasure>(Treasure.ARMOUR, 1));
 		types.add(new WeightedChoice<Treasure>(Treasure.TOOLS, 1));

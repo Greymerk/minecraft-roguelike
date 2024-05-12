@@ -19,7 +19,7 @@ public enum TallPlant {
 		bottom.withProperty(TallPlantBlock.HALF, DoubleBlockHalf.LOWER);
 		MetaBlock top = new MetaBlock(TallPlant.fromType(type));
 		top.withProperty(TallPlantBlock.HALF, DoubleBlockHalf.UPPER);
-		Coord pos = new Coord(origin);
+		Coord pos = origin.copy();
 		bottom.set(editor, pos);
 		pos.add(Cardinal.UP);
 		top.set(editor, pos);

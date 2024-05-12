@@ -16,7 +16,7 @@ public class BlockCheckers extends BlockBase {
 	public BlockCheckers(IBlockFactory fillOne, IBlockFactory fillTwo, Coord offset){
 		this.fillOne = fillOne;
 		this.fillTwo = fillTwo;
-		this.offset = new Coord(offset);
+		this.offset = offset.copy();
 	}
 	
 	public BlockCheckers(IBlockFactory fillOne, IBlockFactory fillTwo){
@@ -33,29 +33,29 @@ public class BlockCheckers extends BlockBase {
 		if (x % 2 == 0) {
 			if(z % 2 == 0){
 				if(y % 2 == 0){
-					return fillOne.set(editor, rand, new Coord(origin), fillAir, replaceSolid);
+					return fillOne.set(editor, rand, origin.copy(), fillAir, replaceSolid);
 				} else {
-					return fillTwo.set(editor, rand, new Coord(origin), fillAir, replaceSolid);
+					return fillTwo.set(editor, rand, origin.copy(), fillAir, replaceSolid);
 				}
 			} else {
 				if(y % 2 == 0){
-					return fillTwo.set(editor, rand, new Coord(origin), fillAir, replaceSolid);
+					return fillTwo.set(editor, rand, origin.copy(), fillAir, replaceSolid);
 				} else {
-					return fillOne.set(editor, rand, new Coord(origin), fillAir, replaceSolid);
+					return fillOne.set(editor, rand, origin.copy(), fillAir, replaceSolid);
 				}
 			}
 		} else {
 			if(z % 2 == 0){
 				if(y % 2 == 0){
-					return fillTwo.set(editor, rand, new Coord(origin), fillAir, replaceSolid);
+					return fillTwo.set(editor, rand, origin.copy(), fillAir, replaceSolid);
 				} else {
-					return fillOne.set(editor, rand, new Coord(origin), fillAir, replaceSolid);
+					return fillOne.set(editor, rand, origin.copy(), fillAir, replaceSolid);
 				}
 			} else {
 				if(y % 2 == 0){
-					return fillOne.set(editor, rand, new Coord(origin), fillAir, replaceSolid);
+					return fillOne.set(editor, rand, origin.copy(), fillAir, replaceSolid);
 				} else {
-					return fillTwo.set(editor, rand, new Coord(origin), fillAir, replaceSolid);
+					return fillTwo.set(editor, rand, origin.copy(), fillAir, replaceSolid);
 				}
 			}
 		}

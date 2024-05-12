@@ -12,15 +12,15 @@ public class GreatHallRoom extends AbstractLargeRoom implements IRoom {
 
 	@Override
 	public void generate(IWorldEditor editor) {
-		Coord origin = new Coord(this.getWorldPos());
+		Coord origin = this.getWorldPos().copy();
 		Random rand = editor.getRandom(origin);
 		
-		Coord start = new Coord(origin);
+		Coord start = origin.copy();
 		int size = 15;
 		start.add(Cardinal.NORTH, size);
 		start.add(Cardinal.WEST, size);
 		start.add(Cardinal.DOWN);
-		Coord end = new Coord(origin);
+		Coord end = origin.copy();
 		end.add(Cardinal.SOUTH, size);
 		end.add(Cardinal.EAST, size);
 		end.add(Cardinal.UP, 5);
@@ -28,7 +28,7 @@ public class GreatHallRoom extends AbstractLargeRoom implements IRoom {
 		box.fill(editor, rand, this.getTheme().getPrimary().getWall());
 		
 		for(Cardinal dir : Cardinal.directions) {
-			Coord pos = new Coord(origin);
+			Coord pos = origin.copy();
 			pos.add(dir, 12);
 			Fragment.generate(Fragment.ARCH, editor, rand, theme, pos, dir);
 		}

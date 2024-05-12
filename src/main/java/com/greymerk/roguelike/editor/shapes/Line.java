@@ -16,8 +16,8 @@ public class Line implements IShape{
 	
 	
 	public Line(Coord start, Coord end){
-		this.start = new Coord(start);
-		this.end = new Coord(end);
+		this.start = start.copy();
+		this.end = end.copy();
 	}
 
 	@Override
@@ -59,7 +59,7 @@ public class Line implements IShape{
 		
 		public LineIterator(){
 			
-			this.current = new Coord(start);
+			this.current = start.copy();
 			
 			x = start.getX();
 			y = start.getY();
@@ -155,7 +155,7 @@ public class Line implements IShape{
 			
 			++counter;
 			
-			Coord toReturn = new Coord(this.current);
+			Coord toReturn = this.current.copy();
 			this.current = new Coord(x, y, z);
 			return toReturn;
 		}

@@ -17,7 +17,7 @@ public class Bed {
 	public static void generate(IWorldEditor editor, Cardinal dir, Coord origin, Color color){
 		
 		
-		Coord pos = new Coord(origin);
+		Coord pos = origin.copy();
 		MetaBlock head = new MetaBlock(getFromColor(color));
 		head.withProperty(BedBlock.PART, BedPart.HEAD);
 		head.withProperty(HorizontalFacingBlock.FACING, Cardinal.facing(dir));

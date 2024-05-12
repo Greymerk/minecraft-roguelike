@@ -108,12 +108,12 @@ public class BoundingBox implements IBounded{
 	
 	@Override
 	public Coord getStart() {
-		return new Coord(start);
+		return start.copy();
 	}
 
 	@Override
 	public Coord getEnd() {
-		return new Coord(end);
+		return end.copy();
 	}
 
 	@Override

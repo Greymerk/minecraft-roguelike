@@ -67,11 +67,11 @@ public class RectSolid implements IShape {
 		Coord c2;
 		
 		public RectSolidIterator(Coord c1, Coord c2){
-			this.c1 = new Coord(c1);
-			this.c2 = new Coord(c2);
+			this.c1 = c1.copy();
+			this.c2 = c2.copy();
 			
 			Coord.correct(this.c1, this.c2);
-			cursor = new Coord(this.c1);
+			cursor = this.c1.copy();
 		}
 		
 		@Override
@@ -82,7 +82,7 @@ public class RectSolid implements IShape {
 		@Override
 		public Coord next() {
 			
-			Coord toReturn = new Coord(cursor);
+			Coord toReturn = cursor.copy();
 			
 			if(cursor.getZ() == c2.getZ() && cursor.getX() == c2.getX()){
 				cursor = new Coord(c1.getX(), cursor.getY(), c1.getZ());

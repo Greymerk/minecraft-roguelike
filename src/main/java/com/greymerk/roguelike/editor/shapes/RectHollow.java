@@ -52,8 +52,8 @@ public class RectHollow implements IShape {
 			block.set(editor, rand, c, fillAir, replaceSolid);
 		}
 		
-		Coord innerStart = new Coord(start);
-		Coord innerEnd = new Coord(end);
+		Coord innerStart = start.copy();
+		Coord innerEnd = end.copy();
 		Coord.correct(innerStart, innerEnd);
 		innerStart.add(new Coord(1, 1, 1));
 		innerEnd.add(new Coord(-1, -1, -1));
@@ -83,11 +83,11 @@ public class RectHollow implements IShape {
 		Coord c2;
 		
 		public RectHollowIterator(Coord c1, Coord c2){
-			this.c1 = new Coord(c1);
-			this.c2 = new Coord(c2);
+			this.c1 = c1.copy();
+			this.c2 = c2.copy();
 			
 			Coord.correct(this.c1, this.c2);
-			cursor = new Coord(this.c1);
+			cursor = c1.copy();
 		}
 		
 		@Override
@@ -98,7 +98,7 @@ public class RectHollow implements IShape {
 		@Override
 		public Coord next() {
 			
-			Coord toReturn = new Coord(cursor);
+			Coord toReturn = cursor.copy();
 
 			if(cursor.getZ() == c2.getZ() && cursor.getX() == c2.getX()){
 				cursor = new Coord(c1.getX(), cursor.getY(), c1.getZ());

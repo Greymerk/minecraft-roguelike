@@ -20,9 +20,9 @@ public abstract class AbstractMediumRoom extends AbstractRoom implements IRoom{
 		for(Cardinal dir : Cardinal.directions) {
 			Coord pos = new Coord(0,0,0);
 			pos.add(dir);
-			cells.add(new Cell(new Coord(pos), CellState.OBSTRUCTED));
+			cells.add(new Cell(pos.copy(), CellState.OBSTRUCTED));
 			pos.add(Cardinal.left(dir));
-			Cell c = new Cell(new Coord(pos), CellState.OBSTRUCTED);
+			Cell c = new Cell(pos.copy(), CellState.OBSTRUCTED);
 			c.addWall(dir);
 			c.addWall(Cardinal.left(dir));
 			cells.add(c);
@@ -48,7 +48,7 @@ public abstract class AbstractMediumRoom extends AbstractRoom implements IRoom{
 	@Override
 	public void determineEntrances(Floor f, Coord fp) {
 		for(Cardinal dir : Cardinal.directions) {
-			Coord pos = new Coord(fp);
+			Coord pos = fp.copy();
 			pos.add(dir, 2);
 			Cell c = f.getCell(pos);
 			if(!c.isRoom()) continue;

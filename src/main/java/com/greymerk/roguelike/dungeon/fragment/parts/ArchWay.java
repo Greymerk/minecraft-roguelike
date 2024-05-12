@@ -32,7 +32,7 @@ public class ArchWay implements IFragment {
 		RectSolid.fill(editor, rand, start, end, theme.getPrimary().getFloor());
 		
 		for(Cardinal o : Cardinal.orthogonal(dir)) {
-			Coord pos = new Coord(origin);
+			Coord pos = origin.copy();
 			pos.add(dir, 3);
 			pos.add(Cardinal.UP, 2);
 			pos.add(o, 2);

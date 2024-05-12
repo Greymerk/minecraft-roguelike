@@ -29,7 +29,7 @@ public class MudFilter implements IFilter{
 		
 		for(Cardinal dir : Cardinal.directions){
 			if(rand.nextBoolean()) continue;
-			Coord next = new Coord(pos);
+			Coord next = pos.copy();
 			next.add(dir);
 			generate(editor, rand, next, counter - 1);
 		}
@@ -75,7 +75,7 @@ public class MudFilter implements IFilter{
 		plants.addBlock(new MetaBlock(FlowerPot.getFlower(FlowerPot.BROWNMUSHROOM)));
 		plants.addBlock(new MetaBlock(FlowerPot.getFlower(FlowerPot.REDMUSHROOM)));
 		
-		Coord cursor = new Coord(pos);
+		Coord cursor = pos.copy();
 		cursor.add(Cardinal.UP);
 		plants.set(editor, rand, cursor);
 	}
@@ -84,7 +84,7 @@ public class MudFilter implements IFilter{
 		
 		if(!editor.isSolid(pos)) return false;
 		
-		Coord cursor = new Coord(pos);
+		Coord cursor = pos.copy();
 		cursor.add(Cardinal.UP);
 		if(!editor.isAir(cursor)) return false;
 		

@@ -30,7 +30,7 @@ public class ChunkFeatureMixin {
 		Coord pos = new Coord(cpos.getCenterX(), 200, cpos.getCenterZ());
 		
 		if(!DungeonPlacement.validChunkPos(world, cpos)) return;
-		if(!Dungeon.canSpawn(editor, new Coord(pos))) return;
+		if(!Dungeon.canSpawn(editor, pos.copy())) return;
 		
 		Dungeon.generate(editor, pos);
 	}

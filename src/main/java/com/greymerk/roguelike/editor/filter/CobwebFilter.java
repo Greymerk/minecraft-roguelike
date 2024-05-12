@@ -35,7 +35,7 @@ public class CobwebFilter implements IFilter{
 		
 		for(int i = 0; i < 2; ++i){
 			Cardinal dir = Cardinal.values()[rand.nextInt(Cardinal.values().length)];
-			Coord cursor = new Coord(pos);
+			Coord cursor = pos.copy();
 			cursor.add(dir);
 			generate(editor, rand, cursor, count - 1);
 		}

@@ -16,8 +16,8 @@ public class RectPyramid implements IShape {
 	private Coord end;
 	
 	public RectPyramid(Coord start, Coord end){
-		this.start = new Coord(start);
-		this.end = new Coord(end);
+		this.start = start.copy();
+		this.end = end.copy();
 	}
 	
 	
@@ -58,15 +58,15 @@ public class RectPyramid implements IShape {
 		double thetaZ;
 		
 		public SquarePyramidIterator(Coord start, Coord end){
-			this.start = new Coord(start);
-			Coord s = new Coord(start);
-			Coord e = new Coord(end);
+			this.start = start.copy();
+			Coord s = start.copy();
+			Coord e = end.copy();
 			Coord.correct(s, e);
 			
 			cursor = new Coord(0,0,0);
 			dir = Cardinal.NORTH;
 			
-			diff = new Coord(e);
+			diff = e.copy();
 			diff.sub(s);
 			
 			double hx = Math.sqrt(Math.pow(diff.getX(), 2) + Math.pow(diff.getY(), 2));
@@ -84,7 +84,7 @@ public class RectPyramid implements IShape {
 		@Override
 		public Coord next() {
 
-			Coord toReturn = new Coord(start);
+			Coord toReturn = start.copy();
 			toReturn.add(Cardinal.UP, cursor.getY());
 			if(dir == Cardinal.NORTH || dir == Cardinal.SOUTH){
 				toReturn.add(Cardinal.left(dir), cursor.getX());

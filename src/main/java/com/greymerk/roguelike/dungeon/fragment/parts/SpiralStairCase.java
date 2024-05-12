@@ -43,15 +43,15 @@ public class SpiralStairCase implements IFragment {
 		Coord start;
 		Coord end;
 		
-		start = new Coord(origin);
+		start = origin.copy();
 		start.add(new Coord(-1, 0, -1));
-		end = new Coord(origin);
+		end = origin.copy();
 		end.add(new Coord(1, 0, 1));
 		
 		RectSolid.fill(editor, rand, start, end, air);
 		fill.set(editor, rand, origin);
 		
-		cursor = new Coord(origin);
+		cursor = origin.copy();
 		cursor.add(dir);
 		stair.setOrientation(Cardinal.left(dir), false).set(editor, cursor);
 		cursor.add(Cardinal.right(dir));

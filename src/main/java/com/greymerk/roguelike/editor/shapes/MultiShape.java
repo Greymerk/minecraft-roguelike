@@ -46,7 +46,7 @@ public class MultiShape implements IShape {
 	public List<Coord> get() {
 		List<Coord> coords = new ArrayList<Coord>();
 		for(Coord pos : this.shape){
-			coords.add(new Coord(pos));
+			coords.add(pos.copy());
 		}
 		return coords;
 	}

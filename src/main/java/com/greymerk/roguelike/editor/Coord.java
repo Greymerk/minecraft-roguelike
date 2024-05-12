@@ -35,23 +35,9 @@ public class Coord {
 		this.y = y;
 		this.z = z;
 	}
-	
-	public Coord(Coord other) {
-		this.x = other.getX();
-		this.y = other.getY();
-		this.z = other.getZ();
-	}
-	
-	/*
-	public Coord(NbtCompound tag){
-		this.x = tag.getInt("x");
-		this.y = tag.getInt("y");
-		this.z = tag.getInt("z");
-	}
-	*/
-	
+		
 	public Coord copy() {
-		return new Coord(this);
+		return new Coord(x, y ,z);
 	}
 	
 	public int getX(){

@@ -43,7 +43,7 @@ public class Cell {
 	}
 	
 	public Coord getFloorPos() {
-		return new Coord(this.floorPos);
+		return this.floorPos.copy();
 	}
 	
 	public int getLevelOffset() {
@@ -53,7 +53,7 @@ public class Cell {
 	}
 	
 	public Coord getWorldPos(Coord origin) {
-		Coord wp = new Coord(this.floorPos);
+		Coord wp = this.floorPos.copy();
 		wp = wp.mul(new Coord(Cell.SIZE, 1, Cell.SIZE));
 		wp.add(origin);
 		return wp;

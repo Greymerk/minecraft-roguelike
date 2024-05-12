@@ -115,15 +115,12 @@ public enum Treasure {
 			return false;
 		}
 		
-		Coord cursor;
-		cursor = new Coord(pos);
-		cursor.add(Cardinal.DOWN);
+		Coord cursor = pos.copy().add(Cardinal.DOWN);
 		
 		if (!editor.isSolid(cursor)) return false;
 		
 		for(Cardinal dir : Cardinal.directions){
-			cursor = new Coord(pos);
-			cursor.add(dir);
+			cursor = pos.copy().add(dir);
 			if(editor.getBlock(cursor).getBlock() == Blocks.CHEST) return false;
 		}
 		

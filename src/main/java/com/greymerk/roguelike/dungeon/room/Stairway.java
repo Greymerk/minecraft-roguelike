@@ -121,7 +121,7 @@ public class Stairway extends AbstractRoom implements IRoom {
 			RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall());
 			
 			for(Cardinal o : Cardinal.orthogonal(dir)) {
-				Coord p = new Coord(origin);
+				Coord p = origin.copy();
 				p.add(dir, 2).add(Cardinal.UP, 2).add(o);
 				stair.setOrientation(Cardinal.reverse(o), true);
 				stair.set(editor, p, true, true);
@@ -146,29 +146,29 @@ public class Stairway extends AbstractRoom implements IRoom {
 		Cardinal.orthogonal(direction).forEach(dir -> topMid.addWall(dir));
 		cells.add(topMid);
 		pos.add(direction);
-		Cell topEnd = new Cell(new Coord(pos), CellState.OBSTRUCTED);
+		Cell topEnd = new Cell(pos.copy(), CellState.OBSTRUCTED);
 		for(Cardinal dir : Cardinal.directions) {
 			if(dir == Cardinal.reverse(direction)) continue;
 			topEnd.addWall(dir);
 		}
 		cells.add(topEnd);
 				
-		pos = new Coord(origin);
+		pos = origin.copy();
 		pos.add(Cardinal.DOWN);
-		Cell bottomEnd = new Cell(new Coord(pos), CellState.OBSTRUCTED);
+		Cell bottomEnd = new Cell(pos.copy(), CellState.OBSTRUCTED);
 		for(Cardinal dir : Cardinal.directions) {
 			if(dir == direction) continue;
 			bottomEnd.addWall(dir);
 		}
 		cells.add(bottomEnd);
 		pos.add(direction);
-		Cell bottomMid = new Cell(new Coord(pos), CellState.OBSTRUCTED);
+		Cell bottomMid = new Cell(pos.copy(), CellState.OBSTRUCTED);
 		for(Cardinal dir : Cardinal.orthogonal(direction)) {
 			bottomMid.addWall(dir);
 		}
 		cells.add(bottomMid);
 		pos.add(direction);
-		cells.add(new Cell(new Coord(pos), CellState.OBSTRUCTED));
+		cells.add(new Cell(pos.copy(), CellState.OBSTRUCTED));
 		
 		// spiral above entry level, otherwise random directions
 		if(this.worldPos != null && Dungeon.getLevelFromY(this.worldPos.getY()) == 0) {
@@ -188,13 +188,13 @@ public class Stairway extends AbstractRoom implements IRoom {
 
 	@Override
 	public IBounded getBoundingBox() {
-		Coord origin = new Coord(this.getWorldPos());
-		Coord start = new Coord(origin);
+		Coord origin = this.getWorldPos().copy();
+		Coord start = origin.copy();
 		start.add(Cardinal.reverse(direction), 3);
 		start.add(Cardinal.UP, 3);
 		start.add(Cardinal.left(direction), 4);
 		
-		Coord end = new Coord(origin);
+		Coord end = origin.copy();
 		end.add(direction, 13);
 		end.add(Cardinal.DOWN, 10);
 		end.add(Cardinal.right(direction), 4);

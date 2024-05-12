@@ -53,7 +53,7 @@ public abstract class AbstractLargeRoom extends AbstractRoom implements IRoom {
 	@Override
 	public void determineEntrances(Floor f, Coord fp) {
 		for(Cardinal dir : Cardinal.directions) {
-			Coord pos = new Coord(fp);
+			Coord pos = fp.copy();
 			pos.add(dir, 3);
 			Cell c = f.getCell(pos);
 			if(!c.isRoom()) continue;

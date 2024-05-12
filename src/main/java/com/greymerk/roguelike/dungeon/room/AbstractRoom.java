@@ -79,7 +79,7 @@ public abstract class AbstractRoom implements IRoom{
 	
 	@Override
 	public Coord getFloorPos() {
-		return new Coord(this.floorPos);
+		return this.floorPos.copy();
 	}
 	
 	@Override

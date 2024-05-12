@@ -31,7 +31,7 @@ public class WallFlowers implements IFragment {
 			}
 		}
 		
-		Coord pos = new Coord(origin);
+		Coord pos = origin.copy();
 		pos.add(dir, 2).add(Cardinal.UP, 2);
 		Lantern.set(editor, pos);
 		

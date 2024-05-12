@@ -36,7 +36,7 @@ public class CryptFragment implements IFragment {
 		} else {
 			Quartz.get(Quartz.SMOOTH).set(editor, origin);	
 		}
-		Coord pos = new Coord(origin);
+		Coord pos = origin.copy();
 		pos.add(dir);
 		if(empty) {
 			BlockType.get(BlockType.AIR).set(editor, pos);

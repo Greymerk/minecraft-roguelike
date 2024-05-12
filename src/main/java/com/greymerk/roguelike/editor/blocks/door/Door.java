@@ -38,7 +38,7 @@ public class Door implements IDoor {
 	}
 
 	public static void generate(IWorldEditor editor, MetaBlock door, Coord pos, Cardinal dir, boolean open){
-		Coord cursor = new Coord(pos);
+		Coord cursor = pos.copy();
 		MetaBlock doorBase = setProperties(door, false, dir, open, false);
 		doorBase.set(editor, cursor);
 		cursor.add(Cardinal.UP);
