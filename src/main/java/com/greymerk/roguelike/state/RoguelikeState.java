@@ -21,7 +21,8 @@ import net.minecraft.world.World;
 
 public class RoguelikeState extends PersistentState {
 	
-	List<Dungeon> dungeons;
+	public static boolean flagForGenerationCheck = true;
+	private List<Dungeon> dungeons;
 	
 	private RoguelikeState() {
 		//because different threads may be concurrently writing

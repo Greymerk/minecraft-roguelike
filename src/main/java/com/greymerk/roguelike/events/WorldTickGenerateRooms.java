@@ -16,6 +16,8 @@ public class WorldTickGenerateRooms implements StartWorldTick{
 
 	@Override
 	public void onStartTick(ServerWorld world) {
+		if(!RoguelikeState.flagForGenerationCheck) return;
+		
 		IWorldEditor editor = new WorldEditor((World)world);
 		MinecraftServer server = world.getServer();
 		RoguelikeState state = RoguelikeState.getServerState(server);
@@ -27,6 +29,8 @@ public class WorldTickGenerateRooms implements StartWorldTick{
 			room.applyFilters(editor);
 			room.setGenerated(true);
 		}	
+		
 		state.update();
+		RoguelikeState.flagForGenerationCheck = false;
 	}
 }

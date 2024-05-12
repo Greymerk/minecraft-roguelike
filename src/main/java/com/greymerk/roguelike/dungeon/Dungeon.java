@@ -14,6 +14,7 @@ import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.editor.boundingbox.IBounded;
 import com.greymerk.roguelike.editor.theme.Theme;
 import com.greymerk.roguelike.settings.LevelSettings;
+import com.greymerk.roguelike.state.RoguelikeState;
 
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
@@ -30,6 +31,7 @@ public class Dungeon implements Iterable<IRoom>{
 		Dungeon donjon = new Dungeon(pos.copy());
 		donjon.generate(editor);
 		editor.getState().addDungeon(donjon);
+		RoguelikeState.flagForGenerationCheck = true;
 	}
 	
 	public Dungeon(Coord pos) {
