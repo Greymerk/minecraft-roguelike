@@ -9,15 +9,12 @@ import com.greymerk.roguelike.dungeon.Dungeon;
 import com.greymerk.roguelike.dungeon.room.IRoom;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
-import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
-import com.greymerk.roguelike.editor.boundingbox.IBounded;
 
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.registry.RegistryWrapper.WrapperLookup;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.PersistentState;
 import net.minecraft.world.PersistentStateManager;
 import net.minecraft.world.World;
@@ -55,26 +52,6 @@ public class RoguelikeState extends PersistentState {
 		}
 		
 		return loadedRooms;
-	}
-	
-	public List<IRoom> getFromChunk(ChunkPos cpos){
-		
-		List<IRoom> rooms = new ArrayList<IRoom>();
-		Coord start = new Coord(cpos.getStartX(), -64, cpos.getStartZ());
-		Coord end = new Coord(cpos.getEndX(), 256, cpos.getEndZ());
-		IBounded box = new BoundingBox(start, end);
-		
-		for(Dungeon d : this.dungeons) {
-			if(box.collide(d.getBounds())) {
-				for(IRoom r : d) {
-					if((!r.isGenerated()) && box.contains(r.getWorldPos())) {
-						rooms.add(r);
-					}
-				}	
-			}
-		}
-		
-		return rooms;
 	}
 	
     @Override

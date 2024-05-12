@@ -56,9 +56,7 @@ public class LayoutManager {
 
 			rooms.forEach(r -> {
 				IRoom room = Room.getInstance(r, this.settings.getLevel(floor.getOrigin().getY()));
-				if(!this.placeRoom(room, rand, floor)){
-					System.out.println("failed to place: " + room.getName());
-				};
+				this.placeRoom(room, rand, floor);
 			});
 			
 			if(level > 0) this.addStair(editor, rand, floor);
