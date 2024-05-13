@@ -37,7 +37,7 @@ public class WallChest extends FragmentBase implements IFragment {
 		types.add(new WeightedChoice<Treasure>(Treasure.TOOLS, 1));
 		
 		Coord pos = origin.copy().add(dir, 2).add(Cardinal.UP);
-		Treasure.generate(editor, rand, pos, dir, types.get(rand));
+		Treasure.generate(editor, rand, pos, Cardinal.reverse(dir), types.get(rand));
 	}
 
 }

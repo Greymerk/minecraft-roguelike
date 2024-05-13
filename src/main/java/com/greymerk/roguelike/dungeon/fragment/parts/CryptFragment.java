@@ -50,7 +50,7 @@ public class CryptFragment implements IFragment {
 			BlockType.get(BlockType.AIR).set(editor, pos);
 		} else {
 			Treasure type = rand.nextBoolean() ? Treasure.ARMOUR : Treasure.WEAPONS;
-			Treasure.generate(editor, rand, pos, type);
+			Treasure.generate(editor, rand, pos, Cardinal.reverse(dir), type);
 		}
 		pos.add(Cardinal.UP);
 		IStair stair = theme.getPrimary().getStair();

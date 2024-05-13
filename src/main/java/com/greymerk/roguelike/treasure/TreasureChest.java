@@ -63,7 +63,7 @@ public class TreasureChest implements ITreasureChest{
 		
 		if(b == Blocks.CHEST || b == Blocks.TRAPPED_CHEST) {
 			if(Cardinal.directions.contains(dir)) {
-				block.withProperty(HorizontalFacingBlock.FACING, Cardinal.facing(dir));	
+				block.withProperty(HorizontalFacingBlock.FACING, Cardinal.facing(dir).getOpposite());	
 			}
 		}
 		
