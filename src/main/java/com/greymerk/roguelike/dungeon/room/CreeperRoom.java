@@ -2,7 +2,6 @@ package com.greymerk.roguelike.dungeon.room;
 
 import java.util.List;
 
-import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IBlockFactory;
@@ -15,6 +14,7 @@ import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.editor.factories.BlockJumble;
 import com.greymerk.roguelike.editor.shapes.RectSolid;
 import com.greymerk.roguelike.editor.shapes.Shape;
+import com.greymerk.roguelike.treasure.ChestType;
 import com.greymerk.roguelike.treasure.Treasure;
 import com.greymerk.roguelike.util.math.RandHelper;
 
@@ -106,7 +106,7 @@ public class CreeperRoom extends AbstractRoom implements IRoom {
 		List<Coord> chestSpots = bb.getShape(Shape.RECTSOLID).get();
 		RandHelper.shuffle(chestSpots, rand);
 		Coord chestPos = chestSpots.get(0);
-		Treasure.generate(editor, rand, chestPos, Treasure.ORE, Difficulty.fromY(origin.getY()), true);
+		Treasure.generate(editor, rand, chestPos, Treasure.ORE, ChestType.TRAPPED_CHEST);
 		chestPos.add(Cardinal.DOWN, 2);
 		BlockType.get(BlockType.TNT).set(editor, chestPos);
 		

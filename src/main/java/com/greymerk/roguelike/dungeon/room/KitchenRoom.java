@@ -13,6 +13,7 @@ import com.greymerk.roguelike.editor.blocks.stair.IStair;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.editor.shapes.RectSolid;
 import com.greymerk.roguelike.editor.shapes.Shape;
+import com.greymerk.roguelike.treasure.ChestType;
 import com.greymerk.roguelike.treasure.Treasure;
 
 import net.minecraft.item.ItemStack;
@@ -180,7 +181,7 @@ public class KitchenRoom extends AbstractMediumRoom implements IRoom {
 		
 		Coord pos = origin.copy();
 		pos.add(Cardinal.UP).add(dir, 2);
-		Treasure.generate(editor, rand, pos, Treasure.FOOD);
+		Treasure.generate(editor, rand, pos, Treasure.FOOD, ChestType.BARREL);
 		
 		pos = origin.copy().add(Cardinal.UP).add(Cardinal.right(dir), 2);
 		Furnace.generate(editor, true, Cardinal.left(dir), pos, new ItemStack(Items.COAL, rand.nextBetween(1, 4)));

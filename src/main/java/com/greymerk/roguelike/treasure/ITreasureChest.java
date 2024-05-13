@@ -10,9 +10,9 @@ import net.minecraft.util.math.random.Random;
 
 public interface ITreasureChest {
 	
-	public ITreasureChest generate(IWorldEditor editor, Random rand, Coord pos, int level, boolean trapped) throws ChestPlacementException;
+	public ITreasureChest generate(IWorldEditor editor, Random rand, Coord pos, ChestType type) throws ChestPlacementException;
 	
-	public ITreasureChest generate(IWorldEditor editor, Random rand, Coord pos, Cardinal dir, int level, boolean trapped) throws ChestPlacementException;
+	public ITreasureChest generate(IWorldEditor editor, Random rand, Coord pos, Cardinal dir, ChestType type) throws ChestPlacementException;
 	
 	public boolean setSlot(int slot, ItemStack item);
 	

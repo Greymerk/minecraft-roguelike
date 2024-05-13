@@ -29,7 +29,7 @@ public class RoguelikeLootRules {
 			lootRules.add(Treasure.WEAPONS, loot.get(Loot.POTION, difficulty),  difficulty, 1);
 			lootRules.add(Treasure.WEAPONS, loot.get(Loot.WEAPON, difficulty),  difficulty, 2);
 			lootRules.add(Treasure.WEAPONS, loot.get(Loot.FOOD, difficulty),  difficulty, 1);
-			lootRules.add(Treasure.BLOCKS, loot.get(Loot.BLOCK, difficulty),  difficulty, 6);
+			lootRules.add(Treasure.BLOCKS, loot.get(Loot.BLOCK, difficulty),  difficulty, 8);
 			lootRules.add(Treasure.ENCHANTING, loot.get(Loot.ENCHANTBONUS, difficulty),  difficulty, 2);
 			lootRules.add(Treasure.ENCHANTING, loot.get(Loot.ENCHANTBOOK, difficulty),  difficulty, 1);
 			lootRules.add(Treasure.FOOD, loot.get(Loot.FOOD, difficulty),  difficulty, 6);

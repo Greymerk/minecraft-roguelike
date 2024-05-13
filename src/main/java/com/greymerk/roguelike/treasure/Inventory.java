@@ -5,15 +5,15 @@ import java.util.List;
 
 import com.greymerk.roguelike.util.math.RandHelper;
 
-import net.minecraft.block.entity.ChestBlockEntity;
+import net.minecraft.block.entity.LootableContainerBlockEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.random.Random;
 
 public class Inventory {
-	private ChestBlockEntity chest;
+	private LootableContainerBlockEntity chest;
 	List<Integer> shuffledSlots;
 	
-	public Inventory(Random rand, ChestBlockEntity chest){
+	public Inventory(Random rand, LootableContainerBlockEntity chest){
 		this.chest = chest;
 		this.shuffledSlots = new ArrayList<Integer>();
 		for(int i = 0; i < this.getInventorySize(); ++i){
