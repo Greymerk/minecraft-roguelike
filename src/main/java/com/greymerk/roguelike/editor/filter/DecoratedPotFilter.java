@@ -15,7 +15,7 @@ public class DecoratedPotFilter implements IFilter {
 	@Override
 	public void apply(IWorldEditor editor, Random rand, ITheme theme, IBounded box) {
 		box.getShape(Shape.RECTSOLID).forEach(c -> {
-			if(rand.nextInt(200) == 0) this.set(editor, rand, c);
+			if(rand.nextInt(300) == 0) this.set(editor, rand, c);
 		});
 	}
 	

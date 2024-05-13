@@ -23,7 +23,7 @@ import net.minecraft.util.math.random.Random;
 public class DecoratedPot {
 
 	public static void set(IWorldEditor editor, Random rand, Coord origin) {
-		set(editor, rand, origin, Loot.JUNK);
+		set(editor, rand, origin, Loot.PRECIOUS);
 	}
 	
 	public static void set(IWorldEditor editor, Random rand, Coord origin, Loot type) {

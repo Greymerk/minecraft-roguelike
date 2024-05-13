@@ -12,6 +12,7 @@ import com.greymerk.roguelike.treasure.loot.provider.ItemFood;
 import com.greymerk.roguelike.treasure.loot.provider.ItemJunk;
 import com.greymerk.roguelike.treasure.loot.provider.ItemOre;
 import com.greymerk.roguelike.treasure.loot.provider.ItemPotion;
+import com.greymerk.roguelike.treasure.loot.provider.ItemPrecious;
 import com.greymerk.roguelike.treasure.loot.provider.ItemRecord;
 import com.greymerk.roguelike.treasure.loot.provider.ItemSmithy;
 import com.greymerk.roguelike.treasure.loot.provider.ItemSpecialty;
@@ -35,7 +36,7 @@ import net.minecraft.util.math.random.Random;
 public enum Loot {
 	
 	WEAPON, ARMOUR, BLOCK, JUNK, ORE, TOOL, POTION, FOOD, ENCHANTBOOK,
-	ENCHANTBONUS, SUPPLY, MUSIC, SMITHY, SPECIAL, REWARD, BREWING;
+	ENCHANTBONUS, SUPPLY, MUSIC, SMITHY, SPECIAL, BREWING, PRECIOUS;
 
 	public static ILoot getLoot(FeatureSet features, DynamicRegistryManager reg){
 		
@@ -65,7 +66,7 @@ public enum Loot {
 		case MUSIC: return new ItemRecord(0, level);
 		case SMITHY: return new ItemSmithy(0, level);
 		case SPECIAL: return new ItemSpecialty(0, level);
-		case REWARD:
+		case PRECIOUS: return new ItemPrecious(0, level);
 		}
 		
 		return new WeightedRandomLoot(Items.STICK, 1);

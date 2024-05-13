@@ -46,7 +46,6 @@ public class RoguelikeLootRules {
 			lootRules.add(Treasure.SMITH, loot.get(Loot.ORE, difficulty),  difficulty, 6);
 			lootRules.add(Treasure.SMITH, loot.get(Loot.SMITHY, difficulty),  difficulty, 1);
 			lootRules.add(Treasure.MUSIC, loot.get(Loot.MUSIC, difficulty),  difficulty, 1);
-			lootRules.add(Treasure.REWARD, loot.get(Loot.REWARD, difficulty),  difficulty, 1);
 			lootRules.add(Treasure.ALL, loot.get(Loot.JUNK, difficulty),  difficulty, 6);
 		}
 		
