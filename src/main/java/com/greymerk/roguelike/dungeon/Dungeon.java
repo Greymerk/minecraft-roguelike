@@ -27,11 +27,13 @@ public class Dungeon implements Iterable<IRoom>{
 	Coord origin;
 	BoundingBox bb;
 	
-	public static void generate(IWorldEditor editor, Coord pos) {
+	public static boolean generate(IWorldEditor editor, Coord pos) {
+		if(!Dungeon.canSpawn(editor, pos)) return false;
 		Dungeon donjon = new Dungeon(pos.copy());
 		donjon.generate(editor);
 		editor.getState().addDungeon(donjon);
 		RoguelikeState.flagForGenerationCheck = true;
+		return true;
 	}
 	
 	public Dungeon(Coord pos) {

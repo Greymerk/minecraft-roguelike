@@ -23,44 +23,37 @@ public class ItemOre extends ItemBase{
 			
 			switch(i){
 			case 4:
-				randomizer.add(new WeightedRandomLoot(Items.DIAMOND, 1, 1, 1));
-				randomizer.add(new WeightedRandomLoot(Items.EMERALD, 1, 1, 2));
-				randomizer.add(new WeightedRandomLoot(Items.GOLD_INGOT, 2, 5, 3));
-				randomizer.add(new WeightedRandomLoot(Items.GOLD_NUGGET, 2, 8, 2));
-				randomizer.add(new WeightedRandomLoot(Items.IRON_INGOT, 2, 5, 5));
+				randomizer.add(new WeightedRandomLoot(Items.NETHERITE_INGOT, 1, 1, 1));
+				randomizer.add(new WeightedRandomLoot(Items.GOLD_INGOT, 8, 32, 10));
+				randomizer.add(new WeightedRandomLoot(Items.IRON_INGOT, 8, 32, 10));
+				randomizer.add(new WeightedRandomLoot(Items.COPPER_INGOT, 16, 64, 5));
+				randomizer.add(new WeightedRandomLoot(Items.COAL, 8, 32, 5));
 				break;
 			case 3:
-				randomizer.add(new WeightedRandomLoot(Items.DIAMOND, 1, 1, 1));
-				randomizer.add(new WeightedRandomLoot(Items.EMERALD, 1, 1, 2));
-				randomizer.add(new WeightedRandomLoot(Items.GOLD_INGOT, 1, 5, 3));
-				randomizer.add(new WeightedRandomLoot(Items.GOLD_NUGGET, 2, 6, 5));
-				randomizer.add(new WeightedRandomLoot(Items.IRON_INGOT, 1, 4, 10));
-				randomizer.add(new WeightedRandomLoot(Items.COAL, 4, 15, 3));
+				randomizer.add(new WeightedRandomLoot(Items.NETHERITE_INGOT, 1, 1, 1));
+				randomizer.add(new WeightedRandomLoot(Items.GOLD_INGOT, 4, 24, 20));
+				randomizer.add(new WeightedRandomLoot(Items.IRON_INGOT, 4, 24, 20));
+				randomizer.add(new WeightedRandomLoot(Items.COPPER_INGOT, 8, 32, 20));
+				randomizer.add(new WeightedRandomLoot(Items.COAL, 8, 32, 10));
 				break;
 			case 2:
-				randomizer.add(new WeightedRandomLoot(Items.DIAMOND, 1, 1, 1));
-				randomizer.add(new WeightedRandomLoot(Items.GOLD_INGOT, 1, 4, 3));
-				randomizer.add(new WeightedRandomLoot(Items.GOLD_NUGGET, 1, 5, 5));
-				randomizer.add(new WeightedRandomLoot(Items.IRON_INGOT, 1, 3, 10));
-				randomizer.add(new WeightedRandomLoot(Items.COAL, 3, 7, 10));
+				randomizer.add(new WeightedRandomLoot(Items.NETHERITE_INGOT, 1, 1, 1));
+				randomizer.add(new WeightedRandomLoot(Items.GOLD_INGOT, 4, 16, 30));
+				randomizer.add(new WeightedRandomLoot(Items.IRON_INGOT, 4, 16, 50));
+				randomizer.add(new WeightedRandomLoot(Items.COPPER_INGOT, 8, 32, 50));
+				randomizer.add(new WeightedRandomLoot(Items.COAL, 4, 24, 20));
 				break;
 			case 1:	
-				randomizer.add(new WeightedRandomLoot(Items.DIAMOND, 1, 1, 1));
-				randomizer.add(new WeightedRandomLoot(Items.GOLD_INGOT, 1, 3, 5));
-				randomizer.add(new WeightedRandomLoot(Items.GOLD_NUGGET, 1, 4, 10));
-				randomizer.add(new WeightedRandomLoot(Items.IRON_INGOT, 1, 2, 5));
-				randomizer.add(new WeightedRandomLoot(Items.IRON_NUGGET, 1, 5, 20));
-				randomizer.add(new WeightedRandomLoot(Items.COAL, 2, 5, 20));
-				randomizer.add(new WeightedRandomLoot(Items.LEATHER, 3, 9, 10));
+				randomizer.add(new WeightedRandomLoot(Items.GOLD_INGOT, 2, 8, 5));
+				randomizer.add(new WeightedRandomLoot(Items.IRON_INGOT, 2, 8, 10));
+				randomizer.add(new WeightedRandomLoot(Items.COPPER_INGOT, 4, 16, 5));
+				randomizer.add(new WeightedRandomLoot(Items.COAL, 2, 16, 10));
 				break;
 			case 0:
-				randomizer.add(new WeightedRandomLoot(Items.DIAMOND, 1, 1, 1));
-				randomizer.add(new WeightedRandomLoot(Items.GOLD_INGOT, 1, 1, 3));
-				randomizer.add(new WeightedRandomLoot(Items.GOLD_NUGGET, 1, 2, 15));
-				randomizer.add(new WeightedRandomLoot(Items.IRON_INGOT, 1, 1, 10));
-				randomizer.add(new WeightedRandomLoot(Items.IRON_NUGGET, 1, 5, 30));
-				randomizer.add(new WeightedRandomLoot(Items.COAL, 1, 3, 40));
-				randomizer.add(new WeightedRandomLoot(Items.LEATHER, 1, 7, 15));
+				randomizer.add(new WeightedRandomLoot(Items.GOLD_INGOT, 1, 4, 5));
+				randomizer.add(new WeightedRandomLoot(Items.IRON_INGOT, 1, 4, 10));
+				randomizer.add(new WeightedRandomLoot(Items.COPPER_INGOT, 1, 4, 10));
+				randomizer.add(new WeightedRandomLoot(Items.COAL, 1, 3, 20));
 				break;
 			default:
 				randomizer.add(new WeightedRandomLoot(Items.COAL, 1));

@@ -20,6 +20,7 @@ public class ItemTool extends ItemBase {
 	
 	@Override
 	public ItemStack getLootItem(Random rand, int level) {
+		if(rand.nextInt(1000) == 0) return ItemNovelty.getItem(ItemNovelty.CLEO);
 		return getRandom(features, rand, level, true);
 	}
 
@@ -30,18 +31,12 @@ public class ItemTool extends ItemBase {
 	
 	public static ItemStack getRandom(FeatureSet features, Random rand, int level, boolean enchant){
 		
-		if(enchant && rand.nextInt(20 + (level * 10)) == 0){
-			switch(rand.nextInt(3)){
-			case 0: return ItemSpecialty.getRandomItem(Equipment.PICK, rand, level);
-			case 1: return ItemSpecialty.getRandomItem(Equipment.AXE, rand, level);
-			case 2: return ItemSpecialty.getRandomItem(Equipment.SHOVEL, rand, level);
-			}
+		if(enchant && rand.nextInt(30) == 0){
+			return ItemSpecialty.getRandomTool(rand, Quality.get(level));
 		}
 		
 		ItemStack tool = pickTool(rand, level);
-		
 		if(enchant) Enchant.enchantItem(features, rand, tool, Enchant.getLevel(rand, level));
-		
 		return tool;
 	}
 	

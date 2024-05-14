@@ -23,6 +23,8 @@ public interface IWorldEditor {
 
 	public boolean isAir(Coord pos);
 	
+	public boolean hasBlockEntity(Coord pos);
+	
 	public BlockEntity getBlockEntity(Coord pos);
 	
 	public long getSeed();

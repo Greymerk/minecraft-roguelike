@@ -3,6 +3,7 @@ package com.greymerk.roguelike.commands;
 import com.greymerk.roguelike.Roguelike;
 import com.greymerk.roguelike.dungeon.Dungeon;
 import com.greymerk.roguelike.editor.Coord;
+import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.WorldEditor;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 
@@ -36,7 +37,12 @@ public class RoguelikeCommand {
 				ServerCommandSource source = context.getSource();
 				Entity e = source.getEntity();
 				World world = e.getWorld();
+				IWorldEditor editor = new WorldEditor(world);
 				Coord pos = Coord.of(e.getBlockPos());
+				if(!Dungeon.canSpawn(editor, pos)) {
+					source.sendFeedback(() -> Text.literal("Dungeon cannot spawn here"), false);
+					return 1;
+				}
 				Dungeon.generate(new WorldEditor(world), pos);
 				source.sendFeedback(() -> Text.literal("Generating dungeon at " + pos.toString()), false);
 				return 1;

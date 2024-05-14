@@ -6,9 +6,9 @@ import com.greymerk.roguelike.treasure.loot.MusicDisk;
 
 import net.minecraft.item.ItemStack;
 
-public class ItemRecord extends ItemBase{
+public class ItemMusic extends ItemBase{
 
-	public ItemRecord(int weight, int level) {
+	public ItemMusic(int weight, int level) {
 		super(weight, level);
 	}
 

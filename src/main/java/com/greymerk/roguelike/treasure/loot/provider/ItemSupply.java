@@ -20,10 +20,12 @@ public class ItemSupply extends ItemBase{
 		loot.add(new WeightedRandomLoot(Items.PUMPKIN_SEEDS, 1, 4, 1));
 		loot.add(new WeightedRandomLoot(Items.MELON_SEEDS, 1, 4, 1));
 		loot.add(new WeightedRandomLoot(Items.BEETROOT_SEEDS, 1, 4, 1));
-		loot.add(new WeightedRandomLoot(Items.CHICKEN, 4, 12, 1));
-		loot.add(new WeightedRandomLoot(Items.PORKCHOP, 4, 12, 1));
-		loot.add(new WeightedRandomLoot(Items.MUTTON, 4, 12, 1));
-		loot.add(new WeightedRandomLoot(Items.RABBIT, 4, 12, 1));
+		loot.add(new WeightedRandomLoot(Items.COD, 2, 32, 1));
+		loot.add(new WeightedRandomLoot(Items.SALMON, 2, 32, 1));
+		loot.add(new WeightedRandomLoot(Items.CHICKEN, 4, 32, 1));
+		loot.add(new WeightedRandomLoot(Items.PORKCHOP, 4, 32, 1));
+		loot.add(new WeightedRandomLoot(Items.MUTTON, 4, 32, 1));
+		loot.add(new WeightedRandomLoot(Items.RABBIT, 4, 32, 1));
 		loot.add(new WeightedRandomLoot(Items.RABBIT_HIDE, 1, 8, 1));
 		loot.add(new WeightedRandomLoot(Items.RABBIT_FOOT, 1, 4, 1));
 		loot.add(new WeightedRandomLoot(Items.SWEET_BERRIES, 1, 4, 1));
@@ -33,8 +35,6 @@ public class ItemSupply extends ItemBase{
 		loot.add(new WeightedRandomLoot(Items.POTATO, 2, 16, 1));
 		loot.add(new WeightedRandomLoot(Items.CARROT, 2, 16, 1));
 		loot.add(new WeightedRandomLoot(Items.STRING, 8, 32, 1));
-		loot.add(new WeightedRandomLoot(Items.COD, 2, 16, 1));
-		loot.add(new WeightedRandomLoot(Items.SALMON, 2, 16, 1));
 		loot.add(new WeightedRandomLoot(Items.STICK, 8, 64, 1));
 		loot.add(new WeightedRandomLoot(Items.LEATHER, 4, 24, 1));
 		loot.add(new WeightedRandomLoot(Items.CLAY_BALL, 8, 64, 1));

@@ -21,6 +21,7 @@ public class ItemWeapon extends ItemBase{
 	
 	@Override
 	public ItemStack getLootItem(Random rand, int level) {
+		if(rand.nextInt(100) == 0) return ItemNovelty.getItem(ItemNovelty.GREYMERK);
 		return getRandom(this.features, rand, level, true);
 	}
 
@@ -34,7 +35,9 @@ public class ItemWeapon extends ItemBase{
 	
 	public static ItemStack getBow(FeatureSet features, Random rand, int level, boolean enchant){
 		
-		if(rand.nextInt(20 + (level * 10)) == 0){
+		if(rand.nextInt(200) == 0) return ItemNovelty.getItem(ItemNovelty.WINDFORCE);
+		
+		if(rand.nextInt(30) == 0){
 			return ItemSpecialty.getRandomItem(Equipment.BOW, rand, level);
 		}
 		
@@ -49,13 +52,14 @@ public class ItemWeapon extends ItemBase{
 	}
 	
 	public static ItemStack getSword(FeatureSet features, Random rand, int level, boolean enchant){
-		ItemStack sword;
 		
-		if(enchant && rand.nextInt(10 + (level * 10)) == 0){
+		if(enchant && rand.nextInt(1000) == 0) return ItemNovelty.getItem(ItemNovelty.NULL);
+		
+		if(enchant && rand.nextInt(30) == 0){
 			return ItemSpecialty.getRandomItem(Equipment.SWORD, rand, level);
 		}
 		
-		sword = pickSword(rand, level);
+		ItemStack sword = pickSword(rand, level);
 		
 		if(enchant) Enchant.enchantItem(features, rand, sword, Enchant.getLevel(rand, level));
 		return sword;		

@@ -13,14 +13,24 @@ public class ItemBlock extends ItemBase{
 	
 	public ItemBlock(int weight, int level) {
 		super(weight, level);
+		
+		WeightedRandomizer<ItemStack> stone = new WeightedRandomizer<ItemStack>(10);
+		stone.add(new WeightedRandomLoot(Blocks.COBBLESTONE, 8, 32, 1));
+		stone.add(new WeightedRandomLoot(Blocks.STONE_BRICKS, 8, 32, 1));
+		
+		WeightedRandomizer<ItemStack> logs = new WeightedRandomizer<ItemStack>(3);
+		logs.add(new WeightedRandomLoot(Blocks.OAK_LOG, 8, 32, 5));
+		logs.add(new WeightedRandomLoot(Blocks.BIRCH_LOG, 8, 32, 3));
+		logs.add(new WeightedRandomLoot(Blocks.SPRUCE_LOG, 8, 32, 3));
+		logs.add(new WeightedRandomLoot(Blocks.JUNGLE_LOG, 8, 32, 2));
+		logs.add(new WeightedRandomLoot(Blocks.DARK_OAK_LOG, 8, 32, 2));
+		logs.add(new WeightedRandomLoot(Blocks.ACACIA_LOG, 8, 32, 1));
+		logs.add(new WeightedRandomLoot(Blocks.MANGROVE_LOG, 8, 32, 1));
+		
 		this.loot = new WeightedRandomizer<ItemStack>();
-		this.loot.add(new WeightedRandomLoot(Blocks.COBBLESTONE, 8, 32, 20));
-		this.loot.add(new WeightedRandomLoot(Blocks.STONE, 8, 32, 10));
-		this.loot.add(new WeightedRandomLoot(Blocks.DIORITE, 8, 32, 5));
-		this.loot.add(new WeightedRandomLoot(Blocks.ANDESITE, 8, 32, 5));
-		this.loot.add(new WeightedRandomLoot(Blocks.GRANITE, 8, 32, 5));
-		this.loot.add(new WeightedRandomLoot(Blocks.OAK_LOG, 8, 32, 10));
-		this.loot.add(new WeightedRandomLoot(Blocks.GLASS, 8, 32, 5));
+		this.loot.add(stone);
+		this.loot.add(logs);
+		this.loot.add(new WeightedRandomLoot(Blocks.GLASS, 8, 32, 2));
 		this.loot.add(new WeightedRandomLoot(Blocks.GLOWSTONE, 4, 16, 1));
 	}
 

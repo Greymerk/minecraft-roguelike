@@ -6,15 +6,13 @@ import java.util.List;
 import com.greymerk.roguelike.treasure.loot.provider.ItemArmour;
 import com.greymerk.roguelike.treasure.loot.provider.ItemBlock;
 import com.greymerk.roguelike.treasure.loot.provider.ItemBrewing;
-import com.greymerk.roguelike.treasure.loot.provider.ItemEnchBonus;
-import com.greymerk.roguelike.treasure.loot.provider.ItemEnchBook;
+import com.greymerk.roguelike.treasure.loot.provider.ItemEnchanting;
 import com.greymerk.roguelike.treasure.loot.provider.ItemFood;
 import com.greymerk.roguelike.treasure.loot.provider.ItemJunk;
+import com.greymerk.roguelike.treasure.loot.provider.ItemMusic;
 import com.greymerk.roguelike.treasure.loot.provider.ItemOre;
 import com.greymerk.roguelike.treasure.loot.provider.ItemPotion;
 import com.greymerk.roguelike.treasure.loot.provider.ItemPrecious;
-import com.greymerk.roguelike.treasure.loot.provider.ItemRecord;
-import com.greymerk.roguelike.treasure.loot.provider.ItemSmithy;
 import com.greymerk.roguelike.treasure.loot.provider.ItemSpecialty;
 import com.greymerk.roguelike.treasure.loot.provider.ItemSupply;
 import com.greymerk.roguelike.treasure.loot.provider.ItemTool;
@@ -35,8 +33,8 @@ import net.minecraft.util.math.random.Random;
 
 public enum Loot {
 	
-	WEAPON, ARMOUR, BLOCK, JUNK, ORE, TOOL, POTION, FOOD, ENCHANTBOOK,
-	ENCHANTBONUS, SUPPLY, MUSIC, SMITHY, SPECIAL, BREWING, PRECIOUS;
+	WEAPON, ARMOUR, BLOCK, JUNK, ORE, TOOL, POTION, FOOD,
+	ENCHANTING, SUPPLY, MUSIC, SPECIAL, BREWING, PRECIOUS;
 
 	public static ILoot getLoot(FeatureSet features, DynamicRegistryManager reg){
 		
@@ -60,11 +58,9 @@ public enum Loot {
 		case POTION: return new ItemPotion(0, level);
 		case BREWING: return new ItemBrewing(0, level);
 		case FOOD: return new ItemFood(0, level);
-		case ENCHANTBOOK: return new ItemEnchBook(features, 0, level);
-		case ENCHANTBONUS: return new ItemEnchBonus(0, level);
+		case ENCHANTING: return new ItemEnchanting(0, level);
 		case SUPPLY: return new ItemSupply(0, level);
-		case MUSIC: return new ItemRecord(0, level);
-		case SMITHY: return new ItemSmithy(0, level);
+		case MUSIC: return new ItemMusic(0, level);
 		case SPECIAL: return new ItemSpecialty(0, level);
 		case PRECIOUS: return new ItemPrecious(0, level);
 		}
@@ -110,18 +106,8 @@ public enum Loot {
 	public static void setItemLore(ItemStack item, String loreText, TextFormat option){
 		setItemLore(item, TextFormat.apply(loreText, option).getString());
 	}
-	
-	public static void setItemName(ItemStack item, String name, TextFormat option){
 		
-		if(option == null){
-			item.set(DataComponentTypes.CUSTOM_NAME, Text.literal(name));
-			return;
-		}
-		
-		item.set(DataComponentTypes.CUSTOM_NAME, TextFormat.apply(name, option));
-	}
-	
 	public static void setItemName(ItemStack item, String name){
-		setItemName(item, name, null);
+		item.set(DataComponentTypes.CUSTOM_NAME, Text.literal(name));
 	}
 }

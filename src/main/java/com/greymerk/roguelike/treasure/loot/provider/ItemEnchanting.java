@@ -5,9 +5,9 @@ import net.minecraft.util.math.random.Random;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 
-public class ItemEnchBonus extends ItemBase{
+public class ItemEnchanting extends ItemBase{
 
-	public ItemEnchBonus(int weight, int level) {
+	public ItemEnchanting(int weight, int level) {
 		super(weight, level);
 	}
 

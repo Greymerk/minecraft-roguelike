@@ -57,8 +57,9 @@ public class WorldEditor implements IWorldEditor{
 
 	@Override
 	public boolean set(Coord pos, MetaBlock block, boolean fillAir, boolean replaceSolid) {
-		MetaBlock currentBlock = getBlock(pos);
+		if(this.hasBlockEntity(pos)) return false;
 		
+		MetaBlock currentBlock = getBlock(pos);
 		if(currentBlock.getBlock() == Blocks.CHEST) return false;
 		if(currentBlock.getBlock() == Blocks.TRAPPED_CHEST) return false;
 		if(currentBlock.getBlock() == Blocks.SPAWNER) return false;
@@ -183,9 +184,16 @@ public class WorldEditor implements IWorldEditor{
 	}
 
 	@Override
+	public boolean hasBlockEntity(Coord pos) {
+		return this.getBlockEntity(pos) != null;
+	}
+	
+	@Override
 	public BlockEntity getBlockEntity(Coord pos) {
 		return world.getBlockEntity(pos.getBlockPos());
 	}
+	
+	
 	
 	@Override
 	public boolean isFaceFullSquare(Coord pos, Cardinal dir) {

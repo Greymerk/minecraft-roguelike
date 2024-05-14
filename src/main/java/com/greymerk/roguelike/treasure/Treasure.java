@@ -9,7 +9,7 @@ import net.minecraft.util.math.random.Random;
 public enum Treasure {
 
 	ALL, ARMOUR, WEAPONS, BLOCKS, ENCHANTING, FOOD, ORE, POTIONS,
-	STARTER, TOOLS, SUPPLIES, SMITH, MUSIC, REWARD, EMPTY, BREWING;
+	STARTER, TOOLS, SUPPLIES, MUSIC, REWARD, EMPTY, BREWING;
 
 	public static void generate(IWorldEditor editor, Random rand, Coord pos, Treasure type) {
 		Treasure.generate(editor, rand, pos, type, ChestType.CHEST);

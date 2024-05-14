@@ -26,14 +26,16 @@ public class RoguelikeLootRules {
 			lootRules.add(Treasure.ARMOUR, loot.get(Loot.POTION, difficulty),  difficulty, 1);
 			lootRules.add(Treasure.ARMOUR, loot.get(Loot.ARMOUR, difficulty),  difficulty, 2);
 			lootRules.add(Treasure.ARMOUR, loot.get(Loot.FOOD, difficulty),  difficulty, 1);
+			lootRules.add(Treasure.ARMOUR, loot.get(Loot.BLOCK, difficulty),  difficulty, 1);
 			lootRules.add(Treasure.WEAPONS, loot.get(Loot.POTION, difficulty),  difficulty, 1);
 			lootRules.add(Treasure.WEAPONS, loot.get(Loot.WEAPON, difficulty),  difficulty, 2);
 			lootRules.add(Treasure.WEAPONS, loot.get(Loot.FOOD, difficulty),  difficulty, 1);
+			lootRules.add(Treasure.WEAPONS, loot.get(Loot.BLOCK, difficulty),  difficulty, 1);
 			lootRules.add(Treasure.BLOCKS, loot.get(Loot.BLOCK, difficulty),  difficulty, 8);
-			lootRules.add(Treasure.ENCHANTING, loot.get(Loot.ENCHANTBONUS, difficulty),  difficulty, 2);
-			lootRules.add(Treasure.ENCHANTING, loot.get(Loot.ENCHANTBOOK, difficulty),  difficulty, 1);
+			lootRules.add(Treasure.ENCHANTING, loot.get(Loot.ENCHANTING, difficulty),  difficulty, 6);
 			lootRules.add(Treasure.FOOD, loot.get(Loot.FOOD, difficulty),  difficulty, 6);
 			lootRules.add(Treasure.ORE, loot.get(Loot.ORE, difficulty),  difficulty, 5);
+			lootRules.add(Treasure.ORE, loot.get(Loot.TOOL, difficulty),  difficulty, 1);
 			lootRules.add(Treasure.POTIONS, loot.get(Loot.POTION, difficulty),  difficulty, 6);
 			lootRules.add(Treasure.BREWING, loot.get(Loot.BREWING, difficulty),  difficulty, 8);
 			lootRules.add(Treasure.TOOLS, loot.get(Loot.ORE, difficulty),  difficulty, 3);
@@ -43,10 +45,10 @@ public class RoguelikeLootRules {
 			lootRules.add(Treasure.SUPPLIES, loot.get(Loot.BLOCK, difficulty),  difficulty, 2);
 			lootRules.add(Treasure.SUPPLIES, loot.get(Loot.FOOD, difficulty),  difficulty, 2);
 			lootRules.add(Treasure.SUPPLIES, loot.get(Loot.ORE, difficulty),  difficulty, 1);
-			lootRules.add(Treasure.SMITH, loot.get(Loot.ORE, difficulty),  difficulty, 6);
-			lootRules.add(Treasure.SMITH, loot.get(Loot.SMITHY, difficulty),  difficulty, 1);
+			lootRules.add(Treasure.SUPPLIES, loot.get(Loot.BREWING, difficulty),  difficulty, 1);
 			lootRules.add(Treasure.MUSIC, loot.get(Loot.MUSIC, difficulty),  difficulty, 1);
 			lootRules.add(Treasure.ALL, loot.get(Loot.JUNK, difficulty),  difficulty, 6);
+			lootRules.add(Treasure.ALL, loot.get(Loot.PRECIOUS, difficulty),  difficulty, 2);
 		}
 		
 		return lootRules;

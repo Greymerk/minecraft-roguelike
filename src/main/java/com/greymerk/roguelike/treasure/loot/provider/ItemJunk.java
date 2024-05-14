@@ -26,10 +26,11 @@ public class ItemJunk extends ItemBase{
 			if(i <= 1) {
 				randomizer.add(new WeightedRandomLoot(Items.FEATHER, 1, 3, 1));
 				randomizer.add(new WeightedRandomLoot(Items.PAPER, 1, 3, 1));
+			} else {
+				randomizer.add(new WeightedRandomLoot(Items.ENDER_PEARL, 1, 3, 1));
 			}
 			
 			if(i <= 3) {
-				randomizer.add(new WeightedRandomLoot(Items.STICK, 1, 3, 1));
 				randomizer.add(new WeightedRandomLoot(Items.LEATHER, 1, i + 3, 1));
 				randomizer.add(new WeightedRandomLoot(Items.INK_SAC, 1, 1, 1));
 			} else {
@@ -39,6 +40,7 @@ public class ItemJunk extends ItemBase{
 				randomizer.add(new WeightedRandomLoot(Items.GLOW_INK_SAC, 1, 1, 1));
 			}
 			
+			randomizer.add(new WeightedRandomLoot(Items.STICK, 1, 3, 1));
 			randomizer.add(new WeightedRandomLoot(Items.STRING, 1, 3, 1));
 			randomizer.add(new WeightedRandomLoot(Items.DRIED_KELP, 1, 3, 1));
 			randomizer.add(new WeightedRandomLoot(Items.BOWL, 1, 1, 1));
@@ -51,14 +53,13 @@ public class ItemJunk extends ItemBase{
 			randomizer.add(new WeightedRandomLoot(Items.BONE, 1, 1, 1));
 			randomizer.add(new WeightedRandomLoot(Items.SPIDER_EYE, 1, 1, 1));
 			randomizer.add(new WeightedRandomLoot(Items.SNOWBALL, 1, 1, 1));
-			
-			randomizer.add(new WeightedRandomLoot(Items.EMERALD, i + 1, (i * 2) + 1, 3));
-			
 		}
 	}
 
 	@Override
 	public ItemStack getLootItem(Random rand, int level){
+		if(rand.nextInt(1000) == 0) return ItemNovelty.getItem(ItemNovelty.ZISTEAU);
+		if(rand.nextInt(1000) == 0) return ItemNovelty.getItem(ItemNovelty.VECHS);
 		return this.loot.get(level).get(rand);
 	}
 }

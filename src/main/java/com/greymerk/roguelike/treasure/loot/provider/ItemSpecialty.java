@@ -61,7 +61,7 @@ public class ItemSpecialty extends ItemBase {
 		case PICK: item = getPick(rand, quality); break;
 		case AXE: item = getAxe(rand, quality); break;
 		case SHOVEL: item = getShovel(rand, quality); break;	
-		default: return null;
+		default: item = getSword(rand, quality);
 		}
 		
 		Loot.setRarity(item, Rarity.RARE);
@@ -74,7 +74,7 @@ public class ItemSpecialty extends ItemBase {
 		case 1: return getRandomItem(Equipment.CHEST, rand, quality);
 		case 2: return getRandomItem(Equipment.LEGS, rand, quality);
 		case 3: return getRandomItem(Equipment.FEET, rand, quality);
-		default: return null;
+		default: return getRandomItem(Equipment.HELMET, rand, quality);
 		}
 	}
 	
@@ -83,7 +83,7 @@ public class ItemSpecialty extends ItemBase {
 		case 0: return getRandomItem(Equipment.PICK, rand, quality);
 		case 1: return getRandomItem(Equipment.AXE, rand, quality);
 		case 2: return getRandomItem(Equipment.SHOVEL, rand, quality);
-		default: return null;
+		default: return getRandomItem(Equipment.PICK, rand, quality);
 		}
 	}
 	

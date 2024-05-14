@@ -6,16 +6,14 @@ import com.greymerk.roguelike.util.IWeighted;
 import com.greymerk.roguelike.util.TextFormat;
 import com.greymerk.roguelike.util.WeightedChoice;
 
-import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.Rarity;
 
 public enum ItemNovelty {
 
-	GREYMERK, NEBRISCROWN, NULL, MANPANTS, ZISTEAUSIGN, AVIDYA, ASHLEA, KURT, AMLP,
-	CLEO, ENIKOSWORD, ENIKOBOW, BDOUBLEO, GUUDE, RLEAHY, ETHO, BAJ, DOCM, GINGER, VECHS,
-	NOTCH, QUANTUMLEAP, GENERIKB, FOURLES, DINNERBONE, GRIM, MMILLSS, VALANDRAH;
+	GREYMERK, NULL, ZISTEAU, AVIDYA, ASHLEA, KURT, 
+	CLEO, WINDFORCE, RLEAHY, VECHS, GENERIKB, FOURLES;
 		
 	public static IWeighted<ItemStack> get(ItemNovelty choice, int weight){
 		return new WeightedChoice<ItemStack>(getItem(choice), weight);
@@ -29,42 +27,26 @@ public enum ItemNovelty {
 		
 		case GREYMERK:
 			item = new ItemStack(Items.IRON_AXE);
-			Loot.setItemName(item, "Greymerk's Hatchet", null);
+			Loot.setItemName(item, "Greymerk's Hatchet");
 			Loot.setItemLore(item, "Pointlessly sharp", TextFormat.DARKGREEN);
 			Loot.setRarity(item, Rarity.EPIC);
 			item.addEnchantment(Enchant.getEnchant(Enchant.SHARPNESS), 3);
 			item.addEnchantment(Enchant.getEnchant(Enchant.KNOCKBACK), 1);
 			item.addEnchantment(Enchant.getEnchant(Enchant.UNBREAKING), 2);
 			return item;
-		case NEBRISCROWN:
-			item = new ItemStack(Items.GOLDEN_HELMET);
-			Loot.setItemName(item, "Crown of Justice", null);
-			Loot.setItemLore(item, "Adorned with precious gemstones", TextFormat.DARKGREEN);
-			Loot.setRarity(item, Rarity.EPIC);
-			item.addEnchantment(Enchant.getEnchant(Enchant.PROTECTION), 4);
-			item.addEnchantment(Enchant.getEnchant(Enchant.UNBREAKING), 3);
-			return item;
 		case NULL:
-			item = new ItemStack(Items.DIAMOND_SWORD);
-			Loot.setItemName(item, "Null Pointer", null);
+			item = new ItemStack(Items.NETHERITE_SWORD);
+			Loot.setItemName(item, "Null Pointer");
 			Loot.setItemLore(item, "Exceptional", TextFormat.DARKGREEN);
 			Loot.setRarity(item, Rarity.EPIC);
 			item.addEnchantment(Enchant.getEnchant(Enchant.SHARPNESS), 5);
 			item.addEnchantment(Enchant.getEnchant(Enchant.KNOCKBACK), 2);
 			item.addEnchantment(Enchant.getEnchant(Enchant.UNBREAKING), 3);
+			item.addEnchantment(Enchant.getEnchant(Enchant.MENDING), 1);
 			return item;
-		case MANPANTS:
-			item = new ItemStack(Items.LEATHER_LEGGINGS);
-			Loot.setItemName(item, "Man Pants", null);
-			Loot.setItemLore(item, "Yessss, Manpants!", TextFormat.DARKGREEN);
-			Loot.setRarity(item, Rarity.EPIC);
-			item.addEnchantment(Enchant.getEnchant(Enchant.FIREPROTECTION), 4);
-			item.addEnchantment(Enchant.getEnchant(Enchant.UNBREAKING), 3);
-			ItemArmour.dyeArmor(item, 250, 128, 114);
-			return item;
-		case ZISTEAUSIGN:
+		case ZISTEAU:
 			item = new ItemStack(Items.OAK_SIGN);
-			Loot.setItemName(item, "Battle Sign", TextFormat.DARKPURPLE);
+			Loot.setItemName(item, "Battle Sign");
 			Loot.setItemLore(item, "\"That's what you get!\"", TextFormat.DARKGREEN);
 			Loot.setRarity(item, Rarity.EPIC);
 			item.addEnchantment(Enchant.getEnchant(Enchant.SHARPNESS), 5);
@@ -73,24 +55,19 @@ public enum ItemNovelty {
 			return item;
 		case AVIDYA:
 			item = new ItemStack(Items.MILK_BUCKET);
-			Loot.setItemName(item, "White Russian", TextFormat.DARKPURPLE);
+			Loot.setItemName(item, "White Russian");
 			Loot.setItemLore(item, "The dude's favourite", TextFormat.DARKGREEN);
 			Loot.setRarity(item, Rarity.EPIC);
-			item.addEnchantment(Enchant.getEnchant(Enchant.ARTHOPODS), 4);
-			item.addEnchantment(Enchant.getEnchant(Enchant.KNOCKBACK), 1);
-			item.addEnchantment(Enchant.getEnchant(Enchant.FIREASPECT), 1);
 			return item;
 		case ASHLEA:
 			item = new ItemStack(Items.COOKIE);
-			Loot.setItemName(item, "Oatmeal Cookie", TextFormat.DARKPURPLE);
+			Loot.setItemName(item, "Oatmeal Cookie");
 			Loot.setItemLore(item, "Perfect for elevensies", TextFormat.DARKGREEN);
 			Loot.setRarity(item, Rarity.EPIC);
-			item.addEnchantment(Enchant.getEnchant(Enchant.SHARPNESS), 2);
-			item.addEnchantment(Enchant.getEnchant(Enchant.KNOCKBACK), 1);
 			return item;
 		case KURT:
 			item = new ItemStack(Items.LEATHER_BOOTS);
-			Loot.setItemName(item, "Farland Travellers", null);
+			Loot.setItemName(item, "Farland Travellers");
 			Loot.setItemLore(item, "Indeed!", TextFormat.DARKGREEN);
 			Loot.setRarity(item, Rarity.EPIC);
 			item.addEnchantment(Enchant.getEnchant(Enchant.PROTECTION), 3);
@@ -98,168 +75,52 @@ public enum ItemNovelty {
 			item.addEnchantment(Enchant.getEnchant(Enchant.UNBREAKING), 3);
 			ItemArmour.dyeArmor(item, 165, 42, 42);
 			return item;
-		case AMLP:
-			item = new ItemStack(Items.SHEARS);
-			Loot.setItemName(item, "Lascerator", null);
-			Loot.setItemLore(item, "The wool collector", TextFormat.DARKGREEN);
-			Loot.setRarity(item, Rarity.EPIC);
-			item.addEnchantment(Enchant.getEnchant(Enchant.SHARPNESS), 3);
-			item.addEnchantment(Enchant.getEnchant(Enchant.KNOCKBACK), 2);
-			item.addEnchantment(Enchant.getEnchant(Enchant.FIREASPECT), 1);
-			return item;
 		case CLEO:
 			item = new ItemStack(Items.COD);
-			Loot.setItemName(item, "Digging Feesh", TextFormat.DARKPURPLE);
+			Loot.setItemName(item, "Digging Feesh");
 			Loot.setItemLore(item, "Feesh are not efeeshent for digging", TextFormat.DARKGREEN);
 			Loot.setRarity(item, Rarity.EPIC);
 			item.addEnchantment(Enchant.getEnchant(Enchant.EFFICIENCY), 10);
-			item.addEnchantment(Enchant.getEnchant(Enchant.KNOCKBACK), 5);
-			item.addEnchantment(Enchant.getEnchant(Enchant.FORTUNE), 5);
-			item.addEnchantment(Enchant.getEnchant(Enchant.UNBREAKING), 10);
-			return item;
-		case BDOUBLEO:
-			item = new ItemStack(Items.DIAMOND_SHOVEL);
-			Loot.setItemName(item, "Dig Job", null);
-			Loot.setItemLore(item, "Lost in hell's blazes", TextFormat.DARKGREEN);
-			Loot.setRarity(item, Rarity.EPIC);
-			item.addEnchantment(Enchant.getEnchant(Enchant.EFFICIENCY), 5);
-			item.addEnchantment(Enchant.getEnchant(Enchant.UNBREAKING), 3);
-			return item;
-		case GUUDE:
-			item = new ItemStack(Items.MUSIC_DISC_13);
-			Loot.setItemName(item, "Boulderfistian Golden Record", TextFormat.DARKPURPLE);
-			Loot.setItemLore(item, "\"You're Watching Guude Boulderfist...\"", TextFormat.DARKGREEN);
-			Loot.setRarity(item, Rarity.EPIC);
-			item.addEnchantment(Enchant.getEnchant(Enchant.SHARPNESS), 3);
-			item.addEnchantment(Enchant.getEnchant(Enchant.KNOCKBACK), 1);
-			item.addEnchantment(Enchant.getEnchant(Enchant.BLASTPROTECTION), 3);
 			return item;
 		case RLEAHY:
 			item = new ItemStack(Items.BREAD);
-			Loot.setItemName(item, "Battle Sub", TextFormat.DARKPURPLE);
+			Loot.setItemName(item, "Battle Sub");
 			Loot.setItemLore(item, "With extra pastrami", TextFormat.DARKGREEN);
 			Loot.setRarity(item, Rarity.EPIC);
-			item.addEnchantment(Enchant.getEnchant(Enchant.SHARPNESS), 2);
+			item.addEnchantment(Enchant.getEnchant(Enchant.SHARPNESS), 1);
 			item.addEnchantment(Enchant.getEnchant(Enchant.KNOCKBACK), 1);
-			item.addEnchantment(Enchant.getEnchant(Enchant.FIREASPECT), 2);
+			item.addEnchantment(Enchant.getEnchant(Enchant.FIREASPECT), 1);
 			return item;
-		case ETHO:
-			item = new ItemStack(Items.WOODEN_PICKAXE);
-			Loot.setItemName(item, "Your Mum", null);
-			Loot.setItemLore(item, "The original", TextFormat.DARKGREEN);
-			Loot.setRarity(item, Rarity.EPIC);
-			item.addEnchantment(Enchant.getEnchant(Enchant.EFFICIENCY), 5);
-			item.addEnchantment(Enchant.getEnchant(Enchant.UNBREAKING), 3);
-			return item;
-		case ENIKOBOW:
+		case WINDFORCE:
 			item = new ItemStack(Items.BOW);
-			Loot.setItemName(item, "String Theory", null);
-			Loot.setItemLore(item, "For Science!", TextFormat.DARKGREEN);
+			Loot.setItemName(item, "Windforce");
+			Loot.setItemLore(item, "Found on many battlefields", TextFormat.DARKGREEN);
 			Loot.setRarity(item, Rarity.EPIC);
 			item.addEnchantment(Enchant.getEnchant(Enchant.POWER), 5);
-			item.addEnchantment(Enchant.getEnchant(Enchant.KNOCKBACK), 2);
+			item.addEnchantment(Enchant.getEnchant(Enchant.PUNCH), 2);
+			item.addEnchantment(Enchant.getEnchant(Enchant.UNBREAKING), 3);
 			item.addEnchantment(Enchant.getEnchant(Enchant.INFINITY), 1);
-			item.addEnchantment(Enchant.getEnchant(Enchant.UNBREAKING), 3);
-			return item;
-		case BAJ:
-			item = new ItemStack(Items.GOLDEN_HOE);
-			Loot.setItemName(item, "Last Resort", TextFormat.DARKPURPLE);
-			Loot.setItemLore(item, "\"Starvation could be fatal\"", TextFormat.DARKGREEN);
-			Loot.setRarity(item, Rarity.EPIC);
-			item.addEnchantment(Enchant.getEnchant(Enchant.SHARPNESS), 2);
-			item.addEnchantment(Enchant.getEnchant(Enchant.KNOCKBACK), 1);
-			item.addEnchantment(Enchant.getEnchant(Enchant.FORTUNE), 5);
-			return item;
-		case DOCM:
-			item = new ItemStack(Items.FISHING_ROD);
-			Loot.setItemName(item, "Rod of Command", TextFormat.DARKPURPLE);
-			Loot.setItemLore(item, "\"Get to the dang land!\"",  TextFormat.DARKGREEN);
-			Loot.setRarity(item, Rarity.EPIC);
-			item.addEnchantment(Enchant.getEnchant(Enchant.SHARPNESS), 3);
-			item.addEnchantment(Enchant.getEnchant(Enchant.KNOCKBACK), 1);
-			return item;
-		case GINGER:
-			item = new ItemStack(Items.COOKED_CHICKEN);
-			Loot.setItemName(item, "Spice Chicken", TextFormat.DARKPURPLE);
-			Loot.setItemLore(item, "\"Kung Pao!\"",  TextFormat.DARKGREEN);
-			Loot.setRarity(item, Rarity.EPIC);
-			item.addEnchantment(Enchant.getEnchant(Enchant.KNOCKBACK), 1);
-			item.addEnchantment(Enchant.getEnchant(Enchant.UNBREAKING), 3);
-			item.addEnchantment(Enchant.getEnchant(Enchant.SHARPNESS), 1);
+			item.addEnchantment(Enchant.getEnchant(Enchant.MENDING), 1);
 			return item;
 		case VECHS:
 			item = new ItemStack(Items.STICK);
-			Loot.setItemName(item, "Legendary Stick", TextFormat.DARKPURPLE);
+			Loot.setItemName(item, "Legendary Stick");
 			Loot.setItemLore(item, "\"Really?!\"",  TextFormat.DARKGREEN);
 			Loot.setRarity(item, Rarity.EPIC);
 			item.addEnchantment(Enchant.getEnchant(Enchant.UNBREAKING), 1);
 			return item;
-		case NOTCH:
-			item = new ItemStack(Items.APPLE);
-			Loot.setItemName(item, "Notch's apple", TextFormat.DARKPURPLE);
-			Loot.setItemLore(item, "Imbued with the creator's power",  TextFormat.DARKGREEN);
-			Loot.setRarity(item, Rarity.EPIC);
-			item.addEnchantment(Enchant.getEnchant(Enchant.SHARPNESS), 10);
-			item.addEnchantment(Enchant.getEnchant(Enchant.KNOCKBACK), 10);
-			return item;
-		case QUANTUMLEAP:
-			item = new ItemStack(Blocks.SPONGE);
-			Loot.setItemName(item, "Swiss Cheese", TextFormat.DARKPURPLE);
-			Loot.setItemLore(item, "\"Oh boy\"",  TextFormat.DARKGREEN);
-			Loot.setRarity(item, Rarity.EPIC);
-			item.addEnchantment(Enchant.getEnchant(Enchant.SHARPNESS), 4);
-			return item;
 		case GENERIKB:
 			item = new ItemStack(Items.BAKED_POTATO);
-			Loot.setItemName(item, "Hot Potato", TextFormat.DARKPURPLE);
+			Loot.setItemName(item, "Hot Potato");
 			Loot.setItemLore(item, "All a hermit needs",  TextFormat.DARKGREEN);
 			Loot.setRarity(item, Rarity.EPIC);
-			item.addEnchantment(Enchant.getEnchant(Enchant.FIREASPECT), 3);
-			item.addEnchantment(Enchant.getEnchant(Enchant.SHARPNESS), 2);
-			item.addEnchantment(Enchant.getEnchant(Enchant.KNOCKBACK), 1);
+			item.addEnchantment(Enchant.getEnchant(Enchant.FIREASPECT), 1);
 			return item;
 		case FOURLES:
 			item = new ItemStack(Items.COCOA_BEANS);
-			Loot.setItemName(item, "Darkroast Beans", TextFormat.DARKPURPLE);
+			Loot.setItemName(item, "Darkroast Beans");
 			Loot.setItemLore(item, "\"Mmmm... Dark Roast\"",  TextFormat.DARKGREEN);
 			Loot.setRarity(item, Rarity.EPIC);
-			item.addEnchantment(Enchant.getEnchant(Enchant.FIREASPECT), 2);
-			item.addEnchantment(Enchant.getEnchant(Enchant.SHARPNESS), 2);
-			return item;
-		case DINNERBONE:
-			item = new ItemStack(Items.BONE, 1);
-			Loot.setItemName(item, "Old Bone", TextFormat.DARKPURPLE);
-			Loot.setItemLore(item, "\"Dang Skellies!\"",  TextFormat.DARKGREEN);
-			Loot.setRarity(item, Rarity.EPIC);
-			item.addEnchantment(Enchant.getEnchant(Enchant.SHARPNESS), 3);
-			item.addEnchantment(Enchant.getEnchant(Enchant.FIREASPECT), 2);
-			return item;
-		case GRIM:
-			item = new ItemStack(Items.ROTTEN_FLESH);
-			Loot.setItemName(item, "Grim chew-toy", TextFormat.DARKPURPLE);
-			Loot.setItemLore(item, "\"Let's do this!\"",  TextFormat.DARKGREEN);
-			Loot.setRarity(item, Rarity.EPIC);
-			item.addEnchantment(Enchant.getEnchant(Enchant.SMITE), 2);
-			item.addEnchantment(Enchant.getEnchant(Enchant.LOOTING), 1);
-			return item;
-		case MMILLSS:
-			item = new ItemStack(Blocks.CACTUS);
-			Loot.setItemName(item, "Spider bane", TextFormat.DARKPURPLE);
-			Loot.setItemLore(item, "\"I really don't need anymore string...\"",  TextFormat.DARKGREEN);
-			Loot.setRarity(item, Rarity.EPIC);
-			item.addEnchantment(Enchant.getEnchant(Enchant.ARTHOPODS), 4);
-			item.addEnchantment(Enchant.getEnchant(Enchant.THORNS), 2);
-			item.addEnchantment(Enchant.getEnchant(Enchant.LOOTING), 1);
-			return item;
-		case VALANDRAH:
-			item = new ItemStack(Items.IRON_SWORD);
-			Loot.setItemName(item, "Kiss of Death", null);
-			Loot.setItemLore(item, "\"Feel the kiss of my blade\"",  TextFormat.DARKGREEN);
-			Loot.setRarity(item, Rarity.EPIC);
-			item.addEnchantment(Enchant.getEnchant(Enchant.SHARPNESS), 4);
-			item.addEnchantment(Enchant.getEnchant(Enchant.FIREASPECT), 1);
-			item.addEnchantment(Enchant.getEnchant(Enchant.KNOCKBACK), 1);
-			item.addEnchantment(Enchant.getEnchant(Enchant.UNBREAKING), 2);
 			return item;
 		default:
 			return new ItemStack(Items.STICK);
