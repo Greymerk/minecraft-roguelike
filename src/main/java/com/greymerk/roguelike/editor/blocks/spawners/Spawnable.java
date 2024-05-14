@@ -35,12 +35,18 @@ public class Spawnable {
 		nbt.putInt("z", pos.getZ());
 		
 		nbt.put("SpawnPotentials", getSpawnPotentials(rand, level));
+		nbt.put("SpawnData", getSpawnData(rand, level));
 		
 		MobSpawnerBlockEntity spawner = (MobSpawnerBlockEntity)be;
 		MobSpawnerLogic logic = spawner.getLogic();
 		spawner.setEntityType(Spawner.getType(type), rand);
 		logic.readNbt(world, pos.getBlockPos(), nbt);
 		spawner.markDirty();
+	}
+	
+	public NbtCompound getSpawnData(Random rand, int level) {
+		SpawnPotential potential = new SpawnPotential(this.type);
+		return potential.getSpawnData(rand, level);
 	}
 	
 	public NbtList getSpawnPotentials(Random rand, int level){

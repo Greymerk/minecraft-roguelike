@@ -81,13 +81,21 @@ public class SpawnPotential {
 		return potentials;
 	}
 	
+	public NbtCompound getSpawnData(Random rand, int level) {
+		return getSpawnData(getRoguelike(level, this.type, new NbtCompound()));
+	}
+	
 	private NbtCompound getPotential(NbtCompound mob){
 		NbtCompound potential = new NbtCompound();
-		NbtCompound data = new NbtCompound();
-		data.put("entity", mob);
-		potential.put("data", data);
+		potential.put("data", getSpawnData(mob));
 		potential.putInt("weight", this.weight);
 		return potential;
+	}
+	
+	private NbtCompound getSpawnData(NbtCompound mob) {
+		NbtCompound data = new NbtCompound();
+		data.put("entity", mob);
+		return data;
 	}
 	
 	private NbtCompound equipHands(NbtCompound mob, String weapon, String offhand){
