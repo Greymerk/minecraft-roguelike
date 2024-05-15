@@ -88,7 +88,15 @@ public class EnderRoom extends AbstractMediumRoom implements IRoom {
 				bb.grow(dir, 4);
 				RectSolid.fill(editor, rand, bb, blocks.getWall());
 			}
+			
+			bb = BoundingBox.of(origin.copy());
+			bb.add(Cardinal.UP, 6).add(dir, 5).grow(dir, 3).grow(Cardinal.left(dir), 4).grow(Cardinal.right(dir), 8);
+			RectSolid.fill(editor, rand, bb, blocks.getWall(), false, true);
 		}
+
+		BoundingBox bb = BoundingBox.of(origin.copy());
+		bb.add(Cardinal.UP, 7).grow(Cardinal.directions, 4);
+		RectSolid.fill(editor, rand, bb, blocks.getWall(), false, true);
 	}
 
 	private void floor(IWorldEditor editor, Random rand, Coord origin, IBlockSet blocks) {
