@@ -35,20 +35,15 @@ public class ItemWeapon extends ItemBase{
 	
 	public static ItemStack getBow(FeatureSet features, Random rand, int level, boolean enchant){
 		
-		if(rand.nextInt(200) == 0) return ItemNovelty.getItem(ItemNovelty.WINDFORCE);
+		if(enchant && rand.nextInt(200) == 0) return ItemNovelty.getItem(ItemNovelty.WINDFORCE);
 		
-		if(rand.nextInt(30) == 0){
+		if(enchant && rand.nextInt(30) == 0){
 			return ItemSpecialty.getRandomItem(Equipment.BOW, rand, level);
 		}
 		
 		ItemStack bow = new ItemStack(Items.BOW);
-		
-		if(enchant && rand.nextInt(6 - level) == 0){
-			Enchant.enchantItem(features, rand, bow, Enchant.getLevel(rand, level));
-		}
-		
+		if(enchant)Enchant.enchantItem(features, rand, bow, Enchant.getLevel(rand, level));
 		return bow;
-		
 	}
 	
 	public static ItemStack getSword(FeatureSet features, Random rand, int level, boolean enchant){
