@@ -18,9 +18,9 @@ public enum Difficulty {
 	}
 	
 	public static int fromY(int y) {
-		if(y >= 50) return EASIEST.value;
-		if(y >= 30) return EASY.value;
-		if(y >= 0) return MEDIUM.value;
+		if(y >= 40) return EASIEST.value;
+		if(y >= 20) return EASY.value;
+		if(y >= -10) return MEDIUM.value;
 		if(y >= -30) return HARD.value;
 		return HARDEST.value;
 	}
