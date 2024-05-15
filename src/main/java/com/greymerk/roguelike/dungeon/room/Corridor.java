@@ -33,6 +33,8 @@ public class Corridor extends AbstractRoom implements IRoom{
 		bb = BoundingBox.of(worldPos);
 		bb.grow(Cardinal.directions).add(Cardinal.UP, 3);
 		RectSolid.fill(editor, rand, bb, Air.get());
+		bb.add(Cardinal.UP);
+		RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall(), false, true);
 		
 		for(Cardinal dir : Cardinal.directions) {
 			
