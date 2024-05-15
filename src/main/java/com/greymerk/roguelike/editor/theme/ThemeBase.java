@@ -2,8 +2,8 @@ package com.greymerk.roguelike.editor.theme;
 
 public abstract class ThemeBase implements ITheme {
 	
-	protected BlockSet primary;
-	protected BlockSet secondary;
+	protected IBlockSet primary;
+	protected IBlockSet secondary;
 
 	@Override
 	public IBlockSet getPrimary() {

@@ -14,6 +14,10 @@ public class Door implements IDoor {
 
 	MetaBlock block;
 	
+	public static Door of(DoorType type) {
+		return new Door(type);
+	}
+	
 	public Door(MetaBlock block){
 		this.block = block;
 	}

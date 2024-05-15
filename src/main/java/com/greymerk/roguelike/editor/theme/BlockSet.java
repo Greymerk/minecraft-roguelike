@@ -25,43 +25,7 @@ public class BlockSet implements IBlockSet {
 	protected IBlockFactory lightblock;
 	protected IBlockFactory liquid;
 	
-	public BlockSet(){
-		
-	}
-	
-	public BlockSet(IBlockFactory floor, IBlockFactory walls, IBlockFactory pillar,
-			IStair stair, ISlab slab, IDoor door, IBlockFactory lightblock, IBlockFactory liquid){
-		
-		this.floor = new BlockFloor(floor);
-		this.walls = walls;
-		this.pillar = pillar;
-		this.stair = stair;
-		this.slab = slab;
-		this.door = door;
-		this.lightblock = lightblock;
-		this.liquid = liquid;
-		
-	}
-
-	public BlockSet(IBlockFactory floor, IBlockFactory walls, IStair stair,
-			IBlockFactory pillar, IDoor door){
-		this(floor, walls, pillar, stair, 
-			Slab.get(Slab.STONE),
-			door,
-			new MetaBlock(BlockType.get(BlockType.GLOWSTONE)),
-			new MetaBlock(BlockType.get(BlockType.WATER_FLOWING))
-		);
-	}
-	
-	public BlockSet(IBlockFactory floor, IBlockFactory walls, IStair stair, IBlockFactory pillar){
-		this(floor, walls, stair, pillar,
-			new Door(DoorType.get(DoorType.OAK))
-		);
-	}
-
-	public BlockSet(IBlockFactory walls, IStair stair, IBlockFactory pillar){
-		this(walls, walls, stair, pillar);
-	}	
+	public BlockSet(){}
 	
 	@Override
 	public IBlockFactory getWall() {
@@ -98,8 +62,10 @@ public class BlockSet implements IBlockSet {
 		return this.liquid != null ? this.liquid : BlockType.get(BlockType.WATER_FLOWING);
 	}
 
-	public void setSlab(ISlab slab) {
+	@Override
+	public IBlockSet setSlab(ISlab slab) {
 		this.slab = slab;
+		return this;
 	}
 	
 	public void setLiquid(MetaBlock liquid) {
@@ -109,5 +75,47 @@ public class BlockSet implements IBlockSet {
 	@Override
 	public ISlab getSlab() {
 		return this.slab != null ? this.slab : Slab.get(Slab.STONE);
+	}
+
+	@Override
+	public IBlockSet setFloor(IBlockFactory floor) {
+		this.floor = new BlockFloor(floor);
+		return this;
+	}
+
+	@Override
+	public IBlockSet setWall(IBlockFactory wall) {
+		this.walls = wall;
+		return this;
+	}
+
+	@Override
+	public IBlockSet setPillar(IBlockFactory pillar) {
+		this.pillar = pillar;
+		return this;
+	}
+
+	@Override
+	public IBlockSet setStair(IStair stair) {
+		this.stair = stair;
+		return this;
+	}
+
+	@Override
+	public IBlockSet setDoor(IDoor door) {
+		this.door = door;
+		return this;
+	}
+
+	@Override
+	public IBlockSet setLightBlock(IBlockFactory lightBlock) {
+		this.lightblock = lightBlock;
+		return this;
+	}
+
+	@Override
+	public IBlockSet setLiquid(IBlockFactory liquid) {
+		this.liquid = liquid;
+		return this;
 	}
 }

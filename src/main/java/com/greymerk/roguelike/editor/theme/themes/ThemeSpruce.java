@@ -31,10 +31,21 @@ public class ThemeSpruce extends ThemeBase implements ITheme {
 		MetaBlock segmentWall = Wood.get(Wood.SPRUCE, WoodBlock.PLANK);
 		MetaStair segmentStair = new MetaStair(StairType.SPRUCE);
 		
-		this.primary = new BlockSet(walls, walls, stair, logs, new Door(DoorType.DARKOAK));
-		this.primary.setSlab(Slab.get(Slab.STONEBRICK));
-		this.secondary =  new BlockSet(segmentWall, segmentWall, segmentStair, logs, new Door(DoorType.SPRUCE));
-		this.secondary.setSlab(Slab.get(Slab.SPRUCE));
+		this.primary = new BlockSet()
+				.setWall(walls)
+				.setFloor(walls)
+				.setStair(stair)
+				.setPillar(logs)
+				.setDoor(Door.of(DoorType.DARKOAK))
+				.setSlab(Slab.get(Slab.STONEBRICK));
+
+		this.secondary = new BlockSet()
+				.setWall(segmentWall)
+				.setFloor(segmentWall)
+				.setStair(segmentStair)
+				.setPillar(logs)
+				.setDoor(Door.of(DoorType.DARKOAK))
+				.setSlab(Slab.get(Slab.SPRUCE));
 	}
 	
 	@Override

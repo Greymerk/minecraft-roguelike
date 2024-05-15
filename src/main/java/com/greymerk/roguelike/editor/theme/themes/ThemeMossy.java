@@ -39,12 +39,14 @@ public class ThemeMossy extends ThemeBase implements ITheme {
 		
 		MetaStair stair = new MetaStair(StairType.MOSSY_STONEBRICK);
 		
-		this.primary = new BlockSet(floor, walls, stair, walls, 
-				new Door(DoorType.IRON)
-				);
-		this.primary.setSlab(Slab.get(Slab.MOSSY_COBBLE));
+		this.primary = new BlockSet()
+				.setWall(walls)
+				.setFloor(floor)
+				.setStair(stair)
+				.setPillar(pillar)
+				.setDoor(Door.of(DoorType.JUNGLE))
+				.setSlab(Slab.of(Slab.MOSSY_COBBLE));
 		this.secondary = this.primary;
-		
 	}
 
 	@Override

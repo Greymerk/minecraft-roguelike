@@ -55,4 +55,8 @@ public enum Slab {
 	public static ISlab get(Slab type) {
 		return get(type, false);
 	}
+	
+	public static ISlab of(Slab type) {
+		return get(type, false);
+	}
 }

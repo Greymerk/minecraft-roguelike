@@ -1,7 +1,8 @@
 package com.greymerk.roguelike.editor.theme.themes;
 
-import com.greymerk.roguelike.editor.MetaBlock;
 import com.greymerk.roguelike.editor.blocks.Warped;
+import com.greymerk.roguelike.editor.blocks.door.Door;
+import com.greymerk.roguelike.editor.blocks.door.DoorType;
 import com.greymerk.roguelike.editor.blocks.slab.Slab;
 import com.greymerk.roguelike.editor.blocks.stair.MetaStair;
 import com.greymerk.roguelike.editor.blocks.stair.StairType;
@@ -13,16 +14,14 @@ import com.greymerk.roguelike.editor.theme.ThemeBase;
 public class ThemeWarped extends ThemeBase implements ITheme {
 
 	public ThemeWarped() {
-		
-		MetaBlock floor = Warped.get(Warped.NYLIUM);
-		MetaBlock wall = Warped.get(Warped.PLANK);
-		MetaStair stair = new MetaStair(StairType.WARPED);
-		MetaBlock pillar = Warped.get(Warped.STEM);
-		
-		this.primary = new BlockSet(floor, wall, stair, pillar);
-		this.primary.setSlab(Slab.get(Slab.WARPED));
-		this.secondary = this.primary;
-		
+		this.primary = new BlockSet()
+				.setWall(Warped.get(Warped.PLANK))
+				.setFloor(Warped.get(Warped.NYLIUM))
+				.setStair(new MetaStair(StairType.WARPED))
+				.setPillar(Warped.get(Warped.STEM))
+				.setDoor(Door.of(DoorType.WARPED))
+				.setSlab(Slab.get(Slab.WARPED));
+		this.secondary = primary;
 	}
 	
 	@Override

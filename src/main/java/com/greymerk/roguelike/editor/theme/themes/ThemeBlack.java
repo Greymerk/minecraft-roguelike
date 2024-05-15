@@ -31,13 +31,14 @@ public class ThemeBlack extends ThemeBase implements ITheme {
 		
 		MetaStair stair = new MetaStair(StairType.BLACKSTONE_BRICK);
 		
-		this.primary = new BlockSet(floor, walls, stair, pillar);
-		this.primary.setLiquid(BlockType.get(BlockType.LAVA_FLOWING));
+		this.primary = new BlockSet()
+				.setWall(walls)
+				.setFloor(floor)
+				.setStair(stair)
+				.setPillar(pillar)
+				.setLiquid(BlockType.get(BlockType.LAVA_FLOWING))
+				.setSlab(Slab.of(Slab.BLACKSTONE_BRICK));
 		this.secondary = this.primary;
-		
-		this.primary.setSlab(Slab.get(Slab.BLACKSTONE_BRICK));
-		this.secondary.setSlab(Slab.get(Slab.BLACKSTONE_BRICK));
-		
 	}
 	
 	@Override
