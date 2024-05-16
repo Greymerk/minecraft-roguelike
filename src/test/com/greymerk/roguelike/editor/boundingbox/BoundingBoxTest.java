@@ -140,8 +140,8 @@ class BoundingBoxTest {
 		NbtCompound s = tag.getCompound("start");
 		NbtCompound e = tag.getCompound("end");
 		
-		assert(new Coord(s).equals(start));
-		assert(new Coord(e).equals(end));
+		assert(Coord.of(s).equals(start));
+		assert(Coord.of(e).equals(end));
 	}
 
 	@Test

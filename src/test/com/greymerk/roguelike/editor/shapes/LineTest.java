@@ -24,9 +24,6 @@ class LineTest {
 		Coord end = new Coord(0,0,3);
 		Line line = new Line(start, end);
 		List<Coord> coords = line.get();
-		for(Coord c : coords) {
-			System.out.println(c.toString());
-		}
 		assert(coords.contains(new Coord(0,0,0)));
 		assert(coords.contains(new Coord(0,0,1)));
 		assert(coords.contains(new Coord(0,0,2)));

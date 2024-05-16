@@ -13,6 +13,8 @@ import com.google.gson.JsonParser;
 
 public class Debug {
 
+	public static final boolean DEBUG = false;
+	
 	Path root;
 	Path debug;
 	
