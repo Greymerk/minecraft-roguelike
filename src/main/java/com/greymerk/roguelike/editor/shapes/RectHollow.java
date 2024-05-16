@@ -9,6 +9,7 @@ import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.MetaBlock;
+import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.editor.boundingbox.IBounded;
 
 import net.minecraft.block.Blocks;
@@ -16,21 +17,10 @@ import net.minecraft.util.math.random.Random;
 
 public class RectHollow implements IShape {
 
-	private Coord start;
-	private Coord end;
+	private BoundingBox bb;
 	
-	public RectHollow(Coord start, Coord end){
-		this.start = start;
-		this.end = end;
-	}
-	
-	public static void fill(IWorldEditor editor, Random rand, Coord start, Coord end, IBlockFactory block){
-		fill(editor, rand, start, end, block, true, true);
-	}
-	
-	public static void fill(IWorldEditor editor, Random rand, Coord start, Coord end, IBlockFactory block, boolean fillAir, boolean replaceSolid){
-		RectHollow rect = new RectHollow(start, end);
-		rect.fill(editor, rand, block, fillAir, replaceSolid);
+	public RectHollow(BoundingBox bb){
+		this.bb = bb;
 	}
 	
 	public static void fill(IWorldEditor editor, Random rand, IBounded bb, IBlockFactory block, boolean fillAir, boolean replaceSolid) {
@@ -52,12 +42,8 @@ public class RectHollow implements IShape {
 			block.set(editor, rand, c, fillAir, replaceSolid);
 		}
 		
-		Coord innerStart = start.copy();
-		Coord innerEnd = end.copy();
-		Coord.correct(innerStart, innerEnd);
-		innerStart.add(new Coord(1, 1, 1));
-		innerEnd.add(new Coord(-1, -1, -1));
-		RectSolid.fill(editor, rand, innerStart, innerEnd, new MetaBlock(Blocks.CAVE_AIR));
+		BoundingBox inner = this.bb.copy().grow(Cardinal.all, -1);
+		RectSolid.fill(editor, rand, inner, new MetaBlock(Blocks.CAVE_AIR));
 	}
 
 	@Override
@@ -73,7 +59,7 @@ public class RectHollow implements IShape {
 	
 	@Override
 	public Iterator<Coord> iterator() {
-		return new RectHollowIterator(start, end);
+		return new RectHollowIterator(bb);
 	}
 	
 	private class RectHollowIterator implements Iterator<Coord>{
@@ -82,11 +68,9 @@ public class RectHollow implements IShape {
 		Coord c1;
 		Coord c2;
 		
-		public RectHollowIterator(Coord c1, Coord c2){
-			this.c1 = c1.copy();
-			this.c2 = c2.copy();
-			
-			Coord.correct(this.c1, this.c2);
+		public RectHollowIterator(BoundingBox bb){
+			this.c1 = bb.getStart();
+			this.c2 = bb.getEnd();
 			cursor = c1.copy();
 		}
 		

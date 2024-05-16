@@ -169,30 +169,6 @@ public class Coord {
 		}
 	}
 	
-	// Arranges two coords so that the they create a positive cube.
-	// used in fill routines.
-	public static void correct(Coord one, Coord two){
-		
-		int temp;
-		
-		if(two.x < one.x){
-			temp = two.x;
-			two.x = one.x;
-			one.x = temp;
-		}
-
-		if(two.y < one.y){
-			temp = two.y;
-			two.y = one.y;
-			one.y = temp;
-		}
-		
-		if(two.z < one.z){
-			temp = two.z;
-			two.z = one.z;
-			one.z = temp;
-		}
-	}
 	
 	@Override
 	public int hashCode(){

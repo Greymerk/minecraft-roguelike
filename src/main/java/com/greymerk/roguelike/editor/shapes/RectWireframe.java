@@ -3,21 +3,21 @@ package com.greymerk.roguelike.editor.shapes;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import net.minecraft.util.math.random.Random;
 
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
+import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
+
+import net.minecraft.util.math.random.Random;
 
 public class RectWireframe implements IShape {
 
-	private Coord start;
-	private Coord end;
+	private BoundingBox bb;
 	
-	public RectWireframe(Coord start, Coord end){
-		this.start = start;
-		this.end = end;
+	public RectWireframe(BoundingBox bb){
+		this.bb = bb;
 	}
 	
 	public static void fill(IWorldEditor editor, Random rand, Coord start, Coord end, IBlockFactory block){
@@ -25,7 +25,7 @@ public class RectWireframe implements IShape {
 	}
 	
 	public static void fill(IWorldEditor editor, Random rand, Coord start, Coord end, IBlockFactory block, boolean fillAir, boolean replaceSolid){
-		RectWireframe rect = new RectWireframe(start, end);
+		RectWireframe rect = new RectWireframe(new BoundingBox(start, end));
 		rect.fill(editor, rand, block, fillAir, replaceSolid);
 	}
 
@@ -54,7 +54,7 @@ public class RectWireframe implements IShape {
 	
 	@Override
 	public Iterator<Coord> iterator() {
-		return new RectWireframeIterator(start, end);
+		return new RectWireframeIterator(this.bb);
 	}
 	
 	private class RectWireframeIterator implements Iterator<Coord>{
@@ -63,11 +63,9 @@ public class RectWireframe implements IShape {
 		Coord c1;
 		Coord c2;
 		
-		public RectWireframeIterator(Coord c1, Coord c2){
-			this.c1 = c1.copy();
-			this.c2 = c2.copy();
-			
-			Coord.correct(this.c1, this.c2);
+		public RectWireframeIterator(BoundingBox bb){
+			this.c1 = bb.getStart();
+			this.c2 = bb.getEnd();
 			cursor = this.c1.copy();
 		}
 		

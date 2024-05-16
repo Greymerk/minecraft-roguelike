@@ -192,15 +192,6 @@ class CoordTest {
 	}
 
 	@Test
-	void testCorrect() {
-		Coord a = new Coord(-30, 60, 40);
-		Coord b = new Coord(10, -100, -20);
-		Coord.correct(a, b);
-		assert(a.equals(new Coord(-30, -100, -20)));
-		assert(b.equals(new Coord(10, 60, 40)));
-	}
-
-	@Test
 	void testToString() {
 	}
 

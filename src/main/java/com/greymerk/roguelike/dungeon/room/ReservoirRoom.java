@@ -316,7 +316,7 @@ public class ReservoirRoom extends AbstractLargeRoom implements IRoom {
 		
 		Coord start = new Coord(-1, -1, -1);
 		Coord end = new Coord(1, -1, 1);
-		for(Coord pos :  new RectSolid(start, end).get()){
+		for(Coord pos :  new RectSolid(new BoundingBox(start, end)).get()){
 			cells.add(new Cell(pos, CellState.OBSTRUCTED));
 		}
 		
@@ -326,7 +326,7 @@ public class ReservoirRoom extends AbstractLargeRoom implements IRoom {
 			start.add(dir, 2);
 			end = start.copy();
 			end.add(Cardinal.right(dir), 2);
-			for(Coord pos :  new RectSolid(start, end).get()){
+			for(Coord pos :  new RectSolid(new BoundingBox(start, end)).get()){
 				Cell c = new Cell(pos, CellState.OBSTRUCTED);
 				c.addWall(dir);
 				cells.add(c);

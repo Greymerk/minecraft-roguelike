@@ -1,19 +1,19 @@
 package com.greymerk.roguelike.editor.shapes;
 
-import com.greymerk.roguelike.editor.Coord;
+import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 
 public enum Shape {
 
 	RECTSOLID, RECTHOLLOW, RECTPYRAMID, RECTWIREFRAME, SPHERE;
 	
-	public static IShape get(Shape type, Coord start, Coord end){
+	public static IShape get(Shape type, BoundingBox bb){
 		switch(type){
-		case RECTSOLID: return new RectSolid(start, end);
-		case RECTHOLLOW: return new RectHollow(start, end);
-		case RECTPYRAMID: return new RectPyramid(start, end);
-		case RECTWIREFRAME: return new RectWireframe(start, end);
-		case SPHERE: return new Sphere(start, end);
-		default: return new RectSolid(start, end);
+		case RECTSOLID: return new RectSolid(bb);
+		case RECTHOLLOW: return new RectHollow(bb);
+		case RECTPYRAMID: return new RectPyramid(bb);
+		case RECTWIREFRAME: return new RectWireframe(bb);
+		case SPHERE: return new Sphere(bb);
+		default: return new RectSolid(bb);
 		}
 	}
 }

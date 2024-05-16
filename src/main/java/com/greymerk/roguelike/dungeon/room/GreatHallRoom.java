@@ -4,6 +4,7 @@ import com.greymerk.roguelike.dungeon.fragment.Fragment;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
+import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.editor.shapes.RectHollow;
 
 import net.minecraft.util.math.random.Random;
@@ -24,7 +25,7 @@ public class GreatHallRoom extends AbstractLargeRoom implements IRoom {
 		end.add(Cardinal.SOUTH, size);
 		end.add(Cardinal.EAST, size);
 		end.add(Cardinal.UP, 5);
-		RectHollow box = new RectHollow(start, end);
+		RectHollow box = new RectHollow(new BoundingBox(start, end));
 		box.fill(editor, rand, this.getTheme().getPrimary().getWall());
 		
 		for(Cardinal dir : Cardinal.directions) {

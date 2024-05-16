@@ -3,26 +3,26 @@ package com.greymerk.roguelike.editor.shapes;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import net.minecraft.util.math.random.Random;
 
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
+import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
+
+import net.minecraft.util.math.random.Random;
 
 public class Sphere implements IShape {
 
-	private Coord start;
-	private Coord end;
+	private BoundingBox bb;
 
-	public Sphere(Coord start, Coord end){
-		this.start = start.copy();
-		this.end = end.copy();
+	public Sphere(BoundingBox bb){
+		this.bb = bb;
 	}
 	
 	@Override
 	public Iterator<Coord> iterator() {
-		return new SphereIterator(start, end);
+		return new SphereIterator(bb);
 	}
 
 	@Override
@@ -60,12 +60,10 @@ public class Sphere implements IShape {
 		private Cardinal dir;
 		private boolean top;
 		
-		public SphereIterator(Coord centre, Coord end){
-			this.centre = centre.copy(); 
-			Coord s = centre.copy();
-			Coord e = end.copy();
-			
-			Coord.correct(s, e);
+		public SphereIterator(BoundingBox bb){
+			this.centre = bb.getStart();
+			Coord s = bb.getStart();
+			Coord e = bb.getEnd();
 			Coord diff = e.sub(s);
 			
 			int r = diff.getX();

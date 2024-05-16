@@ -3,27 +3,27 @@ package com.greymerk.roguelike.editor.shapes;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import net.minecraft.util.math.random.Random;
 
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
+import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
+
+import net.minecraft.util.math.random.Random;
 
 public class RectPyramid implements IShape {
 
-	private Coord start;
-	private Coord end;
+	private BoundingBox bb;
 	
-	public RectPyramid(Coord start, Coord end){
-		this.start = start.copy();
-		this.end = end.copy();
+	public RectPyramid(BoundingBox bb){
+		this.bb = bb;
 	}
 	
 	
 	@Override
 	public Iterator<Coord> iterator() {
-		return new SquarePyramidIterator(start, end);
+		return new SquarePyramidIterator(this.bb);
 	}
 
 	@Override
@@ -57,11 +57,10 @@ public class RectPyramid implements IShape {
 		double thetaX;
 		double thetaZ;
 		
-		public SquarePyramidIterator(Coord start, Coord end){
-			this.start = start.copy();
-			Coord s = start.copy();
-			Coord e = end.copy();
-			Coord.correct(s, e);
+		public SquarePyramidIterator(BoundingBox bb){
+			this.start = bb.getStart();
+			Coord s = bb.getStart();
+			Coord e = bb.getEnd();
 			
 			cursor = new Coord(0,0,0);
 			dir = Cardinal.NORTH;

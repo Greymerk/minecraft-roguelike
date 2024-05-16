@@ -11,6 +11,7 @@ import net.minecraft.util.math.random.Random;
 public enum Cardinal {
 	NORTH, EAST, WEST, SOUTH, UP, DOWN;
 	
+	public static final List<Cardinal> all = Arrays.asList(new Cardinal[] {NORTH, EAST, SOUTH, WEST, UP, DOWN});
 	public static final List<Cardinal> directions = Arrays.asList(new Cardinal[] {NORTH, EAST, SOUTH, WEST});
 	
 	public static Cardinal reverse(Cardinal dir){

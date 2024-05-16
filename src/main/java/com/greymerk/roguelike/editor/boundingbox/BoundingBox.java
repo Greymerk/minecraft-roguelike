@@ -18,6 +18,10 @@ public class BoundingBox implements IBounded{
 		return new BoundingBox(origin);
 	}
 	
+	public BoundingBox copy() {
+		return new BoundingBox(start, end);
+	}
+	
 	public BoundingBox(Coord origin) {
 		this.start = origin.copy();
 		this.end = origin.copy();
@@ -26,13 +30,13 @@ public class BoundingBox implements IBounded{
 	public BoundingBox(Coord start, Coord end){
 		this.start = start.copy();
 		this.end = end.copy();
-		Coord.correct(this.start, this.end);
+		this.correct();
 	}
 	
 	public BoundingBox(NbtCompound tag) {
 		this.start = Coord.of(tag.getCompound("start"));
 		this.end = Coord.of(tag.getCompound("end"));
-		Coord.correct(this.start, this.end);
+		this.correct();
 	}
 
 	public BoundingBox getBoundingBox(){
@@ -40,8 +44,11 @@ public class BoundingBox implements IBounded{
 	}
 	
 	public BoundingBox combine(IBounded other) {
-		Coord.correct(start, other.getStart().copy());
-		Coord.correct(other.getEnd().copy(), end);
+		BoundingBox starts = new BoundingBox(start, other.getStart());
+		BoundingBox ends = new BoundingBox(end, other.getEnd());
+		this.start = starts.start;
+		this.end = ends.end;
+		this.correct();
 		return this;
 	}
 	
@@ -63,7 +70,7 @@ public class BoundingBox implements IBounded{
 
 	@Override
 	public IShape getShape(Shape type) {
-		return Shape.get(type, start, end);
+		return Shape.get(type, this);
 	}
 
 	public BoundingBox grow(Cardinal dir) {
@@ -80,7 +87,7 @@ public class BoundingBox implements IBounded{
 		case SOUTH: end.add(dir, amount); break;
 		default:
 		}
-		Coord.correct(start, end);
+		this.correct();
 		return this;
 	}
 	
@@ -148,5 +155,49 @@ public class BoundingBox implements IBounded{
 		BoundingBox other = (BoundingBox) obj;
 		return Objects.equals(end, other.end) && Objects.equals(start, other.start);
 	}
+	
+	private void correct() {
+		Coord s = new Coord(
+				end.getX() < start.getX() ? end.getX() : start.getX(),
+				end.getY() < start.getY() ? end.getY() : start.getY(),
+				end.getZ() < start.getZ() ? end.getZ() : start.getZ()
+				);
+		
+		Coord e = new Coord(
+				end.getX() < start.getX() ? start.getX() : end.getX(),
+				end.getY() < start.getY() ? start.getY() : end.getY(),
+				end.getZ() < start.getZ() ? start.getZ() : end.getZ()
+				);
+		
+		this.start = s;
+		this.end = e;
+	}
+	
+	/*
+	// Arranges two coords so that the they create a positive cube.
+	// used in fill routines.
+	private static void correct(Coord one, Coord two){
+		
+		int temp;
+		
+		if(two.x < one.x){
+			temp = two.x;
+			two.x = one.x;
+			one.x = temp;
+		}
+
+		if(two.y < one.y){
+			temp = two.y;
+			two.y = one.y;
+			one.y = temp;
+		}
+		
+		if(two.z < one.z){
+			temp = two.z;
+			two.z = one.z;
+			one.z = temp;
+		}
+	}
+	*/
 
 }

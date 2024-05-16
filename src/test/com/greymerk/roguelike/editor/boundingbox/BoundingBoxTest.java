@@ -110,18 +110,17 @@ class BoundingBoxTest {
 
 	@Test
 	void testGetStart() {
-		Coord start = new Coord(-5, 6, 3);
-		Coord end = new Coord(3, -5, 6);
-		Coord.correct(start, end);
+		Coord start = new Coord(-5, -6, 3);
+		Coord end = new Coord(3, 5, 6);
 		BoundingBox bb = new BoundingBox(start, end);
 		assert(bb.getStart().equals(start));
 	}
 
 	@Test
 	void testGetEnd() {
-		Coord start = new Coord(-5, 6, 3);
-		Coord end = new Coord(3, -5, 6);
-		Coord.correct(start, end);
+		Coord start = new Coord(-5, -6, -3);
+		Coord end = new Coord(3, 5, 6);
+		
 		BoundingBox bb = new BoundingBox(start, end);
 		assert(bb.getEnd().equals(end));
 	}
@@ -130,7 +129,7 @@ class BoundingBoxTest {
 	void testGetNbt() {
 		Coord start = new Coord(-5, 6, 3);
 		Coord end = new Coord(3, -5, 6);
-		Coord.correct(start, end);
+		
 		BoundingBox bb = new BoundingBox(start, end);
 		NbtCompound tag = bb.getNbt();
 		
@@ -140,8 +139,8 @@ class BoundingBoxTest {
 		NbtCompound s = tag.getCompound("start");
 		NbtCompound e = tag.getCompound("end");
 		
-		assert(Coord.of(s).equals(start));
-		assert(Coord.of(e).equals(end));
+		assert(Coord.of(s).equals(bb.getStart()));
+		assert(Coord.of(e).equals(bb.getEnd()));
 	}
 
 	@Test

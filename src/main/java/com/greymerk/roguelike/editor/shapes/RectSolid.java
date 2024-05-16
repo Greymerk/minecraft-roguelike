@@ -8,18 +8,17 @@ import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
+import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.editor.boundingbox.IBounded;
 
 import net.minecraft.util.math.random.Random;
 
 public class RectSolid implements IShape {
 
-	private Coord start;
-	private Coord end;
+	private BoundingBox bb;
 	
-	public RectSolid(Coord start, Coord end){
-		this.start = start;
-		this.end = end;
+	public RectSolid(BoundingBox bb){
+		this.bb = bb;
 	}
 	
 	public static void fill(IWorldEditor editor, Random rand, Coord start, Coord end, IBlockFactory block){
@@ -27,7 +26,7 @@ public class RectSolid implements IShape {
 	}
 	
 	public static void fill(IWorldEditor editor, Random rand, Coord start, Coord end, IBlockFactory block, boolean fillAir, boolean replaceSolid){
-		new RectSolid(start, end).fill(editor, rand, block, fillAir, replaceSolid);
+		new RectSolid(new BoundingBox(start, end)).fill(editor, rand, block, fillAir, replaceSolid);
 	}
 	
 	public static void fill(IWorldEditor editor, Random rand, IBounded box, IBlockFactory blocks) {
@@ -57,7 +56,7 @@ public class RectSolid implements IShape {
 	
 	@Override
 	public Iterator<Coord> iterator() {
-		return new RectSolidIterator(this.start, this.end);
+		return new RectSolidIterator(this.bb);
 	}
 	
 	private class RectSolidIterator implements Iterator<Coord>{
@@ -66,11 +65,9 @@ public class RectSolid implements IShape {
 		Coord c1;
 		Coord c2;
 		
-		public RectSolidIterator(Coord c1, Coord c2){
-			this.c1 = c1.copy();
-			this.c2 = c2.copy();
-			
-			Coord.correct(this.c1, this.c2);
+		public RectSolidIterator(BoundingBox bb){
+			this.c1 = bb.getStart();
+			this.c2 = bb.getEnd();
 			cursor = this.c1.copy();
 		}
 		

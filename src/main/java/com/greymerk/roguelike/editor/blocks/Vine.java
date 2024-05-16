@@ -4,6 +4,7 @@ import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.MetaBlock;
+import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.editor.shapes.RectSolid;
 
 import net.minecraft.block.BlockState;
@@ -16,7 +17,7 @@ import net.minecraft.util.math.random.Random;
 public class Vine {
 
 	public static void fill(IWorldEditor editor, Random rand, Coord start, Coord end){
-		for(Coord cursor : new RectSolid(start, end)){
+		for(Coord cursor : new RectSolid(new BoundingBox(start, end))){
 			set(editor, cursor);
 		}
 	}

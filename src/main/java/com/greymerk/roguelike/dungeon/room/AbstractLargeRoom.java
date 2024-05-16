@@ -20,7 +20,7 @@ public abstract class AbstractLargeRoom extends AbstractRoom implements IRoom {
 		
 		Coord start = new Coord(-2,0,-2);
 		Coord end = new Coord(2, 0, 2);
-		RectSolid square = new RectSolid(start, end);
+		RectSolid square = new RectSolid(new BoundingBox(start, end));
 		for(Coord pos : square) {
 			Cell c = new Cell(pos, CellState.OBSTRUCTED);
 			if(Math.abs(pos.getX()) == 2 && pos.getZ() == 0) {cells.add(c); continue;}
