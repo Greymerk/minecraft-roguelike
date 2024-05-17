@@ -192,7 +192,7 @@ public class CryptRoom extends AbstractMediumRoom implements IRoom {
 		Coord pos = origin.copy().add(Cardinal.UP, 6);
 		for(Cardinal dir : Cardinal.directions) {
 			Coord p = pos.copy().add(dir, 3);
-			RectSolid.fill(editor, rand, pos, p, wall);
+			RectSolid.fill(editor, rand, new BoundingBox(pos, p), wall);
 			p.add(Cardinal.DOWN);
 			stair.setOrientation(Cardinal.reverse(dir), true).set(editor, p);
 		}

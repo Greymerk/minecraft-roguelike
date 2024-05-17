@@ -5,12 +5,12 @@ import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
-import com.greymerk.roguelike.editor.MetaBlock;
-import com.greymerk.roguelike.editor.blocks.BlockType;
+import com.greymerk.roguelike.editor.blocks.Air;
 import com.greymerk.roguelike.editor.blocks.IronBar;
 import com.greymerk.roguelike.editor.blocks.Torch;
 import com.greymerk.roguelike.editor.blocks.stair.IStair;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
+import com.greymerk.roguelike.editor.shapes.RectHollow;
 import com.greymerk.roguelike.editor.shapes.RectSolid;
 import com.greymerk.roguelike.editor.theme.ITheme;
 
@@ -20,221 +20,170 @@ import net.minecraft.util.math.random.Random;
 public class RogueTower implements ITower{
 
 	public void generate(IWorldEditor editor, Random rand, ITheme theme, Coord dungeon){
-		
-		int x = dungeon.getX();
-		int y = dungeon.getY();
-		int z = dungeon.getZ();
-		
-		MetaBlock air = BlockType.get(BlockType.AIR);
-		
-		IBlockFactory blocks = theme.getPrimary().getWall();
-		
+		IBlockFactory walls = theme.getPrimary().getWall();
 		IStair stair = theme.getPrimary().getStair();
 		
-		Coord towerBase = Tower.getBaseCoord(editor, dungeon);
-		int ground = towerBase.getY() - 1;
-		int main = towerBase.getY() + 4;
-		int roof = towerBase.getY() + 9;
+		Coord origin = Tower.getBaseCoord(editor, dungeon);
 		
-		RectSolid.fill(editor, rand, new Coord(x - 3, ground, z - 3), new Coord(x + 3, towerBase.getY() + 12, z + 3), air);
+		//floors and roof
+		BoundingBox bb = BoundingBox.of(origin);
+		bb.add(Cardinal.DOWN).grow(Cardinal.directions, 3);
+		RectSolid.fill(editor, rand, bb, walls);
+		bb.add(Cardinal.UP, 5);
+		RectSolid.fill(editor, rand, bb, walls);
+		bb.add(Cardinal.UP, 5).grow(Cardinal.directions);
+		RectSolid.fill(editor, rand, bb, walls);
 		
-		RectSolid.fill(editor, rand, new Coord(x - 2, y + 10, z - 2), new Coord(x + 2, towerBase.getY() - 1, z + 2), blocks, false, true);
-
-		Coord start;
-		Coord end;
-		Coord cursor;
-		
-		RectSolid.fill(editor, rand, new Coord(x - 3, main, z - 3), new Coord(x + 3, main, z + 3), theme.getSecondary().getWall(), true, true);
-		RectSolid.fill(editor, rand, new Coord(x - 3, roof, z - 3), new Coord(x + 3, roof, z + 3), blocks);
-		
-		for(Cardinal dir : Cardinal.directions){
-			for (Cardinal orth : Cardinal.orthogonal(dir)){
-				// ground floor
-				start = towerBase.copy();
-				start.add(Cardinal.DOWN, 1);
-				start.add(dir, 2);
-				end = start.copy();
-				end.add(dir, 3);
-				end.add(orth, 1);
-				RectSolid.fill(editor, rand, start, end, blocks, true, true);
-				start.add(orth, 2);
-				end.add(Cardinal.reverse(dir), 2);
-				end.add(orth, 2);
-				RectSolid.fill(editor, rand, start, end, blocks, true, true);
-				
-				cursor = towerBase.copy();
-				cursor.add(dir, 5);
-				cursor.add(orth, 1);
-				start = cursor.copy();
-				end = cursor.copy();
-				end.add(Cardinal.reverse(dir), 1);
-				end.add(Cardinal.UP, 2);
-				RectSolid.fill(editor, rand, start, end, blocks);
-				start = end.copy();
-				start.add(dir, 1);
-				start.add(Cardinal.reverse(orth), 1);
-				RectSolid.fill(editor, rand, start, end, blocks);
-				cursor.add(Cardinal.UP, 2);
-				stair.setOrientation(orth, false);
-				stair.set(editor, cursor);
-				
-				start = towerBase.copy();
-				start.add(dir, 4);
-				end = start.copy();
-				end.add(Cardinal.UP, 9);
-				end.add(orth, 2);
-				RectSolid.fill(editor, rand, start, end, blocks);
-				
-				start = towerBase.copy();
-				start.add(dir, 3);
-				start.add(orth, 3);
-				end = start.copy();
-				end.add(Cardinal.UP, 9);
-				RectSolid.fill(editor, rand, start, end, blocks);
-				
-				start = towerBase.copy();
-				start.add(dir, 4);
-				end = start.copy();
-				end.add(dir, 1);
-				end.add(Cardinal.UP, 1);
-				RectSolid.fill(editor, rand, start, end, air);
-				
-				cursor = towerBase.copy();
-				cursor.add(dir, 3);
-				cursor.add(orth, 2);
-				cursor.add(Cardinal.UP, 3);
-				stair.setOrientation(Cardinal.reverse(orth), true);
-				stair.set(editor, cursor);
-				cursor.add(Cardinal.UP, 5);
-				stair.setOrientation(Cardinal.reverse(orth), true);
-				stair.set(editor, cursor);
-				
-				start = towerBase.copy();
-				start.add(dir, 4);
-				start.add(orth, 3);
-				start.add(Cardinal.UP, 4);
-				stair.setOrientation(orth, true);
-				stair.set(editor, start);
-				
-				start.add(Cardinal.UP, 1);
-				end = start.copy();
-				end.add(Cardinal.UP, 4);
-				RectSolid.fill(editor, rand, start, end, blocks, true, true);
-				
-				start = towerBase.copy();
-				start.add(dir, 5);
-				start.add(Cardinal.UP, 4);
-				stair.setOrientation(dir, true);
-				stair.set(editor, start);
-				
-				cursor = start.copy();
-				cursor.add(orth, 1);
-				stair.setOrientation(orth, true);
-				stair.set(editor, cursor);
-				
-				start.add(Cardinal.UP, 3);
-				stair.setOrientation(dir, true);
-				stair.set(editor, start);
-				
-				cursor = start.copy();
-				cursor.add(orth, 1);
-				stair.setOrientation(orth, true);
-				stair.set(editor, cursor);
-				
-				start.add(Cardinal.UP, 1);
-				end = start.copy();
-				end.add(orth, 1);
-				end.add(Cardinal.UP, 1);
-				RectSolid.fill(editor, rand, start, end, blocks, true, true);
-				
-				cursor = end.copy();
-				cursor.add(orth, 1);
-				cursor.add(Cardinal.DOWN, 1);
-				stair.setOrientation(orth, true);
-				stair.set(editor, cursor);
-				cursor.add(Cardinal.UP, 1);
-				cursor.add(orth, 1);
-				stair.set(editor, cursor);
-				
-				cursor.add(Cardinal.reverse(orth), 1);
-				blocks.set(editor, rand, cursor);
-				cursor.add(Cardinal.UP, 1);
-				blocks.set(editor, rand, cursor);
-				cursor.add(orth, 1);
-				blocks.set(editor, rand, cursor);
-				cursor.add(Cardinal.UP, 1);
-				this.addCrenellation(editor, rand, cursor, blocks);
-				
-				cursor.add(Cardinal.DOWN, 2);
-				cursor.add(Cardinal.reverse(dir), 1);
-				cursor.add(orth, 1);
-				blocks.set(editor, rand, cursor);
-				cursor.add(Cardinal.DOWN, 1);
-				blocks.set(editor, rand, cursor);
-				
-				cursor = towerBase.copy();
-				cursor.add(dir, 6);
-				cursor.add(Cardinal.UP, 9);
-				
-				stair.setOrientation(dir, true);
-				stair.set(editor, cursor);
-				
-				cursor.add(orth, 1);
-				stair.setOrientation(orth, true);
-				stair.set(editor, cursor);
-				
-				cursor.add(Cardinal.reverse(orth), 1);
-				cursor.add(Cardinal.UP, 1);
-				blocks.set(editor, rand, cursor);
-				cursor.add(orth, 1);
-				blocks.set(editor, rand, cursor);
-				cursor.add(Cardinal.UP, 1);
-				this.addCrenellation(editor, rand, cursor, blocks);
-				
-				cursor = towerBase.copy();
-				cursor.add(dir, 4);
-				cursor.add(Cardinal.UP, 5);
-				air.set(editor, cursor);
-				cursor.add(Cardinal.UP, 1);
-				air.set(editor, cursor);
-				cursor.add(orth, 2);
-				IronBar.get().set(editor, cursor);
-			}
-		}
-		
-		// wall down to entrance room
-		int entranceY = (ground - ground % 10) - 10;
-		for(Cardinal dir : Cardinal.directions){
-			start = new Coord(x, ground, z);
-			end = new Coord(x, entranceY, z);
-			BoundingBox bb = new BoundingBox(start, end);
-			bb.add(dir, 4).grow(Cardinal.orthogonal(dir), 2);
-			RectSolid.fill(editor, rand, bb, blocks, true, false);
+		for(Cardinal dir : Cardinal.directions) {
+			bb = BoundingBox.of(origin).add(Cardinal.DOWN);
+			bb.add(dir, 4).grow(Cardinal.UP, 9).grow(Cardinal.orthogonal(dir), 3);
+			RectSolid.fill(editor, rand, bb, walls);
 			
-			for (Cardinal orth : Cardinal.orthogonal(dir)){
-				start = new Coord(x, ground, z);
-				end = new Coord(x, entranceY, z);
-				bb = new BoundingBox(start, end);
-				bb.add(dir, 3).add(orth, 3);
-				RectSolid.fill(editor, rand, start, end, blocks, true, false);
+			bb = BoundingBox.of(origin);
+			bb.add(dir, 3).add(Cardinal.left(dir), 3).grow(Cardinal.UP, 9).grow(Cardinal.DOWN);
+			RectSolid.fill(editor, rand, bb, theme.getPrimary().getPillar());
+			
+			bb = BoundingBox.of(origin);
+			bb.add(dir, 3).add(Cardinal.UP, 3).grow(Cardinal.orthogonal(dir), 3);
+			RectSolid.fill(editor, rand, bb, walls);
+			bb.add(Cardinal.UP, 5);
+			RectSolid.fill(editor, rand, bb, walls);
+			
+			for(Cardinal o : Cardinal.orthogonal(dir)) {
+				Coord pos = origin.copy();
+				pos.add(dir, 3).add(Cardinal.UP, 2).add(o, 2);
+				stair.setOrientation(Cardinal.reverse(o), true).set(editor, pos);
+				pos.add(Cardinal.UP, 5);
+				stair.setOrientation(Cardinal.reverse(o), true).set(editor, pos);
 			}
+			
+			bb = BoundingBox.of(origin);
+			bb.add(Cardinal.UP, 9).add(dir, 5).grow(Cardinal.orthogonal(dir), 2);
+			RectSolid.fill(editor, rand, bb, walls);
+			
+			Coord roof = origin.copy().add(Cardinal.UP, 9);
+			Coord pos = roof.copy().add(dir, 6).add(Cardinal.UP);
+			walls.set(editor, rand, pos);
+			
+			pos = roof.copy().add(dir, 4).add(Cardinal.left(dir), 4).add(Cardinal.UP);
+			walls.set(editor, rand, pos);
+			
+			for(Cardinal o : Cardinal.orthogonal(dir)) {
+				pos = roof.copy().add(dir, 5).add(o, 2).add(Cardinal.UP);
+				walls.set(editor, rand, pos);
+				pos.add(o);
+				walls.set(editor, rand, pos);
+				pos.add(Cardinal.UP);
+				this.addCrenellation(editor, rand, pos, walls);
+				
+				pos = roof.copy().add(dir, 6).add(o).add(Cardinal.UP);
+				walls.set(editor, rand, pos);
+				pos.add(Cardinal.UP);
+				this.addCrenellation(editor, rand, pos, walls);
+			}
+			
+			// ground level doorways
+			pos = origin.copy().add(Cardinal.UP, 2).add(dir, 5);
+			walls.set(editor, rand, pos);
+			bb = BoundingBox.of(origin);
+			bb.add(dir, 5).grow(Cardinal.orthogonal(dir)).add(Cardinal.DOWN);
+			RectSolid.fill(editor, rand, bb, walls);
+			for(Cardinal o : Cardinal.orthogonal(dir)) {
+				pos = origin.copy().add(dir, 5).add(o);
+				walls.set(editor, rand, pos);
+				pos.add(Cardinal.UP);
+				walls.set(editor, rand, pos);
+				pos.add(Cardinal.UP);
+				stair.setOrientation(o, false).set(editor, pos);
+			}
+			
+			// upper level patios
+			pos = origin.copy().add(Cardinal.UP, 4).add(dir, 5);
+			stair.setOrientation(dir, true).set(editor, pos);
+			for(Cardinal o : Cardinal.orthogonal(dir)) {
+				pos = origin.copy().add(Cardinal.UP, 4).add(dir, 5).add(o);
+				stair.setOrientation(o, true).set(editor, pos);
+			}
+			
+			// wallbrow
+			pos = origin.copy().add(dir, 5).add(Cardinal.UP, 7);
+			stair.setOrientation(dir, true).set(editor, pos);
+			pos.add(Cardinal.UP);
+			walls.set(editor, rand, pos);
+			pos.add(dir);
+			stair.setOrientation(dir, true).set(editor, pos);
+			pos.add(Cardinal.UP);
+			walls.set(editor, rand, pos);
+			pos.add(Cardinal.reverse(dir));
+			walls.set(editor, rand, pos);
+			for(Cardinal o : Cardinal.orthogonal(dir)) {
+				pos = origin.copy().add(dir, 5).add(Cardinal.UP, 7).add(o);
+				stair.setOrientation(o, true).set(editor, pos);
+				pos.add(Cardinal.UP);
+				walls.set(editor, rand, pos);
+				pos.add(dir);
+				stair.setOrientation(o, true).set(editor, pos);
+				pos.add(Cardinal.UP);
+				walls.set(editor, rand, pos);
+				pos.add(Cardinal.reverse(dir));
+				walls.set(editor, rand, pos);
+				
+				pos = origin.copy().add(dir, 5).add(Cardinal.UP, 8).add(o, 2);
+				stair.setOrientation(o, true).set(editor, pos);
+				pos.add(Cardinal.UP);
+				walls.set(editor, rand, pos);
+				pos.add(o);
+				stair.setOrientation(o, true).set(editor, pos);
+			}
+			
+			// doors
+			bb = BoundingBox.of(origin);
+			bb.add(dir, 4).grow(Cardinal.UP);
+			RectSolid.fill(editor, rand, bb, Air.get());
+			bb.add(Cardinal.UP, 5);
+			RectSolid.fill(editor, rand, bb, Air.get());
+			
+			//windows
+			for(Cardinal o : Cardinal.orthogonal(dir)) {
+				pos = origin.copy().add(Cardinal.UP, 6).add(dir, 4).add(o, 2);
+				IronBar.get().set(editor, pos);
+			}
+			
+			//corner bevels
+			for(Cardinal o : Cardinal.orthogonal(dir)) {
+				bb = BoundingBox.of(origin);
+				bb.add(dir, 4).add(o, 3).grow(Cardinal.UP, 3);
+				RectSolid.fill(editor, rand, bb, Air.get());
+				pos = origin.copy().add(dir, 4).add(o, 3).add(Cardinal.UP, 4);
+				stair.setOrientation(o, true).set(editor, pos);
+			}
+			
+			//beard
+			Coord top = origin.copy().add(Cardinal.DOWN).add(dir, 3).add(Cardinal.left(dir), 3);
+			Coord bottom = dungeon.copy().add(dir, 3).add(Cardinal.left(dir), 3);
+			RectSolid.fill(editor, rand, new BoundingBox(top, bottom), walls, true, false);
+			bb = new BoundingBox(origin.copy().add(Cardinal.DOWN), dungeon.copy());
+			bb.add(dir, 4).grow(Cardinal.orthogonal(dir), 3);
+			RectSolid.fill(editor, rand, bb, walls, true, false);
 		}
 		
-		start = towerBase.copy();
-		start.add(Cardinal.UP, 4);
-		end = dungeon.copy();
-		SpiralStairCase stairCase = new SpiralStairCase(start, end);
-		stairCase.generate(editor, rand, theme);
+		//stairway
+		bb = new BoundingBox(origin.copy().add(Cardinal.DOWN), dungeon.copy().add(Cardinal.UP, 4));
+		bb.grow(Cardinal.directions, 2);
+		RectHollow.fill(editor, rand, bb, walls, false, true);
+		SpiralStairCase staircase = new SpiralStairCase(origin.copy().add(Cardinal.UP, 4), dungeon);
+		staircase.generate(editor, rand, theme);
+		
+		
 	}
 	
 	
-	private void addCrenellation(IWorldEditor editor, Random rand, Coord cursor, IBlockFactory blocks){
+	private void addCrenellation(IWorldEditor editor, Random rand, Coord origin, IBlockFactory blocks){
+		blocks.set(editor, rand, origin.copy());
 		
-		blocks.set(editor, rand, cursor);
-		
-		if(editor.isAir(cursor)) return;
+		if(editor.isAir(origin)) return;
 
-		cursor.add(Cardinal.UP, 1);
-		Torch.generate(editor, Torch.WOODEN, Cardinal.UP, cursor);
+		Coord pos = origin.copy().add(Cardinal.UP);
+		Torch.generate(editor, Torch.WOODEN, Cardinal.UP, pos);
 	}
 }

@@ -71,15 +71,9 @@ public class ReservoirRoom extends AbstractLargeRoom implements IRoom {
 	private void addLiquid(IWorldEditor editor, Random rand, Coord origin) {
 		IBlockFactory liquid = theme.getPrimary().getLiquid();
 		
-		Coord start = origin.copy();
-		start.add(Cardinal.DOWN, 6);
-		start.add(Cardinal.NORTH, 11);
-		start.add(Cardinal.WEST, 11);
-		Coord end = origin.copy();
-		end.add(Cardinal.DOWN, 5);
-		end.add(Cardinal.SOUTH, 11);
-		end.add(Cardinal.EAST, 11);
-		RectSolid.fill(editor, rand, start, end, liquid, true, false);
+		BoundingBox bb = BoundingBox.of(origin);
+		bb.add(Cardinal.DOWN, 6).grow(Cardinal.DOWN, 5).grow(Cardinal.directions, 11);
+		RectSolid.fill(editor, rand, bb, liquid, true, false);
 	}
 
 	private void ceiling(IWorldEditor editor, Random rand, Coord origin) {
@@ -88,50 +82,32 @@ public class ReservoirRoom extends AbstractLargeRoom implements IRoom {
 		
 		for(Cardinal dir : Cardinal.directions) {
 			// outer rim
-			Coord start = origin.copy();
-			start.add(Cardinal.UP, 4);
-			start.add(dir, 9);
-			start.add(Cardinal.left(dir), 8);
-			Coord end = origin.copy();
-			end.add(Cardinal.UP, 4);
-			end.add(dir, 10);
-			end.add(Cardinal.right(dir), 9);
-			RectSolid.fill(editor, rand, start, end, wall);
+			BoundingBox bb = BoundingBox.of(origin);
+			bb.add(Cardinal.UP, 4).add(dir, 9).grow(dir).grow(Cardinal.left(dir), 8).grow(Cardinal.right(dir), 9);
+			RectSolid.fill(editor, rand, bb, wall);
 			
 			for(Cardinal o : Cardinal.orthogonal(dir)) {
-				start = origin.copy();
-				start.add(Cardinal.UP, 4);
-				start.add(dir, 2);
-				end = start.copy();
-				end.add(o, 8);
-				RectSolid.fill(editor, rand, start, end, wall);
-				end.add(Cardinal.DOWN);
-				stair.setOrientation(Cardinal.reverse(o), true);
-				stair.set(editor, end);
-				end.add(o);
-				wall.set(editor, rand, end);
-				end.add(Cardinal.DOWN);
-				stair.set(editor, end);
+				bb = BoundingBox.of(origin);
+				bb.add(Cardinal.UP, 4).add(dir, 2).grow(o, 8);
+				RectSolid.fill(editor, rand, bb, wall);
+				Coord pos = origin.copy().add(Cardinal.UP, 3).add(dir, 2).add(o, 8);
+				stair.setOrientation(Cardinal.reverse(o), true).set(editor, pos);
+				pos.add(o);
+				wall.set(editor, rand, pos);
+				pos.add(Cardinal.DOWN);
+				stair.set(editor, pos);
 				
+				bb = BoundingBox.of(origin);
+				bb.add(Cardinal.UP, 4).add(dir, 4).grow(o, 8);
+				RectSolid.fill(editor, rand, bb, wall);
+				pos = origin.copy().add(Cardinal.UP, 3).add(dir, 4).add(o, 8);
+				stair.setOrientation(Cardinal.reverse(o), true).set(editor, pos);
+				pos.add(o);
+				wall.set(editor, rand, pos);
+				pos.add(Cardinal.DOWN);
+				stair.set(editor, pos);
 				
-				start = origin.copy();
-				start.add(Cardinal.UP, 4);
-				start.add(dir, 4);
-				end = start.copy();
-				end.add(o, 8);
-				RectSolid.fill(editor, rand, start, end, wall);
-				end.add(Cardinal.DOWN);
-				stair.setOrientation(Cardinal.reverse(o), true);
-				stair.set(editor, end);
-				end.add(o);
-				wall.set(editor, rand, end);
-				end.add(Cardinal.DOWN);
-				stair.set(editor, end);
-				
-				Coord pos = origin.copy();
-				pos.add(Cardinal.UP, 3);
-				pos.add(o, 9);
-				pos.add(dir, 8);
+				pos = origin.copy().add(Cardinal.UP, 3).add(o, 9).add(dir, 8);
 				wall.set(editor, rand, pos);
 				pos.add(Cardinal.DOWN);
 				stair.set(editor, pos);
@@ -188,23 +164,15 @@ public class ReservoirRoom extends AbstractLargeRoom implements IRoom {
 		IStair stair = theme.getPrimary().getStair();
 		
 		for(Cardinal dir : Cardinal.directions) {
-			Coord start = origin.copy();
-			start.add(dir, 2);
-			start.add(Cardinal.left(dir), 2);
-			Coord end = start.copy();
-			end.add(Cardinal.UP, 3);
-			RectSolid.fill(editor, rand, start, end, pillar);
+			BoundingBox bb = BoundingBox.of(origin);
+			bb.add(dir, 2).add(Cardinal.left(dir), 2).grow(Cardinal.UP, 3);
+			RectSolid.fill(editor, rand, bb, pillar);
 			
-			start = origin.copy();
-			start.add(dir, 2);
-			start.add(Cardinal.left(dir));
-			start.add(Cardinal.DOWN);
-			end = start.copy();
-			end.add(Cardinal.right(dir), 2);
-			RectSolid.fill(editor, rand, start, end, wall);
-			start.add(Cardinal.UP, 4);
-			end.add(Cardinal.UP, 4);
-			RectSolid.fill(editor, rand, start, end, wall);
+			bb = BoundingBox.of(origin);
+			bb.add(dir, 2).add(Cardinal.left(dir)).add(Cardinal.DOWN).grow(Cardinal.right(dir), 2);
+			RectSolid.fill(editor, rand, bb, wall);
+			bb.add(Cardinal.UP, 4);
+			RectSolid.fill(editor, rand, bb, wall);
 			
 			for(Cardinal o : Cardinal.orthogonal(dir)) {
 				Coord pos = origin.copy();
@@ -265,21 +233,13 @@ public class ReservoirRoom extends AbstractLargeRoom implements IRoom {
 		IBlockFactory pillar = theme.getPrimary().getPillar();
 		IStair stair = theme.getPrimary().getStair();
 		
-		Coord start = origin.copy();
-		start.add(Cardinal.left(dir), 3);
-		Coord end = origin.copy();
-		end.add(Cardinal.right(dir), 3);
-		end.add(dir);
-		end.add(Cardinal.UP, 4);
-		RectSolid.fill(editor, rand, start, end, Air.get());
+		BoundingBox bb = BoundingBox.of(origin);
+		bb.grow(Cardinal.orthogonal(dir), 3).grow(dir).grow(Cardinal.UP, 4);
+		RectSolid.fill(editor, rand, bb, Air.get());
 		
-		start = origin.copy();
-		start.add(dir);
-		start.add(Cardinal.UP, 4);
-		end = start.copy();
-		start.add(Cardinal.left(dir), 3);
-		end.add(Cardinal.right(dir), 3);
-		RectSolid.fill(editor, rand, start, end, wall);
+		bb = BoundingBox.of(origin);
+		bb.add(dir).add(Cardinal.UP, 4).grow(Cardinal.orthogonal(dir), 3);
+		RectSolid.fill(editor, rand, bb, wall);
 		
 		Coord pos = origin.copy();
 		pos.add(dir);
@@ -287,25 +247,17 @@ public class ReservoirRoom extends AbstractLargeRoom implements IRoom {
 		Lantern.set(editor, pos, Lantern.SOUL, true);
 		
 		for(Cardinal o : Cardinal.orthogonal(dir)) {
-			start = origin.copy();
-			start.add(o, 3);
-			start.add(dir);
-			end = start.copy();
-			end.add(Cardinal.UP, 3);
-			RectSolid.fill(editor, rand, start, end, pillar);
+			bb = BoundingBox.of(origin);
+			bb.add(o, 3).add(dir).grow(Cardinal.UP, 3);
+			RectSolid.fill(editor, rand, bb, pillar);
 			
-			pos = origin.copy();
-			pos.add(o, 3);
-			pos.add(Cardinal.UP, 3);
-			stair.setOrientation(Cardinal.reverse(dir), true);
-			stair.set(editor, pos);
+			pos = origin.copy().add(o, 3).add(Cardinal.UP, 3);
+			stair.setOrientation(Cardinal.reverse(dir), true).set(editor, pos);
 			pos.add(Cardinal.UP);
 			wall.set(editor, rand, pos);
 			pos.add(Cardinal.reverse(o));
-			stair.setOrientation(Cardinal.reverse(o), true);
-			stair.set(editor, pos);
-			pos.add(dir);
-			pos.add(Cardinal.DOWN);
+			stair.setOrientation(Cardinal.reverse(o), true).set(editor, pos);
+			pos.add(dir).add(Cardinal.DOWN);
 			stair.set(editor, pos);
 		}
 	}

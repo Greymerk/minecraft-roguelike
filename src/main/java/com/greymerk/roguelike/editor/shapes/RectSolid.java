@@ -21,25 +21,17 @@ public class RectSolid implements IShape {
 		this.bb = bb;
 	}
 	
-	public static void fill(IWorldEditor editor, Random rand, Coord start, Coord end, IBlockFactory block){
-		fill(editor, rand, start, end, block, true, true);
-	}
-	
-	public static void fill(IWorldEditor editor, Random rand, Coord start, Coord end, IBlockFactory block, boolean fillAir, boolean replaceSolid){
-		new RectSolid(new BoundingBox(start, end)).fill(editor, rand, block, fillAir, replaceSolid);
-	}
-	
 	public static void fill(IWorldEditor editor, Random rand, IBounded box, IBlockFactory blocks) {
-		fill(editor, rand, box.getStart(), box.getEnd(), blocks, true, true);
+		new RectSolid(box.getBoundingBox()).fill(editor, rand, blocks, true, true);
 	}
 	
 	public static void fill(IWorldEditor editor, Random rand, IBounded box, IBlockFactory blocks, boolean fillAir, boolean replaceSolid) {
-		fill(editor, rand, box.getStart(), box.getEnd(), blocks, fillAir, replaceSolid);
+		new RectSolid(box.getBoundingBox()).fill(editor, rand, blocks, fillAir, replaceSolid);
 	}
 	
 	@Override
 	public void fill(IWorldEditor editor, Random rand, IBlockFactory block){
-		fill(editor, rand, block, true, true);
+		this.fill(editor, rand, block, true, true);
 	}
 	
 	@Override

@@ -8,6 +8,7 @@ import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.MetaBlock;
 import com.greymerk.roguelike.editor.blocks.BlockType;
 import com.greymerk.roguelike.editor.blocks.stair.IStair;
+import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.editor.shapes.Line;
 import com.greymerk.roguelike.editor.shapes.RectSolid;
 import com.greymerk.roguelike.editor.theme.ITheme;
@@ -39,25 +40,19 @@ public class SpiralStairCase implements IFragment {
 		IBlockFactory fill = theme.getPrimary().getWall();
 		IStair stair = theme.getPrimary().getStair();
 		MetaBlock air = BlockType.get(BlockType.AIR);
-		Coord cursor;
-		Coord start;
-		Coord end;
 		
-		start = origin.copy();
-		start.add(new Coord(-1, 0, -1));
-		end = origin.copy();
-		end.add(new Coord(1, 0, 1));
+		BoundingBox bb = BoundingBox.of(origin);
+		bb.grow(Cardinal.directions);
 		
-		RectSolid.fill(editor, rand, start, end, air);
+		RectSolid.fill(editor, rand, bb, air);
 		fill.set(editor, rand, origin);
 		
-		cursor = origin.copy();
-		cursor.add(dir);
-		stair.setOrientation(Cardinal.left(dir), false).set(editor, cursor);
-		cursor.add(Cardinal.right(dir));
-		stair.setOrientation(Cardinal.right(dir), true).set(editor, cursor);
-		cursor.add(Cardinal.reverse(dir));
-		stair.setOrientation(Cardinal.reverse(dir), true).set(editor, cursor);
+		Coord pos = origin.copy().add(dir);
+		stair.setOrientation(Cardinal.left(dir), false).set(editor, pos);
+		pos.add(Cardinal.right(dir));
+		stair.setOrientation(Cardinal.right(dir), true).set(editor, pos);
+		pos.add(Cardinal.reverse(dir));
+		stair.setOrientation(Cardinal.reverse(dir), true).set(editor, pos);
 	}
 
 }
