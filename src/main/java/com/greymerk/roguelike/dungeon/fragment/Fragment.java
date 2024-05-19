@@ -6,6 +6,7 @@ import com.greymerk.roguelike.dungeon.fragment.alcove.TombAlcove;
 import com.greymerk.roguelike.dungeon.fragment.parts.ArchWay;
 import com.greymerk.roguelike.dungeon.fragment.parts.CellSupportBeamFragment;
 import com.greymerk.roguelike.dungeon.fragment.parts.CryptFragment;
+import com.greymerk.roguelike.dungeon.fragment.parts.Sarcophagus;
 import com.greymerk.roguelike.dungeon.fragment.wall.WallBannerFragment;
 import com.greymerk.roguelike.dungeon.fragment.wall.WallBookShelf;
 import com.greymerk.roguelike.dungeon.fragment.wall.WallCandles;
@@ -24,7 +25,8 @@ import net.minecraft.util.math.random.Random;
 
 public enum Fragment {
 
-	CRYPT, CELL_SUPPORT, ARCH,
+	CRYPT, SARCOPHAGUS, 
+	CELL_SUPPORT, ARCH,
 	WALL_FLOWER, WALL_BANNER, WALL_CHEST, WALL_SPAWNER, WALL_CANDLES,
 	WALL_EMPTY, WALL_DECORATED_POT, WALL_BOOK_SHELF, WALL_FOOD_BARREL,
 	ALCOVE_SILVERFISH, ALCOVE_SAFETY, ALCOVE_CRYPT;
@@ -42,6 +44,7 @@ public enum Fragment {
 		switch(type) {
 		case CELL_SUPPORT: return new CellSupportBeamFragment();
 		case CRYPT: return new CryptFragment();
+		case SARCOPHAGUS: return new Sarcophagus();
 		case ARCH: return new ArchWay();
 		case WALL_FLOWER: return new WallFlowers();
 		case WALL_BANNER: return new WallBannerFragment();

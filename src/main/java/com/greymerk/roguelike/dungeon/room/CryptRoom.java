@@ -11,6 +11,7 @@ import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
+import com.greymerk.roguelike.editor.blocks.Air;
 import com.greymerk.roguelike.editor.blocks.BlockType;
 import com.greymerk.roguelike.editor.blocks.stair.IStair;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
@@ -33,7 +34,12 @@ public class CryptRoom extends AbstractMediumRoom implements IRoom {
 			if(this.getEntrance(dir) == Entrance.DOOR) {				
 				this.entryWay(editor, rand, origin.copy(), dir);
 			} else {
-				this.cryptWall(editor, rand, origin.copy().add(dir, 5), dir);
+				if(rand.nextBoolean()) {
+					this.sarcophagus(editor, rand, origin.copy().add(dir, 5), dir);
+				} else {
+					this.cryptWall(editor, rand, origin.copy().add(dir, 5), dir);	
+				}
+				
 			}
 			
 			Fragment.generate(Fragment.CELL_SUPPORT, editor, rand, theme, origin.copy().add(dir, 6));
@@ -60,6 +66,65 @@ public class CryptRoom extends AbstractMediumRoom implements IRoom {
 		}
 	}
 	
+	private void sarcophagus(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
+		IBlockFactory walls = theme.getPrimary().getWall();
+		IStair stair = theme.getPrimary().getStair();
+		
+		BoundingBox bb = BoundingBox.of(origin);
+		bb.grow(dir, 3).grow(Cardinal.orthogonal(dir), 4).grow(Cardinal.UP, 4);
+		RectSolid.fill(editor, rand, bb, Air.get());
+		
+		bb = BoundingBox.of(origin);
+		bb.add(Cardinal.UP, 5).grow(Cardinal.orthogonal(dir), 5).grow(dir, 4);
+		RectSolid.fill(editor, rand, bb, walls, false, true);
+		
+		bb = BoundingBox.of(origin);
+		bb.add(Cardinal.DOWN).grow(Cardinal.orthogonal(dir), 5).grow(dir, 4);
+		RectSolid.fill(editor, rand, bb, theme.getPrimary().getFloor());
+		
+		bb = BoundingBox.of(origin);
+		bb.add(dir, 4).grow(Cardinal.orthogonal(dir), 5).grow(Cardinal.UP, 5);
+		RectSolid.fill(editor, rand, bb, walls, false, true);
+		
+		bb = BoundingBox.of(origin);
+		bb.add(dir, 3).grow(Cardinal.UP, 4);
+		RectSolid.fill(editor, rand, bb, walls);
+		Coord pos = origin.copy().add(dir, 2).add(Cardinal.UP, 3);
+		stair.setOrientation(Cardinal.reverse(dir), true).set(editor, pos);
+		pos.add(Cardinal.UP);
+		walls.set(editor, rand, pos);
+		
+		for(Cardinal o : Cardinal.orthogonal(dir)) {
+			
+			bb = BoundingBox.of(origin);
+			bb.add(o, 5).grow(dir, 4).grow(Cardinal.UP, 4);
+			RectSolid.fill(editor, rand, bb, walls, false, true);
+			
+			bb = BoundingBox.of(origin);
+			bb.add(dir, 3).add(o, 4).grow(Cardinal.UP, 4);
+			RectSolid.fill(editor, rand, bb, walls);
+			
+			bb = BoundingBox.of(origin);
+			bb.add(o, 4).add(Cardinal.UP, 4).grow(dir, 2);
+			RectSolid.fill(editor, rand, bb, walls);
+			
+			bb = BoundingBox.of(origin);
+			bb.add(dir, 3).add(o, 4).grow(Cardinal.UP, 3);
+			RectSolid.fill(editor, rand, bb, walls);
+			
+			bb = BoundingBox.of(origin);
+			bb.add(dir, 3).add(o).add(Cardinal.UP, 4).grow(o, 2);
+			RectSolid.fill(editor, rand, bb, walls);
+			
+			stair.setOrientation(o, true).set(editor, origin.copy().add(dir, 3).add(o).add(Cardinal.UP, 3));
+			stair.setOrientation(Cardinal.reverse(o), true).set(editor, origin.copy().add(dir, 3).add(o, 3).add(Cardinal.UP, 3));
+			stair.setOrientation(Cardinal.reverse(dir), true).set(editor, origin.copy().add(dir, 2).add(Cardinal.UP, 3).add(o, 4));
+			stair.setOrientation(dir, true).set(editor, origin.copy().add(Cardinal.UP, 3).add(o, 4));
+		}
+		
+		Fragment.generate(Fragment.SARCOPHAGUS, editor, rand, theme, origin.copy(), dir);
+	}
+
 	private void entryWay(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
 		IStair stair = this.theme.getPrimary().getStair();
 		IBlockFactory wall = this.theme.getPrimary().getWall();
