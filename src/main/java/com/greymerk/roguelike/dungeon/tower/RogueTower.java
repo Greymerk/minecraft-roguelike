@@ -27,6 +27,10 @@ public class RogueTower implements ITower{
 		
 		//floors and roof
 		BoundingBox bb = BoundingBox.of(origin);
+		bb.grow(Cardinal.directions, 3).grow(Cardinal.UP, 9);
+		RectSolid.fill(editor, rand, bb, Air.get());
+		
+		bb = BoundingBox.of(origin);
 		bb.add(Cardinal.DOWN).grow(Cardinal.directions, 3);
 		RectSolid.fill(editor, rand, bb, walls);
 		bb.add(Cardinal.UP, 5);
