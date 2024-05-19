@@ -26,6 +26,7 @@ public class Stairway extends AbstractRoom implements IRoom {
 	public void generate(IWorldEditor editor) {
 		Random rand = editor.getRandom(getWorldPos());
 		Coord origin = this.worldPos.copy();
+		this.fillWalls(editor, rand, origin.copy());
 		buildCell(editor, rand, origin, direction);
 		Coord middleCell = origin.copy().add(direction, 6).add(Cardinal.DOWN, 6);
 		buildCell(editor, rand, middleCell, Cardinal.reverse(direction));
@@ -33,6 +34,18 @@ public class Stairway extends AbstractRoom implements IRoom {
 		buildCell(editor, rand, bottomCell, Cardinal.reverse(direction));
 		this.buildSteps(editor, rand, origin.copy());
 		this.addDoors(editor, rand);
+		
+		
+	}
+
+	private void fillWalls(IWorldEditor editor, Random rand, Coord origin) {
+		for(Cardinal o : Cardinal.orthogonal(direction)) {
+			for(int i = 0; i < 10; ++i) {
+				BoundingBox bb = BoundingBox.of(origin);
+				bb.add(o, 2).add(direction, i - 1).add(Cardinal.DOWN, i + 1).grow(Cardinal.UP, 5);
+				RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall());
+			}
+		}
 	}
 
 	private void addDoors(IWorldEditor editor, Random rand) {
@@ -93,16 +106,24 @@ public class Stairway extends AbstractRoom implements IRoom {
 		
 		BoundingBox bb = BoundingBox.of(origin);
 		bb.grow(Cardinal.directions, 2).grow(Cardinal.UP, 3);
-		RectSolid.fill(editor, rand, bb, BlockType.get(BlockType.AIR));
+		RectSolid.fill(editor, rand, bb, Air.get());
 		
 		bb = BoundingBox.of(origin);
 		bb.grow(Cardinal.directions).add(Cardinal.DOWN);
 		RectSolid.fill(editor, rand, bb, theme.getPrimary().getFloor());
 		
+		bb = BoundingBox.of(origin);
+		bb.add(Cardinal.UP, 4).grow(Cardinal.directions);
+		RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall(), false, true);
+		
 		for(Cardinal dir : Cardinal.directions) {
 			bb = BoundingBox.of(origin);
 			bb.add(Cardinal.DOWN).add(dir, 2).grow(Cardinal.orthogonal(dir), 2);
 			RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall());
+			
+			bb = BoundingBox.of(origin);
+			bb.add(dir, 3).grow(Cardinal.DOWN).grow(Cardinal.orthogonal(dir), 2).grow(Cardinal.UP, 3);
+			RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall(), false, true);
 		}
 		
 		bb = BoundingBox.of(origin);
