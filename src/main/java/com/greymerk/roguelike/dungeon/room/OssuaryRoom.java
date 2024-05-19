@@ -247,8 +247,12 @@ public class OssuaryRoom extends AbstractMediumRoom implements IRoom {
 	}
 
 	private void ceiling(IWorldEditor editor, Random rand, Coord origin) {
+		BoundingBox bb = BoundingBox.of(origin);
+		bb.add(Cardinal.UP, 8).grow(Cardinal.directions, 6);
+		RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall(), false, true);
+		
 		for(Cardinal dir : Cardinal.directions) {
-			BoundingBox bb = new BoundingBox(origin.copy());
+			bb = BoundingBox.of(origin);
 			bb.add(Cardinal.UP, 7);
 			bb.add(dir, 2);
 			bb.grow(Cardinal.orthogonal(dir), 7);
