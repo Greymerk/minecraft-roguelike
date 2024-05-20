@@ -19,6 +19,10 @@ public class MetaBlock extends BlockBase{
 
 	private BlockState state;
     
+	public static MetaBlock of(Block block) {
+		return new MetaBlock(block);
+	}
+	
 	public MetaBlock(Block block){
 		this.setState(block.getDefaultState());
 	}

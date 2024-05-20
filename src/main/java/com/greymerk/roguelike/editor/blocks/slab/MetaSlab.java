@@ -19,6 +19,11 @@ public class MetaSlab extends MetaBlock implements ISlab {
 	}
 	
 	@Override
+	public MetaSlab get() {
+		return this;
+	}
+	
+	@Override
 	public ISlab upsideDown(boolean upsideDown) {
 		this.withProperty(SlabBlock.TYPE, upsideDown ? SlabType.TOP : SlabType.BOTTOM);
 		return this;

@@ -3,9 +3,11 @@ package com.greymerk.roguelike.editor.blocks.slab;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
 
-public interface ISlab {
+public interface ISlab{
 
 	public ISlab upsideDown(boolean upsideDown);
+	
+	public MetaSlab get();
 	
 	public boolean set(IWorldEditor editor, Coord pos);
 	

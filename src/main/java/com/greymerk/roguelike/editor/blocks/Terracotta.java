@@ -13,4 +13,6 @@ public class Terracotta {
 		block = block.with(GlazedTerracottaBlock.FACING, Cardinal.facing(dir));
 		return new MetaBlock(block);
 	}
+	
+	
 }
