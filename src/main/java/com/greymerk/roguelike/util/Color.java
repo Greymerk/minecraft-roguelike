@@ -4,7 +4,6 @@ import net.minecraft.util.math.random.Random;
 
 import net.minecraft.util.DyeColor;
 
-// @ TODO change this to use color objects
 public enum Color {
 
 	WHITE, ORANGE, MAGENTA, LIGHT_BLUE, YELLOW, LIME,
