@@ -1,8 +1,10 @@
 package com.greymerk.roguelike.dungeon.cell;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -15,12 +17,12 @@ public class Cell {
 	public static final int SIZE = 6;
 	private CellState state;
 	private Coord floorPos;
-	private List<Cardinal> walls;
+	private Set<Cardinal> walls;
 	
 	public Cell(Coord floorPos, CellState state) {
 		this.floorPos = floorPos;
 		this.state = state;
-		this.walls = new ArrayList<Cardinal>();
+		this.walls = new HashSet<Cardinal>();
 	}
 	
 	public CellState getState() {
@@ -32,9 +34,9 @@ public class Cell {
 	}
 	
 	public void replace(Cell other) {
-		this.floorPos = other.floorPos;
+		this.floorPos = other.floorPos.copy();
 		this.state = other.state;
-		this.walls = other.walls;
+		this.walls.addAll(other.walls);
 	}
 	
 	public boolean isRoom() {
@@ -69,7 +71,7 @@ public class Cell {
 	}
 	
 	public List<Cardinal> getWalls(){
-		return this.walls;
+		return new ArrayList<Cardinal>(this.walls);
 	}
 	
 	@Override

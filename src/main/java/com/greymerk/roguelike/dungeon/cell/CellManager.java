@@ -15,17 +15,6 @@ public class CellManager implements Iterable<Cell>{
 		this.cells = new ArrayList<Cell>();
 	}
 	
-	public void add(List<Cell> cellsToAdd, Coord offset) {
-		for(Cell c : cellsToAdd) {
-			if(c.getFloorPos().getY() != 0) continue;
-			this.add(new Cell(c.getFloorPos().add(offset), c.getState()));
-		}
-	}
-	
-	public void add(List<Cell> cellsToAdd) {
-		this.add(cellsToAdd, new Coord(0,0,0));
-	}
-	
 	public void add(Cell toAdd) {
 		Cell current = get(toAdd.getFloorPos());
 
@@ -36,7 +25,12 @@ public class CellManager implements Iterable<Cell>{
 			return;
 		}
 		
-		if(current.getState() == CellState.OBSTRUCTED) return;
+		if(current.getState() == CellState.OBSTRUCTED) {
+			if(toAdd.getState() == CellState.OBSTRUCTED) {
+				current.replace(toAdd);
+			}
+			return;
+		}
 		
 		if(current.getState() == CellState.POTENTIAL) {
 			current.replace(toAdd);

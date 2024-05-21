@@ -215,8 +215,7 @@ public class LayoutManager {
 			Coord center = new Coord(0,0,0);			
 			int distC = (int) c.getFloorPos().distance(center);
 			int distOther = (int) other.getFloorPos().distance(center);
-			return distC - distOther;
+			return Integer.compare(distC, distOther);
 		}
 	}
-	
 }
