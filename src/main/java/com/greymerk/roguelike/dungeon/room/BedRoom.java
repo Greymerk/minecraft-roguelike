@@ -196,7 +196,7 @@ public class BedRoom extends AbstractRoom implements IRoom {
 		Coord pos = origin.copy();
 		pos.add(direction, 11);
 		pos.add(Cardinal.left(direction), 3);
-		Bed.generate(editor, Cardinal.right(direction), pos);
+		Bed.generate(editor, rand, Cardinal.right(direction), pos);
 		pos.add(direction);
 		BlockType.get(BlockType.SHELF).set(editor, pos);
 		pos.add(Cardinal.UP);

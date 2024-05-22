@@ -11,11 +11,21 @@ import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.HorizontalFacingBlock;
 import net.minecraft.block.enums.BedPart;
+import net.minecraft.util.math.random.Random;
 
 public class Bed {
 
+	public static void generate(IWorldEditor editor, Random rand, Cardinal dir, Coord pos) {
+		generate(editor, dir, pos, Color.get(rand));
+	}
+	
+	
+	public static void generate(IWorldEditor editor, Cardinal dir, Coord pos){
+		generate(editor, dir, pos, Color.RED);
+	}
+	
+	
 	public static void generate(IWorldEditor editor, Cardinal dir, Coord origin, Color color){
-		
 		
 		Coord pos = origin.copy();
 		MetaBlock head = new MetaBlock(getFromColor(color));
@@ -53,7 +63,5 @@ public class Bed {
 		}
 	}
 	
-	public static void generate(IWorldEditor editor, Cardinal dir, Coord pos){
-		generate(editor, dir, pos, Color.RED);
-	}
+	
 }
