@@ -11,6 +11,7 @@ import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.blocks.Air;
+import com.greymerk.roguelike.editor.blocks.Candle;
 import com.greymerk.roguelike.editor.blocks.stair.IStair;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.editor.boundingbox.IBounded;
@@ -26,11 +27,11 @@ public class Stairway extends AbstractRoom implements IRoom {
 		Random rand = editor.getRandom(getWorldPos());
 		Coord origin = this.worldPos.copy();
 		this.fillWalls(editor, rand, origin.copy());
-		buildCell(editor, rand, origin, direction);
+		buildCell(editor, rand, origin, direction, true);
 		Coord middleCell = origin.copy().add(direction, 6).add(Cardinal.DOWN, 6);
-		buildCell(editor, rand, middleCell, Cardinal.reverse(direction));
+		buildCell(editor, rand, middleCell, Cardinal.reverse(direction), true);
 		Coord bottomCell = origin.copy().add(direction, 12).add(Cardinal.DOWN, 10);
-		buildCell(editor, rand, bottomCell, Cardinal.reverse(direction));
+		buildCell(editor, rand, bottomCell, Cardinal.reverse(direction), false);
 		this.buildSteps(editor, rand, origin.copy());
 		this.addDoors(editor, rand);
 		
@@ -99,7 +100,7 @@ public class Stairway extends AbstractRoom implements IRoom {
 		});
 	}
 	
-	private void buildCell(IWorldEditor editor, Random rand, Coord origin, Cardinal cellEntry) {
+	private void buildCell(IWorldEditor editor, Random rand, Coord origin, Cardinal cellEntry, boolean candles) {
 		IStair stair = theme.getPrimary().getStair();
 		Fragment.generate(Fragment.CELL_SUPPORT, editor, rand, theme, origin.copy());
 		
@@ -147,6 +148,16 @@ public class Stairway extends AbstractRoom implements IRoom {
 				stair.set(editor, p, true, true);
 			}
 		}
+		
+		if(candles) {
+			for(Cardinal o : Cardinal.orthogonal(cellEntry)) {
+				bb = BoundingBox.of(origin);
+				bb.add(o, 2).grow(Cardinal.orthogonal(o));
+				bb.getShape(Shape.RECTSOLID).forEach(pos -> {
+					if(rand.nextBoolean()) Candle.generate(editor, rand, pos, true);
+				});
+			}
+		}
 	}
 
 	@Override
@@ -163,7 +174,7 @@ public class Stairway extends AbstractRoom implements IRoom {
 		
 		
 		
-		if(this.worldPos != null && Dungeon.getLevelFromY(this.worldPos.getY()) == 0) {
+		if(this.worldPos != null && Dungeon.getLevelFromY(this.worldPos.getY() - 10) == 0) {
 			cells.add(Cell.of(origin.copy().add(Cardinal.DOWN).add(dir, 2), CellState.OBSTRUCTED).addWall(Cardinal.left(dir)).addWall(dir));
 			cells.add(Cell.of(origin.copy().add(Cardinal.DOWN).add(dir, 2).add(Cardinal.right(dir)), CellState.POTENTIAL));
 		} else {

@@ -51,8 +51,7 @@ class CellTest {
 	@Test
 	void testGetWorldPos() {
 		Coord worldPos = new Coord(5, 10, -10);
-		Cell c = Cell.of(new Coord(3, 2, -2), CellState.OBSTRUCTED);
-		System.out.println(c.getWorldPos(worldPos));
-		assert(c.getWorldPos(worldPos).equals(new Coord(23, 12, -22)));
+		Cell c = Cell.of(new Coord(3, 0, -2), CellState.OBSTRUCTED);
+		assert(c.getWorldPos(worldPos).equals(new Coord(23, 10, -22)));
 	}
 }
