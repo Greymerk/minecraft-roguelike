@@ -1,7 +1,6 @@
 package com.greymerk.roguelike.dungeon.layout;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -68,44 +67,66 @@ public class LayoutManager {
 		//debug.toFile(origin.getX() + "_" + origin.getZ() + ".json", this.asJson());
 	}
 	
+	private void placeRoom(IRoom room, Random rand, Floor floor) {
+		List<Cell> cells = floor.getCells(CellState.POTENTIAL);
+		//cells.sort(new CenterSort());
+		RandHelper.shuffle(cells, rand);
+		CellManager fcm = floor.getCells();
+		for(Cell potential : cells) {
+			List<Cardinal> dirs = getPotentialDir(floor, potential);
+			RandHelper.shuffle(dirs, rand);
+			for(Cardinal dir : dirs) {
+				CellManager rcm = room.getCells(dir);
+				if(fcm.roomFits(potential, rcm)) {
+					this.addRoom(room, dir, potential.getFloorPos(), potential.getWorldPos(floor.getOrigin()), floor);
+					return;
+				}
+			}
+		}
+	}
+	
+	private List<Cardinal> getPotentialDir(Floor floor, Cell cell) {
+		List<Cardinal> dirs = new ArrayList<Cardinal>();
+		for(Cardinal dir : Cardinal.directions) {
+			Coord fp = cell.getFloorPos();
+			fp.add(Cardinal.reverse(dir));
+			Cell target = floor.getCell(fp);
+			if(target.getState() != CellState.OBSTRUCTED) continue;
+			if(target.hasWall(dir)) continue;
+			dirs.add(dir);
+		}
+		return dirs;
+	}
+
 	private void addStair(IWorldEditor editor, Random rand, Floor floor) {
 		if(floors.indexOf(floor) >= floors.size() - 1) return;
-		
-		List<Cell> potentials = floor.getCells(CellState.POTENTIAL);
-		if(potentials.size() == 0) return;
-		RandHelper.shuffle(potentials, rand);
-		Cell p = floor.findValidStair(potentials, rand);
-		Cardinal dir = floor.findStairDir(p);
-		Coord rfp = p.getFloorPos();
-		Coord rwp = p.getWorldPos(floor.getOrigin());
-		IRoom stair = Room.getInstance(Room.STAIRWAY, this.settings.getLevel(floor.getOrigin().getY()), rfp, rwp, dir);
-		this.addRoom(stair, rfp, rwp, floor);
+		IRoom stairway = Room.getInstance(Room.STAIRWAY, this.settings.getLevel(floor.getOrigin().getY()));
+		placeRoom(stairway, rand, floor);
 	}
 	
 	public void addEntrance(IRoom room) {
 		Floor f = this.floors.get(0);
 		Coord fp = new Coord(0,0,0);
 		Coord wp = f.getOrigin();
-		this.addRoom(room, fp, wp, f);
+		this.addRoom(room, Cardinal.NORTH, fp, wp, f);
 	}
 	
-	public void addRoom(IRoom toAdd, Coord fp, Coord wp, Floor floor) {
+	public void addRoom(IRoom toAdd, Cardinal dir, Coord fp, Coord wp, Floor floor) {
 		int level = this.floors.indexOf(floor);
-		toAdd.determineEntrances(floor, fp);
+		//toAdd.determineEntrances(floor, fp);
+		toAdd.setDirection(dir);
 		toAdd.setFloorPos(fp);
 		toAdd.setWorldPos(wp);
 		floor.addRoom(toAdd);
-		CellManager cells = toAdd.getCells();
-		for(Cell c : cells) {
-			Coord pos = new Coord(c.getFloorPos().getX(), 0, c.getFloorPos().getZ());
-			pos.add(fp);
-			CellState state = c.getState();
-			int offsetLevel = level + c.getLevelOffset();
-			Floor f = this.floors.get(offsetLevel);
-			Cell copy = new Cell(pos, state);
-			c.getWalls().forEach(w -> copy.addWall(w));
-			f.addCell(copy);
-		}
+		CellManager cells = toAdd.getCells(dir);
+		cells.getLevelOffsets().forEach(offset -> {
+			Floor f = this.floors.get(level + offset);
+			cells.getByOffset(offset).forEach(c -> {
+				Coord cfp = new Coord(c.getFloorPos().getX(), 0, c.getFloorPos().getZ());
+				cfp.add(fp);
+				f.addCell(Cell.of(cfp, c.getState()).addWalls(c.getWalls()));
+			});
+		});
 	}
 	
 	private List<Floor> createFloors() {
@@ -125,81 +146,7 @@ public class LayoutManager {
 		return rooms;
 	}
 	
-	public boolean placeRoom(IRoom room, Random rand, Floor floor) {
-		
-		if(room.isDirectional()) return this.placeDirectionalRoom(room, rand, floor);
-		
-		List<Cell> potentials = floor.getCells(CellState.POTENTIAL);
-		Collections.sort(potentials, new CenterSort());
-		CellManager roomCells = room.getCells();
-		List<Cell> roomPotentials = roomCells.getCells(CellState.POTENTIAL);
-		roomPotentials.removeIf(c -> c.getFloorPos().getY() != 0);
-		RandHelper.shuffle(roomPotentials, rand);
-		
-		for(Cell rp : roomPotentials) {			
-			for(Cell p : potentials) {
-				for(Cardinal dir : Cardinal.randDirs(rand)) {
-					room.setDirection(dir);
-					Coord pos = p.getFloorPos();
-					pos.add(Cardinal.reverse(room.getDirection()));
-					Cell c = floor.getCell(pos);
-					if(c.isRoom() && (!c.hasWall(room.getDirection()))) {
-						Coord roomPos = c.getFloorPos().copy().add(rp.getFloorPos());
-						Cell roomCenter = floor.getCell(roomPos);
-						if(this.roomFits(room, roomPos, floor)) {
-							this.addRoom(room, roomPos, roomCenter.getWorldPos(floor.getOrigin()), floor);
-							return true;
-						}
-					}	
-				}
-			}
-		}	
-		
-		return false;
-	}
-	
-	public boolean placeDirectionalRoom(IRoom room, Random rand, Floor floor) {
-		List<Cell> potentials = floor.getCells(CellState.POTENTIAL);
-		Collections.sort(potentials, new CenterSort());
-		
-		for(Cell p : potentials) {
-			for(Cardinal dir : Cardinal.randDirs(rand)) {
-				room.setDirection(dir);
-				Coord pfp = p.getFloorPos();
-				pfp.add(Cardinal.reverse(dir));
-				Cell c = floor.getCell(pfp);
-				if(c.getState() == CellState.OBSTRUCTED) {
-					if(c.hasWall(dir)) continue;
-					Coord rfp = p.getFloorPos();
-					Coord rwp = p.getWorldPos(floor.getOrigin());
-					if(this.roomFits(room, rfp, floor)) {
-						this.addRoom(room, rfp, rwp, floor);	
-					}
-					return true;
-				}
-			}
-		}
-		
-		return true;
-	}
-	
-	public boolean roomFits(IRoom room, Coord floorPos, Floor floor) {
-		
-		int level = this.floors.indexOf(floor);
-		CellManager roomCells = room.getCells();
-		
-		for(Cell rc : roomCells) {
-			if(rc.getState() != CellState.OBSTRUCTED) continue;
-			if(rc.getLevelOffset() + level >= this.floors.size()) return false;
-			if(rc.getLevelOffset() != 0) continue;
-			
-			Coord fp = new Coord(rc.getFloorPos().getX(), 0, rc.getFloorPos().getZ());
-			fp.add(floorPos);
-			CellState state = floor.getCell(fp).getState();
-			if(state == CellState.OBSTRUCTED) return false;
-		}
-		return true;
-	}
+
 		
 	public JsonObject asJson() {
 		JsonObject json = new JsonObject();
@@ -209,7 +156,7 @@ public class LayoutManager {
 		return json;
 	}
 	
-	private class CenterSort implements Comparator<Cell>{
+	public class CenterSort implements Comparator<Cell>{
 		@Override
 		public int compare(Cell c, Cell other) {
 			Coord center = new Coord(0,0,0);			

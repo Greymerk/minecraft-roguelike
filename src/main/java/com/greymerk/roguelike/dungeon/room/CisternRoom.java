@@ -1,5 +1,6 @@
 package com.greymerk.roguelike.dungeon.room;
 
+import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
 import com.greymerk.roguelike.dungeon.layout.Entrance;
 import com.greymerk.roguelike.editor.Cardinal;
@@ -19,7 +20,7 @@ public class CisternRoom extends AbstractMediumRoom implements IRoom {
 	@Override
 	public void generate(IWorldEditor editor) {
 		Random rand = editor.getRandom(this.worldPos);
-		Coord origin = this.worldPos.copy();
+		Coord origin = this.worldPos.copy().add(direction, Cell.SIZE);
 		
 		this.clear(editor, rand, origin);
 		this.walls(editor, rand, origin);

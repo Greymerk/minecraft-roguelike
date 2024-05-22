@@ -3,6 +3,7 @@ package com.greymerk.roguelike.dungeon.room;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
 import com.greymerk.roguelike.dungeon.fragment.IFragment;
 import com.greymerk.roguelike.dungeon.fragment.parts.CryptFragment;
@@ -25,7 +26,7 @@ public class CryptRoom extends AbstractMediumRoom implements IRoom {
 
 	@Override
 	public void generate(IWorldEditor editor) {
-		Coord origin = this.worldPos.copy();
+		Coord origin = this.worldPos.copy().add(direction, Cell.SIZE);
 		Random rand = editor.getRandom(origin);
 		roomCenter(editor, rand, origin);
 		Fragment.generate(Fragment.CELL_SUPPORT, editor, rand, theme, origin.copy());

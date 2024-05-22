@@ -19,8 +19,12 @@ public class Cell {
 	private Coord floorPos;
 	private Set<Cardinal> walls;
 	
+	public static Cell of(Coord floorPos, CellState state) {
+		return new Cell(floorPos, state);
+	}
+	
 	public Cell(Coord floorPos, CellState state) {
-		this.floorPos = floorPos;
+		this.floorPos = floorPos.copy();
 		this.state = state;
 		this.walls = new HashSet<Cardinal>();
 	}
@@ -61,13 +65,24 @@ public class Cell {
 		return wp;
 	}
 	
-	public void addWall(Cardinal dir) {
-		if(this.walls.contains(dir)) return;
+	public Cell addWall(Cardinal dir) {
 		this.walls.add(dir);
+		return this;
+	}
+	
+	public Cell addWalls(List<Cardinal> directions) {
+		directions.forEach(dir -> {
+			this.addWall(dir);
+		});
+		return this;
 	}
 	
 	public boolean hasWall(Cardinal dir) {
 		return this.walls.contains(dir);
+	}
+	
+	public boolean hasWalls() {
+		return !this.walls.isEmpty();
 	}
 	
 	public List<Cardinal> getWalls(){
@@ -93,6 +108,11 @@ public class Cell {
 				&& state == other.state;
 	}
 
+	@Override
+	public String toString() {
+		return this.floorPos.toString() + ' ' + this.state + ' ' + this.walls;
+	}
+	
 	public JsonElement asJson() {
 		JsonObject jsonCell = new JsonObject();
 		jsonCell.add("floorPos", this.floorPos.asJson());

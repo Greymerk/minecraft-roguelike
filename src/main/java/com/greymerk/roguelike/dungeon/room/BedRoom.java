@@ -217,43 +217,18 @@ public class BedRoom extends AbstractRoom implements IRoom {
 	}
 	
 	@Override
-	public CellManager getCells() {
+	public CellManager getCells(Cardinal dir) {
+		Coord origin = new Coord(0,0,0);
 		CellManager cells = new CellManager();
 		
-		for(Cardinal dir : Cardinal.directions) {
-			if(dir == this.direction) continue;
-			Coord fp = new Coord(0,0,0);
-			fp.add(dir);
-			cells.add(new Cell(fp, CellState.POTENTIAL));
-		}
+		cells.add(Cell.of(origin.copy(), CellState.OBSTRUCTED).addWalls(Cardinal.orthogonal(dir)));
+		cells.add(Cell.of(origin.copy().add(dir), CellState.OBSTRUCTED));
+		cells.add(Cell.of(origin.copy().add(dir, 2), CellState.OBSTRUCTED).addWall(dir));
 		
-		Coord pos = new Coord(0,0,0);
-		cells.add(new Cell(pos.copy(), CellState.OBSTRUCTED));
-		pos.add(direction);
-		cells.add(new Cell(pos.copy(), CellState.OBSTRUCTED));
-		pos.add(direction);
-		Cell cell = new Cell(pos.copy(), CellState.OBSTRUCTED);
-		cell.addWall(direction);
-		cells.add(cell);
-		for(Cardinal o : Cardinal.orthogonal(direction)) {
-			pos = new Coord(0,0,0);
-			pos.add(direction);
-			pos.add(o);
-			{
-				Cell c = new Cell(pos.copy(), CellState.OBSTRUCTED);
-				c.addWall(o);
-				c.addWall(Cardinal.reverse(direction));
-				cells.add(c);
-			}
-			pos.add(direction);
-			{
-				Cell c = new Cell(pos.copy(), CellState.OBSTRUCTED);
-				c.addWall(o);
-				c.addWall(direction);
-				cells.add(c);
-			}
+		for(Cardinal o : Cardinal.orthogonal(dir)) {
+			cells.add(Cell.of(origin.copy().add(dir).add(o), CellState.OBSTRUCTED).addWall(Cardinal.reverse(dir)).addWall(o));
+			cells.add(Cell.of(origin.copy().add(dir, 2).add(o), CellState.OBSTRUCTED).addWall(dir).addWall(o));
 		}
-		
 		
 		return cells;
 	}

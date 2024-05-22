@@ -14,6 +14,7 @@ import com.greymerk.roguelike.editor.blocks.Lantern;
 import com.greymerk.roguelike.editor.blocks.stair.IStair;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.editor.shapes.RectSolid;
+import com.greymerk.roguelike.editor.shapes.Shape;
 
 import net.minecraft.util.math.random.Random;
 
@@ -21,7 +22,7 @@ public class ReservoirRoom extends AbstractLargeRoom implements IRoom {
 
 	@Override
 	public void generate(IWorldEditor editor) {
-		Coord origin = worldPos.copy();
+		Coord origin = worldPos.copy().add(direction, Cell.SIZE);
 		Random rand = editor.getRandom(origin);
 		this.clearUpper(editor, rand, origin);
 		this.buildCells(editor, rand, origin);
@@ -263,32 +264,24 @@ public class ReservoirRoom extends AbstractLargeRoom implements IRoom {
 	}
 	
 	@Override
-	public CellManager getCells() {
-		CellManager cells = super.getCells();
+	public CellManager getCells(Cardinal dir) {
+		Coord origin = new Coord(0,0,0);
+		CellManager cells = super.getCells(dir);
 		
-		Coord start = new Coord(-1, -1, -1);
-		Coord end = new Coord(1, -1, 1);
-		for(Coord pos :  new RectSolid(new BoundingBox(start, end)).get()){
-			cells.add(new Cell(pos, CellState.OBSTRUCTED));
-		}
+		BoundingBox bb = BoundingBox.of(origin);
+		bb.add(dir, 2).add(Cardinal.DOWN).grow(Cardinal.directions);
+		bb.getShape(Shape.RECTSOLID).get().forEach(pos -> {
+			cells.add(Cell.of(pos, CellState.OBSTRUCTED));
+		});
 		
-		for(Cardinal dir : Cardinal.directions) {
-			start = new Coord(0,-1,0);
-			start.add(Cardinal.left(dir));
-			start.add(dir, 2);
-			end = start.copy();
-			end.add(Cardinal.right(dir), 2);
-			for(Coord pos :  new RectSolid(new BoundingBox(start, end)).get()){
-				Cell c = new Cell(pos, CellState.OBSTRUCTED);
-				c.addWall(dir);
-				cells.add(c);
+		for(Cardinal d : Cardinal.directions) {
+			cells.add(Cell.of(origin.copy().add(dir, 2).add(d, 2), CellState.OBSTRUCTED).addWall(d));
+			cells.add(Cell.of(origin.copy().add(dir, 2).add(d, 2).add(Cardinal.left(d), 2), CellState.OBSTRUCTED).addWall(d).addWall(Cardinal.left(d)));
+			for(Cardinal o : Cardinal.orthogonal(d)) {
+				cells.add(Cell.of(origin.copy().add(dir, 2).add(d, 2).add(o), CellState.OBSTRUCTED).addWall(d));
 			}
-			end.add(Cardinal.right(dir));
-			Cell c = new Cell(end, CellState.OBSTRUCTED);
-			c.addWall(dir);
-			c.addWall(Cardinal.right(dir));
-			cells.add(c);
 		}
+		
 		
 		return cells;
 	}

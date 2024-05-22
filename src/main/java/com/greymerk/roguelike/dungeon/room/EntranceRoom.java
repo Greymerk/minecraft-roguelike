@@ -67,16 +67,14 @@ public class EntranceRoom  extends AbstractRoom implements IRoom{
 	}
 
 	@Override
-	public CellManager getCells() {
-		
+	public CellManager getCells(Cardinal dir) {
+		Coord origin = new Coord(0,0,0);
 		CellManager cells = new CellManager();
 		
-		cells.add(new Cell(new Coord(0,0,0), CellState.OBSTRUCTED));
+		cells.add(new Cell(origin, CellState.OBSTRUCTED));
 		
-		for(Cardinal dir : Cardinal.directions) {
-			Coord pos = new Coord(0,0,0);
-			pos.add(dir);
-			cells.add(new Cell(pos, CellState.POTENTIAL));
+		for(Cardinal d : Cardinal.directions) {
+			cells.add(Cell.of(origin.copy().add(d), CellState.POTENTIAL));
 		}
 		
 		return cells;

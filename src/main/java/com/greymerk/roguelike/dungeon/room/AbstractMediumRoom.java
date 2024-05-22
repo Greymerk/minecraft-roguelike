@@ -14,26 +14,22 @@ import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 public abstract class AbstractMediumRoom extends AbstractRoom implements IRoom{
 
 	@Override
-	public CellManager getCells() {
+	public CellManager getCells(Cardinal dir) {
+		Coord origin = new Coord(0,0,0);
 		CellManager cells = new CellManager();
-		cells.add(new Cell(new Coord(0,0,0), CellState.OBSTRUCTED));
-		for(Cardinal dir : Cardinal.directions) {
-			Coord pos = new Coord(0,0,0);
-			pos.add(dir);
-			cells.add(new Cell(pos.copy(), CellState.OBSTRUCTED));
-			pos.add(Cardinal.left(dir));
-			Cell c = new Cell(pos.copy(), CellState.OBSTRUCTED);
-			c.addWall(dir);
-			c.addWall(Cardinal.left(dir));
-			cells.add(c);
+		
+		cells.add(Cell.of(origin, CellState.OBSTRUCTED));
+		cells.add(Cell.of(origin.copy().add(dir), CellState.OBSTRUCTED));
+		cells.add(Cell.of(origin.copy().add(dir, 2), CellState.OBSTRUCTED));
+		cells.add(Cell.of(origin.copy().add(dir, 3), CellState.POTENTIAL));
+		
+		for(Cardinal o : Cardinal.orthogonal(dir)) {
+			cells.add(Cell.of(origin.copy().add(dir).add(o, 2), CellState.POTENTIAL));
+			cells.add(Cell.of(origin.copy().add(o), CellState.OBSTRUCTED).addWall(Cardinal.reverse(dir)).addWall(o));
+			cells.add(Cell.of(origin.copy().add(o).add(dir), CellState.OBSTRUCTED));
+			cells.add(Cell.of(origin.copy().add(o).add(dir, 2), CellState.OBSTRUCTED).addWall(dir).addWall(o));
 		}
 		
-		for(Cardinal dir : Cardinal.directions) {
-			Coord pos = new Coord(0,0,0);
-			pos.add(dir, 2);
-			cells.add(new Cell(pos, CellState.POTENTIAL));
-		}
-
 		return cells;
 	}
 
@@ -48,7 +44,7 @@ public abstract class AbstractMediumRoom extends AbstractRoom implements IRoom{
 	@Override
 	public void determineEntrances(Floor f, Coord fp) {
 		for(Cardinal dir : Cardinal.directions) {
-			Coord pos = fp.copy();
+			Coord pos = fp.copy().add(this.direction);
 			pos.add(dir, 2);
 			Cell c = f.getCell(pos);
 			if(!c.isRoom()) continue;

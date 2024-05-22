@@ -1,5 +1,6 @@
 package com.greymerk.roguelike.dungeon.room;
 
+import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
 import com.greymerk.roguelike.dungeon.layout.Entrance;
 import com.greymerk.roguelike.editor.Cardinal;
@@ -21,7 +22,7 @@ public class OssuaryRoom extends AbstractMediumRoom implements IRoom {
 
 	@Override
 	public void generate(IWorldEditor editor) {
-		Coord origin = this.worldPos.copy();
+		Coord origin = this.worldPos.copy().add(direction, Cell.SIZE);
 		Random rand = editor.getRandom(origin);
 		this.clear(editor, rand, origin);
 		this.corners(editor, rand, origin);

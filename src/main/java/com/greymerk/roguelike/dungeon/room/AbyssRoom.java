@@ -27,7 +27,7 @@ public class AbyssRoom extends AbstractLargeRoom implements IRoom {
 	@Override
 	public void generate(IWorldEditor editor) {
 		Random rand = editor.getRandom(this.worldPos);
-		Coord origin = this.worldPos.copy();
+		Coord origin = this.worldPos.copy().add(direction, Cell.SIZE);
 		this.clear(editor, rand, origin);
 		this.pillars(editor, rand, origin);
 		this.level(editor, rand, origin.copy());
@@ -279,10 +279,10 @@ public class AbyssRoom extends AbstractLargeRoom implements IRoom {
 	}
 
 	@Override
-	public CellManager getCells() {
-		CellManager cells = super.getCells();
+	public CellManager getCells(Cardinal dir) {
+		CellManager cells = super.getCells(dir);
 		
-		BoundingBox bb = new BoundingBox(new Coord(0,0,0));
+		BoundingBox bb = new BoundingBox(new Coord(0,0,0).add(dir, 2));
 		bb.add(Cardinal.DOWN);
 		bb.grow(Cardinal.directions, 2).grow(Cardinal.DOWN);
 		bb.getShape(Shape.RECTSOLID).forEach(pos -> cells.add(new Cell(pos, CellState.OBSTRUCTED)));

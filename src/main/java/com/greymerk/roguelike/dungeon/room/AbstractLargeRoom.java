@@ -10,35 +10,47 @@ import com.greymerk.roguelike.dungeon.layout.Entrance;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
-import com.greymerk.roguelike.editor.shapes.RectSolid;
+import com.greymerk.roguelike.editor.shapes.Shape;
 
 public abstract class AbstractLargeRoom extends AbstractRoom implements IRoom {
 
 	@Override
-	public CellManager getCells() {
+	public CellManager getCells(Cardinal dir) {
+		Coord origin = new Coord(0,0,0);
 		CellManager cells = new CellManager();
 		
-		Coord start = new Coord(-2,0,-2);
-		Coord end = new Coord(2, 0, 2);
-		RectSolid square = new RectSolid(new BoundingBox(start, end));
-		for(Coord pos : square) {
-			Cell c = new Cell(pos, CellState.OBSTRUCTED);
-			if(Math.abs(pos.getX()) == 2 && pos.getZ() == 0) {cells.add(c); continue;}
-			if(Math.abs(pos.getZ()) == 2 && pos.getX() == 0) {cells.add(c); continue;}
+		BoundingBox bb = new BoundingBox(origin);
+		bb.add(dir, 2).grow(Cardinal.directions);
+		bb.getShape(Shape.RECTSOLID).get().forEach(pos -> {
+			cells.add(Cell.of(pos, CellState.OBSTRUCTED));
+		});
+		
+		Coord pos = origin.copy();
+		cells.add(Cell.of(pos, CellState.OBSTRUCTED));
+		pos.add(dir, 4);
+		cells.add(Cell.of(pos, CellState.OBSTRUCTED));
+		pos.add(dir);
+		cells.add(Cell.of(pos, CellState.POTENTIAL));
+		
+		for(Cardinal o : Cardinal.orthogonal(dir)) {
+			pos = origin.copy().add(o);
+			cells.add(Cell.of(pos, CellState.OBSTRUCTED).addWall(Cardinal.reverse(dir)));
+			pos.add(o);
+			cells.add(Cell.of(pos, CellState.OBSTRUCTED).addWall(Cardinal.reverse(dir)).addWall(o));
+			pos.add(dir);
+			cells.add(Cell.of(pos, CellState.OBSTRUCTED).addWall(o));
+			pos.add(dir);
+			cells.add(Cell.of(pos, CellState.OBSTRUCTED));
+			pos.add(dir);
+			cells.add(Cell.of(pos, CellState.OBSTRUCTED).addWall(o));
+			pos.add(dir);
+			cells.add(Cell.of(pos, CellState.OBSTRUCTED).addWall(dir).addWall(o));
+			pos.add(Cardinal.reverse(o));
+			cells.add(Cell.of(pos, CellState.OBSTRUCTED).addWall(dir));
 			
-			if(pos.getX() == -2) c.addWall(Cardinal.WEST);
-			if(pos.getX() == 2)  c.addWall(Cardinal.EAST);
-			if(pos.getZ() == -2) c.addWall(Cardinal.NORTH);
-			if(pos.getZ() == 2)	 c.addWall(Cardinal.SOUTH);
-			cells.add(c);
+			cells.add(Cell.of(origin.copy().add(dir, 2).add(o, 3), CellState.POTENTIAL));
 		}
 		
-		for(Cardinal dir : Cardinal.directions) {
-			Coord pos = new Coord(0,0,0);
-			pos.add(dir, 3);
-			Cell c = new Cell(pos, CellState.POTENTIAL);
-			cells.add(c);
-		}
 		return cells;
 	}
 	
@@ -53,7 +65,7 @@ public abstract class AbstractLargeRoom extends AbstractRoom implements IRoom {
 	@Override
 	public void determineEntrances(Floor f, Coord fp) {
 		for(Cardinal dir : Cardinal.directions) {
-			Coord pos = fp.copy();
+			Coord pos = fp.copy().add(dir, 2);
 			pos.add(dir, 3);
 			Cell c = f.getCell(pos);
 			if(!c.isRoom()) continue;

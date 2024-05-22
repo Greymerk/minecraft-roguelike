@@ -1,5 +1,6 @@
 package com.greymerk.roguelike.dungeon.room;
 
+import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
 import com.greymerk.roguelike.dungeon.layout.Entrance;
 import com.greymerk.roguelike.editor.Cardinal;
@@ -20,7 +21,7 @@ public class MusicRoom extends AbstractMediumRoom implements IRoom {
 
 	@Override
 	public void generate(IWorldEditor editor) {
-		Coord origin = worldPos.copy();
+		Coord origin = worldPos.copy().add(direction, Cell.SIZE);
 		Random rand = editor.getRandom(origin);
 		BoundingBox bb = BoundingBox.of(origin);
 		bb.grow(Cardinal.directions, 5).grow(Cardinal.UP, 5);

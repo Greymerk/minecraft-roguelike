@@ -26,7 +26,7 @@ public interface IRoom {
 	
 	public Cardinal getDirection();
 	
-	public CellManager getCells();
+	public CellManager getCells(Cardinal dir);
 	
 	public NbtCompound getNbt();
 	

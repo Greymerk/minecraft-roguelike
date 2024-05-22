@@ -10,11 +10,8 @@ import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellManager;
 import com.greymerk.roguelike.dungeon.cell.CellState;
 import com.greymerk.roguelike.dungeon.room.IRoom;
-import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
-
-import net.minecraft.util.math.random.Random;
 
 public class Floor {
 
@@ -26,34 +23,6 @@ public class Floor {
 		this.rooms = new ArrayList<IRoom>();
 		this.cells = new CellManager();
 		this.origin = origin;
-	}
-
-	public Cardinal findStairDir(Cell cell) {
-		for(Cardinal dir : Cardinal.directions) {
-			Coord p = cell.getFloorPos();
-			p.add(dir);
-			if(this.cells.get(p).isRoom()) {
-				return Cardinal.reverse(dir);
-			}
-		}
-		return Cardinal.EAST;
-	}
-	
-	public Cell findValidStair(List<Cell> potentials, Random rand) {
-		for(Cell c : potentials) {
-			int count = 0;
-			for(Cardinal dir : Cardinal.randDirs(rand)) {
-				Coord p = c.getFloorPos();
-				p.add(dir);
-				if(this.cells.get(p).isRoom()) {
-					count++;
-				}
-			}
-			if(count == 1) {
-				return c;
-			}
-		}
-		return potentials.get(0);
 	}
 	
 	public void addRoom(IRoom room) {
@@ -70,8 +39,8 @@ public class Floor {
 		return this.rooms;
 	}
 	
-	public List<Cell> getCells(){
-		return this.cells.getCells();
+	public CellManager getCells(){
+		return this.cells;
 	}
 	
 	public List<Cell> getCells(CellState type){

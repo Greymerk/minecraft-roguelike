@@ -141,13 +141,15 @@ public abstract class AbstractRoom implements IRoom{
 	}
 	
 	@Override
-	public CellManager getCells() {
+	public CellManager getCells(Cardinal dir) {
+		Coord origin = new Coord(0,0,0);
 		CellManager cells = new CellManager();
 
-		cells.add(new Cell(new Coord(0,0,0), CellState.OBSTRUCTED));
+		cells.add(new Cell(origin, CellState.OBSTRUCTED));
 		
-		for(Cardinal dir : Cardinal.directions) {
-			cells.add(new Cell(new Coord(0,0,0).add(dir), CellState.POTENTIAL));
+		for(Cardinal d : Cardinal.directions) {
+			if(d == Cardinal.reverse(dir)) continue;
+			cells.add(new Cell(origin.copy().add(d), CellState.POTENTIAL));
 		}
 		
 		return cells;

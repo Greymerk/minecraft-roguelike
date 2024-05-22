@@ -150,59 +150,31 @@ public class Stairway extends AbstractRoom implements IRoom {
 	}
 
 	@Override
-	public CellManager getCells() {
-		CellManager cells = new CellManager();
-		
+	public CellManager getCells(Cardinal dir) {
 		Coord origin = new Coord(0,0,0);
-		Cell entry = new Cell(origin.copy().add(Cardinal.reverse(direction)), CellState.POTENTIAL);
-		cells.add(entry);
+		CellManager cells = new CellManager();
+
+		cells.add(Cell.of(origin.copy(), CellState.OBSTRUCTED).addWalls(Cardinal.orthogonal(dir)));
+		cells.add(Cell.of(origin.copy().add(dir), CellState.OBSTRUCTED).addWalls(Cardinal.orthogonal(dir)));
+		cells.add(Cell.of(origin.copy().add(dir, 2), CellState.OBSTRUCTED).addWalls(Cardinal.orthogonal(dir)));
 		
-		Coord pos = origin.copy();
-		Cell topFirst = new Cell(pos.copy(), CellState.OBSTRUCTED);
-		Cardinal.orthogonal(direction).forEach(dir -> topFirst.addWall(dir));
-		cells.add(topFirst);
-		pos.add(direction);
-		Cell topMid = new Cell(pos.copy(), CellState.OBSTRUCTED);
-		Cardinal.orthogonal(direction).forEach(dir -> topMid.addWall(dir));
-		cells.add(topMid);
-		pos.add(direction);
-		Cell topEnd = new Cell(pos.copy(), CellState.OBSTRUCTED);
-		for(Cardinal dir : Cardinal.directions) {
-			if(dir == Cardinal.reverse(direction)) continue;
-			topEnd.addWall(dir);
-		}
-		cells.add(topEnd);
-				
-		pos = origin.copy();
-		pos.add(Cardinal.DOWN);
-		Cell bottomEnd = new Cell(pos.copy(), CellState.OBSTRUCTED);
-		for(Cardinal dir : Cardinal.directions) {
-			if(dir == direction) continue;
-			bottomEnd.addWall(dir);
-		}
-		cells.add(bottomEnd);
-		pos.add(direction);
-		Cell bottomMid = new Cell(pos.copy(), CellState.OBSTRUCTED);
-		for(Cardinal dir : Cardinal.orthogonal(direction)) {
-			bottomMid.addWall(dir);
-		}
-		cells.add(bottomMid);
-		pos.add(direction);
-		cells.add(new Cell(pos.copy(), CellState.OBSTRUCTED));
+		cells.add(Cell.of(origin.copy().add(Cardinal.DOWN), CellState.OBSTRUCTED).addWall(Cardinal.reverse(dir)).addWalls(Cardinal.orthogonal(dir)));
+		cells.add(Cell.of(origin.copy().add(Cardinal.DOWN).add(dir), CellState.OBSTRUCTED).addWall(Cardinal.reverse(dir)).addWalls(Cardinal.orthogonal(dir)));
 		
-		// spiral above entry level, otherwise random directions
+		
+		
 		if(this.worldPos != null && Dungeon.getLevelFromY(this.worldPos.getY()) == 0) {
-			Coord p = pos.copy();
-			p.add(Cardinal.right(direction));
-			cells.add(new Cell(p.copy(), CellState.POTENTIAL));
+			cells.add(Cell.of(origin.copy().add(Cardinal.DOWN).add(dir, 2), CellState.OBSTRUCTED).addWall(Cardinal.left(dir)).addWall(dir));
+			cells.add(Cell.of(origin.copy().add(Cardinal.DOWN).add(dir, 2).add(Cardinal.right(dir)), CellState.POTENTIAL));
 		} else {
-			for(Cardinal dir : Cardinal.directions) {
-				if(dir == Cardinal.reverse(direction)) continue;
-				Coord p = pos.copy();
-				p.add(dir);
-				cells.add(new Cell(p.copy(), CellState.POTENTIAL));
+			cells.add(Cell.of(origin.copy().add(Cardinal.DOWN).add(dir, 2), CellState.OBSTRUCTED));
+			cells.add(Cell.of(origin.copy().add(Cardinal.DOWN).add(dir, 3), CellState.POTENTIAL));
+			for(Cardinal o : Cardinal.orthogonal(dir)) {
+				cells.add(Cell.of(origin.copy().add(Cardinal.DOWN).add(dir, 2).add(o), CellState.POTENTIAL));
 			}
 		}
+		
+		
 		return cells;
 	}
 
