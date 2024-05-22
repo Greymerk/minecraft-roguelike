@@ -14,7 +14,7 @@ public class ThemeDefault extends ThemeBase implements ITheme {
 		
 		this.primary = new BlockSet()
 				.setWall(BlockType.get(BlockType.STONE_BRICK))
-				.setStair(Stair.get(StairType.STONEBRICK))
+				.setStair(Stair.of(StairType.STONEBRICK))
 				.setPillar(BlockType.get(BlockType.ANDESITE_POLISHED));
 		this.secondary = this.primary;
 	}

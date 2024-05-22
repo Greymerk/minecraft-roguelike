@@ -26,7 +26,7 @@ public class ThemeStone extends ThemeBase{
 		walls.addBlock(BlockType.get(BlockType.COBBLESTONE_MOSSY), 1);
 		walls.addBlock(SilverfishBlock.getJumble(), 1);
 		
-		MetaStair stair = Stair.get(StairType.STONEBRICK);
+		MetaStair stair = Stair.of(StairType.STONEBRICK);
 		
 		this.primary = new BlockSet()
 				.setWall(walls)

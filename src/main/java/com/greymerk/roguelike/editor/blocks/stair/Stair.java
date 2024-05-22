@@ -4,7 +4,7 @@ import com.greymerk.roguelike.editor.Cardinal;
 
 public class Stair{
 
-	public static MetaStair get(StairType type){
+	public static MetaStair of(StairType type){
 		return get(type, Cardinal.EAST, false);
 	}
 	

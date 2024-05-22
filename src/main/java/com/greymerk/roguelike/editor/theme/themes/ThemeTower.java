@@ -1,11 +1,10 @@
 package com.greymerk.roguelike.editor.theme.themes;
 
-import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.blocks.BlockType;
 import com.greymerk.roguelike.editor.blocks.door.Door;
 import com.greymerk.roguelike.editor.blocks.door.DoorType;
 import com.greymerk.roguelike.editor.blocks.slab.Slab;
-import com.greymerk.roguelike.editor.blocks.stair.MetaStair;
+import com.greymerk.roguelike.editor.blocks.stair.Stair;
 import com.greymerk.roguelike.editor.blocks.stair.StairType;
 import com.greymerk.roguelike.editor.factories.BlockJumble;
 import com.greymerk.roguelike.editor.factories.BlockWeightedRandom;
@@ -29,15 +28,11 @@ public class ThemeTower extends ThemeBase implements ITheme {
 		walls.addBlock(BlockType.get(BlockType.COBBLESTONE), 10);
 		walls.addBlock(BlockType.get(BlockType.GRAVEL), 5);
 		
-		MetaStair stair = new MetaStair(StairType.STONEBRICK);
-		
-		IBlockFactory pillar = BlockType.get(BlockType.ANDESITE_POLISHED);
-		
 		this.primary = new BlockSet()
 				.setWall(walls)
 				.setFloor(walls)
-				.setStair(stair)
-				.setPillar(pillar)
+				.setStair(Stair.of(StairType.STONEBRICK))
+				.setPillar(walls)
 				.setDoor(Door.of(DoorType.SPRUCE))
 				.setSlab(Slab.of(Slab.COBBLE));
 		this.secondary = this.primary;
