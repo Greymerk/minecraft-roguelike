@@ -4,7 +4,7 @@ import com.greymerk.roguelike.editor.blocks.BlackStone;
 import com.greymerk.roguelike.editor.blocks.BlockType;
 import com.greymerk.roguelike.editor.blocks.slab.Slab;
 import com.greymerk.roguelike.editor.blocks.stair.MetaStair;
-import com.greymerk.roguelike.editor.blocks.stair.StairType;
+import com.greymerk.roguelike.editor.blocks.stair.Stair;
 import com.greymerk.roguelike.editor.factories.BlockWeightedRandom;
 import com.greymerk.roguelike.editor.theme.BlockSet;
 import com.greymerk.roguelike.editor.theme.ITheme;
@@ -29,7 +29,7 @@ public class ThemeBlack extends ThemeBase implements ITheme {
 		pillar.addBlock(BlackStone.get(BlackStone.POLISHED), 10);
 		pillar.addBlock(BlackStone.get(BlackStone.CHISELED_POLISHED), 1);
 		
-		MetaStair stair = new MetaStair(StairType.BLACKSTONE_BRICK);
+		MetaStair stair = Stair.of(Stair.BLACKSTONE_BRICK);
 		
 		this.primary = new BlockSet()
 				.setWall(walls)

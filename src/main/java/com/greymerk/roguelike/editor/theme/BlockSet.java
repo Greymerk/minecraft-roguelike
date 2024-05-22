@@ -10,7 +10,7 @@ import com.greymerk.roguelike.editor.blocks.slab.ISlab;
 import com.greymerk.roguelike.editor.blocks.slab.Slab;
 import com.greymerk.roguelike.editor.blocks.stair.IStair;
 import com.greymerk.roguelike.editor.blocks.stair.MetaStair;
-import com.greymerk.roguelike.editor.blocks.stair.StairType;
+import com.greymerk.roguelike.editor.blocks.stair.Stair;
 import com.greymerk.roguelike.editor.factories.BlockFloor;
 
 
@@ -34,7 +34,7 @@ public class BlockSet implements IBlockSet {
 
 	@Override
 	public IStair getStair() {
-		return stair != null ? this.stair : new MetaStair(StairType.STONEBRICK);
+		return stair != null ? this.stair : new MetaStair(Stair.STONEBRICK);
 	}
 
 	@Override

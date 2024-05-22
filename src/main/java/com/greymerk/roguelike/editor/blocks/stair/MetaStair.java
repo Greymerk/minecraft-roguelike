@@ -23,8 +23,8 @@ public class MetaStair extends MetaBlock implements IStair{
 		super(block);
 	}
 	
-	public MetaStair(StairType stair) {
-		super(StairType.getBlock(stair));
+	public MetaStair(Stair type) {
+		super(Stair.getBlock(type));
 	}
 	
 	public MetaStair setOrientation(Cardinal dir, Boolean upsideDown){

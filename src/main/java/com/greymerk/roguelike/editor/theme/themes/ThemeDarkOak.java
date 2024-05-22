@@ -8,7 +8,7 @@ import com.greymerk.roguelike.editor.blocks.door.Door;
 import com.greymerk.roguelike.editor.blocks.door.DoorType;
 import com.greymerk.roguelike.editor.blocks.slab.Slab;
 import com.greymerk.roguelike.editor.blocks.stair.MetaStair;
-import com.greymerk.roguelike.editor.blocks.stair.StairType;
+import com.greymerk.roguelike.editor.blocks.stair.Stair;
 import com.greymerk.roguelike.editor.factories.BlockWeightedRandom;
 import com.greymerk.roguelike.editor.theme.BlockSet;
 import com.greymerk.roguelike.editor.theme.ITheme;
@@ -25,12 +25,12 @@ public class ThemeDarkOak extends ThemeBase implements ITheme {
 		walls.addBlock(BlockType.get(BlockType.COBBLESTONE), 5);
 		walls.addBlock(BlockType.get(BlockType.GRAVEL), 1);
 		
-		MetaStair stair = new MetaStair(StairType.STONEBRICK);
+		MetaStair stair = new MetaStair(Stair.STONEBRICK);
 
 		
 		MetaBlock logs = Wood.get(Wood.DARKOAK, WoodBlock.LOG);
 		MetaBlock segmentWall = Wood.get(Wood.DARKOAK, WoodBlock.PLANK);
-		MetaStair segmentStair = new MetaStair(StairType.DARKOAK);
+		MetaStair segmentStair = new MetaStair(Stair.DARKOAK);
 		
 		this.primary = new BlockSet()
 				.setWall(walls)

@@ -2,7 +2,6 @@ package com.greymerk.roguelike.editor.theme.themes;
 
 import com.greymerk.roguelike.editor.blocks.BlockType;
 import com.greymerk.roguelike.editor.blocks.stair.Stair;
-import com.greymerk.roguelike.editor.blocks.stair.StairType;
 import com.greymerk.roguelike.editor.theme.BlockSet;
 import com.greymerk.roguelike.editor.theme.ITheme;
 import com.greymerk.roguelike.editor.theme.Theme;
@@ -14,7 +13,7 @@ public class ThemeDefault extends ThemeBase implements ITheme {
 		
 		this.primary = new BlockSet()
 				.setWall(BlockType.get(BlockType.STONE_BRICK))
-				.setStair(Stair.of(StairType.STONEBRICK))
+				.setStair(Stair.of(Stair.STONEBRICK))
 				.setPillar(BlockType.get(BlockType.ANDESITE_POLISHED));
 		this.secondary = this.primary;
 	}

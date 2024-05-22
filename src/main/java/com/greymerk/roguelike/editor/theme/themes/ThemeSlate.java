@@ -3,7 +3,7 @@ package com.greymerk.roguelike.editor.theme.themes;
 import com.greymerk.roguelike.editor.blocks.Deepslate;
 import com.greymerk.roguelike.editor.blocks.slab.Slab;
 import com.greymerk.roguelike.editor.blocks.stair.MetaStair;
-import com.greymerk.roguelike.editor.blocks.stair.StairType;
+import com.greymerk.roguelike.editor.blocks.stair.Stair;
 import com.greymerk.roguelike.editor.factories.BlockWeightedRandom;
 import com.greymerk.roguelike.editor.theme.BlockSet;
 import com.greymerk.roguelike.editor.theme.ITheme;
@@ -24,7 +24,7 @@ public class ThemeSlate extends ThemeBase implements ITheme {
 		walls.addBlock(Deepslate.get(Deepslate.CRACKED_BRICK), 5);
 		walls.addBlock(Deepslate.get(Deepslate.COBBLED), 1);
 		
-		MetaStair stair = new MetaStair(StairType.DEEPSLATE_BRICK);
+		MetaStair stair = Stair.of(Stair.DEEPSLATE_BRICK);
 		
 		BlockWeightedRandom pillar = new BlockWeightedRandom();
 		pillar.addBlock(Deepslate.get(Deepslate.POLISHED), 20);

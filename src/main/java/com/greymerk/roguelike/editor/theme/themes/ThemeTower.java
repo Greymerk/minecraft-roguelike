@@ -5,7 +5,6 @@ import com.greymerk.roguelike.editor.blocks.door.Door;
 import com.greymerk.roguelike.editor.blocks.door.DoorType;
 import com.greymerk.roguelike.editor.blocks.slab.Slab;
 import com.greymerk.roguelike.editor.blocks.stair.Stair;
-import com.greymerk.roguelike.editor.blocks.stair.StairType;
 import com.greymerk.roguelike.editor.factories.BlockJumble;
 import com.greymerk.roguelike.editor.factories.BlockWeightedRandom;
 import com.greymerk.roguelike.editor.theme.BlockSet;
@@ -31,7 +30,7 @@ public class ThemeTower extends ThemeBase implements ITheme {
 		this.primary = new BlockSet()
 				.setWall(walls)
 				.setFloor(walls)
-				.setStair(Stair.of(StairType.STONEBRICK))
+				.setStair(Stair.of(Stair.STONEBRICK))
 				.setPillar(walls)
 				.setDoor(Door.of(DoorType.SPRUCE))
 				.setSlab(Slab.of(Slab.COBBLE));

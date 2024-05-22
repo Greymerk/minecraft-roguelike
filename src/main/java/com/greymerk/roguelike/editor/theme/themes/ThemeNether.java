@@ -7,7 +7,7 @@ import com.greymerk.roguelike.editor.blocks.door.Door;
 import com.greymerk.roguelike.editor.blocks.door.DoorType;
 import com.greymerk.roguelike.editor.blocks.slab.Slab;
 import com.greymerk.roguelike.editor.blocks.stair.MetaStair;
-import com.greymerk.roguelike.editor.blocks.stair.StairType;
+import com.greymerk.roguelike.editor.blocks.stair.Stair;
 import com.greymerk.roguelike.editor.factories.BlockWeightedRandom;
 import com.greymerk.roguelike.editor.theme.BlockSet;
 import com.greymerk.roguelike.editor.theme.ITheme;
@@ -35,7 +35,7 @@ public class ThemeNether extends ThemeBase implements ITheme {
 		floor.addBlock(BlockType.get(BlockType.GOLD_BLOCK), 2);
 		floor.addBlock(BlockType.get(BlockType.DIAMOND_BLOCK), 1);
 		
-		MetaStair stair = new MetaStair(StairType.NETHERBRICK);
+		MetaStair stair = Stair.of(Stair.NETHERBRICK);
 		MetaBlock obsidian = BlockType.get(BlockType.OBSIDIAN);
 		MetaBlock redBrick = BlockType.get(BlockType.RED_NETHERBRICK);
 		
