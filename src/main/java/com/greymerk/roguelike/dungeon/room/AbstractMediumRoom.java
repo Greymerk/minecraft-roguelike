@@ -35,8 +35,8 @@ public abstract class AbstractMediumRoom extends AbstractRoom implements IRoom{
 
 	@Override
 	public BoundingBox getBoundingBox() {
-		BoundingBox bb = new BoundingBox(worldPos.copy());
-		bb.grow(Cardinal.directions, 10);
+		BoundingBox bb = new BoundingBox(worldPos.copy().add(direction, Cell.SIZE));
+		bb.grow(Cardinal.directions, (Cell.SIZE / 2) + Cell.SIZE + 1);
 		bb.grow(Cardinal.UP, 6).grow(Cardinal.DOWN, 3);
 		return bb;
 	}

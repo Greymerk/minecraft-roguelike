@@ -56,8 +56,8 @@ public abstract class AbstractLargeRoom extends AbstractRoom implements IRoom {
 	
 	@Override
 	public BoundingBox getBoundingBox() {
-		BoundingBox bb = new BoundingBox(worldPos.copy());
-		bb.grow(Cardinal.directions, 16);
+		BoundingBox bb = new BoundingBox(worldPos.copy().add(direction, Cell.SIZE * 2));
+		bb.grow(Cardinal.directions, (Cell.SIZE / 2) + (Cell.SIZE * 2) + 1);
 		bb.grow(Cardinal.UP, 6).grow(Cardinal.DOWN, 3);
 		return bb;
 	}

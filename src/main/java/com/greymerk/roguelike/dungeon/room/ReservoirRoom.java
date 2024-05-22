@@ -289,9 +289,7 @@ public class ReservoirRoom extends AbstractLargeRoom implements IRoom {
 	
 	@Override
 	public BoundingBox getBoundingBox() {
-		BoundingBox bb = new BoundingBox(worldPos.copy());
-		bb.grow(Cardinal.directions, 16);
-		bb.grow(Cardinal.UP, 6).grow(Cardinal.DOWN, 10);
+		BoundingBox bb = super.getBoundingBox().grow(Cardinal.DOWN, 10);
 		return bb;
 	}
 	
