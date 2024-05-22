@@ -28,10 +28,31 @@ class CellTest {
 		
 		Cell c2 = new Cell(pos, CellState.OBSTRUCTED);
 		c2.addWall(Cardinal.NORTH);
-		System.out.println(c2.getWalls());
 		c.replace(c2);
-		System.out.println(c.getWalls());
 		assert((c.getWalls().contains(Cardinal.NORTH)));
+	}
+
+	@Test
+	void testGetLevelOffset() {
+		Coord origin = new Coord(0,0,0);
+		Cell c1 = Cell.of(origin.copy(), CellState.OBSTRUCTED);
+		assert(c1.getLevelOffset() == 0);
+
+		Cell c2 = Cell.of(origin.copy().add(Cardinal.DOWN), CellState.OBSTRUCTED);
+		assert(c2.getLevelOffset() == 1);
 		
+		Cell c3 = Cell.of(origin.copy().add(Cardinal.UP), CellState.OBSTRUCTED);
+		assert(c3.getLevelOffset() == -1);
+
+		Cell c4 = Cell.of(origin.copy().add(Cardinal.DOWN, 3), CellState.OBSTRUCTED);
+		assert(c4.getLevelOffset() == 3);
+	}
+	
+	@Test
+	void testGetWorldPos() {
+		Coord worldPos = new Coord(5, 10, -10);
+		Cell c = Cell.of(new Coord(3, 2, -2), CellState.OBSTRUCTED);
+		System.out.println(c.getWorldPos(worldPos));
+		assert(c.getWorldPos(worldPos).equals(new Coord(23, 12, -22)));
 	}
 }

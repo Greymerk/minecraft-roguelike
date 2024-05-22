@@ -59,10 +59,9 @@ public class Cell {
 	}
 	
 	public Coord getWorldPos(Coord origin) {
-		Coord wp = this.floorPos.copy();
-		wp = wp.mul(new Coord(Cell.SIZE, 1, Cell.SIZE));
-		wp.add(origin);
-		return wp;
+		return this.floorPos.copy()
+				.mul(new Coord(Cell.SIZE, 1, Cell.SIZE))
+				.add(origin);
 	}
 	
 	public Cell addWall(Cardinal dir) {
