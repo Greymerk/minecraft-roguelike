@@ -22,7 +22,7 @@ public class ReservoirRoom extends AbstractLargeRoom implements IRoom {
 
 	@Override
 	public void generate(IWorldEditor editor) {
-		Coord origin = worldPos.copy().add(direction, Cell.SIZE);
+		Coord origin = worldPos.copy().add(direction, Cell.SIZE * 2);
 		Random rand = editor.getRandom(origin);
 		this.clearUpper(editor, rand, origin);
 		this.buildCells(editor, rand, origin);
@@ -265,11 +265,12 @@ public class ReservoirRoom extends AbstractLargeRoom implements IRoom {
 	
 	@Override
 	public CellManager getCells(Cardinal dir) {
-		Coord origin = new Coord(0,0,0);
+		
 		CellManager cells = super.getCells(dir);
 		
+		Coord origin = new Coord(0,0,0).add(Cardinal.DOWN);
 		BoundingBox bb = BoundingBox.of(origin);
-		bb.add(dir, 2).add(Cardinal.DOWN).grow(Cardinal.directions);
+		bb.add(dir, 2).grow(Cardinal.directions);
 		bb.getShape(Shape.RECTSOLID).get().forEach(pos -> {
 			cells.add(Cell.of(pos, CellState.OBSTRUCTED));
 		});
