@@ -135,6 +135,12 @@ public class MusicRoom extends AbstractMediumRoom implements IRoom {
 			}
 		}
 		
+		for(Cardinal dir : this.getEntrancesFromType(Entrance.DOOR)) {
+			Coord pos = origin.copy();
+			pos.add(dir, 6);
+			Fragment.generate(Fragment.ARCH, editor, rand, theme, pos, dir);
+		}
+		
 		Carpet.generate(editor, rand, origin, 4);		
 		Lantern.set(editor, origin.copy().add(Cardinal.UP, 5));
 		

@@ -1,6 +1,5 @@
 package com.greymerk.roguelike.dungeon.room;
 
-import com.greymerk.roguelike.dungeon.Dungeon;
 import com.greymerk.roguelike.dungeon.Floor;
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellManager;
@@ -34,8 +33,6 @@ public class Stairway extends AbstractRoom implements IRoom {
 		buildCell(editor, rand, bottomCell, Cardinal.reverse(direction), false);
 		this.buildSteps(editor, rand, origin.copy());
 		this.addDoors(editor, rand);
-		
-		
 	}
 
 	private void fillWalls(IWorldEditor editor, Random rand, Coord origin) {
@@ -167,14 +164,12 @@ public class Stairway extends AbstractRoom implements IRoom {
 
 		cells.add(Cell.of(origin.copy(), CellState.OBSTRUCTED).addWalls(Cardinal.orthogonal(dir)));
 		cells.add(Cell.of(origin.copy().add(dir), CellState.OBSTRUCTED).addWalls(Cardinal.orthogonal(dir)));
-		cells.add(Cell.of(origin.copy().add(dir, 2), CellState.OBSTRUCTED).addWalls(Cardinal.orthogonal(dir)));
+		cells.add(Cell.of(origin.copy().add(dir, 2), CellState.OBSTRUCTED).addWalls(Cardinal.orthogonal(dir)).addWall(dir));
 		
 		cells.add(Cell.of(origin.copy().add(Cardinal.DOWN), CellState.OBSTRUCTED).addWall(Cardinal.reverse(dir)).addWalls(Cardinal.orthogonal(dir)));
-		cells.add(Cell.of(origin.copy().add(Cardinal.DOWN).add(dir), CellState.OBSTRUCTED).addWall(Cardinal.reverse(dir)).addWalls(Cardinal.orthogonal(dir)));
+		cells.add(Cell.of(origin.copy().add(Cardinal.DOWN).add(dir), CellState.OBSTRUCTED).addWalls(Cardinal.orthogonal(dir)));
 		
-		
-		
-		if(this.worldPos != null && Dungeon.getLevelFromY(this.worldPos.getY() - 10) == 0) {
+		if(this.worldPos != null && this.worldPos.getY() >= 70) {
 			cells.add(Cell.of(origin.copy().add(Cardinal.DOWN).add(dir, 2), CellState.OBSTRUCTED).addWall(Cardinal.left(dir)).addWall(dir));
 			cells.add(Cell.of(origin.copy().add(Cardinal.DOWN).add(dir, 2).add(Cardinal.right(dir)), CellState.POTENTIAL));
 		} else {

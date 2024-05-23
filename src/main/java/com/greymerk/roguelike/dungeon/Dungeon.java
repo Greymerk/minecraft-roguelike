@@ -104,7 +104,7 @@ public class Dungeon implements Iterable<IRoom>{
 	}
 	
 	public static int getLevelFromY(int y) {
-		if(y >= 60) return 0;
+		if(y > 60) return 0;
 		return Math.abs((int)(y / 10 - 6));
 	}
 	
