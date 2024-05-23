@@ -29,7 +29,7 @@ public class MusicRoom extends AbstractMediumRoom implements IRoom {
 		
 		bb = BoundingBox.of(origin);
 		bb.add(Cardinal.DOWN).grow(Cardinal.directions, 6);
-		RectSolid.fill(editor, rand, bb, theme.getPrimary().getFloor());
+		RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall());
 		
 		Fragment.generate(Fragment.CELL_SUPPORT, editor, rand, theme, origin);
 		

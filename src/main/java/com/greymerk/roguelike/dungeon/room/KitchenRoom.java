@@ -45,6 +45,12 @@ public class KitchenRoom extends AbstractMediumRoom implements IRoom {
 		bb.grow(Cardinal.directions, 9);
 		RectSolid.fill(editor, rand, bb, theme.getPrimary().getFloor());
 		
+		Fragment.generate(Fragment.CELL_SUPPORT, editor, rand, theme, origin);
+		Cardinal.directions.forEach(dir -> {
+			Fragment.generate(Fragment.CELL_SUPPORT, editor, rand, theme, origin.copy().add(dir, Cell.SIZE));
+			Fragment.generate(Fragment.CELL_SUPPORT, editor, rand, theme, origin.copy().add(dir, Cell.SIZE).add(Cardinal.left(dir), Cell.SIZE));
+		});
+		
 		for(Cardinal dir : Cardinal.directions) {
 			for(Cardinal o : Cardinal.orthogonal(dir)) {
 				//outer wall
