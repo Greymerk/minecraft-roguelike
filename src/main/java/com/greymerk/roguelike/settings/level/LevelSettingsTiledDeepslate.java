@@ -26,11 +26,14 @@ public class LevelSettingsTiledDeepslate extends LevelSettingsBase implements IL
 		rooms.addRandomChoice(Room.CISTERN, 2);
 		rooms.addRoomOnce(Room.OSSUARY);
 		
-		this.walls = new WeightedRandomizer<Fragment>();
+		this.walls = new WeightedRandomizer<Fragment>(10);
 		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_EMPTY, 10));
 		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_SPAWNER, 1));
 		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_CHEST, 1));
-		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_BOOK_SHELF, 1));
+		
+		this.alcoves.add(this.walls);
+		this.alcoves.add(new WeightedChoice<Fragment>(Fragment.ALCOVE_CRYPT, 5));
+		this.alcoves.add(new WeightedChoice<Fragment>(Fragment.BOOK_SHELF, 2));
 		
 		this.filters = new ArrayList<IFilter>();
 		this.filters.add(Filter.get(Filter.POTS));

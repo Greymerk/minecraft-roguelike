@@ -25,7 +25,7 @@ public class LevelSettingsRandom extends LevelSettingsBase implements ILevelSett
 		});
 		
 		List.of(Fragment.WALL_BANNER,
-				Fragment.WALL_BOOK_SHELF,
+				Fragment.BOOK_SHELF,
 				Fragment.WALL_CANDLES,
 				Fragment.WALL_DECORATED_POT,
 				Fragment.WALL_SPAWNER,

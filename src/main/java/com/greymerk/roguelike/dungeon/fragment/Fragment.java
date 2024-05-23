@@ -3,12 +3,12 @@ package com.greymerk.roguelike.dungeon.fragment;
 import com.greymerk.roguelike.dungeon.fragment.alcove.SafetyCell;
 import com.greymerk.roguelike.dungeon.fragment.alcove.SilverfishNest;
 import com.greymerk.roguelike.dungeon.fragment.alcove.TombAlcove;
+import com.greymerk.roguelike.dungeon.fragment.alcove.BookShelfAlcove;
 import com.greymerk.roguelike.dungeon.fragment.parts.ArchWay;
 import com.greymerk.roguelike.dungeon.fragment.parts.CellSupportBeamFragment;
 import com.greymerk.roguelike.dungeon.fragment.parts.CryptFragment;
 import com.greymerk.roguelike.dungeon.fragment.parts.Sarcophagus;
 import com.greymerk.roguelike.dungeon.fragment.wall.WallBannerFragment;
-import com.greymerk.roguelike.dungeon.fragment.wall.WallBookShelf;
 import com.greymerk.roguelike.dungeon.fragment.wall.WallCandles;
 import com.greymerk.roguelike.dungeon.fragment.wall.WallChest;
 import com.greymerk.roguelike.dungeon.fragment.wall.WallDecoratedPot;
@@ -28,8 +28,8 @@ public enum Fragment {
 	CRYPT, SARCOPHAGUS, 
 	CELL_SUPPORT, ARCH,
 	WALL_FLOWER, WALL_BANNER, WALL_CHEST, WALL_SPAWNER, WALL_CANDLES,
-	WALL_EMPTY, WALL_DECORATED_POT, WALL_BOOK_SHELF, WALL_FOOD_BARREL,
-	ALCOVE_SILVERFISH, ALCOVE_SAFETY, ALCOVE_CRYPT;
+	WALL_EMPTY, WALL_DECORATED_POT, WALL_FOOD_BARREL,
+	ALCOVE_SILVERFISH, ALCOVE_SAFETY, ALCOVE_CRYPT, BOOK_SHELF;
 	
 	public static void generate(Fragment type, IWorldEditor editor, Random rand, ITheme theme, Coord pos) {
 		generate(type, editor, rand, theme, pos, Cardinal.DOWN);
@@ -53,7 +53,7 @@ public enum Fragment {
 		case WALL_CANDLES: return new WallCandles();
 		case WALL_EMPTY: return new WallEmpty();
 		case WALL_DECORATED_POT: return new WallDecoratedPot();
-		case WALL_BOOK_SHELF: return new WallBookShelf();
+		case BOOK_SHELF: return new BookShelfAlcove();
 		case WALL_FOOD_BARREL: return new WallFoodBarrel();
 		case ALCOVE_SILVERFISH: return new SilverfishNest();
 		case ALCOVE_SAFETY: return new SafetyCell();
