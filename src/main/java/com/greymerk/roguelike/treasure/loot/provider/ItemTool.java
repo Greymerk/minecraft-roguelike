@@ -20,7 +20,7 @@ public class ItemTool extends ItemBase {
 	
 	@Override
 	public ItemStack getLootItem(Random rand, int level) {
-		if(rand.nextInt(1000) == 0) return ItemNovelty.getItem(ItemNovelty.CLEO);
+		if(rand.nextInt(2000) == 0) return ItemNovelty.getItem(ItemNovelty.CLEO);
 		return getRandom(features, rand, level, true);
 	}
 

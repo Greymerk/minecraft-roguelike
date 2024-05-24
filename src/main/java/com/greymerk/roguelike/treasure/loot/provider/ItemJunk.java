@@ -57,8 +57,8 @@ public class ItemJunk extends ItemBase{
 
 	@Override
 	public ItemStack getLootItem(Random rand, int level){
-		if(rand.nextInt(1000) == 0) return ItemNovelty.getItem(ItemNovelty.ZISTEAU);
-		if(rand.nextInt(1000) == 0) return ItemNovelty.getItem(ItemNovelty.VECHS);
+		if(rand.nextInt(2000) == 0) return ItemNovelty.getItem(ItemNovelty.ZISTEAU);
+		if(rand.nextInt(2000) == 0) return ItemNovelty.getItem(ItemNovelty.VECHS);
 		return this.loot.get(level).get(rand);
 	}
 }

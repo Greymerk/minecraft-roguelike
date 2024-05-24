@@ -73,7 +73,7 @@ public class ReservoirRoom extends AbstractLargeRoom implements IRoom {
 		IBlockFactory liquid = theme.getPrimary().getLiquid();
 		
 		BoundingBox bb = BoundingBox.of(origin);
-		bb.add(Cardinal.DOWN, 6).grow(Cardinal.DOWN, 5).grow(Cardinal.directions, 11);
+		bb.add(Cardinal.DOWN, 5).grow(Cardinal.DOWN).grow(Cardinal.directions, 11);
 		RectSolid.fill(editor, rand, bb, liquid, true, false);
 	}
 
