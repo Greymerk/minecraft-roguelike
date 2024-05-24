@@ -5,7 +5,7 @@ import com.greymerk.roguelike.dungeon.fragment.IFragment;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
-import com.greymerk.roguelike.editor.theme.ITheme;
+import com.greymerk.roguelike.theme.ITheme;
 import com.greymerk.roguelike.treasure.Treasure;
 import com.greymerk.roguelike.treasure.chest.ChestType;
 

@@ -10,7 +10,7 @@ import com.greymerk.roguelike.editor.blocks.stair.IStair;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.editor.shapes.IShape;
 import com.greymerk.roguelike.editor.shapes.Shape;
-import com.greymerk.roguelike.editor.theme.ITheme;
+import com.greymerk.roguelike.theme.ITheme;
 
 import net.minecraft.util.math.random.Random;
 

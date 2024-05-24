@@ -12,10 +12,10 @@ import com.greymerk.roguelike.editor.blocks.spawners.Spawner;
 import com.greymerk.roguelike.editor.blocks.stair.IStair;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.editor.shapes.RectSolid;
-import com.greymerk.roguelike.editor.theme.IBlockSet;
-import com.greymerk.roguelike.editor.theme.ITheme;
-import com.greymerk.roguelike.editor.theme.ThemeBase;
-import com.greymerk.roguelike.editor.theme.blocksets.EnderBlocks;
+import com.greymerk.roguelike.theme.IBlockSet;
+import com.greymerk.roguelike.theme.ITheme;
+import com.greymerk.roguelike.theme.ThemeBase;
+import com.greymerk.roguelike.theme.blocksets.EnderBlocks;
 
 import net.minecraft.util.math.random.Random;
 

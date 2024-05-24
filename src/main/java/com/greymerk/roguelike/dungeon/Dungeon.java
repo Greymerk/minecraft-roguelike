@@ -12,9 +12,9 @@ import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.editor.boundingbox.IBounded;
-import com.greymerk.roguelike.editor.theme.Theme;
 import com.greymerk.roguelike.settings.LevelSettings;
 import com.greymerk.roguelike.state.RoguelikeState;
+import com.greymerk.roguelike.theme.Theme;
 
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;

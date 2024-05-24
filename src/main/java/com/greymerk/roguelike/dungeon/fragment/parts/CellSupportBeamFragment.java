@@ -8,7 +8,7 @@ import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.blocks.Lantern;
 import com.greymerk.roguelike.editor.blocks.stair.IStair;
 import com.greymerk.roguelike.editor.shapes.Column;
-import com.greymerk.roguelike.editor.theme.ITheme;
+import com.greymerk.roguelike.theme.ITheme;
 
 import net.minecraft.util.math.random.Random;
 

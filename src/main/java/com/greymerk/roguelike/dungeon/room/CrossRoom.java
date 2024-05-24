@@ -10,9 +10,9 @@ import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.blocks.spawners.Spawner;
 import com.greymerk.roguelike.editor.blocks.stair.IStair;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
-import com.greymerk.roguelike.editor.filter.DecoratedPotFilter;
 import com.greymerk.roguelike.editor.shapes.RectHollow;
 import com.greymerk.roguelike.editor.shapes.RectSolid;
+import com.greymerk.roguelike.filter.DecoratedPotFilter;
 
 import net.minecraft.util.math.random.Random;
 

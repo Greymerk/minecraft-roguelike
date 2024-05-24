@@ -8,7 +8,7 @@ import com.greymerk.roguelike.editor.blocks.BlockType;
 import com.greymerk.roguelike.editor.blocks.Quartz;
 import com.greymerk.roguelike.editor.blocks.spawners.Spawner;
 import com.greymerk.roguelike.editor.blocks.stair.IStair;
-import com.greymerk.roguelike.editor.theme.ITheme;
+import com.greymerk.roguelike.theme.ITheme;
 import com.greymerk.roguelike.treasure.Treasure;
 
 import net.minecraft.util.math.random.Random;

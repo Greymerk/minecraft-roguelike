@@ -5,12 +5,12 @@ import java.util.ArrayList;
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
 import com.greymerk.roguelike.dungeon.room.Room;
 import com.greymerk.roguelike.dungeon.room.RoomProvider;
-import com.greymerk.roguelike.editor.filter.Filter;
-import com.greymerk.roguelike.editor.filter.IFilter;
-import com.greymerk.roguelike.editor.theme.Theme;
+import com.greymerk.roguelike.filter.Filter;
+import com.greymerk.roguelike.filter.IFilter;
 import com.greymerk.roguelike.settings.ILevelSettings;
 import com.greymerk.roguelike.settings.LevelSettings;
 import com.greymerk.roguelike.settings.LevelSettingsBase;
+import com.greymerk.roguelike.theme.Theme;
 import com.greymerk.roguelike.util.WeightedChoice;
 import com.greymerk.roguelike.util.WeightedRandomizer;
 

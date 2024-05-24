@@ -7,9 +7,9 @@ import com.greymerk.roguelike.dungeon.fragment.IFragment;
 import com.greymerk.roguelike.dungeon.room.RoomProvider;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.boundingbox.IBounded;
-import com.greymerk.roguelike.editor.filter.IFilter;
-import com.greymerk.roguelike.editor.theme.ITheme;
-import com.greymerk.roguelike.editor.theme.Theme;
+import com.greymerk.roguelike.filter.IFilter;
+import com.greymerk.roguelike.theme.ITheme;
+import com.greymerk.roguelike.theme.Theme;
 import com.greymerk.roguelike.util.WeightedRandomizer;
 
 import net.minecraft.util.math.random.Random;

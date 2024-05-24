@@ -10,7 +10,7 @@ import com.greymerk.roguelike.editor.blocks.BlockType;
 import com.greymerk.roguelike.editor.blocks.spawners.Spawner;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.editor.shapes.RectSolid;
-import com.greymerk.roguelike.editor.theme.ITheme;
+import com.greymerk.roguelike.theme.ITheme;
 
 import net.minecraft.util.math.random.Random;
 

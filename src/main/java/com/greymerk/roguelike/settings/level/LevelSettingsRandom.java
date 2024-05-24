@@ -5,10 +5,10 @@ import java.util.List;
 
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
 import com.greymerk.roguelike.dungeon.room.Room;
-import com.greymerk.roguelike.editor.theme.Theme;
 import com.greymerk.roguelike.settings.ILevelSettings;
 import com.greymerk.roguelike.settings.LevelSettings;
 import com.greymerk.roguelike.settings.LevelSettingsBase;
+import com.greymerk.roguelike.theme.Theme;
 import com.greymerk.roguelike.util.WeightedChoice;
 
 import net.minecraft.util.math.random.Random;
