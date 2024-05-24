@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.util.math.random.Random;
 
+import com.greymerk.roguelike.treasure.chest.ITreasureChest;
 import com.greymerk.roguelike.util.IWeighted;
 
 import net.minecraft.item.ItemStack;

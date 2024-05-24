@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.greymerk.roguelike.editor.IWorldEditor;
-import com.greymerk.roguelike.treasure.loot.BookBase;
 
 public class BookStatistics extends BookBase{
 

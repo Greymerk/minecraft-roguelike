@@ -1,7 +1,5 @@
 package com.greymerk.roguelike.treasure.loot.books;
 
-import com.greymerk.roguelike.treasure.loot.BookBase;
-
 public class BookStarter extends BookBase{
 
 	public BookStarter(){

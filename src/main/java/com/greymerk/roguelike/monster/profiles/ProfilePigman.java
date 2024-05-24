@@ -6,7 +6,7 @@ import com.greymerk.roguelike.monster.IEntity;
 import com.greymerk.roguelike.monster.IMonsterProfile;
 import com.greymerk.roguelike.monster.MobType;
 import com.greymerk.roguelike.monster.MonsterProfile;
-import com.greymerk.roguelike.treasure.loot.Shield;
+import com.greymerk.roguelike.treasure.loot.items.Shield;
 import com.greymerk.roguelike.treasure.loot.provider.ItemWeapon;
 
 import net.minecraft.entity.EquipmentSlot;

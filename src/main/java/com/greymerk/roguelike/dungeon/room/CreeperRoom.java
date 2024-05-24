@@ -14,8 +14,8 @@ import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.editor.factories.BlockJumble;
 import com.greymerk.roguelike.editor.shapes.RectSolid;
 import com.greymerk.roguelike.editor.shapes.Shape;
-import com.greymerk.roguelike.treasure.ChestType;
 import com.greymerk.roguelike.treasure.Treasure;
+import com.greymerk.roguelike.treasure.chest.ChestType;
 import com.greymerk.roguelike.util.math.RandHelper;
 
 import net.minecraft.util.math.random.Random;

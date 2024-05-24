@@ -1,4 +1,4 @@
-package com.greymerk.roguelike.treasure.loot;
+package com.greymerk.roguelike.treasure.loot.items;
 
 import net.minecraft.block.entity.BannerPattern;
 import net.minecraft.component.DataComponentTypes;

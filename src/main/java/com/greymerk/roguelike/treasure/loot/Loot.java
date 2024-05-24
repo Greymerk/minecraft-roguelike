@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.greymerk.roguelike.editor.IWorldEditor;
-import com.greymerk.roguelike.treasure.ITreasureChest;
+import com.greymerk.roguelike.treasure.chest.ITreasureChest;
 import com.greymerk.roguelike.treasure.loot.provider.ItemArmour;
 import com.greymerk.roguelike.treasure.loot.provider.ItemBlock;
 import com.greymerk.roguelike.treasure.loot.provider.ItemBrewing;
@@ -19,7 +19,6 @@ import com.greymerk.roguelike.treasure.loot.provider.ItemSpecialty;
 import com.greymerk.roguelike.treasure.loot.provider.ItemSupply;
 import com.greymerk.roguelike.treasure.loot.provider.ItemTool;
 import com.greymerk.roguelike.treasure.loot.provider.ItemWeapon;
-import com.greymerk.roguelike.treasure.loot.rules.LootRuleManager;
 import com.greymerk.roguelike.treasure.loot.rules.RoguelikeLootRules;
 import com.greymerk.roguelike.util.IWeighted;
 import com.greymerk.roguelike.util.TextFormat;
@@ -39,8 +38,6 @@ public enum Loot {
 	
 	WEAPON, ARMOUR, BLOCK, JUNK, ORE, TOOL, POTION, FOOD,
 	ENCHANTING, SUPPLY, MUSIC, SPECIAL, BREWING, PRECIOUS;
-
-	private static LootRuleManager loot;
 	
 	public static ILoot getLoot(FeatureSet features, DynamicRegistryManager reg){
 		
@@ -53,8 +50,7 @@ public enum Loot {
 	}
 	
 	public static void fillChest(IWorldEditor editor, ITreasureChest chest, Random rand) {
-		if(loot == null) loot = RoguelikeLootRules.getLoot(editor.getFeatureSet(), editor.getRegistryManager());
-		loot.process(rand, chest);
+		RoguelikeLootRules.getLoot(editor.getFeatureSet(), editor.getRegistryManager()).process(rand, chest);
 	}
 	
 	public static ItemStack getLootItem(IWorldEditor editor, Loot type, Random rand, int level) {

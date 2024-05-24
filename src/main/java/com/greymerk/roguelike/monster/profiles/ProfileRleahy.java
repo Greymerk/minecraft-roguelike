@@ -5,8 +5,8 @@ import net.minecraft.util.math.random.Random;
 import com.greymerk.roguelike.monster.IEntity;
 import com.greymerk.roguelike.monster.IMonsterProfile;
 import com.greymerk.roguelike.treasure.loot.Quality;
-import com.greymerk.roguelike.treasure.loot.Shield;
 import com.greymerk.roguelike.treasure.loot.Slot;
+import com.greymerk.roguelike.treasure.loot.items.Shield;
 import com.greymerk.roguelike.treasure.loot.provider.ItemArmour;
 import com.greymerk.roguelike.treasure.loot.provider.ItemNovelty;
 

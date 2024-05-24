@@ -1,4 +1,4 @@
-package com.greymerk.roguelike.treasure.loot;
+package com.greymerk.roguelike.treasure.loot.items;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -8,7 +8,7 @@ import com.greymerk.roguelike.monster.IEntity;
 import com.greymerk.roguelike.monster.IMonsterProfile;
 import com.greymerk.roguelike.monster.MonsterProfile;
 import com.greymerk.roguelike.treasure.loot.Enchant;
-import com.greymerk.roguelike.treasure.loot.TippedArrow;
+import com.greymerk.roguelike.treasure.loot.items.TippedArrow;
 import com.greymerk.roguelike.treasure.loot.provider.ItemWeapon;
 
 import net.minecraft.entity.EquipmentSlot;

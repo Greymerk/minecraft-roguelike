@@ -1,8 +1,8 @@
 package com.greymerk.roguelike.treasure.loot.provider;
 
-import com.greymerk.roguelike.treasure.loot.PotionForm;
-import com.greymerk.roguelike.treasure.loot.PotionItem;
-import com.greymerk.roguelike.treasure.loot.PotionMixture;
+import com.greymerk.roguelike.treasure.loot.potions.PotionForm;
+import com.greymerk.roguelike.treasure.loot.potions.PotionItem;
+import com.greymerk.roguelike.treasure.loot.potions.PotionMixture;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.random.Random;

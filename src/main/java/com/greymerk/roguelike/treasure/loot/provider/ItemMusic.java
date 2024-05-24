@@ -2,7 +2,7 @@ package com.greymerk.roguelike.treasure.loot.provider;
 
 import net.minecraft.util.math.random.Random;
 
-import com.greymerk.roguelike.treasure.loot.MusicDisk;
+import com.greymerk.roguelike.treasure.loot.items.MusicDisk;
 
 import net.minecraft.item.ItemStack;
 

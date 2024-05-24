@@ -4,7 +4,7 @@ import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.MetaBlock;
-import com.greymerk.roguelike.treasure.loot.Banner;
+import com.greymerk.roguelike.treasure.loot.items.Banner;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;

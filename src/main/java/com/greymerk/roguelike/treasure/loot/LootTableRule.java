@@ -6,9 +6,9 @@ import java.util.List;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.greymerk.roguelike.treasure.ITreasureChest;
 import com.greymerk.roguelike.treasure.Treasure;
 import com.greymerk.roguelike.treasure.TreasureManager;
+import com.greymerk.roguelike.treasure.chest.ITreasureChest;
 
 import net.minecraft.util.Identifier;
 

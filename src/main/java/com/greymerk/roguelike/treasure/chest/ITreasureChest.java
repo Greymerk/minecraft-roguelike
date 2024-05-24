@@ -1,8 +1,9 @@
-package com.greymerk.roguelike.treasure;
+package com.greymerk.roguelike.treasure.chest;
 
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
+import com.greymerk.roguelike.treasure.Treasure;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;

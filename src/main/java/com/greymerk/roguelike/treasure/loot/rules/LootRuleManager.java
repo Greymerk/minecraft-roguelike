@@ -3,9 +3,9 @@ package com.greymerk.roguelike.treasure.loot.rules;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.greymerk.roguelike.treasure.ITreasureChest;
 import com.greymerk.roguelike.treasure.Treasure;
 import com.greymerk.roguelike.treasure.TreasureManager;
+import com.greymerk.roguelike.treasure.chest.ITreasureChest;
 import com.greymerk.roguelike.util.IWeighted;
 import com.greymerk.roguelike.util.WeightedChoice;
 

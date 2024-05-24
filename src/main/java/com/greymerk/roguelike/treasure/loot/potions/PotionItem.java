@@ -1,4 +1,4 @@
-package com.greymerk.roguelike.treasure.loot;
+package com.greymerk.roguelike.treasure.loot.potions;
 
 import net.minecraft.component.type.PotionContentsComponent;
 import net.minecraft.item.Item;

@@ -1,8 +1,8 @@
 package com.greymerk.roguelike.treasure.loot.rules;
 
-import com.greymerk.roguelike.treasure.ITreasureChest;
 import com.greymerk.roguelike.treasure.Treasure;
 import com.greymerk.roguelike.treasure.TreasureManager;
+import com.greymerk.roguelike.treasure.chest.ITreasureChest;
 import com.greymerk.roguelike.util.IWeighted;
 
 import net.minecraft.item.ItemStack;

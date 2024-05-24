@@ -1,10 +1,12 @@
-package com.greymerk.roguelike.treasure;
+package com.greymerk.roguelike.treasure.chest;
 
 import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.MetaBlock;
+import com.greymerk.roguelike.treasure.Inventory;
+import com.greymerk.roguelike.treasure.Treasure;
 import com.greymerk.roguelike.treasure.loot.Loot;
 
 import net.minecraft.block.Block;

@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import net.minecraft.util.math.random.Random;
 
-import com.greymerk.roguelike.treasure.loot.PotionMixture;
 import com.greymerk.roguelike.treasure.loot.WeightedRandomLoot;
+import com.greymerk.roguelike.treasure.loot.potions.PotionMixture;
 import com.greymerk.roguelike.util.WeightedRandomizer;
 
 import net.minecraft.item.ItemStack;

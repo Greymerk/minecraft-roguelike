@@ -1,6 +1,4 @@
-package com.greymerk.roguelike.treasure.loot;
-
-import com.greymerk.roguelike.treasure.loot.books.BookStarter;
+package com.greymerk.roguelike.treasure.loot.books;
 
 import net.minecraft.item.ItemStack;
 

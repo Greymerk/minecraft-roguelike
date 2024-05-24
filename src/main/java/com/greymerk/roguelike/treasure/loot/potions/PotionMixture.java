@@ -1,10 +1,12 @@
-package com.greymerk.roguelike.treasure.loot;
+package com.greymerk.roguelike.treasure.loot.potions;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import com.greymerk.roguelike.treasure.loot.ItemHideFlags;
+import com.greymerk.roguelike.treasure.loot.Loot;
 import com.greymerk.roguelike.util.Color;
 import com.greymerk.roguelike.util.TextFormat;
 import com.greymerk.roguelike.util.math.RandHelper;

@@ -3,6 +3,10 @@ package com.greymerk.roguelike.treasure;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
+import com.greymerk.roguelike.treasure.chest.ChestPlacementException;
+import com.greymerk.roguelike.treasure.chest.ChestType;
+import com.greymerk.roguelike.treasure.chest.ITreasureChest;
+import com.greymerk.roguelike.treasure.chest.TreasureChest;
 
 import net.minecraft.util.math.random.Random;
 

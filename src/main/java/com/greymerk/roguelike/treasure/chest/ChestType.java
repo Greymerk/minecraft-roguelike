@@ -1,4 +1,4 @@
-package com.greymerk.roguelike.treasure;
+package com.greymerk.roguelike.treasure.chest;
 
 import com.greymerk.roguelike.editor.MetaBlock;
 
