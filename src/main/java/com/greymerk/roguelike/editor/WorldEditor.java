@@ -2,22 +2,14 @@ package com.greymerk.roguelike.editor;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 import com.greymerk.roguelike.state.RoguelikeState;
-import com.greymerk.roguelike.treasure.ITreasureChest;
-import com.greymerk.roguelike.treasure.loot.Loot;
-import com.greymerk.roguelike.treasure.loot.rules.LootRuleManager;
-import com.greymerk.roguelike.treasure.loot.rules.RoguelikeLootRules;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.TagKey;
@@ -40,29 +32,18 @@ import net.minecraft.world.chunk.ChunkStatus;
 public class WorldEditor implements IWorldEditor{
 
 	WorldAccess world;
-	private Map<Block, Integer> stats;
-	private LootRuleManager loot;
 	
 	public WorldEditor(StructureWorldAccess world){
 		this.world = world;
-		stats = new HashMap<Block, Integer>();
-		this.loot = RoguelikeLootRules.getLoot(world.getEnabledFeatures(), world.getRegistryManager());
 	}
 
 	public WorldEditor(World world) {
 		this.world = world;
-		stats = new HashMap<Block, Integer>();
-		this.loot = RoguelikeLootRules.getLoot(world.getEnabledFeatures(), world.getRegistryManager());
 	}
 
 	@Override
 	public boolean set(Coord pos, MetaBlock block, boolean fillAir, boolean replaceSolid) {
 		if(this.hasBlockEntity(pos)) return false;
-		
-		MetaBlock currentBlock = getBlock(pos);
-		if(currentBlock.getBlock() == Blocks.CHEST) return false;
-		if(currentBlock.getBlock() == Blocks.TRAPPED_CHEST) return false;
-		if(currentBlock.getBlock() == Blocks.SPAWNER) return false;
 		
 		if(!fillAir && this.isAir(pos)) return false;
 		if(!replaceSolid && this.isSolid(pos))	return false;
@@ -71,14 +52,6 @@ public class WorldEditor implements IWorldEditor{
 			world.setBlockState(pos.getBlockPos(), block.getState(), block.getFlag());
 		} catch(NullPointerException npe){
 			//ignore it.
-		}
-		
-		Block type = block.getBlock();
-		Integer count = stats.get(type);
-		if(count == null){
-			stats.put(type, 1);	
-		} else {
-			stats.put(type, count + 1);
 		}
 		
 		return true;
@@ -193,8 +166,6 @@ public class WorldEditor implements IWorldEditor{
 		return world.getBlockEntity(pos.getBlockPos());
 	}
 	
-	
-	
 	@Override
 	public boolean isFaceFullSquare(Coord pos, Cardinal dir) {
 		BlockState b = this.world.getBlockState(pos.getBlockPos());
@@ -204,15 +175,6 @@ public class WorldEditor implements IWorldEditor{
 		boolean isShapeSquare = Block.isFaceFullSquare(shape, facing);
 		boolean isCollisionSquare = Block.isFaceFullSquare(collision, facing);
 		return isShapeSquare || isCollisionSquare;
-	}
-
-	@Override
-	public void fillChest(ITreasureChest chest, Random rand) {
-		this.loot.process(rand, chest);
-	}
-	
-	public ItemStack getLootItem(Loot type, Random rand, int level) {
-		return Loot.getProvider(type, level, this.world.getEnabledFeatures(), getRegistryManager()).get(rand);
 	}
 
 	@Override

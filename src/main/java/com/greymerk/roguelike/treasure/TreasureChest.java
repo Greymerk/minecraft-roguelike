@@ -5,6 +5,7 @@ import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.MetaBlock;
+import com.greymerk.roguelike.treasure.loot.Loot;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -54,7 +55,7 @@ public class TreasureChest implements ITreasureChest{
 		
 		this.chest = (LootableContainerBlockEntity) editor.getBlockEntity(pos);
 		this.inventory = new Inventory(rand, chest);		
-		editor.fillChest(this, rand);
+		Loot.fillChest(editor, this, rand);
 		return this;
 	}
 	

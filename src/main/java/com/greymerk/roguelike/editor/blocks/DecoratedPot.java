@@ -51,7 +51,7 @@ public class DecoratedPot {
 		
 		potEntity.readComponents(potEntity.getComponents(), changes.build());		
 
-		ItemStack loot = editor.getLootItem(type, rand, Difficulty.fromY(origin.getY()));
+		ItemStack loot = Loot.getLootItem(editor, type, rand, Difficulty.fromY(origin.getY()));
 		potEntity.setStack(loot);
 		
 		potEntity.markDirty();

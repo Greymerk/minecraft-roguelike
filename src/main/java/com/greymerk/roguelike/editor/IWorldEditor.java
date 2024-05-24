@@ -3,11 +3,8 @@ package com.greymerk.roguelike.editor;
 import java.nio.file.Path;
 
 import com.greymerk.roguelike.state.RoguelikeState;
-import com.greymerk.roguelike.treasure.ITreasureChest;
-import com.greymerk.roguelike.treasure.loot.Loot;
 
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.resource.featuretoggle.FeatureSet;
 import net.minecraft.util.math.random.Random;
@@ -44,10 +41,6 @@ public interface IWorldEditor {
 	public boolean isSolid(Coord pos);
 		
 	public boolean isFaceFullSquare(Coord pos, Cardinal dir);
-	
-	public void fillChest(ITreasureChest chest, Random rand);
-	
-	public ItemStack getLootItem(Loot type, Random rand, int level);
 	
 	public int getMaxDepth();
 	
