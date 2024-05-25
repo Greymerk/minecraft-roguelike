@@ -191,7 +191,7 @@ public class KitchenRoom extends AbstractMediumRoom implements IRoom {
 		Treasure.generate(editor, rand, pos, Treasure.FOOD, ChestType.BARREL);
 		
 		pos = origin.copy().add(Cardinal.UP).add(Cardinal.right(dir), 2);
-		Furnace.generate(editor, true, Cardinal.left(dir), pos, new ItemStack(Items.COAL, rand.nextBetween(1, 4)));
+		Furnace.generate(editor, Cardinal.left(dir), pos, true, new ItemStack(Items.COAL, rand.nextBetween(1, 4)));
 	}
 
 	private void cornerPillars(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {

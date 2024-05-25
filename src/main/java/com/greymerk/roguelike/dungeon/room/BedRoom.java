@@ -7,6 +7,7 @@ import com.greymerk.roguelike.dungeon.Floor;
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellManager;
 import com.greymerk.roguelike.dungeon.cell.CellState;
+import com.greymerk.roguelike.dungeon.fragment.Fragment;
 import com.greymerk.roguelike.dungeon.fragment.wall.WallFlowers;
 import com.greymerk.roguelike.dungeon.layout.Entrance;
 import com.greymerk.roguelike.editor.Cardinal;
@@ -26,6 +27,8 @@ import com.greymerk.roguelike.editor.shapes.RectSolid;
 import com.greymerk.roguelike.editor.shapes.Shape;
 import com.greymerk.roguelike.treasure.Treasure;
 
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.util.math.random.Random;
 
 public class BedRoom extends AbstractRoom implements IRoom {
@@ -72,6 +75,10 @@ public class BedRoom extends AbstractRoom implements IRoom {
 		this.setPillars(editor, rand, origin);
 		this.ceiling(editor, rand, origin);
 		this.decorations(editor, rand, origin);
+		
+		this.getEntrancesFromType(Entrance.DOOR).forEach(dir -> {
+			Fragment.generate(Fragment.ARCH, editor, rand, theme, origin.copy(), dir);
+		});
 	}
 	
 	private void setPillars(IWorldEditor editor, Random rand, Coord origin) {
@@ -213,7 +220,7 @@ public class BedRoom extends AbstractRoom implements IRoom {
 		pos.add(direction);
 		BlockType.get(BlockType.CRAFTING_TABLE).set(editor, pos);
 		pos.add(direction);
-		Furnace.generate(editor, Cardinal.left(direction), pos);
+		Furnace.generate(editor, Cardinal.left(direction), pos, false, new ItemStack(Items.COAL, rand.nextBetween(1, 4)));
 	}
 	
 	@Override
@@ -221,13 +228,18 @@ public class BedRoom extends AbstractRoom implements IRoom {
 		Coord origin = new Coord(0,0,0);
 		CellManager cells = new CellManager();
 		
-		cells.add(Cell.of(origin.copy(), CellState.OBSTRUCTED).addWalls(Cardinal.orthogonal(dir)));
+		cells.add(Cell.of(origin.copy(), CellState.OBSTRUCTED));
 		cells.add(Cell.of(origin.copy().add(dir), CellState.OBSTRUCTED));
 		cells.add(Cell.of(origin.copy().add(dir, 2), CellState.OBSTRUCTED).addWall(dir));
 		
 		for(Cardinal o : Cardinal.orthogonal(dir)) {
 			cells.add(Cell.of(origin.copy().add(dir).add(o), CellState.OBSTRUCTED).addWall(Cardinal.reverse(dir)).addWall(o));
 			cells.add(Cell.of(origin.copy().add(dir, 2).add(o), CellState.OBSTRUCTED).addWall(dir).addWall(o));
+		}
+		
+		for(Cardinal d : Cardinal.directions) {
+			if(d == dir) continue;
+			cells.add(Cell.of(origin.copy().add(d), CellState.POTENTIAL));
 		}
 		
 		return cells;
@@ -241,6 +253,7 @@ public class BedRoom extends AbstractRoom implements IRoom {
 	@Override
 	public void determineEntrances(Floor f, Coord floorPos) {
 		for(Cardinal dir : Cardinal.directions) {
+			if(dir == this.direction) continue;
 			Coord fp = floorPos.copy();
 			fp.add(dir);
 			Cell c = f.getCell(fp);

@@ -17,14 +17,14 @@ public class Furnace {
 	public static final int OUTPUT_SLOT = 2;
 	
 	public static void generate(IWorldEditor editor, Cardinal dir, Coord pos){
-		generate(editor, false, dir, pos, null);
+		generate(editor, dir, pos, false, ItemStack.EMPTY);
 	}
 	
 	public static void generate(IWorldEditor editor, boolean lit, Cardinal dir, Coord pos){
-		generate(editor, lit, dir, pos, null);
+		generate(editor, dir, pos, lit, ItemStack.EMPTY);
 	}
 	
-	public static void generate(IWorldEditor editor, boolean lit, Cardinal dir, Coord pos, ItemStack fuel){
+	public static void generate(IWorldEditor editor, Cardinal dir, Coord pos, boolean lit, ItemStack fuel){
 		MetaBlock furnace = new MetaBlock(Blocks.FURNACE);
 		
 		furnace.withProperty(FurnaceBlock.LIT, lit);
@@ -32,7 +32,7 @@ public class Furnace {
 		
 		furnace.set(editor, pos);
 		
-		if(fuel == null) return;
+		//if(fuel == ItemStack.EMPTY) return;
 		
 		BlockEntity te = editor.getBlockEntity(pos);
 		if(te == null) return;
