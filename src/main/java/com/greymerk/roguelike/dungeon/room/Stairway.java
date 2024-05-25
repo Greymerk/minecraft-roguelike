@@ -151,7 +151,7 @@ public class Stairway extends AbstractRoom implements IRoom {
 				bb = BoundingBox.of(origin);
 				bb.add(o, 2).grow(Cardinal.orthogonal(o));
 				bb.getShape(Shape.RECTSOLID).forEach(pos -> {
-					if(rand.nextBoolean()) Candle.generate(editor, rand, pos, true);
+					if(rand.nextBoolean()) Candle.generate(editor, rand, pos);
 				});
 			}
 		}

@@ -12,8 +12,12 @@ import net.minecraft.util.math.random.Random;
 
 public class Candle {
 
-	public static void generate(IWorldEditor editor, Coord origin, Color color, int count) {
-		generate(editor, origin, color, count, true);
+	public static void generate(IWorldEditor editor, Random rand, Coord origin) {
+		generate(editor, rand, origin, Color.get(rand));
+	}
+	
+	public static void generate(IWorldEditor editor, Random rand, Coord origin, Color color) {
+		generate(editor, origin, color, rand.nextBetween(1, 4), true);
 	}
 	
 	public static void generate(IWorldEditor editor, Coord origin, Color color, int count, boolean lit) {
@@ -30,10 +34,6 @@ public class Candle {
 		candle.withProperty(CandleBlock.CANDLES, numCandles);
 		candle.withProperty(CandleBlock.LIT, lit);
 		candle.set(editor, origin);
-	}
-	
-	public static void generate(IWorldEditor editor, Random rand, Coord origin, boolean lit) {
-		generate(editor, origin, Color.get(rand), rand.nextBetween(1, 4), lit);
 	}
 	
 	public static Block fromColor(Color color) {

@@ -81,7 +81,7 @@ public class AbyssRoom extends AbstractLargeRoom implements IRoom {
 
 		if(rand.nextBoolean()) {
 			if(rand.nextBoolean()) {
-				Candle.generate(editor, origin.copy(), Color.BLACK, rand.nextBetween(1, 3)); return;
+				Candle.generate(editor, rand, origin.copy(), Color.BLACK); return;
 			} else {
 				Skull.set(editor, rand, origin.copy(), Cardinal.reverse(dir), Skull.SKELETON); return;	
 			}

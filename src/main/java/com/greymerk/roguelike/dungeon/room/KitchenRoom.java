@@ -171,7 +171,7 @@ public class KitchenRoom extends AbstractMediumRoom implements IRoom {
 		stair.setOrientation(Cardinal.right(dir), true).set(editor, pos);
 		
 		pos = origin.copy().add(Cardinal.reverse(dir)).add(Cardinal.left(dir)).add(Cardinal.UP);
-		Candle.generate(editor, rand, pos, true);
+		Candle.generate(editor, rand, pos);
 	}
 
 	private void table(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {

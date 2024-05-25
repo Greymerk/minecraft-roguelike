@@ -27,7 +27,7 @@ public class WallCandles extends FragmentBase implements IFragment {
 			stair.set(editor, c);
 			Coord pos = c.copy().add(Cardinal.UP);
 			if(rand.nextBoolean()) {
-				Candle.generate(editor, rand, pos, true);
+				Candle.generate(editor, rand, pos);
 			}
 		}
 	}

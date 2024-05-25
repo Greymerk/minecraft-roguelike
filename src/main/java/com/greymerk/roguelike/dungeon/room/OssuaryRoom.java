@@ -105,7 +105,7 @@ public class OssuaryRoom extends AbstractMediumRoom implements IRoom {
 		pos.add(Cardinal.UP);
 		slab.upsideDown(true).set(editor, pos);
 		pos.add(Cardinal.UP);
-		candle(editor, rand, pos);
+		Candle.generate(editor, rand, origin, rand.nextBoolean() ? Color.BLACK : Color.RED);
 		pos.add(Cardinal.UP);
 		wall.set(editor, rand, pos);
 		pos.add(Cardinal.UP);
@@ -123,7 +123,7 @@ public class OssuaryRoom extends AbstractMediumRoom implements IRoom {
 			pos.add(Cardinal.UP);
 			stair.setOrientation(Cardinal.reverse(o), true).set(editor, pos);
 			pos.add(Cardinal.UP);
-			candle(editor, rand, pos);
+			Candle.generate(editor, rand, origin, rand.nextBoolean() ? Color.BLACK : Color.RED);
 			
 			pos = origin.copy();
 			pos.add(o, 2);
@@ -135,12 +135,6 @@ public class OssuaryRoom extends AbstractMediumRoom implements IRoom {
 			pos.add(Cardinal.UP);
 			stair.setOrientation(Cardinal.reverse(o), true).set(editor, pos);
 		}
-	}
-	
-	private void candle(IWorldEditor editor, Random rand, Coord origin) {
-		Color c = rand.nextBoolean() ? Color.BLACK : Color.RED;
-		int count = rand.nextInt(2) + 2;
-		Candle.generate(editor, origin, c, count);
 	}
 
 	private void floor(IWorldEditor editor, Random rand, Coord origin) {
@@ -185,7 +179,7 @@ public class OssuaryRoom extends AbstractMediumRoom implements IRoom {
 	private void nich(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
 		Air.get().set(editor, origin);
 		if(rand.nextBoolean()) {
-			if(rand.nextBoolean()) this.candle(editor, rand, origin);
+			if(rand.nextBoolean()) Candle.generate(editor, rand, origin, rand.nextBoolean() ? Color.BLACK : Color.RED);
 		} else {
 			Skull type = rand.nextInt(10) == 0 ? Skull.WITHER : Skull.SKELETON;
 			Skull.set(editor, rand, origin, Cardinal.reverse(dir), type);	
