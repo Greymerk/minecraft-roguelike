@@ -92,26 +92,26 @@ public class ReservoirRoom extends AbstractLargeRoom implements IRoom {
 				bb.add(Cardinal.UP, 4).add(dir, 2).grow(o, 8);
 				RectSolid.fill(editor, rand, bb, wall);
 				Coord pos = origin.copy().add(Cardinal.UP, 3).add(dir, 2).add(o, 8);
-				stair.setOrientation(Cardinal.reverse(o), true).set(editor, pos);
+				stair.setOrientation(Cardinal.reverse(o), true).set(editor, rand, pos);
 				pos.add(o);
 				wall.set(editor, rand, pos);
 				pos.add(Cardinal.DOWN);
-				stair.set(editor, pos);
+				stair.set(editor, rand, pos);
 				
 				bb = BoundingBox.of(origin);
 				bb.add(Cardinal.UP, 4).add(dir, 4).grow(o, 8);
 				RectSolid.fill(editor, rand, bb, wall);
 				pos = origin.copy().add(Cardinal.UP, 3).add(dir, 4).add(o, 8);
-				stair.setOrientation(Cardinal.reverse(o), true).set(editor, pos);
+				stair.setOrientation(Cardinal.reverse(o), true).set(editor, rand, pos);
 				pos.add(o);
 				wall.set(editor, rand, pos);
 				pos.add(Cardinal.DOWN);
-				stair.set(editor, pos);
+				stair.set(editor, rand, pos);
 				
 				pos = origin.copy().add(Cardinal.UP, 3).add(o, 9).add(dir, 8);
 				wall.set(editor, rand, pos);
 				pos.add(Cardinal.DOWN);
-				stair.set(editor, pos);
+				stair.set(editor, rand, pos);
 			}
 		}
 	}
@@ -181,7 +181,7 @@ public class ReservoirRoom extends AbstractLargeRoom implements IRoom {
 				pos.add(o);
 				pos.add(Cardinal.UP, 2);
 				stair.setOrientation(Cardinal.reverse(o), true);
-				stair.set(editor, pos);
+				stair.set(editor, rand, pos);
 			}
 		}
 		Fragment.generate(Fragment.CELL_SUPPORT, editor, rand, theme, origin.copy());
@@ -253,13 +253,13 @@ public class ReservoirRoom extends AbstractLargeRoom implements IRoom {
 			RectSolid.fill(editor, rand, bb, pillar);
 			
 			pos = origin.copy().add(o, 3).add(Cardinal.UP, 3);
-			stair.setOrientation(Cardinal.reverse(dir), true).set(editor, pos);
+			stair.setOrientation(Cardinal.reverse(dir), true).set(editor, rand, pos);
 			pos.add(Cardinal.UP);
 			wall.set(editor, rand, pos);
 			pos.add(Cardinal.reverse(o));
-			stair.setOrientation(Cardinal.reverse(o), true).set(editor, pos);
+			stair.setOrientation(Cardinal.reverse(o), true).set(editor, rand, pos);
 			pos.add(dir).add(Cardinal.DOWN);
-			stair.set(editor, pos);
+			stair.set(editor, rand, pos);
 		}
 	}
 	

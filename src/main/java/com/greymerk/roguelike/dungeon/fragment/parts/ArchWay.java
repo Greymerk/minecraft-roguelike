@@ -32,13 +32,13 @@ public class ArchWay implements IFragment {
 			IStair stair = theme.getPrimary().getStair();
 			
 			Coord pos = origin.copy().add(dir, 3).add(Cardinal.UP, 2).add(o, 2);
-			stair.setOrientation(Cardinal.reverse(o), true).set(editor, pos);
+			stair.setOrientation(Cardinal.reverse(o), true).set(editor, rand, pos);
 			
 			pos.add(Cardinal.UP);
 			theme.getPrimary().getWall().set(editor, rand, pos);
 			
 			pos.add(Cardinal.reverse(o));
-			stair.set(editor, pos);
+			stair.set(editor, rand, pos);
 		}
 	}
 }

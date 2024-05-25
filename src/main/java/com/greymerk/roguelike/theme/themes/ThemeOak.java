@@ -6,6 +6,7 @@ import com.greymerk.roguelike.editor.blocks.WoodBlock;
 import com.greymerk.roguelike.editor.blocks.door.Door;
 import com.greymerk.roguelike.editor.blocks.door.DoorType;
 import com.greymerk.roguelike.editor.blocks.slab.Slab;
+import com.greymerk.roguelike.editor.blocks.stair.RandomStair;
 import com.greymerk.roguelike.editor.blocks.stair.Stair;
 import com.greymerk.roguelike.editor.factories.BlockWeightedRandom;
 import com.greymerk.roguelike.theme.BlockSet;
@@ -22,10 +23,14 @@ public class ThemeOak extends ThemeBase implements ITheme {
 			.addBlock(BlockType.get(BlockType.COBBLESTONE), 5)
 			.addBlock(BlockType.get(BlockType.STONE_BRICK_MOSSY), 1);
 		
+		RandomStair stair = new RandomStair()
+				.add(Stair.of(Stair.STONEBRICK), 5)
+				.add(Stair.of(Stair.MOSSY_STONEBRICK), 1);
+		
 		this.primary = new BlockSet()
 				.setWall(walls)
 				.setFloor(walls)
-				.setStair(Stair.of(Stair.STONEBRICK))
+				.setStair(stair)
 				.setPillar(Wood.get(WoodBlock.LOG))
 				.setSlab(Slab.get(Slab.STONEBRICK))
 				.setDoor(Door.of(DoorType.SPRUCE));

@@ -55,11 +55,11 @@ public class EntranceRoom  extends AbstractRoom implements IRoom{
 				RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall());
 				
 				Coord pos = origin.copy().add(dir, 3).add(o, 2).add(Cardinal.UP, 2);
-				stair.setOrientation(Cardinal.reverse(o), true).set(editor, pos);
+				stair.setOrientation(Cardinal.reverse(o), true).set(editor, rand, pos);
 				pos.add(Cardinal.UP);
 				theme.getPrimary().getWall().set(editor, rand, pos);
 				pos.add(Cardinal.reverse(o));
-				stair.setOrientation(Cardinal.reverse(o), true).set(editor, pos);
+				stair.setOrientation(Cardinal.reverse(o), true).set(editor, rand, pos);
 			}
 		}
 		

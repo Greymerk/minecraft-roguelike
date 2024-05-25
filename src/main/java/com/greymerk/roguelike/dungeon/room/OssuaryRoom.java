@@ -76,12 +76,12 @@ public class OssuaryRoom extends AbstractMediumRoom implements IRoom {
 			Coord pos = origin.copy();
 			pos.add(dir, 7);
 			pos.add(o, 2);
-			stair.setOrientation(Cardinal.reverse(o), false).set(editor, pos);
+			stair.setOrientation(Cardinal.reverse(o), false).set(editor, rand, pos);
 			pos.add(Cardinal.UP, 4);
-			stair.setOrientation(Cardinal.reverse(o), true).set(editor, pos);
+			stair.setOrientation(Cardinal.reverse(o), true).set(editor, rand, pos);
 			pos.add(Cardinal.reverse(dir));
 			pos.add(o);
-			stair.setOrientation(Cardinal.reverse(dir), true).set(editor, pos);
+			stair.setOrientation(Cardinal.reverse(dir), true).set(editor, rand, pos);
 			pos.add(Cardinal.UP);
 			bb = new BoundingBox(pos.copy());
 			bb.grow(Cardinal.UP, 3);
@@ -105,7 +105,7 @@ public class OssuaryRoom extends AbstractMediumRoom implements IRoom {
 		pos.add(Cardinal.UP);
 		slab.upsideDown(true).set(editor, pos);
 		pos.add(Cardinal.UP);
-		Candle.generate(editor, rand, origin, rand.nextBoolean() ? Color.BLACK : Color.RED);
+		Candle.generate(editor, rand, origin.copy().add(Cardinal.UP, 2), rand.nextBoolean() ? Color.BLACK : Color.RED);
 		pos.add(Cardinal.UP);
 		wall.set(editor, rand, pos);
 		pos.add(Cardinal.UP);
@@ -119,21 +119,21 @@ public class OssuaryRoom extends AbstractMediumRoom implements IRoom {
 			pos.add(o);
 			slab.upsideDown(false).set(editor, pos);
 			pos.add(Cardinal.UP);
-			stair.setOrientation(o, true).set(editor, pos);
+			stair.setOrientation(o, true).set(editor, rand, pos);
 			pos.add(Cardinal.UP);
-			stair.setOrientation(Cardinal.reverse(o), true).set(editor, pos);
+			stair.setOrientation(Cardinal.reverse(o), true).set(editor, rand, pos);
 			pos.add(Cardinal.UP);
-			Candle.generate(editor, rand, origin, rand.nextBoolean() ? Color.BLACK : Color.RED);
+			Candle.generate(editor, rand, origin.copy().add(o).add(Cardinal.UP, 3), rand.nextBoolean() ? Color.BLACK : Color.RED);
 			
 			pos = origin.copy();
 			pos.add(o, 2);
 			wall.set(editor, rand, pos);
 			pos.add(Cardinal.UP);
-			stair.setOrientation(Cardinal.reverse(o), true).set(editor, pos);
+			stair.setOrientation(Cardinal.reverse(o), true).set(editor, rand, pos);
 			pos.add(Cardinal.UP);
 			wall.set(editor, rand, pos);
 			pos.add(Cardinal.UP);
-			stair.setOrientation(Cardinal.reverse(o), true).set(editor, pos);
+			stair.setOrientation(Cardinal.reverse(o), true).set(editor, rand, pos);
 		}
 	}
 
@@ -215,7 +215,7 @@ public class OssuaryRoom extends AbstractMediumRoom implements IRoom {
 					Coord p = pos.copy();
 					p.add(d);
 					stair.setOrientation(d, true);
-					stair.set(editor, p, true, false);
+					stair.set(editor, rand, p, true, false);
 				}
 				pos.add(Cardinal.reverse(dir));
 				pos.add(Cardinal.UP);
@@ -226,7 +226,7 @@ public class OssuaryRoom extends AbstractMediumRoom implements IRoom {
 			pos.add(orth, 2);
 			pos.add(Cardinal.UP, 6);
 			stair.setOrientation(Cardinal.reverse(dir), true);
-			stair.set(editor, pos);
+			stair.set(editor, rand, pos);
 			pos.add(dir);
 			theme.getPrimary().getWall().set(editor, rand, pos);
 		}
@@ -284,13 +284,13 @@ public class OssuaryRoom extends AbstractMediumRoom implements IRoom {
 			for(Cardinal d : Cardinal.directions) {
 				Coord p = pos.copy();
 				p.add(d);
-				stair.setOrientation(Cardinal.reverse(d), true).set(editor, p);
+				stair.setOrientation(Cardinal.reverse(d), true).set(editor, rand, p);
 			}
 			for(Cardinal d : Cardinal.directions) {
 				Coord p = pos.copy();
 				p.add(d);
 				p.add(Cardinal.left(d));
-				stair.setOrientation(Cardinal.reverse(d), true).set(editor, p);
+				stair.setOrientation(Cardinal.reverse(d), true).set(editor, rand, p);
 			}
 		}
 	}

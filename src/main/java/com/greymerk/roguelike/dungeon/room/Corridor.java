@@ -58,7 +58,7 @@ public class Corridor extends AbstractRoom implements IRoom{
 				pos.add(dir, 2);
 				pos.add(orth);
 				pos.add(Cardinal.UP, 2);
-				stairs.setOrientation(Cardinal.reverse(orth), true).set(editor, pos);
+				stairs.setOrientation(Cardinal.reverse(orth), true).set(editor, rand, pos);
 			}
 			
 			Fragment.generate(Fragment.CELL_SUPPORT, editor, rand, theme, worldPos.copy());
@@ -102,7 +102,7 @@ public class Corridor extends AbstractRoom implements IRoom{
 			wall.set(editor, rand, pos, true, true);
 			pos.add(Cardinal.DOWN);
 			stair.setOrientation(Cardinal.reverse(o), true);
-			stair.set(editor, pos, true, false);
+			stair.set(editor, rand, pos, true, false);
 		}
 	}
 

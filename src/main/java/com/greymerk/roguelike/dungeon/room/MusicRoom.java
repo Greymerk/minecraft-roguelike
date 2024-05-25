@@ -65,25 +65,25 @@ public class MusicRoom extends AbstractMediumRoom implements IRoom {
 				RectSolid.fill(editor, rand, bb, theme.getPrimary().getPillar());
 				
 				Coord pos = origin.copy().add(dir, 5).add(o).add(Cardinal.UP, 3);
-				stair2.setOrientation(Cardinal.reverse(o), true).set(editor, pos);
+				stair2.setOrientation(Cardinal.reverse(o), true).set(editor, rand, pos);
 				pos.add(o, 2);
-				stair2.setOrientation(o, true).set(editor, pos);
+				stair2.setOrientation(o, true).set(editor, rand, pos);
 				pos.add(o);
-				stair2.setOrientation(Cardinal.reverse(o), true).set(editor, pos);
+				stair2.setOrientation(Cardinal.reverse(o), true).set(editor, rand, pos);
 				
 				pos = origin.copy().add(dir, 4).add(o, 2).add(Cardinal.UP, 3);
-				stair2.setOrientation(Cardinal.reverse(dir), true).set(editor, pos);
+				stair2.setOrientation(Cardinal.reverse(dir), true).set(editor, rand, pos);
 				pos.add(Cardinal.UP);
 				theme.getSecondary().getWall().set(editor, rand, pos);
 				pos.add(Cardinal.UP);
 				theme.getPrimary().getWall().set(editor, rand, pos);
 				pos.add(Cardinal.reverse(dir));
-				stair.setOrientation(Cardinal.reverse(dir), true).set(editor, pos);
+				stair.setOrientation(Cardinal.reverse(dir), true).set(editor, rand, pos);
 				
 				pos = origin.copy().add(dir, 5).add(o, 3);
-				stair2.setOrientation(Cardinal.reverse(dir), true).set(editor, pos);
+				stair2.setOrientation(Cardinal.reverse(dir), true).set(editor, rand, pos);
 				pos.add(o);
-				stair2.setOrientation(Cardinal.reverse(dir), true).set(editor, pos);
+				stair2.setOrientation(Cardinal.reverse(dir), true).set(editor, rand, pos);
 			}
 			
 			if(this.getEntrance(dir).equals(Entrance.DOOR)) {
@@ -117,16 +117,16 @@ public class MusicRoom extends AbstractMediumRoom implements IRoom {
 					RectSolid.fill(editor, rand, bb, Air.get());
 					
 					Coord pos = origin.copy().add(dir, 6).add(o, 2);
-					stair2.setOrientation(Cardinal.reverse(o), true).set(editor, pos);
+					stair2.setOrientation(Cardinal.reverse(o), true).set(editor, rand, pos);
 					pos.add(dir);
-					stair2.setOrientation(Cardinal.reverse(o), true).set(editor, pos);
+					stair2.setOrientation(Cardinal.reverse(o), true).set(editor, rand, pos);
 					pos.add(Cardinal.UP, 3);
-					stair2.setOrientation(Cardinal.reverse(dir), true).set(editor, pos);
+					stair2.setOrientation(Cardinal.reverse(dir), true).set(editor, rand, pos);
 					pos.add(Cardinal.reverse(dir));
-					stair2.setOrientation(dir, true).set(editor, pos);
+					stair2.setOrientation(dir, true).set(editor, rand, pos);
 					
 					pos = origin.copy().add(dir, 8).add(o).add(Cardinal.UP, 2);
-					stair2.setOrientation(Cardinal.reverse(o), true).set(editor, pos);
+					stair2.setOrientation(Cardinal.reverse(o), true).set(editor, rand, pos);
 				}
 			} else {
 				bb = BoundingBox.of(origin);

@@ -5,7 +5,7 @@ import com.greymerk.roguelike.editor.blocks.SilverfishBlock;
 import com.greymerk.roguelike.editor.blocks.door.Door;
 import com.greymerk.roguelike.editor.blocks.door.DoorType;
 import com.greymerk.roguelike.editor.blocks.slab.Slab;
-import com.greymerk.roguelike.editor.blocks.stair.MetaStair;
+import com.greymerk.roguelike.editor.blocks.stair.RandomStair;
 import com.greymerk.roguelike.editor.blocks.stair.Stair;
 import com.greymerk.roguelike.editor.factories.BlockWeightedRandom;
 import com.greymerk.roguelike.theme.BlockSet;
@@ -37,7 +37,14 @@ public class ThemeCrumbledMossy extends ThemeBase implements ITheme {
 		floor.addBlock(BlockType.get(BlockType.COBBLESTONE), 2);
 		floor.addBlock(BlockType.get(BlockType.GRAVEL), 1);
 		
-		MetaStair stair = Stair.of(Stair.MOSSY_COBBLE);
+		RandomStair stair = new RandomStair()
+				.add(Stair.of(Stair.MOSSY_COBBLE), 10)
+				.add(Stair.of(Stair.COBBLE), 5)
+				.add(Stair.of(Stair.MOSSY_STONEBRICK), 3)
+				.add(Stair.of(Stair.STONEBRICK), 1);
+				
+				
+				
 		
 		this.primary = new BlockSet()
 				.setWall(walls)

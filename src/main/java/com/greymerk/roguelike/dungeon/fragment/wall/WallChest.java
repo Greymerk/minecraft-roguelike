@@ -26,7 +26,7 @@ public class WallChest extends FragmentBase implements IFragment {
 		IStair stair = theme.getSecondary().getStair();
 		stair.setOrientation(Cardinal.reverse(dir), true);
 		for(Coord c : rect.get()) {
-			stair.set(editor, c);
+			stair.set(editor, rand, c);
 		}
 		
 		WeightedRandomizer<Treasure> types = new WeightedRandomizer<Treasure>();

@@ -59,7 +59,7 @@ public class CellSupportBeamFragment implements IFragment {
 			wall.set(editor, rand, pos, true, false);
 			pos.add(Cardinal.DOWN);
 			stair.setOrientation(Cardinal.reverse(o), true);
-			stair.set(editor, pos, true, false);
+			stair.set(editor, rand, pos, true, false);
 		}
 		
 		if(rand.nextInt(10) == 0) {

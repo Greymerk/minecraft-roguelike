@@ -48,11 +48,11 @@ public class SpiralStairCase implements IFragment {
 		fill.set(editor, rand, origin);
 		
 		Coord pos = origin.copy().add(dir);
-		stair.setOrientation(Cardinal.left(dir), false).set(editor, pos);
+		stair.setOrientation(Cardinal.left(dir), false).set(editor, rand, pos);
 		pos.add(Cardinal.right(dir));
-		stair.setOrientation(Cardinal.right(dir), true).set(editor, pos);
+		stair.setOrientation(Cardinal.right(dir), true).set(editor, rand, pos);
 		pos.add(Cardinal.reverse(dir));
-		stair.setOrientation(Cardinal.reverse(dir), true).set(editor, pos);
+		stair.setOrientation(Cardinal.reverse(dir), true).set(editor, rand, pos);
 	}
 
 }

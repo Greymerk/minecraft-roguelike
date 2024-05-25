@@ -134,7 +134,7 @@ public class EnderRoom extends AbstractMediumRoom implements IRoom {
 			for(Cardinal d : Cardinal.directions) {
 				Coord p = pos.copy();
 				p.add(d);
-				stair.setOrientation(d, true).set(editor, p);
+				stair.setOrientation(d, true).set(editor, rand, p);
 				p.add(Cardinal.UP);
 				blocks.getWall().set(editor, rand, p);
 			}
@@ -151,7 +151,7 @@ public class EnderRoom extends AbstractMediumRoom implements IRoom {
 			pos.add(dir, 8).add(Cardinal.left(dir), 8).add(Cardinal.UP, 4);
 			for(Cardinal d : Cardinal.directions) {
 				Coord p = pos.copy().add(d);
-				stair.setOrientation(d, true).set(editor, p, true, false);
+				stair.setOrientation(d, true).set(editor, rand, p, true, false);
 			}
 			
 			for(Cardinal orth : Cardinal.orthogonal(dir)) {
@@ -164,8 +164,8 @@ public class EnderRoom extends AbstractMediumRoom implements IRoom {
 					
 					pos = origin.copy();
 					pos.add(dir, 8).add(orth, 3).add(o).add(Cardinal.UP, 4);
-					stair.setOrientation(o, true).set(editor, pos.copy().add(o));
-					stair.setOrientation(Cardinal.reverse(dir), true).set(editor, pos.copy().add(Cardinal.reverse(dir)));
+					stair.setOrientation(o, true).set(editor, rand, pos.copy().add(o));
+					stair.setOrientation(Cardinal.reverse(dir), true).set(editor, rand, pos.copy().add(Cardinal.reverse(dir)));
 				}
 			}
 		}

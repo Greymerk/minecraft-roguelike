@@ -94,7 +94,7 @@ public class PrisonRoom extends AbstractMediumRoom implements IRoom {
 				for(Cardinal o : Cardinal.orthogonal(dir)) {
 					Coord pos = origin.copy();
 					pos.add(dir, 2).add(o).add(Cardinal.UP, 2);
-					stair.setOrientation(Cardinal.reverse(o), true).set(editor, pos);
+					stair.setOrientation(Cardinal.reverse(o), true).set(editor, rand, pos);
 				}
 				
 				settings.getWallFragment(rand).generate(editor, rand, theme, origin, dir);
@@ -104,7 +104,7 @@ public class PrisonRoom extends AbstractMediumRoom implements IRoom {
 		Coord pos = origin.copy();
 		pos.add(Cardinal.reverse(cellDir), 2).add(Cardinal.left(cellDir), 2).add(Cardinal.UP, 3);
 		for(Cardinal dir : Cardinal.directions) {
-			stair.setOrientation(dir, true).set(editor, pos.copy().add(dir), true, false);
+			stair.setOrientation(dir, true).set(editor, rand, pos.copy().add(dir), true, false);
 		}
 		
 		Fragment.generate(Fragment.CELL_SUPPORT, editor, rand, theme, origin.copy());
@@ -152,7 +152,7 @@ public class PrisonRoom extends AbstractMediumRoom implements IRoom {
 				for(Cardinal o : Cardinal.orthogonal(dir)) {
 					Coord pos = origin.copy();
 					pos.add(dir, 2).add(o).add(Cardinal.UP, 2);
-					stair.setOrientation(Cardinal.reverse(o), true).set(editor, pos);
+					stair.setOrientation(Cardinal.reverse(o), true).set(editor, rand, pos);
 				}
 				
 				settings.getWallFragment(rand).generate(editor, rand, theme, origin, dir);
@@ -184,7 +184,7 @@ public class PrisonRoom extends AbstractMediumRoom implements IRoom {
 			
 			Coord pos = origin.copy();
 			pos.add(cellDir, 2).add(Cardinal.UP, 2).add(o);
-			stair.setOrientation(Cardinal.reverse(o), true).set(editor, pos);
+			stair.setOrientation(Cardinal.reverse(o), true).set(editor, rand, pos);
 			
 			BoundingBox bb = new BoundingBox(origin.copy());
 			bb.add(o, 3).grow(cellDir, 2).grow(Cardinal.reverse(cellDir)).grow(Cardinal.UP, 3);
@@ -218,10 +218,10 @@ public class PrisonRoom extends AbstractMediumRoom implements IRoom {
 				RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall());
 				
 				Coord pos = origin.copy().add(dir, 8).add(o).add(Cardinal.UP, 2);
-				stair.setOrientation(Cardinal.reverse(o), true).set(editor, pos);
+				stair.setOrientation(Cardinal.reverse(o), true).set(editor, rand, pos);
 				
 				pos = origin.copy().add(dir, 7).add(o, 2).add(Cardinal.UP, 2);
-				stair.setOrientation(Cardinal.reverse(dir), true).set(editor, pos);
+				stair.setOrientation(Cardinal.reverse(dir), true).set(editor, rand, pos);
 				
 				pos.add(Cardinal.UP);
 				theme.getPrimary().getWall().set(editor, rand, pos);
@@ -272,9 +272,9 @@ public class PrisonRoom extends AbstractMediumRoom implements IRoom {
 				
 				Coord pos = origin.copy();
 				pos.add(dir, 3).add(Cardinal.left(dir), 3).add(Cardinal.UP, 3).add(Cardinal.right(dir));
-				stair.setOrientation(Cardinal.right(dir), true).set(editor, pos);
+				stair.setOrientation(Cardinal.right(dir), true).set(editor, rand, pos);
 				pos.add(Cardinal.left(dir)).add(Cardinal.reverse(dir));
-				stair.setOrientation(Cardinal.reverse(dir), true).set(editor, pos);
+				stair.setOrientation(Cardinal.reverse(dir), true).set(editor, rand, pos);
 			}
 		}
 		

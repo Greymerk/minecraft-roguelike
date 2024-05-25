@@ -91,7 +91,7 @@ public class CryptRoom extends AbstractMediumRoom implements IRoom {
 		bb.add(dir, 3).grow(Cardinal.UP, 4);
 		RectSolid.fill(editor, rand, bb, walls);
 		Coord pos = origin.copy().add(dir, 2).add(Cardinal.UP, 3);
-		stair.setOrientation(Cardinal.reverse(dir), true).set(editor, pos);
+		stair.setOrientation(Cardinal.reverse(dir), true).set(editor, rand, pos);
 		pos.add(Cardinal.UP);
 		walls.set(editor, rand, pos);
 		
@@ -117,10 +117,10 @@ public class CryptRoom extends AbstractMediumRoom implements IRoom {
 			bb.add(dir, 3).add(o).add(Cardinal.UP, 4).grow(o, 2);
 			RectSolid.fill(editor, rand, bb, walls);
 			
-			stair.setOrientation(o, true).set(editor, origin.copy().add(dir, 3).add(o).add(Cardinal.UP, 3));
-			stair.setOrientation(Cardinal.reverse(o), true).set(editor, origin.copy().add(dir, 3).add(o, 3).add(Cardinal.UP, 3));
-			stair.setOrientation(Cardinal.reverse(dir), true).set(editor, origin.copy().add(dir, 2).add(Cardinal.UP, 3).add(o, 4));
-			stair.setOrientation(dir, true).set(editor, origin.copy().add(Cardinal.UP, 3).add(o, 4));
+			stair.setOrientation(o, true).set(editor, rand, origin.copy().add(dir, 3).add(o).add(Cardinal.UP, 3));
+			stair.setOrientation(Cardinal.reverse(o), true).set(editor, rand, origin.copy().add(dir, 3).add(o, 3).add(Cardinal.UP, 3));
+			stair.setOrientation(Cardinal.reverse(dir), true).set(editor, rand, origin.copy().add(dir, 2).add(Cardinal.UP, 3).add(o, 4));
+			stair.setOrientation(dir, true).set(editor, rand, origin.copy().add(Cardinal.UP, 3).add(o, 4));
 		}
 		
 		Fragment.generate(Fragment.SARCOPHAGUS, editor, rand, theme, origin.copy(), dir);
@@ -149,7 +149,7 @@ public class CryptRoom extends AbstractMediumRoom implements IRoom {
 		bb.add(Cardinal.reverse(dir));
 		List<Coord> lc = bb.getShape(Shape.RECTSOLID).get();
 		stair.setOrientation(Cardinal.reverse(dir), true);
-		lc.forEach(c -> stair.set(editor, c, true, false));
+		lc.forEach(c -> stair.set(editor, rand, c, true, false));
 		
 		for(Cardinal o : Cardinal.orthogonal(dir)){
 			bb = BoundingBox.of(origin.copy());
@@ -160,14 +160,14 @@ public class CryptRoom extends AbstractMediumRoom implements IRoom {
 			wall.set(editor, rand, pos);
 			pos.add(Cardinal.reverse(dir));
 			stair.setOrientation(Cardinal.reverse(dir), true);
-			stair.set(editor, pos);
+			stair.set(editor, rand, pos);
 			
 			pos = origin.copy().add(dir, 8).add(o).add(Cardinal.UP, 2);
-			stair.setOrientation(Cardinal.reverse(o), true).set(editor, pos);
+			stair.setOrientation(Cardinal.reverse(o), true).set(editor, rand, pos);
 			pos.add(o).add(Cardinal.reverse(dir));
-			stair.setOrientation(Cardinal.reverse(dir), true).set(editor, pos);
+			stair.setOrientation(Cardinal.reverse(dir), true).set(editor, rand, pos);
 			pos.add(dir).add(o);
-			stair.set(editor, pos);
+			stair.set(editor, rand, pos);
 		}
 		
 				
@@ -195,7 +195,7 @@ public class CryptRoom extends AbstractMediumRoom implements IRoom {
 			RectSolid.fill(editor, rand, bb, theme.getPrimary().getPillar());
 			
 			Coord pos = origin.copy().add(dir, 2).add(o).add(Cardinal.UP, 2);
-			stair.setOrientation(Cardinal.reverse(o), true).set(editor, pos);
+			stair.setOrientation(Cardinal.reverse(o), true).set(editor, rand, pos);
 		}
 		
 		settings.getWallFragment(rand).generate(editor, rand, theme, origin, dir);
@@ -219,7 +219,7 @@ public class CryptRoom extends AbstractMediumRoom implements IRoom {
 			
 			for(Cardinal o : Cardinal.orthogonal(dir)) {
 				Coord pos = origin.copy().add(dir, 2).add(Cardinal.UP, 2).add(o);
-				stair.setOrientation(Cardinal.reverse(o), true).set(editor, pos);
+				stair.setOrientation(Cardinal.reverse(o), true).set(editor, rand, pos);
 			}
 
 			if(!doors.contains(dir)) {
@@ -251,7 +251,7 @@ public class CryptRoom extends AbstractMediumRoom implements IRoom {
 			RectSolid.fill(editor, rand, bb, this.theme.getPrimary().getPillar());
 			for(Cardinal d : Cardinal.directions) {
 				Coord pos = origin.copy().add(dir, 4).add(Cardinal.left(dir), 4).add(Cardinal.UP, 4).add(d);
-				stair.setOrientation(d, true).set(editor, pos);
+				stair.setOrientation(d, true).set(editor, rand, pos);
 			}
 		}
 		
@@ -260,7 +260,7 @@ public class CryptRoom extends AbstractMediumRoom implements IRoom {
 			Coord p = pos.copy().add(dir, 3);
 			RectSolid.fill(editor, rand, new BoundingBox(pos, p), wall);
 			p.add(Cardinal.DOWN);
-			stair.setOrientation(Cardinal.reverse(dir), true).set(editor, p);
+			stair.setOrientation(Cardinal.reverse(dir), true).set(editor, rand, p);
 		}
 
 		bb = new BoundingBox(origin.copy());

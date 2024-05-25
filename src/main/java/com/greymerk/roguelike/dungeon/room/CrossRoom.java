@@ -47,7 +47,7 @@ public class CrossRoom extends AbstractMediumRoom implements IRoom {
 				Coord pos = origin.copy().add(dir, 8).add(orth, 2).add(Cardinal.UP, 2);
 				for(Cardinal d : Cardinal.directions) {
 					Coord p = pos.copy().add(d);
-					stair.setOrientation(d, true).set(editor, p, true, false);
+					stair.setOrientation(d, true).set(editor, rand, p, true, false);
 					p.add(Cardinal.UP);
 					wall.set(editor, rand, p, true, false);
 				}
@@ -55,7 +55,7 @@ public class CrossRoom extends AbstractMediumRoom implements IRoom {
 				pos.add(Cardinal.UP).add(Cardinal.reverse(dir));
 				for(Cardinal d : Cardinal.directions) {
 					Coord p = pos.copy().add(d);
-					stair.setOrientation(d, true).set(editor, p, true, false);
+					stair.setOrientation(d, true).set(editor, rand, p, true, false);
 				}
 			}
 			
@@ -93,7 +93,7 @@ public class CrossRoom extends AbstractMediumRoom implements IRoom {
 			
 			for(Cardinal orth : Cardinal.orthogonal(d)) {
 				Coord pos = origin.copy().add(d, 2).add(Cardinal.UP, 2).add(orth);
-				stair.setOrientation(Cardinal.reverse(orth), true).set(editor, pos);
+				stair.setOrientation(Cardinal.reverse(orth), true).set(editor, rand, pos);
 			}
 		}
 		

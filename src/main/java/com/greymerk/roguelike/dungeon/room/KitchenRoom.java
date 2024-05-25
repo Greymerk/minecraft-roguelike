@@ -80,12 +80,12 @@ public class KitchenRoom extends AbstractMediumRoom implements IRoom {
 				bb.add(dir, 7).add(o, 5).add(Cardinal.UP, 3);
 				bb.grow(o, 2);
 				stair.setOrientation(Cardinal.reverse(dir), true);
-				bb.getShape(Shape.RECTSOLID).get().forEach(c -> stair.set(editor, c));
+				bb.getShape(Shape.RECTSOLID).get().forEach(c -> stair.set(editor, rand, c));
 				
 				//corner upper stair detailing
 				Coord pos = origin.copy();
 				pos.add(dir, 7).add(Cardinal.UP, 3).add(o, 3);
-				stair.set(editor, pos);
+				stair.set(editor, rand, pos);
 				pos.add(o);
 				wall.set(editor, rand, pos);
 				
@@ -98,15 +98,15 @@ public class KitchenRoom extends AbstractMediumRoom implements IRoom {
 				//pillar crowns
 				pos = origin.copy();
 				pos.add(dir, 8).add(Cardinal.UP, 2).add(o);
-				stair.setOrientation(Cardinal.reverse(o), true).set(editor, pos);
+				stair.setOrientation(Cardinal.reverse(o), true).set(editor, rand, pos);
 				pos.add(o).add(Cardinal.reverse(dir));
-				stair.setOrientation(Cardinal.reverse(dir), true).set(editor, pos);
+				stair.setOrientation(Cardinal.reverse(dir), true).set(editor, rand, pos);
 				pos.add(dir).add(o);
-				stair.set(editor, pos);
+				stair.set(editor, rand, pos);
 				
 				pos = origin.copy();
 				pos.add(dir, 2).add(o).add(Cardinal.UP, 4);
-				stair.setOrientation(Cardinal.reverse(o), true).set(editor, pos);
+				stair.setOrientation(Cardinal.reverse(o), true).set(editor, rand, pos);
 			}
 			
 			bb = new BoundingBox(origin.copy());
@@ -154,21 +154,21 @@ public class KitchenRoom extends AbstractMediumRoom implements IRoom {
 		BoundingBox bb = new BoundingBox(origin.copy());
 		bb.add(dir, 2).grow(Cardinal.orthogonal(dir));
 		stair.setOrientation(Cardinal.reverse(dir), false);
-		bb.getShape(Shape.RECTSOLID).get().forEach(c -> stair.set(editor, c));
+		bb.getShape(Shape.RECTSOLID).get().forEach(c -> stair.set(editor, rand, c));
 		
 		bb = new BoundingBox(origin.copy());
 		bb.add(Cardinal.right(dir), 2).grow(Cardinal.orthogonal(Cardinal.right(dir)));
 		stair.setOrientation(Cardinal.left(dir), false);
-		bb.getShape(Shape.RECTSOLID).get().forEach(c -> stair.set(editor, c));
+		bb.getShape(Shape.RECTSOLID).get().forEach(c -> stair.set(editor, rand, c));
 		
 		Coord pos = origin.copy();
-		stair.setOrientation(dir, true).set(editor, pos);
+		stair.setOrientation(dir, true).set(editor, rand, pos);
 		pos.add(Cardinal.left(dir));
-		stair.setOrientation(Cardinal.left(dir), true).set(editor, pos);
+		stair.setOrientation(Cardinal.left(dir), true).set(editor, rand, pos);
 		pos.add(Cardinal.reverse(dir));
-		stair.setOrientation(Cardinal.reverse(dir), true).set(editor, pos);
+		stair.setOrientation(Cardinal.reverse(dir), true).set(editor, rand, pos);
 		pos.add(Cardinal.right(dir));
-		stair.setOrientation(Cardinal.right(dir), true).set(editor, pos);
+		stair.setOrientation(Cardinal.right(dir), true).set(editor, rand, pos);
 		
 		pos = origin.copy().add(Cardinal.reverse(dir)).add(Cardinal.left(dir)).add(Cardinal.UP);
 		Candle.generate(editor, rand, pos);
@@ -179,12 +179,12 @@ public class KitchenRoom extends AbstractMediumRoom implements IRoom {
 		BoundingBox bb = new BoundingBox(origin.copy());
 		bb.add(dir, 2).grow(Cardinal.orthogonal(dir));
 		stair.setOrientation(Cardinal.reverse(dir), true);
-		bb.getShape(Shape.RECTSOLID).get().forEach(c -> stair.set(editor, c));
+		bb.getShape(Shape.RECTSOLID).get().forEach(c -> stair.set(editor, rand, c));
 		
 		bb = new BoundingBox(origin.copy());
 		bb.add(Cardinal.right(dir), 2).grow(Cardinal.orthogonal(Cardinal.right(dir)));
 		stair.setOrientation(Cardinal.left(dir), true);
-		bb.getShape(Shape.RECTSOLID).get().forEach(c -> stair.set(editor, c));
+		bb.getShape(Shape.RECTSOLID).get().forEach(c -> stair.set(editor, rand, c));
 		
 		Coord pos = origin.copy();
 		pos.add(Cardinal.UP).add(dir, 2);
@@ -209,11 +209,11 @@ public class KitchenRoom extends AbstractMediumRoom implements IRoom {
 		
 		Coord pos = origin.copy();
 		pos.add(Cardinal.UP, 2).add(Cardinal.right(dir), 2).add(Cardinal.reverse(dir), 2);
-		Cardinal.directions.forEach(d -> stair.setOrientation(d, true).set(editor, pos.copy().add(d), true, false));
+		Cardinal.directions.forEach(d -> stair.setOrientation(d, true).set(editor, rand, pos.copy().add(d), true, false));
 		pos.add(dir, 4);
-		Cardinal.directions.forEach(d -> stair.setOrientation(d, true).set(editor, pos.copy().add(d), true, false));
+		Cardinal.directions.forEach(d -> stair.setOrientation(d, true).set(editor, rand, pos.copy().add(d), true, false));
 		pos.add(Cardinal.left(dir), 4);
-		Cardinal.directions.forEach(d -> stair.setOrientation(d, true).set(editor, pos.copy().add(d), true, false));
+		Cardinal.directions.forEach(d -> stair.setOrientation(d, true).set(editor, rand, pos.copy().add(d), true, false));
 	}
 
 

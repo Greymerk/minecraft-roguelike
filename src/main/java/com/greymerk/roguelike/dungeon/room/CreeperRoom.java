@@ -74,9 +74,9 @@ public class CreeperRoom extends AbstractRoom implements IRoom {
 				
 				pos = origin.copy();
 				pos.add(dir, 4).add(o).add(Cardinal.UP, 2);
-				stair.setOrientation(Cardinal.reverse(o), true).set(editor, pos);
+				stair.setOrientation(Cardinal.reverse(o), true).set(editor, rand, pos);
 				pos.add(Cardinal.reverse(dir)).add(o);
-				stair.setOrientation(Cardinal.reverse(o), true).set(editor, pos);
+				stair.setOrientation(Cardinal.reverse(o), true).set(editor, rand, pos);
 				
 			}
 		}

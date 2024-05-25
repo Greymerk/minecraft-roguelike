@@ -165,7 +165,7 @@ public class CisternRoom extends AbstractMediumRoom implements IRoom {
 				pos.add(dir, 8).add(Cardinal.left(dir), 8).add(Cardinal.UP, 2);
 				pos.add(d);
 				stair.setOrientation(d, true);
-				stair.set(editor, pos, true, false);
+				stair.set(editor, rand, pos, true, false);
 			}
 			bb = new BoundingBox(origin.copy());
 			bb.add(dir, 8).add(Cardinal.left(dir), 8);
@@ -194,10 +194,10 @@ public class CisternRoom extends AbstractMediumRoom implements IRoom {
 		Coord pos = origin.copy();
 		pos.add(dir, 2);
 		pos.add(Cardinal.UP, 2);
-		stair.setOrientation(Cardinal.reverse(dir), true).set(editor, pos);
+		stair.setOrientation(Cardinal.reverse(dir), true).set(editor, rand, pos);
 		pos.add(Cardinal.UP, 2);
 		pos.add(Cardinal.reverse(dir));
-		stair.set(editor, pos);
+		stair.set(editor, rand, pos);
 		
 		for(Cardinal o : Cardinal.orthogonal(dir)) {
 			BoundingBox bb = new BoundingBox(origin.copy());
@@ -217,16 +217,16 @@ public class CisternRoom extends AbstractMediumRoom implements IRoom {
 			pos.add(dir);
 			pos.add(o);
 			pos.add(Cardinal.UP, 2);
-			stair.setOrientation(Cardinal.reverse(dir), true).set(editor, pos);
+			stair.setOrientation(Cardinal.reverse(dir), true).set(editor, rand, pos);
 			pos.add(Cardinal.reverse(dir));
 			pos.add(Cardinal.UP, 2);
-			stair.set(editor, pos);
+			stair.set(editor, rand, pos);
 			pos.add(dir);
 			pos.add(o);
-			stair.setOrientation(o, true).set(editor, pos);
+			stair.setOrientation(o, true).set(editor, rand, pos);
 			pos.add(Cardinal.DOWN, 2);
 			pos.add(dir);
-			stair.set(editor, pos);
+			stair.set(editor, rand, pos);
 		}
 	}
 

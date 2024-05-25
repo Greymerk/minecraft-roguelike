@@ -5,7 +5,7 @@ import com.greymerk.roguelike.editor.blocks.SilverfishBlock;
 import com.greymerk.roguelike.editor.blocks.door.Door;
 import com.greymerk.roguelike.editor.blocks.door.DoorType;
 import com.greymerk.roguelike.editor.blocks.slab.Slab;
-import com.greymerk.roguelike.editor.blocks.stair.MetaStair;
+import com.greymerk.roguelike.editor.blocks.stair.RandomStair;
 import com.greymerk.roguelike.editor.blocks.stair.Stair;
 import com.greymerk.roguelike.editor.factories.BlockWeightedRandom;
 import com.greymerk.roguelike.theme.BlockSet;
@@ -25,7 +25,11 @@ public class ThemeStone extends ThemeBase{
 		walls.addBlock(BlockType.get(BlockType.COBBLESTONE_MOSSY), 1);
 		walls.addBlock(SilverfishBlock.getJumble(), 1);
 		
-		MetaStair stair = Stair.of(Stair.STONEBRICK);
+		RandomStair stair = new RandomStair()
+				.add(Stair.of(Stair.STONEBRICK), 20)
+				.add(Stair.of(Stair.MOSSY_STONEBRICK), 5)
+				.add(Stair.of(Stair.COBBLE), 5)
+				.add(Stair.of(Stair.MOSSY_COBBLE), 1);
 		
 		this.primary = new BlockSet()
 				.setWall(walls)

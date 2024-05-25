@@ -24,7 +24,7 @@ public class WallSpawner extends FragmentBase implements IFragment {
 		IStair stair = theme.getSecondary().getStair();
 		stair.setOrientation(Cardinal.reverse(dir), true);
 		for(Coord c : rect.get()) {
-			stair.set(editor, c);
+			stair.set(editor, rand, c);
 		}
 		
 		Coord pos = origin.copy().add(dir, 2).add(Cardinal.UP);

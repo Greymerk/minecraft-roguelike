@@ -42,14 +42,14 @@ public class SafetyCell extends FragmentBase implements IFragment {
 			
 			Coord pos = origin.copy().add(dir, 6);
 			pos.add(d).add(Cardinal.UP, 3);
-			stair.setOrientation(Cardinal.reverse(d), true).set(editor, pos);
+			stair.setOrientation(Cardinal.reverse(d), true).set(editor, rand, pos);
 			pos.add(Cardinal.left(d));
-			stair.setOrientation(Cardinal.reverse(d), true).set(editor, pos);
+			stair.setOrientation(Cardinal.reverse(d), true).set(editor, rand, pos);
 			
 			for(Cardinal o : Cardinal.orthogonal(d)) {
 				pos = origin.copy().add(dir, 6);
 				pos.add(d, 2).add(o).add(Cardinal.UP, 2);
-				stair.setOrientation(Cardinal.reverse(o), true).set(editor, pos);
+				stair.setOrientation(Cardinal.reverse(o), true).set(editor, rand, pos);
 			}
 		}
 		

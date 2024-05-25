@@ -126,7 +126,7 @@ public class BedRoom extends AbstractRoom implements IRoom {
 			Coord p = pos.copy();
 			p.add(dir);
 			stair.setOrientation(dir, true);
-			stair.set(editor, p, true, false);
+			stair.set(editor, rand, p, true, false);
 		}
 	}
 	
@@ -153,7 +153,7 @@ public class BedRoom extends AbstractRoom implements IRoom {
 			IStair stair = this.theme.getPrimary().getStair();
 			stair.setOrientation(Cardinal.reverse(dir), true);
 			for(Coord c : bb.getShape(Shape.RECTSOLID)) {
-				stair.set(editor, c);
+				stair.set(editor, rand, c);
 			}
 		}
 		
@@ -173,7 +173,7 @@ public class BedRoom extends AbstractRoom implements IRoom {
 			IStair stair = this.theme.getPrimary().getStair();
 			stair.setOrientation(Cardinal.reverse(dir), true);
 			for(Coord c : bb.getShape(Shape.RECTSOLID)) {
-				stair.set(editor, c);
+				stair.set(editor, rand, c);
 			}
 		}
 		
@@ -184,7 +184,7 @@ public class BedRoom extends AbstractRoom implements IRoom {
 			Coord p = pos.copy();
 			p.add(o);
 			stair.setOrientation(Cardinal.reverse(o), true);
-			stair.set(editor, p);
+			stair.set(editor, rand, p);
 		}
 		
 		

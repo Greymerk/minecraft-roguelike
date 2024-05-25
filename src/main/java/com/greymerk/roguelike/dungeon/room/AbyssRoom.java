@@ -122,9 +122,9 @@ public class AbyssRoom extends AbstractLargeRoom implements IRoom {
 		Campfire.generate(editor, origin, Campfire.SOUL);
 		for(Cardinal dir : Cardinal.directions) {
 			Coord pos = origin.copy().add(dir);
-			stair.setOrientation(dir, false).set(editor, pos);
+			stair.setOrientation(dir, false).set(editor, rand, pos);
 			pos.add(Cardinal.UP, 2);
-			stair.setOrientation(dir, true).set(editor, pos);
+			stair.setOrientation(dir, true).set(editor, rand, pos);
 			pos.add(Cardinal.UP);
 			theme.getPrimary().getWall().set(editor, rand, pos);
 		}
@@ -198,7 +198,7 @@ public class AbyssRoom extends AbstractLargeRoom implements IRoom {
 			for(Cardinal o : Cardinal.orthogonal(dir)) {
 				Coord pos = origin.copy();
 				pos.add(Cardinal.UP, 2).add(dir, 2).add(o);
-				stair.setOrientation(Cardinal.reverse(o), true).set(editor, pos);	
+				stair.setOrientation(Cardinal.reverse(o), true).set(editor, rand, pos);	
 			}
 		}
 	}
@@ -224,7 +224,7 @@ public class AbyssRoom extends AbstractLargeRoom implements IRoom {
 			Coord pos = origin.copy();
 			pos.add(o, 2);
 			pos.add(Cardinal.reverse(dir));
-			theme.getPrimary().getStair().setOrientation(Cardinal.reverse(dir), true).set(editor, pos);
+			theme.getPrimary().getStair().setOrientation(Cardinal.reverse(dir), true).set(editor, rand, pos);
 		}
 		Coord pos = origin.copy();
 		this.crossBar(editor, rand, pos, dir);
@@ -248,7 +248,7 @@ public class AbyssRoom extends AbstractLargeRoom implements IRoom {
 		for(Cardinal o : Cardinal.orthogonal(dir)) {
 			Coord pos = origin.copy();
 			pos.add(o).add(Cardinal.DOWN);
-			stair.setOrientation(Cardinal.reverse(o), true).set(editor, pos);
+			stair.setOrientation(Cardinal.reverse(o), true).set(editor, rand, pos);
 		}
 	}
 

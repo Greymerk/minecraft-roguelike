@@ -55,9 +55,9 @@ public class CryptFragment implements IFragment {
 		pos.add(Cardinal.UP);
 		IStair stair = theme.getPrimary().getStair();
 		stair.setOrientation(Cardinal.reverse(dir), true);
-		stair.set(editor, pos);
+		stair.set(editor, rand, pos);
 		pos.add(Cardinal.reverse(dir));
 		stair.setOrientation(dir, true);
-		stair.set(editor, pos);
+		stair.set(editor, rand, pos);
 	}
 }

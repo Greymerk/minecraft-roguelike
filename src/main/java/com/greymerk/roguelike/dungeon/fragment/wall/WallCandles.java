@@ -24,7 +24,7 @@ public class WallCandles extends FragmentBase implements IFragment {
 		IStair stair = theme.getSecondary().getStair();
 		stair.setOrientation(Cardinal.reverse(dir), true);
 		for(Coord c : rect.get()) {
-			stair.set(editor, c);
+			stair.set(editor, rand, c);
 			Coord pos = c.copy().add(Cardinal.UP);
 			if(rand.nextBoolean()) {
 				Candle.generate(editor, rand, pos);

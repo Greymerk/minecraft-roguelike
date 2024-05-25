@@ -33,38 +33,38 @@ public class Sarcophagus implements IFragment {
 		
 		for(Cardinal o : Cardinal.orthogonal(Cardinal.left(dir))) {
 			pos = origin.copy().add(o);
-			stair.setOrientation(o, false).set(editor, pos);
+			stair.setOrientation(o, false).set(editor, rand, pos);
 			pos.add(Cardinal.UP);
-			stair.setOrientation(o, true).set(editor, pos);
+			stair.setOrientation(o, true).set(editor, rand, pos);
 			pos.add(Cardinal.UP);
-			stair.setOrientation(o, false).set(editor, pos);
+			stair.setOrientation(o, false).set(editor, rand, pos);
 		}
 		
 		for(Cardinal orth : Cardinal.orthogonal(dir)) {
 			pos = origin.copy().add(orth);
 			walls.set(editor, rand, pos);
 			pos.add(orth);
-			stair.setOrientation(orth, false).set(editor, pos);
+			stair.setOrientation(orth, false).set(editor, rand, pos);
 			pos.add(Cardinal.UP);
-			stair.setOrientation(orth, true).set(editor, pos);
+			stair.setOrientation(orth, true).set(editor, rand, pos);
 			pos.add(Cardinal.UP);
-			stair.setOrientation(orth, false).set(editor, pos);
+			stair.setOrientation(orth, false).set(editor, rand, pos);
 			pos.add(Cardinal.reverse(orth));
 			slab.upsideDown(true).set(editor, pos);
 			
 			for(Cardinal o : Cardinal.orthogonal(orth)) {
 				pos = origin.copy().add(orth).add(o);
-				stair.setOrientation(o, false).set(editor, pos);
+				stair.setOrientation(o, false).set(editor, rand, pos);
 				pos.add(orth);
-				stair.setOrientation(o, false).set(editor, pos);
+				stair.setOrientation(o, false).set(editor, rand, pos);
 				pos.add(Cardinal.UP);
-				stair.setOrientation(o, true).set(editor, pos);
+				stair.setOrientation(o, true).set(editor, rand, pos);
 				pos.add(Cardinal.reverse(orth));
-				stair.setOrientation(o, true).set(editor, pos);
+				stair.setOrientation(o, true).set(editor, rand, pos);
 				pos.add(Cardinal.UP);
-				stair.setOrientation(o, false).set(editor, pos);
+				stair.setOrientation(o, false).set(editor, rand, pos);
 				pos.add(orth);
-				stair.setOrientation(o, false).set(editor, pos);
+				stair.setOrientation(o, false).set(editor, rand, pos);
 			}
 		}
 		

@@ -78,7 +78,7 @@ public class Stairway extends AbstractRoom implements IRoom {
 			pos.add(Cardinal.UP, 2 - step);
 			pos.add(o);
 			stair.setOrientation(Cardinal.reverse(o), true);
-			stair.set(editor, pos);
+			stair.set(editor, rand, pos);
 		}
 		
 		bb = new BoundingBox(origin.copy());
@@ -93,7 +93,7 @@ public class Stairway extends AbstractRoom implements IRoom {
 		bb.add(direction);
 		stair.setOrientation(direction, false);
 		bb.getShape(Shape.RECTSOLID).forEach(p -> {
-			stair.set(editor, p);
+			stair.set(editor, rand, p);
 		});
 	}
 	
@@ -141,8 +141,7 @@ public class Stairway extends AbstractRoom implements IRoom {
 			for(Cardinal o : Cardinal.orthogonal(dir)) {
 				Coord p = origin.copy();
 				p.add(dir, 2).add(Cardinal.UP, 2).add(o);
-				stair.setOrientation(Cardinal.reverse(o), true);
-				stair.set(editor, p, true, true);
+				stair.setOrientation(Cardinal.reverse(o), true).set(editor, rand, p);
 			}
 		}
 		

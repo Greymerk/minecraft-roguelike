@@ -8,6 +8,7 @@ import com.greymerk.roguelike.editor.blocks.door.Door;
 import com.greymerk.roguelike.editor.blocks.door.DoorType;
 import com.greymerk.roguelike.editor.blocks.slab.Slab;
 import com.greymerk.roguelike.editor.blocks.stair.MetaStair;
+import com.greymerk.roguelike.editor.blocks.stair.RandomStair;
 import com.greymerk.roguelike.editor.blocks.stair.Stair;
 import com.greymerk.roguelike.editor.factories.BlockWeightedRandom;
 import com.greymerk.roguelike.theme.BlockSet;
@@ -24,8 +25,9 @@ public class ThemeSpruce extends ThemeBase implements ITheme {
 		walls.addBlock(BlockType.get(BlockType.STONE_BRICK_MOSSY), 5);
 		walls.addBlock(BlockType.get(BlockType.COBBLESTONE), 3);
 		
-		MetaStair stair = Stair.of(Stair.STONEBRICK);
-
+		RandomStair stair = new RandomStair()
+				.add(Stair.of(Stair.STONEBRICK), 3)
+				.add(Stair.of(Stair.MOSSY_STONEBRICK), 1);
 		
 		MetaBlock logs = Wood.get(Wood.SPRUCE, WoodBlock.LOG);
 		MetaBlock segmentWall = Wood.get(Wood.SPRUCE, WoodBlock.PLANK);

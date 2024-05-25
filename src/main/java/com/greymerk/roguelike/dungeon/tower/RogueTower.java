@@ -56,9 +56,9 @@ public class RogueTower implements ITower{
 			for(Cardinal o : Cardinal.orthogonal(dir)) {
 				Coord pos = origin.copy();
 				pos.add(dir, 3).add(Cardinal.UP, 2).add(o, 2);
-				stair.setOrientation(Cardinal.reverse(o), true).set(editor, pos);
+				stair.setOrientation(Cardinal.reverse(o), true).set(editor, rand, pos);
 				pos.add(Cardinal.UP, 5);
-				stair.setOrientation(Cardinal.reverse(o), true).set(editor, pos);
+				stair.setOrientation(Cardinal.reverse(o), true).set(editor, rand, pos);
 			}
 			
 			bb = BoundingBox.of(origin);
@@ -98,46 +98,46 @@ public class RogueTower implements ITower{
 				pos.add(Cardinal.UP);
 				walls.set(editor, rand, pos);
 				pos.add(Cardinal.UP);
-				stair.setOrientation(o, false).set(editor, pos);
+				stair.setOrientation(o, false).set(editor, rand, pos);
 			}
 			
 			// upper level patios
 			pos = origin.copy().add(Cardinal.UP, 4).add(dir, 5);
-			stair.setOrientation(dir, true).set(editor, pos);
+			stair.setOrientation(dir, true).set(editor, rand, pos);
 			for(Cardinal o : Cardinal.orthogonal(dir)) {
 				pos = origin.copy().add(Cardinal.UP, 4).add(dir, 5).add(o);
-				stair.setOrientation(o, true).set(editor, pos);
+				stair.setOrientation(o, true).set(editor, rand, pos);
 			}
 			
 			// wallbrow
 			pos = origin.copy().add(dir, 5).add(Cardinal.UP, 7);
-			stair.setOrientation(dir, true).set(editor, pos);
+			stair.setOrientation(dir, true).set(editor, rand, pos);
 			pos.add(Cardinal.UP);
 			walls.set(editor, rand, pos);
 			pos.add(dir);
-			stair.setOrientation(dir, true).set(editor, pos);
+			stair.setOrientation(dir, true).set(editor, rand, pos);
 			pos.add(Cardinal.UP);
 			walls.set(editor, rand, pos);
 			pos.add(Cardinal.reverse(dir));
 			walls.set(editor, rand, pos);
 			for(Cardinal o : Cardinal.orthogonal(dir)) {
 				pos = origin.copy().add(dir, 5).add(Cardinal.UP, 7).add(o);
-				stair.setOrientation(o, true).set(editor, pos);
+				stair.setOrientation(o, true).set(editor, rand, pos);
 				pos.add(Cardinal.UP);
 				walls.set(editor, rand, pos);
 				pos.add(dir);
-				stair.setOrientation(o, true).set(editor, pos);
+				stair.setOrientation(o, true).set(editor, rand, pos);
 				pos.add(Cardinal.UP);
 				walls.set(editor, rand, pos);
 				pos.add(Cardinal.reverse(dir));
 				walls.set(editor, rand, pos);
 				
 				pos = origin.copy().add(dir, 5).add(Cardinal.UP, 8).add(o, 2);
-				stair.setOrientation(o, true).set(editor, pos);
+				stair.setOrientation(o, true).set(editor, rand, pos);
 				pos.add(Cardinal.UP);
 				walls.set(editor, rand, pos);
 				pos.add(o);
-				stair.setOrientation(o, true).set(editor, pos);
+				stair.setOrientation(o, true).set(editor, rand, pos);
 			}
 			
 			// doors
@@ -159,7 +159,7 @@ public class RogueTower implements ITower{
 				bb.add(dir, 4).add(o, 3).grow(Cardinal.UP, 3);
 				RectSolid.fill(editor, rand, bb, Air.get());
 				pos = origin.copy().add(dir, 4).add(o, 3).add(Cardinal.UP, 4);
-				stair.setOrientation(o, true).set(editor, pos);
+				stair.setOrientation(o, true).set(editor, rand, pos);
 			}
 			
 			//beard
