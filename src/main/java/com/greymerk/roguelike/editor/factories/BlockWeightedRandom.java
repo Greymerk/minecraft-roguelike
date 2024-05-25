@@ -16,8 +16,9 @@ public class BlockWeightedRandom extends BlockBase {
 		blocks = new WeightedRandomizer<IBlockFactory>();
 	}
 
-	public void addBlock(IBlockFactory toAdd, int weight){
+	public BlockWeightedRandom addBlock(IBlockFactory toAdd, int weight){
 		blocks.add(new WeightedChoice<IBlockFactory>(toAdd, weight));
+		return this;
 	}
 
 	@Override
