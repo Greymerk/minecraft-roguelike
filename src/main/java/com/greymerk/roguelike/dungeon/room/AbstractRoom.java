@@ -119,12 +119,7 @@ public abstract class AbstractRoom implements IRoom{
 	public boolean isGenerated() {
 		return this.generated;
 	}
-	
-	@Override
-	public boolean isDirectional() {
-		return false;
-	}
-	
+		
 	@Override
 	public Cardinal getDirection() {
 		return this.direction;

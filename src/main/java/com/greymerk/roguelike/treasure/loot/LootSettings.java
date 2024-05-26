@@ -3,21 +3,20 @@ package com.greymerk.roguelike.treasure.loot;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.util.IWeighted;
 
 import net.minecraft.item.ItemStack;
-import net.minecraft.registry.DynamicRegistryManager;
-import net.minecraft.resource.featuretoggle.FeatureSet;
 import net.minecraft.util.math.random.Random;
 
 public class LootSettings {
 
 	private Map<Loot, IWeighted<ItemStack>> loot;
 	
-	public LootSettings(int level, FeatureSet features, DynamicRegistryManager reg){
+	public LootSettings(int level, IWorldEditor editor){
 		loot = new HashMap<Loot, IWeighted<ItemStack>>();
 		for(Loot type : Loot.values()){
-			loot.put(type, Loot.getProvider(type, level, features, reg));
+			loot.put(type, Loot.getProvider(type, level, editor));
 		}
 	}
 	

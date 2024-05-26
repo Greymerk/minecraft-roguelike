@@ -206,11 +206,6 @@ public class Stairway extends AbstractRoom implements IRoom {
 	}
 	
 	@Override
-	public boolean isDirectional() {
-		return true;
-	}
-
-	@Override
 	public void determineEntrances(Floor f, Coord floorPos) {}
 
 }

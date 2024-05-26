@@ -245,18 +245,12 @@ public class BedRoom extends AbstractRoom implements IRoom {
 		return cells;
 	}
 
-	@Override
-	public String getName() {
-		return Room.BEDROOM.name();
-	}
 
 	@Override
 	public void determineEntrances(Floor f, Coord floorPos) {
 		for(Cardinal dir : Cardinal.directions) {
 			if(dir == this.direction) continue;
-			Coord fp = floorPos.copy();
-			fp.add(dir);
-			Cell c = f.getCell(fp);
+			Cell c = f.getCell(floorPos.copy().add(dir));
 			if(!c.isRoom()) continue;
 			if(!c.getWalls().contains(Cardinal.reverse(dir))){
 				this.addEntrance(dir, Entrance.DOOR);
@@ -265,10 +259,9 @@ public class BedRoom extends AbstractRoom implements IRoom {
 			}
 		}
 	}
-	
-	@Override
-	public boolean isDirectional() {
-		return true;
-	}
 
+	@Override
+	public String getName() {
+		return Room.BEDROOM.name();
+	}
 }

@@ -48,7 +48,7 @@ public class ThemeDarkOak extends ThemeBase implements ITheme {
 				.setStair(segmentStair)
 				.setPillar(logs)
 				.setDoor(Door.of(DoorType.DARKOAK))
-				.setSlab(Slab.get(Slab.SPRUCE));
+				.setSlab(Slab.get(Slab.DARK_OAK));
 	}
 	
 	@Override

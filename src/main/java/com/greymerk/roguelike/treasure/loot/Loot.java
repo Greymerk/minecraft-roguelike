@@ -39,25 +39,28 @@ public enum Loot {
 	WEAPON, ARMOUR, BLOCK, JUNK, ORE, TOOL, POTION, FOOD,
 	ENCHANTING, SUPPLY, MUSIC, SPECIAL, BREWING, PRECIOUS;
 	
-	public static ILoot getLoot(FeatureSet features, DynamicRegistryManager reg){
+	public static ILoot getLoot(IWorldEditor editor){
 		
 		LootProvider loot = new LootProvider();
 		for(int i = 0; i < 5; ++i){
-			loot.put(i, new LootSettings(i, features, reg));
+			loot.put(i, new LootSettings(i, editor));
 		}
 		
 		return loot;
 	}
 	
 	public static void fillChest(IWorldEditor editor, ITreasureChest chest, Random rand) {
-		RoguelikeLootRules.getLoot(editor.getFeatureSet(), editor.getRegistryManager()).process(rand, chest);
+		RoguelikeLootRules.getLoot(editor).process(rand, chest);
 	}
 	
 	public static ItemStack getLootItem(IWorldEditor editor, Loot type, Random rand, int level) {
-		return getProvider(type, level, editor.getFeatureSet(), editor.getRegistryManager()).get(rand);
+		return getProvider(type, level, editor).get(rand);
 	}
 	
-	public static IWeighted<ItemStack> getProvider(Loot type, int level, FeatureSet features, DynamicRegistryManager reg){
+	public static IWeighted<ItemStack> getProvider(Loot type, int level, IWorldEditor editor){
+		FeatureSet features = editor.getFeatureSet();
+		DynamicRegistryManager reg = editor.getRegistryManager();
+		
 		switch(type){
 		case WEAPON: return new ItemWeapon(features, 0, level);
 		case ARMOUR: return new ItemArmour(0, level, features, reg);

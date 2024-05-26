@@ -46,6 +46,16 @@ public enum Cardinal {
 		}
 	}
 	
+	public static List<Cardinal> parallel(Cardinal dir){
+		switch(dir){
+		case NORTH: return List.of(NORTH, SOUTH);
+		case SOUTH: return List.of(SOUTH, NORTH);
+		case EAST: return List.of(EAST, WEST);
+		case WEST: return List.of(WEST, EAST);
+		default: return List.of(dir, dir);
+		}
+	}
+	
 	public static List<Cardinal> orthogonal(Cardinal dir) {
 		
 		switch(dir){

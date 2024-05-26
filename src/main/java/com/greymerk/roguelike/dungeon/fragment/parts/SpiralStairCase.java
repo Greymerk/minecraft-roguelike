@@ -19,6 +19,12 @@ public class SpiralStairCase implements IFragment {
 
 	Line stairWell;
 	
+	public static void generate(IWorldEditor editor, Random rand, ITheme theme, Line line) {
+		line.forEach(pos -> {
+			spiralStairStep(editor, rand, pos, Cardinal.directions.get(pos.getY() % 4), theme);
+		});
+	}
+	
 	public SpiralStairCase(Coord start, Coord end) {
 		this.stairWell = new Line(start, end);
 	}

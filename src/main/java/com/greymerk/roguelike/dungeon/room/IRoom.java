@@ -22,8 +22,6 @@ public interface IRoom {
 	
 	public boolean isGenerated();
 	
-	public boolean isDirectional();
-	
 	public Cardinal getDirection();
 	
 	public CellManager getCells(Cardinal dir);

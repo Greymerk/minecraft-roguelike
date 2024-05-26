@@ -37,7 +37,7 @@ public abstract class LevelSettingsBase implements ILevelSettings {
 	
 	@Override
 	public IFragment getAlcove(Random rand) {
-		if(this.alcoves.isEmpty()) return Fragment.fromType(Fragment.WALL_EMPTY);
+		if(this.alcoves.isEmpty()) return getWallFragment(rand);
 		Fragment type = this.alcoves.get(rand);
 		return Fragment.fromType(type);
 	}

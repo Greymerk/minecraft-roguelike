@@ -1,5 +1,6 @@
 package com.greymerk.roguelike.treasure.loot.rules;
 
+import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.treasure.Treasure;
 import com.greymerk.roguelike.treasure.loot.Equipment;
 import com.greymerk.roguelike.treasure.loot.ILoot;
@@ -7,15 +8,12 @@ import com.greymerk.roguelike.treasure.loot.Loot;
 import com.greymerk.roguelike.treasure.loot.Quality;
 import com.greymerk.roguelike.treasure.loot.provider.ItemSpecialty;
 
-import net.minecraft.registry.DynamicRegistryManager;
-import net.minecraft.resource.featuretoggle.FeatureSet;
-
 public class RoguelikeLootRules {
 
-	public static LootRuleManager getLoot(FeatureSet features, DynamicRegistryManager reg) {
+	public static LootRuleManager getLoot(IWorldEditor editor) {
 		
 		LootRuleManager lootRules = new LootRuleManager();
-		ILoot loot = Loot.getLoot(features, reg);
+		ILoot loot = Loot.getLoot(editor);
 		lootRules.add(Treasure.STARTER, loot.get(Loot.WEAPON, 0),  0, 2);
 		lootRules.add(Treasure.STARTER, loot.get(Loot.FOOD, 0),  0, 2);
 		lootRules.add(Treasure.STARTER, loot.get(Loot.TOOL, 0),  0, 2);

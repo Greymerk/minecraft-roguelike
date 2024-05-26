@@ -14,6 +14,9 @@ public class Line implements IShape{
 	Coord start;
 	Coord end;
 	
+	public static Line of(Coord start, Coord end) {
+		return new Line(start, end);
+	}
 	
 	public Line(Coord start, Coord end){
 		this.start = start.copy();
