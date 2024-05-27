@@ -1,9 +1,9 @@
 package com.greymerk.roguelike.dungeon.fragment;
 
+import com.greymerk.roguelike.dungeon.fragment.alcove.BookShelfAlcove;
 import com.greymerk.roguelike.dungeon.fragment.alcove.SafetyCell;
 import com.greymerk.roguelike.dungeon.fragment.alcove.SilverfishNest;
 import com.greymerk.roguelike.dungeon.fragment.alcove.TombAlcove;
-import com.greymerk.roguelike.dungeon.fragment.alcove.BookShelfAlcove;
 import com.greymerk.roguelike.dungeon.fragment.parts.ArchWay;
 import com.greymerk.roguelike.dungeon.fragment.parts.CellSupportBeamFragment;
 import com.greymerk.roguelike.dungeon.fragment.parts.CryptFragment;
@@ -15,6 +15,7 @@ import com.greymerk.roguelike.dungeon.fragment.wall.WallDecoratedPot;
 import com.greymerk.roguelike.dungeon.fragment.wall.WallEmpty;
 import com.greymerk.roguelike.dungeon.fragment.wall.WallFlowers;
 import com.greymerk.roguelike.dungeon.fragment.wall.WallFoodBarrel;
+import com.greymerk.roguelike.dungeon.fragment.wall.WallPlant;
 import com.greymerk.roguelike.dungeon.fragment.wall.WallSpawner;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
@@ -28,7 +29,7 @@ public enum Fragment {
 	CRYPT, SARCOPHAGUS, 
 	CELL_SUPPORT, ARCH,
 	WALL_FLOWER, WALL_BANNER, WALL_CHEST, WALL_SPAWNER, WALL_CANDLES,
-	WALL_EMPTY, WALL_DECORATED_POT, WALL_FOOD_BARREL,
+	WALL_EMPTY, WALL_DECORATED_POT, WALL_FOOD_BARREL, WALL_PLANT,
 	ALCOVE_SILVERFISH, ALCOVE_SAFETY, ALCOVE_CRYPT, BOOK_SHELF;
 	
 	public static void generate(Fragment type, IWorldEditor editor, Random rand, ITheme theme, Coord pos) {
@@ -55,10 +56,11 @@ public enum Fragment {
 		case WALL_DECORATED_POT: return new WallDecoratedPot();
 		case BOOK_SHELF: return new BookShelfAlcove();
 		case WALL_FOOD_BARREL: return new WallFoodBarrel();
+		case WALL_PLANT: return new WallPlant();
 		case ALCOVE_SILVERFISH: return new SilverfishNest();
 		case ALCOVE_SAFETY: return new SafetyCell();
 		case ALCOVE_CRYPT: return new TombAlcove();
-		default: return null;
+		default: return new WallEmpty();
 		}
 	}
 }

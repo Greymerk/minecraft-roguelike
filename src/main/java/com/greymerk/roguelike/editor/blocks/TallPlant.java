@@ -9,10 +9,16 @@ import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.TallPlantBlock;
 import net.minecraft.block.enums.DoubleBlockHalf;
+import net.minecraft.util.math.random.Random;
 
 public enum TallPlant {
 
 	SUNFLOWER, LILAC, TALLGRASS, FERN, ROSE, PEONY;
+	
+	public static void generate(IWorldEditor editor, Random rand, Coord origin) {
+		TallPlant type = TallPlant.values()[rand.nextInt(TallPlant.values().length)];
+		generate(editor, type, origin);
+	}
 	
 	public static void generate(IWorldEditor editor, TallPlant type, Coord origin){
 		MetaBlock bottom = new MetaBlock(TallPlant.fromType(type));

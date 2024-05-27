@@ -23,12 +23,14 @@ public class LevelSettingsOak extends LevelSettingsBase implements ILevelSetting
 		rooms.addRoomAfter(Room.BEDROOM);
 		
 		this.walls = new WeightedRandomizer<Fragment>();
-		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_FLOWER, 10));
-		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_EMPTY, 5));
+		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_FLOWER, 9));
+		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_PLANT, 3));
+		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_EMPTY, 2));
 		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_CANDLES, 2));
 		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_BANNER, 1));
 		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_FOOD_BARREL, 1));
 		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_DECORATED_POT, 1));
+		
 	}
 
 	@Override
