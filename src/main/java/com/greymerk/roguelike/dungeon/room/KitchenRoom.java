@@ -133,6 +133,15 @@ public class KitchenRoom extends AbstractMediumRoom implements IRoom {
 			if(this.getEntrancesFromType(Entrance.DOOR).contains(dir)) {
 				Coord pos = origin.copy().add(dir, 6);
 				Fragment.generate(Fragment.ARCH, editor, rand, theme, pos, dir);
+			} else {
+				BoundingBox.of(origin).add(dir, 9).grow(Cardinal.DOWN).grow(Cardinal.UP, 3).grow(Cardinal.orthogonal(dir), 2)
+					.getShape(Shape.RECTSOLID).fill(editor, rand, wall, false, true);
+				if(this.getEntrance(dir) == Entrance.WALL) {
+					settings.getWallFragment(rand).generate(editor, rand, theme, origin.copy().add(dir, 6), dir);
+				}
+				if(this.getEntrance(dir) == Entrance.ALCOVE) {
+					Fragment.generate(Fragment.ALCOVE_FIRE, editor, rand, theme, origin.copy().add(dir, 6), dir);
+				}
 			}
 		}
 		
