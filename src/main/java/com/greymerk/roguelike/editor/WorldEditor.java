@@ -9,6 +9,7 @@ import com.greymerk.roguelike.state.RoguelikeState;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.FallingBlock;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.registry.tag.BlockTags;
@@ -124,6 +125,17 @@ public class WorldEditor implements IWorldEditor{
 	@Override
 	public boolean isSolid(Coord pos) {
 		return this.world.getBlockState(pos.getBlockPos()).isSolidBlock(world, pos.getBlockPos());
+	}
+	
+	public boolean isSupported(Coord pos) {
+		Coord under = pos.copy().add(Cardinal.DOWN);
+		Block b = this.world.getBlockState(under.getBlockPos()).getBlock();
+		if(b instanceof FallingBlock) {
+			return isSupported(under);
+		}
+		
+		if(!FallingBlock.canFallThrough(world.getBlockState(under.getBlockPos()))) return true;
+		return false;
 	}
 	
 	public boolean isPlant(Coord pos) {

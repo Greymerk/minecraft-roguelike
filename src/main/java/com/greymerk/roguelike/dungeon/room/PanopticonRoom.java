@@ -128,6 +128,12 @@ public class PanopticonRoom extends AbstractLargeRoom implements IRoom {
 				
 				BoundingBox.of(origin).add(dir, 12).add(o, 3).grow(Cardinal.orthogonal(o)).grow(Cardinal.DOWN, 2).grow(Cardinal.UP, 5).fill(editor, rand, theme.getPrimary().getWall());
 				BoundingBox.of(origin).add(Cardinal.DOWN).add(dir, 12).add(o, 2).grow(Cardinal.orthogonal(o)).grow(Cardinal.DOWN).fill(editor, rand, theme.getPrimary().getWall());
+				
+				BoundingBox.of(origin).add(dir, 2).add(o).grow(dir, 8).forEach(pos -> {
+					if(editor.isSupported(pos)) {
+						IronBar.get().set(editor, rand, pos);
+					}
+				});
 			});
 		});
 		
@@ -267,7 +273,9 @@ public class PanopticonRoom extends AbstractLargeRoom implements IRoom {
 					.getShape(Shape.RECTSOLID).fill(editor, rand, walls);
 			});
 				
-			
+			if(this.getEntrance(dir) != Entrance.DOOR) {
+				BoundingBox.of(origin).add(dir, 2).grow(Cardinal.orthogonal(dir)).fill(editor, rand, bars);
+			}
 		});
 	}
 

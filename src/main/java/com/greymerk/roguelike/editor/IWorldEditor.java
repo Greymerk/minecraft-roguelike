@@ -40,6 +40,8 @@ public interface IWorldEditor {
 
 	public boolean isSolid(Coord pos);
 		
+	public boolean isSupported(Coord pos);
+	
 	public boolean isFaceFullSquare(Coord pos, Cardinal dir);
 	
 	public int getMaxDepth();
