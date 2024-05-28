@@ -33,6 +33,6 @@ public enum Torch {
 			torch.with(WallTorchBlock.FACING, Cardinal.facing(Cardinal.reverse(dir)));
 		}
 		
-		editor.set(pos, new MetaBlock(torch));
+		if(editor.isSupported(pos)) MetaBlock.of(Blocks.TORCH).set(editor, pos);
 	}	
 }

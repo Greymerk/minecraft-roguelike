@@ -184,10 +184,6 @@ public class RogueTower implements ITower{
 	
 	private void addCrenellation(IWorldEditor editor, Random rand, Coord origin, IBlockFactory blocks){
 		blocks.set(editor, rand, origin.copy());
-		
-		if(editor.isAir(origin)) return;
-
-		Coord pos = origin.copy().add(Cardinal.UP);
-		Torch.generate(editor, Torch.WOODEN, Cardinal.UP, pos);
+		Torch.generate(editor, Torch.WOODEN, Cardinal.UP, origin.copy().add(Cardinal.UP));
 	}
 }

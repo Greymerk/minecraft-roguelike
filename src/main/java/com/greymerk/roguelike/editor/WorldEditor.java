@@ -128,6 +128,7 @@ public class WorldEditor implements IWorldEditor{
 	}
 	
 	public boolean isSupported(Coord pos) {
+		if(pos.getY() <= world.getBottomY()) return false;
 		Coord under = pos.copy().add(Cardinal.DOWN);
 		Block b = this.world.getBlockState(under.getBlockPos()).getBlock();
 		if(b instanceof FallingBlock) {

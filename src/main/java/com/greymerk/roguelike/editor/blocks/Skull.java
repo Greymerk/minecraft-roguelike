@@ -15,6 +15,7 @@ public enum Skull {
 	SKELETON, WITHER, ZOMBIE, STEVE, CREEPER;
 	
 	public static void set(IWorldEditor editor, Random rand, Coord origin, Cardinal dir, Skull type){
+		if(!editor.isSupported(origin)) return;
 		MetaBlock skullBlock = new MetaBlock(Skull.fromType(type).getDefaultState());
 		setRotation(rand, skullBlock, dir);
 		skullBlock.set(editor, origin);

@@ -21,6 +21,7 @@ public class Candle {
 	}
 	
 	public static void generate(IWorldEditor editor, Coord origin, Color color, int count, boolean lit) {
+		if(!editor.isSupported(origin)) return;
 		int numCandles;
 		if(count == 0) return;
 		if(count < 0) {
