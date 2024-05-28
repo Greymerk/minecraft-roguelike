@@ -224,5 +224,29 @@ class CoordTest {
 	private double round(double d) {
 		return (double)Math.round(d * 100)/100;
 	}
+	
+	@Test
+	void testFreeze() {
+		Coord c = new Coord(0,0,0).freeze();
+		
+		Coord c2 = c.add(Cardinal.EAST);
+		assert(c.equals(new Coord(0,0,0)));
+		assert(c2.equals(new Coord(0,0,0).add(Cardinal.EAST)));
+		
+		c2 = c.add(Cardinal.EAST, 2);
+		assert(c.equals(new Coord(0,0,0)));
+		assert(c2.equals(new Coord(0,0,0).add(Cardinal.EAST, 2)));
+		
+		c2 = c.add(new Coord(0,0,1));
+		assert(c.equals(new Coord(0,0,0)));
+		assert(c2.equals(new Coord(0,0,1)));
+				
+		c2 = c.sub(new Coord(0,0,1));
+		assert(c.equals(new Coord(0,0,0)));
+		assert(c2.equals(new Coord(0,0,0).sub(new Coord(0,0,1))));
+		
+		
+		
+	}
 
 }

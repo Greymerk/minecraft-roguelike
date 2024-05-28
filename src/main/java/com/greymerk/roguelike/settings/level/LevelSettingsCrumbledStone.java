@@ -23,18 +23,19 @@ public class LevelSettingsCrumbledStone extends LevelSettingsBase implements ILe
 		this.rooms = new RoomProvider();
 		rooms.addRandomChoice(Room.CORRIDOR, 10);
 		rooms.addRandomChoice(Room.CRYPT, 5);
-		rooms.addRandomChoice(Room.OSSUARY, 2);
+		rooms.addRandomChoice(Room.PRISON, 3);
+		rooms.addRoomOnce(Room.PANOPTICON);
 		rooms.addRoomOnce(Room.ENDER);
 		
 		this.walls = new WeightedRandomizer<Fragment>(10);
-		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_EMPTY, 30));
-		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_SPAWNER, 3));
-		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_CHEST, 3));
+		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_EMPTY, 15));
+		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_SPAWNER, 2));
+		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_CHEST, 1));
 		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_FOOD_BARREL, 1));
 		
 
 		this.alcoves.add(this.walls);
-		this.alcoves.add(new WeightedChoice<Fragment>(Fragment.ALCOVE_CRYPT, 3));
+		this.alcoves.add(new WeightedChoice<Fragment>(Fragment.ALCOVE_CRYPT, 2));
 		this.alcoves.add(new WeightedChoice<Fragment>(Fragment.BOOK_SHELF, 1));
 		
 		this.filters = new ArrayList<IFilter>();

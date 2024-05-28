@@ -1,15 +1,20 @@
 package com.greymerk.roguelike.editor.boundingbox;
 
+import java.util.Iterator;
+import java.util.List;
 import java.util.Objects;
 
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
+import com.greymerk.roguelike.editor.IBlockFactory;
+import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.shapes.IShape;
 import com.greymerk.roguelike.editor.shapes.Shape;
 
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.util.math.random.Random;
 
-public class BoundingBox implements IBounded{
+public class BoundingBox implements IBounded, IShape{
 
 	private Coord start;
 	private Coord end;
@@ -172,32 +177,26 @@ public class BoundingBox implements IBounded{
 		this.start = s;
 		this.end = e;
 	}
-	
-	/*
-	// Arranges two coords so that the they create a positive cube.
-	// used in fill routines.
-	private static void correct(Coord one, Coord two){
-		
-		int temp;
-		
-		if(two.x < one.x){
-			temp = two.x;
-			two.x = one.x;
-			one.x = temp;
-		}
 
-		if(two.y < one.y){
-			temp = two.y;
-			two.y = one.y;
-			one.y = temp;
-		}
-		
-		if(two.z < one.z){
-			temp = two.z;
-			two.z = one.z;
-			one.z = temp;
-		}
+	@Override
+	public Iterator<Coord> iterator() {
+		return this.getShape(Shape.RECTSOLID).iterator();
 	}
-	*/
 
+	@Override
+	public void fill(IWorldEditor editor, Random rand, IBlockFactory block) {
+		this.getShape(Shape.RECTSOLID).fill(editor, rand, block);
+		
+	}
+
+	@Override
+	public void fill(IWorldEditor editor, Random rand, IBlockFactory block, boolean fillAir, boolean replaceSolid) {
+		this.getShape(Shape.RECTSOLID).fill(editor, rand, block, fillAir, replaceSolid);
+		
+	}
+
+	@Override
+	public List<Coord> get() {
+		return this.getShape(Shape.RECTSOLID).get();
+	}
 }

@@ -15,6 +15,8 @@ import net.minecraft.util.math.ChunkPos;
 Mutable Coordinate 3DVector
 **/
 public class Coord {
+	boolean frozen;
+	
 	private int x;
 	private int y;
 	private int z;
@@ -31,6 +33,7 @@ public class Coord {
 	}
 	
 	public Coord(int x, int y, int z){
+		this.frozen = false;
 		this.x = x;
 		this.y = y;
 		this.z = z;
@@ -52,35 +55,51 @@ public class Coord {
 		return z;
 	}
 	
+
+	public Coord add(Cardinal dir){
+		return add(dir, 1);
+	}
+	
 	public Coord add(Cardinal dir, int amount){
 		switch(dir){
-		case EAST: x += amount; return this;
-		case WEST: x -= amount; return this;
-		case UP: y += amount; return this;
-		case DOWN: y -= amount; return this;
-		case NORTH: z -= amount; return this;
-		case SOUTH: z += amount; return this;
+		case EAST: if(this.frozen) {return new Coord(x + amount, y, z);} else {this.x += amount; return this;}
+		case WEST: if(this.frozen) {return new Coord(x - amount, y, z);} else {this.x -= amount; return this;}
+		case UP: if(this.frozen) {return new Coord(x, y + amount, z);} else {this.y += amount; return this;}
+		case DOWN: if(this.frozen) {return new Coord(x, y - amount, z);} else {this.y -= amount; return this;}
+		case NORTH: if(this.frozen) {return new Coord(x, y, z - amount);} else {this.z -= amount; return this;}
+		case SOUTH: if(this.frozen) {return new Coord(x, y, z + amount);} else {this.z += amount; return this;}
 		}
-		return this;
+		return this.frozen ? this.copy() : this;
 	}
 	
 	public Coord add(Coord other){
-		x += other.x;
-		y += other.y;
-		z += other.z;
-		return this;
+		if(this.frozen) {
+			return new Coord(
+					x + other.x,
+					y + other.y,
+					z + other.z);
+		} else {
+			x += other.x;
+			y += other.y;
+			z += other.z;
+			return this;
+		}
+		
+		
 	}
 	
 	public Coord sub(Coord other){
-		x -= other.x;
-		y -= other.y;
-		z -= other.z;
-		return this;
-	}
-	
-	public Coord add(Cardinal dir){
-		add(dir, 1);
-		return this;
+		if(this.frozen) {
+			return new Coord(
+					x - other.x,
+					y - other.y,
+					z - other.z);
+		} else {
+			x -= other.x;
+			y -= other.y;
+			z -= other.z;
+			return this;	
+		}
 	}
 	
 	public Coord mul(Coord other) {
@@ -169,6 +188,10 @@ public class Coord {
 		}
 	}
 	
+	public Coord freeze() {
+		this.frozen = true;
+		return this;
+	}
 	
 	@Override
 	public int hashCode(){

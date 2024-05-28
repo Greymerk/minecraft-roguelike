@@ -46,7 +46,7 @@ public abstract class AbstractRoom implements IRoom{
 	public AbstractRoom(ILevelSettings settings, IBounded box, Coord worldPos, Cardinal dir) {
 		this.settings = settings;
 		this.theme = settings.getTheme();
-		this.worldPos = worldPos;
+		this.worldPos = worldPos.copy().freeze();
 		this.generated = false;
 		this.direction = dir;
 		this.entrances = new HashMap<Cardinal, Entrance>();
@@ -74,22 +74,22 @@ public abstract class AbstractRoom implements IRoom{
 	
 	@Override
 	public void setFloorPos(Coord floorPos) {
-		this.floorPos = floorPos;
+		this.floorPos = floorPos.copy().freeze();
 	}
 	
 	@Override
 	public Coord getFloorPos() {
-		return this.floorPos.copy();
+		return this.floorPos.copy().freeze();
 	}
 	
 	@Override
 	public void setWorldPos(Coord worldPos) {
-		this.worldPos = worldPos;
+		this.worldPos = worldPos.copy().freeze();
 	}
 	
 	@Override
 	public Coord getWorldPos() {
-		return worldPos.copy();
+		return worldPos.copy().freeze();
 	}
 
 	public void setLevelSettings(ILevelSettings settings) {
