@@ -17,7 +17,7 @@ import net.minecraft.util.math.random.Random;
 public class Vine {
 
 	public static void fill(IWorldEditor editor, Random rand, Coord start, Coord end){
-		for(Coord cursor : new RectSolid(new BoundingBox(start, end))){
+		for(Coord cursor : new RectSolid(BoundingBox.of(start, end))){
 			set(editor, cursor);
 		}
 	}

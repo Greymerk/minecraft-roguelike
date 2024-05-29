@@ -53,13 +53,13 @@ public class OssuaryRoom extends AbstractMediumRoom implements IRoom {
 	private void faceWall(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
 		IStair stair = theme.getPrimary().getStair();
 		
-		BoundingBox bb = new BoundingBox(origin.copy());
+		BoundingBox bb = BoundingBox.of(origin.copy());
 		bb.add(dir, 9);
 		bb.grow(Cardinal.orthogonal(dir), 3);
 		bb.grow(Cardinal.UP, 5);
 		RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall());
 		
-		bb = new BoundingBox(origin.copy());
+		bb = BoundingBox.of(origin.copy());
 		bb.add(dir, 7);
 		bb.add(Cardinal.UP, 5);
 		bb.grow(Cardinal.orthogonal(dir), 2);
@@ -67,7 +67,7 @@ public class OssuaryRoom extends AbstractMediumRoom implements IRoom {
 		RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall());
 		
 		for(Cardinal o : Cardinal.orthogonal(dir)) {
-			bb = new BoundingBox(origin.copy());
+			bb = BoundingBox.of(origin.copy());
 			bb.add(dir, 7);
 			bb.add(o, 3);
 			bb.grow(Cardinal.UP, 5);
@@ -83,7 +83,7 @@ public class OssuaryRoom extends AbstractMediumRoom implements IRoom {
 			pos.add(o);
 			stair.setOrientation(Cardinal.reverse(dir), true).set(editor, rand, pos);
 			pos.add(Cardinal.UP);
-			bb = new BoundingBox(pos.copy());
+			bb = BoundingBox.of(pos.copy());
 			bb.grow(Cardinal.UP, 3);
 			RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall());
 		}
@@ -109,7 +109,7 @@ public class OssuaryRoom extends AbstractMediumRoom implements IRoom {
 		pos.add(Cardinal.UP);
 		wall.set(editor, rand, pos);
 		pos.add(Cardinal.UP);
-		BoundingBox bb = new BoundingBox(pos.copy());
+		BoundingBox bb = BoundingBox.of(pos.copy());
 		bb.grow(Cardinal.orthogonal(dir), 2);
 		RectSolid.fill(editor, rand, bb, wall);
 		
@@ -138,7 +138,7 @@ public class OssuaryRoom extends AbstractMediumRoom implements IRoom {
 	}
 
 	private void floor(IWorldEditor editor, Random rand, Coord origin) {
-		BoundingBox bb = new BoundingBox(origin.copy());
+		BoundingBox bb = BoundingBox.of(origin.copy());
 		bb.add(Cardinal.DOWN);
 		bb.grow(Cardinal.directions, 9);
 		RectSolid.fill(editor, rand, bb, theme.getPrimary().getFloor());
@@ -157,7 +157,7 @@ public class OssuaryRoom extends AbstractMediumRoom implements IRoom {
 	}
 
 	private void skullShelf(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
-		BoundingBox bb = new BoundingBox(origin.copy());
+		BoundingBox bb = BoundingBox.of(origin.copy());
 		bb.add(dir, 3);
 		bb.grow(dir);
 		bb.grow(Cardinal.orthogonal(dir), 2);
@@ -188,7 +188,7 @@ public class OssuaryRoom extends AbstractMediumRoom implements IRoom {
 	}
 
 	private void entry(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
-		BoundingBox bb = new BoundingBox(origin.copy());
+		BoundingBox bb = BoundingBox.of(origin.copy());
 		bb.add(dir, 5);
 		bb.add(Cardinal.UP, 7);
 		bb.grow(Cardinal.orthogonal(dir), 3);
@@ -202,7 +202,7 @@ public class OssuaryRoom extends AbstractMediumRoom implements IRoom {
 			Coord pos = origin.copy();
 			pos.add(dir, 8);
 			pos.add(orth, 2);
-			bb = new BoundingBox(pos.copy());
+			bb = BoundingBox.of(pos.copy());
 			bb.grow(Cardinal.UP, 4);
 			RectSolid.fill(editor, rand, bb, theme.getPrimary().getPillar());
 			
@@ -231,7 +231,7 @@ public class OssuaryRoom extends AbstractMediumRoom implements IRoom {
 			theme.getPrimary().getWall().set(editor, rand, pos);
 		}
 		
-		bb = new BoundingBox(origin.copy());
+		bb = BoundingBox.of(origin.copy());
 		bb.add(dir, 8);
 		bb.grow(Cardinal.orthogonal(dir));
 		bb.grow(Cardinal.UP, 2);
@@ -259,7 +259,7 @@ public class OssuaryRoom extends AbstractMediumRoom implements IRoom {
 		IStair stair = theme.getPrimary().getStair();
 		
 		for(Cardinal dir : Cardinal.directions) {
-			BoundingBox bb = new BoundingBox(origin.copy());
+			BoundingBox bb = BoundingBox.of(origin.copy());
 			bb.add(dir, 7);
 			bb.add(Cardinal.left(dir), 7);
 			bb.grow(dir);
@@ -267,7 +267,7 @@ public class OssuaryRoom extends AbstractMediumRoom implements IRoom {
 			bb.grow(Cardinal.UP, 5);
 			RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall());
 			
-			bb = new BoundingBox(origin.copy());
+			bb = BoundingBox.of(origin.copy());
 			bb.add(dir, 3);
 			bb.add(Cardinal.left(dir), 3);
 			bb.add(Cardinal.UP, 6);
@@ -296,7 +296,7 @@ public class OssuaryRoom extends AbstractMediumRoom implements IRoom {
 	}
 
 	private void clear(IWorldEditor editor, Random rand, Coord origin) {
-		BoundingBox bb = new BoundingBox(origin.copy());
+		BoundingBox bb = BoundingBox.of(origin.copy());
 		bb.grow(Cardinal.directions, 7);
 		bb.grow(Cardinal.UP, 7);
 		RectSolid.fill(editor, rand, bb, Air.get());

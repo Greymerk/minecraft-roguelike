@@ -31,16 +31,16 @@ public class KitchenRoom extends AbstractMediumRoom implements IRoom {
 		IStair stair = theme.getPrimary().getStair();
 		IBlockFactory pillar = theme.getPrimary().getPillar();
 		
-		BoundingBox bb = new BoundingBox(origin.copy());
+		BoundingBox bb = BoundingBox.of(origin.copy());
 		bb.grow(Cardinal.directions, 8).grow(Cardinal.UP, 4);
 		RectSolid.fill(editor, rand, bb, Air.get());
 		
-		bb = new BoundingBox(origin.copy());
+		bb = BoundingBox.of(origin.copy());
 		bb.add(Cardinal.UP, 5);
 		bb.grow(Cardinal.directions, 9);
 		RectSolid.fill(editor, rand, bb, wall);
 		
-		bb = new BoundingBox(origin.copy());
+		bb = BoundingBox.of(origin.copy());
 		bb.add(Cardinal.DOWN);
 		bb.grow(Cardinal.directions, 9);
 		RectSolid.fill(editor, rand, bb, theme.getPrimary().getFloor());
@@ -54,29 +54,29 @@ public class KitchenRoom extends AbstractMediumRoom implements IRoom {
 		for(Cardinal dir : Cardinal.directions) {
 			for(Cardinal o : Cardinal.orthogonal(dir)) {
 				//outer wall
-				bb = new BoundingBox(origin.copy());
+				bb = BoundingBox.of(origin.copy());
 				bb.add(dir, 9).add(o, 3);
 				bb.grow(o, 6).grow(Cardinal.UP, 4);
 				RectSolid.fill(editor, rand, bb, wall, false, true);
 				
 				//outer wall
-				bb = new BoundingBox(origin.copy());
+				bb = BoundingBox.of(origin.copy());
 				bb.add(dir, 8).add(Cardinal.UP, 3);
 				bb.grow(o, 8).grow(Cardinal.UP, 2);
 				RectSolid.fill(editor, rand, bb, wall);
 				
 				//inner upper wall
-				bb = new BoundingBox(origin.copy());
+				bb = BoundingBox.of(origin.copy());
 				bb.add(dir, 3).add(o, 2).add(Cardinal.UP, 3);
 				bb.grow(Cardinal.UP, 1).grow(dir, 4);
 				RectSolid.fill(editor, rand, bb, wall);
 				
-				bb = new BoundingBox(origin.copy());
+				bb = BoundingBox.of(origin.copy());
 				bb.add(dir, 7).add(o, 3).add(Cardinal.UP, 4).grow(o, 4);
 				RectSolid.fill(editor, rand, bb, wall);
 				
 				//upper corner stairs
-				bb = new BoundingBox(origin.copy());
+				bb = BoundingBox.of(origin.copy());
 				bb.add(dir, 7).add(o, 5).add(Cardinal.UP, 3);
 				bb.grow(o, 2);
 				stair.setOrientation(Cardinal.reverse(dir), true);
@@ -90,7 +90,7 @@ public class KitchenRoom extends AbstractMediumRoom implements IRoom {
 				wall.set(editor, rand, pos);
 				
 				//door pillars
-				bb = new BoundingBox(origin.copy());
+				bb = BoundingBox.of(origin.copy());
 				bb.add(dir, 8).add(o, 2);
 				bb.grow(Cardinal.UP, 2);
 				RectSolid.fill(editor, rand, bb, pillar);
@@ -109,7 +109,7 @@ public class KitchenRoom extends AbstractMediumRoom implements IRoom {
 				stair.setOrientation(Cardinal.reverse(o), true).set(editor, rand, pos);
 			}
 			
-			bb = new BoundingBox(origin.copy());
+			bb = BoundingBox.of(origin.copy());
 			bb.add(dir, 2).add(Cardinal.left(dir), 2);
 			bb.grow(Cardinal.UP, 4);
 			RectSolid.fill(editor, rand, bb, pillar);
@@ -123,7 +123,7 @@ public class KitchenRoom extends AbstractMediumRoom implements IRoom {
 			pos.add(Cardinal.left(dir), 6);
 			cornerPillars(editor, rand, pos, Cardinal.left(dir));
 			
-			bb = new BoundingBox(origin.copy());
+			bb = BoundingBox.of(origin.copy());
 			bb.add(dir, 3).add(Cardinal.left(dir), 3).add(Cardinal.DOWN);
 			bb.grow(dir, 4).grow(Cardinal.left(dir), 4);
 			RectSolid.fill(editor, rand, bb, theme.getSecondary().getFloor());
@@ -160,12 +160,12 @@ public class KitchenRoom extends AbstractMediumRoom implements IRoom {
 
 	private void chest(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
 		IStair stair = theme.getSecondary().getStair();
-		BoundingBox bb = new BoundingBox(origin.copy());
+		BoundingBox bb = BoundingBox.of(origin.copy());
 		bb.add(dir, 2).grow(Cardinal.orthogonal(dir));
 		stair.setOrientation(Cardinal.reverse(dir), false);
 		bb.getShape(Shape.RECTSOLID).get().forEach(c -> stair.set(editor, rand, c));
 		
-		bb = new BoundingBox(origin.copy());
+		bb = BoundingBox.of(origin.copy());
 		bb.add(Cardinal.right(dir), 2).grow(Cardinal.orthogonal(Cardinal.right(dir)));
 		stair.setOrientation(Cardinal.left(dir), false);
 		bb.getShape(Shape.RECTSOLID).get().forEach(c -> stair.set(editor, rand, c));
@@ -185,12 +185,12 @@ public class KitchenRoom extends AbstractMediumRoom implements IRoom {
 
 	private void table(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
 		IStair stair = theme.getSecondary().getStair();
-		BoundingBox bb = new BoundingBox(origin.copy());
+		BoundingBox bb = BoundingBox.of(origin.copy());
 		bb.add(dir, 2).grow(Cardinal.orthogonal(dir));
 		stair.setOrientation(Cardinal.reverse(dir), true);
 		bb.getShape(Shape.RECTSOLID).get().forEach(c -> stair.set(editor, rand, c));
 		
-		bb = new BoundingBox(origin.copy());
+		bb = BoundingBox.of(origin.copy());
 		bb.add(Cardinal.right(dir), 2).grow(Cardinal.orthogonal(Cardinal.right(dir)));
 		stair.setOrientation(Cardinal.left(dir), true);
 		bb.getShape(Shape.RECTSOLID).get().forEach(c -> stair.set(editor, rand, c));
@@ -207,7 +207,7 @@ public class KitchenRoom extends AbstractMediumRoom implements IRoom {
 		IBlockFactory pillar = theme.getSecondary().getPillar();
 		IStair stair = theme.getSecondary().getStair();
 		
-		BoundingBox bb = new BoundingBox(origin.copy());
+		BoundingBox bb = BoundingBox.of(origin.copy());
 		bb.grow(Cardinal.UP, 2);
 		bb.add(Cardinal.right(dir), 2).add(Cardinal.reverse(dir), 2);
 		RectSolid.fill(editor, rand, bb, pillar);

@@ -69,14 +69,14 @@ public class EnderRoom extends AbstractMediumRoom implements IRoom {
 
 	private void ceiling(IWorldEditor editor, Random rand, Coord origin, IBlockSet blocks) {
 		for(Cardinal dir : Cardinal.directions) {
-			BoundingBox bb = new BoundingBox(origin.copy());
+			BoundingBox bb = BoundingBox.of(origin.copy());
 			bb.add(Cardinal.UP, 6).add(dir, 2);
 			bb.grow(Cardinal.orthogonal(dir), 4);
 			RectSolid.fill(editor, rand, bb, blocks.getWall());
 			bb.add(dir, 2);
 			RectSolid.fill(editor, rand, bb, blocks.getWall());
 			
-			bb = new BoundingBox(origin.copy());
+			bb = BoundingBox.of(origin.copy());
 			bb.add(dir, 4).add(Cardinal.UP, 5);
 			bb.grow(Cardinal.orthogonal(dir), 7);
 			RectSolid.fill(editor, rand, bb, blocks.getWall());
@@ -84,7 +84,7 @@ public class EnderRoom extends AbstractMediumRoom implements IRoom {
 			RectSolid.fill(editor, rand, bb, blocks.getWall());
 			
 			for(Cardinal o : Cardinal.orthogonal(dir)) {
-				bb = new BoundingBox(origin.copy());
+				bb = BoundingBox.of(origin.copy());
 				bb.add(dir, 3).add(o, 2).add(Cardinal.UP, 5);
 				bb.grow(dir, 4);
 				RectSolid.fill(editor, rand, bb, blocks.getWall());
@@ -101,18 +101,18 @@ public class EnderRoom extends AbstractMediumRoom implements IRoom {
 	}
 
 	private void floor(IWorldEditor editor, Random rand, Coord origin, IBlockSet blocks) {
-		BoundingBox bb = new BoundingBox(origin.copy());
+		BoundingBox bb = BoundingBox.of(origin.copy());
 		bb.grow(Cardinal.directions, 7);
 		bb.add(Cardinal.DOWN);
 		RectSolid.fill(editor, rand, bb, blocks.getFloor());
 		
 		for(Cardinal dir : Cardinal.directions) {
-			bb = new BoundingBox(origin.copy());
+			bb = BoundingBox.of(origin.copy());
 			bb.add(dir, 8).add(Cardinal.DOWN);
 			bb.grow(Cardinal.orthogonal(dir), 8).grow(dir);
 			RectSolid.fill(editor, rand, bb, blocks.getWall());
 			
-			bb = new BoundingBox(origin.copy());
+			bb = BoundingBox.of(origin.copy());
 			bb.add(dir, 2).add(Cardinal.left(dir), 2).add(Cardinal.DOWN);
 			bb.grow(dir, 2).grow(Cardinal.left(dir), 2);
 			RectSolid.fill(editor, rand, bb, blocks.getWall());
@@ -124,7 +124,7 @@ public class EnderRoom extends AbstractMediumRoom implements IRoom {
 		
 		// central pillars
 		for(Cardinal dir : Cardinal.directions) {
-			BoundingBox bb = new BoundingBox(origin.copy());
+			BoundingBox bb = BoundingBox.of(origin.copy());
 			bb.add(dir, 3).add(Cardinal.left(dir), 3);
 			bb.grow(Cardinal.UP, 7);
 			RectSolid.fill(editor, rand, bb, blocks.getPillar());
@@ -142,7 +142,7 @@ public class EnderRoom extends AbstractMediumRoom implements IRoom {
 		
 		// outer wall pillars
 		for(Cardinal dir : Cardinal.directions) {
-			BoundingBox bb = new BoundingBox(origin.copy());
+			BoundingBox bb = BoundingBox.of(origin.copy());
 			bb.add(dir, 8).add(Cardinal.left(dir), 8);
 			bb.grow(Cardinal.UP, 6);
 			RectSolid.fill(editor, rand, bb, blocks.getPillar());
@@ -156,7 +156,7 @@ public class EnderRoom extends AbstractMediumRoom implements IRoom {
 			
 			for(Cardinal orth : Cardinal.orthogonal(dir)) {
 				for(Cardinal o : Cardinal.orthogonal(dir)) {
-					bb = new BoundingBox(origin.copy());
+					bb = BoundingBox.of(origin.copy());
 					bb.add(dir, 8).add(orth, 3);
 					bb.add(o);
 					bb.grow(Cardinal.UP, 6);
@@ -175,7 +175,7 @@ public class EnderRoom extends AbstractMediumRoom implements IRoom {
 
 	private void walls(IWorldEditor editor, Random rand, Coord origin, IBlockSet blocks) {
 		for(Cardinal dir : Cardinal.directions) {
-			BoundingBox bb = new BoundingBox(origin.copy());
+			BoundingBox bb = BoundingBox.of(origin.copy());
 			bb.add(dir, 9).grow(Cardinal.orthogonal(dir), 9).grow(Cardinal.UP, 5).grow(Cardinal.DOWN);
 			RectSolid.fill(editor, rand, bb, blocks.getWall(), false, true);
 		}
@@ -183,12 +183,12 @@ public class EnderRoom extends AbstractMediumRoom implements IRoom {
 
 	private void clear(IWorldEditor editor, Random rand, Coord origin, IBlockSet blocks) {
 
-		BoundingBox bb = new BoundingBox(origin.copy());
+		BoundingBox bb = BoundingBox.of(origin.copy());
 		bb.grow(Cardinal.directions, 8);
 		bb.grow(Cardinal.UP, 5);
 		RectSolid.fill(editor, rand, bb, Air.get());
 		
-		bb = new BoundingBox(origin.copy());
+		bb = BoundingBox.of(origin.copy());
 		bb.grow(Cardinal.directions, 4);
 		bb.add(Cardinal.UP, 6);
 		RectSolid.fill(editor, rand, bb, Air.get());

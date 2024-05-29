@@ -31,12 +31,12 @@ public class BoundingBox implements IBounded, IShape{
 		return new BoundingBox(start, end);
 	}
 	
-	public BoundingBox(Coord origin) {
+	private BoundingBox(Coord origin) {
 		this.start = origin.copy();
 		this.end = origin.copy();
 	}
 	
-	public BoundingBox(Coord start, Coord end){
+	private BoundingBox(Coord start, Coord end){
 		this.start = start.copy();
 		this.end = end.copy();
 		this.correct();

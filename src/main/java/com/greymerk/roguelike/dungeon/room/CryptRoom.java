@@ -258,18 +258,18 @@ public class CryptRoom extends AbstractMediumRoom implements IRoom {
 		Coord pos = origin.copy().add(Cardinal.UP, 6);
 		for(Cardinal dir : Cardinal.directions) {
 			Coord p = pos.copy().add(dir, 3);
-			RectSolid.fill(editor, rand, new BoundingBox(pos, p), wall);
+			RectSolid.fill(editor, rand, BoundingBox.of(pos, p), wall);
 			p.add(Cardinal.DOWN);
 			stair.setOrientation(Cardinal.reverse(dir), true).set(editor, rand, p);
 		}
 
-		bb = new BoundingBox(origin.copy());
+		bb = BoundingBox.of(origin.copy());
 		bb.add(Cardinal.DOWN).grow(Cardinal.directions, 4);
 		RectSolid.fill(editor, rand, bb, theme.getPrimary().getFloor());
 	}
 	
 	private void cryptWall(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
-		BoundingBox bb = new BoundingBox(origin.copy());
+		BoundingBox bb = BoundingBox.of(origin.copy());
 		bb.grow(Cardinal.orthogonal(dir), 4).grow(Cardinal.DOWN).grow(Cardinal.UP, 5).grow(dir, 3);
 		RectSolid.fill(editor, rand, bb, this.theme.getPrimary().getWall());
 		

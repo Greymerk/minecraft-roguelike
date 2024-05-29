@@ -15,7 +15,7 @@ class BoundingBoxTest {
 	void testBoundingBoxCoordCoord() {
 		Coord start = new Coord(0,0,0);
 		Coord end = new Coord(0,0,5);
-		BoundingBox bb = new BoundingBox(start, end);
+		BoundingBox bb = BoundingBox.of(start, end);
 		assert(bb.contains(start));
 		assert(bb.contains(end));
 		assert(!bb.contains(new Coord(1,0,0)));
@@ -25,7 +25,7 @@ class BoundingBoxTest {
 	void testBoundingBoxNbtCompound() {
 		Coord start = new Coord(0,0,0);
 		Coord end = new Coord(0,0,5);
-		BoundingBox bb = new BoundingBox(start, end);
+		BoundingBox bb = BoundingBox.of(start, end);
 		NbtCompound tag = bb.getNbt();
 		BoundingBox bb2 = new BoundingBox(tag);
 		assert(bb.equals(bb2));
@@ -33,7 +33,7 @@ class BoundingBoxTest {
 	
 	@Test
 	void testGrowCardinal() {
-		BoundingBox bb = new BoundingBox(new Coord(0,0,0));
+		BoundingBox bb = BoundingBox.of(new Coord(0,0,0));
 		for(Cardinal dir : Cardinal.values()) {
 			Coord pos = new Coord(0,0,0);
 			pos.add(dir, 1);
@@ -42,7 +42,7 @@ class BoundingBoxTest {
 			assert(bb.contains(pos));	
 		}
 		
-		bb = new BoundingBox(new Coord(0,0,0));
+		bb = BoundingBox.of(new Coord(0,0,0));
 		for(Cardinal dir : Cardinal.values()) {
 			Coord pos = new Coord(0,0,0);
 			pos.add(dir, 10);
@@ -54,7 +54,7 @@ class BoundingBoxTest {
 	
 	@Test
 	void testGrowIterable() {
-		BoundingBox bb = new BoundingBox(new Coord(0,0,0));
+		BoundingBox bb = BoundingBox.of(new Coord(0,0,0));
 		Cardinal.directions.forEach(dir -> {
 			Coord pos = new Coord(0,0,0);
 			pos.add(dir);
@@ -68,7 +68,7 @@ class BoundingBoxTest {
 			assert(bb.contains(pos));
 		});
 		
-		BoundingBox bb2 = new BoundingBox(new Coord(0,0,0));
+		BoundingBox bb2 = BoundingBox.of(new Coord(0,0,0));
 		bb2.grow(Cardinal.directions, 5);
 		Cardinal.directions.forEach(dir -> {
 			Coord pos = new Coord(0,0,0);
@@ -89,7 +89,7 @@ class BoundingBoxTest {
 	
 	@Test
 	void testMove() {
-		BoundingBox bb = new BoundingBox(new Coord(0,0,0));
+		BoundingBox bb = BoundingBox.of(new Coord(0,0,0));
 		bb.grow(Cardinal.orthogonal(Cardinal.NORTH), 1);
 		Coord pos = new Coord(0,0,0);
 		pos.add(Cardinal.NORTH);
@@ -100,11 +100,11 @@ class BoundingBoxTest {
 
 	@Test
 	void testCollide() {
-		BoundingBox bb1 = new BoundingBox(new Coord(2, 0, 2), new Coord (-2, 0, -2));
-		BoundingBox bb2 = new BoundingBox(new Coord(0, -1, 0), new Coord(0,1,0));
+		BoundingBox bb1 = BoundingBox.of(new Coord(2, 0, 2), new Coord (-2, 0, -2));
+		BoundingBox bb2 = BoundingBox.of(new Coord(0, -1, 0), new Coord(0,1,0));
 		assert(bb1.collide(bb2));
 		
-		BoundingBox bb3 = new BoundingBox(new Coord(5,0,0), new Coord(10,0,0));
+		BoundingBox bb3 = BoundingBox.of(new Coord(5,0,0), new Coord(10,0,0));
 		assert(!bb1.collide(bb3));
 	}
 
@@ -112,7 +112,7 @@ class BoundingBoxTest {
 	void testGetStart() {
 		Coord start = new Coord(-5, -6, 3);
 		Coord end = new Coord(3, 5, 6);
-		BoundingBox bb = new BoundingBox(start, end);
+		BoundingBox bb = BoundingBox.of(start, end);
 		assert(bb.getStart().equals(start));
 	}
 
@@ -121,7 +121,7 @@ class BoundingBoxTest {
 		Coord start = new Coord(-5, -6, -3);
 		Coord end = new Coord(3, 5, 6);
 		
-		BoundingBox bb = new BoundingBox(start, end);
+		BoundingBox bb = BoundingBox.of(start, end);
 		assert(bb.getEnd().equals(end));
 	}
 
@@ -130,7 +130,7 @@ class BoundingBoxTest {
 		Coord start = new Coord(-5, 6, 3);
 		Coord end = new Coord(3, -5, 6);
 		
-		BoundingBox bb = new BoundingBox(start, end);
+		BoundingBox bb = BoundingBox.of(start, end);
 		NbtCompound tag = bb.getNbt();
 		
 		assert(tag.contains("start"));
@@ -148,7 +148,7 @@ class BoundingBoxTest {
 		Coord start = new Coord(-5,-5,-5);
 		Coord end = new Coord(5, 5, 5);
 		
-		BoundingBox bb = new BoundingBox(start, end);
+		BoundingBox bb = BoundingBox.of(start, end);
 		assert(bb.contains(new Coord(0,0,0)));
 		assert(bb.contains(new Coord(-5,0,0)));
 		assert(bb.contains(new Coord(5,0,0)));
@@ -164,17 +164,17 @@ class BoundingBoxTest {
 	void testCombine() {
 		Coord origin = new Coord(0,0,0);
 		
-		BoundingBox bb = new BoundingBox(origin.copy());
-		BoundingBox bb2 = new BoundingBox(origin.copy().add(Cardinal.SOUTH));
+		BoundingBox bb = BoundingBox.of(origin.copy());
+		BoundingBox bb2 = BoundingBox.of(origin.copy().add(Cardinal.SOUTH));
 		
 		bb.combine(bb2);
 		assert(bb.contains(origin.copy()));
 		assert(bb.contains(origin.copy().add(Cardinal.SOUTH)));
 		
-		bb = new BoundingBox(origin.copy());
+		bb = BoundingBox.of(origin.copy());
 		bb.grow(Arrays.asList(Cardinal.values()), 10);
 		bb.add(Cardinal.NORTH, 10).add(Cardinal.WEST, 10).add(Cardinal.DOWN, 10);
-		bb2 = new BoundingBox(origin.copy());
+		bb2 = BoundingBox.of(origin.copy());
 		bb2.grow(Arrays.asList(Cardinal.values()), 10);
 		bb2.add(Cardinal.SOUTH, 10).add(Cardinal.EAST, 10).add(Cardinal.UP, 10);
 		bb.combine(bb2);

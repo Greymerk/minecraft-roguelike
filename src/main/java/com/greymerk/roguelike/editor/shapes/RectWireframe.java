@@ -25,7 +25,7 @@ public class RectWireframe implements IShape {
 	}
 	
 	public static void fill(IWorldEditor editor, Random rand, Coord start, Coord end, IBlockFactory block, boolean fillAir, boolean replaceSolid){
-		RectWireframe rect = new RectWireframe(new BoundingBox(start, end));
+		RectWireframe rect = new RectWireframe(BoundingBox.of(start, end));
 		rect.fill(editor, rand, block, fillAir, replaceSolid);
 	}
 

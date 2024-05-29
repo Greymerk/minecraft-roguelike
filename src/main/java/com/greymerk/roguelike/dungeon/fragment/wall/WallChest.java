@@ -19,7 +19,7 @@ public class WallChest implements IFragment {
 
 	@Override
 	public void generate(IWorldEditor editor, Random rand, ITheme theme, Coord origin, Cardinal dir) {
-		BoundingBox bb = new BoundingBox(origin.copy());
+		BoundingBox bb = BoundingBox.of(origin.copy());
 		bb.add(dir, 2).grow(Cardinal.orthogonal(dir));
 		IShape rect = bb.getShape(Shape.RECTSOLID);
 		IStair stair = theme.getSecondary().getStair();

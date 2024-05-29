@@ -22,19 +22,19 @@ public class SafetyCell implements IFragment {
 	public void generate(IWorldEditor editor, Random rand, ITheme theme, Coord origin, Cardinal dir) {
 		IStair stair = theme.getPrimary().getStair();
 		
-		BoundingBox bb = new BoundingBox(origin.copy());
+		BoundingBox bb = BoundingBox.of(origin.copy());
 		bb.add(dir, 6);
 		bb.grow(Cardinal.directions, 3).grow(Cardinal.UP, 3).grow(Cardinal.DOWN);
 		RectHollow.fill(editor, rand, bb, theme.getPrimary().getWall());
 		
-		bb = new BoundingBox(origin.copy());
+		bb = BoundingBox.of(origin.copy());
 		bb.add(dir, 6).add(Cardinal.UP, 4).grow(Cardinal.directions);
 		RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall());
 		bb.add(Cardinal.DOWN, 5);
 		RectSolid.fill(editor, rand, bb, theme.getPrimary().getFloor());
 		
 		for(Cardinal d : Cardinal.directions) {
-			bb = new BoundingBox(origin.copy().add(dir, 6));
+			bb = BoundingBox.of(origin.copy().add(dir, 6));
 			bb.add(d, 2).add(Cardinal.left(d), 2);
 			bb.grow(Cardinal.UP, 2);
 			RectSolid.fill(editor, rand, bb, theme.getPrimary().getPillar());

@@ -30,22 +30,22 @@ public class CreeperRoom extends AbstractRoom implements IRoom {
 		IBlockFactory pillar = theme.getPrimary().getPillar();
 		IStair stair = theme.getPrimary().getStair();
 		
-		BoundingBox bb = new BoundingBox(origin.copy());
+		BoundingBox bb = BoundingBox.of(origin.copy());
 		bb.grow(Cardinal.directions, 4).grow(Cardinal.UP, 6);
 		RectSolid.fill(editor, rand, bb, Air.get());
 		
-		bb = new BoundingBox(origin.copy());
+		bb = BoundingBox.of(origin.copy());
 		bb.add(Cardinal.UP, 3).grow(Cardinal.UP, 3);
 		RectSolid.fill(editor, rand, bb, wall);
 		
 		for(Cardinal dir : Cardinal.directions) {
-			bb = new BoundingBox(origin.copy());
+			bb = BoundingBox.of(origin.copy());
 			bb.add(dir, 3).add(Cardinal.left(dir), 3).grow(Cardinal.UP, 6);
 			RectSolid.fill(editor, rand, bb, pillar);
 			bb.add(dir).add(Cardinal.left(dir));
 			RectSolid.fill(editor, rand, bb, pillar);
 			
-			bb = new BoundingBox(origin.copy());
+			bb = BoundingBox.of(origin.copy());
 			bb.add(Cardinal.UP, 3).add(dir, 2).grow(Cardinal.orthogonal(dir), 4);
 			RectSolid.fill(editor, rand, bb, wall);
 			bb.add(dir, 2);
@@ -55,7 +55,7 @@ public class CreeperRoom extends AbstractRoom implements IRoom {
 			bb.add(Cardinal.reverse(dir), 2);
 			RectSolid.fill(editor, rand, bb, wall);
 			
-			bb = new BoundingBox(origin.copy());
+			bb = BoundingBox.of(origin.copy());
 			bb.add(Cardinal.UP, 3).add(dir).grow(Cardinal.UP, 3);
 			RectSolid.fill(editor, rand, bb, wall);
 			bb.add(dir).add(Cardinal.left(dir), 2);
@@ -68,7 +68,7 @@ public class CreeperRoom extends AbstractRoom implements IRoom {
 			wall.set(editor, rand, pos);
 			
 			for(Cardinal o : Cardinal.orthogonal(dir)) {
-				bb = new BoundingBox(origin.copy());
+				bb = BoundingBox.of(origin.copy());
 				bb.add(dir, 4).add(o, 2).grow(Cardinal.UP, 6).grow(o);
 				RectSolid.fill(editor, rand, bb, pillar);
 				
@@ -81,7 +81,7 @@ public class CreeperRoom extends AbstractRoom implements IRoom {
 			}
 		}
 		
-		bb = new BoundingBox(origin.copy());
+		bb = BoundingBox.of(origin.copy());
 		bb.add(Cardinal.DOWN, 3);
 		bb.grow(Cardinal.directions, 4);
 		RectSolid.fill(editor, rand, bb, wall);
@@ -94,14 +94,14 @@ public class CreeperRoom extends AbstractRoom implements IRoom {
 		tntNonsense.addBlock(gravelNonsense);
 		tntNonsense.addBlock(BlockType.get(BlockType.TNT));
 		
-		bb = new BoundingBox(origin.copy());
+		bb = BoundingBox.of(origin.copy());
 		bb.add(Cardinal.DOWN);
 		bb.grow(Cardinal.directions, 3);
 		RectSolid.fill(editor, rand, bb, gravelNonsense);
 		bb.add(Cardinal.DOWN);
 		RectSolid.fill(editor, rand, bb, tntNonsense);
 		
-		bb = new BoundingBox(origin.copy());
+		bb = BoundingBox.of(origin.copy());
 		bb.grow(Cardinal.directions, 2);
 		List<Coord> chestSpots = bb.getShape(Shape.RECTSOLID).get();
 		RandHelper.shuffle(chestSpots, rand);

@@ -62,12 +62,12 @@ public class Stairway extends AbstractRoom implements IRoom {
 	private void oneStep(IWorldEditor editor, Random rand, Coord origin, int step) {
 		IStair stair = theme.getPrimary().getStair();
 		
-		BoundingBox bb = new BoundingBox(origin.copy());
+		BoundingBox bb = BoundingBox.of(origin.copy());
 		bb.add(direction, 2 + step).add(Cardinal.UP, 3 - step);
 		bb.grow(Cardinal.DOWN, 3).grow(Cardinal.orthogonal(direction));
 		RectSolid.fill(editor, rand, bb, Air.get());
 		
-		bb = new BoundingBox(origin.copy());
+		bb = BoundingBox.of(origin.copy());
 		bb.add(direction, 2 + step).add(Cardinal.UP, 3 - step);
 		bb.grow(Cardinal.orthogonal(direction));
 		RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall());
@@ -81,12 +81,12 @@ public class Stairway extends AbstractRoom implements IRoom {
 			stair.set(editor, rand, pos);
 		}
 		
-		bb = new BoundingBox(origin.copy());
+		bb = BoundingBox.of(origin.copy());
 		bb.add(Cardinal.DOWN, 1 + step).add(direction, step - 2);
 		bb.grow(direction, 4).grow(Cardinal.orthogonal(direction));
 		RectSolid.fill(editor, rand, bb, Air.get());
 		
-		bb = new BoundingBox(origin.copy());
+		bb = BoundingBox.of(origin.copy());
 		bb.add(Cardinal.DOWN, 1 + step).add(direction, step - 2);
 		bb.grow(Cardinal.orthogonal(direction));
 		RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall());
@@ -196,7 +196,7 @@ public class Stairway extends AbstractRoom implements IRoom {
 		end.add(Cardinal.DOWN, 10);
 		end.add(Cardinal.right(direction), 4);
 		
-		return new BoundingBox(start, end);
+		return BoundingBox.of(start, end);
 	}
 	
 

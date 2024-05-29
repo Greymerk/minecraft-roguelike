@@ -19,7 +19,7 @@ public abstract class AbstractLargeRoom extends AbstractRoom implements IRoom {
 		Coord origin = new Coord(0,0,0);
 		CellManager cells = new CellManager();
 		
-		BoundingBox bb = new BoundingBox(origin);
+		BoundingBox bb = BoundingBox.of(origin);
 		bb.add(dir, 2).grow(Cardinal.directions);
 		bb.getShape(Shape.RECTSOLID).get().forEach(pos -> {
 			cells.add(Cell.of(pos, CellState.OBSTRUCTED));
@@ -56,7 +56,7 @@ public abstract class AbstractLargeRoom extends AbstractRoom implements IRoom {
 	
 	@Override
 	public BoundingBox getBoundingBox() {
-		BoundingBox bb = new BoundingBox(worldPos.copy().add(direction, Cell.SIZE * 2));
+		BoundingBox bb = BoundingBox.of(worldPos.copy().add(direction, Cell.SIZE * 2));
 		bb.grow(Cardinal.directions, (Cell.SIZE / 2) + (Cell.SIZE * 2) + 1);
 		bb.grow(Cardinal.UP, 6).grow(Cardinal.DOWN, 3);
 		return bb;

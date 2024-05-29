@@ -104,7 +104,7 @@ public abstract class AbstractRoom implements IRoom{
 	
 	@Override
 	public IBounded getBoundingBox() {
-		BoundingBox bb = new BoundingBox(worldPos.copy());
+		BoundingBox bb = BoundingBox.of(worldPos.copy());
 		bb.grow(Cardinal.directions, (Cell.SIZE / 2) + 1);
 		bb.grow(Cardinal.UP, 6).grow(Cardinal.DOWN, 3);
 		return bb;

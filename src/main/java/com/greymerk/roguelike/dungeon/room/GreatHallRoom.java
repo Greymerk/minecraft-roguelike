@@ -26,7 +26,7 @@ public class GreatHallRoom extends AbstractLargeRoom implements IRoom {
 		end.add(Cardinal.SOUTH, size);
 		end.add(Cardinal.EAST, size);
 		end.add(Cardinal.UP, 5);
-		RectHollow box = new RectHollow(new BoundingBox(start, end));
+		RectHollow box = new RectHollow(BoundingBox.of(start, end));
 		box.fill(editor, rand, this.getTheme().getPrimary().getWall());
 		
 		for(Cardinal dir : Cardinal.directions) {

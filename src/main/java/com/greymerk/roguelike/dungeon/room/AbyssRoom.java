@@ -60,7 +60,7 @@ public class AbyssRoom extends AbstractLargeRoom implements IRoom {
 	}
 
 	private void feature(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
-		BoundingBox bb = new BoundingBox(origin.copy());
+		BoundingBox bb = BoundingBox.of(origin.copy());
 		bb.add(dir);
 		bb.grow(dir, 5).grow(Cardinal.orthogonal(dir), 2).grow(Cardinal.UP, 4);
 		RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall());
@@ -94,13 +94,13 @@ public class AbyssRoom extends AbstractLargeRoom implements IRoom {
 	
 	private void bridge(IWorldEditor editor, Random rand, Coord origin) {
 		for(Cardinal dir : Cardinal.directions) {
-			BoundingBox bb = new BoundingBox(origin.copy());
+			BoundingBox bb = BoundingBox.of(origin.copy());
 			bb.add(Cardinal.DOWN).add(dir, 3);
 			bb.grow(dir, 4).grow(Cardinal.orthogonal(dir));
 			RectSolid.fill(editor, rand, bb, theme.getPrimary().getFloor());
 		}
 		
-		BoundingBox bb = new BoundingBox(origin.copy());
+		BoundingBox bb = BoundingBox.of(origin.copy());
 		bb.add(Cardinal.DOWN).grow(Cardinal.directions, 2);
 		RectSolid.fill(editor, rand, bb, theme.getPrimary().getFloor());
 		
@@ -131,13 +131,13 @@ public class AbyssRoom extends AbstractLargeRoom implements IRoom {
 	}
 
 	private void ceiling(IWorldEditor editor, Random rand, Coord origin) {
-		BoundingBox bb = new BoundingBox(origin.copy());
+		BoundingBox bb = BoundingBox.of(origin.copy());
 		bb.add(Cardinal.UP, 4);
 		bb.grow(Cardinal.directions, 7);
 		RectSolid.fill(editor, rand, bb, Air.get());
 		
 		for(Cardinal dir : Cardinal.directions) {
-			bb = new BoundingBox(origin.copy());
+			bb = BoundingBox.of(origin.copy());
 			bb.add(Cardinal.UP, 4);
 			bb.grow(Cardinal.orthogonal(dir), 7);
 			bb.add(dir, 2);
@@ -152,7 +152,7 @@ public class AbyssRoom extends AbstractLargeRoom implements IRoom {
 	}
 
 	private void floor(IWorldEditor editor, Random rand, Coord origin) {
-		BoundingBox bb = new BoundingBox(origin.copy());
+		BoundingBox bb = BoundingBox.of(origin.copy());
 		bb.add(Cardinal.DOWN, 21);
 		bb.grow(Cardinal.directions, 7);
 		RectSolid.fill(editor, rand, bb, theme.getPrimary().getFloor());
@@ -160,12 +160,12 @@ public class AbyssRoom extends AbstractLargeRoom implements IRoom {
 
 	private void level(IWorldEditor editor, Random rand, Coord origin) {
 		for(Cardinal dir : Cardinal.directions) {
-			BoundingBox bb = new BoundingBox(origin.copy());
+			BoundingBox bb = BoundingBox.of(origin.copy());
 			bb.add(dir, 9).add(Cardinal.DOWN);
 			bb.grow(dir, 6).grow(Cardinal.left(dir), 15).grow(Cardinal.right(dir), 7);
 			RectSolid.fill(editor, rand, bb, theme.getPrimary().getFloor());
 			
-			bb = new BoundingBox(origin.copy());
+			bb = BoundingBox.of(origin.copy());
 			bb.add(dir, 8).add(Cardinal.DOWN);
 			bb.grow(Cardinal.orthogonal(dir), 7);
 			RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall());
@@ -186,11 +186,11 @@ public class AbyssRoom extends AbstractLargeRoom implements IRoom {
 		IBlockFactory walls = theme.getPrimary().getWall();
 		
 		for(Cardinal dir : Cardinal.directions) {
-			BoundingBox bb = new BoundingBox(origin.copy());
+			BoundingBox bb = BoundingBox.of(origin.copy());
 			bb.add(dir, 2).add(Cardinal.left(dir), 2);
 			bb.grow(Cardinal.UP, 3);
 			RectSolid.fill(editor, rand, bb, walls);
-			bb = new BoundingBox(origin.copy());
+			bb = BoundingBox.of(origin.copy());
 			bb.add(Cardinal.UP, 3).add(dir, 2);
 			bb.grow(Cardinal.orthogonal(dir));
 			RectSolid.fill(editor, rand, bb, walls);
@@ -216,7 +216,7 @@ public class AbyssRoom extends AbstractLargeRoom implements IRoom {
 
 	private void innerPillarSet(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
 		for(Cardinal o : Cardinal.orthogonal(dir)) {
-			BoundingBox bb = new BoundingBox(origin.copy());
+			BoundingBox bb = BoundingBox.of(origin.copy());
 			bb.grow(Cardinal.DOWN, 23);
 			bb.add(o, 2);
 			RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall());
@@ -243,7 +243,7 @@ public class AbyssRoom extends AbstractLargeRoom implements IRoom {
 	private void crossBar(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
 		IStair stair = theme.getPrimary().getStair();
 		
-		BoundingBox bb = new BoundingBox(origin);
+		BoundingBox bb = BoundingBox.of(origin);
 		bb.grow(Cardinal.orthogonal(dir));
 		for(Cardinal o : Cardinal.orthogonal(dir)) {
 			Coord pos = origin.copy();
@@ -262,7 +262,7 @@ public class AbyssRoom extends AbstractLargeRoom implements IRoom {
 	}
 
 	private void clear(IWorldEditor editor, Random rand, Coord origin) {
-		BoundingBox bb = new BoundingBox(origin.copy());
+		BoundingBox bb = BoundingBox.of(origin.copy());
 		bb.grow(Cardinal.UP, 3).grow(Cardinal.directions, 14);
 		RectSolid.fill(editor, rand, bb, Air.get());
 		bb.add(Cardinal.DOWN, 10);
@@ -270,7 +270,7 @@ public class AbyssRoom extends AbstractLargeRoom implements IRoom {
 		bb.add(Cardinal.DOWN, 10);
 		RectSolid.fill(editor, rand, bb, Air.get());
 		
-		bb = new BoundingBox(origin.copy());
+		bb = BoundingBox.of(origin.copy());
 		bb.add(Cardinal.DOWN);
 		bb.grow(Cardinal.DOWN, 5).grow(Cardinal.directions, 8);
 		RectSolid.fill(editor, rand, bb, Air.get());
@@ -282,7 +282,7 @@ public class AbyssRoom extends AbstractLargeRoom implements IRoom {
 	public CellManager getCells(Cardinal dir) {
 		CellManager cells = super.getCells(dir);
 		
-		BoundingBox bb = new BoundingBox(new Coord(0,0,0).add(dir, 2));
+		BoundingBox bb = BoundingBox.of(new Coord(0,0,0).add(dir, 2));
 		bb.add(Cardinal.DOWN);
 		bb.grow(Cardinal.directions, 2).grow(Cardinal.DOWN);
 		bb.getShape(Shape.RECTSOLID).forEach(pos -> cells.add(new Cell(pos, CellState.OBSTRUCTED)));

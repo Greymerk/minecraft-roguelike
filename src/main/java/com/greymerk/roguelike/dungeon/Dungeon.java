@@ -38,7 +38,7 @@ public class Dungeon implements Iterable<IRoom>{
 	
 	public Dungeon(Coord pos) {
 		this.rooms = new ArrayList<IRoom>();
-		this.bb = new BoundingBox(pos.copy());
+		this.bb = BoundingBox.of(pos.copy());
 		this.origin = pos;
 	}
 	
