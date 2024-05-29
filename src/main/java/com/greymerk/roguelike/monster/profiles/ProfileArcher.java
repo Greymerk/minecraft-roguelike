@@ -6,7 +6,6 @@ import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.monster.IEntity;
 import com.greymerk.roguelike.monster.IMonsterProfile;
 import com.greymerk.roguelike.monster.MonsterProfile;
-import com.greymerk.roguelike.treasure.loot.Enchant;
 import com.greymerk.roguelike.treasure.loot.items.TippedArrow;
 import com.greymerk.roguelike.treasure.loot.provider.ItemWeapon;
 
@@ -19,11 +18,11 @@ public class ProfileArcher implements IMonsterProfile {
 	@Override
 	public void addEquipment(World world, Random rand, Difficulty diff, IEntity mob) {
 		
-		if(Enchant.canEnchant(world.getDifficulty(), rand, diff) && rand.nextInt(10) == 0){
+		if(mob.canEnchant(rand, diff) && rand.nextInt(10) == 0){
 			mob.setSlot(EquipmentSlot.OFFHAND, TippedArrow.getHarmful(rand, 1));
 		}
 		
-		mob.setSlot(EquipmentSlot.MAINHAND, ItemWeapon.getBow(world.getEnabledFeatures(), rand, diff, Enchant.canEnchant(world.getDifficulty(), rand, diff)));
+		mob.setSlot(EquipmentSlot.MAINHAND, ItemWeapon.getBow(world.getEnabledFeatures(), rand, diff, mob.canEnchant(rand, diff)));
 		MonsterProfile.get(MonsterProfile.TALLMOB).addEquipment(world, rand, diff, mob);
 	}
 

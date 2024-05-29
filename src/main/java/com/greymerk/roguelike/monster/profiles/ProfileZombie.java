@@ -4,7 +4,6 @@ import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.monster.IEntity;
 import com.greymerk.roguelike.monster.IMonsterProfile;
 import com.greymerk.roguelike.monster.MonsterProfile;
-import com.greymerk.roguelike.treasure.loot.Enchant;
 import com.greymerk.roguelike.treasure.loot.provider.ItemTool;
 
 import net.minecraft.entity.EquipmentSlot;
@@ -68,7 +67,7 @@ public class ProfileZombie implements IMonsterProfile {
 			return;
 		}
 		
-		ItemStack weapon = ItemTool.getRandom(world.getEnabledFeatures(), rand, diff, Enchant.canEnchant(world.getDifficulty(), rand, diff));
+		ItemStack weapon = ItemTool.getRandom(world.getEnabledFeatures(), rand, diff, mob.canEnchant(rand, diff));
 		mob.setSlot(EquipmentSlot.MAINHAND, weapon);
 		MonsterProfile.get(MonsterProfile.TALLMOB).addEquipment(world, rand, diff, mob);
 	}

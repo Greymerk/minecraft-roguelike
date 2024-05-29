@@ -1,5 +1,7 @@
 package com.greymerk.roguelike.monster;
 
+import com.greymerk.roguelike.dungeon.Difficulty;
+
 import net.minecraft.entity.Entity.RemovalReason;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
@@ -7,6 +9,8 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.ZombieEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
+import net.minecraft.util.math.random.Random;
+import net.minecraft.world.World;
 
 public class MetaEntity implements IEntity {
 
@@ -71,5 +75,22 @@ public class MetaEntity implements IEntity {
 		this.mob.setCustomName(Text.of(name));
 		this.mob.setCustomNameVisible(true);
 	}
+
+	@Override
+	public boolean canEnchant(Random rand, Difficulty diff) {
+		
+		World world = this.mob.getWorld();
+
+		switch(world.getDifficulty()){
+		case PEACEFUL: return false;
+		case EASY: return rand.nextInt(6) == 0;
+		case NORMAL: return diff.gt(Difficulty.EASIEST) && rand.nextInt(4) == 0;
+		case HARD: return rand.nextBoolean();
+		}
+		
+		return false;
+	}
+	
+	
 
 }

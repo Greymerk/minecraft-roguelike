@@ -73,20 +73,6 @@ public enum Enchant {
 		}
 	}
 
-	public static boolean canEnchant(net.minecraft.world.Difficulty difficulty, Random rand, Difficulty diff){
-		
-		if(difficulty == null) difficulty = net.minecraft.world.Difficulty.NORMAL;
-		
-		switch(difficulty){
-		case PEACEFUL: return false;
-		case EASY: return rand.nextInt(6) == 0;
-		case NORMAL: return diff.gt(Difficulty.EASIEST) && rand.nextInt(4) == 0;
-		case HARD: return rand.nextBoolean();
-		}
-		
-		return false;
-	}
-
 	public static ItemStack enchantItem(FeatureSet features, Random rand, ItemStack item, int enchantLevel) {
 
 		if (item == null ) return null;

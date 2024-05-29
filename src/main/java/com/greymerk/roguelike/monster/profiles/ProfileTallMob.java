@@ -3,7 +3,6 @@ package com.greymerk.roguelike.monster.profiles;
 import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.monster.IEntity;
 import com.greymerk.roguelike.monster.IMonsterProfile;
-import com.greymerk.roguelike.treasure.loot.Enchant;
 import com.greymerk.roguelike.treasure.loot.Loot;
 import com.greymerk.roguelike.treasure.loot.Slot;
 
@@ -28,7 +27,7 @@ public class ProfileTallMob implements IMonsterProfile {
 				EquipmentSlot.LEGS,
 				EquipmentSlot.FEET
 				}){
-			ItemStack item = Loot.getEquipmentBySlot(features, reg, rand, Slot.getSlot(slot), Difficulty.from(ilvl), Enchant.canEnchant(world.getDifficulty(), rand, diff));
+			ItemStack item = Loot.getEquipmentBySlot(features, reg, rand, Slot.getSlot(slot), Difficulty.from(ilvl), mob.canEnchant(rand, diff));
 			mob.setSlot(slot, item);
 		}
 

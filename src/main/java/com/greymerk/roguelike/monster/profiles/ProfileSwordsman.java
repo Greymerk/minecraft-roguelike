@@ -4,7 +4,6 @@ import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.monster.IEntity;
 import com.greymerk.roguelike.monster.IMonsterProfile;
 import com.greymerk.roguelike.monster.MonsterProfile;
-import com.greymerk.roguelike.treasure.loot.Enchant;
 import com.greymerk.roguelike.treasure.loot.items.Shield;
 import com.greymerk.roguelike.treasure.loot.provider.ItemWeapon;
 
@@ -17,7 +16,7 @@ public class ProfileSwordsman implements IMonsterProfile {
 
 	@Override
 	public void addEquipment(World world, Random rand, Difficulty diff, IEntity mob) {
-		ItemStack weapon = ItemWeapon.getSword(world.getEnabledFeatures(), rand, diff, Enchant.canEnchant(world.getDifficulty(), rand, diff));
+		ItemStack weapon = ItemWeapon.getSword(world.getEnabledFeatures(), rand, diff, mob.canEnchant(rand, diff));
 		
 		mob.setSlot(EquipmentSlot.MAINHAND, weapon);
 		mob.setSlot(EquipmentSlot.OFFHAND, Shield.get(world.getRegistryManager(), rand));
