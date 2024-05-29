@@ -1,5 +1,6 @@
 package com.greymerk.roguelike.treasure.loot.provider;
 
+import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.treasure.loot.Enchant;
 import com.greymerk.roguelike.treasure.loot.Equipment;
 import com.greymerk.roguelike.treasure.loot.Quality;
@@ -13,46 +14,46 @@ public class ItemTool extends ItemBase {
 
 	FeatureSet features;
 	
-	public ItemTool(FeatureSet features, int weight, int level) {
-		super(weight, level);
+	public ItemTool(FeatureSet features, int weight, Difficulty diff) {
+		super(weight, diff);
 		this.features = features;
 	}
 	
 	@Override
-	public ItemStack getLootItem(Random rand, int level) {
+	public ItemStack getLootItem(Random rand, Difficulty diff) {
 		if(rand.nextInt(2000) == 0) return ItemNovelty.getItem(ItemNovelty.CLEO);
-		return getRandom(features, rand, level, true);
+		return getRandom(features, rand, diff, true);
 	}
 
-	public static ItemStack getTool(FeatureSet features, Random rand, int level, Quality quality, Equipment type, boolean enchant){		
-		ItemStack tool = Equipment.get(type, quality == null ? Quality.get(level) : quality);
-		return enchant ? Enchant.enchantItem(features, rand, tool, Enchant.getLevel(rand, level)) : tool;
+	public static ItemStack getTool(FeatureSet features, Random rand, Difficulty diff, Quality quality, Equipment type, boolean enchant){		
+		ItemStack tool = Equipment.get(type, quality == null ? Quality.get(diff) : quality);
+		return enchant ? Enchant.enchantItem(features, rand, tool, Enchant.getLevel(rand, diff)) : tool;
 	}
 	
-	public static ItemStack getRandom(FeatureSet features, Random rand, int level, boolean enchant){
+	public static ItemStack getRandom(FeatureSet features, Random rand, Difficulty diff, boolean enchant){
 		
 		if(enchant && rand.nextInt(30) == 0){
-			return ItemSpecialty.getRandomTool(rand, Quality.get(level));
+			return ItemSpecialty.getRandomTool(rand, Quality.get(diff));
 		}
 		
-		ItemStack tool = pickTool(rand, level);
-		if(enchant) Enchant.enchantItem(features, rand, tool, Enchant.getLevel(rand, level));
+		ItemStack tool = pickTool(rand, diff);
+		if(enchant) Enchant.enchantItem(features, rand, tool, Enchant.getLevel(rand, diff));
 		return tool;
 	}
 	
-	private static ItemStack pickTool(Random rand, int rank){
+	private static ItemStack pickTool(Random rand, Difficulty diff){
 		
 		switch(rand.nextInt(3)){
-		case 0: return pickPick(rand, rank);
-		case 1: return pickAxe(rand, rank);
-		case 2: return pickShovel(rand, rank);		
-		default: return pickPick(rand, rank);
+		case 0: return pickPick(rand, diff);
+		case 1: return pickAxe(rand, diff);
+		case 2: return pickShovel(rand, diff);		
+		default: return pickPick(rand, diff);
 		}
 	}
 	
 
-	private static ItemStack pickAxe(Random rand, int level) {
-		Quality quality = Quality.getToolQuality(rand, level);
+	private static ItemStack pickAxe(Random rand, Difficulty diff) {
+		Quality quality = Quality.getToolQuality(rand, diff);
 		switch (quality) {
 		case NETHERITE: return new ItemStack(Items.NETHERITE_AXE);
 		case DIAMOND: return new ItemStack(Items.DIAMOND_AXE);
@@ -63,9 +64,9 @@ public class ItemTool extends ItemBase {
 		}
 	}
 	
-	private static ItemStack pickShovel(Random rand, int level) {
+	private static ItemStack pickShovel(Random rand, Difficulty diff) {
 
-		Quality quality = Quality.getToolQuality(rand, level);
+		Quality quality = Quality.getToolQuality(rand, diff);
 		switch (quality) {
 		case NETHERITE: return new ItemStack(Items.NETHERITE_SHOVEL);
 		case DIAMOND: return new ItemStack(Items.DIAMOND_SHOVEL);
@@ -76,9 +77,9 @@ public class ItemTool extends ItemBase {
 		}
 	}
 	
-	private static ItemStack pickPick(Random rand, int level) {
+	private static ItemStack pickPick(Random rand, Difficulty diff) {
 
-		Quality quality = Quality.getToolQuality(rand, level);
+		Quality quality = Quality.getToolQuality(rand, diff);
 		switch (quality) {
 		case NETHERITE: return new ItemStack(Items.NETHERITE_PICKAXE);
 		case DIAMOND: return new ItemStack(Items.DIAMOND_PICKAXE);

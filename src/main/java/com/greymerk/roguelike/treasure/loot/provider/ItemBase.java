@@ -1,27 +1,27 @@
 package com.greymerk.roguelike.treasure.loot.provider;
 
-import net.minecraft.util.math.random.Random;
-
+import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.util.IWeighted;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.random.Random;
 
 public abstract class ItemBase implements IWeighted<ItemStack> {
 
 	private int weight;
-	int level;
+	protected Difficulty diff;
 	
 	public ItemBase(int weight){
 		this.weight = weight;
-		this.level = 0;
+		this.diff = Difficulty.EASIEST;
 	}
 	
-	public ItemBase(int weight, int level){
+	public ItemBase(int weight, Difficulty diff){
 		this.weight = weight;
-		this.level = level;
+		this.diff = diff;
 	}
 	
-	public abstract ItemStack getLootItem(Random rand, int level);
+	public abstract ItemStack getLootItem(Random rand, Difficulty diff);
 
 	@Override
 	public int getWeight() {
@@ -30,6 +30,6 @@ public abstract class ItemBase implements IWeighted<ItemStack> {
 	
 	@Override
 	public ItemStack get(Random rand) {
-		return getLootItem(rand, level);
+		return getLootItem(rand, diff);
 	}
 }

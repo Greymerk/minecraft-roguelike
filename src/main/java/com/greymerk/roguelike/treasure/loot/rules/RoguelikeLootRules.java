@@ -1,5 +1,8 @@
 package com.greymerk.roguelike.treasure.loot.rules;
 
+import java.util.List;
+
+import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.treasure.Treasure;
 import com.greymerk.roguelike.treasure.loot.Equipment;
@@ -14,12 +17,12 @@ public class RoguelikeLootRules {
 		
 		LootRuleManager lootRules = new LootRuleManager();
 		ILoot loot = Loot.getLoot(editor);
-		lootRules.add(Treasure.STARTER, loot.get(Loot.WEAPON, 0),  0, 2);
-		lootRules.add(Treasure.STARTER, loot.get(Loot.FOOD, 0),  0, 2);
-		lootRules.add(Treasure.STARTER, loot.get(Loot.TOOL, 0),  0, 2);
-		lootRules.add(Treasure.STARTER, loot.get(Loot.SUPPLY, 0),  0, 2);
-		lootRules.add(Treasure.STARTER, new ItemSpecialty(0, 0, Equipment.LEGS, Quality.WOOD), 0, 2);
-		for(int difficulty = 0; difficulty < 5; ++difficulty){
+		lootRules.add(Treasure.STARTER, loot.get(Loot.WEAPON, Difficulty.EASIEST),  Difficulty.EASIEST, 2);
+		lootRules.add(Treasure.STARTER, loot.get(Loot.FOOD, Difficulty.EASIEST),  Difficulty.EASIEST, 2);
+		lootRules.add(Treasure.STARTER, loot.get(Loot.TOOL, Difficulty.EASIEST),  Difficulty.EASIEST, 2);
+		lootRules.add(Treasure.STARTER, loot.get(Loot.SUPPLY, Difficulty.EASIEST),  Difficulty.EASIEST, 2);
+		lootRules.add(Treasure.STARTER, new ItemSpecialty(0, Difficulty.EASIEST, Equipment.LEGS, Quality.WOOD), Difficulty.EASIEST, 2);
+		List.of(Difficulty.values()).forEach(difficulty -> {
 			lootRules.add(Treasure.ARMOUR, loot.get(Loot.POTION, difficulty),  difficulty, 1);
 			lootRules.add(Treasure.ARMOUR, loot.get(Loot.ARMOUR, difficulty),  difficulty, 1);
 			lootRules.add(Treasure.ARMOUR, loot.get(Loot.FOOD, difficulty),  difficulty, 1);
@@ -46,7 +49,7 @@ public class RoguelikeLootRules {
 			lootRules.add(Treasure.MUSIC, loot.get(Loot.MUSIC, difficulty),  difficulty, 1);
 			lootRules.add(Treasure.ALL, loot.get(Loot.JUNK, difficulty),  difficulty, 6);
 			lootRules.add(Treasure.ALL, loot.get(Loot.PRECIOUS, difficulty),  difficulty, 1);
-		}
+		});
 		
 		return lootRules;
 	}

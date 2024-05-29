@@ -2,12 +2,13 @@ package com.greymerk.roguelike.treasure;
 
 import java.util.ArrayList;
 import java.util.List;
-import net.minecraft.util.math.random.Random;
 
+import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.treasure.chest.ITreasureChest;
 import com.greymerk.roguelike.util.IWeighted;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.random.Random;
 
 public class TreasureManager {
 
@@ -21,12 +22,12 @@ public class TreasureManager {
 		this.chests.add(toAdd);
 	}
 	
-	public void addItemToAll(Random rand, Treasure type, int level, IWeighted<ItemStack> item, int amount){
-		addItemToAll(rand, this.getChests(type, level), item, amount);
+	public void addItemToAll(Random rand, Treasure type, Difficulty diff, IWeighted<ItemStack> item, int amount){
+		addItemToAll(rand, this.getChests(type, diff), item, amount);
 	}
 	
-	public void addItemToAll(Random rand, int level, IWeighted<ItemStack> item, int amount){
-		addItemToAll(rand, this.getChests(level), item, amount);
+	public void addItemToAll(Random rand, Difficulty diff, IWeighted<ItemStack> item, int amount){
+		addItemToAll(rand, this.getChests(diff), item, amount);
 	}
 	
 	public void addItemToAll(Random rand, Treasure type, IWeighted<ItemStack> item, int amount){		
@@ -42,16 +43,16 @@ public class TreasureManager {
 	}
 	
 	
-	public void addItem(Random rand, int level, IWeighted<ItemStack> item, int amount){
-		this.addItem(rand, getChests(level), item, amount);
+	public void addItem(Random rand, Difficulty diff, IWeighted<ItemStack> item, int amount){
+		this.addItem(rand, getChests(diff), item, amount);
 	}
 	
 	public void addItem(Random rand, Treasure type, IWeighted<ItemStack> item, int amount){
 		this.addItem(rand, getChests(type), item, amount);
 	}
 	
-	public void addItem(Random rand, Treasure type, int level, IWeighted<ItemStack> item, int amount){
-		this.addItem(rand, getChests(type, level), item, amount);
+	public void addItem(Random rand, Treasure type, Difficulty diff, IWeighted<ItemStack> item, int amount){
+		this.addItem(rand, getChests(type, diff), item, amount);
 	}
 	
 	private void addItem(Random rand, List<ITreasureChest> chests, IWeighted<ItemStack> item, int amount){
@@ -63,10 +64,10 @@ public class TreasureManager {
 		}
 	}
 	
-	public List<ITreasureChest> getChests(Treasure type, int level){
+	public List<ITreasureChest> getChests(Treasure type, Difficulty diff){
 		ArrayList<ITreasureChest> c = new ArrayList<ITreasureChest>();
 		for(ITreasureChest chest : this.chests){
-			if(chest.getType() == type && chest.getLevel() == level) c.add(chest);
+			if(chest.getType() == type && chest.getLevel() == diff) c.add(chest);
 		}
 		return c;
 	}
@@ -79,11 +80,11 @@ public class TreasureManager {
 		return c;
 	}
 	
-	public List<ITreasureChest> getChests(int level){
+	public List<ITreasureChest> getChests(Difficulty diff){
 		ArrayList<ITreasureChest> c = new ArrayList<ITreasureChest>();
 		for(ITreasureChest chest : this.chests){
 			if(chest.getType() == Treasure.EMPTY) continue;
-			if(chest.getLevel() == level) c.add(chest);
+			if(chest.getLevel() == diff) c.add(chest);
 		}
 		return c;
 	}

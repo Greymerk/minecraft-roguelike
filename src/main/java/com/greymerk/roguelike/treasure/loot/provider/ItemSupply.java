@@ -1,5 +1,6 @@
 package com.greymerk.roguelike.treasure.loot.provider;
 
+import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.treasure.loot.WeightedRandomLoot;
 import com.greymerk.roguelike.util.WeightedRandomizer;
 
@@ -11,11 +12,11 @@ public class ItemSupply extends ItemBase{
 
 	private WeightedRandomizer<ItemStack> loot;
 	
-	public ItemSupply(int weight, int level) {
-		super(weight, level);
+	public ItemSupply(int weight, Difficulty diff) {
+		super(weight, diff);
 		this.loot = new WeightedRandomizer<ItemStack>();
 		
-		if(level > 2) {
+		if(diff.gt(Difficulty.MEDIUM)) {
 			loot.add(new WeightedRandomLoot(Items.COD, 2, 32, 1));
 			loot.add(new WeightedRandomLoot(Items.SALMON, 2, 32, 1));
 			loot.add(new WeightedRandomLoot(Items.CHICKEN, 4, 32, 1));
@@ -24,7 +25,7 @@ public class ItemSupply extends ItemBase{
 			loot.add(new WeightedRandomLoot(Items.RABBIT, 4, 32, 1));	
 		}
 		
-		if(level < 2) {
+		if(diff.lt(Difficulty.MEDIUM)) {
 			loot.add(new WeightedRandomLoot(Items.WHEAT_SEEDS, 1, 8, 1));
 			loot.add(new WeightedRandomLoot(Items.PUMPKIN_SEEDS, 1, 4, 1));
 			loot.add(new WeightedRandomLoot(Items.MELON_SEEDS, 1, 4, 1));
@@ -50,7 +51,7 @@ public class ItemSupply extends ItemBase{
 	}
 
 	@Override
-	public ItemStack getLootItem(Random rand, int level) {
+	public ItemStack getLootItem(Random rand, Difficulty diff) {
 		return loot.get(rand);
 	}
 }

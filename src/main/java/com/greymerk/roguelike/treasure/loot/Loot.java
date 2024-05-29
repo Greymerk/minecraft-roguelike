@@ -3,6 +3,7 @@ package com.greymerk.roguelike.treasure.loot;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.treasure.chest.ITreasureChest;
 import com.greymerk.roguelike.treasure.loot.provider.ItemArmour;
@@ -42,9 +43,9 @@ public enum Loot {
 	public static ILoot getLoot(IWorldEditor editor){
 		
 		LootProvider loot = new LootProvider();
-		for(int i = 0; i < 5; ++i){
-			loot.put(i, new LootSettings(i, editor));
-		}
+		List.of(Difficulty.values()).forEach(diff -> {
+			loot.put(diff, new LootSettings(diff, editor));
+		});
 		
 		return loot;
 	}
@@ -53,49 +54,49 @@ public enum Loot {
 		RoguelikeLootRules.getLoot(editor).process(rand, chest);
 	}
 	
-	public static ItemStack getLootItem(IWorldEditor editor, Loot type, Random rand, int level) {
-		return getProvider(type, level, editor).get(rand);
+	public static ItemStack getLootItem(IWorldEditor editor, Loot type, Random rand, Difficulty diff) {
+		return getProvider(type, diff, editor).get(rand);
 	}
 	
-	public static IWeighted<ItemStack> getProvider(Loot type, int level, IWorldEditor editor){
+	public static IWeighted<ItemStack> getProvider(Loot type, Difficulty diff, IWorldEditor editor){
 		FeatureSet features = editor.getFeatureSet();
 		DynamicRegistryManager reg = editor.getRegistryManager();
 		
 		switch(type){
-		case WEAPON: return new ItemWeapon(features, 0, level);
-		case ARMOUR: return new ItemArmour(0, level, features, reg);
-		case BLOCK: return new ItemBlock(0, level);
-		case JUNK: return new ItemJunk(0, level);
-		case ORE: return new ItemOre(0, level);
-		case TOOL: return new ItemTool(features, 0, level);
-		case POTION: return new ItemPotion(0, level);
-		case BREWING: return new ItemBrewing(0, level);
-		case FOOD: return new ItemFood(0, level);
-		case ENCHANTING: return new ItemEnchanting(0, level);
-		case SUPPLY: return new ItemSupply(0, level);
-		case MUSIC: return new ItemMusic(0, level);
-		case SPECIAL: return new ItemSpecialty(0, level);
-		case PRECIOUS: return new ItemPrecious(0, level);
+		case WEAPON: return new ItemWeapon(features, 0, diff);
+		case ARMOUR: return new ItemArmour(0, diff, features, reg);
+		case BLOCK: return new ItemBlock(0, diff);
+		case JUNK: return new ItemJunk(0, diff);
+		case ORE: return new ItemOre(0, diff);
+		case TOOL: return new ItemTool(features, 0, diff);
+		case POTION: return new ItemPotion(0, diff);
+		case BREWING: return new ItemBrewing(0, diff);
+		case FOOD: return new ItemFood(0, diff);
+		case ENCHANTING: return new ItemEnchanting(0, diff);
+		case SUPPLY: return new ItemSupply(0, diff);
+		case MUSIC: return new ItemMusic(0, diff);
+		case SPECIAL: return new ItemSpecialty(0, diff);
+		case PRECIOUS: return new ItemPrecious(0, diff);
 		}
 		
 		return new WeightedRandomLoot(Items.STICK, 1);
 	}
 	
-	public static ItemStack getEquipmentBySlot(FeatureSet features, DynamicRegistryManager reg, Random rand, EquipmentSlot slot, int level, boolean enchant){
+	public static ItemStack getEquipmentBySlot(FeatureSet features, DynamicRegistryManager reg, Random rand, EquipmentSlot slot, Difficulty diff, boolean enchant){
 		if(slot == EquipmentSlot.MAINHAND){
-			return ItemWeapon.getRandom(features, rand, level, enchant);
+			return ItemWeapon.getRandom(features, rand, diff, enchant);
 		}
 		
-		return ItemArmour.getRandom(features, reg, rand, level, Slot.getSlot(slot), enchant);
+		return ItemArmour.getRandom(features, reg, rand, diff, Slot.getSlot(slot), enchant);
 	}
 	
-	public static ItemStack getEquipmentBySlot(FeatureSet features, DynamicRegistryManager reg, Random rand, Slot slot, int level, boolean enchant){
+	public static ItemStack getEquipmentBySlot(FeatureSet features, DynamicRegistryManager reg, Random rand, Slot slot, Difficulty diff, boolean enchant){
 		
 		if(slot == Slot.WEAPON){
-			return ItemWeapon.getRandom(features, rand, level, enchant);
+			return ItemWeapon.getRandom(features, rand, diff, enchant);
 		}
 		
-		return ItemArmour.getRandom(features, reg, rand, level, slot, enchant);
+		return ItemArmour.getRandom(features, reg, rand, diff, slot, enchant);
 	}
 
 	public static void setRarity(ItemStack item, Rarity type) {

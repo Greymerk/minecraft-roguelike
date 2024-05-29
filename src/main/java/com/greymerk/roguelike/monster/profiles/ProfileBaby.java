@@ -1,5 +1,6 @@
 package com.greymerk.roguelike.monster.profiles;
 
+import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.monster.IEntity;
 import com.greymerk.roguelike.monster.IMonsterProfile;
 import com.greymerk.roguelike.monster.MonsterProfile;
@@ -16,11 +17,11 @@ import net.minecraft.world.World;
 public class ProfileBaby implements IMonsterProfile {
 
 	@Override
-	public void addEquipment(World world, Random rand, int level, IEntity mob) {
+	public void addEquipment(World world, Random rand, Difficulty diff, IEntity mob) {
 		mob.setChild(true);
 		
 		if(rand.nextInt(4) == 0){
-			MonsterProfile.get(MonsterProfile.VILLAGER).addEquipment(world, rand, level, mob);
+			MonsterProfile.get(MonsterProfile.VILLAGER).addEquipment(world, rand, diff, mob);
 		}
 		
 		mob.setSlot(EquipmentSlot.MAINHAND, toy(rand));

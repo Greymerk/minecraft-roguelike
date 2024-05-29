@@ -1,5 +1,6 @@
 package com.greymerk.roguelike.monster.profiles;
 
+import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.monster.IEntity;
 import com.greymerk.roguelike.monster.IMonsterProfile;
 import com.greymerk.roguelike.monster.MonsterProfile;
@@ -15,12 +16,12 @@ import net.minecraft.world.World;
 public class ProfileSwordsman implements IMonsterProfile {
 
 	@Override
-	public void addEquipment(World world, Random rand, int level, IEntity mob) {
-		ItemStack weapon = ItemWeapon.getSword(world.getEnabledFeatures(), rand, level, Enchant.canEnchant(world.getDifficulty(), rand, level));
+	public void addEquipment(World world, Random rand, Difficulty diff, IEntity mob) {
+		ItemStack weapon = ItemWeapon.getSword(world.getEnabledFeatures(), rand, diff, Enchant.canEnchant(world.getDifficulty(), rand, diff));
 		
 		mob.setSlot(EquipmentSlot.MAINHAND, weapon);
 		mob.setSlot(EquipmentSlot.OFFHAND, Shield.get(world.getRegistryManager(), rand));
-		MonsterProfile.get(MonsterProfile.TALLMOB).addEquipment(world, rand, level, mob);
+		MonsterProfile.get(MonsterProfile.TALLMOB).addEquipment(world, rand, diff, mob);
 	}
 
 }

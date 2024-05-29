@@ -2,6 +2,8 @@ package com.greymerk.roguelike.treasure.loot;
 
 import java.util.List;
 
+import com.greymerk.roguelike.dungeon.Difficulty;
+
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentLevelEntry;
@@ -11,7 +13,6 @@ import net.minecraft.registry.Registries;
 import net.minecraft.resource.featuretoggle.FeatureSet;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.random.Random;
-import net.minecraft.world.Difficulty;
 
 public enum Enchant {
 
@@ -60,26 +61,26 @@ public enum Enchant {
 		}
 	}
 	
-	public static int getLevel(Random rand, int level) {
+	public static int getLevel(Random rand, Difficulty diff) {
 
-		switch(level){
-		case 4: return 30 + rand.nextInt(10);
-		case 3: return 15 + rand.nextInt(15);
-		case 2: return 5 + rand.nextInt(15);
-		case 1: return 1 + rand.nextInt(10);
-		case 0: return 1 + rand.nextInt(5);
+		switch(diff){
+		case HARDEST: return 30 + rand.nextInt(10);
+		case HARD: return 15 + rand.nextInt(15);
+		case MEDIUM: return 5 + rand.nextInt(15);
+		case EASY: return 1 + rand.nextInt(10);
+		case EASIEST: return 1 + rand.nextInt(5);
 		default: return 1;
 		}
 	}
 
-	public static boolean canEnchant(Difficulty difficulty, Random rand, int level){
+	public static boolean canEnchant(net.minecraft.world.Difficulty difficulty, Random rand, Difficulty diff){
 		
-		if(difficulty == null) difficulty = Difficulty.NORMAL;
+		if(difficulty == null) difficulty = net.minecraft.world.Difficulty.NORMAL;
 		
 		switch(difficulty){
 		case PEACEFUL: return false;
 		case EASY: return rand.nextInt(6) == 0;
-		case NORMAL: return level >= 1 && rand.nextInt(4) == 0;
+		case NORMAL: return diff.gt(Difficulty.EASIEST) && rand.nextInt(4) == 0;
 		case HARD: return rand.nextBoolean();
 		}
 		
@@ -111,7 +112,7 @@ public enum Enchant {
 		return item;
 	}
 	
-	public static ItemStack getBook(FeatureSet features, Random rand, int diff) {
+	public static ItemStack getBook(FeatureSet features, Random rand, Difficulty diff) {
 		ItemStack book = new ItemStack(Items.BOOK);
 		int level = getLevel(rand, diff);
 		return enchantItem(features, rand, book, level);

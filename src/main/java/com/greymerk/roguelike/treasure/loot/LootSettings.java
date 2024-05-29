@@ -3,6 +3,7 @@ package com.greymerk.roguelike.treasure.loot;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.util.IWeighted;
 
@@ -13,10 +14,10 @@ public class LootSettings {
 
 	private Map<Loot, IWeighted<ItemStack>> loot;
 	
-	public LootSettings(int level, IWorldEditor editor){
+	public LootSettings(Difficulty diff, IWorldEditor editor){
 		loot = new HashMap<Loot, IWeighted<ItemStack>>();
 		for(Loot type : Loot.values()){
-			loot.put(type, Loot.getProvider(type, level, editor));
+			loot.put(type, Loot.getProvider(type, diff, editor));
 		}
 	}
 	

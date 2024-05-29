@@ -1,7 +1,6 @@
 package com.greymerk.roguelike.monster;
 
-import net.minecraft.util.math.random.Random;
-
+import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.monster.profiles.ProfileArcher;
 import com.greymerk.roguelike.monster.profiles.ProfileAshlea;
 import com.greymerk.roguelike.monster.profiles.ProfileBaby;
@@ -23,6 +22,7 @@ import com.greymerk.roguelike.monster.profiles.ProfileZombie;
 
 import net.minecraft.entity.mob.SkeletonEntity;
 import net.minecraft.entity.mob.ZombieEntity;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 
 public enum MonsterProfile {
@@ -55,7 +55,7 @@ public enum MonsterProfile {
 		}
 	}
 	
-	public static void equip(World world, Random rand, int level, IEntity mob){
+	public static void equip(World world, Random rand, Difficulty diff, IEntity mob){
 		
 		IMonsterProfile profile = null;
 		
@@ -65,6 +65,6 @@ public enum MonsterProfile {
 		
 		if(profile == null) return;
 		
-		profile.addEquipment(world, rand, level, mob);
+		profile.addEquipment(world, rand, diff, mob);
 	}
 }

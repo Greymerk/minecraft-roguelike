@@ -1,5 +1,6 @@
 package com.greymerk.roguelike.treasure.loot.provider;
 
+import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.treasure.loot.Enchant;
 import com.greymerk.roguelike.treasure.loot.Equipment;
 import com.greymerk.roguelike.treasure.loot.Quality;
@@ -13,60 +14,60 @@ public class ItemWeapon extends ItemBase{
 	
 	FeatureSet features;
 	
-	public ItemWeapon(FeatureSet features, int weight, int level) {
-		super(weight, level);
+	public ItemWeapon(FeatureSet features, int weight, Difficulty diff) {
+		super(weight, diff);
 		this.features = features;
 	}
 
 	
 	@Override
-	public ItemStack getLootItem(Random rand, int level) {
+	public ItemStack getLootItem(Random rand, Difficulty diff) {
 		if(rand.nextInt(1000) == 0) return ItemNovelty.getItem(ItemNovelty.GREYMERK);
-		return getRandom(this.features, rand, level, true);
+		return getRandom(this.features, rand, diff, true);
 	}
 
-	public static ItemStack getRandom(FeatureSet features, Random rand, int rank, boolean enchant){
+	public static ItemStack getRandom(FeatureSet features, Random rand, Difficulty diff, boolean enchant){
 		if(rand.nextInt(10) == 0){
-			return ItemWeapon.getBow(features, rand, rank, enchant);
+			return ItemWeapon.getBow(features, rand, diff, enchant);
 		} else {
-			return ItemWeapon.getSword(features, rand, rank, enchant);
+			return ItemWeapon.getSword(features, rand, diff, enchant);
 		}
 	}
 	
-	public static ItemStack getBow(FeatureSet features, Random rand, int level, boolean enchant){
+	public static ItemStack getBow(FeatureSet features, Random rand, Difficulty diff, boolean enchant){
 		
 		if(enchant && rand.nextInt(1000) == 0) return ItemNovelty.getItem(ItemNovelty.WINDFORCE);
 		
 		if(enchant && rand.nextInt(30) == 0){
-			return ItemSpecialty.getRandomItem(Equipment.BOW, rand, level);
+			return ItemSpecialty.getRandomItem(Equipment.BOW, rand, diff);
 		}
 		
 		ItemStack bow = new ItemStack(Items.BOW);
-		if(enchant)Enchant.enchantItem(features, rand, bow, Enchant.getLevel(rand, level));
+		if(enchant)Enchant.enchantItem(features, rand, bow, Enchant.getLevel(rand, diff));
 		return bow;
 	}
 	
-	public static ItemStack getSword(FeatureSet features, Random rand, int level, boolean enchant){
+	public static ItemStack getSword(FeatureSet features, Random rand, Difficulty diff, boolean enchant){
 		
 		if(enchant && rand.nextInt(1000) == 0) return ItemNovelty.getItem(ItemNovelty.NULL);
 		
 		if(enchant && rand.nextInt(30) == 0){
-			return ItemSpecialty.getRandomItem(Equipment.SWORD, rand, level);
+			return ItemSpecialty.getRandomItem(Equipment.SWORD, rand, diff);
 		}
 		
-		ItemStack sword = pickSword(rand, level);
+		ItemStack sword = pickSword(rand, diff);
 		
-		if(enchant) Enchant.enchantItem(features, rand, sword, Enchant.getLevel(rand, level));
+		if(enchant) Enchant.enchantItem(features, rand, sword, Enchant.getLevel(rand, diff));
 		return sword;		
 	}
 	
-	public static ItemStack getSword(FeatureSet features, Random rand, int level, boolean enchant, Quality quality){
-		ItemStack sword = quality != null ? getSwordByQuality(quality) : pickSword(rand, level);
-		return enchant ? Enchant.enchantItem(features, rand, sword, Enchant.getLevel(rand, level)) : sword;
+	public static ItemStack getSword(FeatureSet features, Random rand, Difficulty diff, boolean enchant, Quality quality){
+		ItemStack sword = quality != null ? getSwordByQuality(quality) : pickSword(rand, diff);
+		return enchant ? Enchant.enchantItem(features, rand, sword, Enchant.getLevel(rand, diff)) : sword;
 	}
 	
-	private static ItemStack pickSword(Random rand, int level){
-		Quality quality = Quality.getWeaponQuality(rand, level);
+	private static ItemStack pickSword(Random rand, Difficulty diff){
+		Quality quality = Quality.getWeaponQuality(rand, diff);
 		return getSwordByQuality(quality);
 	}
 	

@@ -1,8 +1,10 @@
 package com.greymerk.roguelike.treasure.loot.provider;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.treasure.loot.WeightedRandomLoot;
 import com.greymerk.roguelike.util.WeightedRandomizer;
 
@@ -12,30 +14,30 @@ import net.minecraft.util.math.random.Random;
 
 public class ItemJunk extends ItemBase{
 
-	private Map<Integer, WeightedRandomizer<ItemStack>> loot;
+	private Map<Difficulty, WeightedRandomizer<ItemStack>> loot;
 	
-	public ItemJunk(int weight, int level) {
-		super(weight, level);
+	public ItemJunk(int weight, Difficulty diff) {
+		super(weight, diff	);
 		
-		this.loot = new HashMap<Integer, WeightedRandomizer<ItemStack>>();
+		this.loot = new HashMap<Difficulty, WeightedRandomizer<ItemStack>>();
 		
-		for(int i = 0; i < 5; ++i) {
+		List.of(Difficulty.values()).forEach(d -> {
 			WeightedRandomizer<ItemStack> randomizer = new WeightedRandomizer<ItemStack>();
-			loot.put(i, randomizer);
+			loot.put(d, randomizer);
 
-			if(i > 2) {
+			if(d.gt(Difficulty.MEDIUM)) {
 				randomizer.add(new WeightedRandomLoot(Items.BLAZE_ROD, 1, 3, 100));
 				randomizer.add(new WeightedRandomLoot(Items.AMETHYST_SHARD, 1, 3, 100));
 				randomizer.add(new WeightedRandomLoot(Items.BLAZE_ROD, 1, 3, 100));
 			}
 			
-			if(i > 1) {
+			if(d.gt(Difficulty.EASY)) {
 				randomizer.add(new WeightedRandomLoot(Items.ENDER_PEARL, 1, 3, 100));
 				randomizer.add(new WeightedRandomLoot(Items.GLOW_INK_SAC, 1, 1, 100));
 			}
 			
-			randomizer.add(new WeightedRandomLoot(Items.LEATHER, 1, i + 3, 100));
-			randomizer.add(new WeightedRandomLoot(Items.ARROW, 1, i + 3, 100));
+			randomizer.add(new WeightedRandomLoot(Items.LEATHER, 1, d.value + 3, 100));
+			randomizer.add(new WeightedRandomLoot(Items.ARROW, 1, d.value + 3, 100));
 			randomizer.add(new WeightedRandomLoot(Items.INK_SAC, 1, 1, 100));
 			randomizer.add(new WeightedRandomLoot(Items.FEATHER, 1, 3, 100));
 			randomizer.add(new WeightedRandomLoot(Items.PAPER, 1, 3, 100));
@@ -52,13 +54,13 @@ public class ItemJunk extends ItemBase{
 			randomizer.add(new WeightedRandomLoot(Items.SPIDER_EYE, 1, 1, 100));
 			randomizer.add(new WeightedRandomLoot(Items.SNOWBALL, 1, 1, 100));
 			randomizer.add(new WeightedRandomLoot(Items.LEAD, 1, 1, 10));
-		}
+		});
 	}
 
 	@Override
-	public ItemStack getLootItem(Random rand, int level){
+	public ItemStack getLootItem(Random rand, Difficulty diff){
 		if(rand.nextInt(5000) == 0) return ItemNovelty.getItem(ItemNovelty.ZISTEAU);
 		if(rand.nextInt(5000) == 0) return ItemNovelty.getItem(ItemNovelty.VECHS);
-		return this.loot.get(level).get(rand);
+		return this.loot.get(diff).get(rand);
 	}
 }

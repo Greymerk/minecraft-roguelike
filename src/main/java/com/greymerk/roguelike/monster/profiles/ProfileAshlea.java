@@ -1,7 +1,6 @@
 package com.greymerk.roguelike.monster.profiles;
 
-import net.minecraft.util.math.random.Random;
-
+import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.monster.IEntity;
 import com.greymerk.roguelike.monster.IMonsterProfile;
 import com.greymerk.roguelike.monster.MonsterProfile;
@@ -12,16 +11,17 @@ import com.greymerk.roguelike.treasure.loot.provider.ItemNovelty;
 
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 
 public class ProfileAshlea implements IMonsterProfile {
 
 	@Override
-	public void addEquipment(World world, Random rand, int level, IEntity mob) {
+	public void addEquipment(World world, Random rand, Difficulty diff, IEntity mob) {
 		
 		mob.setChild(true);
 		
-		MonsterProfile.get(MonsterProfile.VILLAGER).addEquipment(world, rand, level, mob);
+		MonsterProfile.get(MonsterProfile.VILLAGER).addEquipment(world, rand, diff, mob);
 		
 		ItemStack weapon = ItemNovelty.getItem(ItemNovelty.ASHLEA);
 		mob.setSlot(EquipmentSlot.MAINHAND, weapon);

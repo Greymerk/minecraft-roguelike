@@ -1,5 +1,6 @@
 package com.greymerk.roguelike.treasure.loot.provider;
 
+import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.treasure.loot.Enchant;
 import com.greymerk.roguelike.treasure.loot.Equipment;
 import com.greymerk.roguelike.treasure.loot.Quality;
@@ -19,37 +20,37 @@ public class ItemArmour extends ItemBase {
 	private DynamicRegistryManager registry;
 	private FeatureSet features;
 	
-	public ItemArmour(int weight, int level, FeatureSet features, DynamicRegistryManager reg) {
-		super(weight, level);
+	public ItemArmour(int weight, Difficulty diff, FeatureSet features, DynamicRegistryManager reg) {
+		super(weight, diff);
 		this.features = features;
 		this.registry = reg;
 	}	
 	
 	@Override
-	public ItemStack getLootItem(Random rand, int level) {
-		return getRandom(this.features, this.registry, rand, level, true);
+	public ItemStack getLootItem(Random rand, Difficulty diff) {
+		return getRandom(this.features, this.registry, rand, diff, true);
 	}
 
-	public static ItemStack getRandom(FeatureSet features, DynamicRegistryManager reg, Random rand, int level, boolean enchant){
-		ItemStack item = getRandom(features, reg, rand, level,
+	public static ItemStack getRandom(FeatureSet features, DynamicRegistryManager reg, Random rand, Difficulty diff, boolean enchant){
+		ItemStack item = getRandom(features, reg, rand, diff,
 				Slot.getSlotByNumber(rand.nextInt(4) + 1),
 				enchant);
 		return item;
 	}
 	
-	public static ItemStack getRandom(FeatureSet features, DynamicRegistryManager reg, Random rand, int level, Slot slot, boolean enchant){
-		if(enchant && rand.nextInt(20 + (level * 10)) == 0){
+	public static ItemStack getRandom(FeatureSet features, DynamicRegistryManager reg, Random rand, Difficulty diff, Slot slot, boolean enchant){
+		if(enchant && rand.nextInt(20 + (Difficulty.value(diff) * 10)) == 0){
 			switch(slot){
-			case HEAD: return ItemSpecialty.getRandomItem(Equipment.HELMET, rand, level); 
-			case CHEST: return ItemSpecialty.getRandomItem(Equipment.CHEST, rand, level); 
-			case LEGS: return ItemSpecialty.getRandomItem(Equipment.LEGS, rand, level); 
-			case FEET: return ItemSpecialty.getRandomItem(Equipment.FEET, rand, level);
+			case HEAD: return ItemSpecialty.getRandomItem(Equipment.HELMET, rand, diff); 
+			case CHEST: return ItemSpecialty.getRandomItem(Equipment.CHEST, rand, diff); 
+			case LEGS: return ItemSpecialty.getRandomItem(Equipment.LEGS, rand, diff); 
+			case FEET: return ItemSpecialty.getRandomItem(Equipment.FEET, rand, diff);
 			default: return new ItemStack(Items.STICK);
 			}
 		}
 
-		ItemStack item = get(rand, slot, Quality.getArmourQuality(rand, level));
-		if(enchant) Enchant.enchantItem(features, rand, item, Enchant.getLevel(rand, level));
+		ItemStack item = get(rand, slot, Quality.getArmourQuality(rand, diff));
+		if(enchant) Enchant.enchantItem(features, rand, item, Enchant.getLevel(rand, diff));
 		Trim.addRandom(reg, item, rand);
 		return item;
 	}

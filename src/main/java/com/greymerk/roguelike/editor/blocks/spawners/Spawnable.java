@@ -1,5 +1,6 @@
 package com.greymerk.roguelike.editor.blocks.spawners;
 
+import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.MetaBlock;
@@ -21,7 +22,7 @@ public class Spawnable {
 		this.type = type;
 	}
 		
-	public void generate(IWorldEditor editor, Random rand, Coord pos, int level){
+	public void generate(IWorldEditor editor, Random rand, Coord pos, Difficulty diff){
 
 		editor.set(pos, new MetaBlock(Blocks.SPAWNER), true, true);
 		BlockEntity be = editor.getBlockEntity(pos);
@@ -34,8 +35,8 @@ public class Spawnable {
 		nbt.putInt("y", pos.getY());
 		nbt.putInt("z", pos.getZ());
 		
-		nbt.put("SpawnPotentials", getSpawnPotentials(rand, level));
-		nbt.put("SpawnData", getSpawnData(rand, level));
+		nbt.put("SpawnPotentials", getSpawnPotentials(rand, diff));
+		nbt.put("SpawnData", getSpawnData(rand, diff));
 		
 		MobSpawnerBlockEntity spawner = (MobSpawnerBlockEntity)be;
 		MobSpawnerLogic logic = spawner.getLogic();
@@ -44,13 +45,13 @@ public class Spawnable {
 		spawner.markDirty();
 	}
 	
-	public NbtCompound getSpawnData(Random rand, int level) {
+	public NbtCompound getSpawnData(Random rand, Difficulty diff) {
 		SpawnPotential potential = new SpawnPotential(this.type);
-		return potential.getSpawnData(rand, level);
+		return potential.getSpawnData(rand, diff);
 	}
 	
-	public NbtList getSpawnPotentials(Random rand, int level){
+	public NbtList getSpawnPotentials(Random rand, Difficulty diff){
 		SpawnPotential potential = new SpawnPotential(this.type);
-		return potential.get(rand, level);
+		return potential.get(rand, diff);
 	}
 }

@@ -2,7 +2,7 @@ package com.greymerk.roguelike.dungeon.room;
 
 import java.util.List;
 
-import com.greymerk.roguelike.dungeon.Dungeon;
+import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.dungeon.Floor;
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellManager;
@@ -296,7 +296,7 @@ public class BrewingRoom extends AbstractRoom implements IRoom {
 	
 	private void brewingStand(IWorldEditor editor, Random rand, Coord origin) {
 		BrewingStand.generate(editor, origin);
-		IWeighted<ItemStack> provider = Loot.getProvider(Loot.POTION, Dungeon.getLevelFromY(origin.getY()), editor);
+		IWeighted<ItemStack> provider = Loot.getProvider(Loot.POTION, Difficulty.fromY(origin.getY()), editor);
 		BrewingStand.slots.forEach(slot -> {
 			BrewingStand.add(editor, origin, slot, provider.get(rand));
 		});

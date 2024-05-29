@@ -1,5 +1,6 @@
 package com.greymerk.roguelike.treasure.loot.provider;
 
+import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.treasure.loot.potions.PotionForm;
 import com.greymerk.roguelike.treasure.loot.potions.PotionItem;
 import com.greymerk.roguelike.treasure.loot.potions.PotionMixture;
@@ -9,18 +10,18 @@ import net.minecraft.util.math.random.Random;
 
 public class ItemPotion extends ItemBase{
 
-	public ItemPotion(int weight, int level) {
-		super(weight, level);
+	public ItemPotion(int weight, Difficulty diff) {
+		super(weight, diff);
 	}
 
 	@Override
-	public ItemStack getLootItem(Random rand, int level) {
+	public ItemStack getLootItem(Random rand, Difficulty diff) {
 		
 		if(rand.nextInt(10) == 0) return PotionMixture.getPotion(rand, PotionMixture.LAUDANUM);
 		
-		if(level > 2 && rand.nextBoolean()) {
+		if(diff.gt(Difficulty.MEDIUM) && rand.nextBoolean()) {
 			return PotionMixture.getPotion(rand, PotionMixture.VILE);
-		} else if(level > 0 && rand.nextBoolean()) {
+		} else if(diff.gt(Difficulty.EASIEST) && rand.nextBoolean()) {
 			return PotionMixture.getRandom(rand);
 		}
 		

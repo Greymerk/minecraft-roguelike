@@ -68,8 +68,8 @@ public enum Spawner {
 	
 	public static void generate(IWorldEditor editor, Random rand, Coord pos, Spawner type) {
 		
-		int difficulty = Difficulty.fromY(pos.getY());
-		new Spawnable(type).generate(editor, rand, pos, difficulty);
+		Difficulty diff = Difficulty.fromY(pos.getY());
+		new Spawnable(type).generate(editor, rand, pos, diff);
 	
 	}
 }

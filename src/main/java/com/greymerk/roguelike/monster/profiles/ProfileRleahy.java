@@ -1,7 +1,6 @@
 package com.greymerk.roguelike.monster.profiles;
 
-import net.minecraft.util.math.random.Random;
-
+import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.monster.IEntity;
 import com.greymerk.roguelike.monster.IMonsterProfile;
 import com.greymerk.roguelike.treasure.loot.Quality;
@@ -12,12 +11,13 @@ import com.greymerk.roguelike.treasure.loot.provider.ItemNovelty;
 
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 
 public class ProfileRleahy implements IMonsterProfile {
 
 	@Override
-	public void addEquipment(World world, Random rand, int level, IEntity mob) {
+	public void addEquipment(World world, Random rand, Difficulty diff, IEntity mob) {
 		ItemStack weapon = ItemNovelty.getItem(ItemNovelty.RLEAHY);
 		mob.setSlot(EquipmentSlot.MAINHAND, weapon);
 		mob.setSlot(EquipmentSlot.OFFHAND, Shield.get(world.getRegistryManager(), rand));

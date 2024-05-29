@@ -3,6 +3,7 @@ package com.greymerk.roguelike.treasure.loot.rules;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.treasure.Treasure;
 import com.greymerk.roguelike.treasure.TreasureManager;
 import com.greymerk.roguelike.treasure.chest.ITreasureChest;
@@ -20,13 +21,13 @@ public class LootRuleManager {
 		this.rules = new ArrayList<LootRule>();
 	}
 
-	public void add(Treasure type, IWeighted<ItemStack> item, int level, int amount){
-		this.rules.add(new LootRule(type, item, level, amount));
+	public void add(Treasure type, IWeighted<ItemStack> item, Difficulty diff, int amount){
+		this.rules.add(new LootRule(type, item, diff, amount));
 	}
 	
-	public void add(Treasure type, ItemStack item, int level, int amount){
+	public void add(Treasure type, ItemStack item, Difficulty diff, int amount){
 		IWeighted<ItemStack> toAdd = new WeightedChoice<ItemStack>(item, 1);
-		this.rules.add(new LootRule(type, toAdd, level, amount));
+		this.rules.add(new LootRule(type, toAdd, diff, amount));
 	}
 	
 	public void add(LootRule toAdd){

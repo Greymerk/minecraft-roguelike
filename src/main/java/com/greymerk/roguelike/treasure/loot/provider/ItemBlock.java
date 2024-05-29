@@ -1,5 +1,6 @@
 package com.greymerk.roguelike.treasure.loot.provider;
 
+import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.treasure.loot.WeightedRandomLoot;
 import com.greymerk.roguelike.util.WeightedRandomizer;
 
@@ -11,8 +12,8 @@ public class ItemBlock extends ItemBase{
 	
 	private WeightedRandomizer<ItemStack> loot;
 	
-	public ItemBlock(int weight, int level) {
-		super(weight, level);
+	public ItemBlock(int weight, Difficulty diff) {
+		super(weight, diff);
 		
 		WeightedRandomizer<ItemStack> stone = new WeightedRandomizer<ItemStack>(10);
 		stone.add(new WeightedRandomLoot(Blocks.COBBLESTONE, 8, 32, 1));
@@ -35,7 +36,7 @@ public class ItemBlock extends ItemBase{
 	}
 
 	@Override
-	public ItemStack getLootItem(Random rand, int level) {
+	public ItemStack getLootItem(Random rand, Difficulty diff) {
 		return this.loot.get(rand);
 	}
 }

@@ -24,11 +24,11 @@ public class TreasureChest implements ITreasureChest{
 	private Inventory inventory;
 	private Treasure type;
 	private LootableContainerBlockEntity chest;
-	private int level;
+	private Difficulty diff;
 
 	public TreasureChest(Treasure type){
 		this.type = type;
-		this.level = 0;
+		this.diff = Difficulty.EASIEST;
 	}
 	
 	public ITreasureChest generate(IWorldEditor editor, Random rand, Coord pos, ChestType block) throws ChestPlacementException {
@@ -45,7 +45,7 @@ public class TreasureChest implements ITreasureChest{
 	
 	public ITreasureChest generate(IWorldEditor editor, Random rand, Coord pos, Cardinal dir, ChestType type) throws ChestPlacementException {
 
-		this.level = Difficulty.fromY(pos.getY());
+		this.diff = Difficulty.fromY(pos.getY());
 		
 		MetaBlock block = ChestType.get(type);
 		setOrientation(block, dir);
@@ -105,10 +105,8 @@ public class TreasureChest implements ITreasureChest{
 	}
 
 	@Override
-	public int getLevel() {
-		if(level < 0) return 0;
-		if(level > 4) return 4;
-		return this.level;
+	public Difficulty getLevel() {
+		return this.diff;
 	}
 
 	@Override

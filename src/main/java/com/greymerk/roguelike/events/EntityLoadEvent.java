@@ -2,6 +2,7 @@ package com.greymerk.roguelike.events;
 
 import java.util.Map;
 
+import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.monster.IEntity;
 import com.greymerk.roguelike.monster.MetaEntity;
 import com.greymerk.roguelike.monster.MonsterProfile;
@@ -36,6 +37,8 @@ public class EntityLoadEvent implements Load{
 		
 		IEntity monster = new MetaEntity(mob);
 		
-		MonsterProfile.equip(world, rand, amp, monster);
+		Difficulty diff = Difficulty.from(amp); 
+		
+		MonsterProfile.equip(world, rand, diff, monster);
 	}
 }

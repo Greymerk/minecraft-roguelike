@@ -1,5 +1,6 @@
 package com.greymerk.roguelike.treasure.loot.provider;
 
+import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.treasure.loot.Enchant;
 import com.greymerk.roguelike.treasure.loot.Equipment;
 import com.greymerk.roguelike.treasure.loot.Loot;
@@ -16,35 +17,35 @@ public class ItemSpecialty extends ItemBase {
 	private Equipment type;
 	private Quality quality;
 	
-	public ItemSpecialty(int weight, int level){
-		super(weight, level);
+	public ItemSpecialty(int weight, Difficulty diff){
+		super(weight, diff);
 	}
 	
-	public ItemSpecialty(int weight, int level, Equipment type, Quality q){
-		super(weight, level);
+	public ItemSpecialty(int weight, Difficulty diff, Equipment type, Quality q){
+		super(weight, diff);
 		this.type = type;
 		this.quality = q;
 	}
 	
-	public ItemSpecialty(int weight, int level, Quality q){
-		super(weight, level);
+	public ItemSpecialty(int weight, Difficulty diff, Quality q){
+		super(weight, diff);
 		this.quality = q;
 	}
 	
 	@Override
 	public ItemStack get(Random rand){
 		Equipment t = this.type == null ? Equipment.values()[rand.nextInt(Equipment.values().length)] : this.type;
-		Quality q = this.quality == null ? Quality.get(rand, level, t) : this.quality;
+		Quality q = this.quality == null ? Quality.get(rand, diff, t) : this.quality;
 		return getRandomItem(t, rand, q);
 	}
 		
-	public static ItemStack getRandomItem(Random rand, int level){
-		return getRandomItem(Equipment.values()[rand.nextInt(Equipment.values().length)], rand, level);
+	public static ItemStack getRandomItem(Random rand, Difficulty diff){
+		return getRandomItem(Equipment.values()[rand.nextInt(Equipment.values().length)], rand, diff);
 	}
 	
 	
-	public static ItemStack getRandomItem(Equipment type, Random rand, int level){
-		return getRandomItem(type, rand, Quality.get(rand, level, type));
+	public static ItemStack getRandomItem(Equipment type, Random rand, Difficulty diff){
+		return getRandomItem(type, rand, Quality.get(rand, diff, type));
 	}
 	
 	public static ItemStack getRandomItem(Equipment type, Random rand, Quality quality){
@@ -549,18 +550,7 @@ public class ItemSpecialty extends ItemBase {
 	}
 
 	@Override
-	public ItemStack getLootItem(Random rand, int level) {
-		
-		Quality q;
-		switch(level){
-		case 0: q = Quality.WOOD; break;
-		case 1: q = Quality.STONE; break;
-		case 2: q = Quality.IRON; break;
-		case 3:	q = Quality.GOLD; break;
-		case 4: q = Quality.DIAMOND; break;
-		default: q = Quality.WOOD; break;
-		}
-		
-		return getRandomItem(Equipment.values()[rand.nextInt(Equipment.values().length)], rand, q);
+	public ItemStack getLootItem(Random rand, Difficulty diff) {
+		return getRandomItem(Equipment.values()[rand.nextInt(Equipment.values().length)], rand, Quality.get(diff));
 	}		
 }

@@ -1,5 +1,6 @@
 package com.greymerk.roguelike.treasure.loot.rules;
 
+import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.treasure.Treasure;
 import com.greymerk.roguelike.treasure.TreasureManager;
 import com.greymerk.roguelike.treasure.chest.ITreasureChest;
@@ -12,22 +13,22 @@ public class LootRule {
 
 	private Treasure type;
 	private IWeighted<ItemStack> item;
-	int level;
+	Difficulty diff;
 	int amount;
 	
-	public LootRule(Treasure type, IWeighted<ItemStack> item, int level, int amount){
+	public LootRule(Treasure type, IWeighted<ItemStack> item, Difficulty diff, int amount){
 		this.type = type;
 		this.item = item;
-		this.level = level;
+		this.diff = diff;
 		this.amount = amount;
 	}
 	
 	public void process(Random rand, TreasureManager treasure){
-		treasure.addItemToAll(rand, type, level, item, amount);	
+		treasure.addItemToAll(rand, type, diff, item, amount);	
 	}
 
 	public void process(Random rand, ITreasureChest chest) {
-		if(chest.getLevel() != this.level) return;
+		if(chest.getLevel() != this.diff) return;
 		if(this.type == Treasure.ALL) addItems(rand, chest);
 		if(this.type == chest.getType()) addItems(rand, chest);
 	}
@@ -44,9 +45,8 @@ public class LootRule {
 	public String toString(){
 		
 		String type = this.type.toString();
-		int level = this.level;
 		int amount = this.amount;
 		
-		return "type: " + type + " level: " + level + " amount: " + amount;
+		return "type: " + type + " diff: " + this.diff + " amount: " + amount;
 	}
 }

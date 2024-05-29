@@ -1,8 +1,10 @@
 package com.greymerk.roguelike.treasure.loot.provider;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.treasure.loot.WeightedRandomLoot;
 import com.greymerk.roguelike.util.WeightedRandomizer;
 
@@ -12,31 +14,31 @@ import net.minecraft.util.math.random.Random;
 
 public class ItemPrecious extends ItemBase{
 	
-	private Map<Integer, WeightedRandomizer<ItemStack>> loot;
+	private Map<Difficulty, WeightedRandomizer<ItemStack>> loot;
 
 	
-	public ItemPrecious(int weight, int level) {
-		super(weight, level);
+	public ItemPrecious(int weight, Difficulty diff) {
+		super(weight, diff);
 		
-		this.loot = new HashMap<Integer, WeightedRandomizer<ItemStack>>();
+		this.loot = new HashMap<Difficulty, WeightedRandomizer<ItemStack>>();
 		
-		for(int i = 0; i < 5; ++i) {
+		List.of(Difficulty.values()).forEach(d -> {
 			WeightedRandomizer<ItemStack> randomizer = new WeightedRandomizer<ItemStack>();
-			loot.put(i, randomizer);
+			loot.put(d, randomizer);
 			
-			randomizer.add(new WeightedRandomLoot(Items.EMERALD, i + 1, 3 * (i + 1), 100));
+			randomizer.add(new WeightedRandomLoot(Items.EMERALD, d.value + 1, 3 * (d.value + 1), 100));
 			randomizer.add(new WeightedRandomLoot(Items.AMETHYST_SHARD, 1, 1, 10));
 			randomizer.add(new WeightedRandomLoot(Items.DIAMOND, 1, 1, 5));
-			if(i > 1) {
+			if(d.gt(Difficulty.EASY)) {
 				randomizer.add(new WeightedRandomLoot(Items.SHULKER_SHELL, 1, 1, 1));	
 			}
 			
-		}
+		});
 	}
 
 	@Override
-	public ItemStack getLootItem(Random rand, int level){
-		return this.loot.get(level).get(rand);
+	public ItemStack getLootItem(Random rand, Difficulty diff){
+		return this.loot.get(diff).get(rand);
 	}
 
 }
