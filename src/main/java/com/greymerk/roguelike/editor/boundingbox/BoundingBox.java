@@ -23,6 +23,10 @@ public class BoundingBox implements IBounded, IShape{
 		return new BoundingBox(origin);
 	}
 	
+	public static BoundingBox of(Coord start, Coord end) {
+		return new BoundingBox(start, end);
+	}
+	
 	public BoundingBox copy() {
 		return new BoundingBox(start, end);
 	}
