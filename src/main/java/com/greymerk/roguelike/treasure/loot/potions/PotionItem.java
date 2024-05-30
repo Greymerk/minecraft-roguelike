@@ -1,13 +1,12 @@
 package com.greymerk.roguelike.treasure.loot.potions;
 
-import net.minecraft.component.type.PotionContentsComponent;
-import net.minecraft.item.Item;
+import net.minecraft.util.math.random.Random;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionUtil;
 import net.minecraft.potion.Potions;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.util.math.random.Random;
 
 public enum PotionItem {
 	
@@ -28,23 +27,21 @@ public enum PotionItem {
 		
 	public static ItemStack getSpecific(PotionForm type, PotionItem effect, boolean upgrade, boolean extend){
 		
-		Item potion;
+		ItemStack potion;
 		
 		switch(type){
-		case REGULAR: potion = Items.POTION; break;
-		case SPLASH: potion = Items.SPLASH_POTION; break;
-		case LINGERING: potion = Items.LINGERING_POTION; break;
-		default: potion = Items.POTION; break;
+		case REGULAR: potion = new ItemStack(Items.POTION); break;
+		case SPLASH: potion = new ItemStack(Items.SPLASH_POTION); break;
+		case LINGERING: potion = new ItemStack(Items.LINGERING_POTION); break;
+		default: potion = new ItemStack(Items.POTION); break;
 		}
 		
-		RegistryEntry<Potion> data = getEffect(effect, upgrade, extend);
+		Potion data = getEffect(effect, upgrade, extend);
 		
-		return PotionContentsComponent.createStack(potion, data);
-		
-		
+		return PotionUtil.setPotion(potion, data);
 	}
 	
-	public static RegistryEntry<Potion> getEffect(PotionItem effect, boolean upgrade, boolean extend){
+	public static Potion getEffect(PotionItem effect, boolean upgrade, boolean extend){
 		
 		if(effect == null) return Potions.AWKWARD;
 		

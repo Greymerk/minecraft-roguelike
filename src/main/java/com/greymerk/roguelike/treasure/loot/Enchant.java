@@ -79,7 +79,7 @@ public enum Enchant {
 		
 		List<EnchantmentLevelEntry> enchants = null;
 		try{
-			enchants = EnchantmentHelper.generateEnchantments(features, rand, item, enchantLevel, false);
+			enchants = EnchantmentHelper.generateEnchantments(rand, item, enchantLevel, false);
 		} catch(NullPointerException e){
 			throw e;
 		}

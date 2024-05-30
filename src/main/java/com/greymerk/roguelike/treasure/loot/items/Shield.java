@@ -1,29 +1,31 @@
 package com.greymerk.roguelike.treasure.loot.items;
 
-import net.minecraft.block.entity.BannerPattern;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.BannerPatternsComponent;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.registry.DynamicRegistryManager;
-import net.minecraft.registry.Registry;
-import net.minecraft.registry.RegistryKeys;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.random.Random;
 
 public class Shield {
 
-	public static ItemStack get(DynamicRegistryManager reg, Random rand){
+	public static ItemStack get(Random rand){
 		
-		Registry<BannerPattern> patterns = reg.get(RegistryKeys.BANNER_PATTERN);
+		ItemStack banner = Banner.get(rand);
+		
 		ItemStack shield = new ItemStack(Items.SHIELD); 
 		
-		BannerPatternsComponent component = Banner.createLayersComponent(patterns, rand, rand.nextInt(3) + 3);
-		shield.set(DataComponentTypes.BANNER_PATTERNS, component);
-		
+		applyBanner(banner, shield);
 		return shield;
 	}
 	
+	public static void applyBanner(ItemStack banner, ItemStack shield){
+		
+        NbtCompound bannerNBT = banner.getSubNbt("BlockEntityTag");
+		NbtCompound shieldNBT = bannerNBT == null ? new NbtCompound() : bannerNBT.copy();
+		
+        //shieldNBT.setInteger("Base", 0);
+        shield.setSubNbt("BlockEntityTag", shieldNBT);
 
+	}
 	
 
 }

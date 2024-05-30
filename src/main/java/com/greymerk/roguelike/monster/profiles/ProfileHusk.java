@@ -20,7 +20,7 @@ public class ProfileHusk implements IMonsterProfile {
 		mob.setMobClass(MobType.HUSK, false);
 		ItemStack weapon = ItemTool.getRandom(world.getEnabledFeatures(), rand, diff, mob.canEnchant(rand, diff));
 		mob.setSlot(EquipmentSlot.MAINHAND, weapon);
-		mob.setSlot(EquipmentSlot.OFFHAND, Shield.get(world.getRegistryManager(), rand));
+		mob.setSlot(EquipmentSlot.OFFHAND, Shield.get(rand));
 		MonsterProfile.get(MonsterProfile.TALLMOB).addEquipment(world, rand, diff, mob);
 	}
 }

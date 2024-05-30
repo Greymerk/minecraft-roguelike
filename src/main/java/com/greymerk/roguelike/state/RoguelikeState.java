@@ -13,7 +13,6 @@ import com.greymerk.roguelike.editor.IWorldEditor;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
-import net.minecraft.registry.RegistryWrapper.WrapperLookup;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.PersistentState;
 import net.minecraft.world.PersistentStateManager;
@@ -56,7 +55,7 @@ public class RoguelikeState extends PersistentState {
 	}
 	
     @Override
-    public NbtCompound writeNbt(NbtCompound nbt, WrapperLookup var2) {
+    public NbtCompound writeNbt(NbtCompound nbt) {
     	NbtList dungeonData = new NbtList();
     	
     	for(Dungeon d : this.dungeons) {
@@ -94,17 +93,9 @@ public class RoguelikeState extends PersistentState {
         // Calling this reads the file from the disk if it exists, or creates a new one and saves it to the disk
         // You need to use a unique string as the key. You should already have a MODID variable defined by you somewhere in your code. Use that.
         RoguelikeState serverState = persistentStateManager.getOrCreate(
-        		getPersistentStateType(),
-        		Roguelike.MODID);
+                RoguelikeState::createFromNbt,
+                RoguelikeState::new,
+                Roguelike.MODID); 
         return serverState;
-    }
-    
-    public static PersistentState.Type<RoguelikeState> getPersistentStateType() {
-    	return new PersistentState.Type<RoguelikeState>(
-    			() -> new RoguelikeState(),
-    			(nbt, registryLookup) -> createFromNbt(nbt),
-    			null
-    			);
-    	
     }
 }

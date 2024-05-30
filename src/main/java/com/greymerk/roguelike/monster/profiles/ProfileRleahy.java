@@ -20,7 +20,7 @@ public class ProfileRleahy implements IMonsterProfile {
 	public void addEquipment(World world, Random rand, Difficulty diff, IEntity mob) {
 		ItemStack weapon = ItemNovelty.getItem(ItemNovelty.RLEAHY);
 		mob.setSlot(EquipmentSlot.MAINHAND, weapon);
-		mob.setSlot(EquipmentSlot.OFFHAND, Shield.get(world.getRegistryManager(), rand));
+		mob.setSlot(EquipmentSlot.OFFHAND, Shield.get(rand));
 		
 		ItemStack item = ItemArmour.get(rand, Slot.FEET, Quality.WOOD);
 		ItemArmour.dyeArmor(item, 32, 32, 32);

@@ -7,10 +7,9 @@ import com.greymerk.roguelike.treasure.loot.Quality;
 import com.greymerk.roguelike.treasure.loot.Slot;
 import com.greymerk.roguelike.treasure.loot.trim.Trim;
 
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.DyedColorComponent;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.resource.featuretoggle.FeatureSet;
 import net.minecraft.util.math.random.Random;
@@ -51,7 +50,7 @@ public class ItemArmour extends ItemBase {
 
 		ItemStack item = get(rand, slot, Quality.getArmourQuality(rand, diff));
 		if(enchant) Enchant.enchantItem(features, rand, item, Enchant.getLevel(rand, diff));
-		Trim.addRandom(reg, item, rand);
+		Trim.addRandom(item, rand);
 		return item;
 	}
 	
@@ -120,8 +119,18 @@ public class ItemArmour extends ItemBase {
 		
 		int color = r << 16 | g << 8 | b << 0;;
         
-		DyedColorComponent dye = new DyedColorComponent(color, false);
-		armor.set(DataComponentTypes.DYED_COLOR, dye);
+        NbtCompound nbtdata = armor.getNbt();
+        if (nbtdata == null){
+            nbtdata = new NbtCompound();
+            armor.setNbt(nbtdata);
+        }
+
+        NbtCompound nbtDisplay = nbtdata.getCompound("display");
+        if (!nbtdata.contains("display")){
+            nbtdata.put("display", nbtDisplay);
+        }
+
+        nbtDisplay.putInt("color", color);
 		return armor;
 	}
 

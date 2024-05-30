@@ -133,15 +133,15 @@ public class SpawnPotential {
 		tag.putString("id", Spawner.getName(type));
 		
 		NbtList activeEffects = new NbtList();
-		tag.put("active_effects", activeEffects);
+		tag.put("ActiveEffects", activeEffects);
 		
 		NbtCompound buff = new NbtCompound();
 		activeEffects.add(buff);
 		
-		buff.putString("id", "minecraft:mining_fatigue");
-		buff.putByte("amplifier", (byte) diff.value);
-		buff.putInt("duration", 10);
-		buff.putByte("ambient", (byte) 0);
+		buff.putByte("Id", (byte) 4);
+		buff.putByte("Amplifier", (byte) diff.value);
+		buff.putInt("Duration", 10);
+		buff.putByte("Ambient", (byte) 0);
 
 		return tag;
     }

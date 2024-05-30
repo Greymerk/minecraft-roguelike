@@ -8,10 +8,10 @@ import com.greymerk.roguelike.editor.MetaBlock;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.MobSpawnerBlockEntity;
-import net.minecraft.block.spawner.MobSpawnerLogic;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.util.math.random.Random;
+import net.minecraft.world.MobSpawnerLogic;
 import net.minecraft.world.World;
 
 public class Spawnable {

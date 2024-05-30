@@ -40,7 +40,6 @@ public class ItemSupply extends ItemBase{
 		loot.add(new WeightedRandomLoot(Items.RABBIT_FOOT, 1, 4, 1));
 		loot.add(new WeightedRandomLoot(Items.SWEET_BERRIES, 1, 4, 1));
 		loot.add(new WeightedRandomLoot(Items.PAPER, 4, 32, 1));
-		loot.add(new WeightedRandomLoot(Items.TURTLE_SCUTE, 1, 1, 1));
 		loot.add(new WeightedRandomLoot(Items.STRING, 8, 32, 1));
 		loot.add(new WeightedRandomLoot(Items.STICK, 8, 64, 1));
 		loot.add(new WeightedRandomLoot(Items.LEATHER, 4, 24, 1));

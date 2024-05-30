@@ -15,7 +15,6 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.SkeletonEntity;
 import net.minecraft.entity.mob.ZombieEntity;
-import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.random.Random;
 
@@ -27,7 +26,7 @@ public class EntityLoadEvent implements Load{
 		Random rand = world.getRandom();
 		MobEntity mob = (MobEntity)entity;
 		
-		Map<RegistryEntry<StatusEffect>, StatusEffectInstance> effects = mob.getActiveStatusEffects();
+		Map<StatusEffect, StatusEffectInstance> effects = ((MobEntity)entity).getActiveStatusEffects();
 		if(!effects.containsKey(StatusEffects.MINING_FATIGUE)) return;
 		
 		StatusEffectInstance effect = effects.get(StatusEffects.MINING_FATIGUE);

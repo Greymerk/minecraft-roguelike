@@ -1,6 +1,5 @@
 package com.greymerk.roguelike.treasure.loot;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.greymerk.roguelike.dungeon.Difficulty;
@@ -24,11 +23,12 @@ import com.greymerk.roguelike.treasure.loot.rules.RoguelikeLootRules;
 import com.greymerk.roguelike.util.IWeighted;
 import com.greymerk.roguelike.util.TextFormat;
 
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.LoreComponent;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtList;
+import net.minecraft.nbt.NbtString;
 import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.resource.featuretoggle.FeatureSet;
 import net.minecraft.text.Text;
@@ -100,28 +100,55 @@ public enum Loot {
 	}
 
 	public static void setRarity(ItemStack item, Rarity type) {
-		switch(type) {
-		case COMMON: item.set(DataComponentTypes.RARITY, Rarity.COMMON); return;
-		case UNCOMMON: item.set(DataComponentTypes.RARITY, Rarity.UNCOMMON); return;
-		case RARE: item.set(DataComponentTypes.RARITY, Rarity.RARE); return;
-		case EPIC: item.set(DataComponentTypes.RARITY, Rarity.EPIC); return;
-		default: 
-		}
 		
 	}
 	
 	public static void setItemLore(ItemStack item, String loreText){
-		List<Text> lines = new ArrayList<Text>();
-		lines.add(Text.of(loreText));
-		LoreComponent lore = new LoreComponent(lines);
-		item.set(DataComponentTypes.LORE, lore);
+		
+		NbtCompound tag = item.getNbt(); 
+		
+		if (tag == null){
+			tag = new NbtCompound();
+			item.setNbt(tag);
+		}
+
+		if (!tag.contains("display")){
+			tag.put("display", new NbtCompound());
+		}
+		
+		NbtCompound display = tag.getCompound("display");
+		
+		if (!(display.contains("Lore")))
+		{
+			display.put("Lore", new NbtList());
+		}
+		
+		NbtList lore = display.getList("Lore", 0);
+		
+		NbtString toAdd = NbtString.of(loreText);
+		
+		lore.add(toAdd);
+		
+		display.put("Lore", lore);   
 	}
+
 	
 	public static void setItemLore(ItemStack item, String loreText, TextFormat option){
 		setItemLore(item, TextFormat.apply(loreText, option).getString());
 	}
 		
+	public static void setItemName(ItemStack item, String name, TextFormat option){
+		
+		if(option == null){
+			Text n = Text.of(name);
+			item.setCustomName(n);
+			return;
+		}
+		
+		item.setCustomName(TextFormat.apply(name, option));
+	}
+	
 	public static void setItemName(ItemStack item, String name){
-		item.set(DataComponentTypes.CUSTOM_NAME, Text.literal(name));
+		setItemName(item, name, null);
 	}
 }
