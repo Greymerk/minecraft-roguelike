@@ -35,10 +35,6 @@ public enum Fragment {
 	ALCOVE_SILVERFISH, ALCOVE_SAFETY, ALCOVE_CRYPT, BOOK_SHELF, ALCOVE_FIRE,
 	ALCOVE_PRISON_CELL;
 	
-	public static void generate(Fragment type, IWorldEditor editor, Random rand, ITheme theme, Coord pos) {
-		generate(type, editor, rand, theme, pos, Cardinal.NORTH);
-	}
-	
 	public static void generate(Fragment type, IWorldEditor editor, Random rand, ITheme theme, Coord pos, Cardinal dir) {
 		IFragment fragment = fromType(type);
 		fragment.generate(editor, rand, theme, pos, dir);

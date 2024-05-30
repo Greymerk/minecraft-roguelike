@@ -2,6 +2,7 @@ package com.greymerk.roguelike.dungeon.room;
 
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
+import com.greymerk.roguelike.dungeon.fragment.parts.CellSupport;
 import com.greymerk.roguelike.dungeon.layout.Entrance;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
@@ -40,13 +41,13 @@ public class OssuaryRoom extends AbstractMediumRoom implements IRoom {
 	}
 
 	private void supports(IWorldEditor editor, Random rand, Coord origin) {
-		Fragment.generate(Fragment.CELL_SUPPORT, editor, rand, theme, origin);
+		CellSupport.generate(editor, rand, theme, origin);
 		for(Cardinal dir : Cardinal.directions) {
 			Coord pos = origin.copy();
 			pos.add(dir, 6);
-			Fragment.generate(Fragment.CELL_SUPPORT, editor, rand, theme, pos);
+			CellSupport.generate(editor, rand, theme, pos);
 			pos.add(Cardinal.left(dir), 6);
-			Fragment.generate(Fragment.CELL_SUPPORT, editor, rand, theme, pos);
+			CellSupport.generate(editor, rand, theme, pos);
 		}
 	}
 

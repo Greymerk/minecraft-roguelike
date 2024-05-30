@@ -2,6 +2,7 @@ package com.greymerk.roguelike.dungeon.room;
 
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
+import com.greymerk.roguelike.dungeon.fragment.parts.CellSupport;
 import com.greymerk.roguelike.dungeon.layout.Entrance;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
@@ -78,7 +79,7 @@ public class CrossRoom extends AbstractMediumRoom implements IRoom {
 		IBlockFactory pillar = theme.getPrimary().getPillar();
 		IStair stair = theme.getPrimary().getStair();
 		
-		Fragment.generate(Fragment.CELL_SUPPORT, editor, rand, theme, origin.copy());
+		CellSupport.generate(editor, rand, theme, origin.copy());
 		
 		for(Cardinal d : Cardinal.directions) {
 			BoundingBox bb = BoundingBox.of(origin);

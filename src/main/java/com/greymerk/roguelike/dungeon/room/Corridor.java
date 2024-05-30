@@ -2,6 +2,7 @@ package com.greymerk.roguelike.dungeon.room;
 
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
 import com.greymerk.roguelike.dungeon.fragment.IFragment;
+import com.greymerk.roguelike.dungeon.fragment.parts.CellSupport;
 import com.greymerk.roguelike.dungeon.layout.Entrance;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
@@ -61,7 +62,7 @@ public class Corridor extends AbstractRoom implements IRoom{
 				stairs.setOrientation(Cardinal.reverse(orth), true).set(editor, rand, pos);
 			}
 			
-			Fragment.generate(Fragment.CELL_SUPPORT, editor, rand, theme, worldPos.copy());
+			CellSupport.generate(editor, rand, theme, worldPos.copy());
 			
 			
 		}

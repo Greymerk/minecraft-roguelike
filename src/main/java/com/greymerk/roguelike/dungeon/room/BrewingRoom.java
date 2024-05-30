@@ -8,6 +8,7 @@ import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellManager;
 import com.greymerk.roguelike.dungeon.cell.CellState;
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
+import com.greymerk.roguelike.dungeon.fragment.parts.CellSupport;
 import com.greymerk.roguelike.dungeon.fragment.parts.SpiralStairCase;
 import com.greymerk.roguelike.dungeon.layout.Entrance;
 import com.greymerk.roguelike.editor.Cardinal;
@@ -107,7 +108,7 @@ public class BrewingRoom extends AbstractRoom implements IRoom {
 			});
 			
 			this.shelf(editor, rand, origin.copy().add(dir, 3), dir, stair);
-			Fragment.generate(Fragment.CELL_SUPPORT, editor, rand, theme, origin.copy().add(dir, 3));
+			CellSupport.generate(editor, rand, theme, origin.copy().add(dir, 3));
 		});
 		
 		this.shelf(editor, rand, origin.copy().add(Cardinal.reverse(direction), 3), Cardinal.left(direction), stair);
@@ -156,7 +157,7 @@ public class BrewingRoom extends AbstractRoom implements IRoom {
 				stair.setOrientation(Cardinal.reverse(o), true).set(editor, rand, origin.copy().add(dir, 5).add(o, 4).add(Cardinal.UP, 2));
 			});
 			
-			Fragment.generate(Fragment.CELL_SUPPORT, editor, rand, theme, origin.copy().add(dir, 3).add(Cardinal.left(dir), 3));
+			CellSupport.generate(editor, rand, theme, origin.copy().add(dir, 3).add(Cardinal.left(dir), 3));
 		});
 		
 		settings.getWallFragment(rand).generate(editor, rand, theme, origin.copy().add(direction, 3).add(Cardinal.left(direction), 3), direction);

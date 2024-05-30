@@ -14,6 +14,11 @@ import net.minecraft.util.math.random.Random;
 
 public class CellSupport implements IFragment {
 
+	public static void generate(IWorldEditor editor, Random rand, ITheme theme, Coord origin) {
+		CellSupport support = new CellSupport();
+		support.generate(editor, rand, theme, origin, Cardinal.NORTH);
+	}
+	
 	@Override
 	public void generate(IWorldEditor editor, Random rand, ITheme theme, Coord origin, Cardinal d) {
 		

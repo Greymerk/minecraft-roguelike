@@ -5,6 +5,7 @@ import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellManager;
 import com.greymerk.roguelike.dungeon.cell.CellState;
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
+import com.greymerk.roguelike.dungeon.fragment.parts.CellSupport;
 import com.greymerk.roguelike.dungeon.layout.Entrance;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
@@ -99,7 +100,7 @@ public class Stairway extends AbstractRoom implements IRoom {
 	
 	private void buildCell(IWorldEditor editor, Random rand, Coord origin, Cardinal cellEntry, boolean candles) {
 		IStair stair = theme.getPrimary().getStair();
-		Fragment.generate(Fragment.CELL_SUPPORT, editor, rand, theme, origin.copy());
+		CellSupport.generate(editor, rand, theme, origin.copy());
 		
 		BoundingBox bb = BoundingBox.of(origin);
 		bb.grow(Cardinal.directions, 2).grow(Cardinal.UP, 3);

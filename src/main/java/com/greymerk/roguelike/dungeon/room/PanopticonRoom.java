@@ -6,6 +6,7 @@ import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellManager;
 import com.greymerk.roguelike.dungeon.cell.CellState;
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
+import com.greymerk.roguelike.dungeon.fragment.parts.CellSupport;
 import com.greymerk.roguelike.dungeon.layout.Entrance;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
@@ -45,12 +46,12 @@ public class PanopticonRoom extends AbstractLargeRoom implements IRoom {
 	}
 
 	private void supports(IWorldEditor editor, Random rand, Coord origin) {
-		Fragment.generate(Fragment.CELL_SUPPORT, editor, rand, theme, origin);
+		CellSupport.generate(editor, rand, theme, origin);
 		Cardinal.directions.forEach(dir -> {
 			List.of(6, 12).forEach(i -> {
-				Fragment.generate(Fragment.CELL_SUPPORT, editor, rand, theme, origin.copy().add(dir, i));
+				CellSupport.generate(editor, rand, theme, origin.copy().add(dir, i));
 				List.of(6, 12).forEach(j -> {
-					Fragment.generate(Fragment.CELL_SUPPORT, editor, rand, theme, origin.copy().add(dir, i).add(Cardinal.left(dir), j));
+					CellSupport.generate(editor, rand, theme, origin.copy().add(dir, i).add(Cardinal.left(dir), j));
 				});
 			});
 		});

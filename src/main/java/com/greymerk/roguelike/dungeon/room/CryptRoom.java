@@ -6,6 +6,7 @@ import java.util.List;
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
 import com.greymerk.roguelike.dungeon.fragment.IFragment;
+import com.greymerk.roguelike.dungeon.fragment.parts.CellSupport;
 import com.greymerk.roguelike.dungeon.fragment.parts.CryptFragment;
 import com.greymerk.roguelike.dungeon.layout.Entrance;
 import com.greymerk.roguelike.editor.Cardinal;
@@ -29,7 +30,7 @@ public class CryptRoom extends AbstractMediumRoom implements IRoom {
 		Coord origin = this.worldPos.copy().add(direction, Cell.SIZE);
 		Random rand = editor.getRandom(origin);
 		roomCenter(editor, rand, origin);
-		Fragment.generate(Fragment.CELL_SUPPORT, editor, rand, theme, origin.copy());
+		CellSupport.generate(editor, rand, theme, origin.copy());
 		
 		for(Cardinal dir : Cardinal.directions) {
 			if(this.getEntrance(dir) == Entrance.DOOR) {				
@@ -43,7 +44,7 @@ public class CryptRoom extends AbstractMediumRoom implements IRoom {
 				
 			}
 			
-			Fragment.generate(Fragment.CELL_SUPPORT, editor, rand, theme, origin.copy().add(dir, 6));
+			CellSupport.generate(editor, rand, theme, origin.copy().add(dir, 6));
 		}
 		
 		for(Cardinal dir : Cardinal.directions) {

@@ -3,6 +3,7 @@ package com.greymerk.roguelike.dungeon.fragment.alcove;
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
 import com.greymerk.roguelike.dungeon.fragment.IFragment;
+import com.greymerk.roguelike.dungeon.fragment.parts.CellSupport;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IBlockFactory;
@@ -38,7 +39,7 @@ public class PrisonAlcove implements IFragment {
 		IBlockFactory walls = theme.getPrimary().getWall();
 		IStair stair = theme.getPrimary().getStair();
 		
-		Fragment.generate(Fragment.CELL_SUPPORT, editor, rand, theme, origin);
+		CellSupport.generate(editor, rand, theme, origin);
 		BoundingBox.of(origin).grow(Cardinal.directions, 2).grow(Cardinal.UP, 3).fill(editor, rand, Air.get());
 		BoundingBox.of(origin).add(Cardinal.UP, 4).grow(Cardinal.directions, 3).fill(editor, rand, walls, false, true);
 		BoundingBox.of(origin).add(Cardinal.DOWN).grow(Cardinal.directions, 2).fill(editor, rand, theme.getPrimary().getFloor());

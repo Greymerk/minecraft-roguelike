@@ -1,7 +1,7 @@
 package com.greymerk.roguelike.dungeon.fragment.alcove;
 
-import com.greymerk.roguelike.dungeon.fragment.Fragment;
 import com.greymerk.roguelike.dungeon.fragment.IFragment;
+import com.greymerk.roguelike.dungeon.fragment.parts.CellSupport;
 import com.greymerk.roguelike.dungeon.fragment.parts.CryptFragment;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
@@ -26,7 +26,7 @@ public class TombAlcove implements IFragment{
 		
 		crypt.generate(editor, rand, theme, pos, dir);
 		
-		Fragment.generate(Fragment.CELL_SUPPORT, editor, rand, theme, origin.copy().add(dir, 6));
+		CellSupport.generate(editor, rand, theme, origin.copy().add(dir, 6));
 	}
 
 }

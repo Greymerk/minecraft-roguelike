@@ -4,6 +4,7 @@ import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellManager;
 import com.greymerk.roguelike.dungeon.cell.CellState;
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
+import com.greymerk.roguelike.dungeon.fragment.parts.CellSupport;
 import com.greymerk.roguelike.dungeon.layout.Entrance;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
@@ -184,7 +185,7 @@ public class ReservoirRoom extends AbstractLargeRoom implements IRoom {
 				stair.set(editor, rand, pos);
 			}
 		}
-		Fragment.generate(Fragment.CELL_SUPPORT, editor, rand, theme, origin.copy());
+		CellSupport.generate(editor, rand, theme, origin.copy());
 	}
 
 	private void basin(IWorldEditor editor, Random rand, Coord origin) {
@@ -205,13 +206,13 @@ public class ReservoirRoom extends AbstractLargeRoom implements IRoom {
 		
 		Coord pos = origin.copy();
 		pos.add(Cardinal.DOWN, 9);
-		Fragment.generate(Fragment.CELL_SUPPORT, editor, rand, theme, pos.copy());
+		CellSupport.generate(editor, rand, theme, pos.copy());
 		
 		for(Cardinal dir : Cardinal.directions) {
 			pos = origin.copy().add(Cardinal.DOWN, 9).add(dir, 6);
-			Fragment.generate(Fragment.CELL_SUPPORT, editor, rand, theme, pos.copy());
+			CellSupport.generate(editor, rand, theme, pos.copy());
 			pos.add(Cardinal.left(dir), 6);
-			Fragment.generate(Fragment.CELL_SUPPORT, editor, rand, theme, pos.copy());
+			CellSupport.generate(editor, rand, theme, pos.copy());
 		}
 	}
 
