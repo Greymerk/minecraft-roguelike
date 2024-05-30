@@ -2,8 +2,10 @@ package com.greymerk.roguelike.editor.blocks;
 
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
+import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.MetaBlock;
+import com.greymerk.roguelike.editor.factories.BlockWeightedRandom;
 
 import net.minecraft.block.Blocks;
 import net.minecraft.block.PaneBlock;
@@ -13,6 +15,13 @@ public class IronBar extends MetaBlock{
 
 	public static MetaBlock get() {
 		return new IronBar();
+	}
+
+	public static IBlockFactory getBroken() {
+		BlockWeightedRandom blocks = new BlockWeightedRandom();
+		blocks.addBlock(Air.get(), 1);
+		blocks.addBlock(IronBar.get(), 2);
+		return blocks;
 	}
 	
 	public IronBar() {

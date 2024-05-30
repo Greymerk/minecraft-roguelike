@@ -12,7 +12,7 @@ import com.greymerk.roguelike.theme.ITheme;
 
 import net.minecraft.util.math.random.Random;
 
-public class CellSupportBeamFragment implements IFragment {
+public class CellSupport implements IFragment {
 
 	@Override
 	public void generate(IWorldEditor editor, Random rand, ITheme theme, Coord origin, Cardinal d) {

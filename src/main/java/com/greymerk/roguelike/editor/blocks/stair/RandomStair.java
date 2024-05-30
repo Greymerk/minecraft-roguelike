@@ -29,7 +29,7 @@ public class RandomStair implements IStair, IBlockFactory {
 	
 	@Override
 	public IStair setOrientation(Cardinal dir, Boolean upsideDown) {
-		this.dir = dir;
+		this.dir = Cardinal.directions.contains(dir) ? dir : Cardinal.NORTH;
 		this.upsideDown = upsideDown;
 		return this;
 	}

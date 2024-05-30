@@ -2,11 +2,12 @@ package com.greymerk.roguelike.dungeon.fragment;
 
 import com.greymerk.roguelike.dungeon.fragment.alcove.BookShelfAlcove;
 import com.greymerk.roguelike.dungeon.fragment.alcove.FireAlcove;
+import com.greymerk.roguelike.dungeon.fragment.alcove.PrisonAlcove;
 import com.greymerk.roguelike.dungeon.fragment.alcove.SafetyCell;
 import com.greymerk.roguelike.dungeon.fragment.alcove.SilverfishNest;
 import com.greymerk.roguelike.dungeon.fragment.alcove.TombAlcove;
 import com.greymerk.roguelike.dungeon.fragment.parts.ArchWay;
-import com.greymerk.roguelike.dungeon.fragment.parts.CellSupportBeamFragment;
+import com.greymerk.roguelike.dungeon.fragment.parts.CellSupport;
 import com.greymerk.roguelike.dungeon.fragment.parts.CryptFragment;
 import com.greymerk.roguelike.dungeon.fragment.parts.Sarcophagus;
 import com.greymerk.roguelike.dungeon.fragment.wall.WallBannerFragment;
@@ -31,10 +32,11 @@ public enum Fragment {
 	CELL_SUPPORT, ARCH,
 	WALL_FLOWER, WALL_BANNER, WALL_CHEST, WALL_SPAWNER, WALL_CANDLES,
 	WALL_EMPTY, WALL_DECORATED_POT, WALL_FOOD_BARREL, WALL_PLANT,
-	ALCOVE_SILVERFISH, ALCOVE_SAFETY, ALCOVE_CRYPT, BOOK_SHELF, ALCOVE_FIRE;
+	ALCOVE_SILVERFISH, ALCOVE_SAFETY, ALCOVE_CRYPT, BOOK_SHELF, ALCOVE_FIRE,
+	ALCOVE_PRISON_CELL;
 	
 	public static void generate(Fragment type, IWorldEditor editor, Random rand, ITheme theme, Coord pos) {
-		generate(type, editor, rand, theme, pos, Cardinal.DOWN);
+		generate(type, editor, rand, theme, pos, Cardinal.NORTH);
 	}
 	
 	public static void generate(Fragment type, IWorldEditor editor, Random rand, ITheme theme, Coord pos, Cardinal dir) {
@@ -44,7 +46,7 @@ public enum Fragment {
 	
 	public static IFragment fromType(Fragment type) {
 		switch(type) {
-		case CELL_SUPPORT: return new CellSupportBeamFragment();
+		case CELL_SUPPORT: return new CellSupport();
 		case CRYPT: return new CryptFragment();
 		case SARCOPHAGUS: return new Sarcophagus();
 		case ARCH: return new ArchWay();
@@ -62,6 +64,7 @@ public enum Fragment {
 		case ALCOVE_SAFETY: return new SafetyCell();
 		case ALCOVE_CRYPT: return new TombAlcove();
 		case ALCOVE_FIRE: return new FireAlcove();
+		case ALCOVE_PRISON_CELL: return new PrisonAlcove();
 		default: return new WallEmpty();
 		}
 	}
