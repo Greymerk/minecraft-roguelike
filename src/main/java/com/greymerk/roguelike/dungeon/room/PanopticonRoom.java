@@ -198,18 +198,20 @@ public class PanopticonRoom extends AbstractLargeRoom implements IRoom {
 	}
 
 	private void cornerPillarSet(IWorldEditor editor, Random rand, Coord origin, List<Cardinal> corner) {
-		pillar(editor, rand, origin.add(corner.getFirst()).add(corner.getLast()),
-				List.of(Cardinal.reverse(corner.getFirst()), Cardinal.reverse(corner.getLast())), 2);
-		pillar(editor, rand, origin.add(corner.getFirst(), 2).add(corner.getLast(), 2),
-				List.of(Cardinal.reverse(corner.getFirst()), Cardinal.reverse(corner.getLast())), 6);
-		pillar(editor, rand, origin.add(corner.getFirst(), 2).add(corner.getLast(), 2).add(Cardinal.UP, 8),
-				List.of(Cardinal.reverse(corner.getFirst()), Cardinal.reverse(corner.getLast())), 6);
-		pillar(editor, rand, origin.add(corner.getFirst(), 3).add(corner.getLast(), 3),
-				List.of(corner.getFirst(), corner.getLast()), 14);
-		pillar(editor, rand, origin.add(corner.getFirst(), 7).add(corner.getLast(), 7),
-				List.of(Cardinal.reverse(corner.getFirst()), Cardinal.reverse(corner.getLast())), 14);
+		Cardinal first = corner.get(0);
+		Cardinal last = corner.get(1);
+		pillar(editor, rand, origin.add(first).add(last),
+				List.of(Cardinal.reverse(first), Cardinal.reverse(last)), 2);
+		pillar(editor, rand, origin.add(first, 2).add(last, 2),
+				List.of(Cardinal.reverse(first), Cardinal.reverse(last)), 6);
+		pillar(editor, rand, origin.add(first, 2).add(last, 2).add(Cardinal.UP, 8),
+				List.of(Cardinal.reverse(first), Cardinal.reverse(last)), 6);
+		pillar(editor, rand, origin.add(first, 3).add(last, 3),
+				List.of(first, last), 14);
+		pillar(editor, rand, origin.add(first, 7).add(last, 7),
+				List.of(Cardinal.reverse(first), Cardinal.reverse(last)), 14);
 		corner.forEach(dir -> {
-			Cardinal o = dir == corner.getFirst() ? corner.getLast() : corner.getFirst();
+			Cardinal o = dir == first ? last : first;
 			pillar(editor, rand, origin.add(dir, 3).add(o),
 					List.of(Cardinal.reverse(o), dir), 14);
 			pillar(editor, rand, origin.add(dir, 7).add(o),
