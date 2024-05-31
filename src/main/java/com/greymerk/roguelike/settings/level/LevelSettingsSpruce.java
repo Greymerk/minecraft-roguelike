@@ -8,7 +8,6 @@ import com.greymerk.roguelike.settings.LevelSettings;
 import com.greymerk.roguelike.settings.LevelSettingsBase;
 import com.greymerk.roguelike.theme.Theme;
 import com.greymerk.roguelike.util.WeightedChoice;
-import com.greymerk.roguelike.util.WeightedRandomizer;
 
 public class LevelSettingsSpruce extends LevelSettingsBase implements ILevelSettings {
 
@@ -19,19 +18,19 @@ public class LevelSettingsSpruce extends LevelSettingsBase implements ILevelSett
 		this.rooms = new RoomProvider();
 		rooms.addRandomChoice(Room.CORRIDOR, 3);
 		rooms.addRandomChoice(Room.CROSS, 1);
+		rooms.addRoomOnce(Room.BANQUET);
 		
-		this.walls = new WeightedRandomizer<Fragment>(10);
-		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_CANDLES, 15));
 		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_EMPTY, 10));
+		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_CANDLES, 7));
 		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_BANNER, 2));
 		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_CHEST, 1));
 		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_FOOD_BARREL, 1));
 		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_DECORATED_POT, 1));
 		
 		this.alcoves.add(walls);
-		this.alcoves.add(new WeightedChoice<Fragment>(Fragment.ALCOVE_SAFETY, 2));
-		this.alcoves.add(new WeightedChoice<Fragment>(Fragment.BOOK_SHELF, 3));
-		
+		this.alcoves.add(new WeightedChoice<Fragment>(Fragment.ALCOVE_SAFETY, 1));
+		this.alcoves.add(new WeightedChoice<Fragment>(Fragment.ALCOVE_FIRE, 3));
+		this.alcoves.add(new WeightedChoice<Fragment>(Fragment.BOOK_SHELF, 2));
 	}
 	
 	@Override
