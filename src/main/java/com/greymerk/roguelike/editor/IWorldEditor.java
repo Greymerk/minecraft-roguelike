@@ -20,6 +20,8 @@ public interface IWorldEditor {
 
 	public boolean isAir(Coord pos);
 	
+	public boolean isReplaceable(Coord pos);
+	
 	public boolean hasBlockEntity(Coord pos);
 	
 	public BlockEntity getBlockEntity(Coord pos);

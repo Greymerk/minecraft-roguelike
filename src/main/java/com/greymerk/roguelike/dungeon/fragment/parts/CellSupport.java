@@ -50,8 +50,7 @@ public class CellSupport implements IFragment {
 		
 		// to avoid having ends hanging in mid air
 		for(Cardinal o : Cardinal.orthogonal(dir)) {
-			Coord pos = origin.copy();
-			pos.add(o, 2);
+			Coord pos = origin.copy().add(o, 2);
 			if(!editor.isSolid(pos)) {
 				return;
 			}
@@ -59,19 +58,17 @@ public class CellSupport implements IFragment {
 		
 		wall.set(editor, rand, origin, true, false);
 		for(Cardinal o : Cardinal.orthogonal(dir)) {
-			Coord pos = origin.copy();
-			pos.add(o);
+			Coord pos = origin.copy().add(o);
 			wall.set(editor, rand, pos, true, false);
 			pos.add(Cardinal.DOWN);
 			stair.setOrientation(Cardinal.reverse(o), true);
 			stair.set(editor, rand, pos, true, false);
 		}
 		
+		
 		if(rand.nextInt(10) == 0) {
-			Coord pos = origin.copy();
-			pos.add(Cardinal.DOWN);
-			Lantern type = pos.getY() < 0 ? Lantern.SOUL : Lantern.FLAME;
-			Lantern.set(editor, pos, type, true);
+			Coord pos = origin.copy().add(Cardinal.DOWN);
+			Lantern.set(editor, pos, pos.getY() < 0 ? Lantern.SOUL : Lantern.FLAME, true);
 		}
 	}
 }

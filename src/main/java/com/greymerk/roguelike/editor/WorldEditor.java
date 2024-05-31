@@ -73,6 +73,11 @@ public class WorldEditor implements IWorldEditor{
 	public boolean isAir(Coord pos) {
 		return world.isAir(pos.getBlockPos());
 	}
+	
+	@Override
+	public boolean isReplaceable(Coord pos) {
+		return world.getBlockState(pos.getBlockPos()).isReplaceable();
+	}
 
 	@Override
 	public long getSeed() {
