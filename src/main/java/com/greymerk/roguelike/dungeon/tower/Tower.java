@@ -1,11 +1,10 @@
 package com.greymerk.roguelike.dungeon.tower;
 
-import net.minecraft.util.math.random.Random;
-
-import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.theme.Theme;
+
+import net.minecraft.util.math.random.Random;
 
 public enum Tower {
 

@@ -17,8 +17,9 @@ public class LevelSettingsDarkOak extends LevelSettingsBase implements ILevelSet
 		this.theme = Theme.getTheme(Theme.DARKOAK);
 		
 		this.rooms = new RoomProvider();
-		rooms.addRandomChoice(Room.CORRIDOR, 10);
-		rooms.addRandomChoice(Room.CROSS, 2);
+		rooms.addRandomChoice(Room.CORRIDOR, 1);
+		rooms.addRoomOnce(Room.PRISON);
+		rooms.addRoomOnce(Room.CROSS);
 		rooms.addRoomAfter(Room.BREWING);
 		
 		this.walls = new WeightedRandomizer<Fragment>(10);
@@ -31,7 +32,7 @@ public class LevelSettingsDarkOak extends LevelSettingsBase implements ILevelSet
 		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_FOOD_BARREL, 1));
 		
 		this.alcoves.add(walls);
-		this.alcoves.add(new WeightedChoice<Fragment>(Fragment.BOOK_SHELF, 1));
+		this.alcoves.add(new WeightedChoice<Fragment>(Fragment.BOOK_SHELF, 2));
 		
 	}
 

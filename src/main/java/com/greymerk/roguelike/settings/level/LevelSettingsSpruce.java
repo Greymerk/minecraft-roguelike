@@ -16,13 +16,13 @@ public class LevelSettingsSpruce extends LevelSettingsBase implements ILevelSett
 		this.theme = Theme.getTheme(Theme.SPRUCE);
 		
 		this.rooms = new RoomProvider();
-		rooms.addRandomChoice(Room.CORRIDOR, 3);
-		rooms.addRandomChoice(Room.CROSS, 1);
+		rooms.addRandomChoice(Room.CORRIDOR, 1);
+		rooms.addRoomOnce(Room.CROSS);
 		rooms.addRoomOnce(Room.BANQUET);
 		
 		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_EMPTY, 10));
 		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_CANDLES, 7));
-		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_BANNER, 2));
+		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_BANNER, 1));
 		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_CHEST, 1));
 		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_FOOD_BARREL, 1));
 		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_DECORATED_POT, 1));
