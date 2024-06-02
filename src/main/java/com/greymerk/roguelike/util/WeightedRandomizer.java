@@ -30,9 +30,10 @@ public class WeightedRandomizer<T> implements IWeighted<T>{
 		return items.isEmpty();
 	}
 	
-	public void add(IWeighted<T> toAdd){
+	public WeightedRandomizer<T> add(IWeighted<T> toAdd){
 		this.weightSum += toAdd.getWeight();
 		this.items.add(toAdd);
+		return this;
 	}
 	
 	public T get(Random rand){

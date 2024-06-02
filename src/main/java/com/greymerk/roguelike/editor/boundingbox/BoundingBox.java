@@ -4,6 +4,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
+import org.jetbrains.annotations.NotNull;
+
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IBlockFactory;
@@ -188,7 +190,7 @@ public class BoundingBox implements IBounded, IShape{
 	}
 
 	@Override
-	public void fill(IWorldEditor editor, Random rand, IBlockFactory block) {
+	public void fill(IWorldEditor editor, Random rand, @NotNull IBlockFactory block) {
 		this.getShape(Shape.RECTSOLID).fill(editor, rand, block);
 		
 	}
