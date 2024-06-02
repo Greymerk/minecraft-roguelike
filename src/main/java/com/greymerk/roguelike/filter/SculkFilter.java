@@ -6,12 +6,14 @@ import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.MetaBlock;
 import com.greymerk.roguelike.editor.blocks.SculkVein;
 import com.greymerk.roguelike.editor.boundingbox.IBounded;
+import com.greymerk.roguelike.editor.factories.BlockWeightedRandom;
 import com.greymerk.roguelike.theme.ITheme;
 import com.greymerk.roguelike.util.WeightedChoice;
 import com.greymerk.roguelike.util.WeightedRandomizer;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.SculkShriekerBlock;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.util.math.random.Random;
 
@@ -32,12 +34,16 @@ public class SculkFilter implements IFilter {
 		MetaBlock block = editor.getBlock(origin);
 		if(!block.getState().isIn(BlockTags.SCULK_REPLACEABLE_WORLD_GEN)) return;
 		MetaBlock.of(Blocks.SCULK).set(editor, origin);
-		WeightedRandomizer<Block> sculks = new WeightedRandomizer<Block>()
-			.add(new WeightedChoice<Block>(Blocks.SCULK_CATALYST, 1))
-			.add(new WeightedChoice<Block>(Blocks.SCULK_SENSOR, 3))
-			.add(new WeightedChoice<Block>(Blocks.SCULK_SHRIEKER, 2));
+		MetaBlock shrieker = MetaBlock.of(Blocks.SCULK_SHRIEKER);
+		shrieker.withProperty(SculkShriekerBlock.CAN_SUMMON, true);
+		
+		BlockWeightedRandom blocks = new BlockWeightedRandom()
+				.addBlock(MetaBlock.of(Blocks.SCULK_SENSOR), 3)
+				.addBlock(MetaBlock.of(Blocks.SCULK_CATALYST), 2)
+				.addBlock(shrieker, 1);
+		
 		if(rand.nextInt(20) == 0) {
-			MetaBlock.of(sculks.get(rand)).set(editor, origin.copy().add(Cardinal.UP));	
+			blocks.set(editor, rand, origin.copy().add(Cardinal.UP));	
 		} else {
 			SculkVein.set(editor, origin.copy().add(Cardinal.UP));
 		}
