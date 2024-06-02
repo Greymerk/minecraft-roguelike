@@ -9,6 +9,7 @@ import com.greymerk.roguelike.dungeon.fragment.alcove.TombAlcove;
 import com.greymerk.roguelike.dungeon.fragment.parts.ArchWay;
 import com.greymerk.roguelike.dungeon.fragment.parts.CellSupport;
 import com.greymerk.roguelike.dungeon.fragment.parts.CryptFragment;
+import com.greymerk.roguelike.dungeon.fragment.parts.Fungus;
 import com.greymerk.roguelike.dungeon.fragment.parts.Sarcophagus;
 import com.greymerk.roguelike.dungeon.fragment.wall.WallBannerFragment;
 import com.greymerk.roguelike.dungeon.fragment.wall.WallCandles;
@@ -28,7 +29,7 @@ import net.minecraft.util.math.random.Random;
 
 public enum Fragment {
 
-	CRYPT, SARCOPHAGUS, 
+	CRYPT, SARCOPHAGUS, FUNGUS, 
 	CELL_SUPPORT, ARCH,
 	WALL_FLOWER, WALL_BANNER, WALL_CHEST, WALL_SPAWNER, WALL_CANDLES,
 	WALL_EMPTY, WALL_DECORATED_POT, WALL_FOOD_BARREL, WALL_PLANT,
@@ -61,6 +62,7 @@ public enum Fragment {
 		case ALCOVE_CRYPT: return new TombAlcove();
 		case ALCOVE_FIRE: return new FireAlcove();
 		case ALCOVE_PRISON_CELL: return new PrisonAlcove();
+		case FUNGUS: return new Fungus();
 		default: return new WallEmpty();
 		}
 	}

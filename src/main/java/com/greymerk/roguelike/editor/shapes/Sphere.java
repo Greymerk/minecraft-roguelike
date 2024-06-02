@@ -15,7 +15,7 @@ import net.minecraft.util.math.random.Random;
 public class Sphere implements IShape {
 
 	private BoundingBox bb;
-
+	
 	public Sphere(BoundingBox bb){
 		this.bb = bb;
 	}

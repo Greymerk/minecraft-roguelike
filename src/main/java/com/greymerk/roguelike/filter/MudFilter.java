@@ -2,6 +2,7 @@ package com.greymerk.roguelike.filter;
 
 import net.minecraft.util.math.random.Random;
 
+import com.greymerk.roguelike.dungeon.fragment.parts.Fungus;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
@@ -69,15 +70,17 @@ public class MudFilter implements IFilter{
 		}
 		
 		
-		if(rand.nextInt(6) != 0) return;
+		if(rand.nextInt(3) != 0) return;
 		
-		BlockJumble plants = new BlockJumble();
-		plants.addBlock(new MetaBlock(FlowerPot.getFlower(FlowerPot.BROWNMUSHROOM)));
-		plants.addBlock(new MetaBlock(FlowerPot.getFlower(FlowerPot.REDMUSHROOM)));
+		BlockJumble shrooms = new BlockJumble();
+		shrooms.addBlock(new MetaBlock(FlowerPot.getFlower(FlowerPot.BROWNMUSHROOM)));
+		shrooms.addBlock(new MetaBlock(FlowerPot.getFlower(FlowerPot.REDMUSHROOM)));
 		
-		Coord cursor = pos.copy();
-		cursor.add(Cardinal.UP);
-		plants.set(editor, rand, cursor);
+		if(rand.nextInt(3) == 0) {
+			Fungus.generate(editor, rand, pos.copy().add(Cardinal.UP));
+		} else {
+			shrooms.set(editor, rand, pos.copy().add(Cardinal.UP));	
+		}
 	}
 	
 	private boolean validLocation(IWorldEditor editor, Random rand, Coord pos){

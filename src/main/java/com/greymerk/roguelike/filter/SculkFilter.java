@@ -8,17 +8,14 @@ import com.greymerk.roguelike.editor.blocks.SculkVein;
 import com.greymerk.roguelike.editor.boundingbox.IBounded;
 import com.greymerk.roguelike.editor.factories.BlockWeightedRandom;
 import com.greymerk.roguelike.theme.ITheme;
-import com.greymerk.roguelike.util.WeightedChoice;
-import com.greymerk.roguelike.util.WeightedRandomizer;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.SculkShriekerBlock;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.util.math.random.Random;
 
 public class SculkFilter implements IFilter {
-
+	
 	@Override
 	public void apply(IWorldEditor editor, Random rand, ITheme theme, IBounded box) {
 		box.getBoundingBox().forEach(pos -> {
