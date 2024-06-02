@@ -2,6 +2,7 @@ package com.greymerk.roguelike.dungeon.room;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
@@ -62,15 +63,23 @@ public class SculkRoom extends AbstractLargeRoom implements IRoom {
 			.add(new WeightedChoice<Treasure>(Treasure.TOOLS, 1))
 			.add(new WeightedChoice<Treasure>(Treasure.WEAPONS, 1));
 		
-		BoundingBox bb = BoundingBox.of(origin).add(Cardinal.DOWN, 2).grow(Cardinal.directions, 9);
-		List<Coord> empty = new ArrayList<Coord>(); 
-		bb.forEach(pos -> {
-			if(editor.isAir(pos)) empty.add(pos);
-		});
+		List<Coord> empty = BoundingBox.of(origin).add(Cardinal.DOWN, 2).grow(Cardinal.directions, 9).get().stream()
+				.filter(pos -> editor.isAir(pos))
+				.filter(pos -> checkerBoard(pos))
+				.collect(Collectors.toList());
 		RandHelper.shuffle(empty, rand);
 		empty.subList(0, rand.nextBetween(5, 9)).forEach(pos -> {
-			Treasure.generate(editor, rand, pos, direction, types.get(rand));
+			Treasure.generate(editor, rand, pos, types.get(rand));
 		});
+	}
+	
+	private boolean checkerBoard(Coord pos) {
+		int x = pos.getX();
+		int z = pos.getZ();
+		if(Math.floorMod(x, 2) == 0 && Math.floorMod(z, 2) == 0) return true;
+		if(Math.floorMod(x, 2) == 1 && Math.floorMod(z, 2) == 1) return true;
+		
+		return false;
 	}
 
 	private void bridges(IWorldEditor editor, Random rand, Coord origin) {

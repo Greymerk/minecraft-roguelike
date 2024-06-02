@@ -24,7 +24,6 @@ public class LevelSettingsTiledDeepslate extends LevelSettingsBase implements IL
 		rooms.addRandomChoice(Room.CROSS, 2);
 		rooms.addRandomChoice(Room.CRYPT, 3);
 		rooms.addRandomChoice(Room.CISTERN, 2);
-		rooms.addRandomChoice(Room.SCULK, 3);
 		rooms.addRoomOnce(Room.OSSUARY);
 		rooms.addRoomOnce(Room.SCULK);
 		

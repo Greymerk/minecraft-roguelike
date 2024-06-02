@@ -32,7 +32,7 @@ public class TreasureChest implements ITreasureChest{
 	}
 	
 	public ITreasureChest generate(IWorldEditor editor, Random rand, Coord pos, ChestType block) throws ChestPlacementException {
-		for(Cardinal dir : Cardinal.directions) {
+		for(Cardinal dir : Cardinal.randDirs(rand)) {
 			Coord p = pos.copy();
 			p.add(dir);
 			if(editor.isAir(pos)) {
