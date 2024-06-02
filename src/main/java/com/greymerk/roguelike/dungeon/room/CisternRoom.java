@@ -60,6 +60,8 @@ public class CisternRoom extends AbstractMediumRoom implements IRoom {
 			bb.grow(Cardinal.orthogonal(dir), 5);
 			RectSolid.fill(editor, rand, bb, wall, true, false);
 		}
+		
+		BoundingBox.of(origin).add(Cardinal.UP, 6).grow(Cardinal.directions, 8).fill(editor, rand, wall, false, true);
 	}
 
 	private void water(IWorldEditor editor, Random rand, Coord origin) {
@@ -133,6 +135,10 @@ public class CisternRoom extends AbstractMediumRoom implements IRoom {
 
 	private void walls(IWorldEditor editor, Random rand, Coord origin) {
 		IStair stair = theme.getPrimary().getStair();
+		
+		Cardinal.directions.forEach(dir -> {
+			BoundingBox.of(origin).add(dir, 9).grow(Cardinal.orthogonal(dir), 9).grow(Cardinal.DOWN).grow(Cardinal.UP, 5).fill(editor, rand, theme.getPrimary().getWall(), false, true);
+		});
 		
 		for(Cardinal dir : Cardinal.directions) {
 			BoundingBox bb = BoundingBox.of(origin.copy());
