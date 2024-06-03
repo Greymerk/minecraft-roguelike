@@ -13,16 +13,14 @@ import net.minecraft.util.math.random.Random;
 public class Pillar {
 
 	public static void generate(IWorldEditor editor, Random rand, Coord origin, ITheme theme, int height) {
-		BoundingBox.of(origin).grow(Cardinal.UP, height).fill(editor, rand, theme.getPrimary().getPillar());
-		Cardinal.directions.forEach(dir -> {
-			theme.getPrimary().getStair().setOrientation(dir, true).set(editor, rand, origin.copy().add(dir).add(Cardinal.UP, height), true, false);
-		});
+		generate(editor, rand, origin, theme, height, Cardinal.directions);
 	}
 	
 	public static void generate(IWorldEditor editor, Random rand, Coord origin, ITheme theme, int height, List<Cardinal> directions) {
-		BoundingBox.of(origin).grow(Cardinal.UP, height).fill(editor, rand, theme.getPrimary().getPillar());
+		if(height > 1) BoundingBox.of(origin).grow(Cardinal.UP, height - 1).fill(editor, rand, theme.getPrimary().getPillar());
+		theme.getPrimary().getWall().set(editor, rand, origin.copy().add(Cardinal.UP, height));
 		directions.forEach(dir -> {
-			theme.getPrimary().getStair().setOrientation(dir, true).set(editor, rand, origin.copy().add(dir).add(Cardinal.UP, height));
+			theme.getPrimary().getStair().setOrientation(dir, true).set(editor, rand, origin.copy().add(dir).add(Cardinal.UP, height), true, false);
 		});
 	}
 
