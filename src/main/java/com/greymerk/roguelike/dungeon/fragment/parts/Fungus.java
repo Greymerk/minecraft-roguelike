@@ -36,8 +36,7 @@ public class Fungus implements IFragment {
 		}
 		MetaBlock.of(Blocks.MUSHROOM_STEM).set(editor, origin);
 		List<Cardinal> randDirs = Cardinal.randDirs(rand);
-		if(rand.nextInt(5) == 0) grow(editor, rand, origin.copy().add(randDirs.getFirst()).freeze(), counter - 1);
-		
+		if(rand.nextInt(5) == 0) branch(editor, rand, origin.copy().add(randDirs.getFirst()).freeze(), randDirs.getFirst(), counter);
 		grow(editor, rand, origin.add(findPath(editor, rand, origin)), counter - 1);
 	}
 	
@@ -51,12 +50,30 @@ public class Fungus implements IFragment {
 		return Cardinal.UP;
 	}
 	
+	private void branch(IWorldEditor editor, Random rand, Coord origin, Cardinal dir, int counter) {
+		MetaBlock stem = MetaBlock.of(Blocks.MUSHROOM_STEM);
+		if(editor.isAir(origin)) {
+			stem.set(editor, origin);
+		} else {
+			return;
+		}
+		
+		if(editor.isAir(origin.copy().add(dir))) {
+			stem.set(editor, origin.copy().add(dir));
+		} else {
+			return;
+		}
+		
+		grow(editor, rand, origin.copy().add(dir).add(Cardinal.UP), counter - 1);
+		
+	}
+	
 	private void cap(IWorldEditor editor, Random rand, Coord origin) {
 		BlockWeightedRandom flesh = new BlockWeightedRandom()
 			.addBlock(MetaBlock.of(rand.nextBoolean() ? Blocks.BROWN_MUSHROOM_BLOCK : Blocks.RED_MUSHROOM_BLOCK), 3)
 			.addBlock(Air.get(), 1);
 		
-		if(rand.nextBoolean()) {
+		if(rand.nextInt(3) != 0) {
 			BoundingBox.of(origin).grow(Cardinal.directions).fill(editor, rand, flesh, true, false);	
 		} else {
 			flesh.set(editor, rand, origin);

@@ -83,23 +83,15 @@ public class MudFilter implements IFilter{
 		}
 	}
 	
-	private boolean validLocation(IWorldEditor editor, Random rand, Coord pos){
+	private boolean validLocation(IWorldEditor editor, Random rand, Coord origin){
 		
-		if(!editor.isSolid(pos)) return false;
+		if(!editor.isSolid(origin)) return false;
 		
-		Coord cursor = pos.copy();
-		cursor.add(Cardinal.UP);
-		if(!editor.isAir(cursor)) return false;
+		if(!editor.isAir(origin.copy().add(Cardinal.UP))) return false;
+		if(editor.isAir(origin.copy().add(Cardinal.DOWN))) return false;
 		
-		cursor.add(Cardinal.DOWN, 2);
-		if(editor.isAir(cursor)) return false;
-		
-		cursor.add(Cardinal.UP);
-		
-		for(Cardinal dir : Cardinal.values()){
-			cursor.add(dir);
-			if(!editor.isSolid(pos)) return false;
-			cursor.add(Cardinal.reverse(dir));
+		for(Cardinal dir : Cardinal.directions){
+			if(!editor.isSolid(origin.copy().add(dir))) return false;
 		}
 		
 		return true;
