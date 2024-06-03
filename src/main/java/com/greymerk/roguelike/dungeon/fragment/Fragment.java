@@ -38,7 +38,7 @@ public enum Fragment {
 	
 	public static void generate(Fragment type, IWorldEditor editor, Random rand, ITheme theme, Coord pos, Cardinal dir) {
 		IFragment fragment = fromType(type);
-		fragment.generate(editor, rand, theme, pos, dir);
+		fragment.generate(editor, rand, theme, pos.freeze(), dir);
 	}
 	
 	public static IFragment fromType(Fragment type) {

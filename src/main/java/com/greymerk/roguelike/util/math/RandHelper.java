@@ -10,6 +10,11 @@ public class RandHelper {
 
 	private static final int SHUFFLE_THRESHOLD = 5;
 	
+	public static <T> T pickFrom(List<T> list, Random rand) {
+		if(list.size() == 0) return null;
+		return list.get(rand.nextInt(list.size()));
+	}
+	
 	@SuppressWarnings("unchecked")
 	public static void shuffle(List<?> list, Random rnd) {
         int size = list.size();
@@ -34,13 +39,13 @@ public class RandHelper {
     }
 	
     @SuppressWarnings("unchecked")
-	public static void swap(List<?> list, int i, int j) {
+	private static void swap(List<?> list, int i, int j) {
         @SuppressWarnings("rawtypes")
 		final List l = list;
         l.set(i, l.set(j, l.get(i)));
     }
 	
-	public static void swap(Object[] x, int a, int b) {
+	private static void swap(Object[] x, int a, int b) {
 	    Object t = x[a];
 	    x[a] = x[b];
 	    x[b] = t;
