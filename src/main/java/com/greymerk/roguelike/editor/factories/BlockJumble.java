@@ -16,8 +16,9 @@ public class BlockJumble extends BlockBase {
 		blocks = new ArrayList<IBlockFactory>();
 	}
 
-	public void addBlock(IBlockFactory toAdd){
+	public BlockJumble addBlock(IBlockFactory toAdd){
 		blocks.add(toAdd);
+		return this;
 	}
 
 	@Override

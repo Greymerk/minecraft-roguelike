@@ -13,9 +13,9 @@ public class WallBannerFragment implements IFragment {
 
 	@Override
 	public void generate(IWorldEditor editor, Random rand, ITheme theme, Coord origin, Cardinal dir) {
-		Coord pos = origin.copy();
-		pos.add(dir, 2).add(Cardinal.UP, 2);
-		WallBanner.generate(editor, rand, pos, dir);
+		if(editor.isAir(origin.copy().add(dir, 3).add(Cardinal.UP, 2))) return;
+		if(!editor.isSupported(origin.copy().add(dir, 3).add(Cardinal.UP, 2))) return;
+		WallBanner.generate(editor, rand, origin.copy().add(dir, 2).add(Cardinal.UP, 2), dir);
 	}
 
 }

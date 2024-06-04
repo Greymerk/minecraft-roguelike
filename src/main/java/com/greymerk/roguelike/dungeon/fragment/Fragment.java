@@ -18,6 +18,7 @@ import com.greymerk.roguelike.dungeon.fragment.wall.WallDecoratedPot;
 import com.greymerk.roguelike.dungeon.fragment.wall.WallEmpty;
 import com.greymerk.roguelike.dungeon.fragment.wall.WallFlowers;
 import com.greymerk.roguelike.dungeon.fragment.wall.WallFoodBarrel;
+import com.greymerk.roguelike.dungeon.fragment.wall.WallMushrooms;
 import com.greymerk.roguelike.dungeon.fragment.wall.WallPlant;
 import com.greymerk.roguelike.dungeon.fragment.wall.WallSpawner;
 import com.greymerk.roguelike.editor.Cardinal;
@@ -32,7 +33,7 @@ public enum Fragment {
 	CRYPT, SARCOPHAGUS, FUNGUS, 
 	CELL_SUPPORT, ARCH,
 	WALL_FLOWER, WALL_BANNER, WALL_CHEST, WALL_SPAWNER, WALL_CANDLES,
-	WALL_EMPTY, WALL_DECORATED_POT, WALL_FOOD_BARREL, WALL_PLANT,
+	WALL_EMPTY, WALL_DECORATED_POT, WALL_FOOD_BARREL, WALL_PLANT, WALL_MUSHROOMS,
 	ALCOVE_SILVERFISH, ALCOVE_SAFETY, ALCOVE_CRYPT, BOOK_SHELF, ALCOVE_FIRE,
 	ALCOVE_PRISON_CELL;
 	
@@ -54,7 +55,7 @@ public enum Fragment {
 		case WALL_CANDLES: return new WallCandles();
 		case WALL_EMPTY: return new WallEmpty();
 		case WALL_DECORATED_POT: return new WallDecoratedPot();
-		case BOOK_SHELF: return new BookShelfAlcove();
+		case WALL_MUSHROOMS: return new WallMushrooms();
 		case WALL_FOOD_BARREL: return new WallFoodBarrel();
 		case WALL_PLANT: return new WallPlant();
 		case ALCOVE_SILVERFISH: return new SilverfishNest();
@@ -62,6 +63,7 @@ public enum Fragment {
 		case ALCOVE_CRYPT: return new TombAlcove();
 		case ALCOVE_FIRE: return new FireAlcove();
 		case ALCOVE_PRISON_CELL: return new PrisonAlcove();
+		case BOOK_SHELF: return new BookShelfAlcove();
 		case FUNGUS: return new Fungus();
 		default: return new WallEmpty();
 		}

@@ -271,8 +271,14 @@ public class BrewingRoom extends AbstractRoom implements IRoom {
 
 	private void entry(IWorldEditor editor, Random rand, Coord origin) {
 		Corridor cor = new Corridor();
-		this.getEntrancesFromType(Entrance.DOOR).forEach(dir -> {
-			cor.addEntrance(dir, Entrance.DOOR);
+		
+		Cardinal.directions.forEach(dir -> {
+			Entrance type = this.getEntrance(dir);
+			if(type == Entrance.DOOR) {
+				cor.addEntrance(dir, Entrance.DOOR);	
+			} else {
+				cor.addEntrance(dir, Entrance.WALL);
+			}
 		});
 		
 		cor.setLevelSettings(settings);
