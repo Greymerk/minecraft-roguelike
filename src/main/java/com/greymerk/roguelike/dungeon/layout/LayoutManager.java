@@ -64,8 +64,11 @@ public class LayoutManager {
 			floor.getRooms().forEach(r -> r.determineEntrances(floor, r.getFloorPos()));
 		}
 		
-		Debug debug = new Debug(editor.getWorldDirectory());
-		debug.toFile(origin.getX() + "_" + origin.getZ() + ".json", this.asJson());
+		if(Debug.DEBUG) {
+			Debug debug = new Debug(editor.getWorldDirectory());
+			debug.toFile(origin.getX() + "_" + origin.getZ() + ".json", this.asJson());	
+		}
+		
 	}
 	
 	private void placeRoom(IRoom room, Random rand, Floor floor) {
