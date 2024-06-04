@@ -141,9 +141,9 @@ public class BedRoom extends AbstractRoom implements IRoom {
 		bb = BoundingBox.of(origin);
 		bb.add(direction, 7).add(Cardinal.UP, 3);
 		bb.grow(Cardinal.directions).grow(Cardinal.UP);
-		RectSolid.fill(editor, rand, bb, BlockType.get(BlockType.AIR));
+		RectSolid.fill(editor, rand, bb, Air.get());
 		bb.add(direction, 4);
-		RectSolid.fill(editor, rand, bb, BlockType.get(BlockType.AIR));
+		RectSolid.fill(editor, rand, bb, Air.get());
 		
 		for(Cardinal dir : Cardinal.directions) {
 			if(dir == direction) continue;

@@ -3,7 +3,7 @@ package com.greymerk.roguelike.editor.factories;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
-import com.greymerk.roguelike.editor.blocks.BlockType;
+import com.greymerk.roguelike.editor.blocks.Air;
 
 import net.minecraft.util.math.random.Random;
 
@@ -26,7 +26,7 @@ public class BlockFloor extends BlockBase implements IBlockFactory{
 		this.floor = floor;
 		BlockWeightedRandom bridge = new BlockWeightedRandom();
 		bridge.addBlock(floor, 10);
-		bridge.addBlock(BlockType.get(BlockType.AIR), 1);
+		bridge.addBlock(Air.get(), 1);
 		this.bridge = bridge;
 	}
 	

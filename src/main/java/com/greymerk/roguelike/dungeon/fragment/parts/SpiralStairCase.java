@@ -6,7 +6,7 @@ import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.MetaBlock;
-import com.greymerk.roguelike.editor.blocks.BlockType;
+import com.greymerk.roguelike.editor.blocks.Air;
 import com.greymerk.roguelike.editor.blocks.stair.IStair;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.editor.shapes.Line;
@@ -45,7 +45,7 @@ public class SpiralStairCase implements IFragment {
 		
 		IBlockFactory fill = theme.getPrimary().getWall();
 		IStair stair = theme.getPrimary().getStair();
-		MetaBlock air = BlockType.get(BlockType.AIR);
+		MetaBlock air = Air.get();
 		
 		BoundingBox bb = BoundingBox.of(origin);
 		bb.grow(Cardinal.directions);

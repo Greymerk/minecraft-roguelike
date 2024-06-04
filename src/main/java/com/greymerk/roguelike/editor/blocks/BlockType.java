@@ -6,7 +6,7 @@ import net.minecraft.block.Blocks;
 
 public enum BlockType {
 
-	AIR, WATER_STILL, WATER_FLOWING, LAVA_STILL, LAVA_FLOWING, FIRE, IRON_BAR,
+	WATER_STILL, WATER_FLOWING, LAVA_STILL, LAVA_FLOWING, FIRE, IRON_BAR,
 	STONE_SMOOTH, GRANITE, GRANITE_POLISHED, DIORITE, DIORITE_POLISHED, ANDESITE, 
 	ANDESITE_POLISHED, GRASS, DIRT, DIRT_COARSE, DIRT_PODZOL, COBBLESTONE, COBBLESTONE_WALL, BEDROCK,
 	SAND, SAND_RED, GRAVEL, ORE_GOLD, ORE_IRON, ORE_COAL, GLASS, ORE_LAPIS, ORE_EMERALD, LAPIS_BLOCK,
@@ -27,7 +27,6 @@ public enum BlockType {
 	public static MetaBlock get(BlockType type){
 		
 		switch(type){
-		case AIR: return new MetaBlock(Blocks.AIR);
 		case WATER_STILL: return new MetaBlock(Blocks.WATER);
 		case WATER_FLOWING: return new MetaBlock(Blocks.WATER);
 		case LAVA_STILL: return new MetaBlock(Blocks.LAVA);

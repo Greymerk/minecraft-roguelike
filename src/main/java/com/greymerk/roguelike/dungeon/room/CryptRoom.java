@@ -14,7 +14,6 @@ import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.blocks.Air;
-import com.greymerk.roguelike.editor.blocks.BlockType;
 import com.greymerk.roguelike.editor.blocks.stair.IStair;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.editor.shapes.RectHollow;
@@ -133,7 +132,7 @@ public class CryptRoom extends AbstractMediumRoom implements IRoom {
 		
 		BoundingBox bb = BoundingBox.of(origin.copy());
 		bb.add(dir, 5).grow(Cardinal.orthogonal(dir), 4).grow(Cardinal.UP, 3).grow(dir, 3);
-		RectSolid.fill(editor, rand, bb, BlockType.get(BlockType.AIR));
+		RectSolid.fill(editor, rand, bb, Air.get());
 		
 		bb = BoundingBox.of(origin.copy());
 		bb.add(dir, 5).add(Cardinal.DOWN).grow(Cardinal.orthogonal(dir), 4).grow(dir, 5);
@@ -180,7 +179,7 @@ public class CryptRoom extends AbstractMediumRoom implements IRoom {
 		
 		BoundingBox bb = BoundingBox.of(origin.copy());
 		bb.add(dir, 2).grow(Cardinal.orthogonal(dir)).add(Cardinal.UP, 2);
-		RectSolid.fill(editor, rand, bb, BlockType.get(BlockType.AIR));
+		RectSolid.fill(editor, rand, bb, Air.get());
 		
 		bb = BoundingBox.of(origin.copy());
 		bb.add(dir, 2).add(Cardinal.UP, 3).grow(Cardinal.orthogonal(dir));
@@ -206,7 +205,7 @@ public class CryptRoom extends AbstractMediumRoom implements IRoom {
 		IStair stair = theme.getPrimary().getStair();
 		
 		BoundingBox bb = BoundingBox.of(origin.copy()).grow(Cardinal.directions, 2).grow(Cardinal.UP, 3);
-		RectSolid.fill(editor, rand, bb, BlockType.get(BlockType.AIR));
+		RectSolid.fill(editor, rand, bb, Air.get());
 		
 		bb = BoundingBox.of(origin).add(Cardinal.DOWN).grow(Cardinal.directions);
 		RectSolid.fill(editor, rand, bb, theme.getPrimary().getFloor());
@@ -244,7 +243,7 @@ public class CryptRoom extends AbstractMediumRoom implements IRoom {
 		
 		bb = BoundingBox.of(origin.copy());
 		bb.grow(Cardinal.UP, 4).grow(Cardinal.directions, 4);
-		RectSolid.fill(editor, rand, bb, BlockType.get(BlockType.AIR));
+		RectSolid.fill(editor, rand, bb, Air.get());
 		
 		for(Cardinal dir : Cardinal.directions) {
 			bb = BoundingBox.of(origin.copy());

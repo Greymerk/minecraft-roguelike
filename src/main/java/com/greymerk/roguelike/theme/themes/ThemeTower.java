@@ -1,5 +1,6 @@
 package com.greymerk.roguelike.theme.themes;
 
+import com.greymerk.roguelike.editor.blocks.Air;
 import com.greymerk.roguelike.editor.blocks.BlockType;
 import com.greymerk.roguelike.editor.blocks.door.Door;
 import com.greymerk.roguelike.editor.blocks.door.DoorType;
@@ -23,7 +24,7 @@ public class ThemeTower extends ThemeBase implements ITheme {
 		stone.addBlock(BlockType.get(BlockType.STONE_BRICK_MOSSY));
 		
 		BlockWeightedRandom walls = new BlockWeightedRandom();
-		walls.addBlock(BlockType.get(BlockType.AIR), 5);
+		walls.addBlock(Air.get(), 5);
 		walls.addBlock(stone, 30);
 		walls.addBlock(BlockType.get(BlockType.COBBLESTONE), 10);
 		walls.addBlock(BlockType.get(BlockType.GRAVEL), 5);
