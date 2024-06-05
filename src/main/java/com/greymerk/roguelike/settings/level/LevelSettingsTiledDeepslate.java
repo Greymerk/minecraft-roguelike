@@ -34,7 +34,8 @@ public class LevelSettingsTiledDeepslate extends LevelSettingsBase implements IL
 		
 		this.alcoves.add(this.walls);
 		this.alcoves.add(new WeightedChoice<Fragment>(Fragment.ALCOVE_CRYPT, 5));
-		this.alcoves.add(new WeightedChoice<Fragment>(Fragment.BOOK_SHELF, 2));
+		this.alcoves.add(new WeightedChoice<Fragment>(Fragment.BOOK_SHELF, 5));
+		this.alcoves.add(new WeightedChoice<Fragment>(Fragment.ALCOVE_FIRE, 2));
 		
 		this.filters = new ArrayList<IFilter>();
 		this.filters.add(Filter.get(Filter.POTS));

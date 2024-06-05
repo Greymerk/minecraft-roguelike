@@ -68,6 +68,11 @@ public class CreeperRoom extends AbstractMediumRoom implements IRoom {
 		blocks.addBlock(MetaBlock.of(Blocks.GRAVEL), 3);
 		blocks.addBlock(MetaBlock.of(Blocks.TNT), 1);
 		BoundingBox.of(origin).add(Cardinal.DOWN, 2).grow(Cardinal.DOWN).grow(Cardinal.directions, 3).fill(editor, rand, blocks);
+		
+		BoundingBox.of(origin).add(Cardinal.DOWN, 3).grow(Cardinal.directions, 4).fill(editor, rand, theme.getPrimary().getWall());
+		Cardinal.directions.forEach(dir -> {
+			BoundingBox.of(origin).add(Cardinal.DOWN).add(dir, 4).grow(Cardinal.orthogonal(dir), 4).grow(Cardinal.DOWN, 3).fill(editor, rand, theme.getPrimary().getWall());
+		});
 	}
 
 	private void entry(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {

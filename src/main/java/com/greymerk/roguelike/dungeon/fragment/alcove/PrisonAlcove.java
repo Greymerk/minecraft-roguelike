@@ -20,6 +20,9 @@ public class PrisonAlcove implements IFragment {
 
 	@Override
 	public void generate(IWorldEditor editor, Random rand, ITheme theme, Coord origin, Cardinal dir) {
+		
+		BoundingBox.of(origin).add(dir, 3).add(Cardinal.DOWN).grow(Cardinal.orthogonal(dir)).fill(editor, rand, theme.getPrimary().getFloor());
+		
 		cell(editor, rand, theme, origin.copy().add(dir, Cell.SIZE).freeze());
 
 		Cardinal.directions.forEach(d -> {

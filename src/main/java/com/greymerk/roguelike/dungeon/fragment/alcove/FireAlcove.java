@@ -25,8 +25,14 @@ public class FireAlcove implements IFragment {
 		theme.getPrimary().getStair().setOrientation(Cardinal.reverse(dir), true).set(editor, rand, origin.copy().add(dir, 4).add(Cardinal.UP, 3));
 		BoundingBox.of(origin).add(dir, 4).grow(Cardinal.UP, 2)
 			.getShape(Shape.RECTSOLID).fill(editor, rand, Air.get());
-		MetaBlock.of(Blocks.NETHERRACK).set(editor, origin.copy().add(dir, 4).add(Cardinal.DOWN));
-		MetaBlock.of(Blocks.FIRE).set(editor, origin.copy().add(dir, 4));
+		if(origin.getY() > 0) {
+			MetaBlock.of(Blocks.NETHERRACK).set(editor, origin.copy().add(dir, 4).add(Cardinal.DOWN));
+			MetaBlock.of(Blocks.FIRE).set(editor, origin.copy().add(dir, 4));	
+		} else {
+			MetaBlock.of(Blocks.SOUL_SOIL).set(editor, origin.copy().add(dir, 4).add(Cardinal.DOWN));
+			MetaBlock.of(Blocks.SOUL_FIRE).set(editor, origin.copy().add(dir, 4));
+		}
+		
 	}
 
 }
