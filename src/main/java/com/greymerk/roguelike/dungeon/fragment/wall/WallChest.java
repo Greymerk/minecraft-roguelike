@@ -29,7 +29,7 @@ public class WallChest implements IFragment {
 		}
 		
 		WeightedRandomizer<Treasure> types = new WeightedRandomizer<Treasure>();
-		types.add(new WeightedChoice<Treasure>(Treasure.SUPPLIES, 2));
+		types.add(new WeightedChoice<Treasure>(Treasure.SUPPLIES, 1));
 		types.add(new WeightedChoice<Treasure>(Treasure.BLOCKS, 1));
 		types.add(new WeightedChoice<Treasure>(Treasure.WEAPONS, 1));
 		types.add(new WeightedChoice<Treasure>(Treasure.ARMOUR, 1));

@@ -49,11 +49,16 @@ public class MetaEntity implements IEntity {
 			((ZombieEntity)newMob).setBaby(((ZombieEntity)oldMob).isBaby());
 		}
 		
-		for(EquipmentSlot slot : EquipmentSlot.values()){
-			ItemStack toTrade = oldMob.getEquippedStack(slot);
-			newMob.equipStack(slot, toTrade);
+		if(clear) {
+			for(EquipmentSlot slot : EquipmentSlot.values()){
+				newMob.equipStack(slot, ItemStack.EMPTY);
+			}	
+		} else {
+			for(EquipmentSlot slot : EquipmentSlot.values()){
+				ItemStack toTrade = oldMob.getEquippedStack(slot);
+				newMob.equipStack(slot, toTrade);
+			}
 		}
-		
 		
 		oldMob.remove(RemovalReason.DISCARDED);
 		newMob.getEntityWorld().spawnEntity(newMob);
