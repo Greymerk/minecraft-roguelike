@@ -6,14 +6,17 @@ import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.MetaBlock;
 import com.greymerk.roguelike.editor.factories.BlockWeightedRandom;
+import com.greymerk.roguelike.editor.shapes.IShape;
 
 import net.minecraft.block.Blocks;
 import net.minecraft.block.PaneBlock;
 import net.minecraft.util.math.random.Random;
 
-public class IronBar extends MetaBlock{
+public class IronBar implements IBlockFactory{
 
-	public static MetaBlock get() {
+	MetaBlock bar;
+	
+	public static IronBar get() {
 		return new IronBar();
 	}
 
@@ -25,21 +28,9 @@ public class IronBar extends MetaBlock{
 	}
 	
 	public IronBar() {
-		super(Blocks.IRON_BARS);
+		this.bar = MetaBlock.of(Blocks.IRON_BARS);
 	}
 
-	@Override
-	public boolean set(IWorldEditor editor, Coord pos){
-		this.setShape(editor, pos);
-		return editor.set(pos, this, true, true);
-	}
-	
-	@Override
-	public boolean set(IWorldEditor editor, Random rand, Coord pos, boolean fillAir, boolean replaceSolid) {
-		this.setShape(editor, pos);
-		return editor.set(pos, this, fillAir, replaceSolid);
-	}
-	
 	private void setShape(IWorldEditor editor, Coord origin) {
 		for(Cardinal dir : Cardinal.directions) {
 			setConnection(editor, origin, dir, connects(editor, origin, dir));
@@ -54,11 +45,33 @@ public class IronBar extends MetaBlock{
 	
 	private void setConnection(IWorldEditor editor, Coord origin, Cardinal dir, boolean connects) {
 		switch(dir) {
-		case EAST: this.withProperty(PaneBlock.EAST, connects); return;
-		case NORTH: this.withProperty(PaneBlock.NORTH, connects); return;
-		case SOUTH: this.withProperty(PaneBlock.SOUTH, connects); return;
-		case WEST: this.withProperty(PaneBlock.WEST, connects); return;
+		case EAST: this.bar.withProperty(PaneBlock.EAST, connects); return;
+		case NORTH: this.bar.withProperty(PaneBlock.NORTH, connects); return;
+		case SOUTH: this.bar.withProperty(PaneBlock.SOUTH, connects); return;
+		case WEST: this.bar.withProperty(PaneBlock.WEST, connects); return;
 		default: return;
 		}
+	}
+
+	@Override
+	public boolean set(IWorldEditor editor, Random rand, Coord pos){
+		this.setShape(editor, pos);
+		return editor.set(pos, this.bar, true, true);
+	}
+	
+	@Override
+	public boolean set(IWorldEditor editor, Random rand, Coord pos, boolean fillAir, boolean replaceSolid) {
+		this.setShape(editor, pos);
+		return editor.set(pos, bar, fillAir, replaceSolid);
+	}
+	
+	@Override
+	public void fill(IWorldEditor editor, Random rand, IShape shape, boolean fillAir, boolean replaceSolid) {
+		this.bar.fill(editor, rand, shape, fillAir, replaceSolid);
+	}
+
+	@Override
+	public void fill(IWorldEditor editor, Random rand, IShape shape) {
+		this.bar.fill(editor, rand, shape);
 	}
 }

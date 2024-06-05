@@ -3,6 +3,7 @@ package com.greymerk.roguelike.editor.blocks.stair;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
+import com.greymerk.roguelike.editor.MetaBlock;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -26,7 +27,7 @@ public enum Stair{
 	}
 	
 	public static MetaStair get(Stair type, Cardinal dir, boolean upsideDown){
-		MetaStair stair = new MetaStair(type);
+		MetaStair stair = MetaStair.of(type);
 		stair.setOrientation(dir, upsideDown);
 		return stair;
 	}
@@ -63,7 +64,8 @@ public enum Stair{
 		}
 	}
 	
-    public static StairShape getStairShape(BlockState state, IWorldEditor world, BlockPos pos) {
+    public static StairShape getStairShape(MetaBlock stair, IWorldEditor world, BlockPos pos) {
+    	BlockState state = stair.getState();
         Direction direction3;
         Direction direction2;
         Direction direction = state.get(StairsBlock.FACING);

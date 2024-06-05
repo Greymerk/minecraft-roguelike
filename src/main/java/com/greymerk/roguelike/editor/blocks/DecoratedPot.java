@@ -28,11 +28,7 @@ public class DecoratedPot {
 	
 	public static void set(IWorldEditor editor, Random rand, Coord origin, Loot type) {
 		
-		MetaBlock pot = new MetaBlock(Blocks.DECORATED_POT);
-
-		boolean success = pot.set(editor, origin);
-		
-		if(!success) return;
+		if(!MetaBlock.of(Blocks.DECORATED_POT).set(editor, origin)) return;
 		
 		BlockEntity be = editor.getBlockEntity(origin);
 		

@@ -10,6 +10,10 @@ public enum NetherBrick {
 	BRICK, CRACKED, CHISELED, STAIR, RED_BRICK, RED_STAIR,
 	SLAB, RED_SLAB;
 	
+	public static MetaBlock get(NetherBrick type) {
+		return MetaBlock.of(fromType(type));
+	}
+	
 	public static Block fromType(NetherBrick type) {
 		
 		switch(type) {
@@ -25,7 +29,5 @@ public enum NetherBrick {
 		}
 	}
 	
-	public MetaBlock get(NetherBrick type) {
-		return new MetaBlock(fromType(type));
-	}
+	
 }

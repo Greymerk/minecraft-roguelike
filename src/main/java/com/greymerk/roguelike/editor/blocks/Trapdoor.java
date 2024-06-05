@@ -17,7 +17,7 @@ public enum Trapdoor {
 	}
 	
 	public static MetaBlock getIron(Cardinal dir, boolean bottom, boolean open) {
-		MetaBlock hatch = new MetaBlock(Blocks.IRON_TRAPDOOR.getDefaultState());
+		MetaBlock hatch = MetaBlock.of(Blocks.IRON_TRAPDOOR);
 		return Trapdoor.setOrientation(hatch, dir, bottom, open);
 	}
 	

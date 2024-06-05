@@ -12,7 +12,7 @@ public enum SilverfishBlock {
 	STONE, COBBLE, STONEBRICK, STONEBRICK_MOSSY, STONEBRICK_CRACKED, STONEBRICK_CHISELED;
 	
 	public static MetaBlock get(SilverfishBlock type){
-		return new MetaBlock(fromType(type));
+		return MetaBlock.of(fromType(type));
 	}
 	
 	public static Block fromType(SilverfishBlock type) {

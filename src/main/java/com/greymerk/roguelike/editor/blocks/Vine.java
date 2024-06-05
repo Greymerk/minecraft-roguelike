@@ -7,7 +7,6 @@ import com.greymerk.roguelike.editor.MetaBlock;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.editor.shapes.RectSolid;
 
-import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.VineBlock;
 import net.minecraft.state.property.BooleanProperty;
@@ -53,7 +52,8 @@ public class Vine {
 				: Cardinal.facing(dir);
 		BooleanProperty facingProperty = VineBlock.getFacingProperty(facing);
 		if(facingProperty == null) return;
-		BlockState vine = (BlockState)Blocks.VINE.getDefaultState().with(facingProperty, true);
-		editor.set(origin, new MetaBlock(vine));
+		MetaBlock.of(Blocks.VINE)
+			.withProperty(facingProperty, true)
+			.set(editor, pos);
 	}
 }

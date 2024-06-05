@@ -6,7 +6,6 @@ import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.MetaBlock;
 import com.greymerk.roguelike.treasure.loot.items.Banner;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.HorizontalFacingBlock;
 import net.minecraft.block.entity.BannerBlockEntity;
@@ -22,10 +21,10 @@ public class WallBanner {
 	}
 	
 	public static void generate(IWorldEditor editor, ItemStack banner, Coord origin, Cardinal dir) {
-		Block b = Blocks.BLACK_WALL_BANNER;
-		MetaBlock block = new MetaBlock(b);
-		block.withProperty(HorizontalFacingBlock.FACING, Cardinal.facing(dir));
-		block.set(editor, origin);
+		
+		MetaBlock.of(Blocks.BLACK_WALL_BANNER)
+			.withProperty(HorizontalFacingBlock.FACING, Cardinal.facing(dir))
+			.set(editor, origin);
 		
 		BlockEntity be = editor.getBlockEntity(origin);
 		if(be == null) return;

@@ -1,17 +1,16 @@
 package com.greymerk.roguelike.editor;
 
-import net.minecraft.util.math.random.Random;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.state.State;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.state.property.Property;
+import net.minecraft.util.math.random.Random;
 
 /**
 A Wrapper for Mojang's BlockState objects
 
 MetaBlocks implement IBlockFactory and may
-therefore be used interchangably and
+therefore be used interchangeably and
 recursively with other IBlockFactory containers
 such as BlockWeightedRandom
 **/
@@ -23,33 +22,44 @@ public class MetaBlock extends BlockBase{
 		return new MetaBlock(block);
 	}
 	
-	public MetaBlock(Block block){
+	public static MetaBlock of(BlockState state) {
+		return new MetaBlock(state);
+	}
+	
+	private MetaBlock(Block block){
 		this.setState(block.getDefaultState());
 	}
 	
-	public MetaBlock(MetaBlock block){
+	private MetaBlock(MetaBlock block){
 		this.setState(block.state);
 	}
 	
-	public MetaBlock(BlockState state){
+	private MetaBlock(BlockState state){
 		this.setState(state);
 	}
 	
-	public void setState(BlockState bs){
+	private void setState(BlockState bs){
 		this.state = bs;
 	}
 	
 	public BlockState getState() {
 		return this.state;
 	}
-
+	
 	public boolean set(IWorldEditor editor, Coord pos){
 		return editor.set(pos, this, true, true);
 	}
 	
-	@Override
 	public boolean set(IWorldEditor editor, Random rand, Coord pos, boolean fillAir, boolean replaceSolid) {
 		return editor.set(pos, this, fillAir, replaceSolid);
+	}
+	
+	public boolean isIn(TagKey<Block> tag) {
+		return this.state.isIn(tag);
+	}
+	
+	public <T extends Comparable<T>> T get(Property<T> property) {
+		return this.state.get(property);
 	}
 
 	public Block getBlock() {
@@ -60,9 +70,9 @@ public class MetaBlock extends BlockBase{
 		return Block.NOTIFY_ALL;
 	}
 	
-	public <T extends Comparable<T>, V extends T> State<?, BlockState> withProperty(Property<T> property, V value) {
+	public <T extends Comparable<T>, V extends T> MetaBlock withProperty(Property<T> property, V value) {
 		this.state = this.state.with(property, value);
-		return this.state;
+		return this;
 	}
 	
 	@Override

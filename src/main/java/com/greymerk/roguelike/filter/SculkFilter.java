@@ -29,7 +29,7 @@ public class SculkFilter implements IFilter {
 		if (counter <= 0) return;
 		if(!editor.isAir(origin.copy().add(Cardinal.UP))) return;
 		MetaBlock block = editor.getBlock(origin);
-		if(!block.getState().isIn(BlockTags.SCULK_REPLACEABLE_WORLD_GEN)) return;
+		if(!block.isIn(BlockTags.SCULK_REPLACEABLE_WORLD_GEN)) return;
 		MetaBlock.of(Blocks.SCULK).set(editor, origin);
 		MetaBlock shrieker = MetaBlock.of(Blocks.SCULK_SHRIEKER);
 		shrieker.withProperty(SculkShriekerBlock.CAN_SUMMON, true);

@@ -73,8 +73,8 @@ public class MudFilter implements IFilter{
 		if(rand.nextInt(3) != 0) return;
 		
 		BlockJumble shrooms = new BlockJumble();
-		shrooms.addBlock(new MetaBlock(FlowerPot.getFlower(FlowerPot.BROWNMUSHROOM)));
-		shrooms.addBlock(new MetaBlock(FlowerPot.getFlower(FlowerPot.REDMUSHROOM)));
+		shrooms.addBlock(MetaBlock.of(FlowerPot.getFlower(FlowerPot.BROWNMUSHROOM)));
+		shrooms.addBlock(MetaBlock.of(FlowerPot.getFlower(FlowerPot.REDMUSHROOM)));
 		
 		if(rand.nextInt(3) == 0) {
 			Fungus.generate(editor, rand, pos.copy().add(Cardinal.UP));

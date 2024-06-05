@@ -23,9 +23,9 @@ public enum Button {
 	}
 	
 	public static void generate(IWorldEditor editor, Coord origin, Cardinal dir, Button type) {
-		MetaBlock button = new MetaBlock(fromType(type));
-		button.withProperty(ButtonBlock.FACING, Cardinal.facing(Cardinal.reverse(dir)));
-		button.set(editor, origin);
+		MetaBlock.of(fromType(type))
+			.withProperty(ButtonBlock.FACING, Cardinal.facing(Cardinal.reverse(dir)))
+			.set(editor, origin);
 	}
 	
 }

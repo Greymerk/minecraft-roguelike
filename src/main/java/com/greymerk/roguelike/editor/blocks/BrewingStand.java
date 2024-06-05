@@ -23,7 +23,7 @@ public enum BrewingStand {
 	}
 	
 	public static boolean generate(IWorldEditor editor, Coord pos){
-		MetaBlock stand = new MetaBlock(Blocks.BREWING_STAND);
+		MetaBlock stand = MetaBlock.of(Blocks.BREWING_STAND);
 		return stand.set(editor, pos);
 	}
 	

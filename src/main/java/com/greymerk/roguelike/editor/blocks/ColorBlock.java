@@ -12,13 +12,13 @@ public enum ColorBlock {
 	
 	public static MetaBlock get(ColorBlock type, Color color){
 		switch(type) {
-		case CLAY: return new MetaBlock(getClay(color));
-		case GLAZED: return new MetaBlock(getGlazed(color));
-		default: return new MetaBlock(getClay(color));
+		case CLAY: return MetaBlock.of(getClay(color));
+		case GLAZED: return MetaBlock.of(getGlazed(color));
+		default: return MetaBlock.of(getClay(color));
 		}
 	}
 	
-	public static BlockState getClay(Color color) {
+	private static BlockState getClay(Color color) {
 		switch(color){
 		case WHITE: return Blocks.WHITE_TERRACOTTA.getDefaultState();
 		case ORANGE: return Blocks.ORANGE_TERRACOTTA.getDefaultState();
@@ -40,7 +40,7 @@ public enum ColorBlock {
 		}
 	}
 	
-	public static BlockState getGlazed(Color color) {
+	private static BlockState getGlazed(Color color) {
 		switch(color){
 		case WHITE: return Blocks.WHITE_GLAZED_TERRACOTTA.getDefaultState();
 		case ORANGE: return Blocks.ORANGE_GLAZED_TERRACOTTA.getDefaultState();

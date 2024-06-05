@@ -4,16 +4,15 @@ import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.MetaBlock;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.PillarBlock;
 
 public class Log {
 
 	public static MetaBlock get(Wood type, Cardinal dir){
-		BlockState log = fromType(type).getDefaultState();
-		log.with(PillarBlock.AXIS, Cardinal.axis(dir));
-		return new MetaBlock(log);
+		return MetaBlock.of(fromType(type))
+			.withProperty(PillarBlock.AXIS, Cardinal.axis(dir));
+		
 	}
 	
 	public static MetaBlock get(Wood type){

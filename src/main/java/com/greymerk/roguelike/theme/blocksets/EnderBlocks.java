@@ -31,8 +31,8 @@ public class EnderBlocks extends BlockSet implements IBlockSet {
 		BlockCheckers floor = new BlockCheckers(BlockType.get(BlockType.DIORITE_POLISHED), BlackStone.get(BlackStone.POLISHED));
 		this.floor = new BlockFloor(floor);
 
-		this.stair = new MetaStair(BlackStone.get(BlackStone.STONE_STAIR));
-		this.door = new Door(DoorType.CRIMSON);
+		this.stair = MetaStair.of(BlackStone.fromType(BlackStone.STONE_STAIR));
+		this.door = Door.of(DoorType.CRIMSON);
 		this.slab = Slab.get(Slab.BLACK_STONE);
 		
 		this.lightblock = BlockType.get(BlockType.GLOWSTONE);

@@ -31,10 +31,10 @@ public class Candle {
 		} else {
 			numCandles = count;
 		}
-		MetaBlock candle = new MetaBlock(fromColor(color));
-		candle.withProperty(CandleBlock.CANDLES, numCandles);
-		candle.withProperty(CandleBlock.LIT, lit);
-		candle.set(editor, origin);
+		MetaBlock.of(fromColor(color))
+			.withProperty(CandleBlock.CANDLES, numCandles)
+			.withProperty(CandleBlock.LIT, lit)
+			.set(editor, origin);
 	}
 	
 	public static Block fromColor(Color color) {

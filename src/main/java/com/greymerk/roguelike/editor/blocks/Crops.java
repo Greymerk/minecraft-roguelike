@@ -13,28 +13,26 @@ public enum Crops {
 	
 	public static MetaBlock get(Crops type){
 		switch(type){
-		case WHEAT: return new MetaBlock(Blocks.WHEAT);
-		case CARROTS: return new MetaBlock(Blocks.CARROTS);
-		case NETHERWART: return new MetaBlock(Blocks.NETHER_WART);
-		case MELON: return new MetaBlock(Blocks.MELON_STEM);
-		case PUMPKIN: return new MetaBlock(Blocks.PUMPKIN_STEM);
-		case POTATOES: return new MetaBlock(Blocks.POTATOES);
-		default: return new MetaBlock(Blocks.WHEAT);
+		case WHEAT: return MetaBlock.of(Blocks.WHEAT);
+		case CARROTS: return MetaBlock.of(Blocks.CARROTS);
+		case NETHERWART: return MetaBlock.of(Blocks.NETHER_WART);
+		case MELON: return MetaBlock.of(Blocks.MELON_STEM);
+		case PUMPKIN: return MetaBlock.of(Blocks.PUMPKIN_STEM);
+		case POTATOES: return MetaBlock.of(Blocks.POTATOES);
+		default: return MetaBlock.of(Blocks.WHEAT);
 		}
 	}
 	
 	public static MetaBlock getCocao(Cardinal dir){
-		MetaBlock cocao = new MetaBlock(Blocks.COCOA);
-		cocao.withProperty(CocoaBlock.FACING, Cardinal.facing(Cardinal.reverse(dir)));
-		cocao.withProperty(CocoaBlock.AGE, 2);
-		return cocao;
+		return MetaBlock.of(Blocks.COCOA)
+			.withProperty(CocoaBlock.FACING, Cardinal.facing(Cardinal.reverse(dir)))
+			.withProperty(CocoaBlock.AGE, 2);
 	}
 	
 	public static MetaBlock getPumpkin(Cardinal dir, boolean lit){
-		MetaBlock pumpkin = new MetaBlock(lit 
+		return MetaBlock.of(lit 
 				? Blocks.JACK_O_LANTERN.getDefaultState() 
-				: Blocks.CARVED_PUMPKIN.getDefaultState()); 
-		pumpkin.withProperty(CarvedPumpkinBlock.FACING, Cardinal.facing(Cardinal.reverse(dir)));
-		return pumpkin;
+				: Blocks.CARVED_PUMPKIN.getDefaultState()) 
+			.withProperty(CarvedPumpkinBlock.FACING, Cardinal.facing(Cardinal.reverse(dir)));
 	}
 }

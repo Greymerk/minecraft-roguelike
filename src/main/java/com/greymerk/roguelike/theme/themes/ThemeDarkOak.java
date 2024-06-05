@@ -33,7 +33,7 @@ public class ThemeDarkOak extends ThemeBase implements ITheme {
 		
 		MetaBlock logs = Wood.get(Wood.DARKOAK, WoodBlock.LOG);
 		MetaBlock segmentWall = Wood.get(Wood.DARKOAK, WoodBlock.PLANK);
-		MetaStair segmentStair = new MetaStair(Stair.DARKOAK);
+		MetaStair segmentStair = MetaStair.of(Stair.DARKOAK);
 		
 		this.primary = new BlockSet()
 				.setWall(walls)

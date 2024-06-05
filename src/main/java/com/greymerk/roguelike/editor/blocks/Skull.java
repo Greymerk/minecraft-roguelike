@@ -16,12 +16,10 @@ public enum Skull {
 	
 	public static void set(IWorldEditor editor, Random rand, Coord origin, Cardinal dir, Skull type){
 		if(!editor.isSupported(origin)) return;
-		MetaBlock skullBlock = new MetaBlock(Skull.fromType(type).getDefaultState());
-		setRotation(rand, skullBlock, dir);
-		skullBlock.set(editor, origin);
+		setRotation(rand, MetaBlock.of(Skull.fromType(type)), dir).set(editor, origin);
 	}
 	
-	public static void setRotation(Random rand, MetaBlock skull, Cardinal dir){
+	public static MetaBlock setRotation(Random rand, MetaBlock skull, Cardinal dir){
 		int directionValue = getDirectionValue(dir);
 		
 		// nudge the skull so that it isn't perfectly aligned.
@@ -32,6 +30,7 @@ public enum Skull {
 		directionValue = Math.floorMod(directionValue, 16);
 		
 		skull.withProperty(SkullBlock.ROTATION, directionValue);
+		return skull;
 	}
 	
 	public static Block fromType(Skull type){

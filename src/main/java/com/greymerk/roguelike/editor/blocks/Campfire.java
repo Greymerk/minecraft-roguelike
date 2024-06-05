@@ -12,18 +12,14 @@ public enum Campfire {
 	NATURAL, SOUL;
 	
 	public static void generate(IWorldEditor editor, Coord origin, Campfire type) {
-		MetaBlock fire = new MetaBlock(fromType(type));
-		fire.set(editor, origin);
+		MetaBlock.of(fromType(type)).set(editor, origin);
 	}
 	
 	public static Block fromType(Campfire type) {
 		switch(type) {
-		case NATURAL:
-			return Blocks.CAMPFIRE;
-		case SOUL:
-			return Blocks.SOUL_CAMPFIRE;
-		default:
-			return Blocks.CAMPFIRE;
+		case NATURAL: return Blocks.CAMPFIRE;
+		case SOUL: return Blocks.SOUL_CAMPFIRE;
+		default: return Blocks.CAMPFIRE;
 		}
 	}
 	

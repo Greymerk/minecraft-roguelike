@@ -66,7 +66,7 @@ public class WorldEditor implements IWorldEditor{
 	@Override
 	public MetaBlock getBlock(Coord pos) {
 		BlockState state = world.getBlockState(pos.getBlockPos());
-		return new MetaBlock(state);
+		return MetaBlock.of(state);
 	}
 
 	@Override

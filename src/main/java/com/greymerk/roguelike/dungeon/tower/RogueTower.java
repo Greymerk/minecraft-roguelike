@@ -95,7 +95,7 @@ public class RogueTower implements ITower{
 			
 			//windows
 			Cardinal.orthogonal(dir).forEach(o -> {
-				IronBar.get().set(editor, origin.copy().add(Cardinal.UP, 6).add(dir, 4).add(o, 2));
+				IronBar.get().set(editor, rand, origin.copy().add(Cardinal.UP, 6).add(dir, 4).add(o, 2));
 			});
 			
 			//corner bevels

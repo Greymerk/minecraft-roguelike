@@ -8,11 +8,10 @@ import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
-import com.greymerk.roguelike.editor.MetaBlock;
+import com.greymerk.roguelike.editor.blocks.Air;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.editor.boundingbox.IBounded;
 
-import net.minecraft.block.Blocks;
 import net.minecraft.util.math.random.Random;
 
 public class RectHollow implements IShape {
@@ -43,7 +42,7 @@ public class RectHollow implements IShape {
 		}
 		
 		BoundingBox inner = this.bb.copy().grow(Cardinal.all, -1);
-		RectSolid.fill(editor, rand, inner, new MetaBlock(Blocks.CAVE_AIR));
+		RectSolid.fill(editor, rand, inner, Air.get());
 	}
 
 	@Override

@@ -34,7 +34,7 @@ public class BlockSet implements IBlockSet {
 
 	@Override
 	public IStair getStair() {
-		return stair != null ? this.stair : new MetaStair(Stair.STONEBRICK);
+		return stair != null ? this.stair : MetaStair.of(Stair.STONEBRICK);
 	}
 
 	@Override
@@ -49,7 +49,7 @@ public class BlockSet implements IBlockSet {
 
 	@Override
 	public IDoor getDoor() {
-		return this.door != null ? this.door : new Door(DoorType.OAK);
+		return this.door != null ? this.door : Door.of(DoorType.OAK);
 	}
 
 	@Override

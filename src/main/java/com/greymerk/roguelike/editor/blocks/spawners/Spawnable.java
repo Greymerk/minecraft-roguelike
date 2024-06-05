@@ -24,7 +24,7 @@ public class Spawnable {
 		
 	public void generate(IWorldEditor editor, Random rand, Coord pos, Difficulty diff){
 
-		editor.set(pos, new MetaBlock(Blocks.SPAWNER), true, true);
+		MetaBlock.of(Blocks.SPAWNER).set(editor, pos);
 		BlockEntity be = editor.getBlockEntity(pos);
 		if (!(be instanceof MobSpawnerBlockEntity)) return;
 		

@@ -8,32 +8,34 @@ import net.minecraft.block.Block;
 import net.minecraft.block.SlabBlock;
 import net.minecraft.block.enums.SlabType;
 
-public class MetaSlab extends MetaBlock implements ISlab {
+public class MetaSlab implements ISlab {
 
-	public MetaSlab(Block slab) {
-		super(slab);
-	}
+	MetaBlock slab;
 	
-	public MetaSlab(MetaBlock slab) {
-		super(slab);
+	public MetaSlab(Block slab) {
+		this.slab = MetaBlock.of(slab);
 	}
 	
 	@Override
-	public MetaSlab get() {
-		return this;
+	public MetaBlock get() {
+		return this.slab;
 	}
 	
 	@Override
 	public ISlab upsideDown(boolean upsideDown) {
-		this.withProperty(SlabBlock.TYPE, upsideDown ? SlabType.TOP : SlabType.BOTTOM);
+		this.slab.withProperty(SlabBlock.TYPE, upsideDown ? SlabType.TOP : SlabType.BOTTOM);
 		return this;
 	}
 
 	@Override
-	public boolean set(IWorldEditor editor, Coord pos, boolean fillAir, boolean replaceSolid) {
-		return editor.set(pos, this, fillAir, replaceSolid);
+	public boolean set(IWorldEditor editor, Coord pos) {
+		return editor.set(pos, slab);
 	}
 
+	@Override
+	public boolean set(IWorldEditor editor, Coord pos, boolean fillAir, boolean replaceSolid) {
+		return editor.set(pos, slab, fillAir, replaceSolid);
+	}
 
 
 }

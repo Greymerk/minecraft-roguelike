@@ -21,7 +21,7 @@ public class FireAlcove implements IFragment {
 		BoundingBox.of(origin).add(dir, 3).grow(dir, 3).grow(Cardinal.orthogonal(dir)).grow(Cardinal.UP, 3)
 			.getShape(Shape.RECTSOLID).fill(editor, rand, theme.getPrimary().getWall());
 		theme.getPrimary().getSlab().upsideDown(false).set(editor, origin.copy().add(dir, 3));
-		IronBar.get().set(editor, origin.copy().add(dir, 3).add(Cardinal.UP));
+		IronBar.get().set(editor, rand, origin.copy().add(dir, 3).add(Cardinal.UP));
 		theme.getPrimary().getStair().setOrientation(Cardinal.reverse(dir), true).set(editor, rand, origin.copy().add(dir, 4).add(Cardinal.UP, 3));
 		BoundingBox.of(origin).add(dir, 4).grow(Cardinal.UP, 2)
 			.getShape(Shape.RECTSOLID).fill(editor, rand, Air.get());

@@ -23,9 +23,9 @@ public class BookShelf {
 
 	public static void set(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
 		
-		MetaBlock mb = new MetaBlock(Blocks.CHISELED_BOOKSHELF);
-		mb.withProperty(HorizontalFacingBlock.FACING, Cardinal.facing(Cardinal.reverse(dir)));
-		mb.set(editor, origin);
+		MetaBlock.of(Blocks.CHISELED_BOOKSHELF)
+			.withProperty(HorizontalFacingBlock.FACING, Cardinal.facing(Cardinal.reverse(dir)))
+			.set(editor, origin);
 		
 		BlockEntity be = editor.getBlockEntity(origin);
 		
