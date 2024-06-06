@@ -44,22 +44,24 @@ public class MetaStair implements IStair{
 	
 	public boolean set(IWorldEditor editor, Random rand, Coord pos) {
 		setStairShape(editor, pos);
-		return editor.set(pos, stair);
+		return this.stair.set(editor, rand, pos);
 	}
 	
 	public boolean set(IWorldEditor editor, Random rand, Coord pos, boolean fillAir, boolean replaceSolid) {
 		setStairShape(editor, pos);
-		return editor.set(pos, stair, fillAir, replaceSolid);
+		return this.stair.set(editor, rand, pos, fillAir, replaceSolid);
 	}
 
 	@Override
 	public void fill(IWorldEditor editor, Random rand, IShape shape, boolean fillAir, boolean replaceSolid) {
-		shape.fill(editor, rand, stair, fillAir, replaceSolid);
+		shape.get().forEach(pos -> {
+			this.set(editor, rand, pos, fillAir, replaceSolid);
+		});
 	}
 
 	@Override
 	public void fill(IWorldEditor editor, Random rand, IShape shape) {
-		shape.fill(editor, rand, stair);
+		this.fill(editor, rand, shape, true, true);
 	}
 	
 	private void setStairShape(IWorldEditor editor, Coord pos) {

@@ -24,7 +24,6 @@ public enum SilverfishBlock {
 		case STONEBRICK_CRACKED: return Blocks.INFESTED_CRACKED_STONE_BRICKS;
 		case STONEBRICK_MOSSY: return Blocks.INFESTED_MOSSY_STONE_BRICKS;
 		default: return Blocks.INFESTED_STONE;
-		
 		}
 	}
 	

@@ -56,13 +56,13 @@ public class IronBar implements IBlockFactory{
 	@Override
 	public boolean set(IWorldEditor editor, Random rand, Coord pos){
 		this.setShape(editor, pos);
-		return editor.set(pos, this.bar, true, true);
+		return bar.set(editor, rand, pos);
 	}
 	
 	@Override
 	public boolean set(IWorldEditor editor, Random rand, Coord pos, boolean fillAir, boolean replaceSolid) {
 		this.setShape(editor, pos);
-		return editor.set(pos, bar, fillAir, replaceSolid);
+		return bar.set(editor, rand, pos, fillAir, replaceSolid);
 	}
 	
 	@Override

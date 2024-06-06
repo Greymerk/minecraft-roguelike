@@ -29,9 +29,7 @@ public class Vine {
 	public static boolean canPlace(IWorldEditor editor, Coord origin) {
 		if(!editor.isAir(origin)) return false;
 		for(Cardinal dir : Cardinal.directions) {
-			Coord pos = origin.copy();
-			pos.add(dir);
-			if(editor.isFaceFullSquare(pos, Cardinal.reverse(dir))) return true;
+			if(editor.isFaceFullSquare(origin.copy().add(dir), Cardinal.reverse(dir))) return true;
 		}
 		return false;
 	}
@@ -44,8 +42,7 @@ public class Vine {
 	}
 	
 	public static void setFace(IWorldEditor editor, Coord origin, Cardinal dir) {
-		Coord pos = origin.copy();
-		pos.add(dir);
+		Coord pos = origin.copy().add(dir);
 		if(!editor.isFaceFullSquare(pos, dir)) return;
 		Direction facing = Cardinal.directions.contains(dir) 
 				? Cardinal.facing(Cardinal.reverse(dir))
@@ -54,6 +51,6 @@ public class Vine {
 		if(facingProperty == null) return;
 		MetaBlock.of(Blocks.VINE)
 			.withProperty(facingProperty, true)
-			.set(editor, pos);
+			.set(editor, origin.copy());
 	}
 }

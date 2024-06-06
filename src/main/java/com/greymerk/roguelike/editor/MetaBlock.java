@@ -27,19 +27,11 @@ public class MetaBlock extends BlockBase{
 	}
 	
 	private MetaBlock(Block block){
-		this.setState(block.getDefaultState());
-	}
-	
-	private MetaBlock(MetaBlock block){
-		this.setState(block.state);
+		this.state = block.getDefaultState();
 	}
 	
 	private MetaBlock(BlockState state){
-		this.setState(state);
-	}
-	
-	private void setState(BlockState bs){
-		this.state = bs;
+		this.state = state;
 	}
 	
 	public BlockState getState() {

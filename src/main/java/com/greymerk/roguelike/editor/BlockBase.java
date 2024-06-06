@@ -1,8 +1,8 @@
 package com.greymerk.roguelike.editor;
 
-import net.minecraft.util.math.random.Random;
-
 import com.greymerk.roguelike.editor.shapes.IShape;
+
+import net.minecraft.util.math.random.Random;
 
 public abstract class BlockBase implements IBlockFactory {
 	
