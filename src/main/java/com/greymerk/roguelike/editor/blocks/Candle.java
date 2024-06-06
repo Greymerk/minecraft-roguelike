@@ -32,8 +32,8 @@ public class Candle {
 			numCandles = count;
 		}
 		MetaBlock.of(fromColor(color))
-			.withProperty(CandleBlock.CANDLES, numCandles)
-			.withProperty(CandleBlock.LIT, lit)
+			.with(CandleBlock.CANDLES, numCandles)
+			.with(CandleBlock.LIT, lit)
 			.set(editor, origin);
 	}
 	

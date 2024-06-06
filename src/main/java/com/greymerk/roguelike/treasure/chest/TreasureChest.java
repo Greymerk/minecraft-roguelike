@@ -66,16 +66,16 @@ public class TreasureChest implements ITreasureChest{
 		
 		if(b == Blocks.CHEST || b == Blocks.TRAPPED_CHEST) {
 			if(Cardinal.directions.contains(dir)) {
-				block.withProperty(HorizontalFacingBlock.FACING, Cardinal.facing(dir).getOpposite());	
+				block.with(HorizontalFacingBlock.FACING, Cardinal.facing(dir).getOpposite());	
 			}
 		}
 		
 		if(b == Blocks.BARREL) {
-			block.withProperty(Properties.FACING, Cardinal.facing(Cardinal.UP));
+			block.with(Properties.FACING, Cardinal.facing(Cardinal.UP));
 		}
 		
 		if(b == Blocks.SHULKER_BOX) {
-			block.withProperty(FacingBlock.FACING, Cardinal.facing(dir));
+			block.with(FacingBlock.FACING, Cardinal.facing(dir));
 		}
 	}
 	

@@ -32,7 +32,7 @@ public class SculkFilter implements IFilter {
 		if(!block.isIn(BlockTags.SCULK_REPLACEABLE_WORLD_GEN)) return;
 		MetaBlock.of(Blocks.SCULK).set(editor, origin);
 		MetaBlock shrieker = MetaBlock.of(Blocks.SCULK_SHRIEKER);
-		shrieker.withProperty(SculkShriekerBlock.CAN_SUMMON, true);
+		shrieker.with(SculkShriekerBlock.CAN_SUMMON, true);
 		
 		BlockWeightedRandom blocks = new BlockWeightedRandom()
 				.addBlock(MetaBlock.of(Blocks.SCULK_SENSOR), 3)

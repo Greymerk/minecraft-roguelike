@@ -11,7 +11,7 @@ import net.minecraft.block.EnderChestBlock;
 public class EnderChest {
 	public static void set(IWorldEditor editor, Cardinal dir, Coord pos){
 		MetaBlock.of(Blocks.ENDER_CHEST)
-			.withProperty(EnderChestBlock.FACING, Cardinal.facing(Cardinal.reverse(dir)))
+			.with(EnderChestBlock.FACING, Cardinal.facing(Cardinal.reverse(dir)))
 			.set(editor, pos);
 	}
 }

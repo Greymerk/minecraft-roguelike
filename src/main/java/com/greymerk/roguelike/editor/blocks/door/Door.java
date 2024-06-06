@@ -46,10 +46,10 @@ public class Door implements IDoor {
 	
 	private static MetaBlock setProperties(DoorType type, boolean top, Cardinal dir, boolean open, boolean hingeLeft){
 		return DoorType.get(type)
-				.withProperty(DoorBlock.HALF, top ? DoubleBlockHalf.UPPER : DoubleBlockHalf.LOWER)
-				.withProperty(DoorBlock.FACING, Cardinal.facing(dir))
-				.withProperty(DoorBlock.OPEN, open)
-				.withProperty(DoorBlock.HINGE, hingeLeft ? DoorHinge.LEFT : DoorHinge.RIGHT);
+				.with(DoorBlock.HALF, top ? DoubleBlockHalf.UPPER : DoubleBlockHalf.LOWER)
+				.with(DoorBlock.FACING, Cardinal.facing(dir))
+				.with(DoorBlock.OPEN, open)
+				.with(DoorBlock.HINGE, hingeLeft ? DoorHinge.LEFT : DoorHinge.RIGHT);
 		
 		
 	}

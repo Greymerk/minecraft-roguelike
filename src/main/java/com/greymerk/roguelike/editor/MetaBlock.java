@@ -62,7 +62,7 @@ public class MetaBlock extends BlockBase{
 		return Block.NOTIFY_ALL;
 	}
 	
-	public <T extends Comparable<T>, V extends T> MetaBlock withProperty(Property<T> property, V value) {
+	public <T extends Comparable<T>, V extends T> MetaBlock with(Property<T> property, V value) {
 		this.state = this.state.with(property, value);
 		return this;
 	}

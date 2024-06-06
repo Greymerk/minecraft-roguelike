@@ -17,15 +17,12 @@ import com.greymerk.roguelike.editor.blocks.IronBar;
 import com.greymerk.roguelike.editor.blocks.Lantern;
 import com.greymerk.roguelike.editor.blocks.stair.IStair;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
-import com.greymerk.roguelike.editor.factories.BlockWeightedRandom;
 import com.greymerk.roguelike.editor.shapes.Shape;
 
 import net.minecraft.util.math.random.Random;
 
 public class PanopticonRoom extends AbstractLargeRoom implements IRoom {
 
-	static final BlockWeightedRandom bars = new BlockWeightedRandom().addBlock(IronBar.get(), 2).addBlock(Air.get(), 1);
-	
 	@Override
 	public void generate(IWorldEditor editor) {
 		Random rand = editor.getRandom(this.getWorldPos());
@@ -115,7 +112,7 @@ public class PanopticonRoom extends AbstractLargeRoom implements IRoom {
 	}
 	
 	private void barWall(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
-		BoundingBox.of(origin).grow(Cardinal.orthogonal(dir)).grow(Cardinal.UP, 2).fill(editor, rand, bars, true, false);
+		BoundingBox.of(origin).grow(Cardinal.orthogonal(dir)).grow(Cardinal.UP, 2).fill(editor, rand, IronBar.getBroken(), true, false);
 	}
 
 	private void bridges(IWorldEditor editor, Random rand, Coord origin) {
@@ -275,7 +272,7 @@ public class PanopticonRoom extends AbstractLargeRoom implements IRoom {
 			});
 				
 			if(this.getEntrance(dir) != Entrance.DOOR) {
-				BoundingBox.of(origin).add(dir, 2).grow(Cardinal.orthogonal(dir)).fill(editor, rand, bars);
+				BoundingBox.of(origin).add(dir, 2).grow(Cardinal.orthogonal(dir)).fill(editor, rand, IronBar.getBroken());
 			}
 		});
 	}

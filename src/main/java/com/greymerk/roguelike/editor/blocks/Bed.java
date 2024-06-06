@@ -29,14 +29,14 @@ public class Bed {
 		
 		Coord pos = origin.copy();
 		MetaBlock head = MetaBlock.of(getFromColor(color));
-		head.withProperty(BedBlock.PART, BedPart.HEAD);
-		head.withProperty(HorizontalFacingBlock.FACING, Cardinal.facing(dir));
+		head.with(BedBlock.PART, BedPart.HEAD);
+		head.with(HorizontalFacingBlock.FACING, Cardinal.facing(dir));
 		head.set(editor, pos);
 		
 		pos.add(dir);
 		MetaBlock foot = MetaBlock.of(getFromColor(color));
-		foot.withProperty(BedBlock.PART, BedPart.FOOT);
-		foot.withProperty(HorizontalFacingBlock.FACING, Cardinal.facing(dir));
+		foot.with(BedBlock.PART, BedPart.FOOT);
+		foot.with(HorizontalFacingBlock.FACING, Cardinal.facing(dir));
 		foot.set(editor, pos);
 
 	}

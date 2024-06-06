@@ -9,6 +9,6 @@ import net.minecraft.block.GlazedTerracottaBlock;
 public class Terracotta {
 	public static MetaBlock get(Color color, Cardinal dir){
 		return ColorBlock.get(ColorBlock.GLAZED, color)
-				.withProperty(GlazedTerracottaBlock.FACING, Cardinal.facing(dir));
+				.with(GlazedTerracottaBlock.FACING, Cardinal.facing(dir));
 	}
 }

@@ -38,6 +38,6 @@ public class SculkVein {
 		Direction facing = Cardinal.directions.contains(dir) 
 				? Cardinal.facing(Cardinal.reverse(dir))
 				: Cardinal.facing(dir);
-		vein.withProperty(SculkVeinBlock.getProperty(facing), true);
+		vein.with(SculkVeinBlock.getProperty(facing), true);
 	}
 }

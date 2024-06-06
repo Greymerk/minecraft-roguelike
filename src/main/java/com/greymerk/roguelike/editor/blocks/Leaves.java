@@ -7,6 +7,6 @@ import net.minecraft.block.LeavesBlock;
 public class Leaves {
 	
 	public static MetaBlock get(Wood type, boolean persistent){
-		return MetaBlock.of(Wood.getLeaf(type)).withProperty(LeavesBlock.PERSISTENT, persistent);
+		return MetaBlock.of(Wood.getLeaf(type)).with(LeavesBlock.PERSISTENT, persistent);
 	}
 }

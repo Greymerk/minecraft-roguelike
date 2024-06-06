@@ -45,10 +45,10 @@ public class IronBar implements IBlockFactory{
 	
 	private void setConnection(IWorldEditor editor, Coord origin, Cardinal dir, boolean connects) {
 		switch(dir) {
-		case EAST: this.bar.withProperty(PaneBlock.EAST, connects); return;
-		case NORTH: this.bar.withProperty(PaneBlock.NORTH, connects); return;
-		case SOUTH: this.bar.withProperty(PaneBlock.SOUTH, connects); return;
-		case WEST: this.bar.withProperty(PaneBlock.WEST, connects); return;
+		case EAST: this.bar.with(PaneBlock.EAST, connects); return;
+		case NORTH: this.bar.with(PaneBlock.NORTH, connects); return;
+		case SOUTH: this.bar.with(PaneBlock.SOUTH, connects); return;
+		case WEST: this.bar.with(PaneBlock.WEST, connects); return;
 		default: return;
 		}
 	}

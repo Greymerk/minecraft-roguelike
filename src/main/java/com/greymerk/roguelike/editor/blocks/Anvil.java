@@ -12,7 +12,7 @@ public enum Anvil {
 	ANVIL, CHIPPED, DAMAGED;
 	
 	public static MetaBlock get(Anvil damage, Cardinal dir){
-		return MetaBlock.of(getFromDamage(damage)).withProperty(AnvilBlock.FACING, Cardinal.facing(dir));
+		return MetaBlock.of(getFromDamage(damage)).with(AnvilBlock.FACING, Cardinal.facing(dir));
 	}
 	
 	private static Block getFromDamage(Anvil damage) {

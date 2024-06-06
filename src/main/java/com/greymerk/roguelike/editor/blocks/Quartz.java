@@ -17,7 +17,7 @@ public enum Quartz {
 
 	public static MetaBlock getPillar(Cardinal dir){
 		MetaBlock block = MetaBlock.of(Blocks.QUARTZ_PILLAR);
-		block.withProperty(PillarBlock.AXIS, Cardinal.axis(dir));
+		block.with(PillarBlock.AXIS, Cardinal.axis(dir));
 		return block;
 	}
 	

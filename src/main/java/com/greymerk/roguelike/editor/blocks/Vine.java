@@ -50,7 +50,7 @@ public class Vine {
 		BooleanProperty facingProperty = VineBlock.getFacingProperty(facing);
 		if(facingProperty == null) return;
 		MetaBlock.of(Blocks.VINE)
-			.withProperty(facingProperty, true)
+			.with(facingProperty, true)
 			.set(editor, origin.copy());
 	}
 }

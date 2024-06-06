@@ -25,14 +25,14 @@ public enum Crops {
 	
 	public static MetaBlock getCocao(Cardinal dir){
 		return MetaBlock.of(Blocks.COCOA)
-			.withProperty(CocoaBlock.FACING, Cardinal.facing(Cardinal.reverse(dir)))
-			.withProperty(CocoaBlock.AGE, 2);
+			.with(CocoaBlock.FACING, Cardinal.facing(Cardinal.reverse(dir)))
+			.with(CocoaBlock.AGE, 2);
 	}
 	
 	public static MetaBlock getPumpkin(Cardinal dir, boolean lit){
 		return MetaBlock.of(lit 
 				? Blocks.JACK_O_LANTERN.getDefaultState() 
 				: Blocks.CARVED_PUMPKIN.getDefaultState()) 
-			.withProperty(CarvedPumpkinBlock.FACING, Cardinal.facing(Cardinal.reverse(dir)));
+			.with(CarvedPumpkinBlock.FACING, Cardinal.facing(Cardinal.reverse(dir)));
 	}
 }

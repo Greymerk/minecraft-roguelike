@@ -23,7 +23,7 @@ public class MetaSlab implements ISlab {
 	
 	@Override
 	public ISlab upsideDown(boolean upsideDown) {
-		this.slab.withProperty(SlabBlock.TYPE, upsideDown ? SlabType.TOP : SlabType.BOTTOM);
+		this.slab.with(SlabBlock.TYPE, upsideDown ? SlabType.TOP : SlabType.BOTTOM);
 		return this;
 	}
 

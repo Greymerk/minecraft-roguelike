@@ -29,7 +29,7 @@ public enum Skull {
 		//directionValue = directionValue % 16;
 		directionValue = Math.floorMod(directionValue, 16);
 		
-		skull.withProperty(SkullBlock.ROTATION, directionValue);
+		skull.with(SkullBlock.ROTATION, directionValue);
 		return skull;
 	}
 	

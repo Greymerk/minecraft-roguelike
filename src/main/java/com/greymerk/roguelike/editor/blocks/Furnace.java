@@ -26,8 +26,8 @@ public class Furnace {
 	
 	public static void generate(IWorldEditor editor, Cardinal dir, Coord pos, boolean lit, ItemStack fuel){
 		MetaBlock.of(Blocks.FURNACE)
-			.withProperty(FurnaceBlock.LIT, lit)
-			.withProperty(FurnaceBlock.FACING, Cardinal.facing(Cardinal.reverse(dir)))
+			.with(FurnaceBlock.LIT, lit)
+			.with(FurnaceBlock.FACING, Cardinal.facing(Cardinal.reverse(dir)))
 			.set(editor, pos);
 		
 		BlockEntity te = editor.getBlockEntity(pos);

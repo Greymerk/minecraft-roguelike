@@ -23,7 +23,7 @@ public class WallBanner {
 	public static void generate(IWorldEditor editor, ItemStack banner, Coord origin, Cardinal dir) {
 		
 		MetaBlock.of(Blocks.BLACK_WALL_BANNER)
-			.withProperty(HorizontalFacingBlock.FACING, Cardinal.facing(dir))
+			.with(HorizontalFacingBlock.FACING, Cardinal.facing(dir))
 			.set(editor, origin);
 		
 		BlockEntity be = editor.getBlockEntity(origin);

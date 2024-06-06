@@ -11,7 +11,7 @@ public class Log {
 
 	public static MetaBlock get(Wood type, Cardinal dir){
 		return MetaBlock.of(fromType(type))
-			.withProperty(PillarBlock.AXIS, Cardinal.axis(dir));
+			.with(PillarBlock.AXIS, Cardinal.axis(dir));
 		
 	}
 	

@@ -37,8 +37,8 @@ public class MetaStair implements IStair{
 	}
 	
 	public MetaStair setOrientation(Cardinal dir, Boolean upsideDown){
-		stair.withProperty(StairsBlock.FACING, Cardinal.facing(dir));
-		stair.withProperty(StairsBlock.HALF, upsideDown ? BlockHalf.TOP : BlockHalf.BOTTOM);
+		stair.with(StairsBlock.FACING, Cardinal.facing(dir));
+		stair.with(StairsBlock.HALF, upsideDown ? BlockHalf.TOP : BlockHalf.BOTTOM);
 		return this;
 	}
 	
@@ -114,7 +114,7 @@ public class MetaStair implements IStair{
     }
     
     private MetaStair setShape(StairShape shape) {
-		stair.withProperty(StairsBlock.SHAPE, shape);
+		stair.with(StairsBlock.SHAPE, shape);
 		return this;
 	}
 }
