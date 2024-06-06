@@ -97,4 +97,17 @@ public enum Cardinal {
 		RandHelper.shuffle(Arrays.asList(dirs), rand);
 		return dirs;
 	}
+
+	public static Cardinal of(Direction direction) {
+		switch(direction) {
+		case DOWN: return Cardinal.DOWN;
+		case EAST: return Cardinal.WEST;
+		case NORTH: return Cardinal.SOUTH;
+		case SOUTH: return Cardinal.NORTH;
+		case UP: return Cardinal.UP;
+		case WEST: return Cardinal.EAST;
+		default: return null;
+		}
+		
+	}
 }

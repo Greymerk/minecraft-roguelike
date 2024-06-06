@@ -32,25 +32,23 @@ public class MetaStair implements IStair{
 		this.stair = MetaBlock.of(Stair.getBlock(type));
 	}
 	
+	private MetaStair(MetaBlock stair) {
+		this.stair = stair;
+	}
+	
 	public MetaStair setOrientation(Cardinal dir, Boolean upsideDown){
 		stair.withProperty(StairsBlock.FACING, Cardinal.facing(dir));
 		stair.withProperty(StairsBlock.HALF, upsideDown ? BlockHalf.TOP : BlockHalf.BOTTOM);
 		return this;
 	}
 	
-	public MetaStair setShape(StairShape shape) {
-		stair.withProperty(StairsBlock.SHAPE, shape);
-		return this;
-	}
-	
 	public boolean set(IWorldEditor editor, Random rand, Coord pos) {
-		this.setShape(Stair.getStairShape(this.stair, editor, pos.getBlockPos()));
+		setStairShape(editor, pos);
 		return editor.set(pos, stair);
 	}
 	
 	public boolean set(IWorldEditor editor, Random rand, Coord pos, boolean fillAir, boolean replaceSolid) {
-		StairShape shape = Stair.getStairShape(this.stair, editor, pos.getBlockPos());
-		this.setShape(shape);
+		setStairShape(editor, pos);
 		return editor.set(pos, stair, fillAir, replaceSolid);
 	}
 
@@ -62,5 +60,59 @@ public class MetaStair implements IStair{
 	@Override
 	public void fill(IWorldEditor editor, Random rand, IShape shape) {
 		shape.fill(editor, rand, stair);
+	}
+	
+	private void setStairShape(IWorldEditor editor, Coord pos) {
+		
+		// in front
+		MetaBlock mb = editor.getBlock(pos.copy().add(this.direction()));
+		if(isStair(mb)){
+			MetaStair other = new MetaStair(mb);
+			if(other.isUpsideDown() == this.isUpsideDown()){
+				if(other.direction() == Cardinal.left(this.direction())) {
+					this.setShape(StairShape.INNER_LEFT);
+					return;
+				}
+				if(other.direction() == Cardinal.right(this.direction())) {
+					this.setShape(StairShape.INNER_RIGHT);
+					return;
+				}
+			}
+		}
+		
+		// behind
+		mb = editor.getBlock(pos.copy().add(Cardinal.reverse(this.direction())));
+		if(isStair(mb)) {
+			MetaStair other = new MetaStair(mb);
+			if(other.isUpsideDown() == this.isUpsideDown()){
+				if(other.direction() == Cardinal.left(this.direction())) {
+					this.setShape(StairShape.OUTER_LEFT);
+					return;
+				}
+				if(other.direction() == Cardinal.right(this.direction())) {
+					this.setShape(StairShape.OUTER_RIGHT);
+					return;
+				}
+			}
+		}
+		
+		this.setShape(StairShape.STRAIGHT); // resetting by default
+	}
+	
+    public Cardinal direction() {
+    	return Cardinal.of(this.stair.get(StairsBlock.FACING));
+    }
+    
+    public boolean isUpsideDown() {
+    	return this.stair.get(StairsBlock.HALF) == BlockHalf.TOP;
+    }
+    
+    private boolean isStair(MetaBlock mb) {
+    	return mb.getBlock() instanceof StairsBlock;
+    }
+    
+    private MetaStair setShape(StairShape shape) {
+		stair.withProperty(StairsBlock.SHAPE, shape);
+		return this;
 	}
 }
