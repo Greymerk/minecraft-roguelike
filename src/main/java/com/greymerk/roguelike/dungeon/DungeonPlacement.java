@@ -6,6 +6,7 @@ import java.util.List;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.WorldEditor;
+import com.greymerk.roguelike.util.StructureLocator;
 
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerWorld;
@@ -63,7 +64,7 @@ public class DungeonPlacement {
 	
 	public static ChunkPos findVillage(long seed, List<ChunkPos> chunks) {
 		for(ChunkPos cpos : chunks) {
-			if(hasVillage(seed, cpos)) {
+			if(StructureLocator.hasVillage(seed, cpos)) {
 				return cpos;
 			}
 		}

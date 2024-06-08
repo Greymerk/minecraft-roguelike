@@ -25,6 +25,10 @@ public class Coord {
 		return new Coord(bp.getX(), bp.getY(), bp.getZ());
 	}
 	
+	public static Coord of(ChunkPos cpos) {
+		return new Coord(cpos.x << 4, 0, cpos.z << 4);
+	}
+	
 	public static Coord of(NbtCompound tag) {
 		int x = tag.getInt("x");
 		int y = tag.getInt("y");

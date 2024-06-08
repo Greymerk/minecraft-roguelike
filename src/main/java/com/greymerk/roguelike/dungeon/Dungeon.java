@@ -15,6 +15,7 @@ import com.greymerk.roguelike.editor.boundingbox.IBounded;
 import com.greymerk.roguelike.settings.LevelSettings;
 import com.greymerk.roguelike.state.RoguelikeState;
 import com.greymerk.roguelike.theme.Theme;
+import com.greymerk.roguelike.util.StructureLocator;
 
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
@@ -57,6 +58,7 @@ public class Dungeon implements Iterable<IRoom>{
 		
 		Coord surface = editor.findSurface(pos);
 		if(!editor.isGround(surface)) return false;
+		
 		return true;
 	}
 	
