@@ -28,10 +28,10 @@ public class LevelSettingsSpruce extends LevelSettingsBase implements ILevelSett
 		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_DECORATED_POT, 1));
 		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_MUSHROOMS, 1));
 		
-		this.alcoves.add(walls);
+		this.alcoves.add(new WeightedChoice<Fragment>(Fragment.WALL_MUSHROOMS, 5));
 		this.alcoves.add(new WeightedChoice<Fragment>(Fragment.ALCOVE_SAFETY, 1));
 		this.alcoves.add(new WeightedChoice<Fragment>(Fragment.ALCOVE_FIRE, 5));
-		this.alcoves.add(new WeightedChoice<Fragment>(Fragment.BOOK_SHELF, 3));
+		this.alcoves.add(new WeightedChoice<Fragment>(Fragment.BOOK_SHELF, 1));
 	}
 	
 	@Override

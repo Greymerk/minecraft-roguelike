@@ -30,7 +30,7 @@ public class LevelSettingsStone extends LevelSettingsBase implements ILevelSetti
 		//this.alcoves.add(walls);
 		this.alcoves.add(new WeightedChoice<Fragment>(Fragment.ALCOVE_PRISON_CELL, 10));
 		this.alcoves.add(new WeightedChoice<Fragment>(Fragment.ALCOVE_CRYPT, 3));
-		this.alcoves.add(new WeightedChoice<Fragment>(Fragment.BOOK_SHELF, 1));
+		this.alcoves.add(new WeightedChoice<Fragment>(Fragment.BOOK_SHELF, 2));
 	}
 
 	@Override

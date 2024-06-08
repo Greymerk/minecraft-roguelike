@@ -35,16 +35,10 @@ public class BookShelf {
 		ChiseledBookshelfBlockEntity shelf = (ChiseledBookshelfBlockEntity)be;
 		
 		getSlots(rand).forEach(i -> {
-			shelf.setStack(i, createBook(editor, rand, Difficulty.fromY(origin.getY())));		
+			shelf.setStack(i, Enchant.getBook(rand, Difficulty.fromY(origin.getY())));		
 		});
 		
 		shelf.markDirty();
-	}
-	
-	private static ItemStack createBook(IWorldEditor editor, Random rand, Difficulty diff) {
-		
-		if(rand.nextInt(6) == 0) return Enchant.getBook(Enchant.MENDING, rand);
-		return Enchant.getBook(editor.getFeatureSet(), rand, diff);
 	}
 	
 	private static List<Integer> getSlots(Random rand){

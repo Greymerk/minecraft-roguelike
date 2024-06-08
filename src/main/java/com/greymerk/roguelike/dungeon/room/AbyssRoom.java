@@ -17,7 +17,6 @@ import com.greymerk.roguelike.editor.blocks.Skull;
 import com.greymerk.roguelike.editor.blocks.stair.IStair;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.editor.shapes.RectSolid;
-import com.greymerk.roguelike.editor.shapes.Shape;
 import com.greymerk.roguelike.util.Color;
 
 import net.minecraft.util.math.random.Random;
@@ -282,10 +281,8 @@ public class AbyssRoom extends AbstractLargeRoom implements IRoom {
 	public CellManager getCells(Cardinal dir) {
 		CellManager cells = super.getCells(dir);
 		
-		BoundingBox bb = BoundingBox.of(new Coord(0,0,0).add(dir, 2));
-		bb.add(Cardinal.DOWN);
-		bb.grow(Cardinal.directions, 2).grow(Cardinal.DOWN);
-		bb.getShape(Shape.RECTSOLID).forEach(pos -> cells.add(new Cell(pos, CellState.OBSTRUCTED)));
+		BoundingBox.of(Coord.ZERO).add(dir, 2).add(Cardinal.DOWN).grow(Cardinal.directions, 2).grow(Cardinal.DOWN)
+			.forEach(pos -> cells.add(new Cell(pos, CellState.OBSTRUCTED)));
 		
 		return cells;
 	}

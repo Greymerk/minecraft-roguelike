@@ -20,7 +20,7 @@ public class BlockCheckers extends BlockBase {
 	}
 	
 	public BlockCheckers(IBlockFactory fillOne, IBlockFactory fillTwo){
-		this(fillOne, fillTwo, new Coord(0,0,0));
+		this(fillOne, fillTwo, Coord.ZERO);
 	}
 
 	@Override

@@ -3,6 +3,7 @@ package com.greymerk.roguelike.editor.blocks;
 import com.greymerk.roguelike.editor.MetaBlock;
 import com.greymerk.roguelike.util.Color;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 
@@ -14,10 +15,33 @@ public enum ColorBlock {
 		switch(type) {
 		case CLAY: return MetaBlock.of(getClay(color));
 		case GLAZED: return MetaBlock.of(getGlazed(color));
+		case WOOL: return MetaBlock.of(getWool(color));
 		default: return MetaBlock.of(getClay(color));
 		}
 	}
 	
+	public static Block getWool(Color color) {
+		switch(color){
+		case WHITE: return Blocks.WHITE_WOOL;
+		case ORANGE: return Blocks.ORANGE_WOOL;
+		case MAGENTA: return Blocks.MAGENTA_WOOL;
+		case LIGHT_BLUE: return Blocks.LIGHT_BLUE_WOOL;
+		case YELLOW: return Blocks.YELLOW_WOOL;
+		case LIME: return Blocks.LIME_WOOL;
+		case PINK: return Blocks.PINK_WOOL;
+		case GRAY: return Blocks.GRAY_WOOL;
+		case LIGHT_GRAY: return Blocks.LIGHT_GRAY_WOOL;
+		case CYAN: return Blocks.CYAN_WOOL;
+		case PURPLE: return Blocks.PURPLE_WOOL;
+		case BLUE: return Blocks.BLUE_WOOL;
+		case BROWN: return Blocks.BROWN_BED;
+		case GREEN: return Blocks.GREEN_WOOL;
+		case RED: return Blocks.RED_WOOL;
+		case BLACK: return Blocks.BLACK_WOOL;
+		default: return Blocks.WHITE_WOOL;
+		}
+	}
+
 	private static BlockState getClay(Color color) {
 		switch(color){
 		case WHITE: return Blocks.WHITE_TERRACOTTA.getDefaultState();

@@ -16,7 +16,7 @@ public abstract class AbstractLargeRoom extends AbstractRoom implements IRoom {
 
 	@Override
 	public CellManager getCells(Cardinal dir) {
-		Coord origin = new Coord(0,0,0);
+		Coord origin = Coord.ZERO;
 		CellManager cells = new CellManager();
 		
 		BoundingBox bb = BoundingBox.of(origin);

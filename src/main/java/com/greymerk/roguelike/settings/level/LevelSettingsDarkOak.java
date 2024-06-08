@@ -33,7 +33,7 @@ public class LevelSettingsDarkOak extends LevelSettingsBase implements ILevelSet
 		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_MUSHROOMS, 1));
 		
 		this.alcoves.add(walls);
-		this.alcoves.add(new WeightedChoice<Fragment>(Fragment.BOOK_SHELF, 5));
+		this.alcoves.add(new WeightedChoice<Fragment>(Fragment.BOOK_SHELF, 2));
 		
 	}
 

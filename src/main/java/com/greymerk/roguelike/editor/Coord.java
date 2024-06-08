@@ -15,6 +15,9 @@ import net.minecraft.util.math.ChunkPos;
 Mutable Coordinate 3DVector
 **/
 public class Coord {
+	
+	public static final Coord ZERO = new Coord(0,0,0).freeze();
+	
 	boolean frozen;
 	
 	private int x;

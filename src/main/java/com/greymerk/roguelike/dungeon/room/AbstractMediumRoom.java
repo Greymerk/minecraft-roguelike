@@ -15,7 +15,7 @@ public abstract class AbstractMediumRoom extends AbstractRoom implements IRoom{
 
 	@Override
 	public CellManager getCells(Cardinal dir) {
-		Coord origin = new Coord(0,0,0);
+		Coord origin = Coord.ZERO;
 		CellManager cells = new CellManager();
 		
 		cells.add(Cell.of(origin, CellState.OBSTRUCTED));

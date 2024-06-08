@@ -244,9 +244,5 @@ class CoordTest {
 		c2 = c.sub(new Coord(0,0,1));
 		assert(c.equals(new Coord(0,0,0)));
 		assert(c2.equals(new Coord(0,0,0).sub(new Coord(0,0,1))));
-		
-		
-		
 	}
-
 }

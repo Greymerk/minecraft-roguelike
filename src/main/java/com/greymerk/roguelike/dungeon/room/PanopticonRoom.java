@@ -297,7 +297,7 @@ public class PanopticonRoom extends AbstractLargeRoom implements IRoom {
 		
 		CellManager cells = super.getCells(dir);
 		
-		Coord origin = new Coord(0,0,0).add(Cardinal.DOWN);
+		Coord origin = Coord.ZERO.add(Cardinal.DOWN);
 		BoundingBox bb = BoundingBox.of(origin);
 		bb.add(dir, 2).grow(Cardinal.directions);
 		bb.getShape(Shape.RECTSOLID).get().forEach(pos -> {

@@ -49,6 +49,7 @@ public class Line implements IShape{
 		return new LineIterator();
 	}
 	
+	// https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm
 	private class LineIterator implements Iterator<Coord>{
 		
 		int x; int y; int z;
