@@ -1,5 +1,7 @@
 package com.greymerk.roguelike.monster;
 
+import java.util.List;
+
 import com.greymerk.roguelike.dungeon.Difficulty;
 
 import net.minecraft.entity.Entity.RemovalReason;
@@ -25,24 +27,16 @@ public class MetaEntity implements IEntity {
 		mob.equipStack(slot, item);
 	}
 	
-	@Override
-	public void clear() {
-		mob.equipStack(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
-		mob.equipStack(EquipmentSlot.OFFHAND, ItemStack.EMPTY);
-		mob.equipStack(EquipmentSlot.HEAD, ItemStack.EMPTY);
-		mob.equipStack(EquipmentSlot.CHEST, ItemStack.EMPTY);
-		mob.equipStack(EquipmentSlot.LEGS, ItemStack.EMPTY);
-		mob.equipStack(EquipmentSlot.FEET, ItemStack.EMPTY);
+	public ItemStack getEquippedStack(EquipmentSlot slot) {
+		return ((LivingEntity)this.mob).getEquippedStack(slot);
 	}
-
+	
 	@Override
 	public void setMobClass(MobType type, boolean clear) {
 		
 		LivingEntity oldMob = (LivingEntity)this.mob;
 		LivingEntity newMob = (LivingEntity)MobType.getEntity(this.mob.getEntityWorld(), type);
-
 		newMob.copyPositionAndRotation(oldMob);
-		
 		this.mob = (MobEntity)newMob;
 		
 		if(newMob instanceof ZombieEntity){
@@ -50,14 +44,14 @@ public class MetaEntity implements IEntity {
 		}
 		
 		if(clear) {
-			for(EquipmentSlot slot : EquipmentSlot.values()){
-				newMob.equipStack(slot, ItemStack.EMPTY);
-			}	
+			List.of(EquipmentSlot.values()).forEach(slot -> {
+				mob.equipStack(slot, ItemStack.EMPTY);
+			});
 		} else {
-			for(EquipmentSlot slot : EquipmentSlot.values()){
+			List.of(EquipmentSlot.values()).forEach(slot -> {
 				ItemStack toTrade = oldMob.getEquippedStack(slot);
-				newMob.equipStack(slot, toTrade);
-			}
+				this.setSlot(slot, toTrade);
+			});
 		}
 		
 		oldMob.remove(RemovalReason.DISCARDED);
@@ -95,7 +89,4 @@ public class MetaEntity implements IEntity {
 		
 		return false;
 	}
-	
-	
-
 }
