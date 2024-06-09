@@ -1,7 +1,6 @@
 package com.greymerk.roguelike.editor;
 
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -155,12 +154,13 @@ public class WorldEditor implements IWorldEditor{
 		if(isPlant(pos)) return false;
 		if(this.isAir(pos)) return false;
 		
-		List<TagKey<Block>> tags = new ArrayList<TagKey<Block>>();
-		tags.add(BlockTags.BASE_STONE_OVERWORLD);
-		tags.add(BlockTags.DIRT);
-		tags.add(BlockTags.SAND);
-		tags.add(BlockTags.SNOW);
-		tags.add(BlockTags.STONE_ORE_REPLACEABLES);
+		List<TagKey<Block>> tags = List.of(
+				BlockTags.BASE_STONE_OVERWORLD, 
+				BlockTags.DIRT, 
+				BlockTags.SAND, 
+				BlockTags.SNOW, 
+				BlockTags.STONE_ORE_REPLACEABLES, 
+				BlockTags.BADLANDS_TERRACOTTA);
 		
 		MetaBlock m = getBlock(pos);
 		
