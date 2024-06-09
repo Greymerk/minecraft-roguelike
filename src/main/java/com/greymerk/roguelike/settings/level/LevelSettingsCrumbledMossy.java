@@ -45,6 +45,7 @@ public class LevelSettingsCrumbledMossy extends LevelSettingsBase implements ILe
 		this.filters = new ArrayList<IFilter>();
 		this.filters.add(Filter.get(Filter.MUD));
 		this.filters.add(Filter.get(Filter.VINE));
+		this.filters.add(Filter.get(Filter.EXPLOSIVE));
 	}
 
 	@Override

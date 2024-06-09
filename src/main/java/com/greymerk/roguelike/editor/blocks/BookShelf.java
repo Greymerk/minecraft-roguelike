@@ -16,7 +16,6 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.HorizontalFacingBlock;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.ChiseledBookshelfBlockEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.random.Random;
 
 public class BookShelf {

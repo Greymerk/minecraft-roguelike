@@ -1,7 +1,7 @@
 package com.greymerk.roguelike.filter;
 
 public enum Filter {
-	VINE, ENCASE, WIREFRAME, COBWEB, MUD, POTS, SCULK;
+	VINE, ENCASE, WIREFRAME, COBWEB, MUD, POTS, SCULK, EXPLOSIVE;
 	
 	public static IFilter get(Filter type){
 		switch(type){
@@ -12,6 +12,7 @@ public enum Filter {
 		case MUD: return new MudFilter();
 		case POTS: return new DecoratedPotFilter();
 		case SCULK: return new SculkFilter();
+		case EXPLOSIVE: return new ExplosiveTrapFilter();
 		default: return new VineFilter();
 		}
 	}
