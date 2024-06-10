@@ -3,7 +3,11 @@ package com.greymerk.roguelike.dungeon;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import com.google.common.base.Stopwatch;
+import com.greymerk.roguelike.Roguelike;
+import com.greymerk.roguelike.config.Config;
 import com.greymerk.roguelike.dungeon.layout.LayoutManager;
 import com.greymerk.roguelike.dungeon.room.IRoom;
 import com.greymerk.roguelike.dungeon.room.Room;
@@ -33,6 +37,9 @@ public class Dungeon implements Iterable<IRoom>{
 		donjon.generate(editor);
 		editor.getState().addDungeon(donjon);
 		RoguelikeState.flagForGenerationCheck = true;
+		
+		
+		
 		return true;
 	}
 	
@@ -76,6 +83,8 @@ public class Dungeon implements Iterable<IRoom>{
 	public void generate(IWorldEditor editor) {
 		Random rand = editor.getRandom(origin);
 		
+		Stopwatch watch = Stopwatch.createStarted();
+		
 		Coord surface = editor.findSurface(this.origin);
 		int entranceY = (surface.getY() - surface.getY() % 10) - 10;
 		Coord firstFloor = new Coord(this.origin.getX(), entranceY, this.origin.getZ());
@@ -91,6 +100,10 @@ public class Dungeon implements Iterable<IRoom>{
 		
 		RogueTower tower = new RogueTower();
 		tower.generate(editor, rand, Theme.getTheme(Theme.TOWER), firstFloor);
+		
+		if(Config.ofBoolean(Config.DEBUG)) {
+			Roguelike.LOGGER.info("Dungeon @: " + surface + " in: " + watch.elapsed(TimeUnit.MILLISECONDS) + "ms");
+		}
 	}
 	
 	public boolean isGenerated() {

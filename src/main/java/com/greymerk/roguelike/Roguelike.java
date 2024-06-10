@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.greymerk.roguelike.commands.RoguelikeCommand;
+import com.greymerk.roguelike.config.ConfigFile;
 import com.greymerk.roguelike.config.ConfigSettings;
 import com.greymerk.roguelike.events.ChunkLoadRoomFlagEvent;
 import com.greymerk.roguelike.events.EntityLoadEvent;
@@ -39,6 +40,6 @@ public class Roguelike implements ModInitializer {
 		
 		CommandRegistrationCallback.EVENT.register(RoguelikeCommand.getListener());
 		
-		ConfigSettings.getInstance();
+		ConfigSettings.init(new ConfigFile());
 	}
 }

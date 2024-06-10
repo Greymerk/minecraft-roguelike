@@ -1,11 +1,15 @@
 package com.greymerk.roguelike.config;
 
+import java.util.Optional;
+
 import com.greymerk.roguelike.util.MixedKey;
 
 public enum Config {
 	
 	FREQUENCY("frequency"),
-	MOB_DROPS("mob_drops");
+	MOB_DROPS("mob_drops"),
+	DEBUG("debug"),
+	ROOMS_PER_LEVEL("rooms_per_level");
 
 	private final String key;
 	
@@ -32,9 +36,14 @@ public enum Config {
 		return settings.get(MixedKey.ofDouble(type.keyOf()));
 	}
 	
-	public static Integer ofInteger(Config type) {
+	public static Optional<Integer> ofInteger(Config type) {
 		ConfigSettings settings = ConfigSettings.getInstance();
-		return settings.get(MixedKey.ofInteger(type.keyOf()));
+		MixedKey<Integer> key = MixedKey.ofInteger(type.keyOf());
+		if(settings.has(key)) {
+			return Optional.of(settings.get(key));
+		} else {
+			return Optional.empty();
+		}
 	}
 	
 	public static String ofString(Config type) {

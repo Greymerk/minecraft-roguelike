@@ -9,47 +9,23 @@ import java.util.Optional;
 
 import org.apache.commons.io.IOUtils;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.greymerk.roguelike.Roguelike;
 
-public class ConfigFile {
+public class ConfigFile implements IConfigStore {
 
 	private static final String configDirPath = "config";
 	private static final String configFilePath = "roguelike-dungeons.json";
 	private static final String configFullPath = configDirPath + File.separatorChar + configFilePath;
 	
-	private ConfigSettings settings;
-	
-	public ConfigFile(ConfigSettings settings) {
-		this.settings = settings;
+	public ConfigFile() {
 	}
-	
-	public void read() {
-		Optional<String> contents = getFileContents();
-		if(contents.isEmpty()) return;
-		try {
-			String str = contents.get();
-			JsonElement jsonElement = JsonParser.parseString(str);
-			JsonObject json = jsonElement.getAsJsonObject();
-			settings.parse(json);	
-		} catch (IllegalStateException e) {
-			Roguelike.LOGGER.error(e.toString());
-			Roguelike.LOGGER.error("Invalid Json Config - Replacing with defaults");
-			this.writeConfigFile();
-			return;
-		} catch (Exception e){
-			Roguelike.LOGGER.error(e.toString());
-			Roguelike.LOGGER.error("Something's wrong with the config file - using defaults for now");
-			return;
-		}
-	}
-	
+
+	@Override
 	public Optional<String> getFileContents() {
-		File file = this.getFile();
+		File file = new File(configFullPath);
+		if(!file.exists()) {
+			return Optional.empty();
+		}
 		try {
 			return Optional.of(IOUtils.toString(new FileReader(file)));
 		} catch (FileNotFoundException e) {
@@ -58,30 +34,28 @@ public class ConfigFile {
 			return Optional.empty();
 		}
 	}
-	
-	public File getFile() {
-		File file = new File(configFullPath);
-		if(!file.exists()) {
-			writeConfigFile();
-		}
-		return file;
-	}
-	
-	public void writeConfigFile() {
+
+	@Override
+	public void write(String content) {
 		File directory = new File(configDirPath);
+		
 		if(!directory.exists()) {
 			directory.mkdirs();
 		}
-		
-	    try {
-	        FileWriter writer = new FileWriter(configFullPath);
-	        writer.flush();
-	        JsonObject json = settings.asJson();
-	        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-	        writer.write(gson.toJson(json));
-	        writer.close();
-	      } catch (IOException e) {
-	        e.printStackTrace();
-	      }
+
+		try {
+			FileWriter writer = new FileWriter(configFullPath);
+			writer.flush();
+			writer.write(content);
+			writer.close();
+		} catch (IOException e) {
+			Roguelike.LOGGER.error(e.getMessage());
+		}
+	}
+
+	@Override
+	public boolean exists() {
+		File f = new File(configFullPath);
+		return f.exists();
 	}
 }
