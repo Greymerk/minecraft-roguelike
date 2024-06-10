@@ -32,7 +32,6 @@ public class ConfigSettings {
 	
 	public <T> T get(MixedKey<T> key) {
 		if(!this.has(key)) return null;
-		this.file.read();
 		return configs.getMixed(key);
 	}
 	

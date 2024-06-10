@@ -5,18 +5,21 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Optional;
 
 import org.apache.commons.io.IOUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.greymerk.roguelike.Roguelike;
 
 public class ConfigFile {
 
-	private static final String configDirPath = "config" + File.separatorChar + "roguelike_dungeons";
-	private static final String configFilePath = "roguelike.json";
+	private static final String configDirPath = "config";
+	private static final String configFilePath = "roguelike-dungeons.json";
 	private static final String configFullPath = configDirPath + File.separatorChar + configFilePath;
 	
 	private ConfigSettings settings;
@@ -26,20 +29,34 @@ public class ConfigFile {
 	}
 	
 	public void read() {
-		JsonObject json = JsonParser.parseString(getFileContents()).getAsJsonObject();
-		settings.parse(json);
+		Optional<String> contents = getFileContents();
+		if(contents.isEmpty()) return;
+		try {
+			String str = contents.get();
+			JsonElement jsonElement = JsonParser.parseString(str);
+			JsonObject json = jsonElement.getAsJsonObject();
+			settings.parse(json);	
+		} catch (IllegalStateException e) {
+			Roguelike.LOGGER.error(e.toString());
+			Roguelike.LOGGER.error("Invalid Json Config - Replacing with defaults");
+			this.writeConfigFile();
+			return;
+		} catch (Exception e){
+			Roguelike.LOGGER.error(e.toString());
+			Roguelike.LOGGER.error("Something's wrong with the config file - using defaults for now");
+			return;
+		}
 	}
 	
-	public String getFileContents() {
+	public Optional<String> getFileContents() {
 		File file = this.getFile();
 		try {
-			return IOUtils.toString(new FileReader(file));
+			return Optional.of(IOUtils.toString(new FileReader(file)));
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			return Optional.empty();
 		} catch (IOException e) {
-			e.printStackTrace();
+			return Optional.empty();
 		}
-		return "{}";
 	}
 	
 	public File getFile() {

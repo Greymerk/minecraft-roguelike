@@ -2,6 +2,7 @@ package com.greymerk.roguelike.monster;
 
 import java.util.List;
 
+import com.greymerk.roguelike.config.Config;
 import com.greymerk.roguelike.dungeon.Difficulty;
 
 import net.minecraft.entity.Entity.RemovalReason;
@@ -25,6 +26,9 @@ public class MetaEntity implements IEntity {
 	@Override
 	public void setSlot(EquipmentSlot slot, ItemStack item) {
 		mob.equipStack(slot, item);
+		if(!Config.ofBoolean(Config.MOB_DROPS)) {
+			mob.setEquipmentDropChance(slot, 0);
+		}
 	}
 	
 	public ItemStack getEquippedStack(EquipmentSlot slot) {

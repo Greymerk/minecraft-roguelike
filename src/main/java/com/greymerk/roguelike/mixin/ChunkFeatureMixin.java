@@ -5,6 +5,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import com.greymerk.roguelike.config.Config;
 import com.greymerk.roguelike.dungeon.Dungeon;
 import com.greymerk.roguelike.dungeon.DungeonPlacement;
 import com.greymerk.roguelike.editor.Coord;
@@ -13,6 +14,7 @@ import com.greymerk.roguelike.editor.WorldEditor;
 import com.greymerk.roguelike.gamerules.RoguelikeRules;
 
 import net.minecraft.util.math.ChunkPos;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.StructureAccessor;
@@ -32,6 +34,11 @@ public class ChunkFeatureMixin {
 		if(!DungeonPlacement.validChunkPos(world, cpos)) return;
 		if(!Dungeon.canSpawn(editor, pos)) return;
 		
-		Dungeon.generate(editor, pos);
+		Random rand = editor.getRandom(pos);
+		Double chance = Math.clamp(Config.ofDouble(Config.FREQUENCY), 0, 1.0);
+		Double roll = rand.nextDouble();
+		if(chance == 1.0 || roll < chance) {
+			Dungeon.generate(editor, pos);
+		}
 	}
 }
