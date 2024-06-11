@@ -7,7 +7,7 @@ import java.util.List;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.greymerk.roguelike.config.Config;
-import com.greymerk.roguelike.debug.Debug;
+import com.greymerk.roguelike.debug.DebugLayout;
 import com.greymerk.roguelike.dungeon.Dungeon;
 import com.greymerk.roguelike.dungeon.Floor;
 import com.greymerk.roguelike.dungeon.cell.Cell;
@@ -65,8 +65,8 @@ public class LayoutManager {
 			floor.getRooms().forEach(r -> r.determineEntrances(floor, r.getFloorPos()));
 		}
 		
-		if(Debug.DEBUG) {
-			Debug debug = new Debug(editor.getWorldDirectory());
+		if(Config.ofBoolean(Config.DEBUG)) {
+			DebugLayout debug = new DebugLayout(editor.getWorldDirectory());
 			debug.toFile(origin.getX() + "_" + origin.getZ() + ".json", this.asJson());	
 		}
 		

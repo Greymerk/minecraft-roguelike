@@ -6,8 +6,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import com.google.common.base.Stopwatch;
-import com.greymerk.roguelike.Roguelike;
-import com.greymerk.roguelike.config.Config;
+import com.greymerk.roguelike.debug.Debug;
 import com.greymerk.roguelike.dungeon.layout.LayoutManager;
 import com.greymerk.roguelike.dungeon.room.IRoom;
 import com.greymerk.roguelike.dungeon.room.Room;
@@ -102,9 +101,8 @@ public class Dungeon implements Iterable<IRoom>{
 		RogueTower tower = new RogueTower();
 		tower.generate(editor, rand, Theme.getTheme(Theme.TOWER), firstFloor);
 		
-		if(Config.ofBoolean(Config.DEBUG)) {
-			Roguelike.LOGGER.info("Dungeon @: " + surface + " in: " + watch.elapsed(TimeUnit.MILLISECONDS) + "ms");
-		}
+		Debug.info("Dungeon @: " + surface + " in: " + watch.elapsed(TimeUnit.MILLISECONDS) + "ms");
+		
 	}
 	
 	public boolean isGenerated() {
