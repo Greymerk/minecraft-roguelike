@@ -68,7 +68,7 @@ public class WorldEditor implements IWorldEditor{
 
 	@Override
 	public boolean isAir(Coord pos) {
-		return this.getBlock(pos).isAir();
+		return this.world.isAir(pos.getBlockPos());
 	}
 	
 	@Override
@@ -112,7 +112,7 @@ public class WorldEditor implements IWorldEditor{
 			if(m.getState().isIn(BlockTags.LOGS)) continue;
 			if(m.getState().isIn(BlockTags.LEAVES)) continue;
 			
-			if(!m.isAir() && !m.isPlant()) return cursor;
+			if(!this.isAir(cursor) && !m.isPlant()) return cursor;
 			cursor.add(Cardinal.DOWN);
 		}
 		

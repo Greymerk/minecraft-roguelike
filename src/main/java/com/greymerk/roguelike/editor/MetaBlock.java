@@ -4,7 +4,6 @@ import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.state.property.Property;
@@ -93,7 +92,6 @@ public class MetaBlock extends BlockBase{
 	
 	public boolean isGround() {
 		if(this.isPlant()) return false;
-		if(this.isAir()) return false;
 		
 		List<TagKey<Block>> tags = List.of(
 				BlockTags.BASE_STONE_OVERWORLD, 
@@ -110,9 +108,4 @@ public class MetaBlock extends BlockBase{
 		
 		return false;
 	}
-	
-	public boolean isAir() {
-		return this.state.isAir();
-	}
-	
 }
