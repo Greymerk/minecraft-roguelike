@@ -32,14 +32,15 @@ public class Dungeon implements Iterable<IRoom>{
 	BoundingBox bb;
 	
 	public static boolean generate(IWorldEditor editor, Coord pos) {
-		if(!Dungeon.canSpawn(editor, pos)) return false;
+		return generate(editor, pos, false);
+	}
+	
+	public static boolean generate(IWorldEditor editor, Coord pos, boolean force) {
+		if(!Dungeon.canSpawn(editor, pos) && !force) return false;
 		Dungeon donjon = new Dungeon(pos.copy());
 		donjon.generate(editor);
 		editor.getState().addDungeon(donjon);
 		RoguelikeState.flagForGenerationCheck = true;
-		
-		
-		
 		return true;
 	}
 	

@@ -39,11 +39,7 @@ public class RoguelikeCommand {
 				World world = e.getWorld();
 				IWorldEditor editor = new WorldEditor(world);
 				Coord pos = Coord.of(e.getBlockPos());
-				if(!Dungeon.canSpawn(editor, pos)) {
-					source.sendFeedback(() -> Text.literal("Dungeon cannot spawn here"), false);
-					return 1;
-				}
-				Dungeon.generate(new WorldEditor(world), pos);
+				Dungeon.generate(editor, pos, true);
 				source.sendFeedback(() -> Text.literal("Generating dungeon at " + pos.toString()), false);
 				return 1;
 			});
