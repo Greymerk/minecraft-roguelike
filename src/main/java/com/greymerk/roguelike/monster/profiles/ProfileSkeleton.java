@@ -13,7 +13,7 @@ public class ProfileSkeleton implements IMonsterProfile{
 	@Override
 	public void addEquipment(World world, Random rand, Difficulty diff, IEntity mob) {
 		
-		if(diff.gt(Difficulty.EASY) && rand.nextInt(40) == 0){
+		if(diff.gt(Difficulty.EASY) && rand.nextInt(50) == 0){
 			MonsterProfile.get(MonsterProfile.POISONARCHER).addEquipment(world, rand, diff, mob);
 			return;
 		}
@@ -23,7 +23,12 @@ public class ProfileSkeleton implements IMonsterProfile{
 			return;
 		}
 		
-		if(diff.gt(Difficulty.EASY) && rand.nextInt(10) == 0){
+		if(diff.gt(Difficulty.EASY) && rand.nextInt(50) == 0){
+			MonsterProfile.get(MonsterProfile.FIREARCHER).addEquipment(world, rand, diff, mob);
+			return;
+		}
+		
+		if(diff.gt(Difficulty.EASY) && rand.nextInt(20) == 0){
 			MonsterProfile.get(MonsterProfile.WITHER).addEquipment(world, rand, diff, mob);
 			return;
 		}

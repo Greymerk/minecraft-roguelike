@@ -95,8 +95,6 @@ public enum PotionEffect {
 	
 	public static void addCustomEffect(ItemStack potion, PotionEffect type, int amplifier, int duration){
 		
-		final int TICKS_PER_SECOND = 20;
-		
 		RegistryEntry<StatusEffect> effect = getStatusEffect(type);
 		PotionContentsComponent contents = potion.getOrDefault(DataComponentTypes.POTION_CONTENTS, PotionContentsComponent.DEFAULT);
 		List<StatusEffectInstance> effects = contents.customEffects();
@@ -108,5 +106,9 @@ public enum PotionEffect {
 		
 		PotionContentsComponent replace = new PotionContentsComponent(Optional.empty(), contents.customColor(), flist);
 		potion.set(DataComponentTypes.POTION_CONTENTS, replace);
+	}
+	
+	public static StatusEffectInstance getInstance(PotionEffect type, int amplifier, int duration) {
+		return new StatusEffectInstance(getStatusEffect(type), duration * TICKS_PER_SECOND, Math.max(0, amplifier - 1));
 	}
 }

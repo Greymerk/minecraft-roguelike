@@ -8,6 +8,7 @@ import com.greymerk.roguelike.dungeon.Difficulty;
 import net.minecraft.entity.Entity.RemovalReason;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.ZombieEntity;
 import net.minecraft.item.ItemStack;
@@ -79,6 +80,16 @@ public class MetaEntity implements IEntity {
 		this.mob.setCustomNameVisible(true);
 	}
 
+	@Override
+	public void setOnFire(int duration) {
+		this.mob.setOnFireFor(duration);;
+	}
+	
+	@Override
+	public void setEffect(StatusEffectInstance effect) {
+		this.mob.addStatusEffect(effect);
+	}
+	
 	@Override
 	public boolean canEnchant(Random rand, Difficulty diff) {
 		

@@ -13,9 +13,13 @@ public class Trim {
 
     
 	public static ItemStack addRandom(DynamicRegistryManager registry, ItemStack item, Random rand) {
-	    
-	    RegistryEntry<ArmorTrimPattern> pattern = TrimPattern.getEntry(registry, rand);
-	    RegistryEntry<ArmorTrimMaterial> material = TrimMaterial.getEntry(registry, rand);
+	    return set(registry, item, TrimPattern.getRandom(rand), TrimMaterial.getRandom(rand));
+	}
+	
+	public static ItemStack set(DynamicRegistryManager registry, ItemStack item, TrimPattern pat, TrimMaterial mat) {
+		
+		RegistryEntry<ArmorTrimPattern> pattern = TrimPattern.getEntry(registry, pat);
+	    RegistryEntry<ArmorTrimMaterial> material = TrimMaterial.getEntry(registry, mat);
 	    
 	    ArmorTrim at = new ArmorTrim(material, pattern);
 	    

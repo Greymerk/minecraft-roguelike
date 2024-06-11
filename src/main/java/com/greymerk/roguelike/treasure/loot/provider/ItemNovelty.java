@@ -13,7 +13,8 @@ import net.minecraft.util.Rarity;
 public enum ItemNovelty {
 
 	GREYMERK, NULL, ZISTEAU, AVIDYA, ASHLEA, KURT, 
-	CLEO, WINDFORCE, RLEAHY, VECHS, GENERIKB, FOURLES;
+	CLEO, WINDFORCE, RLEAHY, VECHS, GENERIKB, FOURLES,
+	BURNING;
 		
 	public static IWeighted<ItemStack> get(ItemNovelty choice, int weight){
 		return new WeightedChoice<ItemStack>(getItem(choice), weight);
@@ -121,6 +122,12 @@ public enum ItemNovelty {
 			Loot.setItemName(item, "Darkroast Beans");
 			Loot.setItemLore(item, "\"Mmmm... Dark Roast\"",  TextFormat.DARKGREEN);
 			Loot.setRarity(item, Rarity.EPIC);
+			return item;
+		case BURNING:
+			item = new ItemStack(Items.BOW);
+			Loot.setItemName(item, "Burning Bow");
+			Loot.setRarity(item, Rarity.EPIC);
+			item.addEnchantment(Enchant.getEnchant(Enchant.FLAME), 1);
 			return item;
 		default:
 			return new ItemStack(Items.STICK);

@@ -11,6 +11,9 @@ import com.greymerk.roguelike.treasure.loot.items.TippedArrow;
 import com.greymerk.roguelike.treasure.loot.potions.PotionItem;
 import com.greymerk.roguelike.treasure.loot.provider.ItemArmour;
 import com.greymerk.roguelike.treasure.loot.provider.ItemWeapon;
+import com.greymerk.roguelike.treasure.loot.trim.Trim;
+import com.greymerk.roguelike.treasure.loot.trim.TrimMaterial;
+import com.greymerk.roguelike.treasure.loot.trim.TrimPattern;
 
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.ItemStack;
@@ -35,7 +38,8 @@ public class ProfileMagicArcher implements IMonsterProfile {
 				}){
 			ItemStack item = ItemArmour.get(rand, Slot.getSlot(slot), Quality.WOOD);
 			Enchant.enchantItem(world.getEnabledFeatures(), rand, item, 20);
-			ItemArmour.dyeArmor(item, 51, 0, 102);
+			ItemArmour.dyeArmor(item, 51, 0, 102); // dark blue
+			Trim.set(world.getRegistryManager(), item, TrimPattern.VEX, TrimMaterial.GOLD);
 			mob.setSlot(slot, item);
 		}
 	}
