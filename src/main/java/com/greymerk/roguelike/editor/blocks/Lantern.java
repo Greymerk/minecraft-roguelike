@@ -17,7 +17,7 @@ public enum Lantern {
 	}
 	
 	public static void set(IWorldEditor editor, Coord origin, Lantern type, boolean hang) {
-		if(!editor.isReplaceable(origin)) return;
+		if(!editor.getBlock(origin).isReplaceable()) return;
 		MetaBlock.of(fromType(type).getDefaultState())
 			.with(LanternBlock.HANGING, hang)
 			.set(editor, origin);

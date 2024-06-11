@@ -64,7 +64,7 @@ public class Dungeon implements Iterable<IRoom>{
 		if(!editor.isOverworld()) return false;
 		
 		Coord surface = editor.findSurface(pos);
-		if(!editor.isGround(surface)) return false;
+		if(!editor.getBlock(surface).isGround()) return false;
 		
 		return true;
 	}

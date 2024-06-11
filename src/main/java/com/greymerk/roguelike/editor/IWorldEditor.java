@@ -17,10 +17,6 @@ public interface IWorldEditor {
 	public boolean set(Coord pos, MetaBlock metaBlock);
 	
 	public MetaBlock getBlock(Coord pos);
-
-	public boolean isAir(Coord pos);
-	
-	public boolean isReplaceable(Coord pos);
 	
 	public boolean hasBlockEntity(Coord pos);
 	
@@ -35,8 +31,6 @@ public interface IWorldEditor {
 	public boolean isChunkLoaded(Coord pos);
 	
 	public boolean surroundingChunksLoaded(Coord pos);
-	
-	public boolean isGround(Coord pos);
 	
 	public boolean isOverworld();
 
@@ -57,4 +51,6 @@ public interface IWorldEditor {
 	public GameRules getGameRules();
 	
 	public RoguelikeState getState();
+
+	boolean isAir(Coord pos);
 }

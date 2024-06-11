@@ -1,7 +1,6 @@
 package com.greymerk.roguelike.editor;
 
 import java.nio.file.Path;
-import java.util.List;
 import java.util.Objects;
 
 import com.greymerk.roguelike.state.RoguelikeState;
@@ -12,7 +11,6 @@ import net.minecraft.block.FallingBlock;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.registry.tag.TagKey;
 import net.minecraft.resource.featuretoggle.FeatureSet;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerWorld;
@@ -70,14 +68,9 @@ public class WorldEditor implements IWorldEditor{
 
 	@Override
 	public boolean isAir(Coord pos) {
-		return world.isAir(pos.getBlockPos());
+		return this.getBlock(pos).isAir();
 	}
 	
-	@Override
-	public boolean isReplaceable(Coord pos) {
-		return world.getBlockState(pos.getBlockPos()).isReplaceable();
-	}
-
 	@Override
 	public long getSeed() {
 		MinecraftServer server = this.world.getServer();
@@ -119,7 +112,7 @@ public class WorldEditor implements IWorldEditor{
 			if(m.getState().isIn(BlockTags.LOGS)) continue;
 			if(m.getState().isIn(BlockTags.LEAVES)) continue;
 			
-			if(!isAir(cursor) && !isPlant(cursor)) return cursor;
+			if(!m.isAir() && !m.isPlant()) return cursor;
 			cursor.add(Cardinal.DOWN);
 		}
 		
@@ -143,32 +136,7 @@ public class WorldEditor implements IWorldEditor{
 		return false;
 	}
 	
-	public boolean isPlant(Coord pos) {
-		BlockState bs = getBlock(pos).getState();
-		if(bs.isIn(BlockTags.LOGS)) return true;
-		if(bs.isIn(BlockTags.SWORD_EFFICIENT)) return true;
-		return false;
-	}
-	
-	public boolean isGround(Coord pos) {
-		if(isPlant(pos)) return false;
-		if(this.isAir(pos)) return false;
-		
-		List<TagKey<Block>> tags = List.of(
-				BlockTags.BASE_STONE_OVERWORLD, 
-				BlockTags.DIRT, 
-				BlockTags.SAND, 
-				BlockTags.SNOW, 
-				BlockTags.STONE_ORE_REPLACEABLES, 
-				BlockTags.BADLANDS_TERRACOTTA);
-		
-		MetaBlock m = getBlock(pos);
-		
-		for(TagKey<Block> tag : tags) {
-			if(m.getState().isIn(tag)) return true;
-		}
-		return false;
-	}
+
 	
 	public boolean isOverworld() {
 		return this.world.getDimension().hasSkyLight();
@@ -201,8 +169,7 @@ public class WorldEditor implements IWorldEditor{
 	}
 	
 	public DynamicRegistryManager getRegistryManager() {
-		DynamicRegistryManager reg = this.world.getRegistryManager();
-		return reg;
+		return this.world.getRegistryManager();
 	}
 	
 	public FeatureSet getFeatureSet() {
@@ -214,13 +181,10 @@ public class WorldEditor implements IWorldEditor{
 	}
 	
 	public GameRules getGameRules() {
-		MinecraftServer server = world.getServer();
-		GameRules rules = server.getGameRules();
-		return rules;
+		return world.getServer().getGameRules();
 	}
 	
 	public RoguelikeState getState() {
-		MinecraftServer server = world.getServer();
-		return RoguelikeState.getServerState(server);
+		return RoguelikeState.getServerState(world.getServer());
 	}
 }

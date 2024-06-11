@@ -1,7 +1,11 @@
 package com.greymerk.roguelike.editor;
 
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.state.property.Property;
 import net.minecraft.util.math.random.Random;
@@ -76,4 +80,39 @@ public class MetaBlock extends BlockBase{
 		MetaBlock otherBlock = (MetaBlock)other;
 		return this.state.equals(otherBlock.state);
 	}
+	
+	public boolean isReplaceable() {
+		return this.state.isReplaceable();
+	}
+	
+	public boolean isPlant() {
+		if(this.isIn(BlockTags.LOGS)) return true;
+		if(this.isIn(BlockTags.SWORD_EFFICIENT)) return true;
+		return false;
+	}
+	
+	public boolean isGround() {
+		if(this.isPlant()) return false;
+		if(this.isAir()) return false;
+		
+		List<TagKey<Block>> tags = List.of(
+				BlockTags.BASE_STONE_OVERWORLD, 
+				BlockTags.DIRT, 
+				BlockTags.SAND, 
+				BlockTags.SNOW,
+				BlockTags.STONE_ORE_REPLACEABLES, 
+				BlockTags.SHOVEL_MINEABLE,
+				BlockTags.BADLANDS_TERRACOTTA);
+		
+		for(TagKey<Block> tag : tags) {
+			if(this.isIn(tag)) return true;
+		}
+		
+		return false;
+	}
+	
+	public boolean isAir() {
+		return this.state.isAir();
+	}
+	
 }
