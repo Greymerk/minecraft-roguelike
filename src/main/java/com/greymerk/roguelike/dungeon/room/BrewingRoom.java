@@ -336,7 +336,15 @@ public class BrewingRoom extends AbstractRoom implements IRoom {
 		return cells;
 	}
 
-
+	@Override
+	public BoundingBox getBoundingBox(Coord origin, Cardinal dir) {
+		return BoundingBox.of(origin)
+				.grow(dir, 12)
+				.grow(Cardinal.orthogonal(dir), 9)
+				.grow(Cardinal.DOWN, 10)
+				.grow(Cardinal.UP, 6);
+	}
+	
 	@Override
 	public void determineEntrances(Floor f, Coord floorPos) {
 		for(Cardinal dir : Cardinal.directions) {

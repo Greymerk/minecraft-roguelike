@@ -1,6 +1,8 @@
 package com.greymerk.roguelike.editor.boundingbox;
 
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
@@ -182,5 +184,17 @@ class BoundingBoxTest {
 		assert(bb.contains(origin.copy().add(Cardinal.SOUTH, 10).add(Cardinal.EAST, 10).add(Cardinal.DOWN, 10)));
 		assert(bb.getStart().equals(new Coord(-20, -20, -20)));
 		assert(bb.getEnd().equals(new Coord(20, 20, 20)));
+	}
+	
+	@Test
+	void testHashSet() {
+		Set<BoundingBox> boxes = new HashSet<BoundingBox>();
+		boxes.add(BoundingBox.of(Coord.ZERO).grow(Cardinal.directions, 2));
+		boxes.add(BoundingBox.of(Coord.ZERO).grow(Cardinal.directions, 3));
+		assert(boxes.size() == 2);
+		boxes.add(BoundingBox.of(Coord.ZERO).grow(Cardinal.directions, 2));
+		assert(boxes.size() == 2);
+		boxes.add(BoundingBox.of(Coord.ZERO).grow(Cardinal.directions, 4));
+		assert(boxes.size() == 3);
 	}
 }

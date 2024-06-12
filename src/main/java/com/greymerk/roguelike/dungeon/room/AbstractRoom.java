@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import com.greymerk.roguelike.dungeon.Floor;
 import com.greymerk.roguelike.dungeon.cell.Cell;
@@ -103,11 +104,18 @@ public abstract class AbstractRoom implements IRoom{
 	}
 	
 	@Override
-	public IBounded getBoundingBox() {
-		BoundingBox bb = BoundingBox.of(worldPos.copy());
-		bb.grow(Cardinal.directions, (Cell.SIZE / 2) + 1);
-		bb.grow(Cardinal.UP, 6).grow(Cardinal.DOWN, 3);
-		return bb;
+	public Optional<IBounded> getBoundingBox() {
+		if(this.direction == null) return Optional.empty();
+		if(this.worldPos == null) return Optional.empty();
+		return Optional.of(this.getBoundingBox(worldPos, direction));
+	}
+	
+	@Override
+	public IBounded getBoundingBox(Coord origin, Cardinal dir) {
+		return BoundingBox.of(origin)
+			.grow(Cardinal.directions, 3)
+			.grow(Cardinal.UP, 6)
+			.grow(Cardinal.DOWN, 3);
 	}
 	
 	@Override
@@ -188,6 +196,6 @@ public abstract class AbstractRoom implements IRoom{
 	
 	public void applyFilters(IWorldEditor editor) {
 		Random rand = editor.getRandom(this.getWorldPos());
-		this.settings.applyFilters(editor, rand, getBoundingBox());
+		this.settings.applyFilters(editor, rand, getBoundingBox().get());
 	}
 }

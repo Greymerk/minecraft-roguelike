@@ -1,6 +1,7 @@
 package com.greymerk.roguelike.dungeon.room;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.greymerk.roguelike.dungeon.Floor;
 import com.greymerk.roguelike.dungeon.cell.CellManager;
@@ -40,7 +41,9 @@ public interface IRoom {
 	
 	public ITheme getTheme();
 	
-	public IBounded getBoundingBox();
+	public Optional<IBounded> getBoundingBox();
+	
+	public IBounded getBoundingBox(Coord origin, Cardinal dir);
 	
 	public void determineEntrances(Floor f, Coord floorPos);
 	

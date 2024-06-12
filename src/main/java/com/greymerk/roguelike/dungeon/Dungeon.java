@@ -96,7 +96,7 @@ public class Dungeon implements Iterable<IRoom>{
 		layout.addEntrance(entrance);
 		layout.generate(editor);
 		this.rooms = layout.getRooms();
-		this.rooms.forEach(r -> bb.combine(r.getBoundingBox()));
+		this.rooms.forEach(r -> bb.combine(r.getBoundingBox().get()));
 		
 		RogueTower tower = new RogueTower();
 		tower.generate(editor, rand, Theme.getTheme(Theme.TOWER), firstFloor);

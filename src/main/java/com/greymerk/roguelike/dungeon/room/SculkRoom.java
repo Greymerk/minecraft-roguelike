@@ -53,7 +53,7 @@ public class SculkRoom extends AbstractLargeRoom implements IRoom {
 		bridges(editor, rand, origin);
 		placeSpawners(editor, rand, origin);
 		placeChests(editor, rand, origin);
-		Filter.get(Filter.SCULK).apply(editor, rand, theme, getBoundingBox());
+		Filter.get(Filter.SCULK).apply(editor, rand, theme, getBoundingBox().get());
 
 	}
 

@@ -317,9 +317,8 @@ public class PanopticonRoom extends AbstractLargeRoom implements IRoom {
 	}
 	
 	@Override
-	public BoundingBox getBoundingBox() {
-		BoundingBox bb = super.getBoundingBox().grow(Cardinal.DOWN, 10);
-		return bb;
+	public BoundingBox getBoundingBox(Coord origin, Cardinal dir) {
+		return super.getBoundingBox(origin, dir).grow(Cardinal.DOWN, 10);
 	}
 
 	@Override

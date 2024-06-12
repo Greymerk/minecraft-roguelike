@@ -7,6 +7,7 @@ import java.util.List;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.greymerk.roguelike.config.Config;
+import com.greymerk.roguelike.debug.Debug;
 import com.greymerk.roguelike.debug.DebugLayout;
 import com.greymerk.roguelike.dungeon.Dungeon;
 import com.greymerk.roguelike.dungeon.Floor;
@@ -30,11 +31,14 @@ public class LayoutManager {
 	private Coord origin;
 	private List<Floor> floors;
 	private IDungeonSettings settings;
+	private ExclusionZones zones; 
 	
 	public LayoutManager(Coord origin) {
 		this.origin = origin;
 		this.floors = createFloors();
 		this.settings = new DungeonSettingsDefault();
+		this.zones = new ExclusionZones();
+		//this.zones.add(BoundingBox.of(new Coord(-150, 0, 50)).grow(Cardinal.all, 200));
 	}
 	
 	public void generate(IWorldEditor editor) {
@@ -77,6 +81,26 @@ public class LayoutManager {
 		//cells.sort(new CenterSort());
 		RandHelper.shuffle(cells, rand);
 		CellManager fcm = floor.getCells();
+		
+		// try to find a place that avoids exclusion zones :)
+		for(Cell potential : cells) {
+			List<Cardinal> dirs = getPotentialDir(floor, potential);
+			RandHelper.shuffle(dirs, rand);
+			for(Cardinal dir : dirs) {
+				Coord wp = potential.getWorldPos(floor.getOrigin());
+				if(zones.collides(room.getBoundingBox(wp, dir))) {
+					Debug.info("colliding at " + wp);
+					continue;
+				}
+				CellManager rcm = room.getCells(dir);
+				if(fcm.roomFits(potential, rcm)) {
+					this.addRoom(room, dir, potential.getFloorPos(), wp, floor);
+					return;
+				}
+			}
+		}
+		
+		// try it again without checking exclusion zones :(
 		for(Cell potential : cells) {
 			List<Cardinal> dirs = getPotentialDir(floor, potential);
 			RandHelper.shuffle(dirs, rand);
@@ -89,7 +113,7 @@ public class LayoutManager {
 			}
 		}
 	}
-	
+
 	private List<Cardinal> getPotentialDir(Floor floor, Cell cell) {
 		List<Cardinal> dirs = new ArrayList<Cardinal>();
 		for(Cardinal dir : Cardinal.directions) {
@@ -107,8 +131,9 @@ public class LayoutManager {
 		if(floors.indexOf(floor) >= floors.size() - 1) return;
 		IRoom stairway = Room.getInstance(Room.STAIRWAY, this.settings.getLevel(floor.getOrigin().getY()));
 		placeRoom(stairway, rand, floor);
+		zones.scan(editor, stairway.getWorldPos(), 500);
 	}
-	
+
 	public void addEntrance(IRoom room) {
 		Floor f = this.floors.get(0);
 		Coord fp = new Coord(0,0,0);

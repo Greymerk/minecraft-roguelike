@@ -185,19 +185,13 @@ public class Stairway extends AbstractRoom implements IRoom {
 	}
 
 	@Override
-	public IBounded getBoundingBox() {
-		Coord origin = this.getWorldPos().copy();
-		Coord start = origin.copy();
-		start.add(Cardinal.reverse(direction), 3);
-		start.add(Cardinal.UP, 3);
-		start.add(Cardinal.left(direction), 4);
-		
-		Coord end = origin.copy();
-		end.add(direction, 13);
-		end.add(Cardinal.DOWN, 10);
-		end.add(Cardinal.right(direction), 4);
-		
-		return BoundingBox.of(start, end);
+	public IBounded getBoundingBox(Coord origin, Cardinal dir) {
+		return BoundingBox.of(origin)
+				.grow(Cardinal.reverse(dir), 3)
+				.grow(dir, 15)
+				.grow(Cardinal.orthogonal(dir), 4)
+				.grow(Cardinal.UP, 6)
+				.grow(Cardinal.DOWN, 10);
 	}
 	
 

@@ -261,6 +261,15 @@ public class BedRoom extends AbstractRoom implements IRoom {
 	}
 
 	@Override
+	public BoundingBox getBoundingBox(Coord origin, Cardinal dir) {
+		return BoundingBox.of(origin)
+				.grow(dir, 12)
+				.grow(Cardinal.orthogonal(dir), 6)
+				.grow(Cardinal.UP, 6)
+				.grow(Cardinal.DOWN, 3);
+	}
+	
+	@Override
 	public String getName() {
 		return Room.BEDROOM.name();
 	}

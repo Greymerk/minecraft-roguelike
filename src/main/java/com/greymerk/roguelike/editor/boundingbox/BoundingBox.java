@@ -123,6 +123,12 @@ public class BoundingBox implements IBounded, IShape{
 		this.end.add(dir, amount);
 		return this;
 	}
+
+	public BoundingBox add(Coord pos) {
+		this.start.add(pos);
+		this.end.add(pos);
+		return this;
+	}
 	
 	@Override
 	public Coord getStart() {
@@ -205,4 +211,5 @@ public class BoundingBox implements IBounded, IShape{
 	public List<Coord> get() {
 		return this.getShape(Shape.RECTSOLID).get();
 	}
+
 }
