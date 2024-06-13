@@ -18,7 +18,7 @@ public class ProfileJohnny implements IMonsterProfile {
 	@Override
 	public void addEquipment(World world, Random rand, Difficulty diff, IEntity mob) {
 		mob.setMobClass(MobType.VINDICATOR, false);
-		mob.setSlot(EquipmentSlot.MAINHAND, ItemSpecialty.getRandomItem(Equipment.AXE, rand, Difficulty.HARDEST));
+		mob.setSlot(EquipmentSlot.MAINHAND, ItemSpecialty.getRandomItem(world.getRegistryManager(), Equipment.AXE, rand, Difficulty.HARDEST));
 		MonsterProfile.get(MonsterProfile.TALLMOB).addEquipment(world, rand, Difficulty.HARD, mob);
 		mob.setName("Johnny");
 	}

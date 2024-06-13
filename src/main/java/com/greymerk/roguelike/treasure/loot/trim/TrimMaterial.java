@@ -24,7 +24,7 @@ public enum TrimMaterial {
 	
 	public static NbtString getNbt(TrimMaterial material) {
 		String path = getId(material);
-		Identifier id = new Identifier("minecraft", path);
+		Identifier id = Identifier.of("minecraft", path);
 		return NbtString.of(id.toString());
 	}
 	

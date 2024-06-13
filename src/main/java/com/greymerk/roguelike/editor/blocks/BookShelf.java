@@ -34,7 +34,7 @@ public class BookShelf {
 		ChiseledBookshelfBlockEntity shelf = (ChiseledBookshelfBlockEntity)be;
 		
 		getSlots(rand).forEach(i -> {
-			shelf.setStack(i, Enchant.getBook(rand, Difficulty.fromY(origin.getY())));		
+			shelf.setStack(i, Enchant.getBook(editor.getRegistryManager(), rand, Difficulty.fromY(origin.getY())));		
 		});
 		
 		shelf.markDirty();

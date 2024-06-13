@@ -22,7 +22,7 @@ public class ProfileArcher implements IMonsterProfile {
 			mob.setSlot(EquipmentSlot.OFFHAND, TippedArrow.getHarmful(rand, 1));
 		}
 		
-		mob.setSlot(EquipmentSlot.MAINHAND, ItemWeapon.getBow(world.getEnabledFeatures(), rand, diff, mob.canEnchant(rand, diff)));
+		mob.setSlot(EquipmentSlot.MAINHAND, ItemWeapon.getBow(world.getRegistryManager(), world.getEnabledFeatures(), rand, diff, mob.canEnchant(rand, diff)));
 		MonsterProfile.get(MonsterProfile.TALLMOB).addEquipment(world, rand, diff, mob);
 	}
 

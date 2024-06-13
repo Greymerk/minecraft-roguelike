@@ -67,7 +67,7 @@ public class ProfileZombie implements IMonsterProfile {
 			return;
 		}
 		
-		ItemStack weapon = ItemTool.getRandom(world.getEnabledFeatures(), rand, diff, mob.canEnchant(rand, diff));
+		ItemStack weapon = ItemTool.getRandom(world.getRegistryManager(), world.getEnabledFeatures(), rand, diff, mob.canEnchant(rand, diff));
 		mob.setSlot(EquipmentSlot.MAINHAND, weapon);
 		MonsterProfile.get(MonsterProfile.TALLMOB).addEquipment(world, rand, diff, mob);
 	}

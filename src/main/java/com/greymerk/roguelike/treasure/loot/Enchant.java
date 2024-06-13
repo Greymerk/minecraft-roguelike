@@ -1,6 +1,8 @@
 package com.greymerk.roguelike.treasure.loot;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 import com.greymerk.roguelike.dungeon.Difficulty;
 
@@ -9,7 +11,10 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentLevelEntry;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.registry.Registries;
+import net.minecraft.registry.DynamicRegistryManager;
+import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.resource.featuretoggle.FeatureSet;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.random.Random;
@@ -41,11 +46,12 @@ public enum Enchant {
 	
 	public static final List<Enchant> cursed = List.of(CURSE_OF_VANISHING, CURSE_OF_BINDING);
 	
-	public static Enchantment getEnchant(Enchant type){
+	public static RegistryEntry<Enchantment> getEnchant(DynamicRegistryManager reg, Enchant type){
+		Registry<Enchantment> enchantments = reg.get(RegistryKeys.ENCHANTMENT);
 		String ns = "minecraft";
 		String path = getName(type);
-		Identifier id = new Identifier(ns, path);
-		return Registries.ENCHANTMENT.get(id);
+		Identifier id = Identifier.of(ns, path);
+		return enchantments.getEntry(id).get();
 	}
 	
 	public static String getName(Enchant type){
@@ -156,13 +162,13 @@ public enum Enchant {
 		}
 	}
 
-	public static ItemStack enchantItem(FeatureSet features, Random rand, ItemStack item, int enchantLevel) {
-
+	public static ItemStack enchantItem(DynamicRegistryManager reg, FeatureSet features, Random rand, ItemStack item, int enchantLevel) {
+				
 		if (item == null ) return null;
 		
 		List<EnchantmentLevelEntry> enchants = null;
 		try{
-			enchants = EnchantmentHelper.generateEnchantments(features, rand, item, enchantLevel, false);
+			enchants = EnchantmentHelper.generateEnchantments(rand, item, enchantLevel, streamEntries(reg));
 		} catch(NullPointerException e){
 			throw e;
 		}
@@ -181,35 +187,43 @@ public enum Enchant {
 		return item;
 	}
 	
-	public static ItemStack getBook(FeatureSet features, Random rand, Difficulty diff) {
+	public static Stream<RegistryEntry<Enchantment>> streamEntries(DynamicRegistryManager reg){
+		List<RegistryEntry<Enchantment>> enchants = new ArrayList<RegistryEntry<Enchantment>>();
+		List.of(Enchant.values()).forEach(e -> {
+			enchants.add(Enchant.getEnchant(reg, e));
+		});
+		return enchants.stream();
+	}
+	
+	public static ItemStack getBook(DynamicRegistryManager reg, FeatureSet features, Random rand, Difficulty diff) {
 		ItemStack book = new ItemStack(Items.BOOK);
 		int level = getLevel(rand, diff);
-		return enchantItem(features, rand, book, level);
+		return enchantItem(reg, features, rand, book, level);
 	}
 
-	public static ItemStack getBook(Random rand, Enchant type, Difficulty diff) {
+	public static ItemStack getBook(DynamicRegistryManager reg, Random rand, Enchant type, Difficulty diff) {
 		ItemStack book = new ItemStack(Items.ENCHANTED_BOOK);
-		book.addEnchantment(Enchant.getEnchant(type), Enchant.getRandomRank(rand, type, diff));
+		book.addEnchantment(Enchant.getEnchant(reg, type), Enchant.getRandomRank(rand, type, diff));
 		return book;
 	}
 	
-	public static ItemStack getBook(Random rand, Difficulty diff) {
+	public static ItemStack getBook(DynamicRegistryManager reg, Random rand, Difficulty diff) {
 		
 		if(diff == Difficulty.HARDEST && rand.nextInt(4) == 0) {
 			Enchant type = endgame.get(rand.nextInt(endgame.size()));
-			return Enchant.getBook(rand, type, diff);	
+			return Enchant.getBook(reg, rand, type, diff);	
 		}
 		
-		if(rand.nextInt(6) == 0) return Enchant.getBook(Enchant.MENDING);
+		if(rand.nextInt(6) == 0) return Enchant.getBook(reg, Enchant.MENDING);
 		
 		Enchant type = common.get(rand.nextInt(common.size()));
-		return Enchant.getBook(rand, type, diff);
+		return Enchant.getBook(reg, rand, type, diff);
 	}
 	
-	public static ItemStack getBook(Enchant type) {
-		Enchantment e = getEnchant(type);
+	public static ItemStack getBook(DynamicRegistryManager reg, Enchant type) {
+		RegistryEntry<Enchantment> e = getEnchant(reg, type);
 		ItemStack item = new ItemStack(Items.ENCHANTED_BOOK);
-		item.addEnchantment(e, e.getMaxLevel());
+		item.addEnchantment(e, Enchant.getMaxRank(type));
 		return item;
 	}
 }

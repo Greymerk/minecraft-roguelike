@@ -11,15 +11,19 @@ import com.greymerk.roguelike.util.WeightedRandomizer;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.util.math.random.Random;
 
 public class ItemFood extends ItemBase{
 
 	private Map<Difficulty, WeightedRandomizer<ItemStack>> loot;
+	private DynamicRegistryManager reg;
 	
-	public ItemFood(int weight, Difficulty diff) {
+	public ItemFood(DynamicRegistryManager reg, int weight, Difficulty diff) {
 		super(weight, diff);
+		this.reg = reg;
 		this.loot = new HashMap<Difficulty, WeightedRandomizer<ItemStack>>();
+		
 		List.of(Difficulty.values()).forEach(d -> {
 			
 			WeightedRandomizer<ItemStack> randomizer = new WeightedRandomizer<ItemStack>();
@@ -71,10 +75,10 @@ public class ItemFood extends ItemBase{
 
 	@Override
 	public ItemStack getLootItem(Random rand, Difficulty diff) {
-		if(rand.nextInt(2000) == 0) return ItemNovelty.getItem(ItemNovelty.GENERIKB);
-		if(rand.nextInt(2000) == 0) return ItemNovelty.getItem(ItemNovelty.AVIDYA);
-		if(rand.nextInt(1000) == 0) return ItemNovelty.getItem(ItemNovelty.RLEAHY);
-		if(rand.nextInt(1000) == 0) return ItemNovelty.getItem(ItemNovelty.FOURLES);
+		if(rand.nextInt(2000) == 0) return ItemNovelty.getItem(reg, ItemNovelty.GENERIKB);
+		if(rand.nextInt(2000) == 0) return ItemNovelty.getItem(reg, ItemNovelty.AVIDYA);
+		if(rand.nextInt(1000) == 0) return ItemNovelty.getItem(reg, ItemNovelty.RLEAHY);
+		if(rand.nextInt(1000) == 0) return ItemNovelty.getItem(reg, ItemNovelty.FOURLES);
 		if(diff == Difficulty.EASIEST && rand.nextInt(20) == 0) return PotionMixture.getPotion(rand, PotionMixture.COFFEE);
 		return this.loot.get(diff).get(rand);
 	}

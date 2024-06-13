@@ -11,6 +11,7 @@ import com.greymerk.roguelike.util.WeightedRandomizer;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 
@@ -24,12 +25,12 @@ public class ProfileBaby implements IMonsterProfile {
 			MonsterProfile.get(MonsterProfile.VILLAGER).addEquipment(world, rand, diff, mob);
 		}
 		
-		mob.setSlot(EquipmentSlot.MAINHAND, toy(rand));
+		mob.setSlot(EquipmentSlot.MAINHAND, toy(world.getRegistryManager(), rand));
 	}
 	
-	private ItemStack toy(Random rand) {
+	private ItemStack toy(DynamicRegistryManager reg, Random rand) {
 		
-		if(rand.nextInt(100) == 0) return ItemNovelty.getItem(ItemNovelty.VECHS);
+		if(rand.nextInt(100) == 0) return ItemNovelty.getItem(reg, ItemNovelty.VECHS);
 		
 		WeightedRandomizer<ItemStack> randomizer = new WeightedRandomizer<ItemStack>();
 		

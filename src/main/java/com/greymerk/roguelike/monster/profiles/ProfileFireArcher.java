@@ -30,7 +30,7 @@ public class ProfileFireArcher implements IMonsterProfile {
 		mob.setEffect(PotionEffect.getInstance(PotionEffect.FIRERESIST, 1, 60 * 60));
 		mob.setEffect(PotionEffect.getInstance(PotionEffect.SPEED, 1, 60 * 60));
 		
-		mob.setSlot(EquipmentSlot.MAINHAND, ItemNovelty.getItem(ItemNovelty.BURNING));
+		mob.setSlot(EquipmentSlot.MAINHAND, ItemNovelty.getItem(world.getRegistryManager(), ItemNovelty.BURNING));
 		
 		for(EquipmentSlot slot : new EquipmentSlot[]{
 				EquipmentSlot.HEAD,
@@ -39,7 +39,7 @@ public class ProfileFireArcher implements IMonsterProfile {
 				EquipmentSlot.FEET
 				}){
 			ItemStack item = ItemArmour.get(rand, Slot.getSlot(slot), Quality.WOOD);
-			Enchant.enchantItem(world.getEnabledFeatures(), rand, item, 20);
+			Enchant.enchantItem(world.getRegistryManager(), world.getEnabledFeatures(), rand, item, 20);
 			ItemArmour.dyeArmor(item, 200, 50, 52); // dark red
 			Trim.set(world.getRegistryManager(), item, TrimPattern.RIB, TrimMaterial.GOLD);
 			mob.setSlot(slot, item);
