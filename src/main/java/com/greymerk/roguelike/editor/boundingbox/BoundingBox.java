@@ -211,5 +211,9 @@ public class BoundingBox implements IBounded, IShape{
 	public List<Coord> get() {
 		return this.getShape(Shape.RECTSOLID).get();
 	}
-
+	
+	@Override
+	public String toString() {
+		return List.of(start, end).toString();
+	}
 }

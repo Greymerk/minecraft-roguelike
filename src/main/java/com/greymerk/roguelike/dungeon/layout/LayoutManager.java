@@ -7,6 +7,7 @@ import java.util.List;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.greymerk.roguelike.config.Config;
+import com.greymerk.roguelike.debug.Debug;
 import com.greymerk.roguelike.debug.DebugLayout;
 import com.greymerk.roguelike.dungeon.Dungeon;
 import com.greymerk.roguelike.dungeon.Floor;
@@ -71,7 +72,6 @@ public class LayoutManager {
 			DebugLayout debug = new DebugLayout(editor.getWorldDirectory());
 			debug.toFile(origin.getX() + "_" + origin.getZ() + ".json", this.asJson());	
 		}
-		
 	}
 	
 	private void placeRoom(IRoom room, Random rand, Floor floor) {
@@ -87,7 +87,6 @@ public class LayoutManager {
 			for(Cardinal dir : dirs) {
 				Coord wp = potential.getWorldPos(floor.getOrigin());
 				if(zones.collides(room.getBoundingBox(wp, dir))) {
-					//Debug.info("colliding at " + wp);
 					continue;
 				}
 				CellManager rcm = room.getCells(dir);

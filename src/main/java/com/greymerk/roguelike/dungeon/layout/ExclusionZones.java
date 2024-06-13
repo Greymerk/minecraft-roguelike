@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.greymerk.roguelike.debug.Debug;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
@@ -36,8 +35,12 @@ public class ExclusionZones {
 	public void scan(IWorldEditor editor, Coord pos, int range) {
 		Set<Coord> trialChambers = StructureLocator.scan(editor.getSeed(), pos, StructureLocator.TRIAL_CHAMBER, range);
 		trialChambers.forEach(c -> {
-			this.add(c, 200);
-			Debug.info("Chamber @" + c);
+			this.add(c, 100);
 		});
+	}
+	
+	@Override
+	public String toString() {
+		return "Zones: " + this.zones.size() + " : " + List.of(zones).toString();
 	}
 }
