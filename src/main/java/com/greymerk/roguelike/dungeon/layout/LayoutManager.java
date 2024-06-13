@@ -7,7 +7,6 @@ import java.util.List;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.greymerk.roguelike.config.Config;
-import com.greymerk.roguelike.debug.Debug;
 import com.greymerk.roguelike.debug.DebugLayout;
 import com.greymerk.roguelike.dungeon.Dungeon;
 import com.greymerk.roguelike.dungeon.Floor;
@@ -38,7 +37,6 @@ public class LayoutManager {
 		this.floors = createFloors();
 		this.settings = new DungeonSettingsDefault();
 		this.zones = new ExclusionZones();
-		//this.zones.add(BoundingBox.of(new Coord(-150, 0, 50)).grow(Cardinal.all, 200));
 	}
 	
 	public void generate(IWorldEditor editor) {
@@ -89,7 +87,7 @@ public class LayoutManager {
 			for(Cardinal dir : dirs) {
 				Coord wp = potential.getWorldPos(floor.getOrigin());
 				if(zones.collides(room.getBoundingBox(wp, dir))) {
-					Debug.info("colliding at " + wp);
+					//Debug.info("colliding at " + wp);
 					continue;
 				}
 				CellManager rcm = room.getCells(dir);

@@ -4,11 +4,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.greymerk.roguelike.debug.Debug;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.editor.boundingbox.IBounded;
+import com.greymerk.roguelike.util.StructureLocator;
 
 public class ExclusionZones {
 
@@ -32,15 +34,10 @@ public class ExclusionZones {
 	}
 	
 	public void scan(IWorldEditor editor, Coord pos, int range) {
-		/*
-		ChunkSet chunks = new ChunkSet(pos, range);
-		chunks.forEach(cpos -> {
-			if(StructureLocator.hasVillage(editor.getSeed(), cpos)) {
-				Coord village = Coord.of(cpos.getCenterAtY(0));
-				this.add(village, 128);
-				Debug.info("village @: " + village);
-			}
+		Set<Coord> trialChambers = StructureLocator.scan(editor.getSeed(), pos, StructureLocator.TRIAL_CHAMBER, range);
+		trialChambers.forEach(c -> {
+			this.add(c, 200);
+			Debug.info("Chamber @" + c);
 		});
-		*/
 	}
 }

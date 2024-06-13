@@ -1,13 +1,9 @@
 package com.greymerk.roguelike.util;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
-import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
-import com.greymerk.roguelike.editor.IWorldEditor;
-import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.random.CheckedRandom;
@@ -16,11 +12,7 @@ import net.minecraft.world.gen.chunk.placement.SpreadType;
 
 public enum StructureLocator {
 
-	VILLAGE;
-	
-	public static Coord locate(IWorldEditor editor, StructureLocator type, Coord pos, int radius) {
-		return search(editor.getSeed(), VILLAGE, pos, radius);
-	}
+	VILLAGE, TRIAL_CHAMBER;
 	
 	public static boolean hasVillage(long seed, ChunkPos cpos) {
 		return hasStructure(seed, VILLAGE, cpos);
@@ -29,6 +21,7 @@ public enum StructureLocator {
 	public static boolean hasStructure(long seed, StructureLocator type, ChunkPos cpos) {
 		switch(type) {
 		case VILLAGE: return hasRandomScatteredStructure(seed, cpos, 34, 8, SpreadType.LINEAR, 10387312);
+		case TRIAL_CHAMBER: return hasRandomScatteredStructure(seed, cpos, 34, 12, SpreadType.LINEAR, 94251327);
 		default: return false;
 		}
 	}
@@ -49,26 +42,16 @@ public enum StructureLocator {
 		return false;
 	}
 	
-	public static Coord search(long seed, StructureLocator type, Coord pos, int radius) {
-		ChunkPos cpos = pos.getChunkPos();
+	public static Set<Coord> scan(long seed, Coord origin, StructureLocator type, int range) {
+		Set<Coord> locations = new HashSet<Coord>();
 		
-		List<Coord> locations = new ArrayList<Coord>();
-		
-		BoundingBox.of(new Coord(cpos.x, 0, cpos.z))
-			.grow(Cardinal.directions, radius)
-			.forEach(c -> {
-				ChunkPos cp = new ChunkPos(c.getX(), c.getZ());
-				if(hasStructure(seed, type, cp)) {
-					locations.add(Coord.of(cp));
-				}
-			});
-		
-		locations.sort(new Comparator<Coord>() {
-			public int compare(Coord a, Coord b) {
-				return (int)a.distance(pos) - (int)b.distance(pos);
+		ChunkSet chunks = new ChunkSet(origin, range);
+		chunks.forEach(cpos -> {
+			if(hasStructure(seed, type, cpos)) {
+				locations.add(Coord.of(cpos.getCenterAtY(0)));
 			}
 		});
 		
-		return locations.getFirst();
+		return locations;
 	}
 }
