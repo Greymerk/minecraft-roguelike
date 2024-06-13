@@ -42,9 +42,7 @@ public class BookShelf {
 	}
 	
 	private static ItemStack createBook(IWorldEditor editor, Random rand, Difficulty diff) {
-		
-		if(rand.nextInt(10) == 0) return Enchant.getBook(Enchant.MENDING, rand);
-		
+		if(rand.nextInt(10) == 0) return Enchant.getBook(Enchant.MENDING, 1);
 		return Enchant.getBook(editor.getFeatureSet(), rand, diff);
 	}
 	

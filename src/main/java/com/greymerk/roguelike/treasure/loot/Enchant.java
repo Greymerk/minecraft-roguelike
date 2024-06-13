@@ -7,6 +7,7 @@ import com.greymerk.roguelike.dungeon.Difficulty;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentLevelEntry;
+import net.minecraft.item.EnchantedBookItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
@@ -101,13 +102,14 @@ public enum Enchant {
 	public static ItemStack getBook(FeatureSet features, Random rand, Difficulty diff) {
 		ItemStack book = new ItemStack(Items.BOOK);
 		int level = getLevel(rand, diff);
-		return enchantItem(features, rand, book, level);
+		return EnchantmentHelper.enchant(rand, book, level, true);
 	}
 	
-	public static ItemStack getBook(Enchant type, Random rand) {
+	public static ItemStack getBook(Enchant type, int rank) {
 		Enchantment e = getEnchant(type);
-		ItemStack item = new ItemStack(Items.ENCHANTED_BOOK);
-		item.addEnchantment(e, e.getMaxLevel());
-		return item;
+		ItemStack book = new ItemStack(Items.ENCHANTED_BOOK);
+		EnchantmentLevelEntry ench = new EnchantmentLevelEntry(e, rank);
+		EnchantedBookItem.addEnchantment(book, ench);
+		return book;
 	}
 }
