@@ -33,11 +33,8 @@ public class Roguelike implements ModInitializer {
 		ServerWorldEvents.LOAD.register(listener);
 		
 		ServerEntityEvents.ENTITY_LOAD.register(new EntityLoadEvent());
-		ServerTickEvents.START_SERVER_TICK.register(new WorldTickGenerate());
+		ServerTickEvents.START_WORLD_TICK.register(new WorldTickGenerate());
 		ServerChunkEvents.CHUNK_LOAD.register(new ChunkLoadRoomFlagEvent());
-		//ServerChunkEvents.CHUNK_LOAD.register(new ChunkLoadGenerateDungeon());
-		
-		//ServerTickEvents.START_WORLD_TICK.register(new WorldTickTest());
 		
 		CommandRegistrationCallback.EVENT.register(RoguelikeCommand.getListener());
 	}

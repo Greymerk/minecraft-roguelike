@@ -163,6 +163,8 @@ public class WorldEditor implements IWorldEditor{
 		tags.add(BlockTags.SAND);
 		tags.add(BlockTags.SNOW);
 		tags.add(BlockTags.STONE_ORE_REPLACEABLES);
+		tags.add(BlockTags.TERRACOTTA);
+		tags.add(BlockTags.SHOVEL_MINEABLE);
 		
 		MetaBlock m = getBlock(pos);
 		
