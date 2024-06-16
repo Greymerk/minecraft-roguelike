@@ -13,9 +13,11 @@ import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.WorldEditor;
 import com.greymerk.roguelike.gamerules.RoguelikeRules;
 
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.StructureAccessor;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
@@ -25,13 +27,14 @@ public class ChunkFeatureMixin {
 	
 	@Inject(at = @At("HEAD"), method = "generateFeatures")
 	public void generateFeatures(StructureWorldAccess world, Chunk chunk, StructureAccessor structureAccessor, CallbackInfo info) {
-		IWorldEditor editor = new WorldEditor(world);
+		RegistryKey<World> worldKey = world.toServerWorld().getRegistryKey();
+		IWorldEditor editor = new WorldEditor(world, worldKey);
 		if(!editor.getGameRules().getBoolean(RoguelikeRules.GEN_ROGUELIKE_DUNGEONS)) return;
 		
 		ChunkPos cpos = chunk.getPos();
 		Coord pos = new Coord(cpos.getCenterX(), world.getTopY(), cpos.getCenterZ()).freeze();
 		
-		if(!DungeonPlacement.validChunkPos(world, cpos)) return;
+		if(!DungeonPlacement.validChunkPos(editor, cpos)) return;
 		if(!Dungeon.canSpawn(editor, pos)) return;
 		
 		Random rand = editor.getRandom(pos);

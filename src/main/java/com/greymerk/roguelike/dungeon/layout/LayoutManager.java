@@ -7,7 +7,6 @@ import java.util.List;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.greymerk.roguelike.config.Config;
-import com.greymerk.roguelike.debug.Debug;
 import com.greymerk.roguelike.debug.DebugLayout;
 import com.greymerk.roguelike.dungeon.Dungeon;
 import com.greymerk.roguelike.dungeon.Floor;
@@ -75,40 +74,33 @@ public class LayoutManager {
 	}
 	
 	private void placeRoom(IRoom room, Random rand, Floor floor) {
-		List<Cell> cells = floor.getCells(CellState.POTENTIAL);
-		//cells.sort(new CenterSort());
-		RandHelper.shuffle(cells, rand);
-		CellManager fcm = floor.getCells();
-		
 		// try to find a place that avoids exclusion zones :)
+		if(findFit(room, rand, floor, true)) return;
+		
+		// try it again without checking exclusion zones :(
+		findFit(room, rand, floor, false);
+	}
+	
+	private boolean findFit(IRoom room, Random rand, Floor floor, boolean avoidZones) {
+		List<Cell> cells = floor.getCells(CellState.POTENTIAL);
+		RandHelper.shuffle(cells, rand);
+		
 		for(Cell potential : cells) {
 			List<Cardinal> dirs = getPotentialDir(floor, potential);
 			RandHelper.shuffle(dirs, rand);
 			for(Cardinal dir : dirs) {
 				Coord wp = potential.getWorldPos(floor.getOrigin());
-				if(zones.collides(room.getBoundingBox(wp, dir))) {
+				if(avoidZones && zones.collides(room.getBoundingBox(wp, dir))) {
 					continue;
 				}
 				CellManager rcm = room.getCells(dir);
-				if(fcm.roomFits(potential, rcm)) {
+				if(floor.getCells().roomFits(potential, rcm)) {
 					this.addRoom(room, dir, potential.getFloorPos(), wp, floor);
-					return;
+					return true;
 				}
 			}
 		}
-		
-		// try it again without checking exclusion zones :(
-		for(Cell potential : cells) {
-			List<Cardinal> dirs = getPotentialDir(floor, potential);
-			RandHelper.shuffle(dirs, rand);
-			for(Cardinal dir : dirs) {
-				CellManager rcm = room.getCells(dir);
-				if(fcm.roomFits(potential, rcm)) {
-					this.addRoom(room, dir, potential.getFloorPos(), potential.getWorldPos(floor.getOrigin()), floor);
-					return;
-				}
-			}
-		}
+		return false;
 	}
 
 	private List<Cardinal> getPotentialDir(Floor floor, Cell cell) {

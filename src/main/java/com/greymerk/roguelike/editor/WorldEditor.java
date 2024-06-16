@@ -10,6 +10,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.FallingBlock;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.registry.DynamicRegistryManager;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.resource.featuretoggle.FeatureSet;
 import net.minecraft.server.MinecraftServer;
@@ -26,17 +27,21 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkStatus;
+import net.minecraft.world.dimension.DimensionTypes;
 
 public class WorldEditor implements IWorldEditor{
 
 	WorldAccess world;
+	RegistryKey<World> worldKey;
 	
-	public WorldEditor(StructureWorldAccess world){
+	public WorldEditor(StructureWorldAccess world, RegistryKey<World> worldKey){
 		this.world = world;
+		this.worldKey = worldKey;
 	}
 
 	public WorldEditor(World world) {
 		this.world = world;
+		this.worldKey = world.getRegistryKey();
 	}
 
 	@Override
@@ -83,11 +88,13 @@ public class WorldEditor implements IWorldEditor{
 		return new CheckedRandom(Objects.hash(getSeed(), pos.hashCode()));
 	}
 
+	@Override
 	public boolean isChunkLoaded(Coord pos) {
 		ChunkPos cp = pos.getChunkPos();
 		return world.isChunkLoaded(cp.x, cp.z);
 	}
 	
+	@Override
 	public boolean surroundingChunksLoaded(Coord pos) {
 		ChunkPos cpos = pos.getChunkPos();
 		for(int x = cpos.x - 1; x <= cpos.x + 1; x++) {
@@ -103,6 +110,7 @@ public class WorldEditor implements IWorldEditor{
 		
 	}
 
+	@Override
 	public Coord findSurface(Coord pos) {
 		
 		Coord cursor = new Coord(pos.getX(), world.getTopY(), pos.getZ());
@@ -124,6 +132,7 @@ public class WorldEditor implements IWorldEditor{
 		return this.world.getBlockState(pos.getBlockPos()).isSolidBlock(world, pos.getBlockPos());
 	}
 	
+	@Override
 	public boolean isSupported(Coord pos) {
 		if(pos.getY() <= world.getBottomY()) return false;
 		Coord under = pos.copy().add(Cardinal.DOWN);
@@ -136,10 +145,11 @@ public class WorldEditor implements IWorldEditor{
 		return false;
 	}
 	
-
-	
+	@Override
 	public boolean isOverworld() {
-		return this.world.getDimension().hasSkyLight();
+		MinecraftServer mcServer = world.getServer();
+		ServerWorld sw = mcServer.getWorld(worldKey);
+		return sw.getDimensionEntry().matchesKey(DimensionTypes.OVERWORLD);
 	}
 
 	@Override
@@ -168,23 +178,33 @@ public class WorldEditor implements IWorldEditor{
 		return world.getBottomY();
 	}
 	
+	@Override
 	public DynamicRegistryManager getRegistryManager() {
 		return this.world.getRegistryManager();
 	}
 	
+	@Override
 	public FeatureSet getFeatureSet() {
 		return this.world.getEnabledFeatures();
 	}
 	
+	@Override
 	public Path getWorldDirectory() {
 		return this.world.getServer().getSavePath(WorldSavePath.ROOT);
 	}
 	
+	@Override
 	public GameRules getGameRules() {
 		return world.getServer().getGameRules();
 	}
 	
+	@Override
+	public RegistryKey<World> getRegistryKey(){
+		return this.worldKey;
+	}
+	
+	@Override
 	public RoguelikeState getState() {
-		return RoguelikeState.getServerState(world.getServer());
+		return RoguelikeState.getServerState(worldKey, world.getServer());
 	}
 }

@@ -13,6 +13,7 @@ import com.greymerk.roguelike.editor.IWorldEditor;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryWrapper.WrapperLookup;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.PersistentState;
@@ -86,10 +87,10 @@ public class RoguelikeState extends PersistentState {
     	return dungeons;
     }
     
-    public static RoguelikeState getServerState(MinecraftServer server) {
+    public static RoguelikeState getServerState(RegistryKey<World> worldKey, MinecraftServer server) {
         // First we get the persistentStateManager for the OVERWORLD
         PersistentStateManager persistentStateManager = server
-                .getWorld(World.OVERWORLD).getPersistentStateManager();
+                .getWorld(worldKey).getPersistentStateManager();
  
         // Calling this reads the file from the disk if it exists, or creates a new one and saves it to the disk
         // You need to use a unique string as the key. You should already have a MODID variable defined by you somewhere in your code. Use that.

@@ -6,9 +6,11 @@ import com.greymerk.roguelike.state.RoguelikeState;
 
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.registry.DynamicRegistryManager;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.resource.featuretoggle.FeatureSet;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.GameRules;
+import net.minecraft.world.World;
 
 public interface IWorldEditor {
 	
@@ -49,6 +51,8 @@ public interface IWorldEditor {
 	public Path getWorldDirectory();
 	
 	public GameRules getGameRules();
+	
+	public RegistryKey<World> getRegistryKey();
 	
 	public RoguelikeState getState();
 

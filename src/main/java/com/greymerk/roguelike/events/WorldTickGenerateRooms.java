@@ -20,7 +20,7 @@ public class WorldTickGenerateRooms implements StartWorldTick{
 		
 		IWorldEditor editor = new WorldEditor((World)world);
 		MinecraftServer server = world.getServer();
-		RoguelikeState state = RoguelikeState.getServerState(server);
+		RoguelikeState state = RoguelikeState.getServerState(editor.getRegistryKey(), server);
 		
 		List<IRoom> rooms = state.getFromLoaded(editor);
 		
