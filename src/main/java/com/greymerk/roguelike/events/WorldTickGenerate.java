@@ -7,22 +7,29 @@ import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.WorldEditor;
 import com.greymerk.roguelike.state.RoguelikeState;
 
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents.StartWorldTick;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents.StartTick;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.world.World;
+import net.minecraft.world.dimension.DimensionTypes;
 
-public class WorldTickGenerateRooms implements StartWorldTick{
+public class WorldTickGenerate implements StartTick{
 
 	@Override
-	public void onStartTick(ServerWorld world) {
+	public void onStartTick(MinecraftServer server) {
+		server.getWorlds().forEach(sw -> {
+			tick(sw);
+		});
+	}
+	
+	public void tick(ServerWorld sw) {
+		if(sw.getDimensionKey() != DimensionTypes.OVERWORLD) return;
 		if(!RoguelikeState.flagForGenerationCheck) return;
 		
-		IWorldEditor editor = new WorldEditor((World)world);
-		MinecraftServer server = world.getServer();
-		RoguelikeState state = RoguelikeState.getServerState(server);
-		
+		IWorldEditor editor = new WorldEditor(sw);
+		//System.out.println("tick " + editor.getKey());
+		RoguelikeState state = editor.getState();
 		List<IRoom> rooms = state.getFromLoaded(editor);
+		if(rooms.isEmpty()) return;
 		
 		for(IRoom room : rooms) {
 			room.generate(editor);
@@ -30,7 +37,7 @@ public class WorldTickGenerateRooms implements StartWorldTick{
 			room.setGenerated(true);
 		}	
 		
-		state.update();
+		state.update();	
 		RoguelikeState.flagForGenerationCheck = false;
 	}
 }

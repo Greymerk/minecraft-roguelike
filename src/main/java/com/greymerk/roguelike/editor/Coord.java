@@ -32,6 +32,10 @@ public class Coord {
 		return new Coord(x, y, z);
 	}
 	
+	public static Coord of(ChunkPos cpos) {
+		return Coord.of(cpos.getCenterAtY(0));
+	}
+	
 	public Coord(int x, int y, int z){
 		this.frozen = false;
 		this.x = x;

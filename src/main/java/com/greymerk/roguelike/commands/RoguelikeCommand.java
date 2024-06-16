@@ -9,6 +9,7 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.entity.Entity;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Text;
@@ -37,13 +38,14 @@ public class RoguelikeCommand {
 				ServerCommandSource source = context.getSource();
 				Entity e = source.getEntity();
 				World world = e.getWorld();
-				IWorldEditor editor = new WorldEditor(world);
+				MinecraftServer mcServer = world.getServer();
+				IWorldEditor editor = new WorldEditor(mcServer.getWorld(world.getRegistryKey()));
 				Coord pos = Coord.of(e.getBlockPos());
 				if(!Dungeon.canSpawn(editor, pos)) {
 					source.sendFeedback(() -> Text.literal("Dungeon cannot spawn here"), false);
 					return 1;
 				}
-				Dungeon.generate(new WorldEditor(world), pos);
+				Dungeon.generate(editor, pos);
 				source.sendFeedback(() -> Text.literal("Generating dungeon at " + pos.toString()), false);
 				return 1;
 			});

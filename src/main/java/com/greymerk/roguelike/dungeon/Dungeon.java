@@ -54,7 +54,6 @@ public class Dungeon implements Iterable<IRoom>{
 
 	public static boolean canSpawn(IWorldEditor editor, Coord pos) {
 		if(!editor.isOverworld()) return false;
-		
 		Coord surface = editor.findSurface(pos);
 		if(!editor.isGround(surface)) return false;
 		return true;

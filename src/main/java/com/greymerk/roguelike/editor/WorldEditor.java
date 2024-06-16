@@ -12,6 +12,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.FallingBlock;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.registry.DynamicRegistryManager;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.resource.featuretoggle.FeatureSet;
@@ -29,17 +30,23 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkStatus;
+import net.minecraft.world.dimension.DimensionTypes;
 
 public class WorldEditor implements IWorldEditor{
 
+	RegistryKey<World> worldKey;
 	WorldAccess world;
 	
-	public WorldEditor(StructureWorldAccess world){
+	
+	public WorldEditor(ServerWorld world) {
 		this.world = world;
+		this.worldKey = world.getRegistryKey();
+		
 	}
-
-	public WorldEditor(World world) {
+	
+	public WorldEditor(StructureWorldAccess world, RegistryKey<World> key) {
 		this.world = world;
+		this.worldKey = key;
 	}
 
 	@Override
@@ -88,6 +95,9 @@ public class WorldEditor implements IWorldEditor{
 
 	public boolean isChunkLoaded(Coord pos) {
 		ChunkPos cp = pos.getChunkPos();
+		Chunk c = this.world.getChunk(pos.getBlockPos());
+		ChunkStatus status = c.getStatus();
+		if(status != ChunkStatus.FULL) return false;
 		return world.isChunkLoaded(cp.x, cp.z);
 	}
 	
@@ -95,10 +105,7 @@ public class WorldEditor implements IWorldEditor{
 		ChunkPos cpos = pos.getChunkPos();
 		for(int x = cpos.x - 1; x <= cpos.x + 1; x++) {
 			for(int z = cpos.z - 1; z <= cpos.z + 1; z++) {
-				if(!world.isChunkLoaded(x, z)) return false;
-				Chunk chunk = world.getChunk(x, z);
-				ChunkStatus status = chunk.getStatus();
-				if(status != ChunkStatus.FULL) return false;
+				if(!this.isChunkLoaded(Coord.of(new ChunkPos(x, z)))) return false;
 			}
 		}
 		
@@ -108,7 +115,7 @@ public class WorldEditor implements IWorldEditor{
 
 	public Coord findSurface(Coord pos) {
 		
-		Coord cursor = new Coord(pos.getX(), 256, pos.getZ());
+		Coord cursor = new Coord(pos.getX(), world.getTopY(), pos.getZ());
 		
 		while(cursor.getY() > 60) {
 			MetaBlock m = this.getBlock(cursor);
@@ -166,7 +173,9 @@ public class WorldEditor implements IWorldEditor{
 	}
 	
 	public boolean isOverworld() {
-		return this.world.getDimension().hasSkyLight();
+		MinecraftServer mcServer = world.getServer();
+		ServerWorld sw = mcServer.getWorld(worldKey);
+		return sw.getDimensionKey().equals(DimensionTypes.OVERWORLD);
 	}
 
 	@Override
@@ -216,6 +225,11 @@ public class WorldEditor implements IWorldEditor{
 	
 	public RoguelikeState getState() {
 		MinecraftServer server = world.getServer();
-		return RoguelikeState.getServerState(server);
+		return RoguelikeState.getServerState(worldKey, server);
+	}
+
+	@Override
+	public RegistryKey<World> getKey() {
+		return this.worldKey;
 	}
 }

@@ -5,21 +5,14 @@ import java.util.List;
 
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
-import com.greymerk.roguelike.editor.WorldEditor;
 
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.random.CheckedRandom;
 import net.minecraft.util.math.random.Random;
-import net.minecraft.world.StructureWorldAccess;
 
 public class DungeonPlacement {
 
-	public static boolean validChunkPos(StructureWorldAccess world, ChunkPos cpos) {
-		
-		MinecraftServer server = world.getServer();
-		ServerWorld overworld = server.getOverworld();
+	public static boolean validChunkPos(IWorldEditor editor, ChunkPos cpos) {
 		
 		int range = 10;
 		ChunkPos start = new ChunkPos(cpos.x - range, cpos.z - range);
@@ -31,10 +24,10 @@ public class DungeonPlacement {
 			}
 		}
 		
-		ChunkPos villageChunk = findVillage(overworld.getSeed(), chunks); 
+		ChunkPos villageChunk = findVillage(editor.getSeed(), chunks); 
 		if(villageChunk == null) return false;
 		Coord village = Coord.of(villageChunk.getCenterAtY(0));
-		IWorldEditor editor = new WorldEditor(world);
+		
 		Random rand = editor.getRandom(village);
 		
 		Coord chunkFrom = new Coord(cpos.x, 0, cpos.z);
