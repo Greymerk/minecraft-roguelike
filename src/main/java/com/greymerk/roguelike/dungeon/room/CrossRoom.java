@@ -112,7 +112,8 @@ public class CrossRoom extends AbstractMediumRoom implements IRoom {
 
 	private void clear(IWorldEditor editor, Random rand, Coord origin) {
 		BoundingBox.of(origin).grow(Cardinal.directions, 8).grow(Cardinal.UP, 4).fill(editor, rand, Air.get());
-		BoundingBox.of(origin).add(Cardinal.UP, 5).grow(Cardinal.directions, 4).grow(Cardinal.UP).fill(editor, rand, Air.get());
+		BoundingBox.of(origin).add(Cardinal.UP, 5).grow(Cardinal.directions, 4).fill(editor, rand, Air.get());
+		BoundingBox.of(origin).add(Cardinal.UP, 6).grow(Cardinal.directions, 2).fill(editor, rand, Air.get());
 		Cardinal.directions.forEach(dir -> {
 			BoundingBox.of(origin).add(dir, 4).add(Cardinal.UP, 5).grow(dir, 4).grow(Cardinal.orthogonal(dir), 3).fill(editor, rand, Air.get());
 			BoundingBox.of(origin).add(Cardinal.DOWN).add(dir, 9).grow(Cardinal.orthogonal(dir), 9).fill(editor, rand, theme.getPrimary().getWall());

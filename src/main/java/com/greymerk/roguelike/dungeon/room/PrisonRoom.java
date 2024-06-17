@@ -1,21 +1,19 @@
 package com.greymerk.roguelike.dungeon.room;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
 import com.greymerk.roguelike.dungeon.fragment.parts.CellSupport;
+import com.greymerk.roguelike.dungeon.fragment.parts.Pillar;
 import com.greymerk.roguelike.dungeon.layout.Entrance;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.blocks.Air;
 import com.greymerk.roguelike.editor.blocks.IronBar;
-import com.greymerk.roguelike.editor.blocks.stair.IStair;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
-import com.greymerk.roguelike.editor.factories.BlockWeightedRandom;
-import com.greymerk.roguelike.editor.shapes.RectSolid;
 
 import net.minecraft.util.math.random.Random;
 
@@ -23,273 +21,128 @@ public class PrisonRoom extends AbstractMediumRoom implements IRoom {
 
 	@Override
 	public void generate(IWorldEditor editor) {
-		Coord origin = this.worldPos.copy().add(direction, Cell.SIZE);
+		Coord origin = this.worldPos.copy().add(direction, Cell.SIZE).freeze();
 		Random rand = editor.getRandom(origin);
-		this.ceiling(editor, rand, origin);
-		this.clear(editor, rand, origin);
-		this.outerWall(editor, rand, origin);
-		this.center(editor, rand, origin);
-		this.floor(editor, rand, origin);
-		this.doors(editor, rand, origin);
-		this.cells(editor, rand, origin);
+		clear(editor, rand, origin);
+		ceiling(editor, rand, origin);
+		cornerCells(editor, rand, origin);
+		entrances(editor, rand, origin);
+		center(editor, rand, origin);
+		supports(editor, rand, origin);
+	}
+
+	private void supports(IWorldEditor editor, Random rand, Coord origin) {
+		CellSupport.generate(editor, rand, theme, origin);
+		Cardinal.directions.forEach(dir -> {
+			CellSupport.generate(editor, rand, theme, origin.copy().add(dir, 6));
+			CellSupport.generate(editor, rand, theme, origin.copy().add(dir, 6).add(Cardinal.left(dir), 6));
+		});
 	}
 
 	private void ceiling(IWorldEditor editor, Random rand, Coord origin) {
-		BoundingBox bb = BoundingBox.of(origin.copy());
-		bb.add(Cardinal.UP, 4).grow(Cardinal.UP).grow(Cardinal.directions, 9);
-		RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall());
+		Cardinal.directions.forEach(dir -> {
+			BoundingBox.of(origin).add(dir, 8).add(Cardinal.UP, 3).grow(Cardinal.orthogonal(dir), 8).grow(Cardinal.UP).fill(editor, rand, theme.getPrimary().getWall());
+			BoundingBox.of(origin).add(Cardinal.UP, 4).add(dir, 2).grow(Cardinal.orthogonal(dir), 8).grow(Cardinal.UP).fill(editor, rand, theme.getPrimary().getWall());
+			BoundingBox.of(origin).add(Cardinal.UP, 4).add(dir, 4).grow(Cardinal.orthogonal(dir), 8).grow(Cardinal.UP).fill(editor, rand, theme.getPrimary().getWall());
+			Cardinal.orthogonal(dir).forEach(o -> {
+				List.of(2, 4, 8).forEach(step -> {
+					theme.getPrimary().getWall().set(editor, rand, origin.add(Cardinal.UP, 6).add(dir, 2).add(o, step), true, false);
+					theme.getPrimary().getWall().set(editor, rand, origin.add(Cardinal.UP, 6).add(dir, 4).add(o, step), true, false);
+				});
+			});
+			theme.getPrimary().getWall().set(editor, rand, origin.add(Cardinal.UP, 5).add(dir, 8).add(Cardinal.left(dir), 8), true, false);
+		});
+		BoundingBox.of(origin).add(Cardinal.UP, 5).grow(Cardinal.directions, 8).fill(editor, rand, theme.getPrimary().getWall(), false, true);
 	}
 
-	private void cells(IWorldEditor editor, Random rand, Coord origin) {
-		for(Cardinal dir : Cardinal.directions) {
-			if(this.getEntrance(dir) != Entrance.DOOR) {
-				Coord pos = origin.copy().add(dir, 6);
-				mainCell(editor, rand, pos, dir);
-				
-				if(this.getEntrance(Cardinal.left(dir)) != Entrance.DOOR) {
-					pos.add(Cardinal.left(dir), 6);
-					List<Cardinal> doors = new ArrayList<Cardinal>();
-					doors.add(Cardinal.reverse(dir));
-					doors.add(Cardinal.right(dir));
-					closedCell(editor, rand, pos, doors);
-				} else {
-					pos.add(Cardinal.left(dir), 6);
-					sideCell(editor, rand, pos, dir);
-				}
-			} else { // is a door
-				if(this.getEntrance(Cardinal.left(dir)) != Entrance.DOOR) {
-					Coord pos = origin.copy();
-					pos.add(dir, 6).add(Cardinal.left(dir), 6);
-					sideCell(editor, rand, pos, Cardinal.left(dir));
-				} else { // left is also a door
-					Coord pos = origin.copy();
-					pos.add(dir, 6).add(Cardinal.left(dir), 6);
-					cornerCell(editor, rand, pos, Cardinal.left(dir));
-				}
-			}
-		}
-	}
 
-	private void cornerCell(IWorldEditor editor, Random rand, Coord origin, Cardinal cellDir) {
-		IStair stair = theme.getPrimary().getStair();
-		for(Cardinal dir : Cardinal.directions) {
-			BoundingBox bb = BoundingBox.of(origin.copy());
-			bb.add(dir, 2).add(Cardinal.left(dir), 2);
-			bb.grow(Cardinal.UP, 3);
-			RectSolid.fill(editor, rand, bb, theme.getPrimary().getPillar());
-			
-			bb = BoundingBox.of(origin.copy());
-			bb.add(dir, 2).add(Cardinal.UP, 3).grow(Cardinal.orthogonal(dir));
-			RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall());
-			
-			if(dir == Cardinal.reverse(cellDir) || dir == Cardinal.left(cellDir)) {
-				bb = BoundingBox.of(origin.copy());
-				bb.add(dir, 2).grow(Cardinal.orthogonal(dir)).grow(Cardinal.UP, 2);
-				
-				BlockWeightedRandom bars = new BlockWeightedRandom();
-				bars.addBlock(IronBar.get(), 3);
-				bars.addBlock(Air.get(), 1);
-				
-				RectSolid.fill(editor, rand, bb, bars);
-			} else {
-				for(Cardinal o : Cardinal.orthogonal(dir)) {
-					Coord pos = origin.copy();
-					pos.add(dir, 2).add(o).add(Cardinal.UP, 2);
-					stair.setOrientation(Cardinal.reverse(o), true).set(editor, rand, pos);
-				}
-				
-				settings.getWallFragment(rand).generate(editor, rand, theme, origin, dir);
-			}
-		}
-		
-		Coord pos = origin.copy();
-		pos.add(Cardinal.reverse(cellDir), 2).add(Cardinal.left(cellDir), 2).add(Cardinal.UP, 3);
-		for(Cardinal dir : Cardinal.directions) {
-			stair.setOrientation(dir, true).set(editor, rand, pos.copy().add(dir), true, false);
-		}
-		
-		CellSupport.generate(editor, rand, theme, origin.copy());
-	}
-
-	private void sideCell(IWorldEditor editor, Random rand, Coord origin, Cardinal cellDir) {
-		BlockWeightedRandom bars = new BlockWeightedRandom();
-		bars.addBlock(IronBar.get(), 2);
-		bars.addBlock(Air.get(), 1);
-		
-		for(Cardinal dir : Cardinal.directions) {
-			BoundingBox bb = BoundingBox.of(origin.copy());
-			bb.add(dir, 2).add(Cardinal.left(dir), 2).grow(Cardinal.UP, 3);
-			RectSolid.fill(editor, rand, bb, theme.getPrimary().getPillar());
-			
-			bb = BoundingBox.of(origin.copy());
-			bb.add(dir, 2).add(Cardinal.UP, 3).grow(Cardinal.orthogonal(dir));
-			RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall());
-		}
-		
-		BoundingBox bb = BoundingBox.of(origin.copy());
-		bb.add(Cardinal.reverse(cellDir), 2).grow(Cardinal.UP, 2).grow(Cardinal.orthogonal(cellDir));
-		RectSolid.fill(editor, rand, bb, bars);
-		
-		settings.getWallFragment(rand).generate(editor, rand, theme, origin, cellDir);
-		
-		CellSupport.generate(editor, rand, theme, origin.copy());
-	}
-
-	private void closedCell(IWorldEditor editor, Random rand, Coord origin, List<Cardinal> doors) {
-		IStair stair = theme.getPrimary().getStair();
-		
-		for(Cardinal dir : Cardinal.directions) {
-			BoundingBox bb = BoundingBox.of(origin.copy());
-			bb.add(dir, 2).add(Cardinal.left(dir), 2).grow(Cardinal.UP, 3);
-			RectSolid.fill(editor, rand, bb, theme.getPrimary().getPillar());
-			
-			bb = BoundingBox.of(origin.copy());
-			bb.add(dir, 2).add(Cardinal.UP, 3).grow(Cardinal.orthogonal(dir));
-			RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall());
-		}
-		
-		for(Cardinal dir : Cardinal.directions) {
-			if(!doors.contains(dir)) {
-				for(Cardinal o : Cardinal.orthogonal(dir)) {
-					Coord pos = origin.copy();
-					pos.add(dir, 2).add(o).add(Cardinal.UP, 2);
-					stair.setOrientation(Cardinal.reverse(o), true).set(editor, rand, pos);
-				}
-				
-				settings.getWallFragment(rand).generate(editor, rand, theme, origin, dir);
-			}
-		}
-		
-		CellSupport.generate(editor, rand, theme, origin.copy());
-	}
-
-	private void mainCell(IWorldEditor editor, Random rand, Coord origin, Cardinal cellDir) {
-		IStair stair = theme.getPrimary().getStair();
-
-
-		
-		for(Cardinal dir : Cardinal.directions) {
-			BoundingBox bb = BoundingBox.of(origin.copy());
-			bb.add(dir, 2).add(Cardinal.left(dir), 2).grow(Cardinal.UP, 2);
-			RectSolid.fill(editor, rand, bb, theme.getPrimary().getPillar());
-			
-			bb = BoundingBox.of(origin.copy());
-			bb.add(dir, 2).add(Cardinal.UP, 3).grow(Cardinal.orthogonal(dir));
-			RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall());
-		}
-
-		for(Cardinal o : Cardinal.orthogonal(cellDir)) {
-			BlockWeightedRandom bars = new BlockWeightedRandom();
-			bars.addBlock(IronBar.get(), 3);
-			bars.addBlock(Air.get(), 1);
-			
-			Coord pos = origin.copy();
-			pos.add(cellDir, 2).add(Cardinal.UP, 2).add(o);
-			stair.setOrientation(Cardinal.reverse(o), true).set(editor, rand, pos);
-			
-			BoundingBox bb = BoundingBox.of(origin.copy());
-			bb.add(o, 3).grow(cellDir, 2).grow(Cardinal.reverse(cellDir)).grow(Cardinal.UP, 3);
-			RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall());
-			
-			bb = BoundingBox.of(origin.copy());
-			bb.add(o, 3).grow(Cardinal.orthogonal(o)).grow(Cardinal.UP, 2);
-			RectSolid.fill(editor, rand, bb, bars);
-			
-			
-		}
-
-		BlockWeightedRandom bars = new BlockWeightedRandom();
-		bars.addBlock(IronBar.get(), 2);
-		bars.addBlock(Air.get(), 1);
-		
-		BoundingBox bb = BoundingBox.of(origin.copy());
-		bb.add(Cardinal.reverse(cellDir), 2).grow(Cardinal.UP, 2).grow(Cardinal.orthogonal(cellDir));
-		RectSolid.fill(editor, rand, bb, bars);
-		
-		CellSupport.generate(editor, rand, theme, origin.copy());
-	}
-
-	private void doors(IWorldEditor editor, Random rand, Coord origin) {
-		IStair stair = theme.getPrimary().getStair();
-		
-		for(Cardinal dir : this.getEntrancesFromType(Entrance.DOOR)) {
-			for(Cardinal o : Cardinal.orthogonal(dir)) {
-				BoundingBox bb = BoundingBox.of(origin.copy());
-				bb.add(dir, 8).add(o, 2).grow(Cardinal.UP, 2);
-				RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall());
-				
-				Coord pos = origin.copy().add(dir, 8).add(o).add(Cardinal.UP, 2);
-				stair.setOrientation(Cardinal.reverse(o), true).set(editor, rand, pos);
-				
-				pos = origin.copy().add(dir, 7).add(o, 2).add(Cardinal.UP, 2);
-				stair.setOrientation(Cardinal.reverse(dir), true).set(editor, rand, pos);
-				
-				pos.add(Cardinal.UP);
-				theme.getPrimary().getWall().set(editor, rand, pos);
-				
-			}
-			
-			Fragment.generate(Fragment.ARCH, editor, rand, theme, origin.copy().add(dir, 6), dir);
-		}
-	}
-
-	private void floor(IWorldEditor editor, Random rand, Coord origin) {
-		BoundingBox bb = BoundingBox.of(origin.copy());
-		bb.add(Cardinal.DOWN).grow(Cardinal.directions, 9);
-		RectSolid.fill(editor, rand, bb, theme.getPrimary().getFloor());
-	}
-
-	private void outerWall(IWorldEditor editor, Random rand, Coord origin) {
-		for(Cardinal dir : Cardinal.directions) {
-			BoundingBox bb = BoundingBox.of(origin.copy());
-			bb.add(dir, 9).grow(Cardinal.orthogonal(dir), 9).grow(Cardinal.UP, 3);
-			RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall(), false, true);
-			
-			bb = BoundingBox.of(origin.copy());
-			bb.add(dir, 8).add(Cardinal.UP, 3).grow(Cardinal.orthogonal(dir), 8);
-			RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall());
-		}
-	}
 
 	private void center(IWorldEditor editor, Random rand, Coord origin) {
-		IStair stair = theme.getPrimary().getStair();
-		for(Cardinal dir : Cardinal.directions) {
-			if(this.getEntrance(dir) != Entrance.DOOR) {
-				BoundingBox bb = BoundingBox.of(origin.copy());
-				bb.add(dir, 4).grow(Cardinal.orthogonal(dir), 3).grow(Cardinal.UP, 4);
-				RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall());
+		Cardinal.directions.forEach(dir -> {
+			if(this.getEntrance(dir) == Entrance.WALL && this.getEntrance(Cardinal.left(dir)) != Entrance.WALL){
+				Pillar.generate(editor, rand, origin.add(dir, 3).add(Cardinal.left(dir), 3), theme, 3, List.of(Cardinal.left(dir), Cardinal.reverse(dir), Cardinal.right(dir)));
+			}
+			if(this.getEntrance(dir) == Entrance.WALL && this.getEntrance(Cardinal.left(dir)) == Entrance.WALL){
+				Pillar.generate(editor, rand, origin.add(dir, 3).add(Cardinal.left(dir), 3), theme, 3, List.of(Cardinal.reverse(dir), Cardinal.right(dir)));
+			}
+			if(this.getEntrance(dir) != Entrance.WALL && this.getEntrance(Cardinal.left(dir)) != Entrance.WALL){
+				Pillar.generate(editor, rand, origin.add(dir, 4).add(Cardinal.left(dir), 4), theme, 3, List.of(Cardinal.reverse(dir), Cardinal.right(dir)));
+			}
+			if(this.getEntrance(dir) != Entrance.WALL && this.getEntrance(Cardinal.left(dir)) == Entrance.WALL){
+				Pillar.generate(editor, rand, origin.add(dir, 3).add(Cardinal.left(dir), 3), theme, 3, List.of(dir, Cardinal.reverse(dir), Cardinal.right(dir)));
+			}
+		});
+	}
 
+
+
+	private void entrances(IWorldEditor editor, Random rand, Coord origin) {
+		Cardinal.directions.forEach(dir -> {
+			if(this.getEntrance(dir) == Entrance.WALL) {
+				cellWall(editor, rand, origin, dir);
+			} else {
+				entry(editor, rand, origin, dir);
 			}
-			BoundingBox bb = BoundingBox.of(origin.copy());
-			bb.add(dir, 3).add(Cardinal.UP, 4).grow(Cardinal.orthogonal(dir), 2);
-			RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall());
-		}
-				
-		for(Cardinal dir : Cardinal.directions) {
-			if(this.getEntrance(dir) != Entrance.DOOR || this.getEntrance(Cardinal.left(dir)) != Entrance.DOOR){
-				BoundingBox bb = BoundingBox.of(origin.copy());
-				bb.add(dir, 3).add(Cardinal.left(dir), 3).grow(Cardinal.UP, 4);
-				RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall());
-				
-				Coord pos = origin.copy();
-				pos.add(dir, 3).add(Cardinal.left(dir), 3).add(Cardinal.UP, 3).add(Cardinal.right(dir));
-				stair.setOrientation(Cardinal.right(dir), true).set(editor, rand, pos);
-				pos.add(Cardinal.left(dir)).add(Cardinal.reverse(dir));
-				stair.setOrientation(Cardinal.reverse(dir), true).set(editor, rand, pos);
-			}
-		}
+		});
+	}
+
+	private void entry(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
+		Cardinal.orthogonal(dir).forEach(o -> {
+			Pillar.generate(editor, rand, origin.add(dir, 8).add(o, 2), theme, 2, List.of(Cardinal.reverse(dir), Cardinal.reverse(o)));
+			theme.getPrimary().getWall().set(editor, rand, origin.add(dir, 7).add(o, 2).add(Cardinal.UP, 3));
+		});
 		
+		if(this.getEntrance(dir) == Entrance.DOOR) {
+			Fragment.generate(Fragment.ARCH, editor, rand, theme, origin.add(dir, 6), dir);
+		} else if(this.getEntrance(dir) == Entrance.ALCOVE) {
+			BoundingBox.of(origin).add(dir, 9).grow(Cardinal.orthogonal(dir), 2).grow(Cardinal.UP, 2).fill(editor, rand, theme.getPrimary().getWall(), false, true);
+			settings.getAlcove(rand).generate(editor, rand, theme, origin.add(dir, 6), dir);
+		}
+	}
+
+
+
+	private void cellWall(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
+		Cardinal.orthogonal(dir).forEach(o -> {
+			BoundingBox.of(origin).add(dir, 4).add(o, 2).grow(o).grow(Cardinal.UP, 4).fill(editor, rand, theme.getPrimary().getWall());
+			BoundingBox.of(origin).add(dir, 5).add(o, 2).add(Cardinal.UP, 3).grow(dir, 2).fill(editor, rand, theme.getPrimary().getWall());
+			BoundingBox.of(origin).add(dir, 8).add(o, 2).grow(Cardinal.UP, 2).fill(editor, rand, theme.getPrimary().getWall());
+			bars(editor, rand, origin.add(dir, 6).add(o, 2), o);
+			theme.getPrimary().getStair().setOrientation(Cardinal.reverse(o), true).set(editor, rand, origin.add(dir, 8).add(Cardinal.UP, 2).add(o));
+			BoundingBox.of(origin).add(dir, 4).add(o, 4).grow(Cardinal.UP, 4).fill(editor, rand, theme.getPrimary().getWall());
+		});
+		BoundingBox.of(origin).add(dir, 4).add(Cardinal.UP, 3).grow(Cardinal.orthogonal(dir)).grow(Cardinal.UP).fill(editor, rand, theme.getPrimary().getWall());
+		bars(editor, rand, origin.add(dir, 4), dir);
+		BoundingBox.of(origin).add(dir, 9).grow(Cardinal.orthogonal(dir), 2).grow(Cardinal.UP, 2).fill(editor, rand, theme.getPrimary().getWall(), false, true);
+		settings.getWallFragment(rand).generate(editor, rand, theme, origin.add(dir, 6), dir);
+	}
+
+	private void cornerCells(IWorldEditor editor, Random rand, Coord origin) {
+		Cardinal.directions.forEach(dir -> {
+			Pillar.generate(editor, rand, origin.add(dir, 8).add(Cardinal.left(dir), 8), theme, 2, List.of(Cardinal.reverse(dir), Cardinal.right(dir)));
+			Cardinal.orthogonal(dir).forEach(o -> {
+				Pillar.generate(editor, rand, origin.add(dir, 8).add(o, 4), theme, 2, List.of(o));
+				BoundingBox.of(origin).add(dir, 5).add(o, 4).add(Cardinal.UP, 3).grow(dir, 2).fill(editor, rand, theme.getPrimary().getWall());
+				bars(editor, rand, origin.add(dir, 6).add(o, 4), o);
+				settings.getWallFragment(rand).generate(editor, rand, theme, origin.add(dir, 6).add(o, 6), o);
+			});
+		});
 	}
 
 	private void clear(IWorldEditor editor, Random rand, Coord origin) {
-		BoundingBox bb = BoundingBox.of(origin.copy());
-		bb.grow(Cardinal.directions, 8).grow(Cardinal.UP, 3);
-		RectSolid.fill(editor, rand, bb, Air.get());
-		
-		bb = BoundingBox.of(origin.copy());
-		bb.add(Cardinal.UP, 4).grow(Cardinal.directions, 2);
-		RectSolid.fill(editor, rand, bb, Air.get());
+		BoundingBox.of(origin).grow(Cardinal.directions, 8).grow(Cardinal.UP, 4).fill(editor, rand, Air.get());
+		BoundingBox.of(origin).add(Cardinal.DOWN).grow(Cardinal.directions, 9).fill(editor, rand, theme.getPrimary().getFloor());
+		Cardinal.directions.forEach(dir -> {
+			Cardinal.orthogonal(dir).forEach(o -> {
+				BoundingBox.of(origin).add(dir, 9).add(o, 3).grow(o, 6).grow(Cardinal.UP, 3).fill(editor, rand, theme.getPrimary().getWall(), false, true);
+			});
+		});
 	}
+
+	private void bars(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
+		BoundingBox.of(origin).grow(Cardinal.orthogonal(dir)).grow(Cardinal.UP, 2).fill(editor, rand, IronBar.getBroken());
+	}
+
 
 	@Override
 	public String getName() {

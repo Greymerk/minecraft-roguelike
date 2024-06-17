@@ -8,6 +8,7 @@ import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellManager;
 import com.greymerk.roguelike.dungeon.cell.CellState;
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
+import com.greymerk.roguelike.dungeon.fragment.parts.CellSupport;
 import com.greymerk.roguelike.dungeon.fragment.wall.WallFlowers;
 import com.greymerk.roguelike.dungeon.layout.Entrance;
 import com.greymerk.roguelike.editor.Cardinal;
@@ -79,6 +80,9 @@ public class BedRoom extends AbstractRoom implements IRoom {
 		this.getEntrancesFromType(Entrance.DOOR).forEach(dir -> {
 			Fragment.generate(Fragment.ARCH, editor, rand, theme, origin.copy(), dir);
 		});
+		
+		CellSupport.generate(editor, rand, theme, origin.copy().add(direction, 6));
+		CellSupport.generate(editor, rand, theme, origin.copy().add(direction, 12));
 	}
 	
 	private void setPillars(IWorldEditor editor, Random rand, Coord origin) {
