@@ -2,6 +2,7 @@ package com.greymerk.roguelike.monster;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.mob.BoggedEntity;
 import net.minecraft.entity.mob.CreeperEntity;
 import net.minecraft.entity.mob.EvokerEntity;
 import net.minecraft.entity.mob.HuskEntity;
@@ -18,7 +19,7 @@ import net.minecraft.world.World;
 
 public enum MobType {
 	
-	ZOMBIE, ZOMBIEVILLAGER, HUSK, SKELETON, STRAY, SPIDER, CREEPER, WITHERSKELETON, PIGZOMBIE, EVOKER, VINDICATOR, WITCH;
+	ZOMBIE, ZOMBIEVILLAGER, HUSK, SKELETON, STRAY, SPIDER, CREEPER, WITHERSKELETON, PIGLIN, EVOKER, VINDICATOR, WITCH, BOGGED;
 	
 	public static Entity getEntity(World world, MobType type){
 		switch(type){
@@ -30,10 +31,11 @@ public enum MobType {
 		case SPIDER: return new SpiderEntity(EntityType.SPIDER, world);
 		case CREEPER: return new CreeperEntity(EntityType.CREEPER, world);
 		case WITHERSKELETON: return new WitherSkeletonEntity(EntityType.WITHER_SKELETON, world);
-		case PIGZOMBIE: return new ZombifiedPiglinEntity(EntityType.ZOMBIFIED_PIGLIN, world);
+		case PIGLIN: return new ZombifiedPiglinEntity(EntityType.ZOMBIFIED_PIGLIN, world);
 		case EVOKER: return new EvokerEntity(EntityType.EVOKER, world);
 		case VINDICATOR: return new VindicatorEntity(EntityType.VINDICATOR, world);
 		case WITCH: return new WitchEntity(EntityType.WITCH, world);
+		case BOGGED: return new BoggedEntity(EntityType.BOGGED, world);
 		
 		default: return new ZombieEntity(world);
 		}

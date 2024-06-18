@@ -27,39 +27,6 @@ public enum PotionEffect {
 		this.id = id;
 	}
 	
-	public static String getEffectID(PotionEffect type){
-		switch(type) {
-		case ABSORPTION: return "absorption";
-		case BAD_LUCK: return "unluck";
-		case BLINDNESS: return "blindness";
-		case DAMAGE: return "instant_damage";
-		case FATIGUE: return "mining_fatigue";
-		case FIRERESIST: return "fire_resistance";
-		case GLOWING: return "glowing";
-		case HASTE: return "haste";
-		case HEALTH: return "instant_health";
-		case HEALTHBOOST: return "health_boost";
-		case HUNGER: return "hunger";
-		case INVISIBILITY: return "invisibility";
-		case JUMP: return "jump_boost";
-		case LEVITATION: return "levitation";
-		case LUCK: return "luck";
-		case NAUSIA: return "nausia";
-		case NIGHTVISION: return "night_vision";
-		case POISON: return "poison";
-		case REGEN: return "regeneration";
-		case RESISTANCE: return "resistance";
-		case SATURATION: return "saturation";
-		case SLOWNESS: return "slowness";
-		case SPEED: return "speed";
-		case STRENGTH: return "strength";
-		case WATERBREATH: return "water_breathing";
-		case WEAKNESS: return "weakness";
-		case WITHER: return "wither";
-		default: return "weakness";	
-		}
-	}
-	
 	public static RegistryEntry<StatusEffect> getStatusEffect(PotionEffect type) {
 		switch(type) {
 		case ABSORPTION: return StatusEffects.ABSORPTION;

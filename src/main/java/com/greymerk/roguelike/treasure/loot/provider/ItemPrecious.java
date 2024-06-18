@@ -27,11 +27,12 @@ public class ItemPrecious extends ItemBase{
 			loot.put(d, randomizer);
 			
 			randomizer.add(new WeightedRandomLoot(Items.EMERALD, d.value + 1, 3 * (d.value + 1), 100));
-			randomizer.add(new WeightedRandomLoot(Items.AMETHYST_SHARD, 1, 1, 10));
+			randomizer.add(new WeightedRandomLoot(Items.AMETHYST_SHARD, 1, 1, 5));
 			randomizer.add(new WeightedRandomLoot(Items.DIAMOND, 1, 1, 5));
 			if(d.gt(Difficulty.EASY)) {
 				randomizer.add(new WeightedRandomLoot(Items.SHULKER_SHELL, 1, 1, diff.value + 1));
 				randomizer.add(new WeightedRandomLoot(Items.NETHERITE_SCRAP, 1, 1, 1));
+				randomizer.add(new WeightedRandomLoot(Items.OMINOUS_BOTTLE, 1, 1, 1));
 			}
 		});
 	}

@@ -18,6 +18,11 @@ public class ProfileSkeleton implements IMonsterProfile{
 			return;
 		}
 		
+		if(diff.gt(Difficulty.MEDIUM) && rand.nextInt(50) == 0){
+			MonsterProfile.get(MonsterProfile.INFESTOR).addEquipment(world, rand, diff, mob);
+			return;
+		}
+		
 		if(diff.gt(Difficulty.EASY) && rand.nextInt(50) == 0){
 			MonsterProfile.get(MonsterProfile.MAGICARCHER).addEquipment(world, rand, diff, mob);
 			return;
@@ -33,7 +38,7 @@ public class ProfileSkeleton implements IMonsterProfile{
 			return;
 		}
 		
-		if(diff.gt(Difficulty.EASIEST) && rand.nextInt(20) == 0){
+		if(diff.gt(Difficulty.EASY) && rand.nextInt(20) == 0){
 			MonsterProfile.get(MonsterProfile.SWORDSMAN).addEquipment(world, rand, diff, mob);
 			return;
 		}

@@ -31,7 +31,7 @@ public class ProfileZombie implements IMonsterProfile {
 			return;
 		}
 		
-		if(diff.gt(Difficulty.EASY) && rand.nextInt(50) == 0){
+		if(diff.gt(Difficulty.EASY) && rand.nextInt(100) == 0){
 			MonsterProfile.get(MonsterProfile.JOHNNY).addEquipment(world, rand, diff, mob);
 			return;
 		}

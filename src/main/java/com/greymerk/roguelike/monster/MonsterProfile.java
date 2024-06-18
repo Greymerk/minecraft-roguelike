@@ -7,6 +7,7 @@ import com.greymerk.roguelike.monster.profiles.ProfileBaby;
 import com.greymerk.roguelike.monster.profiles.ProfileEvoker;
 import com.greymerk.roguelike.monster.profiles.ProfileFireArcher;
 import com.greymerk.roguelike.monster.profiles.ProfileHusk;
+import com.greymerk.roguelike.monster.profiles.ProfileInfestor;
 import com.greymerk.roguelike.monster.profiles.ProfileJohnny;
 import com.greymerk.roguelike.monster.profiles.ProfileMagicArcher;
 import com.greymerk.roguelike.monster.profiles.ProfilePigman;
@@ -30,7 +31,7 @@ public enum MonsterProfile {
 
 	TALLMOB, ZOMBIE, PIGMAN, SKELETON, VILLAGER, HUSK, BABY, ASHLEA, RLEAHY, 
 	ARCHER, WITHER, FIREARCHER, POISONARCHER, MAGICARCHER, SWORDSMAN, EVOKER, VINDICATOR,
-	WITCH, JOHNNY;
+	WITCH, JOHNNY, INFESTOR;
 	
 	public static IMonsterProfile get(MonsterProfile profile){
 		switch(profile){
@@ -53,6 +54,7 @@ public enum MonsterProfile {
 		case VINDICATOR: return new ProfileVindicator();
 		case WITCH: return new ProfileWitch();
 		case JOHNNY: return new ProfileJohnny();
+		case INFESTOR: return new ProfileInfestor();
 		default: return new ProfileTallMob();
 		}
 	}
