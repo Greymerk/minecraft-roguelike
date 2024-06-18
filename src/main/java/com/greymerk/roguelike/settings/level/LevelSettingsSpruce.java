@@ -19,6 +19,7 @@ public class LevelSettingsSpruce extends LevelSettingsBase implements ILevelSett
 		rooms.addRandomChoice(Room.CORRIDOR, 1);
 		rooms.addRoomOnce(Room.CROSS);
 		rooms.addRoomOnce(Room.BANQUET);
+		rooms.addRoomOnce(Room.BTEAM);
 		
 		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_EMPTY, 5));
 		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_CANDLES, 5));
