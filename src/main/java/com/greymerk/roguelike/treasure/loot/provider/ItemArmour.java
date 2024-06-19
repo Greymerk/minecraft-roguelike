@@ -50,7 +50,7 @@ public class ItemArmour extends ItemBase {
 		}
 
 		ItemStack item = get(rand, slot, Quality.getArmourQuality(rand, diff));
-		if(enchant) Enchant.enchantItem(reg, features, rand, item, Enchant.getLevel(rand, diff));
+		if(enchant) Enchant.enchantItem(reg, rand, item, diff);
 		Trim.addRandom(reg, item, rand);
 		return item;
 	}

@@ -37,7 +37,7 @@ public class ProfileInfestor implements IMonsterProfile {
 				EquipmentSlot.FEET
 				}){
 			ItemStack item = ItemArmour.get(rand, Slot.getSlot(slot), Quality.WOOD);
-			Enchant.enchantItem(world.getRegistryManager(), world.getEnabledFeatures(), rand, item, 20);
+			Enchant.enchantItem(world.getRegistryManager(), rand, item, 20);
 			ItemArmour.dyeArmor(item, 30, 50, 30); //dark black green
 			Trim.set(world.getRegistryManager(), item, TrimPattern.RAISER, TrimMaterial.EMERALD);
 			mob.setSlot(slot, item);

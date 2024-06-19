@@ -30,7 +30,7 @@ public class ItemFood extends ItemBase{
 			
 			switch(d){
 			case HARDEST:
-				randomizer.add(new WeightedRandomLoot(Items.GOLDEN_APPLE, 1, 3, 1));
+				randomizer.add(new WeightedRandomLoot(Items.GOLDEN_APPLE, 1));
 				randomizer.add(new WeightedRandomLoot(Items.GOLDEN_CARROT, 2, 6, 1));
 				randomizer.add(new WeightedRandomLoot(Items.COOKED_BEEF, 3, 9, 5));
 				randomizer.add(new WeightedRandomLoot(Items.COOKED_PORKCHOP, 3, 9, 3));
@@ -79,7 +79,8 @@ public class ItemFood extends ItemBase{
 		if(rand.nextInt(2000) == 0) return ItemNovelty.getItem(reg, ItemNovelty.AVIDYA);
 		if(rand.nextInt(1000) == 0) return ItemNovelty.getItem(reg, ItemNovelty.RLEAHY);
 		if(rand.nextInt(1000) == 0) return ItemNovelty.getItem(reg, ItemNovelty.FOURLES);
-		if(diff == Difficulty.EASIEST && rand.nextInt(20) == 0) return PotionMixture.getPotion(rand, PotionMixture.COFFEE);
+		if(diff.lt(Difficulty.MEDIUM) && rand.nextInt(30) == 0) return PotionMixture.getPotion(rand, PotionMixture.COFFEE);
+		if(diff.gt(Difficulty.EASY) && rand.nextInt(60) == 0) return PotionMixture.getPotion(rand, PotionMixture.LAUDANUM);
 		return this.loot.get(diff).get(rand);
 	}
 

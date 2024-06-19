@@ -37,7 +37,7 @@ public class ProfilePoisonArcher implements IMonsterProfile {
 				EquipmentSlot.FEET
 				}){
 			ItemStack item = ItemArmour.get(rand, Slot.getSlot(slot), Quality.WOOD);
-			Enchant.enchantItem(world.getRegistryManager(), world.getEnabledFeatures(), rand, item, 20);
+			Enchant.enchantItem(world.getRegistryManager(), rand, item, 20);
 			ItemArmour.dyeArmor(item, 178, 255, 102); //bright lime green
 			Trim.set(world.getRegistryManager(), item, TrimPattern.WILD, TrimMaterial.REDSTONE);
 			mob.setSlot(slot, item);

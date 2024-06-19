@@ -46,7 +46,7 @@ public class ItemWeapon extends ItemBase{
 		}
 		
 		ItemStack bow = new ItemStack(Items.BOW);
-		if(enchant)Enchant.enchantItem(reg, features, rand, bow, Enchant.getLevel(rand, diff));
+		if(enchant)Enchant.enchantItem(reg, rand, bow, diff);
 		return bow;
 	}
 	
@@ -60,13 +60,13 @@ public class ItemWeapon extends ItemBase{
 		
 		ItemStack sword = pickSword(rand, diff);
 		
-		if(enchant) Enchant.enchantItem(reg, features, rand, sword, Enchant.getLevel(rand, diff));
+		if(enchant) Enchant.enchantItem(reg, rand, sword, diff);
 		return sword;		
 	}
 	
 	public static ItemStack getSword(DynamicRegistryManager reg, FeatureSet features, Random rand, Difficulty diff, boolean enchant, Quality quality){
 		ItemStack sword = quality != null ? getSwordByQuality(quality) : pickSword(rand, diff);
-		return enchant ? Enchant.enchantItem(reg, features, rand, sword, Enchant.getLevel(rand, diff)) : sword;
+		return enchant ? Enchant.enchantItem(reg, rand, sword, diff) : sword;
 	}
 	
 	private static ItemStack pickSword(Random rand, Difficulty diff){

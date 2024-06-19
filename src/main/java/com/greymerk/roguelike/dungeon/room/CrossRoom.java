@@ -14,6 +14,7 @@ import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.blocks.Air;
 import com.greymerk.roguelike.editor.blocks.stair.IStair;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
+import com.greymerk.roguelike.filter.Filter;
 
 import net.minecraft.util.math.random.Random;
 
@@ -30,8 +31,13 @@ public class CrossRoom extends AbstractMediumRoom implements IRoom {
 		center(editor, rand, origin);
 		decorations(editor, rand, origin);
 		supports(editor, rand, origin);
+		pots(editor, rand, origin);
 	}
 	
+	private void pots(IWorldEditor editor, Random rand, Coord origin) {
+		Filter.get(Filter.POTS).apply(editor, rand, theme, BoundingBox.of(origin).grow(Cardinal.directions, 8));
+	}
+
 	private void supports(IWorldEditor editor, Random rand, Coord origin) {
 		CellSupport.generate(editor, rand, theme, origin);
 		Cardinal.directions.forEach(dir -> {

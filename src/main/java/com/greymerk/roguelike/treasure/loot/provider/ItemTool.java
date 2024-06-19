@@ -30,7 +30,7 @@ public class ItemTool extends ItemBase {
 
 	public static ItemStack getTool(DynamicRegistryManager reg, FeatureSet features, Random rand, Difficulty diff, Quality quality, Equipment type, boolean enchant){		
 		ItemStack tool = Equipment.get(type, quality == null ? Quality.get(diff) : quality);
-		return enchant ? Enchant.enchantItem(reg, features, rand, tool, Enchant.getLevel(rand, diff)) : tool;
+		return enchant ? Enchant.enchantItem(reg, rand, tool, diff) : tool;
 	}
 	
 	public static ItemStack getRandom(DynamicRegistryManager reg, FeatureSet features, Random rand, Difficulty diff, boolean enchant){
@@ -40,7 +40,7 @@ public class ItemTool extends ItemBase {
 		}
 		
 		ItemStack tool = pickTool(rand, diff);
-		if(enchant) Enchant.enchantItem(reg, features, rand, tool, Enchant.getLevel(rand, diff));
+		if(enchant) Enchant.enchantItem(reg, rand, tool, diff);
 		return tool;
 	}
 	

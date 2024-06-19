@@ -39,7 +39,7 @@ public class ProfileFireArcher implements IMonsterProfile {
 				EquipmentSlot.FEET
 				}){
 			ItemStack item = ItemArmour.get(rand, Slot.getSlot(slot), Quality.WOOD);
-			Enchant.enchantItem(world.getRegistryManager(), world.getEnabledFeatures(), rand, item, 20);
+			Enchant.enchantItem(world.getRegistryManager(), rand, item, 20);
 			ItemArmour.dyeArmor(item, 200, 50, 52); // dark red
 			Trim.set(world.getRegistryManager(), item, TrimPattern.RIB, TrimMaterial.GOLD);
 			mob.setSlot(slot, item);

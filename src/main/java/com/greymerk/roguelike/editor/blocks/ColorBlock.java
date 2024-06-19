@@ -34,7 +34,7 @@ public enum ColorBlock {
 		case CYAN: return Blocks.CYAN_WOOL;
 		case PURPLE: return Blocks.PURPLE_WOOL;
 		case BLUE: return Blocks.BLUE_WOOL;
-		case BROWN: return Blocks.BROWN_BED;
+		case BROWN: return Blocks.BROWN_WOOL;
 		case GREEN: return Blocks.GREEN_WOOL;
 		case RED: return Blocks.RED_WOOL;
 		case BLACK: return Blocks.BLACK_WOOL;

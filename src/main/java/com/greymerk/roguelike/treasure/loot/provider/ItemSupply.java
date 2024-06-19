@@ -47,7 +47,6 @@ public class ItemSupply extends ItemBase{
 		loot.add(new WeightedRandomLoot(Items.CLAY_BALL, 8, 64, 1));
 		loot.add(new WeightedRandomLoot(Items.QUARTZ, 2, 16, 1));
 		loot.add(new WeightedRandomLoot(Items.INK_SAC, 2, 12, 1));
-		
 	}
 
 	@Override
