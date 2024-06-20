@@ -84,8 +84,13 @@ public class WorldEditor implements IWorldEditor{
 	}
 	
 	@Override
+	public long getSeed(Coord pos) {
+		return Objects.hash(getSeed(), pos.hashCode());
+	}
+	
+	@Override
 	public Random getRandom(Coord pos) {
-		return new CheckedRandom(Objects.hash(getSeed(), pos.hashCode()));
+		return new CheckedRandom(getSeed(pos));
 	}
 
 	@Override

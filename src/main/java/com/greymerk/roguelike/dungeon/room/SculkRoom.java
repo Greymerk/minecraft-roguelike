@@ -59,9 +59,9 @@ public class SculkRoom extends AbstractLargeRoom implements IRoom {
 
 	private void placeChests(IWorldEditor editor, Random rand, Coord origin) {
 		WeightedRandomizer<Treasure> types = new WeightedRandomizer<Treasure>()
-			.add(new WeightedChoice<Treasure>(Treasure.ARMOUR, 1))
-			.add(new WeightedChoice<Treasure>(Treasure.TOOLS, 1))
-			.add(new WeightedChoice<Treasure>(Treasure.WEAPONS, 1));
+			.add(new WeightedChoice<Treasure>(Treasure.ARMOR, 1))
+			.add(new WeightedChoice<Treasure>(Treasure.TOOL, 1))
+			.add(new WeightedChoice<Treasure>(Treasure.WEAPON, 1));
 		
 		List<Coord> empty = BoundingBox.of(origin).add(Cardinal.DOWN, 2).grow(Cardinal.directions, 9).get().stream()
 				.filter(pos -> editor.isAir(pos))

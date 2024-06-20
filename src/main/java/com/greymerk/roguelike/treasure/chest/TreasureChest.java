@@ -18,8 +18,9 @@ import net.minecraft.block.FacingBlock;
 import net.minecraft.block.HorizontalFacingBlock;
 import net.minecraft.block.entity.LootableContainerBlockEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.loot.LootTable;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.state.property.Properties;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.math.random.Random;
 
 public class TreasureChest implements ITreasureChest{
@@ -32,13 +33,11 @@ public class TreasureChest implements ITreasureChest{
 	
 	public static Optional<ITreasureChest> generate(IWorldEditor editor, Random rand, Coord pos, Treasure type, ChestType block) {
 		Optional<ITreasureChest> chest = new TreasureChest(type, block, pos).set(editor, rand, pos);
-		if(chest.isPresent()) Loot.fillChest(editor, chest.get(), rand);
 		return chest;
 	}
 	
 	public static Optional<ITreasureChest> generate(IWorldEditor editor, Random rand, Coord pos, Cardinal dir, Treasure type, ChestType block){
 		Optional<ITreasureChest> chest = new TreasureChest(type, block, pos).set(editor, rand, pos, dir);
-		if(chest.isPresent()) Loot.fillChest(editor, chest.get(), rand);
 		return chest;
 	}
 	
@@ -59,7 +58,11 @@ public class TreasureChest implements ITreasureChest{
 		}
 		
 		this.chest = (LootableContainerBlockEntity) editor.getBlockEntity(pos);
-		this.inventory = new Inventory(rand, chest);		
+		this.inventory = new Inventory(rand, chest);
+		Loot.fillChest(editor, this, rand);
+		
+		Optional<RegistryKey<LootTable>> maybeTable = Treasure.getLootTable(type, diff);
+		if(maybeTable.isPresent()) this.setLootTable(maybeTable.get(), editor.getSeed(pos));
 		return Optional.of(this);
 	}
 	
@@ -123,8 +126,7 @@ public class TreasureChest implements ITreasureChest{
 		return this.diff;
 	}
 
-	@Override
-	public void setLootTable(Identifier table) {
-		//this.chest.setLootTable(table, (long)Objects.hash(pos.hashCode(), editor.getSeed()));
+	public void setLootTable(RegistryKey<LootTable> key, long seed) {
+		this.chest.setLootTable(key, seed);
 	}
 }

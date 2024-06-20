@@ -41,5 +41,6 @@ public class Roguelike implements ModInitializer {
 		CommandRegistrationCallback.EVENT.register(RoguelikeCommand.getListener());
 		
 		ConfigSettings.init(new ConfigFile());
+		
 	}
 }
