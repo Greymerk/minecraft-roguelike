@@ -29,11 +29,11 @@ public class WallChest implements IFragment {
 		}
 		
 		WeightedRandomizer<Treasure> types = new WeightedRandomizer<Treasure>();
-		types.add(new WeightedChoice<Treasure>(Treasure.SUPPLIES, 3));
-		types.add(new WeightedChoice<Treasure>(Treasure.BLOCKS, 1));
-		types.add(new WeightedChoice<Treasure>(Treasure.WEAPONS, 1));
-		types.add(new WeightedChoice<Treasure>(Treasure.ARMOUR, 1));
-		types.add(new WeightedChoice<Treasure>(Treasure.TOOLS, 1));
+		types.add(new WeightedChoice<Treasure>(Treasure.SUPPLY, 3));
+		types.add(new WeightedChoice<Treasure>(Treasure.BLOCK, 1));
+		types.add(new WeightedChoice<Treasure>(Treasure.WEAPON, 1));
+		types.add(new WeightedChoice<Treasure>(Treasure.ARMOR, 1));
+		types.add(new WeightedChoice<Treasure>(Treasure.TOOL, 1));
 		
 		Coord pos = origin.copy().add(dir, 2).add(Cardinal.UP);
 		Treasure.generate(editor, rand, pos, Cardinal.reverse(dir), types.get(rand));

@@ -7,7 +7,6 @@ import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.treasure.Treasure;
 
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.math.random.Random;
 
 public interface ITreasureChest {
@@ -19,8 +18,6 @@ public interface ITreasureChest {
 	public boolean setSlot(int slot, ItemStack item);
 	
 	public boolean setRandomEmptySlot(ItemStack item);
-	
-	public void setLootTable(Identifier table);
 	
 	public boolean isEmptySlot(int slot);
 	

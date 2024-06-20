@@ -49,7 +49,7 @@ public class CryptFragment implements IFragment {
 		if(empty) {
 			BlockType.get(BlockType.AIR).set(editor, pos);
 		} else {
-			Treasure type = rand.nextBoolean() ? Treasure.ARMOUR : Treasure.WEAPONS;
+			Treasure type = rand.nextBoolean() ? Treasure.ARMOR : Treasure.WEAPON;
 			Treasure.generate(editor, rand, pos, Cardinal.reverse(dir), type);
 		}
 		pos.add(Cardinal.UP);

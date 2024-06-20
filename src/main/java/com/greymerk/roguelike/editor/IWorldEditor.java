@@ -28,6 +28,8 @@ public interface IWorldEditor {
 	
 	public long getSeed();
 	
+	public long getSeed(Coord pos);
+	
 	public Random getRandom(Coord pos);
 			
 	public Coord findSurface(Coord pos);

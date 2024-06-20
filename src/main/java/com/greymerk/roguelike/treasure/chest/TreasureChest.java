@@ -1,5 +1,7 @@
 package com.greymerk.roguelike.treasure.chest;
 
+import java.util.Optional;
+
 import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
@@ -15,6 +17,7 @@ import net.minecraft.block.FacingBlock;
 import net.minecraft.block.HorizontalFacingBlock;
 import net.minecraft.block.entity.LootableContainerBlockEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.loot.LootTables;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.random.Random;
@@ -56,8 +59,16 @@ public class TreasureChest implements ITreasureChest{
 		}
 		
 		this.chest = (LootableContainerBlockEntity) editor.getBlockEntity(pos);
-		this.inventory = new Inventory(rand, chest);		
+		this.inventory = new Inventory(rand, chest);
+		Optional<Identifier> table = Treasure.getTableIdentifier(this.type, diff);
+		if(this.type == Treasure.STARTER) {
+			System.out.println(table.get().toString());
+			System.out.println(LootTables.SIMPLE_DUNGEON_CHEST.toString());
+		}
+		
+		if(table.isPresent()) this.setLootTable(table.get(), editor.getSeed(pos));
 		Loot.fillChest(editor, this, rand);
+		
 		return this;
 	}
 	
@@ -109,8 +120,7 @@ public class TreasureChest implements ITreasureChest{
 		return this.diff;
 	}
 
-	@Override
-	public void setLootTable(Identifier table) {
-		//this.chest.setLootTable(table, (long)Objects.hash(pos.hashCode(), editor.getSeed()));
+	public void setLootTable(Identifier table, long seed) {
+		this.chest.setLootTable(table, seed);
 	}
 }

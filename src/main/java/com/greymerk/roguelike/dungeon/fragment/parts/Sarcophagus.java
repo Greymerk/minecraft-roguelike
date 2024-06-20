@@ -74,8 +74,8 @@ public class Sarcophagus implements IFragment {
 		List<Cardinal> dirs = new ArrayList<Cardinal>(Cardinal.orthogonal(dir));
 		RandHelper.shuffle(dirs, rand);
 		pos = origin.copy().add(Cardinal.UP).add(dirs.get(0));
-		Treasure.generate(editor, rand, pos, dirs.get(0), Treasure.ARMOUR);
+		Treasure.generate(editor, rand, pos, dirs.get(0), Treasure.ARMOR);
 		pos = origin.copy().add(Cardinal.UP).add(dirs.get(1));
-		Treasure.generate(editor, rand, pos, dirs.get(1), Treasure.WEAPONS);
+		Treasure.generate(editor, rand, pos, dirs.get(1), Treasure.WEAPON);
 	}
 }
