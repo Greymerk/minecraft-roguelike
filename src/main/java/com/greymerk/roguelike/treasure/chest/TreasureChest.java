@@ -1,5 +1,8 @@
 package com.greymerk.roguelike.treasure.chest;
 
+import java.util.List;
+import java.util.Optional;
+
 import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
@@ -25,43 +28,54 @@ public class TreasureChest implements ITreasureChest{
 	private Treasure type;
 	private LootableContainerBlockEntity chest;
 	private Difficulty diff;
-
-	public TreasureChest(Treasure type){
+	private MetaBlock block;
+	
+	public static Optional<ITreasureChest> generate(IWorldEditor editor, Random rand, Coord pos, Treasure type, ChestType block) {
+		Optional<ITreasureChest> chest = new TreasureChest(type, block, pos).set(editor, rand, pos);
+		if(chest.isPresent()) Loot.fillChest(editor, chest.get(), rand);
+		return chest;
+	}
+	
+	public static Optional<ITreasureChest> generate(IWorldEditor editor, Random rand, Coord pos, Cardinal dir, Treasure type, ChestType block){
+		Optional<ITreasureChest> chest = new TreasureChest(type, block, pos).set(editor, rand, pos, dir);
+		if(chest.isPresent()) Loot.fillChest(editor, chest.get(), rand);
+		return chest;
+	}
+	
+	private Optional<ITreasureChest> set(IWorldEditor editor, Random rand, Coord pos){
+		return this.set(editor, rand, pos, this.findOrientation(editor, rand, pos));
+	}
+	
+	private TreasureChest(Treasure type, ChestType block, Coord pos){
 		this.type = type;
-		this.diff = Difficulty.EASIEST;
-	}
-	
-	public ITreasureChest generate(IWorldEditor editor, Random rand, Coord pos, ChestType block) throws ChestPlacementException {
-		for(Cardinal dir : Cardinal.randDirs(rand)) {
-			Coord p = pos.copy();
-			p.add(dir);
-			if(editor.isAir(pos)) {
-				return this.generate(editor, rand, pos, dir, block);
-			}
-		}
-		Cardinal dir = Cardinal.randDirs(rand).get(0);
-		return this.generate(editor, rand, pos, dir, block);
-	}
-	
-	public ITreasureChest generate(IWorldEditor editor, Random rand, Coord pos, Cardinal dir, ChestType type) throws ChestPlacementException {
-
+		this.block = ChestType.get(block);
 		this.diff = Difficulty.fromY(pos.getY());
-		
-		MetaBlock block = ChestType.get(type);
-		setOrientation(block, dir);
-		boolean success = block.set(editor, pos);
-		
-		if(!success){
-			throw new ChestPlacementException("Failed to place chest in world");
+	}
+	
+	private Optional<ITreasureChest> set(IWorldEditor editor, Random rand, Coord pos, Cardinal dir) {
+		setOrientation(dir);
+		if(!block.set(editor, pos)) {
+			return Optional.empty();
 		}
 		
 		this.chest = (LootableContainerBlockEntity) editor.getBlockEntity(pos);
 		this.inventory = new Inventory(rand, chest);		
-		Loot.fillChest(editor, this, rand);
-		return this;
+		return Optional.of(this);
 	}
 	
-	private void setOrientation(MetaBlock block, Cardinal dir) {
+	public Cardinal findOrientation(IWorldEditor editor, Random rand, Coord pos) {
+		List<Cardinal> dirs = Cardinal.randDirs(rand);
+		for(Cardinal dir : dirs) {
+			Coord p = pos.copy();
+			p.add(dir);
+			if(editor.isAir(pos)) {
+				return dir;
+			}
+		}
+		return dirs.getFirst();
+	}
+	
+	public void setOrientation(Cardinal dir) {
 		Block b = block.getBlock();
 		
 		if(b == Blocks.CHEST || b == Blocks.TRAPPED_CHEST) {

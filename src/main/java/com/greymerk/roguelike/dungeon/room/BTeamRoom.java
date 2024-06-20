@@ -1,5 +1,7 @@
 package com.greymerk.roguelike.dungeon.room;
 
+import java.util.Optional;
+
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellManager;
 import com.greymerk.roguelike.dungeon.cell.CellState;
@@ -20,9 +22,8 @@ import com.greymerk.roguelike.editor.blocks.stair.Stair;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.editor.factories.BlockCheckers;
 import com.greymerk.roguelike.treasure.Treasure;
-import com.greymerk.roguelike.treasure.chest.ChestPlacementException;
 import com.greymerk.roguelike.treasure.chest.ChestType;
-import com.greymerk.roguelike.treasure.chest.TreasureChest;
+import com.greymerk.roguelike.treasure.chest.ITreasureChest;
 import com.greymerk.roguelike.treasure.loot.potions.PotionMixture;
 
 import net.minecraft.block.Blocks;
@@ -51,13 +52,11 @@ public class BTeamRoom extends AbstractRoom implements IRoom {
 
 	private void decor(IWorldEditor editor, Random rand, Coord origin) {
 		MetaBlock.of(Blocks.JUKEBOX).set(editor, origin.add(direction, 7).add(Cardinal.left(direction), 4));
-		try {
-			TreasureChest chest = new TreasureChest(Treasure.EMPTY);
-			chest.generate(editor, rand, origin.add(direction, 7).add(Cardinal.left(direction), 5), Cardinal.reverse(direction), ChestType.CHEST);
-			chest.setRandomEmptySlot(new ItemStack(Items.MUSIC_DISC_STAL));			
-		} catch (ChestPlacementException e) {
-			return;
+		Optional<ITreasureChest> maybeChest = Treasure.generate(editor, rand, origin.add(direction, 7).add(Cardinal.left(direction), 5), Cardinal.reverse(direction), Treasure.EMPTY, ChestType.CHEST); 
+		if(maybeChest.isPresent()) {
+			maybeChest.get().setRandomEmptySlot(new ItemStack(Items.MUSIC_DISC_STAL));	
 		}
+		
 		MetaBlock.of(Blocks.BOOKSHELF).set(editor, origin.add(Cardinal.right(direction), 5).add(direction, 7));
 		Coord stand = origin.add(Cardinal.right(direction), 5).add(direction, 7).add(Cardinal.UP);
 		BrewingStand.generate(editor, stand);
