@@ -29,7 +29,6 @@ public class LevelSettingsCrumbledMossy extends LevelSettingsBase implements ILe
 		rooms.addRoomOnce(Room.RESERVOIR);
 		rooms.addRoomOnce(Room.CREEPER);
 		
-		
 		this.walls = new WeightedRandomizer<Fragment>(10);
 		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_EMPTY, 20));
 		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_SPAWNER, 3));
