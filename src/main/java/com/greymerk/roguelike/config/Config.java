@@ -9,7 +9,8 @@ public enum Config {
 	FREQUENCY("frequency"),
 	MOB_DROPS("mob_drops"),
 	DEBUG("debug"),
-	ROOMS_PER_LEVEL("rooms_per_level");
+	ROOMS_PER_LEVEL("rooms_per_level"),
+	ROGUELIKE_LOOT("roguelike_loot");
 
 	private final String key;
 	

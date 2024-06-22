@@ -3,6 +3,7 @@ package com.greymerk.roguelike.treasure.chest;
 import java.util.List;
 import java.util.Optional;
 
+import com.greymerk.roguelike.config.Config;
 import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
@@ -59,10 +60,11 @@ public class TreasureChest implements ITreasureChest{
 		
 		this.chest = (LootableContainerBlockEntity) editor.getBlockEntity(pos);
 		this.inventory = new Inventory(rand, chest);
-		Loot.fillChest(editor, this, rand);
 		
 		Optional<RegistryKey<LootTable>> maybeTable = Treasure.getLootTable(type, diff);
 		if(maybeTable.isPresent()) this.setLootTable(maybeTable.get(), editor.getSeed(pos));
+		
+		if(Config.ofBoolean(Config.ROGUELIKE_LOOT)) Loot.fillChest(editor, this, rand);
 		return Optional.of(this);
 	}
 	
