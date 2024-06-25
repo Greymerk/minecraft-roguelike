@@ -6,8 +6,8 @@ import com.greymerk.roguelike.util.Color;
 
 import net.minecraft.block.GlazedTerracottaBlock;
 
-public class Terracotta {
-	public static MetaBlock get(Color color, Cardinal dir){
+public class Terracotta {	
+	public static MetaBlock getGlazed(Color color, Cardinal dir){
 		return ColorBlock.get(ColorBlock.GLAZED, color)
 				.with(GlazedTerracottaBlock.FACING, Cardinal.facing(dir));
 	}

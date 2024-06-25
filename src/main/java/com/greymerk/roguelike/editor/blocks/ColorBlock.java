@@ -56,7 +56,7 @@ public enum ColorBlock {
 		case CYAN: return Blocks.CYAN_TERRACOTTA.getDefaultState();
 		case PURPLE: return Blocks.PURPLE_TERRACOTTA.getDefaultState();
 		case BLUE: return Blocks.BLUE_TERRACOTTA.getDefaultState();
-		case BROWN: return Blocks.BROWN_BED.getDefaultState();
+		case BROWN: return Blocks.BROWN_TERRACOTTA.getDefaultState();
 		case GREEN: return Blocks.GREEN_TERRACOTTA.getDefaultState();
 		case RED: return Blocks.RED_TERRACOTTA.getDefaultState();
 		case BLACK: return Blocks.BLACK_TERRACOTTA.getDefaultState();
@@ -78,7 +78,7 @@ public enum ColorBlock {
 		case CYAN: return Blocks.CYAN_GLAZED_TERRACOTTA.getDefaultState();
 		case PURPLE: return Blocks.PURPLE_GLAZED_TERRACOTTA.getDefaultState();
 		case BLUE: return Blocks.BLUE_GLAZED_TERRACOTTA.getDefaultState();
-		case BROWN: return Blocks.BROWN_BED.getDefaultState();
+		case BROWN: return Blocks.BROWN_GLAZED_TERRACOTTA.getDefaultState();
 		case GREEN: return Blocks.GREEN_GLAZED_TERRACOTTA.getDefaultState();
 		case RED: return Blocks.RED_GLAZED_TERRACOTTA.getDefaultState();
 		case BLACK: return Blocks.BLACK_GLAZED_TERRACOTTA.getDefaultState();

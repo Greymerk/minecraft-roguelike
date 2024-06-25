@@ -1,5 +1,6 @@
 package com.greymerk.roguelike.util.math;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.RandomAccess;
@@ -13,6 +14,13 @@ public class RandHelper {
 	public static <T> T pickFrom(List<T> list, Random rand) {
 		if(list.size() == 0) return null;
 		return list.get(rand.nextInt(list.size()));
+	}
+	
+	public static <T> List<T> pickCountFrom(List<T> list, Random rand, int count){
+		List<T> copy = new ArrayList<T>(list);
+		shuffle(copy, rand);
+		if(copy.size() < count) return copy;
+		return copy.subList(0, count);
 	}
 	
 	@SuppressWarnings("unchecked")
