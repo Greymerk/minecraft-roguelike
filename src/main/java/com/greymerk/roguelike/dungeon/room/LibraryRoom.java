@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
+import com.greymerk.roguelike.dungeon.fragment.parts.CellSupport;
 import com.greymerk.roguelike.dungeon.fragment.parts.Pillar;
 import com.greymerk.roguelike.dungeon.layout.Entrance;
 import com.greymerk.roguelike.editor.Cardinal;
@@ -38,6 +39,7 @@ public class LibraryRoom extends AbstractLargeRoom implements IRoom {
 		this.ceiling(editor, rand, origin);
 		this.walls(editor, rand, origin);
 		this.decorations(editor, rand, origin);
+		this.supports(editor, rand, origin);
 	}
 
 	private void decorations(IWorldEditor editor, Random rand, Coord origin) {
@@ -102,6 +104,18 @@ public class LibraryRoom extends AbstractLargeRoom implements IRoom {
 		});
 	}
 
+	private void supports(IWorldEditor editor, Random rand, Coord origin) {
+		CellSupport.generate(editor, rand, theme, origin);
+		Cardinal.directions.forEach(dir -> {
+			List.of(6, 12).forEach(i -> {
+				CellSupport.generate(editor, rand, theme, origin.copy().add(dir, i));
+				List.of(6, 12).forEach(j -> {
+					CellSupport.generate(editor, rand, theme, origin.copy().add(dir, i).add(Cardinal.left(dir), j));
+				});
+			});
+		});
+	}
+	
 	private void ceiling(IWorldEditor editor, Random rand, Coord origin) {
 		Cardinal.directions.forEach(dir -> {
 			List.of(2, 4, 8, 10, 14).forEach(step -> {

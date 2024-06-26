@@ -23,7 +23,7 @@ public enum FlowerPot {
 	CRIMSON_FUNGUS, WARPED_FUNGUS, CRIMSON_ROOTS, WARPED_ROOTS;
 
 	public static List<FlowerPot> mushrooms = List.of(
-			REDMUSHROOM, BROWNMUSHROOM, CRIMSON_FUNGUS, WARPED_FUNGUS, CRIMSON_ROOTS, WARPED_ROOTS, WITHER);
+			REDMUSHROOM, BROWNMUSHROOM, CRIMSON_FUNGUS, WARPED_FUNGUS, CRIMSON_ROOTS, WARPED_ROOTS, WITHER, SHRUB);
 	
 	public static List<FlowerPot> saplings = List.of(
 			OAK, BIRCH, SPRUCE, JUNGLE, ACACIA, DARKOAK, MANGROVE, AZALEA, CHERRY);
@@ -105,7 +105,19 @@ public enum FlowerPot {
 		case DARKOAK: return Blocks.DARK_OAK_SAPLING;
 		case SHRUB: return Blocks.DEAD_BUSH;
 		case FERN: return Blocks.FERN;
+		case AZALEA: return Blocks.AZALEA;
+		case AZALEA_FLOWERING: return Blocks.FLOWERING_AZALEA;
+		case BAMBOO: return Blocks.BAMBOO;
+		case CHERRY: return Blocks.CHERRY_SAPLING;
+		case CRIMSON_FUNGUS: return Blocks.CRIMSON_FUNGUS;
+		case CRIMSON_ROOTS: return Blocks.CRIMSON_ROOTS;
+		case LILY: return Blocks.LILY_OF_THE_VALLEY;
+		case MANGROVE: return Blocks.MANGROVE_PROPAGULE;
+		case WARPED_FUNGUS: return Blocks.WARPED_FUNGUS;
+		case WARPED_ROOTS: return Blocks.WARPED_ROOTS;
+		case WITHER: return Blocks.WITHER_ROSE;
 		default: return Blocks.DEAD_BUSH;
+		
 		}
 	}
 }

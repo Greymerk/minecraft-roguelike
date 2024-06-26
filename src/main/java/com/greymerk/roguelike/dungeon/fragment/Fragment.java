@@ -20,6 +20,7 @@ import com.greymerk.roguelike.dungeon.fragment.wall.WallFlowers;
 import com.greymerk.roguelike.dungeon.fragment.wall.WallFoodBarrel;
 import com.greymerk.roguelike.dungeon.fragment.wall.WallMushrooms;
 import com.greymerk.roguelike.dungeon.fragment.wall.WallPlant;
+import com.greymerk.roguelike.dungeon.fragment.wall.WallSkulls;
 import com.greymerk.roguelike.dungeon.fragment.wall.WallSpawner;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
@@ -33,7 +34,8 @@ public enum Fragment {
 	CRYPT, SARCOPHAGUS, FUNGUS, 
 	CELL_SUPPORT, ARCH,
 	WALL_FLOWER, WALL_BANNER, WALL_CHEST, WALL_SPAWNER, WALL_CANDLES,
-	WALL_EMPTY, WALL_DECORATED_POT, WALL_FOOD_BARREL, WALL_PLANT, WALL_MUSHROOMS,
+	WALL_EMPTY, WALL_DECORATED_POT, WALL_FOOD_BARREL, WALL_PLANT, 
+	WALL_MUSHROOMS, WALL_SKULLS,
 	ALCOVE_SILVERFISH, ALCOVE_SAFETY, ALCOVE_CRYPT, BOOK_SHELF, ALCOVE_FIRE,
 	ALCOVE_PRISON_CELL;
 	
@@ -58,6 +60,7 @@ public enum Fragment {
 		case WALL_MUSHROOMS: return new WallMushrooms();
 		case WALL_FOOD_BARREL: return new WallFoodBarrel();
 		case WALL_PLANT: return new WallPlant();
+		case WALL_SKULLS: return new WallSkulls();
 		case ALCOVE_SILVERFISH: return new SilverfishNest();
 		case ALCOVE_SAFETY: return new SafetyCell();
 		case ALCOVE_CRYPT: return new TombAlcove();

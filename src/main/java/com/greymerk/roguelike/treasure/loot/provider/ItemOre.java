@@ -29,13 +29,15 @@ public class ItemOre extends ItemBase{
 				randomizer.add(new WeightedRandomLoot(Items.RAW_GOLD, 8, 32, 10));
 				randomizer.add(new WeightedRandomLoot(Items.RAW_IRON, 8, 32, 10));
 				randomizer.add(new WeightedRandomLoot(Items.RAW_COPPER, 16, 64, 5));
+				randomizer.add(new WeightedRandomLoot(Items.LAPIS_LAZULI, 8, 32, 3));
 				randomizer.add(new WeightedRandomLoot(Items.COAL, 8, 32, 5));
 				break;
 			case HARD:
-				randomizer.add(new WeightedRandomLoot(Items.NETHERITE_SCRAP, 1, 2, 3));
+				randomizer.add(new WeightedRandomLoot(Items.NETHERITE_SCRAP, 1, 2, 2));
 				randomizer.add(new WeightedRandomLoot(Items.RAW_GOLD, 4, 24, 20));
 				randomizer.add(new WeightedRandomLoot(Items.RAW_IRON, 4, 24, 20));
-				randomizer.add(new WeightedRandomLoot(Items.RAW_COPPER, 8, 32, 20));
+				randomizer.add(new WeightedRandomLoot(Items.RAW_COPPER, 8, 32, 10));
+				randomizer.add(new WeightedRandomLoot(Items.LAPIS_LAZULI, 4, 16, 3));
 				randomizer.add(new WeightedRandomLoot(Items.COAL, 8, 32, 10));
 				break;
 			case MEDIUM:
@@ -43,13 +45,15 @@ public class ItemOre extends ItemBase{
 				randomizer.add(new WeightedRandomLoot(Items.RAW_GOLD, 4, 16, 30));
 				randomizer.add(new WeightedRandomLoot(Items.RAW_IRON, 4, 16, 50));
 				randomizer.add(new WeightedRandomLoot(Items.RAW_COPPER, 8, 32, 50));
+				randomizer.add(new WeightedRandomLoot(Items.LAPIS_LAZULI, 2, 8, 10));
 				randomizer.add(new WeightedRandomLoot(Items.COAL, 4, 24, 20));
 				break;
 			case EASY:	
 				randomizer.add(new WeightedRandomLoot(Items.RAW_GOLD, 2, 8, 5));
 				randomizer.add(new WeightedRandomLoot(Items.RAW_IRON, 2, 8, 10));
 				randomizer.add(new WeightedRandomLoot(Items.RAW_COPPER, 4, 16, 5));
-				randomizer.add(new WeightedRandomLoot(Items.COAL, 2, 16, 10));
+				randomizer.add(new WeightedRandomLoot(Items.LAPIS_LAZULI, 1, 4, 3));
+				randomizer.add(new WeightedRandomLoot(Items.COAL, 2, 16, 5));
 				break;
 			case EASIEST:
 				randomizer.add(new WeightedRandomLoot(Items.RAW_GOLD, 1, 4, 5));

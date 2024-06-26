@@ -14,6 +14,11 @@ public enum Skull {
 
 	SKELETON, WITHER, ZOMBIE, STEVE, CREEPER;
 	
+	public static void set(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
+		Skull type = rand.nextInt(10) == 0 ? Skull.WITHER : Skull.SKELETON;
+		Skull.set(editor, rand, origin, dir, type);
+	}
+	
 	public static void set(IWorldEditor editor, Random rand, Coord origin, Cardinal dir, Skull type){
 		if(!editor.isSupported(origin)) return;
 		setRotation(rand, MetaBlock.of(Skull.fromType(type)), dir).set(editor, origin);

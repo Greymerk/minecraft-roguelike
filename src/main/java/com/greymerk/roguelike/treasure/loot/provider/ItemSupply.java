@@ -1,8 +1,10 @@
 package com.greymerk.roguelike.treasure.loot.provider;
 
 import com.greymerk.roguelike.dungeon.Difficulty;
+import com.greymerk.roguelike.editor.blocks.FlowerPot;
 import com.greymerk.roguelike.treasure.loot.WeightedRandomLoot;
 import com.greymerk.roguelike.util.WeightedRandomizer;
+import com.greymerk.roguelike.util.math.RandHelper;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -22,7 +24,7 @@ public class ItemSupply extends ItemBase{
 			loot.add(new WeightedRandomLoot(Items.CHICKEN, 4, 32, 1));
 			loot.add(new WeightedRandomLoot(Items.PORKCHOP, 4, 32, 1));
 			loot.add(new WeightedRandomLoot(Items.MUTTON, 4, 32, 1));
-			loot.add(new WeightedRandomLoot(Items.RABBIT, 4, 32, 1));	
+			loot.add(new WeightedRandomLoot(Items.RABBIT, 4, 32, 1));
 		}
 		
 		if(diff.lt(Difficulty.MEDIUM)) {
@@ -51,6 +53,7 @@ public class ItemSupply extends ItemBase{
 
 	@Override
 	public ItemStack getLootItem(Random rand, Difficulty diff) {
+		if(rand.nextInt(100) == 0) return FlowerPot.getFlowerItem(RandHelper.pickFrom(FlowerPot.saplings, rand));
 		return loot.get(rand);
 	}
 }
