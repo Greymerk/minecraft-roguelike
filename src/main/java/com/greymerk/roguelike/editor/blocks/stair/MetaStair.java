@@ -10,6 +10,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.StairsBlock;
 import net.minecraft.block.enums.BlockHalf;
 import net.minecraft.block.enums.StairShape;
+import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.random.Random;
 
 public class MetaStair implements IStair{
@@ -39,6 +40,7 @@ public class MetaStair implements IStair{
 	public MetaStair setOrientation(Cardinal dir, Boolean upsideDown){
 		stair.with(StairsBlock.FACING, Cardinal.facing(dir));
 		stair.with(StairsBlock.HALF, upsideDown ? BlockHalf.TOP : BlockHalf.BOTTOM);
+		stair.with(Properties.WATERLOGGED, false);
 		return this;
 	}
 	
@@ -115,6 +117,12 @@ public class MetaStair implements IStair{
     
     private MetaStair setShape(StairShape shape) {
 		stair.with(StairsBlock.SHAPE, shape);
+		return this;
+	}
+
+	@Override
+	public IStair waterlog() {
+		this.stair.with(Properties.WATERLOGGED, true);
 		return this;
 	}
 }

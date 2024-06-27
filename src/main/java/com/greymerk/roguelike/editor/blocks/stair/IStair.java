@@ -11,6 +11,8 @@ public interface IStair {
 
 	public IStair setOrientation(Cardinal dir, Boolean upsideDown);
 	
+	public IStair waterlog();
+	
 	public boolean set(IWorldEditor editor, Random rand, Coord pos);
 	
 	public boolean set(IWorldEditor editor, Random rand, Coord pos, boolean fillAir, boolean replaceSolid);

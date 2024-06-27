@@ -14,12 +14,14 @@ public class RandomStair implements IStair, IBlockFactory {
 
 	private Cardinal dir;
 	private boolean upsideDown;
+	private boolean waterlogged;
 	private WeightedRandomizer<IStair> stairs;
 	
 	public RandomStair() {
 		this.stairs = new WeightedRandomizer<IStair>();
 		this.dir = Cardinal.NORTH;
 		this.upsideDown = false;
+		this.waterlogged = false;
 	}
 
 	public RandomStair add(IStair toAdd, int weight) {
@@ -31,6 +33,7 @@ public class RandomStair implements IStair, IBlockFactory {
 	public IStair setOrientation(Cardinal dir, Boolean upsideDown) {
 		this.dir = Cardinal.directions.contains(dir) ? dir : Cardinal.NORTH;
 		this.upsideDown = upsideDown;
+		this.waterlogged = false;
 		return this;
 	}
 
@@ -43,7 +46,9 @@ public class RandomStair implements IStair, IBlockFactory {
 	@Override
 	public boolean set(IWorldEditor editor, Random rand, Coord pos, boolean fillAir, boolean replaceSolid) {
 		if(this.stairs.isEmpty()) return false;
-		return this.stairs.get(rand).setOrientation(this.dir, this.upsideDown).set(editor, rand, pos, fillAir, replaceSolid);
+		IStair stair = this.stairs.get(rand).setOrientation(this.dir, this.upsideDown);
+		if(waterlogged) stair.waterlog();
+		return stair.set(editor, rand, pos, fillAir, replaceSolid);
 	}
 
 	@Override
@@ -56,6 +61,12 @@ public class RandomStair implements IStair, IBlockFactory {
 	@Override
 	public void fill(IWorldEditor editor, Random rand, IShape shape) {
 		this.fill(editor, rand, shape, true, true);
+	}
+
+	@Override
+	public IStair waterlog() {
+		this.waterlogged = true;
+		return this;
 	}
 	
 }

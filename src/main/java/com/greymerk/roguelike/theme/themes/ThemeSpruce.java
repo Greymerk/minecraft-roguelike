@@ -38,7 +38,7 @@ public class ThemeSpruce extends ThemeBase implements ITheme {
 				.setFloor(walls)
 				.setStair(stair)
 				.setPillar(logs)
-				.setDoor(Door.of(DoorType.DARKOAK))
+				.setDoor(Door.of(DoorType.SPRUCE))
 				.setSlab(Slab.get(Slab.STONEBRICK));
 
 		this.secondary = new BlockSet()
@@ -46,7 +46,7 @@ public class ThemeSpruce extends ThemeBase implements ITheme {
 				.setFloor(segmentWall)
 				.setStair(segmentStair)
 				.setPillar(logs)
-				.setDoor(Door.of(DoorType.DARKOAK))
+				.setDoor(Door.of(DoorType.SPRUCE))
 				.setSlab(Slab.get(Slab.SPRUCE));
 	}
 	
