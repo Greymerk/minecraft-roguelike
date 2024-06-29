@@ -6,7 +6,8 @@ import java.util.List;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.greymerk.roguelike.debug.Debug;
+import com.greymerk.roguelike.config.Config;
+import com.greymerk.roguelike.debug.DebugLayout;
 import com.greymerk.roguelike.dungeon.Dungeon;
 import com.greymerk.roguelike.dungeon.Floor;
 import com.greymerk.roguelike.dungeon.cell.Cell;
@@ -30,8 +31,6 @@ public class LayoutManager {
 	private List<Floor> floors;
 	private IDungeonSettings settings;
 	
-	final int ROOMS_PER_LEVEL = 20;
-	
 	public LayoutManager(Coord origin) {
 		this.origin = origin;
 		this.floors = createFloors();
@@ -52,7 +51,9 @@ public class LayoutManager {
 			
 			RoomProvider roomProvider = this.settings.getLevel(floor.getOrigin().getY()).getRooms();
 			
-			List<Room> rooms = roomProvider.getRooms(rand, ROOMS_PER_LEVEL);
+			int numRooms = Math.clamp(Config.ofInteger(Config.ROOMS_PER_LEVEL).orElse(20), 1, 1000);
+			
+			List<Room> rooms = roomProvider.getRooms(rand, numRooms);
 
 			rooms.forEach(r -> {
 				IRoom room = Room.getInstance(r, this.settings.getLevel(floor.getOrigin().getY()));
@@ -64,7 +65,7 @@ public class LayoutManager {
 			floor.getRooms().forEach(r -> r.determineEntrances(floor, r.getFloorPos()));
 		}
 		
-		Debug debug = new Debug(editor.getWorldDirectory());
+		DebugLayout debug = new DebugLayout(editor.getWorldDirectory());
 		debug.toFile(origin.getX() + "_" + origin.getZ() + ".json", this.asJson());
 	}
 	

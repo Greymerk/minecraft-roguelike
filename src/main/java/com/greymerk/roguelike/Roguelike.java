@@ -4,6 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.greymerk.roguelike.commands.RoguelikeCommand;
+import com.greymerk.roguelike.config.ConfigFile;
+import com.greymerk.roguelike.config.ConfigSettings;
 import com.greymerk.roguelike.events.ChunkLoadRoomFlagEvent;
 import com.greymerk.roguelike.events.EntityLoadEvent;
 import com.greymerk.roguelike.events.WorldTickGenerate;
@@ -37,5 +39,7 @@ public class Roguelike implements ModInitializer {
 		ServerChunkEvents.CHUNK_LOAD.register(new ChunkLoadRoomFlagEvent());
 		
 		CommandRegistrationCallback.EVENT.register(RoguelikeCommand.getListener());
+		
+		ConfigSettings.init(new ConfigFile());
 	}
 }
