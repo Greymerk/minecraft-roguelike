@@ -40,7 +40,8 @@ public class ChunkFeatureMixin {
 		if(!Dungeon.canSpawn(editor, pos.copy())) return;
 		
 		Random rand = editor.getRandom(pos);
-		Double chance = Math.clamp(Config.ofDouble(Config.FREQUENCY), 0, 1.0);
+		//Double chance = Math.clamp(Config.ofDouble(Config.FREQUENCY), 0, 1.0);
+		Double chance = Math.max(0, Math.min(1.0, Config.ofDouble(Config.FREQUENCY)));
 		Double roll = rand.nextDouble();
 		if(chance == 1.0 || roll < chance) {
 			Dungeon.generate(editor, pos);

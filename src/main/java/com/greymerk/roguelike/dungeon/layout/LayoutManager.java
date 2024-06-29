@@ -51,7 +51,8 @@ public class LayoutManager {
 			
 			RoomProvider roomProvider = this.settings.getLevel(floor.getOrigin().getY()).getRooms();
 			
-			int numRooms = Math.clamp(Config.ofInteger(Config.ROOMS_PER_LEVEL).orElse(20), 1, 1000);
+			int configRoomNumber = Config.ofInteger(Config.ROOMS_PER_LEVEL).orElse(20);
+			int numRooms = Math.max(1, Math.min(1000, configRoomNumber));
 			
 			List<Room> rooms = roomProvider.getRooms(rand, numRooms);
 
