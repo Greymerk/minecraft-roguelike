@@ -3,6 +3,9 @@ package com.greymerk.roguelike.editor.shapes;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.Predicate;
+
+import org.apache.commons.lang3.tuple.Pair;
 
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
@@ -28,6 +31,11 @@ public class Column implements IShape {
 		this.forEach(c -> block.set(editor, rand, top, true, true));
 	}
 
+	@Override
+	public void fill(IWorldEditor editor, Random rand, IBlockFactory block, Predicate<Pair<IWorldEditor, Coord>> p) {
+		this.forEach(c -> block.set(editor, rand, top, p));
+	}
+	
 	@Override
 	public void fill(IWorldEditor editor, Random rand, IBlockFactory block, boolean fillAir, boolean replaceSolid) {
 		this.forEach(c -> block.set(editor, rand, top, fillAir, replaceSolid));
@@ -98,4 +106,6 @@ public class Column implements IShape {
 			return current.getY() > MAX_DEPTH;
 		}
 	}
+
+
 }

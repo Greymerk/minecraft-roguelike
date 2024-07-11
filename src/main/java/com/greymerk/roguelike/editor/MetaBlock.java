@@ -1,6 +1,11 @@
 package com.greymerk.roguelike.editor;
 
 import java.util.List;
+import java.util.function.Predicate;
+
+import org.apache.commons.lang3.tuple.Pair;
+
+import com.greymerk.roguelike.editor.shapes.IShape;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -18,7 +23,7 @@ recursively with other IBlockFactory containers
 such as BlockWeightedRandom
 **/
 public class MetaBlock extends BlockBase{
-
+	
 	private BlockState state;
     
 	public static MetaBlock of(Block block) {
@@ -45,8 +50,20 @@ public class MetaBlock extends BlockBase{
 		return editor.set(pos, this, true, true);
 	}
 	
+	@Override
+	public boolean set(IWorldEditor editor, Random rand, Coord pos, Predicate<Pair<IWorldEditor, Coord>> p) {
+		return editor.set(pos, this, p);
+	}
+	
 	public boolean set(IWorldEditor editor, Random rand, Coord pos, boolean fillAir, boolean replaceSolid) {
 		return editor.set(pos, this, fillAir, replaceSolid);
+	}
+	
+	@Override
+	public void fill(IWorldEditor editor, Random rand, IShape shape, Predicate<Pair<IWorldEditor, Coord>> p) {
+		shape.forEach(pos -> {
+			this.set(editor, rand, pos, p);
+		});	
 	}
 	
 	public boolean isIn(TagKey<Block> tag) {
@@ -108,4 +125,10 @@ public class MetaBlock extends BlockBase{
 		
 		return false;
 	}
+
+
+
+
+
+
 }

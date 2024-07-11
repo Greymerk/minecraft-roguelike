@@ -3,6 +3,10 @@ package com.greymerk.roguelike.editor.shapes;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.Predicate;
+
+import org.apache.commons.lang3.tuple.Pair;
+
 import net.minecraft.util.math.random.Random;
 
 import com.greymerk.roguelike.editor.Cardinal;
@@ -31,6 +35,13 @@ public class Ellipsoid implements IShape {
 
 	}
 
+	@Override
+	public void fill(IWorldEditor editor, Random rand, IBlockFactory block, Predicate<Pair<IWorldEditor, Coord>> p) {
+		for(Coord pos : this){
+			block.set(editor, rand, pos, p);
+		}
+	}
+	
 	@Override
 	public void fill(IWorldEditor editor, Random rand, IBlockFactory block, boolean fillAir, boolean replaceSolid) {
 		for(Coord pos : this){
@@ -142,4 +153,6 @@ public class Ellipsoid implements IShape {
 			throw new UnsupportedOperationException();
 		}
 	}
+
+
 }

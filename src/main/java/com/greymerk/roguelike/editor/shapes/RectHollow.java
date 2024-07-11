@@ -3,6 +3,9 @@ package com.greymerk.roguelike.editor.shapes;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.Predicate;
+
+import org.apache.commons.lang3.tuple.Pair;
 
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
@@ -33,6 +36,16 @@ public class RectHollow implements IShape {
 	@Override
 	public void fill(IWorldEditor editor, Random rand, IBlockFactory block){
 		fill(editor, rand, block, true, true);
+	}
+	
+	@Override
+	public void fill(IWorldEditor editor, Random rand, IBlockFactory block, Predicate<Pair<IWorldEditor, Coord>> p) {
+		this.forEach(c -> {
+			block.set(editor, rand, c, p);
+		});
+		
+		BoundingBox inner = this.bb.copy().grow(Cardinal.all, -1);
+		RectSolid.fill(editor, rand, inner, Air.get());
 	}
 	
 	@Override
@@ -116,4 +129,6 @@ public class RectHollow implements IShape {
 			throw new UnsupportedOperationException();	
 		}
 	}
+
+
 }

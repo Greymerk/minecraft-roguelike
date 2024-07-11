@@ -1,7 +1,12 @@
 package com.greymerk.roguelike.editor.blocks.stair;
 
+import java.util.function.Predicate;
+
+import org.apache.commons.lang3.tuple.Pair;
+
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
+import com.greymerk.roguelike.editor.Fill;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.shapes.IShape;
@@ -44,20 +49,31 @@ public class RandomStair implements IStair, IBlockFactory {
 	}
 
 	@Override
-	public boolean set(IWorldEditor editor, Random rand, Coord pos, boolean fillAir, boolean replaceSolid) {
+	public boolean set(IWorldEditor editor, Random rand, Coord pos, Predicate<Pair<IWorldEditor, Coord>> p) {
 		if(this.stairs.isEmpty()) return false;
 		IStair stair = this.stairs.get(rand).setOrientation(this.dir, this.upsideDown);
 		if(waterlogged) stair.waterlog();
-		return stair.set(editor, rand, pos, fillAir, replaceSolid);
+		return stair.set(editor, rand, pos, p);
+	}
+
+
+	@Override
+	public boolean set(IWorldEditor editor, Random rand, Coord pos, boolean fillAir, boolean replaceSolid) {
+		return set(editor, rand, pos, Fill.of(fillAir, replaceSolid));
+	}
+	
+	@Override
+	public void fill(IWorldEditor editor, Random rand, IShape shape, Predicate<Pair<IWorldEditor, Coord>> p) {
+		shape.forEach(pos -> {
+			this.set(editor, rand, pos, p);
+		});
 	}
 
 	@Override
 	public void fill(IWorldEditor editor, Random rand, IShape shape, boolean fillAir, boolean replaceSolid) {
-		shape.forEach(pos -> {
-			this.set(editor, rand, pos, fillAir, replaceSolid);
-		});
+		fill(editor, rand, shape, Fill.of(fillAir, replaceSolid));
 	}
-
+	
 	@Override
 	public void fill(IWorldEditor editor, Random rand, IShape shape) {
 		this.fill(editor, rand, shape, true, true);
@@ -68,5 +84,4 @@ public class RandomStair implements IStair, IBlockFactory {
 		this.waterlogged = true;
 		return this;
 	}
-	
 }

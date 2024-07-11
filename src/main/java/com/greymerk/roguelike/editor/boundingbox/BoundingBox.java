@@ -3,7 +3,9 @@ package com.greymerk.roguelike.editor.boundingbox;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Predicate;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.NotNull;
 
 import com.greymerk.roguelike.editor.Cardinal;
@@ -201,6 +203,12 @@ public class BoundingBox implements IBounded, IShape{
 		
 	}
 
+	@Override
+	public void fill(IWorldEditor editor, Random rand, IBlockFactory block, Predicate<Pair<IWorldEditor, Coord>> p) {
+		this.getShape(Shape.RECTSOLID).fill(editor, rand, block, p);
+		
+	}
+	
 	@Override
 	public void fill(IWorldEditor editor, Random rand, IBlockFactory block, boolean fillAir, boolean replaceSolid) {
 		this.getShape(Shape.RECTSOLID).fill(editor, rand, block, fillAir, replaceSolid);

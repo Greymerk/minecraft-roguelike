@@ -3,6 +3,7 @@ package com.greymerk.roguelike.dungeon.tower;
 import com.greymerk.roguelike.dungeon.fragment.parts.SpiralStairCase;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
+import com.greymerk.roguelike.editor.Fill;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.blocks.Air;
@@ -117,7 +118,7 @@ public class RogueTower implements ITower{
 		//stairway
 		BoundingBox.of(origin.copy().add(Cardinal.DOWN),
 			dungeon.copy().add(Cardinal.UP, 4)).grow(Cardinal.directions, 2)
-			.getShape(Shape.RECTHOLLOW).fill(editor, rand, walls, false, true);
+			.getShape(Shape.RECTHOLLOW).fill(editor, rand, walls, Fill.ONLY_SOLID);
 		SpiralStairCase.generate(editor, rand, theme, Line.of(origin.copy().add(Cardinal.UP, 4), dungeon));
 	}
 	

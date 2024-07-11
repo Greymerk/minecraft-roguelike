@@ -6,6 +6,9 @@ import java.util.Iterator;
 import java.util.List;
 import net.minecraft.util.math.random.Random;
 import java.util.Set;
+import java.util.function.Predicate;
+
+import org.apache.commons.lang3.tuple.Pair;
 
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IBlockFactory;
@@ -49,5 +52,12 @@ public class MultiShape implements IShape {
 			coords.add(pos.copy());
 		}
 		return coords;
+	}
+
+	@Override
+	public void fill(IWorldEditor editor, Random rand, IBlockFactory block, Predicate<Pair<IWorldEditor, Coord>> p) {
+		shape.forEach(pos -> {
+			block.set(editor, rand, pos, p);
+		});
 	}
 }

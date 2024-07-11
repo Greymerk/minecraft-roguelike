@@ -3,9 +3,13 @@ package com.greymerk.roguelike.editor.shapes;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.Predicate;
+
+import org.apache.commons.lang3.tuple.Pair;
 
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
+import com.greymerk.roguelike.editor.Fill;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
@@ -32,11 +36,15 @@ public class RectPyramid implements IShape {
 	}
 
 	@Override
-	public void fill(IWorldEditor editor, Random rand, IBlockFactory block, boolean fillAir, boolean replaceSolid) {
+	public void fill(IWorldEditor editor, Random rand, IBlockFactory block, Predicate<Pair<IWorldEditor, Coord>> p) {
 		for (Coord pos : this){
-			block.set(editor, rand, pos, fillAir, replaceSolid);
+			block.set(editor, rand, pos, p);
 		}
-
+	}
+	
+	@Override
+	public void fill(IWorldEditor editor, Random rand, IBlockFactory block, boolean fillAir, boolean replaceSolid) {
+		fill(editor, rand, block, Fill.of(fillAir, replaceSolid));
 	}
 
 	@Override
@@ -139,8 +147,6 @@ public class RectPyramid implements IShape {
 			
 			return true;
 			
-		}
-		
+		}	
 	}
-
 }

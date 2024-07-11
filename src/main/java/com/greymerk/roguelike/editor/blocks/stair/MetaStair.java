@@ -1,7 +1,12 @@
 package com.greymerk.roguelike.editor.blocks.stair;
 
+import java.util.function.Predicate;
+
+import org.apache.commons.lang3.tuple.Pair;
+
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
+import com.greymerk.roguelike.editor.Fill;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.MetaBlock;
 import com.greymerk.roguelike.editor.shapes.IShape;
@@ -49,18 +54,28 @@ public class MetaStair implements IStair{
 		return this.stair.set(editor, rand, pos);
 	}
 	
+	@Override
 	public boolean set(IWorldEditor editor, Random rand, Coord pos, boolean fillAir, boolean replaceSolid) {
+		return set(editor, rand, pos, Fill.of(fillAir, replaceSolid));
+	}
+	
+	public boolean set(IWorldEditor editor, Random rand, Coord pos, Predicate<Pair<IWorldEditor, Coord>> p) {
 		setStairShape(editor, pos);
-		return this.stair.set(editor, rand, pos, fillAir, replaceSolid);
+		return this.stair.set(editor, rand, pos, p);
+	}
+	
+	@Override
+	public void fill(IWorldEditor editor, Random rand, IShape shape, Predicate<Pair<IWorldEditor, Coord>> p) {
+		shape.get().forEach(pos -> {
+			this.set(editor, rand, pos, p);
+		});
 	}
 
 	@Override
 	public void fill(IWorldEditor editor, Random rand, IShape shape, boolean fillAir, boolean replaceSolid) {
-		shape.get().forEach(pos -> {
-			this.set(editor, rand, pos, fillAir, replaceSolid);
-		});
+		fill(editor, rand, shape, Fill.of(fillAir, replaceSolid));
 	}
-
+	
 	@Override
 	public void fill(IWorldEditor editor, Random rand, IShape shape) {
 		this.fill(editor, rand, shape, true, true);

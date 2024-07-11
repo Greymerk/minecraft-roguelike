@@ -68,9 +68,16 @@ public class SculkRoom extends AbstractLargeRoom implements IRoom {
 				.filter(pos -> checkerBoard(pos))
 				.collect(Collectors.toList());
 		RandHelper.shuffle(empty, rand);
-		empty.subList(0, rand.nextBetween(5, 9)).forEach(pos -> {
-			Treasure.generate(editor, rand, pos, types.get(rand));
-		});
+		int count = rand.nextBetween(5, 9);
+		if(empty.size() <= count) {
+			empty.forEach(pos -> {
+				Treasure.generate(editor, rand, pos, types.get(rand));	
+			});
+		} else {
+			empty.subList(0, count).forEach(pos -> {
+				Treasure.generate(editor, rand, pos, types.get(rand));
+			});	
+		}
 	}
 	
 	private boolean checkerBoard(Coord pos) {

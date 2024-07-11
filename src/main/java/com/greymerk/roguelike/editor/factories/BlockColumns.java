@@ -2,6 +2,10 @@ package com.greymerk.roguelike.editor.factories;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
+
+import org.apache.commons.lang3.tuple.Pair;
+
 import net.minecraft.util.math.random.Random;
 
 import com.greymerk.roguelike.editor.Coord;
@@ -21,11 +25,13 @@ public class BlockColumns extends BlockBase{
 	}
 	
 	@Override
-	public boolean set(IWorldEditor editor, Random rand, Coord pos, boolean fillAir, boolean replaceSolid) {
+	public boolean set(IWorldEditor editor, Random rand, Coord pos, Predicate<Pair<IWorldEditor, Coord>> p) {
 		int size = blocks.size();
 		int choice = Math.abs((pos.getX() % size + pos.getZ() % size)) % size;
 		IBlockFactory block = blocks.get(choice);
-		return block.set(editor, rand, pos, fillAir, replaceSolid);
+		return block.set(editor, rand, pos, p);
 	}
+	
+	
 
 }

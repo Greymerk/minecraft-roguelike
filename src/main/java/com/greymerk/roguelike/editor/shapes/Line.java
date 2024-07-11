@@ -3,6 +3,10 @@ package com.greymerk.roguelike.editor.shapes;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.Predicate;
+
+import org.apache.commons.lang3.tuple.Pair;
+
 import net.minecraft.util.math.random.Random;
 
 import com.greymerk.roguelike.editor.Coord;
@@ -28,6 +32,13 @@ public class Line implements IShape{
 		this.fill(editor, rand, block, true, true);
 	}
 
+	@Override
+	public void fill(IWorldEditor editor, Random rand, IBlockFactory block, Predicate<Pair<IWorldEditor, Coord>> p) {
+		for(Coord c : this){
+			block.set(editor, rand, c, p);
+		}
+	}
+	
 	@Override
 	public void fill(IWorldEditor editor, Random rand, IBlockFactory block, boolean fillAir, boolean replaceSolid) {
 		for(Coord c : this){
@@ -164,5 +175,7 @@ public class Line implements IShape{
 			return toReturn;
 		}
 	}
+
+
 
 }

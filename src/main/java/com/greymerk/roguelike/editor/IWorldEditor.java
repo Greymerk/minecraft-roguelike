@@ -1,6 +1,9 @@
 package com.greymerk.roguelike.editor;
 
 import java.nio.file.Path;
+import java.util.function.Predicate;
+
+import org.apache.commons.lang3.tuple.Pair;
 
 import com.greymerk.roguelike.state.RoguelikeState;
 
@@ -14,9 +17,11 @@ import net.minecraft.world.World;
 
 public interface IWorldEditor {
 	
-	public boolean set(Coord pos, MetaBlock metaBlock, boolean fillAir, boolean replaceSolid);
-	
 	public boolean set(Coord pos, MetaBlock metaBlock);
+	
+	boolean set(Coord pos, MetaBlock block, Predicate<Pair<IWorldEditor, Coord>> p);
+	
+	public boolean set(Coord pos, MetaBlock metaBlock, boolean fillAir, boolean replaceSolid);
 	
 	public MetaBlock getBlock(Coord pos);
 	
@@ -59,4 +64,6 @@ public interface IWorldEditor {
 	public RoguelikeState getState();
 
 	boolean isAir(Coord pos);
+
+	
 }

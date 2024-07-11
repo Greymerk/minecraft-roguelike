@@ -2,6 +2,9 @@ package com.greymerk.roguelike.editor;
 
 import java.nio.file.Path;
 import java.util.Objects;
+import java.util.function.Predicate;
+
+import org.apache.commons.lang3.tuple.Pair;
 
 import com.greymerk.roguelike.state.RoguelikeState;
 
@@ -44,6 +47,20 @@ public class WorldEditor implements IWorldEditor{
 		this.worldKey = world.getRegistryKey();
 	}
 
+	@Override
+	public boolean set(Coord pos, MetaBlock block, Predicate<Pair<IWorldEditor, Coord>> p) {
+		
+		if(!p.test(Pair.of(this, pos))) return false;
+		
+		try{
+			world.setBlockState(pos.getBlockPos(), block.getState(), block.getFlag());
+		} catch(NullPointerException npe){
+			//ignore it.
+		}
+		
+		return true;
+	}
+	
 	@Override
 	public boolean set(Coord pos, MetaBlock block, boolean fillAir, boolean replaceSolid) {
 		if(this.hasBlockEntity(pos)) return false;
