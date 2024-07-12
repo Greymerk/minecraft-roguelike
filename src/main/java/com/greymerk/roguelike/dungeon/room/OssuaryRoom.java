@@ -217,7 +217,7 @@ public class OssuaryRoom extends AbstractMediumRoom implements IRoom {
 					Coord p = pos.copy();
 					p.add(d);
 					stair.setOrientation(d, true);
-					stair.set(editor, rand, p, true, false);
+					stair.set(editor, rand, p, Fill.ONLY_AIR);
 				}
 				pos.add(Cardinal.reverse(dir));
 				pos.add(Cardinal.UP);

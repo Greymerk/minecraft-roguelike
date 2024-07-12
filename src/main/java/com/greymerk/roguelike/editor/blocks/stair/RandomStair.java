@@ -55,12 +55,6 @@ public class RandomStair implements IStair, IBlockFactory {
 		if(waterlogged) stair.waterlog();
 		return stair.set(editor, rand, pos, p);
 	}
-
-
-	@Override
-	public boolean set(IWorldEditor editor, Random rand, Coord pos, boolean fillAir, boolean replaceSolid) {
-		return set(editor, rand, pos, Fill.of(fillAir, replaceSolid));
-	}
 	
 	@Override
 	public void fill(IWorldEditor editor, Random rand, IShape shape, Predicate<Pair<IWorldEditor, Coord>> p) {
@@ -68,15 +62,10 @@ public class RandomStair implements IStair, IBlockFactory {
 			this.set(editor, rand, pos, p);
 		});
 	}
-
-	@Override
-	public void fill(IWorldEditor editor, Random rand, IShape shape, boolean fillAir, boolean replaceSolid) {
-		fill(editor, rand, shape, Fill.of(fillAir, replaceSolid));
-	}
 	
 	@Override
 	public void fill(IWorldEditor editor, Random rand, IShape shape) {
-		this.fill(editor, rand, shape, true, true);
+		this.fill(editor, rand, shape, Fill.ALWAYS);
 	}
 
 	@Override

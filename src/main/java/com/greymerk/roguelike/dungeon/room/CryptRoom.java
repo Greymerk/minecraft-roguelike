@@ -150,7 +150,7 @@ public class CryptRoom extends AbstractMediumRoom implements IRoom {
 		bb.add(Cardinal.reverse(dir));
 		List<Coord> lc = bb.getShape(Shape.RECTSOLID).get();
 		stair.setOrientation(Cardinal.reverse(dir), true);
-		lc.forEach(c -> stair.set(editor, rand, c, true, false));
+		lc.forEach(c -> stair.set(editor, rand, c, Fill.ONLY_AIR));
 		
 		for(Cardinal o : Cardinal.orthogonal(dir)){
 			bb = BoundingBox.of(origin.copy());

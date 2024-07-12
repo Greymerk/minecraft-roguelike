@@ -13,6 +13,7 @@ import com.greymerk.roguelike.dungeon.fragment.wall.WallFlowers;
 import com.greymerk.roguelike.dungeon.layout.Entrance;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
+import com.greymerk.roguelike.editor.Fill;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.blocks.Air;
@@ -130,7 +131,7 @@ public class BedRoom extends AbstractRoom implements IRoom {
 			Coord p = pos.copy();
 			p.add(dir);
 			stair.setOrientation(dir, true);
-			stair.set(editor, rand, p, true, false);
+			stair.set(editor, rand, p, Fill.ONLY_AIR);
 		}
 	}
 	

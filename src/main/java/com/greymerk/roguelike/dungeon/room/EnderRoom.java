@@ -153,7 +153,7 @@ public class EnderRoom extends AbstractMediumRoom implements IRoom {
 			pos.add(dir, 8).add(Cardinal.left(dir), 8).add(Cardinal.UP, 4);
 			for(Cardinal d : Cardinal.directions) {
 				Coord p = pos.copy().add(d);
-				stair.setOrientation(d, true).set(editor, rand, p, true, false);
+				stair.setOrientation(d, true).set(editor, rand, p, Fill.ONLY_AIR);
 			}
 			
 			for(Cardinal orth : Cardinal.orthogonal(dir)) {

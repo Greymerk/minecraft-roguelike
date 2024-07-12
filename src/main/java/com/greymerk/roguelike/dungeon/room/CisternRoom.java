@@ -173,7 +173,7 @@ public class CisternRoom extends AbstractMediumRoom implements IRoom {
 				pos.add(dir, 8).add(Cardinal.left(dir), 8).add(Cardinal.UP, 2);
 				pos.add(d);
 				stair.setOrientation(d, true);
-				stair.set(editor, rand, pos, true, false);
+				stair.set(editor, rand, pos, Fill.ONLY_AIR);
 			}
 			bb = BoundingBox.of(origin.copy());
 			bb.add(dir, 8).add(Cardinal.left(dir), 8);

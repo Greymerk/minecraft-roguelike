@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
+import com.greymerk.roguelike.editor.Fill;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.theme.IBlockSet;
@@ -25,7 +26,7 @@ public class Pillar {
 		if(height > 1) BoundingBox.of(origin).grow(Cardinal.UP, height - 1).fill(editor, rand, blocks.getPillar());
 		blocks.getWall().set(editor, rand, origin.copy().add(Cardinal.UP, height));
 		directions.forEach(dir -> {
-			blocks.getStair().setOrientation(dir, true).set(editor, rand, origin.copy().add(dir).add(Cardinal.UP, height), true, false);
+			blocks.getStair().setOrientation(dir, true).set(editor, rand, origin.copy().add(dir).add(Cardinal.UP, height), Fill.ONLY_AIR);
 		});
 	}
 

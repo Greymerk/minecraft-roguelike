@@ -54,11 +54,6 @@ public class MetaStair implements IStair{
 		return this.stair.set(editor, rand, pos);
 	}
 	
-	@Override
-	public boolean set(IWorldEditor editor, Random rand, Coord pos, boolean fillAir, boolean replaceSolid) {
-		return set(editor, rand, pos, Fill.of(fillAir, replaceSolid));
-	}
-	
 	public boolean set(IWorldEditor editor, Random rand, Coord pos, Predicate<Pair<IWorldEditor, Coord>> p) {
 		setStairShape(editor, pos);
 		return this.stair.set(editor, rand, pos, p);
@@ -70,15 +65,10 @@ public class MetaStair implements IStair{
 			this.set(editor, rand, pos, p);
 		});
 	}
-
-	@Override
-	public void fill(IWorldEditor editor, Random rand, IShape shape, boolean fillAir, boolean replaceSolid) {
-		fill(editor, rand, shape, Fill.of(fillAir, replaceSolid));
-	}
 	
 	@Override
 	public void fill(IWorldEditor editor, Random rand, IShape shape) {
-		this.fill(editor, rand, shape, true, true);
+		this.fill(editor, rand, shape, Fill.ALWAYS);
 	}
 	
 	private void setStairShape(IWorldEditor editor, Coord pos) {
