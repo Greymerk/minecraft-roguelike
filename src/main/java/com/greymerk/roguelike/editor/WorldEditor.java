@@ -49,37 +49,13 @@ public class WorldEditor implements IWorldEditor{
 
 	@Override
 	public boolean set(Coord pos, MetaBlock block, Predicate<Pair<IWorldEditor, Coord>> p) {
-		
 		if(!p.test(Pair.of(this, pos))) return false;
-		
-		try{
-			world.setBlockState(pos.getBlockPos(), block.getState(), block.getFlag());
-		} catch(NullPointerException npe){
-			//ignore it.
-		}
-		
-		return true;
+		return world.setBlockState(pos.getBlockPos(), block.getState(), block.getFlag());
 	}
 	
 	@Override
-	public boolean set(Coord pos, MetaBlock block, boolean fillAir, boolean replaceSolid) {
-		if(this.hasBlockEntity(pos)) return false;
-		
-		if(!fillAir && this.isAir(pos)) return false;
-		if(!replaceSolid && this.isSolid(pos))	return false;
-		
-		try{
-			world.setBlockState(pos.getBlockPos(), block.getState(), block.getFlag());
-		} catch(NullPointerException npe){
-			//ignore it.
-		}
-		
-		return true;
-	}
-	
-	@Override
-	public boolean set(Coord pos, MetaBlock metaBlock) {
-		return this.set(pos, metaBlock, true, true);
+	public boolean set(Coord pos, MetaBlock block) {
+		return world.setBlockState(pos.getBlockPos(), block.getState(), block.getFlag());
 	}
 	
 	@Override
@@ -228,5 +204,10 @@ public class WorldEditor implements IWorldEditor{
 	@Override
 	public RoguelikeState getState() {
 		return RoguelikeState.getServerState(worldKey, world.getServer());
+	}
+
+	@Override
+	public int getBottomY() {
+		return world.getBottomY();
 	}
 }

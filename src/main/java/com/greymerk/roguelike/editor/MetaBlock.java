@@ -5,8 +5,6 @@ import java.util.function.Predicate;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import com.greymerk.roguelike.editor.shapes.IShape;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.registry.tag.BlockTags;
@@ -47,25 +45,23 @@ public class MetaBlock extends BlockBase{
 	}
 	
 	public boolean set(IWorldEditor editor, Coord pos){
-		return editor.set(pos, this, true, true);
+		return editor.set(pos, this);
+	}
+	
+	public boolean set(IWorldEditor editor, Coord pos, Predicate<Pair<IWorldEditor, Coord>> p) {
+		return editor.set(pos, this, p);
+	}
+	
+	@Override
+	public boolean set(IWorldEditor editor, Random rand, Coord pos) {
+		return editor.set(pos, this);
 	}
 	
 	@Override
 	public boolean set(IWorldEditor editor, Random rand, Coord pos, Predicate<Pair<IWorldEditor, Coord>> p) {
 		return editor.set(pos, this, p);
 	}
-	
-	public boolean set(IWorldEditor editor, Random rand, Coord pos, boolean fillAir, boolean replaceSolid) {
-		return editor.set(pos, this, fillAir, replaceSolid);
-	}
-	
-	@Override
-	public void fill(IWorldEditor editor, Random rand, IShape shape, Predicate<Pair<IWorldEditor, Coord>> p) {
-		shape.forEach(pos -> {
-			this.set(editor, rand, pos, p);
-		});	
-	}
-	
+		
 	public boolean isIn(TagKey<Block> tag) {
 		return this.state.isIn(tag);
 	}

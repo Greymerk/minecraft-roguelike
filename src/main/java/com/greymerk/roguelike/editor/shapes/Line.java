@@ -10,6 +10,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import net.minecraft.util.math.random.Random;
 
 import com.greymerk.roguelike.editor.Coord;
+import com.greymerk.roguelike.editor.Fill;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
 
@@ -29,7 +30,7 @@ public class Line implements IShape{
 
 	@Override
 	public void fill(IWorldEditor editor, Random rand, IBlockFactory block) {
-		this.fill(editor, rand, block, true, true);
+		this.fill(editor, rand, block, Fill.ALWAYS);
 	}
 
 	@Override
@@ -39,13 +40,6 @@ public class Line implements IShape{
 		}
 	}
 	
-	@Override
-	public void fill(IWorldEditor editor, Random rand, IBlockFactory block, boolean fillAir, boolean replaceSolid) {
-		for(Coord c : this){
-			block.set(editor, rand, c, fillAir, replaceSolid);
-		}
-	}
-
 	@Override
 	public List<Coord> get() {
 		List<Coord> coords = new ArrayList<Coord>();

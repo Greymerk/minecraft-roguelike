@@ -13,6 +13,7 @@ import com.greymerk.roguelike.dungeon.fragment.parts.SpiralStairCase;
 import com.greymerk.roguelike.dungeon.layout.Entrance;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
+import com.greymerk.roguelike.editor.Fill;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.MetaBlock;
@@ -180,7 +181,7 @@ public class BrewingRoom extends AbstractRoom implements IRoom {
 		BoundingBox.of(origin).grow(Cardinal.orthogonal(direction), 8).grow(List.of(direction, Cardinal.reverse(direction)), 5).grow(Cardinal.UP, 4)
 			.getShape(Shape.RECTSOLID).fill(editor, rand, Air.get());
 		BoundingBox.of(origin).add(Cardinal.UP, 5).grow(Cardinal.parallel(direction), 3).grow(Cardinal.orthogonal(direction), 6)
-			.getShape(Shape.RECTSOLID).fill(editor, rand, ceiling.get(), false, true);
+			.getShape(Shape.RECTSOLID).fill(editor, rand, ceiling.get(), Fill.ONLY_SOLID);
 		BoundingBox.of(origin).add(Cardinal.DOWN).grow(List.of(direction, Cardinal.reverse(direction)), 4).grow(Cardinal.orthogonal(direction), 7)
 			.getShape(Shape.RECTSOLID).fill(editor, rand, floor);
 		

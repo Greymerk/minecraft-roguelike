@@ -1,5 +1,9 @@
 package com.greymerk.roguelike.editor.blocks.slab;
 
+import java.util.function.Predicate;
+
+import org.apache.commons.lang3.tuple.Pair;
+
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.MetaBlock;
@@ -33,8 +37,8 @@ public class MetaSlab implements ISlab {
 	}
 
 	@Override
-	public boolean set(IWorldEditor editor, Coord pos, boolean fillAir, boolean replaceSolid) {
-		return editor.set(pos, slab, fillAir, replaceSolid);
+	public boolean set(IWorldEditor editor, Coord pos, Predicate<Pair<IWorldEditor, Coord>> p) {
+		return editor.set(pos, slab, p);
 	}
 
 

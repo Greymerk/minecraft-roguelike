@@ -1,15 +1,14 @@
 package com.greymerk.roguelike.editor.factories;
 
-import net.minecraft.util.math.random.Random;
-
 import java.util.function.Predicate;
 
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.greymerk.roguelike.editor.Coord;
-import com.greymerk.roguelike.editor.Fill;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
+
+import net.minecraft.util.math.random.Random;
 
 public class BlockCheckers extends BlockBase {
 
@@ -65,10 +64,5 @@ public class BlockCheckers extends BlockBase {
 				}
 			}
 		}
-	}
-
-	@Override
-	public boolean set(IWorldEditor editor, Random rand, Coord pos, boolean fillAir, boolean replaceSolid) {
-		return set(editor, rand, pos, Fill.of(fillAir, replaceSolid));
 	}
 }

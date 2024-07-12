@@ -8,6 +8,7 @@ import com.greymerk.roguelike.dungeon.fragment.parts.Pillar;
 import com.greymerk.roguelike.dungeon.layout.Entrance;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
+import com.greymerk.roguelike.editor.Fill;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.blocks.Air;
@@ -31,7 +32,7 @@ public class Corridor extends AbstractRoom implements IRoom{
 	
 	private void cell(IWorldEditor editor, Random rand, Coord origin) {
 		IBlockFactory blocks = theme.getPrimary().getWall();
-		BoundingBox.of(origin).add(Cardinal.UP, 4).grow(Cardinal.directions).fill(editor, rand, blocks, false, true);
+		BoundingBox.of(origin).add(Cardinal.UP, 4).grow(Cardinal.directions).fill(editor, rand, blocks, Fill.ONLY_SOLID);
 		Cardinal.directions.forEach(dir -> {
 			BoundingBox.of(origin).add(dir, 2).add(Cardinal.UP, 3).grow(Cardinal.orthogonal(dir), 2).fill(editor, rand, blocks);
 			BoundingBox.of(origin).add(dir, 2).add(Cardinal.DOWN).grow(Cardinal.orthogonal(dir), 2).fill(editor, rand, blocks);
@@ -45,7 +46,7 @@ public class Corridor extends AbstractRoom implements IRoom{
 		BoundingBox.of(origin).grow(Cardinal.directions, 2).grow(Cardinal.UP, 3).fill(editor, rand, Air.get());
 		Cardinal.directions.forEach(dir -> {
 			BoundingBox.of(origin).add(dir, 3).grow(Cardinal.orthogonal(dir), 2).grow(Cardinal.UP, 3)
-				.fill(editor, rand, theme.getPrimary().getWall(), false, true);
+				.fill(editor, rand, theme.getPrimary().getWall(), Fill.ONLY_SOLID);
 		});
 	}
 

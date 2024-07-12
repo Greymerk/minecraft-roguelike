@@ -6,6 +6,7 @@ import com.greymerk.roguelike.dungeon.fragment.parts.CellSupport;
 import com.greymerk.roguelike.dungeon.layout.Entrance;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
+import com.greymerk.roguelike.editor.Fill;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.blocks.Air;
 import com.greymerk.roguelike.editor.blocks.BlockType;
@@ -132,7 +133,7 @@ public class MusicRoom extends AbstractMediumRoom implements IRoom {
 			} else {
 				bb = BoundingBox.of(origin);
 				bb.add(dir, 6).grow(Cardinal.UP, 4).grow(Cardinal.orthogonal(dir), 2);
-				RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall(), false, true);
+				RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall(), Fill.ONLY_SOLID);
 			}
 		}
 		

@@ -3,6 +3,7 @@ package com.greymerk.roguelike.editor.blocks;
 
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
+import com.greymerk.roguelike.editor.Fill;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.MetaBlock;
 
@@ -33,6 +34,6 @@ public enum Torch {
 			torch.with(WallTorchBlock.FACING, Cardinal.facing(Cardinal.reverse(dir)));
 		}
 		
-		if(editor.isSupported(pos)) MetaBlock.of(Blocks.TORCH).set(editor, pos);
+		MetaBlock.of(Blocks.TORCH).set(editor, pos, Fill.SUPPORTED);
 	}	
 }

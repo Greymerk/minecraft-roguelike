@@ -108,11 +108,11 @@ public class RogueTower implements ITower{
 			//beard
 			BoundingBox.of(origin.copy().add(Cardinal.DOWN).add(dir, 3).add(Cardinal.left(dir), 3),
 				dungeon.copy().add(dir, 3).add(Cardinal.left(dir), 3))
-				.fill(editor, rand, walls, true, false);
+				.fill(editor, rand, walls, Fill.ONLY_AIR);
 				
 			BoundingBox.of(origin.copy().add(Cardinal.DOWN),
 				dungeon.copy().add(Cardinal.UP, 4)).add(dir, 4).grow(Cardinal.orthogonal(dir), 3)
-				.fill(editor, rand, walls, true, false);
+				.fill(editor, rand, walls, Fill.ONLY_AIR);
 		}
 		
 		//stairway

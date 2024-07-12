@@ -32,7 +32,7 @@ public class RectPyramid implements IShape {
 
 	@Override
 	public void fill(IWorldEditor editor, Random rand, IBlockFactory block) {
-		fill(editor, rand, block, true, true);
+		fill(editor, rand, block, Fill.ALWAYS);
 	}
 
 	@Override
@@ -40,11 +40,6 @@ public class RectPyramid implements IShape {
 		for (Coord pos : this){
 			block.set(editor, rand, pos, p);
 		}
-	}
-	
-	@Override
-	public void fill(IWorldEditor editor, Random rand, IBlockFactory block, boolean fillAir, boolean replaceSolid) {
-		fill(editor, rand, block, Fill.of(fillAir, replaceSolid));
 	}
 
 	@Override

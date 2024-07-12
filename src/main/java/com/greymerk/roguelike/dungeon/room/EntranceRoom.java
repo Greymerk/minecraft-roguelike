@@ -7,6 +7,7 @@ import com.greymerk.roguelike.dungeon.cell.CellState;
 import com.greymerk.roguelike.dungeon.fragment.parts.CellSupport;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
+import com.greymerk.roguelike.editor.Fill;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.blocks.stair.IStair;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
@@ -24,7 +25,7 @@ public class EntranceRoom  extends AbstractRoom implements IRoom{
 		IStair stair = theme.getPrimary().getStair();
 		
 		BoundingBox.of(origin).grow(Cardinal.directions, 5).grow(Cardinal.UP, 5).grow(Cardinal.DOWN)
-			.getShape(Shape.RECTHOLLOW).fill(editor, rand, theme.getPrimary().getWall(), false, true);
+			.getShape(Shape.RECTHOLLOW).fill(editor, rand, theme.getPrimary().getWall(), Fill.ONLY_SOLID);
 		
 		BoundingBox.of(origin).grow(Cardinal.directions, 4).add(Cardinal.DOWN)
 			.fill(editor, rand, theme.getPrimary().getFloor());

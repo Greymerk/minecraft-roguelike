@@ -10,6 +10,12 @@ public class Fill {
 		return ctx.getLeft().isAir(ctx.getRight());
 	});
 	
+	public static Predicate<Pair<IWorldEditor, Coord>> SUPPORTED = (ctx -> {
+		IWorldEditor editor = ctx.getLeft();
+		Coord pos = ctx.getRight();
+		return editor.isSupported(pos);
+	});
+	
 	public static Predicate<Pair<IWorldEditor, Coord>> ALWAYS = (ctx -> true);
 	public static Predicate<Pair<IWorldEditor, Coord>> NEVER = ALWAYS.negate();
 	public static Predicate<Pair<IWorldEditor, Coord>> ONLY_AIR = isAir; // fillAir !replaceSolid
@@ -22,4 +28,5 @@ public class Fill {
 		return ALWAYS;
 	}
 	
+		
 }

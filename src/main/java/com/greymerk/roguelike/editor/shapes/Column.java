@@ -9,6 +9,7 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
+import com.greymerk.roguelike.editor.Fill;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
 
@@ -28,7 +29,7 @@ public class Column implements IShape {
 	
 	@Override
 	public void fill(IWorldEditor editor, Random rand, IBlockFactory block) {
-		this.forEach(c -> block.set(editor, rand, top, true, true));
+		this.forEach(c -> block.set(editor, rand, top, Fill.ALWAYS));
 	}
 
 	@Override
@@ -36,11 +37,6 @@ public class Column implements IShape {
 		this.forEach(c -> block.set(editor, rand, top, p));
 	}
 	
-	@Override
-	public void fill(IWorldEditor editor, Random rand, IBlockFactory block, boolean fillAir, boolean replaceSolid) {
-		this.forEach(c -> block.set(editor, rand, top, fillAir, replaceSolid));
-	}
-
 	public List<Coord> getUntilSolid(IWorldEditor editor){
 		Iterator<Coord> itr = new FillDownIterator(editor, top.copy());
 		List<Coord> cl = new ArrayList<Coord>();
@@ -56,12 +52,12 @@ public class Column implements IShape {
 	}
 	
 	public void fillDown(IWorldEditor editor, Random rand, IBlockFactory blocks) {
-		fillDown(editor, rand, blocks, true, true);
+		fillDown(editor, rand, blocks, Fill.ALWAYS);
 	}
 	
-	public void fillDown(IWorldEditor editor, Random rand, IBlockFactory blocks, boolean fillAir, boolean replaceSolid) {
+	public void fillDown(IWorldEditor editor, Random rand, IBlockFactory blocks, Predicate<Pair<IWorldEditor, Coord>> p) {
 		Iterator<Coord> itr = new FillDownIterator(editor, top.copy());
-		itr.forEachRemaining(c -> blocks.set(editor, rand, c, fillAir, replaceSolid));
+		itr.forEachRemaining(c -> blocks.set(editor, rand, c, p));
 	}
 	
 	@Override

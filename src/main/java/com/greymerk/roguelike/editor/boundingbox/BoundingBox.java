@@ -210,12 +210,6 @@ public class BoundingBox implements IBounded, IShape{
 	}
 	
 	@Override
-	public void fill(IWorldEditor editor, Random rand, IBlockFactory block, boolean fillAir, boolean replaceSolid) {
-		this.getShape(Shape.RECTSOLID).fill(editor, rand, block, fillAir, replaceSolid);
-		
-	}
-
-	@Override
 	public List<Coord> get() {
 		return this.getShape(Shape.RECTSOLID).get();
 	}

@@ -9,6 +9,7 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
+import com.greymerk.roguelike.editor.Fill;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.blocks.Air;
@@ -24,18 +25,14 @@ public class RectHollow implements IShape {
 	public RectHollow(BoundingBox bb){
 		this.bb = bb;
 	}
-	
-	public static void fill(IWorldEditor editor, Random rand, IBounded bb, IBlockFactory block, boolean fillAir, boolean replaceSolid) {
-		bb.getShape(Shape.RECTHOLLOW).fill(editor, rand, block, fillAir, replaceSolid);
-	}
 
 	public static void fill(IWorldEditor editor, Random rand, IBounded bb, IBlockFactory block) {
-		bb.getShape(Shape.RECTHOLLOW).fill(editor, rand, block, true, true);
+		bb.getShape(Shape.RECTHOLLOW).fill(editor, rand, block, Fill.ALWAYS);
 	}
 	
 	@Override
 	public void fill(IWorldEditor editor, Random rand, IBlockFactory block){
-		fill(editor, rand, block, true, true);
+		fill(editor, rand, block, Fill.ALWAYS);
 	}
 	
 	@Override
@@ -48,16 +45,6 @@ public class RectHollow implements IShape {
 		RectSolid.fill(editor, rand, inner, Air.get());
 	}
 	
-	@Override
-	public void fill(IWorldEditor editor, Random rand, IBlockFactory block, boolean fillAir, boolean replaceSolid) {
-		for(Coord c : this){
-			block.set(editor, rand, c, fillAir, replaceSolid);
-		}
-		
-		BoundingBox inner = this.bb.copy().grow(Cardinal.all, -1);
-		RectSolid.fill(editor, rand, inner, Air.get());
-	}
-
 	@Override
 	public List<Coord> get(){
 		List<Coord> coords = new ArrayList<Coord>();

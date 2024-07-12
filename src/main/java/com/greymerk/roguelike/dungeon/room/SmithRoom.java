@@ -11,6 +11,7 @@ import com.greymerk.roguelike.dungeon.fragment.parts.Pillar;
 import com.greymerk.roguelike.dungeon.layout.Entrance;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
+import com.greymerk.roguelike.editor.Fill;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.MetaBlock;
@@ -82,7 +83,7 @@ public class SmithRoom extends AbstractRoom implements IRoom {
 		IStair stair = theme.getPrimary().getStair();
 		IBlockFactory wall = theme.getPrimary().getWall();
 		BoundingBox.of(origin).add(Cardinal.DOWN).grow(Cardinal.reverse(direction), 4).grow(direction, 8).grow(Cardinal.orthogonal(direction), 3).fill(editor, rand, theme.getPrimary().getFloor());
-		BoundingBox.of(origin).add(Cardinal.UP, 5).grow(Cardinal.reverse(direction), 4).grow(direction, 8).grow(Cardinal.orthogonal(direction), 3).fill(editor, rand, theme.getPrimary().getWall(), false, true);
+		BoundingBox.of(origin).add(Cardinal.UP, 5).grow(Cardinal.reverse(direction), 4).grow(direction, 8).grow(Cardinal.orthogonal(direction), 3).fill(editor, rand, theme.getPrimary().getWall(), Fill.ONLY_SOLID);
 		this.anvilRoom(editor, rand, origin.add(Cardinal.left(direction), 6).freeze(), Cardinal.left(direction));
 		this.smithingRoom(editor, rand, origin.add(Cardinal.right(direction), 6).freeze(), Cardinal.right(direction));
 		Cardinal.parallel(direction).forEach(dir -> {
@@ -154,13 +155,13 @@ public class SmithRoom extends AbstractRoom implements IRoom {
 
 	private void sideRoom(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
 		BoundingBox.of(origin).add(Cardinal.DOWN).grow(Cardinal.orthogonal(dir), 3).grow(Cardinal.reverse(dir), 2).grow(dir, 3).fill(editor, rand, theme.getPrimary().getFloor());
-		BoundingBox.of(origin).add(Cardinal.UP, 4).grow(Cardinal.directions, 2).fill(editor, rand, theme.getPrimary().getWall(), false, true);
-		BoundingBox.of(origin).add(dir, 3).grow(Cardinal.DOWN).grow(Cardinal.UP, 3).grow(Cardinal.orthogonal(dir), 2).fill(editor, rand, theme.getPrimary().getWall(), false, true);
+		BoundingBox.of(origin).add(Cardinal.UP, 4).grow(Cardinal.directions, 2).fill(editor, rand, theme.getPrimary().getWall(), Fill.ONLY_SOLID);
+		BoundingBox.of(origin).add(dir, 3).grow(Cardinal.DOWN).grow(Cardinal.UP, 3).grow(Cardinal.orthogonal(dir), 2).fill(editor, rand, theme.getPrimary().getWall(), Fill.ONLY_SOLID);
 		Cardinal.directions.forEach(d -> {
 			BoundingBox.of(origin).add(Cardinal.UP, 3).add(d, 2).grow(Cardinal.orthogonal(d), 2).fill(editor, rand, theme.getPrimary().getWall());
 		});
 		Cardinal.orthogonal(dir).forEach(o -> {
-			BoundingBox.of(origin).add(o, 3).grow(Cardinal.DOWN).grow(Cardinal.UP, 3).grow(Cardinal.orthogonal(o), 2).fill(editor, rand, theme.getPrimary().getWall(), false, true);
+			BoundingBox.of(origin).add(o, 3).grow(Cardinal.DOWN).grow(Cardinal.UP, 3).grow(Cardinal.orthogonal(o), 2).fill(editor, rand, theme.getPrimary().getWall(), Fill.ONLY_SOLID);
 			Pillar.generate(editor, rand, origin.add(Cardinal.reverse(dir), 2).add(o, 2), theme, 2, List.of(Cardinal.reverse(dir), dir, Cardinal.reverse(o)));
 			Pillar.generate(editor, rand, origin.add(dir, 2).add(o, 2), theme, 2, List.of(Cardinal.reverse(dir), Cardinal.reverse(o)));
 		});

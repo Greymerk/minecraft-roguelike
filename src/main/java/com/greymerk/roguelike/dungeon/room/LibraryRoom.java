@@ -9,6 +9,7 @@ import com.greymerk.roguelike.dungeon.fragment.parts.Pillar;
 import com.greymerk.roguelike.dungeon.layout.Entrance;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
+import com.greymerk.roguelike.editor.Fill;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.MetaBlock;
@@ -123,7 +124,7 @@ public class LibraryRoom extends AbstractLargeRoom implements IRoom {
 			});
 		});
 		
-		BoundingBox.of(origin).add(Cardinal.UP, 7).grow(Cardinal.directions, 14).fill(editor, rand, theme.getPrimary().getWall(), false, true);
+		BoundingBox.of(origin).add(Cardinal.UP, 7).grow(Cardinal.directions, 14).fill(editor, rand, theme.getPrimary().getWall(), Fill.ONLY_SOLID);
 	}
 
 	private void entries(IWorldEditor editor, Random rand, Coord origin) {
@@ -162,7 +163,7 @@ public class LibraryRoom extends AbstractLargeRoom implements IRoom {
 	private void clear(IWorldEditor editor, Random rand, Coord origin) {
 		BoundingBox.of(origin).grow(Cardinal.directions, 14).grow(Cardinal.UP, 6).fill(editor, rand, Air.get());;
 		Cardinal.directions.forEach(dir -> {
-			BoundingBox.of(origin).add(dir, 15).grow(Cardinal.orthogonal(dir), 15).grow(Cardinal.UP, 5).fill(editor, rand, theme.getPrimary().getWall(), false, true);
+			BoundingBox.of(origin).add(dir, 15).grow(Cardinal.orthogonal(dir), 15).grow(Cardinal.UP, 5).fill(editor, rand, theme.getPrimary().getWall(), Fill.ONLY_SOLID);
 		});
 	}
 

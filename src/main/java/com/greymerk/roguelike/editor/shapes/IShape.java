@@ -18,8 +18,5 @@ public interface IShape extends Iterable<Coord>{
 	
 	public void fill(IWorldEditor editor, Random rand, IBlockFactory block, Predicate<Pair<IWorldEditor, Coord>> p);
 	
-	public void fill(IWorldEditor editor, Random rand, IBlockFactory block, boolean fillAir, boolean replaceSolid);
-	
-	public List<Coord> get();
-	
+	public List<Coord> get();	
 }

@@ -7,6 +7,7 @@ import com.greymerk.roguelike.dungeon.fragment.parts.Pillar;
 import com.greymerk.roguelike.dungeon.layout.Entrance;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
+import com.greymerk.roguelike.editor.Fill;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.blocks.Air;
@@ -45,7 +46,7 @@ public class KitchenRoom extends AbstractMediumRoom implements IRoom {
 		for(Cardinal dir : Cardinal.directions) {
 			for(Cardinal o : Cardinal.orthogonal(dir)) {
 				//outer wall
-				BoundingBox.of(origin).add(dir, 9).add(o, 3).grow(o, 6).grow(Cardinal.UP, 4).fill(editor, rand, wall, false, true);
+				BoundingBox.of(origin).add(dir, 9).add(o, 3).grow(o, 6).grow(Cardinal.UP, 4).fill(editor, rand, wall, Fill.ONLY_SOLID);
 				
 				//outer wall
 				BoundingBox.of(origin).add(dir, 8).add(Cardinal.UP, 3).grow(o, 8).grow(Cardinal.UP, 2).fill(editor, rand, wall);
@@ -85,7 +86,7 @@ public class KitchenRoom extends AbstractMediumRoom implements IRoom {
 				Fragment.generate(Fragment.ARCH, editor, rand, theme, pos, dir);
 			} else {
 				BoundingBox.of(origin).add(dir, 9).grow(Cardinal.DOWN).grow(Cardinal.UP, 3).grow(Cardinal.orthogonal(dir), 2)
-					.getShape(Shape.RECTSOLID).fill(editor, rand, wall, false, true);
+					.getShape(Shape.RECTSOLID).fill(editor, rand, wall, Fill.ONLY_SOLID);
 				if(this.getEntrance(dir) == Entrance.WALL) {
 					settings.getWallFragment(rand).generate(editor, rand, theme, origin.copy().add(dir, 6), dir);
 				}

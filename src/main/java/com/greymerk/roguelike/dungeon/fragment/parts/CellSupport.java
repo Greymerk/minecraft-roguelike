@@ -3,6 +3,7 @@ package com.greymerk.roguelike.dungeon.fragment.parts;
 import com.greymerk.roguelike.dungeon.fragment.IFragment;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
+import com.greymerk.roguelike.editor.Fill;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.blocks.Lantern;
@@ -56,13 +57,13 @@ public class CellSupport implements IFragment {
 			}
 		}
 		
-		wall.set(editor, rand, origin, true, false);
+		wall.set(editor, rand, origin, Fill.ONLY_AIR);
 		for(Cardinal o : Cardinal.orthogonal(dir)) {
 			Coord pos = origin.copy().add(o);
-			wall.set(editor, rand, pos, true, false);
+			wall.set(editor, rand, pos, Fill.ONLY_AIR);
 			pos.add(Cardinal.DOWN);
 			stair.setOrientation(Cardinal.reverse(o), true);
-			stair.set(editor, rand, pos, true, false);
+			stair.set(editor, rand, pos, Fill.ONLY_AIR);
 		}
 		
 		

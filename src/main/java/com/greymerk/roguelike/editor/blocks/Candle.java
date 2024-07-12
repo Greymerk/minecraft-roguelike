@@ -1,6 +1,7 @@
 package com.greymerk.roguelike.editor.blocks;
 
 import com.greymerk.roguelike.editor.Coord;
+import com.greymerk.roguelike.editor.Fill;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.MetaBlock;
 import com.greymerk.roguelike.util.Color;
@@ -21,7 +22,6 @@ public class Candle {
 	}
 	
 	public static void generate(IWorldEditor editor, Coord origin, Color color, int count, boolean lit) {
-		if(!editor.isSupported(origin)) return;
 		int numCandles;
 		if(count == 0) return;
 		if(count < 0) {
@@ -34,7 +34,7 @@ public class Candle {
 		MetaBlock.of(fromColor(color))
 			.with(CandleBlock.CANDLES, numCandles)
 			.with(CandleBlock.LIT, lit)
-			.set(editor, origin);
+			.set(editor, origin, Fill.SUPPORTED);
 	}
 	
 	public static Block fromColor(Color color) {

@@ -5,6 +5,7 @@ import java.util.List;
 import com.greymerk.roguelike.dungeon.fragment.IFragment;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
+import com.greymerk.roguelike.editor.Fill;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.MetaBlock;
 import com.greymerk.roguelike.editor.blocks.Air;
@@ -74,7 +75,7 @@ public class Fungus implements IFragment {
 			.addBlock(Air.get(), 1);
 		
 		if(rand.nextInt(3) != 0) {
-			BoundingBox.of(origin).grow(Cardinal.directions).fill(editor, rand, flesh, true, false);	
+			BoundingBox.of(origin).grow(Cardinal.directions).fill(editor, rand, flesh, Fill.ONLY_AIR);	
 		} else {
 			flesh.set(editor, rand, origin);
 		}

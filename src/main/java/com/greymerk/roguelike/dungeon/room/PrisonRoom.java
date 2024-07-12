@@ -10,6 +10,7 @@ import com.greymerk.roguelike.dungeon.fragment.parts.Pillar;
 import com.greymerk.roguelike.dungeon.layout.Entrance;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
+import com.greymerk.roguelike.editor.Fill;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.blocks.Air;
 import com.greymerk.roguelike.editor.blocks.IronBar;
@@ -46,13 +47,13 @@ public class PrisonRoom extends AbstractMediumRoom implements IRoom {
 			BoundingBox.of(origin).add(Cardinal.UP, 4).add(dir, 4).grow(Cardinal.orthogonal(dir), 8).grow(Cardinal.UP).fill(editor, rand, theme.getPrimary().getWall());
 			Cardinal.orthogonal(dir).forEach(o -> {
 				List.of(2, 4, 8).forEach(step -> {
-					theme.getPrimary().getWall().set(editor, rand, origin.add(Cardinal.UP, 6).add(dir, 2).add(o, step), true, false);
-					theme.getPrimary().getWall().set(editor, rand, origin.add(Cardinal.UP, 6).add(dir, 4).add(o, step), true, false);
+					theme.getPrimary().getWall().set(editor, rand, origin.add(Cardinal.UP, 6).add(dir, 2).add(o, step), Fill.ONLY_AIR);
+					theme.getPrimary().getWall().set(editor, rand, origin.add(Cardinal.UP, 6).add(dir, 4).add(o, step), Fill.ONLY_AIR);
 				});
 			});
-			theme.getPrimary().getWall().set(editor, rand, origin.add(Cardinal.UP, 5).add(dir, 8).add(Cardinal.left(dir), 8), true, false);
+			theme.getPrimary().getWall().set(editor, rand, origin.add(Cardinal.UP, 5).add(dir, 8).add(Cardinal.left(dir), 8), Fill.ONLY_AIR);
 		});
-		BoundingBox.of(origin).add(Cardinal.UP, 5).grow(Cardinal.directions, 8).fill(editor, rand, theme.getPrimary().getWall(), false, true);
+		BoundingBox.of(origin).add(Cardinal.UP, 5).grow(Cardinal.directions, 8).fill(editor, rand, theme.getPrimary().getWall(), Fill.ONLY_SOLID);
 	}
 
 
@@ -95,7 +96,7 @@ public class PrisonRoom extends AbstractMediumRoom implements IRoom {
 		if(this.getEntrance(dir) == Entrance.DOOR) {
 			Fragment.generate(Fragment.ARCH, editor, rand, theme, origin.add(dir, 6), dir);
 		} else if(this.getEntrance(dir) == Entrance.ALCOVE) {
-			BoundingBox.of(origin).add(dir, 9).grow(Cardinal.orthogonal(dir), 2).grow(Cardinal.UP, 2).fill(editor, rand, theme.getPrimary().getWall(), false, true);
+			BoundingBox.of(origin).add(dir, 9).grow(Cardinal.orthogonal(dir), 2).grow(Cardinal.UP, 2).fill(editor, rand, theme.getPrimary().getWall(), Fill.ONLY_SOLID);
 			settings.getAlcove(rand).generate(editor, rand, theme, origin.add(dir, 6), dir);
 		}
 	}
@@ -113,7 +114,7 @@ public class PrisonRoom extends AbstractMediumRoom implements IRoom {
 		});
 		BoundingBox.of(origin).add(dir, 4).add(Cardinal.UP, 3).grow(Cardinal.orthogonal(dir)).grow(Cardinal.UP).fill(editor, rand, theme.getPrimary().getWall());
 		bars(editor, rand, origin.add(dir, 4), dir);
-		BoundingBox.of(origin).add(dir, 9).grow(Cardinal.orthogonal(dir), 2).grow(Cardinal.UP, 2).fill(editor, rand, theme.getPrimary().getWall(), false, true);
+		BoundingBox.of(origin).add(dir, 9).grow(Cardinal.orthogonal(dir), 2).grow(Cardinal.UP, 2).fill(editor, rand, theme.getPrimary().getWall(), Fill.ONLY_SOLID);
 		settings.getWallFragment(rand).generate(editor, rand, theme, origin.add(dir, 6), dir);
 	}
 
@@ -134,7 +135,7 @@ public class PrisonRoom extends AbstractMediumRoom implements IRoom {
 		BoundingBox.of(origin).add(Cardinal.DOWN).grow(Cardinal.directions, 9).fill(editor, rand, theme.getPrimary().getFloor());
 		Cardinal.directions.forEach(dir -> {
 			Cardinal.orthogonal(dir).forEach(o -> {
-				BoundingBox.of(origin).add(dir, 9).add(o, 3).grow(o, 6).grow(Cardinal.UP, 3).fill(editor, rand, theme.getPrimary().getWall(), false, true);
+				BoundingBox.of(origin).add(dir, 9).add(o, 3).grow(o, 6).grow(Cardinal.UP, 3).fill(editor, rand, theme.getPrimary().getWall(), Fill.ONLY_SOLID);
 			});
 		});
 	}

@@ -2,6 +2,7 @@ package com.greymerk.roguelike.editor.blocks;
 
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
+import com.greymerk.roguelike.editor.Fill;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.MetaBlock;
 
@@ -20,8 +21,7 @@ public enum Skull {
 	}
 	
 	public static void set(IWorldEditor editor, Random rand, Coord origin, Cardinal dir, Skull type){
-		if(!editor.isSupported(origin)) return;
-		setRotation(rand, MetaBlock.of(Skull.fromType(type)), dir).set(editor, origin);
+		setRotation(rand, MetaBlock.of(Skull.fromType(type)), dir).set(editor, origin, Fill.SUPPORTED);
 	}
 	
 	public static MetaBlock setRotation(Random rand, MetaBlock skull, Cardinal dir){

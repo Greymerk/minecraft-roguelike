@@ -9,6 +9,7 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
+import com.greymerk.roguelike.editor.Fill;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
@@ -30,21 +31,13 @@ public class Sphere implements IShape {
 
 	@Override
 	public void fill(IWorldEditor editor, Random rand, IBlockFactory block) {
-		this.fill(editor, rand, block, true, true);
-
+		this.fill(editor, rand, block, Fill.ALWAYS);
 	}
 
 	@Override
 	public void fill(IWorldEditor editor, Random rand, IBlockFactory block, Predicate<Pair<IWorldEditor, Coord>> p) {
 		for(Coord pos : this){
 			block.set(editor, rand, pos, p);
-		}
-	}
-	
-	@Override
-	public void fill(IWorldEditor editor, Random rand, IBlockFactory block, boolean fillAir, boolean replaceSolid) {
-		for(Coord pos : this){
-			block.set(editor, rand, pos, fillAir, replaceSolid);
 		}
 	}
 

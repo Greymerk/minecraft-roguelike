@@ -16,25 +16,15 @@ public abstract class BlockBase implements IBlockFactory {
 	
 	@Override
 	public boolean set(IWorldEditor editor, Random rand, Coord pos) {
-		return set(editor, rand, pos, Fill.of(true, true));
-	}
-	
-	@Override
-	public boolean set(IWorldEditor editor, Random rand, Coord pos, boolean fillAir, boolean replaceSolid) {
-		return set(editor, rand, pos, Fill.of(fillAir, replaceSolid));
+		return set(editor, rand, pos, Fill.ALWAYS);
 	}
 	
 	@Override
 	public void fill(IWorldEditor editor, Random rand, IShape shape){
-		shape.fill(editor, rand, this, true, true);
+		shape.fill(editor, rand, this, Fill.ALWAYS);
 	}
 	
 	public void fill(IWorldEditor editor, Random rand, IShape shape, Predicate<Pair<IWorldEditor, Coord>> p) {
 		shape.fill(editor, rand, this, p);
-	}
-	
-	@Override
-	public void fill(IWorldEditor editor, Random rand, IShape shape, boolean fillAir, boolean replaceSolid){
-		shape.fill(editor, rand, this, fillAir, replaceSolid);
 	}
 }

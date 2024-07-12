@@ -20,7 +20,7 @@ public class WireframeFilter implements IFilter{
 		BoundingBox bb = box.getBoundingBox();
 		bb.add(Cardinal.UP, 200);
 		
-		IShape shape = new RectWireframe(bb);
+		IShape shape = RectWireframe.of(bb);
 		IBlockFactory block = BlockType.get(BlockType.SEA_LANTERN);
 		
 		shape.fill(editor, rand, block);

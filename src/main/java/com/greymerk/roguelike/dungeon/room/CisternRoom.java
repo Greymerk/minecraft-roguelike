@@ -6,6 +6,7 @@ import com.greymerk.roguelike.dungeon.fragment.parts.CellSupport;
 import com.greymerk.roguelike.dungeon.layout.Entrance;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
+import com.greymerk.roguelike.editor.Fill;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.blocks.Air;
@@ -58,10 +59,10 @@ public class CisternRoom extends AbstractMediumRoom implements IRoom {
 			bb.add(Cardinal.UP, 5);
 			bb.add(dir, 2);
 			bb.grow(Cardinal.orthogonal(dir), 5);
-			RectSolid.fill(editor, rand, bb, wall, true, false);
+			RectSolid.fill(editor, rand, bb, wall, Fill.ONLY_AIR);
 		}
 		
-		BoundingBox.of(origin).add(Cardinal.UP, 6).grow(Cardinal.directions, 8).fill(editor, rand, wall, false, true);
+		BoundingBox.of(origin).add(Cardinal.UP, 6).grow(Cardinal.directions, 8).fill(editor, rand, wall, Fill.ONLY_SOLID);
 	}
 
 	private void water(IWorldEditor editor, Random rand, Coord origin) {
@@ -73,7 +74,7 @@ public class CisternRoom extends AbstractMediumRoom implements IRoom {
 		bb = BoundingBox.of(origin.copy());
 		bb.add(Cardinal.DOWN);
 		bb.grow(Cardinal.directions, 7);
-		RectSolid.fill(editor, rand, bb, theme.getPrimary().getLiquid(), true, false);
+		RectSolid.fill(editor, rand, bb, theme.getPrimary().getLiquid(), Fill.ONLY_AIR);
 	}
 
 	private void bridges(IWorldEditor editor, Random rand, Coord origin) {
@@ -137,7 +138,7 @@ public class CisternRoom extends AbstractMediumRoom implements IRoom {
 		IStair stair = theme.getPrimary().getStair();
 		
 		Cardinal.directions.forEach(dir -> {
-			BoundingBox.of(origin).add(dir, 9).grow(Cardinal.orthogonal(dir), 9).grow(Cardinal.DOWN).grow(Cardinal.UP, 5).fill(editor, rand, theme.getPrimary().getWall(), false, true);
+			BoundingBox.of(origin).add(dir, 9).grow(Cardinal.orthogonal(dir), 9).grow(Cardinal.DOWN).grow(Cardinal.UP, 5).fill(editor, rand, theme.getPrimary().getWall(), Fill.ONLY_SOLID);
 		});
 		
 		for(Cardinal dir : Cardinal.directions) {
@@ -242,7 +243,7 @@ public class CisternRoom extends AbstractMediumRoom implements IRoom {
 		bb.add(Cardinal.DOWN);
 		bb.grow(Cardinal.UP, 6);
 		bb.grow(Cardinal.directions, 8);
-		RectSolid.fill(editor, rand, bb, Air.get(), false, true);
+		RectSolid.fill(editor, rand, bb, Air.get(), Fill.ONLY_SOLID);
 	}
 
 	@Override

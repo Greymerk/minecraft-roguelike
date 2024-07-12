@@ -10,6 +10,7 @@ import com.greymerk.roguelike.dungeon.fragment.parts.CellSupport;
 import com.greymerk.roguelike.dungeon.layout.Entrance;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
+import com.greymerk.roguelike.editor.Fill;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.blocks.Air;
@@ -112,7 +113,7 @@ public class PanopticonRoom extends AbstractLargeRoom implements IRoom {
 	}
 	
 	private void barWall(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
-		BoundingBox.of(origin).grow(Cardinal.orthogonal(dir)).grow(Cardinal.UP, 2).fill(editor, rand, IronBar.getBroken(), true, false);
+		BoundingBox.of(origin).grow(Cardinal.orthogonal(dir)).grow(Cardinal.UP, 2).fill(editor, rand, IronBar.getBroken(), Fill.ONLY_AIR);
 	}
 
 	private void bridges(IWorldEditor editor, Random rand, Coord origin) {
@@ -127,11 +128,7 @@ public class PanopticonRoom extends AbstractLargeRoom implements IRoom {
 				BoundingBox.of(origin).add(dir, 12).add(o, 3).grow(Cardinal.orthogonal(o)).grow(Cardinal.DOWN, 2).grow(Cardinal.UP, 5).fill(editor, rand, theme.getPrimary().getWall());
 				BoundingBox.of(origin).add(Cardinal.DOWN).add(dir, 12).add(o, 2).grow(Cardinal.orthogonal(o)).grow(Cardinal.DOWN).fill(editor, rand, theme.getPrimary().getWall());
 				
-				BoundingBox.of(origin).add(dir, 2).add(o).grow(dir, 8).forEach(pos -> {
-					if(editor.isSupported(pos)) {
-						IronBar.get().set(editor, rand, pos);
-					}
-				});
+				BoundingBox.of(origin).add(dir, 2).add(o).grow(dir, 8).fill(editor, rand, IronBar.get(), Fill.SUPPORTED);
 			});
 		});
 		
@@ -152,7 +149,7 @@ public class PanopticonRoom extends AbstractLargeRoom implements IRoom {
 				BoundingBox.of(origin).add(dir, 10).add(o, 5).grow(o, 2).fill(editor, rand, theme.getPrimary().getWall());
 				BoundingBox.of(origin).add(dir, 11).add(o, 4).grow(dir, 2).fill(editor, rand, theme.getPrimary().getWall());
 				BoundingBox.of(origin).add(dir, 14).add(o, 5).grow(o, 8).fill(editor, rand, theme.getPrimary().getWall());
-				BoundingBox.of(origin).add(dir, 12).add(o, 5).grow(o, 8).grow(Cardinal.orthogonal(o)).fill(editor, rand, theme.getPrimary().getFloor(), true, false);
+				BoundingBox.of(origin).add(dir, 12).add(o, 5).grow(o, 8).grow(Cardinal.orthogonal(o)).fill(editor, rand, theme.getPrimary().getFloor(), Fill.ONLY_AIR);
 			});
 		});
 	}
@@ -167,7 +164,7 @@ public class PanopticonRoom extends AbstractLargeRoom implements IRoom {
 				BoundingBox.of(origin).add(dir, 11).add(o, 9).grow(Cardinal.orthogonal(dir)).grow(dir, 2).fill(editor, rand, theme.getPrimary().getWall());
 				theme.getPrimary().getWall().set(editor, rand, origin.copy().add(dir, 8).add(o, 3));
 			});
-			BoundingBox.of(origin).add(dir, 11).grow(dir, 3).grow(Cardinal.left(dir), 13).grow(Cardinal.right(dir), 7).fill(editor, rand, theme.getPrimary().getFloor(), true, false);
+			BoundingBox.of(origin).add(dir, 11).grow(dir, 3).grow(Cardinal.left(dir), 13).grow(Cardinal.right(dir), 7).fill(editor, rand, theme.getPrimary().getFloor(), Fill.ONLY_AIR);
 		});
 		
 	}
@@ -180,7 +177,7 @@ public class PanopticonRoom extends AbstractLargeRoom implements IRoom {
 				BoundingBox.of(origin).add(dir, 11).add(o, 3).grow(Cardinal.orthogonal(dir)).grow(dir, 2).fill(editor, rand, theme.getPrimary().getWall());
 				BoundingBox.of(origin).add(dir, 11).add(o, 9).grow(Cardinal.orthogonal(dir)).grow(dir, 2).fill(editor, rand, theme.getPrimary().getWall());
 			});
-			BoundingBox.of(origin).add(dir, 11).grow(dir, 3).grow(Cardinal.left(dir), 13).grow(Cardinal.right(dir), 7).fill(editor, rand, theme.getPrimary().getFloor(), true, false);
+			BoundingBox.of(origin).add(dir, 11).grow(dir, 3).grow(Cardinal.left(dir), 13).grow(Cardinal.right(dir), 7).fill(editor, rand, theme.getPrimary().getFloor(), Fill.ONLY_AIR);
 		});
 	}
 
@@ -286,9 +283,9 @@ public class PanopticonRoom extends AbstractLargeRoom implements IRoom {
 	private void clear(IWorldEditor editor, Random rand, Coord origin) {
 		BoundingBox.of(origin).grow(Cardinal.directions, 14).grow(Cardinal.DOWN, 10).grow(Cardinal.UP, 5).fill(editor, rand, Air.get());
 		BoundingBox.of(origin).add(Cardinal.DOWN, 11).grow(Cardinal.directions, 15).fill(editor, rand, theme.getPrimary().getFloor());
-		BoundingBox.of(origin).add(Cardinal.UP, 6).grow(Cardinal.directions, 15).fill(editor, rand, theme.getPrimary().getWall(), false, true);
+		BoundingBox.of(origin).add(Cardinal.UP, 6).grow(Cardinal.directions, 15).fill(editor, rand, theme.getPrimary().getWall(), Fill.ONLY_SOLID);
 		Cardinal.directions.forEach(dir -> {
-			BoundingBox.of(origin).add(dir, 15).grow(Cardinal.orthogonal(dir), 15).grow(Cardinal.DOWN, 11).grow(Cardinal.UP, 6).fill(editor, rand, theme.getPrimary().getWall(), false, true);
+			BoundingBox.of(origin).add(dir, 15).grow(Cardinal.orthogonal(dir), 15).grow(Cardinal.DOWN, 11).grow(Cardinal.UP, 6).fill(editor, rand, theme.getPrimary().getWall(), Fill.ONLY_SOLID);
 		});
 	}
 

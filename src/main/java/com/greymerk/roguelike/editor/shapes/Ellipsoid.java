@@ -11,6 +11,7 @@ import net.minecraft.util.math.random.Random;
 
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
+import com.greymerk.roguelike.editor.Fill;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
 
@@ -31,8 +32,7 @@ public class Ellipsoid implements IShape {
 
 	@Override
 	public void fill(IWorldEditor editor, Random rand, IBlockFactory block) {
-		this.fill(editor, rand, block, true, true);
-
+		this.fill(editor, rand, block, Fill.ALWAYS);
 	}
 
 	@Override
@@ -42,13 +42,6 @@ public class Ellipsoid implements IShape {
 		}
 	}
 	
-	@Override
-	public void fill(IWorldEditor editor, Random rand, IBlockFactory block, boolean fillAir, boolean replaceSolid) {
-		for(Coord pos : this){
-			block.set(editor, rand, pos, fillAir, replaceSolid);
-		}
-	}
-
 	@Override
 	public List<Coord> get() {
 		List<Coord> copy = new ArrayList<Coord>();
@@ -66,8 +59,6 @@ public class Ellipsoid implements IShape {
 
 		private Cardinal dir;
 		private boolean top;
-		
-		
 		
 		public EllipsoidIterator(Coord centre, Coord end){
 			this.centre = centre.copy(); 

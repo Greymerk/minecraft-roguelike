@@ -9,6 +9,7 @@ import com.greymerk.roguelike.dungeon.fragment.parts.CellSupport;
 import com.greymerk.roguelike.dungeon.layout.Entrance;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
+import com.greymerk.roguelike.editor.Fill;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.blocks.Air;
 import com.greymerk.roguelike.editor.blocks.Candle;
@@ -112,7 +113,7 @@ public class Stairway extends AbstractRoom implements IRoom {
 		
 		bb = BoundingBox.of(origin);
 		bb.add(Cardinal.UP, 4).grow(Cardinal.directions);
-		RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall(), false, true);
+		RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall(), Fill.ONLY_SOLID);
 		
 		for(Cardinal dir : Cardinal.directions) {
 			bb = BoundingBox.of(origin);
@@ -121,7 +122,7 @@ public class Stairway extends AbstractRoom implements IRoom {
 			
 			bb = BoundingBox.of(origin);
 			bb.add(dir, 3).grow(Cardinal.DOWN).grow(Cardinal.orthogonal(dir), 2).grow(Cardinal.UP, 3);
-			RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall(), false, true);
+			RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall(), Fill.ONLY_SOLID);
 		}
 		
 		bb = BoundingBox.of(origin);

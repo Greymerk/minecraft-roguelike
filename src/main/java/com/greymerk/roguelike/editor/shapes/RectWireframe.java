@@ -13,6 +13,7 @@ import com.greymerk.roguelike.editor.Fill;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
+import com.greymerk.roguelike.editor.boundingbox.IBounded;
 
 import net.minecraft.util.math.random.Random;
 
@@ -20,22 +21,21 @@ public class RectWireframe implements IShape {
 
 	private BoundingBox bb;
 	
-	public RectWireframe(BoundingBox bb){
+	private RectWireframe(BoundingBox bb){
 		this.bb = bb;
 	}
 	
-	public static void fill(IWorldEditor editor, Random rand, Coord start, Coord end, IBlockFactory block){
-		fill(editor, rand, start, end, block, true, true);
+	public static RectWireframe of(IBounded box) {
+		return new RectWireframe(box.getBoundingBox());
 	}
 	
-	public static void fill(IWorldEditor editor, Random rand, Coord start, Coord end, IBlockFactory block, boolean fillAir, boolean replaceSolid){
-		RectWireframe rect = new RectWireframe(BoundingBox.of(start, end));
-		rect.fill(editor, rand, block, fillAir, replaceSolid);
+	public static void fill(IWorldEditor editor, Random rand, Coord start, Coord end, IBlockFactory block){
+		RectWireframe.of(BoundingBox.of(start, end)).fill(editor, rand, block, Fill.ALWAYS);
 	}
-
+	
 	@Override
 	public void fill(IWorldEditor editor, Random rand, IBlockFactory block){
-		fill(editor, rand, block, true, true);
+		fill(editor, rand, block, Fill.ALWAYS);
 	}
 	
 	@Override
@@ -45,10 +45,6 @@ public class RectWireframe implements IShape {
 		}
 	}
 	
-	@Override
-	public void fill(IWorldEditor editor, Random rand, IBlockFactory block, boolean fillAir, boolean replaceSolid) {
-		fill(editor, rand, block, Fill.of(fillAir, replaceSolid));
-	}
 
 	@Override
 	public List<Coord> get(){

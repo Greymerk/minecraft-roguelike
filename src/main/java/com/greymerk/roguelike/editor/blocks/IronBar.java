@@ -64,17 +64,6 @@ public class IronBar implements IBlockFactory{
 	}
 	
 	@Override
-	public boolean set(IWorldEditor editor, Random rand, Coord pos, boolean fillAir, boolean replaceSolid) {
-		this.setShape(editor, pos);
-		return bar.set(editor, rand, pos, fillAir, replaceSolid);
-	}
-	
-	@Override
-	public void fill(IWorldEditor editor, Random rand, IShape shape, boolean fillAir, boolean replaceSolid) {
-		this.bar.fill(editor, rand, shape, fillAir, replaceSolid);
-	}
-
-	@Override
 	public void fill(IWorldEditor editor, Random rand, IShape shape) {
 		this.bar.fill(editor, rand, shape);
 	}
