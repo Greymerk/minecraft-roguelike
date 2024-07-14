@@ -5,15 +5,14 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.function.Predicate;
 
-import org.apache.commons.lang3.tuple.Pair;
-
-import net.minecraft.util.math.random.Random;
-
+import com.greymerk.roguelike.editor.BlockContext;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.Fill;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
+
+import net.minecraft.util.math.random.Random;
 
 public class Ellipsoid implements IShape {
 
@@ -36,7 +35,7 @@ public class Ellipsoid implements IShape {
 	}
 
 	@Override
-	public void fill(IWorldEditor editor, Random rand, IBlockFactory block, Predicate<Pair<IWorldEditor, Coord>> p) {
+	public void fill(IWorldEditor editor, Random rand, IBlockFactory block, Predicate<BlockContext> p) {
 		for(Coord pos : this){
 			block.set(editor, rand, pos, p);
 		}

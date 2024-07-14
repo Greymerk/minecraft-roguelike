@@ -2,8 +2,7 @@ package com.greymerk.roguelike.editor.factories;
 
 import java.util.function.Predicate;
 
-import org.apache.commons.lang3.tuple.Pair;
-
+import com.greymerk.roguelike.editor.BlockContext;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.Fill;
 import com.greymerk.roguelike.editor.IBlockFactory;
@@ -36,12 +35,14 @@ public class BlockFloor extends BlockBase implements IBlockFactory{
 	}
 	
 	@Override
-	public boolean set(IWorldEditor editor, Random rand, Coord pos, Predicate<Pair<IWorldEditor, Coord>> p) {
-		if(!p.test(Pair.of(editor, pos))) return false;
-		
-		floor.set(editor, rand, pos, Fill.ONLY_SOLID);
-		bridge.set(editor, rand, pos, Fill.ONLY_AIR);
-		return true;
+	public boolean set(IWorldEditor editor, Random rand, Coord pos, Predicate<BlockContext> p) {
+		return floor.set(editor, rand, pos, Fill.SOLID.and(p))
+		    || bridge.set(editor, rand, pos, Fill.AIR.and(p));
 	}
 
+	@Override
+	public boolean set(IWorldEditor editor, Random rand, Coord pos) {
+		return floor.set(editor, rand, pos, Fill.SOLID)
+			|| bridge.set(editor, rand, pos, Fill.AIR);
+	}
 }

@@ -2,8 +2,7 @@ package com.greymerk.roguelike.editor.blocks.stair;
 
 import java.util.function.Predicate;
 
-import org.apache.commons.lang3.tuple.Pair;
-
+import com.greymerk.roguelike.editor.BlockContext;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.Fill;
@@ -49,7 +48,7 @@ public class RandomStair implements IStair, IBlockFactory {
 	}
 
 	@Override
-	public boolean set(IWorldEditor editor, Random rand, Coord pos, Predicate<Pair<IWorldEditor, Coord>> p) {
+	public boolean set(IWorldEditor editor, Random rand, Coord pos, Predicate<BlockContext> p) {
 		if(this.stairs.isEmpty()) return false;
 		IStair stair = this.stairs.get(rand).setOrientation(this.dir, this.upsideDown);
 		if(waterlogged) stair.waterlog();
@@ -57,7 +56,7 @@ public class RandomStair implements IStair, IBlockFactory {
 	}
 	
 	@Override
-	public void fill(IWorldEditor editor, Random rand, IShape shape, Predicate<Pair<IWorldEditor, Coord>> p) {
+	public void fill(IWorldEditor editor, Random rand, IShape shape, Predicate<BlockContext> p) {
 		shape.forEach(pos -> {
 			this.set(editor, rand, pos, p);
 		});

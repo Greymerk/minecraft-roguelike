@@ -26,7 +26,7 @@ public class Pillar {
 		if(height > 1) BoundingBox.of(origin).grow(Cardinal.UP, height - 1).fill(editor, rand, blocks.getPillar());
 		blocks.getWall().set(editor, rand, origin.copy().add(Cardinal.UP, height));
 		directions.forEach(dir -> {
-			blocks.getStair().setOrientation(dir, true).set(editor, rand, origin.copy().add(dir).add(Cardinal.UP, height), Fill.ONLY_AIR);
+			blocks.getStair().setOrientation(dir, true).set(editor, rand, origin.copy().add(dir).add(Cardinal.UP, height), Fill.AIR);
 		});
 	}
 

@@ -76,7 +76,7 @@ public class ReservoirRoom extends AbstractLargeRoom implements IRoom {
 		
 		BoundingBox bb = BoundingBox.of(origin);
 		bb.add(Cardinal.DOWN, 5).grow(Cardinal.DOWN).grow(Cardinal.directions, 11);
-		RectSolid.fill(editor, rand, bb, liquid, Fill.ONLY_AIR);
+		RectSolid.fill(editor, rand, bb, liquid, Fill.AIR);
 	}
 
 	private void ceiling(IWorldEditor editor, Random rand, Coord origin) {
@@ -151,13 +151,13 @@ public class ReservoirRoom extends AbstractLargeRoom implements IRoom {
 			BoundingBox bb = BoundingBox.of(origin.copy());
 			bb.add(dir, 10).add(Cardinal.DOWN);
 			bb.grow(Cardinal.orthogonal(dir), 14);
-			RectSolid.fill(editor, rand, bb, wall, Fill.ONLY_AIR);
+			RectSolid.fill(editor, rand, bb, wall, Fill.AIR);
 			bb.add(dir, 4);
-			RectSolid.fill(editor, rand, bb, wall, Fill.ONLY_AIR);
+			RectSolid.fill(editor, rand, bb, wall, Fill.AIR);
 			bb.add(Cardinal.UP, 4);
-			RectSolid.fill(editor, rand, bb, wall, Fill.ONLY_AIR);
+			RectSolid.fill(editor, rand, bb, wall, Fill.AIR);
 			bb.add(Cardinal.reverse(dir), 2);
-			RectSolid.fill(editor, rand, bb, wall, Fill.ONLY_AIR);
+			RectSolid.fill(editor, rand, bb, wall, Fill.AIR);
 		}
 	}
 	

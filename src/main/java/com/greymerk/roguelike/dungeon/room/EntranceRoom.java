@@ -25,7 +25,7 @@ public class EntranceRoom  extends AbstractRoom implements IRoom{
 		IStair stair = theme.getPrimary().getStair();
 		
 		BoundingBox.of(origin).grow(Cardinal.directions, 5).grow(Cardinal.UP, 5).grow(Cardinal.DOWN)
-			.getShape(Shape.RECTHOLLOW).fill(editor, rand, theme.getPrimary().getWall(), Fill.ONLY_SOLID);
+			.getShape(Shape.RECTHOLLOW).fill(editor, rand, theme.getPrimary().getWall(), Fill.SOLID);
 		
 		BoundingBox.of(origin).grow(Cardinal.directions, 4).add(Cardinal.DOWN)
 			.fill(editor, rand, theme.getPrimary().getFloor());

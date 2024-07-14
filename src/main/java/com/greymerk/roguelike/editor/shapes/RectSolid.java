@@ -5,8 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.function.Predicate;
 
-import org.apache.commons.lang3.tuple.Pair;
-
+import com.greymerk.roguelike.editor.BlockContext;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.Fill;
@@ -29,7 +28,7 @@ public class RectSolid implements IShape {
 		new RectSolid(box.getBoundingBox()).fill(editor, rand, blocks, Fill.ALWAYS);
 	}
 	
-	public static void fill(IWorldEditor editor, Random rand, IBounded box, IBlockFactory blocks, Predicate<Pair<IWorldEditor, Coord>> p) {
+	public static void fill(IWorldEditor editor, Random rand, IBounded box, IBlockFactory blocks, Predicate<BlockContext> p) {
 		new RectSolid(box.getBoundingBox()).fill(editor, rand, blocks, p);
 	}
 	
@@ -39,7 +38,7 @@ public class RectSolid implements IShape {
 	}
 	
 	@Override
-	public void fill(IWorldEditor editor, Random rand, IBlockFactory block, Predicate<Pair<IWorldEditor, Coord>> p) {
+	public void fill(IWorldEditor editor, Random rand, IBlockFactory block, Predicate<BlockContext> p) {
 		this.forEach(c -> block.set(editor, rand, c, p));
 	}
 

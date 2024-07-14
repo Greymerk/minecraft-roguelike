@@ -94,12 +94,12 @@ public class EnderRoom extends AbstractMediumRoom implements IRoom {
 			
 			bb = BoundingBox.of(origin.copy());
 			bb.add(Cardinal.UP, 6).add(dir, 5).grow(dir, 3).grow(Cardinal.left(dir), 4).grow(Cardinal.right(dir), 8);
-			RectSolid.fill(editor, rand, bb, blocks.getWall(), Fill.ONLY_SOLID);
+			RectSolid.fill(editor, rand, bb, blocks.getWall(), Fill.SOLID);
 		}
 
 		BoundingBox bb = BoundingBox.of(origin.copy());
 		bb.add(Cardinal.UP, 7).grow(Cardinal.directions, 4);
-		RectSolid.fill(editor, rand, bb, blocks.getWall(), Fill.ONLY_SOLID);
+		RectSolid.fill(editor, rand, bb, blocks.getWall(), Fill.SOLID);
 	}
 
 	private void floor(IWorldEditor editor, Random rand, Coord origin, IBlockSet blocks) {
@@ -153,7 +153,7 @@ public class EnderRoom extends AbstractMediumRoom implements IRoom {
 			pos.add(dir, 8).add(Cardinal.left(dir), 8).add(Cardinal.UP, 4);
 			for(Cardinal d : Cardinal.directions) {
 				Coord p = pos.copy().add(d);
-				stair.setOrientation(d, true).set(editor, rand, p, Fill.ONLY_AIR);
+				stair.setOrientation(d, true).set(editor, rand, p, Fill.AIR);
 			}
 			
 			for(Cardinal orth : Cardinal.orthogonal(dir)) {
@@ -179,7 +179,7 @@ public class EnderRoom extends AbstractMediumRoom implements IRoom {
 		for(Cardinal dir : Cardinal.directions) {
 			BoundingBox bb = BoundingBox.of(origin.copy());
 			bb.add(dir, 9).grow(Cardinal.orthogonal(dir), 9).grow(Cardinal.UP, 5).grow(Cardinal.DOWN);
-			RectSolid.fill(editor, rand, bb, blocks.getWall(), Fill.ONLY_SOLID);
+			RectSolid.fill(editor, rand, bb, blocks.getWall(), Fill.SOLID);
 		}
 	}
 

@@ -3,8 +3,6 @@ package com.greymerk.roguelike.editor;
 import java.nio.file.Path;
 import java.util.function.Predicate;
 
-import org.apache.commons.lang3.tuple.Pair;
-
 import com.greymerk.roguelike.state.RoguelikeState;
 
 import net.minecraft.block.entity.BlockEntity;
@@ -19,7 +17,7 @@ public interface IWorldEditor {
 	
 	public boolean set(Coord pos, MetaBlock metaBlock);
 	
-	boolean set(Coord pos, MetaBlock block, Predicate<Pair<IWorldEditor, Coord>> p);
+	boolean set(Coord pos, MetaBlock block, Predicate<BlockContext> p);
 		
 	public MetaBlock getBlock(Coord pos);
 	
@@ -47,8 +45,6 @@ public interface IWorldEditor {
 	
 	public boolean isFaceFullSquare(Coord pos, Cardinal dir);
 	
-	public int getMaxDepth();
-	
 	public DynamicRegistryManager getRegistryManager();
 	
 	public FeatureSet getFeatureSet();
@@ -62,8 +58,4 @@ public interface IWorldEditor {
 	public RoguelikeState getState();
 
 	boolean isAir(Coord pos);
-
-	public int getBottomY();
-
-	
 }

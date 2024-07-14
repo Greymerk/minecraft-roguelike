@@ -45,7 +45,7 @@ public class CreeperRoom extends AbstractMediumRoom implements IRoom {
 			if(this.getEntrance(dir) == Entrance.DOOR) {
 				entry(editor, rand, origin.copy().add(dir, Cell.SIZE).freeze(), dir);
 			} else {
-				BoundingBox.of(origin).add(dir, 5).grow(Cardinal.orthogonal(dir), 3).grow(Cardinal.UP, 3).fill(editor, rand, theme.getPrimary().getWall(), Fill.ONLY_SOLID);
+				BoundingBox.of(origin).add(dir, 5).grow(Cardinal.orthogonal(dir), 3).grow(Cardinal.UP, 3).fill(editor, rand, theme.getPrimary().getWall(), Fill.SOLID);
 				settings.getWallFragment(rand).generate(editor, rand, theme, origin.copy().add(dir, 2), dir);	
 			}
 		});
@@ -87,7 +87,7 @@ public class CreeperRoom extends AbstractMediumRoom implements IRoom {
 			Pillar.generate(editor, rand, origin.copy().add(dir, 2).add(o, 2), theme, 2, List.of(Cardinal.reverse(o), Cardinal.reverse(dir)));
 			BoundingBox.of(origin).add(o, 2).add(Cardinal.UP, 3).grow(Cardinal.UP, 3).grow(Cardinal.reverse(dir)).grow(dir, 2).fill(editor, rand, theme.getPrimary().getWall());
 			theme.getPrimary().getStair().setOrientation(dir, true).set(editor, rand, origin.copy().add(Cardinal.reverse(dir)).add(o, 2).add(Cardinal.UP, 2));
-			BoundingBox.of(origin).add(o, 3).grow(Cardinal.orthogonal(o), 2).grow(Cardinal.UP, 3).fill(editor, rand, theme.getPrimary().getWall(), Fill.ONLY_SOLID);
+			BoundingBox.of(origin).add(o, 3).grow(Cardinal.orthogonal(o), 2).grow(Cardinal.UP, 3).fill(editor, rand, theme.getPrimary().getWall(), Fill.SOLID);
 		});
 		Cardinal.directions.forEach(d -> {
 			BoundingBox.of(origin).add(Cardinal.UP, 3).grow(Cardinal.orthogonal(d)).grow(Cardinal.UP).fill(editor, rand, theme.getPrimary().getWall());

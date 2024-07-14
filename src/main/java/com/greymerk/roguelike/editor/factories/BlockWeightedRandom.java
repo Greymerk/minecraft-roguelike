@@ -1,16 +1,15 @@
 package com.greymerk.roguelike.editor.factories;
 
-import net.minecraft.util.math.random.Random;
-
 import java.util.function.Predicate;
 
-import org.apache.commons.lang3.tuple.Pair;
-
+import com.greymerk.roguelike.editor.BlockContext;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.util.WeightedChoice;
 import com.greymerk.roguelike.util.WeightedRandomizer;
+
+import net.minecraft.util.math.random.Random;
 
 public class BlockWeightedRandom extends BlockBase {
 
@@ -26,7 +25,7 @@ public class BlockWeightedRandom extends BlockBase {
 	}
 
 	@Override
-	public boolean set(IWorldEditor editor, Random rand, Coord origin, Predicate<Pair<IWorldEditor, Coord>> p) {
+	public boolean set(IWorldEditor editor, Random rand, Coord origin, Predicate<BlockContext> p) {
 		IBlockFactory block = blocks.get(rand);
 		return block.set(editor, rand, origin, p);
 	}

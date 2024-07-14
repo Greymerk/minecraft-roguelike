@@ -65,7 +65,7 @@ public class CrossRoom extends AbstractMediumRoom implements IRoom {
 		IBlockFactory walls = theme.getPrimary().getWall();
 		IStair stair = theme.getPrimary().getStair();
 		walls.set(editor, rand, origin.copy().add(Cardinal.UP, 6));
-		BoundingBox.of(origin).add(Cardinal.UP, 7).grow(Cardinal.directions, 2).fill(editor, rand, walls, Fill.ONLY_SOLID);
+		BoundingBox.of(origin).add(Cardinal.UP, 7).grow(Cardinal.directions, 2).fill(editor, rand, walls, Fill.SOLID);
 		Cardinal.directions.forEach(dir -> {
 			walls.set(editor, rand, origin.copy().add(Cardinal.UP, 6).add(dir));
 			walls.set(editor, rand, origin.copy().add(Cardinal.UP, 5).add(dir, 3).add(Cardinal.left(dir), 3));
@@ -86,7 +86,7 @@ public class CrossRoom extends AbstractMediumRoom implements IRoom {
 		IBlockFactory walls = theme.getPrimary().getWall();
 		IStair stair = theme.getPrimary().getStair();
 		Cardinal.directions.forEach(dir -> {
-			BoundingBox.of(origin).add(dir, 5).add(Cardinal.UP, 6).grow(dir).grow(Cardinal.orthogonal(dir), 3).fill(editor, rand, walls, Fill.ONLY_SOLID);
+			BoundingBox.of(origin).add(dir, 5).add(Cardinal.UP, 6).grow(dir).grow(Cardinal.orthogonal(dir), 3).fill(editor, rand, walls, Fill.SOLID);
 			BoundingBox.of(origin).add(dir, 8).add(Cardinal.UP, 3).grow(Cardinal.orthogonal(dir), 3).grow(Cardinal.UP, 2).fill(editor, rand, walls);
 			BoundingBox.of(origin).add(dir, 7).add(Cardinal.UP, 5).grow(Cardinal.orthogonal(dir), 3).fill(editor, rand, walls);
 			BoundingBox.of(origin).add(dir, 4).add(Cardinal.UP, 5).grow(Cardinal.orthogonal(dir), 3).fill(editor, rand, walls);
@@ -114,7 +114,7 @@ public class CrossRoom extends AbstractMediumRoom implements IRoom {
 			BoundingBox.of(origin).add(dir, 2).add(Cardinal.UP, 3).grow(Cardinal.orthogonal(dir)).grow(Cardinal.left(dir)).grow(Cardinal.UP, 2).fill(editor, rand, theme.getPrimary().getWall());
 			Pillar.generate(editor, rand, origin.copy().add(dir, 2).add(Cardinal.left(dir), 2), theme, 2, List.of(Cardinal.reverse(dir), Cardinal.right(dir)));
 		});
-		BoundingBox.of(origin).add(Cardinal.UP, 5).grow(Cardinal.directions).fill(editor, rand, theme.getPrimary().getWall(), Fill.ONLY_SOLID);
+		BoundingBox.of(origin).add(Cardinal.UP, 5).grow(Cardinal.directions).fill(editor, rand, theme.getPrimary().getWall(), Fill.SOLID);
 	}
 
 	private void clear(IWorldEditor editor, Random rand, Coord origin) {
@@ -124,7 +124,7 @@ public class CrossRoom extends AbstractMediumRoom implements IRoom {
 		Cardinal.directions.forEach(dir -> {
 			BoundingBox.of(origin).add(dir, 4).add(Cardinal.UP, 5).grow(dir, 4).grow(Cardinal.orthogonal(dir), 3).fill(editor, rand, Air.get());
 			BoundingBox.of(origin).add(Cardinal.DOWN).add(dir, 9).grow(Cardinal.orthogonal(dir), 9).fill(editor, rand, theme.getPrimary().getWall());
-			BoundingBox.of(origin).grow(Cardinal.UP, 5).add(dir, 9).grow(Cardinal.orthogonal(dir), 9).fill(editor, rand, theme.getPrimary().getWall(), Fill.ONLY_SOLID);
+			BoundingBox.of(origin).grow(Cardinal.UP, 5).add(dir, 9).grow(Cardinal.orthogonal(dir), 9).fill(editor, rand, theme.getPrimary().getWall(), Fill.SOLID);
 			
 		});
 		BoundingBox.of(origin).add(Cardinal.DOWN).grow(Cardinal.directions, 8).fill(editor, rand, theme.getPrimary().getFloor());

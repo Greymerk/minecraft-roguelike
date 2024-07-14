@@ -4,16 +4,16 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import net.minecraft.util.math.random.Random;
 import java.util.Set;
 import java.util.function.Predicate;
 
-import org.apache.commons.lang3.tuple.Pair;
-
+import com.greymerk.roguelike.editor.BlockContext;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.Fill;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
+
+import net.minecraft.util.math.random.Random;
 
 public class MultiShape implements IShape {
 	
@@ -49,7 +49,7 @@ public class MultiShape implements IShape {
 	}
 
 	@Override
-	public void fill(IWorldEditor editor, Random rand, IBlockFactory block, Predicate<Pair<IWorldEditor, Coord>> p) {
+	public void fill(IWorldEditor editor, Random rand, IBlockFactory block, Predicate<BlockContext> p) {
 		shape.forEach(pos -> {
 			block.set(editor, rand, pos, p);
 		});

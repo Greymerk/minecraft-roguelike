@@ -21,7 +21,7 @@ public class WallPlant implements IFragment {
 		MetaBlock.of(Blocks.COARSE_DIRT).set(editor, origin.copy().add(dir, 2));
 		Cardinal.directions.forEach(d -> {
 			Trapdoor.getWooden(Wood.SPRUCE, Cardinal.reverse(d), true, true)
-				.set(editor, rand, origin.copy().add(dir, 2).add(d), Fill.ONLY_AIR);
+				.set(editor, rand, origin.copy().add(dir, 2).add(d), Fill.AIR);
 		});
 		TallPlant.generate(editor, rand, origin.copy().add(dir, 2).add(Cardinal.UP));
 	}

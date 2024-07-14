@@ -57,15 +57,14 @@ public class CellSupport implements IFragment {
 			}
 		}
 		
-		wall.set(editor, rand, origin, Fill.ONLY_AIR);
+		wall.set(editor, rand, origin, Fill.AIR);
 		for(Cardinal o : Cardinal.orthogonal(dir)) {
 			Coord pos = origin.copy().add(o);
-			wall.set(editor, rand, pos, Fill.ONLY_AIR);
+			wall.set(editor, rand, pos, Fill.AIR);
 			pos.add(Cardinal.DOWN);
 			stair.setOrientation(Cardinal.reverse(o), true);
-			stair.set(editor, rand, pos, Fill.ONLY_AIR);
+			stair.set(editor, rand, pos, Fill.AIR);
 		}
-		
 		
 		if(rand.nextInt(10) == 0) {
 			Coord pos = origin.copy().add(Cardinal.DOWN);

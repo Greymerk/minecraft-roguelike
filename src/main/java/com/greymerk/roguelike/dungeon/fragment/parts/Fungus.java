@@ -75,7 +75,7 @@ public class Fungus implements IFragment {
 			.addBlock(Air.get(), 1);
 		
 		if(rand.nextInt(3) != 0) {
-			BoundingBox.of(origin).grow(Cardinal.directions).fill(editor, rand, flesh, Fill.ONLY_AIR);	
+			BoundingBox.of(origin).grow(Cardinal.directions).fill(editor, rand, flesh, Fill.AIR);	
 		} else {
 			flesh.set(editor, rand, origin);
 		}

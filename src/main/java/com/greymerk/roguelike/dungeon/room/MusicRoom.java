@@ -133,7 +133,7 @@ public class MusicRoom extends AbstractMediumRoom implements IRoom {
 			} else {
 				bb = BoundingBox.of(origin);
 				bb.add(dir, 6).grow(Cardinal.UP, 4).grow(Cardinal.orthogonal(dir), 2);
-				RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall(), Fill.ONLY_SOLID);
+				RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall(), Fill.SOLID);
 			}
 		}
 		

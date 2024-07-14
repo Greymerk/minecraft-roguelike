@@ -2,8 +2,7 @@ package com.greymerk.roguelike.editor.factories;
 
 import java.util.function.Predicate;
 
-import org.apache.commons.lang3.tuple.Pair;
-
+import com.greymerk.roguelike.editor.BlockContext;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
@@ -29,7 +28,7 @@ public class BlockCheckers extends BlockBase {
 	
 	
 	@Override
-	public boolean set(IWorldEditor editor, Random rand, Coord origin, Predicate<Pair<IWorldEditor, Coord>> p) {
+	public boolean set(IWorldEditor editor, Random rand, Coord origin, Predicate<BlockContext> p) {
 		
 		int x = origin.getX() - this.offset.getX();
 		int y = origin.getY() - this.offset.getY();

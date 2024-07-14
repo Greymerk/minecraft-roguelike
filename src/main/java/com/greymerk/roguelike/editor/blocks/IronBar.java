@@ -2,8 +2,7 @@ package com.greymerk.roguelike.editor.blocks;
 
 import java.util.function.Predicate;
 
-import org.apache.commons.lang3.tuple.Pair;
-
+import com.greymerk.roguelike.editor.BlockContext;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IBlockFactory;
@@ -69,13 +68,13 @@ public class IronBar implements IBlockFactory{
 	}
 
 	@Override
-	public boolean set(IWorldEditor editor, Random rand, Coord pos, Predicate<Pair<IWorldEditor, Coord>> p) {
+	public boolean set(IWorldEditor editor, Random rand, Coord pos, Predicate<BlockContext> p) {
 		this.setShape(editor, pos);
 		return bar.set(editor, rand, pos, p);
 	}
 
 	@Override
-	public void fill(IWorldEditor editor, Random rand, IShape shape, Predicate<Pair<IWorldEditor, Coord>> p) {
+	public void fill(IWorldEditor editor, Random rand, IShape shape, Predicate<BlockContext> p) {
 		this.bar.fill(editor, rand, shape, p);
 	}
 }

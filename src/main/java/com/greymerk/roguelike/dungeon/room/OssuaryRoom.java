@@ -217,7 +217,7 @@ public class OssuaryRoom extends AbstractMediumRoom implements IRoom {
 					Coord p = pos.copy();
 					p.add(d);
 					stair.setOrientation(d, true);
-					stair.set(editor, rand, p, Fill.ONLY_AIR);
+					stair.set(editor, rand, p, Fill.AIR);
 				}
 				pos.add(Cardinal.reverse(dir));
 				pos.add(Cardinal.UP);
@@ -246,7 +246,7 @@ public class OssuaryRoom extends AbstractMediumRoom implements IRoom {
 	private void ceiling(IWorldEditor editor, Random rand, Coord origin) {
 		BoundingBox bb = BoundingBox.of(origin);
 		bb.add(Cardinal.UP, 8).grow(Cardinal.directions, 6);
-		RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall(), Fill.ONLY_SOLID);
+		RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall(), Fill.SOLID);
 		
 		for(Cardinal dir : Cardinal.directions) {
 			bb = BoundingBox.of(origin);

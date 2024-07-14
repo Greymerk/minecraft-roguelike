@@ -3,8 +3,6 @@ package com.greymerk.roguelike.editor;
 import java.util.List;
 import java.util.function.Predicate;
 
-import org.apache.commons.lang3.tuple.Pair;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.registry.tag.BlockTags;
@@ -48,7 +46,7 @@ public class MetaBlock extends BlockBase{
 		return editor.set(pos, this);
 	}
 	
-	public boolean set(IWorldEditor editor, Coord pos, Predicate<Pair<IWorldEditor, Coord>> p) {
+	public boolean set(IWorldEditor editor, Coord pos, Predicate<BlockContext> p) {
 		return editor.set(pos, this, p);
 	}
 	
@@ -58,7 +56,7 @@ public class MetaBlock extends BlockBase{
 	}
 	
 	@Override
-	public boolean set(IWorldEditor editor, Random rand, Coord pos, Predicate<Pair<IWorldEditor, Coord>> p) {
+	public boolean set(IWorldEditor editor, Random rand, Coord pos, Predicate<BlockContext> p) {
 		return editor.set(pos, this, p);
 	}
 		

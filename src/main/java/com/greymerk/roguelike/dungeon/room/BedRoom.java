@@ -131,7 +131,7 @@ public class BedRoom extends AbstractRoom implements IRoom {
 			Coord p = pos.copy();
 			p.add(dir);
 			stair.setOrientation(dir, true);
-			stair.set(editor, rand, p, Fill.ONLY_AIR);
+			stair.set(editor, rand, p, Fill.AIR);
 		}
 	}
 	

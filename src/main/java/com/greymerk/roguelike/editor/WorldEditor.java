@@ -4,8 +4,6 @@ import java.nio.file.Path;
 import java.util.Objects;
 import java.util.function.Predicate;
 
-import org.apache.commons.lang3.tuple.Pair;
-
 import com.greymerk.roguelike.state.RoguelikeState;
 
 import net.minecraft.block.Block;
@@ -48,13 +46,14 @@ public class WorldEditor implements IWorldEditor{
 	}
 
 	@Override
-	public boolean set(Coord pos, MetaBlock block, Predicate<Pair<IWorldEditor, Coord>> p) {
-		if(!p.test(Pair.of(this, pos))) return false;
+	public boolean set(Coord pos, MetaBlock block, Predicate<BlockContext> p) {
+		if(!p.and(Fill.IGNORE_BLOCK_ENTITIES).test(BlockContext.of(this, pos, block))) return false;
 		return world.setBlockState(pos.getBlockPos(), block.getState(), block.getFlag());
 	}
 	
 	@Override
 	public boolean set(Coord pos, MetaBlock block) {
+		if(!Fill.IGNORE_BLOCK_ENTITIES.test(BlockContext.of(this, pos, block))) return false;
 		return world.setBlockState(pos.getBlockPos(), block.getState(), block.getFlag());
 	}
 	
@@ -170,11 +169,6 @@ public class WorldEditor implements IWorldEditor{
 		boolean isCollisionSquare = Block.isFaceFullSquare(collision, facing);
 		return isShapeSquare || isCollisionSquare;
 	}
-
-	@Override
-	public int getMaxDepth() {
-		return world.getBottomY();
-	}
 	
 	@Override
 	public DynamicRegistryManager getRegistryManager() {
@@ -204,10 +198,5 @@ public class WorldEditor implements IWorldEditor{
 	@Override
 	public RoguelikeState getState() {
 		return RoguelikeState.getServerState(worldKey, world.getServer());
-	}
-
-	@Override
-	public int getBottomY() {
-		return world.getBottomY();
 	}
 }

@@ -78,7 +78,7 @@ public class CryptRoom extends AbstractMediumRoom implements IRoom {
 		
 		bb = BoundingBox.of(origin);
 		bb.add(Cardinal.UP, 5).grow(Cardinal.orthogonal(dir), 5).grow(dir, 4);
-		RectSolid.fill(editor, rand, bb, walls, Fill.ONLY_SOLID);
+		RectSolid.fill(editor, rand, bb, walls, Fill.SOLID);
 		
 		bb = BoundingBox.of(origin);
 		bb.add(Cardinal.DOWN).grow(Cardinal.orthogonal(dir), 5).grow(dir, 4);
@@ -86,7 +86,7 @@ public class CryptRoom extends AbstractMediumRoom implements IRoom {
 		
 		bb = BoundingBox.of(origin);
 		bb.add(dir, 4).grow(Cardinal.orthogonal(dir), 5).grow(Cardinal.UP, 5);
-		RectSolid.fill(editor, rand, bb, walls, Fill.ONLY_SOLID);
+		RectSolid.fill(editor, rand, bb, walls, Fill.SOLID);
 		
 		bb = BoundingBox.of(origin);
 		bb.add(dir, 3).grow(Cardinal.UP, 4);
@@ -100,7 +100,7 @@ public class CryptRoom extends AbstractMediumRoom implements IRoom {
 			
 			bb = BoundingBox.of(origin);
 			bb.add(o, 5).grow(dir, 4).grow(Cardinal.UP, 4);
-			RectSolid.fill(editor, rand, bb, walls, Fill.ONLY_SOLID);
+			RectSolid.fill(editor, rand, bb, walls, Fill.SOLID);
 			
 			bb = BoundingBox.of(origin);
 			bb.add(dir, 3).add(o, 4).grow(Cardinal.UP, 4);
@@ -150,7 +150,7 @@ public class CryptRoom extends AbstractMediumRoom implements IRoom {
 		bb.add(Cardinal.reverse(dir));
 		List<Coord> lc = bb.getShape(Shape.RECTSOLID).get();
 		stair.setOrientation(Cardinal.reverse(dir), true);
-		lc.forEach(c -> stair.set(editor, rand, c, Fill.ONLY_AIR));
+		lc.forEach(c -> stair.set(editor, rand, c, Fill.AIR));
 		
 		for(Cardinal o : Cardinal.orthogonal(dir)){
 			bb = BoundingBox.of(origin.copy());
@@ -188,7 +188,7 @@ public class CryptRoom extends AbstractMediumRoom implements IRoom {
 		
 		bb = BoundingBox.of(origin.copy());
 		bb.add(dir, 3).grow(Cardinal.orthogonal(dir), 2).grow(Cardinal.UP, 3);
-		RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall(), Fill.ONLY_SOLID);
+		RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall(), Fill.SOLID);
 		
 		for(Cardinal o : Cardinal.orthogonal(dir)) {
 			bb = BoundingBox.of(origin.copy());
@@ -226,7 +226,7 @@ public class CryptRoom extends AbstractMediumRoom implements IRoom {
 			if(!doors.contains(dir)) {
 				bb = BoundingBox.of(origin.copy());
 				bb.add(dir, 3).grow(Cardinal.orthogonal(dir), 2).grow(Cardinal.UP, 3);
-				RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall(), Fill.ONLY_SOLID);
+				RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall(), Fill.SOLID);
 				settings.getWallFragment(rand).generate(editor, rand, theme, origin.copy(), dir);
 			}
 
@@ -238,7 +238,7 @@ public class CryptRoom extends AbstractMediumRoom implements IRoom {
 		IStair stair = this.theme.getPrimary().getStair();
 		IBlockFactory wall = this.theme.getPrimary().getWall();
 		
-		BoundingBox.of(origin).add(Cardinal.UP, 7).grow(Cardinal.directions, 4).fill(editor, rand, wall, Fill.ONLY_SOLID);
+		BoundingBox.of(origin).add(Cardinal.UP, 7).grow(Cardinal.directions, 4).fill(editor, rand, wall, Fill.SOLID);
 		BoundingBox.of(origin).grow(Cardinal.UP, 4).grow(Cardinal.directions, 4).fill(editor, rand, Air.get());
 		BoundingBox.of(origin).add(Cardinal.UP, 5).grow(Cardinal.directions, 3).grow(Cardinal.UP).fill(editor, rand, Air.get());
 		

@@ -208,12 +208,12 @@ public class SculkRoom extends AbstractLargeRoom implements IRoom {
 	private void clear(IWorldEditor editor, Random rand, Coord origin) {
 		BoundingBox.of(origin).grow(Cardinal.directions, 14).grow(Cardinal.DOWN, 2).grow(Cardinal.UP, 6).fill(editor, rand, Air.get());
 		Cardinal.directions.forEach(dir -> {
-			BoundingBox.of(origin).add(dir, 15).grow(Cardinal.orthogonal(dir), 15).fill(editor, rand, theme.getPrimary().getWall(), Fill.ONLY_SOLID);
+			BoundingBox.of(origin).add(dir, 15).grow(Cardinal.orthogonal(dir), 15).fill(editor, rand, theme.getPrimary().getWall(), Fill.SOLID);
 			if(this.getEntrance(dir) == Entrance.DOOR) {
 				Fragment.generate(Fragment.ARCH, editor, rand, theme, origin.copy().add(dir, 12), dir);	
 			}
 		});
-		BoundingBox.of(origin).add(Cardinal.UP, 7).grow(Cardinal.directions, 15).fill(editor, rand, theme.getPrimary().getWall(), Fill.ONLY_SOLID);
+		BoundingBox.of(origin).add(Cardinal.UP, 7).grow(Cardinal.directions, 15).fill(editor, rand, theme.getPrimary().getWall(), Fill.SOLID);
 		BoundingBox.of(origin).add(Cardinal.DOWN, 3).grow(Cardinal.directions, 15).fill(editor, rand, theme.getPrimary().getWall());
 	}
 

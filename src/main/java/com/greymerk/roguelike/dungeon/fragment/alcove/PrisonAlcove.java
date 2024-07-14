@@ -45,11 +45,11 @@ public class PrisonAlcove implements IFragment {
 		
 		CellSupport.generate(editor, rand, theme, origin);
 		BoundingBox.of(origin).grow(Cardinal.directions, 2).grow(Cardinal.UP, 3).fill(editor, rand, Air.get());
-		BoundingBox.of(origin).add(Cardinal.UP, 4).grow(Cardinal.directions, 3).fill(editor, rand, walls, Fill.ONLY_SOLID);
+		BoundingBox.of(origin).add(Cardinal.UP, 4).grow(Cardinal.directions, 3).fill(editor, rand, walls, Fill.SOLID);
 		BoundingBox.of(origin).add(Cardinal.DOWN).grow(Cardinal.directions, 2).fill(editor, rand, theme.getPrimary().getFloor());
 		
 		Cardinal.directions.forEach(dir -> {
-			BoundingBox.of(origin).add(dir, 3).grow(Cardinal.UP, 3).grow(Cardinal.orthogonal(dir), 3).fill(editor, rand, walls, Fill.ONLY_SOLID);
+			BoundingBox.of(origin).add(dir, 3).grow(Cardinal.UP, 3).grow(Cardinal.orthogonal(dir), 3).fill(editor, rand, walls, Fill.SOLID);
 			BoundingBox.of(origin).add(dir, 2).add(Cardinal.left(dir), 2).grow(Cardinal.UP).fill(editor, rand, theme.getPrimary().getPillar());
 			BoundingBox.of(origin).add(dir, 2).add(Cardinal.left(dir), 2).grow(Cardinal.UP, 2).grow(Cardinal.UP).fill(editor, rand, theme.getPrimary().getWall());
 			BoundingBox.of(origin).add(dir, 2).add(Cardinal.UP, 3).grow(Cardinal.orthogonal(dir)).fill(editor, rand, walls);

@@ -113,7 +113,7 @@ public class Stairway extends AbstractRoom implements IRoom {
 		
 		bb = BoundingBox.of(origin);
 		bb.add(Cardinal.UP, 4).grow(Cardinal.directions);
-		RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall(), Fill.ONLY_SOLID);
+		RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall(), Fill.SOLID);
 		
 		for(Cardinal dir : Cardinal.directions) {
 			bb = BoundingBox.of(origin);
@@ -122,7 +122,7 @@ public class Stairway extends AbstractRoom implements IRoom {
 			
 			bb = BoundingBox.of(origin);
 			bb.add(dir, 3).grow(Cardinal.DOWN).grow(Cardinal.orthogonal(dir), 2).grow(Cardinal.UP, 3);
-			RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall(), Fill.ONLY_SOLID);
+			RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall(), Fill.SOLID);
 		}
 		
 		bb = BoundingBox.of(origin);
