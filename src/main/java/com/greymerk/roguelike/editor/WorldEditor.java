@@ -29,6 +29,7 @@ import net.minecraft.world.WorldAccess;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkStatus;
 import net.minecraft.world.dimension.DimensionTypes;
+import net.minecraft.world.gen.chunk.placement.StructurePlacementCalculator;
 
 public class WorldEditor implements IWorldEditor{
 
@@ -198,5 +199,11 @@ public class WorldEditor implements IWorldEditor{
 	@Override
 	public RoguelikeState getState() {
 		return RoguelikeState.getServerState(worldKey, world.getServer());
+	}
+	
+	@Override
+	public StructurePlacementCalculator getPlacementCalculator() {
+		ServerWorld sw = this.world.getServer().getWorld(worldKey);
+		return sw.getChunkManager().getStructurePlacementCalculator();
 	}
 }

@@ -25,7 +25,7 @@ public class DungeonPlacement {
 			}
 		}
 		
-		ChunkPos villageChunk = findVillage(editor.getSeed(), chunks); 
+		ChunkPos villageChunk = findVillage(editor, chunks); 
 		if(villageChunk == null) return false;
 		Coord village = Coord.of(villageChunk.getCenterAtY(0));
 		Random rand = editor.getRandom(village);
@@ -54,9 +54,9 @@ public class DungeonPlacement {
 		
 	}
 	
-	public static ChunkPos findVillage(long seed, List<ChunkPos> chunks) {
+	public static ChunkPos findVillage(IWorldEditor editor, List<ChunkPos> chunks) {
 		for(ChunkPos cpos : chunks) {
-			if(StructureLocator.hasVillage(seed, cpos)) {
+			if(StructureLocator.hasVillage(editor, cpos)) {
 				return cpos;
 			}
 		}

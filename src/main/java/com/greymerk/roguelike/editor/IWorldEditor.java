@@ -12,6 +12,7 @@ import net.minecraft.resource.featuretoggle.FeatureSet;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
+import net.minecraft.world.gen.chunk.placement.StructurePlacementCalculator;
 
 public interface IWorldEditor {
 	
@@ -58,4 +59,6 @@ public interface IWorldEditor {
 	public RoguelikeState getState();
 
 	boolean isAir(Coord pos);
+	
+	StructurePlacementCalculator getPlacementCalculator();
 }

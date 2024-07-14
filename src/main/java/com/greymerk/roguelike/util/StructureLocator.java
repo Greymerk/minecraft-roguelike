@@ -4,11 +4,19 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.greymerk.roguelike.editor.Coord;
+import com.greymerk.roguelike.editor.IWorldEditor;
 
+import net.minecraft.registry.DynamicRegistryManager;
+import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.structure.StructureSet;
+import net.minecraft.structure.StructureSetKeys;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.random.CheckedRandom;
 import net.minecraft.util.math.random.ChunkRandom;
 import net.minecraft.world.gen.chunk.placement.SpreadType;
+import net.minecraft.world.gen.chunk.placement.StructurePlacement;
 
 public enum StructureLocator {
 
@@ -16,6 +24,15 @@ public enum StructureLocator {
 	
 	public static boolean hasVillage(long seed, ChunkPos cpos) {
 		return hasStructure(seed, VILLAGE, cpos);
+	}
+	
+	public static boolean hasVillage(IWorldEditor editor, ChunkPos cpos) {
+		DynamicRegistryManager reg = editor.getRegistryManager();
+		Registry<StructureSet> structures = reg.get(RegistryKeys.STRUCTURE_SET);
+		RegistryKey<StructureSet> villages = StructureSetKeys.VILLAGES;
+		StructureSet v = structures.get(villages);
+		StructurePlacement placement = v.placement();
+		return placement.shouldGenerate(editor.getPlacementCalculator(), cpos.x, cpos.z);
 	}
 	
 	public static boolean hasStructure(long seed, StructureLocator type, ChunkPos cpos) {
