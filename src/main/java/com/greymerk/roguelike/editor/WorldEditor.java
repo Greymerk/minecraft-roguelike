@@ -2,6 +2,7 @@ package com.greymerk.roguelike.editor;
 
 import java.nio.file.Path;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 import com.greymerk.roguelike.state.RoguelikeState;
@@ -11,11 +12,14 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.FallingBlock;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.registry.DynamicRegistryManager;
+import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.resource.featuretoggle.FeatureSet;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.structure.StructureSet;
 import net.minecraft.util.WorldSavePath;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.Direction;
@@ -29,6 +33,7 @@ import net.minecraft.world.WorldAccess;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkStatus;
 import net.minecraft.world.dimension.DimensionTypes;
+import net.minecraft.world.gen.chunk.placement.StructurePlacement;
 import net.minecraft.world.gen.chunk.placement.StructurePlacementCalculator;
 
 public class WorldEditor implements IWorldEditor{
@@ -201,9 +206,16 @@ public class WorldEditor implements IWorldEditor{
 		return RoguelikeState.getServerState(worldKey, world.getServer());
 	}
 	
-	@Override
-	public StructurePlacementCalculator getPlacementCalculator() {
-		ServerWorld sw = this.world.getServer().getWorld(worldKey);
-		return sw.getChunkManager().getStructurePlacementCalculator();
+	public Optional<Coord> getStructureLocation(RegistryKey<StructureSet> key, ChunkPos cpos){
+		MinecraftServer mcServer = world.getServer();
+		ServerWorld sw = mcServer.getWorld(worldKey);
+		StructurePlacementCalculator calculator = sw.getChunkManager().getStructurePlacementCalculator();
+		DynamicRegistryManager reg = world.getRegistryManager();
+		Registry<StructureSet> structures = reg.get(RegistryKeys.STRUCTURE_SET);
+		StructureSet structure = structures.get(key);
+		StructurePlacement placement = structure.placement(); 
+		
+		if(!placement.shouldGenerate(calculator, cpos.x, cpos.z)) return Optional.empty();
+		return Optional.of(Coord.of(placement.getLocatePos(cpos)));
 	}
 }

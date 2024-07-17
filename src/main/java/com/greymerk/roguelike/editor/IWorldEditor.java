@@ -1,6 +1,7 @@
 package com.greymerk.roguelike.editor;
 
 import java.nio.file.Path;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 import com.greymerk.roguelike.state.RoguelikeState;
@@ -9,16 +10,17 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.resource.featuretoggle.FeatureSet;
+import net.minecraft.structure.StructureSet;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
-import net.minecraft.world.gen.chunk.placement.StructurePlacementCalculator;
 
 public interface IWorldEditor {
 	
 	public boolean set(Coord pos, MetaBlock metaBlock);
 	
-	boolean set(Coord pos, MetaBlock block, Predicate<BlockContext> p);
+	public boolean set(Coord pos, MetaBlock block, Predicate<BlockContext> p);
 		
 	public MetaBlock getBlock(Coord pos);
 	
@@ -58,7 +60,7 @@ public interface IWorldEditor {
 	
 	public RoguelikeState getState();
 
-	boolean isAir(Coord pos);
+	public boolean isAir(Coord pos);
 	
-	StructurePlacementCalculator getPlacementCalculator();
+	public Optional<Coord> getStructureLocation(RegistryKey<StructureSet> key, ChunkPos cpos);
 }

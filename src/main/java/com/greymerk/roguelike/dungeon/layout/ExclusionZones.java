@@ -14,14 +14,15 @@ import com.greymerk.roguelike.util.StructureLocator;
 public class ExclusionZones {
 
 	private Set<BoundingBox> zones;
+	private static int SIZE_OF_ZONES = 100;
 	
 	public ExclusionZones() {
 		this.zones = new HashSet<BoundingBox>();
 	}
 	
-	public void add(Coord pos, int range) {
+	public void add(Coord pos) {
 		this.zones.add(BoundingBox.of(pos)
-				.grow(Cardinal.directions, range)
+				.grow(Cardinal.directions, SIZE_OF_ZONES)
 				.grow(List.of(Cardinal.UP, Cardinal.DOWN), 64));
 	}
 	
@@ -33,9 +34,9 @@ public class ExclusionZones {
 	}
 	
 	public void scan(IWorldEditor editor, Coord pos, int range) {
-		Set<Coord> trialChambers = StructureLocator.scan(editor.getSeed(), pos, StructureLocator.TRIAL_CHAMBER, range);
-		trialChambers.forEach(c -> {
-			this.add(c, 100);
+		Set<Coord> structureLocations = StructureLocator.scan(editor, pos, StructureLocator.UNDERGROUND, range);
+		structureLocations.forEach(location -> {
+			this.add(location);
 		});
 	}
 	
