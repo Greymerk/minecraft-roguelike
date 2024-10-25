@@ -32,7 +32,7 @@ public class ChunkFeatureMixin {
 		if(!editor.getGameRules().getBoolean(RoguelikeRules.GEN_ROGUELIKE_DUNGEONS)) return;
 		
 		ChunkPos cpos = chunk.getPos();
-		Coord pos = new Coord(cpos.getCenterX(), world.getTopY(), cpos.getCenterZ()).freeze();
+		Coord pos = new Coord(cpos.getCenterX(), world.getTopYInclusive(), cpos.getCenterZ()).freeze();
 		
 		if(!DungeonPlacement.validChunkPos(editor, cpos)) return;
 		if(!Dungeon.canSpawn(editor, pos)) return;

@@ -68,7 +68,7 @@ public class Banner {
 	}
 	
 	public static ItemStack get(DynamicRegistryManager reg, Random rand){
-		Registry<BannerPattern> patterns = reg.get(RegistryKeys.BANNER_PATTERN);
+		Registry<BannerPattern> patterns = reg.getOrThrow(RegistryKeys.BANNER_PATTERN);
 		
 		ItemStack banner = new ItemStack(Items.BLACK_BANNER);
 		banner.set(DataComponentTypes.BANNER_PATTERNS, createLayersComponent(patterns, rand, rand.nextInt(3) + 3));
@@ -90,7 +90,7 @@ public class Banner {
 	}
 	
 	public static Layer createLayer(Registry<BannerPattern> reg, RegistryKey<BannerPattern> key, Color c) {
-		RegistryEntry<BannerPattern> entry = reg.getEntry(key).get();
+		RegistryEntry<BannerPattern> entry = reg.getOrThrow(key);
 		return new Layer(entry, Color.get(c));
 	}
 		

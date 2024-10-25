@@ -6,8 +6,8 @@ import java.util.List;
 import com.greymerk.roguelike.util.math.RandHelper;
 
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.trim.ArmorTrimPattern;
-import net.minecraft.item.trim.ArmorTrimPatterns;
+import net.minecraft.item.equipment.trim.ArmorTrimPattern;
+import net.minecraft.item.equipment.trim.ArmorTrimPatterns;
 import net.minecraft.nbt.NbtString;
 import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.registry.Registry;
@@ -30,9 +30,9 @@ public enum TrimPattern {
 	}
 	
 	public static RegistryEntry<ArmorTrimPattern> getEntry(DynamicRegistryManager registry, TrimPattern mat){
-		Registry<ArmorTrimPattern> patterns = registry.get(RegistryKeys.TRIM_PATTERN);
+		Registry<ArmorTrimPattern> patterns = registry.getOrThrow(RegistryKeys.TRIM_PATTERN);
 		RegistryKey<ArmorTrimPattern> key = getRegistryKey(mat);
-		return patterns.getEntry(key).get();
+		return patterns.getOrThrow(key);
 	}
 	
 	public static RegistryKey<ArmorTrimPattern> getRegistryKey(Random rand){

@@ -7,8 +7,8 @@ import com.greymerk.roguelike.util.math.RandHelper;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
-import net.minecraft.item.trim.ArmorTrimMaterial;
-import net.minecraft.item.trim.ArmorTrimMaterials;
+import net.minecraft.item.equipment.trim.ArmorTrimMaterial;
+import net.minecraft.item.equipment.trim.ArmorTrimMaterials;
 import net.minecraft.nbt.NbtString;
 import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.registry.Registry;
@@ -34,9 +34,9 @@ public enum TrimMaterial {
 	}
 	
 	public static RegistryEntry<ArmorTrimMaterial> getEntry(DynamicRegistryManager registry, TrimMaterial mat){
-		Registry<ArmorTrimMaterial> materials = registry.get(RegistryKeys.TRIM_MATERIAL);
+		Registry<ArmorTrimMaterial> materials = registry.getOrThrow(RegistryKeys.TRIM_MATERIAL);
 		RegistryKey<ArmorTrimMaterial> key = getRegistryKey(mat);
-		return materials.getEntry(key).get();
+		return materials.getOrThrow(key);
 	}
 	
 	public static RegistryKey<ArmorTrimMaterial> getRegistryKey(TrimMaterial mat) {

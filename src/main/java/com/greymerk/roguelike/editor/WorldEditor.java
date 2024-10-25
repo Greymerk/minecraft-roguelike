@@ -116,7 +116,7 @@ public class WorldEditor implements IWorldEditor{
 	@Override
 	public Coord findSurface(Coord pos) {
 		
-		Coord cursor = new Coord(pos.getX(), world.getTopY(), pos.getZ());
+		Coord cursor = new Coord(pos.getX(), world.getTopYInclusive(), pos.getZ());
 		
 		while(cursor.getY() > 60) {
 			MetaBlock m = this.getBlock(cursor);
@@ -211,7 +211,7 @@ public class WorldEditor implements IWorldEditor{
 		ServerWorld sw = mcServer.getWorld(worldKey);
 		StructurePlacementCalculator calculator = sw.getChunkManager().getStructurePlacementCalculator();
 		DynamicRegistryManager reg = world.getRegistryManager();
-		Registry<StructureSet> structures = reg.get(RegistryKeys.STRUCTURE_SET);
+		Registry<StructureSet> structures = reg.getOrThrow(RegistryKeys.STRUCTURE_SET);
 		StructureSet structure = structures.get(key);
 		StructurePlacement placement = structure.placement(); 
 		

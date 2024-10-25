@@ -51,7 +51,7 @@ public enum Enchant {
 	public static final List<Enchant> cursed = List.of(CURSE_OF_VANISHING, CURSE_OF_BINDING);
 	
 	public static RegistryEntry<Enchantment> getEnchant(DynamicRegistryManager reg, Enchant type){
-		Registry<Enchantment> enchantments = reg.get(RegistryKeys.ENCHANTMENT);
+		Registry<Enchantment> enchantments = reg.getOrThrow(RegistryKeys.ENCHANTMENT);
 		String ns = "minecraft";
 		String path = getName(type);
 		Identifier id = Identifier.of(ns, path);
@@ -185,7 +185,7 @@ public enum Enchant {
 	}
 
 	public static List<EnchantmentLevelEntry> enchantsForItem(DynamicRegistryManager reg, Random rand, ItemStack item, int level, TagKey<Enchantment> tag){
-		Optional<RegistryEntryList.Named<Enchantment>> optional = reg.get(RegistryKeys.ENCHANTMENT).getEntryList(tag);
+		Optional<RegistryEntryList.Named<Enchantment>> optional = reg.getOrThrow(RegistryKeys.ENCHANTMENT).getOptional(tag);
 		if(optional.isEmpty()) return List.of();
 		List<EnchantmentLevelEntry> enchants = EnchantmentHelper.generateEnchantments(rand, item, level, optional.get().stream());
 		return enchants;
@@ -199,8 +199,8 @@ public enum Enchant {
 
 		if(rand.nextInt(6) == 0) return Enchant.getBook(reg, Enchant.MENDING);
 		
-		Optional<RegistryEntryList.Named<Enchantment>> optional = reg.get(RegistryKeys.ENCHANTMENT)
-				.getEntryList(EnchantmentTags.IN_ENCHANTING_TABLE);
+		Optional<RegistryEntryList.Named<Enchantment>> optional = reg.getOrThrow(RegistryKeys.ENCHANTMENT)
+				.getOptional(EnchantmentTags.IN_ENCHANTING_TABLE);
 		if(optional.isEmpty()) return new ItemStack(Items.BOOK);
 		List<EnchantmentLevelEntry> enchants = Enchant.enchantsForItem(
 				reg, rand, new ItemStack(Items.BOOK), getLevel(rand, diff), EnchantmentTags.IN_ENCHANTING_TABLE);

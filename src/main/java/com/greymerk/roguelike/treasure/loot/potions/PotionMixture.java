@@ -196,7 +196,7 @@ public enum PotionMixture {
 	public static void setColor(ItemStack potion, int color){
 		PotionContentsComponent contents = potion.getOrDefault(DataComponentTypes.POTION_CONTENTS, PotionContentsComponent.DEFAULT);
 		List<StatusEffectInstance> effects = contents.customEffects();
-		PotionContentsComponent c = new PotionContentsComponent(Optional.empty(), Optional.of(color), effects);
+		PotionContentsComponent c = new PotionContentsComponent(Optional.empty(), Optional.of(color), effects, contents.customName());
 		potion.set(DataComponentTypes.POTION_CONTENTS, c);
 	}
 }

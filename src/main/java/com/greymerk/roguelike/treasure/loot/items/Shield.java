@@ -14,7 +14,7 @@ public class Shield {
 
 	public static ItemStack get(DynamicRegistryManager reg, Random rand){
 		
-		Registry<BannerPattern> patterns = reg.get(RegistryKeys.BANNER_PATTERN);
+		Registry<BannerPattern> patterns = reg.getOrThrow(RegistryKeys.BANNER_PATTERN);
 		ItemStack shield = new ItemStack(Items.SHIELD); 
 		
 		BannerPatternsComponent component = Banner.createLayersComponent(patterns, rand, rand.nextInt(3) + 3);
