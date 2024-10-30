@@ -1,7 +1,6 @@
 package com.greymerk.roguelike.treasure.loot;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import com.greymerk.roguelike.dungeon.Difficulty;
@@ -23,146 +22,36 @@ public enum Quality{
 		weaponQuality = new HashMap<Difficulty, IWeighted<Quality>>();
 		toolQuality = new HashMap<Difficulty, IWeighted<Quality>>();
 		
-		List.of(Difficulty.values()).forEach(diff -> {
-			WeightedRandomizer<Quality> armour = new WeightedRandomizer<Quality>();
-			switch(diff){
-			case EASIEST:
-				armour.add(new WeightedChoice<Quality>(WOOD, 100));
-				armour.add(new WeightedChoice<Quality>(STONE, 30));
-				armour.add(new WeightedChoice<Quality>(IRON, 20));
-				armour.add(new WeightedChoice<Quality>(GOLD, 5));
-				armour.add(new WeightedChoice<Quality>(DIAMOND, 3));
-				armour.add(new WeightedChoice<Quality>(NETHERITE, 1));
-				break;
-			case EASY:
-				armour.add(new WeightedChoice<Quality>(WOOD, 100));
-				armour.add(new WeightedChoice<Quality>(STONE, 50));
-				armour.add(new WeightedChoice<Quality>(IRON, 30));
-				armour.add(new WeightedChoice<Quality>(GOLD, 10));
-				armour.add(new WeightedChoice<Quality>(DIAMOND, 3));
-				armour.add(new WeightedChoice<Quality>(NETHERITE, 1));
-				break;
-			case MEDIUM:
-				armour.add(new WeightedChoice<Quality>(WOOD, 30));
-				armour.add(new WeightedChoice<Quality>(STONE, 100));
-				armour.add(new WeightedChoice<Quality>(IRON, 50));
-				armour.add(new WeightedChoice<Quality>(GOLD, 20));
-				armour.add(new WeightedChoice<Quality>(DIAMOND, 5));
-				armour.add(new WeightedChoice<Quality>(NETHERITE, 1));
-				break;
-			case HARD:
-				armour.add(new WeightedChoice<Quality>(WOOD, 10));
-				armour.add(new WeightedChoice<Quality>(STONE, 30));
-				armour.add(new WeightedChoice<Quality>(IRON, 100));
-				armour.add(new WeightedChoice<Quality>(GOLD, 5));
-				armour.add(new WeightedChoice<Quality>(DIAMOND, 10));
-				armour.add(new WeightedChoice<Quality>(NETHERITE, 3));
-				break;
-			case HARDEST:
-				armour.add(new WeightedChoice<Quality>(WOOD, 1));
-				armour.add(new WeightedChoice<Quality>(STONE, 5));
-				armour.add(new WeightedChoice<Quality>(IRON, 20));
-				armour.add(new WeightedChoice<Quality>(GOLD, 3));
-				armour.add(new WeightedChoice<Quality>(DIAMOND, 50));
-				armour.add(new WeightedChoice<Quality>(NETHERITE, 5));
-				break;
-			}
-			armourQuality.put(diff, armour);
-			
-			WeightedRandomizer<Quality> weapon = new WeightedRandomizer<Quality>();
-			switch(diff){
-			case EASIEST:
-				weapon.add(new WeightedChoice<Quality>(WOOD, 200));
-				weapon.add(new WeightedChoice<Quality>(STONE, 50));
-				weapon.add(new WeightedChoice<Quality>(IRON, 10));
-				weapon.add(new WeightedChoice<Quality>(GOLD, 3));
-				weapon.add(new WeightedChoice<Quality>(DIAMOND, 1));
-				weapon.add(new WeightedChoice<Quality>(NETHERITE, 1));
-				break;
-			case EASY:
-				weapon.add(new WeightedChoice<Quality>(WOOD, 20));
-				weapon.add(new WeightedChoice<Quality>(STONE, 30));
-				weapon.add(new WeightedChoice<Quality>(IRON, 10));
-				weapon.add(new WeightedChoice<Quality>(GOLD, 3));
-				weapon.add(new WeightedChoice<Quality>(DIAMOND, 1));
-				weapon.add(new WeightedChoice<Quality>(NETHERITE, 1));
-				
-				break;
-			case MEDIUM:
-				weapon.add(new WeightedChoice<Quality>(WOOD, 10));
-				weapon.add(new WeightedChoice<Quality>(STONE, 20));
-				weapon.add(new WeightedChoice<Quality>(IRON, 10));
-				weapon.add(new WeightedChoice<Quality>(GOLD, 3));
-				weapon.add(new WeightedChoice<Quality>(DIAMOND, 1));
-				weapon.add(new WeightedChoice<Quality>(NETHERITE, 1));
-				break;
-			case HARD:
-				weapon.add(new WeightedChoice<Quality>(WOOD, 1));
-				weapon.add(new WeightedChoice<Quality>(STONE, 3));
-				weapon.add(new WeightedChoice<Quality>(IRON, 5));
-				weapon.add(new WeightedChoice<Quality>(GOLD, 3));
-				weapon.add(new WeightedChoice<Quality>(DIAMOND, 1));
-				weapon.add(new WeightedChoice<Quality>(NETHERITE, 1));
-				break;
-			case HARDEST:
-				weapon.add(new WeightedChoice<Quality>(WOOD, 1));
-				weapon.add(new WeightedChoice<Quality>(STONE, 2));
-				weapon.add(new WeightedChoice<Quality>(IRON, 15));
-				weapon.add(new WeightedChoice<Quality>(GOLD, 5));
-				weapon.add(new WeightedChoice<Quality>(DIAMOND, 3));
-				weapon.add(new WeightedChoice<Quality>(NETHERITE, 1));
-				break;
-			}
-			weaponQuality.put(diff, weapon);
-			
-			WeightedRandomizer<Quality> tool = new WeightedRandomizer<Quality>();
-			switch(diff){
-			case EASIEST:
-				tool.add(new WeightedChoice<Quality>(WOOD, 10));
-				tool.add(new WeightedChoice<Quality>(STONE, 20));
-				tool.add(new WeightedChoice<Quality>(IRON, 10));
-				tool.add(new WeightedChoice<Quality>(GOLD, 3));
-				tool.add(new WeightedChoice<Quality>(DIAMOND, 1));
-				tool.add(new WeightedChoice<Quality>(NETHERITE, 1));
-				break;
-			case EASY:
-				tool.add(new WeightedChoice<Quality>(WOOD, 2));
-				tool.add(new WeightedChoice<Quality>(STONE, 10));
-				tool.add(new WeightedChoice<Quality>(IRON, 10));
-				tool.add(new WeightedChoice<Quality>(GOLD, 3));
-				tool.add(new WeightedChoice<Quality>(DIAMOND, 1));
-				tool.add(new WeightedChoice<Quality>(NETHERITE, 1));
-				break;
-			case MEDIUM:
-				tool.add(new WeightedChoice<Quality>(WOOD, 1));
-				tool.add(new WeightedChoice<Quality>(STONE, 5));
-				tool.add(new WeightedChoice<Quality>(IRON, 10));
-				tool.add(new WeightedChoice<Quality>(GOLD, 5));
-				tool.add(new WeightedChoice<Quality>(DIAMOND, 3));
-				tool.add(new WeightedChoice<Quality>(NETHERITE, 1));
-				break;
-			case HARD:
-				tool.add(new WeightedChoice<Quality>(WOOD, 1));
-				tool.add(new WeightedChoice<Quality>(STONE, 3));
-				tool.add(new WeightedChoice<Quality>(IRON, 10));
-				tool.add(new WeightedChoice<Quality>(GOLD, 5));
-				tool.add(new WeightedChoice<Quality>(DIAMOND, 5));
-				tool.add(new WeightedChoice<Quality>(NETHERITE, 1));
-				break;
-			case HARDEST:
-				tool.add(new WeightedChoice<Quality>(WOOD, 1));
-				tool.add(new WeightedChoice<Quality>(STONE, 2));
-				tool.add(new WeightedChoice<Quality>(IRON, 10));
-				tool.add(new WeightedChoice<Quality>(GOLD, 3));
-				tool.add(new WeightedChoice<Quality>(DIAMOND, 5));
-				tool.add(new WeightedChoice<Quality>(NETHERITE, 1));
-				break;
-			}
-			toolQuality.put(diff, tool);
-		});
+		armourQuality.put(Difficulty.EASIEST, 	create(120, 50, 20, 10, 2, 1));
+		armourQuality.put(Difficulty.EASY, 		create(80, 60, 30, 10, 2, 1));
+		armourQuality.put(Difficulty.MEDIUM, 	create(40, 80, 40, 20, 3, 1));
+		armourQuality.put(Difficulty.HARD, 		create(10, 30, 80, 10, 10, 2));
+		armourQuality.put(Difficulty.HARDEST, 	create(1, 5, 40, 10, 10, 2));
 		
+		weaponQuality.put(Difficulty.EASIEST, 	create(50, 150, 10, 2, 2, 1));
+		weaponQuality.put(Difficulty.EASY, 		create(50, 120, 10, 2, 2, 1));
+		weaponQuality.put(Difficulty.MEDIUM, 	create(20, 60, 80, 5, 3, 1));
+		weaponQuality.put(Difficulty.HARD, 		create(5, 20, 60, 5, 5, 1));
+		weaponQuality.put(Difficulty.HARDEST, 	create(1, 5, 30, 5, 10, 2));
+		
+		toolQuality.put(Difficulty.EASIEST, 	create(50, 120, 10, 2, 2, 1));
+		toolQuality.put(Difficulty.EASY, 		create(30, 100, 20, 2, 2, 1));
+		toolQuality.put(Difficulty.MEDIUM, 		create(10, 100, 50, 5, 10, 1));
+		toolQuality.put(Difficulty.HARD, 		create(5, 50, 100, 5, 20, 2));
+		toolQuality.put(Difficulty.HARDEST, 	create(1, 5, 20, 10, 10, 2));
 	}
 
+	private static WeightedRandomizer<Quality> create(int wood, int stone, int iron, int gold, int diamond, int netherite){
+		WeightedRandomizer<Quality> randomizer = new WeightedRandomizer<Quality>();
+		randomizer.add(new WeightedChoice<Quality>(WOOD, wood));
+		randomizer.add(new WeightedChoice<Quality>(STONE, stone));
+		randomizer.add(new WeightedChoice<Quality>(IRON, iron));
+		randomizer.add(new WeightedChoice<Quality>(GOLD, gold));
+		randomizer.add(new WeightedChoice<Quality>(DIAMOND, diamond));
+		randomizer.add(new WeightedChoice<Quality>(NETHERITE, netherite));
+		return randomizer;
+	}
+	
 	public static Quality get(Random rand, Difficulty diff, Equipment type) {
 		
 		switch(type){
