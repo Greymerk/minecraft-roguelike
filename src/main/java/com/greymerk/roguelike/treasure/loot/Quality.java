@@ -22,23 +22,23 @@ public enum Quality{
 		weaponQuality = new HashMap<Difficulty, IWeighted<Quality>>();
 		toolQuality = new HashMap<Difficulty, IWeighted<Quality>>();
 		
-		armourQuality.put(Difficulty.EASIEST, 	create(120, 50, 20, 10, 2, 1));
+		armourQuality.put(Difficulty.EASIEST, 	create(120, 60, 40, 10, 2, 1));
 		armourQuality.put(Difficulty.EASY, 		create(80, 60, 30, 10, 2, 1));
-		armourQuality.put(Difficulty.MEDIUM, 	create(40, 80, 40, 20, 3, 1));
-		armourQuality.put(Difficulty.HARD, 		create(10, 30, 80, 10, 10, 2));
-		armourQuality.put(Difficulty.HARDEST, 	create(1, 5, 40, 10, 10, 2));
+		armourQuality.put(Difficulty.MEDIUM, 	create(20, 80, 40, 20, 10, 1));
+		armourQuality.put(Difficulty.HARD, 		create(5, 30, 80, 10, 10, 1));
+		armourQuality.put(Difficulty.HARDEST, 	create(1, 5, 30, 5, 10, 1));
 		
-		weaponQuality.put(Difficulty.EASIEST, 	create(50, 150, 10, 2, 2, 1));
-		weaponQuality.put(Difficulty.EASY, 		create(50, 120, 10, 2, 2, 1));
-		weaponQuality.put(Difficulty.MEDIUM, 	create(20, 60, 80, 5, 3, 1));
-		weaponQuality.put(Difficulty.HARD, 		create(5, 20, 60, 5, 5, 1));
-		weaponQuality.put(Difficulty.HARDEST, 	create(1, 5, 30, 5, 10, 2));
+		weaponQuality.put(Difficulty.EASIEST, 	create(30, 160, 40, 2, 2, 1));
+		weaponQuality.put(Difficulty.EASY, 		create(20, 120, 60, 2, 5, 1));
+		weaponQuality.put(Difficulty.MEDIUM, 	create(10, 40, 80, 5, 10, 1));
+		weaponQuality.put(Difficulty.HARD, 		create(5, 20, 60, 5, 20, 1));
+		weaponQuality.put(Difficulty.HARDEST, 	create(1, 5, 40, 5, 20, 1));
 		
-		toolQuality.put(Difficulty.EASIEST, 	create(50, 120, 10, 2, 2, 1));
-		toolQuality.put(Difficulty.EASY, 		create(30, 100, 20, 2, 2, 1));
-		toolQuality.put(Difficulty.MEDIUM, 		create(10, 100, 50, 5, 10, 1));
-		toolQuality.put(Difficulty.HARD, 		create(5, 50, 100, 5, 20, 2));
-		toolQuality.put(Difficulty.HARDEST, 	create(1, 5, 20, 10, 10, 2));
+		toolQuality.put(Difficulty.EASIEST, 	create(10, 160, 40, 2, 2, 1));
+		toolQuality.put(Difficulty.EASY, 		create(5, 120, 60, 2, 5, 1));
+		toolQuality.put(Difficulty.MEDIUM, 		create(5, 40, 80, 5, 10, 1));
+		toolQuality.put(Difficulty.HARD, 		create(2, 20, 50, 5, 20, 1));
+		toolQuality.put(Difficulty.HARDEST, 	create(1, 5, 40, 5, 20, 1));
 	}
 
 	private static WeightedRandomizer<Quality> create(int wood, int stone, int iron, int gold, int diamond, int netherite){
