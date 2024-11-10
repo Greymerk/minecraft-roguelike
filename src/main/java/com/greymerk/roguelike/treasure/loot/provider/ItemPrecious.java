@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.treasure.loot.WeightedRandomLoot;
+import com.greymerk.roguelike.treasure.loot.items.OminousBottle;
 import com.greymerk.roguelike.util.WeightedRandomizer;
 
 import net.minecraft.item.ItemStack;
@@ -31,7 +32,6 @@ public class ItemPrecious extends ItemBase{
 			if(d.gt(Difficulty.EASY)) {
 				randomizer.add(new WeightedRandomLoot(Items.DIAMOND, 5));
 				randomizer.add(new WeightedRandomLoot(Items.TOTEM_OF_UNDYING, diff.value + 1));
-				randomizer.add(new WeightedRandomLoot(Items.OMINOUS_BOTTLE, diff.value + 1));
 			}
 			
 			if(d.gt(Difficulty.MEDIUM)) {
@@ -43,6 +43,10 @@ public class ItemPrecious extends ItemBase{
 
 	@Override
 	public ItemStack getLootItem(Random rand, Difficulty diff){
+		if(diff.gt(Difficulty.EASY) && rand.nextInt(30) == 0) {
+			return OminousBottle.get(rand.nextInt(1 + diff.value));
+		}
+		
 		return this.loot.get(diff).get(rand);
 	}
 
