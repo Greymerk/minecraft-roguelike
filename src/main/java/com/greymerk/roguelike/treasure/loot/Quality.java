@@ -16,29 +16,23 @@ public enum Quality{
 	
 	private static Map<Difficulty, IWeighted<Quality>> armourQuality;
 	private static Map<Difficulty, IWeighted<Quality>> weaponQuality;
-	private static Map<Difficulty, IWeighted<Quality>> toolQuality;
+	
 	static {
 		armourQuality = new HashMap<Difficulty, IWeighted<Quality>>();
 		weaponQuality = new HashMap<Difficulty, IWeighted<Quality>>();
-		toolQuality = new HashMap<Difficulty, IWeighted<Quality>>();
 		
-		armourQuality.put(Difficulty.EASIEST, 	create(120, 60, 40, 10, 2, 1));
-		armourQuality.put(Difficulty.EASY, 		create(80, 60, 30, 10, 2, 1));
-		armourQuality.put(Difficulty.MEDIUM, 	create(20, 80, 40, 20, 10, 1));
+		armourQuality.put(Difficulty.EASIEST, 	create(300, 100, 20, 5, 2, 1));
+		armourQuality.put(Difficulty.EASY, 		create(200, 80, 40, 10, 2, 1));
+		armourQuality.put(Difficulty.MEDIUM, 	create(50, 60, 80, 10, 5, 1));
 		armourQuality.put(Difficulty.HARD, 		create(5, 40, 80, 10, 10, 1));
 		armourQuality.put(Difficulty.HARDEST, 	create(1, 10, 30, 5, 20, 1));
 		
-		weaponQuality.put(Difficulty.EASIEST, 	create(60, 90, 20, 2, 2, 1));
-		weaponQuality.put(Difficulty.EASY, 		create(20, 120, 60, 2, 5, 1));
-		weaponQuality.put(Difficulty.MEDIUM, 	create(10, 40, 80, 5, 10, 1));
+		weaponQuality.put(Difficulty.EASIEST, 	create(100, 300, 50, 2, 1, 1));
+		weaponQuality.put(Difficulty.EASY, 		create(50, 200, 50, 5, 2, 1));
+		weaponQuality.put(Difficulty.MEDIUM, 	create(10, 100, 80, 5, 5, 1));
 		weaponQuality.put(Difficulty.HARD, 		create(5, 20, 60, 5, 10, 1));
 		weaponQuality.put(Difficulty.HARDEST, 	create(1, 10, 30, 5, 20, 1));
 		
-		toolQuality.put(Difficulty.EASIEST, 	create(40, 120, 20, 2, 2, 1));
-		toolQuality.put(Difficulty.EASY, 		create(5, 120, 60, 2, 5, 1));
-		toolQuality.put(Difficulty.MEDIUM, 		create(5, 40, 80, 5, 10, 1));
-		toolQuality.put(Difficulty.HARD, 		create(2, 20, 50, 5, 20, 1));
-		toolQuality.put(Difficulty.HARDEST, 	create(1, 10, 30, 5, 20, 1));
 	}
 
 	private static WeightedRandomizer<Quality> create(int wood, int stone, int iron, int gold, int diamond, int netherite){
@@ -55,9 +49,6 @@ public enum Quality{
 	public static Quality get(Random rand, Difficulty diff, Equipment type) {
 		
 		switch(type){
-		case SWORD:
-		case BOW:
-			return weaponQuality.get(diff).get(rand);
 		case HELMET:
 		case CHEST:
 		case LEGS:
@@ -66,9 +57,11 @@ public enum Quality{
 		case PICK:
 		case AXE:
 		case SHOVEL:
-			return toolQuality.get(diff).get(rand);
+		case SWORD:
+		case BOW:
+			return weaponQuality.get(diff).get(rand);
 		}
-		return null;
+		return Quality.WOOD;
 	}
 	
 	public static Quality get(Difficulty diff){
@@ -87,7 +80,7 @@ public enum Quality{
 	}
 
 	public static Quality getToolQuality(Random rand, Difficulty diff) {
-		return toolQuality.get(diff).get(rand);
+		return weaponQuality.get(diff).get(rand);
 	}
 
 	public static Quality getWeaponQuality(Random rand, Difficulty diff) {
