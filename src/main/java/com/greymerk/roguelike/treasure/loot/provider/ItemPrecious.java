@@ -27,15 +27,15 @@ public class ItemPrecious extends ItemBase{
 			WeightedRandomizer<ItemStack> randomizer = new WeightedRandomizer<ItemStack>();
 			loot.put(d, randomizer);
 			
-			randomizer.add(new WeightedRandomLoot(Items.EMERALD, d.value + 1, 3 * (d.value + 1), 100));
+			randomizer.add(new WeightedRandomLoot(Items.EMERALD, d.value + 1, 2 * (d.value + 3), 100));
 			
 			if(d.gt(Difficulty.EASY)) {
 				randomizer.add(new WeightedRandomLoot(Items.DIAMOND, 5));
-				randomizer.add(new WeightedRandomLoot(Items.TOTEM_OF_UNDYING, diff.value + 1));
+				randomizer.add(new WeightedRandomLoot(Items.TOTEM_OF_UNDYING, 2));
 			}
 			
 			if(d.gt(Difficulty.MEDIUM)) {
-				randomizer.add(new WeightedRandomLoot(Items.SHULKER_SHELL, diff.value + 1));
+				randomizer.add(new WeightedRandomLoot(Items.SHULKER_SHELL, 2));
 				randomizer.add(new WeightedRandomLoot(Items.NETHERITE_SCRAP, 1));
 			}
 		});

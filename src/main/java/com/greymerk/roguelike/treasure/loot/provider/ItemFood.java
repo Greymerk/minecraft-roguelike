@@ -79,7 +79,7 @@ public class ItemFood extends ItemBase{
 		if(rand.nextInt(2000) == 0) return ItemNovelty.getItem(reg, ItemNovelty.AVIDYA);
 		if(rand.nextInt(1000) == 0) return ItemNovelty.getItem(reg, ItemNovelty.RLEAHY);
 		if(rand.nextInt(1000) == 0) return ItemNovelty.getItem(reg, ItemNovelty.FOURLES);
-		if(diff.lt(Difficulty.MEDIUM) && rand.nextInt(100) == 0) return PotionMixture.getPotion(rand, PotionMixture.COFFEE);
+		if(diff.lt(Difficulty.MEDIUM) && rand.nextInt(200) == 0) return PotionMixture.getPotion(rand, PotionMixture.COFFEE);
 		if(diff.gt(Difficulty.EASY) && rand.nextInt(100) == 0) return PotionMixture.getPotion(rand, PotionMixture.LAUDANUM);
 		return this.loot.get(diff).get(rand);
 	}
