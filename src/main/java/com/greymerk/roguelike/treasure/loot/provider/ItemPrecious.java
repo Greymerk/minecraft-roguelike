@@ -27,7 +27,7 @@ public class ItemPrecious extends ItemBase{
 			WeightedRandomizer<ItemStack> randomizer = new WeightedRandomizer<ItemStack>();
 			loot.put(d, randomizer);
 			
-			randomizer.add(new WeightedRandomLoot(Items.EMERALD, d.value + 1, 2 * (d.value + 3), 100));
+			randomizer.add(new WeightedRandomLoot(Items.EMERALD, 1, 3 * (d.value + 1), 100));
 			
 			if(d.gt(Difficulty.EASY)) {
 				randomizer.add(new WeightedRandomLoot(Items.DIAMOND, 5));

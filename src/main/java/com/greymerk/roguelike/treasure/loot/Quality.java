@@ -22,16 +22,16 @@ public enum Quality{
 		weaponQuality = new HashMap<Difficulty, IWeighted<Quality>>();
 		
 		armourQuality.put(Difficulty.EASIEST, 	create(300, 100, 20, 5, 2, 1));
-		armourQuality.put(Difficulty.EASY, 		create(200, 80, 40, 10, 2, 1));
-		armourQuality.put(Difficulty.MEDIUM, 	create(50, 60, 80, 10, 5, 1));
-		armourQuality.put(Difficulty.HARD, 		create(5, 40, 80, 10, 10, 1));
-		armourQuality.put(Difficulty.HARDEST, 	create(1, 10, 30, 5, 20, 1));
+		armourQuality.put(Difficulty.EASY, 		create(200, 80, 40, 5, 2, 1));
+		armourQuality.put(Difficulty.MEDIUM, 	create(50, 80, 60, 5, 3, 1));
+		armourQuality.put(Difficulty.HARD, 		create(5, 40, 80, 5, 5, 1));
+		armourQuality.put(Difficulty.HARDEST, 	create(1, 10, 50, 5, 10, 1));
 		
 		weaponQuality.put(Difficulty.EASIEST, 	create(100, 300, 50, 2, 1, 1));
 		weaponQuality.put(Difficulty.EASY, 		create(50, 200, 50, 5, 2, 1));
-		weaponQuality.put(Difficulty.MEDIUM, 	create(10, 100, 80, 5, 5, 1));
-		weaponQuality.put(Difficulty.HARD, 		create(5, 20, 60, 5, 10, 1));
-		weaponQuality.put(Difficulty.HARDEST, 	create(1, 10, 30, 5, 20, 1));
+		weaponQuality.put(Difficulty.MEDIUM, 	create(10, 80, 80, 5, 5, 1));
+		weaponQuality.put(Difficulty.HARD, 		create(5, 20, 70, 5, 5, 1));
+		weaponQuality.put(Difficulty.HARDEST, 	create(1, 10, 50, 5, 10, 1));
 		
 	}
 
