@@ -30,7 +30,7 @@ public class WallBanner {
 		if(be == null) return;
 		if(!(be instanceof BannerBlockEntity)) return;
 		BannerBlockEntity bannerEntity = (BannerBlockEntity)be;
-		bannerEntity.readFrom(banner, DyeColor.BLACK);
+		bannerEntity.readComponents(banner);
 		bannerEntity.markDirty();
 	}	
 }
