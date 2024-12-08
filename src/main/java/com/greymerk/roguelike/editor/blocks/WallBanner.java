@@ -11,7 +11,6 @@ import net.minecraft.block.HorizontalFacingBlock;
 import net.minecraft.block.entity.BannerBlockEntity;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.random.Random;
 
 public class WallBanner {
