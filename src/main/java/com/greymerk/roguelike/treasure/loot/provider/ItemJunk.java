@@ -28,8 +28,8 @@ public class ItemJunk extends ItemBase{
 			loot.put(d, randomizer);
 
 			if(d.gt(Difficulty.MEDIUM)) {
-				randomizer.add(new WeightedRandomLoot(Items.BLAZE_ROD, 1, 3, 50));
-				randomizer.add(new WeightedRandomLoot(Items.AMETHYST_SHARD, 1, 3, 100));
+				randomizer.add(new WeightedRandomLoot(Items.BLAZE_ROD, 1, 3, 20));
+				randomizer.add(new WeightedRandomLoot(Items.AMETHYST_SHARD, 1, 3, 50));
 			}
 			
 			if(d.gt(Difficulty.EASY)) {
@@ -65,6 +65,7 @@ public class ItemJunk extends ItemBase{
 			randomizer.add(new WeightedRandomLoot(Items.SPIDER_EYE, 1, 1, 100));
 			randomizer.add(new WeightedRandomLoot(Items.SNOWBALL, 1, 1, 100));
 			randomizer.add(new WeightedRandomLoot(Items.LEAD, 1, 1, 10));
+			randomizer.add(new WeightedRandomLoot(Items.RESIN_CLUMP, 1, 1, 10));
 			randomizer.add(new WeightedRandomLoot(Items.POISONOUS_POTATO, 1, 1, 5));
 		});
 	}

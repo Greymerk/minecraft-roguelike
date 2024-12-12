@@ -18,7 +18,9 @@ import net.minecraft.util.math.random.Random;
 
 public enum TrimPattern {
 
-	COAST, DUNE, EYE, HOST, RAISER, RIB, SENTRY, SHAPER, SILENCE, SNOUT, SPIRE, TIDE, VEX, WARD, WAYFINDER, WILD;
+	COAST, DUNE, EYE, HOST, RAISER, RIB, SENTRY, SHAPER, 
+	SILENCE, SNOUT, SPIRE, TIDE, VEX, WARD, WAYFINDER, WILD,
+	BOLT, FLOW;
 	
 	public static ItemStack addTrim(ItemStack item) {
 		return item;
@@ -58,6 +60,8 @@ public enum TrimPattern {
 		case WARD: return ArmorTrimPatterns.WARD;
 		case WAYFINDER: return ArmorTrimPatterns.WAYFINDER;
 		case WILD: return ArmorTrimPatterns.WILD;
+		case BOLT: return ArmorTrimPatterns.BOLT;
+		case FLOW: return ArmorTrimPatterns.FLOW;
 		default: return ArmorTrimPatterns.COAST;
 		}
 	}

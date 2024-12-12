@@ -57,7 +57,7 @@ public class DecoratedPot {
 	private static IWeighted<Item> getFaceRoller(){
 		
 		WeightedRandomizer<Item> faceroll = new WeightedRandomizer<Item>();
-		faceroll.add(new WeightedChoice<Item>(Items.BRICK, 50));
+		faceroll.add(new WeightedChoice<Item>(Items.BRICK, 100));
 		faceroll.add(new WeightedChoice<Item>(Items.ANGLER_POTTERY_SHERD, 1));
 		faceroll.add(new WeightedChoice<Item>(Items.ARCHER_POTTERY_SHERD, 1));
 		faceroll.add(new WeightedChoice<Item>(Items.ARMS_UP_POTTERY_SHERD, 1));

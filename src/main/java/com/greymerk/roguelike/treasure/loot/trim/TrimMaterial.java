@@ -20,7 +20,8 @@ import net.minecraft.util.math.random.Random;
 
 public enum TrimMaterial {
 
-	AMETHYST, COPPER, DIAMOND, EMERALD, GOLD, IRON, LAPIS, QUARTZ, NETHERITE, REDSTONE;
+	AMETHYST, COPPER, DIAMOND, EMERALD, GOLD, IRON, 
+	LAPIS, QUARTZ, NETHERITE, REDSTONE, RESIN;
 	
 	public static NbtString getNbt(TrimMaterial material) {
 		String path = getId(material);
@@ -50,6 +51,7 @@ public enum TrimMaterial {
 		case LAPIS: return ArmorTrimMaterials.LAPIS;
 		case QUARTZ: return ArmorTrimMaterials.NETHERITE;
 		case REDSTONE: return ArmorTrimMaterials.REDSTONE;
+		case RESIN: return ArmorTrimMaterials.RESIN;
 		default: return ArmorTrimMaterials.QUARTZ;
 		}
 	}

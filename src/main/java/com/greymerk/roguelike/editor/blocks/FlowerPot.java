@@ -18,15 +18,16 @@ public enum FlowerPot {
 	ORANGETULIP, WHITETULIP, PINKTULIP, DAISY, LILY, 
 	REDMUSHROOM, BROWNMUSHROOM,
 	OAK, BIRCH, SPRUCE, JUNGLE, ACACIA, DARKOAK,
-	MANGROVE, AZALEA, AZALEA_FLOWERING, CHERRY,
+	MANGROVE, AZALEA, AZALEA_FLOWERING, CHERRY, PALE_OAK,
 	SHRUB, FERN, CACTUS, BAMBOO, WITHER,
-	CRIMSON_FUNGUS, WARPED_FUNGUS, CRIMSON_ROOTS, WARPED_ROOTS;
+	CRIMSON_FUNGUS, WARPED_FUNGUS, CRIMSON_ROOTS, WARPED_ROOTS,
+	EYEBLOSSOM_OPEN, EYEBLOSSOM_CLOSED;
 
 	public static List<FlowerPot> mushrooms = List.of(
-			REDMUSHROOM, BROWNMUSHROOM, CRIMSON_FUNGUS, WARPED_FUNGUS, CRIMSON_ROOTS, WARPED_ROOTS, WITHER, SHRUB);
+			REDMUSHROOM, BROWNMUSHROOM, CRIMSON_FUNGUS, WARPED_FUNGUS, CRIMSON_ROOTS, WARPED_ROOTS, WITHER, SHRUB, EYEBLOSSOM_OPEN, EYEBLOSSOM_CLOSED);
 	
 	public static List<FlowerPot> saplings = List.of(
-			OAK, BIRCH, SPRUCE, JUNGLE, ACACIA, DARKOAK, MANGROVE, AZALEA, CHERRY);
+			OAK, BIRCH, SPRUCE, JUNGLE, ACACIA, DARKOAK, MANGROVE, AZALEA, CHERRY, PALE_OAK);
 	
 	public static void generate(IWorldEditor editor, Random rand, Coord origin){
 		generate(editor, rand, origin, Arrays.asList(FlowerPot.values()));
@@ -64,6 +65,7 @@ public enum FlowerPot {
 		case ACACIA: return Blocks.POTTED_ACACIA_SAPLING;
 		case DARKOAK: return Blocks.POTTED_DARK_OAK_SAPLING;
 		case CHERRY: return Blocks.POTTED_CHERRY_SAPLING;
+		case PALE_OAK: return Blocks.POTTED_PALE_OAK_SAPLING;
 		case SHRUB: return Blocks.POTTED_DEAD_BUSH;
 		case FERN: return Blocks.POTTED_FERN;
 		case AZALEA: return Blocks.POTTED_AZALEA_BUSH;
@@ -74,6 +76,8 @@ public enum FlowerPot {
 		case WARPED_FUNGUS: return Blocks.POTTED_WARPED_FUNGUS;
 		case WARPED_ROOTS: return Blocks.POTTED_WARPED_ROOTS;
 		case WITHER: return Blocks.POTTED_WITHER_ROSE;
+		case EYEBLOSSOM_OPEN: return Blocks.POTTED_OPEN_EYEBLOSSOM;
+		case EYEBLOSSOM_CLOSED: return Blocks.POTTED_CLOSED_EYEBLOSSOM;
 		default: return Blocks.POTTED_DEAD_BUSH;
 		}
 	}
@@ -109,6 +113,7 @@ public enum FlowerPot {
 		case AZALEA_FLOWERING: return Blocks.FLOWERING_AZALEA;
 		case BAMBOO: return Blocks.BAMBOO;
 		case CHERRY: return Blocks.CHERRY_SAPLING;
+		case PALE_OAK: return Blocks.PALE_OAK_SAPLING;
 		case CRIMSON_FUNGUS: return Blocks.CRIMSON_FUNGUS;
 		case CRIMSON_ROOTS: return Blocks.CRIMSON_ROOTS;
 		case LILY: return Blocks.LILY_OF_THE_VALLEY;
@@ -116,6 +121,8 @@ public enum FlowerPot {
 		case WARPED_FUNGUS: return Blocks.WARPED_FUNGUS;
 		case WARPED_ROOTS: return Blocks.WARPED_ROOTS;
 		case WITHER: return Blocks.WITHER_ROSE;
+		case EYEBLOSSOM_OPEN: return Blocks.OPEN_EYEBLOSSOM;
+		case EYEBLOSSOM_CLOSED: return Blocks.CLOSED_EYEBLOSSOM;
 		default: return Blocks.DEAD_BUSH;
 		
 		}
