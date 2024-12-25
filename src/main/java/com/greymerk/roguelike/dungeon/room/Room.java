@@ -17,7 +17,7 @@ public enum Room {
 	CORRIDOR, ENTRANCE, STAIRWAY, CROSS, BEDROOM, CRYPT,
 	RESERVOIR, CISTERN, OSSUARY, KITCHEN, CREEPER, ENDER,
 	ABYSS, PRISON, MUSIC, BREWING, PANOPTICON, BANQUET, SCULK,
-	BTEAM, LIBRARY, SMITH;
+	BTEAM, LIBRARY, SMITH, PIT;
 	
 	public static IRoom fromType(Room type) {
 		switch(type) {
@@ -43,6 +43,7 @@ public enum Room {
 		case BTEAM: return new BTeamRoom();
 		case LIBRARY: return new LibraryRoom();
 		case SMITH: return new SmithRoom();
+		case PIT: return new PitRoom();
 		default: return new Corridor();
 		}
 	}
