@@ -1,30 +1,68 @@
 package com.greymerk.roguelike.settings.dungeon;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import com.greymerk.roguelike.settings.DungeonSettingsBase;
 import com.greymerk.roguelike.settings.IDungeonSettings;
+import com.greymerk.roguelike.settings.ILevelSettings;
 import com.greymerk.roguelike.settings.LevelSettings;
 
 public class DungeonSettingsDefault extends DungeonSettingsBase implements IDungeonSettings {
 
+	int firstLevelY;
+	int lastLevelY;
+	Map<Double, LevelSettings> levelSettings;
+	
 	public DungeonSettingsDefault() {
-		super();
-		
-		this.set(0, LevelSettings.OAK); //60+
-		this.set(1, LevelSettings.OAK); //50
-		this.set(2, LevelSettings.SPRUCE); //40
-		this.set(3, LevelSettings.DARK_OAK); //30
-		this.set(4, LevelSettings.STONE); //20
-		this.set(5, LevelSettings.STONE); //10
-		this.set(6, LevelSettings.CRUMBLED_STONE); //0
-		this.set(7, LevelSettings.MOSSY); //-10
-		this.set(8, LevelSettings.MOSSY); //-20
-		this.set(9, LevelSettings.CRUMBLED_MOSSY); //-30
-		this.set(10, LevelSettings.CRUMBLED_MOSSY); //-40
-		this.set(11, LevelSettings.TILED_SLATE); //-50
+		this(50, -50);
 	}
 	
-	private void set(Integer key, LevelSettings value) {
-		this.levelSettings.put(key, LevelSettings.fromType(value));
+	public DungeonSettingsDefault(int firstLevelY, int lastLevelY) {
+		this.firstLevelY = firstLevelY;
+		this.lastLevelY = lastLevelY;
+		
+		this.levelSettings = new HashMap<Double, LevelSettings>();
+		
+		this.set(0.05d, LevelSettings.OAK);
+		this.set(0.1d, LevelSettings.SPRUCE);
+		this.set(0.2d, LevelSettings.DARK_OAK);
+		this.set(0.4d, LevelSettings.STONE);
+		this.set(0.6d, LevelSettings.CRUMBLED_STONE);
+		this.set(0.7d, LevelSettings.MOSSY);
+		this.set(0.9d, LevelSettings.CRUMBLED_MOSSY);
+		this.set(1.0d, LevelSettings.TILED_SLATE);
 	}
-
+	
+	private void set(Double key, LevelSettings value) {
+		this.levelSettings.put(key, value);
+	}
+	
+	@Override
+	public ILevelSettings getLevel(int y) {
+		if(y > this.firstLevelY) return LevelSettings.fromType(LevelSettings.OAK);
+		if(y < this.lastLevelY) return LevelSettings.fromType(LevelSettings.TILED_SLATE);
+		
+		double total = (double)(firstLevelY - lastLevelY);
+		double position = (double)(firstLevelY - y) / total;
+		
+		double key = 0d;
+		LevelSettings level = LevelSettings.OAK;
+		
+		List<Double> keySet = new ArrayList<Double>();
+		keySet.addAll(this.levelSettings.keySet());
+		Collections.sort(keySet);
+		
+		for(double k : keySet) {
+			if(k > key && k <= position) {
+				key = k;
+				level = this.levelSettings.get(k);
+			}
+		}
+		
+		return LevelSettings.fromType(level);
+	}
 }

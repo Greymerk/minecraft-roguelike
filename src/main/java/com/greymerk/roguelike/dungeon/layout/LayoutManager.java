@@ -8,7 +8,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.greymerk.roguelike.config.Config;
 import com.greymerk.roguelike.debug.DebugLayout;
-import com.greymerk.roguelike.dungeon.Dungeon;
 import com.greymerk.roguelike.dungeon.Floor;
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellManager;
@@ -20,6 +19,7 @@ import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.settings.IDungeonSettings;
+import com.greymerk.roguelike.settings.ILevelSettings;
 import com.greymerk.roguelike.settings.dungeon.DungeonSettingsDefault;
 import com.greymerk.roguelike.util.math.RandHelper;
 
@@ -35,7 +35,7 @@ public class LayoutManager {
 	public LayoutManager(Coord origin) {
 		this.origin = origin;
 		this.floors = createFloors();
-		this.settings = new DungeonSettingsDefault();
+		this.settings = new DungeonSettingsDefault(Config.ofBoolean(Config.BELOW_SEA_LEVEL) ? 50 : origin.getY(), -50);
 		this.zones = new ExclusionZones();
 	}
 	
@@ -44,25 +44,26 @@ public class LayoutManager {
 		Random rand = editor.getRandom(origin);
 				
 		for(Floor floor : this.floors) {
-			int level = Dungeon.getLevelFromY(floor.getOrigin().getY());
 			
-			if(level == 0) {
+			if(Config.ofBoolean(Config.BELOW_SEA_LEVEL) && floor.getOrigin().getY() > 55) {
 				this.addStair(editor, rand, floor);
 				continue;
 			}
 			
-			RoomProvider roomProvider = this.settings.getLevel(floor.getOrigin().getY()).getRooms();
+			ILevelSettings levelSettings = this.settings.getLevel(floor.getOrigin().getY());
+			
+			RoomProvider roomProvider = levelSettings.getRooms();
 			
 			int numRooms = Math.clamp(Config.ofInteger(Config.ROOMS_PER_LEVEL).orElse(20), 1, 1000);
 			
 			List<Room> rooms = roomProvider.getRooms(rand, numRooms);
 
 			rooms.forEach(r -> {
-				IRoom room = Room.getInstance(r, this.settings.getLevel(floor.getOrigin().getY()));
+				IRoom room = Room.getInstance(r, levelSettings);
 				this.placeRoom(room, rand, floor);
 			});
 			
-			if(level > 0) this.addStair(editor, rand, floor);
+			this.addStair(editor, rand, floor);
 			
 			floor.getRooms().forEach(r -> r.determineEntrances(floor, r.getFloorPos()));
 		}
@@ -82,6 +83,10 @@ public class LayoutManager {
 	}
 	
 	private boolean findFit(IRoom room, Random rand, Floor floor, boolean avoidZones) {
+		for(Cell c : room.getCells(Cardinal.NORTH)) {
+			if(c.getLevelOffset() + this.floors.indexOf(floor) > this.floors.size() - 1) return false;
+		}
+		
 		List<Cell> cells = floor.getCells(CellState.POTENTIAL);
 		RandHelper.shuffle(cells, rand);
 		
