@@ -22,11 +22,11 @@ import net.minecraft.util.math.random.Random;
 
 public class DecoratedPot {
 
-	public static void set(IWorldEditor editor, Random rand, Coord origin) {
-		set(editor, rand, origin, Loot.PRECIOUS);
+	public static void set(IWorldEditor editor, Random rand, Difficulty diff, Coord origin) {
+		set(editor, rand, diff, origin, Loot.PRECIOUS);
 	}
 	
-	public static void set(IWorldEditor editor, Random rand, Coord origin, Loot type) {
+	public static void set(IWorldEditor editor, Random rand, Difficulty diff, Coord origin, Loot type) {
 		
 		if(!MetaBlock.of(Blocks.DECORATED_POT).set(editor, origin)) return;
 		
@@ -47,7 +47,7 @@ public class DecoratedPot {
 		
 		potEntity.readComponents(potEntity.getComponents(), changes.build());		
 
-		ItemStack loot = Loot.getLootItem(editor, type, rand, Difficulty.fromY(origin.getY()));
+		ItemStack loot = Loot.getLootItem(editor, type, rand, diff);
 		potEntity.setStack(loot);
 		
 		potEntity.markDirty();

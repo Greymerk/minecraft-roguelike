@@ -54,7 +54,7 @@ public class SculkRoom extends AbstractLargeRoom implements IRoom {
 		bridges(editor, rand, origin);
 		placeSpawners(editor, rand, origin);
 		placeChests(editor, rand, origin);
-		Filter.get(Filter.SCULK).apply(editor, rand, theme, getBoundingBox().get());
+		Filter.get(Filter.SCULK).apply(editor, rand, settings, getBoundingBox().get());
 
 	}
 
@@ -72,11 +72,11 @@ public class SculkRoom extends AbstractLargeRoom implements IRoom {
 		int count = rand.nextBetween(5, 9);
 		if(empty.size() <= count) {
 			empty.forEach(pos -> {
-				Treasure.generate(editor, rand, pos, types.get(rand));	
+				Treasure.generate(editor, rand, settings.getDifficulty(), pos, types.get(rand));	
 			});
 		} else {
 			empty.subList(0, count).forEach(pos -> {
-				Treasure.generate(editor, rand, pos, types.get(rand));
+				Treasure.generate(editor, rand, settings.getDifficulty(), pos, types.get(rand));
 			});	
 		}
 	}
@@ -110,7 +110,7 @@ public class SculkRoom extends AbstractLargeRoom implements IRoom {
 		types.add(new WeightedChoice<Spawner>(Spawner.SPIDER, 2));
 		
 		spawners.forEach(pos -> {
-			if(rand.nextBoolean()) Spawner.generate(editor, rand, pos, types.get(rand));
+			if(rand.nextBoolean()) Spawner.generate(editor, rand, settings.getDifficulty(), pos, types.get(rand));
 		});
 	}
 
@@ -136,7 +136,7 @@ public class SculkRoom extends AbstractLargeRoom implements IRoom {
 		Cardinal.directions.forEach(dir -> {
 			Cardinal.orthogonal(dir).forEach(o -> {
 				List.of(6, 12).forEach(step -> {
-					settings.getWallFragment(rand).generate(editor, rand, theme, origin.copy().add(dir, 12).add(o, step), dir);
+					settings.getWallFragment(rand).generate(editor, rand, settings, origin.copy().add(dir, 12).add(o, step), dir);
 				});
 			});
 		});
@@ -210,7 +210,7 @@ public class SculkRoom extends AbstractLargeRoom implements IRoom {
 		Cardinal.directions.forEach(dir -> {
 			BoundingBox.of(origin).add(dir, 15).grow(Cardinal.orthogonal(dir), 15).fill(editor, rand, theme.getPrimary().getWall(), Fill.SOLID);
 			if(this.getEntrance(dir) == Entrance.DOOR) {
-				Fragment.generate(Fragment.ARCH, editor, rand, theme, origin.copy().add(dir, 12), dir);	
+				Fragment.generate(Fragment.ARCH, editor, rand, settings, origin.copy().add(dir, 12), dir);	
 			}
 		});
 		BoundingBox.of(origin).add(Cardinal.UP, 7).grow(Cardinal.directions, 15).fill(editor, rand, theme.getPrimary().getWall(), Fill.SOLID);

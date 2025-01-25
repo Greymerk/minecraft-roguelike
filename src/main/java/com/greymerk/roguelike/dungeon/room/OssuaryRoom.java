@@ -240,7 +240,7 @@ public class OssuaryRoom extends AbstractMediumRoom implements IRoom {
 		RectSolid.fill(editor, rand, bb, Air.get());
 		
 		Coord door = origin.copy().add(dir, 6);
-		Fragment.generate(Fragment.ARCH, editor, rand, theme, door, dir);
+		Fragment.generate(Fragment.ARCH, editor, rand, settings, door, dir);
 	}
 
 	private void ceiling(IWorldEditor editor, Random rand, Coord origin) {

@@ -78,7 +78,7 @@ public class BanquetRoom extends AbstractLargeRoom implements IRoom {
 		Cardinal.directions.forEach(dir -> {
 			Cardinal.orthogonal(dir).forEach(o -> {
 				List.of(6, 12).forEach(step -> {
-					settings.getWallFragment(rand).generate(editor, rand, theme, origin.copy().add(dir, 12).add(o, step), dir);
+					settings.getWallFragment(rand).generate(editor, rand, settings, origin.copy().add(dir, 12).add(o, step), dir);
 				});
 			});
 		});
@@ -135,7 +135,7 @@ public class BanquetRoom extends AbstractLargeRoom implements IRoom {
 		BoundingBox.of(origin).add(Cardinal.DOWN).grow(Cardinal.directions, 15).fill(editor, rand, theme.getPrimary().getFloor());
 		
 		this.getEntrancesFromType(Entrance.DOOR).forEach(dir -> {
-			Fragment.generate(Fragment.ARCH, editor, rand, theme, origin.copy().add(dir, 12), dir); 
+			Fragment.generate(Fragment.ARCH, editor, rand, settings, origin.copy().add(dir, 12), dir); 
 		});
 	}
 

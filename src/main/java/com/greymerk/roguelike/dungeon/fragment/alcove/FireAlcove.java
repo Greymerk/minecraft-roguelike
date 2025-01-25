@@ -9,6 +9,7 @@ import com.greymerk.roguelike.editor.blocks.Air;
 import com.greymerk.roguelike.editor.blocks.IronBar;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.editor.shapes.Shape;
+import com.greymerk.roguelike.settings.ILevelSettings;
 import com.greymerk.roguelike.theme.ITheme;
 
 import net.minecraft.block.Blocks;
@@ -17,7 +18,8 @@ import net.minecraft.util.math.random.Random;
 public class FireAlcove implements IFragment {
 
 	@Override
-	public void generate(IWorldEditor editor, Random rand, ITheme theme, Coord origin, Cardinal dir) {
+	public void generate(IWorldEditor editor, Random rand, ILevelSettings settings, Coord origin, Cardinal dir) {
+		ITheme theme = settings.getTheme();
 		BoundingBox.of(origin).add(dir, 3).grow(dir, 3).grow(Cardinal.orthogonal(dir)).grow(Cardinal.UP, 3)
 			.getShape(Shape.RECTSOLID).fill(editor, rand, theme.getPrimary().getWall());
 		theme.getPrimary().getSlab().upsideDown(false).set(editor, origin.copy().add(dir, 3));

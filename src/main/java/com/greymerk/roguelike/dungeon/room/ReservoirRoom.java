@@ -67,7 +67,7 @@ public class ReservoirRoom extends AbstractLargeRoom implements IRoom {
 		for(Cardinal dir : this.getEntrancesFromType(Entrance.DOOR)) {
 			Coord pos = origin.copy();
 			pos.add(dir, 12);
-			Fragment.generate(Fragment.ARCH, editor, rand, theme, pos, dir);
+			Fragment.generate(Fragment.ARCH, editor, rand, settings, pos, dir);
 		}
 	}
 
@@ -135,18 +135,18 @@ public class ReservoirRoom extends AbstractLargeRoom implements IRoom {
 			pos.add(dir, 12);
 			cell(editor, rand, pos.copy());
 			if(!this.getEntrancesFromType(Entrance.DOOR).contains(dir)) {
-				settings.getWallFragment(rand).generate(editor, rand, theme, pos.copy(), dir);
+				settings.getWallFragment(rand).generate(editor, rand, settings, pos.copy(), dir);
 			}
 			pos.add(Cardinal.left(dir), 6);
 			cell(editor, rand, pos.copy());
-			settings.getWallFragment(rand).generate(editor, rand, theme, pos.copy(), dir);
+			settings.getWallFragment(rand).generate(editor, rand, settings, pos.copy(), dir);
 			pos.add(Cardinal.right(dir), 12);
 			cell(editor, rand, pos.copy());
-			settings.getWallFragment(rand).generate(editor, rand, theme, pos.copy(), dir);
+			settings.getWallFragment(rand).generate(editor, rand, settings, pos.copy(), dir);
 			pos.add(Cardinal.right(dir), 6);
 			cell(editor, rand, pos.copy());
-			settings.getWallFragment(rand).generate(editor, rand, theme, pos.copy(), dir);
-			settings.getWallFragment(rand).generate(editor, rand, theme, pos.copy(), Cardinal.right(dir));
+			settings.getWallFragment(rand).generate(editor, rand, settings, pos.copy(), dir);
+			settings.getWallFragment(rand).generate(editor, rand, settings, pos.copy(), Cardinal.right(dir));
 			
 			BoundingBox bb = BoundingBox.of(origin.copy());
 			bb.add(dir, 10).add(Cardinal.DOWN);

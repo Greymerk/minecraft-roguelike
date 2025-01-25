@@ -2,6 +2,7 @@ package com.greymerk.roguelike.settings;
 
 import java.util.List;
 
+import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
 import com.greymerk.roguelike.dungeon.fragment.IFragment;
 import com.greymerk.roguelike.dungeon.room.RoomProvider;
@@ -57,8 +58,13 @@ public abstract class LevelSettingsBase implements ILevelSettings {
 	public void applyFilters(IWorldEditor editor, Random rand, IBounded box) {
 		if(this.filters == null) return;
 		for(IFilter filter : this.filters) {
-			filter.apply(editor, rand, this.getTheme(), box);
+			filter.apply(editor, rand, this, box);
 		}
+	}
+
+	@Override
+	public Difficulty getDifficulty() {
+		return Difficulty.EASIEST;
 	}
 	
 }

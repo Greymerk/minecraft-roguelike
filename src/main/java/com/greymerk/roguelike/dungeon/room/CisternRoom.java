@@ -128,7 +128,7 @@ public class CisternRoom extends AbstractMediumRoom implements IRoom {
 		for(Cardinal dir : this.getEntrancesFromType(Entrance.DOOR)) {
 			Coord pos = origin.copy();
 			pos.add(dir, 6);
-			Fragment.generate(Fragment.ARCH, editor, rand, theme, pos, dir);
+			Fragment.generate(Fragment.ARCH, editor, rand, settings, pos, dir);
 		}
 		
 		
@@ -188,11 +188,11 @@ public class CisternRoom extends AbstractMediumRoom implements IRoom {
 			Coord pos = origin.copy();
 			pos.add(dir, 6);
 			if(this.entrances.get(dir) == Entrance.WALL) {
-				settings.getWallFragment(rand).generate(editor, rand, theme, pos.copy(), dir);
+				settings.getWallFragment(rand).generate(editor, rand, settings, pos.copy(), dir);
 			}
 			pos.add(Cardinal.left(dir), 6);
-			settings.getWallFragment(rand).generate(editor, rand, theme, pos.copy(), dir);
-			settings.getWallFragment(rand).generate(editor, rand, theme, pos.copy(), Cardinal.left(dir));
+			settings.getWallFragment(rand).generate(editor, rand, settings, pos.copy(), dir);
+			settings.getWallFragment(rand).generate(editor, rand, settings, pos.copy(), Cardinal.left(dir));
 		}
 	}
 

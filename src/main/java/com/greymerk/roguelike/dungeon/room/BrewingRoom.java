@@ -2,7 +2,6 @@ package com.greymerk.roguelike.dungeon.room;
 
 import java.util.List;
 
-import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.dungeon.Floor;
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellManager;
@@ -117,8 +116,8 @@ public class BrewingRoom extends AbstractRoom implements IRoom {
 		Cardinal.orthogonal(direction).forEach(dir -> {
 			this.wartFarm(editor, rand, origin.copy().add(direction, 3), dir);
 		});
-		Treasure.generate(editor, rand, origin.copy().add(Cardinal.reverse(direction), 5).add(Cardinal.UP), direction, Treasure.BREWING);
-		Treasure.generate(editor, rand, origin.copy().add(Cardinal.reverse(direction), 3).add(Cardinal.left(direction), 2).add(Cardinal.UP), Cardinal.right(direction), Treasure.BREWING);
+		Treasure.generate(editor, rand, settings.getDifficulty(), origin.copy().add(Cardinal.reverse(direction), 5).add(Cardinal.UP), direction, Treasure.BREWING);
+		Treasure.generate(editor, rand, settings.getDifficulty(), origin.copy().add(Cardinal.reverse(direction), 3).add(Cardinal.left(direction), 2).add(Cardinal.UP), Cardinal.right(direction), Treasure.BREWING);
 	}
 	
 
@@ -161,12 +160,12 @@ public class BrewingRoom extends AbstractRoom implements IRoom {
 			CellSupport.generate(editor, rand, theme, origin.copy().add(dir, 3).add(Cardinal.left(dir), 3));
 		});
 		
-		settings.getWallFragment(rand).generate(editor, rand, theme, origin.copy().add(direction, 3).add(Cardinal.left(direction), 3), direction);
-		settings.getWallFragment(rand).generate(editor, rand, theme, origin.copy().add(direction, 3).add(Cardinal.left(direction), 3), Cardinal.left(direction));
-		settings.getWallFragment(rand).generate(editor, rand, theme, origin.copy().add(Cardinal.reverse(direction), 3).add(Cardinal.left(direction), 3), Cardinal.reverse(direction));
+		settings.getWallFragment(rand).generate(editor, rand, settings, origin.copy().add(direction, 3).add(Cardinal.left(direction), 3), direction);
+		settings.getWallFragment(rand).generate(editor, rand, settings, origin.copy().add(direction, 3).add(Cardinal.left(direction), 3), Cardinal.left(direction));
+		settings.getWallFragment(rand).generate(editor, rand, settings, origin.copy().add(Cardinal.reverse(direction), 3).add(Cardinal.left(direction), 3), Cardinal.reverse(direction));
 		
-		settings.getWallFragment(rand).generate(editor, rand, theme, origin.copy().add(Cardinal.reverse(direction), 3).add(Cardinal.right(direction), 3), Cardinal.reverse(direction));
-		settings.getWallFragment(rand).generate(editor, rand, theme, origin.copy().add(Cardinal.reverse(direction), 3).add(Cardinal.right(direction), 3), Cardinal.right(direction));
+		settings.getWallFragment(rand).generate(editor, rand, settings, origin.copy().add(Cardinal.reverse(direction), 3).add(Cardinal.right(direction), 3), Cardinal.reverse(direction));
+		settings.getWallFragment(rand).generate(editor, rand, settings, origin.copy().add(Cardinal.reverse(direction), 3).add(Cardinal.right(direction), 3), Cardinal.right(direction));
 		
 		theme.getPrimary().getDoor().generate(editor, origin.copy().add(Cardinal.left(direction), 6).add(Cardinal.reverse(direction), 3), Cardinal.right(direction));
 	}
@@ -262,12 +261,12 @@ public class BrewingRoom extends AbstractRoom implements IRoom {
 				BoundingBox.of(origin).add(Cardinal.DOWN).add(orth, 4).add(o).grow(orth, 4)
 					.getShape(Shape.RECTSOLID).fill(editor, rand, walls);
 				
-				settings.getWallFragment(rand).generate(editor, rand, theme, origin.copy().add(orth, 6).add(o, 3), orth);
-				settings.getWallFragment(rand).generate(editor, rand, theme, origin.copy().add(orth, 6).add(o, 3), o);
+				settings.getWallFragment(rand).generate(editor, rand, settings, origin.copy().add(orth, 6).add(o, 3), orth);
+				settings.getWallFragment(rand).generate(editor, rand, settings, origin.copy().add(orth, 6).add(o, 3), o);
 			}
 		}
 		
-		Fragment.generate(Fragment.WALL_CANDLES, editor, rand, theme, origin.copy().add(direction, 3), direction);
+		Fragment.generate(Fragment.WALL_CANDLES, editor, rand, settings, origin.copy().add(direction, 3), direction);
 	}
 
 	private void entry(IWorldEditor editor, Random rand, Coord origin) {
@@ -304,7 +303,7 @@ public class BrewingRoom extends AbstractRoom implements IRoom {
 	
 	private void brewingStand(IWorldEditor editor, Random rand, Coord origin) {
 		BrewingStand.generate(editor, origin);
-		IWeighted<ItemStack> provider = Loot.getProvider(Loot.POTION, Difficulty.fromY(origin.getY()), editor);
+		IWeighted<ItemStack> provider = Loot.getProvider(Loot.POTION, settings.getDifficulty(), editor);
 		BrewingStand.slots.forEach(slot -> {
 			BrewingStand.add(editor, origin, slot, provider.get(rand));
 		});

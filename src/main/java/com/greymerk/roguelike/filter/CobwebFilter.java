@@ -1,19 +1,19 @@
 package com.greymerk.roguelike.filter;
 
-import net.minecraft.util.math.random.Random;
-
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.blocks.BlockType;
 import com.greymerk.roguelike.editor.boundingbox.IBounded;
 import com.greymerk.roguelike.editor.shapes.Shape;
-import com.greymerk.roguelike.theme.ITheme;
+import com.greymerk.roguelike.settings.ILevelSettings;
+
+import net.minecraft.util.math.random.Random;
 
 public class CobwebFilter implements IFilter{
 
 	@Override
-	public void apply(IWorldEditor editor, Random rand, ITheme theme, IBounded box) {
+	public void apply(IWorldEditor editor, Random rand, ILevelSettings settings, IBounded box) {
 		for(Coord pos : box.getShape(Shape.RECTSOLID)){
 			if(rand.nextInt(100) != 0) continue;
 			if(!editor.isAir(pos)) continue;

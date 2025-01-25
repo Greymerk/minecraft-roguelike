@@ -11,7 +11,7 @@ import com.greymerk.roguelike.editor.MetaBlock;
 import com.greymerk.roguelike.editor.blocks.Air;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.editor.factories.BlockWeightedRandom;
-import com.greymerk.roguelike.theme.ITheme;
+import com.greymerk.roguelike.settings.ILevelSettings;
 
 import net.minecraft.block.Blocks;
 import net.minecraft.util.math.random.Random;
@@ -21,7 +21,7 @@ public class Fungus implements IFragment {
 	static final int SIZE = 8;
 	
 	@Override
-	public void generate(IWorldEditor editor, Random rand, ITheme theme, Coord origin, Cardinal dir) {
+	public void generate(IWorldEditor editor, Random rand, ILevelSettings settings, Coord origin, Cardinal dir) {
 		grow(editor, rand, origin.freeze(), SIZE);
 	}
 	

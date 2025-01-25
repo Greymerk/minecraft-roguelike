@@ -94,10 +94,10 @@ public class PrisonRoom extends AbstractMediumRoom implements IRoom {
 		});
 		
 		if(this.getEntrance(dir) == Entrance.DOOR) {
-			Fragment.generate(Fragment.ARCH, editor, rand, theme, origin.add(dir, 6), dir);
+			Fragment.generate(Fragment.ARCH, editor, rand, settings, origin.add(dir, 6), dir);
 		} else if(this.getEntrance(dir) == Entrance.ALCOVE) {
 			BoundingBox.of(origin).add(dir, 9).grow(Cardinal.orthogonal(dir), 2).grow(Cardinal.UP, 2).fill(editor, rand, theme.getPrimary().getWall(), Fill.SOLID);
-			settings.getAlcove(rand).generate(editor, rand, theme, origin.add(dir, 6), dir);
+			settings.getAlcove(rand).generate(editor, rand, settings, origin.add(dir, 6), dir);
 		}
 	}
 
@@ -115,7 +115,7 @@ public class PrisonRoom extends AbstractMediumRoom implements IRoom {
 		BoundingBox.of(origin).add(dir, 4).add(Cardinal.UP, 3).grow(Cardinal.orthogonal(dir)).grow(Cardinal.UP).fill(editor, rand, theme.getPrimary().getWall());
 		bars(editor, rand, origin.add(dir, 4), dir);
 		BoundingBox.of(origin).add(dir, 9).grow(Cardinal.orthogonal(dir), 2).grow(Cardinal.UP, 2).fill(editor, rand, theme.getPrimary().getWall(), Fill.SOLID);
-		settings.getWallFragment(rand).generate(editor, rand, theme, origin.add(dir, 6), dir);
+		settings.getWallFragment(rand).generate(editor, rand, settings, origin.add(dir, 6), dir);
 	}
 
 	private void cornerCells(IWorldEditor editor, Random rand, Coord origin) {
@@ -125,7 +125,7 @@ public class PrisonRoom extends AbstractMediumRoom implements IRoom {
 				Pillar.generate(editor, rand, origin.add(dir, 8).add(o, 4), theme, 2, List.of(o));
 				BoundingBox.of(origin).add(dir, 5).add(o, 4).add(Cardinal.UP, 3).grow(dir, 2).fill(editor, rand, theme.getPrimary().getWall());
 				bars(editor, rand, origin.add(dir, 6).add(o, 4), o);
-				settings.getWallFragment(rand).generate(editor, rand, theme, origin.add(dir, 6).add(o, 6), o);
+				settings.getWallFragment(rand).generate(editor, rand, settings, origin.add(dir, 6).add(o, 6), o);
 			});
 		});
 	}

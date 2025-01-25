@@ -2,6 +2,7 @@ package com.greymerk.roguelike.settings.level;
 
 import java.util.ArrayList;
 
+import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
 import com.greymerk.roguelike.dungeon.room.Room;
 import com.greymerk.roguelike.dungeon.room.RoomProvider;
@@ -47,5 +48,10 @@ public class LevelSettingsMossy extends LevelSettingsBase implements ILevelSetti
 	@Override
 	public String getName() {
 		return LevelSettings.MOSSY.name();
+	}
+
+	@Override
+	public Difficulty getDifficulty() {
+		return Difficulty.HARD;
 	}
 }

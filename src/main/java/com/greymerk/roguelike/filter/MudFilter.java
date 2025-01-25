@@ -1,7 +1,5 @@
 package com.greymerk.roguelike.filter;
 
-import net.minecraft.util.math.random.Random;
-
 import com.greymerk.roguelike.dungeon.fragment.parts.Fungus;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
@@ -12,12 +10,14 @@ import com.greymerk.roguelike.editor.blocks.FlowerPot;
 import com.greymerk.roguelike.editor.boundingbox.IBounded;
 import com.greymerk.roguelike.editor.factories.BlockJumble;
 import com.greymerk.roguelike.editor.shapes.Shape;
-import com.greymerk.roguelike.theme.ITheme;
+import com.greymerk.roguelike.settings.ILevelSettings;
+
+import net.minecraft.util.math.random.Random;
 
 public class MudFilter implements IFilter{
 
 	@Override
-	public void apply(IWorldEditor editor, Random rand, ITheme theme, IBounded box) {
+	public void apply(IWorldEditor editor, Random rand, ILevelSettings settings, IBounded box) {
 		for(Coord pos : box.getShape(Shape.RECTSOLID)){
 			if(rand.nextInt(40) != 0) continue;
 			if(!validLocation(editor, rand, pos)) continue;

@@ -140,7 +140,7 @@ public class MusicRoom extends AbstractMediumRoom implements IRoom {
 		for(Cardinal dir : this.getEntrancesFromType(Entrance.DOOR)) {
 			Coord pos = origin.copy();
 			pos.add(dir, 6);
-			Fragment.generate(Fragment.ARCH, editor, rand, theme, pos, dir);
+			Fragment.generate(Fragment.ARCH, editor, rand, settings, pos, dir);
 		}
 		
 		Carpet.generate(editor, rand, origin, 4);		
@@ -150,7 +150,7 @@ public class MusicRoom extends AbstractMediumRoom implements IRoom {
 		
 		Cardinal d = Cardinal.randDirs(rand).get(0);
 		Coord pos = origin.copy().add(d, 5).add(Cardinal.orthogonal(d).get(rand.nextInt(2)), rand.nextInt(2) + 3).add(Cardinal.UP);
-		Treasure.generate(editor, rand, pos, Cardinal.reverse(d), Treasure.MUSIC);
+		Treasure.generate(editor, rand, settings.getDifficulty(), pos, Cardinal.reverse(d), Treasure.MUSIC);
 	}
 
 	@Override

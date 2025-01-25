@@ -88,7 +88,7 @@ public class AbyssRoom extends AbstractLargeRoom implements IRoom {
 
 		CryptFragment crypt = new CryptFragment();
 		crypt.setEmpty(rand.nextInt(3) != 0);
-		crypt.generate(editor, rand, theme, origin.copy(), dir);
+		crypt.generate(editor, rand, settings, origin.copy(), dir);
 	}
 	
 	private void bridge(IWorldEditor editor, Random rand, Coord origin) {
@@ -256,7 +256,7 @@ public class AbyssRoom extends AbstractLargeRoom implements IRoom {
 			if(this.entrances.get(dir) != Entrance.DOOR) continue;
 			Coord pos = origin.copy();
 			pos.add(dir, 12);
-			Fragment.generate(Fragment.ARCH, editor, rand, theme, pos, dir);
+			Fragment.generate(Fragment.ARCH, editor, rand, settings, pos, dir);
 		}
 	}
 

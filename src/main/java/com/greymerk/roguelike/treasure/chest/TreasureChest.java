@@ -32,13 +32,13 @@ public class TreasureChest implements ITreasureChest{
 	private Difficulty diff;
 	private MetaBlock block;
 	
-	public static Optional<ITreasureChest> generate(IWorldEditor editor, Random rand, Coord pos, Treasure type, ChestType block) {
-		Optional<ITreasureChest> chest = new TreasureChest(type, block, pos).set(editor, rand, pos);
+	public static Optional<ITreasureChest> generate(IWorldEditor editor, Random rand, Difficulty diff, Coord pos, Treasure type, ChestType block) {
+		Optional<ITreasureChest> chest = new TreasureChest(type, block, diff, pos).set(editor, rand, pos);
 		return chest;
 	}
 	
-	public static Optional<ITreasureChest> generate(IWorldEditor editor, Random rand, Coord pos, Cardinal dir, Treasure type, ChestType block){
-		Optional<ITreasureChest> chest = new TreasureChest(type, block, pos).set(editor, rand, pos, dir);
+	public static Optional<ITreasureChest> generate(IWorldEditor editor, Random rand, Difficulty diff, Coord pos, Cardinal dir, Treasure type, ChestType block){
+		Optional<ITreasureChest> chest = new TreasureChest(type, block, diff, pos).set(editor, rand, pos, dir);
 		return chest;
 	}
 	
@@ -46,10 +46,10 @@ public class TreasureChest implements ITreasureChest{
 		return this.set(editor, rand, pos, this.findOrientation(editor, rand, pos));
 	}
 	
-	private TreasureChest(Treasure type, ChestType block, Coord pos){
+	private TreasureChest(Treasure type, ChestType block, Difficulty diff, Coord pos){
 		this.type = type;
 		this.block = ChestType.get(block);
-		this.diff = Difficulty.fromY(pos.getY());
+		this.diff = diff;
 	}
 	
 	private Optional<ITreasureChest> set(IWorldEditor editor, Random rand, Coord pos, Cardinal dir) {

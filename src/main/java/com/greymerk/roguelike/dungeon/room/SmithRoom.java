@@ -110,15 +110,15 @@ public class SmithRoom extends AbstractRoom implements IRoom {
 		MetaBlock table = MetaBlock.of(Blocks.SMITHING_TABLE);
 		table.set(editor, origin.add(Cardinal.right(dir), 2));
 		theme.getPrimary().getStair().setOrientation(Cardinal.reverse(dir), true).fill(editor, rand, BoundingBox.of(origin).add(dir, 2).grow(Cardinal.orthogonal(dir)));
-		Treasure.generate(editor, rand, origin.add(dir, 2).add(Cardinal.left(dir)).add(Cardinal.UP), Cardinal.reverse(dir), Treasure.WEAPON);
-		Treasure.generate(editor, rand, origin.add(dir, 2).add(Cardinal.right(dir)).add(Cardinal.UP), Cardinal.reverse(dir), Treasure.ARMOR);
+		Treasure.generate(editor, rand, settings.getDifficulty(), origin.add(dir, 2).add(Cardinal.left(dir)).add(Cardinal.UP), Cardinal.reverse(dir), Treasure.WEAPON);
+		Treasure.generate(editor, rand, settings.getDifficulty(), origin.add(dir, 2).add(Cardinal.right(dir)).add(Cardinal.UP), Cardinal.reverse(dir), Treasure.ARMOR);
 	}
 
 
 	private void anvilRoom(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
 		sideRoom(editor, rand, origin, dir);
 		theme.getPrimary().getStair().setOrientation(Cardinal.reverse(dir), true).fill(editor, rand, BoundingBox.of(origin).add(dir, 2).grow(Cardinal.orthogonal(dir)));
-		Treasure.generate(editor, rand, origin.add(dir, 2).add(Cardinal.UP), Cardinal.reverse(dir), Treasure.ORE);
+		Treasure.generate(editor, rand, settings.getDifficulty(), origin.add(dir, 2).add(Cardinal.UP), Cardinal.reverse(dir), Treasure.ORE);
 		this.lavaTank(editor, rand, origin, Cardinal.right(dir));
 		this.waterTank(editor, rand, origin, Cardinal.left(dir));
 		Anvil.set(editor, origin, Anvil.CHIPPED, Cardinal.left(dir));

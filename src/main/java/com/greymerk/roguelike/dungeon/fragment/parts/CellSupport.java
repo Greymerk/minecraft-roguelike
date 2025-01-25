@@ -9,6 +9,7 @@ import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.blocks.Lantern;
 import com.greymerk.roguelike.editor.blocks.stair.IStair;
 import com.greymerk.roguelike.editor.shapes.Column;
+import com.greymerk.roguelike.settings.ILevelSettings;
 import com.greymerk.roguelike.theme.ITheme;
 
 import net.minecraft.util.math.random.Random;
@@ -16,13 +17,10 @@ import net.minecraft.util.math.random.Random;
 public class CellSupport implements IFragment {
 
 	public static void generate(IWorldEditor editor, Random rand, ITheme theme, Coord origin) {
-		CellSupport support = new CellSupport();
-		support.generate(editor, rand, theme, origin, Cardinal.NORTH);
+		CellSupport.generate(editor, rand, theme, origin, Cardinal.NORTH);
 	}
 	
-	@Override
-	public void generate(IWorldEditor editor, Random rand, ITheme theme, Coord origin, Cardinal d) {
-		
+	public static void generate(IWorldEditor editor, Random rand, ITheme theme, Coord origin, Cardinal d) {
 		IBlockFactory wall = theme.getPrimary().getWall();
 		
 		for(Cardinal dir : Cardinal.directions) {
@@ -39,13 +37,18 @@ public class CellSupport implements IFragment {
 			pos.add(Cardinal.DOWN, 2);
 			for(Coord p : new Column(pos).getUntilSolid(editor)) {
 				if(Math.floorMod(p.getY(), 10) == 9	|| Math.floorMod(p.getY(), 10) == 3) {
-					this.crossBar(editor, rand, theme, p, dir);
+					CellSupport.crossBar(editor, rand, theme, p, dir);
 				}
 			}
 		}
 	}
 	
-	private void crossBar(IWorldEditor editor, Random rand, ITheme theme, Coord origin, Cardinal dir) {
+	@Override
+	public void generate(IWorldEditor editor, Random rand, ILevelSettings settings, Coord origin, Cardinal d) {
+		CellSupport.generate(editor, rand, settings.getTheme(), origin, d);
+	}
+	
+	public static void crossBar(IWorldEditor editor, Random rand, ITheme theme, Coord origin, Cardinal dir) {
 		IBlockFactory wall = theme.getPrimary().getWall();
 		IStair stair = theme.getPrimary().getStair();
 		

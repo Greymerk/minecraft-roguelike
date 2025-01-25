@@ -83,15 +83,15 @@ public class KitchenRoom extends AbstractMediumRoom implements IRoom {
 		for(Cardinal dir : Cardinal.directions) {
 			if(this.getEntrancesFromType(Entrance.DOOR).contains(dir)) {
 				Coord pos = origin.copy().add(dir, 6);
-				Fragment.generate(Fragment.ARCH, editor, rand, theme, pos, dir);
+				Fragment.generate(Fragment.ARCH, editor, rand, settings, pos, dir);
 			} else {
 				BoundingBox.of(origin).add(dir, 9).grow(Cardinal.DOWN).grow(Cardinal.UP, 3).grow(Cardinal.orthogonal(dir), 2)
 					.getShape(Shape.RECTSOLID).fill(editor, rand, wall, Fill.SOLID);
 				if(this.getEntrance(dir) == Entrance.WALL) {
-					settings.getWallFragment(rand).generate(editor, rand, theme, origin.copy().add(dir, 6), dir);
+					settings.getWallFragment(rand).generate(editor, rand, settings, origin.copy().add(dir, 6), dir);
 				}
 				if(this.getEntrance(dir) == Entrance.ALCOVE) {
-					Fragment.generate(Fragment.ALCOVE_FIRE, editor, rand, theme, origin.copy().add(dir, 6), dir);
+					Fragment.generate(Fragment.ALCOVE_FIRE, editor, rand, settings, origin.copy().add(dir, 6), dir);
 				}
 			}
 		}
@@ -126,7 +126,7 @@ public class KitchenRoom extends AbstractMediumRoom implements IRoom {
 		
 		stair.setOrientation(Cardinal.reverse(dir), true).fill(editor, rand, BoundingBox.of(origin).add(dir, 2).grow(Cardinal.orthogonal(dir)));
 		stair.setOrientation(Cardinal.left(dir), true).fill(editor, rand, BoundingBox.of(origin).add(Cardinal.right(dir), 2).grow(Cardinal.orthogonal(Cardinal.right(dir))));
-		Treasure.generate(editor, rand, origin.copy().add(Cardinal.UP).add(dir, 2), Treasure.FOOD, ChestType.BARREL);
+		Treasure.generate(editor, rand, settings.getDifficulty(), origin.copy().add(Cardinal.UP).add(dir, 2), Treasure.FOOD, ChestType.BARREL);
 		Furnace.generate(editor, Cardinal.left(dir), origin.copy().add(Cardinal.UP).add(Cardinal.right(dir), 2), true, new ItemStack(Items.COAL, rand.nextBetween(1, 4)));
 	}
 

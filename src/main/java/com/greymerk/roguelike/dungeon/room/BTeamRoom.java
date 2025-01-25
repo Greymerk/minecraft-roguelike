@@ -52,7 +52,7 @@ public class BTeamRoom extends AbstractRoom implements IRoom {
 
 	private void decor(IWorldEditor editor, Random rand, Coord origin) {
 		MetaBlock.of(Blocks.JUKEBOX).set(editor, origin.add(direction, 7).add(Cardinal.left(direction), 4));
-		Optional<ITreasureChest> maybeChest = Treasure.generate(editor, rand, origin.add(direction, 7).add(Cardinal.left(direction), 5), Cardinal.reverse(direction), Treasure.EMPTY, ChestType.CHEST); 
+		Optional<ITreasureChest> maybeChest = Treasure.generate(editor, rand, settings.getDifficulty(), origin.add(direction, 7).add(Cardinal.left(direction), 5), Cardinal.reverse(direction), Treasure.EMPTY, ChestType.CHEST); 
 		if(maybeChest.isPresent()) {
 			maybeChest.get().setRandomEmptySlot(new ItemStack(Items.MUSIC_DISC_STAL));	
 		}

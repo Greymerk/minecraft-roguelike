@@ -22,20 +22,20 @@ public enum Treasure {
 	ALL, EMPTY, STARTER, ARMOR, WEAPON, TOOL, 
 	BLOCK, ORE, FOOD, SUPPLY, MUSIC, BREWING;
 
-	public static Optional<ITreasureChest> generate(IWorldEditor editor, Random rand, Coord pos, Treasure type) {
-		return Treasure.generate(editor, rand, pos, type, ChestType.CHEST);
+	public static Optional<ITreasureChest> generate(IWorldEditor editor, Random rand, Difficulty diff, Coord pos, Treasure type) {
+		return Treasure.generate(editor, rand, diff, pos, type, ChestType.CHEST);
 	}
 	
-	public static Optional<ITreasureChest> generate(IWorldEditor editor, Random rand, Coord pos, Cardinal dir, Treasure type) {
-		return Treasure.generate(editor, rand, pos, dir, type, ChestType.CHEST);
+	public static Optional<ITreasureChest> generate(IWorldEditor editor, Random rand, Difficulty diff, Coord pos, Cardinal dir, Treasure type) {
+		return Treasure.generate(editor, rand, diff, pos, dir, type, ChestType.CHEST);
 	}
 	
-	public static Optional<ITreasureChest> generate(IWorldEditor editor, Random rand, Coord pos, Treasure type, ChestType block){
-		return TreasureChest.generate(editor, rand, pos, type, block);
+	public static Optional<ITreasureChest> generate(IWorldEditor editor, Random rand, Difficulty diff, Coord pos, Treasure type, ChestType block){
+		return TreasureChest.generate(editor, rand, diff, pos, type, block);
 	}
 	
-	public static Optional<ITreasureChest> generate(IWorldEditor editor, Random rand, Coord pos, Cardinal dir, Treasure type, ChestType block){
-		return TreasureChest.generate(editor, rand, pos, dir, type, block);
+	public static Optional<ITreasureChest> generate(IWorldEditor editor, Random rand, Difficulty diff, Coord pos, Cardinal dir, Treasure type, ChestType block){
+		return TreasureChest.generate(editor, rand, diff, pos, dir, type, block);
 	}
 	
 	public static Optional<RegistryKey<LootTable>> getLootTable(Treasure type, Difficulty diff){

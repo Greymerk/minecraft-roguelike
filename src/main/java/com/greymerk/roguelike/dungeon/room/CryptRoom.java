@@ -124,7 +124,7 @@ public class CryptRoom extends AbstractMediumRoom implements IRoom {
 			stair.setOrientation(dir, true).set(editor, rand, origin.copy().add(Cardinal.UP, 3).add(o, 4));
 		}
 		
-		Fragment.generate(Fragment.SARCOPHAGUS, editor, rand, theme, origin.copy(), dir);
+		Fragment.generate(Fragment.SARCOPHAGUS, editor, rand, settings, origin.copy(), dir);
 	}
 
 	private void entryWay(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
@@ -172,7 +172,7 @@ public class CryptRoom extends AbstractMediumRoom implements IRoom {
 		}
 		
 				
-		Fragment.generate(Fragment.ARCH, editor, rand, theme, origin.copy().add(dir, 6), dir);
+		Fragment.generate(Fragment.ARCH, editor, rand, settings, origin.copy().add(dir, 6), dir);
 	}
 
 	private void entrySideWall(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
@@ -199,7 +199,7 @@ public class CryptRoom extends AbstractMediumRoom implements IRoom {
 			stair.setOrientation(Cardinal.reverse(o), true).set(editor, rand, pos);
 		}
 		
-		settings.getWallFragment(rand).generate(editor, rand, theme, origin, dir);
+		settings.getWallFragment(rand).generate(editor, rand, settings, origin, dir);
 	}
 
 	private void cornerCell(IWorldEditor editor, Random rand, Coord origin, List<Cardinal> doors) {
@@ -227,7 +227,7 @@ public class CryptRoom extends AbstractMediumRoom implements IRoom {
 				bb = BoundingBox.of(origin.copy());
 				bb.add(dir, 3).grow(Cardinal.orthogonal(dir), 2).grow(Cardinal.UP, 3);
 				RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall(), Fill.SOLID);
-				settings.getWallFragment(rand).generate(editor, rand, theme, origin.copy(), dir);
+				settings.getWallFragment(rand).generate(editor, rand, settings, origin.copy(), dir);
 			}
 
 
@@ -277,7 +277,7 @@ public class CryptRoom extends AbstractMediumRoom implements IRoom {
 	
 	private void crypt(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
 		IFragment crypt = new CryptFragment(rand.nextInt(5) != 0);
-		crypt.generate(editor, rand, theme, origin.copy(), dir);
+		crypt.generate(editor, rand, settings, origin.copy(), dir);
 	}
 
 	@Override

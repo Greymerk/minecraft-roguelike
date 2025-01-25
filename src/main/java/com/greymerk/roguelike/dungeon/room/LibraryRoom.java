@@ -46,10 +46,10 @@ public class LibraryRoom extends AbstractLargeRoom implements IRoom {
 	private void decorations(IWorldEditor editor, Random rand, Coord origin) {
 		Cardinal.directions.forEach(dir -> {
 			Cardinal.orthogonal(dir).forEach(o -> {
-				BookShelf.set(editor, rand, origin.add(dir, 5).add(o, 8).add(Cardinal.UP), Cardinal.reverse(o));
-				settings.getWallFragment(rand).generate(editor, rand, theme, origin.add(dir, 12).add(o, 6), dir);
-				settings.getWallFragment(rand).generate(editor, rand, theme, origin.add(dir, 12).add(o, 6), Cardinal.reverse(dir));
-				settings.getWallFragment(rand).generate(editor, rand, theme, origin.add(dir, 12).add(o, 12), dir);
+				BookShelf.set(editor, rand, settings.getDifficulty(), origin.add(dir, 5).add(o, 8).add(Cardinal.UP), Cardinal.reverse(o));
+				settings.getWallFragment(rand).generate(editor, rand, settings, origin.add(dir, 12).add(o, 6), dir);
+				settings.getWallFragment(rand).generate(editor, rand, settings, origin.add(dir, 12).add(o, 6), Cardinal.reverse(dir));
+				settings.getWallFragment(rand).generate(editor, rand, settings, origin.add(dir, 12).add(o, 12), dir);
 			});
 		});
 		
@@ -129,7 +129,7 @@ public class LibraryRoom extends AbstractLargeRoom implements IRoom {
 
 	private void entries(IWorldEditor editor, Random rand, Coord origin) {
 		this.getEntrancesFromType(Entrance.DOOR).forEach(dir -> {
-			Fragment.generate(Fragment.ARCH, editor, rand, theme, origin.add(dir, 12),  dir);
+			Fragment.generate(Fragment.ARCH, editor, rand, settings, origin.add(dir, 12),  dir);
 		});
 	}
 

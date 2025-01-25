@@ -81,7 +81,7 @@ public class PanopticonRoom extends AbstractLargeRoom implements IRoom {
 			theme.getPrimary().getStair().setOrientation(Cardinal.reverse(o), true)
 				.set(editor, rand, origin.copy().add(dir, 2).add(o).add(Cardinal.UP, 2));
 		});
-		this.settings.getWallFragment(rand).generate(editor, rand, theme, origin, dir);
+		this.settings.getWallFragment(rand).generate(editor, rand, settings, origin, dir);
 	}
 
 	private void bars(IWorldEditor editor, Random rand, Coord origin) {
@@ -276,7 +276,7 @@ public class PanopticonRoom extends AbstractLargeRoom implements IRoom {
 
 	private void doors(IWorldEditor editor, Random rand, Coord origin) {
 		this.getEntrancesFromType(Entrance.DOOR).forEach(dir -> {
-			Fragment.generate(Fragment.ARCH, editor, rand, theme, origin.copy().add(dir, 12), dir);
+			Fragment.generate(Fragment.ARCH, editor, rand, settings, origin.copy().add(dir, 12), dir);
 		});
 	}
 

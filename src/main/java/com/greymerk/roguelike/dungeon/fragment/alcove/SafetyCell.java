@@ -17,6 +17,7 @@ import com.greymerk.roguelike.editor.blocks.door.Door;
 import com.greymerk.roguelike.editor.blocks.door.DoorType;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.editor.shapes.Shape;
+import com.greymerk.roguelike.settings.ILevelSettings;
 import com.greymerk.roguelike.theme.ITheme;
 import com.greymerk.roguelike.util.math.RandHelper;
 
@@ -25,16 +26,19 @@ import net.minecraft.util.math.random.Random;
 public class SafetyCell implements IFragment {
 
 	@Override
-	public void generate(IWorldEditor editor, Random rand, ITheme theme, Coord origin, Cardinal dir) {
-		cell(editor, rand, origin.copy().add(dir, Cell.SIZE).freeze(), dir, theme);
+	public void generate(IWorldEditor editor, Random rand, ILevelSettings settings, Coord origin, Cardinal dir) {
+		
+		cell(editor, rand, origin.copy().add(dir, Cell.SIZE).freeze(), dir, settings);
 		
 		Door.generate(editor, origin.copy().add(dir, 3), Cardinal.reverse(dir), DoorType.IRON);
 		Button.generate(editor, origin.copy().add(dir, 2).add(Cardinal.UP).add(Cardinal.right(dir)), Cardinal.reverse(dir), Button.OAK);
 		Button.generate(editor, origin.copy().add(dir, 4).add(Cardinal.UP).add(Cardinal.left(dir)), dir, Button.OAK);
 	}
 
-	private void cell(IWorldEditor editor, Random rand, Coord origin, Cardinal direction, ITheme theme) {
+	private void cell(IWorldEditor editor, Random rand, Coord origin, Cardinal direction, ILevelSettings settings) {
 
+		ITheme theme = settings.getTheme();
+		
 		BoundingBox.of(origin).grow(Cardinal.directions, 3).grow(Cardinal.UP, 3).grow(Cardinal.DOWN)
 			.getShape(Shape.RECTHOLLOW).fill(editor, rand, theme.getPrimary().getWall());
 	
@@ -49,7 +53,7 @@ public class SafetyCell implements IFragment {
 		BoundingBox.of(origin).add(Cardinal.UP, 3).grow(Cardinal.directions).fill(editor, rand, Air.get());
 		BoundingBox.of(origin).add(Cardinal.UP, 4).grow(Cardinal.directions, 2).fill(editor, rand, theme.getPrimary().getWall());
 		
-		Fragment.generate(Fragment.WALL_FOOD_BARREL, editor, rand, theme, origin, 
+		Fragment.generate(Fragment.WALL_FOOD_BARREL, editor, rand, settings, origin, 
 				RandHelper.pickFrom(List.of(direction, Cardinal.left(direction), Cardinal.right(direction)), rand));
 		
 		Lantern.set(editor, origin.copy().add(Cardinal.UP, 3));

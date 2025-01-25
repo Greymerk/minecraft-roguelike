@@ -53,11 +53,11 @@ public class Corridor extends AbstractRoom implements IRoom{
 	private void decorations(IWorldEditor editor, Random rand, Coord origin) {
 		for(Cardinal dir : Cardinal.directions) {
 			if(this.getEntrance(dir) == Entrance.DOOR) {
-				Fragment.generate(Fragment.ARCH, editor, rand, theme, worldPos.copy(), dir);
+				Fragment.generate(Fragment.ARCH, editor, rand, settings, worldPos.copy(), dir);
 			} else if(this.getEntrance(dir) == Entrance.ALCOVE){
-				this.settings.getAlcove(rand).generate(editor, rand, theme, worldPos.copy(), dir);
+				this.settings.getAlcove(rand).generate(editor, rand, settings, worldPos.copy(), dir);
 			} else {
-				this.settings.getWallFragment(rand).generate(editor, rand, theme, worldPos.copy(), dir);
+				this.settings.getWallFragment(rand).generate(editor, rand, settings, worldPos.copy(), dir);
 			}
 		}
 	}

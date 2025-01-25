@@ -79,7 +79,7 @@ public class BedRoom extends AbstractRoom implements IRoom {
 		this.decorations(editor, rand, origin);
 		
 		this.getEntrancesFromType(Entrance.DOOR).forEach(dir -> {
-			Fragment.generate(Fragment.ARCH, editor, rand, theme, origin.copy(), dir);
+			Fragment.generate(Fragment.ARCH, editor, rand, settings, origin.copy(), dir);
 		});
 		
 		CellSupport.generate(editor, rand, theme, origin.copy().add(direction, 6));
@@ -202,7 +202,7 @@ public class BedRoom extends AbstractRoom implements IRoom {
 			Coord pos = origin.copy();
 			pos.add(direction, 7);
 			pos.add(o);
-			new WallFlowers().generate(editor, rand, theme, pos, o);
+			new WallFlowers().generate(editor, rand, settings, pos, o);
 		}
 		
 		Coord pos = origin.copy();
@@ -216,12 +216,12 @@ public class BedRoom extends AbstractRoom implements IRoom {
 
 		pos = origin.copy();
 		pos.add(direction, 12);
-		new WallFlowers().generate(editor, rand, theme, pos, direction);
+		new WallFlowers().generate(editor, rand, settings, pos, direction);
 		
 		pos = origin.copy();
 		pos.add(direction, 10);
 		pos.add(Cardinal.right(direction), 3);
-		Treasure.generate(editor, rand, pos, Cardinal.left(direction), Treasure.STARTER);
+		Treasure.generate(editor, rand, settings.getDifficulty(), pos, Cardinal.left(direction), Treasure.STARTER);
 		pos.add(direction);
 		BlockType.get(BlockType.CRAFTING_TABLE).set(editor, pos);
 		pos.add(direction);

@@ -2,6 +2,7 @@ package com.greymerk.roguelike.settings.level;
 
 import java.util.ArrayList;
 
+import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
 import com.greymerk.roguelike.dungeon.room.Room;
 import com.greymerk.roguelike.dungeon.room.RoomProvider;
@@ -44,5 +45,10 @@ public class LevelSettingsTiledDeepslate extends LevelSettingsBase implements IL
 	@Override
 	public String getName() {
 		return LevelSettings.TILED_SLATE.name();
+	}
+
+	@Override
+	public Difficulty getDifficulty() {
+		return Difficulty.HARDEST;
 	}
 }

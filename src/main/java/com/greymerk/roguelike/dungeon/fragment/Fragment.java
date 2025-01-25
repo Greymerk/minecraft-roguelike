@@ -25,7 +25,7 @@ import com.greymerk.roguelike.dungeon.fragment.wall.WallSpawner;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
-import com.greymerk.roguelike.theme.ITheme;
+import com.greymerk.roguelike.settings.ILevelSettings;
 
 import net.minecraft.util.math.random.Random;
 
@@ -39,9 +39,9 @@ public enum Fragment {
 	ALCOVE_SILVERFISH, ALCOVE_SAFETY, ALCOVE_CRYPT, BOOK_SHELF, ALCOVE_FIRE,
 	ALCOVE_PRISON_CELL;
 	
-	public static void generate(Fragment type, IWorldEditor editor, Random rand, ITheme theme, Coord pos, Cardinal dir) {
+	public static void generate(Fragment type, IWorldEditor editor, Random rand, ILevelSettings settings, Coord pos, Cardinal dir) {
 		IFragment fragment = fromType(type);
-		fragment.generate(editor, rand, theme, pos.freeze(), dir);
+		fragment.generate(editor, rand, settings, pos.freeze(), dir);
 	}
 	
 	public static IFragment fromType(Fragment type) {

@@ -48,10 +48,10 @@ public class Stairway extends AbstractRoom implements IRoom {
 	}
 
 	private void addDoors(IWorldEditor editor, Random rand) {
-		Fragment.generate(Fragment.ARCH, editor, rand, theme, worldPos, Cardinal.reverse(direction));
+		Fragment.generate(Fragment.ARCH, editor, rand, settings, worldPos, Cardinal.reverse(direction));
 		
 		for(Cardinal dir : this.getEntrancesFromType(Entrance.DOOR)) {
-			Fragment.generate(Fragment.ARCH, editor, rand, theme, worldPos, dir);
+			Fragment.generate(Fragment.ARCH, editor, rand, settings, worldPos, dir);
 		}
 	}
 	

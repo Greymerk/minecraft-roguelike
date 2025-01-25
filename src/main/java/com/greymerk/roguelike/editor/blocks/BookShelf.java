@@ -20,7 +20,7 @@ import net.minecraft.util.math.random.Random;
 
 public class BookShelf {
 
-	public static void set(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
+	public static void set(IWorldEditor editor, Random rand, Difficulty diff, Coord origin, Cardinal dir) {
 		
 		MetaBlock.of(Blocks.CHISELED_BOOKSHELF)
 			.with(HorizontalFacingBlock.FACING, Cardinal.facing(Cardinal.reverse(dir)))
@@ -34,7 +34,7 @@ public class BookShelf {
 		ChiseledBookshelfBlockEntity shelf = (ChiseledBookshelfBlockEntity)be;
 		
 		getSlots(rand).forEach(i -> {
-			shelf.setStack(i, Enchant.getBook(editor.getRegistryManager(), rand, Difficulty.fromY(origin.getY())));		
+			shelf.setStack(i, Enchant.getBook(editor.getRegistryManager(), rand, diff));		
 		});
 		
 		shelf.markDirty();

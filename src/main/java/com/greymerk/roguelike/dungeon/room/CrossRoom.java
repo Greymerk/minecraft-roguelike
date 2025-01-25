@@ -36,7 +36,7 @@ public class CrossRoom extends AbstractMediumRoom implements IRoom {
 	}
 	
 	private void pots(IWorldEditor editor, Random rand, Coord origin) {
-		Filter.get(Filter.POTS).apply(editor, rand, theme, BoundingBox.of(origin).grow(Cardinal.directions, 8));
+		Filter.get(Filter.POTS).apply(editor, rand, settings, BoundingBox.of(origin).grow(Cardinal.directions, 8));
 	}
 
 	private void supports(IWorldEditor editor, Random rand, Coord origin) {
@@ -50,13 +50,13 @@ public class CrossRoom extends AbstractMediumRoom implements IRoom {
 	private void decorations(IWorldEditor editor, Random rand, Coord origin) {
 		Cardinal.directions.forEach(dir -> {
 			Cardinal.orthogonal(dir).forEach(o -> {
-				settings.getWallFragment(rand).generate(editor, rand, theme, origin.copy().add(dir, 6).add(o, 6), dir);
+				settings.getWallFragment(rand).generate(editor, rand, settings, origin.copy().add(dir, 6).add(o, 6), dir);
 			});
 			if(this.getEntrance(dir) == Entrance.WALL) {
-				settings.getWallFragment(rand).generate(editor, rand, theme, origin.copy().add(dir, 6), dir);
+				settings.getWallFragment(rand).generate(editor, rand, settings, origin.copy().add(dir, 6), dir);
 			}
 			if(this.getEntrance(dir) == Entrance.ALCOVE) {
-				settings.getAlcove(rand).generate(editor, rand, theme, origin.copy().add(dir, 6), dir);
+				settings.getAlcove(rand).generate(editor, rand, settings, origin.copy().add(dir, 6), dir);
 			}
 		});
 	}
@@ -129,7 +129,7 @@ public class CrossRoom extends AbstractMediumRoom implements IRoom {
 		});
 		BoundingBox.of(origin).add(Cardinal.DOWN).grow(Cardinal.directions, 8).fill(editor, rand, theme.getPrimary().getFloor());
 		this.getEntrancesFromType(Entrance.DOOR).forEach(dir -> {
-			Fragment.generate(Fragment.ARCH, editor, rand, theme, origin.copy().add(dir, Cell.SIZE), dir);
+			Fragment.generate(Fragment.ARCH, editor, rand, settings, origin.copy().add(dir, Cell.SIZE), dir);
 		});
 	}
 

@@ -36,7 +36,7 @@ public class EnderRoom extends AbstractMediumRoom implements IRoom {
 		this.doors(editor, rand, origin, blocks);
 		this.enderchest(editor, rand, origin, blocks);
 		this.supports(editor, rand, origin, blocks);
-		Spawner.generate(editor, rand, origin, Spawner.ENDERMAN);
+		Spawner.generate(editor, rand, settings.getDifficulty(), origin, Spawner.ENDERMAN);
 	}
 
 	private void supports(IWorldEditor editor, Random rand, Coord origin, IBlockSet blocks) {
@@ -56,7 +56,7 @@ public class EnderRoom extends AbstractMediumRoom implements IRoom {
 		for(Cardinal dir : this.getEntrancesFromType(Entrance.DOOR)) {
 			Coord pos = origin.copy();
 			pos.add(dir, 6);
-			Fragment.generate(Fragment.ARCH, editor, rand, theme, pos, dir);
+			Fragment.generate(Fragment.ARCH, editor, rand, settings, pos, dir);
 		}
 	}
 
