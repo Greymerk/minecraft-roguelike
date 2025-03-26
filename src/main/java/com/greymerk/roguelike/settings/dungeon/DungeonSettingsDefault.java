@@ -27,13 +27,13 @@ public class DungeonSettingsDefault extends DungeonSettingsBase implements IDung
 		
 		this.levelSettings = new HashMap<Double, LevelSettings>();
 		
-		this.set(0.05d, LevelSettings.OAK);
-		this.set(0.1d, LevelSettings.SPRUCE);
-		this.set(0.2d, LevelSettings.DARK_OAK);
-		this.set(0.4d, LevelSettings.STONE);
-		this.set(0.6d, LevelSettings.CRUMBLED_STONE);
-		this.set(0.7d, LevelSettings.MOSSY);
-		this.set(0.9d, LevelSettings.CRUMBLED_MOSSY);
+		this.set(0d, LevelSettings.OAK);
+		this.set(0.03d, LevelSettings.SPRUCE);
+		this.set(0.15d, LevelSettings.DARK_OAK);
+		this.set(0.25d, LevelSettings.STONE);
+		this.set(0.45d, LevelSettings.CRUMBLED_STONE);
+		this.set(0.6d, LevelSettings.MOSSY);
+		this.set(0.8d, LevelSettings.CRUMBLED_MOSSY);
 		this.set(1.0d, LevelSettings.TILED_SLATE);
 	}
 	
@@ -41,10 +41,9 @@ public class DungeonSettingsDefault extends DungeonSettingsBase implements IDung
 		this.levelSettings.put(key, value);
 	}
 	
-	@Override
-	public ILevelSettings getLevel(int y) {
-		if(y > this.firstLevelY) return LevelSettings.fromType(LevelSettings.OAK);
-		if(y < this.lastLevelY) return LevelSettings.fromType(LevelSettings.TILED_SLATE);
+	public LevelSettings getLevelType(int y) {
+		if(y > this.firstLevelY) return LevelSettings.OAK;
+		if(y < this.lastLevelY) return LevelSettings.TILED_SLATE;
 		
 		double total = (double)(firstLevelY - lastLevelY);
 		double position = (double)(firstLevelY - y) / total;
@@ -63,6 +62,11 @@ public class DungeonSettingsDefault extends DungeonSettingsBase implements IDung
 			}
 		}
 		
-		return LevelSettings.fromType(level);
+		return level;
+	}
+	
+	@Override
+	public ILevelSettings getLevel(int y) {
+		return LevelSettings.fromType(getLevelType(y));
 	}
 }

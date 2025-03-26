@@ -47,13 +47,13 @@ public class RandHelper {
     }
 	
     @SuppressWarnings("unchecked")
-	private static void swap(List<?> list, int i, int j) {
+	public static void swap(List<?> list, int i, int j) {
         @SuppressWarnings("rawtypes")
 		final List l = list;
         l.set(i, l.set(j, l.get(i)));
     }
 	
-	private static void swap(Object[] x, int a, int b) {
+	public static void swap(Object[] x, int a, int b) {
 	    Object t = x[a];
 	    x[a] = x[b];
 	    x[b] = t;
