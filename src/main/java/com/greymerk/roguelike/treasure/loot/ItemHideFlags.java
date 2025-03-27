@@ -1,8 +1,8 @@
 package com.greymerk.roguelike.treasure.loot;
 
 import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.TooltipDisplayComponent;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Unit;
 
 public enum ItemHideFlags {
 
@@ -10,7 +10,7 @@ public enum ItemHideFlags {
 		
 	public static void set(ItemHideFlags flag, ItemStack item){
 		switch(flag) {
-		case EFFECTS: item.set(DataComponentTypes.HIDE_ADDITIONAL_TOOLTIP, Unit.INSTANCE);
+		case EFFECTS: item.set(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplayComponent.DEFAULT);
 		default:
 			break; 
 		}

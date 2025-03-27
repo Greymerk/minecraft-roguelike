@@ -14,6 +14,24 @@ public enum Cardinal {
 	public static final List<Cardinal> all = Arrays.asList(new Cardinal[] {NORTH, EAST, SOUTH, WEST, UP, DOWN});
 	public static final List<Cardinal> directions = Arrays.asList(new Cardinal[] {NORTH, EAST, SOUTH, WEST});
 	
+	public static int index(Cardinal dir) {
+		return Arrays.asList(Cardinal.values()).indexOf(dir);
+	}
+	
+	
+	
+	public static Cardinal get(String name) {
+		switch(name) {
+		case "NORTH" : return NORTH;
+		case "EAST" : return EAST;
+		case "WEST" : return WEST;
+		case "SOUTH" : return SOUTH;
+		case "UP" : return UP;
+		case "DOWN" : return DOWN;
+		default: return NORTH;
+		}
+	}
+	
 	public static Cardinal reverse(Cardinal dir){
 		switch(dir){
 		case NORTH: return SOUTH;

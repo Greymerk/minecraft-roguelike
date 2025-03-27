@@ -4,6 +4,8 @@ import java.util.Objects;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
@@ -15,6 +17,14 @@ import net.minecraft.util.math.ChunkPos;
 Mutable Coordinate 3DVector
 **/
 public class Coord {
+	
+	public static final Codec<Coord> CODEC = RecordCodecBuilder.create(
+		instance -> instance.group(
+			Codec.INT.fieldOf("x").forGetter(c -> c.x),
+			Codec.INT.fieldOf("y").forGetter(c -> c.y),
+			Codec.INT.fieldOf("z").forGetter(c -> c.z)
+		).apply(instance, Coord::new)
+	);
 	
 	public static final Coord ZERO = new Coord(0,0,0).freeze();
 	
@@ -33,9 +43,13 @@ public class Coord {
 	}
 	
 	public static Coord of(NbtCompound tag) {
-		int x = tag.getInt("x");
-		int y = tag.getInt("y");
-		int z = tag.getInt("z");
+		int x = tag.getInt("x").get();
+		int y = tag.getInt("y").get();
+		int z = tag.getInt("z").get();
+		return new Coord(x, y, z);
+	}
+	
+	public static Coord of(int x, int y, int z) {
 		return new Coord(x, y, z);
 	}
 	

@@ -174,6 +174,11 @@ public abstract class AbstractRoom implements IRoom{
 		}
 		return dirs;
 	}
+	
+	@Override
+	public Map<Cardinal, Entrance> getEntrances(){
+		return this.entrances;
+	}
 
 	@Override
 	public void determineEntrances(Floor f, Coord floorPos) {
@@ -197,5 +202,9 @@ public abstract class AbstractRoom implements IRoom{
 	public void applyFilters(IWorldEditor editor) {
 		Random rand = editor.getRandom(this.getWorldPos());
 		this.settings.applyFilters(editor, rand, getBoundingBox().get());
+	}
+	
+	public ILevelSettings getLevelSettings() {
+		return this.settings;
 	}
 }

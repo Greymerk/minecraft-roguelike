@@ -120,7 +120,7 @@ public class ItemArmour extends ItemBase {
 		
 		int color = r << 16 | g << 8 | b << 0;;
         
-		DyedColorComponent dye = new DyedColorComponent(color, false);
+		DyedColorComponent dye = new DyedColorComponent(color);
 		armor.set(DataComponentTypes.DYED_COLOR, dye);
 		return armor;
 	}

@@ -14,12 +14,21 @@ import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.shapes.IShape;
 import com.greymerk.roguelike.editor.shapes.Shape;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.random.Random;
 
 public class BoundingBox implements IBounded, IShape{
 
+	public static Codec<BoundingBox> CODEC = RecordCodecBuilder.create(
+		instance -> instance.group(
+			Coord.CODEC.fieldOf("start").forGetter(bb -> bb.start),
+			Coord.CODEC.fieldOf("end").forGetter(bb -> bb.end)
+		).apply(instance, BoundingBox::new)
+	);
+	
 	private Coord start;
 	private Coord end;
 	
@@ -47,8 +56,8 @@ public class BoundingBox implements IBounded, IShape{
 	}
 	
 	public BoundingBox(NbtCompound tag) {
-		this.start = Coord.of(tag.getCompound("start"));
-		this.end = Coord.of(tag.getCompound("end"));
+		this.start = Coord.of(tag.getCompound("start").get());
+		this.end = Coord.of(tag.getCompound("end").get());
 		this.correct();
 	}
 

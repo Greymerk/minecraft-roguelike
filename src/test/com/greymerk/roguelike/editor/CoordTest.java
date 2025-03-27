@@ -2,8 +2,12 @@ package com.greymerk.roguelike.editor;
 
 import org.junit.jupiter.api.Test;
 
+import com.mojang.datafixers.util.Pair;
+import com.mojang.serialization.DataResult;
+
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 
@@ -244,5 +248,20 @@ class CoordTest {
 		c2 = c.sub(new Coord(0,0,1));
 		assert(c.equals(new Coord(0,0,0)));
 		assert(c2.equals(new Coord(0,0,0).sub(new Coord(0,0,1))));
+	}
+	
+	@Test
+	void testCodec() {
+		final Coord c = Coord.of(12, -4, 0);
+		
+		final DataResult<NbtElement> enc = Coord.CODEC.encodeStart(NbtOps.INSTANCE, c);
+		
+		NbtElement e = enc.getOrThrow();
+		
+		final DataResult<Pair<Coord, NbtElement>> dec = Coord.CODEC.decode(NbtOps.INSTANCE, e);
+		
+		Coord d = dec.getOrThrow().getFirst();
+		
+		assert(c.equals(d));
 	}
 }

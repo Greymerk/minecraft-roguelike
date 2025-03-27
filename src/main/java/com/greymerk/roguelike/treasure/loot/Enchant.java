@@ -178,7 +178,7 @@ public enum Enchant {
 		if (item.isOf(Items.BOOK)) return getBook(enchants.getFirst());
 		
 		enchants.forEach(toAdd -> {
-			item.addEnchantment(toAdd.enchantment, toAdd.level);
+			item.addEnchantment(toAdd.enchantment(), toAdd.level());
 		});
 
 		return item;		
@@ -221,7 +221,7 @@ public enum Enchant {
 		ItemStack book = new ItemStack(Items.ENCHANTED_BOOK);
 		ItemEnchantmentsComponent component = book.get(DataComponentTypes.STORED_ENCHANTMENTS);
 		ItemEnchantmentsComponent.Builder builder = new ItemEnchantmentsComponent.Builder(component);
-		builder.add(ench.enchantment, ench.level);
+		builder.add(ench.enchantment(), ench.level());
 		book.set(DataComponentTypes.STORED_ENCHANTMENTS, builder.build());
 		return book;
 	}

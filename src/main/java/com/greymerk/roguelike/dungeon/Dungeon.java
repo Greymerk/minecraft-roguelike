@@ -18,9 +18,10 @@ import com.greymerk.roguelike.editor.boundingbox.IBounded;
 import com.greymerk.roguelike.settings.LevelSettings;
 import com.greymerk.roguelike.state.RoguelikeState;
 import com.greymerk.roguelike.theme.Theme;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.util.math.random.Random;
 
@@ -29,6 +30,17 @@ public class Dungeon implements Iterable<IRoom>{
 	List<IRoom> rooms;
 	Coord origin;
 	BoundingBox bb;
+	
+	
+	public static final Codec<List<IRoom>> LIST_ROOM_CODEC = Codec.list(Room.CODEC);
+	
+	public static final Codec<Dungeon> CODEC = RecordCodecBuilder.create(
+		instance -> instance.group(
+			LIST_ROOM_CODEC.fieldOf("rooms").forGetter(dungeon -> dungeon.rooms),
+			Coord.CODEC.fieldOf("pos").forGetter(dungeon -> dungeon.origin),
+			BoundingBox.CODEC.fieldOf("bounds").forGetter(dungeon -> dungeon.bb)
+		).apply(instance, Dungeon::new)
+	);
 	
 	public static boolean generate(IWorldEditor editor, Coord pos) {
 		return generate(editor, pos, false);
@@ -49,14 +61,10 @@ public class Dungeon implements Iterable<IRoom>{
 		this.origin = pos;
 	}
 	
-	public Dungeon(NbtCompound tag) {
-		this.rooms = new ArrayList<IRoom>();
-		NbtList rooms = tag.getList("rooms", NbtElement.COMPOUND_TYPE);
-		for(NbtElement nbt : rooms) {
-			this.rooms.add(Room.createFromNBT((NbtCompound)nbt));
-		}
-		this.origin = Coord.of(tag.getCompound("pos"));
-		this.bb = new BoundingBox(tag.getCompound("bounds"));
+	public Dungeon(List<IRoom> rooms, Coord origin, BoundingBox bb) {
+		this.rooms = rooms;
+		this.origin = origin;
+		this.bb = bb;
 	}
 
 	public static boolean canSpawn(IWorldEditor editor, Coord pos) {

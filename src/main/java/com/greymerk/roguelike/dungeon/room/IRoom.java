@@ -1,6 +1,7 @@
 package com.greymerk.roguelike.dungeon.room;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import com.greymerk.roguelike.dungeon.Floor;
@@ -39,6 +40,8 @@ public interface IRoom {
 	
 	public void setLevelSettings(ILevelSettings settings);
 	
+	public ILevelSettings getLevelSettings();
+	
 	public ITheme getTheme();
 	
 	public Optional<IBounded> getBoundingBox();
@@ -52,6 +55,8 @@ public interface IRoom {
 	public Entrance getEntrance(Cardinal dir);
 	
 	public List<Cardinal> getEntrancesFromType(Entrance type);
+	
+	public Map<Cardinal, Entrance> getEntrances();
 	
 	public void setDirection(Cardinal dir);
 	

@@ -6,10 +6,16 @@ import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
+import com.google.gson.JsonElement;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
+import com.mojang.datafixers.util.Pair;
+import com.mojang.serialization.DataResult;
+import com.mojang.serialization.JsonOps;
 
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
+import net.minecraft.nbt.NbtOps;
 
 class BoundingBoxTest {
 
@@ -138,8 +144,8 @@ class BoundingBoxTest {
 		assert(tag.contains("start"));
 		assert(tag.contains("end"));
 		
-		NbtCompound s = tag.getCompound("start");
-		NbtCompound e = tag.getCompound("end");
+		NbtCompound s = tag.getCompound("start").get();
+		NbtCompound e = tag.getCompound("end").get();
 		
 		assert(Coord.of(s).equals(bb.getStart()));
 		assert(Coord.of(e).equals(bb.getEnd()));
@@ -196,5 +202,22 @@ class BoundingBoxTest {
 		assert(boxes.size() == 2);
 		boxes.add(BoundingBox.of(Coord.ZERO).grow(Cardinal.directions, 4));
 		assert(boxes.size() == 3);
+	}
+	
+	@Test
+	void testCodec() {
+		Coord s = Coord.of(5, 3, -2);
+		Coord e = Coord.of(-9, 2, 18);
+		BoundingBox bb = BoundingBox.of(s, e);
+		
+		final DataResult<NbtElement> enc = BoundingBox.CODEC.encodeStart(NbtOps.INSTANCE, bb);
+		NbtElement nbt = enc.getOrThrow();
+		final DataResult<Pair<BoundingBox, NbtElement>> dec = BoundingBox.CODEC.decode(NbtOps.INSTANCE, nbt);
+		BoundingBox bb2 = dec.getOrThrow().getFirst();
+		
+		assert(bb.equals(bb2));
+		
+		JsonElement json = BoundingBox.CODEC.encodeStart(JsonOps.INSTANCE, bb).getOrThrow();
+		System.out.println(json);
 	}
 }
