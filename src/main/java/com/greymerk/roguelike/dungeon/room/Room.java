@@ -58,8 +58,9 @@ public enum Room {
 				Codecs.NON_EMPTY_STRING.fieldOf("settings").forGetter(room -> room.getLevelSettings().getName()),
 				Coord.CODEC.fieldOf("pos").forGetter(room -> room.getWorldPos()),
 				Codecs.NON_EMPTY_STRING.fieldOf("dir").forGetter(room -> room.getDirection().name()),
-				ENTRANCES_CODEC.fieldOf("entrances").forGetter(room -> Room.convertEntrances(room.getEntrances()))
-			).apply(instance, (name, settings, pos, dir, entrances) -> Room.getInstance(name, settings, pos, dir, entrances))
+				ENTRANCES_CODEC.fieldOf("entrances").forGetter(room -> Room.convertEntrances(room.getEntrances())),
+				Codec.BOOL.fieldOf("generated").forGetter(room -> room.isGenerated())
+			).apply(instance, (name, settings, pos, dir, entrances, generated) -> Room.getInstance(name, settings, pos, dir, entrances, generated))
 	);
 	
 	
@@ -97,7 +98,7 @@ public enum Room {
 		return room;
 	}
 	
-	public static IRoom getInstance(Room type, ILevelSettings settings, Coord pos, Cardinal dir, Map<Cardinal, Entrance> entrances) {
+	public static IRoom getInstance(Room type, ILevelSettings settings, Coord pos, Cardinal dir, Map<Cardinal, Entrance> entrances, boolean generated) {
 		IRoom room = fromType(type);
 		room.setLevelSettings(settings);
 		room.setWorldPos(pos);
@@ -105,16 +106,18 @@ public enum Room {
 		entrances.forEach((d, e) -> {
 			room.addEntrance(d, e);
 		});
+		room.setGenerated(generated);
 		return room;
 	}
 	
-	public static IRoom getInstance(String name, String settings, Coord pos, String dir, Map<String, String> entrances) {
+	public static IRoom getInstance(String name, String settings, Coord pos, String dir, Map<String, String> entrances, boolean generated) {
 		return Room.getInstance(
 			Room.get(name),
 			LevelSettings.get(settings),
 			pos,
-			Cardinal.valueOf(dir),
-			Room.convertEntrancesBack(entrances));
+			Cardinal.of(dir),
+			Room.convertEntrancesBack(entrances),
+			generated);
 	}
 	
 	public static Map<String, String> convertEntrances(Map<Cardinal, Entrance> entrances){

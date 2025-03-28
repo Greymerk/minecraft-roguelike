@@ -2,6 +2,7 @@ package com.greymerk.roguelike.editor;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.greymerk.roguelike.util.math.RandHelper;
 
@@ -13,12 +14,18 @@ public enum Cardinal {
 	
 	public static final List<Cardinal> all = Arrays.asList(new Cardinal[] {NORTH, EAST, SOUTH, WEST, UP, DOWN});
 	public static final List<Cardinal> directions = Arrays.asList(new Cardinal[] {NORTH, EAST, SOUTH, WEST});
+	public static final List<String> names = all.stream().map(dir -> dir.name()).collect(Collectors.toList());
+	public static final List<String> ordinalStrings = all.stream().map(dir -> Integer.toString(dir.ordinal())).collect(Collectors.toList());
 	
 	public static int index(Cardinal dir) {
 		return Arrays.asList(Cardinal.values()).indexOf(dir);
 	}
 	
-	
+	public static Cardinal of(String dir) {
+		if(names.contains(dir)) return Cardinal.valueOf(dir);
+		if(ordinalStrings.contains(dir)) return all.get(Integer.parseInt(dir));
+		return NORTH;
+	}
 	
 	public static Cardinal get(String name) {
 		switch(name) {
