@@ -132,7 +132,7 @@ public enum Room {
 	public static Map<Cardinal, Entrance> convertEntrancesBack(Map<String, String> entrances){
 		Map<Cardinal, Entrance> ents = new HashMap<Cardinal, Entrance>();
 		entrances.forEach((d, e) -> {
-			Cardinal dir = Cardinal.get(d);
+			Cardinal dir = Cardinal.of(d);
 			Entrance ent = Entrance.valueOf(e);
 			ents.put(dir, ent);
 		});
