@@ -6,12 +6,10 @@ import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
-import com.google.gson.JsonElement;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.DataResult;
-import com.mojang.serialization.JsonOps;
 
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
@@ -215,9 +213,6 @@ class BoundingBoxTest {
 		final DataResult<Pair<BoundingBox, NbtElement>> dec = BoundingBox.CODEC.decode(NbtOps.INSTANCE, nbt);
 		BoundingBox bb2 = dec.getOrThrow().getFirst();
 		
-		assert(bb.equals(bb2));
-		
-		JsonElement json = BoundingBox.CODEC.encodeStart(JsonOps.INSTANCE, bb).getOrThrow();
-		System.out.println(json);
+		assert(bb.equals(bb2));		
 	}
 }

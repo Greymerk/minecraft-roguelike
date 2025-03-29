@@ -6,6 +6,7 @@ out/
 classes/
 logs/
 remappedSrc/
+config/
 
 # eclipse
 

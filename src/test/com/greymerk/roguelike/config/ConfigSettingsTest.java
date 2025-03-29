@@ -15,8 +15,9 @@ class ConfigSettingsTest {
 		assert(config.has(MixedKey.ofBoolean(Config.MOB_DROPS.keyOf())));
 		assert(!config.has(MixedKey.ofDouble(Config.MOB_DROPS.keyOf())));
 		
-		
+		config.put(MixedKey.ofDouble(Config.FREQUENCY.keyOf()), 1.0);
 		Double d = config.get(MixedKey.ofDouble(Config.FREQUENCY.keyOf()));
+
 		assert(d == 1.0);
 		config.put(MixedKey.ofDouble(Config.FREQUENCY.keyOf()), 2.0);
 		Double d2 = config.get(MixedKey.ofDouble(Config.FREQUENCY.keyOf()));

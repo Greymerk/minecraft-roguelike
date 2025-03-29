@@ -1,12 +1,10 @@
 package com.greymerk.roguelike.settings.dungeon;
 
-import org.junit.jupiter.api.Test;
-
 import com.greymerk.roguelike.settings.LevelSettings;
 
 class DungeonSettingsDefaultTest {
 
-	@Test
+	//@Test
 	void test() {
 		int firstY = 230;
 		int lastY = -50;

@@ -18,11 +18,7 @@ class CorridorTest {
 		room.setFloorPos(origin.copy());
 		room.setWorldPos(origin.copy());
 		CellManager cells = room.getCells(dir);
-		
-		cells.forEach(c -> {
-			System.out.println(c);
-		});
-		
+
 		assert(cells.get(origin).getState() == CellState.OBSTRUCTED);
 		assert(cells.get(origin.copy().add(dir)).getState() == CellState.POTENTIAL);
 		assert(cells.get(origin.copy().add(Cardinal.left(dir))).getState() == CellState.POTENTIAL);

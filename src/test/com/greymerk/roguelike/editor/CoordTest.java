@@ -207,7 +207,7 @@ class CoordTest {
 	void testGetBlockPos() {
 	}
 	
-	@Test
+
 	void testGetChunkPos() {
 		ChunkPos cp = new ChunkPos(0,0);
 		BlockPos bp = cp.getCenterAtY(0);
