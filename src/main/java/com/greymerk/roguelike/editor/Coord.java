@@ -2,14 +2,10 @@ package com.greymerk.roguelike.editor;
 
 import java.util.Objects;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
-import net.minecraft.nbt.NbtInt;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 
@@ -245,21 +241,5 @@ public class Coord {
 
 	public ChunkPos getChunkPos() {
 		return new ChunkPos(this.x >> 4, this.z >> 4);
-	}
-	
-	public NbtElement getNbt() {
-		NbtCompound nbt = new NbtCompound();
-		nbt.put("x", NbtInt.of(x));
-		nbt.put("y", NbtInt.of(y));
-		nbt.put("z", NbtInt.of(z));
-		return nbt;
-	}
-
-	public JsonElement asJson() {
-		JsonObject jsonCoord = new JsonObject();
-		jsonCoord.addProperty("x", this.x);
-		jsonCoord.addProperty("y", this.y);
-		jsonCoord.addProperty("z", this.z);
-		return jsonCoord;
 	}
 }

@@ -5,21 +5,12 @@ import org.junit.jupiter.api.Test;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.DataResult;
 
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 
 class CoordTest {
-
-	@Test
-	void testCoordNbtCompound() {
-		Coord a = new Coord(1, 2, 3);
-		NbtElement nbt = a.getNbt();
-		Coord b = Coord.of((NbtCompound)nbt);
-		assert(a.equals(b));
-	}
 
 	@Test
 	void testCoordBlockPos() {

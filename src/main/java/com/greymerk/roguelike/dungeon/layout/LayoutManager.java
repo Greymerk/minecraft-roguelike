@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import com.greymerk.roguelike.config.Config;
 import com.greymerk.roguelike.debug.DebugLayout;
 import com.greymerk.roguelike.dungeon.Floor;
@@ -22,11 +20,21 @@ import com.greymerk.roguelike.settings.IDungeonSettings;
 import com.greymerk.roguelike.settings.ILevelSettings;
 import com.greymerk.roguelike.settings.dungeon.DungeonSettingsDefault;
 import com.greymerk.roguelike.util.math.RandHelper;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.JsonOps;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.util.math.random.Random;
 
 public class LayoutManager {
 
+	public static final Codec<LayoutManager> CODEC = RecordCodecBuilder.create(
+			instance -> instance.group(
+				Coord.CODEC.fieldOf("origin").forGetter(lm -> lm.origin),
+				Codec.list(Floor.CODEC).fieldOf("floors").forGetter(lm -> lm.floors)
+		).apply(instance, (origin, floors) -> new LayoutManager(origin, floors))
+	);
+	
 	private Coord origin;
 	private List<Floor> floors;
 	private IDungeonSettings settings;
@@ -35,6 +43,13 @@ public class LayoutManager {
 	public LayoutManager(Coord origin) {
 		this.origin = origin;
 		this.floors = createFloors();
+		this.settings = new DungeonSettingsDefault(Config.ofBoolean(Config.BELOW_SEA_LEVEL) ? 50 : origin.getY(), -50);
+		this.zones = new ExclusionZones();
+	}
+	
+	public LayoutManager(Coord origin, List<Floor> floors) {
+		this.origin = origin;
+		this.floors = floors;
 		this.settings = new DungeonSettingsDefault(Config.ofBoolean(Config.BELOW_SEA_LEVEL) ? 50 : origin.getY(), -50);
 		this.zones = new ExclusionZones();
 	}
@@ -70,7 +85,7 @@ public class LayoutManager {
 		
 		if(Config.ofBoolean(Config.DEBUG)) {
 			DebugLayout debug = new DebugLayout(editor.getWorldDirectory());
-			debug.toFile(origin.getX() + "_" + origin.getZ() + ".json", this.asJson());	
+			debug.toFile(origin.getX() + "_" + origin.getZ() + ".json", CODEC.encodeStart(JsonOps.INSTANCE, this).getOrThrow());	
 		}
 	}
 	
@@ -168,16 +183,6 @@ public class LayoutManager {
 			rooms.addAll(floor.getRooms());
 		}
 		return rooms;
-	}
-	
-
-		
-	public JsonObject asJson() {
-		JsonObject json = new JsonObject();
-		JsonArray jsonFloors = new JsonArray();
-		json.add("floors", jsonFloors);
-		this.floors.forEach(f -> jsonFloors.add(f.asJson()));
-		return json;
 	}
 	
 	public class CenterSort implements Comparator<Cell>{

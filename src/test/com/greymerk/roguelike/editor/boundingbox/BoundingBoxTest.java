@@ -11,7 +11,6 @@ import com.greymerk.roguelike.editor.Coord;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.DataResult;
 
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtOps;
 
@@ -27,16 +26,6 @@ class BoundingBoxTest {
 		assert(!bb.contains(new Coord(1,0,0)));
 	}
 
-	@Test
-	void testBoundingBoxNbtCompound() {
-		Coord start = new Coord(0,0,0);
-		Coord end = new Coord(0,0,5);
-		BoundingBox bb = BoundingBox.of(start, end);
-		NbtCompound tag = bb.getNbt();
-		BoundingBox bb2 = new BoundingBox(tag);
-		assert(bb.equals(bb2));
-	}
-	
 	@Test
 	void testGrowCardinal() {
 		BoundingBox bb = BoundingBox.of(new Coord(0,0,0));
@@ -129,24 +118,6 @@ class BoundingBoxTest {
 		
 		BoundingBox bb = BoundingBox.of(start, end);
 		assert(bb.getEnd().equals(end));
-	}
-
-	@Test
-	void testGetNbt() {
-		Coord start = new Coord(-5, 6, 3);
-		Coord end = new Coord(3, -5, 6);
-		
-		BoundingBox bb = BoundingBox.of(start, end);
-		NbtCompound tag = bb.getNbt();
-		
-		assert(tag.contains("start"));
-		assert(tag.contains("end"));
-		
-		NbtCompound s = tag.getCompound("start").get();
-		NbtCompound e = tag.getCompound("end").get();
-		
-		assert(Coord.of(s).equals(bb.getStart()));
-		assert(Coord.of(e).equals(bb.getEnd()));
 	}
 
 	@Test

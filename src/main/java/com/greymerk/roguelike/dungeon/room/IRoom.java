@@ -14,8 +14,6 @@ import com.greymerk.roguelike.editor.boundingbox.IBounded;
 import com.greymerk.roguelike.settings.ILevelSettings;
 import com.greymerk.roguelike.theme.ITheme;
 
-import net.minecraft.nbt.NbtCompound;
-
 public interface IRoom {
 
 	public void generate(IWorldEditor editor);
@@ -27,8 +25,6 @@ public interface IRoom {
 	public Cardinal getDirection();
 	
 	public CellManager getCells(Cardinal dir);
-	
-	public NbtCompound getNbt();
 	
 	public void setFloorPos(Coord floorPos);
 	

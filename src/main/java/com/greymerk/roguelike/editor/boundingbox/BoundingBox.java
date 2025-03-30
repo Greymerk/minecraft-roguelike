@@ -152,14 +152,6 @@ public class BoundingBox implements IBounded, IShape{
 	}
 
 	@Override
-	public NbtCompound getNbt() {
-		NbtCompound nbt = new NbtCompound();
-		nbt.put("start", this.start.getNbt());
-		nbt.put("end", this.end.getNbt());
-		return nbt;
-	}
-
-	@Override
 	public boolean contains(Coord pos) {
 		if(pos.getX() < this.start.getX() || pos.getX() > this.end.getX()) return false;
 		if(pos.getY() < this.start.getY() || pos.getY() > this.end.getY()) return false;

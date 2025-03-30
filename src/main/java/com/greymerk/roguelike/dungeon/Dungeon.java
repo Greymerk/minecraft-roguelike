@@ -21,8 +21,6 @@ import com.greymerk.roguelike.theme.Theme;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtList;
 import net.minecraft.util.math.random.Random;
 
 public class Dungeon implements Iterable<IRoom>{
@@ -74,18 +72,6 @@ public class Dungeon implements Iterable<IRoom>{
 		if(!editor.getBlock(surface).isGround()) return false;
 		
 		return true;
-	}
-	
-	public NbtCompound getNbt() {
-		NbtCompound data = new NbtCompound();
-		NbtList roomlist = new NbtList();
-		for(IRoom room : this.rooms) {
-			roomlist.add(room.getNbt());
-		}
-		data.put("rooms", roomlist);
-		data.put("pos", this.origin.getNbt());
-		data.put("bounds", this.bb.getNbt());
-		return data;
 	}
 	
 	public void generate(IWorldEditor editor) {

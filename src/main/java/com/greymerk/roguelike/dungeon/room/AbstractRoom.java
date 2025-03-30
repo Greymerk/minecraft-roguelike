@@ -1,7 +1,6 @@
 package com.greymerk.roguelike.dungeon.room;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,8 +19,6 @@ import com.greymerk.roguelike.editor.boundingbox.IBounded;
 import com.greymerk.roguelike.settings.ILevelSettings;
 import com.greymerk.roguelike.theme.ITheme;
 
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtString;
 import net.minecraft.util.math.random.Random;
 
 public abstract class AbstractRoom implements IRoom{
@@ -51,26 +48,6 @@ public abstract class AbstractRoom implements IRoom{
 		this.generated = false;
 		this.direction = dir;
 		this.entrances = new HashMap<Cardinal, Entrance>();
-	}
-	
-	@Override
-	public NbtCompound getNbt() {
-		ITheme theme = this.getTheme();
-		Coord pos = this.getWorldPos();
-		
-		NbtCompound nbt = new NbtCompound();
-		nbt.put("type", NbtString.of(getName()));
-		nbt.put("settings", NbtString.of(settings.getName()));
-		nbt.put("theme", NbtString.of(theme.getName()));
-		nbt.put("pos", pos.getNbt());
-		nbt.putBoolean("generated", this.generated);
-		nbt.putInt("dir", Arrays.asList(Cardinal.values()).indexOf(this.direction));
-		NbtCompound ent = new NbtCompound();
-		for(Cardinal dir : this.entrances.keySet()) {
-			ent.put(dir.name(), NbtString.of(this.entrances.get(dir).name()));
-		}
-		nbt.put("entrances", ent);
-		return nbt;
 	}
 	
 	@Override

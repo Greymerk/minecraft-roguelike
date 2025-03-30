@@ -1,9 +1,14 @@
 package com.greymerk.roguelike.dungeon.cell;
 
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 
+import com.google.gson.JsonElement;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
+import com.mojang.serialization.DataResult;
+import com.mojang.serialization.JsonOps;
 
 class CellTest {
 
@@ -54,4 +59,16 @@ class CellTest {
 		Cell c = Cell.of(new Coord(3, 0, -2), CellState.OBSTRUCTED);
 		assert(c.getWorldPos(worldPos).equals(new Coord(23, 10, -22)));
 	}
+	
+	@Test
+	void testCodec() {
+		Cell c = Cell.of(Coord.of(1, 2, 3), CellState.OBSTRUCTED, List.of(Cardinal.NORTH, Cardinal.EAST));
+		
+		DataResult<JsonElement> enc = Cell.CODEC.encodeStart(JsonOps.INSTANCE, c);
+		
+		Cell c2 = Cell.CODEC.decode(JsonOps.INSTANCE, enc.getOrThrow()).getOrThrow().getFirst();
+		
+		assert(c.equals(c2));
+	}
+	
 }

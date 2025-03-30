@@ -8,7 +8,6 @@ import java.nio.file.Path;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 public class DebugLayout {
@@ -21,7 +20,7 @@ public class DebugLayout {
 		this.debug.toFile().mkdir();
 	}
 	
-	public void toFile(String name, JsonObject content) {
+	public void toFile(String name, JsonElement content) {
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		JsonElement je = JsonParser.parseString(content.toString());
 		String pretty = gson.toJson(je);

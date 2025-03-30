@@ -4,8 +4,6 @@ import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.shapes.IShape;
 import com.greymerk.roguelike.editor.shapes.Shape;
 
-import net.minecraft.nbt.NbtCompound;
-
 public interface IBounded {
 	
 	public BoundingBox getBoundingBox();
@@ -19,7 +17,5 @@ public interface IBounded {
 	public Coord getStart();
 	
 	public Coord getEnd();
-
-	public NbtCompound getNbt();
 	
 }

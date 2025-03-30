@@ -6,15 +6,29 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import com.google.gson.JsonArray;
 import com.greymerk.roguelike.editor.Coord;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 public class CellManager implements Iterable<Cell>{
 
 	List<Cell> cells;
 	
+	public static final Codec<List<Cell>> LIST_CELL_CODEC = Codec.list(Cell.CODEC);
+	public static final Codec<CellManager> CODEC = RecordCodecBuilder.create(
+		instance -> instance.group(
+			LIST_CELL_CODEC.fieldOf("cells").forGetter(cm -> cm.getCells())
+		).apply(instance, cl -> new CellManager(cl))
+	);
+			
+	
 	public CellManager() {
 		this.cells = new ArrayList<Cell>();
+	}
+	
+	public CellManager(List<Cell> cells) {
+		this.cells = new ArrayList<Cell>();
+		cells.addAll(cells);
 	}
 	
 	public void add(Cell toAdd) {
@@ -67,12 +81,6 @@ public class CellManager implements Iterable<Cell>{
 	
 	public Iterator<Cell> iterator(){
 		return this.cells.iterator();
-	}
-	
-	public JsonArray asJson() {
-		JsonArray jsonCells = new JsonArray();
-		this.cells.forEach(c -> jsonCells.add(c.asJson()));
-		return jsonCells;
 	}
 
 	public boolean roomFits(Cell potential, CellManager rcm) {

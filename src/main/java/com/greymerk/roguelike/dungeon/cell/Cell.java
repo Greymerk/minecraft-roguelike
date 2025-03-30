@@ -5,15 +5,28 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+
+import net.minecraft.util.dynamic.Codecs;
 
 public class Cell {
 
+	private static final Codec<List<String>> LIST_CODEC = Codec.list(Codecs.NON_EMPTY_STRING);
+	
+	public static final Codec<Cell> CODEC = RecordCodecBuilder.create(
+			instance -> instance.group(
+				Coord.CODEC.fieldOf("floorPos").forGetter(cell -> cell.floorPos),
+				Codecs.NON_EMPTY_STRING.fieldOf("state").forGetter(cell -> cell.state.name()),
+				LIST_CODEC.fieldOf("walls").forGetter(cell -> cell.getWalls().stream().map(dir -> dir.name()).collect(Collectors.toList()))
+			).apply(instance, (fp, state, walls) -> Cell.of(fp, CellState.of(state), 
+					walls.stream().map(dir -> Cardinal.of(dir)).collect(Collectors.toList())))
+	);
+	
 	public static final int SIZE = 6;
 	private CellState state;
 	private Coord floorPos;
@@ -21,6 +34,10 @@ public class Cell {
 	
 	public static Cell of(Coord floorPos, CellState state) {
 		return new Cell(floorPos, state);
+	}
+	
+	public static Cell of(Coord floorPos, CellState state, List<Cardinal> walls) {
+		return Cell.of(floorPos, state).addWalls(walls);
 	}
 	
 	public Cell(Coord floorPos, CellState state) {
@@ -111,14 +128,5 @@ public class Cell {
 	public String toString() {
 		return this.floorPos.toString() + ' ' + this.state + ' ' + this.walls;
 	}
-	
-	public JsonElement asJson() {
-		JsonObject jsonCell = new JsonObject();
-		jsonCell.add("floorPos", this.floorPos.asJson());
-		jsonCell.addProperty("state", this.state.name());
-		JsonArray jsonWalls = new JsonArray();
-		this.walls.forEach(dir -> jsonWalls.add(dir.name()));
-		jsonCell.add("walls", jsonWalls);
-		return jsonCell;
-	}
+
 }
