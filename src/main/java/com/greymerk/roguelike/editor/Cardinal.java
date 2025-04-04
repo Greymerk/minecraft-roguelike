@@ -1,5 +1,6 @@
 package com.greymerk.roguelike.editor;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,8 +15,8 @@ public enum Cardinal {
 	
 	public static final List<Cardinal> all = Arrays.asList(new Cardinal[] {NORTH, EAST, SOUTH, WEST, UP, DOWN});
 	public static final List<Cardinal> directions = Arrays.asList(new Cardinal[] {NORTH, EAST, SOUTH, WEST});
-	public static final List<String> names = all.stream().map(dir -> dir.name()).collect(Collectors.toList());
-	public static final List<String> ordinalStrings = all.stream().map(dir -> Integer.toString(dir.ordinal())).collect(Collectors.toList());
+	private static final List<String> names = all.stream().map(dir -> dir.name()).collect(Collectors.toList());
+	private static final List<String> ordinalStrings = all.stream().map(dir -> Integer.toString(dir.ordinal())).collect(Collectors.toList());
 	
 	public static int index(Cardinal dir) {
 		return Arrays.asList(Cardinal.values()).indexOf(dir);
@@ -25,6 +26,18 @@ public enum Cardinal {
 		if(names.contains(dir)) return Cardinal.valueOf(dir);
 		if(ordinalStrings.contains(dir)) return all.get(Integer.parseInt(dir));
 		return NORTH;
+	}
+
+	public static Cardinal of(Direction direction) {
+		switch(direction) {
+		case DOWN: return Cardinal.DOWN;
+		case EAST: return Cardinal.WEST;
+		case NORTH: return Cardinal.SOUTH;
+		case SOUTH: return Cardinal.NORTH;
+		case UP: return Cardinal.UP;
+		case WEST: return Cardinal.EAST;
+		default: return null;
+		}
 	}
 	
 	public static Cardinal get(String name) {
@@ -84,11 +97,11 @@ public enum Cardinal {
 	public static List<Cardinal> orthogonal(Cardinal dir) {
 		
 		switch(dir){
-		case NORTH: return Arrays.asList(new Cardinal[] {WEST, EAST});
-		case SOUTH: return Arrays.asList(new Cardinal[] {EAST, WEST});
-		case EAST: return Arrays.asList(new Cardinal[] {NORTH, SOUTH});
-		case WEST: return Arrays.asList(new Cardinal[] {SOUTH, NORTH});
-		default: return Arrays.asList(new Cardinal[]{dir, dir});
+		case NORTH: return List.of(WEST, EAST);
+		case SOUTH: return List.of(WEST, EAST);
+		case EAST: return List.of(NORTH, SOUTH);
+		case WEST: return List.of(NORTH, SOUTH);
+		default: return List.of(dir, dir);
 		}
 	}
 
@@ -118,21 +131,9 @@ public enum Cardinal {
 	}
 	
 	public static List<Cardinal> randDirs(Random rand){
-		List<Cardinal> dirs = Arrays.asList(new Cardinal[] {NORTH, EAST, SOUTH, WEST});
-		RandHelper.shuffle(Arrays.asList(dirs), rand);
+		List<Cardinal> dirs = new ArrayList<Cardinal>(directions);
+		RandHelper.shuffle(dirs, rand);
 		return dirs;
 	}
 
-	public static Cardinal of(Direction direction) {
-		switch(direction) {
-		case DOWN: return Cardinal.DOWN;
-		case EAST: return Cardinal.WEST;
-		case NORTH: return Cardinal.SOUTH;
-		case SOUTH: return Cardinal.NORTH;
-		case UP: return Cardinal.UP;
-		case WEST: return Cardinal.EAST;
-		default: return null;
-		}
-		
-	}
 }
