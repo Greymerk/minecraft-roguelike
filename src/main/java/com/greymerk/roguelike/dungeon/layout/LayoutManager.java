@@ -67,6 +67,8 @@ public class LayoutManager {
 			
 			ILevelSettings levelSettings = this.settings.getLevel(floor.getOrigin().getY());
 			
+			this.connectFloorBranches(editor, rand, floor, levelSettings);
+			
 			RoomProvider roomProvider = levelSettings.getRooms();
 			
 			int numRooms = Math.clamp(Config.ofInteger(Config.ROOMS_PER_LEVEL).orElse(20), 1, 1000);
@@ -78,7 +80,7 @@ public class LayoutManager {
 				this.placeRoom(room, rand, floor);
 			});
 			
-			this.addStair(editor, rand, floor);
+			this.addStair(editor, rand, floor);	
 			
 			floor.getRooms().forEach(r -> r.determineEntrances(floor, r.getFloorPos()));
 		}
@@ -89,6 +91,18 @@ public class LayoutManager {
 		}
 	}
 	
+	private void connectFloorBranches(IWorldEditor editor, Random rand, Floor floor, ILevelSettings settings) {
+		while(!floor.getCells().isConnected()) {
+			CellManager cm = floor.getCells();
+			List<Cell> nearest = cm.getNearestPotentials();
+			if(nearest.isEmpty()) return;
+			nearest.forEach(c -> {
+				IRoom room = Room.getInstance(Room.CORRIDOR, settings);
+				this.addRoom(room, Cardinal.NORTH, c.getFloorPos(), c.getWorldPos(floor.getOrigin()), floor);
+			});
+		}
+	}
+
 	private void placeRoom(IRoom room, Random rand, Floor floor) {
 		// try to find a place that avoids exclusion zones :)
 		if(findFit(room, rand, floor, true)) return;

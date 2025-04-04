@@ -61,6 +61,26 @@ class CellTest {
 	}
 	
 	@Test
+	void testConnectedTo() {
+		Cell a = Cell.of(Coord.ZERO, CellState.OBSTRUCTED);
+		Cell b = Cell.of(Coord.ZERO.add(Cardinal.EAST), CellState.OBSTRUCTED);
+		assert(a.connectedTo(b));
+		
+		Cell c = Cell.of(Coord.ZERO.add(Cardinal.EAST, 2), CellState.OBSTRUCTED);
+		assert(!a.connectedTo(c));
+	}
+	
+	@Test
+	void testConnectToWithWalls() {
+		Cell a = Cell.of(Coord.ZERO, CellState.OBSTRUCTED, List.of(Cardinal.EAST));
+		Cell b = Cell.of(Coord.ZERO.add(Cardinal.EAST), CellState.OBSTRUCTED, List.of(Cardinal.WEST));
+		
+		assert(!a.connectedTo(b));
+		
+		
+	}
+	
+	@Test
 	void testCodec() {
 		Cell c = Cell.of(Coord.of(1, 2, 3), CellState.OBSTRUCTED, List.of(Cardinal.NORTH, Cardinal.EAST));
 		

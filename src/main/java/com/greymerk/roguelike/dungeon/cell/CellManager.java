@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import com.greymerk.roguelike.editor.Coord;
 import com.mojang.serialization.Codec;
@@ -72,11 +74,7 @@ public class CellManager implements Iterable<Cell>{
 	}
 	
 	public List<Cell> getCells(CellState state){
-		List<Cell> cl = new ArrayList<Cell>();
-		for(Cell c : this.cells) {
-			if(c.getState() == state) cl.add(c);
-		}
-		return cl;
+		return this.cells.stream().filter(cell -> cell.getState() == state).collect(Collectors.toList());
 	}
 	
 	public Iterator<Cell> iterator(){
@@ -93,6 +91,113 @@ public class CellManager implements Iterable<Cell>{
 		}
 		
 		return true;
+	}
+	
+	public boolean isConnected() {
+		return this.getBranches().size() == 1;
+	}
+	
+	public List<Cell> getNearestPotentials(){
+		List<Cell> potentials = this.getCells(CellState.POTENTIAL);
+		List<List<Cell>> branches = this.getBranches();
+		
+		List<Cell> nearestSoFar = List.of();
+		
+		for(Cell c : potentials) {
+			if(this.connectsTwoBranches(branches, c)) return List.of(c);
+			
+			for(Cell c2 : potentials) {
+				if(c == c2) continue;
+				
+				Optional<List<Cell>> branch1 = this.findBranchAttachedToPotential(branches, c);
+				Optional<List<Cell>> branch2 = this.findBranchAttachedToPotential(branches, c2);
+				
+				if(branch1.isEmpty() || branch2.isEmpty()) continue;
+				
+				if(branch1.get().equals(branch2.get())) continue;
+				
+				if(nearestSoFar.isEmpty()) {
+					nearestSoFar = List.of(c, c2);
+					continue;
+				}
+				
+				double dist1 = nearestSoFar.getFirst().getFloorPos().distance(nearestSoFar.getLast().getFloorPos());
+				double dist2 = c.getFloorPos().distance(c2.getFloorPos());
+				
+				if(dist2 < dist1) {
+					nearestSoFar = List.of(c, c2);
+				}
+			}
+		}
+		
+		return nearestSoFar;
+	}
+	
+	private boolean connectsTwoBranches(List<List<Cell>> branches, Cell c) {
+		int count = 0;
+		for(List<Cell> branch : branches) {
+			if(isCellAttachedToBranch(branch, c)) count++;
+		}
+		return count > 1;
+	}
+
+	public Optional<List<Cell>> findBranchAttachedToPotential(List<List<Cell>> branches, Cell potential){
+		for(List<Cell> branch : branches) {
+			if(isCellAttachedToBranch(branch, potential)) return Optional.of(branch);
+		}
+		return Optional.empty();
+	}
+	
+	public boolean isCellAttachedToBranch(List<Cell> branch, Cell cell) {
+		for(Cell c : branch) {
+			if(c.connectedTo(cell)) return true;
+		}
+		return false;
+	}
+	
+	public List<List<Cell>> getBranches(){
+		List<Cell> obstructeds = this.getCells(CellState.OBSTRUCTED);
+		
+		List<List<Cell>> branches = new ArrayList<List<Cell>>();
+		if(obstructeds.isEmpty()) return branches;
+		
+		for(Cell cell : obstructeds) {
+			if(this.branchesContainCell(branches, cell)) continue;
+			List<Cell> branch = new ArrayList<Cell>();
+			branch.add(cell);
+			branches.add(this.buildBranch(branch, obstructeds));
+		}
+		
+		return branches;
+	}
+	
+	public List<Cell> buildBranch(List<Cell> branch, List<Cell> cells){
+		for(Cell c : cells) {
+			if(!branch.contains(c) && this.isCellAttachedToBranch(branch, c)) {
+				branch.add(c);
+				return buildBranch(branch, cells);
+			}
+		}
+		return branch;
+	}
+	
+	public boolean branchesContainCell(List<List<Cell>> branches, Cell c) {
+		for(List<Cell> branch : branches) {
+			if(branch.contains(c)) return true;
+		}
+		
+		return false;
+	}
+	
+	public Optional<List<Cell>> findBranchContainingCell(List<List<Cell>> branches, Cell cell){
+		for(List<Cell> branch : branches) {
+			for(Cell c : branch) {
+				if(c.connectedTo(cell)) {
+					return Optional.of(branch);
+				}
+			}
+		}
+		return Optional.empty();
 	}
 	
 	public Set<Integer> getLevelOffsets(){

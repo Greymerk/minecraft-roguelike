@@ -105,6 +105,16 @@ public class Cell {
 		return new ArrayList<Cardinal>(this.walls);
 	}
 	
+	public boolean connectedTo(Cell other) {
+		Cardinal dirTo = this.floorPos.dirTo(other.floorPos);
+		if(!this.floorPos.copy().add(dirTo).equals(other.floorPos)) return false;
+		
+		if(this.hasWall(dirTo)) return false;
+		if(other.hasWall(Cardinal.reverse(dirTo))) return false;
+		
+		return true;
+	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(floorPos, state);
