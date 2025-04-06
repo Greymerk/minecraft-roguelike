@@ -28,10 +28,6 @@ public class RectWireframe implements IShape {
 		return new RectWireframe(box.getBoundingBox());
 	}
 	
-	public static void fill(IWorldEditor editor, Random rand, Coord start, Coord end, IBlockFactory block){
-		RectWireframe.of(BoundingBox.of(start, end)).fill(editor, rand, block, Fill.ALWAYS);
-	}
-	
 	@Override
 	public void fill(IWorldEditor editor, Random rand, IBlockFactory block){
 		fill(editor, rand, block, Fill.ALWAYS);

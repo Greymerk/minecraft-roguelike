@@ -1,7 +1,11 @@
 package com.greymerk.roguelike.dungeon.room;
 
+import java.util.List;
+
 import com.greymerk.roguelike.dungeon.cell.Cell;
-import com.greymerk.roguelike.dungeon.fragment.parts.CellSupport;
+import com.greymerk.roguelike.dungeon.cell.CellManager;
+import com.greymerk.roguelike.dungeon.cell.CellState;
+import com.greymerk.roguelike.dungeon.fragment.parts.Pillar;
 import com.greymerk.roguelike.dungeon.layout.Entrance;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
@@ -23,18 +27,72 @@ public class PitRoom extends AbstractMediumRoom {
 		Coord origin = this.worldPos.copy().add(direction, Cell.SIZE).freeze();
 		Random rand = editor.getRandom(origin);
 		this.centerRoom(editor, rand, origin);
-		this.drillDown(editor, rand, origin.add(Cardinal.DOWN).freeze());
 		Cardinal.directions.forEach(dir -> {
 			if(this.getEntrance(dir) == Entrance.DOOR) {
-				this.entryRoom(editor, rand, origin, dir);	
+				this.entryDoorWay(editor, rand, origin, dir);	
 			} else {
 				this.pistonTrap(editor, rand, origin, dir);
 			}
 		});
 		
-		CellSupport.generate(editor, rand, theme, origin);
+		this.tunnelDown(editor, rand, origin);
+		this.lowerRoom(editor, rand, origin.add(Cardinal.DOWN, 20).freeze());
+		
+		//CellSupport.generate(editor, rand, theme, origin);
 	}
 	
+	private void tunnelDown(IWorldEditor editor, Random rand, Coord origin) {
+		BoundingBox.of(origin).grow(Cardinal.DOWN, 16).grow(Cardinal.directions).fill(editor, rand, Air.get());
+		Cardinal.directions.forEach(dir -> {
+			BoundingBox.of(origin).add(Cardinal.DOWN).add(dir, 2)
+				.grow(Cardinal.left(dir)).grow(Cardinal.right(dir), 2).grow(Cardinal.DOWN, 15)
+				.fill(editor, rand, theme.getPrimary().getWall(), Fill.SOLID);
+		});
+	}
+
+	private void lowerRoom(IWorldEditor editor, Random rand, Coord origin) {
+		BoundingBox.of(origin).grow(Cardinal.directions, 8).grow(Cardinal.UP, 4).fill(editor, rand, Air.get());
+		Cardinal.directions.forEach(dir -> {
+			BoundingBox.of(origin).add(dir, 9).grow(Cardinal.orthogonal(dir), 9).grow(Cardinal.UP, 3)
+				.fill(editor, rand, theme.getPrimary().getWall(), Fill.SOLID);
+		});
+		BoundingBox.of(origin).add(Cardinal.DOWN).grow(Cardinal.directions, 8).fill(editor, rand, theme.getPrimary().getFloor());
+		this.lowerRoomCeiling(editor, rand, origin);
+		Cardinal.directions.forEach(dir -> {
+			BoundingBox.of(origin).add(Cardinal.UP, 3).add(dir, 8).grow(Cardinal.orthogonal(dir), 8).fill(editor, rand, theme.getPrimary().getWall());
+			Cardinal.orthogonal(dir).forEach(o -> {
+				Pillar.generate(editor, rand, origin.add(dir, 8).add(o, 2), theme, 2, List.of(Cardinal.reverse(dir), Cardinal.reverse(o)));
+				Pillar.generate(editor, rand, origin.add(dir, 8).add(o, 4), theme, 2, List.of(Cardinal.reverse(dir), o));
+				List.of(2, 4).forEach(i -> {
+					theme.getPrimary().getWall().set(editor, rand, origin.add(dir, 7).add(o, i).add(Cardinal.UP, 3));
+					theme.getPrimary().getStair()
+						.setOrientation(Cardinal.reverse(dir), true)
+						.set(editor, rand, origin.add(dir, 6).add(Cardinal.UP, 3).add(o, i));
+				});
+			});
+			Pillar.generate(editor, rand, origin.add(dir, 8).add(Cardinal.left(dir), 8), theme, 2, List.of(Cardinal.reverse(dir), Cardinal.right(dir)));
+		});
+		this.lowerRoomPond(editor, rand, origin);
+	}
+
+	private void lowerRoomPond(IWorldEditor editor, Random rand, Coord origin) {
+		BoundingBox.of(origin).add(Cardinal.DOWN, 2).grow(Cardinal.directions, 3).fill(editor, rand, theme.getPrimary().getWall());
+		BoundingBox.of(origin).add(Cardinal.DOWN).grow(Cardinal.directions, 2).fill(editor, rand, theme.getPrimary().getLiquid());
+		Cardinal.directions.forEach(dir -> {
+			theme.getPrimary().getWall().set(editor, rand, origin.add(dir, 3).add(Cardinal.left(dir), 3).add(Cardinal.UP, 4));
+			Pillar.generate(editor, rand, origin.add(dir, 3).add(Cardinal.left(dir), 3), theme, 3);
+		});
+	}
+
+	private void lowerRoomCeiling(IWorldEditor editor, Random rand, Coord origin) {
+		BoundingBox.of(origin).add(Cardinal.UP, 5).grow(Cardinal.directions, 8).fill(editor, rand, theme.getPrimary().getWall(), Fill.SOLID);
+		Cardinal.directions.forEach(dir -> {
+			List.of(2, 4, 8).forEach(i -> {
+				BoundingBox.of(origin).add(Cardinal.UP, 4).add(dir, i).grow(Cardinal.orthogonal(dir), 8).fill(editor, rand, theme.getPrimary().getWall());
+			});
+		});
+	}
+
 	private void centerRoom(IWorldEditor editor, Random rand, Coord origin) {
 		BoundingBox.of(origin).grow(Cardinal.directions, 2).grow(Cardinal.UP, 3).fill(editor, rand, Air.get());
 		BoundingBox.of(origin).grow(Cardinal.directions, 3).add(Cardinal.DOWN).fill(editor, rand, this.theme.getPrimary().getWall());
@@ -44,7 +102,7 @@ public class PitRoom extends AbstractMediumRoom {
 		BoundingBox.of(origin).add(Cardinal.UP, 4).grow(Cardinal.directions, 3).fill(editor, rand, theme.getPrimary().getWall(), Fill.SOLID);
 	}
 	
-	private void entryRoom(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
+	private void entryDoorWay(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
 		Corridor room = new Corridor();
 		room.setWorldPos(origin.add(dir, Cell.SIZE));
 		room.setDirection(dir);
@@ -58,19 +116,6 @@ public class PitRoom extends AbstractMediumRoom {
 		room.generate(editor);
 	}
 	
-	private void drillDown(IWorldEditor editor, Random rand, Coord origin) {
-		if(origin.getY() <= -60) return;
-		
-		BoundingBox.of(origin).grow(Cardinal.directions).fill(editor, rand, origin.getY() > -55 ? Air.get() : theme.getPrimary().getLiquid());	
-		
-		Cardinal.directions.forEach(dir -> {
-			BoundingBox.of(origin).add(dir, 2).grow(Cardinal.orthogonal(dir), 2).fill(editor, rand, theme.getPrimary().getWall(), Fill.SOLID);
-		});
-		
-		if(!editor.isSolid(origin.add(Cardinal.DOWN))) return;
-		this.drillDown(editor, rand, origin.add(Cardinal.DOWN).freeze());
-	}
-
 	private void pistonTrap(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
 		BoundingBox.of(origin).add(dir, 3).grow(Cardinal.UP, 2).grow(Cardinal.DOWN, 2).grow(Cardinal.orthogonal(dir), 2).grow(dir, 3).fill(editor, rand, this.theme.getPrimary().getWall());
 		MetaBlock.of(Blocks.STONE_PRESSURE_PLATE).set(editor, origin.add(dir, 2));
@@ -78,6 +123,23 @@ public class PitRoom extends AbstractMediumRoom {
 		RedstoneTorch.generate(editor, origin.add(dir, 5), false);
 		MetaBlock.of(Blocks.REDSTONE_WIRE).set(editor, origin.add(dir, 4).add(Cardinal.DOWN));
 		Piston.generate(editor, origin.add(dir, 4).add(Cardinal.UP), Cardinal.reverse(dir), true);
+	}
+	
+	@Override
+	public CellManager getCells(Cardinal dir) {
+		CellManager cells = super.getCells(dir);
+		cells.add(Cell.of(Coord.ZERO.add(dir).add(Cardinal.DOWN), CellState.OBSTRUCTED, Cardinal.directions));
+		BoundingBox.of(Coord.ZERO).add(dir).add(Cardinal.DOWN, 2).grow(Cardinal.directions).forEach(c -> {
+			cells.add(Cell.of(c, CellState.OBSTRUCTED));
+		});
+		
+		Cardinal.directions.forEach(d -> {
+			BoundingBox.of(Coord.ZERO).add(dir).add(Cardinal.DOWN, 2).add(d, 2).grow(Cardinal.orthogonal(d)).forEach(c -> {
+				cells.add(Cell.of(c, CellState.POTENTIAL));
+			});
+		});
+		
+		return cells;
 	}
 	
 	@Override

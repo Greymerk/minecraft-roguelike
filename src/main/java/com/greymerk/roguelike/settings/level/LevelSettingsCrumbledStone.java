@@ -27,6 +27,7 @@ public class LevelSettingsCrumbledStone extends LevelSettingsBase implements ILe
 		rooms.addRandomChoice(Room.PRISON, 3);
 		rooms.addRoomOnce(Room.PANOPTICON);
 		rooms.addRoomOnce(Room.ENDER);
+		rooms.addRoomSometimes(Room.PIT, 0.2);
 		
 		this.walls = new WeightedRandomizer<Fragment>(10);
 		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_EMPTY, 15));

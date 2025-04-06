@@ -23,6 +23,7 @@ public class LevelSettingsDarkOak extends LevelSettingsBase implements ILevelSet
 		rooms.addRoomOnce(Room.CROSS);
 		rooms.addRoomSometimes(Room.LIBRARY, 0.4);
 		rooms.addRoomSometimes(Room.BREWING, 0.4);
+		rooms.addRoomSometimes(Room.PIT, 0.2);
 		
 		this.walls = new WeightedRandomizer<Fragment>(10);
 		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_EMPTY, 5));
