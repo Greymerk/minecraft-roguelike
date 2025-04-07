@@ -25,7 +25,7 @@ public class RectWireframe implements IShape {
 	}
 	
 	public static RectWireframe of(IBounded box) {
-		return new RectWireframe(box.getBoundingBox());
+		return new RectWireframe(BoundingBox.of(box));
 	}
 	
 	@Override

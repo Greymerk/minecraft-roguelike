@@ -81,7 +81,7 @@ class BoundingBoxTest {
 		pos.add(Cardinal.UP);
 		assert(!bb2.contains(pos));
 	}
-	
+		
 	@Test
 	void testMove() {
 		BoundingBox bb = BoundingBox.of(new Coord(0,0,0));

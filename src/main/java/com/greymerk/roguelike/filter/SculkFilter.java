@@ -18,7 +18,7 @@ public class SculkFilter implements IFilter {
 	
 	@Override
 	public void apply(IWorldEditor editor, Random rand, ILevelSettings settings, IBounded box) {
-		box.getBoundingBox().forEach(pos -> {
+		box.forEach(pos -> {
 			if(rand.nextInt(8) != 0) return;
 			if(!editor.isAir(pos)) return;
 			generate(editor, rand, pos.copy().add(Cardinal.DOWN).freeze(), 5);

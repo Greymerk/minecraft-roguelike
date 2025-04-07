@@ -14,7 +14,7 @@ public class CobwebFilter implements IFilter{
 
 	@Override
 	public void apply(IWorldEditor editor, Random rand, ILevelSettings settings, IBounded box) {
-		box.getBoundingBox().forEach(pos -> {
+		box.forEach(pos -> {
 			if(!editor.isAir(pos)) return;
 			if(rand.nextInt(100) != 0) return;
 			if(editor.isSolid(pos.copy().add(Cardinal.UP))) {

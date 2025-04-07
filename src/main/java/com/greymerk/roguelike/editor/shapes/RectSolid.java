@@ -20,16 +20,16 @@ public class RectSolid implements IShape {
 
 	private BoundingBox bb;
 	
-	public RectSolid(BoundingBox bb){
-		this.bb = bb;
+	public RectSolid(IBounded box){
+		this.bb = BoundingBox.of(box);
 	}
 	
 	public static void fill(IWorldEditor editor, Random rand, IBounded box, IBlockFactory blocks) {
-		new RectSolid(box.getBoundingBox()).fill(editor, rand, blocks, Fill.ALWAYS);
+		new RectSolid(BoundingBox.of(box)).fill(editor, rand, blocks, Fill.ALWAYS);
 	}
 	
 	public static void fill(IWorldEditor editor, Random rand, IBounded box, IBlockFactory blocks, Predicate<BlockContext> p) {
-		new RectSolid(box.getBoundingBox()).fill(editor, rand, blocks, p);
+		new RectSolid(BoundingBox.of(box)).fill(editor, rand, blocks, p);
 	}
 	
 	@Override

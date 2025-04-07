@@ -14,7 +14,7 @@ public class ExplosiveTrapFilter implements IFilter {
 
 	@Override
 	public void apply(IWorldEditor editor, Random rand, ILevelSettings settings, IBounded box) {
-		box.getBoundingBox().forEach(pos -> {
+		box.forEach(pos -> {
 			if(rand.nextInt(200) == 0) addTrap(editor, rand, pos);
 		});
 	}

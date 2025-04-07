@@ -40,6 +40,10 @@ public class BoundingBox implements IBounded, IShape{
 		return new BoundingBox(start, end);
 	}
 	
+	public static BoundingBox of(IBounded box) {
+		return new BoundingBox(box.getStart(), box.getEnd());
+	}
+	
 	public BoundingBox copy() {
 		return new BoundingBox(start, end);
 	}
@@ -76,7 +80,7 @@ public class BoundingBox implements IBounded, IShape{
 	
 	public boolean collide(IBounded other){
 		
-		BoundingBox otherBox = other.getBoundingBox();
+		BoundingBox otherBox = BoundingBox.of(other);
 		
 		if(end.getX() < otherBox.start.getX()
 			|| otherBox.end.getX() < start.getX()) return false; 

@@ -4,9 +4,7 @@ import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.shapes.IShape;
 import com.greymerk.roguelike.editor.shapes.Shape;
 
-public interface IBounded {
-	
-	public BoundingBox getBoundingBox();
+public interface IBounded extends Iterable<Coord>{
 	
 	public boolean collide(IBounded other);
 

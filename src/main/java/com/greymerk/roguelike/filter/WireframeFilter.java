@@ -17,7 +17,7 @@ public class WireframeFilter implements IFilter{
 	@Override
 	public void apply(IWorldEditor editor, Random rand, ILevelSettings settings, IBounded box) {
 		
-		BoundingBox bb = box.getBoundingBox();
+		BoundingBox bb = BoundingBox.of(box);
 		bb.add(Cardinal.UP, 200);
 		
 		IShape shape = RectWireframe.of(bb);

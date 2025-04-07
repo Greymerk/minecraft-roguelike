@@ -6,12 +6,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.greymerk.roguelike.settings.DungeonSettingsBase;
 import com.greymerk.roguelike.settings.IDungeonSettings;
 import com.greymerk.roguelike.settings.ILevelSettings;
 import com.greymerk.roguelike.settings.LevelSettings;
 
-public class DungeonSettingsDefault extends DungeonSettingsBase implements IDungeonSettings {
+public class DungeonSettingsDefault implements IDungeonSettings {
 
 	int firstLevelY;
 	int lastLevelY;
