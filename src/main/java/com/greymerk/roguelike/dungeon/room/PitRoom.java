@@ -5,6 +5,7 @@ import java.util.List;
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellManager;
 import com.greymerk.roguelike.dungeon.cell.CellState;
+import com.greymerk.roguelike.dungeon.fragment.parts.CellSupport;
 import com.greymerk.roguelike.dungeon.fragment.parts.Pillar;
 import com.greymerk.roguelike.dungeon.layout.Entrance;
 import com.greymerk.roguelike.editor.Cardinal;
@@ -38,9 +39,17 @@ public class PitRoom extends AbstractMediumRoom {
 		this.tunnelDown(editor, rand, origin);
 		this.lowerRoom(editor, rand, origin.add(Cardinal.DOWN, 20).freeze());
 		
-		//CellSupport.generate(editor, rand, theme, origin);
+		this.supports(editor, rand, origin.add(Cardinal.DOWN, 20).freeze());
 	}
 	
+	private void supports(IWorldEditor editor, Random rand, Coord origin) {
+		CellSupport.generate(editor, rand, theme, origin.copy().add(Cardinal.DOWN));
+		Cardinal.directions.forEach(dir -> {
+			CellSupport.generate(editor, rand, theme, origin.copy().add(dir, 6));
+			CellSupport.generate(editor, rand, theme, origin.copy().add(dir, 6).add(Cardinal.left(dir), 6));
+		});
+	}
+
 	private void tunnelDown(IWorldEditor editor, Random rand, Coord origin) {
 		BoundingBox.of(origin).grow(Cardinal.DOWN, 16).grow(Cardinal.directions).fill(editor, rand, Air.get());
 		Cardinal.directions.forEach(dir -> {

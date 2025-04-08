@@ -27,21 +27,23 @@ public class ThemeOak extends ThemeBase implements ITheme {
 				.add(Stair.of(Stair.STONEBRICK), 5)
 				.add(Stair.of(Stair.MOSSY_STONEBRICK), 1);
 		
-		this.primary = new BlockSet()
-				.setWall(walls)
-				.setFloor(walls)
-				.setStair(stair)
-				.setPillar(Wood.get(WoodBlock.LOG))
-				.setSlab(Slab.get(Slab.STONEBRICK))
-				.setDoor(Door.of(DoorType.SPRUCE));
+		this.primary = BlockSet.builder()
+				.walls(walls)
+				.floor(walls)
+				.stair(stair)
+				.pillar(Wood.get(WoodBlock.LOG))
+				.slab(Slab.get(Slab.STONEBRICK))
+				.door(Door.of(DoorType.SPRUCE))
+				.build();
 		
-		this.secondary = new BlockSet()
-				.setWall(Wood.get(Wood.OAK, WoodBlock.PLANK))
-				.setFloor(Wood.get(Wood.OAK, WoodBlock.PLANK))
-				.setStair(Stair.of(Stair.OAK))
-				.setPillar(Wood.get(WoodBlock.LOG))
-				.setSlab(Slab.of(Slab.OAK))
-				.setDoor(Door.of(DoorType.SPRUCE));
+		this.secondary = BlockSet.builder()
+				.walls(Wood.get(Wood.OAK, WoodBlock.PLANK))
+				.floor(Wood.get(Wood.OAK, WoodBlock.PLANK))
+				.stair(Stair.of(Stair.OAK))
+				.pillar(Wood.get(WoodBlock.LOG))
+				.slab(Slab.of(Slab.OAK))
+				.door(Door.of(DoorType.SPRUCE))
+				.build();
 	}
 	
 	@Override

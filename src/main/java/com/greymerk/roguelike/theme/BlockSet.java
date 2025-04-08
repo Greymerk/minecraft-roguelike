@@ -25,7 +25,29 @@ public class BlockSet implements IBlockSet {
 	protected IBlockFactory lightblock;
 	protected IBlockFactory liquid;
 	
-	public BlockSet(){}
+	public static Builder builder() {
+		return new Builder();
+	}
+	
+	public BlockSet() {}
+	
+	private BlockSet(BlockFloor floor, 
+			IBlockFactory walls,
+			IBlockFactory pillar,
+			IStair stair,
+			ISlab slab,
+			IDoor door,
+			IBlockFactory lightblock,
+			IBlockFactory liquid){
+		this.floor = floor;
+		this.walls = walls;
+		this.pillar = pillar;
+		this.stair = stair;
+		this.slab = slab;
+		this.door = door;
+		this.lightblock = lightblock;
+		this.liquid = liquid;
+	}
 	
 	@Override
 	public IBlockFactory getWall() {
@@ -61,12 +83,6 @@ public class BlockSet implements IBlockSet {
 	public IBlockFactory getLiquid() {
 		return this.liquid != null ? this.liquid : BlockType.get(BlockType.WATER_FLOWING);
 	}
-
-	@Override
-	public IBlockSet setSlab(ISlab slab) {
-		this.slab = slab;
-		return this;
-	}
 	
 	public void setLiquid(MetaBlock liquid) {
 		this.liquid = liquid;
@@ -76,46 +92,60 @@ public class BlockSet implements IBlockSet {
 	public ISlab getSlab() {
 		return this.slab != null ? this.slab : Slab.get(Slab.STONE);
 	}
-
-	@Override
-	public IBlockSet setFloor(IBlockFactory floor) {
-		this.floor = new BlockFloor(floor);
-		return this;
-	}
-
-	@Override
-	public IBlockSet setWall(IBlockFactory wall) {
-		this.walls = wall;
-		return this;
-	}
-
-	@Override
-	public IBlockSet setPillar(IBlockFactory pillar) {
-		this.pillar = pillar;
-		return this;
-	}
-
-	@Override
-	public IBlockSet setStair(IStair stair) {
-		this.stair = stair;
-		return this;
-	}
-
-	@Override
-	public IBlockSet setDoor(IDoor door) {
-		this.door = door;
-		return this;
-	}
-
-	@Override
-	public IBlockSet setLightBlock(IBlockFactory lightBlock) {
-		this.lightblock = lightBlock;
-		return this;
-	}
-
-	@Override
-	public IBlockSet setLiquid(IBlockFactory liquid) {
-		this.liquid = liquid;
-		return this;
+	
+	public static class Builder {
+		
+		private BlockFloor floor;
+		private IBlockFactory walls;
+		private IBlockFactory pillar;
+		private IStair stair;
+		private ISlab slab;
+		private IDoor door;
+		private IBlockFactory lightblock;
+		private IBlockFactory liquid;
+		
+		public Builder floor(IBlockFactory floor) {
+			this.floor = BlockFloor.of(floor);
+			return this;
+		}
+		
+		public Builder walls(IBlockFactory walls) {
+			this.walls = walls;
+			return this;
+		}
+		
+		public Builder pillar(IBlockFactory pillar) {
+			this.pillar = pillar;
+			return this;
+		}
+		
+		public Builder stair(IStair stair) {
+			this.stair = stair;
+			return this;
+		}
+		
+		public Builder slab(ISlab slab) {
+			this.slab = slab;
+			return this;
+		}
+		
+		public Builder door(IDoor door) {
+			this.door = door;
+			return this;
+		}
+		
+		public Builder lightblock(IBlockFactory lightblock) {
+			this.lightblock = lightblock;
+			return this;
+		}
+		
+		public Builder liquid(IBlockFactory liquid) {
+			this.liquid = liquid;
+			return this;
+		}
+		
+		public BlockSet build() {
+			return new BlockSet(floor, walls, pillar, stair, slab, door, lightblock, liquid);
+		}
 	}
 }

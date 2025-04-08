@@ -31,13 +31,14 @@ public class ThemeStone extends ThemeBase{
 				.add(Stair.of(Stair.COBBLE), 5)
 				.add(Stair.of(Stair.MOSSY_COBBLE), 1);
 		
-		this.primary = new BlockSet()
-				.setWall(walls)
-				.setFloor(walls)
-				.setStair(stair)
-				.setPillar(walls)
-				.setDoor(Door.of(DoorType.SPRUCE))
-				.setSlab(Slab.get(Slab.STONEBRICK));
+		this.primary = BlockSet.builder()
+				.walls(walls)
+				.floor(walls)
+				.stair(stair)
+				.pillar(walls)
+				.door(Door.of(DoorType.SPRUCE))
+				.slab(Slab.get(Slab.STONEBRICK))
+				.build();
 		this.secondary = primary;
 	}
 	

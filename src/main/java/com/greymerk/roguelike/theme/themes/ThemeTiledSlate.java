@@ -37,13 +37,14 @@ public class ThemeTiledSlate extends ThemeBase implements ITheme {
 		pillar.addBlock(Deepslate.get(Deepslate.CRACKED_TILE), 4);
 		pillar.addBlock(Deepslate.get(Deepslate.CHISELED), 1);
 		
-		this.primary = new BlockSet()
-				.setWall(walls)
-				.setFloor(floor)
-				.setStair(stair)
-				.setPillar(pillar)
-				.setSlab(Slab.get(Slab.TILED_SLATE))
-				.setLiquid(BlockType.get(BlockType.LAVA_FLOWING));
+		this.primary = BlockSet.builder()
+				.walls(walls)
+				.floor(floor)
+				.stair(stair)
+				.pillar(pillar)
+				.slab(Slab.get(Slab.TILED_SLATE))
+				.liquid(BlockType.get(BlockType.LAVA_FLOWING))
+				.build();
 		this.secondary = primary;
 	}
 	

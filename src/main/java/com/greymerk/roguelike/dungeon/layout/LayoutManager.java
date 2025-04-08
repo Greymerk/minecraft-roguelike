@@ -1,6 +1,7 @@
 package com.greymerk.roguelike.dungeon.layout;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -56,9 +57,9 @@ public class LayoutManager {
 	
 	public void generate(IWorldEditor editor) {
 		
-		Random rand = editor.getRandom(origin);
-				
 		for(Floor floor : this.floors) {
+			
+			Random rand = editor.getRandom(floor.getOrigin());
 			
 			if(Config.ofBoolean(Config.BELOW_SEA_LEVEL) && floor.getOrigin().getY() > 55) {
 				this.addStair(editor, rand, floor);
@@ -117,7 +118,13 @@ public class LayoutManager {
 		}
 		
 		List<Cell> cells = floor.getCells(CellState.POTENTIAL);
-		RandHelper.shuffle(cells, rand);
+		if(rand.nextBoolean()) {
+			RandHelper.shuffle(cells, rand);
+		} else {
+			Collections.sort(cells, (a, b) -> {
+				return (int)(a.getWorldPos(origin).distance(origin) - b.getWorldPos(origin).distance(origin));
+			});
+		}
 		
 		for(Cell potential : cells) {
 			List<Cardinal> dirs = getPotentialDir(floor, potential);

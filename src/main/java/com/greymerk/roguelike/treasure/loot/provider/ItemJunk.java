@@ -43,7 +43,7 @@ public class ItemJunk extends ItemBase{
 				randomizer.add(new WeightedRandomLoot(Items.SOUL_TORCH, 1, 3, 100));
 				randomizer.add(new WeightedRandomLoot(Items.SOUL_LANTERN, 1, 3, 20));
 			} else {
-				randomizer.add(new WeightedRandomLoot(Items.TORCH, 1, d.value + 3, 100));
+				randomizer.add(new WeightedRandomLoot(Items.TORCH, 3, d.value + 8, 100));
 				randomizer.add(new WeightedRandomLoot(Items.LANTERN, 1, 3, 20));
 			}
 			

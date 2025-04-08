@@ -43,13 +43,14 @@ public class ThemeMossy extends ThemeBase implements ITheme {
 				.add(Stair.of(Stair.COBBLE), 2)
 				.add(Stair.of(Stair.MOSSY_COBBLE), 1);
 		
-		this.primary = new BlockSet()
-				.setWall(walls)
-				.setFloor(floor)
-				.setStair(stair)
-				.setPillar(pillar)
-				.setDoor(Door.of(DoorType.JUNGLE))
-				.setSlab(Slab.of(Slab.MOSSY_COBBLE));
+		this.primary = BlockSet.builder()
+				.walls(walls)
+				.floor(floor)
+				.stair(stair)
+				.pillar(pillar)
+				.door(Door.of(DoorType.JUNGLE))
+				.slab(Slab.of(Slab.MOSSY_COBBLE))
+				.build();
 		this.secondary = this.primary;
 	}
 

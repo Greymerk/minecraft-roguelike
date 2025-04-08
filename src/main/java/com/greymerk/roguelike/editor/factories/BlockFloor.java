@@ -26,6 +26,10 @@ public class BlockFloor extends BlockBase implements IBlockFactory{
 	private IBlockFactory floor;
 	private IBlockFactory bridge;
 	
+	public static BlockFloor of(IBlockFactory floor) {
+		return new BlockFloor(floor);
+	}
+	
 	public BlockFloor(IBlockFactory floor) {
 		this.floor = floor;
 		BlockWeightedRandom bridge = new BlockWeightedRandom();

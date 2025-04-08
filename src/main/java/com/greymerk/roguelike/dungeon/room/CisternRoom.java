@@ -29,13 +29,13 @@ public class CisternRoom extends AbstractMediumRoom implements IRoom {
 		this.bridges(editor, rand, origin);
 		this.water(editor, rand, origin);
 		this.ceiling(editor, rand, origin);
-		this.supports(editor, rand, origin);
+		this.supports(editor, rand, origin.copy().add(Cardinal.DOWN, 2));
 	}
 	
 	private void supports(IWorldEditor editor, Random rand, Coord origin) {
-		CellSupport.generate(editor, rand, theme, origin.copy().add(Cardinal.DOWN));
+		CellSupport.generate(editor, rand, theme, origin.copy());
 		for(Cardinal dir : Cardinal.directions) {
-			Coord pos = origin.copy().add(Cardinal.DOWN);
+			Coord pos = origin.copy();
 			pos.add(dir, 6);
 			CellSupport.generate(editor, rand, theme, pos);
 			pos.add(Cardinal.left(dir), 6);
@@ -47,34 +47,25 @@ public class CisternRoom extends AbstractMediumRoom implements IRoom {
 		IBlockFactory wall = theme.getPrimary().getWall();
 		
 		for(Cardinal dir : Cardinal.directions) {
-			BoundingBox bb = BoundingBox.of(origin.copy());
-			bb.add(Cardinal.UP, 5);
-			bb.add(dir, 6);
-			bb.grow(dir);
-			bb.grow(Cardinal.left(dir), 5);
-			bb.grow(Cardinal.right(dir), 7);
-			RectSolid.fill(editor, rand, bb, wall);
+			BoundingBox.of(origin).add(Cardinal.UP, 5).add(dir, 6)
+				.grow(dir).grow(Cardinal.left(dir), 5).grow(Cardinal.right(dir), 7)
+				.fill(editor, rand, wall);
 			
-			bb = BoundingBox.of(origin.copy());
-			bb.add(Cardinal.UP, 5);
-			bb.add(dir, 2);
-			bb.grow(Cardinal.orthogonal(dir), 5);
-			RectSolid.fill(editor, rand, bb, wall, Fill.AIR);
+			BoundingBox.of(origin.copy()).add(Cardinal.UP, 5).add(dir, 2)
+				.grow(Cardinal.orthogonal(dir), 5)
+				.fill(editor, rand, wall, Fill.AIR);
 		}
 		
 		BoundingBox.of(origin).add(Cardinal.UP, 6).grow(Cardinal.directions, 8).fill(editor, rand, wall, Fill.SOLID);
 	}
 
 	private void water(IWorldEditor editor, Random rand, Coord origin) {
-		BoundingBox bb = BoundingBox.of(origin.copy());
-		bb.add(Cardinal.DOWN, 2);
-		bb.grow(Cardinal.directions, 9);
-		RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall());
+		BoundingBox.of(origin).add(Cardinal.DOWN, 2)
+			.grow(Cardinal.directions, 9).grow(Cardinal.DOWN)
+			.fill(editor, rand, theme.getPrimary().getWall());
 		
-		bb = BoundingBox.of(origin.copy());
-		bb.add(Cardinal.DOWN);
-		bb.grow(Cardinal.directions, 7);
-		RectSolid.fill(editor, rand, bb, theme.getPrimary().getLiquid(), Fill.AIR);
+		BoundingBox.of(origin).add(Cardinal.DOWN).grow(Cardinal.directions, 7)
+			.fill(editor, rand, theme.getPrimary().getLiquid(), Fill.AIR);
 	}
 
 	private void bridges(IWorldEditor editor, Random rand, Coord origin) {
@@ -239,11 +230,9 @@ public class CisternRoom extends AbstractMediumRoom implements IRoom {
 	}
 
 	private void clear(IWorldEditor editor, Random rand, Coord origin) {
-		BoundingBox bb = BoundingBox.of(origin.copy());
-		bb.add(Cardinal.DOWN);
-		bb.grow(Cardinal.UP, 6);
-		bb.grow(Cardinal.directions, 8);
-		RectSolid.fill(editor, rand, bb, Air.get(), Fill.SOLID);
+		BoundingBox.of(origin.copy()).add(Cardinal.DOWN)
+			.grow(Cardinal.UP, 6).grow(Cardinal.directions, 8)
+			.fill(editor, rand, Air.get(), Fill.SOLID);
 	}
 
 	@Override

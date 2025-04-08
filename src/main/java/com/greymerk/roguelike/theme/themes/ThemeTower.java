@@ -35,13 +35,14 @@ public class ThemeTower extends ThemeBase implements ITheme {
 				.add(Stair.of(Stair.COBBLE), 2)
 				.add(Stair.of(Stair.MOSSY_COBBLE), 1);
 		
-		this.primary = new BlockSet()
-				.setWall(walls)
-				.setFloor(walls)
-				.setStair(stair)
-				.setPillar(walls)
-				.setDoor(Door.of(DoorType.SPRUCE))
-				.setSlab(Slab.of(Slab.COBBLE));
+		this.primary = BlockSet.builder()
+				.walls(walls)
+				.floor(walls)
+				.stair(stair)
+				.pillar(walls)
+				.door(Door.of(DoorType.SPRUCE))
+				.slab(Slab.of(Slab.COBBLE))
+				.build();
 		this.secondary = this.primary;
 	}
 	

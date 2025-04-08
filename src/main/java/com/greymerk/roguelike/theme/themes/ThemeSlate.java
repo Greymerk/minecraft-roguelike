@@ -30,12 +30,13 @@ public class ThemeSlate extends ThemeBase implements ITheme {
 		pillar.addBlock(Deepslate.get(Deepslate.POLISHED), 20);
 		pillar.addBlock(Deepslate.get(Deepslate.CHISELED), 1);
 		
-		this.primary = new BlockSet()
-				.setWall(walls)
-				.setFloor(floor)
-				.setStair(stair)
-				.setPillar(pillar)
-				.setSlab(Slab.of(Slab.SLATE_BRICK));
+		this.primary = BlockSet.builder()
+				.walls(walls)
+				.floor(floor)
+				.stair(stair)
+				.pillar(pillar)
+				.slab(Slab.of(Slab.SLATE_BRICK))
+				.build();
 		this.secondary = this.primary;
 		
 	}

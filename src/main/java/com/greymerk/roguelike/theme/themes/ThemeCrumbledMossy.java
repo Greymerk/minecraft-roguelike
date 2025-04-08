@@ -56,13 +56,14 @@ public class ThemeCrumbledMossy extends ThemeBase implements ITheme {
 				.add(Stair.of(Stair.MOSSY_STONEBRICK), 3)
 				.add(Stair.of(Stair.STONEBRICK), 1);
 		
-		this.primary = new BlockSet()
-				.setWall(layered)
-				.setFloor(floor)
-				.setStair(stair)
-				.setPillar(mossy)
-				.setDoor(Door.of(DoorType.JUNGLE))
-				.setSlab(Slab.of(Slab.MOSSY_COBBLE));
+		this.primary = BlockSet.builder()
+				.walls(layered)
+				.floor(floor)
+				.stair(stair)
+				.pillar(mossy)
+				.door(Door.of(DoorType.JUNGLE))
+				.slab(Slab.of(Slab.MOSSY_COBBLE))
+				.build();
 		
 		this.secondary = this.primary;
 	}

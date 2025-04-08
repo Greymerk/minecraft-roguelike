@@ -1,5 +1,6 @@
 package com.greymerk.roguelike.events;
 
+import java.util.Collections;
 import java.util.List;
 
 import com.greymerk.roguelike.dungeon.room.IRoom;
@@ -23,6 +24,11 @@ public class WorldTickGenerateRooms implements StartWorldTick{
 		RoguelikeState state = RoguelikeState.getServerState(editor.getRegistryKey(), server);
 		
 		List<IRoom> rooms = state.getFromLoaded(editor);
+		
+		// generate rooms from bottom to top so that cell supports generate properly
+		Collections.sort(rooms, (a, b) -> {
+			return a.getWorldPos().getY() - b.getWorldPos().getY();
+		});
 		
 		for(IRoom room : rooms) {
 			room.generate(editor);

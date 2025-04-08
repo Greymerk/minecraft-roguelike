@@ -42,25 +42,27 @@ public class ThemeNether extends ThemeBase implements ITheme {
 		IBlockFactory lightstone = BlockType.get(BlockType.GLOWSTONE);
 		IBlockFactory liquid = BlockType.get(BlockType.LAVA_FLOWING);
 		
-		this.primary = new BlockSet()
-				.setWall(walls)
-				.setFloor(floor)
-				.setPillar(obsidian)
-				.setStair(stair)
-				.setSlab(Slab.of(Slab.NETHER_BRICK))
-				.setDoor(Door.of(DoorType.CRIMSON))
-				.setLightBlock(lightstone)
-				.setLiquid(liquid);
+		this.primary = BlockSet.builder()
+				.walls(walls)
+				.floor(floor)
+				.pillar(obsidian)
+				.stair(stair)
+				.slab(Slab.of(Slab.NETHER_BRICK))
+				.door(Door.of(DoorType.CRIMSON))
+				.lightblock(lightstone)
+				.liquid(liquid)
+				.build();
 		
-		this.secondary = new BlockSet()
-				.setWall(redBrick)
-				.setFloor(floor)
-				.setPillar(obsidian)
-				.setStair(stair)
-				.setSlab(Slab.of(Slab.RED_NETHER_BRICK))
-				.setDoor(Door.of(DoorType.CRIMSON))
-				.setLightBlock(lightstone)
-				.setLiquid(liquid);
+		this.secondary = BlockSet.builder()
+				.walls(redBrick)
+				.floor(floor)
+				.pillar(obsidian)
+				.stair(stair)
+				.slab(Slab.of(Slab.RED_NETHER_BRICK))
+				.door(Door.of(DoorType.CRIMSON))
+				.lightblock(lightstone)
+				.liquid(liquid)
+				.build();
 				
 	}
 	

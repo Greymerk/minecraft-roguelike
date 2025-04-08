@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
+import com.greymerk.roguelike.dungeon.fragment.parts.CellSupport;
 import com.greymerk.roguelike.dungeon.fragment.parts.Pillar;
 import com.greymerk.roguelike.dungeon.layout.Entrance;
 import com.greymerk.roguelike.editor.Cardinal;
@@ -54,6 +55,7 @@ public class SculkRoom extends AbstractLargeRoom implements IRoom {
 		bridges(editor, rand, origin);
 		placeSpawners(editor, rand, origin);
 		placeChests(editor, rand, origin);
+		supports(editor, rand, origin.copy().add(Cardinal.DOWN, 2));
 		Filter.get(Filter.SCULK).apply(editor, rand, settings, getBoundingBox().get());
 
 	}
@@ -217,6 +219,18 @@ public class SculkRoom extends AbstractLargeRoom implements IRoom {
 		BoundingBox.of(origin).add(Cardinal.DOWN, 3).grow(Cardinal.directions, 15).fill(editor, rand, theme.getPrimary().getWall());
 	}
 
+	private void supports(IWorldEditor editor, Random rand, Coord origin) {
+		CellSupport.generate(editor, rand, theme, origin);
+		Cardinal.directions.forEach(dir -> {
+			List.of(6, 12).forEach(i -> {
+				CellSupport.generate(editor, rand, theme, origin.copy().add(dir, i));
+				List.of(6, 12).forEach(j -> {
+					CellSupport.generate(editor, rand, theme, origin.copy().add(dir, i).add(Cardinal.left(dir), j));
+				});
+			});
+		});
+	}
+	
 	@Override
 	public String getName() {
 		return Room.SCULK.name();

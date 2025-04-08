@@ -44,25 +44,27 @@ public class ThemeRedNether extends ThemeBase implements ITheme {
 		//this.primary = new BlockSet(floor, walls, obsidian, stair, Slab.get(Slab.NETHER_BRICK), door, lightstone, liquid);
 		//this.secondary = new BlockSet(floor, redBrick, obsidian, stair, Slab.get(Slab.RED_NETHER_BRICK), door, lightstone, liquid);
 
-		this.primary = new BlockSet()
-				.setWall(walls)
-				.setFloor(floor)
-				.setPillar(obsidian)
-				.setStair(stair)
-				.setSlab(Slab.of(Slab.NETHER_BRICK))
-				.setDoor(Door.of(DoorType.CRIMSON))
-				.setLightBlock(lightstone)
-				.setLiquid(liquid);
+		this.primary = BlockSet.builder()
+				.walls(walls)
+				.floor(floor)
+				.pillar(obsidian)
+				.stair(stair)
+				.slab(Slab.of(Slab.NETHER_BRICK))
+				.door(Door.of(DoorType.CRIMSON))
+				.lightblock(lightstone)
+				.liquid(liquid)
+				.build();
 		
-		this.secondary = new BlockSet()
-				.setWall(redBrick)
-				.setFloor(floor)
-				.setPillar(obsidian)
-				.setStair(stair)
-				.setSlab(Slab.of(Slab.RED_NETHER_BRICK))
-				.setDoor(Door.of(DoorType.CRIMSON))
-				.setLightBlock(lightstone)
-				.setLiquid(liquid);
+		this.secondary = BlockSet.builder()
+				.walls(redBrick)
+				.floor(floor)
+				.pillar(obsidian)
+				.stair(stair)
+				.slab(Slab.of(Slab.RED_NETHER_BRICK))
+				.door(Door.of(DoorType.CRIMSON))
+				.lightblock(lightstone)
+				.liquid(liquid)
+				.build();
 	}
 	
 	@Override
