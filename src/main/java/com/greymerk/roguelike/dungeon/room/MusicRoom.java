@@ -8,8 +8,8 @@ import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.Fill;
 import com.greymerk.roguelike.editor.IWorldEditor;
+import com.greymerk.roguelike.editor.MetaBlock;
 import com.greymerk.roguelike.editor.blocks.Air;
-import com.greymerk.roguelike.editor.blocks.BlockType;
 import com.greymerk.roguelike.editor.blocks.Carpet;
 import com.greymerk.roguelike.editor.blocks.Lantern;
 import com.greymerk.roguelike.editor.blocks.stair.IStair;
@@ -17,6 +17,7 @@ import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.editor.shapes.RectSolid;
 import com.greymerk.roguelike.treasure.Treasure;
 
+import net.minecraft.block.Blocks;
 import net.minecraft.util.math.random.Random;
 
 public class MusicRoom extends AbstractMediumRoom implements IRoom {
@@ -146,7 +147,7 @@ public class MusicRoom extends AbstractMediumRoom implements IRoom {
 		Carpet.generate(editor, rand, origin, 4);		
 		Lantern.set(editor, origin.copy().add(Cardinal.UP, 5));
 		
-		BlockType.get(BlockType.JUKEBOX).set(editor, origin);
+		MetaBlock.of(Blocks.JUKEBOX).set(editor, origin);
 		
 		Cardinal d = Cardinal.randDirs(rand).get(0);
 		Coord pos = origin.copy().add(d, 5).add(Cardinal.orthogonal(d).get(rand.nextInt(2)), rand.nextInt(2) + 3).add(Cardinal.UP);

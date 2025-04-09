@@ -16,9 +16,9 @@ import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.Fill;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
+import com.greymerk.roguelike.editor.MetaBlock;
 import com.greymerk.roguelike.editor.blocks.Air;
 import com.greymerk.roguelike.editor.blocks.Bed;
-import com.greymerk.roguelike.editor.blocks.BlockType;
 import com.greymerk.roguelike.editor.blocks.Candle;
 import com.greymerk.roguelike.editor.blocks.Furnace;
 import com.greymerk.roguelike.editor.blocks.Lantern;
@@ -29,6 +29,7 @@ import com.greymerk.roguelike.editor.shapes.RectSolid;
 import com.greymerk.roguelike.editor.shapes.Shape;
 import com.greymerk.roguelike.treasure.Treasure;
 
+import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.math.random.Random;
@@ -210,7 +211,7 @@ public class BedRoom extends AbstractRoom implements IRoom {
 		pos.add(Cardinal.left(direction), 3);
 		Bed.generate(editor, rand, Cardinal.right(direction), pos);
 		pos.add(direction);
-		BlockType.get(BlockType.SHELF).set(editor, pos);
+		MetaBlock.of(Blocks.BOOKSHELF).set(editor, pos);
 		pos.add(Cardinal.UP);
 		Candle.generate(editor, rand, pos);
 
@@ -223,7 +224,7 @@ public class BedRoom extends AbstractRoom implements IRoom {
 		pos.add(Cardinal.right(direction), 3);
 		Treasure.generate(editor, rand, settings.getDifficulty(), pos, Cardinal.left(direction), Treasure.STARTER);
 		pos.add(direction);
-		BlockType.get(BlockType.CRAFTING_TABLE).set(editor, pos);
+		MetaBlock.of(Blocks.CRAFTING_TABLE).set(editor, pos);
 		pos.add(direction);
 		Furnace.generate(editor, Cardinal.left(direction), pos, false, new ItemStack(Items.COAL, rand.nextBetween(1, 4)));
 	}

@@ -1,6 +1,6 @@
 package com.greymerk.roguelike.theme.themes;
 
-import com.greymerk.roguelike.editor.blocks.BlockType;
+import com.greymerk.roguelike.editor.MetaBlock;
 import com.greymerk.roguelike.editor.blocks.Wood;
 import com.greymerk.roguelike.editor.blocks.WoodBlock;
 import com.greymerk.roguelike.editor.blocks.door.Door;
@@ -14,14 +14,16 @@ import com.greymerk.roguelike.theme.ITheme;
 import com.greymerk.roguelike.theme.Theme;
 import com.greymerk.roguelike.theme.ThemeBase;
 
+import net.minecraft.block.Blocks;
+
 public class ThemeOak extends ThemeBase implements ITheme {
 
 	public ThemeOak() {
 		BlockWeightedRandom walls = new BlockWeightedRandom()
-			.addBlock(BlockType.get(BlockType.STONE_BRICK), 50)
-			.addBlock(BlockType.get(BlockType.STONE_BRICK_CRACKED), 10)
-			.addBlock(BlockType.get(BlockType.COBBLESTONE), 5)
-			.addBlock(BlockType.get(BlockType.STONE_BRICK_MOSSY), 1);
+			.add(MetaBlock.of(Blocks.STONE_BRICKS), 50)
+			.add(MetaBlock.of(Blocks.CRACKED_STONE_BRICKS), 10)
+			.add(MetaBlock.of(Blocks.COBBLESTONE), 5)
+			.add(MetaBlock.of(Blocks.MOSSY_STONE_BRICKS), 1);
 		
 		RandomStair stair = new RandomStair()
 				.add(Stair.of(Stair.STONEBRICK), 5)

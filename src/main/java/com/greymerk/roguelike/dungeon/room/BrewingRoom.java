@@ -17,7 +17,6 @@ import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.MetaBlock;
 import com.greymerk.roguelike.editor.blocks.Air;
-import com.greymerk.roguelike.editor.blocks.BlockType;
 import com.greymerk.roguelike.editor.blocks.BrewingStand;
 import com.greymerk.roguelike.editor.blocks.Trapdoor;
 import com.greymerk.roguelike.editor.blocks.Wood;
@@ -296,7 +295,7 @@ public class BrewingRoom extends AbstractRoom implements IRoom {
 		BoundingBox bb = BoundingBox.of(origin).add(dir).grow(Cardinal.orthogonal(dir));
 		bb.getShape(Shape.RECTSOLID).fill(editor, rand, Trapdoor.getWooden(Wood.SPRUCE, dir, false, true));
 		bb.add(dir);
-		bb.getShape(Shape.RECTSOLID).fill(editor, rand, BlockType.get(BlockType.SOUL_SAND));
+		bb.getShape(Shape.RECTSOLID).fill(editor, rand, MetaBlock.of(Blocks.SOUL_SAND));
 		bb.add(Cardinal.UP);
 		bb.getShape(Shape.RECTSOLID).fill(editor, rand, MetaBlock.of(Blocks.NETHER_WART));
 	}

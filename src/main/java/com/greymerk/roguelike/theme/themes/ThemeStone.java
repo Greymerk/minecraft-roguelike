@@ -1,6 +1,6 @@
 package com.greymerk.roguelike.theme.themes;
 
-import com.greymerk.roguelike.editor.blocks.BlockType;
+import com.greymerk.roguelike.editor.MetaBlock;
 import com.greymerk.roguelike.editor.blocks.SilverfishBlock;
 import com.greymerk.roguelike.editor.blocks.door.Door;
 import com.greymerk.roguelike.editor.blocks.door.DoorType;
@@ -12,18 +12,20 @@ import com.greymerk.roguelike.theme.BlockSet;
 import com.greymerk.roguelike.theme.Theme;
 import com.greymerk.roguelike.theme.ThemeBase;
 
+import net.minecraft.block.Blocks;
+
 public class ThemeStone extends ThemeBase{
 	
 	public ThemeStone(){
 		
 		BlockWeightedRandom walls = new BlockWeightedRandom();
-		walls.addBlock(BlockType.get(BlockType.STONE_BRICK), 50);
-		walls.addBlock(BlockType.get(BlockType.STONE_BRICK_CRACKED), 20);
-		walls.addBlock(BlockType.get(BlockType.STONE_BRICK_MOSSY), 10);
-		walls.addBlock(BlockType.get(BlockType.COBBLESTONE), 6);
-		walls.addBlock(BlockType.get(BlockType.GRAVEL), 2);
-		walls.addBlock(BlockType.get(BlockType.COBBLESTONE_MOSSY), 1);
-		walls.addBlock(SilverfishBlock.getJumble(), 1);
+		walls.add(MetaBlock.of(Blocks.STONE_BRICKS), 50);
+		walls.add(MetaBlock.of(Blocks.CRACKED_STONE_BRICKS), 20);
+		walls.add(MetaBlock.of(Blocks.MOSSY_STONE_BRICKS), 10);
+		walls.add(MetaBlock.of(Blocks.COBBLESTONE), 6);
+		walls.add(MetaBlock.of(Blocks.GRAVEL), 2);
+		walls.add(MetaBlock.of(Blocks.MOSSY_COBBLESTONE), 1);
+		walls.add(SilverfishBlock.getJumble(), 1);
 		
 		RandomStair stair = new RandomStair()
 				.add(Stair.of(Stair.STONEBRICK), 20)

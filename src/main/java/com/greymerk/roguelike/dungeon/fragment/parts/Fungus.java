@@ -71,8 +71,8 @@ public class Fungus implements IFragment {
 	
 	private void cap(IWorldEditor editor, Random rand, Coord origin) {
 		BlockWeightedRandom flesh = new BlockWeightedRandom()
-			.addBlock(MetaBlock.of(rand.nextBoolean() ? Blocks.BROWN_MUSHROOM_BLOCK : Blocks.RED_MUSHROOM_BLOCK), 3)
-			.addBlock(Air.get(), 1);
+			.add(MetaBlock.of(rand.nextBoolean() ? Blocks.BROWN_MUSHROOM_BLOCK : Blocks.RED_MUSHROOM_BLOCK), 3)
+			.add(Air.get(), 1);
 		
 		if(rand.nextInt(3) != 0) {
 			BoundingBox.of(origin).grow(Cardinal.directions).fill(editor, rand, flesh, Fill.AIR);	

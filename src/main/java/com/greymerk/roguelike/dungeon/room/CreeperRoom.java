@@ -61,13 +61,13 @@ public class CreeperRoom extends AbstractMediumRoom implements IRoom {
 
 	private void tnt(IWorldEditor editor, Random rand, Coord origin) {
 		BlockWeightedRandom floor = new BlockWeightedRandom();
-		floor.addBlock(MetaBlock.of(Blocks.GRAVEL), 2);
-		floor.addBlock(theme.getPrimary().getFloor(), 1);
+		floor.add(MetaBlock.of(Blocks.GRAVEL), 2);
+		floor.add(theme.getPrimary().getFloor(), 1);
 		BoundingBox.of(origin).add(Cardinal.DOWN).grow(Cardinal.directions, 3).fill(editor, rand, floor);
 		
 		BlockWeightedRandom blocks = new BlockWeightedRandom();
-		blocks.addBlock(MetaBlock.of(Blocks.GRAVEL), 3);
-		blocks.addBlock(MetaBlock.of(Blocks.TNT), 1);
+		blocks.add(MetaBlock.of(Blocks.GRAVEL), 3);
+		blocks.add(MetaBlock.of(Blocks.TNT), 1);
 		BoundingBox.of(origin).add(Cardinal.DOWN, 2).grow(Cardinal.DOWN).grow(Cardinal.directions, 3).fill(editor, rand, blocks);
 		
 		BoundingBox.of(origin).add(Cardinal.DOWN, 3).grow(Cardinal.directions, 4).fill(editor, rand, theme.getPrimary().getWall());

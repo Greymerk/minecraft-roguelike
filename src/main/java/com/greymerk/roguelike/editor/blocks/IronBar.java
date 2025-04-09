@@ -25,8 +25,8 @@ public class IronBar implements IBlockFactory{
 
 	public static IBlockFactory getBroken() {
 		BlockWeightedRandom blocks = new BlockWeightedRandom();
-		blocks.addBlock(Air.get(), 1);
-		blocks.addBlock(IronBar.get(), 2);
+		blocks.add(Air.get(), 1);
+		blocks.add(IronBar.get(), 2);
 		return blocks;
 	}
 	

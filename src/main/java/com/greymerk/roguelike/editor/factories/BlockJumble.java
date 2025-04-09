@@ -19,7 +19,7 @@ public class BlockJumble extends BlockBase {
 		blocks = new ArrayList<IBlockFactory>();
 	}
 
-	public BlockJumble addBlock(IBlockFactory toAdd){
+	public BlockJumble add(IBlockFactory toAdd){
 		blocks.add(toAdd);
 		return this;
 	}

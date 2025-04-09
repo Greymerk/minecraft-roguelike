@@ -26,9 +26,9 @@ public class SilverfishNest implements IFragment {
 
 	private void nest(IWorldEditor editor, Random rand, ILevelSettings settings, Coord origin) {
 		BlockJumble nest = new BlockJumble()
-		  .addBlock(MetaBlock.of(Blocks.MOSSY_COBBLESTONE))
-		  .addBlock(MetaBlock.of(Blocks.COBBLESTONE))
-		  .addBlock(MetaBlock.of(Blocks.MOSSY_STONE_BRICKS));
+		  .add(MetaBlock.of(Blocks.MOSSY_COBBLESTONE))
+		  .add(MetaBlock.of(Blocks.COBBLESTONE))
+		  .add(MetaBlock.of(Blocks.MOSSY_STONE_BRICKS));
 		
 		BoundingBox.of(origin).grow(Cardinal.directions, 2).grow(Cardinal.DOWN).grow(Cardinal.UP, 3).fill(editor, rand, nest);
 		Cardinal.directions.forEach(dir -> {

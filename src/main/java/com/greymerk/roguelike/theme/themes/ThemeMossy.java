@@ -1,6 +1,6 @@
 package com.greymerk.roguelike.theme.themes;
 
-import com.greymerk.roguelike.editor.blocks.BlockType;
+import com.greymerk.roguelike.editor.MetaBlock;
 import com.greymerk.roguelike.editor.blocks.SilverfishBlock;
 import com.greymerk.roguelike.editor.blocks.door.Door;
 import com.greymerk.roguelike.editor.blocks.door.DoorType;
@@ -13,29 +13,31 @@ import com.greymerk.roguelike.theme.ITheme;
 import com.greymerk.roguelike.theme.Theme;
 import com.greymerk.roguelike.theme.ThemeBase;
 
+import net.minecraft.block.Blocks;
+
 public class ThemeMossy extends ThemeBase implements ITheme {
 
 	public ThemeMossy(){
 				
 		BlockWeightedRandom walls = new BlockWeightedRandom();
-		walls.addBlock(BlockType.get(BlockType.COBBLESTONE), 60);
-		walls.addBlock(BlockType.get(BlockType.STONE_BRICK_MOSSY), 20);
-		walls.addBlock(BlockType.get(BlockType.STONE_BRICK), 10);
-		walls.addBlock(SilverfishBlock.getJumble(), 5);
-		walls.addBlock(BlockType.get(BlockType.COBBLESTONE_MOSSY), 10);
-		walls.addBlock(BlockType.get(BlockType.GRAVEL), 15);
+		walls.add(MetaBlock.of(Blocks.COBBLESTONE), 60);
+		walls.add(MetaBlock.of(Blocks.MOSSY_STONE_BRICKS), 20);
+		walls.add(MetaBlock.of(Blocks.STONE_BRICKS), 10);
+		walls.add(SilverfishBlock.getJumble(), 5);
+		walls.add(MetaBlock.of(Blocks.MOSSY_COBBLESTONE), 10);
+		walls.add(MetaBlock.of(Blocks.GRAVEL), 15);
 		
 		BlockWeightedRandom pillar = new BlockWeightedRandom();
-		pillar.addBlock(BlockType.get(BlockType.STONE_BRICK_MOSSY), 20);
-		pillar.addBlock(BlockType.get(BlockType.COBBLESTONE), 5);
-		pillar.addBlock(SilverfishBlock.getJumble(), 3);
-		pillar.addBlock(BlockType.get(BlockType.COBBLESTONE_MOSSY), 5);
+		pillar.add(MetaBlock.of(Blocks.MOSSY_STONE_BRICKS), 20);
+		pillar.add(MetaBlock.of(Blocks.COBBLESTONE), 5);
+		pillar.add(SilverfishBlock.getJumble(), 3);
+		pillar.add(MetaBlock.of(Blocks.MOSSY_COBBLESTONE), 5);
 		
 		BlockWeightedRandom floor = new BlockWeightedRandom();
-		floor.addBlock(BlockType.get(BlockType.COBBLESTONE_MOSSY), 10);
-		floor.addBlock(BlockType.get(BlockType.STONE_BRICK_MOSSY), 4);
-		floor.addBlock(BlockType.get(BlockType.COBBLESTONE), 2);
-		floor.addBlock(BlockType.get(BlockType.GRAVEL), 1);
+		floor.add(MetaBlock.of(Blocks.MOSSY_COBBLESTONE), 10);
+		floor.add(MetaBlock.of(Blocks.MOSSY_STONE_BRICKS), 4);
+		floor.add(MetaBlock.of(Blocks.COBBLESTONE), 2);
+		floor.add(MetaBlock.of(Blocks.GRAVEL), 1);
 		
 		RandomStair stair = new RandomStair()
 				.add(Stair.of(Stair.STONEBRICK), 3)

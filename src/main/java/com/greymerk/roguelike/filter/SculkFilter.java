@@ -35,9 +35,9 @@ public class SculkFilter implements IFilter {
 		shrieker.with(SculkShriekerBlock.CAN_SUMMON, true);
 		
 		BlockWeightedRandom blocks = new BlockWeightedRandom()
-				.addBlock(MetaBlock.of(Blocks.SCULK_SENSOR), 20)
-				.addBlock(MetaBlock.of(Blocks.SCULK_CATALYST), 10)
-				.addBlock(shrieker, 1);
+				.add(MetaBlock.of(Blocks.SCULK_SENSOR), 20)
+				.add(MetaBlock.of(Blocks.SCULK_CATALYST), 10)
+				.add(shrieker, 1);
 		
 		if(rand.nextInt(20) == 0) {
 			blocks.set(editor, rand, origin.copy().add(Cardinal.UP));	

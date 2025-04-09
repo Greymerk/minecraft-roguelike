@@ -19,7 +19,7 @@ public class BlockStripes extends BlockBase {
 		blocks = new ArrayList<IBlockFactory>();
 	}
 
-	public void addBlock(IBlockFactory toAdd){
+	public void add(IBlockFactory toAdd){
 		blocks.add(toAdd);
 	}
 

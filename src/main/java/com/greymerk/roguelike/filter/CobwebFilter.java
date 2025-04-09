@@ -4,10 +4,11 @@ import com.greymerk.roguelike.dungeon.fragment.parts.SpiderNest;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
-import com.greymerk.roguelike.editor.blocks.BlockType;
+import com.greymerk.roguelike.editor.MetaBlock;
 import com.greymerk.roguelike.editor.boundingbox.IBounded;
 import com.greymerk.roguelike.settings.ILevelSettings;
 
+import net.minecraft.block.Blocks;
 import net.minecraft.util.math.random.Random;
 
 public class CobwebFilter implements IFilter{
@@ -29,7 +30,7 @@ public class CobwebFilter implements IFilter{
 		if(!editor.isAir(pos)) return;
 		if(count <= 0) return;
 		
-		BlockType.get(BlockType.WEB).set(editor, pos);
+		MetaBlock.of(Blocks.COBWEB).set(editor, pos);
 		
 		for(int i = 0; i < 2; ++i){
 			Cardinal dir = Cardinal.values()[rand.nextInt(Cardinal.values().length)];

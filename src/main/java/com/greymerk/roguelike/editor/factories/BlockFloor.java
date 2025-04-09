@@ -33,8 +33,8 @@ public class BlockFloor extends BlockBase implements IBlockFactory{
 	public BlockFloor(IBlockFactory floor) {
 		this.floor = floor;
 		BlockWeightedRandom bridge = new BlockWeightedRandom();
-		bridge.addBlock(floor, 10);
-		bridge.addBlock(Air.get(), 1);
+		bridge.add(floor, 10);
+		bridge.add(Air.get(), 1);
 		this.bridge = bridge;
 	}
 	

@@ -2,7 +2,6 @@ package com.greymerk.roguelike.theme;
 
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.MetaBlock;
-import com.greymerk.roguelike.editor.blocks.BlockType;
 import com.greymerk.roguelike.editor.blocks.door.Door;
 import com.greymerk.roguelike.editor.blocks.door.DoorType;
 import com.greymerk.roguelike.editor.blocks.door.IDoor;
@@ -12,6 +11,8 @@ import com.greymerk.roguelike.editor.blocks.stair.IStair;
 import com.greymerk.roguelike.editor.blocks.stair.MetaStair;
 import com.greymerk.roguelike.editor.blocks.stair.Stair;
 import com.greymerk.roguelike.editor.factories.BlockFloor;
+
+import net.minecraft.block.Blocks;
 
 
 public class BlockSet implements IBlockSet {
@@ -29,7 +30,7 @@ public class BlockSet implements IBlockSet {
 		return new Builder();
 	}
 	
-	public BlockSet() {}
+	protected BlockSet() {}
 	
 	private BlockSet(BlockFloor floor, 
 			IBlockFactory walls,
@@ -51,7 +52,7 @@ public class BlockSet implements IBlockSet {
 	
 	@Override
 	public IBlockFactory getWall() {
-		return walls != null ? walls : BlockType.get(BlockType.STONE_BRICK);
+		return walls != null ? walls : MetaBlock.of(Blocks.STONE_BRICKS);
 	}
 
 	@Override
@@ -76,12 +77,12 @@ public class BlockSet implements IBlockSet {
 
 	@Override
 	public IBlockFactory getLightBlock() {
-		return this.lightblock != null ? this.lightblock : BlockType.get(BlockType.GLOWSTONE);
+		return this.lightblock != null ? this.lightblock : MetaBlock.of(Blocks.GLOWSTONE);
 	}
 
 	@Override
 	public IBlockFactory getLiquid() {
-		return this.liquid != null ? this.liquid : BlockType.get(BlockType.WATER_FLOWING);
+		return this.liquid != null ? this.liquid : MetaBlock.of(Blocks.WATER);
 	}
 	
 	public void setLiquid(MetaBlock liquid) {

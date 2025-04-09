@@ -39,7 +39,7 @@ public enum SilverfishBlock {
 		};
 		
 		for(SilverfishBlock type : types){
-			jumble.addBlock(get(type));	
+			jumble.add(get(type));	
 		}		
 		
 		return jumble;
