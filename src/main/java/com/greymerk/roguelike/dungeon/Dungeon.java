@@ -7,6 +7,7 @@ import java.util.concurrent.TimeUnit;
 
 import com.google.common.base.Stopwatch;
 import com.greymerk.roguelike.debug.Debug;
+import com.greymerk.roguelike.dungeon.layout.ExclusionZones;
 import com.greymerk.roguelike.dungeon.layout.LayoutManager;
 import com.greymerk.roguelike.dungeon.room.IRoom;
 import com.greymerk.roguelike.dungeon.room.Room;
@@ -67,6 +68,11 @@ public class Dungeon implements Iterable<IRoom>{
 
 	public static boolean canSpawn(IWorldEditor editor, Coord pos) {
 		if(!editor.isOverworld()) return false;
+		
+		ExclusionZones zones = new ExclusionZones();
+		zones.scan(editor, pos, 300);
+		Debug.info("Trial Chambers: " + zones.toString());
+		if(zones.collides(pos, 50)) return false;
 		
 		Coord surface = editor.findSurface(pos);
 		if(!editor.getBlock(surface).isGround()) return false;

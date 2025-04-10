@@ -14,9 +14,7 @@ import net.minecraft.util.math.ChunkPos;
 
 public class StructureLocator {
 
-	public static List<RegistryKey<StructureSet>> UNDERGROUND = List.of(
-			StructureSetKeys.ANCIENT_CITIES,
-			StructureSetKeys.TRIAL_CHAMBERS);
+	public static List<RegistryKey<StructureSet>> UNDERGROUND = List.of(StructureSetKeys.TRIAL_CHAMBERS);
 	
 	public static boolean hasVillage(IWorldEditor editor, ChunkPos cpos) {
 		return hasStructure(editor, StructureSetKeys.VILLAGES, cpos);

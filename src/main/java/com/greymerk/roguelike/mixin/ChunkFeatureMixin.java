@@ -35,7 +35,7 @@ public class ChunkFeatureMixin {
 		Coord pos = new Coord(cpos.getCenterX(), world.getTopYInclusive(), cpos.getCenterZ()).freeze();
 		
 		if(!DungeonPlacement.validChunkPos(editor, cpos)) return;
-		if(!Dungeon.canSpawn(editor, pos)) return;
+		//if(!Dungeon.canSpawn(editor, pos)) return;
 		
 		Random rand = editor.getRandom(pos);
 		Double chance = Math.clamp(Config.ofDouble(Config.FREQUENCY), 0, 1.0);

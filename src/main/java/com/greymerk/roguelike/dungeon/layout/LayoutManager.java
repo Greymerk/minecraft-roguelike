@@ -118,13 +118,14 @@ public class LayoutManager {
 		}
 		
 		List<Cell> cells = floor.getCells(CellState.POTENTIAL);
+		
 		if(rand.nextBoolean()) {
 			RandHelper.shuffle(cells, rand);
 		} else {
 			Collections.sort(cells, (a, b) -> {
 				return (int)(a.getWorldPos(origin).distance(origin) - b.getWorldPos(origin).distance(origin));
 			});
-		}
+		}	
 		
 		for(Cell potential : cells) {
 			List<Cardinal> dirs = getPotentialDir(floor, potential);
