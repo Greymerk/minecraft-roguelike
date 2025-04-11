@@ -31,39 +31,42 @@ public class ItemFood extends ItemBase{
 			switch(d){
 			case HARDEST:
 				randomizer.add(new WeightedRandomLoot(Items.GOLDEN_APPLE, 1));
-				randomizer.add(new WeightedRandomLoot(Items.GOLDEN_CARROT, 2, 6, 1));
-				randomizer.add(new WeightedRandomLoot(Items.COOKED_BEEF, 3, 9, 5));
-				randomizer.add(new WeightedRandomLoot(Items.COOKED_PORKCHOP, 3, 9, 3));
-				randomizer.add(new WeightedRandomLoot(Items.COOKED_MUTTON, 3, 9, 3));
+				randomizer.add(new WeightedRandomLoot(Items.GOLDEN_CARROT, 1, 6, 1));
+				randomizer.add(new WeightedRandomLoot(Items.COOKED_BEEF, 1, 9, 5));
+				randomizer.add(new WeightedRandomLoot(Items.COOKED_PORKCHOP, 1, 9, 3));
+				randomizer.add(new WeightedRandomLoot(Items.COOKED_MUTTON, 1, 9, 3));
 				break;
 			case HARD:
-				randomizer.add(new WeightedRandomLoot(Items.COOKED_BEEF, 2, 7, 3));
-				randomizer.add(new WeightedRandomLoot(Items.COOKED_PORKCHOP, 2, 7, 3));
-				randomizer.add(new WeightedRandomLoot(Items.COOKED_MUTTON, 2, 7, 3));
-				randomizer.add(new WeightedRandomLoot(Items.COOKED_CHICKEN, 2, 7, 5));
-				randomizer.add(new WeightedRandomLoot(Items.BAKED_POTATO, 4, 9, 5));
+				randomizer.add(new WeightedRandomLoot(Items.COOKED_BEEF, 1, 5, 3));
+				randomizer.add(new WeightedRandomLoot(Items.COOKED_PORKCHOP, 1, 5, 3));
+				randomizer.add(new WeightedRandomLoot(Items.COOKED_MUTTON, 1, 5, 3));
+				randomizer.add(new WeightedRandomLoot(Items.COOKED_CHICKEN, 1, 5, 5));
+				randomizer.add(new WeightedRandomLoot(Items.BAKED_POTATO, 1, 5, 5));
 				break;
 			case MEDIUM:
-				randomizer.add(new WeightedRandomLoot(Items.COOKED_BEEF, 2, 5, 3));
-				randomizer.add(new WeightedRandomLoot(Items.COOKED_PORKCHOP, 2, 5, 3));
-				randomizer.add(new WeightedRandomLoot(Items.COOKED_MUTTON, 2, 5, 3));
-				randomizer.add(new WeightedRandomLoot(Items.COOKED_CHICKEN, 2, 5, 5));
-				randomizer.add(new WeightedRandomLoot(Items.BAKED_POTATO, 2, 5, 5));
+				randomizer.add(new WeightedRandomLoot(Items.COOKED_BEEF, 1, 3, 2));
+				randomizer.add(new WeightedRandomLoot(Items.COOKED_PORKCHOP, 1, 3, 2));
+				randomizer.add(new WeightedRandomLoot(Items.COOKED_MUTTON, 1, 3, 3));
+				randomizer.add(new WeightedRandomLoot(Items.COOKED_CHICKEN, 1, 5, 5));
+				randomizer.add(new WeightedRandomLoot(Items.BAKED_POTATO, 1, 5, 5));
 				break;
-			case EASY:	
-				randomizer.add(new WeightedRandomLoot(Items.BREAD, 2, 5, 5));
-				randomizer.add(new WeightedRandomLoot(Items.COOKED_COD, 1, 4, 5));
-				randomizer.add(new WeightedRandomLoot(Items.COOKED_SALMON, 1, 4, 5));
-				randomizer.add(new WeightedRandomLoot(Items.APPLE, 1, 1, 1));
-				randomizer.add(new WeightedRandomLoot(Items.COOKED_CHICKEN, 2, 5, 5));
-				randomizer.add(new WeightedRandomLoot(Items.BAKED_POTATO, 2, 5, 5));
+			case EASY:
+				randomizer.add(new WeightedRandomLoot(Items.COOKED_PORKCHOP, 1, 1, 1));
+				randomizer.add(new WeightedRandomLoot(Items.APPLE, 1));
+				randomizer.add(new WeightedRandomLoot(Items.MUSHROOM_STEW, 1));
+				randomizer.add(new WeightedRandomLoot(Items.BREAD, 1, 3, 5));
+				randomizer.add(new WeightedRandomLoot(Items.COOKED_COD, 1, 3, 5));
+				randomizer.add(new WeightedRandomLoot(Items.COOKED_SALMON, 1, 2, 5));
+				randomizer.add(new WeightedRandomLoot(Items.COOKED_CHICKEN, 1, 3, 5));
+				randomizer.add(new WeightedRandomLoot(Items.BAKED_POTATO, 1, 3, 5));
 				break;
 			case EASIEST:
-				randomizer.add(new WeightedRandomLoot(Items.BREAD, 1, 4, 4));
-				randomizer.add(new WeightedRandomLoot(Items.COOKED_COD, 1, 4, 2));
-				randomizer.add(new WeightedRandomLoot(Items.APPLE, 1, 1, 2));
-				randomizer.add(new WeightedRandomLoot(Items.COOKED_CHICKEN, 1, 4, 1));
-				randomizer.add(new WeightedRandomLoot(Items.COOKIE, 1, 1, 1));
+				randomizer.add(new WeightedRandomLoot(Items.BREAD, 1, 2, 3));
+				randomizer.add(new WeightedRandomLoot(Items.COOKED_COD, 1, 2, 2));
+				randomizer.add(new WeightedRandomLoot(Items.APPLE, 1));
+				randomizer.add(new WeightedRandomLoot(Items.MUSHROOM_STEW, 1));
+				randomizer.add(new WeightedRandomLoot(Items.COOKED_CHICKEN, 1, 2, 2));
+				randomizer.add(new WeightedRandomLoot(Items.COOKIE, 1));
 				break;
 			default:
 				randomizer.add(new WeightedRandomLoot(Items.BREAD, 1));

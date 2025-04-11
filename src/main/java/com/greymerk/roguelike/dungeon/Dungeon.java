@@ -71,7 +71,6 @@ public class Dungeon implements Iterable<IRoom>{
 		
 		ExclusionZones zones = new ExclusionZones();
 		zones.scan(editor, pos, 300);
-		Debug.info("Trial Chambers: " + zones.toString());
 		if(zones.collides(pos, 50)) return false;
 		
 		Coord surface = editor.findSurface(pos);

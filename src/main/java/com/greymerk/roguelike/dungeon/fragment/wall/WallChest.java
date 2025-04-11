@@ -18,6 +18,18 @@ import net.minecraft.util.math.random.Random;
 
 public class WallChest implements IFragment {
 
+	private Treasure type;
+	
+	public static void generate(IWorldEditor editor, Random rand, ILevelSettings settings, Coord origin, Cardinal dir, Treasure type) {
+		new WallChest(type).generate(editor, rand, settings, origin, dir);
+	}
+	
+	private WallChest(Treasure type) {
+		this.type = type;
+	}
+	
+	public WallChest() {};
+	
 	@Override
 	public void generate(IWorldEditor editor, Random rand, ILevelSettings settings, Coord origin, Cardinal dir) {
 		ITheme theme = settings.getTheme();
@@ -30,16 +42,22 @@ public class WallChest implements IFragment {
 			stair.set(editor, rand, c);
 		}
 		
-		WeightedRandomizer<Treasure> types = new WeightedRandomizer<Treasure>();
-		types.add(new WeightedChoice<Treasure>(Treasure.SUPPLY, 1));
-		types.add(new WeightedChoice<Treasure>(Treasure.BLOCK, 1));
-		types.add(new WeightedChoice<Treasure>(Treasure.WEAPON, 2));
-		types.add(new WeightedChoice<Treasure>(Treasure.ARMOR, 2));
-		types.add(new WeightedChoice<Treasure>(Treasure.TOOL, 3));
-		types.add(new WeightedChoice<Treasure>(Treasure.ORE, 1));
-		
 		Coord pos = origin.copy().add(dir, 2).add(Cardinal.UP);
-		Treasure.generate(editor, rand, settings.getDifficulty(), pos, Cardinal.reverse(dir), types.get(rand));
+		
+		if(this.type == null) {
+			WeightedRandomizer<Treasure> types = new WeightedRandomizer<Treasure>();
+			types.add(new WeightedChoice<Treasure>(Treasure.SUPPLY, 1));
+			types.add(new WeightedChoice<Treasure>(Treasure.BLOCK, 1));
+			types.add(new WeightedChoice<Treasure>(Treasure.WEAPON, 2));
+			types.add(new WeightedChoice<Treasure>(Treasure.ARMOR, 2));
+			types.add(new WeightedChoice<Treasure>(Treasure.TOOL, 3));
+			types.add(new WeightedChoice<Treasure>(Treasure.ORE, 1));
+			Treasure.generate(editor, rand, settings.getDifficulty(), pos, Cardinal.reverse(dir), types.get(rand));
+		} else {
+			Treasure.generate(editor, rand, settings.getDifficulty(), pos, Cardinal.reverse(dir), this.type);
+		}
+		
+		
 	}
 
 }

@@ -43,8 +43,13 @@ public class BookShelf {
 	private static List<Integer> getSlots(Random rand){
 		List<Integer> slots = IntStream.rangeClosed(0, 5).boxed().collect(Collectors.toList());
 		RandHelper.shuffle(slots, rand);
-		int count = rand.nextBetween(1, 3);
-		return slots.subList(0, count);
+		return slots.subList(0, slotCount(rand));
+	}
+	
+	private static int slotCount(Random rand) {
+		if(rand.nextInt(10) == 0) return 3;
+		if(rand.nextInt(3) == 0) return 2;
+		return 1;
 	}
 	
 }

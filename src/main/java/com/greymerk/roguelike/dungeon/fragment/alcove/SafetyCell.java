@@ -7,6 +7,7 @@ import com.greymerk.roguelike.dungeon.fragment.Fragment;
 import com.greymerk.roguelike.dungeon.fragment.IFragment;
 import com.greymerk.roguelike.dungeon.fragment.parts.CellSupport;
 import com.greymerk.roguelike.dungeon.fragment.parts.Pillar;
+import com.greymerk.roguelike.dungeon.fragment.wall.WallChest;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
@@ -19,6 +20,7 @@ import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.editor.shapes.Shape;
 import com.greymerk.roguelike.settings.ILevelSettings;
 import com.greymerk.roguelike.theme.ITheme;
+import com.greymerk.roguelike.treasure.Treasure;
 import com.greymerk.roguelike.util.math.RandHelper;
 
 import net.minecraft.util.math.random.Random;
@@ -53,8 +55,14 @@ public class SafetyCell implements IFragment {
 		BoundingBox.of(origin).add(Cardinal.UP, 3).grow(Cardinal.directions).fill(editor, rand, Air.get());
 		BoundingBox.of(origin).add(Cardinal.UP, 4).grow(Cardinal.directions, 2).fill(editor, rand, theme.getPrimary().getWall());
 		
-		Fragment.generate(Fragment.WALL_FOOD_BARREL, editor, rand, settings, origin, 
-				RandHelper.pickFrom(List.of(direction, Cardinal.left(direction), Cardinal.right(direction)), rand));
+		Cardinal chestDir = RandHelper.pickFrom(List.of(direction, Cardinal.left(direction), Cardinal.right(direction)), rand); 
+		
+		if(rand.nextBoolean()) {
+			Fragment.generate(Fragment.WALL_FOOD_BARREL, editor, rand, settings, origin, chestDir);	
+		} else {
+			WallChest.generate(editor, rand, settings, origin, chestDir, Treasure.SUPPLY);
+		}
+		
 		
 		Lantern.set(editor, origin.copy().add(Cardinal.UP, 3));
 		CellSupport.generate(editor, rand, theme, origin);
