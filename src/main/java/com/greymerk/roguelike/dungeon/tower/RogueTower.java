@@ -7,6 +7,7 @@ import com.greymerk.roguelike.editor.Fill;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.blocks.Air;
+import com.greymerk.roguelike.editor.blocks.ColorBlock;
 import com.greymerk.roguelike.editor.blocks.IronBar;
 import com.greymerk.roguelike.editor.blocks.Torch;
 import com.greymerk.roguelike.editor.blocks.stair.IStair;
@@ -15,6 +16,7 @@ import com.greymerk.roguelike.editor.shapes.Line;
 import com.greymerk.roguelike.editor.shapes.RectSolid;
 import com.greymerk.roguelike.editor.shapes.Shape;
 import com.greymerk.roguelike.theme.ITheme;
+import com.greymerk.roguelike.util.Color;
 
 import net.minecraft.util.math.random.Random;
 
@@ -105,14 +107,15 @@ public class RogueTower implements ITower{
 				stair.setOrientation(o, true).set(editor, rand, origin.copy().add(dir, 4).add(o, 3).add(Cardinal.UP, 4));
 			}
 			
-			//beard
+			//beard wall
 			BoundingBox.of(origin.copy().add(Cardinal.DOWN).add(dir, 3).add(Cardinal.left(dir), 3),
 				dungeon.copy().add(dir, 3).add(Cardinal.left(dir), 3))
-				.fill(editor, rand, walls, Fill.AIR);
-				
+				.fill(editor, rand, walls, Fill.AIR.or(Fill.LIQUID));
+			
+			//beard corner column
 			BoundingBox.of(origin.copy().add(Cardinal.DOWN),
 				dungeon.copy().add(Cardinal.UP, 4)).add(dir, 4).grow(Cardinal.orthogonal(dir), 3)
-				.fill(editor, rand, walls, Fill.AIR);
+				.fill(editor, rand, walls, Fill.AIR.or(Fill.LIQUID));
 		}
 		
 		//stairway

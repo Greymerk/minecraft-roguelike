@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.state.property.Property;
@@ -120,9 +121,8 @@ public class MetaBlock extends BlockBase{
 		return false;
 	}
 
-
-
-
-
-
+	public boolean isLiquid() {
+		Block b = this.state.getBlock();
+		return b == Blocks.WATER || b == Blocks.LAVA;
+	}
 }

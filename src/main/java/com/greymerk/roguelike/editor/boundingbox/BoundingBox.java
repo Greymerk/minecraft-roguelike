@@ -209,7 +209,7 @@ public class BoundingBox implements IBounded, IShape{
 	}
 
 	@Override
-	public void fill(IWorldEditor editor, Random rand, IBlockFactory block, Predicate<BlockContext> p) {
+	public void fill(IWorldEditor editor, Random rand, @NotNull IBlockFactory block, Predicate<BlockContext> p) {
 		this.getShape(Shape.RECTSOLID).fill(editor, rand, block, p);
 		
 	}
