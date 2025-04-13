@@ -7,7 +7,6 @@ import com.greymerk.roguelike.editor.Fill;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.blocks.Air;
-import com.greymerk.roguelike.editor.blocks.ColorBlock;
 import com.greymerk.roguelike.editor.blocks.IronBar;
 import com.greymerk.roguelike.editor.blocks.Torch;
 import com.greymerk.roguelike.editor.blocks.stair.IStair;
@@ -16,7 +15,6 @@ import com.greymerk.roguelike.editor.shapes.Line;
 import com.greymerk.roguelike.editor.shapes.RectSolid;
 import com.greymerk.roguelike.editor.shapes.Shape;
 import com.greymerk.roguelike.theme.ITheme;
-import com.greymerk.roguelike.util.Color;
 
 import net.minecraft.util.math.random.Random;
 

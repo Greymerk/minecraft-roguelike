@@ -123,7 +123,7 @@ public class LayoutManager {
 			RandHelper.shuffle(cells, rand);
 		} else {
 			Collections.sort(cells, (a, b) -> {
-				return (int)(a.getWorldPos(origin).distance(origin) - b.getWorldPos(origin).distance(origin));
+				return a.getWorldPos(origin).manhattanDistance(origin) - b.getWorldPos(origin).manhattanDistance(origin);
 			});
 		}	
 		
