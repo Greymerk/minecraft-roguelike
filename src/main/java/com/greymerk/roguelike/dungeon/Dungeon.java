@@ -14,6 +14,7 @@ import com.greymerk.roguelike.dungeon.room.Room;
 import com.greymerk.roguelike.dungeon.tower.RogueTower;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
+import com.greymerk.roguelike.editor.MetaBlock;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.editor.boundingbox.IBounded;
 import com.greymerk.roguelike.settings.LevelSettings;
@@ -71,10 +72,17 @@ public class Dungeon implements Iterable<IRoom>{
 		
 		ExclusionZones zones = new ExclusionZones();
 		zones.scan(editor, pos, 300);
-		if(zones.collides(pos, 50)) return false;
+		if(zones.collides(Coord.of(pos.getX(), 0, pos.getZ()), 50)) {
+			Debug.info("Dungeon @" + pos.toString() + " failed: nearby trial chamber");
+			return false;
+		}
 		
 		Coord surface = editor.findSurface(pos);
-		if(!editor.getBlock(surface).isGround()) return false;
+		MetaBlock block = editor.getBlock(surface);
+		if(!block.isGround()) {
+			Debug.info("Dungeon @" + surface.toString() + " failed: " + block.getBlock().toString() + " isn't valid ground");
+			return false;
+		}
 		
 		return true;
 	}

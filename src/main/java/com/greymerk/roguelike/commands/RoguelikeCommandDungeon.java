@@ -40,7 +40,6 @@ public class RoguelikeCommandDungeon {
 					});
 				}
 				
-				
 				return 1;
 			});
 	}

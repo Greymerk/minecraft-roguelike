@@ -125,4 +125,9 @@ public class MetaBlock extends BlockBase{
 		Block b = this.state.getBlock();
 		return b == Blocks.WATER || b == Blocks.LAVA;
 	}
+	
+	@Override
+	public String toString() {
+		return this.state.toString();
+	}
 }

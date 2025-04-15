@@ -26,14 +26,16 @@ public class PrisonAlcove implements IFragment {
 		
 		BoundingBox.of(origin).add(dir, 3).add(Cardinal.DOWN).grow(Cardinal.orthogonal(dir)).fill(editor, rand, theme.getPrimary().getFloor());
 		
-		cell(editor, rand, theme, origin.copy().add(dir, Cell.SIZE).freeze());
+		Coord cellPos = origin.copy().add(dir, Cell.SIZE).freeze();
+		
+		cell(editor, rand, theme, cellPos);
 
 		Cardinal.directions.forEach(d -> {
 			if(d != Cardinal.reverse(dir) && rand.nextInt(5) == 0) {
 				if(rand.nextBoolean()) {
-					Fragment.generate(Fragment.WALL_SPAWNER, editor, rand, settings, origin.copy().add(dir, Cell.SIZE), d);	
+					Fragment.generate(Fragment.WALL_SPAWNER, editor, rand, settings, cellPos, d);	
 				} else {
-					Fragment.generate(Fragment.WALL_CHEST, editor, rand, settings, origin.copy().add(dir, Cell.SIZE), d);
+					Fragment.generate(Fragment.WALL_CHEST, editor, rand, settings, cellPos, d);
 				}
 			}
 		});
