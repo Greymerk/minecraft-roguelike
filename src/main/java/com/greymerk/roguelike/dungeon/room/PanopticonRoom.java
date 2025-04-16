@@ -43,7 +43,6 @@ public class PanopticonRoom extends AbstractLargeRoom implements IRoom {
 		bars(editor, rand, origin.copy().freeze());
 		decorations(editor, rand, origin.copy().freeze());
 		supports(editor, rand, origin.copy().add(Cardinal.DOWN, 10).freeze());
-		this.generateExits(editor, rand);
 	}
 
 	private void supports(IWorldEditor editor, Random rand, Coord origin) {

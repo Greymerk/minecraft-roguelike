@@ -1,6 +1,7 @@
 package com.greymerk.roguelike.dungeon.room;
 
 import com.greymerk.roguelike.dungeon.cell.Cell;
+import com.greymerk.roguelike.dungeon.fragment.Fragment;
 import com.greymerk.roguelike.dungeon.fragment.parts.CellSupport;
 import com.greymerk.roguelike.dungeon.layout.ExitType;
 import com.greymerk.roguelike.editor.Cardinal;
@@ -146,7 +147,15 @@ public class MusicRoom extends AbstractMediumRoom implements IRoom {
 		Coord pos = origin.copy().add(d, 5).add(Cardinal.orthogonal(d).get(rand.nextInt(2)), rand.nextInt(2) + 3).add(Cardinal.UP);
 		Treasure.generate(editor, rand, settings.getDifficulty(), pos, Cardinal.reverse(d), Treasure.MUSIC);
 		
-		this.generateExits(editor, rand);
+		doors(editor, rand, origin);
+	}
+
+	private void doors(IWorldEditor editor, Random rand, Coord origin) {
+		this.exits.forEach(exit -> {
+			if(exit.type() == ExitType.DOOR) {
+				Fragment.generate(Fragment.ARCH, editor, rand, settings, exit.origin(), exit.dir());	
+			}
+		});
 	}
 
 	@Override

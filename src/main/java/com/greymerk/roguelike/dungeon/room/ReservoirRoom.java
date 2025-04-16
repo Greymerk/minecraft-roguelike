@@ -125,14 +125,15 @@ public class ReservoirRoom extends AbstractLargeRoom implements IRoom {
 			cell(editor, rand, pos.copy());
 			pos.add(Cardinal.left(dir), 6);
 			cell(editor, rand, pos.copy());
-			settings.getWallFragment(rand).generate(editor, rand, settings, pos.copy(), dir);
+			//settings.getWallFragment(rand).generate(editor, rand, settings, pos.copy(), dir);
 			pos.add(Cardinal.right(dir), 12);
 			cell(editor, rand, pos.copy());
-			settings.getWallFragment(rand).generate(editor, rand, settings, pos.copy(), dir);
+			//settings.getWallFragment(rand).generate(editor, rand, settings, pos.copy(), dir);
 			pos.add(Cardinal.right(dir), 6);
 			cell(editor, rand, pos.copy());
-			settings.getWallFragment(rand).generate(editor, rand, settings, pos.copy(), dir);
-			settings.getWallFragment(rand).generate(editor, rand, settings, pos.copy(), Cardinal.right(dir));
+			//settings.getWallFragment(rand).generate(editor, rand, settings, pos.copy(), dir);
+			//settings.getWallFragment(rand).generate(editor, rand, settings, pos.copy(), Cardinal.right(dir));
+			
 			
 			BoundingBox bb = BoundingBox.of(origin.copy());
 			bb.add(dir, 10).add(Cardinal.DOWN);
@@ -254,20 +255,35 @@ public class ReservoirRoom extends AbstractLargeRoom implements IRoom {
 	@Override
 	public CellManager getCells(Cardinal dir) {
 		
-		CellManager cells = super.getCells(dir);
+		CellManager cells = new CellManager();
+		Coord origin = Coord.ZERO;
+		BoundingBox.of(origin).add(dir, 2)
+			.grow(Cardinal.directions, 2)
+			.forEach(pos -> {
+				cells.add(Cell.of(pos, CellState.OBSTRUCTED, this));
+			});
 		
-		Coord origin = Coord.ZERO.add(Cardinal.DOWN);
-		BoundingBox bb = BoundingBox.of(origin);
-		bb.add(dir, 2).grow(Cardinal.directions);
-		bb.getShape(Shape.RECTSOLID).get().forEach(pos -> {
-			cells.add(Cell.of(pos, CellState.OBSTRUCTED, this));
+		Cardinal.directions.forEach(d -> {
+			BoundingBox.of(origin).add(d, 3)
+				.grow(Cardinal.orthogonal(d), 2)
+				.forEach(pos -> {
+					if(pos.equals(origin.add(Cardinal.reverse(dir), 3))) return;
+					cells.add(Cell.of(pos, CellState.POTENTIAL, this));
+				});
 		});
 		
+		Coord lower = origin.add(Cardinal.DOWN).freeze();
+		BoundingBox.of(lower).add(dir, 2)
+			.grow(Cardinal.directions)
+			.forEach(pos -> {
+				cells.add(Cell.of(pos, CellState.OBSTRUCTED, this));
+			});
+		
 		for(Cardinal d : Cardinal.directions) {
-			cells.add(Cell.of(origin.copy().add(dir, 2).add(d, 2), CellState.OBSTRUCTED, this).addWall(d));
-			cells.add(Cell.of(origin.copy().add(dir, 2).add(d, 2).add(Cardinal.left(d), 2), CellState.OBSTRUCTED, this).addWall(d).addWall(Cardinal.left(d)));
+			cells.add(Cell.of(lower.copy().add(dir, 2).add(d, 2), CellState.OBSTRUCTED, this).addWall(d));
+			cells.add(Cell.of(lower.copy().add(dir, 2).add(d, 2).add(Cardinal.left(d), 2), CellState.OBSTRUCTED, this).addWall(d).addWall(Cardinal.left(d)));
 			for(Cardinal o : Cardinal.orthogonal(d)) {
-				cells.add(Cell.of(origin.copy().add(dir, 2).add(d, 2).add(o), CellState.OBSTRUCTED, this).addWall(d));
+				cells.add(Cell.of(lower.copy().add(dir, 2).add(d, 2).add(o), CellState.OBSTRUCTED, this).addWall(d));
 			}
 		}
 		

@@ -3,6 +3,8 @@ package com.greymerk.roguelike.dungeon.room;
 import java.util.List;
 
 import com.greymerk.roguelike.dungeon.cell.Cell;
+import com.greymerk.roguelike.dungeon.cell.CellManager;
+import com.greymerk.roguelike.dungeon.cell.CellState;
 import com.greymerk.roguelike.dungeon.fragment.parts.CellSupport;
 import com.greymerk.roguelike.dungeon.fragment.parts.Pillar;
 import com.greymerk.roguelike.editor.Cardinal;
@@ -27,7 +29,7 @@ public class BanquetRoom extends AbstractLargeRoom implements IRoom {
 		clear(editor, rand, origin);
 		ceiling(editor, rand, origin);
 		pillars(editor, rand, origin);
-		decorations(editor, rand, origin);
+		//decorations(editor, rand, origin);
 		tables(editor, rand, origin);
 		supports(editor, rand, origin);
 		this.generateExits(editor, rand);
@@ -133,6 +135,27 @@ public class BanquetRoom extends AbstractLargeRoom implements IRoom {
 		BoundingBox.of(origin).add(Cardinal.DOWN).grow(Cardinal.directions, 15).fill(editor, rand, theme.getPrimary().getFloor());
 	}
 
+	@Override
+	public CellManager getCells(Cardinal dir) {
+		CellManager cells = new CellManager();
+		BoundingBox.of(Coord.ZERO).add(dir, 2)
+			.grow(Cardinal.directions, 2)
+			.forEach(pos -> {
+				cells.add(Cell.of(pos, CellState.OBSTRUCTED, this));
+			});
+		
+		Cardinal.directions.forEach(d -> {
+			BoundingBox.of(Coord.ZERO).add(d, 3)
+			.grow(Cardinal.orthogonal(d), 2)
+			.forEach(pos -> {
+				if(pos.equals(Coord.ZERO.add(Cardinal.reverse(dir), 3))) return;
+				cells.add(Cell.of(pos, CellState.POTENTIAL, this));
+			});
+		});
+		
+		return cells;
+	}
+	
 	@Override
 	public String getName() {
 		return Room.BANQUET.name();
