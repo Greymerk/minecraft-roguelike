@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.greymerk.roguelike.dungeon.room.IRoom;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.mojang.serialization.Codec;
@@ -23,7 +25,7 @@ public class Cell {
 				Coord.CODEC.fieldOf("floorPos").forGetter(cell -> cell.floorPos),
 				Codecs.NON_EMPTY_STRING.fieldOf("state").forGetter(cell -> cell.state.name()),
 				LIST_CODEC.fieldOf("walls").forGetter(cell -> cell.getWalls().stream().map(dir -> dir.name()).collect(Collectors.toList()))
-			).apply(instance, (fp, state, walls) -> Cell.of(fp, CellState.of(state), 
+			).apply(instance, (fp, state, walls) -> Cell.of(fp, CellState.of(state), null, 
 					walls.stream().map(dir -> Cardinal.of(dir)).collect(Collectors.toList())))
 	);
 	
@@ -31,19 +33,27 @@ public class Cell {
 	private CellState state;
 	private Coord floorPos;
 	private Set<Cardinal> walls;
+	private IRoom owner;
 	
-	public static Cell of(Coord floorPos, CellState state) {
-		return new Cell(floorPos, state);
-	}
-	
+	/*
 	public static Cell of(Coord floorPos, CellState state, List<Cardinal> walls) {
-		return Cell.of(floorPos, state).addWalls(walls);
+		return Cell.of(floorPos, state, null, walls);
+	}
+	*/
+	
+	public static Cell of(Coord floorPos, CellState state, IRoom room) {
+		return new Cell(floorPos, state, room);
 	}
 	
-	public Cell(Coord floorPos, CellState state) {
-		this.floorPos = floorPos.copy();
+	public static Cell of(Coord floorPos, CellState state, IRoom room, List<Cardinal> walls) {
+		return Cell.of(floorPos, state, room).addWalls(walls);
+	}
+	
+	public Cell(Coord floorPos, CellState state, IRoom room) {
+		this.floorPos = floorPos.copy().freeze();
 		this.state = state;
 		this.walls = new HashSet<Cardinal>();
+		this.owner = room;
 	}
 	
 	public CellState getState() {
@@ -58,6 +68,7 @@ public class Cell {
 		this.floorPos = other.floorPos.copy();
 		this.state = other.state;
 		this.walls.addAll(other.walls);
+		this.owner = other.owner;
 	}
 	
 	public boolean isRoom() {
@@ -67,6 +78,16 @@ public class Cell {
 	
 	public Coord getFloorPos() {
 		return this.floorPos.copy();
+	}
+	
+	public boolean sameRoom(Cell other) {
+		if(this.owner == null || other.owner == null) return false;
+		return this.owner.equals(other.owner);
+	}
+
+	public Optional<IRoom> getOwner() {
+		if(this.owner == null) return Optional.empty();
+		return Optional.of(this.owner);
 	}
 	
 	public int getLevelOffset() {
@@ -114,6 +135,7 @@ public class Cell {
 		
 		return true;
 	}
+
 	
 	@Override
 	public int hashCode() {
@@ -138,5 +160,7 @@ public class Cell {
 	public String toString() {
 		return this.floorPos.toString() + ' ' + this.state + ' ' + this.walls;
 	}
+
+
 
 }

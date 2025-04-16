@@ -1,6 +1,5 @@
 package com.greymerk.roguelike.dungeon.room;
 
-import com.greymerk.roguelike.dungeon.Floor;
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellManager;
 import com.greymerk.roguelike.dungeon.cell.CellState;
@@ -60,6 +59,7 @@ public class EntranceRoom  extends AbstractRoom implements IRoom{
 		}
 		
 		CellSupport.generate(editor, rand, theme, origin);
+		this.generateExits(editor, rand);
 	}
 
 	@Override
@@ -67,10 +67,10 @@ public class EntranceRoom  extends AbstractRoom implements IRoom{
 		Coord origin = Coord.ZERO;
 		CellManager cells = new CellManager();
 		
-		cells.add(new Cell(origin, CellState.OBSTRUCTED));
+		cells.add(new Cell(origin, CellState.OBSTRUCTED, this));
 		
 		for(Cardinal d : Cardinal.directions) {
-			cells.add(Cell.of(origin.copy().add(d), CellState.POTENTIAL));
+			cells.add(Cell.of(origin.copy().add(d), CellState.POTENTIAL, this));
 		}
 		
 		return cells;
@@ -80,7 +80,4 @@ public class EntranceRoom  extends AbstractRoom implements IRoom{
 	public String getName() {
 		return Room.ENTRANCE.name();
 	}
-
-	@Override
-	public void determineEntrances(Floor f, Coord floorPos) {}
 }

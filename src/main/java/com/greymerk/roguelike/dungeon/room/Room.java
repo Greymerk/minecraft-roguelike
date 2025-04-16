@@ -2,9 +2,11 @@
 package com.greymerk.roguelike.dungeon.room;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-import com.greymerk.roguelike.dungeon.layout.Entrance;
+import com.greymerk.roguelike.dungeon.layout.Exit;
+import com.greymerk.roguelike.dungeon.layout.ExitType;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.settings.ILevelSettings;
@@ -50,7 +52,7 @@ public enum Room {
 		}
 	}
 	
-	public static final Codec<Map<String, String>> ENTRANCES_CODEC = Codec.unboundedMap(Codecs.NON_EMPTY_STRING, Codecs.NON_EMPTY_STRING);
+	public static final Codec<List<Exit>> EXITS_CODEC = Codec.list(Exit.CODEC);
 	
 	public static final Codec<IRoom> CODEC = RecordCodecBuilder.create(
 			instance -> instance.group(
@@ -58,9 +60,10 @@ public enum Room {
 				Codecs.NON_EMPTY_STRING.fieldOf("settings").forGetter(room -> room.getLevelSettings().getName()),
 				Coord.CODEC.fieldOf("pos").forGetter(room -> room.getWorldPos()),
 				Codecs.NON_EMPTY_STRING.fieldOf("dir").forGetter(room -> room.getDirection().name()),
-				ENTRANCES_CODEC.fieldOf("entrances").forGetter(room -> Room.convertEntrances(room.getEntrances())),
+				//ENTRANCES_CODEC.fieldOf("entrances").forGetter(room -> Room.convertEntrances(room.getEntrances())),
+				EXITS_CODEC.fieldOf("exits").forGetter(room -> room.getExits()),
 				Codec.BOOL.fieldOf("generated").forGetter(room -> room.isGenerated())
-			).apply(instance, (name, settings, pos, dir, entrances, generated) -> Room.getInstance(name, settings, pos, dir, entrances, generated))
+			).apply(instance, (name, settings, pos, dir, exits, generated) -> Room.getInstance(name, settings, pos, dir, exits, generated))
 	);
 	
 	
@@ -98,29 +101,29 @@ public enum Room {
 		return room;
 	}
 	
-	public static IRoom getInstance(Room type, ILevelSettings settings, Coord pos, Cardinal dir, Map<Cardinal, Entrance> entrances, boolean generated) {
+	public static IRoom getInstance(Room type, ILevelSettings settings, Coord pos, Cardinal dir, List<Exit> exits, boolean generated) {
 		IRoom room = fromType(type);
 		room.setLevelSettings(settings);
 		room.setWorldPos(pos);
 		room.setDirection(dir);
-		entrances.forEach((d, e) -> {
-			room.addEntrance(d, e);
+		exits.forEach(e -> {
+			room.addExit(e);
 		});
 		room.setGenerated(generated);
 		return room;
 	}
 	
-	public static IRoom getInstance(String name, String settings, Coord pos, String dir, Map<String, String> entrances, boolean generated) {
+	public static IRoom getInstance(String name, String settings, Coord pos, String dir, List<Exit> exits, boolean generated) {
 		return Room.getInstance(
 			Room.get(name),
 			LevelSettings.get(settings),
 			pos,
 			Cardinal.of(dir),
-			Room.convertEntrancesBack(entrances),
+			exits,
 			generated);
 	}
 	
-	public static Map<String, String> convertEntrances(Map<Cardinal, Entrance> entrances){
+	public static Map<String, String> convertEntrances(Map<Cardinal, ExitType> entrances){
 		Map<String, String> ents = new HashMap<String, String>();
 		entrances.forEach((d, e) -> {
 			ents.put(d.name(), e.name());
@@ -129,11 +132,11 @@ public enum Room {
 		return ents;
 	}
 	
-	public static Map<Cardinal, Entrance> convertEntrancesBack(Map<String, String> entrances){
-		Map<Cardinal, Entrance> ents = new HashMap<Cardinal, Entrance>();
+	public static Map<Cardinal, ExitType> convertEntrancesBack(Map<String, String> entrances){
+		Map<Cardinal, ExitType> ents = new HashMap<Cardinal, ExitType>();
 		entrances.forEach((d, e) -> {
 			Cardinal dir = Cardinal.of(d);
-			Entrance ent = Entrance.valueOf(e);
+			ExitType ent = ExitType.valueOf(e);
 			ents.put(dir, ent);
 		});
 		return ents;

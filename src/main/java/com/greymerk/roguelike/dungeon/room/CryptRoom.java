@@ -9,7 +9,7 @@ import com.greymerk.roguelike.dungeon.fragment.IFragment;
 import com.greymerk.roguelike.dungeon.fragment.parts.CellSupport;
 import com.greymerk.roguelike.dungeon.fragment.parts.CryptFragment;
 import com.greymerk.roguelike.dungeon.fragment.parts.Pillar;
-import com.greymerk.roguelike.dungeon.layout.Entrance;
+import com.greymerk.roguelike.dungeon.layout.ExitType;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.Fill;
@@ -33,7 +33,7 @@ public class CryptRoom extends AbstractMediumRoom implements IRoom {
 		CellSupport.generate(editor, rand, theme, origin.copy());
 		
 		for(Cardinal dir : Cardinal.directions) {
-			if(this.getEntrance(dir) == Entrance.DOOR) {				
+			if(this.getExitType(dir) == ExitType.DOOR) {				
 				this.entryWay(editor, rand, origin.copy(), dir);
 			} else {
 				if(rand.nextBoolean()) {
@@ -48,8 +48,8 @@ public class CryptRoom extends AbstractMediumRoom implements IRoom {
 		}
 		
 		for(Cardinal dir : Cardinal.directions) {
-			if(this.getEntrance(dir) == Entrance.DOOR) {
-				if(this.getEntrance(Cardinal.left(dir)) == Entrance.DOOR) {
+			if(this.getExitType(dir) == ExitType.DOOR) {
+				if(this.getExitType(Cardinal.left(dir)) == ExitType.DOOR) {
 					Coord pos = origin.copy().add(dir, 6).add(Cardinal.left(dir), 6);
 					List<Cardinal> doors = new ArrayList<Cardinal>();
 					doors.add(Cardinal.reverse(dir));
@@ -60,7 +60,7 @@ public class CryptRoom extends AbstractMediumRoom implements IRoom {
 					this.entrySideWall(editor, rand, pos, Cardinal.left(dir));
 				}
 				
-				if(this.getEntrance(Cardinal.right(dir)) != Entrance.DOOR) {
+				if(this.getExitType(Cardinal.right(dir)) != ExitType.DOOR) {
 					Coord pos = origin.copy().add(dir, 6).add(Cardinal.right(dir), 2);
 					this.entrySideWall(editor, rand, pos, Cardinal.right(dir));
 				}		

@@ -56,9 +56,9 @@ public class LayoutManager {
 	}
 	
 	public void generate(IWorldEditor editor) {
-		
+
 		for(Floor floor : this.floors) {
-			
+		
 			Random rand = editor.getRandom(floor.getOrigin());
 			
 			if(Config.ofBoolean(Config.BELOW_SEA_LEVEL) && floor.getOrigin().getY() > 55) {
@@ -82,16 +82,30 @@ public class LayoutManager {
 			});
 			
 			this.addStair(editor, rand, floor);	
-			
-			floor.getRooms().forEach(r -> r.determineEntrances(floor, r.getFloorPos()));
+
+			this.determineExits(editor, rand, floor);
 		}
-		
+				
 		if(Config.ofBoolean(Config.DEBUG)) {
 			DebugLayout debug = new DebugLayout(editor.getWorldDirectory());
 			debug.toFile(origin.getX() + "_" + origin.getZ() + ".json", CODEC.encodeStart(JsonOps.INSTANCE, this).getOrThrow());	
 		}
 	}
 	
+	private void determineExits(IWorldEditor editor, Random rand, Floor floor) {
+		CellManager cells = floor.getCells();
+		cells.forEach(cell -> {
+			Cardinal.directions.forEach(dir -> {		
+				cells.getExitType(cell, dir).ifPresent(type -> {
+					cell.getOwner().ifPresent(room -> {
+						Exit exit = Exit.of(type, cell.getWorldPos(floor.getOrigin()), dir);
+						room.addExit(exit);
+					});
+				});
+			});
+		});
+	}
+
 	private void connectFloorBranches(IWorldEditor editor, Random rand, Floor floor, ILevelSettings settings) {
 		while(!floor.getCells().isConnected()) {
 			CellManager cm = floor.getCells();
@@ -185,7 +199,7 @@ public class LayoutManager {
 			cells.getByOffset(offset).forEach(c -> {
 				Coord cfp = new Coord(c.getFloorPos().getX(), 0, c.getFloorPos().getZ());
 				cfp.add(fp);
-				f.addCell(Cell.of(cfp, c.getState()).addWalls(c.getWalls()));
+				f.addCell(Cell.of(cfp, c.getState(), c.getOwner().orElse(null)).addWalls(c.getWalls()));
 			});
 		});
 	}

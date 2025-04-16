@@ -3,10 +3,8 @@ package com.greymerk.roguelike.dungeon.room;
 import java.util.List;
 
 import com.greymerk.roguelike.dungeon.cell.Cell;
-import com.greymerk.roguelike.dungeon.fragment.Fragment;
 import com.greymerk.roguelike.dungeon.fragment.parts.CellSupport;
 import com.greymerk.roguelike.dungeon.fragment.parts.Pillar;
-import com.greymerk.roguelike.dungeon.layout.Entrance;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.Fill;
@@ -32,7 +30,7 @@ public class BanquetRoom extends AbstractLargeRoom implements IRoom {
 		decorations(editor, rand, origin);
 		tables(editor, rand, origin);
 		supports(editor, rand, origin);
-		
+		this.generateExits(editor, rand);
 	}
 	
 	private void supports(IWorldEditor editor, Random rand, Coord origin) {
@@ -133,10 +131,6 @@ public class BanquetRoom extends AbstractLargeRoom implements IRoom {
 			BoundingBox.of(origin).add(dir, 15).grow(Cardinal.DOWN).grow(Cardinal.UP, 4).grow(Cardinal.orthogonal(dir), 15).fill(editor, rand, theme.getPrimary().getWall(), Fill.SOLID);
 		});
 		BoundingBox.of(origin).add(Cardinal.DOWN).grow(Cardinal.directions, 15).fill(editor, rand, theme.getPrimary().getFloor());
-		
-		this.getEntrancesFromType(Entrance.DOOR).forEach(dir -> {
-			Fragment.generate(Fragment.ARCH, editor, rand, settings, origin.copy().add(dir, 12), dir); 
-		});
 	}
 
 	@Override

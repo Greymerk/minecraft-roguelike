@@ -1,10 +1,8 @@
 package com.greymerk.roguelike.dungeon.room;
 
 import com.greymerk.roguelike.dungeon.cell.Cell;
-import com.greymerk.roguelike.dungeon.fragment.Fragment;
 import com.greymerk.roguelike.dungeon.fragment.parts.CellSupport;
 import com.greymerk.roguelike.dungeon.fragment.parts.Pillar;
-import com.greymerk.roguelike.dungeon.layout.Entrance;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.Fill;
@@ -15,7 +13,6 @@ import com.greymerk.roguelike.editor.blocks.Candle;
 import com.greymerk.roguelike.editor.blocks.Furnace;
 import com.greymerk.roguelike.editor.blocks.stair.IStair;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
-import com.greymerk.roguelike.editor.shapes.Shape;
 import com.greymerk.roguelike.treasure.Treasure;
 import com.greymerk.roguelike.treasure.chest.ChestType;
 
@@ -80,22 +77,6 @@ public class KitchenRoom extends AbstractMediumRoom implements IRoom {
 			BoundingBox.of(origin.copy()).add(dir, 3).add(Cardinal.left(dir), 3).add(Cardinal.DOWN).grow(dir, 4).grow(Cardinal.left(dir), 4).fill(editor, rand, theme.getSecondary().getFloor());
 		}
 		
-		for(Cardinal dir : Cardinal.directions) {
-			if(this.getEntrancesFromType(Entrance.DOOR).contains(dir)) {
-				Coord pos = origin.copy().add(dir, 6);
-				Fragment.generate(Fragment.ARCH, editor, rand, settings, pos, dir);
-			} else {
-				BoundingBox.of(origin).add(dir, 9).grow(Cardinal.DOWN).grow(Cardinal.UP, 3).grow(Cardinal.orthogonal(dir), 2)
-					.getShape(Shape.RECTSOLID).fill(editor, rand, wall, Fill.SOLID);
-				if(this.getEntrance(dir) == Entrance.WALL) {
-					settings.getWallFragment(rand).generate(editor, rand, settings, origin.copy().add(dir, 6), dir);
-				}
-				if(this.getEntrance(dir) == Entrance.ALCOVE) {
-					Fragment.generate(Fragment.ALCOVE_FIRE, editor, rand, settings, origin.copy().add(dir, 6), dir);
-				}
-			}
-		}
-		
 		boolean table = true;
 		for(Cardinal dir : Cardinal.randDirs(rand)) {
 			if(table) {
@@ -105,6 +86,8 @@ public class KitchenRoom extends AbstractMediumRoom implements IRoom {
 			}
 			table = !table;
 		}
+		
+		this.generateExits(editor, rand);
 	}
 
 	private void chest(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {

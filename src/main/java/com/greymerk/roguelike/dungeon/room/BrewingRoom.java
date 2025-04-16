@@ -2,14 +2,12 @@ package com.greymerk.roguelike.dungeon.room;
 
 import java.util.List;
 
-import com.greymerk.roguelike.dungeon.Floor;
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellManager;
 import com.greymerk.roguelike.dungeon.cell.CellState;
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
 import com.greymerk.roguelike.dungeon.fragment.parts.CellSupport;
 import com.greymerk.roguelike.dungeon.fragment.parts.SpiralStairCase;
-import com.greymerk.roguelike.dungeon.layout.Entrance;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.Fill;
@@ -271,18 +269,12 @@ public class BrewingRoom extends AbstractRoom implements IRoom {
 	private void entry(IWorldEditor editor, Random rand, Coord origin) {
 		Corridor cor = new Corridor();
 		
-		Cardinal.directions.forEach(dir -> {
-			Entrance type = this.getEntrance(dir);
-			if(type == Entrance.DOOR) {
-				cor.addEntrance(dir, Entrance.DOOR);	
-			} else {
-				cor.addEntrance(dir, Entrance.WALL);
-			}
+		this.exits.forEach(e -> {
+			cor.addExit(e);
 		});
 		
 		cor.setLevelSettings(settings);
 		cor.worldPos = this.worldPos.copy();
-		cor.addEntrance(direction, Entrance.DOOR);
 		cor.generate(editor);
 	}
 	
@@ -314,22 +306,22 @@ public class BrewingRoom extends AbstractRoom implements IRoom {
 		Coord origin = Coord.ZERO;
 		CellManager cells = new CellManager();
 		
-		cells.add(Cell.of(origin.copy(), CellState.OBSTRUCTED));
-		cells.add(Cell.of(origin.copy().add(dir), CellState.OBSTRUCTED));
-		cells.add(Cell.of(origin.copy().add(Cardinal.DOWN).add(dir), CellState.OBSTRUCTED).addWall(Cardinal.reverse(dir)));
-		cells.add(Cell.of(origin.copy().add(dir, 2), CellState.OBSTRUCTED).addWall(dir));
-		cells.add(Cell.of(origin.copy().add(Cardinal.DOWN).add(dir, 2), CellState.OBSTRUCTED).addWall(dir));
+		cells.add(Cell.of(origin.copy(), CellState.OBSTRUCTED, this));
+		cells.add(Cell.of(origin.copy().add(dir), CellState.OBSTRUCTED, this));
+		cells.add(Cell.of(origin.copy().add(Cardinal.DOWN).add(dir), CellState.OBSTRUCTED, this).addWall(Cardinal.reverse(dir)));
+		cells.add(Cell.of(origin.copy().add(dir, 2), CellState.OBSTRUCTED, this).addWall(dir));
+		cells.add(Cell.of(origin.copy().add(Cardinal.DOWN).add(dir, 2), CellState.OBSTRUCTED, this).addWall(dir));
 		
 		for(Cardinal o : Cardinal.orthogonal(dir)) {
-			cells.add(Cell.of(origin.copy().add(dir).add(o), CellState.OBSTRUCTED).addWall(Cardinal.reverse(dir)).addWall(o));
-			cells.add(Cell.of(origin.copy().add(Cardinal.DOWN).add(dir).add(o), CellState.OBSTRUCTED).addWall(Cardinal.reverse(dir)).addWall(o));
-			cells.add(Cell.of(origin.copy().add(dir, 2).add(o), CellState.OBSTRUCTED).addWall(dir).addWall(o));
-			cells.add(Cell.of(origin.copy().add(Cardinal.DOWN).add(dir, 2).add(o), CellState.OBSTRUCTED).addWall(dir).addWall(o));
+			cells.add(Cell.of(origin.copy().add(dir).add(o), CellState.OBSTRUCTED, this).addWall(Cardinal.reverse(dir)).addWall(o));
+			cells.add(Cell.of(origin.copy().add(Cardinal.DOWN).add(dir).add(o), CellState.OBSTRUCTED, this).addWall(Cardinal.reverse(dir)).addWall(o));
+			cells.add(Cell.of(origin.copy().add(dir, 2).add(o), CellState.OBSTRUCTED, this).addWall(dir).addWall(o));
+			cells.add(Cell.of(origin.copy().add(Cardinal.DOWN).add(dir, 2).add(o), CellState.OBSTRUCTED, this).addWall(dir).addWall(o));
 		}
 		
 		for(Cardinal d : Cardinal.directions) {
 			if(d == dir) continue;
-			cells.add(Cell.of(origin.copy().add(d), CellState.POTENTIAL));
+			cells.add(Cell.of(origin.copy().add(d), CellState.POTENTIAL, this));
 		}
 		
 		return cells;
@@ -342,20 +334,6 @@ public class BrewingRoom extends AbstractRoom implements IRoom {
 				.grow(Cardinal.orthogonal(dir), 9)
 				.grow(Cardinal.DOWN, 10)
 				.grow(Cardinal.UP, 6);
-	}
-	
-	@Override
-	public void determineEntrances(Floor f, Coord floorPos) {
-		for(Cardinal dir : Cardinal.directions) {
-			if(dir == this.direction) continue;
-			Cell c = f.getCell(floorPos.copy().add(dir));
-			if(!c.isRoom()) continue;
-			if(!c.getWalls().contains(Cardinal.reverse(dir))){
-				this.addEntrance(dir, Entrance.DOOR);
-			} else {
-				this.addEntrance(dir, Entrance.WALL);
-			}
-		}
 	}
 	
 	@Override

@@ -5,7 +5,7 @@ import java.util.List;
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
 import com.greymerk.roguelike.dungeon.fragment.parts.Pillar;
-import com.greymerk.roguelike.dungeon.layout.Entrance;
+import com.greymerk.roguelike.dungeon.layout.ExitType;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.Fill;
@@ -37,12 +37,12 @@ public class CreeperRoom extends AbstractMediumRoom implements IRoom {
 		tnt(editor, rand, origin);
 		chest(editor, rand, origin);
 		Spawner.generate(editor, rand, settings.getDifficulty(), origin.copy().add(Cardinal.UP, 5), Spawner.CREEPER);
-		
+		this.generateExits(editor, rand);
 	}
 	
 	private void entrances(IWorldEditor editor, Random rand, Coord origin) {
 		Cardinal.directions.forEach(dir -> {
-			if(this.getEntrance(dir) == Entrance.DOOR) {
+			if(this.getExitType(dir) == ExitType.DOOR) {
 				entry(editor, rand, origin.copy().add(dir, Cell.SIZE).freeze(), dir);
 			} else {
 				BoundingBox.of(origin).add(dir, 5).grow(Cardinal.orthogonal(dir), 3).grow(Cardinal.UP, 3).fill(editor, rand, theme.getPrimary().getWall(), Fill.SOLID);

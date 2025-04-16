@@ -3,9 +3,7 @@ package com.greymerk.roguelike.dungeon.room;
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellManager;
 import com.greymerk.roguelike.dungeon.cell.CellState;
-import com.greymerk.roguelike.dungeon.fragment.Fragment;
 import com.greymerk.roguelike.dungeon.fragment.parts.CellSupport;
-import com.greymerk.roguelike.dungeon.layout.Entrance;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.Fill;
@@ -33,8 +31,7 @@ public class ReservoirRoom extends AbstractLargeRoom implements IRoom {
 		this.ceiling(editor, rand, origin);
 		this.addArches(editor, rand, origin);
 		this.addLiquid(editor, rand, origin);
-		this.doors(editor, rand, origin);
-		
+		this.generateExits(editor, rand);
 	}
 	
 
@@ -61,14 +58,6 @@ public class ReservoirRoom extends AbstractLargeRoom implements IRoom {
 		bb.grow(Cardinal.UP, 4);
 		bb.grow(Cardinal.DOWN);
 		RectSolid.fill(editor, rand, bb, Air.get());
-	}
-
-	private void doors(IWorldEditor editor, Random rand, Coord origin) {
-		for(Cardinal dir : this.getEntrancesFromType(Entrance.DOOR)) {
-			Coord pos = origin.copy();
-			pos.add(dir, 12);
-			Fragment.generate(Fragment.ARCH, editor, rand, settings, pos, dir);
-		}
 	}
 
 	private void addLiquid(IWorldEditor editor, Random rand, Coord origin) {
@@ -134,9 +123,6 @@ public class ReservoirRoom extends AbstractLargeRoom implements IRoom {
 			Coord pos = origin.copy();
 			pos.add(dir, 12);
 			cell(editor, rand, pos.copy());
-			if(!this.getEntrancesFromType(Entrance.DOOR).contains(dir)) {
-				settings.getWallFragment(rand).generate(editor, rand, settings, pos.copy(), dir);
-			}
 			pos.add(Cardinal.left(dir), 6);
 			cell(editor, rand, pos.copy());
 			settings.getWallFragment(rand).generate(editor, rand, settings, pos.copy(), dir);
@@ -274,14 +260,14 @@ public class ReservoirRoom extends AbstractLargeRoom implements IRoom {
 		BoundingBox bb = BoundingBox.of(origin);
 		bb.add(dir, 2).grow(Cardinal.directions);
 		bb.getShape(Shape.RECTSOLID).get().forEach(pos -> {
-			cells.add(Cell.of(pos, CellState.OBSTRUCTED));
+			cells.add(Cell.of(pos, CellState.OBSTRUCTED, this));
 		});
 		
 		for(Cardinal d : Cardinal.directions) {
-			cells.add(Cell.of(origin.copy().add(dir, 2).add(d, 2), CellState.OBSTRUCTED).addWall(d));
-			cells.add(Cell.of(origin.copy().add(dir, 2).add(d, 2).add(Cardinal.left(d), 2), CellState.OBSTRUCTED).addWall(d).addWall(Cardinal.left(d)));
+			cells.add(Cell.of(origin.copy().add(dir, 2).add(d, 2), CellState.OBSTRUCTED, this).addWall(d));
+			cells.add(Cell.of(origin.copy().add(dir, 2).add(d, 2).add(Cardinal.left(d), 2), CellState.OBSTRUCTED, this).addWall(d).addWall(Cardinal.left(d)));
 			for(Cardinal o : Cardinal.orthogonal(d)) {
-				cells.add(Cell.of(origin.copy().add(dir, 2).add(d, 2).add(o), CellState.OBSTRUCTED).addWall(d));
+				cells.add(Cell.of(origin.copy().add(dir, 2).add(d, 2).add(o), CellState.OBSTRUCTED, this).addWall(d));
 			}
 		}
 		

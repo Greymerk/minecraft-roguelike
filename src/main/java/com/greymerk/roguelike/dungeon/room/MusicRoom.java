@@ -1,9 +1,8 @@
 package com.greymerk.roguelike.dungeon.room;
 
 import com.greymerk.roguelike.dungeon.cell.Cell;
-import com.greymerk.roguelike.dungeon.fragment.Fragment;
 import com.greymerk.roguelike.dungeon.fragment.parts.CellSupport;
-import com.greymerk.roguelike.dungeon.layout.Entrance;
+import com.greymerk.roguelike.dungeon.layout.ExitType;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.Fill;
@@ -89,7 +88,7 @@ public class MusicRoom extends AbstractMediumRoom implements IRoom {
 				stair2.setOrientation(Cardinal.reverse(dir), true).set(editor, rand, pos);
 			}
 			
-			if(this.getEntrance(dir).equals(Entrance.DOOR)) {
+			if(this.getExitType(dir).equals(ExitType.DOOR)) {
 				bb = BoundingBox.of(origin);
 				bb.add(dir, 6).grow(Cardinal.orthogonal(dir)).grow(Cardinal.UP, 3).grow(dir, 2);
 				RectSolid.fill(editor, rand, bb, Air.get());
@@ -138,12 +137,6 @@ public class MusicRoom extends AbstractMediumRoom implements IRoom {
 			}
 		}
 		
-		for(Cardinal dir : this.getEntrancesFromType(Entrance.DOOR)) {
-			Coord pos = origin.copy();
-			pos.add(dir, 6);
-			Fragment.generate(Fragment.ARCH, editor, rand, settings, pos, dir);
-		}
-		
 		Carpet.generate(editor, rand, origin, 4);		
 		Lantern.set(editor, origin.copy().add(Cardinal.UP, 5));
 		
@@ -152,6 +145,8 @@ public class MusicRoom extends AbstractMediumRoom implements IRoom {
 		Cardinal d = Cardinal.randDirs(rand).get(0);
 		Coord pos = origin.copy().add(d, 5).add(Cardinal.orthogonal(d).get(rand.nextInt(2)), rand.nextInt(2) + 3).add(Cardinal.UP);
 		Treasure.generate(editor, rand, settings.getDifficulty(), pos, Cardinal.reverse(d), Treasure.MUSIC);
+		
+		this.generateExits(editor, rand);
 	}
 
 	@Override

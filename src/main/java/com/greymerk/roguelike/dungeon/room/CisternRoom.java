@@ -1,9 +1,9 @@
 package com.greymerk.roguelike.dungeon.room;
 
 import com.greymerk.roguelike.dungeon.cell.Cell;
-import com.greymerk.roguelike.dungeon.fragment.Fragment;
 import com.greymerk.roguelike.dungeon.fragment.parts.CellSupport;
-import com.greymerk.roguelike.dungeon.layout.Entrance;
+import com.greymerk.roguelike.dungeon.layout.Exit;
+import com.greymerk.roguelike.dungeon.layout.ExitType;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.Fill;
@@ -30,6 +30,7 @@ public class CisternRoom extends AbstractMediumRoom implements IRoom {
 		this.water(editor, rand, origin);
 		this.ceiling(editor, rand, origin);
 		this.supports(editor, rand, origin.copy().add(Cardinal.DOWN, 2));
+		this.generateExits(editor, rand);
 	}
 	
 	private void supports(IWorldEditor editor, Random rand, Coord origin) {
@@ -83,7 +84,9 @@ public class CisternRoom extends AbstractMediumRoom implements IRoom {
 		bb.grow(Cardinal.directions);
 		RectSolid.fill(editor, rand, bb, floor);
 		
-		for(Cardinal dir : this.getEntrancesFromType(Entrance.DOOR)) {
+		for(Exit exit : this.exits) {
+			if(exit.type() != ExitType.DOOR) continue;
+			Cardinal dir = exit.dir();
 			bb = BoundingBox.of(origin.copy());
 			bb.add(dir, 3);
 			bb.add(Cardinal.DOWN);
@@ -100,7 +103,7 @@ public class CisternRoom extends AbstractMediumRoom implements IRoom {
 			pos.add(Cardinal.left(dir), 2);
 			wall.set(editor, rand, pos);
 			
-			if(this.getEntrance(dir) != Entrance.DOOR) {
+			if(this.getExitType(dir) != ExitType.DOOR) {
 				bb = BoundingBox.of(origin.copy());
 				bb.add(dir, 2);
 				bb.grow(Cardinal.orthogonal(dir));
@@ -115,14 +118,6 @@ public class CisternRoom extends AbstractMediumRoom implements IRoom {
 				}
 			}
 		}
-		
-		for(Cardinal dir : this.getEntrancesFromType(Entrance.DOOR)) {
-			Coord pos = origin.copy();
-			pos.add(dir, 6);
-			Fragment.generate(Fragment.ARCH, editor, rand, settings, pos, dir);
-		}
-		
-		
 	}
 
 	private void walls(IWorldEditor editor, Random rand, Coord origin) {
@@ -178,9 +173,6 @@ public class CisternRoom extends AbstractMediumRoom implements IRoom {
 		for(Cardinal dir : Cardinal.directions) {
 			Coord pos = origin.copy();
 			pos.add(dir, 6);
-			if(this.entrances.get(dir) == Entrance.WALL) {
-				settings.getWallFragment(rand).generate(editor, rand, settings, pos.copy(), dir);
-			}
 			pos.add(Cardinal.left(dir), 6);
 			settings.getWallFragment(rand).generate(editor, rand, settings, pos.copy(), dir);
 			settings.getWallFragment(rand).generate(editor, rand, settings, pos.copy(), Cardinal.left(dir));

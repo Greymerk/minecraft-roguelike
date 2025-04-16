@@ -8,7 +8,7 @@ import com.greymerk.roguelike.dungeon.cell.CellState;
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
 import com.greymerk.roguelike.dungeon.fragment.parts.CellSupport;
 import com.greymerk.roguelike.dungeon.fragment.parts.CryptFragment;
-import com.greymerk.roguelike.dungeon.layout.Entrance;
+import com.greymerk.roguelike.dungeon.layout.ExitType;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IBlockFactory;
@@ -42,6 +42,7 @@ public class AbyssRoom extends AbstractLargeRoom implements IRoom {
 		this.bridge(editor, rand, origin);
 		this.features(editor, rand, origin);
 		this.supports(editor, rand, origin.copy().add(Cardinal.DOWN, 20).freeze());
+		this.generateExits(editor, rand);
 	}
 
 	private void supports(IWorldEditor editor, Random rand, Coord origin) {
@@ -275,7 +276,7 @@ public class AbyssRoom extends AbstractLargeRoom implements IRoom {
 
 	private void doors(IWorldEditor editor, Random rand, Coord origin) {
 		for(Cardinal dir : Cardinal.directions) {
-			if(this.entrances.get(dir) != Entrance.DOOR) continue;
+			if(this.getExitType(dir) != ExitType.DOOR) continue;
 			Coord pos = origin.copy();
 			pos.add(dir, 12);
 			Fragment.generate(Fragment.ARCH, editor, rand, settings, pos, dir);
@@ -304,12 +305,12 @@ public class AbyssRoom extends AbstractLargeRoom implements IRoom {
 		CellManager cells = super.getCells(dir);
 		
 		BoundingBox.of(Coord.ZERO).add(dir, 2).add(Cardinal.DOWN).grow(Cardinal.directions, 2).grow(Cardinal.DOWN)
-			.forEach(pos -> cells.add(Cell.of(pos, CellState.OBSTRUCTED)));
+			.forEach(pos -> cells.add(Cell.of(pos, CellState.OBSTRUCTED, this)));
 		
 		Cardinal.directions.forEach(d -> {
 			BoundingBox.of(Coord.ZERO).add(dir, 2).add(d, 3).add(Cardinal.DOWN)
 				.grow(Cardinal.orthogonal(d), 2).grow(Cardinal.DOWN)
-				.forEach(pos -> cells.add(Cell.of(pos, CellState.POTENTIAL)));
+				.forEach(pos -> cells.add(Cell.of(pos, CellState.POTENTIAL, this)));
 		});
 		
 		return cells;

@@ -8,6 +8,8 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.greymerk.roguelike.dungeon.layout.ExitType;
+import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -66,7 +68,7 @@ public class CellManager implements Iterable<Cell>{
 			if(c.getFloorPos().equals(floorPos)) return c;
 		}
 		
-		return new Cell(floorPos.copy(), CellState.EMPTY);
+		return new Cell(floorPos.copy(), CellState.EMPTY, null);
 	}
 	
 	public List<Cell> getCells(){
@@ -131,6 +133,14 @@ public class CellManager implements Iterable<Cell>{
 		}
 		
 		return nearestSoFar;
+	}
+	
+	public Optional<ExitType> getExitType(Cell cell, Cardinal dir) {
+		Cell neighbour = this.get(cell.getFloorPos().add(dir));
+		if(ExitType.isValidDoor(cell, neighbour, dir)) return Optional.of(ExitType.DOOR);
+		if(ExitType.isValidAlcove(cell, neighbour, dir)) return Optional.of(ExitType.ALCOVE);
+		if(ExitType.isValidWall(cell, neighbour, dir)) return Optional.of(ExitType.WALL);
+		return Optional.empty();
 	}
 	
 	private boolean connectsTwoBranches(List<List<Cell>> branches, Cell c) {

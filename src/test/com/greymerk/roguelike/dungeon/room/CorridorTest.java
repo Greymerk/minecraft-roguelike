@@ -26,4 +26,8 @@ class CorridorTest {
 		assert(cells.get(origin.copy().add(Cardinal.reverse(dir))).getState() == CellState.EMPTY);
 	}
 
+	@Test
+	void testEntrancePair() {
+
+	}
 }

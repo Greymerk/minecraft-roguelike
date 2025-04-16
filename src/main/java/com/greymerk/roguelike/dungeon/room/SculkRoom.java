@@ -8,7 +8,7 @@ import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
 import com.greymerk.roguelike.dungeon.fragment.parts.CellSupport;
 import com.greymerk.roguelike.dungeon.fragment.parts.Pillar;
-import com.greymerk.roguelike.dungeon.layout.Entrance;
+import com.greymerk.roguelike.dungeon.layout.ExitType;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.Fill;
@@ -57,7 +57,7 @@ public class SculkRoom extends AbstractLargeRoom implements IRoom {
 		placeChests(editor, rand, origin);
 		supports(editor, rand, origin.copy().add(Cardinal.DOWN, 2));
 		Filter.get(Filter.SCULK).apply(editor, rand, settings, getBoundingBox().get());
-
+		this.generateExits(editor, rand);
 	}
 
 	private void placeChests(IWorldEditor editor, Random rand, Coord origin) {
@@ -93,7 +93,7 @@ public class SculkRoom extends AbstractLargeRoom implements IRoom {
 	}
 
 	private void bridges(IWorldEditor editor, Random rand, Coord origin) {
-		this.getEntrancesFromType(Entrance.DOOR).forEach(dir -> {
+		Cardinal.directions.forEach(dir -> {
 			bridge(editor, rand, origin, dir);
 		});
 	}
@@ -211,7 +211,7 @@ public class SculkRoom extends AbstractLargeRoom implements IRoom {
 		BoundingBox.of(origin).grow(Cardinal.directions, 14).grow(Cardinal.DOWN, 2).grow(Cardinal.UP, 6).fill(editor, rand, Air.get());
 		Cardinal.directions.forEach(dir -> {
 			BoundingBox.of(origin).add(dir, 15).grow(Cardinal.orthogonal(dir), 15).fill(editor, rand, theme.getPrimary().getWall(), Fill.SOLID);
-			if(this.getEntrance(dir) == Entrance.DOOR) {
+			if(this.getExitType(dir) == ExitType.DOOR) {
 				Fragment.generate(Fragment.ARCH, editor, rand, settings, origin.copy().add(dir, 12), dir);	
 			}
 		});

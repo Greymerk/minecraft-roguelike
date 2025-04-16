@@ -7,7 +7,8 @@ import com.greymerk.roguelike.dungeon.cell.CellManager;
 import com.greymerk.roguelike.dungeon.cell.CellState;
 import com.greymerk.roguelike.dungeon.fragment.parts.CellSupport;
 import com.greymerk.roguelike.dungeon.fragment.parts.Pillar;
-import com.greymerk.roguelike.dungeon.layout.Entrance;
+import com.greymerk.roguelike.dungeon.layout.Exit;
+import com.greymerk.roguelike.dungeon.layout.ExitType;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.Fill;
@@ -29,7 +30,7 @@ public class PitRoom extends AbstractMediumRoom {
 		Random rand = editor.getRandom(origin);
 		this.centerRoom(editor, rand, origin);
 		Cardinal.directions.forEach(dir -> {
-			if(this.getEntrance(dir) == Entrance.DOOR) {
+			if(this.getExitType(dir) == ExitType.DOOR) {
 				this.entryDoorWay(editor, rand, origin, dir);	
 			} else {
 				this.pistonTrap(editor, rand, origin, dir);
@@ -38,7 +39,6 @@ public class PitRoom extends AbstractMediumRoom {
 		
 		this.tunnelDown(editor, rand, origin);
 		this.lowerRoom(editor, rand, origin.add(Cardinal.DOWN, 20).freeze());
-		
 		this.supports(editor, rand, origin.add(Cardinal.DOWN, 20).freeze());
 	}
 	
@@ -113,14 +113,15 @@ public class PitRoom extends AbstractMediumRoom {
 	
 	private void entryDoorWay(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
 		Corridor room = new Corridor();
-		room.setWorldPos(origin.add(dir, Cell.SIZE));
+		Coord wp = origin.add(dir, Cell.SIZE);
+		room.setWorldPos(wp);
 		room.setDirection(dir);
 		room.setLevelSettings(settings);
 		Cardinal.parallel(dir).forEach(d -> {
-			room.addEntrance(d, Entrance.DOOR);	
+			room.addExit(Exit.of(ExitType.DOOR, wp, d));
 		});
 		Cardinal.orthogonal(dir).forEach(d -> {
-			room.addEntrance(d, Entrance.WALL);
+			room.addExit(Exit.of(ExitType.WALL, wp, d));
 		});
 		room.generate(editor);
 	}
@@ -137,14 +138,14 @@ public class PitRoom extends AbstractMediumRoom {
 	@Override
 	public CellManager getCells(Cardinal dir) {
 		CellManager cells = super.getCells(dir);
-		cells.add(Cell.of(Coord.ZERO.add(dir).add(Cardinal.DOWN), CellState.OBSTRUCTED, Cardinal.directions));
+		cells.add(Cell.of(Coord.ZERO.add(dir).add(Cardinal.DOWN), CellState.OBSTRUCTED, this, Cardinal.directions));
 		BoundingBox.of(Coord.ZERO).add(dir).add(Cardinal.DOWN, 2).grow(Cardinal.directions).forEach(c -> {
-			cells.add(Cell.of(c, CellState.OBSTRUCTED));
+			cells.add(Cell.of(c, CellState.OBSTRUCTED, this));
 		});
 		
 		Cardinal.directions.forEach(d -> {
 			BoundingBox.of(Coord.ZERO).add(dir).add(Cardinal.DOWN, 2).add(d, 2).grow(Cardinal.orthogonal(d)).forEach(c -> {
-				cells.add(Cell.of(c, CellState.POTENTIAL));
+				cells.add(Cell.of(c, CellState.POTENTIAL, this));
 			});
 		});
 		

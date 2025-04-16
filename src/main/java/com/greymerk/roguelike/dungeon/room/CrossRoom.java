@@ -3,10 +3,9 @@ package com.greymerk.roguelike.dungeon.room;
 import java.util.List;
 
 import com.greymerk.roguelike.dungeon.cell.Cell;
-import com.greymerk.roguelike.dungeon.fragment.Fragment;
 import com.greymerk.roguelike.dungeon.fragment.parts.CellSupport;
 import com.greymerk.roguelike.dungeon.fragment.parts.Pillar;
-import com.greymerk.roguelike.dungeon.layout.Entrance;
+import com.greymerk.roguelike.dungeon.layout.ExitType;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.Fill;
@@ -33,6 +32,7 @@ public class CrossRoom extends AbstractMediumRoom implements IRoom {
 		decorations(editor, rand, origin);
 		supports(editor, rand, origin);
 		pots(editor, rand, origin);
+
 	}
 	
 	private void pots(IWorldEditor editor, Random rand, Coord origin) {
@@ -52,10 +52,10 @@ public class CrossRoom extends AbstractMediumRoom implements IRoom {
 			Cardinal.orthogonal(dir).forEach(o -> {
 				settings.getWallFragment(rand).generate(editor, rand, settings, origin.copy().add(dir, 6).add(o, 6), dir);
 			});
-			if(this.getEntrance(dir) == Entrance.WALL) {
+			if(this.getExitType(dir) == ExitType.WALL) {
 				settings.getWallFragment(rand).generate(editor, rand, settings, origin.copy().add(dir, 6), dir);
 			}
-			if(this.getEntrance(dir) == Entrance.ALCOVE) {
+			if(this.getExitType(dir) == ExitType.ALCOVE) {
 				settings.getAlcove(rand).generate(editor, rand, settings, origin.copy().add(dir, 6), dir);
 			}
 		});
@@ -128,9 +128,6 @@ public class CrossRoom extends AbstractMediumRoom implements IRoom {
 			
 		});
 		BoundingBox.of(origin).add(Cardinal.DOWN).grow(Cardinal.directions, 8).fill(editor, rand, theme.getPrimary().getFloor());
-		this.getEntrancesFromType(Entrance.DOOR).forEach(dir -> {
-			Fragment.generate(Fragment.ARCH, editor, rand, settings, origin.copy().add(dir, Cell.SIZE), dir);
-		});
 	}
 
 	@Override

@@ -1,9 +1,7 @@
 package com.greymerk.roguelike.dungeon.room;
 
 import com.greymerk.roguelike.dungeon.cell.Cell;
-import com.greymerk.roguelike.dungeon.fragment.Fragment;
 import com.greymerk.roguelike.dungeon.fragment.parts.CellSupport;
-import com.greymerk.roguelike.dungeon.layout.Entrance;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.Fill;
@@ -33,10 +31,10 @@ public class EnderRoom extends AbstractMediumRoom implements IRoom {
 		this.pillars(editor, rand, origin, blocks);
 		this.floor(editor, rand, origin, blocks);
 		this.ceiling(editor, rand, origin, blocks);
-		this.doors(editor, rand, origin, blocks);
 		this.enderchest(editor, rand, origin, blocks);
 		this.supports(editor, rand, origin, blocks);
 		Spawner.generate(editor, rand, settings.getDifficulty(), origin, Spawner.ENDERMAN);
+		this.generateExits(editor, rand);
 	}
 
 	private void supports(IWorldEditor editor, Random rand, Coord origin, IBlockSet blocks) {
@@ -49,14 +47,6 @@ public class EnderRoom extends AbstractMediumRoom implements IRoom {
 			CellSupport.generate(editor, rand, ender, pos);
 			pos.add(Cardinal.left(dir), 6);
 			CellSupport.generate(editor, rand, ender, pos);
-		}
-	}
-
-	private void doors(IWorldEditor editor, Random rand, Coord origin, IBlockSet blocks) {
-		for(Cardinal dir : this.getEntrancesFromType(Entrance.DOOR)) {
-			Coord pos = origin.copy();
-			pos.add(dir, 6);
-			Fragment.generate(Fragment.ARCH, editor, rand, settings, pos, dir);
 		}
 	}
 
