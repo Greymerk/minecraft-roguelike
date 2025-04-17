@@ -1,11 +1,11 @@
 package com.greymerk.roguelike.dungeon.cell;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 import com.greymerk.roguelike.dungeon.room.IRoom;
@@ -52,7 +52,7 @@ public class Cell {
 	public Cell(Coord floorPos, CellState state, IRoom room) {
 		this.floorPos = floorPos.copy().freeze();
 		this.state = state;
-		this.walls = new HashSet<Cardinal>();
+		this.walls = new TreeSet<Cardinal>();
 		this.owner = room;
 	}
 	

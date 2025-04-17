@@ -1,10 +1,10 @@
 package com.greymerk.roguelike.dungeon.room;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.TreeSet;
 
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellManager;
@@ -35,7 +35,7 @@ public abstract class AbstractRoom implements IRoom{
 	public AbstractRoom() {
 		this.direction = Cardinal.EAST;
 		this.generated = false;
-		this.exits = new HashSet<Exit>();
+		this.exits = new TreeSet<Exit>();
 	}
 	
 	public AbstractRoom(ILevelSettings settings, IBounded box, Coord worldPos) {
@@ -48,7 +48,7 @@ public abstract class AbstractRoom implements IRoom{
 		this.worldPos = worldPos.copy().freeze();
 		this.generated = false;
 		this.direction = dir;
-		this.exits = new HashSet<Exit>();
+		this.exits = new TreeSet<Exit>();
 	}
 	
 	@Override

@@ -2,10 +2,8 @@ package com.greymerk.roguelike.util.math;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.Map;
 import java.util.RandomAccess;
 
 import net.minecraft.util.math.random.Random;
@@ -62,30 +60,23 @@ public class RandHelper {
 	    x[b] = t;
 	}
 	
-	public static <T> RandomComparator<T> randomizer(Random rand){
+	public static <T> Comparator<T> randomizer(Random rand){
 		return new RandomComparator<>(rand);
 	}
 	
-	private static final class RandomComparator<T> implements Comparator<T> {
-
-	    private final Map<T, Integer> map = new IdentityHashMap<>();
-	    private final Random random;
+	private static final class RandomComparator<T> implements Comparator<T>{
+	    
+		private final Random rand;
 
 	    public RandomComparator(Random rand) {
-	        this.random = rand;
+	        this.rand = rand;
 	    }
-
-	    @Override
-	    public int compare(T t1, T t2) {
-	        return Integer.compare(valueFor(t1), valueFor(t2));
-	    }
-
-	    private int valueFor(T t) {
-	        synchronized (map) {
-	            return map.computeIfAbsent(t, ignore -> random.nextInt());
-	        }
-	    }
-
+	    
+		@Override
+		public int compare(T o1, T o2) {
+			return rand.nextBetween(-1000, 1000);
+		}
+		
 	}
 	
 }

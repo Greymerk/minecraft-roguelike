@@ -1,8 +1,8 @@
 package com.greymerk.roguelike.dungeon.room;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellManager;
@@ -146,7 +146,7 @@ public class PanopticonRoom extends AbstractLargeRoom implements IRoom {
 	}
 
 	private Iterable<Cardinal> getEntrancesFromType(ExitType door) {
-		Set<Cardinal> dirs = new HashSet<Cardinal>();
+		Set<Cardinal> dirs = new TreeSet<Cardinal>();
 		this.exits.forEach(exit -> {
 			if(exit.type() == ExitType.DOOR) dirs.add(exit.dir());
 		});

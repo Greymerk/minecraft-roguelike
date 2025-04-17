@@ -12,7 +12,7 @@ import net.minecraft.util.math.ChunkPos;
 /**
 Mutable Coordinate 3DVector
 **/
-public class Coord {
+public class Coord implements Comparable<Coord> {
 	
 	public static final Codec<Coord> CODEC = RecordCodecBuilder.create(
 		instance -> instance.group(
@@ -241,5 +241,13 @@ public class Coord {
 
 	public ChunkPos getChunkPos() {
 		return new ChunkPos(this.x >> 4, this.z >> 4);
+	}
+
+	@Override
+	public int compareTo(Coord other) {
+		if(this.x != other.x) return this.x - other.x;
+		if(this.y != other.y) return this.y - other.y;
+		if(this.z != other.z) return this.z - other.z;
+		return 0;
 	}
 }

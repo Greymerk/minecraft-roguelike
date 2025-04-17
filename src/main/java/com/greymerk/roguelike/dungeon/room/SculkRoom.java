@@ -1,8 +1,7 @@
 package com.greymerk.roguelike.dungeon.room;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.greymerk.roguelike.dungeon.cell.Cell;
@@ -36,11 +35,11 @@ import net.minecraft.util.math.random.Random;
 
 public class SculkRoom extends AbstractLargeRoom implements IRoom {
 
-	Set<Coord> spawners;
+	List<Coord> spawners;
 	
 	public SculkRoom() {
 		super();
-		this.spawners = new HashSet<Coord>();
+		this.spawners = new ArrayList<Coord>();
 	}
 	
 	@Override
@@ -110,6 +109,7 @@ public class SculkRoom extends AbstractLargeRoom implements IRoom {
 		types.add(new WeightedChoice<Spawner>(Spawner.SPIDER, 2));
 		
 		spawners.stream()
+			.distinct()
 			.sorted(RandHelper.randomizer(rand))
 			.limit(rand.nextBetween(5, 10))
 			.forEach(pos -> {

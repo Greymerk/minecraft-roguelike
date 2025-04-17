@@ -1,11 +1,11 @@
 package com.greymerk.roguelike.dungeon.cell;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 import com.greymerk.roguelike.dungeon.layout.ExitType;
@@ -210,12 +210,12 @@ public class CellManager implements Iterable<Cell>{
 		return Optional.empty();
 	}
 	
-	public Set<Integer> getLevelOffsets(){
-		Set<Integer> offsets = new HashSet<Integer>();
+	public List<Integer> getLevelOffsets(){
+		Set<Integer> offsets = new TreeSet<Integer>();
 		this.cells.forEach(c -> {
 			offsets.add(c.getLevelOffset());
 		});
-		return offsets; 
+		return offsets.stream().sorted().toList(); 
 	}
 	
 	public List<Cell> getByOffset(int offset){

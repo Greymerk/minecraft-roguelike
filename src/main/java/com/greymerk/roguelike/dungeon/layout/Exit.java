@@ -1,5 +1,7 @@
 package com.greymerk.roguelike.dungeon.layout;
 
+import java.util.Objects;
+
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.mojang.serialization.Codec;
@@ -7,8 +9,8 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.util.dynamic.Codecs;
 
-public class Exit {
-	
+public class Exit implements Comparable<Exit>{
+
 	private ExitType type;
 	private Coord origin;
 	private Cardinal dir;
@@ -48,5 +50,40 @@ public class Exit {
 		return this.type.name() + " " + this.origin.toString() + " " + dir.name();
 	}
 	
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(dir, origin, type);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Exit other = (Exit) obj;
+		return dir == other.dir && Objects.equals(origin, other.origin) && type == other.type;
+	}
+
+	@Override
+	public int compareTo(Exit other) {
+		
+		if(!this.origin.equals(other.origin)) {
+			return this.origin.compareTo(other.origin);
+		}
+		
+		if(this.dir != other.dir) {
+			return this.dir.compareTo(other.dir);
+		}
+		
+		if(this.type != other.type) {
+			return this.type.compareTo(other.type);
+		}
+		
+		return 0;
+	}
 };
 

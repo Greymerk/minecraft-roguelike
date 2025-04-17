@@ -37,7 +37,6 @@ public class CreeperRoom extends AbstractMediumRoom implements IRoom {
 		tnt(editor, rand, origin);
 		chest(editor, rand, origin);
 		Spawner.generate(editor, rand, settings.getDifficulty(), origin.copy().add(Cardinal.UP, 5), Spawner.CREEPER);
-		this.generateExits(editor, rand);
 	}
 	
 	private void entrances(IWorldEditor editor, Random rand, Coord origin) {
