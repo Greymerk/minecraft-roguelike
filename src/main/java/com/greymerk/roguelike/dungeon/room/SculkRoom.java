@@ -1,10 +1,13 @@
 package com.greymerk.roguelike.dungeon.room;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.greymerk.roguelike.dungeon.cell.Cell;
+import com.greymerk.roguelike.dungeon.cell.CellManager;
+import com.greymerk.roguelike.dungeon.cell.CellState;
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
 import com.greymerk.roguelike.dungeon.fragment.parts.CellSupport;
 import com.greymerk.roguelike.dungeon.fragment.parts.Pillar;
@@ -33,11 +36,11 @@ import net.minecraft.util.math.random.Random;
 
 public class SculkRoom extends AbstractLargeRoom implements IRoom {
 
-	List<Coord> spawners;
+	Set<Coord> spawners;
 	
 	public SculkRoom() {
 		super();
-		this.spawners = new ArrayList<Coord>();
+		this.spawners = new HashSet<Coord>();
 	}
 	
 	@Override
@@ -66,21 +69,16 @@ public class SculkRoom extends AbstractLargeRoom implements IRoom {
 			.add(new WeightedChoice<Treasure>(Treasure.TOOL, 1))
 			.add(new WeightedChoice<Treasure>(Treasure.WEAPON, 1));
 		
-		List<Coord> empty = BoundingBox.of(origin).add(Cardinal.DOWN, 2).grow(Cardinal.directions, 9).get().stream()
+		List<Coord> space = BoundingBox.of(origin).add(Cardinal.DOWN, 2).grow(Cardinal.directions, 9).get().stream()
 				.filter(pos -> editor.isAir(pos))
 				.filter(pos -> checkerBoard(pos))
+				.sorted(RandHelper.randomizer(rand))
+				.limit(rand.nextBetween(3, 7))
 				.collect(Collectors.toList());
-		RandHelper.shuffle(empty, rand);
-		int count = rand.nextBetween(5, 9);
-		if(empty.size() <= count) {
-			empty.forEach(pos -> {
-				Treasure.generate(editor, rand, settings.getDifficulty(), pos, types.get(rand));	
-			});
-		} else {
-			empty.subList(0, count).forEach(pos -> {
-				Treasure.generate(editor, rand, settings.getDifficulty(), pos, types.get(rand));
-			});	
-		}
+
+		space.forEach(pos -> {
+			Treasure.generate(editor, rand, settings.getDifficulty(), pos, types.get(rand));	
+		});
 	}
 	
 	private boolean checkerBoard(Coord pos) {
@@ -111,9 +109,12 @@ public class SculkRoom extends AbstractLargeRoom implements IRoom {
 		types.add(new WeightedChoice<Spawner>(Spawner.SKELETON, 3));
 		types.add(new WeightedChoice<Spawner>(Spawner.SPIDER, 2));
 		
-		spawners.forEach(pos -> {
-			if(rand.nextBoolean()) Spawner.generate(editor, rand, settings.getDifficulty(), pos, types.get(rand));
-		});
+		spawners.stream()
+			.sorted(RandHelper.randomizer(rand))
+			.limit(rand.nextBetween(5, 10))
+			.forEach(pos -> {
+				Spawner.generate(editor, rand, this.settings.getDifficulty(), pos, types.get(rand));
+			});
 	}
 
 	private void tower(IWorldEditor editor, Random rand, Coord origin) {
@@ -229,6 +230,27 @@ public class SculkRoom extends AbstractLargeRoom implements IRoom {
 				});
 			});
 		});
+	}
+	
+	@Override
+	public CellManager getCells(Cardinal dir) {
+		CellManager cells = new CellManager();
+		BoundingBox.of(Coord.ZERO).add(dir, 2)
+			.grow(Cardinal.directions, 2)
+			.forEach(pos -> {
+				cells.add(Cell.of(pos, CellState.OBSTRUCTED, this));
+			});
+		
+		Cardinal.directions.forEach(d -> {
+			BoundingBox.of(Coord.ZERO.add(dir, 2)).add(d, 3)
+				.grow(Cardinal.orthogonal(d), 2)
+				.forEach(pos -> {
+					if(pos.equals(Coord.ZERO.add(Cardinal.reverse(dir), 3))) return;
+					cells.add(Cell.of(pos, CellState.POTENTIAL, this));
+				});
+		});
+		
+		return cells;
 	}
 	
 	@Override

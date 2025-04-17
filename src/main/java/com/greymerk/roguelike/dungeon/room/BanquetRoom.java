@@ -74,16 +74,6 @@ public class BanquetRoom extends AbstractLargeRoom implements IRoom {
 		});
 	}
 
-	private void decorations(IWorldEditor editor, Random rand, Coord origin) {
-		Cardinal.directions.forEach(dir -> {
-			Cardinal.orthogonal(dir).forEach(o -> {
-				List.of(6, 12).forEach(step -> {
-					settings.getWallFragment(rand).generate(editor, rand, settings, origin.copy().add(dir, 12).add(o, step), dir);
-				});
-			});
-		});
-	}
-
 	private void pillars(IWorldEditor editor, Random rand, Coord origin) {
 		Cardinal.directions.forEach(dir -> {
 			Cardinal.orthogonal(dir).forEach(o -> {
@@ -145,12 +135,12 @@ public class BanquetRoom extends AbstractLargeRoom implements IRoom {
 			});
 		
 		Cardinal.directions.forEach(d -> {
-			BoundingBox.of(Coord.ZERO).add(d, 3)
-			.grow(Cardinal.orthogonal(d), 2)
-			.forEach(pos -> {
-				if(pos.equals(Coord.ZERO.add(Cardinal.reverse(dir), 3))) return;
-				cells.add(Cell.of(pos, CellState.POTENTIAL, this));
-			});
+			BoundingBox.of(Coord.ZERO.add(dir, 2)).add(d, 3)
+				.grow(Cardinal.orthogonal(d), 2)
+				.forEach(pos -> {
+					if(pos.equals(Coord.ZERO.add(Cardinal.reverse(dir), 3))) return;
+					cells.add(Cell.of(pos, CellState.POTENTIAL, this));
+				});
 		});
 		
 		return cells;

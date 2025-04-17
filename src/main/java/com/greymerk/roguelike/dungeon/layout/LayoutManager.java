@@ -100,8 +100,9 @@ public class LayoutManager {
 					cell.getOwner().ifPresent(room -> {
 						Exit exit = Exit.of(type, cell.getWorldPos(floor.getOrigin()), dir);
 						room.addExit(exit);
-						if(cell.getState() == CellState.POTENTIAL) {
-							cell.addWalls(Cardinal.directions);
+						if(exit.type() == ExitType.ALCOVE) {
+							Cell other = cells.get(cell.getWorldPos(floor.getOrigin()).add(dir));
+							other.addWalls(Cardinal.directions);
 						}
 					});
 				});

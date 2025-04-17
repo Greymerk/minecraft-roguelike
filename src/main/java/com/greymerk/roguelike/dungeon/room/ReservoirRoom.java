@@ -14,7 +14,6 @@ import com.greymerk.roguelike.editor.blocks.Lantern;
 import com.greymerk.roguelike.editor.blocks.stair.IStair;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.editor.shapes.RectSolid;
-import com.greymerk.roguelike.editor.shapes.Shape;
 
 import net.minecraft.util.math.random.Random;
 
