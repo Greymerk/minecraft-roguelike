@@ -21,11 +21,11 @@ public class LevelSettingsDarkOak extends LevelSettingsBase implements ILevelSet
 		rooms.addRandomChoice(Room.CORRIDOR, 1);
 		rooms.addRoomOnce(Room.PRISON);
 		rooms.addRoomOnce(Room.CROSS);
-		rooms.addRoomSometimes(Room.LIBRARY, 0.4);
+		rooms.addRoomSometimes(Room.LIBRARY, 0.1);
 		rooms.addRoomSometimes(Room.BREWING, 0.4);
 		rooms.addRoomSometimes(Room.PIT, 0.2);
 		
-		this.walls = new WeightedRandomizer<Fragment>(10);
+		this.walls = new WeightedRandomizer<Fragment>(20);
 		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_EMPTY, 5));
 		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_CHEST, 1));
 		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_CANDLES, 1));
@@ -36,7 +36,9 @@ public class LevelSettingsDarkOak extends LevelSettingsBase implements ILevelSet
 		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_MUSHROOMS, 1));
 		
 		this.alcoves.add(walls);
-		this.alcoves.add(new WeightedChoice<Fragment>(Fragment.BOOK_SHELF, 2));
+		this.alcoves.add(new WeightedChoice<Fragment>(Fragment.BOOK_SHELF, 3));
+		this.alcoves.add(new WeightedChoice<Fragment>(Fragment.ALCOVE_FIRE, 1));
+		this.alcoves.add(new WeightedChoice<Fragment>(Fragment.ALCOVE_PRISON_CELL, 1));
 		
 	}
 

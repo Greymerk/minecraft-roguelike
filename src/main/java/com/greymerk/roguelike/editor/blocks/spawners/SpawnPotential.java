@@ -49,13 +49,12 @@ public class SpawnPotential {
 				NbtCompound mob = new NbtCompound();
 				mob = getRoguelike(diff, this.type, mob);
 				
-				Equipment tool;
-				switch(rand.nextInt(3)){
-				case 0: tool = Equipment.SHOVEL; break;
-				case 1: tool = Equipment.AXE; break;
-				case 2: tool = Equipment.PICK; break;
-				default: tool = Equipment.PICK; break;
-				}
+				Equipment tool = switch(rand.nextInt(3)) {
+				case 0 -> Equipment.SHOVEL;
+				case 1 -> Equipment.AXE;
+				case 2 -> Equipment.PICK;
+				default -> Equipment.PICK;
+				};
 				
 				mob = equipHands(mob, Equipment.getName(tool, Quality.getToolQuality(rand, diff)), null);
 				mob = equipArmour(mob, rand, diff);
