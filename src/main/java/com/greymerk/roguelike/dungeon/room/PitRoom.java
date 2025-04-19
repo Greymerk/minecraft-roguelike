@@ -139,17 +139,27 @@ public class PitRoom extends AbstractMediumRoom {
 	public CellManager getCells(Cardinal dir) {
 		CellManager cells = super.getCells(dir);
 		cells.add(Cell.of(Coord.ZERO.add(dir).add(Cardinal.DOWN), CellState.OBSTRUCTED, this, Cardinal.directions));
-		BoundingBox.of(Coord.ZERO).add(dir).add(Cardinal.DOWN, 2).grow(Cardinal.directions).forEach(c -> {
+		BoundingBox.of(Coord.ZERO.add(dir).add(Cardinal.DOWN, 2))
+			.grow(Cardinal.directions).forEach(c -> {
 			cells.add(Cell.of(c, CellState.OBSTRUCTED, this));
 		});
 		
 		Cardinal.directions.forEach(d -> {
-			BoundingBox.of(Coord.ZERO).add(dir).add(Cardinal.DOWN, 2).add(d, 2).grow(Cardinal.orthogonal(d)).forEach(c -> {
+			BoundingBox.of(Coord.ZERO.add(dir).add(Cardinal.DOWN, 2))
+				.add(d, 2).grow(Cardinal.orthogonal(d)).forEach(c -> {
 				cells.add(Cell.of(c, CellState.POTENTIAL, this));
 			});
 		});
 		
 		return cells;
+	}
+	
+	@Override
+	public BoundingBox getBoundingBox(Coord origin, Cardinal dir) {
+		return BoundingBox.of(origin.copy().add(dir, Cell.SIZE))
+			.grow(Cardinal.directions, 10)
+			.grow(Cardinal.UP, 6)
+			.grow(Cardinal.DOWN, 22);
 	}
 	
 	@Override

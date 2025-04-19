@@ -25,6 +25,7 @@ public class LevelSettingsCrumbledStone extends LevelSettingsBase implements ILe
 		rooms.addRandomChoice(Room.CORRIDOR, 10);
 		rooms.addRandomChoice(Room.CRYPT, 5);
 		rooms.addRandomChoice(Room.PRISON, 3);
+		rooms.addRandomChoice(Room.BALCONY, 1);
 		rooms.addRoomOnce(Room.PANOPTICON);
 		rooms.addRoomOnce(Room.ENDER);
 		rooms.addRoomSometimes(Room.PIT, 0.2);

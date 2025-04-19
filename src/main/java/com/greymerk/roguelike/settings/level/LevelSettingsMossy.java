@@ -29,6 +29,7 @@ public class LevelSettingsMossy extends LevelSettingsBase implements ILevelSetti
 		rooms.addRoomSometimes(Room.OSSUARY, 0.2);
 		rooms.addRoomSometimes(Room.ABYSS, 0.3);
 		rooms.addRoomSometimes(Room.PIT, 0.2);
+		rooms.addRoomSometimes(Room.BALCONY, 0.3);
 		rooms.addRoomOnce(Room.CROSS);
 		
 		this.walls = new WeightedRandomizer<Fragment>(10);
