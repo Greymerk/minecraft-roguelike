@@ -10,4 +10,10 @@ public class DungeonSettingsRandom implements IDungeonSettings{
 	public ILevelSettings getLevel(int y) {
 		return LevelSettings.fromType(LevelSettings.RANDOM);
 	}
+
+	@Override
+	public LevelSettings getSettings(int y) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

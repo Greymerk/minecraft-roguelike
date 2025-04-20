@@ -5,12 +5,24 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Accordion<T> {
 
+
+/**
+ * The {@code Accordion} class allows the generation of an expandable list of
+ * elements of a given type by applying rules based on min/max target values.
+ * 
+ * @param <T>
+ */
+public class Accordion<T> {
+	
 	List<ItemRule<T>> itemRules;
 	
 	public Accordion(){
 		this.itemRules = new ArrayList<ItemRule<T>>();
+	}
+	
+	public Accordion<T> add(T thing){
+		return this.add(thing, 1, 1);
 	}
 	
 	public Accordion<T> addExactly(T thing, int count){
@@ -43,11 +55,11 @@ public class Accordion<T> {
 		
 		int i = 0;
 		
-		while(thingCounter.values().stream().reduce(0, (s, e) -> s + e) < count) {
+		while(thingCounter.values().stream().reduce(0, Integer::sum) < count) {
 			ItemRule<T> ir = itemRules.get(i);
 			int soFar = thingCounter.get(ir.thing);
 			if(soFar < ir.max) thingCounter.put(ir.thing, soFar + 1);
-			
+
 			i = i < itemRules.size() - 1 ? i + 1 : 0; 
 		}
 		

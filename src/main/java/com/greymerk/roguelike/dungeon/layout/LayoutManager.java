@@ -43,8 +43,8 @@ public class LayoutManager {
 	
 	public LayoutManager(Coord origin) {
 		this.origin = origin;
-		this.floors = createFloors();
 		this.settings = new DungeonSettingsDefault(Config.ofBoolean(Config.BELOW_SEA_LEVEL) ? 50 : origin.getY(), -50);
+		this.floors = createFloors();
 		this.zones = new ExclusionZones();
 	}
 	

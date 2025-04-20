@@ -136,17 +136,24 @@ public class PitRoom extends AbstractMediumRoom {
 	}
 	
 	@Override
-	public CellManager getCells(Cardinal dir) {
-		CellManager cells = super.getCells(dir);
-		cells.add(Cell.of(Coord.ZERO.add(dir).add(Cardinal.DOWN), CellState.OBSTRUCTED, this, Cardinal.directions));
-		BoundingBox.of(Coord.ZERO.add(dir).add(Cardinal.DOWN, 2))
+	public CellManager getCells(Cardinal roomDir) {
+		CellManager cells = super.getCells(roomDir);
+		
+		cells.add(Cell.of(Coord.ZERO.add(roomDir).add(Cardinal.DOWN), CellState.OBSTRUCTED, this));
+		Cardinal.directions.forEach(dir -> {
+			cells.add(Cell.of(Coord.ZERO.add(roomDir).add(Cardinal.DOWN).add(dir), CellState.OBSTRUCTED, this).addWall(dir));
+			cells.add(Cell.of(Coord.ZERO.add(roomDir).add(Cardinal.DOWN).add(dir).add(Cardinal.left(dir)), CellState.OBSTRUCTED, this, List.of(dir, Cardinal.left(dir))));
+		});
+		
+		
+		BoundingBox.of(Coord.ZERO.add(roomDir).add(Cardinal.DOWN, 2))
 			.grow(Cardinal.directions).forEach(c -> {
 			cells.add(Cell.of(c, CellState.OBSTRUCTED, this));
 		});
 		
-		Cardinal.directions.forEach(d -> {
-			BoundingBox.of(Coord.ZERO.add(dir).add(Cardinal.DOWN, 2))
-				.add(d, 2).grow(Cardinal.orthogonal(d)).forEach(c -> {
+		Cardinal.directions.forEach(dir -> {
+			BoundingBox.of(Coord.ZERO.add(roomDir).add(Cardinal.DOWN, 2))
+				.add(dir, 2).grow(Cardinal.orthogonal(dir)).forEach(c -> {
 				cells.add(Cell.of(c, CellState.POTENTIAL, this));
 			});
 		});

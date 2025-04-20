@@ -18,11 +18,11 @@ class AccordionTest {
 	
 	@Test
 	void testMap() {
-		Accordion<String> strings = new Accordion<String>();
-		strings.addExactly("foo", 1);
-		strings.addAny("bar");
-		strings.add("biz", 3, 3);
-		strings.addExactly("baz", 1);
+		Accordion<String> strings = new Accordion<String>()
+			.addExactly("foo", 1)
+			.addAny("bar")
+			.add("biz", 3, 3)
+			.addExactly("baz", 1);
 		
 		
 		Map<String, Integer> stringMap = strings.get(10);

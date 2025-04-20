@@ -1,17 +1,24 @@
 package com.greymerk.roguelike.settings.dungeon;
 
-import com.greymerk.roguelike.settings.LevelSettings;
+import org.junit.jupiter.api.Test;
+
+import com.greymerk.roguelike.settings.IDungeonSettings;
 
 class DungeonSettingsDefaultTest {
 
-	//@Test
+	@Test
 	void test() {
-		int firstY = 230;
-		int lastY = -50;
-		DungeonSettingsDefault settings = new DungeonSettingsDefault(firstY, lastY);
-		for(int i = firstY; i >= lastY; i-=10) {
-			LevelSettings level = settings.getLevelType(i);
-			System.out.println("y:" + i + " " + level.name());
+		IDungeonSettings settings = new DungeonSettingsDefault();
+		for(int i = 80; i >= -50; i-=10) {
+			System.out.println(settings.getSettings(i));
+		}
+	}
+	
+	@Test
+	void testAboveSeaLevel() {
+		IDungeonSettings settings = new DungeonSettingsDefault(100, -50);
+		for(int i = 100; i >= -50; i-=10) {
+			System.out.println(settings.getSettings(i));
 		}
 	}
 

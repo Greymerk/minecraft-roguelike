@@ -10,4 +10,10 @@ public class DungeonSettingsBase implements IDungeonSettings{
 		return LevelSettings.fromType(LevelSettings.OAK);
 	}
 
+	@Override
+	public LevelSettings getSettings(int y) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

@@ -1,14 +1,11 @@
 package com.greymerk.roguelike.dungeon.room;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellManager;
 import com.greymerk.roguelike.dungeon.cell.CellState;
 import com.greymerk.roguelike.dungeon.fragment.parts.Pillar;
-import com.greymerk.roguelike.dungeon.layout.Exit;
-import com.greymerk.roguelike.dungeon.layout.ExitType;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.Fill;
@@ -16,9 +13,6 @@ import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.blocks.Air;
 import com.greymerk.roguelike.editor.blocks.IronBar;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
-import com.greymerk.roguelike.editor.boundingbox.IBounded;
-import com.greymerk.roguelike.settings.ILevelSettings;
-import com.greymerk.roguelike.theme.ITheme;
 
 import net.minecraft.util.math.random.Random;
 
