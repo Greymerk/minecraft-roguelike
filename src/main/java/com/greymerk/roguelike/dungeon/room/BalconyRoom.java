@@ -5,6 +5,7 @@ import java.util.List;
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellManager;
 import com.greymerk.roguelike.dungeon.cell.CellState;
+import com.greymerk.roguelike.dungeon.fragment.parts.CellSupport;
 import com.greymerk.roguelike.dungeon.fragment.parts.Pillar;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
@@ -29,7 +30,16 @@ public class BalconyRoom  extends AbstractRoom implements IRoom {
 		this.ceiling(editor, rand, origin);
 		this.upperRoom(editor, rand, origin);
 		this.lowerRoom(editor, rand, origin.add(Cardinal.DOWN, 10).freeze());
+		this.supports(editor, rand, origin.add(Cardinal.DOWN, 10).freeze());
 		this.generateExits(editor, rand);
+	}
+
+	private void supports(IWorldEditor editor, Random rand, Coord origin) {
+		CellSupport.generate(editor, rand, theme, origin);
+		Cardinal.directions.forEach(dir -> {
+			CellSupport.generate(editor, rand, theme, origin.add(dir, Cell.SIZE));
+			CellSupport.generate(editor, rand, theme, origin.add(dir, Cell.SIZE).add(Cardinal.left(dir), Cell.SIZE));
+		});
 	}
 
 	private void lowerRoom(IWorldEditor editor, Random rand, Coord origin) {
