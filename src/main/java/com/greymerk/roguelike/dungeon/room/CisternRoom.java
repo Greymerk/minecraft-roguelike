@@ -1,5 +1,7 @@
 package com.greymerk.roguelike.dungeon.room;
 
+import java.util.List;
+
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.fragment.parts.CellSupport;
 import com.greymerk.roguelike.dungeon.layout.Exit;
@@ -13,8 +15,10 @@ import com.greymerk.roguelike.editor.blocks.Air;
 import com.greymerk.roguelike.editor.blocks.IronBar;
 import com.greymerk.roguelike.editor.blocks.stair.IStair;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
+import com.greymerk.roguelike.editor.factories.BlockJumble;
 import com.greymerk.roguelike.editor.shapes.RectSolid;
 
+import net.minecraft.block.Blocks;
 import net.minecraft.util.math.random.Random;
 
 public class CisternRoom extends AbstractMediumRoom implements IRoom {
@@ -29,7 +33,7 @@ public class CisternRoom extends AbstractMediumRoom implements IRoom {
 		this.bridges(editor, rand, origin);
 		this.water(editor, rand, origin);
 		this.ceiling(editor, rand, origin);
-		this.supports(editor, rand, origin.copy().add(Cardinal.DOWN, 2));
+		this.supports(editor, rand, origin.copy().add(Cardinal.DOWN));
 		this.generateExits(editor, rand);
 	}
 	
@@ -62,8 +66,9 @@ public class CisternRoom extends AbstractMediumRoom implements IRoom {
 
 	private void water(IWorldEditor editor, Random rand, Coord origin) {
 		BoundingBox.of(origin).add(Cardinal.DOWN, 2)
-			.grow(Cardinal.directions, 9).grow(Cardinal.DOWN)
-			.fill(editor, rand, theme.getPrimary().getWall());
+			.grow(Cardinal.directions, 9)
+			.fill(editor, rand, BlockJumble.ofBlocks(
+					List.of(Blocks.COBBLESTONE, Blocks.MOSSY_COBBLESTONE)));
 		
 		BoundingBox.of(origin).add(Cardinal.DOWN).grow(Cardinal.directions, 7)
 			.fill(editor, rand, theme.getPrimary().getLiquid(), Fill.AIR);

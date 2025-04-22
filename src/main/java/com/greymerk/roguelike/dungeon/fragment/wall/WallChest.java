@@ -50,7 +50,7 @@ public class WallChest implements IFragment {
 			types.add(new WeightedChoice<Treasure>(Treasure.BLOCK, 1));
 			types.add(new WeightedChoice<Treasure>(Treasure.WEAPON, 2));
 			types.add(new WeightedChoice<Treasure>(Treasure.ARMOR, 2));
-			types.add(new WeightedChoice<Treasure>(Treasure.TOOL, 3));
+			types.add(new WeightedChoice<Treasure>(Treasure.TOOL, 4));
 			types.add(new WeightedChoice<Treasure>(Treasure.ORE, 1));
 			Treasure.generate(editor, rand, settings.getDifficulty(), pos, Cardinal.reverse(dir), types.get(rand));
 		} else {

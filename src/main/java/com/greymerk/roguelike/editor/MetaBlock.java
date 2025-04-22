@@ -31,6 +31,10 @@ public class MetaBlock extends BlockBase{
 		return new MetaBlock(state);
 	}
 	
+	public static List<MetaBlock> listOf(List<Block> blocks){
+		return blocks.stream().map(b -> MetaBlock.of(b)).toList();
+	}
+	
 	private MetaBlock(Block block){
 		this.state = block.getDefaultState();
 	}
