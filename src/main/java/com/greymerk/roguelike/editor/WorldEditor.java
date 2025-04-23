@@ -1,54 +1,41 @@
 package com.greymerk.roguelike.editor;
 
-import java.nio.file.Path;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.function.Predicate;
-
-import com.greymerk.roguelike.state.RoguelikeState;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.FallingBlock;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.registry.DynamicRegistryManager;
-import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.resource.featuretoggle.FeatureSet;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.structure.StructureSet;
-import net.minecraft.util.WorldSavePath;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.CheckedRandom;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.world.GameRules;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkStatus;
-import net.minecraft.world.dimension.DimensionTypes;
-import net.minecraft.world.gen.chunk.placement.StructurePlacement;
-import net.minecraft.world.gen.chunk.placement.StructurePlacementCalculator;
 
 public class WorldEditor implements IWorldEditor{
 
 	WorldAccess world;
 	RegistryKey<World> worldKey;
+	IWorldInfo worldInfo;
 	
 	public WorldEditor(StructureWorldAccess world, RegistryKey<World> worldKey){
 		this.world = world;
 		this.worldKey = worldKey;
+		this.worldInfo = WorldInfo.of(world, worldKey);
 	}
 
 	public WorldEditor(World world) {
 		this.world = world;
 		this.worldKey = world.getRegistryKey();
+		this.worldInfo = WorldInfo.of(world, worldKey);
 	}
 
 	@Override
@@ -73,17 +60,11 @@ public class WorldEditor implements IWorldEditor{
 	public boolean isAir(Coord pos) {
 		return this.world.isAir(pos.getBlockPos());
 	}
-	
-	@Override
-	public long getSeed() {
-		MinecraftServer server = this.world.getServer();
-		ServerWorld sw = server.getOverworld();
-		return sw.getSeed();
-	}
+
 	
 	@Override
 	public long getSeed(Coord pos) {
-		return Objects.hash(getSeed(), pos.hashCode());
+		return Objects.hash(this.worldInfo.getSeed(), pos.hashCode());
 	}
 	
 	@Override
@@ -148,12 +129,7 @@ public class WorldEditor implements IWorldEditor{
 		return false;
 	}
 	
-	@Override
-	public boolean isOverworld() {
-		MinecraftServer mcServer = world.getServer();
-		ServerWorld sw = mcServer.getWorld(worldKey);
-		return sw.getDimensionEntry().matchesKey(DimensionTypes.OVERWORLD);
-	}
+
 
 	@Override
 	public boolean hasBlockEntity(Coord pos) {
@@ -177,45 +153,12 @@ public class WorldEditor implements IWorldEditor{
 	}
 	
 	@Override
-	public DynamicRegistryManager getRegistryManager() {
-		return this.world.getRegistryManager();
-	}
-	
-	@Override
-	public FeatureSet getFeatureSet() {
-		return this.world.getEnabledFeatures();
-	}
-	
-	@Override
-	public Path getWorldDirectory() {
-		return this.world.getServer().getSavePath(WorldSavePath.ROOT);
-	}
-	
-	@Override
-	public GameRules getGameRules() {
-		return world.getServer().getGameRules();
-	}
-	
-	@Override
 	public RegistryKey<World> getRegistryKey(){
 		return this.worldKey;
 	}
-	
+
 	@Override
-	public RoguelikeState getState() {
-		return RoguelikeState.getServerState(worldKey, world.getServer());
-	}
-	
-	public Optional<Coord> getStructureLocation(RegistryKey<StructureSet> key, ChunkPos cpos){
-		MinecraftServer mcServer = world.getServer();
-		ServerWorld sw = mcServer.getWorld(worldKey);
-		StructurePlacementCalculator calculator = sw.getChunkManager().getStructurePlacementCalculator();
-		DynamicRegistryManager reg = world.getRegistryManager();
-		Registry<StructureSet> structures = reg.getOrThrow(RegistryKeys.STRUCTURE_SET);
-		StructureSet structure = structures.get(key);
-		StructurePlacement placement = structure.placement(); 
-		
-		if(!placement.shouldGenerate(calculator, cpos.x, cpos.z)) return Optional.empty();
-		return Optional.of(Coord.of(placement.getLocatePos(cpos)));
+	public IWorldInfo getInfo() {
+		return this.worldInfo;
 	}
 }

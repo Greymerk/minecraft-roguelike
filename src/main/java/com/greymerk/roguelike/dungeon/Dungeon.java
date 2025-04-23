@@ -50,7 +50,7 @@ public class Dungeon implements Iterable<IRoom>{
 		if(!Dungeon.canSpawn(editor, pos) && !force) return false;
 		Dungeon donjon = new Dungeon(pos.copy());
 		donjon.generate(editor);
-		editor.getState().addDungeon(donjon);
+		editor.getInfo().getState().addDungeon(donjon);
 		RoguelikeState.flagForGenerationCheck = true;
 		return true;
 	}
@@ -68,7 +68,7 @@ public class Dungeon implements Iterable<IRoom>{
 	}
 
 	public static boolean canSpawn(IWorldEditor editor, Coord pos) {
-		if(!editor.isOverworld()) return false;
+		if(!editor.getInfo().isOverworld()) return false;
 		
 		ExclusionZones zones = new ExclusionZones();
 		zones.scan(editor, pos, 300);

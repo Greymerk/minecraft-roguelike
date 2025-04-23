@@ -21,7 +21,7 @@ public class RoguelikeLootRules {
 		lootRules.add(Treasure.STARTER, loot.get(Loot.FOOD, Difficulty.EASIEST),  Difficulty.EASIEST, 2);
 		lootRules.add(Treasure.STARTER, loot.get(Loot.TOOL, Difficulty.EASIEST),  Difficulty.EASIEST, 2);
 		lootRules.add(Treasure.STARTER, loot.get(Loot.SUPPLY, Difficulty.EASIEST),  Difficulty.EASIEST, 2);
-		lootRules.add(Treasure.STARTER, new ItemSpecialty(editor.getRegistryManager(), 0, Difficulty.EASIEST, Equipment.LEGS, Quality.WOOD), Difficulty.EASIEST, 2);
+		lootRules.add(Treasure.STARTER, new ItemSpecialty(editor.getInfo().getRegistryManager(), 0, Difficulty.EASIEST, Equipment.LEGS, Quality.WOOD), Difficulty.EASIEST, 2);
 		List.of(Difficulty.values()).forEach(difficulty -> {
 			lootRules.add(Treasure.ARMOR, loot.get(Loot.POTION, difficulty),  difficulty, 1);
 			lootRules.add(Treasure.ARMOR, loot.get(Loot.ARMOUR, difficulty),  difficulty, 1);

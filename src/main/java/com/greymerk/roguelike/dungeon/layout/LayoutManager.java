@@ -87,7 +87,7 @@ public class LayoutManager {
 		}
 				
 		if(Config.ofBoolean(Config.DEBUG)) {
-			DebugLayout debug = new DebugLayout(editor.getWorldDirectory());
+			DebugLayout debug = new DebugLayout(editor.getInfo().getWorldDirectory());
 			debug.toFile(origin.getX() + "_" + origin.getZ() + ".json", CODEC.encodeStart(JsonOps.INSTANCE, this).getOrThrow());	
 		}
 	}

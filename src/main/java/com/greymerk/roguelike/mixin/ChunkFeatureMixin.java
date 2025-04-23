@@ -29,7 +29,7 @@ public class ChunkFeatureMixin {
 	public void generateFeatures(StructureWorldAccess world, Chunk chunk, StructureAccessor structureAccessor, CallbackInfo info) {
 		RegistryKey<World> worldKey = world.toServerWorld().getRegistryKey();
 		IWorldEditor editor = new WorldEditor(world, worldKey);
-		if(!editor.getGameRules().getBoolean(RoguelikeRules.GEN_ROGUELIKE_DUNGEONS)) return;
+		if(!editor.getInfo().getGameRules().getBoolean(RoguelikeRules.GEN_ROGUELIKE_DUNGEONS)) return;
 		
 		ChunkPos cpos = chunk.getPos();
 		Coord pos = new Coord(cpos.getCenterX(), world.getTopYInclusive(), cpos.getCenterZ()).freeze();
