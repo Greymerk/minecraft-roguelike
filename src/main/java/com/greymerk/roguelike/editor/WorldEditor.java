@@ -8,7 +8,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.FallingBlock;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.CheckedRandom;
@@ -95,23 +94,6 @@ public class WorldEditor implements IWorldEditor{
 	}
 
 	@Override
-	public Coord findSurface(Coord pos) {
-		
-		Coord cursor = new Coord(pos.getX(), world.getTopYInclusive(), pos.getZ());
-		
-		while(cursor.getY() > 60) {
-			MetaBlock m = this.getBlock(cursor);
-			if(m.getState().isIn(BlockTags.LOGS)) continue;
-			if(m.getState().isIn(BlockTags.LEAVES)) continue;
-			
-			if(!this.isAir(cursor) && !m.isPlant()) return cursor;
-			cursor.add(Cardinal.DOWN);
-		}
-		
-		return cursor;
-	}
-	
-	@Override
 	public boolean isSolid(Coord pos) {
 		return this.world.getBlockState(pos.getBlockPos()).isSolidBlock(world, pos.getBlockPos());
 	}
@@ -128,8 +110,6 @@ public class WorldEditor implements IWorldEditor{
 		if(!FallingBlock.canFallThrough(world.getBlockState(under.getBlockPos()))) return true;
 		return false;
 	}
-	
-
 
 	@Override
 	public boolean hasBlockEntity(Coord pos) {

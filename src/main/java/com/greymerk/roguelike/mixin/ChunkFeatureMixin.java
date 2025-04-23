@@ -10,6 +10,7 @@ import com.greymerk.roguelike.dungeon.Dungeon;
 import com.greymerk.roguelike.dungeon.DungeonPlacement;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
+import com.greymerk.roguelike.editor.IWorldInfo;
 import com.greymerk.roguelike.editor.WorldEditor;
 import com.greymerk.roguelike.gamerules.RoguelikeRules;
 
@@ -29,14 +30,13 @@ public class ChunkFeatureMixin {
 	public void generateFeatures(StructureWorldAccess world, Chunk chunk, StructureAccessor structureAccessor, CallbackInfo info) {
 		RegistryKey<World> worldKey = world.toServerWorld().getRegistryKey();
 		IWorldEditor editor = new WorldEditor(world, worldKey);
-		if(!editor.getInfo().getGameRules().getBoolean(RoguelikeRules.GEN_ROGUELIKE_DUNGEONS)) return;
+		IWorldInfo worldInfo = editor.getInfo();
+		if(!worldInfo.getGameRules().getBoolean(RoguelikeRules.GEN_ROGUELIKE_DUNGEONS)) return;
 		
 		ChunkPos cpos = chunk.getPos();
-		Coord pos = new Coord(cpos.getCenterX(), world.getTopYInclusive(), cpos.getCenterZ()).freeze();
-		
 		if(!DungeonPlacement.validChunkPos(editor, cpos)) return;
-		//if(!Dungeon.canSpawn(editor, pos)) return;
 		
+		Coord pos = new Coord(cpos.getCenterX(), worldInfo.getTopYInclusive(), cpos.getCenterZ()).freeze();
 		Random rand = editor.getRandom(pos);
 		Double chance = Math.clamp(Config.ofDouble(Config.FREQUENCY), 0, 1.0);
 		Double roll = rand.nextDouble();

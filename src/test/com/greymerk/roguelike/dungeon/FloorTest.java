@@ -13,7 +13,7 @@ class FloorTest {
 	@Test
 	void testFloor() {
 		Coord worldPos = new Coord(1,2,3);
-		Floor f = new Floor(worldPos);
+		Floor f = Floor.of(worldPos);
 		
 		assert(f.getOrigin().equals(worldPos));
 	}
@@ -23,7 +23,7 @@ class FloorTest {
 		Coord worldPos = Coord.ZERO;
 		Coord origin = Coord.ZERO;
 		Cardinal dir = Cardinal.NORTH;
-		Floor f = new Floor(worldPos);
+		Floor f = Floor.of(worldPos);
 		assert(f.getOrigin().equals(worldPos));
 		
 		EntranceRoom entrance = new EntranceRoom();

@@ -27,7 +27,11 @@ public class Floor {
 	private List<IRoom> rooms;
 	private CellManager cells;
 	
-	public Floor(Coord origin) {
+	public static Floor of(Coord origin) {
+		return new Floor(origin);
+	}
+	
+	private Floor(Coord origin) {
 		this.rooms = new ArrayList<IRoom>();
 		this.cells = new CellManager();
 		this.origin = origin;

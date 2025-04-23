@@ -71,13 +71,15 @@ public class Dungeon implements Iterable<IRoom>{
 		if(!editor.getInfo().isOverworld()) return false;
 		
 		ExclusionZones zones = new ExclusionZones();
-		zones.scan(editor, pos, 300);
-		if(zones.collides(Coord.of(pos.getX(), 0, pos.getZ()), 50)) {
+		final int SCAN_DISTANCE = 300;
+		final int COLLISION_RANGE = 50;
+		zones.scan(editor, pos, SCAN_DISTANCE);
+		if(zones.collides(pos.withY(0), COLLISION_RANGE)) {
 			Debug.info("Dungeon @" + pos.toString() + " failed: nearby trial chamber");
 			return false;
 		}
 		
-		Coord surface = editor.findSurface(pos);
+		Coord surface = editor.getInfo().findSurface(pos);
 		MetaBlock block = editor.getBlock(surface);
 		if(!block.isGround()) {
 			Debug.info("Dungeon @" + surface.toString() + " failed: " + block.getBlock().toString() + " isn't valid ground");
@@ -92,12 +94,11 @@ public class Dungeon implements Iterable<IRoom>{
 		
 		Stopwatch watch = Stopwatch.createStarted();
 		
-		Coord surface = editor.findSurface(this.origin);
-		int entranceY = (surface.getY() - surface.getY() % 10) - 10;
-		Coord firstFloor = new Coord(this.origin.getX(), entranceY, this.origin.getZ());
-
-		LayoutManager layout = new LayoutManager(firstFloor);
-		IRoom entrance = Room.getInstance(Room.ENTRANCE, LevelSettings.fromType(LevelSettings.OAK), new Coord(0, 0, 0), firstFloor);
+		Coord surface = editor.getInfo().findSurface(this.origin);
+		Coord firstFloor = this.origin.withY(editor.getInfo().getTopFloorDepth(origin));
+		
+		LayoutManager layout = new LayoutManager(firstFloor, editor.getInfo().getBottomFloorDepth());
+		IRoom entrance = Room.getInstance(Room.ENTRANCE, LevelSettings.fromType(LevelSettings.OAK), Coord.ZERO, firstFloor);
 		entrance.generate(editor);
 		entrance.setGenerated(true);
 		layout.addEntrance(entrance);
@@ -121,11 +122,6 @@ public class Dungeon implements Iterable<IRoom>{
 	
 	public IBounded getBounds() {
 		return this.bb;
-	}
-	
-	public static int getLevelFromY(int y) {
-		if(y > 60) return 0;
-		return Math.abs((int)(y / 10 - 6));
 	}
 	
 	@Override

@@ -38,41 +38,45 @@ public class LayoutManager {
 	
 	private Coord origin;
 	private List<Floor> floors;
-	private IDungeonSettings settings;
 	private ExclusionZones zones; 
 	
-	public LayoutManager(Coord origin) {
+	public LayoutManager(Coord origin, int depth) {
 		this.origin = origin;
-		this.settings = new DungeonSettingsDefault(Config.ofBoolean(Config.BELOW_SEA_LEVEL) ? 50 : origin.getY(), -50);
-		this.floors = createFloors();
+		this.floors = createFloors(depth);
 		this.zones = new ExclusionZones();
 	}
 	
 	public LayoutManager(Coord origin, List<Floor> floors) {
 		this.origin = origin;
 		this.floors = floors;
-		this.settings = new DungeonSettingsDefault(Config.ofBoolean(Config.BELOW_SEA_LEVEL) ? 50 : origin.getY(), -50);
 		this.zones = new ExclusionZones();
 	}
 	
 	public void generate(IWorldEditor editor) {
 
+		final int ROOMS_PER_LEVEL = 20;
+		
+		IDungeonSettings settings = new DungeonSettingsDefault(
+				Config.ofBoolean(Config.BELOW_SEA_LEVEL) 
+					? editor.getInfo().getFloorBelowSeaLevelDepth()
+					: origin.getY(),
+				editor.getInfo().getBottomFloorDepth());
+		
 		for(Floor floor : this.floors) {
 		
 			Random rand = editor.getRandom(floor.getOrigin());
+			ILevelSettings levelSettings = settings.getLevel(floor.getOrigin().getY());
 			
-			if(Config.ofBoolean(Config.BELOW_SEA_LEVEL) && floor.getOrigin().getY() > 55) {
-				this.addStair(editor, rand, floor);
+			if(Config.ofBoolean(Config.BELOW_SEA_LEVEL) && floor.getOrigin().getY() > editor.getInfo().getFloorBelowSeaLevelDepth()) {
+				this.addStair(editor, levelSettings, rand, floor);
 				continue;
 			}
-			
-			ILevelSettings levelSettings = this.settings.getLevel(floor.getOrigin().getY());
 			
 			this.connectFloorBranches(editor, rand, floor, levelSettings);
 			
 			RoomProvider roomProvider = levelSettings.getRooms();
 			
-			int numRooms = Math.clamp(Config.ofInteger(Config.ROOMS_PER_LEVEL).orElse(20), 1, 1000);
+			int numRooms = Math.clamp(Config.ofInteger(Config.ROOMS_PER_LEVEL).orElse(ROOMS_PER_LEVEL), 1, 1000);
 			
 			List<Room> rooms = roomProvider.getRooms(rand, numRooms);
 
@@ -81,7 +85,7 @@ public class LayoutManager {
 				this.placeRoom(room, rand, floor);
 			});
 			
-			this.addStair(editor, rand, floor);	
+			this.addStair(editor, levelSettings, rand, floor);	
 
 			this.determineExits(editor, rand, floor);
 		}
@@ -137,6 +141,7 @@ public class LayoutManager {
 		
 		List<Cell> cells = floor.getCells(CellState.POTENTIAL);
 		
+		// shuffle half the time, otherwise keep rooms close to dungeon center
 		if(rand.nextBoolean()) {
 			RandHelper.shuffle(cells, rand);
 		} else {
@@ -176,18 +181,17 @@ public class LayoutManager {
 		return dirs;
 	}
 
-	private void addStair(IWorldEditor editor, Random rand, Floor floor) {
+	private void addStair(IWorldEditor editor, ILevelSettings settings, Random rand, Floor floor) {
 		if(floors.indexOf(floor) >= floors.size() - 1) return;
-		IRoom stairway = Room.getInstance(Room.STAIRWAY, this.settings.getLevel(floor.getOrigin().getY()));
+		IRoom stairway = Room.getInstance(Room.STAIRWAY, settings);
 		placeRoom(stairway, rand, floor);
 		zones.scan(editor, stairway.getWorldPos(), 500);
 	}
 
 	public void addEntrance(IRoom room) {
 		Floor f = this.floors.get(0);
-		Coord fp = new Coord(0,0,0);
 		Coord wp = f.getOrigin();
-		this.addRoom(room, Cardinal.NORTH, fp, wp, f);
+		this.addRoom(room, Cardinal.NORTH, Coord.ZERO, wp, f);
 	}
 	
 	public void addRoom(IRoom toAdd, Cardinal dir, Coord fp, Coord wp, Floor floor) {
@@ -208,11 +212,10 @@ public class LayoutManager {
 		});
 	}
 	
-	private List<Floor> createFloors() {
-		int depth = -50;
+	private List<Floor> createFloors(int depth) {
 		List<Floor> floors = new ArrayList<Floor>();
 		for(int y = origin.getY(); y >= depth; y -= 10) {
-			floors.add(new Floor(new Coord(this.origin.getX(), y, this.origin.getZ())));
+			floors.add(Floor.of(origin.withY(y)));
 		}
 		return floors;
 	}
@@ -228,9 +231,8 @@ public class LayoutManager {
 	public class CenterSort implements Comparator<Cell>{
 		@Override
 		public int compare(Cell c, Cell other) {
-			Coord center = new Coord(0,0,0);			
-			int distC = (int) c.getFloorPos().distance(center);
-			int distOther = (int) other.getFloorPos().distance(center);
+			int distC = (int) c.getFloorPos().distance(Coord.ZERO);
+			int distOther = (int) other.getFloorPos().distance(Coord.ZERO);
 			return Integer.compare(distC, distOther);
 		}
 	}

@@ -72,6 +72,17 @@ public class Coord implements Comparable<Coord> {
 		return z;
 	}
 	
+	public Coord withX(int x) {
+		return Coord.of(x, this.y, this.z);
+	}
+	
+	public Coord withY(int y) {
+		return Coord.of(this.x, y, this.z);
+	}
+	
+	public Coord withZ(int z) {
+		return Coord.of(this.x, this.y, z);
+	}
 
 	public Coord add(Cardinal dir){
 		return add(dir, 1);
@@ -101,8 +112,6 @@ public class Coord implements Comparable<Coord> {
 			z += other.z;
 			return this;
 		}
-		
-		
 	}
 	
 	public Coord sub(Coord other){

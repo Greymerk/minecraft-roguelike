@@ -69,6 +69,14 @@ public class MetaBlock extends BlockBase{
 		return this.state.isIn(tag);
 	}
 	
+	public boolean isIn(List<TagKey<Block>> tags) {
+		for(TagKey<Block> tag : tags) {
+			if(isIn(tag)) return true;
+		}
+		
+		return false;
+	}
+	
 	public <T extends Comparable<T>> T get(Property<T> property) {
 		return this.state.get(property);
 	}
@@ -118,11 +126,7 @@ public class MetaBlock extends BlockBase{
 				BlockTags.SHOVEL_MINEABLE,
 				BlockTags.BADLANDS_TERRACOTTA);
 		
-		for(TagKey<Block> tag : tags) {
-			if(this.isIn(tag)) return true;
-		}
-		
-		return false;
+		return this.isIn(tags);
 	}
 
 	public boolean isLiquid() {

@@ -28,7 +28,7 @@ public interface IWorldEditor {
 	
 	public Random getRandom(Coord pos);
 			
-	public Coord findSurface(Coord pos);
+
 	
 	public boolean isChunkLoaded(Coord pos);
 	

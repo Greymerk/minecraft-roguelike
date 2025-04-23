@@ -25,8 +25,16 @@ public interface IWorldInfo {
 	
 	public int getHeight();
 	
+	public int getTopYInclusive();
+	
+	public Coord findSurface(Coord pos);
+	
 	public int getBottomY();
 	
+	public int getTopFloorDepth(Coord origin);
+	
+	public int getBottomFloorDepth();
+		
 	public boolean isOverworld();
 	
 	public DynamicRegistryManager getRegistryManager();
@@ -44,5 +52,7 @@ public interface IWorldInfo {
 	public long getSeed();
 	
 	public Optional<Coord> getStructureLocation(RegistryKey<StructureSet> key, ChunkPos cpos);
+
+	int getFloorBelowSeaLevelDepth();
 	
 }
