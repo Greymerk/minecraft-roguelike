@@ -41,9 +41,10 @@ public class KitchenRoom extends AbstractMediumRoom implements IRoom {
 		});
 		
 		for(Cardinal dir : Cardinal.directions) {
+			//outer wall
+			BoundingBox.of(origin).add(dir, 9).grow(Cardinal.orthogonal(dir), 9).grow(Cardinal.UP, 4).fill(editor, rand, wall, Fill.SOLID);
+			
 			for(Cardinal o : Cardinal.orthogonal(dir)) {
-				//outer wall
-				BoundingBox.of(origin).add(dir, 9).add(o, 3).grow(o, 6).grow(Cardinal.UP, 4).fill(editor, rand, wall, Fill.SOLID);
 				
 				//outer wall
 				BoundingBox.of(origin).add(dir, 8).add(Cardinal.UP, 3).grow(o, 8).grow(Cardinal.UP, 2).fill(editor, rand, wall);
