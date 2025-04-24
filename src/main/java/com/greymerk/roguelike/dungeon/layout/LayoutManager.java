@@ -58,16 +58,16 @@ public class LayoutManager {
 		
 		IDungeonSettings settings = new DungeonSettingsDefault(
 				Config.ofBoolean(Config.BELOW_SEA_LEVEL) 
-					? editor.getInfo().getFloorBelowSeaLevelDepth()
+					? editor.getInfo().getFirstFloorDepth()
 					: origin.getY(),
-				editor.getInfo().getBottomFloorDepth());
+				editor.getInfo().getLastFloorDepth());
 		
 		for(Floor floor : this.floors) {
 		
 			Random rand = editor.getRandom(floor.getOrigin());
 			ILevelSettings levelSettings = settings.getLevel(floor.getOrigin().getY());
 			
-			if(Config.ofBoolean(Config.BELOW_SEA_LEVEL) && floor.getOrigin().getY() > editor.getInfo().getFloorBelowSeaLevelDepth()) {
+			if(Config.ofBoolean(Config.BELOW_SEA_LEVEL) && floor.getOrigin().getY() > editor.getInfo().getFirstFloorDepth()) {
 				this.addStair(editor, levelSettings, rand, floor);
 				continue;
 			}
@@ -205,7 +205,7 @@ public class LayoutManager {
 		cells.getLevelOffsets().forEach(offset -> {
 			Floor f = this.floors.get(level + offset);
 			cells.getByOffset(offset).forEach(c -> {
-				Coord cfp = new Coord(c.getFloorPos().getX(), 0, c.getFloorPos().getZ());
+				Coord cfp = c.getFloorPos().withY(0);
 				cfp.add(fp);
 				f.addCell(Cell.of(cfp, c.getState(), c.getOwner().orElse(null)).addWalls(c.getWalls()));
 			});

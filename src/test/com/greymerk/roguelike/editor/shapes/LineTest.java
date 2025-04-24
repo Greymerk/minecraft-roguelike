@@ -11,8 +11,8 @@ class LineTest {
 	
 	@Test
 	void testLine() {
-		Coord start = new Coord(0,0,0);
-		Coord end = new Coord(0,0,5);
+		Coord start = Coord.ZERO;
+		Coord end = Coord.of(0,0,5);
 		Line line = new Line(start, end);
 		line.start.equals(start);
 		line.end.equals(end);
@@ -20,31 +20,31 @@ class LineTest {
 
 	@Test
 	void testGet() {
-		Coord start = new Coord(0,0,0);
-		Coord end = new Coord(0,0,3);
+		Coord start = Coord.ZERO;
+		Coord end = Coord.of(0,0,3);
 		Line line = new Line(start, end);
 		List<Coord> coords = line.get();
-		assert(coords.contains(new Coord(0,0,0)));
-		assert(coords.contains(new Coord(0,0,1)));
-		assert(coords.contains(new Coord(0,0,2)));
-		assert(coords.contains(new Coord(0,0,3)));
+		assert(coords.contains(Coord.ZERO));
+		assert(coords.contains(Coord.of(0,0,1)));
+		assert(coords.contains(Coord.of(0,0,2)));
+		assert(coords.contains(Coord.of(0,0,3)));
 		
 	}
 
 	@Test
 	void testIterator() {
-		Coord start = new Coord(0,0,0);
-		Coord end = new Coord(0,0,3);
+		Coord start = Coord.ZERO;
+		Coord end = Coord.of(0,0,3);
 		Line line = new Line(start, end);
 		List<Coord> coords = new ArrayList<Coord>();
 		for(Coord c : line) {
 			coords.add(c);
 		}
 		assert(coords.size() == 4);
-		assert(coords.contains(new Coord(0,0,0)));
-		assert(coords.contains(new Coord(0,0,1)));
-		assert(coords.contains(new Coord(0,0,2)));
-		assert(coords.contains(new Coord(0,0,3)));
+		assert(coords.contains(Coord.ZERO));
+		assert(coords.contains(Coord.of(0,0,1)));
+		assert(coords.contains(Coord.of(0,0,2)));
+		assert(coords.contains(Coord.of(0,0,3)));
 	}
 
 }

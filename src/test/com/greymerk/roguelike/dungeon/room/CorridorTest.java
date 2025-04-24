@@ -11,7 +11,7 @@ class CorridorTest {
 
 	@Test
 	void getCellsTest() {
-		Coord origin = new Coord(0,0,0);
+		Coord origin = Coord.ZERO;
 		Cardinal dir = Cardinal.EAST;
 		Corridor room = new Corridor();
 		room.setDirection(dir);

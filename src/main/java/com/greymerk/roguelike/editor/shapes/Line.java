@@ -164,7 +164,7 @@ public class Line implements IShape{
 			++counter;
 			
 			Coord toReturn = this.current.copy();
-			this.current = new Coord(x, y, z);
+			this.current = Coord.of(x, y, z);
 			return toReturn;
 		}
 	}

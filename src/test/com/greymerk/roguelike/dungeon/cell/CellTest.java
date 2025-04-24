@@ -14,7 +14,7 @@ class CellTest {
 
 	@Test
 	void testGetState() {
-		Coord pos = new Coord(0,0,0);
+		Coord pos = Coord.ZERO;
 		Cell c = new Cell(pos, CellState.OBSTRUCTED, null);
 		assert(c.getState() == CellState.OBSTRUCTED);
 		
@@ -27,7 +27,7 @@ class CellTest {
 	
 	@Test
 	void testReplace() {
-		Coord pos = new Coord(0,0,0);
+		Coord pos = Coord.ZERO;
 		Cell c = new Cell(pos, CellState.EMPTY, null);
 		assert(!(c.getWalls().contains(Cardinal.NORTH)));
 		
@@ -39,7 +39,7 @@ class CellTest {
 
 	@Test
 	void testGetLevelOffset() {
-		Coord origin = new Coord(0,0,0);
+		Coord origin = Coord.ZERO;
 		Cell c1 = Cell.of(origin.copy(), CellState.OBSTRUCTED, null);
 		assert(c1.getLevelOffset() == 0);
 
@@ -55,9 +55,9 @@ class CellTest {
 	
 	@Test
 	void testGetWorldPos() {
-		Coord worldPos = new Coord(5, 10, -10);
-		Cell c = Cell.of(new Coord(3, 0, -2), CellState.OBSTRUCTED, null);
-		assert(c.getWorldPos(worldPos).equals(new Coord(23, 10, -22)));
+		Coord worldPos = Coord.of(5, 10, -10);
+		Cell c = Cell.of(Coord.of(3, 0, -2), CellState.OBSTRUCTED, null);
+		assert(c.getWorldPos(worldPos).equals(Coord.of(23, 10, -22)));
 	}
 	
 	@Test

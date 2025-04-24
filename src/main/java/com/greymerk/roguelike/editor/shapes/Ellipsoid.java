@@ -65,9 +65,9 @@ public class Ellipsoid implements IShape {
 			Coord e = end.copy();
 			
 			this.diff = e.sub(s);
-			this.diff = new Coord(Math.abs(diff.getX()), Math.abs(diff.getY()), Math.abs(diff.getZ()));
+			this.diff = Coord.of(Math.abs(diff.getX()), Math.abs(diff.getY()), Math.abs(diff.getZ()));
 			
-			cursor = new Coord(0,0,0);
+			cursor = Coord.ZERO;
 			top = true;
 			this.dir = Cardinal.NORTH;
 		}
@@ -104,7 +104,7 @@ public class Ellipsoid implements IShape {
 				top = true;
 				return toReturn;
 			} else {
-				cursor = new Coord(cursor.getX(), cursor.getY(), 0);
+				cursor = Coord.of(cursor.getX(), cursor.getY(), 0);
 			}
 			
 			cursor.add(Cardinal.EAST);
@@ -114,7 +114,7 @@ public class Ellipsoid implements IShape {
 				top = true;
 				return toReturn;
 			} else {
-				cursor = new Coord(0, cursor.getY(), cursor.getZ());
+				cursor = Coord.of(0, cursor.getY(), cursor.getZ());
 			}
 			
 			cursor.add(Cardinal.UP);

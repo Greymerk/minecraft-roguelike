@@ -36,7 +36,7 @@ public class ChunkFeatureMixin {
 		ChunkPos cpos = chunk.getPos();
 		if(!DungeonPlacement.validChunkPos(editor, cpos)) return;
 		
-		Coord pos = new Coord(cpos.getCenterX(), worldInfo.getTopYInclusive(), cpos.getCenterZ()).freeze();
+		Coord pos = Coord.of(cpos.getCenterX(), worldInfo.getTopYInclusive(), cpos.getCenterZ()).freeze();
 		Random rand = editor.getRandom(pos);
 		Double chance = Math.clamp(Config.ofDouble(Config.FREQUENCY), 0, 1.0);
 		Double roll = rand.nextDouble();

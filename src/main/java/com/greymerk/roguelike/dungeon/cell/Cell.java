@@ -35,12 +35,6 @@ public class Cell {
 	private Set<Cardinal> walls;
 	private IRoom owner;
 	
-	/*
-	public static Cell of(Coord floorPos, CellState state, List<Cardinal> walls) {
-		return Cell.of(floorPos, state, null, walls);
-	}
-	*/
-	
 	public static Cell of(Coord floorPos, CellState state, IRoom room) {
 		return new Cell(floorPos, state, room);
 	}
@@ -98,7 +92,7 @@ public class Cell {
 	
 	public Coord getWorldPos(Coord origin) {
 		return this.floorPos.copy()
-				.mul(new Coord(Cell.SIZE, 1, Cell.SIZE))
+				.mul(Coord.of(Cell.SIZE, 1, Cell.SIZE))
 				.add(origin);
 	}
 	

@@ -32,7 +32,7 @@ public enum Tower {
 			yOffset = 14;
 		}
 		
-		return new Coord(pos.getX(), pos.getY() + yOffset, pos.getZ());
+		return pos.withY(pos.getY() + yOffset);
 	}
 
 	public static Tower get(String name) throws Exception{

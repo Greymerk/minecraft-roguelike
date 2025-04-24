@@ -136,19 +136,19 @@ public class WorldInfo implements IWorldInfo {
 	}
 
 	@Override
-	public int getBottomFloorDepth() {
+	public int getLastFloorDepth() {
 		int minY = this.getBottomY();
 		return minY - Math.floorMod(minY, 10) + 20;
 	}
 
 	@Override
-	public int getTopFloorDepth(Coord origin) {
+	public int getDungeonEntryDepth(Coord origin) {
 		Coord surface = this.findSurface(origin);
 		return (surface.getY() - Math.floorMod(surface.getY(), 10)) - 10;
 	}
 	
 	@Override
-	public int getFloorBelowSeaLevelDepth() {
+	public int getFirstFloorDepth() {
 		int sl = this.getSeaLevel();
 		return (sl - Math.floorMod(sl, 10)) - 10;
 	}

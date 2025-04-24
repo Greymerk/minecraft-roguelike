@@ -11,7 +11,7 @@ class CellManagerTest {
 
 	@Test
 	void testAdd() {
-		Coord pos = new Coord(0,0,0);
+		Coord pos = Coord.ZERO;
 		CellManager cells = new CellManager();
 		assert(cells.get(pos).getState() == CellState.EMPTY);
 
@@ -36,7 +36,7 @@ class CellManagerTest {
 	
 	@Test
 	void testGet() {
-		Coord pos = new Coord(0,0,0);
+		Coord pos = Coord.ZERO;
 		CellManager cells = new CellManager();
 		assert(cells.get(pos).getState() == CellState.EMPTY);
 		
@@ -140,15 +140,15 @@ class CellManagerTest {
 		
 		assert(cells.getCells().size() == 0);
 		
-		cells.add(new Cell(new Coord(0,0,0), CellState.POTENTIAL, null));
-		cells.add(new Cell(new Coord(0,0,1), CellState.POTENTIAL, null));
-		cells.add(new Cell(new Coord(0,1,0), CellState.POTENTIAL, null));
+		cells.add(new Cell(Coord.ZERO, CellState.POTENTIAL, null));
+		cells.add(new Cell(Coord.of(0,0,1), CellState.POTENTIAL, null));
+		cells.add(new Cell(Coord.of(0,1,0), CellState.POTENTIAL, null));
 		assert(cells.getCells().size() == 3);
 		assert(cells.getCells(CellState.POTENTIAL).size() == 3);
 		
-		cells.add(new Cell(new Coord(0,0,0), CellState.OBSTRUCTED, null));
-		cells.add(new Cell(new Coord(1,0,0), CellState.OBSTRUCTED, null));
-		cells.add(new Cell(new Coord(0,2,0), CellState.OBSTRUCTED, null));
+		cells.add(new Cell(Coord.ZERO, CellState.OBSTRUCTED, null));
+		cells.add(new Cell(Coord.of(1,0,0), CellState.OBSTRUCTED, null));
+		cells.add(new Cell(Coord.of(0,2,0), CellState.OBSTRUCTED, null));
 		assert(cells.getCells().size() == 5);
 		assert(cells.getCells(CellState.POTENTIAL).size() == 2);
 		assert(cells.getCells(CellState.OBSTRUCTED).size() == 3);

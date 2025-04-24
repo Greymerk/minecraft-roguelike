@@ -80,7 +80,7 @@ public class RectWireframe implements IShape {
 			Coord toReturn = cursor.copy();	
 			
 			if(cursor.getZ() == c2.getZ() && cursor.getX() == c2.getX()){
-				cursor = new Coord(c1.getX(), cursor.getY(), c1.getZ());
+				cursor = c1.withY(cursor.getY());
 				cursor.add(Cardinal.UP);
 				return toReturn;
 			}
@@ -88,7 +88,7 @@ public class RectWireframe implements IShape {
 			if(cursor.getY() == c1.getY() || cursor.getY() == c2.getY()){
 				
 				if(cursor.getX() == c2.getX()){
-					cursor = new Coord(c1.getX(), cursor.getY(), cursor.getZ());
+					cursor = cursor.withX(c1.getX());
 					cursor.add(Cardinal.SOUTH);
 					return toReturn;
 				}
@@ -99,7 +99,7 @@ public class RectWireframe implements IShape {
 				}
 				
 				if(cursor.getX() == c1.getX()){
-					cursor = new Coord(c2.getX(), cursor.getY(), cursor.getZ());
+					cursor = cursor.withX(c2.getX());
 					return toReturn;
 				}
 				
@@ -107,16 +107,16 @@ public class RectWireframe implements IShape {
 			}
 
 			if(cursor.getX() == c1.getX()){
-				cursor = new Coord(c2.getX(), cursor.getY(), cursor.getZ());
+				cursor = cursor.withX(c2.getX());
 				return toReturn;
 			}
 			
 			if(cursor.getX() == c2.getX()){
-				cursor = new Coord(c1.getX() ,cursor.getY(), c2.getZ());
+				cursor = Coord.of(c1.getX(), cursor.getY(), c2.getZ());
 				return toReturn;
 			}
 			
-			cursor = new Coord(c2.getX(), cursor.getY(), cursor.getZ());
+			cursor = cursor.withX(c2.getX());
 			return toReturn;
 			
 		}

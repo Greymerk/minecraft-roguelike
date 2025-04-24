@@ -30,13 +30,13 @@ public class DungeonPlacement {
 		Coord village = Coord.of(villageChunk.getCenterAtY(0));
 		Random rand = editor.getRandom(village);
 		
-		Coord chunkFrom = new Coord(cpos.x, 0, cpos.z);
-		Coord chunkVillage = new Coord(villageChunk.x, 0, villageChunk.z);
+		Coord chunkFrom = Coord.of(cpos.x, 0, cpos.z);
+		Coord chunkVillage = Coord.of(villageChunk.x, 0, villageChunk.z);
 		
 		int chunkDist = chunkFrom.manhattanDistance(chunkVillage);
 		if(chunkDist != 6) return false;
 
-		Coord dirToDungeon = new Coord(
+		Coord dirToDungeon = Coord.of(
 				rand.nextBetween(-100, 100),
 				0,
 				rand.nextBetween(-100, 100));

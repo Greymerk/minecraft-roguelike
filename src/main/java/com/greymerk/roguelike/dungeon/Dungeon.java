@@ -95,9 +95,10 @@ public class Dungeon implements Iterable<IRoom>{
 		Stopwatch watch = Stopwatch.createStarted();
 		
 		Coord surface = editor.getInfo().findSurface(this.origin);
-		Coord firstFloor = this.origin.withY(editor.getInfo().getTopFloorDepth(origin));
+		Coord firstFloor = this.origin.withY(editor.getInfo().getDungeonEntryDepth(origin));
 		
-		LayoutManager layout = new LayoutManager(firstFloor, editor.getInfo().getBottomFloorDepth());
+		LayoutManager layout = new LayoutManager(firstFloor, editor.getInfo().getLastFloorDepth());
+		
 		IRoom entrance = Room.getInstance(Room.ENTRANCE, LevelSettings.fromType(LevelSettings.OAK), Coord.ZERO, firstFloor);
 		entrance.generate(editor);
 		entrance.setGenerated(true);

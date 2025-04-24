@@ -181,13 +181,13 @@ public class BoundingBox implements IBounded, IShape{
 	}
 	
 	private void correct() {
-		Coord s = new Coord(
+		Coord s = Coord.of(
 				end.getX() < start.getX() ? end.getX() : start.getX(),
 				end.getY() < start.getY() ? end.getY() : start.getY(),
 				end.getZ() < start.getZ() ? end.getZ() : start.getZ()
 				);
 		
-		Coord e = new Coord(
+		Coord e = Coord.of(
 				end.getX() < start.getX() ? start.getX() : end.getX(),
 				end.getY() < start.getY() ? start.getY() : end.getY(),
 				end.getZ() < start.getZ() ? start.getZ() : end.getZ()

@@ -31,9 +31,9 @@ public interface IWorldInfo {
 	
 	public int getBottomY();
 	
-	public int getTopFloorDepth(Coord origin);
+	public int getDungeonEntryDepth(Coord origin);
 	
-	public int getBottomFloorDepth();
+	public int getLastFloorDepth();
 		
 	public boolean isOverworld();
 	
@@ -53,6 +53,6 @@ public interface IWorldInfo {
 	
 	public Optional<Coord> getStructureLocation(RegistryKey<StructureSet> key, ChunkPos cpos);
 
-	int getFloorBelowSeaLevelDepth();
+	int getFirstFloorDepth();
 	
 }

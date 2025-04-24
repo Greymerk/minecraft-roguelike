@@ -64,7 +64,7 @@ public class RectPyramid implements IShape {
 			Coord s = bb.getStart();
 			Coord e = bb.getEnd();
 			
-			cursor = new Coord(0,0,0);
+			cursor = Coord.ZERO;
 			dir = Cardinal.NORTH;
 			
 			diff = e.copy();
@@ -107,7 +107,7 @@ public class RectPyramid implements IShape {
 				return toReturn;
 			}
 			
-			cursor = new Coord(cursor.getX(), cursor.getY(), 0);
+			cursor = cursor.withZ(0);
 			
 			
 			cursor.add(Cardinal.EAST);
@@ -117,7 +117,7 @@ public class RectPyramid implements IShape {
 				return toReturn;
 			}
 			
-			cursor = new Coord(0, cursor.getY(), cursor.getZ());
+			cursor = cursor.withX(0);
 			cursor.add(Cardinal.UP);
 			dir = Cardinal.left(dir);
 			return toReturn;

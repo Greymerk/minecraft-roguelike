@@ -22,7 +22,7 @@ public class Coord implements Comparable<Coord> {
 		).apply(instance, Coord::new)
 	);
 	
-	public static final Coord ZERO = new Coord(0,0,0).freeze();
+	public static final Coord ZERO = Coord.of(0,0,0).freeze();
 	
 	boolean frozen;
 	
@@ -31,25 +31,25 @@ public class Coord implements Comparable<Coord> {
 	private int z;
 	
 	public static Coord of(BlockPos bp){
-		return new Coord(bp.getX(), bp.getY(), bp.getZ());
+		return Coord.of(bp.getX(), bp.getY(), bp.getZ());
 	}
 	
 	public static Coord of(ChunkPos cpos) {
-		return new Coord(cpos.x << 4, 0, cpos.z << 4);
+		return Coord.of(cpos.x << 4, 0, cpos.z << 4);
 	}
 	
 	public static Coord of(NbtCompound tag) {
 		int x = tag.getInt("x").get();
 		int y = tag.getInt("y").get();
 		int z = tag.getInt("z").get();
-		return new Coord(x, y, z);
+		return Coord.of(x, y, z);
 	}
 	
 	public static Coord of(int x, int y, int z) {
 		return new Coord(x, y, z);
 	}
 	
-	public Coord(int x, int y, int z){
+	private Coord(int x, int y, int z){
 		this.frozen = false;
 		this.x = x;
 		this.y = y;
@@ -57,7 +57,7 @@ public class Coord implements Comparable<Coord> {
 	}
 		
 	public Coord copy() {
-		return new Coord(x, y ,z);
+		return Coord.of(x, y ,z);
 	}
 	
 	public int getX(){
@@ -90,19 +90,19 @@ public class Coord implements Comparable<Coord> {
 	
 	public Coord add(Cardinal dir, int amount){
 		switch(dir){
-		case EAST: if(this.frozen) {return new Coord(x + amount, y, z);} else {this.x += amount; return this;}
-		case WEST: if(this.frozen) {return new Coord(x - amount, y, z);} else {this.x -= amount; return this;}
-		case UP: if(this.frozen) {return new Coord(x, y + amount, z);} else {this.y += amount; return this;}
-		case DOWN: if(this.frozen) {return new Coord(x, y - amount, z);} else {this.y -= amount; return this;}
-		case NORTH: if(this.frozen) {return new Coord(x, y, z - amount);} else {this.z -= amount; return this;}
-		case SOUTH: if(this.frozen) {return new Coord(x, y, z + amount);} else {this.z += amount; return this;}
+		case EAST: if(this.frozen) {return Coord.of(x + amount, y, z);} else {this.x += amount; return this;}
+		case WEST: if(this.frozen) {return Coord.of(x - amount, y, z);} else {this.x -= amount; return this;}
+		case UP: if(this.frozen) {return Coord.of(x, y + amount, z);} else {this.y += amount; return this;}
+		case DOWN: if(this.frozen) {return Coord.of(x, y - amount, z);} else {this.y -= amount; return this;}
+		case NORTH: if(this.frozen) {return Coord.of(x, y, z - amount);} else {this.z -= amount; return this;}
+		case SOUTH: if(this.frozen) {return Coord.of(x, y, z + amount);} else {this.z += amount; return this;}
 		}
 		return this.frozen ? this.copy() : this;
 	}
 	
 	public Coord add(Coord other){
 		if(this.frozen) {
-			return new Coord(
+			return Coord.of(
 					x + other.x,
 					y + other.y,
 					z + other.z);
@@ -116,7 +116,7 @@ public class Coord implements Comparable<Coord> {
 	
 	public Coord sub(Coord other){
 		if(this.frozen) {
-			return new Coord(
+			return Coord.of(
 					x - other.x,
 					y - other.y,
 					z - other.z);
@@ -129,7 +129,7 @@ public class Coord implements Comparable<Coord> {
 	}
 	
 	public Coord mul(Coord other) {
-		return new Coord(x * other.x, y * other.y, z * other.z);
+		return Coord.of(x * other.x, y * other.y, z * other.z);
 	}
 	
 	public int dot(Coord other) {
@@ -146,7 +146,7 @@ public class Coord implements Comparable<Coord> {
 		double px = proj * onto.x;
 		double py = proj * onto.y;
 		double pz = proj * onto.z;
-		return new Coord(
+		return Coord.of(
 					(int)Math.floor(px), 
 					(int)Math.floor(py),
 					(int)Math.floor(pz));
@@ -167,7 +167,7 @@ public class Coord implements Comparable<Coord> {
 	}
 	
 	public Coord unit() {
-		return new Coord(
+		return Coord.of(
 			x == 0 ? 0 : x / Math.abs(x),
 			y == 0 ? 0 : y / Math.abs(y),
 			z == 0 ? 0 : z / Math.abs(z));

@@ -12,7 +12,7 @@ class FloorTest {
 
 	@Test
 	void testFloor() {
-		Coord worldPos = new Coord(1,2,3);
+		Coord worldPos = Coord.of(1,2,3);
 		Floor f = Floor.of(worldPos);
 		
 		assert(f.getOrigin().equals(worldPos));
