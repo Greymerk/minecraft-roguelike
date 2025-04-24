@@ -1,13 +1,12 @@
 package com.greymerk.roguelike.state;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.stream.StreamSupport;
 
 import com.greymerk.roguelike.Roguelike;
 import com.greymerk.roguelike.dungeon.Dungeon;
 import com.greymerk.roguelike.dungeon.room.IRoom;
-import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -15,7 +14,6 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.PersistentState;
-import net.minecraft.world.PersistentStateManager;
 import net.minecraft.world.PersistentStateType;
 import net.minecraft.world.World;
 
@@ -48,36 +46,31 @@ public class RoguelikeState extends PersistentState {
 		this.markDirty();
 	}
 	
+	public boolean hasDungeons() {
+		return !this.dungeons.isEmpty();
+	}
+	
 	public void update() {
+		this.dungeons.forEach(d -> {
+			if(d.isGenerated()) {
+				this.dungeons.remove(d);
+			}
+		});
 		this.markDirty();
 	}
 	
 	public List<IRoom> getFromLoaded(IWorldEditor editor){
-		List<IRoom> loadedRooms = new ArrayList<IRoom>();
-		
-		for(Dungeon d : this.dungeons) {
-			for(IRoom r : d) {
-				if(r.isGenerated()) continue;
-				Coord pos = r.getWorldPos();
-				if(editor.surroundingChunksLoaded(pos)) {
-					loadedRooms.add(r);
-				}
-			}
-		}
-		
-		return loadedRooms;
+		return this.dungeons.stream()
+				.flatMap(d -> StreamSupport.stream(d.spliterator(), false))
+				.filter(r -> !r.isGenerated())
+				.filter(r -> editor.surroundingChunksLoaded(r.getWorldPos()))
+				.toList();
 	}
     
     public static RoguelikeState getServerState(RegistryKey<World> worldKey, MinecraftServer server) {
-        // First we get the persistentStateManager for the OVERWORLD
-        PersistentStateManager persistentStateManager = server
-                .getWorld(worldKey).getPersistentStateManager();
- 
-        // Calling this reads the file from the disk if it exists, or creates a new one and saves it to the disk
-        // You need to use a unique string as the key. You should already have a MODID variable defined by you somewhere in your code. Use that.
-        RoguelikeState serverState = persistentStateManager.getOrCreate(getPersistentStateType());
-        
-        return serverState;
+        return server.getWorld(worldKey)
+        		.getPersistentStateManager()
+        		.getOrCreate(getPersistentStateType());
     }
     
     public static PersistentStateType<RoguelikeState> getPersistentStateType() {

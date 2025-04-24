@@ -31,7 +31,6 @@ public class Dungeon implements Iterable<IRoom>{
 	Coord origin;
 	BoundingBox bb;
 	
-	
 	public static final Codec<List<IRoom>> LIST_ROOM_CODEC = Codec.list(Room.CODEC);
 	
 	public static final Codec<Dungeon> CODEC = RecordCodecBuilder.create(
