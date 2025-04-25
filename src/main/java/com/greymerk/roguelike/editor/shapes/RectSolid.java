@@ -1,9 +1,8 @@
 package com.greymerk.roguelike.editor.shapes;
-
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.StreamSupport;
 
 import com.greymerk.roguelike.editor.BlockContext;
 import com.greymerk.roguelike.editor.Cardinal;
@@ -44,9 +43,7 @@ public class RectSolid implements IShape {
 
 	@Override
 	public List<Coord> get(){
-		List<Coord> coords = new ArrayList<Coord>();
-		this.forEach(c -> coords.add(c));
-		return coords;
+		return StreamSupport.stream(this.spliterator(), false).toList();
 	}
 	
 	@Override
@@ -57,39 +54,37 @@ public class RectSolid implements IShape {
 	private class RectSolidIterator implements Iterator<Coord>{
 
 		Coord cursor;
-		Coord c1;
-		Coord c2;
+		Coord start;
+		Coord end;
 		
 		public RectSolidIterator(BoundingBox bb){
-			this.c1 = bb.getStart();
-			this.c2 = bb.getEnd();
-			cursor = this.c1.copy();
+			this.start = bb.getStart();
+			this.end = bb.getEnd();
+			cursor = this.start.copy();
 		}
 		
 		@Override
 		public boolean hasNext() {
-			return this.cursor.getY() <= this.c2.getY();
+			return this.cursor.getY() <= this.end.getY();
 		}
 
 		@Override
 		public Coord next() {
 			
-			Coord toReturn = cursor.copy();
+			Coord current = cursor.copy();
 			
-			if(cursor.getZ() == c2.getZ() && cursor.getX() == c2.getX()){
-				cursor = c1.withY(cursor.getY());
-				cursor.add(Cardinal.UP);
-				return toReturn;
+			if(cursor.getZ() == end.getZ() && cursor.getX() == end.getX()){
+				cursor = start.withY(cursor.getY()).add(Cardinal.UP);
+				return current;
 			}
 			
-			if(cursor.getX() == c2.getX()){
-				cursor = cursor.withX(c1.getX());
-				cursor.add(Cardinal.SOUTH);
-				return toReturn;
+			if(cursor.getX() == end.getX()){
+				cursor = cursor.withX(start.getX()).add(Cardinal.SOUTH);
+				return current;
 			}
 			
 			cursor.add(Cardinal.EAST);
-			return toReturn;
+			return current;
 			
 		}
 

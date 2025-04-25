@@ -51,11 +51,12 @@ public class CreeperRoom extends AbstractMediumRoom implements IRoom {
 	}
 
 	private void chest(IWorldEditor editor, Random rand, Coord origin) {
-		List<Coord> space = BoundingBox.of(origin).grow(Cardinal.directions, 2).get();
-		RandHelper.shuffle(space, rand);
-		Coord pos = space.getFirst();
-		Treasure.generate(editor, rand, settings.getDifficulty(), pos, Treasure.ORE, ChestType.TRAPPED_CHEST);
-		MetaBlock.of(Blocks.TNT).set(editor, pos.copy().add(Cardinal.DOWN, 2));
+		BoundingBox.of(origin).grow(Cardinal.directions, 2).get().stream()
+			.sorted(RandHelper.randomizer(rand))
+			.findFirst().ifPresent(pos -> {
+				Treasure.generate(editor, rand, settings.getDifficulty(), pos, Treasure.ORE, ChestType.TRAPPED_CHEST);
+				MetaBlock.of(Blocks.TNT).set(editor, pos.copy().add(Cardinal.DOWN, 2));		
+			});
 	}
 
 	private void tnt(IWorldEditor editor, Random rand, Coord origin) {

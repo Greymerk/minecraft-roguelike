@@ -1,9 +1,9 @@
 package com.greymerk.roguelike.editor.shapes;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.StreamSupport;
 
 import com.greymerk.roguelike.editor.BlockContext;
 import com.greymerk.roguelike.editor.Cardinal;
@@ -43,11 +43,7 @@ public class RectPyramid implements IShape {
 
 	@Override
 	public List<Coord> get() {
-		List<Coord> shape = new ArrayList<Coord>();
-		for (Coord pos : this){
-			shape.add(pos);
-		}
-		return shape;
+		return StreamSupport.stream(this.spliterator(), false).toList();
 	}
 	
 	private class SquarePyramidIterator implements Iterator<Coord>{

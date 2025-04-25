@@ -1,6 +1,5 @@
 package com.greymerk.roguelike.dungeon.fragment.parts;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,17 +42,13 @@ public class SpiderNest implements IFragment {
 	}
 		
 	private Optional<Line> getStrand(IWorldEditor editor, Coord start, Coord end) {
-		Line strand = Line.of(start, end);
-		
-		List<Coord> segments = strand.get();
-		
-		Collections.sort(segments, (a, b) -> {
-			return (int) (Math.round(start.distance(b)) - Math.round(start.distance(a)));
-		});
+		List<Coord> segments = Line.of(start, end).get().stream()
+				.sorted((a, b) -> {
+					return (int) (Math.round(start.distance(b)) - Math.round(start.distance(a)));
+				}).toList();
 		
 		for(Coord c : segments) {
 			if(c.equals(start)) continue;
-			
 			if(editor.isSupported(c)) return Optional.of(Line.of(start, c));
 		}
 		
