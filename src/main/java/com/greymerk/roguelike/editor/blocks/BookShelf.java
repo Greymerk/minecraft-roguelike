@@ -1,7 +1,7 @@
 package com.greymerk.roguelike.editor.blocks;
 
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 import java.util.stream.IntStream;
 
 import com.greymerk.roguelike.dungeon.Difficulty;
@@ -26,11 +26,10 @@ public class BookShelf {
 			.with(HorizontalFacingBlock.FACING, Cardinal.facing(Cardinal.reverse(dir)))
 			.set(editor, origin);
 		
-		BlockEntity be = editor.getBlockEntity(origin);
-		
-		if(be == null) return;
+		Optional<BlockEntity> obe = editor.getBlockEntity(origin);
+		if(obe.isEmpty()) return;
+		BlockEntity be  = obe.get();
 		if(!(be instanceof ChiseledBookshelfBlockEntity)) return;
-		
 		ChiseledBookshelfBlockEntity shelf = (ChiseledBookshelfBlockEntity)be;
 		
 		getSlots(rand).forEach(i -> {
@@ -41,9 +40,11 @@ public class BookShelf {
 	}
 	
 	private static List<Integer> getSlots(Random rand){
-		List<Integer> slots = IntStream.rangeClosed(0, 5).boxed().collect(Collectors.toList());
-		RandHelper.shuffle(slots, rand);
-		return slots.subList(0, slotCount(rand));
+		return IntStream.rangeClosed(0, 5)
+			.boxed()
+			.sorted(RandHelper.randomizer(rand))
+			.limit(slotCount(rand))
+			.toList();
 	}
 	
 	private static int slotCount(Random rand) {

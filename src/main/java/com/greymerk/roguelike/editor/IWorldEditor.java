@@ -1,5 +1,6 @@
 package com.greymerk.roguelike.editor;
 
+import java.util.Optional;
 import java.util.function.Predicate;
 
 import net.minecraft.block.entity.BlockEntity;
@@ -22,13 +23,11 @@ public interface IWorldEditor {
 	
 	public boolean hasBlockEntity(Coord pos);
 	
-	public BlockEntity getBlockEntity(Coord pos);
+	public Optional<BlockEntity> getBlockEntity(Coord pos);
 	
 	public long getSeed(Coord pos);
 	
 	public Random getRandom(Coord pos);
-			
-
 	
 	public boolean isChunkLoaded(Coord pos);
 	

@@ -46,6 +46,7 @@ public class LevelSettingsMossy extends LevelSettingsBase implements ILevelSetti
 
 		this.filters = new ArrayList<IFilter>();
 		this.filters.add(Filter.get(Filter.VINE));
+		this.filters.add(Filter.get(Filter.LEAFLITTER));
 	}
 
 	@Override

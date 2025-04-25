@@ -17,6 +17,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FacingBlock;
 import net.minecraft.block.HorizontalFacingBlock;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.LootableContainerBlockEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootTable;
@@ -58,7 +59,13 @@ public class TreasureChest implements ITreasureChest{
 			return Optional.empty();
 		}
 		
-		this.chest = (LootableContainerBlockEntity) editor.getBlockEntity(pos);
+		Optional<BlockEntity> obe = editor.getBlockEntity(pos);
+		if(obe.isEmpty()) return Optional.empty();
+		
+		BlockEntity be = obe.get();
+		if(!(be instanceof LootableContainerBlockEntity)) return Optional.empty();
+		
+		this.chest = (LootableContainerBlockEntity) be;
 		this.inventory = new Inventory(rand, chest);
 		
 		Optional<RegistryKey<LootTable>> maybeTable = Treasure.getLootTable(type, diff);

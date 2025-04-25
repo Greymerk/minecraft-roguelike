@@ -1,5 +1,7 @@
 package com.greymerk.roguelike.editor.blocks;
 
+import java.util.Optional;
+
 import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
@@ -30,13 +32,11 @@ public class DecoratedPot {
 		
 		if(!MetaBlock.of(Blocks.DECORATED_POT).set(editor, origin)) return;
 		
-		BlockEntity be = editor.getBlockEntity(origin);
-		
-		if(be == null) return;
+		Optional<BlockEntity> obe = editor.getBlockEntity(origin);
+		if(obe.isEmpty()) return;
+		BlockEntity be = obe.get();
 		if(!(be instanceof DecoratedPotBlockEntity)) return;
-		
 		DecoratedPotBlockEntity potEntity = (DecoratedPotBlockEntity)be;
-		
 		
 		IWeighted<Item> faceroll = getFaceRoller();
 		

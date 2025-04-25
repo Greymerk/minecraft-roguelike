@@ -24,24 +24,19 @@ public class Bed {
 		generate(editor, dir, pos, Color.RED);
 	}
 	
-	
 	public static void generate(IWorldEditor editor, Cardinal dir, Coord origin, Color color){
+		MetaBlock.of(getFromColor(color))
+			.with(BedBlock.PART, BedPart.HEAD)
+			.with(HorizontalFacingBlock.FACING, Cardinal.facing(dir))
+			.set(editor, origin);
 		
-		Coord pos = origin.copy();
-		MetaBlock head = MetaBlock.of(getFromColor(color));
-		head.with(BedBlock.PART, BedPart.HEAD);
-		head.with(HorizontalFacingBlock.FACING, Cardinal.facing(dir));
-		head.set(editor, pos);
-		
-		pos.add(dir);
-		MetaBlock foot = MetaBlock.of(getFromColor(color));
-		foot.with(BedBlock.PART, BedPart.FOOT);
-		foot.with(HorizontalFacingBlock.FACING, Cardinal.facing(dir));
-		foot.set(editor, pos);
-
+		MetaBlock.of(getFromColor(color))
+			.with(BedBlock.PART, BedPart.FOOT)
+			.with(HorizontalFacingBlock.FACING, Cardinal.facing(dir))
+			.set(editor, origin.copy().add(dir));
 	}
 	
-	public static Block getFromColor(Color c) {
+	private static Block getFromColor(Color c) {
 		switch(c) {
 		case WHITE: return Blocks.WHITE_BED;
 		case ORANGE: return Blocks.ORANGE_BED;

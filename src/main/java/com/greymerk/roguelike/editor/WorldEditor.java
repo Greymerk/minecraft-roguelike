@@ -1,6 +1,7 @@
 package com.greymerk.roguelike.editor;
 
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 import net.minecraft.block.Block;
@@ -113,12 +114,14 @@ public class WorldEditor implements IWorldEditor{
 
 	@Override
 	public boolean hasBlockEntity(Coord pos) {
-		return this.getBlockEntity(pos) != null;
+		return this.world.getBlockEntity(pos.getBlockPos()) != null;
 	}
 	
 	@Override
-	public BlockEntity getBlockEntity(Coord pos) {
-		return world.getBlockEntity(pos.getBlockPos());
+	public Optional<BlockEntity> getBlockEntity(Coord pos) {
+		BlockEntity be = world.getBlockEntity(pos.getBlockPos());
+		if(be == null) return Optional.empty();
+		return Optional.of(be);
 	}
 	
 	@Override

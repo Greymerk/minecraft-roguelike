@@ -1,9 +1,12 @@
 package com.greymerk.roguelike.settings.level;
 
+import java.util.List;
+
 import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
 import com.greymerk.roguelike.dungeon.room.Room;
 import com.greymerk.roguelike.dungeon.room.RoomProvider;
+import com.greymerk.roguelike.filter.Filter;
 import com.greymerk.roguelike.settings.ILevelSettings;
 import com.greymerk.roguelike.settings.LevelSettings;
 import com.greymerk.roguelike.settings.LevelSettingsBase;
@@ -38,6 +41,8 @@ public class LevelSettingsSpruce extends LevelSettingsBase implements ILevelSett
 		this.alcoves.add(new WeightedChoice<Fragment>(Fragment.ALCOVE_SAFETY, 1));
 		this.alcoves.add(new WeightedChoice<Fragment>(Fragment.ALCOVE_FIRE, 5));
 		this.alcoves.add(new WeightedChoice<Fragment>(Fragment.BOOK_SHELF, 1));
+		
+		this.filters = List.of(Filter.get(Filter.LEAFLITTER));
 	}
 	
 	@Override

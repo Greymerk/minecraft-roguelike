@@ -1,5 +1,7 @@
 package com.greymerk.roguelike.editor.blocks;
 
+import java.util.Optional;
+
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
@@ -25,8 +27,9 @@ public class WallBanner {
 			.with(HorizontalFacingBlock.FACING, Cardinal.facing(dir))
 			.set(editor, origin);
 		
-		BlockEntity be = editor.getBlockEntity(origin);
-		if(be == null) return;
+		Optional<BlockEntity> obe = editor.getBlockEntity(origin);
+		if(obe.isEmpty()) return;
+		BlockEntity be = obe.get();
 		if(!(be instanceof BannerBlockEntity)) return;
 		BannerBlockEntity bannerEntity = (BannerBlockEntity)be;
 		bannerEntity.readComponents(banner);

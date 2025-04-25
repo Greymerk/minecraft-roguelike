@@ -214,6 +214,12 @@ public class Coord implements Comparable<Coord> {
 		}
 	}
 	
+	
+	/**
+	 * Protects this Coord object from further mutation.
+	 * Any operations altering the position of this Coord
+	 * will return a copy.
+	 */
 	public Coord freeze() {
 		this.frozen = true;
 		return this;
