@@ -2,7 +2,6 @@ package com.greymerk.roguelike.dungeon.room;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellManager;
@@ -68,16 +67,14 @@ public class SculkRoom extends AbstractLargeRoom implements IRoom {
 			.add(new WeightedChoice<Treasure>(Treasure.TOOL, 1))
 			.add(new WeightedChoice<Treasure>(Treasure.WEAPON, 1));
 		
-		List<Coord> space = BoundingBox.of(origin).add(Cardinal.DOWN, 2).grow(Cardinal.directions, 9).get().stream()
+		BoundingBox.of(origin).add(Cardinal.DOWN, 2).grow(Cardinal.directions, 9).get().stream()
 				.filter(pos -> editor.isAir(pos))
 				.filter(pos -> checkerBoard(pos))
 				.sorted(RandHelper.randomizer(rand))
 				.limit(rand.nextBetween(3, 7))
-				.collect(Collectors.toList());
-
-		space.forEach(pos -> {
-			Treasure.generate(editor, rand, settings.getDifficulty(), pos, types.get(rand));	
-		});
+				.forEach(pos -> {
+					Treasure.generate(editor, rand, settings.getDifficulty(), pos, types.get(rand));	
+				});
 	}
 	
 	private boolean checkerBoard(Coord pos) {
