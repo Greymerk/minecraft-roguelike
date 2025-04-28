@@ -155,6 +155,4 @@ public class Cell {
 		return this.floorPos.toString() + ' ' + this.state + ' ' + this.walls;
 	}
 
-
-
 }

@@ -23,6 +23,7 @@ public class LevelSettingsSpruce extends LevelSettingsBase implements ILevelSett
 		this.rooms = new RoomProvider();
 		rooms.addRandomChoice(Room.CORRIDOR, 1);
 		rooms.addRoomOnce(Room.CROSS);
+		rooms.addRoomOnce(Room.IMPERIAL_STAIRWAY);
 		rooms.addRoomSometimes(Room.PIT, 0.2);
 		rooms.addRoomSometimes(Room.SMITH, 0.3);
 		rooms.addRoomSometimes(Room.BANQUET, 0.3);

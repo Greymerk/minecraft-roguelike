@@ -128,13 +128,13 @@ public class LayoutManager {
 
 	private void placeRoom(IRoom room, Random rand, Floor floor) {
 		// try to find a place that avoids exclusion zones :)
-		if(findFit(room, rand, floor, true)) return;
+		if(findFit(room, rand, floor, true, rand.nextBoolean())) return;
 		
 		// try it again without checking exclusion zones :(
-		findFit(room, rand, floor, false);
+		findFit(room, rand, floor, false, rand.nextBoolean());
 	}
 	
-	private boolean findFit(IRoom room, Random rand, Floor floor, boolean avoidZones) {
+	private boolean findFit(IRoom room, Random rand, Floor floor, boolean avoidZones, boolean shuffle) {
 		for(Cell c : room.getCells(Cardinal.NORTH)) {
 			if(c.getLevelOffset() + this.floors.indexOf(floor) > this.floors.size() - 1) return false;
 		}
@@ -142,13 +142,17 @@ public class LayoutManager {
 		List<Cell> cells = floor.getCells(CellState.POTENTIAL);
 		
 		// shuffle half the time, otherwise keep rooms close to dungeon center
-		if(rand.nextBoolean()) {
+		if(shuffle) {
 			RandHelper.shuffle(cells, rand);
 		} else {
 			Collections.sort(cells, (a, b) -> {
-				return a.getWorldPos(origin).manhattanDistance(origin) - b.getWorldPos(origin).manhattanDistance(origin);
+				Coord ac = a.getWorldPos(origin);
+				Coord bc = b.getWorldPos(origin);
+				Double adist = ac.distance(origin);
+				Double bdist = bc.distance(origin);
+				return Double.compare(adist, bdist);
 			});
-		}	
+		}
 		
 		for(Cell potential : cells) {
 			List<Cardinal> dirs = getPotentialDir(floor, potential);
@@ -184,6 +188,12 @@ public class LayoutManager {
 	private void addStair(IWorldEditor editor, ILevelSettings settings, Random rand, Floor floor) {
 		if(floors.indexOf(floor) >= floors.size() - 1) return;
 		IRoom stairway = Room.getInstance(Room.STAIRWAY, settings);
+		
+		if(Config.ofBoolean(Config.BELOW_SEA_LEVEL) && floor.getOrigin().getY() > editor.getInfo().getSeaLevel()) {
+			findFit(stairway, rand, floor, false, false);
+			return;
+		}
+		
 		placeRoom(stairway, rand, floor);
 		zones.scan(editor, stairway.getWorldPos(), 500);
 	}

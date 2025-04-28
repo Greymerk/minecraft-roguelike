@@ -34,7 +34,7 @@ public class Candle {
 		MetaBlock.of(fromColor(color))
 			.with(CandleBlock.CANDLES, numCandles)
 			.with(CandleBlock.LIT, lit)
-			.set(editor, origin, Fill.SUPPORTED);
+			.set(editor, origin, Fill.SUPPORTED.and(Fill.AIR));
 	}
 	
 	public static Block fromColor(Color color) {

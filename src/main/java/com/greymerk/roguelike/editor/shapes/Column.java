@@ -17,7 +17,7 @@ import net.minecraft.util.math.random.Random;
 
 public class Column implements IShape {
 
-	Coord top;
+	private Coord top;
 	
 	public Column(Coord top) {
 		this.top = top.copy();
@@ -97,7 +97,7 @@ public class Column implements IShape {
 		@Override
 		public boolean hasNext() {
 			if(editor.isSolid(this.current)) return false;
-			return current.getY() > MAX_DEPTH;
+			return current.getY() > editor.getInfo().getBottomY();
 		}
 	}
 

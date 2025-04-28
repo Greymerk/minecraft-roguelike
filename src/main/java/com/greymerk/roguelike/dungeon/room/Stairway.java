@@ -165,17 +165,11 @@ public class Stairway extends AbstractRoom implements IRoom {
 		cells.add(Cell.of(origin.copy().add(Cardinal.DOWN), CellState.OBSTRUCTED, this).addWall(Cardinal.reverse(dir)).addWalls(Cardinal.orthogonal(dir)));
 		cells.add(Cell.of(origin.copy().add(Cardinal.DOWN).add(dir), CellState.OBSTRUCTED, this).addWalls(Cardinal.orthogonal(dir)));
 		
-		if(this.worldPos != null && this.worldPos.getY() >= 70) {
-			cells.add(Cell.of(origin.copy().add(Cardinal.DOWN).add(dir, 2), CellState.OBSTRUCTED, this).addWall(Cardinal.left(dir)).addWall(dir));
-			cells.add(Cell.of(origin.copy().add(Cardinal.DOWN).add(dir, 2).add(Cardinal.right(dir)), CellState.POTENTIAL, this));
-		} else {
-			cells.add(Cell.of(origin.copy().add(Cardinal.DOWN).add(dir, 2), CellState.OBSTRUCTED, this));
-			cells.add(Cell.of(origin.copy().add(Cardinal.DOWN).add(dir, 3), CellState.POTENTIAL, this));
-			for(Cardinal o : Cardinal.orthogonal(dir)) {
-				cells.add(Cell.of(origin.copy().add(Cardinal.DOWN).add(dir, 2).add(o), CellState.POTENTIAL, this));
-			}
+		cells.add(Cell.of(origin.copy().add(Cardinal.DOWN).add(dir, 2), CellState.OBSTRUCTED, this));
+		cells.add(Cell.of(origin.copy().add(Cardinal.DOWN).add(dir, 3), CellState.POTENTIAL, this));
+		for(Cardinal o : Cardinal.orthogonal(dir)) {
+			cells.add(Cell.of(origin.copy().add(Cardinal.DOWN).add(dir, 2).add(o), CellState.POTENTIAL, this));
 		}
-		
 		
 		return cells;
 	}

@@ -1,5 +1,7 @@
 package com.greymerk.roguelike.dungeon.cell;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -89,6 +91,31 @@ class CellTest {
 		Cell c2 = Cell.CODEC.decode(JsonOps.INSTANCE, enc.getOrThrow()).getOrThrow().getFirst();
 		
 		assert(c.equals(c2));
+	}
+	
+	@Test
+	void testSort() {
+		
+		var cells = new ArrayList<Cell>(List.of(Cell.of(Coord.ZERO.add(Cardinal.EAST, 5), CellState.OBSTRUCTED, null),
+				Cell.of(Coord.ZERO.add(Cardinal.EAST, 4).add(Cardinal.NORTH), CellState.OBSTRUCTED, null),
+				Cell.of(Coord.ZERO.add(Cardinal.EAST, 4).add(Cardinal.SOUTH), CellState.OBSTRUCTED, null)));
+		System.out.println(cells);
+		
+		Coord origin = Coord.ZERO;
+		Collections.sort(cells, (a, b) -> {
+			Coord ac = a.getWorldPos(origin);
+			Coord bc = b.getWorldPos(origin);
+			int diff = ac.manhattanDistance(origin) - bc.manhattanDistance(origin);
+			if(diff != 0) return diff;
+			int aMax = Math.max(ac.getX(), ac.getZ());
+			int bMax = Math.max(bc.getX(), bc.getZ());
+			return aMax - bMax;
+		});
+		
+		System.out.println(cells);
+		
+		Collections.reverse(cells);
+		System.out.println(cells);
 	}
 	
 }
