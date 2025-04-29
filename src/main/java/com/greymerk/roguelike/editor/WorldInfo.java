@@ -119,7 +119,7 @@ public class WorldInfo implements IWorldInfo {
 		Coord cursor = pos.withY(world.getTopYInclusive());
 
 		int seaLevel = this.getSeaLevel();
-		while(cursor.getY() > seaLevel - 5) {
+		while(cursor.getY() > seaLevel - 3) {
 			MetaBlock m = MetaBlock.of(world.getBlockState(cursor.getBlockPos()));
 			if(m.isIn(List.of(BlockTags.LOGS, BlockTags.LEAVES))) continue;
 			

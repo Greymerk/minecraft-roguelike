@@ -119,7 +119,6 @@ public class BoundingBox implements IBounded, IShape{
 	
 	public BoundingBox grow(Iterable<Cardinal> dirs) {
 		return this.grow(dirs, 1);
-		
 	}
 	
 	public BoundingBox grow(Iterable<Cardinal> dirs, int amount) {

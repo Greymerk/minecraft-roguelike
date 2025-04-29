@@ -114,10 +114,7 @@ public class Dungeon implements Iterable<IRoom>{
 	}
 	
 	public boolean isGenerated() {
-		for(IRoom room : this.rooms) {
-			if(!room.isGenerated()) return false;
-		}
-		return true;
+		return this.rooms.stream().allMatch(room -> room.isGenerated());
 	}
 	
 	public IBounded getBounds() {

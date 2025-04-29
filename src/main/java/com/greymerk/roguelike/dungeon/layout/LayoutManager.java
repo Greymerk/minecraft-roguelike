@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.StreamSupport;
 
 import com.greymerk.roguelike.config.Config;
 import com.greymerk.roguelike.debug.DebugLayout;
@@ -67,7 +68,7 @@ public class LayoutManager {
 			Random rand = editor.getRandom(floor.getOrigin());
 			ILevelSettings levelSettings = settings.getLevel(floor.getOrigin().getY());
 			
-			boolean aboveDungeon = Config.ofBoolean(Config.BELOW_SEA_LEVEL) 
+			final boolean aboveDungeon = Config.ofBoolean(Config.BELOW_SEA_LEVEL) 
 					&& floor.getOrigin().getY() > editor.getInfo().getFirstFloorDepth();
 			
 			if(aboveDungeon) {
@@ -78,12 +79,11 @@ public class LayoutManager {
 			this.connectFloorBranches(editor, rand, floor, levelSettings);
 			
 			RoomProvider roomProvider = levelSettings.getRooms();
-			int numRooms = Math.clamp(Config.ofInteger(Config.ROOMS_PER_LEVEL).orElse(ROOMS_PER_LEVEL), 1, 1000);
+			final int numRooms = Math.clamp(Config.ofInteger(Config.ROOMS_PER_LEVEL).orElse(ROOMS_PER_LEVEL), 1, 1000);
 			List<Room> rooms = roomProvider.getRooms(rand, numRooms);
 
 			rooms.forEach(r -> {
-				IRoom room = Room.getInstance(r, levelSettings);
-				this.placeRoom(room, rand, floor, rand.nextBoolean());
+				this.placeRoom(Room.getInstance(r, levelSettings), rand, floor, rand.nextBoolean());
 			});	
 
 			this.determineExits(editor, rand, floor);
@@ -140,7 +140,6 @@ public class LayoutManager {
 		
 		List<Cell> cells = floor.getCells(CellState.POTENTIAL);
 		
-		// shuffle half the time, otherwise keep rooms close to dungeon center
 		if(shuffle) {
 			RandHelper.shuffle(cells, rand);
 		} else {
@@ -185,7 +184,7 @@ public class LayoutManager {
 	}
 
 	public void addEntrance(IRoom room) {
-		Floor f = this.floors.get(0);
+		Floor f = this.floors.getFirst();
 		Coord wp = f.getOrigin();
 		this.addRoom(room, Cardinal.NORTH, Coord.ZERO, wp, f);
 	}
@@ -217,11 +216,9 @@ public class LayoutManager {
 	}
 	
 	public List<IRoom> getRooms(){
-		List<IRoom> rooms = new ArrayList<IRoom>();
-		for(Floor floor : floors) {
-			rooms.addAll(floor.getRooms());
-		}
-		return rooms;
+		return this.floors.stream()
+			.flatMap(floor -> StreamSupport.stream(floor.getRooms().spliterator(), false))
+			.toList();
 	}
 	
 	public class CenterSort implements Comparator<Cell>{
