@@ -17,12 +17,14 @@ public class RoomProvider {
 	List<Room> addAfter;
 	Map<Room, Double> addSometimes;
 	WeightedRandomizer<Room> random;
+	Room stairway;
 	
 	public RoomProvider() {
 		this.addOnce = new ArrayList<Room>();
 		this.addAfter = new ArrayList<Room>();
 		this.addSometimes = new HashMap<Room, Double>();
 		this.random = new WeightedRandomizer<Room>();
+		this.stairway = Room.STAIRWAY;
 	}
 	
 	public void addRoomOnce(Room room) {
@@ -31,6 +33,10 @@ public class RoomProvider {
 	
 	public void addRoomAfter(Room room) {
 		this.addAfter.add(room);
+	}
+	
+	public void setStairway(Room room) {
+		this.stairway = room;
 	}
 	
 	public void addRoomSometimes(Room room, Double probability) {
@@ -53,6 +59,7 @@ public class RoomProvider {
 			if(rand.nextDouble() < probability) rooms.add(room);
 		});
 		RandHelper.shuffle(rooms, rand);
+		rooms.add(this.stairway);
 		this.addAfter.forEach(room -> rooms.add(room));
 		return rooms;
 	}

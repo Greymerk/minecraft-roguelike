@@ -46,11 +46,6 @@ public class WorldInfo implements IWorldInfo {
 	}
 
 	@Override
-	public int getHeight() {
-		return world.getHeight();
-	}
-
-	@Override
 	public int getTopYInclusive() {
 		return world.getTopYInclusive();
 	}

@@ -67,25 +67,24 @@ public class LayoutManager {
 			Random rand = editor.getRandom(floor.getOrigin());
 			ILevelSettings levelSettings = settings.getLevel(floor.getOrigin().getY());
 			
-			if(Config.ofBoolean(Config.BELOW_SEA_LEVEL) && floor.getOrigin().getY() > editor.getInfo().getFirstFloorDepth()) {
-				this.addStair(editor, levelSettings, rand, floor);
+			boolean aboveDungeon = Config.ofBoolean(Config.BELOW_SEA_LEVEL) 
+					&& floor.getOrigin().getY() > editor.getInfo().getFirstFloorDepth();
+			
+			if(aboveDungeon) {
+				this.placeRoom(Room.getInstance(Room.STAIRWAY, levelSettings), rand, floor, false);
 				continue;
 			}
 			
 			this.connectFloorBranches(editor, rand, floor, levelSettings);
 			
 			RoomProvider roomProvider = levelSettings.getRooms();
-			
 			int numRooms = Math.clamp(Config.ofInteger(Config.ROOMS_PER_LEVEL).orElse(ROOMS_PER_LEVEL), 1, 1000);
-			
 			List<Room> rooms = roomProvider.getRooms(rand, numRooms);
 
 			rooms.forEach(r -> {
 				IRoom room = Room.getInstance(r, levelSettings);
-				this.placeRoom(room, rand, floor);
-			});
-			
-			this.addStair(editor, levelSettings, rand, floor);	
+				this.placeRoom(room, rand, floor, rand.nextBoolean());
+			});	
 
 			this.determineExits(editor, rand, floor);
 		}
@@ -126,12 +125,12 @@ public class LayoutManager {
 		}
 	}
 
-	private void placeRoom(IRoom room, Random rand, Floor floor) {
+	private void placeRoom(IRoom room, Random rand, Floor floor, boolean shuffle) {
 		// try to find a place that avoids exclusion zones :)
-		if(findFit(room, rand, floor, true, rand.nextBoolean())) return;
+		if(findFit(room, rand, floor, true, shuffle)) return;
 		
 		// try it again without checking exclusion zones :(
-		findFit(room, rand, floor, false, rand.nextBoolean());
+		findFit(room, rand, floor, false, shuffle);
 	}
 	
 	private boolean findFit(IRoom room, Random rand, Floor floor, boolean avoidZones, boolean shuffle) {
@@ -183,19 +182,6 @@ public class LayoutManager {
 			dirs.add(dir);
 		}
 		return dirs;
-	}
-
-	private void addStair(IWorldEditor editor, ILevelSettings settings, Random rand, Floor floor) {
-		if(floors.indexOf(floor) >= floors.size() - 1) return;
-		IRoom stairway = Room.getInstance(Room.STAIRWAY, settings);
-		
-		if(Config.ofBoolean(Config.BELOW_SEA_LEVEL) && floor.getOrigin().getY() > editor.getInfo().getSeaLevel()) {
-			findFit(stairway, rand, floor, false, false);
-			return;
-		}
-		
-		placeRoom(stairway, rand, floor);
-		zones.scan(editor, stairway.getWorldPos(), 500);
 	}
 
 	public void addEntrance(IRoom room) {

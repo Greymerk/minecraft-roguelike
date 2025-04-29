@@ -23,8 +23,9 @@ public interface IWorldInfo {
 
 	public int getSeaLevel();
 	
-	public int getHeight();
-	
+	/**
+	 * Returns the highest buildable Block Y
+	 */
 	public int getTopYInclusive();
 	
 	public Coord findSurface(Coord pos);
@@ -35,6 +36,9 @@ public interface IWorldInfo {
 	
 	public int getLastFloorDepth();
 		
+	/**
+	 * Is this an Overworld type dimension
+	 */
 	public boolean isOverworld();
 	
 	public DynamicRegistryManager getRegistryManager();
@@ -53,6 +57,10 @@ public interface IWorldInfo {
 	
 	public Optional<Coord> getStructureLocation(RegistryKey<StructureSet> key, ChunkPos cpos);
 
+	/**
+	 * This is the first levelY that would appear below sea level
+	 * {@code sealevel - (sealevel % 10 - 10)}
+	 */
 	int getFirstFloorDepth();
 	
 }

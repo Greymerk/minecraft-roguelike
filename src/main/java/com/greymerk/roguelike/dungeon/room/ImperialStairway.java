@@ -7,6 +7,7 @@ import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellManager;
 import com.greymerk.roguelike.dungeon.cell.CellState;
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
+import com.greymerk.roguelike.dungeon.fragment.parts.CellSupport;
 import com.greymerk.roguelike.dungeon.fragment.parts.Pillar;
 import com.greymerk.roguelike.dungeon.layout.Exit;
 import com.greymerk.roguelike.dungeon.layout.ExitType;
@@ -18,6 +19,7 @@ import com.greymerk.roguelike.editor.blocks.Air;
 import com.greymerk.roguelike.editor.blocks.Candle;
 import com.greymerk.roguelike.editor.blocks.IronBar;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
+import com.greymerk.roguelike.editor.boundingbox.IBounded;
 
 import net.minecraft.util.math.random.Random;
 
@@ -35,7 +37,20 @@ public class ImperialStairway extends AbstractRoom implements IRoom {
 		this.stairway(editor, rand, origin, Cardinal.reverse(direction));
 		this.tunnels(editor, rand, origin.add(Cardinal.DOWN, 10).freeze(), Cardinal.reverse(direction));
 		this.lowerRoom(editor, rand, origin.add(Cardinal.DOWN, 10).freeze());
+		this.supports(editor, rand, origin.add(Cardinal.DOWN, 10).freeze());
 		this.generateExits(editor, rand);
+	}
+
+	private void supports(IWorldEditor editor, Random rand, Coord origin) {
+		CellSupport.generate(editor, rand, theme, origin);
+		Cardinal.directions.forEach(dir -> {
+			List.of(6, 12).forEach(i -> {
+				CellSupport.generate(editor, rand, theme, origin.copy().add(dir, i));
+				List.of(6, 12).forEach(j -> {
+					CellSupport.generate(editor, rand, theme, origin.copy().add(dir, i).add(Cardinal.left(dir), j));
+				});
+			});
+		});
 	}
 
 	private void lowerRoom(IWorldEditor editor, Random rand, Coord origin) {
@@ -376,6 +391,13 @@ public class ImperialStairway extends AbstractRoom implements IRoom {
 			.fill(editor, rand, Air.get());
 	}
 
+	@Override
+	public IBounded getBoundingBox(Coord origin, Cardinal dir) {
+		return BoundingBox.of(origin).add(dir, Cell.SIZE * 2)
+				.grow(Cardinal.UP, 6).grow(Cardinal.DOWN, 12)
+				.grow(Cardinal.directions, 15);
+	}
+	
 	@Override
 	public String getName() {
 		return Room.IMPERIAL_STAIRWAY.name();
