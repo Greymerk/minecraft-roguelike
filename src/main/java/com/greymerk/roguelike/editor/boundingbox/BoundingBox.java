@@ -18,7 +18,9 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.random.Random;
+import net.minecraft.world.chunk.WorldChunk;
 
 public class BoundingBox implements IBounded, IShape{
 
@@ -34,6 +36,15 @@ public class BoundingBox implements IBounded, IShape{
 	
 	public static BoundingBox of(Coord origin) {
 		return new BoundingBox(origin);
+	}
+	
+	public static BoundingBox of(WorldChunk chunk) {
+		ChunkPos cpos = chunk.getPos();
+		return BoundingBox.of(
+				Coord.of(cpos.getStartX(), chunk.getBottomY(), cpos.getStartZ()),
+				Coord.of(cpos.getEndX(), chunk.getTopYInclusive(), cpos.getEndZ())
+				);
+				
 	}
 	
 	public static BoundingBox of(Coord start, Coord end) {

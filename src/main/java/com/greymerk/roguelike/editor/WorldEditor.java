@@ -1,5 +1,6 @@
 package com.greymerk.roguelike.editor;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Predicate;
@@ -9,6 +10,8 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.FallingBlock;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.tag.BlockTags;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.CheckedRandom;
@@ -16,23 +19,32 @@ import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldAccess;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkStatus;
 
 public class WorldEditor implements IWorldEditor{
 
-	WorldAccess world;
+	World world;
 	RegistryKey<World> worldKey;
 	IWorldInfo worldInfo;
 	
+	public static WorldEditor of(World world) {
+		return new WorldEditor(world);
+	}
+	
+	public static WorldEditor of(ServerWorld world) {
+		return new WorldEditor(world);
+	}
+	
 	public WorldEditor(StructureWorldAccess world, RegistryKey<World> worldKey){
+		/*
 		this.world = world;
 		this.worldKey = worldKey;
 		this.worldInfo = WorldInfo.of(world, worldKey);
+		*/
 	}
 
-	public WorldEditor(World world) {
+	private WorldEditor(World world) {
 		this.world = world;
 		this.worldKey = world.getRegistryKey();
 		this.worldInfo = WorldInfo.of(world, worldKey);
@@ -133,6 +145,32 @@ public class WorldEditor implements IWorldEditor{
 		boolean isShapeSquare = Block.isFaceFullSquare(shape, facing);
 		boolean isCollisionSquare = Block.isFaceFullSquare(collision, facing);
 		return isShapeSquare || isCollisionSquare;
+	}
+	
+	@Override
+	public Coord findSurface(Coord pos) {
+
+		Coord cursor = pos.withY(world.getTopYInclusive());
+		int seaLevel = this.worldInfo.getSeaLevel();
+
+		while(cursor.getY() > seaLevel - 3) {
+			MetaBlock m = this.getBlock(cursor);
+			if(m.isIn(List.of(BlockTags.LOGS, BlockTags.LEAVES))) {
+				cursor.add(Cardinal.DOWN);
+				continue;
+			}
+			
+			if(!world.isAir(cursor.getBlockPos()) && !m.isPlant()) return cursor;
+			cursor.add(Cardinal.DOWN);
+		}
+		
+		return cursor;
+	}
+
+	@Override
+	public int getDungeonEntryDepth(Coord origin) {
+		Coord surface = this.findSurface(origin);
+		return (surface.getY() - Math.floorMod(surface.getY(), 10)) - 10;
 	}
 	
 	@Override

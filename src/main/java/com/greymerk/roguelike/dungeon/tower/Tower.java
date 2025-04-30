@@ -24,7 +24,7 @@ public enum Tower {
 	
 	public static Coord getBaseCoord(IWorldEditor editor, Coord pos){
 		
-		Coord cursor = editor.getInfo().findSurface(pos);
+		Coord cursor = editor.findSurface(pos);
 		
 		int yOffset = cursor.getY() - pos.getY();
 

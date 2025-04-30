@@ -10,8 +10,10 @@ import com.greymerk.roguelike.editor.WorldEditor;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.world.World;
 
@@ -27,8 +29,11 @@ public class RoguelikeCommandDungeon {
 			.executes(context -> {
 				ServerCommandSource source = context.getSource();
 				Entity entity = source.getEntity();
-				World world = entity.getWorld();
-				IWorldEditor editor = new WorldEditor(world);
+				
+				World world = entity.getWorld().getServer().getWorld(null);
+				RegistryKey<World> key = world.getRegistryKey();
+				ServerWorld sw = world.getServer().getWorld(key);
+				IWorldEditor editor = WorldEditor.of(sw);
 				Coord pos = Coord.of(entity.getBlockPos());
 				try{
 					Dungeon.generate(editor, pos, true);

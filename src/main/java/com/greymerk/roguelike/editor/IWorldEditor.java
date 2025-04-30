@@ -44,4 +44,8 @@ public interface IWorldEditor {
 	public boolean isAir(Coord pos);
 	
 	public IWorldInfo getInfo();
+
+	Coord findSurface(Coord pos);
+
+	int getDungeonEntryDepth(Coord origin);
 }

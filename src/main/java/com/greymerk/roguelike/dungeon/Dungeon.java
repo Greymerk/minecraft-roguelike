@@ -68,7 +68,6 @@ public class Dungeon implements Iterable<IRoom>{
 
 	public static boolean canSpawn(IWorldEditor editor, Coord pos) {
 		if(!editor.getInfo().isOverworld()) return false;
-		
 		ExclusionZones zones = new ExclusionZones();
 		final int SCAN_DISTANCE = 300;
 		final int COLLISION_RANGE = 50;
@@ -78,7 +77,7 @@ public class Dungeon implements Iterable<IRoom>{
 			return false;
 		}
 		
-		Coord surface = editor.getInfo().findSurface(pos);
+		Coord surface = editor.findSurface(pos);
 		MetaBlock block = editor.getBlock(surface);
 		if(!block.isGround()) {
 			Debug.info("Dungeon @" + surface.toString() + " failed: " + block.getBlock().toString() + " isn't valid ground");
@@ -93,8 +92,8 @@ public class Dungeon implements Iterable<IRoom>{
 		
 		Stopwatch watch = Stopwatch.createStarted();
 		
-		Coord surface = editor.getInfo().findSurface(this.origin);
-		Coord entry = this.origin.withY(editor.getInfo().getDungeonEntryDepth(origin));
+		Coord surface = editor.findSurface(this.origin);
+		Coord entry = this.origin.withY(editor.getDungeonEntryDepth(origin));
 		
 		LayoutManager layout = new LayoutManager(entry, editor.getInfo().getLastFloorDepth());
 		
@@ -113,12 +112,20 @@ public class Dungeon implements Iterable<IRoom>{
 		
 	}
 	
+	public boolean hasLayout() {
+		return this.rooms.size() > 0;
+	}
+	
 	public boolean isGenerated() {
-		return this.rooms.stream().allMatch(room -> room.isGenerated());
+		return this.hasLayout() && this.rooms.stream().allMatch(room -> room.isGenerated());
 	}
 	
 	public IBounded getBounds() {
 		return this.bb;
+	}
+	
+	public Coord getPos() {
+		return this.origin.copy();
 	}
 	
 	@Override

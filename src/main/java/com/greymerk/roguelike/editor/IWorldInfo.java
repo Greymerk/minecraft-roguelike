@@ -28,11 +28,7 @@ public interface IWorldInfo {
 	 */
 	public int getTopYInclusive();
 	
-	public Coord findSurface(Coord pos);
-	
 	public int getBottomY();
-	
-	public int getDungeonEntryDepth(Coord origin);
 	
 	public int getLastFloorDepth();
 		

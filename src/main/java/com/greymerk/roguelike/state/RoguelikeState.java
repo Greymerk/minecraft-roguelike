@@ -46,6 +46,11 @@ public class RoguelikeState extends PersistentState {
 		this.markDirty();
 	}
 	
+	public void removeDungeon(Dungeon toRemove) {
+		this.dungeons.remove(toRemove);
+		this.markDirty();
+	}
+	
 	public boolean hasDungeons() {
 		return !this.dungeons.isEmpty();
 	}
@@ -59,7 +64,13 @@ public class RoguelikeState extends PersistentState {
 		this.markDirty();
 	}
 	
-	public List<IRoom> getFromLoaded(IWorldEditor editor){
+	public List<Dungeon> getLoadedDungeons(IWorldEditor editor){
+		return this.dungeons.stream()
+				.filter(d -> editor.isChunkLoaded(d.getPos()))
+				.toList();
+	}
+	
+	public List<IRoom> getLoadedRooms(IWorldEditor editor){
 		return this.dungeons.stream()
 				.flatMap(d -> StreamSupport.stream(d.spliterator(), false))
 				.filter(r -> !r.isGenerated())
