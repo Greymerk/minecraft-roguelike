@@ -9,6 +9,7 @@ import com.greymerk.roguelike.dungeon.layout.ExitType;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
+import com.greymerk.roguelike.editor.Statistics;
 import com.greymerk.roguelike.editor.boundingbox.IBounded;
 import com.greymerk.roguelike.settings.ILevelSettings;
 import com.greymerk.roguelike.theme.ITheme;
@@ -58,5 +59,9 @@ public interface IRoom {
 	public List<Exit> getExits();
 
 	public ExitType getExitType(Cardinal dir);
+	
+	public void mergeStats(Statistics stats);
+	
+	public Statistics getStats();
 	
 }

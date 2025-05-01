@@ -1,5 +1,6 @@
 package com.greymerk.roguelike.treasure.chest;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,7 +26,7 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.random.Random;
 
-public class TreasureChest implements ITreasureChest{
+public class TreasureChest implements ITreasureChest, Iterable<ItemStack>{
 
 	private Inventory inventory;
 	private Treasure type;
@@ -72,6 +73,7 @@ public class TreasureChest implements ITreasureChest{
 		if(maybeTable.isPresent()) this.setLootTable(maybeTable.get(), editor.getSeed(pos));
 		
 		if(Config.ofBoolean(Config.ROGUELIKE_LOOT)) Loot.fillChest(editor, this, rand);
+		this.forEach(item -> editor.getStatistics().add(item));
 		return Optional.of(this);
 	}
 	
@@ -137,5 +139,10 @@ public class TreasureChest implements ITreasureChest{
 
 	public void setLootTable(RegistryKey<LootTable> key, long seed) {
 		this.chest.setLootTable(key, seed);
+	}
+
+	@Override
+	public Iterator<ItemStack> iterator() {
+		return this.chest.iterator();
 	}
 }

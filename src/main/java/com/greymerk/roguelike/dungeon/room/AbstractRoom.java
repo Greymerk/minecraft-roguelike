@@ -15,6 +15,7 @@ import com.greymerk.roguelike.dungeon.layout.ExitType;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
+import com.greymerk.roguelike.editor.Statistics;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.editor.boundingbox.IBounded;
 import com.greymerk.roguelike.settings.ILevelSettings;
@@ -31,11 +32,13 @@ public abstract class AbstractRoom implements IRoom{
 	protected Cardinal direction;
 	protected boolean generated;
 	protected Set<Exit> exits;
+	protected Statistics stats;
 	
 	public AbstractRoom() {
 		this.direction = Cardinal.EAST;
 		this.generated = false;
 		this.exits = new TreeSet<Exit>();
+		this.stats = new Statistics();
 	}
 	
 	public AbstractRoom(ILevelSettings settings, IBounded box, Coord worldPos) {
@@ -49,6 +52,7 @@ public abstract class AbstractRoom implements IRoom{
 		this.generated = false;
 		this.direction = dir;
 		this.exits = new TreeSet<Exit>();
+		this.stats = new Statistics();
 	}
 	
 	@Override
@@ -180,5 +184,15 @@ public abstract class AbstractRoom implements IRoom{
 	
 	public ILevelSettings getLevelSettings() {
 		return this.settings;
+	}
+	
+	@Override
+	public void mergeStats(Statistics other) {
+		this.stats.merge(other);
+	}
+	
+	@Override
+	public Statistics getStats() {
+		return this.stats;
 	}
 }

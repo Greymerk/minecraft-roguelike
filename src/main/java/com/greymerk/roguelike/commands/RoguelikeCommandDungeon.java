@@ -22,6 +22,7 @@ public class RoguelikeCommandDungeon {
 	public static LiteralArgumentBuilder<ServerCommandSource> getDungeon(){
 		return CommandManager.literal("dungeon")
 				.then(getDungeonHere());
+				
 	}
 	
 	public static LiteralArgumentBuilder<ServerCommandSource> getDungeonHere(){

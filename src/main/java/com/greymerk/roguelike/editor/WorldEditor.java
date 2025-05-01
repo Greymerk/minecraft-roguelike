@@ -24,9 +24,10 @@ import net.minecraft.world.chunk.ChunkStatus;
 
 public class WorldEditor implements IWorldEditor{
 
-	World world;
-	RegistryKey<World> worldKey;
-	IWorldInfo worldInfo;
+	private World world;
+	private RegistryKey<World> worldKey;
+	private IWorldInfo worldInfo;
+	private Statistics stats;
 	
 	public static WorldEditor of(World world) {
 		return new WorldEditor(world);
@@ -36,18 +37,14 @@ public class WorldEditor implements IWorldEditor{
 		return new WorldEditor(world);
 	}
 	
-	public WorldEditor(StructureWorldAccess world, RegistryKey<World> worldKey){
-		/*
-		this.world = world;
-		this.worldKey = worldKey;
-		this.worldInfo = WorldInfo.of(world, worldKey);
-		*/
-	}
+	@Deprecated
+	public WorldEditor(StructureWorldAccess world, RegistryKey<World> worldKey){}
 
 	private WorldEditor(World world) {
 		this.world = world;
 		this.worldKey = world.getRegistryKey();
 		this.worldInfo = WorldInfo.of(world, worldKey);
+		this.stats = new Statistics();
 	}
 
 	@Override
@@ -181,5 +178,15 @@ public class WorldEditor implements IWorldEditor{
 	@Override
 	public IWorldInfo getInfo() {
 		return this.worldInfo;
+	}
+
+	@Override
+	public Statistics getStatistics() {
+		return this.stats;
+	}
+
+	@Override
+	public void clearStats() {
+		this.stats = new Statistics();
 	}
 }

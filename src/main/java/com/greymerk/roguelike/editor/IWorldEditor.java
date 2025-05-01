@@ -48,4 +48,8 @@ public interface IWorldEditor {
 	Coord findSurface(Coord pos);
 
 	int getDungeonEntryDepth(Coord origin);
+	
+	Statistics getStatistics();
+	
+	public void clearStats();
 }

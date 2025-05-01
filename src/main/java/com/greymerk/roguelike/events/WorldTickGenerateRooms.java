@@ -33,9 +33,11 @@ public class WorldTickGenerateRooms implements StartWorldTick{
 		state.getLoadedRooms(editor).stream()
 			.sorted((a, b) -> a.getWorldPos().getY() - b.getWorldPos().getY())
 			.forEach(room -> {
+				editor.clearStats();
 				room.generate(editor);
 				room.applyFilters(editor);
 				room.setGenerated(true);
+				room.mergeStats(editor.getStatistics());
 			});
 		
 		state.update();

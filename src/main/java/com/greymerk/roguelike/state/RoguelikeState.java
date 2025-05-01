@@ -4,11 +4,16 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.StreamSupport;
 
+import com.google.gson.JsonElement;
 import com.greymerk.roguelike.Roguelike;
+import com.greymerk.roguelike.debug.Debug;
 import com.greymerk.roguelike.dungeon.Dungeon;
 import com.greymerk.roguelike.dungeon.room.IRoom;
 import com.greymerk.roguelike.editor.IWorldEditor;
+import com.greymerk.roguelike.editor.Statistics;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
+import com.mojang.serialization.JsonOps;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.registry.RegistryKey;
@@ -56,11 +61,16 @@ public class RoguelikeState extends PersistentState {
 	}
 	
 	public void update() {
-		this.dungeons.forEach(d -> {
-			if(d.isGenerated()) {
-				this.dungeons.remove(d);
-			}
-		});
+		this.dungeons.stream()
+			.filter(d -> d.isGenerated())
+			.forEach(d -> {
+				Statistics stats = d.getStatistics();
+				DataResult<JsonElement> result = Statistics.LOG_CODEC.encodeStart(JsonOps.INSTANCE, stats);
+				JsonElement je = result.getOrThrow();
+				String json = je.toString();
+				Debug.info(json);
+			});
+		this.dungeons.removeIf(d -> d.isGenerated());
 		this.markDirty();
 	}
 	
@@ -69,7 +79,7 @@ public class RoguelikeState extends PersistentState {
 				.filter(d -> editor.isChunkLoaded(d.getPos()))
 				.toList();
 	}
-	
+		
 	public List<IRoom> getLoadedRooms(IWorldEditor editor){
 		return this.dungeons.stream()
 				.flatMap(d -> StreamSupport.stream(d.spliterator(), false))

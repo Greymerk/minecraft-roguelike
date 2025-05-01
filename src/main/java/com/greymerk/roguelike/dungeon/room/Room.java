@@ -9,6 +9,7 @@ import com.greymerk.roguelike.dungeon.layout.Exit;
 import com.greymerk.roguelike.dungeon.layout.ExitType;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
+import com.greymerk.roguelike.editor.Statistics;
 import com.greymerk.roguelike.settings.ILevelSettings;
 import com.greymerk.roguelike.settings.LevelSettings;
 import com.mojang.serialization.Codec;
@@ -64,8 +65,11 @@ public enum Room {
 				Codecs.NON_EMPTY_STRING.fieldOf("dir").forGetter(room -> room.getDirection().name()),
 				//ENTRANCES_CODEC.fieldOf("entrances").forGetter(room -> Room.convertEntrances(room.getEntrances())),
 				EXITS_CODEC.fieldOf("exits").forGetter(room -> room.getExits()),
-				Codec.BOOL.fieldOf("generated").forGetter(room -> room.isGenerated())
-			).apply(instance, (name, settings, pos, dir, exits, generated) -> Room.getInstance(name, settings, pos, dir, exits, generated))
+				Codec.BOOL.fieldOf("generated").forGetter(room -> room.isGenerated()),
+				Statistics.CODEC.fieldOf("stats").forGetter(room -> room.getStats())
+			).apply(instance, 
+				(name, settings, pos, dir, exits, generated, stats) -> 
+					Room.getInstance(name, settings, pos, dir, exits, generated, stats))
 	);
 	
 	
@@ -103,7 +107,7 @@ public enum Room {
 		return room;
 	}
 	
-	public static IRoom getInstance(Room type, ILevelSettings settings, Coord pos, Cardinal dir, List<Exit> exits, boolean generated) {
+	public static IRoom getInstance(Room type, ILevelSettings settings, Coord pos, Cardinal dir, List<Exit> exits, boolean generated, Statistics stats) {
 		IRoom room = fromType(type);
 		room.setLevelSettings(settings);
 		room.setWorldPos(pos);
@@ -112,17 +116,19 @@ public enum Room {
 			room.addExit(e);
 		});
 		room.setGenerated(generated);
+		room.mergeStats(stats);
 		return room;
 	}
 	
-	public static IRoom getInstance(String name, String settings, Coord pos, String dir, List<Exit> exits, boolean generated) {
+	public static IRoom getInstance(String name, String settings, Coord pos, String dir, List<Exit> exits, boolean generated, Statistics stats) {
 		return Room.getInstance(
 			Room.get(name),
 			LevelSettings.get(settings),
 			pos,
 			Cardinal.of(dir),
 			exits,
-			generated);
+			generated,
+			stats);
 	}
 	
 	public static Map<String, String> convertEntrances(Map<Cardinal, ExitType> entrances){

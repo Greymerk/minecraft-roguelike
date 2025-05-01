@@ -15,6 +15,7 @@ import com.greymerk.roguelike.dungeon.tower.RogueTower;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.MetaBlock;
+import com.greymerk.roguelike.editor.Statistics;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.editor.boundingbox.IBounded;
 import com.greymerk.roguelike.settings.LevelSettings;
@@ -126,6 +127,14 @@ public class Dungeon implements Iterable<IRoom>{
 	
 	public Coord getPos() {
 		return this.origin.copy();
+	}
+
+	public Statistics getStatistics() {
+		Statistics combined = new Statistics();
+		this.rooms.forEach(r -> {
+			combined.merge(r.getStats());
+		});
+		return combined;
 	}
 	
 	@Override
