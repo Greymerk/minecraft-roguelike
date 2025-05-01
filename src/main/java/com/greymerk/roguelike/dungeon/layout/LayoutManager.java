@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.stream.StreamSupport;
 
 import com.greymerk.roguelike.config.Config;
-import com.greymerk.roguelike.debug.DebugLayout;
+import com.greymerk.roguelike.debug.Debug;
 import com.greymerk.roguelike.dungeon.Floor;
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellManager;
@@ -89,9 +89,10 @@ public class LayoutManager {
 			this.determineExits(editor, rand, floor);
 		}
 				
-		if(Config.ofBoolean(Config.DEBUG)) {
-			DebugLayout debug = new DebugLayout(editor.getInfo().getWorldDirectory());
-			debug.toFile(origin.getX() + "_" + origin.getZ() + ".json", CODEC.encodeStart(JsonOps.INSTANCE, this).getOrThrow());	
+		if(Debug.isOn()) {
+			Debug.toFile(editor, 
+				"RoguelikeDungeons_Layout_" + origin.getX() + "_" + origin.getZ() + ".json", 
+				CODEC.encodeStart(JsonOps.INSTANCE, this).getOrThrow());	
 		}
 	}
 	

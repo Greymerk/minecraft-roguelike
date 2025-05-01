@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.StreamSupport;
 
-import com.google.gson.JsonElement;
 import com.greymerk.roguelike.Roguelike;
 import com.greymerk.roguelike.debug.Debug;
 import com.greymerk.roguelike.dungeon.Dungeon;
@@ -12,7 +11,6 @@ import com.greymerk.roguelike.dungeon.room.IRoom;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.Statistics;
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.DataResult;
 import com.mojang.serialization.JsonOps;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
@@ -60,16 +58,18 @@ public class RoguelikeState extends PersistentState {
 		return !this.dungeons.isEmpty();
 	}
 	
-	public void update() {
-		this.dungeons.stream()
+	public void update(IWorldEditor editor) {
+		if(Debug.isOn()) {
+			this.dungeons.stream()
 			.filter(d -> d.isGenerated())
 			.forEach(d -> {
 				Statistics stats = d.getStatistics();
-				DataResult<JsonElement> result = Statistics.LOG_CODEC.encodeStart(JsonOps.INSTANCE, stats);
-				JsonElement je = result.getOrThrow();
-				String json = je.toString();
-				Debug.info(json);
-			});
+				Debug.toFile(editor, 
+					"RoguelikeDungeons_Loot_" + d.getPos().getX() + "_" + d.getPos().getZ() + ".json", 
+					Statistics.CODEC.encodeStart(JsonOps.INSTANCE, stats).getOrThrow());
+				Debug.info("Dungeon @" + d.getPos().toString() + " completed generating rooms.");
+			});	
+		}
 		this.dungeons.removeIf(d -> d.isGenerated());
 		this.markDirty();
 	}

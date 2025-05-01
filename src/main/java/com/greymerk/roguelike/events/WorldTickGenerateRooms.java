@@ -40,7 +40,7 @@ public class WorldTickGenerateRooms implements StartWorldTick{
 				room.mergeStats(editor.getStatistics());
 			});
 		
-		state.update();
+		state.update(editor);
 		RoguelikeState.flagForGenerationCheck = false;
 	}
 }
