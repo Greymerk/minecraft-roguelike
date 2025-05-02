@@ -1,9 +1,12 @@
 package com.greymerk.roguelike.settings.level;
 
+import java.util.List;
+
 import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
 import com.greymerk.roguelike.dungeon.room.Room;
 import com.greymerk.roguelike.dungeon.room.RoomProvider;
+import com.greymerk.roguelike.filter.Filter;
 import com.greymerk.roguelike.settings.ILevelSettings;
 import com.greymerk.roguelike.settings.LevelSettings;
 import com.greymerk.roguelike.settings.LevelSettingsBase;
@@ -35,6 +38,8 @@ public class LevelSettingsStone extends LevelSettingsBase implements ILevelSetti
 		this.alcoves.add(new WeightedChoice<Fragment>(Fragment.ALCOVE_PRISON_CELL, 10));
 		this.alcoves.add(new WeightedChoice<Fragment>(Fragment.ALCOVE_CRYPT, 3));
 		this.alcoves.add(new WeightedChoice<Fragment>(Fragment.BOOK_SHELF, 2));
+		
+		this.filters = List.of(Filter.get(Filter.CHAINS));
 	}
 
 	@Override

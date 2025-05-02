@@ -4,6 +4,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Predicate;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -22,7 +24,7 @@ import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.chunk.WorldChunk;
 
-public class BoundingBox implements IBounded, IShape{
+public class BoundingBox implements IBounded, IShape, Iterable<Coord>{
 
 	public static Codec<BoundingBox> CODEC = RecordCodecBuilder.create(
 		instance -> instance.group(
@@ -232,5 +234,9 @@ public class BoundingBox implements IBounded, IShape{
 	@Override
 	public String toString() {
 		return List.of(start, end).toString();
+	}
+
+	public Stream<Coord> stream() {
+		return StreamSupport.stream(this.spliterator(), false);
 	}
 }

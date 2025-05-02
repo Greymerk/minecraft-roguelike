@@ -36,14 +36,13 @@ public class LevelSettingsCrumbledStone extends LevelSettingsBase implements ILe
 		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_CHEST, 1));
 		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_FOOD_BARREL, 1));
 		
-
-		//this.alcoves.add(this.walls);
 		this.alcoves.add(new WeightedChoice<Fragment>(Fragment.ALCOVE_PRISON_CELL, 10));
 		this.alcoves.add(new WeightedChoice<Fragment>(Fragment.ALCOVE_CRYPT, 5));
 		this.alcoves.add(new WeightedChoice<Fragment>(Fragment.BOOK_SHELF, 3));
 		
 		this.filters = new ArrayList<IFilter>();
 		this.filters.add(Filter.get(Filter.COBWEB));
+		this.filters.add(Filter.get(Filter.CHAINS));
 	}
 
 	@Override
