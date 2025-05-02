@@ -219,7 +219,7 @@ public class SmithRoom extends AbstractRoom implements IRoom {
 		cells.add(Cell.of(origin.copy(), CellState.OBSTRUCTED, this));
 		cells.add(Cell.of(origin.copy().add(dir), CellState.OBSTRUCTED, this));
 		cells.add(Cell.of(origin.copy().add(dir, 2), CellState.OBSTRUCTED, this));
-		cells.add(Cell.of(origin.copy().add(dir, 3), CellState.OBSTRUCTED, this).addWall(dir));
+		cells.add(Cell.of(origin.copy().add(dir, 3), CellState.OBSTRUCTED, this).addWall(dir).addWalls(Cardinal.orthogonal(dir)));
 		
 		for(Cardinal o : Cardinal.orthogonal(dir)) {
 			cells.add(Cell.of(origin.copy().add(dir).add(o), CellState.OBSTRUCTED, this).addWall(Cardinal.reverse(dir)).addWall(o));

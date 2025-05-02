@@ -293,7 +293,7 @@ public class ImperialStairway extends AbstractRoom implements IRoom {
 			
 			Cardinal.orthogonal(dir).forEach(o -> {
 				theme.getPrimary().getWall().set(editor, rand, origin.add(dir, i).add(Cardinal.UP, i).add(o, 2));
-				Candle.generate(editor, rand, origin.add(dir, i).add(Cardinal.UP, i + 1).add(o, 2));
+				if(rand.nextBoolean()) Candle.generate(editor, rand, origin.add(dir, i).add(Cardinal.UP, i + 1).add(o, 2));
 			});
 			
 			if(i > 0) {

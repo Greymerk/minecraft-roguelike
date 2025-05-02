@@ -154,7 +154,7 @@ public class BTeamRoom extends AbstractRoom implements IRoom {
 	}
 
 	private void passage(IWorldEditor editor, Random rand, Coord origin) {
-		BoundingBox.of(origin).add(direction, 3).grow(Cardinal.orthogonal(direction)).grow(Cardinal.UP, 3).fill(editor, rand, theme.getPrimary().getWall());
+		BoundingBox.of(origin).add(direction, 3).grow(Cardinal.orthogonal(direction), 2).grow(Cardinal.UP, 3).grow(Cardinal.DOWN).fill(editor, rand, theme.getPrimary().getWall());
 		BoundingBox.of(origin).add(direction, 4).grow(Cardinal.orthogonal(direction)).grow(Cardinal.UP, 2).grow(direction).grow(Cardinal.DOWN).fill(editor, rand, MetaBlock.of(Blocks.COBBLESTONE));
 		BoundingBox.of(origin).add(direction, 4).grow(Cardinal.UP).grow(direction).fill(editor, rand, Air.get());
 		BoundingBox.of(origin).add(direction, 3).grow(Cardinal.UP).grow(direction, 2).fill(editor, rand, MetaBlock.of(Blocks.GRAVEL));
