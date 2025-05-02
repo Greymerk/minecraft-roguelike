@@ -25,6 +25,7 @@ public class BlockSet implements IBlockSet {
 	protected IDoor door;
 	protected IBlockFactory lightblock;
 	protected IBlockFactory liquid;
+	private boolean naturalFire;
 	
 	public static Builder builder() {
 		return new Builder();
@@ -39,7 +40,8 @@ public class BlockSet implements IBlockSet {
 			ISlab slab,
 			IDoor door,
 			IBlockFactory lightblock,
-			IBlockFactory liquid){
+			IBlockFactory liquid,
+			boolean naturalFire){
 		this.floor = floor;
 		this.walls = walls;
 		this.pillar = pillar;
@@ -48,6 +50,7 @@ public class BlockSet implements IBlockSet {
 		this.door = door;
 		this.lightblock = lightblock;
 		this.liquid = liquid;
+		this.naturalFire = naturalFire;
 	}
 	
 	@Override
@@ -85,13 +88,14 @@ public class BlockSet implements IBlockSet {
 		return this.liquid != null ? this.liquid : MetaBlock.of(Blocks.WATER);
 	}
 	
-	public void setLiquid(MetaBlock liquid) {
-		this.liquid = liquid;
-	}
-	
 	@Override
 	public ISlab getSlab() {
 		return this.slab != null ? this.slab : Slab.get(Slab.STONE);
+	}
+
+	@Override
+	public boolean naturalFire() {
+		return this.naturalFire;
 	}
 	
 	public static class Builder {
@@ -104,6 +108,11 @@ public class BlockSet implements IBlockSet {
 		private IDoor door;
 		private IBlockFactory lightblock;
 		private IBlockFactory liquid;
+		private boolean naturalFire;
+		
+		public Builder() {
+			this.naturalFire = true;
+		}
 		
 		public Builder floor(IBlockFactory floor) {
 			this.floor = BlockFloor.of(floor);
@@ -145,8 +154,14 @@ public class BlockSet implements IBlockSet {
 			return this;
 		}
 		
+		public Builder naturalFire(boolean natural) {
+			this.naturalFire = natural;
+			return this;
+		}
+		
 		public BlockSet build() {
-			return new BlockSet(floor, walls, pillar, stair, slab, door, lightblock, liquid);
+			return new BlockSet(floor, walls, pillar, stair, slab, door, lightblock, liquid, naturalFire);
 		}
 	}
+
 }

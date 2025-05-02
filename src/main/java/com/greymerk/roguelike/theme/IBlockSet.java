@@ -13,5 +13,6 @@ public interface IBlockSet {
 	public ISlab getSlab();
 	public IDoor getDoor();
 	public IBlockFactory getLightBlock();
-	public IBlockFactory getLiquid();	
+	public IBlockFactory getLiquid();
+	public boolean naturalFire();
 }

@@ -139,7 +139,7 @@ public class AbyssRoom extends AbstractLargeRoom implements IRoom {
 	private void fire(IWorldEditor editor, Random rand, Coord origin) {
 		IStair stair = theme.getPrimary().getStair();
 		
-		Campfire.generate(editor, origin, Campfire.SOUL);
+		Campfire.generate(editor, origin, theme);
 		for(Cardinal dir : Cardinal.directions) {
 			Coord pos = origin.copy().add(dir);
 			stair.setOrientation(dir, false).set(editor, rand, pos);

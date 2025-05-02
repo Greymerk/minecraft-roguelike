@@ -46,6 +46,7 @@ public class ThemeTiledSlate extends ThemeBase implements ITheme {
 				.pillar(pillar)
 				.slab(Slab.get(Slab.TILED_SLATE))
 				.liquid(MetaBlock.of(Blocks.LAVA))
+				.naturalFire(false)
 				.build();
 		this.secondary = primary;
 	}

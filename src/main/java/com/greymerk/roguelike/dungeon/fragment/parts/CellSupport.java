@@ -71,7 +71,7 @@ public class CellSupport implements IFragment {
 		
 		if(rand.nextInt(10) == 0) {
 			Coord pos = origin.copy().add(Cardinal.DOWN);
-			Lantern.set(editor, pos, pos.getY() < 0 ? Lantern.SOUL : Lantern.FLAME, true);
+			Lantern.set(editor, pos, theme, true);
 		}
 	}
 }
