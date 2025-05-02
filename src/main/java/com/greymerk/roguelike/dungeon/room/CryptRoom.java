@@ -248,8 +248,9 @@ public class CryptRoom extends AbstractMediumRoom implements IRoom {
 		});
 				
 		Cardinal.directions.forEach(dir -> {
-			BoundingBox.of(origin).add(Cardinal.UP, 6).grow(dir, 3).fill(editor, rand, wall);
+			theme.getPrimary().getWall().set(editor, rand, origin.copy().add(Cardinal.UP, 6).add(dir, 3));
 			stair.setOrientation(Cardinal.reverse(dir), true).set(editor, rand, origin.copy().add(Cardinal.UP, 5).add(dir, 3));
+			BoundingBox.of(origin).add(Cardinal.UP, 6).add(dir, 2).grow(Cardinal.orthogonal(dir)).grow(Cardinal.left(dir)).fill(editor, rand, wall);
 		});
 
 		BoundingBox.of(origin.copy()).add(Cardinal.DOWN).grow(Cardinal.directions, 4).fill(editor, rand, theme.getPrimary().getFloor());
