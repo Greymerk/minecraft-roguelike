@@ -9,6 +9,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.registry.Registries;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.dynamic.Codecs;
 
@@ -33,14 +34,11 @@ public class Statistics {
 	
 	public Statistics() {
 		this.items = new HashMap<RegistryEntry<Item>, Integer>();
-		
-		Items.STICK.getName().getString();
-		Item.byRawId(Item.getRawId(Items.STICK));
 	}
 	
 	public void add(ItemStack toAdd) {
 		if(toAdd.getItem().equals(Items.AIR)) return;
-		items.merge(toAdd.getItem().getRegistryEntry(), toAdd.getCount(), Integer::sum);
+		items.merge(Registries.ITEM.getEntry(toAdd.getItem()), toAdd.getCount(), Integer::sum);
 	}
 	
 	public void merge(Statistics other) {
