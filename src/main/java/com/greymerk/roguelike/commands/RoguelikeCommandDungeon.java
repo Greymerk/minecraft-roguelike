@@ -30,8 +30,7 @@ public class RoguelikeCommandDungeon {
 			.executes(context -> {
 				ServerCommandSource source = context.getSource();
 				Entity entity = source.getEntity();
-				
-				World world = entity.getWorld().getServer().getWorld(null);
+				World world = entity.getWorld();
 				RegistryKey<World> key = world.getRegistryKey();
 				ServerWorld sw = world.getServer().getWorld(key);
 				IWorldEditor editor = WorldEditor.of(sw);
