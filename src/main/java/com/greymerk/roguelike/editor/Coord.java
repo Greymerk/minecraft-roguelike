@@ -232,11 +232,7 @@ public class Coord implements Comparable<Coord> {
 	
 	@Override
 	public String toString(){
-		String toReturn = "";
-		toReturn += "x: " + x + " ";
-		toReturn += "y: " + y + " ";
-		toReturn += "z: " + z;
-		return toReturn;
+		return String.format("[%d %d %d]", x, y, z);
 	}
 	
 	@Override

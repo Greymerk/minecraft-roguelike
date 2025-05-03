@@ -94,9 +94,10 @@ public class Dungeon implements Iterable<IRoom>{
 		Stopwatch watch = Stopwatch.createStarted();
 		
 		Coord surface = editor.findSurface(this.origin);
-		Coord entry = this.origin.withY(editor.getDungeonEntryDepth(origin));
+		this.origin = surface.copy().freeze();
+		Coord entry = this.origin.withY(editor.getDungeonEntryDepth(origin)).freeze();
 		
-		LayoutManager layout = new LayoutManager(entry, editor.getInfo().getLastFloorDepth());
+		LayoutManager layout = new LayoutManager(this.origin, entry, editor.getInfo().getLastFloorDepth());
 		
 		IRoom entrance = Room.getInstance(Room.ENTRANCE, LevelSettings.fromType(LevelSettings.OAK), Coord.ZERO, entry);
 		entrance.generate(editor);
@@ -109,8 +110,7 @@ public class Dungeon implements Iterable<IRoom>{
 		RogueTower tower = new RogueTower();
 		tower.generate(editor, rand, Theme.getTheme(Theme.TOWER), entry);
 		
-		Debug.info("Dungeon @: " + surface + " in: " + watch.elapsed(TimeUnit.MILLISECONDS) + "ms");
-		
+		Debug.info("Dungeon @" + surface + " generated layout in: " + watch.elapsed(TimeUnit.MILLISECONDS) + "ms");
 	}
 	
 	public boolean hasLayout() {

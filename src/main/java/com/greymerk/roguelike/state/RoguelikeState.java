@@ -65,7 +65,7 @@ public class RoguelikeState extends PersistentState {
 			.forEach(d -> {
 				Statistics stats = d.getStatistics();
 				Debug.toFile(editor, 
-					"RoguelikeDungeons_Loot_" + d.getPos().getX() + "_" + d.getPos().getZ() + ".json", 
+					"RoguelikeDungeons_" + d.getPos().toString().replaceAll(" ", "_") + "_Loot.json", 
 					Statistics.CODEC.encodeStart(JsonOps.INSTANCE, stats).getOrThrow());
 				Debug.info("Dungeon @" + d.getPos().toString() + " completed generating rooms.");
 			});	

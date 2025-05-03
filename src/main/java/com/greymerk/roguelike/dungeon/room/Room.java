@@ -63,7 +63,6 @@ public enum Room {
 				Codecs.NON_EMPTY_STRING.fieldOf("settings").forGetter(room -> room.getLevelSettings().getName()),
 				Coord.CODEC.fieldOf("pos").forGetter(room -> room.getWorldPos()),
 				Codecs.NON_EMPTY_STRING.fieldOf("dir").forGetter(room -> room.getDirection().name()),
-				//ENTRANCES_CODEC.fieldOf("entrances").forGetter(room -> Room.convertEntrances(room.getEntrances())),
 				EXITS_CODEC.fieldOf("exits").forGetter(room -> room.getExits()),
 				Codec.BOOL.fieldOf("generated").forGetter(room -> room.isGenerated()),
 				Statistics.CODEC.fieldOf("stats").forGetter(room -> room.getStats())
@@ -129,24 +128,5 @@ public enum Room {
 			exits,
 			generated,
 			stats);
-	}
-	
-	public static Map<String, String> convertEntrances(Map<Cardinal, ExitType> entrances){
-		Map<String, String> ents = new HashMap<String, String>();
-		entrances.forEach((d, e) -> {
-			ents.put(d.name(), e.name());
-		});
-		
-		return ents;
-	}
-	
-	public static Map<Cardinal, ExitType> convertEntrancesBack(Map<String, String> entrances){
-		Map<Cardinal, ExitType> ents = new HashMap<Cardinal, ExitType>();
-		entrances.forEach((d, e) -> {
-			Cardinal dir = Cardinal.of(d);
-			ExitType ent = ExitType.valueOf(e);
-			ents.put(dir, ent);
-		});
-		return ents;
 	}
 }

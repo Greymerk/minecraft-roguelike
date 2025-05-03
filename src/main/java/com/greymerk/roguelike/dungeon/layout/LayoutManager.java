@@ -33,22 +33,26 @@ public class LayoutManager {
 	public static final Codec<LayoutManager> CODEC = RecordCodecBuilder.create(
 			instance -> instance.group(
 				Coord.CODEC.fieldOf("origin").forGetter(lm -> lm.origin),
+				Coord.CODEC.fieldOf("entry").forGetter(lm -> lm.entry),
 				Codec.list(Floor.CODEC).fieldOf("floors").forGetter(lm -> lm.floors)
-		).apply(instance, (origin, floors) -> new LayoutManager(origin, floors))
+		).apply(instance, (origin, entry, floors) -> new LayoutManager(origin, entry, floors))
 	);
 	
 	private Coord origin;
+	private Coord entry;
 	private List<Floor> floors;
 	private ExclusionZones zones; 
 	
-	public LayoutManager(Coord origin, int depth) {
+	public LayoutManager(Coord origin, Coord entry, int depth) {
 		this.origin = origin;
-		this.floors = createFloors(depth);
+		this.entry = entry;
+		this.floors = createFloors(entry, depth);
 		this.zones = new ExclusionZones();
 	}
 	
-	public LayoutManager(Coord origin, List<Floor> floors) {
+	public LayoutManager(Coord origin, Coord entry, List<Floor> floors) {
 		this.origin = origin;
+		this.entry = entry;
 		this.floors = floors;
 		this.zones = new ExclusionZones();
 	}
@@ -60,7 +64,7 @@ public class LayoutManager {
 		IDungeonSettings settings = new DungeonSettingsDefault(
 				Config.ofBoolean(Config.BELOW_SEA_LEVEL) 
 					? editor.getInfo().getFirstFloorDepth()
-					: origin.getY(),
+					: entry.getY(),
 				editor.getInfo().getLastFloorDepth());
 		
 		for(Floor floor : this.floors) {
@@ -91,7 +95,7 @@ public class LayoutManager {
 				
 		if(Debug.isOn()) {
 			Debug.toFile(editor, 
-				"RoguelikeDungeons_Layout_" + origin.getX() + "_" + origin.getZ() + ".json", 
+				"RoguelikeDungeons_" + origin.toString().replaceAll(" ", "_") + "_Layout.json", 
 				CODEC.encodeStart(JsonOps.INSTANCE, this).getOrThrow());	
 		}
 	}
@@ -145,10 +149,10 @@ public class LayoutManager {
 			RandHelper.shuffle(cells, rand);
 		} else {
 			Collections.sort(cells, (a, b) -> {
-				Coord ac = a.getWorldPos(origin);
-				Coord bc = b.getWorldPos(origin);
-				Double adist = ac.distance(origin);
-				Double bdist = bc.distance(origin);
+				Coord ac = a.getWorldPos(floor.getOrigin());
+				Coord bc = b.getWorldPos(floor.getOrigin());
+				Double adist = ac.distance(floor.getOrigin());
+				Double bdist = bc.distance(floor.getOrigin());
 				return Double.compare(adist, bdist);
 			});
 		}
@@ -192,7 +196,6 @@ public class LayoutManager {
 	
 	public void addRoom(IRoom toAdd, Cardinal dir, Coord fp, Coord wp, Floor floor) {
 		int level = this.floors.indexOf(floor);
-		//toAdd.determineEntrances(floor, fp);
 		toAdd.setDirection(dir);
 		toAdd.setFloorPos(fp);
 		toAdd.setWorldPos(wp);
@@ -208,10 +211,10 @@ public class LayoutManager {
 		});
 	}
 	
-	private List<Floor> createFloors(int depth) {
+	private List<Floor> createFloors(Coord entry, int depth) {
 		List<Floor> floors = new ArrayList<Floor>();
-		for(int y = origin.getY(); y >= depth; y -= 10) {
-			floors.add(Floor.of(origin.withY(y)));
+		for(int y = entry.getY(); y >= depth; y -= 10) {
+			floors.add(Floor.of(entry.withY(y)));
 		}
 		return floors;
 	}
