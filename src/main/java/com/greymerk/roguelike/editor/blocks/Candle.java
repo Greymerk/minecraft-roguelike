@@ -1,5 +1,9 @@
 package com.greymerk.roguelike.editor.blocks;
 
+
+import java.util.function.Predicate;
+
+import com.greymerk.roguelike.editor.BlockContext;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.Fill;
 import com.greymerk.roguelike.editor.IWorldEditor;
@@ -22,19 +26,25 @@ public class Candle {
 	}
 	
 	public static void generate(IWorldEditor editor, Coord origin, Color color, int count, boolean lit) {
-		int numCandles;
-		if(count == 0) return;
-		if(count < 0) {
-			numCandles = 1;
-		} else if(count > 4) {
-			numCandles = 4;
-		} else {
-			numCandles = count;
-		}
-		MetaBlock.of(fromColor(color))
-			.with(CandleBlock.CANDLES, numCandles)
-			.with(CandleBlock.LIT, lit)
-			.set(editor, origin, Fill.SUPPORTED.and(Fill.AIR));
+		Candle.get(color, count, lit).set(editor, origin, Fill.SUPPORTED);
+	}
+	
+	public static void generate(IWorldEditor editor, Random rand, Coord origin, Predicate<BlockContext> p) {
+		generate(editor, rand, origin, Color.get(rand), p);
+	}
+	
+	public static void generate(IWorldEditor editor, Random rand, Coord origin, Color color, Predicate<BlockContext> p) {
+		generate(editor, origin, color, rand.nextBetween(1, 4), true, p);
+	}
+	
+	public static void generate(IWorldEditor editor, Coord origin, Color color, int count, boolean lit, Predicate<BlockContext> p) {
+		Candle.get(color, count, lit).set(editor, origin, Fill.SUPPORTED.and(p));
+	}
+	
+	public static MetaBlock get(Color color, int count, boolean lit) {
+		return MetaBlock.of(fromColor(color))
+				.with(CandleBlock.CANDLES, Math.clamp(count, 1, 4))
+				.with(CandleBlock.LIT, lit);
 	}
 	
 	public static Block fromColor(Color color) {
@@ -59,5 +69,4 @@ public class Candle {
 		
 		}
 	}
-	
 }

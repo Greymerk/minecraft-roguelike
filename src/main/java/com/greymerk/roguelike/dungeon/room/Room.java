@@ -1,12 +1,9 @@
 
 package com.greymerk.roguelike.dungeon.room;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.greymerk.roguelike.dungeon.layout.Exit;
-import com.greymerk.roguelike.dungeon.layout.ExitType;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.Statistics;
