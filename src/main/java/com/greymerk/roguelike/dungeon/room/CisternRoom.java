@@ -51,15 +51,17 @@ public class CisternRoom extends AbstractMediumRoom implements IRoom {
 	private void ceiling(IWorldEditor editor, Random rand, Coord origin) {
 		IBlockFactory wall = theme.getPrimary().getWall();
 		
-		for(Cardinal dir : Cardinal.directions) {
+		Cardinal.directions.forEach(dir -> {
+			List.of(2, 4).forEach(i -> {
+				BoundingBox.of(origin.copy()).add(Cardinal.UP, 5).add(dir, i)
+				.grow(Cardinal.orthogonal(dir), 5)
+				.fill(editor, rand, wall);	
+			});
+			
 			BoundingBox.of(origin).add(Cardinal.UP, 5).add(dir, 6)
 				.grow(dir).grow(Cardinal.left(dir), 5).grow(Cardinal.right(dir), 7)
 				.fill(editor, rand, wall);
-			
-			BoundingBox.of(origin.copy()).add(Cardinal.UP, 5).add(dir, 2)
-				.grow(Cardinal.orthogonal(dir), 5)
-				.fill(editor, rand, wall, Fill.AIR);
-		}
+		});
 		
 		BoundingBox.of(origin).add(Cardinal.UP, 6).grow(Cardinal.directions, 8).fill(editor, rand, wall, Fill.SOLID);
 	}
