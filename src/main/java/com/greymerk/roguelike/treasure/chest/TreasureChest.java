@@ -67,8 +67,8 @@ public class TreasureChest implements ITreasureChest{
 		this.chest = (LootableContainerBlockEntity) be;
 		this.inventory = new Inventory(rand, chest);
 		
-		//Optional<RegistryKey<LootTable>> maybeTable = Treasure.getLootTable(type, diff);
-		//if(maybeTable.isPresent()) this.setLootTable(maybeTable.get(), editor.getSeed(pos));
+		Optional<Identifier> table = Treasure.getTableIdentifier(this.type, diff);
+		if(table.isPresent()) this.setLootTable(table.get(), editor.getSeed(pos));
 		
 		if(Config.ofBoolean(Config.ROGUELIKE_LOOT)) Loot.fillChest(editor, this, rand);
 		return Optional.of(this);

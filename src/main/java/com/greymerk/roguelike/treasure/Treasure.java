@@ -35,14 +35,6 @@ public enum Treasure {
 		return TreasureChest.generate(editor, rand, diff, pos, dir, type, block);
 	}
 	
-	/*
-	public static Optional<RegistryKey<LootTable>> getLootTable(Treasure type, Difficulty diff){
-		Optional<Identifier> id = getTableIdentifier(type, diff);
-		if(id.isEmpty()) return Optional.empty();
-		return Optional.of(RegistryKey.of(RegistryKeys.LOOT_TABLE, id.get()));
-	}
-	*/
-	
 	public static Optional<Identifier> getTableIdentifier(Treasure type, Difficulty diff){
 		String tier = diff.lt(Difficulty.HARD) ? "1" : "2";
 		String path = "chests/";

@@ -36,6 +36,7 @@ public class WorldInfo implements IWorldInfo {
 		this.worldKey = worldKey;
 	}
 	
+	@SuppressWarnings("deprecation")
 	@Override
 	public int getSeaLevel() {
 		if(this.isFlat()) return 64;
