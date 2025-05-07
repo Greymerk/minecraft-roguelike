@@ -11,29 +11,10 @@ public class WeightedRandomizer<T> implements IWeighted<T>{
 	private List<IWeighted<T>> items;	
 
 	public WeightedRandomizer(int weight){
+		assert(weight > 0);
 		this.weight = weight;
 		this.weightSum = 0;
 		items = new ArrayList<IWeighted<T>>();
-	}
-	
-	public WeightedRandomizer(WeightedRandomizer<T> toCopy){
-		this.weight = toCopy.weight;
-		this.weightSum = toCopy.weightSum;
-		this.items = new ArrayList<IWeighted<T>>();
-		for(IWeighted<T> e : toCopy.items){
-			items.add(e);
-		}
-	}
-	
-	public WeightedRandomizer(WeightedRandomizer<T> base, WeightedRandomizer<T> other){
-		this();
-		for(IWeighted<T> item : base.items){
-			this.add(item);
-		}
-	
-		for(IWeighted<T> item : other.items){
-			this.add(item);
-		}		
 	}
 	
 	public WeightedRandomizer(){
@@ -49,9 +30,10 @@ public class WeightedRandomizer<T> implements IWeighted<T>{
 		return items.isEmpty();
 	}
 	
-	public void add(IWeighted<T> toAdd){
+	public WeightedRandomizer<T> add(IWeighted<T> toAdd){
 		this.weightSum += toAdd.getWeight();
 		this.items.add(toAdd);
+		return this;
 	}
 	
 	public T get(Random rand){

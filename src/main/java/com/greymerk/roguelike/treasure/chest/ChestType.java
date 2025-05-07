@@ -10,11 +10,11 @@ public enum ChestType {
 	
 	public static MetaBlock get(ChestType type) {
 		switch(type) {
-		case CHEST: return new MetaBlock(Blocks.CHEST);
-		case TRAPPED_CHEST: return new MetaBlock(Blocks.TRAPPED_CHEST);
-		case BARREL: return new MetaBlock(Blocks.BARREL);
-		case SHULKER: return new MetaBlock(Blocks.SHULKER_BOX);
-		default: return new MetaBlock(Blocks.CHEST);
+		case CHEST: return MetaBlock.of(Blocks.CHEST);
+		case TRAPPED_CHEST: return MetaBlock.of(Blocks.TRAPPED_CHEST);
+		case BARREL: return MetaBlock.of(Blocks.BARREL);
+		case SHULKER: return MetaBlock.of(Blocks.SHULKER_BOX);
+		default: return MetaBlock.of(Blocks.CHEST);
 		}
 	}
 }

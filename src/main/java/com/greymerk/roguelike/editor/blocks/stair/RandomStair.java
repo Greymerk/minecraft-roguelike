@@ -1,7 +1,11 @@
 package com.greymerk.roguelike.editor.blocks.stair;
 
+import java.util.function.Predicate;
+
+import com.greymerk.roguelike.editor.BlockContext;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
+import com.greymerk.roguelike.editor.Fill;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.shapes.IShape;
@@ -14,12 +18,14 @@ public class RandomStair implements IStair, IBlockFactory {
 
 	private Cardinal dir;
 	private boolean upsideDown;
+	private boolean waterlogged;
 	private WeightedRandomizer<IStair> stairs;
 	
 	public RandomStair() {
 		this.stairs = new WeightedRandomizer<IStair>();
 		this.dir = Cardinal.NORTH;
 		this.upsideDown = false;
+		this.waterlogged = false;
 	}
 
 	public RandomStair add(IStair toAdd, int weight) {
@@ -29,8 +35,9 @@ public class RandomStair implements IStair, IBlockFactory {
 	
 	@Override
 	public IStair setOrientation(Cardinal dir, Boolean upsideDown) {
-		this.dir = dir;
+		this.dir = Cardinal.directions.contains(dir) ? dir : Cardinal.NORTH;
 		this.upsideDown = upsideDown;
+		this.waterlogged = false;
 		return this;
 	}
 
@@ -41,21 +48,28 @@ public class RandomStair implements IStair, IBlockFactory {
 	}
 
 	@Override
-	public boolean set(IWorldEditor editor, Random rand, Coord pos, boolean fillAir, boolean replaceSolid) {
+	public boolean set(IWorldEditor editor, Random rand, Coord pos, Predicate<BlockContext> p) {
 		if(this.stairs.isEmpty()) return false;
-		return this.stairs.get(rand).setOrientation(this.dir, this.upsideDown).set(editor, rand, pos, fillAir, replaceSolid);
-	}
-
-	@Override
-	public void fill(IWorldEditor editor, Random rand, IShape shape, boolean fillAir, boolean replaceSolid) {
-		shape.forEach(pos -> {
-			this.set(editor, rand, pos, fillAir, replaceSolid);
-		});
-	}
-
-	@Override
-	public void fill(IWorldEditor editor, Random rand, IShape shape) {
-		this.fill(editor, rand, shape, true, true);
+		IStair stair = this.stairs.get(rand).setOrientation(this.dir, this.upsideDown);
+		if(waterlogged) stair.waterlog();
+		return stair.set(editor, rand, pos, p);
 	}
 	
+	@Override
+	public void fill(IWorldEditor editor, Random rand, IShape shape, Predicate<BlockContext> p) {
+		shape.forEach(pos -> {
+			this.set(editor, rand, pos, p);
+		});
+	}
+	
+	@Override
+	public void fill(IWorldEditor editor, Random rand, IShape shape) {
+		this.fill(editor, rand, shape, Fill.ALWAYS);
+	}
+
+	@Override
+	public IStair waterlog() {
+		this.waterlogged = true;
+		return this;
+	}
 }

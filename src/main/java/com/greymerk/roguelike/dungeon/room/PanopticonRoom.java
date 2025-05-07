@@ -1,14 +1,18 @@
 package com.greymerk.roguelike.dungeon.room;
 
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellManager;
 import com.greymerk.roguelike.dungeon.cell.CellState;
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
-import com.greymerk.roguelike.dungeon.layout.Entrance;
+import com.greymerk.roguelike.dungeon.fragment.parts.CellSupport;
+import com.greymerk.roguelike.dungeon.layout.ExitType;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
+import com.greymerk.roguelike.editor.Fill;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.blocks.Air;
@@ -16,15 +20,12 @@ import com.greymerk.roguelike.editor.blocks.IronBar;
 import com.greymerk.roguelike.editor.blocks.Lantern;
 import com.greymerk.roguelike.editor.blocks.stair.IStair;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
-import com.greymerk.roguelike.editor.factories.BlockWeightedRandom;
 import com.greymerk.roguelike.editor.shapes.Shape;
 
 import net.minecraft.util.math.random.Random;
 
 public class PanopticonRoom extends AbstractLargeRoom implements IRoom {
 
-	static final BlockWeightedRandom bars = new BlockWeightedRandom().addBlock(IronBar.get(), 2).addBlock(Air.get(), 1);
-	
 	@Override
 	public void generate(IWorldEditor editor) {
 		Random rand = editor.getRandom(this.getWorldPos());
@@ -45,12 +46,12 @@ public class PanopticonRoom extends AbstractLargeRoom implements IRoom {
 	}
 
 	private void supports(IWorldEditor editor, Random rand, Coord origin) {
-		Fragment.generate(Fragment.CELL_SUPPORT, editor, rand, theme, origin);
+		CellSupport.generate(editor, rand, theme, origin);
 		Cardinal.directions.forEach(dir -> {
 			List.of(6, 12).forEach(i -> {
-				Fragment.generate(Fragment.CELL_SUPPORT, editor, rand, theme, origin.copy().add(dir, i));
+				CellSupport.generate(editor, rand, theme, origin.copy().add(dir, i));
 				List.of(6, 12).forEach(j -> {
-					Fragment.generate(Fragment.CELL_SUPPORT, editor, rand, theme, origin.copy().add(dir, i).add(Cardinal.left(dir), j));
+					CellSupport.generate(editor, rand, theme, origin.copy().add(dir, i).add(Cardinal.left(dir), j));
 				});
 			});
 		});
@@ -58,7 +59,7 @@ public class PanopticonRoom extends AbstractLargeRoom implements IRoom {
 
 	private void decorations(IWorldEditor editor, Random rand, Coord origin) {
 		Cardinal.directions.forEach(dir -> {
-			if(this.getEntrance(dir) != Entrance.DOOR) {
+			if(this.getExitType(dir) != ExitType.DOOR) {
 				deco(editor, rand, origin.copy().add(Cardinal.UP, 2).add(dir, 12), dir);
 				deco(editor, rand, origin.copy().add(Cardinal.DOWN, 2).add(dir, 12), dir);
 			}
@@ -82,14 +83,14 @@ public class PanopticonRoom extends AbstractLargeRoom implements IRoom {
 			theme.getPrimary().getStair().setOrientation(Cardinal.reverse(o), true)
 				.set(editor, rand, origin.copy().add(dir, 2).add(o).add(Cardinal.UP, 2));
 		});
-		this.settings.getWallFragment(rand).generate(editor, rand, theme, origin, dir);
+		this.settings.getWallFragment(rand).generate(editor, rand, settings, origin, dir);
 	}
 
 	private void bars(IWorldEditor editor, Random rand, Coord origin) {
 		Cardinal.directions.forEach(dir -> {
 			barWall(editor, rand, origin.copy().add(Cardinal.DOWN, 10).add(dir, 10), dir);
 			barWall(editor, rand, origin.copy().add(Cardinal.DOWN, 6).add(dir, 10), dir);
-			if(this.getEntrance(dir) != Entrance.DOOR) {
+			if(this.getExitType(dir) != ExitType.DOOR) {
 				barWall(editor, rand, origin.copy().add(Cardinal.DOWN, 2).add(dir, 10), dir);
 			}
 			Cardinal.orthogonal(dir).forEach(o -> {
@@ -100,7 +101,7 @@ public class PanopticonRoom extends AbstractLargeRoom implements IRoom {
 					barWall(editor, rand, origin.copy().add(Cardinal.DOWN, 10).add(dir, 12).add(o, i), o);
 					barWall(editor, rand, origin.copy().add(Cardinal.DOWN, 6).add(dir, 12).add(o, i), o);
 				});
-				if(this.getEntrance(dir) == Entrance.DOOR) {
+				if(this.getExitType(dir) == ExitType.DOOR) {
 					List.of(8, 10).forEach(i -> {
 						barWall(editor, rand, origin.copy().add(Cardinal.DOWN, 2).add(dir, 12).add(o, i), o);
 					});
@@ -114,12 +115,12 @@ public class PanopticonRoom extends AbstractLargeRoom implements IRoom {
 	}
 	
 	private void barWall(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
-		BoundingBox.of(origin).grow(Cardinal.orthogonal(dir)).grow(Cardinal.UP, 2).fill(editor, rand, bars, true, false);
+		BoundingBox.of(origin).grow(Cardinal.orthogonal(dir)).grow(Cardinal.UP, 2).fill(editor, rand, IronBar.getBroken(), Fill.AIR);
 	}
 
 	private void bridges(IWorldEditor editor, Random rand, Coord origin) {
 		IStair stair = theme.getPrimary().getStair();
-		this.getEntrancesFromType(Entrance.DOOR).forEach(dir -> {
+		this.getEntrancesFromType(ExitType.DOOR).forEach(dir -> {
 			BoundingBox.of(origin).add(Cardinal.DOWN).add(dir, 3).grow(Cardinal.orthogonal(dir)).grow(dir, 13).fill(editor, rand, theme.getPrimary().getFloor());
 			BoundingBox.of(origin).add(Cardinal.DOWN, 2).add(dir, 8).grow(Cardinal.orthogonal(dir)).grow(dir, 6).fill(editor, rand, theme.getPrimary().getWall());
 			Cardinal.orthogonal(dir).forEach(o -> {
@@ -129,16 +130,12 @@ public class PanopticonRoom extends AbstractLargeRoom implements IRoom {
 				BoundingBox.of(origin).add(dir, 12).add(o, 3).grow(Cardinal.orthogonal(o)).grow(Cardinal.DOWN, 2).grow(Cardinal.UP, 5).fill(editor, rand, theme.getPrimary().getWall());
 				BoundingBox.of(origin).add(Cardinal.DOWN).add(dir, 12).add(o, 2).grow(Cardinal.orthogonal(o)).grow(Cardinal.DOWN).fill(editor, rand, theme.getPrimary().getWall());
 				
-				BoundingBox.of(origin).add(dir, 2).add(o).grow(dir, 8).forEach(pos -> {
-					if(editor.isSupported(pos)) {
-						IronBar.get().set(editor, rand, pos);
-					}
-				});
+				BoundingBox.of(origin).add(dir, 2).add(o).grow(dir, 8).fill(editor, rand, IronBar.get(), Fill.SUPPORTED);
 			});
 		});
 		
 		Cardinal.directions.forEach(dir -> {
-			if(this.getEntrance(dir) != Entrance.DOOR) {
+			if(this.getExitType(dir) != ExitType.DOOR) {
 				BoundingBox.of(origin).add(Cardinal.UP).add(dir, 10).grow(Cardinal.orthogonal(dir), 3).fill(editor, rand, theme.getPrimary().getWall());
 				Cardinal.orthogonal(dir).forEach(o -> {
 					BoundingBox.of(origin).add(Cardinal.UP).add(dir, 11).add(o, 2).grow(dir, 2).fill(editor, rand, theme.getPrimary().getWall());
@@ -148,13 +145,22 @@ public class PanopticonRoom extends AbstractLargeRoom implements IRoom {
 		});
 	}
 
+	private Iterable<Cardinal> getEntrancesFromType(ExitType door) {
+		Set<Cardinal> dirs = new TreeSet<Cardinal>();
+		this.exits.forEach(exit -> {
+			if(exit.type() == ExitType.DOOR) dirs.add(exit.dir());
+		});
+		dirs.add(Cardinal.reverse(direction));
+		return dirs;
+	}
+
 	private void upperPlatforms(IWorldEditor editor, Random rand, Coord origin) {
 		Cardinal.directions.forEach(dir -> {
 			Cardinal.orthogonal(dir).forEach(o -> {
 				BoundingBox.of(origin).add(dir, 10).add(o, 5).grow(o, 2).fill(editor, rand, theme.getPrimary().getWall());
 				BoundingBox.of(origin).add(dir, 11).add(o, 4).grow(dir, 2).fill(editor, rand, theme.getPrimary().getWall());
 				BoundingBox.of(origin).add(dir, 14).add(o, 5).grow(o, 8).fill(editor, rand, theme.getPrimary().getWall());
-				BoundingBox.of(origin).add(dir, 12).add(o, 5).grow(o, 8).grow(Cardinal.orthogonal(o)).fill(editor, rand, theme.getPrimary().getFloor(), true, false);
+				BoundingBox.of(origin).add(dir, 12).add(o, 5).grow(o, 8).grow(Cardinal.orthogonal(o)).fill(editor, rand, theme.getPrimary().getFloor(), Fill.AIR);
 			});
 		});
 	}
@@ -169,7 +175,7 @@ public class PanopticonRoom extends AbstractLargeRoom implements IRoom {
 				BoundingBox.of(origin).add(dir, 11).add(o, 9).grow(Cardinal.orthogonal(dir)).grow(dir, 2).fill(editor, rand, theme.getPrimary().getWall());
 				theme.getPrimary().getWall().set(editor, rand, origin.copy().add(dir, 8).add(o, 3));
 			});
-			BoundingBox.of(origin).add(dir, 11).grow(dir, 3).grow(Cardinal.left(dir), 13).grow(Cardinal.right(dir), 7).fill(editor, rand, theme.getPrimary().getFloor(), true, false);
+			BoundingBox.of(origin).add(dir, 11).grow(dir, 3).grow(Cardinal.left(dir), 13).grow(Cardinal.right(dir), 7).fill(editor, rand, theme.getPrimary().getFloor(), Fill.AIR);
 		});
 		
 	}
@@ -182,7 +188,7 @@ public class PanopticonRoom extends AbstractLargeRoom implements IRoom {
 				BoundingBox.of(origin).add(dir, 11).add(o, 3).grow(Cardinal.orthogonal(dir)).grow(dir, 2).fill(editor, rand, theme.getPrimary().getWall());
 				BoundingBox.of(origin).add(dir, 11).add(o, 9).grow(Cardinal.orthogonal(dir)).grow(dir, 2).fill(editor, rand, theme.getPrimary().getWall());
 			});
-			BoundingBox.of(origin).add(dir, 11).grow(dir, 3).grow(Cardinal.left(dir), 13).grow(Cardinal.right(dir), 7).fill(editor, rand, theme.getPrimary().getFloor(), true, false);
+			BoundingBox.of(origin).add(dir, 11).grow(dir, 3).grow(Cardinal.left(dir), 13).grow(Cardinal.right(dir), 7).fill(editor, rand, theme.getPrimary().getFloor(), Fill.AIR);
 		});
 	}
 
@@ -275,24 +281,24 @@ public class PanopticonRoom extends AbstractLargeRoom implements IRoom {
 					.getShape(Shape.RECTSOLID).fill(editor, rand, walls);
 			});
 				
-			if(this.getEntrance(dir) != Entrance.DOOR) {
-				BoundingBox.of(origin).add(dir, 2).grow(Cardinal.orthogonal(dir)).fill(editor, rand, bars);
+			if(this.getExitType(dir) != ExitType.DOOR) {
+				BoundingBox.of(origin).add(dir, 2).grow(Cardinal.orthogonal(dir)).fill(editor, rand, IronBar.getBroken());
 			}
 		});
 	}
 
 	private void doors(IWorldEditor editor, Random rand, Coord origin) {
-		this.getEntrancesFromType(Entrance.DOOR).forEach(dir -> {
-			Fragment.generate(Fragment.ARCH, editor, rand, theme, origin.copy().add(dir, 12), dir);
+		this.getEntrancesFromType(ExitType.DOOR).forEach(dir -> {
+			Fragment.generate(Fragment.ARCH, editor, rand, settings, origin.copy().add(dir, 12), dir);
 		});
 	}
 
 	private void clear(IWorldEditor editor, Random rand, Coord origin) {
 		BoundingBox.of(origin).grow(Cardinal.directions, 14).grow(Cardinal.DOWN, 10).grow(Cardinal.UP, 5).fill(editor, rand, Air.get());
 		BoundingBox.of(origin).add(Cardinal.DOWN, 11).grow(Cardinal.directions, 15).fill(editor, rand, theme.getPrimary().getFloor());
-		BoundingBox.of(origin).add(Cardinal.UP, 6).grow(Cardinal.directions, 15).fill(editor, rand, theme.getPrimary().getWall(), false, true);
+		BoundingBox.of(origin).add(Cardinal.UP, 6).grow(Cardinal.directions, 15).fill(editor, rand, theme.getPrimary().getWall(), Fill.SOLID);
 		Cardinal.directions.forEach(dir -> {
-			BoundingBox.of(origin).add(dir, 15).grow(Cardinal.orthogonal(dir), 15).grow(Cardinal.DOWN, 11).grow(Cardinal.UP, 6).fill(editor, rand, theme.getPrimary().getWall(), false, true);
+			BoundingBox.of(origin).add(dir, 15).grow(Cardinal.orthogonal(dir), 15).grow(Cardinal.DOWN, 11).grow(Cardinal.UP, 6).fill(editor, rand, theme.getPrimary().getWall(), Fill.SOLID);
 		});
 	}
 
@@ -301,18 +307,18 @@ public class PanopticonRoom extends AbstractLargeRoom implements IRoom {
 		
 		CellManager cells = super.getCells(dir);
 		
-		Coord origin = new Coord(0,0,0).add(Cardinal.DOWN);
+		Coord origin = Coord.ZERO.add(Cardinal.DOWN);
 		BoundingBox bb = BoundingBox.of(origin);
 		bb.add(dir, 2).grow(Cardinal.directions);
 		bb.getShape(Shape.RECTSOLID).get().forEach(pos -> {
-			cells.add(Cell.of(pos, CellState.OBSTRUCTED));
+			cells.add(Cell.of(pos, CellState.OBSTRUCTED, this));
 		});
 		
 		for(Cardinal d : Cardinal.directions) {
-			cells.add(Cell.of(origin.copy().add(dir, 2).add(d, 2), CellState.OBSTRUCTED).addWall(d));
-			cells.add(Cell.of(origin.copy().add(dir, 2).add(d, 2).add(Cardinal.left(d), 2), CellState.OBSTRUCTED).addWall(d).addWall(Cardinal.left(d)));
+			cells.add(Cell.of(origin.copy().add(dir, 2).add(d, 2), CellState.OBSTRUCTED, this).addWall(d));
+			cells.add(Cell.of(origin.copy().add(dir, 2).add(d, 2).add(Cardinal.left(d), 2), CellState.OBSTRUCTED, this).addWall(d).addWall(Cardinal.left(d)));
 			for(Cardinal o : Cardinal.orthogonal(d)) {
-				cells.add(Cell.of(origin.copy().add(dir, 2).add(d, 2).add(o), CellState.OBSTRUCTED).addWall(d));
+				cells.add(Cell.of(origin.copy().add(dir, 2).add(d, 2).add(o), CellState.OBSTRUCTED, this).addWall(d));
 			}
 		}
 		
@@ -321,9 +327,8 @@ public class PanopticonRoom extends AbstractLargeRoom implements IRoom {
 	}
 	
 	@Override
-	public BoundingBox getBoundingBox() {
-		BoundingBox bb = super.getBoundingBox().grow(Cardinal.DOWN, 10);
-		return bb;
+	public BoundingBox getBoundingBox(Coord origin, Cardinal dir) {
+		return super.getBoundingBox(origin, dir).grow(Cardinal.DOWN, 10);
 	}
 
 	@Override

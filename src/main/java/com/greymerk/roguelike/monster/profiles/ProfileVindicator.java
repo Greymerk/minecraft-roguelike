@@ -16,7 +16,7 @@ public class ProfileVindicator implements IMonsterProfile {
 	@Override
 	public void addEquipment(World world, Random rand, Difficulty diff, IEntity mob) {
 		mob.setMobClass(MobType.VINDICATOR, true);
-		mob.setSlot(EquipmentSlot.MAINHAND, ItemSpecialty.getRandomItem(Equipment.AXE, rand, diff));
+		mob.setSlot(EquipmentSlot.MAINHAND, ItemSpecialty.getRandomItem(world.getRegistryManager(), Equipment.AXE, rand, diff));
 	}
 
 }

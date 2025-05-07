@@ -1,7 +1,9 @@
 package com.greymerk.roguelike.dungeon.room;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.greymerk.roguelike.util.WeightedChoice;
 import com.greymerk.roguelike.util.WeightedRandomizer;
@@ -13,12 +15,16 @@ public class RoomProvider {
 
 	List<Room> addOnce;
 	List<Room> addAfter;
+	Map<Room, Double> addSometimes;
 	WeightedRandomizer<Room> random;
+	Room stairway;
 	
 	public RoomProvider() {
 		this.addOnce = new ArrayList<Room>();
 		this.addAfter = new ArrayList<Room>();
+		this.addSometimes = new HashMap<Room, Double>();
 		this.random = new WeightedRandomizer<Room>();
+		this.stairway = Room.STAIRWAY;
 	}
 	
 	public void addRoomOnce(Room room) {
@@ -27,6 +33,14 @@ public class RoomProvider {
 	
 	public void addRoomAfter(Room room) {
 		this.addAfter.add(room);
+	}
+	
+	public void setStairway(Room room) {
+		this.stairway = room;
+	}
+	
+	public void addRoomSometimes(Room room, Double probability) {
+		this.addSometimes.put(room, probability);
 	}
 	
 	public void addRandomChoice(Room room, int weight) {
@@ -41,7 +55,11 @@ public class RoomProvider {
 		for(int i = 0; i < count - rooms.size(); ++i) {
 			rooms.add(random.get(rand));
 		}
+		this.addSometimes.forEach((room, probability) -> {
+			if(rand.nextDouble() < probability) rooms.add(room);
+		});
 		RandHelper.shuffle(rooms, rand);
+		rooms.add(this.stairway);
 		this.addAfter.forEach(room -> rooms.add(room));
 		return rooms;
 	}

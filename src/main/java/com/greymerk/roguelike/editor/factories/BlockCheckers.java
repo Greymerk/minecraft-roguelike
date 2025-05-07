@@ -1,10 +1,13 @@
 package com.greymerk.roguelike.editor.factories;
 
-import net.minecraft.util.math.random.Random;
+import java.util.function.Predicate;
 
+import com.greymerk.roguelike.editor.BlockContext;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
+
+import net.minecraft.util.math.random.Random;
 
 public class BlockCheckers extends BlockBase {
 
@@ -12,6 +15,9 @@ public class BlockCheckers extends BlockBase {
 	private IBlockFactory fillTwo;
 	private Coord offset;
 	
+	public static BlockCheckers of(IBlockFactory fillOne, IBlockFactory fillTwo) {
+		return new BlockCheckers(fillOne, fillTwo);
+	}
 	
 	public BlockCheckers(IBlockFactory fillOne, IBlockFactory fillTwo, Coord offset){
 		this.fillOne = fillOne;
@@ -20,11 +26,12 @@ public class BlockCheckers extends BlockBase {
 	}
 	
 	public BlockCheckers(IBlockFactory fillOne, IBlockFactory fillTwo){
-		this(fillOne, fillTwo, new Coord(0,0,0));
+		this(fillOne, fillTwo, Coord.ZERO);
 	}
-
+	
+	
 	@Override
-	public boolean set(IWorldEditor editor, Random rand, Coord origin, boolean fillAir, boolean replaceSolid) {
+	public boolean set(IWorldEditor editor, Random rand, Coord origin, Predicate<BlockContext> p) {
 		
 		int x = origin.getX() - this.offset.getX();
 		int y = origin.getY() - this.offset.getY();
@@ -33,29 +40,29 @@ public class BlockCheckers extends BlockBase {
 		if (x % 2 == 0) {
 			if(z % 2 == 0){
 				if(y % 2 == 0){
-					return fillOne.set(editor, rand, origin.copy(), fillAir, replaceSolid);
+					return fillOne.set(editor, rand, origin.copy(), p);
 				} else {
-					return fillTwo.set(editor, rand, origin.copy(), fillAir, replaceSolid);
+					return fillTwo.set(editor, rand, origin.copy(), p);
 				}
 			} else {
 				if(y % 2 == 0){
-					return fillTwo.set(editor, rand, origin.copy(), fillAir, replaceSolid);
+					return fillTwo.set(editor, rand, origin.copy(), p);
 				} else {
-					return fillOne.set(editor, rand, origin.copy(), fillAir, replaceSolid);
+					return fillOne.set(editor, rand, origin.copy(), p);
 				}
 			}
 		} else {
 			if(z % 2 == 0){
 				if(y % 2 == 0){
-					return fillTwo.set(editor, rand, origin.copy(), fillAir, replaceSolid);
+					return fillTwo.set(editor, rand, origin.copy(), p);
 				} else {
-					return fillOne.set(editor, rand, origin.copy(), fillAir, replaceSolid);
+					return fillOne.set(editor, rand, origin.copy(), p);
 				}
 			} else {
 				if(y % 2 == 0){
-					return fillOne.set(editor, rand, origin.copy(), fillAir, replaceSolid);
+					return fillOne.set(editor, rand, origin.copy(), p);
 				} else {
-					return fillTwo.set(editor, rand, origin.copy(), fillAir, replaceSolid);
+					return fillTwo.set(editor, rand, origin.copy(), p);
 				}
 			}
 		}

@@ -18,9 +18,9 @@ public enum Wood {
 	public static MetaBlock get(Wood type, WoodBlock block){
 		switch(block){
 		case LOG: return Log.get(type);
-		case PLANK: return new MetaBlock(getPlank(type));
-		case FENCE: return new MetaBlock(getFence(type));
-		case TRAPDOOR: return new MetaBlock(getTrapdoor(type));
+		case PLANK: return MetaBlock.of(getPlank(type));
+		case FENCE: return MetaBlock.of(getFence(type));
+		case TRAPDOOR: return MetaBlock.of(getTrapdoor(type));
 		default: return Log.get(OAK);
 		}
 	}

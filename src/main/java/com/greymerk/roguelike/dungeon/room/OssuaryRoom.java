@@ -2,9 +2,11 @@ package com.greymerk.roguelike.dungeon.room;
 
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
-import com.greymerk.roguelike.dungeon.layout.Entrance;
+import com.greymerk.roguelike.dungeon.fragment.parts.CellSupport;
+import com.greymerk.roguelike.dungeon.layout.ExitType;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
+import com.greymerk.roguelike.editor.Fill;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.blocks.Air;
@@ -29,7 +31,7 @@ public class OssuaryRoom extends AbstractMediumRoom implements IRoom {
 		this.ceiling(editor, rand, origin);
 		this.skullShelves(editor, rand, origin);
 		for(Cardinal dir : Cardinal.directions) {
-			if(this.entrances.get(dir) == Entrance.DOOR) {
+			if(this.getExitType(dir) == ExitType.DOOR) {
 				this.entry(editor, rand, origin, dir);
 			} else {
 				this.faceWall(editor, rand, origin, dir);
@@ -40,13 +42,13 @@ public class OssuaryRoom extends AbstractMediumRoom implements IRoom {
 	}
 
 	private void supports(IWorldEditor editor, Random rand, Coord origin) {
-		Fragment.generate(Fragment.CELL_SUPPORT, editor, rand, theme, origin);
+		CellSupport.generate(editor, rand, theme, origin);
 		for(Cardinal dir : Cardinal.directions) {
 			Coord pos = origin.copy();
 			pos.add(dir, 6);
-			Fragment.generate(Fragment.CELL_SUPPORT, editor, rand, theme, pos);
+			CellSupport.generate(editor, rand, theme, pos);
 			pos.add(Cardinal.left(dir), 6);
-			Fragment.generate(Fragment.CELL_SUPPORT, editor, rand, theme, pos);
+			CellSupport.generate(editor, rand, theme, pos);
 		}
 	}
 
@@ -215,7 +217,7 @@ public class OssuaryRoom extends AbstractMediumRoom implements IRoom {
 					Coord p = pos.copy();
 					p.add(d);
 					stair.setOrientation(d, true);
-					stair.set(editor, rand, p, true, false);
+					stair.set(editor, rand, p, Fill.AIR);
 				}
 				pos.add(Cardinal.reverse(dir));
 				pos.add(Cardinal.UP);
@@ -238,13 +240,13 @@ public class OssuaryRoom extends AbstractMediumRoom implements IRoom {
 		RectSolid.fill(editor, rand, bb, Air.get());
 		
 		Coord door = origin.copy().add(dir, 6);
-		Fragment.generate(Fragment.ARCH, editor, rand, theme, door, dir);
+		Fragment.generate(Fragment.ARCH, editor, rand, settings, door, dir);
 	}
 
 	private void ceiling(IWorldEditor editor, Random rand, Coord origin) {
 		BoundingBox bb = BoundingBox.of(origin);
 		bb.add(Cardinal.UP, 8).grow(Cardinal.directions, 6);
-		RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall(), false, true);
+		RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall(), Fill.SOLID);
 		
 		for(Cardinal dir : Cardinal.directions) {
 			bb = BoundingBox.of(origin);

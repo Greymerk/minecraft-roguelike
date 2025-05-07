@@ -6,44 +6,47 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.greymerk.roguelike.config.Config;
+import com.greymerk.roguelike.debug.Debug;
 import com.greymerk.roguelike.dungeon.Dungeon;
 import com.greymerk.roguelike.dungeon.DungeonPlacement;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
+import com.greymerk.roguelike.editor.IWorldInfo;
 import com.greymerk.roguelike.editor.WorldEditor;
 import com.greymerk.roguelike.gamerules.RoguelikeRules;
 
-import net.minecraft.server.world.ServerWorld;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.StructureAccessor;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 
+@Deprecated
 @Mixin(ChunkGenerator.class)
 public class ChunkFeatureMixin {
 	
 	@Inject(at = @At("HEAD"), method = "generateFeatures")
-	public void generateFeatures(StructureWorldAccess worldAccess, Chunk chunk, StructureAccessor structureAccessor, CallbackInfo info) {
+	public void generateFeatures(StructureWorldAccess world, Chunk chunk, StructureAccessor structureAccessor, CallbackInfo info) {
 		
-		ServerWorld sw = worldAccess.toServerWorld();
-		//System.out.println(sw.getRegistryKey());
-		
-		IWorldEditor editor = new WorldEditor(worldAccess, sw.getRegistryKey());
-		if(!editor.getGameRules().getBoolean(RoguelikeRules.GEN_ROGUELIKE_DUNGEONS)) return;
+		RegistryKey<World> worldKey = world.toServerWorld().getRegistryKey();
+		IWorldEditor editor = new WorldEditor(world, worldKey);
+		IWorldInfo worldInfo = editor.getInfo();
+		if(!worldInfo.getGameRules().getBoolean(RoguelikeRules.GEN_ROGUELIKE_DUNGEONS)) return;
 		
 		ChunkPos cpos = chunk.getPos();
-		Coord pos = new Coord(cpos.getCenterX(), 200, cpos.getCenterZ());
-		
 		if(!DungeonPlacement.validChunkPos(editor, cpos)) return;
-		if(!Dungeon.canSpawn(editor, pos.copy())) return;
 		
+		
+		Coord pos = Coord.of(cpos.getCenterX(), worldInfo.getTopYInclusive(), cpos.getCenterZ()).freeze();
+		Debug.info("mixin: " + pos.toString());
 		Random rand = editor.getRandom(pos);
-		//Double chance = Math.clamp(Config.ofDouble(Config.FREQUENCY), 0, 1.0);
 		Double chance = Math.max(0, Math.min(1.0, Config.ofDouble(Config.FREQUENCY)));
 		Double roll = rand.nextDouble();
 		if(chance == 1.0 || roll < chance) {
+			Debug.info("mixin: generate " + pos.toString());
 			Dungeon.generate(editor, pos);
 		}
 	}

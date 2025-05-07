@@ -11,18 +11,18 @@ public enum DoorType {
 	
 	public static MetaBlock get(DoorType type){	
 		switch(type){
-		case IRON: return new MetaBlock(Blocks.IRON_DOOR);
-		case BIRCH: return new MetaBlock(Blocks.BIRCH_DOOR);
-		case SPRUCE: return new MetaBlock(Blocks.SPRUCE_DOOR);
-		case JUNGLE: return new MetaBlock(Blocks.JUNGLE_DOOR);
-		case ACACIA: return new MetaBlock(Blocks.ACACIA_DOOR);
-		case DARKOAK: return new MetaBlock(Blocks.DARK_OAK_DOOR);
-		case MANGROVE: return new MetaBlock(Blocks.MANGROVE_DOOR);
-		case CHERRY: return new MetaBlock(Blocks.CHERRY_DOOR);
-		case BAMBOO: return new MetaBlock(Blocks.BAMBOO_DOOR);
-		case CRIMSON: return new MetaBlock(Blocks.CRIMSON_DOOR);
-		case WARPED: return new MetaBlock(Blocks.WARPED_DOOR);
-		default: return new MetaBlock(Blocks.OAK_DOOR);
+		case IRON: return MetaBlock.of(Blocks.IRON_DOOR);
+		case BIRCH: return MetaBlock.of(Blocks.BIRCH_DOOR);
+		case SPRUCE: return MetaBlock.of(Blocks.SPRUCE_DOOR);
+		case JUNGLE: return MetaBlock.of(Blocks.JUNGLE_DOOR);
+		case ACACIA: return MetaBlock.of(Blocks.ACACIA_DOOR);
+		case DARKOAK: return MetaBlock.of(Blocks.DARK_OAK_DOOR);
+		case MANGROVE: return MetaBlock.of(Blocks.MANGROVE_DOOR);
+		case CHERRY: return MetaBlock.of(Blocks.CHERRY_DOOR);
+		case BAMBOO: return MetaBlock.of(Blocks.BAMBOO_DOOR);
+		case CRIMSON: return MetaBlock.of(Blocks.CRIMSON_DOOR);
+		case WARPED: return MetaBlock.of(Blocks.WARPED_DOOR);
+		default: return MetaBlock.of(Blocks.OAK_DOOR);
 		}
 	}
 }

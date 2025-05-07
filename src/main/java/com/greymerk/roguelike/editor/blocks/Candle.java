@@ -1,9 +1,15 @@
 package com.greymerk.roguelike.editor.blocks;
 
+
+import java.util.function.Predicate;
+
+import com.greymerk.roguelike.editor.BlockContext;
 import com.greymerk.roguelike.editor.Coord;
+import com.greymerk.roguelike.editor.Fill;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.MetaBlock;
 import com.greymerk.roguelike.util.Color;
+import com.greymerk.roguelike.util.math.MathHelper;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -21,20 +27,25 @@ public class Candle {
 	}
 	
 	public static void generate(IWorldEditor editor, Coord origin, Color color, int count, boolean lit) {
-		if(!editor.isSupported(origin)) return;
-		int numCandles;
-		if(count == 0) return;
-		if(count < 0) {
-			numCandles = 1;
-		} else if(count > 4) {
-			numCandles = 4;
-		} else {
-			numCandles = count;
-		}
-		MetaBlock candle = new MetaBlock(fromColor(color));
-		candle.withProperty(CandleBlock.CANDLES, numCandles);
-		candle.withProperty(CandleBlock.LIT, lit);
-		candle.set(editor, origin);
+		Candle.get(color, count, lit).set(editor, origin, Fill.SUPPORTED);
+	}
+	
+	public static void generate(IWorldEditor editor, Random rand, Coord origin, Predicate<BlockContext> p) {
+		generate(editor, rand, origin, Color.get(rand), p);
+	}
+	
+	public static void generate(IWorldEditor editor, Random rand, Coord origin, Color color, Predicate<BlockContext> p) {
+		generate(editor, origin, color, rand.nextBetween(1, 4), true, p);
+	}
+	
+	public static void generate(IWorldEditor editor, Coord origin, Color color, int count, boolean lit, Predicate<BlockContext> p) {
+		Candle.get(color, count, lit).set(editor, origin, Fill.SUPPORTED.and(p));
+	}
+	
+	public static MetaBlock get(Color color, int count, boolean lit) {
+		return MetaBlock.of(fromColor(color))
+				.with(CandleBlock.CANDLES, MathHelper.clamp(count, 1, 4))
+				.with(CandleBlock.LIT, lit);
 	}
 	
 	public static Block fromColor(Color color) {
@@ -59,5 +70,4 @@ public class Candle {
 		
 		}
 	}
-	
 }

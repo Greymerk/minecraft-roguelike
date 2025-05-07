@@ -5,6 +5,7 @@ import com.greymerk.roguelike.monster.profiles.ProfileArcher;
 import com.greymerk.roguelike.monster.profiles.ProfileAshlea;
 import com.greymerk.roguelike.monster.profiles.ProfileBaby;
 import com.greymerk.roguelike.monster.profiles.ProfileEvoker;
+import com.greymerk.roguelike.monster.profiles.ProfileFireArcher;
 import com.greymerk.roguelike.monster.profiles.ProfileHusk;
 import com.greymerk.roguelike.monster.profiles.ProfileJohnny;
 import com.greymerk.roguelike.monster.profiles.ProfileMagicArcher;
@@ -28,7 +29,7 @@ import net.minecraft.world.World;
 public enum MonsterProfile {
 
 	TALLMOB, ZOMBIE, PIGMAN, SKELETON, VILLAGER, HUSK, BABY, ASHLEA, RLEAHY, 
-	ARCHER, WITHER, POISONARCHER, MAGICARCHER, SWORDSMAN, EVOKER, VINDICATOR,
+	ARCHER, WITHER, FIREARCHER, POISONARCHER, MAGICARCHER, SWORDSMAN, EVOKER, VINDICATOR,
 	WITCH, JOHNNY;
 	
 	public static IMonsterProfile get(MonsterProfile profile){
@@ -44,6 +45,7 @@ public enum MonsterProfile {
 		case RLEAHY: return new ProfileRleahy();
 		case ARCHER: return new ProfileArcher();
 		case WITHER: return new ProfileWither();
+		case FIREARCHER: return new ProfileFireArcher();
 		case POISONARCHER: return new ProfilePoisonArcher();
 		case MAGICARCHER: return new ProfileMagicArcher();
 		case SWORDSMAN: return new ProfileSwordsman();

@@ -8,7 +8,7 @@ import com.greymerk.roguelike.config.ConfigFile;
 import com.greymerk.roguelike.config.ConfigSettings;
 import com.greymerk.roguelike.events.ChunkLoadRoomFlagEvent;
 import com.greymerk.roguelike.events.EntityLoadEvent;
-import com.greymerk.roguelike.events.WorldTickGenerate;
+import com.greymerk.roguelike.events.WorldTickGenerateRooms;
 import com.greymerk.roguelike.gamerules.RoguelikeRules;
 import com.greymerk.roguelike.state.ServerLoadListener;
 
@@ -35,11 +35,12 @@ public class Roguelike implements ModInitializer {
 		ServerWorldEvents.LOAD.register(listener);
 		
 		ServerEntityEvents.ENTITY_LOAD.register(new EntityLoadEvent());
-		ServerTickEvents.START_WORLD_TICK.register(new WorldTickGenerate());
+		ServerTickEvents.START_WORLD_TICK.register(new WorldTickGenerateRooms());
 		ServerChunkEvents.CHUNK_LOAD.register(new ChunkLoadRoomFlagEvent());
 		
 		CommandRegistrationCallback.EVENT.register(RoguelikeCommand.getListener());
 		
 		ConfigSettings.init(new ConfigFile());
+		
 	}
 }

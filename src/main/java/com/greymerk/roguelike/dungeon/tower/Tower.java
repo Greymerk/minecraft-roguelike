@@ -1,11 +1,10 @@
 package com.greymerk.roguelike.dungeon.tower;
 
-import net.minecraft.util.math.random.Random;
-
-import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.theme.Theme;
+
+import net.minecraft.util.math.random.Random;
 
 public enum Tower {
 
@@ -25,16 +24,7 @@ public enum Tower {
 	
 	public static Coord getBaseCoord(IWorldEditor editor, Coord pos){
 		
-		Coord cursor = new Coord(pos.getX(), 128, pos.getZ());
-
-		while(cursor.getY() > 60){
-			if(editor.isGround(cursor)) break;
-			cursor.add(Cardinal.DOWN);
-		}
-
-		cursor.add(Cardinal.UP);
-		
-		
+		Coord cursor = editor.findSurface(pos);
 		
 		int yOffset = cursor.getY() - pos.getY();
 
@@ -42,7 +32,7 @@ public enum Tower {
 			yOffset = 14;
 		}
 		
-		return new Coord(pos.getX(), pos.getY() + yOffset, pos.getZ());
+		return pos.withY(pos.getY() + yOffset);
 	}
 
 	public static Tower get(String name) throws Exception{

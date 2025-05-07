@@ -1,11 +1,13 @@
 package com.greymerk.roguelike.editor.shapes;
-
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.StreamSupport;
 
+import com.greymerk.roguelike.editor.BlockContext;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
+import com.greymerk.roguelike.editor.Fill;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
@@ -17,33 +19,31 @@ public class RectSolid implements IShape {
 
 	private BoundingBox bb;
 	
-	public RectSolid(BoundingBox bb){
-		this.bb = bb;
+	public RectSolid(IBounded box){
+		this.bb = BoundingBox.of(box);
 	}
 	
 	public static void fill(IWorldEditor editor, Random rand, IBounded box, IBlockFactory blocks) {
-		new RectSolid(box.getBoundingBox()).fill(editor, rand, blocks, true, true);
+		new RectSolid(BoundingBox.of(box)).fill(editor, rand, blocks, Fill.ALWAYS);
 	}
 	
-	public static void fill(IWorldEditor editor, Random rand, IBounded box, IBlockFactory blocks, boolean fillAir, boolean replaceSolid) {
-		new RectSolid(box.getBoundingBox()).fill(editor, rand, blocks, fillAir, replaceSolid);
+	public static void fill(IWorldEditor editor, Random rand, IBounded box, IBlockFactory blocks, Predicate<BlockContext> p) {
+		new RectSolid(BoundingBox.of(box)).fill(editor, rand, blocks, p);
 	}
 	
 	@Override
 	public void fill(IWorldEditor editor, Random rand, IBlockFactory block){
-		this.fill(editor, rand, block, true, true);
+		this.forEach(c -> block.set(editor, rand, c));
 	}
 	
 	@Override
-	public void fill(IWorldEditor editor, Random rand, IBlockFactory block, boolean fillAir, boolean replaceSolid) {
-		this.forEach(c -> block.set(editor, rand, c, fillAir, replaceSolid));
+	public void fill(IWorldEditor editor, Random rand, IBlockFactory block, Predicate<BlockContext> p) {
+		this.forEach(c -> block.set(editor, rand, c, p));
 	}
 
 	@Override
 	public List<Coord> get(){
-		List<Coord> coords = new ArrayList<Coord>();
-		this.forEach(c -> coords.add(c));
-		return coords;
+		return StreamSupport.stream(this.spliterator(), false).toList();
 	}
 	
 	@Override
@@ -54,39 +54,37 @@ public class RectSolid implements IShape {
 	private class RectSolidIterator implements Iterator<Coord>{
 
 		Coord cursor;
-		Coord c1;
-		Coord c2;
+		Coord start;
+		Coord end;
 		
 		public RectSolidIterator(BoundingBox bb){
-			this.c1 = bb.getStart();
-			this.c2 = bb.getEnd();
-			cursor = this.c1.copy();
+			this.start = bb.getStart();
+			this.end = bb.getEnd();
+			cursor = this.start.copy();
 		}
 		
 		@Override
 		public boolean hasNext() {
-			return this.cursor.getY() <= this.c2.getY();
+			return this.cursor.getY() <= this.end.getY();
 		}
 
 		@Override
 		public Coord next() {
 			
-			Coord toReturn = cursor.copy();
+			Coord current = cursor.copy();
 			
-			if(cursor.getZ() == c2.getZ() && cursor.getX() == c2.getX()){
-				cursor = new Coord(c1.getX(), cursor.getY(), c1.getZ());
-				cursor.add(Cardinal.UP);
-				return toReturn;
+			if(cursor.getZ() == end.getZ() && cursor.getX() == end.getX()){
+				cursor = start.withY(cursor.getY()).add(Cardinal.UP);
+				return current;
 			}
 			
-			if(cursor.getX() == c2.getX()){
-				cursor = new Coord(c1.getX(), cursor.getY(), cursor.getZ());
-				cursor.add(Cardinal.SOUTH);
-				return toReturn;
+			if(cursor.getX() == end.getX()){
+				cursor = cursor.withX(start.getX()).add(Cardinal.SOUTH);
+				return current;
 			}
 			
 			cursor.add(Cardinal.EAST);
-			return toReturn;
+			return current;
 			
 		}
 

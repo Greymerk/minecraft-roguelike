@@ -12,7 +12,7 @@ public enum Warped {
 	FUNGUS, WART, ROOT, VINE;
 	
 	public static MetaBlock get(Warped type) {
-		return new MetaBlock(fromType(type));
+		return MetaBlock.of(fromType(type));
 	}
 	
 	public static Block fromType(Warped type) {

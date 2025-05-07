@@ -3,14 +3,12 @@ package com.greymerk.roguelike.dungeon.fragment.parts;
 import com.greymerk.roguelike.dungeon.fragment.IFragment;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
-import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
-import com.greymerk.roguelike.editor.MetaBlock;
-import com.greymerk.roguelike.editor.blocks.BlockType;
+import com.greymerk.roguelike.editor.blocks.Air;
 import com.greymerk.roguelike.editor.blocks.stair.IStair;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.editor.shapes.Line;
-import com.greymerk.roguelike.editor.shapes.RectSolid;
+import com.greymerk.roguelike.settings.ILevelSettings;
 import com.greymerk.roguelike.theme.ITheme;
 
 import net.minecraft.util.math.random.Random;
@@ -21,7 +19,7 @@ public class SpiralStairCase implements IFragment {
 	
 	public static void generate(IWorldEditor editor, Random rand, ITheme theme, Line line) {
 		line.forEach(pos -> {
-			spiralStairStep(editor, rand, pos, Cardinal.directions.get(pos.getY() % 4), theme);
+			spiralStairStep(editor, rand, pos, Cardinal.directions.get(Math.floorMod(pos.getY(), 4)), theme);
 		});
 	}
 	
@@ -31,34 +29,24 @@ public class SpiralStairCase implements IFragment {
 	
 	public void generate(IWorldEditor editor, Random rand, ITheme theme) {
 		for(Coord pos : stairWell) {
-			Cardinal dir = Cardinal.directions.get(pos.getY() % 4);
-			this.generate(editor, rand, theme, pos, dir);
+			Cardinal dir = Cardinal.directions.get(Math.floorMod(pos.getY(), 4));
+			spiralStairStep(editor, rand, pos, dir, theme);
 		}		
 	}
 	
 	@Override
-	public void generate(IWorldEditor editor, Random rand, ITheme theme, Coord origin, Cardinal dir) {
-		spiralStairStep(editor, rand, origin, dir, theme);
+	public void generate(IWorldEditor editor, Random rand, ILevelSettings settings, Coord origin, Cardinal dir) {
+		spiralStairStep(editor, rand, origin, dir, settings.getTheme());
 	}
 	
 	public static void spiralStairStep(IWorldEditor editor, Random rand, Coord origin, Cardinal dir, ITheme theme){
+		BoundingBox.of(origin).grow(Cardinal.directions).fill(editor, rand, Air.get());
+		theme.getPrimary().getWall().set(editor, rand, origin);
 		
-		IBlockFactory fill = theme.getPrimary().getWall();
 		IStair stair = theme.getPrimary().getStair();
-		MetaBlock air = BlockType.get(BlockType.AIR);
-		
-		BoundingBox bb = BoundingBox.of(origin);
-		bb.grow(Cardinal.directions);
-		
-		RectSolid.fill(editor, rand, bb, air);
-		fill.set(editor, rand, origin);
-		
-		Coord pos = origin.copy().add(dir);
-		stair.setOrientation(Cardinal.left(dir), false).set(editor, rand, pos);
-		pos.add(Cardinal.right(dir));
-		stair.setOrientation(Cardinal.right(dir), true).set(editor, rand, pos);
-		pos.add(Cardinal.reverse(dir));
-		stair.setOrientation(Cardinal.reverse(dir), true).set(editor, rand, pos);
+		stair.setOrientation(Cardinal.left(dir), false).set(editor, rand, origin.copy().add(dir));
+		stair.setOrientation(Cardinal.right(dir), true).set(editor, rand, origin.copy().add(dir).add(Cardinal.right(dir)));
+		stair.setOrientation(Cardinal.reverse(dir), true).set(editor, rand, origin.copy().add(Cardinal.right(dir)));
 	}
 
 }

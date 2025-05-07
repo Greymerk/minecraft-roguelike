@@ -59,23 +59,23 @@ public enum Loot {
 	}
 	
 	public static IWeighted<ItemStack> getProvider(Loot type, Difficulty diff, IWorldEditor editor){
-		FeatureSet features = editor.getFeatureSet();
-		DynamicRegistryManager reg = editor.getRegistryManager();
+		FeatureSet features = editor.getInfo().getFeatureSet();
+		DynamicRegistryManager reg = editor.getInfo().getRegistryManager();
 		
 		switch(type){
-		case WEAPON: return new ItemWeapon(features, 0, diff);
+		case WEAPON: return new ItemWeapon(reg, features, 0, diff);
 		case ARMOUR: return new ItemArmour(0, diff, features, reg);
 		case BLOCK: return new ItemBlock(0, diff);
-		case JUNK: return new ItemJunk(0, diff);
+		case JUNK: return new ItemJunk(reg, 0, diff);
 		case ORE: return new ItemOre(0, diff);
-		case TOOL: return new ItemTool(features, 0, diff);
+		case TOOL: return new ItemTool(reg, features, 0, diff);
 		case POTION: return new ItemPotion(0, diff);
 		case BREWING: return new ItemBrewing(0, diff);
-		case FOOD: return new ItemFood(0, diff);
+		case FOOD: return new ItemFood(reg, 0, diff);
 		case ENCHANTING: return new ItemEnchanting(0, diff);
 		case SUPPLY: return new ItemSupply(0, diff);
 		case MUSIC: return new ItemMusic(0, diff);
-		case SPECIAL: return new ItemSpecialty(0, diff);
+		case SPECIAL: return new ItemSpecialty(reg, 0, diff);
 		case PRECIOUS: return new ItemPrecious(0, diff);
 		}
 		
@@ -84,7 +84,7 @@ public enum Loot {
 	
 	public static ItemStack getEquipmentBySlot(FeatureSet features, DynamicRegistryManager reg, Random rand, EquipmentSlot slot, Difficulty diff, boolean enchant){
 		if(slot == EquipmentSlot.MAINHAND){
-			return ItemWeapon.getRandom(features, rand, diff, enchant);
+			return ItemWeapon.getRandom(reg, features, rand, diff, enchant);
 		}
 		
 		return ItemArmour.getRandom(features, reg, rand, diff, Slot.getSlot(slot), enchant);
@@ -93,7 +93,7 @@ public enum Loot {
 	public static ItemStack getEquipmentBySlot(FeatureSet features, DynamicRegistryManager reg, Random rand, Slot slot, Difficulty diff, boolean enchant){
 		
 		if(slot == Slot.WEAPON){
-			return ItemWeapon.getRandom(features, rand, diff, enchant);
+			return ItemWeapon.getRandom(reg, features, rand, diff, enchant);
 		}
 		
 		return ItemArmour.getRandom(features, reg, rand, diff, slot, enchant);

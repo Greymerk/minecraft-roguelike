@@ -26,6 +26,6 @@ public enum NetherBrick {
 	}
 	
 	public MetaBlock get(NetherBrick type) {
-		return new MetaBlock(fromType(type));
+		return MetaBlock.of(fromType(type));
 	}
 }

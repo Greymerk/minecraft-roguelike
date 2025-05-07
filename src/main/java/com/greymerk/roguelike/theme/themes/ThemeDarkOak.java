@@ -1,7 +1,6 @@
 package com.greymerk.roguelike.theme.themes;
 
 import com.greymerk.roguelike.editor.MetaBlock;
-import com.greymerk.roguelike.editor.blocks.BlockType;
 import com.greymerk.roguelike.editor.blocks.Wood;
 import com.greymerk.roguelike.editor.blocks.WoodBlock;
 import com.greymerk.roguelike.editor.blocks.door.Door;
@@ -16,15 +15,17 @@ import com.greymerk.roguelike.theme.ITheme;
 import com.greymerk.roguelike.theme.Theme;
 import com.greymerk.roguelike.theme.ThemeBase;
 
+import net.minecraft.block.Blocks;
+
 public class ThemeDarkOak extends ThemeBase implements ITheme {
 
 	public ThemeDarkOak() {
 		BlockWeightedRandom walls = new BlockWeightedRandom();
-		walls.addBlock(BlockType.get(BlockType.STONE_BRICK), 50);
-		walls.addBlock(BlockType.get(BlockType.STONE_BRICK_CRACKED), 30);
-		walls.addBlock(BlockType.get(BlockType.STONE_BRICK_MOSSY), 10);
-		walls.addBlock(BlockType.get(BlockType.COBBLESTONE), 5);
-		walls.addBlock(BlockType.get(BlockType.GRAVEL), 1);
+		walls.add(MetaBlock.of(Blocks.STONE_BRICKS), 50);
+		walls.add(MetaBlock.of(Blocks.CRACKED_STONE_BRICKS), 30);
+		walls.add(MetaBlock.of(Blocks.MOSSY_STONE_BRICKS), 10);
+		walls.add(MetaBlock.of(Blocks.COBBLESTONE), 5);
+		walls.add(MetaBlock.of(Blocks.GRAVEL), 1);
 		
 		RandomStair stair = new RandomStair()
 				.add(Stair.of(Stair.STONEBRICK), 3)
@@ -33,22 +34,24 @@ public class ThemeDarkOak extends ThemeBase implements ITheme {
 		
 		MetaBlock logs = Wood.get(Wood.DARKOAK, WoodBlock.LOG);
 		MetaBlock segmentWall = Wood.get(Wood.DARKOAK, WoodBlock.PLANK);
-		MetaStair segmentStair = new MetaStair(Stair.DARKOAK);
+		MetaStair segmentStair = MetaStair.of(Stair.DARKOAK);
 		
-		this.primary = new BlockSet()
-				.setWall(walls)
-				.setFloor(walls)
-				.setStair(stair)
-				.setPillar(logs)
-				.setDoor(Door.of(DoorType.DARKOAK))
-				.setSlab(Slab.get(Slab.STONEBRICK));
-		this.secondary = new BlockSet()
-				.setWall(segmentWall)
-				.setFloor(segmentWall)
-				.setStair(segmentStair)
-				.setPillar(logs)
-				.setDoor(Door.of(DoorType.DARKOAK))
-				.setSlab(Slab.get(Slab.DARK_OAK));
+		this.primary = BlockSet.builder()
+				.walls(walls)
+				.floor(walls)
+				.stair(stair)
+				.pillar(logs)
+				.door(Door.of(DoorType.DARKOAK))
+				.slab(Slab.get(Slab.STONEBRICK))
+				.build();
+		this.secondary = BlockSet.builder()
+				.walls(segmentWall)
+				.floor(segmentWall)
+				.stair(segmentStair)
+				.pillar(logs)
+				.door(Door.of(DoorType.DARKOAK))
+				.slab(Slab.get(Slab.DARK_OAK))
+				.build();
 	}
 	
 	@Override

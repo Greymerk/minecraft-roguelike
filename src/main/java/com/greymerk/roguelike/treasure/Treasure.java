@@ -7,7 +7,6 @@ import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
-import com.greymerk.roguelike.treasure.chest.ChestPlacementException;
 import com.greymerk.roguelike.treasure.chest.ChestType;
 import com.greymerk.roguelike.treasure.chest.ITreasureChest;
 import com.greymerk.roguelike.treasure.chest.TreasureChest;
@@ -20,31 +19,29 @@ public enum Treasure {
 	ALL, EMPTY, STARTER, ARMOR, WEAPON, TOOL, 
 	BLOCK, ORE, FOOD, SUPPLY, MUSIC, BREWING;
 
-	public static void generate(IWorldEditor editor, Random rand, Coord pos, Treasure type) {
-		Treasure.generate(editor, rand, pos, type, ChestType.CHEST);
+	public static Optional<ITreasureChest> generate(IWorldEditor editor, Random rand, Difficulty diff, Coord pos, Treasure type) {
+		return Treasure.generate(editor, rand, diff, pos, type, ChestType.CHEST);
 	}
 	
-	public static void generate(IWorldEditor editor, Random rand, Coord pos, Cardinal dir, Treasure type) {
-		Treasure.generate(editor, rand, pos, dir, type, ChestType.CHEST);
+	public static Optional<ITreasureChest> generate(IWorldEditor editor, Random rand, Difficulty diff, Coord pos, Cardinal dir, Treasure type) {
+		return Treasure.generate(editor, rand, diff, pos, dir, type, ChestType.CHEST);
 	}
 	
-	public static void generate(IWorldEditor editor, Random rand, Coord pos, Treasure type, ChestType block){
-		try {
-			ITreasureChest chest = new TreasureChest(type);
-			chest.generate(editor, rand, pos, block);
-		} catch (ChestPlacementException e) {
-			// do nothing
-		}
+	public static Optional<ITreasureChest> generate(IWorldEditor editor, Random rand, Difficulty diff, Coord pos, Treasure type, ChestType block){
+		return TreasureChest.generate(editor, rand, diff, pos, type, block);
 	}
 	
-	public static void generate(IWorldEditor editor, Random rand, Coord pos, Cardinal dir, Treasure type, ChestType block){
-		try {
-			ITreasureChest chest = new TreasureChest(type);
-			chest.generate(editor, rand, pos, dir, block);
-		} catch (ChestPlacementException e) {
-			// do nothing
-		}
+	public static Optional<ITreasureChest> generate(IWorldEditor editor, Random rand, Difficulty diff, Coord pos, Cardinal dir, Treasure type, ChestType block){
+		return TreasureChest.generate(editor, rand, diff, pos, dir, type, block);
 	}
+	
+	/*
+	public static Optional<RegistryKey<LootTable>> getLootTable(Treasure type, Difficulty diff){
+		Optional<Identifier> id = getTableIdentifier(type, diff);
+		if(id.isEmpty()) return Optional.empty();
+		return Optional.of(RegistryKey.of(RegistryKeys.LOOT_TABLE, id.get()));
+	}
+	*/
 	
 	public static Optional<Identifier> getTableIdentifier(Treasure type, Difficulty diff){
 		String tier = diff.lt(Difficulty.HARD) ? "1" : "2";

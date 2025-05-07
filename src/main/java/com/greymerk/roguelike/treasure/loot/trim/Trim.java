@@ -3,11 +3,12 @@ package com.greymerk.roguelike.treasure.loot.trim;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtString;
+import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.util.math.random.Random;
 
 public class Trim {
 
-	public static ItemStack add(ItemStack item, TrimPattern pattern, TrimMaterial material) {
+	public static ItemStack set(DynamicRegistryManager reg, ItemStack item, TrimPattern pattern, TrimMaterial material) {
 		NbtCompound nbt = item.getNbt();
 
         if (nbt == null){
@@ -33,9 +34,9 @@ public class Trim {
 		nbt.put("Trim", trim);
 	}
 	
-	public static ItemStack addRandom(ItemStack item, Random rand) {
+	public static ItemStack addRandom(DynamicRegistryManager reg, ItemStack item, Random rand) {
 		TrimMaterial m = TrimMaterial.getRandom(rand);
 		TrimPattern p = TrimPattern.getRandom(rand);
-		return Trim.add(item, p, m);
+		return Trim.set(reg, item, p, m);
 	}
 }

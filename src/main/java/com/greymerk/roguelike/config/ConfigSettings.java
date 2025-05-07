@@ -39,6 +39,7 @@ public class ConfigSettings {
 		this.configs.putMixed(MixedKey.ofBoolean(Config.MOB_DROPS.keyOf()), true);
 		this.configs.putMixed(MixedKey.ofDouble(Config.FREQUENCY.keyOf()), 1.0);
 		this.configs.putMixed(MixedKey.ofBoolean(Config.DEBUG.keyOf()), false);
+		this.configs.putMixed(MixedKey.ofBoolean(Config.BELOW_SEA_LEVEL.keyOf()), true);
 		this.configs.putMixed(MixedKey.ofInteger(Config.ROOMS_PER_LEVEL.keyOf()), 20);
 		this.configs.putMixed(MixedKey.ofBoolean(Config.ROGUELIKE_LOOT.keyOf()), true);
 		if(file.exists()) this.read();
@@ -50,6 +51,7 @@ public class ConfigSettings {
 		json.addProperty(Config.MOB_DROPS.keyOf(), this.get(MixedKey.ofBoolean(Config.MOB_DROPS.keyOf())));
 		json.addProperty(Config.FREQUENCY.keyOf(), this.get(MixedKey.ofDouble(Config.FREQUENCY.keyOf())));
 		json.addProperty(Config.DEBUG.keyOf(), this.get(MixedKey.ofBoolean(Config.DEBUG.keyOf())));
+		json.addProperty(Config.BELOW_SEA_LEVEL.keyOf(), this.get(MixedKey.ofBoolean(Config.BELOW_SEA_LEVEL.keyOf())));
 		json.addProperty(Config.ROOMS_PER_LEVEL.keyOf(), this.get(MixedKey.ofInteger(Config.ROOMS_PER_LEVEL.keyOf())));
 		json.addProperty(Config.ROGUELIKE_LOOT.keyOf(), this.get(MixedKey.ofBoolean(Config.ROGUELIKE_LOOT.keyOf())));
 		return json;
@@ -59,6 +61,7 @@ public class ConfigSettings {
 		if(json.has(Config.MOB_DROPS.keyOf())) configs.put(MixedKey.ofBoolean(Config.MOB_DROPS.keyOf()), json.get(Config.MOB_DROPS.keyOf()).getAsBoolean());
 		if(json.has(Config.FREQUENCY.keyOf())) configs.put(MixedKey.ofDouble(Config.FREQUENCY.keyOf()), json.get(Config.FREQUENCY.keyOf()).getAsDouble());
 		if(json.has(Config.DEBUG.keyOf())) configs.put(MixedKey.ofBoolean(Config.DEBUG.keyOf()), json.get(Config.DEBUG.keyOf()).getAsBoolean());
+		if(json.has(Config.BELOW_SEA_LEVEL.keyOf())) configs.put(MixedKey.ofBoolean(Config.BELOW_SEA_LEVEL.keyOf()), json.get(Config.BELOW_SEA_LEVEL.keyOf()).getAsBoolean());
 		if(json.has(Config.ROOMS_PER_LEVEL.keyOf())) configs.put(MixedKey.ofInteger(Config.ROOMS_PER_LEVEL.keyOf()), json.get(Config.ROOMS_PER_LEVEL.keyOf()).getAsInt());
 		if(json.has(Config.ROGUELIKE_LOOT.keyOf())) configs.put(MixedKey.ofBoolean(Config.ROGUELIKE_LOOT.keyOf()), json.get(Config.ROGUELIKE_LOOT.keyOf()).getAsBoolean());
 	}

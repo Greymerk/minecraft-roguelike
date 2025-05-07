@@ -1,5 +1,7 @@
 package com.greymerk.roguelike.editor.blocks;
 
+import java.util.Optional;
+
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
@@ -25,17 +27,18 @@ public class Furnace {
 	}
 	
 	public static void generate(IWorldEditor editor, Cardinal dir, Coord pos, boolean lit, ItemStack fuel){
-		MetaBlock furnace = new MetaBlock(Blocks.FURNACE);
+		MetaBlock furnace = MetaBlock.of(Blocks.FURNACE);
 		
-		furnace.withProperty(FurnaceBlock.LIT, lit);
-		furnace.withProperty(FurnaceBlock.FACING, Cardinal.facing(Cardinal.reverse(dir)));
+		furnace.with(FurnaceBlock.LIT, lit);
+		furnace.with(FurnaceBlock.FACING, Cardinal.facing(Cardinal.reverse(dir)));
 		
 		furnace.set(editor, pos);
 		
 		//if(fuel == ItemStack.EMPTY) return;
 		
-		BlockEntity te = editor.getBlockEntity(pos);
-		if(te == null) return;
+		Optional<BlockEntity> obe = editor.getBlockEntity(pos);
+		if(obe.isEmpty()) return;
+		BlockEntity te = obe.get();
 		if(!(te instanceof FurnaceBlockEntity)) return;
 		FurnaceBlockEntity teFurnace = (FurnaceBlockEntity)te;
 		teFurnace.setStack(FUEL_SLOT, fuel);

@@ -1,18 +1,20 @@
 package com.greymerk.roguelike.editor.shapes;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.StreamSupport;
 
+import com.greymerk.roguelike.editor.BlockContext;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
+import com.greymerk.roguelike.editor.Fill;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
-import com.greymerk.roguelike.editor.MetaBlock;
+import com.greymerk.roguelike.editor.blocks.Air;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.editor.boundingbox.IBounded;
 
-import net.minecraft.block.Blocks;
 import net.minecraft.util.math.random.Random;
 
 public class RectHollow implements IShape {
@@ -22,39 +24,29 @@ public class RectHollow implements IShape {
 	public RectHollow(BoundingBox bb){
 		this.bb = bb;
 	}
-	
-	public static void fill(IWorldEditor editor, Random rand, IBounded bb, IBlockFactory block, boolean fillAir, boolean replaceSolid) {
-		bb.getShape(Shape.RECTHOLLOW).fill(editor, rand, block, fillAir, replaceSolid);
-	}
 
 	public static void fill(IWorldEditor editor, Random rand, IBounded bb, IBlockFactory block) {
-		bb.getShape(Shape.RECTHOLLOW).fill(editor, rand, block, true, true);
+		bb.getShape(Shape.RECTHOLLOW).fill(editor, rand, block, Fill.ALWAYS);
 	}
 	
 	@Override
 	public void fill(IWorldEditor editor, Random rand, IBlockFactory block){
-		fill(editor, rand, block, true, true);
+		fill(editor, rand, block, Fill.ALWAYS);
 	}
 	
 	@Override
-	public void fill(IWorldEditor editor, Random rand, IBlockFactory block, boolean fillAir, boolean replaceSolid) {
-		for(Coord c : this){
-			block.set(editor, rand, c, fillAir, replaceSolid);
-		}
+	public void fill(IWorldEditor editor, Random rand, IBlockFactory block, Predicate<BlockContext> p) {
+		this.forEach(c -> {
+			block.set(editor, rand, c, p);
+		});
 		
 		BoundingBox inner = this.bb.copy().grow(Cardinal.all, -1);
-		RectSolid.fill(editor, rand, inner, new MetaBlock(Blocks.CAVE_AIR));
+		RectSolid.fill(editor, rand, inner, Air.get());
 	}
-
+	
 	@Override
 	public List<Coord> get(){
-		List<Coord> coords = new ArrayList<Coord>();
-		
-		for(Coord c : this){
-			coords.add(c);
-		}
-		
-		return coords;
+		return StreamSupport.stream(this.spliterator(), false).toList();
 	}
 	
 	@Override
@@ -85,13 +77,13 @@ public class RectHollow implements IShape {
 			Coord toReturn = cursor.copy();
 
 			if(cursor.getZ() == c2.getZ() && cursor.getX() == c2.getX()){
-				cursor = new Coord(c1.getX(), cursor.getY(), c1.getZ());
+				cursor = c1.withY(cursor.getY());
 				cursor.add(Cardinal.UP);
 				return toReturn;
 			}
 			
 			if(cursor.getX() == c2.getX()){
-				cursor = new Coord(c1.getX(), cursor.getY(), cursor.getZ());
+				cursor = cursor.withX(c1.getX());
 				cursor.add(Cardinal.SOUTH);
 				return toReturn;
 			}
@@ -117,4 +109,6 @@ public class RectHollow implements IShape {
 			throw new UnsupportedOperationException();	
 		}
 	}
+
+
 }

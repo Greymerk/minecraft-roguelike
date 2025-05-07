@@ -9,10 +9,13 @@ import com.greymerk.roguelike.dungeon.Dungeon;
 import com.greymerk.roguelike.dungeon.room.IRoom;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.PersistentState;
@@ -21,8 +24,22 @@ import net.minecraft.world.World;
 
 public class RoguelikeState extends PersistentState {
 	
+	public static final Codec<List<Dungeon>> DUNGEON_LIST_CODEC = Codec.list(Dungeon.CODEC);
+	
+	public static final Codec<RoguelikeState> CODEC = RecordCodecBuilder.create(
+			instance -> instance.group(
+				DUNGEON_LIST_CODEC.fieldOf("dungeons").forGetter(state -> state.dungeons)
+			).apply(instance, (dungeonList) -> RoguelikeState.of(dungeonList))
+	);
+	
 	public static boolean flagForGenerationCheck = true;
 	private List<Dungeon> dungeons;
+	
+	private static RoguelikeState of(List<Dungeon> dungeonList) {
+		RoguelikeState rs = new RoguelikeState();
+		rs.dungeons = dungeonList;
+		return rs;
+	}
 	
 	private RoguelikeState() {
 		//because different threads may be concurrently writing
@@ -40,7 +57,7 @@ public class RoguelikeState extends PersistentState {
 		this.markDirty();
 	}
 	
-	public List<IRoom> getFromLoaded(IWorldEditor editor){
+	public List<IRoom> getLoadedRooms(IWorldEditor editor){
 		List<IRoom> loadedRooms = new ArrayList<IRoom>();
 		
 		for(Dungeon d : this.dungeons) {
@@ -58,16 +75,7 @@ public class RoguelikeState extends PersistentState {
 	
     @Override
     public NbtCompound writeNbt(NbtCompound nbt) {
-    	NbtList dungeonData = new NbtList();
-    	
-    	for(Dungeon d : this.dungeons) {
-    		NbtCompound data = d.getNbt();
-    		dungeonData.add(data);
-    	}
-    	
-    	nbt.put("dungeons", dungeonData);
-    	
-        return nbt;
+        return (NbtCompound) CODEC.encodeStart(NbtOps.INSTANCE, this).result().get();
     }    
  
     public static RoguelikeState createFromNbt(NbtCompound tag) {
@@ -82,7 +90,7 @@ public class RoguelikeState extends PersistentState {
     	List<Dungeon> dungeons = new CopyOnWriteArrayList<Dungeon>();
     	for(int i = 0; i < dungeonList.size(); i++) {
     		NbtCompound data = dungeonList.getCompound(i);
-    		Dungeon toAdd = new Dungeon(data);
+    		Dungeon toAdd = Dungeon.CODEC.decode(NbtOps.INSTANCE, data).result().get().getFirst();
     		dungeons.add(toAdd);
     	}
     	
@@ -102,4 +110,8 @@ public class RoguelikeState extends PersistentState {
                 Roguelike.MODID); 
         return serverState;
     }
+
+	public boolean hasDungeons() {
+		return !this.dungeons.isEmpty();
+	}
 }

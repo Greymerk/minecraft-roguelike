@@ -13,7 +13,7 @@ public class Log {
 	public static MetaBlock get(Wood type, Cardinal dir){
 		BlockState log = fromType(type).getDefaultState();
 		log.with(PillarBlock.AXIS, Cardinal.axis(dir));
-		return new MetaBlock(log);
+		return MetaBlock.of(log);
 	}
 	
 	public static MetaBlock get(Wood type){

@@ -12,7 +12,7 @@ public enum Quartz {
 	SMOOTH, CHISELED, PILLAR;
 	
 	public static MetaBlock get(Quartz type){
-		return new MetaBlock(fromType(type));
+		return MetaBlock.of(fromType(type));
 	}
 	
 	public static Block fromType(Quartz type) {
@@ -25,8 +25,8 @@ public enum Quartz {
 	}
 	
 	public static MetaBlock getPillar(Cardinal dir){
-		MetaBlock block = new MetaBlock(Blocks.QUARTZ_PILLAR);
-		block.withProperty(PillarBlock.AXIS, Cardinal.axis(dir));
+		MetaBlock block = MetaBlock.of(Blocks.QUARTZ_PILLAR);
+		block.with(PillarBlock.AXIS, Cardinal.axis(dir));
 		return block;
 	}
 	

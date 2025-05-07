@@ -13,7 +13,7 @@ public enum BlackStone {
 	BRICK, CRACKED_BRICK, BRICK_STAIR, BRICK_SLAB, BRICK_WALL;
 	
 	public static MetaBlock get(BlackStone type) {
-		return new MetaBlock(fromType(type));
+		return MetaBlock.of(fromType(type));
 	}
 	
 	public static Block fromType(BlackStone type) {

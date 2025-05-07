@@ -1,22 +1,23 @@
 package com.greymerk.roguelike.filter;
 
-import net.minecraft.util.math.random.Random;
-
+import com.greymerk.roguelike.dungeon.fragment.parts.Fungus;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.MetaBlock;
-import com.greymerk.roguelike.editor.blocks.BlockType;
 import com.greymerk.roguelike.editor.blocks.FlowerPot;
 import com.greymerk.roguelike.editor.boundingbox.IBounded;
 import com.greymerk.roguelike.editor.factories.BlockJumble;
 import com.greymerk.roguelike.editor.shapes.Shape;
-import com.greymerk.roguelike.theme.ITheme;
+import com.greymerk.roguelike.settings.ILevelSettings;
+
+import net.minecraft.block.Blocks;
+import net.minecraft.util.math.random.Random;
 
 public class MudFilter implements IFilter{
 
 	@Override
-	public void apply(IWorldEditor editor, Random rand, ITheme theme, IBounded box) {
+	public void apply(IWorldEditor editor, Random rand, ILevelSettings settings, IBounded box) {
 		for(Coord pos : box.getShape(Shape.RECTSOLID)){
 			if(rand.nextInt(40) != 0) continue;
 			if(!validLocation(editor, rand, pos)) continue;
@@ -37,22 +38,22 @@ public class MudFilter implements IFilter{
 		if(!validLocation(editor, rand, pos)) return;
 		
 		BlockJumble wet = new BlockJumble();
-		wet.addBlock(BlockType.get(BlockType.CLAY));
-		wet.addBlock(BlockType.get(BlockType.SOUL_SAND));
-		wet.addBlock(BlockType.get(BlockType.MYCELIUM));
+		wet.add(MetaBlock.of(Blocks.CLAY));
+		wet.add(MetaBlock.of(Blocks.SOUL_SAND));
+		wet.add(MetaBlock.of(Blocks.MYCELIUM));
 		
 		BlockJumble dry = new BlockJumble();
-		dry.addBlock(BlockType.get(BlockType.DIRT_PODZOL));
-		dry.addBlock(BlockType.get(BlockType.DIRT));
-		dry.addBlock(BlockType.get(BlockType.DIRT_COARSE));
+		dry.add(MetaBlock.of(Blocks.PODZOL));
+		dry.add(MetaBlock.of(Blocks.DIRT));
+		dry.add(MetaBlock.of(Blocks.COARSE_DIRT));
 		
 		switch(counter){
 		case 5:
 		case 4:
-			BlockType.get(BlockType.DIRT).set(editor, pos);
+			MetaBlock.of(Blocks.DIRT).set(editor, pos);
 		case 3:
 			if(rand.nextBoolean()){
-				BlockType.get(BlockType.DIRT_COARSE).set(editor, pos);
+				MetaBlock.of(Blocks.COARSE_DIRT).set(editor, pos);
 				break;
 			}
 		case 2:
@@ -64,39 +65,33 @@ public class MudFilter implements IFilter{
 				break;
 			}
 		default:
-			BlockType.get(BlockType.WATER_FLOWING).set(editor, pos);
+			MetaBlock.of(Blocks.WATER).set(editor, pos);
 			return;
 		}
 		
 		
-		if(rand.nextInt(6) != 0) return;
+		if(rand.nextInt(3) != 0) return;
 		
-		BlockJumble plants = new BlockJumble();
-		plants.addBlock(new MetaBlock(FlowerPot.getFlower(FlowerPot.BROWNMUSHROOM)));
-		plants.addBlock(new MetaBlock(FlowerPot.getFlower(FlowerPot.REDMUSHROOM)));
+		BlockJumble shrooms = new BlockJumble();
+		shrooms.add(MetaBlock.of(FlowerPot.getFlower(FlowerPot.BROWNMUSHROOM)));
+		shrooms.add(MetaBlock.of(FlowerPot.getFlower(FlowerPot.REDMUSHROOM)));
 		
-		Coord cursor = pos.copy();
-		cursor.add(Cardinal.UP);
-		plants.set(editor, rand, cursor);
+		if(rand.nextInt(3) == 0) {
+			Fungus.generate(editor, rand, pos.copy().add(Cardinal.UP));
+		} else {
+			shrooms.set(editor, rand, pos.copy().add(Cardinal.UP));	
+		}
 	}
 	
-	private boolean validLocation(IWorldEditor editor, Random rand, Coord pos){
+	private boolean validLocation(IWorldEditor editor, Random rand, Coord origin){
 		
-		if(!editor.isSolid(pos)) return false;
+		if(!editor.isSolid(origin)) return false;
 		
-		Coord cursor = pos.copy();
-		cursor.add(Cardinal.UP);
-		if(!editor.isAir(cursor)) return false;
+		if(!editor.isAir(origin.copy().add(Cardinal.UP))) return false;
+		if(editor.isAir(origin.copy().add(Cardinal.DOWN))) return false;
 		
-		cursor.add(Cardinal.DOWN, 2);
-		if(editor.isAir(cursor)) return false;
-		
-		cursor.add(Cardinal.UP);
-		
-		for(Cardinal dir : Cardinal.values()){
-			cursor.add(dir);
-			if(!editor.isSolid(pos)) return false;
-			cursor.add(Cardinal.reverse(dir));
+		for(Cardinal dir : Cardinal.directions){
+			if(!editor.isSolid(origin.copy().add(dir))) return false;
 		}
 		
 		return true;

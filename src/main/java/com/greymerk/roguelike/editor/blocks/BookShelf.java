@@ -1,6 +1,7 @@
 package com.greymerk.roguelike.editor.blocks;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -21,21 +22,22 @@ import net.minecraft.util.math.random.Random;
 
 public class BookShelf {
 
-	public static void set(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
+	public static void set(IWorldEditor editor, Random rand, Difficulty diff, Coord origin, Cardinal dir) {
 		
-		MetaBlock mb = new MetaBlock(Blocks.CHISELED_BOOKSHELF);
-		mb.withProperty(HorizontalFacingBlock.FACING, Cardinal.facing(Cardinal.reverse(dir)));
+		MetaBlock mb = MetaBlock.of(Blocks.CHISELED_BOOKSHELF);
+		mb.with(HorizontalFacingBlock.FACING, Cardinal.facing(Cardinal.reverse(dir)));
 		mb.set(editor, origin);
 		
-		BlockEntity be = editor.getBlockEntity(origin);
+		Optional<BlockEntity> obe = editor.getBlockEntity(origin);
 		
-		if(be == null) return;
+		if(obe.isEmpty()) return;
+		BlockEntity be = obe.get();
 		if(!(be instanceof ChiseledBookshelfBlockEntity)) return;
 		
 		ChiseledBookshelfBlockEntity shelf = (ChiseledBookshelfBlockEntity)be;
 		
 		getSlots(rand).forEach(i -> {
-			shelf.setStack(i, createBook(editor, rand, Difficulty.fromY(origin.getY())));		
+			shelf.setStack(i, createBook(editor, rand, diff));		
 		});
 		
 		shelf.markDirty();
@@ -43,7 +45,7 @@ public class BookShelf {
 	
 	private static ItemStack createBook(IWorldEditor editor, Random rand, Difficulty diff) {
 		if(rand.nextInt(10) == 0) return Enchant.getBook(Enchant.MENDING, 1);
-		return Enchant.getBook(editor.getFeatureSet(), rand, diff);
+		return Enchant.getBook(editor.getInfo().getFeatureSet(), rand, diff);
 	}
 	
 	private static List<Integer> getSlots(Random rand){

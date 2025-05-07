@@ -1,5 +1,6 @@
 package com.greymerk.roguelike.settings.level;
 
+import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
 import com.greymerk.roguelike.dungeon.room.Room;
 import com.greymerk.roguelike.dungeon.room.RoomProvider;
@@ -26,6 +27,12 @@ public class LevelSettingsDefault extends LevelSettingsBase implements ILevelSet
 	@Override
 	public String getName() {
 		return LevelSettings.DEFAULT.name();
+	}
+	
+
+	@Override
+	public Difficulty getDifficulty() {
+		return Difficulty.EASIEST;
 	}
 
 }

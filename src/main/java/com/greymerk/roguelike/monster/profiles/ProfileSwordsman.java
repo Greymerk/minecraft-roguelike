@@ -16,7 +16,7 @@ public class ProfileSwordsman implements IMonsterProfile {
 
 	@Override
 	public void addEquipment(World world, Random rand, Difficulty diff, IEntity mob) {
-		ItemStack weapon = ItemWeapon.getSword(world.getEnabledFeatures(), rand, diff, mob.canEnchant(rand, diff));
+		ItemStack weapon = ItemWeapon.getSword(world.getRegistryManager(), world.getEnabledFeatures(), rand, diff, mob.canEnchant(rand, diff));
 		
 		mob.setSlot(EquipmentSlot.MAINHAND, weapon);
 		mob.setSlot(EquipmentSlot.OFFHAND, Shield.get(rand));

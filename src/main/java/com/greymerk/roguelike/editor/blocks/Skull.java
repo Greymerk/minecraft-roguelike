@@ -14,9 +14,14 @@ public enum Skull {
 
 	SKELETON, WITHER, ZOMBIE, STEVE, CREEPER;
 	
+	public static void set(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
+		Skull type = rand.nextInt(10) == 0 ? Skull.WITHER : Skull.SKELETON;
+		Skull.set(editor, rand, origin, dir, type);
+	}
+	
 	public static void set(IWorldEditor editor, Random rand, Coord origin, Cardinal dir, Skull type){
 		if(!editor.isSupported(origin)) return;
-		MetaBlock skullBlock = new MetaBlock(Skull.fromType(type).getDefaultState());
+		MetaBlock skullBlock = MetaBlock.of(Skull.fromType(type).getDefaultState());
 		setRotation(rand, skullBlock, dir);
 		skullBlock.set(editor, origin);
 	}
@@ -31,7 +36,7 @@ public enum Skull {
 		//directionValue = directionValue % 16;
 		directionValue = Math.floorMod(directionValue, 16);
 		
-		skull.withProperty(SkullBlock.ROTATION, directionValue);
+		skull.with(SkullBlock.ROTATION, directionValue);
 	}
 	
 	public static Block fromType(Skull type){

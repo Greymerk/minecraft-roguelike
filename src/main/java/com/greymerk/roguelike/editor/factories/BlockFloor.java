@@ -1,9 +1,13 @@
 package com.greymerk.roguelike.editor.factories;
 
+import java.util.function.Predicate;
+
+import com.greymerk.roguelike.editor.BlockContext;
 import com.greymerk.roguelike.editor.Coord;
+import com.greymerk.roguelike.editor.Fill;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
-import com.greymerk.roguelike.editor.blocks.BlockType;
+import com.greymerk.roguelike.editor.blocks.Air;
 
 import net.minecraft.util.math.random.Random;
 
@@ -22,22 +26,27 @@ public class BlockFloor extends BlockBase implements IBlockFactory{
 	private IBlockFactory floor;
 	private IBlockFactory bridge;
 	
+	public static BlockFloor of(IBlockFactory floor) {
+		return new BlockFloor(floor);
+	}
+	
 	public BlockFloor(IBlockFactory floor) {
 		this.floor = floor;
 		BlockWeightedRandom bridge = new BlockWeightedRandom();
-		bridge.addBlock(floor, 10);
-		bridge.addBlock(BlockType.get(BlockType.AIR), 1);
+		bridge.add(floor, 10);
+		bridge.add(Air.get(), 1);
 		this.bridge = bridge;
 	}
 	
 	@Override
-	public boolean set(IWorldEditor editor, Random rand, Coord pos, boolean fillAir, boolean replaceSolid) {
-		if(!fillAir && editor.isAir(pos)) return false;
-		if(!replaceSolid && editor.isSolid(pos)) return false;
-		
-		floor.set(editor, rand, pos, false, true);
-		bridge.set(editor, rand, pos, true, false);
-		return true;
+	public boolean set(IWorldEditor editor, Random rand, Coord pos, Predicate<BlockContext> p) {
+		return floor.set(editor, rand, pos, Fill.SOLID.and(p))
+		    || bridge.set(editor, rand, pos, Fill.AIR.and(p));
 	}
 
+	@Override
+	public boolean set(IWorldEditor editor, Random rand, Coord pos) {
+		return floor.set(editor, rand, pos, Fill.SOLID)
+			|| bridge.set(editor, rand, pos, Fill.AIR);
+	}
 }

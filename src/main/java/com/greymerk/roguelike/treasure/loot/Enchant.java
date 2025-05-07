@@ -10,6 +10,7 @@ import net.minecraft.enchantment.EnchantmentLevelEntry;
 import net.minecraft.item.EnchantedBookItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.registry.Registries;
 import net.minecraft.resource.featuretoggle.FeatureSet;
 import net.minecraft.util.Identifier;
@@ -23,7 +24,7 @@ public enum Enchant {
 	THORNS, UNBREAKING, EFFICIENCY, SILKTOUCH, FORTUNE,
 	POWER, PUNCH, FLAME, INFINITY, LURE, LUCKOFTHESEA, MENDING;
 	
-	public static Enchantment getEnchant(Enchant type){
+	public static Enchantment getEnchant(DynamicRegistryManager reg, Enchant type){
 		String ns = "minecraft";
 		String path = getName(type);
 		Identifier id = new Identifier(ns, path);
@@ -62,7 +63,7 @@ public enum Enchant {
 		}
 	}
 	
-	public static int getLevel(Random rand, Difficulty diff) {
+	private static int getLevel(Random rand, Difficulty diff) {
 
 		switch(diff){
 		case HARDEST: return 30 + rand.nextInt(10);
@@ -74,6 +75,10 @@ public enum Enchant {
 		}
 	}
 
+	public static ItemStack enchantItem(FeatureSet features, Random rand, ItemStack item, Difficulty diff) {
+		return enchantItem(features, rand, item, getLevel(rand, diff));
+	}
+	
 	public static ItemStack enchantItem(FeatureSet features, Random rand, ItemStack item, int enchantLevel) {
 
 		if (item == null ) return null;
@@ -106,7 +111,7 @@ public enum Enchant {
 	}
 	
 	public static ItemStack getBook(Enchant type, int rank) {
-		Enchantment e = getEnchant(type);
+		Enchantment e = getEnchant(null, type);
 		ItemStack book = new ItemStack(Items.ENCHANTED_BOOK);
 		EnchantmentLevelEntry ench = new EnchantmentLevelEntry(e, rank);
 		EnchantedBookItem.addEnchantment(book, ench);

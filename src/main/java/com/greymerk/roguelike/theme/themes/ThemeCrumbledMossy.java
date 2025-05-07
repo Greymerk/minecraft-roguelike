@@ -1,6 +1,6 @@
 package com.greymerk.roguelike.theme.themes;
 
-import com.greymerk.roguelike.editor.blocks.BlockType;
+import com.greymerk.roguelike.editor.MetaBlock;
 import com.greymerk.roguelike.editor.blocks.SilverfishBlock;
 import com.greymerk.roguelike.editor.blocks.door.Door;
 import com.greymerk.roguelike.editor.blocks.door.DoorType;
@@ -13,46 +13,46 @@ import com.greymerk.roguelike.theme.ITheme;
 import com.greymerk.roguelike.theme.Theme;
 import com.greymerk.roguelike.theme.ThemeBase;
 
+import net.minecraft.block.Blocks;
+
 public class ThemeCrumbledMossy extends ThemeBase implements ITheme {
 
 	public ThemeCrumbledMossy() {
-		BlockWeightedRandom walls = new BlockWeightedRandom();
-		walls.addBlock(BlockType.get(BlockType.COBBLESTONE), 60);
-		walls.addBlock(BlockType.get(BlockType.STONE_BRICK_MOSSY), 20);
-		walls.addBlock(BlockType.get(BlockType.STONE_BRICK), 10);
-		walls.addBlock(BlockType.get(BlockType.STONE_BRICK_CRACKED), 10);
-		walls.addBlock(SilverfishBlock.getJumble(), 5);
-		walls.addBlock(BlockType.get(BlockType.COBBLESTONE_MOSSY), 20);
-		walls.addBlock(BlockType.get(BlockType.GRAVEL), 15);
+		BlockWeightedRandom mossy = new BlockWeightedRandom();
+		mossy.add(MetaBlock.of(Blocks.COBBLESTONE), 60);
+		mossy.add(MetaBlock.of(Blocks.MOSSY_STONE_BRICKS), 20);
+		mossy.add(MetaBlock.of(Blocks.STONE_BRICKS), 10);
+		mossy.add(MetaBlock.of(Blocks.CRACKED_STONE_BRICKS), 10);
+		mossy.add(SilverfishBlock.getJumble(), 5);
+		mossy.add(MetaBlock.of(Blocks.MOSSY_COBBLESTONE), 20);
+		mossy.add(MetaBlock.of(Blocks.GRAVEL), 15);
 		
 		BlockWeightedRandom pillar = new BlockWeightedRandom();
-		pillar.addBlock(BlockType.get(BlockType.STONE_BRICK_MOSSY), 20);
-		pillar.addBlock(BlockType.get(BlockType.COBBLESTONE), 5);
-		pillar.addBlock(SilverfishBlock.getJumble(), 3);
-		pillar.addBlock(BlockType.get(BlockType.COBBLESTONE_MOSSY), 5);
+		pillar.add(MetaBlock.of(Blocks.MOSSY_STONE_BRICKS), 20);
+		pillar.add(MetaBlock.of(Blocks.COBBLESTONE), 5);
+		pillar.add(SilverfishBlock.getJumble(), 3);
+		pillar.add(MetaBlock.of(Blocks.MOSSY_COBBLESTONE), 5);
 		
 		BlockWeightedRandom floor = new BlockWeightedRandom();
-		floor.addBlock(BlockType.get(BlockType.COBBLESTONE_MOSSY), 10);
-		floor.addBlock(BlockType.get(BlockType.STONE_BRICK_MOSSY), 4);
-		floor.addBlock(BlockType.get(BlockType.COBBLESTONE), 2);
-		floor.addBlock(BlockType.get(BlockType.GRAVEL), 1);
+		floor.add(MetaBlock.of(Blocks.MOSSY_COBBLESTONE), 10);
+		floor.add(MetaBlock.of(Blocks.MOSSY_STONE_BRICKS), 4);
+		floor.add(MetaBlock.of(Blocks.COBBLESTONE), 2);
+		floor.add(MetaBlock.of(Blocks.GRAVEL), 1);
 		
 		RandomStair stair = new RandomStair()
 				.add(Stair.of(Stair.MOSSY_COBBLE), 10)
 				.add(Stair.of(Stair.COBBLE), 5)
 				.add(Stair.of(Stair.MOSSY_STONEBRICK), 3)
 				.add(Stair.of(Stair.STONEBRICK), 1);
-				
-				
-				
 		
-		this.primary = new BlockSet()
-				.setWall(walls)
-				.setFloor(floor)
-				.setStair(stair)
-				.setPillar(walls)
-				.setDoor(Door.of(DoorType.JUNGLE))
-				.setSlab(Slab.of(Slab.MOSSY_COBBLE));
+		this.primary = BlockSet.builder()
+				.walls(mossy)
+				.floor(floor)
+				.stair(stair)
+				.pillar(mossy)
+				.door(Door.of(DoorType.JUNGLE))
+				.slab(Slab.of(Slab.MOSSY_COBBLE))
+				.build();
 		
 		this.secondary = this.primary;
 	}

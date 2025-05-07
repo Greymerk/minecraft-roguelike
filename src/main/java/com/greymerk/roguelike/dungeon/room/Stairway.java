@@ -1,13 +1,13 @@
 package com.greymerk.roguelike.dungeon.room;
 
-import com.greymerk.roguelike.dungeon.Floor;
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellManager;
 import com.greymerk.roguelike.dungeon.cell.CellState;
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
-import com.greymerk.roguelike.dungeon.layout.Entrance;
+import com.greymerk.roguelike.dungeon.fragment.parts.CellSupport;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
+import com.greymerk.roguelike.editor.Fill;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.blocks.Air;
 import com.greymerk.roguelike.editor.blocks.Candle;
@@ -46,11 +46,8 @@ public class Stairway extends AbstractRoom implements IRoom {
 	}
 
 	private void addDoors(IWorldEditor editor, Random rand) {
-		Fragment.generate(Fragment.ARCH, editor, rand, theme, worldPos, Cardinal.reverse(direction));
-		
-		for(Cardinal dir : this.getEntrancesFromType(Entrance.DOOR)) {
-			Fragment.generate(Fragment.ARCH, editor, rand, theme, worldPos, dir);
-		}
+		Fragment.generate(Fragment.ARCH, editor, rand, settings, worldPos, Cardinal.reverse(direction));
+		this.generateExits(editor, rand);
 	}
 	
 	private void buildSteps(IWorldEditor editor, Random rand, Coord origin) {
@@ -99,7 +96,7 @@ public class Stairway extends AbstractRoom implements IRoom {
 	
 	private void buildCell(IWorldEditor editor, Random rand, Coord origin, Cardinal cellEntry, boolean candles) {
 		IStair stair = theme.getPrimary().getStair();
-		Fragment.generate(Fragment.CELL_SUPPORT, editor, rand, theme, origin.copy());
+		CellSupport.generate(editor, rand, theme, origin.copy());
 		
 		BoundingBox bb = BoundingBox.of(origin);
 		bb.grow(Cardinal.directions, 2).grow(Cardinal.UP, 3);
@@ -111,7 +108,7 @@ public class Stairway extends AbstractRoom implements IRoom {
 		
 		bb = BoundingBox.of(origin);
 		bb.add(Cardinal.UP, 4).grow(Cardinal.directions);
-		RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall(), false, true);
+		RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall(), Fill.SOLID);
 		
 		for(Cardinal dir : Cardinal.directions) {
 			bb = BoundingBox.of(origin);
@@ -120,7 +117,7 @@ public class Stairway extends AbstractRoom implements IRoom {
 			
 			bb = BoundingBox.of(origin);
 			bb.add(dir, 3).grow(Cardinal.DOWN).grow(Cardinal.orthogonal(dir), 2).grow(Cardinal.UP, 3);
-			RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall(), false, true);
+			RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall(), Fill.SOLID);
 		}
 		
 		bb = BoundingBox.of(origin);
@@ -158,45 +155,33 @@ public class Stairway extends AbstractRoom implements IRoom {
 
 	@Override
 	public CellManager getCells(Cardinal dir) {
-		Coord origin = new Coord(0,0,0);
+		Coord origin = Coord.ZERO;
 		CellManager cells = new CellManager();
 
-		cells.add(Cell.of(origin.copy(), CellState.OBSTRUCTED).addWalls(Cardinal.orthogonal(dir)));
-		cells.add(Cell.of(origin.copy().add(dir), CellState.OBSTRUCTED).addWalls(Cardinal.orthogonal(dir)));
-		cells.add(Cell.of(origin.copy().add(dir, 2), CellState.OBSTRUCTED).addWalls(Cardinal.orthogonal(dir)).addWall(dir));
+		cells.add(Cell.of(origin.copy(), CellState.OBSTRUCTED, this).addWalls(Cardinal.orthogonal(dir)));
+		cells.add(Cell.of(origin.copy().add(dir), CellState.OBSTRUCTED, this).addWalls(Cardinal.orthogonal(dir)));
+		cells.add(Cell.of(origin.copy().add(dir, 2), CellState.OBSTRUCTED, this).addWalls(Cardinal.orthogonal(dir)).addWall(dir));
 		
-		cells.add(Cell.of(origin.copy().add(Cardinal.DOWN), CellState.OBSTRUCTED).addWall(Cardinal.reverse(dir)).addWalls(Cardinal.orthogonal(dir)));
-		cells.add(Cell.of(origin.copy().add(Cardinal.DOWN).add(dir), CellState.OBSTRUCTED).addWalls(Cardinal.orthogonal(dir)));
+		cells.add(Cell.of(origin.copy().add(Cardinal.DOWN), CellState.OBSTRUCTED, this).addWall(Cardinal.reverse(dir)).addWalls(Cardinal.orthogonal(dir)));
+		cells.add(Cell.of(origin.copy().add(Cardinal.DOWN).add(dir), CellState.OBSTRUCTED, this).addWalls(Cardinal.orthogonal(dir)));
 		
-		if(this.worldPos != null && this.worldPos.getY() >= 70) {
-			cells.add(Cell.of(origin.copy().add(Cardinal.DOWN).add(dir, 2), CellState.OBSTRUCTED).addWall(Cardinal.left(dir)).addWall(dir));
-			cells.add(Cell.of(origin.copy().add(Cardinal.DOWN).add(dir, 2).add(Cardinal.right(dir)), CellState.POTENTIAL));
-		} else {
-			cells.add(Cell.of(origin.copy().add(Cardinal.DOWN).add(dir, 2), CellState.OBSTRUCTED));
-			cells.add(Cell.of(origin.copy().add(Cardinal.DOWN).add(dir, 3), CellState.POTENTIAL));
-			for(Cardinal o : Cardinal.orthogonal(dir)) {
-				cells.add(Cell.of(origin.copy().add(Cardinal.DOWN).add(dir, 2).add(o), CellState.POTENTIAL));
-			}
+		cells.add(Cell.of(origin.copy().add(Cardinal.DOWN).add(dir, 2), CellState.OBSTRUCTED, this));
+		cells.add(Cell.of(origin.copy().add(Cardinal.DOWN).add(dir, 3), CellState.POTENTIAL, this));
+		for(Cardinal o : Cardinal.orthogonal(dir)) {
+			cells.add(Cell.of(origin.copy().add(Cardinal.DOWN).add(dir, 2).add(o), CellState.POTENTIAL, this));
 		}
-		
 		
 		return cells;
 	}
 
 	@Override
-	public IBounded getBoundingBox() {
-		Coord origin = this.getWorldPos().copy();
-		Coord start = origin.copy();
-		start.add(Cardinal.reverse(direction), 3);
-		start.add(Cardinal.UP, 3);
-		start.add(Cardinal.left(direction), 4);
-		
-		Coord end = origin.copy();
-		end.add(direction, 13);
-		end.add(Cardinal.DOWN, 10);
-		end.add(Cardinal.right(direction), 4);
-		
-		return BoundingBox.of(start, end);
+	public IBounded getBoundingBox(Coord origin, Cardinal dir) {
+		return BoundingBox.of(origin)
+				.grow(Cardinal.reverse(dir), 3)
+				.grow(dir, 15)
+				.grow(Cardinal.orthogonal(dir), 4)
+				.grow(Cardinal.UP, 6)
+				.grow(Cardinal.DOWN, 10);
 	}
 	
 
@@ -204,8 +189,4 @@ public class Stairway extends AbstractRoom implements IRoom {
 	public String getName() {
 		return Room.STAIRWAY.name();
 	}
-	
-	@Override
-	public void determineEntrances(Floor f, Coord floorPos) {}
-
 }

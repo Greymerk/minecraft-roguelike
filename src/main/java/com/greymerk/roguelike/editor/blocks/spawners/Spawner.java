@@ -59,17 +59,12 @@ public enum Spawner {
 		}
 	}
 	
-	
-
-	public static void generate(IWorldEditor editor, Random rand, Coord pos){
+	public static void generate(IWorldEditor editor, Random rand, Difficulty diff, Coord pos){
 		Spawner type = common[rand.nextInt(common.length)];
-		generate(editor, rand, pos, type);
+		generate(editor, rand, diff, pos, type);
 	}
 	
-	public static void generate(IWorldEditor editor, Random rand, Coord pos, Spawner type) {
-		
-		Difficulty diff = Difficulty.fromY(pos.getY());
+	public static void generate(IWorldEditor editor, Random rand, Difficulty diff, Coord pos, Spawner type) {
 		new Spawnable(type).generate(editor, rand, pos, diff);
-	
 	}
 }

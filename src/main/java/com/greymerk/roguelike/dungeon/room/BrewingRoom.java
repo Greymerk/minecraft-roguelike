@@ -2,21 +2,19 @@ package com.greymerk.roguelike.dungeon.room;
 
 import java.util.List;
 
-import com.greymerk.roguelike.dungeon.Difficulty;
-import com.greymerk.roguelike.dungeon.Floor;
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellManager;
 import com.greymerk.roguelike.dungeon.cell.CellState;
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
+import com.greymerk.roguelike.dungeon.fragment.parts.CellSupport;
 import com.greymerk.roguelike.dungeon.fragment.parts.SpiralStairCase;
-import com.greymerk.roguelike.dungeon.layout.Entrance;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
+import com.greymerk.roguelike.editor.Fill;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.MetaBlock;
 import com.greymerk.roguelike.editor.blocks.Air;
-import com.greymerk.roguelike.editor.blocks.BlockType;
 import com.greymerk.roguelike.editor.blocks.BrewingStand;
 import com.greymerk.roguelike.editor.blocks.Trapdoor;
 import com.greymerk.roguelike.editor.blocks.Wood;
@@ -107,7 +105,7 @@ public class BrewingRoom extends AbstractRoom implements IRoom {
 			});
 			
 			this.shelf(editor, rand, origin.copy().add(dir, 3), dir, stair);
-			Fragment.generate(Fragment.CELL_SUPPORT, editor, rand, theme, origin.copy().add(dir, 3));
+			CellSupport.generate(editor, rand, theme, origin.copy().add(dir, 3));
 		});
 		
 		this.shelf(editor, rand, origin.copy().add(Cardinal.reverse(direction), 3), Cardinal.left(direction), stair);
@@ -115,8 +113,8 @@ public class BrewingRoom extends AbstractRoom implements IRoom {
 		Cardinal.orthogonal(direction).forEach(dir -> {
 			this.wartFarm(editor, rand, origin.copy().add(direction, 3), dir);
 		});
-		Treasure.generate(editor, rand, origin.copy().add(Cardinal.reverse(direction), 5).add(Cardinal.UP), direction, Treasure.BREWING);
-		Treasure.generate(editor, rand, origin.copy().add(Cardinal.reverse(direction), 3).add(Cardinal.left(direction), 2).add(Cardinal.UP), Cardinal.right(direction), Treasure.BREWING);
+		Treasure.generate(editor, rand, settings.getDifficulty(), origin.copy().add(Cardinal.reverse(direction), 5).add(Cardinal.UP), direction, Treasure.BREWING);
+		Treasure.generate(editor, rand, settings.getDifficulty(), origin.copy().add(Cardinal.reverse(direction), 3).add(Cardinal.left(direction), 2).add(Cardinal.UP), Cardinal.right(direction), Treasure.BREWING);
 	}
 	
 
@@ -156,15 +154,15 @@ public class BrewingRoom extends AbstractRoom implements IRoom {
 				stair.setOrientation(Cardinal.reverse(o), true).set(editor, rand, origin.copy().add(dir, 5).add(o, 4).add(Cardinal.UP, 2));
 			});
 			
-			Fragment.generate(Fragment.CELL_SUPPORT, editor, rand, theme, origin.copy().add(dir, 3).add(Cardinal.left(dir), 3));
+			CellSupport.generate(editor, rand, theme, origin.copy().add(dir, 3).add(Cardinal.left(dir), 3));
 		});
 		
-		settings.getWallFragment(rand).generate(editor, rand, theme, origin.copy().add(direction, 3).add(Cardinal.left(direction), 3), direction);
-		settings.getWallFragment(rand).generate(editor, rand, theme, origin.copy().add(direction, 3).add(Cardinal.left(direction), 3), Cardinal.left(direction));
-		settings.getWallFragment(rand).generate(editor, rand, theme, origin.copy().add(Cardinal.reverse(direction), 3).add(Cardinal.left(direction), 3), Cardinal.reverse(direction));
+		settings.getWallFragment(rand).generate(editor, rand, settings, origin.copy().add(direction, 3).add(Cardinal.left(direction), 3), direction);
+		settings.getWallFragment(rand).generate(editor, rand, settings, origin.copy().add(direction, 3).add(Cardinal.left(direction), 3), Cardinal.left(direction));
+		settings.getWallFragment(rand).generate(editor, rand, settings, origin.copy().add(Cardinal.reverse(direction), 3).add(Cardinal.left(direction), 3), Cardinal.reverse(direction));
 		
-		settings.getWallFragment(rand).generate(editor, rand, theme, origin.copy().add(Cardinal.reverse(direction), 3).add(Cardinal.right(direction), 3), Cardinal.reverse(direction));
-		settings.getWallFragment(rand).generate(editor, rand, theme, origin.copy().add(Cardinal.reverse(direction), 3).add(Cardinal.right(direction), 3), Cardinal.right(direction));
+		settings.getWallFragment(rand).generate(editor, rand, settings, origin.copy().add(Cardinal.reverse(direction), 3).add(Cardinal.right(direction), 3), Cardinal.reverse(direction));
+		settings.getWallFragment(rand).generate(editor, rand, settings, origin.copy().add(Cardinal.reverse(direction), 3).add(Cardinal.right(direction), 3), Cardinal.right(direction));
 		
 		theme.getPrimary().getDoor().generate(editor, origin.copy().add(Cardinal.left(direction), 6).add(Cardinal.reverse(direction), 3), Cardinal.right(direction));
 	}
@@ -179,7 +177,7 @@ public class BrewingRoom extends AbstractRoom implements IRoom {
 		BoundingBox.of(origin).grow(Cardinal.orthogonal(direction), 8).grow(List.of(direction, Cardinal.reverse(direction)), 5).grow(Cardinal.UP, 4)
 			.getShape(Shape.RECTSOLID).fill(editor, rand, Air.get());
 		BoundingBox.of(origin).add(Cardinal.UP, 5).grow(Cardinal.parallel(direction), 3).grow(Cardinal.orthogonal(direction), 6)
-			.getShape(Shape.RECTSOLID).fill(editor, rand, ceiling.get(), false, true);
+			.getShape(Shape.RECTSOLID).fill(editor, rand, ceiling.get(), Fill.SOLID);
 		BoundingBox.of(origin).add(Cardinal.DOWN).grow(List.of(direction, Cardinal.reverse(direction)), 4).grow(Cardinal.orthogonal(direction), 7)
 			.getShape(Shape.RECTSOLID).fill(editor, rand, floor);
 		
@@ -260,23 +258,23 @@ public class BrewingRoom extends AbstractRoom implements IRoom {
 				BoundingBox.of(origin).add(Cardinal.DOWN).add(orth, 4).add(o).grow(orth, 4)
 					.getShape(Shape.RECTSOLID).fill(editor, rand, walls);
 				
-				settings.getWallFragment(rand).generate(editor, rand, theme, origin.copy().add(orth, 6).add(o, 3), orth);
-				settings.getWallFragment(rand).generate(editor, rand, theme, origin.copy().add(orth, 6).add(o, 3), o);
+				settings.getWallFragment(rand).generate(editor, rand, settings, origin.copy().add(orth, 6).add(o, 3), orth);
+				settings.getWallFragment(rand).generate(editor, rand, settings, origin.copy().add(orth, 6).add(o, 3), o);
 			}
 		}
 		
-		Fragment.generate(Fragment.WALL_CANDLES, editor, rand, theme, origin.copy().add(direction, 3), direction);
+		Fragment.generate(Fragment.WALL_CANDLES, editor, rand, settings, origin.copy().add(direction, 3), direction);
 	}
 
 	private void entry(IWorldEditor editor, Random rand, Coord origin) {
 		Corridor cor = new Corridor();
-		this.getEntrancesFromType(Entrance.DOOR).forEach(dir -> {
-			cor.addEntrance(dir, Entrance.DOOR);
+		
+		this.exits.forEach(e -> {
+			cor.addExit(e);
 		});
 		
 		cor.setLevelSettings(settings);
 		cor.worldPos = this.worldPos.copy();
-		cor.addEntrance(direction, Entrance.DOOR);
 		cor.generate(editor);
 	}
 	
@@ -289,14 +287,14 @@ public class BrewingRoom extends AbstractRoom implements IRoom {
 		BoundingBox bb = BoundingBox.of(origin).add(dir).grow(Cardinal.orthogonal(dir));
 		bb.getShape(Shape.RECTSOLID).fill(editor, rand, Trapdoor.getWooden(Wood.SPRUCE, dir, false, true));
 		bb.add(dir);
-		bb.getShape(Shape.RECTSOLID).fill(editor, rand, BlockType.get(BlockType.SOUL_SAND));
+		bb.getShape(Shape.RECTSOLID).fill(editor, rand, MetaBlock.of(Blocks.SOUL_SAND));
 		bb.add(Cardinal.UP);
 		bb.getShape(Shape.RECTSOLID).fill(editor, rand, MetaBlock.of(Blocks.NETHER_WART));
 	}
 	
 	private void brewingStand(IWorldEditor editor, Random rand, Coord origin) {
 		BrewingStand.generate(editor, origin);
-		IWeighted<ItemStack> provider = Loot.getProvider(Loot.POTION, Difficulty.fromY(origin.getY()), editor);
+		IWeighted<ItemStack> provider = Loot.getProvider(Loot.POTION, settings.getDifficulty(), editor);
 		BrewingStand.slots.forEach(slot -> {
 			BrewingStand.add(editor, origin, slot, provider.get(rand));
 		});
@@ -305,43 +303,37 @@ public class BrewingRoom extends AbstractRoom implements IRoom {
 	
 	@Override
 	public CellManager getCells(Cardinal dir) {
-		Coord origin = new Coord(0,0,0);
+		Coord origin = Coord.ZERO;
 		CellManager cells = new CellManager();
 		
-		cells.add(Cell.of(origin.copy(), CellState.OBSTRUCTED));
-		cells.add(Cell.of(origin.copy().add(dir), CellState.OBSTRUCTED));
-		cells.add(Cell.of(origin.copy().add(Cardinal.DOWN).add(dir), CellState.OBSTRUCTED).addWall(Cardinal.reverse(dir)));
-		cells.add(Cell.of(origin.copy().add(dir, 2), CellState.OBSTRUCTED).addWall(dir));
-		cells.add(Cell.of(origin.copy().add(Cardinal.DOWN).add(dir, 2), CellState.OBSTRUCTED).addWall(dir));
+		cells.add(Cell.of(origin.copy(), CellState.OBSTRUCTED, this));
+		cells.add(Cell.of(origin.copy().add(dir), CellState.OBSTRUCTED, this));
+		cells.add(Cell.of(origin.copy().add(Cardinal.DOWN).add(dir), CellState.OBSTRUCTED, this).addWall(Cardinal.reverse(dir)));
+		cells.add(Cell.of(origin.copy().add(dir, 2), CellState.OBSTRUCTED, this).addWall(dir));
+		cells.add(Cell.of(origin.copy().add(Cardinal.DOWN).add(dir, 2), CellState.OBSTRUCTED, this).addWall(dir));
 		
 		for(Cardinal o : Cardinal.orthogonal(dir)) {
-			cells.add(Cell.of(origin.copy().add(dir).add(o), CellState.OBSTRUCTED).addWall(Cardinal.reverse(dir)).addWall(o));
-			cells.add(Cell.of(origin.copy().add(Cardinal.DOWN).add(dir).add(o), CellState.OBSTRUCTED).addWall(Cardinal.reverse(dir)).addWall(o));
-			cells.add(Cell.of(origin.copy().add(dir, 2).add(o), CellState.OBSTRUCTED).addWall(dir).addWall(o));
-			cells.add(Cell.of(origin.copy().add(Cardinal.DOWN).add(dir, 2).add(o), CellState.OBSTRUCTED).addWall(dir).addWall(o));
+			cells.add(Cell.of(origin.copy().add(dir).add(o), CellState.OBSTRUCTED, this).addWall(Cardinal.reverse(dir)).addWall(o));
+			cells.add(Cell.of(origin.copy().add(Cardinal.DOWN).add(dir).add(o), CellState.OBSTRUCTED, this).addWall(Cardinal.reverse(dir)).addWall(o));
+			cells.add(Cell.of(origin.copy().add(dir, 2).add(o), CellState.OBSTRUCTED, this).addWall(dir).addWall(o));
+			cells.add(Cell.of(origin.copy().add(Cardinal.DOWN).add(dir, 2).add(o), CellState.OBSTRUCTED, this).addWall(dir).addWall(o));
 		}
 		
 		for(Cardinal d : Cardinal.directions) {
 			if(d == dir) continue;
-			cells.add(Cell.of(origin.copy().add(d), CellState.POTENTIAL));
+			cells.add(Cell.of(origin.copy().add(d), CellState.POTENTIAL, this));
 		}
 		
 		return cells;
 	}
 
-
 	@Override
-	public void determineEntrances(Floor f, Coord floorPos) {
-		for(Cardinal dir : Cardinal.directions) {
-			if(dir == this.direction) continue;
-			Cell c = f.getCell(floorPos.copy().add(dir));
-			if(!c.isRoom()) continue;
-			if(!c.getWalls().contains(Cardinal.reverse(dir))){
-				this.addEntrance(dir, Entrance.DOOR);
-			} else {
-				this.addEntrance(dir, Entrance.WALL);
-			}
-		}
+	public BoundingBox getBoundingBox(Coord origin, Cardinal dir) {
+		return BoundingBox.of(origin)
+				.grow(dir, 12)
+				.grow(Cardinal.orthogonal(dir), 9)
+				.grow(Cardinal.DOWN, 10)
+				.grow(Cardinal.UP, 6);
 	}
 	
 	@Override

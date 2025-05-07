@@ -1,36 +1,39 @@
 package com.greymerk.roguelike.editor.blocks;
 
+import java.util.function.Predicate;
+
+import com.greymerk.roguelike.editor.BlockContext;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
+import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.MetaBlock;
+import com.greymerk.roguelike.editor.factories.BlockWeightedRandom;
+import com.greymerk.roguelike.editor.shapes.IShape;
 
 import net.minecraft.block.Blocks;
 import net.minecraft.block.PaneBlock;
 import net.minecraft.util.math.random.Random;
 
-public class IronBar extends MetaBlock{
+public class IronBar implements IBlockFactory{
 
-	public static MetaBlock get() {
+	MetaBlock bar;
+	
+	public static IronBar get() {
 		return new IronBar();
+	}
+
+	public static IBlockFactory getBroken() {
+		BlockWeightedRandom blocks = new BlockWeightedRandom();
+		blocks.add(Air.get(), 1);
+		blocks.add(IronBar.get(), 2);
+		return blocks;
 	}
 	
 	public IronBar() {
-		super(Blocks.IRON_BARS);
+		this.bar = MetaBlock.of(Blocks.IRON_BARS);
 	}
 
-	@Override
-	public boolean set(IWorldEditor editor, Coord pos){
-		this.setShape(editor, pos);
-		return editor.set(pos, this, true, true);
-	}
-	
-	@Override
-	public boolean set(IWorldEditor editor, Random rand, Coord pos, boolean fillAir, boolean replaceSolid) {
-		this.setShape(editor, pos);
-		return editor.set(pos, this, fillAir, replaceSolid);
-	}
-	
 	private void setShape(IWorldEditor editor, Coord origin) {
 		for(Cardinal dir : Cardinal.directions) {
 			setConnection(editor, origin, dir, connects(editor, origin, dir));
@@ -45,11 +48,33 @@ public class IronBar extends MetaBlock{
 	
 	private void setConnection(IWorldEditor editor, Coord origin, Cardinal dir, boolean connects) {
 		switch(dir) {
-		case EAST: this.withProperty(PaneBlock.EAST, connects); return;
-		case NORTH: this.withProperty(PaneBlock.NORTH, connects); return;
-		case SOUTH: this.withProperty(PaneBlock.SOUTH, connects); return;
-		case WEST: this.withProperty(PaneBlock.WEST, connects); return;
+		case EAST: this.bar.with(PaneBlock.EAST, connects); return;
+		case NORTH: this.bar.with(PaneBlock.NORTH, connects); return;
+		case SOUTH: this.bar.with(PaneBlock.SOUTH, connects); return;
+		case WEST: this.bar.with(PaneBlock.WEST, connects); return;
 		default: return;
 		}
+	}
+
+	@Override
+	public boolean set(IWorldEditor editor, Random rand, Coord pos){
+		this.setShape(editor, pos);
+		return bar.set(editor, rand, pos);
+	}
+	
+	@Override
+	public void fill(IWorldEditor editor, Random rand, IShape shape) {
+		this.bar.fill(editor, rand, shape);
+	}
+
+	@Override
+	public boolean set(IWorldEditor editor, Random rand, Coord pos, Predicate<BlockContext> p) {
+		this.setShape(editor, pos);
+		return bar.set(editor, rand, pos, p);
+	}
+
+	@Override
+	public void fill(IWorldEditor editor, Random rand, IShape shape, Predicate<BlockContext> p) {
+		this.bar.fill(editor, rand, shape, p);
 	}
 }

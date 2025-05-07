@@ -2,6 +2,7 @@ package com.greymerk.roguelike.settings.level;
 
 import java.util.ArrayList;
 
+import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
 import com.greymerk.roguelike.dungeon.room.Room;
 import com.greymerk.roguelike.dungeon.room.RoomProvider;
@@ -24,8 +25,10 @@ public class LevelSettingsCrumbledStone extends LevelSettingsBase implements ILe
 		rooms.addRandomChoice(Room.CORRIDOR, 10);
 		rooms.addRandomChoice(Room.CRYPT, 5);
 		rooms.addRandomChoice(Room.PRISON, 3);
+		rooms.addRandomChoice(Room.BALCONY, 1);
 		rooms.addRoomOnce(Room.PANOPTICON);
 		rooms.addRoomOnce(Room.ENDER);
+		rooms.addRoomSometimes(Room.PIT, 0.2);
 		
 		this.walls = new WeightedRandomizer<Fragment>(10);
 		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_EMPTY, 15));
@@ -33,18 +36,22 @@ public class LevelSettingsCrumbledStone extends LevelSettingsBase implements ILe
 		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_CHEST, 1));
 		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_FOOD_BARREL, 1));
 		
-
-		this.alcoves.add(this.walls);
-		this.alcoves.add(new WeightedChoice<Fragment>(Fragment.ALCOVE_CRYPT, 2));
-		this.alcoves.add(new WeightedChoice<Fragment>(Fragment.BOOK_SHELF, 1));
+		this.alcoves.add(new WeightedChoice<Fragment>(Fragment.ALCOVE_PRISON_CELL, 10));
+		this.alcoves.add(new WeightedChoice<Fragment>(Fragment.ALCOVE_CRYPT, 5));
+		this.alcoves.add(new WeightedChoice<Fragment>(Fragment.BOOK_SHELF, 3));
 		
 		this.filters = new ArrayList<IFilter>();
 		this.filters.add(Filter.get(Filter.COBWEB));
+		this.filters.add(Filter.get(Filter.CHAINS));
 	}
 
 	@Override
 	public String getName() {
 		return LevelSettings.CRUMBLED_STONE.name();
 	}
-	
+
+	@Override
+	public Difficulty getDifficulty() {
+		return Difficulty.MEDIUM;
+	}
 }

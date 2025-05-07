@@ -1,5 +1,6 @@
 package com.greymerk.roguelike.settings;
 
+import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.dungeon.fragment.IFragment;
 import com.greymerk.roguelike.dungeon.room.RoomProvider;
 import com.greymerk.roguelike.editor.IWorldEditor;
@@ -22,5 +23,6 @@ public interface ILevelSettings {
 	
 	public String getName();
 	
+	public Difficulty getDifficulty();
 	
 }

@@ -2,7 +2,6 @@ package com.greymerk.roguelike.theme.themes;
 
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.MetaBlock;
-import com.greymerk.roguelike.editor.blocks.BlockType;
 import com.greymerk.roguelike.editor.blocks.door.Door;
 import com.greymerk.roguelike.editor.blocks.door.DoorType;
 import com.greymerk.roguelike.editor.blocks.slab.Slab;
@@ -14,55 +13,54 @@ import com.greymerk.roguelike.theme.ITheme;
 import com.greymerk.roguelike.theme.Theme;
 import com.greymerk.roguelike.theme.ThemeBase;
 
+import net.minecraft.block.Blocks;
+
 public class ThemeRedNether extends ThemeBase implements ITheme {
 
 	public ThemeRedNether() {
 		BlockWeightedRandom walls = new BlockWeightedRandom();
-		walls.addBlock(BlockType.get(BlockType.RED_NETHERBRICK), 200);
-		walls.addBlock(BlockType.get(BlockType.NETHERRACK), 20);
-		walls.addBlock(BlockType.get(BlockType.ORE_QUARTZ), 20);
-		walls.addBlock(BlockType.get(BlockType.SOUL_SAND), 15);
-		walls.addBlock(BlockType.get(BlockType.NETHER_WART_BLOCK), 10);
-		walls.addBlock(BlockType.get(BlockType.COAL_BLOCK), 5);
+		walls.add(MetaBlock.of(Blocks.RED_NETHER_BRICKS), 200);
+		walls.add(MetaBlock.of(Blocks.NETHERRACK), 20);
+		walls.add(MetaBlock.of(Blocks.NETHER_QUARTZ_ORE), 20);
+		walls.add(MetaBlock.of(Blocks.SOUL_SAND), 15);
+		walls.add(MetaBlock.of(Blocks.NETHER_WART_BLOCK), 10);
+		walls.add(MetaBlock.of(Blocks.COAL_BLOCK), 5);
 
 		BlockWeightedRandom floor = new BlockWeightedRandom();
-		floor.addBlock(walls, 1500);
-		floor.addBlock(BlockType.get(BlockType.RED_NETHERBRICK), 500);
-		floor.addBlock(BlockType.get(BlockType.REDSTONE_BLOCK), 50);
-		floor.addBlock(BlockType.get(BlockType.GOLD_BLOCK), 3);
-		floor.addBlock(BlockType.get(BlockType.DIAMOND_BLOCK), 2);
+		floor.add(walls, 1500);
+		floor.add(MetaBlock.of(Blocks.RED_NETHER_BRICKS), 500);
+		floor.add(MetaBlock.of(Blocks.REDSTONE_BLOCK), 50);
+		floor.add(MetaBlock.of(Blocks.GOLD_BLOCK), 3);
+		floor.add(MetaBlock.of(Blocks.DIAMOND_BLOCK), 2);
 		
 		MetaStair stair = Stair.of(Stair.NETHERBRICK);
-		MetaBlock obsidian = BlockType.get(BlockType.OBSIDIAN);
-		MetaBlock redBrick = BlockType.get(BlockType.RED_NETHERBRICK);
+		MetaBlock obsidian = MetaBlock.of(Blocks.OBSIDIAN);
+		MetaBlock redBrick = MetaBlock.of(Blocks.RED_NETHER_BRICKS);
 		
-		IBlockFactory lightstone = BlockType.get(BlockType.GLOWSTONE);
-		IBlockFactory liquid = BlockType.get(BlockType.LAVA_FLOWING);
-		
-		
-		
-		//this.primary = new BlockSet(floor, walls, obsidian, stair, Slab.get(Slab.NETHER_BRICK), door, lightstone, liquid);
-		//this.secondary = new BlockSet(floor, redBrick, obsidian, stair, Slab.get(Slab.RED_NETHER_BRICK), door, lightstone, liquid);
+		IBlockFactory lightstone = MetaBlock.of(Blocks.GLOWSTONE);
+		IBlockFactory liquid = MetaBlock.of(Blocks.LAVA);
 
-		this.primary = new BlockSet()
-				.setWall(walls)
-				.setFloor(floor)
-				.setPillar(obsidian)
-				.setStair(stair)
-				.setSlab(Slab.of(Slab.NETHER_BRICK))
-				.setDoor(Door.of(DoorType.CRIMSON))
-				.setLightBlock(lightstone)
-				.setLiquid(liquid);
+		this.primary = BlockSet.builder()
+				.walls(walls)
+				.floor(floor)
+				.pillar(obsidian)
+				.stair(stair)
+				.slab(Slab.of(Slab.NETHER_BRICK))
+				.door(Door.of(DoorType.CRIMSON))
+				.lightblock(lightstone)
+				.liquid(liquid)
+				.build();
 		
-		this.secondary = new BlockSet()
-				.setWall(redBrick)
-				.setFloor(floor)
-				.setPillar(obsidian)
-				.setStair(stair)
-				.setSlab(Slab.of(Slab.RED_NETHER_BRICK))
-				.setDoor(Door.of(DoorType.CRIMSON))
-				.setLightBlock(lightstone)
-				.setLiquid(liquid);
+		this.secondary = BlockSet.builder()
+				.walls(redBrick)
+				.floor(floor)
+				.pillar(obsidian)
+				.stair(stair)
+				.slab(Slab.of(Slab.RED_NETHER_BRICK))
+				.door(Door.of(DoorType.CRIMSON))
+				.lightblock(lightstone)
+				.liquid(liquid)
+				.build();
 	}
 	
 	@Override

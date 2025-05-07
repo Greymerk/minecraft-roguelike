@@ -1,9 +1,10 @@
 package com.greymerk.roguelike.editor.blocks;
 
+import java.util.Optional;
+
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.MetaBlock;
-import com.greymerk.roguelike.treasure.loot.Loot;
 import com.greymerk.roguelike.util.IWeighted;
 import com.greymerk.roguelike.util.WeightedChoice;
 import com.greymerk.roguelike.util.WeightedRandomizer;
@@ -18,22 +19,19 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.random.Random;
 
 public class DecoratedPot {
-
-	public static void set(IWorldEditor editor, Random rand, Coord origin) {
-		set(editor, rand, origin, Loot.PRECIOUS);
-	}
 	
-	public static void set(IWorldEditor editor, Random rand, Coord origin, Loot type) {
+	public static void set(IWorldEditor editor, Random rand, Coord origin) {
 		
-		MetaBlock pot = new MetaBlock(Blocks.DECORATED_POT);
+		MetaBlock pot = MetaBlock.of(Blocks.DECORATED_POT);
 
 		boolean success = pot.set(editor, origin);
 		
 		if(!success) return;
 		
-		BlockEntity be = editor.getBlockEntity(origin);
+		Optional<BlockEntity> obe = editor.getBlockEntity(origin);
 		
-		if(be == null) return;
+		if(!obe.isPresent()) return;
+		BlockEntity be = obe.get();
 		if(!(be instanceof DecoratedPotBlockEntity)) return;
 		
 		DecoratedPotBlockEntity potEntity = (DecoratedPotBlockEntity)be;

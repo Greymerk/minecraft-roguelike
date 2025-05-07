@@ -2,11 +2,14 @@ package com.greymerk.roguelike.editor.factories;
 
 import java.util.ArrayList;
 import java.util.List;
-import net.minecraft.util.math.random.Random;
+import java.util.function.Predicate;
 
+import com.greymerk.roguelike.editor.BlockContext;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
+
+import net.minecraft.util.math.random.Random;
 
 public class BlockStripes extends BlockBase {
 
@@ -16,12 +19,12 @@ public class BlockStripes extends BlockBase {
 		blocks = new ArrayList<IBlockFactory>();
 	}
 
-	public void addBlock(IBlockFactory toAdd){
+	public void add(IBlockFactory toAdd){
 		blocks.add(toAdd);
 	}
 
 	@Override
-	public boolean set(IWorldEditor editor, Random rand, Coord origin, boolean fillAir, boolean replaceSolid) {
+	public boolean set(IWorldEditor editor, Random rand, Coord origin, Predicate<BlockContext> p) {
 		int size = blocks.size();
 		int choice = Math.abs(
 				Math.floorMod(
@@ -30,6 +33,6 @@ public class BlockStripes extends BlockBase {
 				+ Math.floorMod(origin.getZ(), size))
 				, size));
 		IBlockFactory block = blocks.get(choice);
-		return block.set(editor, rand, origin, fillAir, replaceSolid);
+		return block.set(editor, rand, origin, p);
 	}
 }

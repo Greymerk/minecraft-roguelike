@@ -1,5 +1,7 @@
 package com.greymerk.roguelike.editor.blocks;
 
+import java.util.List;
+
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.MetaBlock;
 import com.greymerk.roguelike.editor.factories.BlockJumble;
@@ -12,7 +14,7 @@ public enum SilverfishBlock {
 	STONE, COBBLE, STONEBRICK, STONEBRICK_MOSSY, STONEBRICK_CRACKED, STONEBRICK_CHISELED;
 	
 	public static MetaBlock get(SilverfishBlock type){
-		return new MetaBlock(fromType(type));
+		return MetaBlock.of(fromType(type));
 	}
 	
 	public static Block fromType(SilverfishBlock type) {
@@ -24,27 +26,15 @@ public enum SilverfishBlock {
 		case STONEBRICK_CRACKED: return Blocks.INFESTED_CRACKED_STONE_BRICKS;
 		case STONEBRICK_MOSSY: return Blocks.INFESTED_MOSSY_STONE_BRICKS;
 		default: return Blocks.INFESTED_STONE;
-		
 		}
 	}
 	
-	public static IBlockFactory getJumble(){
-		
-		BlockJumble jumble = new BlockJumble();
-		
-		SilverfishBlock[] types = new SilverfishBlock[]{
-				COBBLE,
-				STONEBRICK,
-				STONEBRICK_MOSSY,
-				STONEBRICK_CRACKED
-		};
-		
-		for(SilverfishBlock type : types){
-			jumble.addBlock(get(type));	
-		}		
-		
-		return jumble;
-		
+	public static IBlockFactory getJumble(){	
+		return BlockJumble.of(List.of(
+			get(COBBLE),
+			get(STONEBRICK),
+			get(STONEBRICK_MOSSY),
+			get(STONEBRICK_CRACKED)
+		));
 	}
-	
 }

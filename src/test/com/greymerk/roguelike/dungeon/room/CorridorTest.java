@@ -11,18 +11,14 @@ class CorridorTest {
 
 	@Test
 	void getCellsTest() {
-		Coord origin = new Coord(0,0,0);
+		Coord origin = Coord.ZERO;
 		Cardinal dir = Cardinal.EAST;
 		Corridor room = new Corridor();
 		room.setDirection(dir);
 		room.setFloorPos(origin.copy());
 		room.setWorldPos(origin.copy());
 		CellManager cells = room.getCells(dir);
-		
-		cells.forEach(c -> {
-			System.out.println(c);
-		});
-		
+
 		assert(cells.get(origin).getState() == CellState.OBSTRUCTED);
 		assert(cells.get(origin.copy().add(dir)).getState() == CellState.POTENTIAL);
 		assert(cells.get(origin.copy().add(Cardinal.left(dir))).getState() == CellState.POTENTIAL);
@@ -30,4 +26,8 @@ class CorridorTest {
 		assert(cells.get(origin.copy().add(Cardinal.reverse(dir))).getState() == CellState.EMPTY);
 	}
 
+	@Test
+	void testEntrancePair() {
+
+	}
 }

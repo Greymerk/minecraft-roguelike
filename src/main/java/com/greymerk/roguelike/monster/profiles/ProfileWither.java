@@ -16,7 +16,7 @@ public class ProfileWither implements IMonsterProfile {
 	@Override
 	public void addEquipment(World world, Random rand, Difficulty diff, IEntity mob) {
 		mob.setMobClass(MobType.WITHERSKELETON, false);
-		mob.setSlot(EquipmentSlot.MAINHAND, ItemWeapon.getSword(world.getEnabledFeatures(), rand, diff, mob.canEnchant(rand, diff)));
+		mob.setSlot(EquipmentSlot.MAINHAND, ItemWeapon.getSword(world.getRegistryManager(), world.getEnabledFeatures(), rand, diff, mob.canEnchant(rand, diff)));
 		MonsterProfile.get(MonsterProfile.TALLMOB).addEquipment(world, rand, diff, mob);
 	}
 

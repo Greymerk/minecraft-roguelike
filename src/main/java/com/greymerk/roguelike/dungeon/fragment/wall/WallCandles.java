@@ -9,18 +9,18 @@ import com.greymerk.roguelike.editor.blocks.stair.IStair;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.editor.shapes.IShape;
 import com.greymerk.roguelike.editor.shapes.Shape;
-import com.greymerk.roguelike.theme.ITheme;
+import com.greymerk.roguelike.settings.ILevelSettings;
 
 import net.minecraft.util.math.random.Random;
 
 public class WallCandles implements IFragment {
 
 	@Override
-	public void generate(IWorldEditor editor, Random rand, ITheme theme, Coord origin, Cardinal dir) {
+	public void generate(IWorldEditor editor, Random rand, ILevelSettings settings, Coord origin, Cardinal dir) {
 		BoundingBox bb = BoundingBox.of(origin.copy());
 		bb.add(dir, 2).grow(Cardinal.orthogonal(dir));
 		IShape rect = bb.getShape(Shape.RECTSOLID);
-		IStair stair = theme.getSecondary().getStair();
+		IStair stair = settings.getTheme().getSecondary().getStair();
 		stair.setOrientation(Cardinal.reverse(dir), true);
 		for(Coord c : rect.get()) {
 			stair.set(editor, rand, c);

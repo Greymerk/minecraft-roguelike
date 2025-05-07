@@ -3,9 +3,13 @@ package com.greymerk.roguelike.editor.shapes;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.StreamSupport;
 
+import com.greymerk.roguelike.editor.BlockContext;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
+import com.greymerk.roguelike.editor.Fill;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
 
@@ -13,7 +17,7 @@ import net.minecraft.util.math.random.Random;
 
 public class Column implements IShape {
 
-	Coord top;
+	private Coord top;
 	
 	public Column(Coord top) {
 		this.top = top.copy();
@@ -25,14 +29,14 @@ public class Column implements IShape {
 	
 	@Override
 	public void fill(IWorldEditor editor, Random rand, IBlockFactory block) {
-		this.forEach(c -> block.set(editor, rand, top, true, true));
+		this.forEach(c -> block.set(editor, rand, top, Fill.ALWAYS));
 	}
 
 	@Override
-	public void fill(IWorldEditor editor, Random rand, IBlockFactory block, boolean fillAir, boolean replaceSolid) {
-		this.forEach(c -> block.set(editor, rand, top, fillAir, replaceSolid));
+	public void fill(IWorldEditor editor, Random rand, IBlockFactory block, Predicate<BlockContext> p) {
+		this.forEach(c -> block.set(editor, rand, top, p));
 	}
-
+	
 	public List<Coord> getUntilSolid(IWorldEditor editor){
 		Iterator<Coord> itr = new FillDownIterator(editor, top.copy());
 		List<Coord> cl = new ArrayList<Coord>();
@@ -42,18 +46,16 @@ public class Column implements IShape {
 	
 	@Override
 	public List<Coord> get() {
-		List<Coord> cl = new ArrayList<Coord>();
-		this.forEach(c -> cl.add(c));
-		return cl;
+		return StreamSupport.stream(this.spliterator(), false).toList();
 	}
 	
 	public void fillDown(IWorldEditor editor, Random rand, IBlockFactory blocks) {
-		fillDown(editor, rand, blocks, true, true);
+		fillDown(editor, rand, blocks, Fill.ALWAYS);
 	}
 	
-	public void fillDown(IWorldEditor editor, Random rand, IBlockFactory blocks, boolean fillAir, boolean replaceSolid) {
+	public void fillDown(IWorldEditor editor, Random rand, IBlockFactory blocks, Predicate<BlockContext> p) {
 		Iterator<Coord> itr = new FillDownIterator(editor, top.copy());
-		itr.forEachRemaining(c -> blocks.set(editor, rand, c, fillAir, replaceSolid));
+		itr.forEachRemaining(c -> blocks.set(editor, rand, c, p));
 	}
 	
 	@Override
@@ -95,7 +97,9 @@ public class Column implements IShape {
 		@Override
 		public boolean hasNext() {
 			if(editor.isSolid(this.current)) return false;
-			return current.getY() > MAX_DEPTH;
+			return current.getY() > editor.getInfo().getBottomY();
 		}
 	}
+
+
 }

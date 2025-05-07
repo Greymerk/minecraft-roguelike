@@ -6,34 +6,22 @@ import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.blocks.FlowerPot;
 import com.greymerk.roguelike.editor.blocks.Lantern;
-import com.greymerk.roguelike.editor.blocks.stair.IStair;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
-import com.greymerk.roguelike.editor.shapes.IShape;
-import com.greymerk.roguelike.editor.shapes.Shape;
-import com.greymerk.roguelike.theme.ITheme;
+import com.greymerk.roguelike.settings.ILevelSettings;
 
 import net.minecraft.util.math.random.Random;
 
 public class WallFlowers implements IFragment {
 	
 	@Override
-	public void generate(IWorldEditor editor, Random rand, ITheme theme, Coord origin, Cardinal dir) {
-		BoundingBox bb = BoundingBox.of(origin.copy());
-		bb.add(dir, 2).grow(Cardinal.orthogonal(dir));
-		IShape rect = bb.getShape(Shape.RECTSOLID);
-		IStair stair = theme.getSecondary().getStair();
-		stair.setOrientation(Cardinal.reverse(dir), true);
-		for(Coord c : rect.get()) {
-			stair.set(editor, rand, c);
-			Coord pos = c.copy().add(Cardinal.UP);
-			if(rand.nextBoolean()) {
-				FlowerPot.generate(editor, rand, pos);
-			}
-		}
+	public void generate(IWorldEditor editor, Random rand, ILevelSettings settings, Coord origin, Cardinal dir) {
+		settings.getTheme().getSecondary().getStair().setOrientation(Cardinal.reverse(dir), true)
+			.fill(editor, rand, BoundingBox.of(origin).add(dir, 2).grow(Cardinal.orthogonal(dir)));
+
+		BoundingBox.of(origin).add(dir, 2).add(Cardinal.UP).grow(Cardinal.orthogonal(dir)).forEach(pos -> {
+			if(rand.nextBoolean()) FlowerPot.generate(editor, rand, pos);
+		});
 		
-		Coord pos = origin.copy();
-		pos.add(dir, 2).add(Cardinal.UP, 2);
-		Lantern.set(editor, pos);
-		
+		Lantern.set(editor, origin.copy().add(dir, 2).add(Cardinal.UP, 2));
 	}
 }

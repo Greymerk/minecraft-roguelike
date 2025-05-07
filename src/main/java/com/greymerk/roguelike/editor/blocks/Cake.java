@@ -7,6 +7,6 @@ import net.minecraft.block.Blocks;
 public class Cake {
 	
 	public static MetaBlock get(){
-		return new MetaBlock(Blocks.CAKE);
+		return MetaBlock.of(Blocks.CAKE);
 	}
 }

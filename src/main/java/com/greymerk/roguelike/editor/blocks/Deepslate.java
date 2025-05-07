@@ -15,7 +15,7 @@ public enum Deepslate {
 	COAL, IRON, COPPER, GOLD, REDSTONE, EMERALD, LAPIS, DIAMOND;
 	
 	public static MetaBlock get(Deepslate type) {
-		return new MetaBlock(fromType(type));
+		return MetaBlock.of(fromType(type));
 	}
 	
 	public static Block fromType(Deepslate type) {

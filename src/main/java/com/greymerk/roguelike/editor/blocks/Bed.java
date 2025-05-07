@@ -28,15 +28,15 @@ public class Bed {
 	public static void generate(IWorldEditor editor, Cardinal dir, Coord origin, Color color){
 		
 		Coord pos = origin.copy();
-		MetaBlock head = new MetaBlock(getFromColor(color));
-		head.withProperty(BedBlock.PART, BedPart.HEAD);
-		head.withProperty(HorizontalFacingBlock.FACING, Cardinal.facing(dir));
+		MetaBlock head = MetaBlock.of(getFromColor(color));
+		head.with(BedBlock.PART, BedPart.HEAD);
+		head.with(HorizontalFacingBlock.FACING, Cardinal.facing(dir));
 		head.set(editor, pos);
 		
 		pos.add(dir);
-		MetaBlock foot = new MetaBlock(getFromColor(color));
-		foot.withProperty(BedBlock.PART, BedPart.FOOT);
-		foot.withProperty(HorizontalFacingBlock.FACING, Cardinal.facing(dir));
+		MetaBlock foot = MetaBlock.of(getFromColor(color));
+		foot.with(BedBlock.PART, BedPart.FOOT);
+		foot.with(HorizontalFacingBlock.FACING, Cardinal.facing(dir));
 		foot.set(editor, pos);
 
 	}

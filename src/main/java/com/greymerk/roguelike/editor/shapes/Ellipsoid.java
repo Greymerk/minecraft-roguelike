@@ -1,14 +1,18 @@
 package com.greymerk.roguelike.editor.shapes;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import net.minecraft.util.math.random.Random;
+import java.util.function.Predicate;
+import java.util.stream.StreamSupport;
 
+import com.greymerk.roguelike.editor.BlockContext;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
+import com.greymerk.roguelike.editor.Fill;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
+
+import net.minecraft.util.math.random.Random;
 
 public class Ellipsoid implements IShape {
 
@@ -27,24 +31,19 @@ public class Ellipsoid implements IShape {
 
 	@Override
 	public void fill(IWorldEditor editor, Random rand, IBlockFactory block) {
-		this.fill(editor, rand, block, true, true);
-
+		this.fill(editor, rand, block, Fill.ALWAYS);
 	}
 
 	@Override
-	public void fill(IWorldEditor editor, Random rand, IBlockFactory block, boolean fillAir, boolean replaceSolid) {
+	public void fill(IWorldEditor editor, Random rand, IBlockFactory block, Predicate<BlockContext> p) {
 		for(Coord pos : this){
-			block.set(editor, rand, pos, fillAir, replaceSolid);
+			block.set(editor, rand, pos, p);
 		}
 	}
-
+	
 	@Override
 	public List<Coord> get() {
-		List<Coord> copy = new ArrayList<Coord>();
-		for(Coord pos : this){
-			copy.add(pos);
-		}
-		return copy;
+		return StreamSupport.stream(this.spliterator(), false).toList();
 	}
 
 	private class EllipsoidIterator implements Iterator<Coord>{
@@ -56,17 +55,15 @@ public class Ellipsoid implements IShape {
 		private Cardinal dir;
 		private boolean top;
 		
-		
-		
 		public EllipsoidIterator(Coord centre, Coord end){
 			this.centre = centre.copy(); 
 			Coord s = centre.copy();
 			Coord e = end.copy();
 			
 			this.diff = e.sub(s);
-			this.diff = new Coord(Math.abs(diff.getX()), Math.abs(diff.getY()), Math.abs(diff.getZ()));
+			this.diff = Coord.of(Math.abs(diff.getX()), Math.abs(diff.getY()), Math.abs(diff.getZ()));
 			
-			cursor = new Coord(0,0,0);
+			cursor = Coord.ZERO;
 			top = true;
 			this.dir = Cardinal.NORTH;
 		}
@@ -103,7 +100,7 @@ public class Ellipsoid implements IShape {
 				top = true;
 				return toReturn;
 			} else {
-				cursor = new Coord(cursor.getX(), cursor.getY(), 0);
+				cursor = Coord.of(cursor.getX(), cursor.getY(), 0);
 			}
 			
 			cursor.add(Cardinal.EAST);
@@ -113,7 +110,7 @@ public class Ellipsoid implements IShape {
 				top = true;
 				return toReturn;
 			} else {
-				cursor = new Coord(0, cursor.getY(), cursor.getZ());
+				cursor = Coord.of(0, cursor.getY(), cursor.getZ());
 			}
 			
 			cursor.add(Cardinal.UP);
@@ -142,4 +139,6 @@ public class Ellipsoid implements IShape {
 			throw new UnsupportedOperationException();
 		}
 	}
+
+
 }

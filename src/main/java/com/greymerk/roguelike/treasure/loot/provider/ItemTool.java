@@ -7,37 +7,40 @@ import com.greymerk.roguelike.treasure.loot.Quality;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.resource.featuretoggle.FeatureSet;
 import net.minecraft.util.math.random.Random;
 
 public class ItemTool extends ItemBase {
 
+	DynamicRegistryManager reg;
 	FeatureSet features;
 	
-	public ItemTool(FeatureSet features, int weight, Difficulty diff) {
+	public ItemTool(DynamicRegistryManager reg, FeatureSet features, int weight, Difficulty diff) {
 		super(weight, diff);
 		this.features = features;
+		this.reg = reg;
 	}
 	
 	@Override
 	public ItemStack getLootItem(Random rand, Difficulty diff) {
-		if(rand.nextInt(2000) == 0) return ItemNovelty.getItem(ItemNovelty.CLEO);
-		return getRandom(features, rand, diff, true);
+		if(rand.nextInt(2000) == 0) return ItemNovelty.getItem(reg, ItemNovelty.CLEO);
+		return getRandom(reg, features, rand, diff, true);
 	}
 
-	public static ItemStack getTool(FeatureSet features, Random rand, Difficulty diff, Quality quality, Equipment type, boolean enchant){		
+	public static ItemStack getTool(DynamicRegistryManager reg, FeatureSet features, Random rand, Difficulty diff, Quality quality, Equipment type, boolean enchant){		
 		ItemStack tool = Equipment.get(type, quality == null ? Quality.get(diff) : quality);
-		return enchant ? Enchant.enchantItem(features, rand, tool, Enchant.getLevel(rand, diff)) : tool;
+		return enchant ? Enchant.enchantItem(features, rand, tool, diff) : tool;
 	}
 	
-	public static ItemStack getRandom(FeatureSet features, Random rand, Difficulty diff, boolean enchant){
+	public static ItemStack getRandom(DynamicRegistryManager reg, FeatureSet features, Random rand, Difficulty diff, boolean enchant){
 		
 		if(enchant && rand.nextInt(30) == 0){
-			return ItemSpecialty.getRandomTool(rand, Quality.get(diff));
+			return ItemSpecialty.getRandomTool(reg, rand, Quality.get(diff));
 		}
 		
 		ItemStack tool = pickTool(rand, diff);
-		if(enchant) Enchant.enchantItem(features, rand, tool, Enchant.getLevel(rand, diff));
+		if(enchant) Enchant.enchantItem(features, rand, tool, diff);
 		return tool;
 	}
 	

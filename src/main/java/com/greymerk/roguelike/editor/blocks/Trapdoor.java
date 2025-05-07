@@ -17,14 +17,14 @@ public enum Trapdoor {
 	}
 	
 	public static MetaBlock getIron(Cardinal dir, boolean bottom, boolean open) {
-		MetaBlock hatch = new MetaBlock(Blocks.IRON_TRAPDOOR.getDefaultState());
+		MetaBlock hatch = MetaBlock.of(Blocks.IRON_TRAPDOOR.getDefaultState());
 		return Trapdoor.setOrientation(hatch, dir, bottom, open);
 	}
 	
 	public static MetaBlock setOrientation(MetaBlock slab, Cardinal dir, boolean bottom, boolean open){
-		slab.withProperty(TrapdoorBlock.FACING, Cardinal.facing(dir));
-		slab.withProperty(TrapdoorBlock.HALF, bottom ? BlockHalf.BOTTOM : BlockHalf.TOP);
-		slab.withProperty(TrapdoorBlock.OPEN, open);
+		slab.with(TrapdoorBlock.FACING, Cardinal.facing(dir));
+		slab.with(TrapdoorBlock.HALF, bottom ? BlockHalf.BOTTOM : BlockHalf.TOP);
+		slab.with(TrapdoorBlock.OPEN, open);
 		return slab;
 	}
 }

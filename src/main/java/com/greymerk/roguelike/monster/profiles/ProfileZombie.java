@@ -31,7 +31,7 @@ public class ProfileZombie implements IMonsterProfile {
 			return;
 		}
 		
-		if(diff.gt(Difficulty.EASY) && rand.nextInt(50) == 0){
+		if(diff.gt(Difficulty.EASY) && rand.nextInt(100) == 0){
 			MonsterProfile.get(MonsterProfile.JOHNNY).addEquipment(world, rand, diff, mob);
 			return;
 		}
@@ -67,7 +67,7 @@ public class ProfileZombie implements IMonsterProfile {
 			return;
 		}
 		
-		ItemStack weapon = ItemTool.getRandom(world.getEnabledFeatures(), rand, diff, mob.canEnchant(rand, diff));
+		ItemStack weapon = ItemTool.getRandom(world.getRegistryManager(), world.getEnabledFeatures(), rand, diff, mob.canEnchant(rand, diff));
 		mob.setSlot(EquipmentSlot.MAINHAND, weapon);
 		MonsterProfile.get(MonsterProfile.TALLMOB).addEquipment(world, rand, diff, mob);
 	}

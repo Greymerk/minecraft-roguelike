@@ -1,6 +1,6 @@
 package com.greymerk.roguelike.editor.blocks;
 
-import net.minecraft.util.math.random.Random;
+import java.util.List;
 
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
@@ -9,6 +9,7 @@ import com.greymerk.roguelike.editor.MetaBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.random.Random;
 
 public enum FlowerPot {
 
@@ -20,9 +21,19 @@ public enum FlowerPot {
 	SHRUB, FERN, CACTUS, BAMBOO, WITHER,
 	CRIMSON_FUNGUS, WARPED_FUNGUS, CRIMSON_ROOTS, WARPED_ROOTS;
 
+	public static List<FlowerPot> mushrooms = List.of(
+			REDMUSHROOM, BROWNMUSHROOM, CRIMSON_FUNGUS, WARPED_FUNGUS, CRIMSON_ROOTS, WARPED_ROOTS, WITHER, SHRUB);
+	
+	public static List<FlowerPot> saplings = List.of(
+			OAK, BIRCH, SPRUCE, JUNGLE, ACACIA, DARKOAK, MANGROVE, AZALEA, CHERRY);
+	
 	public static void generate(IWorldEditor editor, Coord pos, FlowerPot type){
-		MetaBlock pot = new MetaBlock(FlowerPot.getFlowerPot(type));
+		MetaBlock pot = MetaBlock.of(FlowerPot.getFlowerPot(type));
 		pot.set(editor, pos);
+	}
+	
+	public static void generate(IWorldEditor editor, Random rand, Coord origin, List<FlowerPot> types) {
+		generate(editor, origin, types.get(rand.nextInt(types.size())));
 	}
 	
 	public static void generate(IWorldEditor editor, Random rand, Coord pos){

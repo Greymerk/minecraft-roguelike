@@ -1,6 +1,7 @@
 package com.greymerk.roguelike.editor.blocks;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
@@ -23,7 +24,7 @@ public enum BrewingStand {
 	}
 	
 	public static boolean generate(IWorldEditor editor, Coord pos){
-		MetaBlock stand = new MetaBlock(Blocks.BREWING_STAND);
+		MetaBlock stand = MetaBlock.of(Blocks.BREWING_STAND);
 		return stand.set(editor, pos);
 	}
 	
@@ -37,10 +38,12 @@ public enum BrewingStand {
 	private static BrewingStandBlockEntity get(IWorldEditor editor, Coord pos){
 		MetaBlock stand = editor.getBlock(pos);
 		if(stand.getBlock() != Blocks.BREWING_STAND) return null;
-		BlockEntity te = editor.getBlockEntity(pos);
-		if(te == null) return null;
-		if(!(te instanceof BrewingStandBlockEntity)) return null;
-		BrewingStandBlockEntity brewingTE = (BrewingStandBlockEntity)te;
+		Optional<BlockEntity> obe = editor.getBlockEntity(pos);
+		if(obe.isEmpty()) return null;
+		
+		BlockEntity be = obe.get();
+		if(!(be instanceof BrewingStandBlockEntity)) return null;
+		BrewingStandBlockEntity brewingTE = (BrewingStandBlockEntity)be;
 		return brewingTE;
 	}
 }

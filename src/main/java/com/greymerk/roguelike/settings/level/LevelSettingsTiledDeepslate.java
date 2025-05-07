@@ -2,6 +2,7 @@ package com.greymerk.roguelike.settings.level;
 
 import java.util.ArrayList;
 
+import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
 import com.greymerk.roguelike.dungeon.room.Room;
 import com.greymerk.roguelike.dungeon.room.RoomProvider;
@@ -25,15 +26,17 @@ public class LevelSettingsTiledDeepslate extends LevelSettingsBase implements IL
 		rooms.addRandomChoice(Room.CRYPT, 3);
 		rooms.addRandomChoice(Room.CISTERN, 2);
 		rooms.addRoomOnce(Room.OSSUARY);
+		rooms.addRoomOnce(Room.SCULK);
 		
 		this.walls = new WeightedRandomizer<Fragment>(10);
 		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_EMPTY, 10));
+		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_DECORATED_POT, 2));
 		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_SPAWNER, 1));
 		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_CHEST, 1));
 		
-		this.alcoves.add(this.walls);
 		this.alcoves.add(new WeightedChoice<Fragment>(Fragment.ALCOVE_CRYPT, 5));
-		this.alcoves.add(new WeightedChoice<Fragment>(Fragment.BOOK_SHELF, 2));
+		this.alcoves.add(new WeightedChoice<Fragment>(Fragment.BOOK_SHELF, 5));
+		this.alcoves.add(new WeightedChoice<Fragment>(Fragment.ALCOVE_FIRE, 2));
 		
 		this.filters = new ArrayList<IFilter>();
 		this.filters.add(Filter.get(Filter.POTS));
@@ -42,5 +45,10 @@ public class LevelSettingsTiledDeepslate extends LevelSettingsBase implements IL
 	@Override
 	public String getName() {
 		return LevelSettings.TILED_SLATE.name();
+	}
+
+	@Override
+	public Difficulty getDifficulty() {
+		return Difficulty.HARDEST;
 	}
 }

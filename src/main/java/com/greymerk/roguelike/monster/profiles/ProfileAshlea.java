@@ -23,7 +23,7 @@ public class ProfileAshlea implements IMonsterProfile {
 		
 		MonsterProfile.get(MonsterProfile.VILLAGER).addEquipment(world, rand, diff, mob);
 		
-		ItemStack weapon = ItemNovelty.getItem(ItemNovelty.ASHLEA);
+		ItemStack weapon = ItemNovelty.getItem(world.getRegistryManager(), ItemNovelty.ASHLEA);
 		mob.setSlot(EquipmentSlot.MAINHAND, weapon);
 		
 		for(EquipmentSlot slot : new EquipmentSlot[]{

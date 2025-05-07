@@ -1,22 +1,26 @@
 package com.greymerk.roguelike.editor.shapes;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import net.minecraft.util.math.random.Random;
 import java.util.Set;
+import java.util.TreeSet;
+import java.util.function.Predicate;
+import java.util.stream.StreamSupport;
 
+import com.greymerk.roguelike.editor.BlockContext;
 import com.greymerk.roguelike.editor.Coord;
+import com.greymerk.roguelike.editor.Fill;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
+
+import net.minecraft.util.math.random.Random;
 
 public class MultiShape implements IShape {
 	
 	private Set<Coord> shape;
 	
 	public MultiShape(){
-		shape = new HashSet<Coord>();
+		shape = new TreeSet<Coord>();
 	}
 	
 	public void addShape(IShape toAdd){
@@ -32,22 +36,18 @@ public class MultiShape implements IShape {
 
 	@Override
 	public void fill(IWorldEditor editor, Random rand, IBlockFactory block) {
-		this.fill(editor, rand, block, true, true);
-	}
-
-	@Override
-	public void fill(IWorldEditor editor, Random rand, IBlockFactory block, boolean fillAir, boolean replaceSolid) {
-		for(Coord c : this){
-			block.set(editor, rand, c, fillAir, replaceSolid);
-		}
+		this.fill(editor, rand, block, Fill.ALWAYS);
 	}
 
 	@Override
 	public List<Coord> get() {
-		List<Coord> coords = new ArrayList<Coord>();
-		for(Coord pos : this.shape){
-			coords.add(pos.copy());
-		}
-		return coords;
+		return StreamSupport.stream(this.spliterator(), false).toList();
+	}
+
+	@Override
+	public void fill(IWorldEditor editor, Random rand, IBlockFactory block, Predicate<BlockContext> p) {
+		shape.forEach(pos -> {
+			block.set(editor, rand, pos, p);
+		});
 	}
 }

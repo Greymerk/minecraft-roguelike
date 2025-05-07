@@ -1,6 +1,8 @@
 package com.greymerk.roguelike.editor.blocks;
 
 import com.greymerk.roguelike.editor.Cardinal;
+import com.greymerk.roguelike.editor.Coord;
+import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.MetaBlock;
 
 import net.minecraft.block.AnvilBlock;
@@ -11,10 +13,14 @@ public enum Anvil {
 
 	ANVIL, CHIPPED, DAMAGED;
 	
+	public static void set(IWorldEditor editor, Coord pos, Anvil damage, Cardinal dir) {
+		MetaBlock.of(getFromDamage(damage)).with(AnvilBlock.FACING, Cardinal.facing(dir)).set(editor, pos);
+	}
+	
 	public static MetaBlock get(Anvil damage, Cardinal dir){
 		BlockState anvil = getFromDamage(damage);
 		anvil.with(AnvilBlock.FACING, Cardinal.facing(dir));
-		return new MetaBlock(anvil);
+		return MetaBlock.of(anvil);
 	}
 	
 	private static BlockState getFromDamage(Anvil damage) {

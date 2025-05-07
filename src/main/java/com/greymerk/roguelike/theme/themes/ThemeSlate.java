@@ -15,27 +15,28 @@ public class ThemeSlate extends ThemeBase implements ITheme {
 	public ThemeSlate() {
 		
 		BlockWeightedRandom floor = new BlockWeightedRandom();
-		floor.addBlock(Deepslate.get(Deepslate.COBBLED), 80);
-		floor.addBlock(Deepslate.get(Deepslate.GOLD), 2);
-		floor.addBlock(Deepslate.get(Deepslate.DIAMOND), 1);
+		floor.add(Deepslate.get(Deepslate.COBBLED), 80);
+		floor.add(Deepslate.get(Deepslate.GOLD), 2);
+		floor.add(Deepslate.get(Deepslate.DIAMOND), 1);
 		
 		BlockWeightedRandom walls = new BlockWeightedRandom();
-		walls.addBlock(Deepslate.get(Deepslate.BRICK), 30);
-		walls.addBlock(Deepslate.get(Deepslate.CRACKED_BRICK), 5);
-		walls.addBlock(Deepslate.get(Deepslate.COBBLED), 1);
+		walls.add(Deepslate.get(Deepslate.BRICK), 30);
+		walls.add(Deepslate.get(Deepslate.CRACKED_BRICK), 5);
+		walls.add(Deepslate.get(Deepslate.COBBLED), 1);
 		
 		MetaStair stair = Stair.of(Stair.DEEPSLATE_BRICK);
 		
 		BlockWeightedRandom pillar = new BlockWeightedRandom();
-		pillar.addBlock(Deepslate.get(Deepslate.POLISHED), 20);
-		pillar.addBlock(Deepslate.get(Deepslate.CHISELED), 1);
+		pillar.add(Deepslate.get(Deepslate.POLISHED), 20);
+		pillar.add(Deepslate.get(Deepslate.CHISELED), 1);
 		
-		this.primary = new BlockSet()
-				.setWall(walls)
-				.setFloor(floor)
-				.setStair(stair)
-				.setPillar(pillar)
-				.setSlab(Slab.of(Slab.SLATE_BRICK));
+		this.primary = BlockSet.builder()
+				.walls(walls)
+				.floor(floor)
+				.stair(stair)
+				.pillar(pillar)
+				.slab(Slab.of(Slab.SLATE_BRICK))
+				.build();
 		this.secondary = this.primary;
 		
 	}

@@ -1,11 +1,14 @@
 package com.greymerk.roguelike.editor.shapes;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.StreamSupport;
 
+import com.greymerk.roguelike.editor.BlockContext;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
+import com.greymerk.roguelike.editor.Fill;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
@@ -28,24 +31,19 @@ public class RectPyramid implements IShape {
 
 	@Override
 	public void fill(IWorldEditor editor, Random rand, IBlockFactory block) {
-		fill(editor, rand, block, true, true);
+		fill(editor, rand, block, Fill.ALWAYS);
 	}
 
 	@Override
-	public void fill(IWorldEditor editor, Random rand, IBlockFactory block, boolean fillAir, boolean replaceSolid) {
+	public void fill(IWorldEditor editor, Random rand, IBlockFactory block, Predicate<BlockContext> p) {
 		for (Coord pos : this){
-			block.set(editor, rand, pos, fillAir, replaceSolid);
+			block.set(editor, rand, pos, p);
 		}
-
 	}
 
 	@Override
 	public List<Coord> get() {
-		List<Coord> shape = new ArrayList<Coord>();
-		for (Coord pos : this){
-			shape.add(pos);
-		}
-		return shape;
+		return StreamSupport.stream(this.spliterator(), false).toList();
 	}
 	
 	private class SquarePyramidIterator implements Iterator<Coord>{
@@ -62,7 +60,7 @@ public class RectPyramid implements IShape {
 			Coord s = bb.getStart();
 			Coord e = bb.getEnd();
 			
-			cursor = new Coord(0,0,0);
+			cursor = Coord.ZERO;
 			dir = Cardinal.NORTH;
 			
 			diff = e.copy();
@@ -105,7 +103,7 @@ public class RectPyramid implements IShape {
 				return toReturn;
 			}
 			
-			cursor = new Coord(cursor.getX(), cursor.getY(), 0);
+			cursor = cursor.withZ(0);
 			
 			
 			cursor.add(Cardinal.EAST);
@@ -115,7 +113,7 @@ public class RectPyramid implements IShape {
 				return toReturn;
 			}
 			
-			cursor = new Coord(0, cursor.getY(), cursor.getZ());
+			cursor = cursor.withX(0);
 			cursor.add(Cardinal.UP);
 			dir = Cardinal.left(dir);
 			return toReturn;
@@ -139,8 +137,6 @@ public class RectPyramid implements IShape {
 			
 			return true;
 			
-		}
-		
+		}	
 	}
-
 }

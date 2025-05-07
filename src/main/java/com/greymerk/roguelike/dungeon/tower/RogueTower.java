@@ -3,6 +3,7 @@ package com.greymerk.roguelike.dungeon.tower;
 import com.greymerk.roguelike.dungeon.fragment.parts.SpiralStairCase;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
+import com.greymerk.roguelike.editor.Fill;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.blocks.Air;
@@ -95,7 +96,7 @@ public class RogueTower implements ITower{
 			
 			//windows
 			Cardinal.orthogonal(dir).forEach(o -> {
-				IronBar.get().set(editor, origin.copy().add(Cardinal.UP, 6).add(dir, 4).add(o, 2));
+				IronBar.get().set(editor, rand, origin.copy().add(Cardinal.UP, 6).add(dir, 4).add(o, 2));
 			});
 			
 			//corner bevels
@@ -104,20 +105,21 @@ public class RogueTower implements ITower{
 				stair.setOrientation(o, true).set(editor, rand, origin.copy().add(dir, 4).add(o, 3).add(Cardinal.UP, 4));
 			}
 			
-			//beard
+			//beard wall
 			BoundingBox.of(origin.copy().add(Cardinal.DOWN).add(dir, 3).add(Cardinal.left(dir), 3),
 				dungeon.copy().add(dir, 3).add(Cardinal.left(dir), 3))
-				.fill(editor, rand, walls, true, false);
-				
+				.fill(editor, rand, walls, Fill.AIR.or(Fill.LIQUID));
+			
+			//beard corner column
 			BoundingBox.of(origin.copy().add(Cardinal.DOWN),
 				dungeon.copy().add(Cardinal.UP, 4)).add(dir, 4).grow(Cardinal.orthogonal(dir), 3)
-				.fill(editor, rand, walls, true, false);
+				.fill(editor, rand, walls, Fill.AIR.or(Fill.LIQUID));
 		}
 		
 		//stairway
 		BoundingBox.of(origin.copy().add(Cardinal.DOWN),
 			dungeon.copy().add(Cardinal.UP, 4)).grow(Cardinal.directions, 2)
-			.getShape(Shape.RECTHOLLOW).fill(editor, rand, walls, false, true);
+			.getShape(Shape.RECTHOLLOW).fill(editor, rand, walls, Fill.SOLID);
 		SpiralStairCase.generate(editor, rand, theme, Line.of(origin.copy().add(Cardinal.UP, 4), dungeon));
 	}
 	

@@ -1,6 +1,7 @@
 package com.greymerk.roguelike.theme.themes;
 
-import com.greymerk.roguelike.editor.blocks.BlockType;
+import com.greymerk.roguelike.editor.MetaBlock;
+import com.greymerk.roguelike.editor.blocks.Air;
 import com.greymerk.roguelike.editor.blocks.door.Door;
 import com.greymerk.roguelike.editor.blocks.door.DoorType;
 import com.greymerk.roguelike.editor.blocks.slab.Slab;
@@ -13,20 +14,22 @@ import com.greymerk.roguelike.theme.ITheme;
 import com.greymerk.roguelike.theme.Theme;
 import com.greymerk.roguelike.theme.ThemeBase;
 
+import net.minecraft.block.Blocks;
+
 public class ThemeTower extends ThemeBase implements ITheme {
 
 	public ThemeTower(){
 	
 		BlockJumble stone = new BlockJumble();
-		stone.addBlock(BlockType.get(BlockType.STONE_BRICK));
-		stone.addBlock(BlockType.get(BlockType.STONE_BRICK_CRACKED));
-		stone.addBlock(BlockType.get(BlockType.STONE_BRICK_MOSSY));
+		stone.add(MetaBlock.of(Blocks.STONE_BRICKS));
+		stone.add(MetaBlock.of(Blocks.CRACKED_STONE_BRICKS));
+		stone.add(MetaBlock.of(Blocks.MOSSY_STONE_BRICKS));
 		
 		BlockWeightedRandom walls = new BlockWeightedRandom();
-		walls.addBlock(BlockType.get(BlockType.AIR), 5);
-		walls.addBlock(stone, 30);
-		walls.addBlock(BlockType.get(BlockType.COBBLESTONE), 10);
-		walls.addBlock(BlockType.get(BlockType.GRAVEL), 5);
+		walls.add(Air.get(), 5);
+		walls.add(stone, 30);
+		walls.add(MetaBlock.of(Blocks.COBBLESTONE), 10);
+		walls.add(MetaBlock.of(Blocks.GRAVEL), 5);
 		
 		RandomStair stair = new RandomStair()
 				.add(Stair.of(Stair.STONEBRICK), 3)
@@ -34,13 +37,14 @@ public class ThemeTower extends ThemeBase implements ITheme {
 				.add(Stair.of(Stair.COBBLE), 2)
 				.add(Stair.of(Stair.MOSSY_COBBLE), 1);
 		
-		this.primary = new BlockSet()
-				.setWall(walls)
-				.setFloor(walls)
-				.setStair(stair)
-				.setPillar(walls)
-				.setDoor(Door.of(DoorType.SPRUCE))
-				.setSlab(Slab.of(Slab.COBBLE));
+		this.primary = BlockSet.builder()
+				.walls(walls)
+				.floor(walls)
+				.stair(stair)
+				.pillar(walls)
+				.door(Door.of(DoorType.SPRUCE))
+				.slab(Slab.of(Slab.COBBLE))
+				.build();
 		this.secondary = this.primary;
 	}
 	

@@ -3,6 +3,7 @@ package com.greymerk.roguelike.editor.blocks;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.MetaBlock;
+import com.greymerk.roguelike.theme.ITheme;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -17,9 +18,14 @@ public enum Lantern {
 	}
 	
 	public static void set(IWorldEditor editor, Coord origin, Lantern type, boolean hang) {
-		MetaBlock lantern = new MetaBlock(fromType(type).getDefaultState());
-		lantern.withProperty(LanternBlock.HANGING, hang);
-		lantern.set(editor, origin);
+		if(!editor.getBlock(origin).isReplaceable()) return;
+		MetaBlock.of(fromType(type).getDefaultState())
+			.with(LanternBlock.HANGING, hang)
+			.set(editor, origin);
+	}
+	
+	public static void set(IWorldEditor editor, Coord pos, ITheme theme, boolean hang) {
+		Lantern.set(editor, pos, theme.getPrimary().naturalFire() ? FLAME : SOUL, hang);
 	}
 	
 	public static Block fromType(Lantern type) {
@@ -30,5 +36,7 @@ public enum Lantern {
 		
 		}
 	}
+
+	
 	
 }

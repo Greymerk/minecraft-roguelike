@@ -1,5 +1,6 @@
 package com.greymerk.roguelike.treasure.chest;
 
+import java.util.List;
 import java.util.Optional;
 
 import com.greymerk.roguelike.config.Config;
@@ -16,6 +17,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FacingBlock;
 import net.minecraft.block.HorizontalFacingBlock;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.LootableContainerBlockEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.property.Properties;
@@ -28,61 +30,77 @@ public class TreasureChest implements ITreasureChest{
 	private Treasure type;
 	private LootableContainerBlockEntity chest;
 	private Difficulty diff;
-
-	public TreasureChest(Treasure type){
-		this.type = type;
-		this.diff = Difficulty.EASIEST;
+	private MetaBlock block;
+	
+	public static Optional<ITreasureChest> generate(IWorldEditor editor, Random rand, Difficulty diff, Coord pos, Treasure type, ChestType block) {
+		Optional<ITreasureChest> chest = new TreasureChest(type, block, diff, pos).set(editor, rand, pos);
+		return chest;
 	}
 	
-	public ITreasureChest generate(IWorldEditor editor, Random rand, Coord pos, ChestType block) throws ChestPlacementException {
-		for(Cardinal dir : Cardinal.directions) {
+	public static Optional<ITreasureChest> generate(IWorldEditor editor, Random rand, Difficulty diff, Coord pos, Cardinal dir, Treasure type, ChestType block){
+		Optional<ITreasureChest> chest = new TreasureChest(type, block, diff, pos).set(editor, rand, pos, dir);
+		return chest;
+	}
+	
+	private Optional<ITreasureChest> set(IWorldEditor editor, Random rand, Coord pos){
+		return this.set(editor, rand, pos, this.findOrientation(editor, rand, pos));
+	}
+	
+	private TreasureChest(Treasure type, ChestType block, Difficulty diff, Coord pos){
+		this.type = type;
+		this.block = ChestType.get(block);
+		this.diff = diff;
+	}
+	
+	private Optional<ITreasureChest> set(IWorldEditor editor, Random rand, Coord pos, Cardinal dir) {
+		setOrientation(dir);
+		if(!block.set(editor, pos)) {
+			return Optional.empty();
+		}
+		
+		Optional<BlockEntity> obe = editor.getBlockEntity(pos);
+		if(obe.isEmpty()) return Optional.empty();
+		
+		BlockEntity be = obe.get();
+		if(!(be instanceof LootableContainerBlockEntity)) return Optional.empty();
+		
+		this.chest = (LootableContainerBlockEntity) be;
+		this.inventory = new Inventory(rand, chest);
+		
+		//Optional<RegistryKey<LootTable>> maybeTable = Treasure.getLootTable(type, diff);
+		//if(maybeTable.isPresent()) this.setLootTable(maybeTable.get(), editor.getSeed(pos));
+		
+		if(Config.ofBoolean(Config.ROGUELIKE_LOOT)) Loot.fillChest(editor, this, rand);
+		return Optional.of(this);
+	}
+	
+	public Cardinal findOrientation(IWorldEditor editor, Random rand, Coord pos) {
+		List<Cardinal> dirs = Cardinal.randDirs(rand);
+		for(Cardinal dir : dirs) {
 			Coord p = pos.copy();
 			p.add(dir);
 			if(editor.isAir(pos)) {
-				return this.generate(editor, rand, pos, dir, block);
+				return dir;
 			}
 		}
-		Cardinal dir = Cardinal.randDirs(rand).get(0);
-		return this.generate(editor, rand, pos, dir, block);
+		return dirs.get(0);
 	}
 	
-	public ITreasureChest generate(IWorldEditor editor, Random rand, Coord pos, Cardinal dir, ChestType type) throws ChestPlacementException {
-
-		this.diff = Difficulty.fromY(pos.getY());
-		
-		MetaBlock block = ChestType.get(type);
-		setOrientation(block, dir);
-		boolean success = block.set(editor, pos);
-		
-		if(!success){
-			throw new ChestPlacementException("Failed to place chest in world");
-		}
-		
-		this.chest = (LootableContainerBlockEntity) editor.getBlockEntity(pos);
-		this.inventory = new Inventory(rand, chest);
-		Optional<Identifier> table = Treasure.getTableIdentifier(this.type, diff);
-		
-		if(table.isPresent()) this.setLootTable(table.get(), editor.getSeed(pos));
-		if(Config.ofBoolean(Config.ROGUELIKE_LOOT)) Loot.fillChest(editor, this, rand);
-		
-		return this;
-	}
-	
-	private void setOrientation(MetaBlock block, Cardinal dir) {
+	public void setOrientation(Cardinal dir) {
 		Block b = block.getBlock();
 		
 		if(b == Blocks.CHEST || b == Blocks.TRAPPED_CHEST) {
 			if(Cardinal.directions.contains(dir)) {
-				block.withProperty(HorizontalFacingBlock.FACING, Cardinal.facing(dir).getOpposite());	
+				block.with(HorizontalFacingBlock.FACING, Cardinal.facing(dir).getOpposite());	
 			}
 		}
 		
 		if(b == Blocks.BARREL) {
-			block.withProperty(Properties.FACING, Cardinal.facing(Cardinal.UP));
+			block.with(Properties.FACING, Cardinal.facing(Cardinal.UP));
 		}
 		
 		if(b == Blocks.SHULKER_BOX) {
-			block.withProperty(FacingBlock.FACING, Cardinal.facing(dir));
+			block.with(FacingBlock.FACING, Cardinal.facing(dir));
 		}
 	}
 	

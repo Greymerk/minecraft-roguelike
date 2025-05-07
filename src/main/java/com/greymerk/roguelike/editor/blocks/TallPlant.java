@@ -21,10 +21,10 @@ public enum TallPlant {
 	}
 	
 	public static void generate(IWorldEditor editor, TallPlant type, Coord origin){
-		MetaBlock bottom = new MetaBlock(TallPlant.fromType(type));
-		bottom.withProperty(TallPlantBlock.HALF, DoubleBlockHalf.LOWER);
-		MetaBlock top = new MetaBlock(TallPlant.fromType(type));
-		top.withProperty(TallPlantBlock.HALF, DoubleBlockHalf.UPPER);
+		MetaBlock bottom = MetaBlock.of(TallPlant.fromType(type));
+		bottom.with(TallPlantBlock.HALF, DoubleBlockHalf.LOWER);
+		MetaBlock top = MetaBlock.of(TallPlant.fromType(type));
+		top.with(TallPlantBlock.HALF, DoubleBlockHalf.UPPER);
 		Coord pos = origin.copy();
 		bottom.set(editor, pos);
 		pos.add(Cardinal.UP);

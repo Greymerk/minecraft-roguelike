@@ -1,5 +1,6 @@
 package com.greymerk.roguelike.settings.level;
 
+import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
 import com.greymerk.roguelike.dungeon.room.Room;
 import com.greymerk.roguelike.dungeon.room.RoomProvider;
@@ -33,5 +34,9 @@ public class LevelSettingsDeepslateBrick extends LevelSettingsBase implements IL
 	public String getName() {
 		return LevelSettings.SLATE.name();
 	}
-	
+
+	@Override
+	public Difficulty getDifficulty() {
+		return Difficulty.HARDEST;
+	}
 }

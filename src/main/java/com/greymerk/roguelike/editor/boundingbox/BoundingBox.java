@@ -3,19 +3,36 @@ package com.greymerk.roguelike.editor.boundingbox;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Predicate;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
+import org.jetbrains.annotations.NotNull;
+
+import com.greymerk.roguelike.editor.BlockContext;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.shapes.IShape;
 import com.greymerk.roguelike.editor.shapes.Shape;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.random.Random;
+import net.minecraft.world.chunk.WorldChunk;
 
-public class BoundingBox implements IBounded, IShape{
+public class BoundingBox implements IBounded, IShape, Iterable<Coord>{
 
+	public static Codec<BoundingBox> CODEC = RecordCodecBuilder.create(
+		instance -> instance.group(
+			Coord.CODEC.fieldOf("start").forGetter(bb -> bb.start),
+			Coord.CODEC.fieldOf("end").forGetter(bb -> bb.end)
+		).apply(instance, BoundingBox::new)
+	);
+	
 	private Coord start;
 	private Coord end;
 	
@@ -23,8 +40,21 @@ public class BoundingBox implements IBounded, IShape{
 		return new BoundingBox(origin);
 	}
 	
+	public static BoundingBox of(WorldChunk chunk) {
+		ChunkPos cpos = chunk.getPos();
+		return BoundingBox.of(
+				Coord.of(cpos.getStartX(), chunk.getBottomY(), cpos.getStartZ()),
+				Coord.of(cpos.getEndX(), chunk.getTopY(), cpos.getEndZ())
+				);
+				
+	}
+	
 	public static BoundingBox of(Coord start, Coord end) {
 		return new BoundingBox(start, end);
+	}
+	
+	public static BoundingBox of(IBounded box) {
+		return new BoundingBox(box.getStart(), box.getEnd());
 	}
 	
 	public BoundingBox copy() {
@@ -63,7 +93,7 @@ public class BoundingBox implements IBounded, IShape{
 	
 	public boolean collide(IBounded other){
 		
-		BoundingBox otherBox = other.getBoundingBox();
+		BoundingBox otherBox = BoundingBox.of(other);
 		
 		if(end.getX() < otherBox.start.getX()
 			|| otherBox.end.getX() < start.getX()) return false; 
@@ -102,7 +132,6 @@ public class BoundingBox implements IBounded, IShape{
 	
 	public BoundingBox grow(Iterable<Cardinal> dirs) {
 		return this.grow(dirs, 1);
-		
 	}
 	
 	public BoundingBox grow(Iterable<Cardinal> dirs, int amount) {
@@ -121,6 +150,12 @@ public class BoundingBox implements IBounded, IShape{
 		this.end.add(dir, amount);
 		return this;
 	}
+
+	public BoundingBox add(Coord pos) {
+		this.start.add(pos);
+		this.end.add(pos);
+		return this;
+	}
 	
 	@Override
 	public Coord getStart() {
@@ -130,14 +165,6 @@ public class BoundingBox implements IBounded, IShape{
 	@Override
 	public Coord getEnd() {
 		return end.copy();
-	}
-
-	@Override
-	public NbtCompound getNbt() {
-		NbtCompound nbt = new NbtCompound();
-		nbt.put("start", this.start.getNbt());
-		nbt.put("end", this.end.getNbt());
-		return nbt;
 	}
 
 	@Override
@@ -166,13 +193,13 @@ public class BoundingBox implements IBounded, IShape{
 	}
 	
 	private void correct() {
-		Coord s = new Coord(
+		Coord s = Coord.of(
 				end.getX() < start.getX() ? end.getX() : start.getX(),
 				end.getY() < start.getY() ? end.getY() : start.getY(),
 				end.getZ() < start.getZ() ? end.getZ() : start.getZ()
 				);
 		
-		Coord e = new Coord(
+		Coord e = Coord.of(
 				end.getX() < start.getX() ? start.getX() : end.getX(),
 				end.getY() < start.getY() ? start.getY() : end.getY(),
 				end.getZ() < start.getZ() ? start.getZ() : end.getZ()
@@ -188,19 +215,28 @@ public class BoundingBox implements IBounded, IShape{
 	}
 
 	@Override
-	public void fill(IWorldEditor editor, Random rand, IBlockFactory block) {
+	public void fill(IWorldEditor editor, Random rand, @NotNull IBlockFactory block) {
 		this.getShape(Shape.RECTSOLID).fill(editor, rand, block);
 		
 	}
 
 	@Override
-	public void fill(IWorldEditor editor, Random rand, IBlockFactory block, boolean fillAir, boolean replaceSolid) {
-		this.getShape(Shape.RECTSOLID).fill(editor, rand, block, fillAir, replaceSolid);
+	public void fill(IWorldEditor editor, Random rand, @NotNull IBlockFactory block, Predicate<BlockContext> p) {
+		this.getShape(Shape.RECTSOLID).fill(editor, rand, block, p);
 		
 	}
-
+	
 	@Override
 	public List<Coord> get() {
 		return this.getShape(Shape.RECTSOLID).get();
+	}
+	
+	@Override
+	public String toString() {
+		return List.of(start, end).toString();
+	}
+
+	public Stream<Coord> stream() {
+		return StreamSupport.stream(this.spliterator(), false);
 	}
 }

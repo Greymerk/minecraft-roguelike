@@ -11,7 +11,7 @@ public enum Shape {
 		case RECTSOLID: return new RectSolid(bb);
 		case RECTHOLLOW: return new RectHollow(bb);
 		case RECTPYRAMID: return new RectPyramid(bb);
-		case RECTWIREFRAME: return new RectWireframe(bb);
+		case RECTWIREFRAME: return RectWireframe.of(bb);
 		case SPHERE: return new Sphere(bb);
 		default: return new RectSolid(bb);
 		}

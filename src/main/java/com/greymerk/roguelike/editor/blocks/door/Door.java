@@ -58,7 +58,7 @@ public class Door implements IDoor {
 		door = door.with(DoorBlock.OPEN, open);
 		door = door.with(DoorBlock.HINGE, hingeLeft ? DoorHinge.LEFT : DoorHinge.RIGHT);
 		
-		return new MetaBlock(door);
+		return MetaBlock.of(door);
 	}
 	
 }

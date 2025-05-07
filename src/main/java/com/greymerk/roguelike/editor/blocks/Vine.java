@@ -54,6 +54,6 @@ public class Vine {
 		BooleanProperty facingProperty = VineBlock.getFacingProperty(facing);
 		if(facingProperty == null) return;
 		BlockState vine = (BlockState)Blocks.VINE.getDefaultState().with(facingProperty, true);
-		editor.set(origin, new MetaBlock(vine));
+		editor.set(origin, MetaBlock.of(vine));
 	}
 }
