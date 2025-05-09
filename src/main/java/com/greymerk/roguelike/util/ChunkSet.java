@@ -18,7 +18,7 @@ public class ChunkSet implements Iterable<ChunkPos>{
 		this.chunks = new HashSet<ChunkPos>();
 		
 		ChunkPos center = origin.getChunkPos();
-		BoundingBox.of(new Coord(center.x, 0, center.z)).grow(Cardinal.directions, range >> 4).forEach(pos -> {
+		BoundingBox.of(Coord.of(center.x, 0, center.z)).grow(Cardinal.directions, range >> 4).forEach(pos -> {
 			this.chunks.add(new ChunkPos(pos.getX(), pos.getZ()));
 		});
 	}

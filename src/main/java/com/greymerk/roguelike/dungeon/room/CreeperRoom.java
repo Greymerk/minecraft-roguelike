@@ -5,7 +5,7 @@ import java.util.List;
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
 import com.greymerk.roguelike.dungeon.fragment.parts.Pillar;
-import com.greymerk.roguelike.dungeon.layout.Entrance;
+import com.greymerk.roguelike.dungeon.layout.ExitType;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.Fill;
@@ -36,38 +36,38 @@ public class CreeperRoom extends AbstractMediumRoom implements IRoom {
 		entrances(editor, rand, origin);
 		tnt(editor, rand, origin);
 		chest(editor, rand, origin);
-		Spawner.generate(editor, rand, origin.copy().add(Cardinal.UP, 5), Spawner.CREEPER);
-		
+		Spawner.generate(editor, rand, settings.getDifficulty(), origin.copy().add(Cardinal.UP, 5), Spawner.CREEPER);
 	}
 	
 	private void entrances(IWorldEditor editor, Random rand, Coord origin) {
 		Cardinal.directions.forEach(dir -> {
-			if(this.getEntrance(dir) == Entrance.DOOR) {
+			if(this.getExitType(dir) == ExitType.DOOR) {
 				entry(editor, rand, origin.copy().add(dir, Cell.SIZE).freeze(), dir);
 			} else {
 				BoundingBox.of(origin).add(dir, 5).grow(Cardinal.orthogonal(dir), 3).grow(Cardinal.UP, 3).fill(editor, rand, theme.getPrimary().getWall(), Fill.SOLID);
-				settings.getWallFragment(rand).generate(editor, rand, theme, origin.copy().add(dir, 2), dir);	
+				settings.getWallFragment(rand).generate(editor, rand, settings, origin.copy().add(dir, 2), dir);	
 			}
 		});
 	}
 
 	private void chest(IWorldEditor editor, Random rand, Coord origin) {
-		List<Coord> space = BoundingBox.of(origin).grow(Cardinal.directions, 2).get();
-		RandHelper.shuffle(space, rand);
-		Coord pos = space.getFirst();
-		Treasure.generate(editor, rand, pos, Treasure.ORE, ChestType.TRAPPED_CHEST);
-		MetaBlock.of(Blocks.TNT).set(editor, pos.copy().add(Cardinal.DOWN, 2));
+		BoundingBox.of(origin).grow(Cardinal.directions, 2).get().stream()
+			.sorted(RandHelper.randomizer(rand))
+			.findFirst().ifPresent(pos -> {
+				Treasure.generate(editor, rand, settings.getDifficulty(), pos, Treasure.ORE, ChestType.TRAPPED_CHEST);
+				MetaBlock.of(Blocks.TNT).set(editor, pos.copy().add(Cardinal.DOWN, 2));		
+			});
 	}
 
 	private void tnt(IWorldEditor editor, Random rand, Coord origin) {
 		BlockWeightedRandom floor = new BlockWeightedRandom();
-		floor.addBlock(MetaBlock.of(Blocks.GRAVEL), 2);
-		floor.addBlock(theme.getPrimary().getFloor(), 1);
+		floor.add(MetaBlock.of(Blocks.GRAVEL), 2);
+		floor.add(theme.getPrimary().getFloor(), 1);
 		BoundingBox.of(origin).add(Cardinal.DOWN).grow(Cardinal.directions, 3).fill(editor, rand, floor);
 		
 		BlockWeightedRandom blocks = new BlockWeightedRandom();
-		blocks.addBlock(MetaBlock.of(Blocks.GRAVEL), 3);
-		blocks.addBlock(MetaBlock.of(Blocks.TNT), 1);
+		blocks.add(MetaBlock.of(Blocks.GRAVEL), 3);
+		blocks.add(MetaBlock.of(Blocks.TNT), 1);
 		BoundingBox.of(origin).add(Cardinal.DOWN, 2).grow(Cardinal.DOWN).grow(Cardinal.directions, 3).fill(editor, rand, blocks);
 		
 		BoundingBox.of(origin).add(Cardinal.DOWN, 3).grow(Cardinal.directions, 4).fill(editor, rand, theme.getPrimary().getWall());
@@ -95,7 +95,7 @@ public class CreeperRoom extends AbstractMediumRoom implements IRoom {
 			BoundingBox.of(origin).add(d, 3).add(Cardinal.left(d), 3).grow(Cardinal.UP, 7).fill(editor, rand, theme.getPrimary().getWall());
 		});
 		
-		Fragment.generate(Fragment.ARCH, editor, rand, theme, origin.copy(), dir);
+		Fragment.generate(Fragment.ARCH, editor, rand, settings, origin.copy(), dir);
 	}
 
 	private void pillars(IWorldEditor editor, Random rand, Coord origin) {

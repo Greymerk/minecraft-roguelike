@@ -3,10 +3,10 @@ package com.greymerk.roguelike.dungeon.room;
 import java.util.List;
 
 import com.greymerk.roguelike.dungeon.cell.Cell;
-import com.greymerk.roguelike.dungeon.fragment.Fragment;
+import com.greymerk.roguelike.dungeon.cell.CellManager;
+import com.greymerk.roguelike.dungeon.cell.CellState;
 import com.greymerk.roguelike.dungeon.fragment.parts.CellSupport;
 import com.greymerk.roguelike.dungeon.fragment.parts.Pillar;
-import com.greymerk.roguelike.dungeon.layout.Entrance;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.Fill;
@@ -29,10 +29,10 @@ public class BanquetRoom extends AbstractLargeRoom implements IRoom {
 		clear(editor, rand, origin);
 		ceiling(editor, rand, origin);
 		pillars(editor, rand, origin);
-		decorations(editor, rand, origin);
+		//decorations(editor, rand, origin);
 		tables(editor, rand, origin);
 		supports(editor, rand, origin);
-		
+		this.generateExits(editor, rand);
 	}
 	
 	private void supports(IWorldEditor editor, Random rand, Coord origin) {
@@ -71,16 +71,6 @@ public class BanquetRoom extends AbstractLargeRoom implements IRoom {
 		});
 		BoundingBox.of(origin).add(Cardinal.UP).grow(Cardinal.orthogonal(dir), 3).forEach(pos -> {
 			if(rand.nextBoolean()) Candle.generate(editor, rand, pos);
-		});
-	}
-
-	private void decorations(IWorldEditor editor, Random rand, Coord origin) {
-		Cardinal.directions.forEach(dir -> {
-			Cardinal.orthogonal(dir).forEach(o -> {
-				List.of(6, 12).forEach(step -> {
-					settings.getWallFragment(rand).generate(editor, rand, theme, origin.copy().add(dir, 12).add(o, step), dir);
-				});
-			});
 		});
 	}
 
@@ -133,12 +123,29 @@ public class BanquetRoom extends AbstractLargeRoom implements IRoom {
 			BoundingBox.of(origin).add(dir, 15).grow(Cardinal.DOWN).grow(Cardinal.UP, 4).grow(Cardinal.orthogonal(dir), 15).fill(editor, rand, theme.getPrimary().getWall(), Fill.SOLID);
 		});
 		BoundingBox.of(origin).add(Cardinal.DOWN).grow(Cardinal.directions, 15).fill(editor, rand, theme.getPrimary().getFloor());
-		
-		this.getEntrancesFromType(Entrance.DOOR).forEach(dir -> {
-			Fragment.generate(Fragment.ARCH, editor, rand, theme, origin.copy().add(dir, 12), dir); 
-		});
 	}
 
+	@Override
+	public CellManager getCells(Cardinal dir) {
+		CellManager cells = new CellManager();
+		BoundingBox.of(Coord.ZERO).add(dir, 2)
+			.grow(Cardinal.directions, 2)
+			.forEach(pos -> {
+				cells.add(Cell.of(pos, CellState.OBSTRUCTED, this));
+			});
+		
+		Cardinal.directions.forEach(d -> {
+			BoundingBox.of(Coord.ZERO.add(dir, 2)).add(d, 3)
+				.grow(Cardinal.orthogonal(d), 2)
+				.forEach(pos -> {
+					if(pos.equals(Coord.ZERO.add(Cardinal.reverse(dir), 3))) return;
+					cells.add(Cell.of(pos, CellState.POTENTIAL, this));
+				});
+		});
+		
+		return cells;
+	}
+	
 	@Override
 	public String getName() {
 		return Room.BANQUET.name();

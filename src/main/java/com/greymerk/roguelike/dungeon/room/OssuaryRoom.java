@@ -3,7 +3,7 @@ package com.greymerk.roguelike.dungeon.room;
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
 import com.greymerk.roguelike.dungeon.fragment.parts.CellSupport;
-import com.greymerk.roguelike.dungeon.layout.Entrance;
+import com.greymerk.roguelike.dungeon.layout.ExitType;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.Fill;
@@ -31,7 +31,7 @@ public class OssuaryRoom extends AbstractMediumRoom implements IRoom {
 		this.ceiling(editor, rand, origin);
 		this.skullShelves(editor, rand, origin);
 		for(Cardinal dir : Cardinal.directions) {
-			if(this.entrances.get(dir) == Entrance.DOOR) {
+			if(this.getExitType(dir) == ExitType.DOOR) {
 				this.entry(editor, rand, origin, dir);
 			} else {
 				this.faceWall(editor, rand, origin, dir);
@@ -240,7 +240,7 @@ public class OssuaryRoom extends AbstractMediumRoom implements IRoom {
 		RectSolid.fill(editor, rand, bb, Air.get());
 		
 		Coord door = origin.copy().add(dir, 6);
-		Fragment.generate(Fragment.ARCH, editor, rand, theme, door, dir);
+		Fragment.generate(Fragment.ARCH, editor, rand, settings, door, dir);
 	}
 
 	private void ceiling(IWorldEditor editor, Random rand, Coord origin) {

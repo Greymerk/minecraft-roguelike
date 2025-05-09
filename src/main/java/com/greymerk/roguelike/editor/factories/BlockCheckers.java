@@ -15,6 +15,9 @@ public class BlockCheckers extends BlockBase {
 	private IBlockFactory fillTwo;
 	private Coord offset;
 	
+	public static BlockCheckers of(IBlockFactory fillOne, IBlockFactory fillTwo) {
+		return new BlockCheckers(fillOne, fillTwo);
+	}
 	
 	public BlockCheckers(IBlockFactory fillOne, IBlockFactory fillTwo, Coord offset){
 		this.fillOne = fillOne;

@@ -2,10 +2,8 @@ package com.greymerk.roguelike.dungeon.room;
 
 import java.util.List;
 
-import com.greymerk.roguelike.dungeon.fragment.Fragment;
 import com.greymerk.roguelike.dungeon.fragment.parts.CellSupport;
 import com.greymerk.roguelike.dungeon.fragment.parts.Pillar;
-import com.greymerk.roguelike.dungeon.layout.Entrance;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.Fill;
@@ -26,8 +24,8 @@ public class Corridor extends AbstractRoom implements IRoom{
 		Coord origin = this.getWorldPos();
 		clear(editor, rand, origin);
 		cell(editor, rand, origin);
-		decorations(editor, rand, origin);
 		CellSupport.generate(editor, rand, theme, origin);
+		this.generateExits(editor, rand);
 	}
 	
 	private void cell(IWorldEditor editor, Random rand, Coord origin) {
@@ -48,18 +46,6 @@ public class Corridor extends AbstractRoom implements IRoom{
 			BoundingBox.of(origin).add(dir, 3).grow(Cardinal.orthogonal(dir), 2).grow(Cardinal.UP, 3)
 				.fill(editor, rand, theme.getPrimary().getWall(), Fill.SOLID);
 		});
-	}
-
-	private void decorations(IWorldEditor editor, Random rand, Coord origin) {
-		for(Cardinal dir : Cardinal.directions) {
-			if(this.getEntrance(dir) == Entrance.DOOR) {
-				Fragment.generate(Fragment.ARCH, editor, rand, theme, worldPos.copy(), dir);
-			} else if(this.getEntrance(dir) == Entrance.ALCOVE){
-				this.settings.getAlcove(rand).generate(editor, rand, theme, worldPos.copy(), dir);
-			} else {
-				this.settings.getWallFragment(rand).generate(editor, rand, theme, worldPos.copy(), dir);
-			}
-		}
 	}
 
 	@Override

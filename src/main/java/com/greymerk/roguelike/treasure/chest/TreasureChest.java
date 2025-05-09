@@ -17,6 +17,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FacingBlock;
 import net.minecraft.block.HorizontalFacingBlock;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.LootableContainerBlockEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootTable;
@@ -32,13 +33,13 @@ public class TreasureChest implements ITreasureChest{
 	private Difficulty diff;
 	private MetaBlock block;
 	
-	public static Optional<ITreasureChest> generate(IWorldEditor editor, Random rand, Coord pos, Treasure type, ChestType block) {
-		Optional<ITreasureChest> chest = new TreasureChest(type, block, pos).set(editor, rand, pos);
+	public static Optional<ITreasureChest> generate(IWorldEditor editor, Random rand, Difficulty diff, Coord pos, Treasure type, ChestType block) {
+		Optional<ITreasureChest> chest = new TreasureChest(type, block, diff, pos).set(editor, rand, pos);
 		return chest;
 	}
 	
-	public static Optional<ITreasureChest> generate(IWorldEditor editor, Random rand, Coord pos, Cardinal dir, Treasure type, ChestType block){
-		Optional<ITreasureChest> chest = new TreasureChest(type, block, pos).set(editor, rand, pos, dir);
+	public static Optional<ITreasureChest> generate(IWorldEditor editor, Random rand, Difficulty diff, Coord pos, Cardinal dir, Treasure type, ChestType block){
+		Optional<ITreasureChest> chest = new TreasureChest(type, block, diff, pos).set(editor, rand, pos, dir);
 		return chest;
 	}
 	
@@ -46,10 +47,10 @@ public class TreasureChest implements ITreasureChest{
 		return this.set(editor, rand, pos, this.findOrientation(editor, rand, pos));
 	}
 	
-	private TreasureChest(Treasure type, ChestType block, Coord pos){
+	private TreasureChest(Treasure type, ChestType block, Difficulty diff, Coord pos){
 		this.type = type;
 		this.block = ChestType.get(block);
-		this.diff = Difficulty.fromY(pos.getY());
+		this.diff = diff;
 	}
 	
 	private Optional<ITreasureChest> set(IWorldEditor editor, Random rand, Coord pos, Cardinal dir) {
@@ -58,7 +59,13 @@ public class TreasureChest implements ITreasureChest{
 			return Optional.empty();
 		}
 		
-		this.chest = (LootableContainerBlockEntity) editor.getBlockEntity(pos);
+		Optional<BlockEntity> obe = editor.getBlockEntity(pos);
+		if(obe.isEmpty()) return Optional.empty();
+		
+		BlockEntity be = obe.get();
+		if(!(be instanceof LootableContainerBlockEntity)) return Optional.empty();
+		
+		this.chest = (LootableContainerBlockEntity) be;
 		this.inventory = new Inventory(rand, chest);
 		
 		Optional<RegistryKey<LootTable>> maybeTable = Treasure.getLootTable(type, diff);
@@ -131,4 +138,5 @@ public class TreasureChest implements ITreasureChest{
 	public void setLootTable(RegistryKey<LootTable> key, long seed) {
 		this.chest.setLootTable(key, seed);
 	}
+
 }

@@ -1,54 +1,55 @@
 package com.greymerk.roguelike.editor;
 
-import java.nio.file.Path;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Predicate;
-
-import com.greymerk.roguelike.state.RoguelikeState;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.FallingBlock;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.registry.DynamicRegistryManager;
-import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.resource.featuretoggle.FeatureSet;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.structure.StructureSet;
-import net.minecraft.util.WorldSavePath;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.CheckedRandom;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.world.GameRules;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkStatus;
-import net.minecraft.world.dimension.DimensionTypes;
-import net.minecraft.world.gen.chunk.placement.StructurePlacement;
-import net.minecraft.world.gen.chunk.placement.StructurePlacementCalculator;
 
 public class WorldEditor implements IWorldEditor{
 
-	WorldAccess world;
 	RegistryKey<World> worldKey;
+	WorldAccess world;
+	private IWorldInfo worldInfo;
 	
-	public WorldEditor(StructureWorldAccess world, RegistryKey<World> worldKey){
-		this.world = world;
-		this.worldKey = worldKey;
+	public static WorldEditor of(World world) {
+		return new WorldEditor(world);
 	}
-
-	public WorldEditor(World world) {
+	
+	public WorldEditor(ServerWorld world) {
 		this.world = world;
 		this.worldKey = world.getRegistryKey();
+		this.worldInfo = WorldInfo.of(this.world, worldKey);
+		
+	}
+	
+	public WorldEditor(StructureWorldAccess world, RegistryKey<World> key) {
+		this.world = world;
+		this.worldKey = key;
+		this.worldInfo = WorldInfo.of(this.world, worldKey);
+	}
+
+	private WorldEditor(World world) {
+		this.world = world;
+		this.worldKey = world.getRegistryKey();
+		this.worldInfo = WorldInfo.of(world, worldKey);
 	}
 
 	@Override
@@ -73,17 +74,11 @@ public class WorldEditor implements IWorldEditor{
 	public boolean isAir(Coord pos) {
 		return this.world.isAir(pos.getBlockPos());
 	}
-	
-	@Override
-	public long getSeed() {
-		MinecraftServer server = this.world.getServer();
-		ServerWorld sw = server.getOverworld();
-		return sw.getSeed();
-	}
+
 	
 	@Override
 	public long getSeed(Coord pos) {
-		return Objects.hash(getSeed(), pos.hashCode());
+		return Objects.hash(this.worldInfo.getSeed(), pos.hashCode());
 	}
 	
 	@Override
@@ -114,23 +109,6 @@ public class WorldEditor implements IWorldEditor{
 	}
 
 	@Override
-	public Coord findSurface(Coord pos) {
-		
-		Coord cursor = new Coord(pos.getX(), world.getTopY(), pos.getZ());
-		
-		while(cursor.getY() > 60) {
-			MetaBlock m = this.getBlock(cursor);
-			if(m.getState().isIn(BlockTags.LOGS)) continue;
-			if(m.getState().isIn(BlockTags.LEAVES)) continue;
-			
-			if(!this.isAir(cursor) && !m.isPlant()) return cursor;
-			cursor.add(Cardinal.DOWN);
-		}
-		
-		return cursor;
-	}
-	
-	@Override
 	public boolean isSolid(Coord pos) {
 		return this.world.getBlockState(pos.getBlockPos()).isSolidBlock(world, pos.getBlockPos());
 	}
@@ -147,22 +125,17 @@ public class WorldEditor implements IWorldEditor{
 		if(!FallingBlock.canFallThrough(world.getBlockState(under.getBlockPos()))) return true;
 		return false;
 	}
-	
-	@Override
-	public boolean isOverworld() {
-		MinecraftServer mcServer = world.getServer();
-		ServerWorld sw = mcServer.getWorld(worldKey);
-		return sw.getDimensionEntry().matchesKey(DimensionTypes.OVERWORLD);
-	}
 
 	@Override
 	public boolean hasBlockEntity(Coord pos) {
-		return this.getBlockEntity(pos) != null;
+		return this.world.getBlockEntity(pos.getBlockPos()) != null;
 	}
 	
 	@Override
-	public BlockEntity getBlockEntity(Coord pos) {
-		return world.getBlockEntity(pos.getBlockPos());
+	public Optional<BlockEntity> getBlockEntity(Coord pos) {
+		BlockEntity be = world.getBlockEntity(pos.getBlockPos());
+		if(be == null) return Optional.empty();
+		return Optional.of(be);
 	}
 	
 	@Override
@@ -177,45 +150,38 @@ public class WorldEditor implements IWorldEditor{
 	}
 	
 	@Override
-	public DynamicRegistryManager getRegistryManager() {
-		return this.world.getRegistryManager();
+	public Coord findSurface(Coord pos) {
+
+		Coord cursor = pos.withY(world.getTopY());
+		int seaLevel = this.worldInfo.getSeaLevel();
+
+		while(cursor.getY() > seaLevel - 3) {
+			MetaBlock m = this.getBlock(cursor);
+			if(m.isIn(List.of(BlockTags.LOGS, BlockTags.LEAVES))) {
+				cursor.add(Cardinal.DOWN);
+				continue;
+			}
+			
+			if(!world.isAir(cursor.getBlockPos()) && !m.isPlant()) return cursor;
+			cursor.add(Cardinal.DOWN);
+		}
+		
+		return cursor;
 	}
-	
+
 	@Override
-	public FeatureSet getFeatureSet() {
-		return this.world.getEnabledFeatures();
-	}
-	
-	@Override
-	public Path getWorldDirectory() {
-		return this.world.getServer().getSavePath(WorldSavePath.ROOT);
-	}
-	
-	@Override
-	public GameRules getGameRules() {
-		return world.getServer().getGameRules();
+	public int getDungeonEntryDepth(Coord origin) {
+		Coord surface = this.findSurface(origin);
+		return (surface.getY() - Math.floorMod(surface.getY(), 10)) - 10;
 	}
 	
 	@Override
 	public RegistryKey<World> getRegistryKey(){
 		return this.worldKey;
 	}
-	
+
 	@Override
-	public RoguelikeState getState() {
-		return RoguelikeState.getServerState(worldKey, world.getServer());
-	}
-	
-	public Optional<Coord> getStructureLocation(RegistryKey<StructureSet> key, ChunkPos cpos){
-		MinecraftServer mcServer = world.getServer();
-		ServerWorld sw = mcServer.getWorld(worldKey);
-		StructurePlacementCalculator calculator = sw.getChunkManager().getStructurePlacementCalculator();
-		DynamicRegistryManager reg = world.getRegistryManager();
-		Registry<StructureSet> structures = reg.get(RegistryKeys.STRUCTURE_SET);
-		StructureSet structure = structures.get(key);
-		StructurePlacement placement = structure.placement(); 
-		
-		if(!placement.shouldGenerate(calculator, cpos.x, cpos.z)) return Optional.empty();
-		return Optional.of(Coord.of(placement.getLocatePos(cpos)));
+	public IWorldInfo getInfo() {
+		return this.worldInfo;
 	}
 }

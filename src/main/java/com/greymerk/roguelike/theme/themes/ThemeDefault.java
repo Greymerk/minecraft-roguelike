@@ -1,20 +1,23 @@
 package com.greymerk.roguelike.theme.themes;
 
-import com.greymerk.roguelike.editor.blocks.BlockType;
+import com.greymerk.roguelike.editor.MetaBlock;
 import com.greymerk.roguelike.editor.blocks.stair.Stair;
 import com.greymerk.roguelike.theme.BlockSet;
 import com.greymerk.roguelike.theme.ITheme;
 import com.greymerk.roguelike.theme.Theme;
 import com.greymerk.roguelike.theme.ThemeBase;
 
+import net.minecraft.block.Blocks;
+
 public class ThemeDefault extends ThemeBase implements ITheme {
 
 	public ThemeDefault() {
 		
-		this.primary = new BlockSet()
-				.setWall(BlockType.get(BlockType.STONE_BRICK))
-				.setStair(Stair.of(Stair.STONEBRICK))
-				.setPillar(BlockType.get(BlockType.ANDESITE_POLISHED));
+		this.primary = BlockSet.builder()
+				.walls(MetaBlock.of(Blocks.STONE_BRICKS))
+				.stair(Stair.of(Stair.STONEBRICK))
+				.pillar(MetaBlock.of(Blocks.POLISHED_ANDESITE))
+				.build();
 		this.secondary = this.primary;
 	}
 	

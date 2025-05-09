@@ -27,7 +27,9 @@ public class MetaEntity implements IEntity {
 	@Override
 	public void setSlot(EquipmentSlot slot, ItemStack item) {
 		mob.equipStack(slot, item);
-		if(!Config.ofBoolean(Config.MOB_DROPS)) {
+		if(Config.ofBoolean(Config.MOB_DROPS)) {
+			mob.setEquipmentDropChance(slot, 0.085f);
+		} else {
 			mob.setEquipmentDropChance(slot, 0);
 		}
 	}

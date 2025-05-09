@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.StreamSupport;
 
 import com.greymerk.roguelike.editor.BlockContext;
 import com.greymerk.roguelike.editor.Cardinal;
@@ -16,7 +17,7 @@ import net.minecraft.util.math.random.Random;
 
 public class Column implements IShape {
 
-	Coord top;
+	private Coord top;
 	
 	public Column(Coord top) {
 		this.top = top.copy();
@@ -45,9 +46,7 @@ public class Column implements IShape {
 	
 	@Override
 	public List<Coord> get() {
-		List<Coord> cl = new ArrayList<Coord>();
-		this.forEach(c -> cl.add(c));
-		return cl;
+		return StreamSupport.stream(this.spliterator(), false).toList();
 	}
 	
 	public void fillDown(IWorldEditor editor, Random rand, IBlockFactory blocks) {
@@ -98,7 +97,7 @@ public class Column implements IShape {
 		@Override
 		public boolean hasNext() {
 			if(editor.isSolid(this.current)) return false;
-			return current.getY() > MAX_DEPTH;
+			return current.getY() > editor.getInfo().getBottomY();
 		}
 	}
 

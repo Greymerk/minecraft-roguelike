@@ -1,5 +1,6 @@
 package com.greymerk.roguelike.settings.level;
 
+import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
 import com.greymerk.roguelike.dungeon.room.Room;
 import com.greymerk.roguelike.dungeon.room.RoomProvider;
@@ -30,7 +31,7 @@ public class LevelSettingsOak extends LevelSettingsBase implements ILevelSetting
 		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_BANNER, 1));
 		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_FOOD_BARREL, 1));
 		this.walls.add(new WeightedChoice<Fragment>(Fragment.WALL_DECORATED_POT, 1));
-		
+
 	}
 
 	@Override
@@ -38,4 +39,9 @@ public class LevelSettingsOak extends LevelSettingsBase implements ILevelSetting
 		return LevelSettings.OAK.name();
 	}
 
+	@Override
+	public Difficulty getDifficulty() {
+		return Difficulty.EASIEST;
+	}
+	
 }

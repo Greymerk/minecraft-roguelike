@@ -2,6 +2,7 @@ package com.greymerk.roguelike.dungeon;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
@@ -15,9 +16,11 @@ public class DungeonPlacement {
 
 	public static boolean validChunkPos(IWorldEditor editor, ChunkPos cpos) {
 		
-		int range = 10;
-		ChunkPos start = new ChunkPos(cpos.x - range, cpos.z - range);
-		ChunkPos end = new ChunkPos(cpos.x + range, cpos.z + range);
+		final int RANGE = 10;
+		final int VALID_DISTANCE_TO_VILLAGE = 6;
+		
+		ChunkPos start = new ChunkPos(cpos.x - RANGE, cpos.z - RANGE);
+		ChunkPos end = new ChunkPos(cpos.x + RANGE, cpos.z + RANGE);
 		List<ChunkPos> chunks = new ArrayList<ChunkPos>();
 		for(int x = start.x; x < end.x; ++x) {
 			for(int z = start.z; z < end.z; ++z) {
@@ -25,18 +28,20 @@ public class DungeonPlacement {
 			}
 		}
 		
-		ChunkPos villageChunk = findVillage(editor, chunks); 
-		if(villageChunk == null) return false;
+		Optional<ChunkPos> ovc = findVillage(editor, chunks); 
+		if(ovc.isEmpty()) return false;
+		ChunkPos villageChunk = ovc.get();
+		
 		Coord village = Coord.of(villageChunk.getCenterAtY(0));
 		Random rand = editor.getRandom(village);
 		
-		Coord chunkFrom = new Coord(cpos.x, 0, cpos.z);
-		Coord chunkVillage = new Coord(villageChunk.x, 0, villageChunk.z);
+		Coord chunkFrom = Coord.of(cpos.x, 0, cpos.z);
+		Coord chunkVillage = Coord.of(villageChunk.x, 0, villageChunk.z);
 		
 		int chunkDist = chunkFrom.manhattanDistance(chunkVillage);
-		if(chunkDist != 6) return false;
+		if(chunkDist != VALID_DISTANCE_TO_VILLAGE) return false;
 
-		Coord dirToDungeon = new Coord(
+		Coord dirToDungeon = Coord.of(
 				rand.nextBetween(-100, 100),
 				0,
 				rand.nextBetween(-100, 100));
@@ -54,15 +59,16 @@ public class DungeonPlacement {
 		
 	}
 	
-	public static ChunkPos findVillage(IWorldEditor editor, List<ChunkPos> chunks) {
+	public static Optional<ChunkPos> findVillage(IWorldEditor editor, List<ChunkPos> chunks) {
 		for(ChunkPos cpos : chunks) {
 			if(StructureLocator.hasVillage(editor, cpos)) {
-				return cpos;
+				return Optional.of(cpos);
 			}
 		}
-		return null;
+		return Optional.empty();
 	}
 	
+	@Deprecated
 	public static boolean hasVillage(long seed, ChunkPos cpos) {
 		int chunkX = cpos.x;
 		int chunkZ = cpos.z;

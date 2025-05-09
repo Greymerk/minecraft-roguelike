@@ -105,14 +105,15 @@ public class RogueTower implements ITower{
 				stair.setOrientation(o, true).set(editor, rand, origin.copy().add(dir, 4).add(o, 3).add(Cardinal.UP, 4));
 			}
 			
-			//beard
+			//beard wall
 			BoundingBox.of(origin.copy().add(Cardinal.DOWN).add(dir, 3).add(Cardinal.left(dir), 3),
 				dungeon.copy().add(dir, 3).add(Cardinal.left(dir), 3))
-				.fill(editor, rand, walls, Fill.AIR);
-				
+				.fill(editor, rand, walls, Fill.AIR.or(Fill.LIQUID));
+			
+			//beard corner column
 			BoundingBox.of(origin.copy().add(Cardinal.DOWN),
 				dungeon.copy().add(Cardinal.UP, 4)).add(dir, 4).grow(Cardinal.orthogonal(dir), 3)
-				.fill(editor, rand, walls, Fill.AIR);
+				.fill(editor, rand, walls, Fill.AIR.or(Fill.LIQUID));
 		}
 		
 		//stairway

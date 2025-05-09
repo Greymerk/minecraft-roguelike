@@ -62,4 +62,34 @@ public enum Theme {
 		return Theme.getTheme(Theme.values()[rand.nextInt(Theme.values().length)]);
 	}
 	
+	public static ITheme of(BlockSet primary, BlockSet secondary) {
+		return new ThemeCustom(primary, secondary);
+	}
+	
+	private static class ThemeCustom implements ITheme {
+
+		BlockSet primary;
+		BlockSet secondary;
+		
+		public ThemeCustom(BlockSet primary, BlockSet secondary) {
+			this.primary = primary;
+			this.secondary = secondary;
+		}
+		
+		@Override
+		public IBlockSet getPrimary() {
+			return this.primary;
+		}
+
+		@Override
+		public IBlockSet getSecondary() {
+			return this.secondary;
+		}
+
+		@Override
+		public String getName() {
+			return "custom";
+		}
+		
+	}
 }

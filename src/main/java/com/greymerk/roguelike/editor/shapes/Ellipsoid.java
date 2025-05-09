@@ -1,9 +1,9 @@
 package com.greymerk.roguelike.editor.shapes;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.StreamSupport;
 
 import com.greymerk.roguelike.editor.BlockContext;
 import com.greymerk.roguelike.editor.Cardinal;
@@ -43,11 +43,7 @@ public class Ellipsoid implements IShape {
 	
 	@Override
 	public List<Coord> get() {
-		List<Coord> copy = new ArrayList<Coord>();
-		for(Coord pos : this){
-			copy.add(pos);
-		}
-		return copy;
+		return StreamSupport.stream(this.spliterator(), false).toList();
 	}
 
 	private class EllipsoidIterator implements Iterator<Coord>{
@@ -65,9 +61,9 @@ public class Ellipsoid implements IShape {
 			Coord e = end.copy();
 			
 			this.diff = e.sub(s);
-			this.diff = new Coord(Math.abs(diff.getX()), Math.abs(diff.getY()), Math.abs(diff.getZ()));
+			this.diff = Coord.of(Math.abs(diff.getX()), Math.abs(diff.getY()), Math.abs(diff.getZ()));
 			
-			cursor = new Coord(0,0,0);
+			cursor = Coord.ZERO;
 			top = true;
 			this.dir = Cardinal.NORTH;
 		}
@@ -104,7 +100,7 @@ public class Ellipsoid implements IShape {
 				top = true;
 				return toReturn;
 			} else {
-				cursor = new Coord(cursor.getX(), cursor.getY(), 0);
+				cursor = Coord.of(cursor.getX(), cursor.getY(), 0);
 			}
 			
 			cursor.add(Cardinal.EAST);
@@ -114,7 +110,7 @@ public class Ellipsoid implements IShape {
 				top = true;
 				return toReturn;
 			} else {
-				cursor = new Coord(0, cursor.getY(), cursor.getZ());
+				cursor = Coord.of(0, cursor.getY(), cursor.getZ());
 			}
 			
 			cursor.add(Cardinal.UP);

@@ -1,22 +1,19 @@
 package com.greymerk.roguelike.settings.dungeon;
 
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
-import com.greymerk.roguelike.settings.DungeonSettingsBase;
 import com.greymerk.roguelike.settings.IDungeonSettings;
+import com.greymerk.roguelike.settings.ILevelSettings;
 import com.greymerk.roguelike.settings.LevelSettings;
 
-public class DungeonSettingsRandom extends DungeonSettingsBase implements IDungeonSettings{
-	public DungeonSettingsRandom() {
-		super();
-		
-		IntStream.rangeClosed(0, 11).boxed().collect(Collectors.toList()).forEach(i -> {
-			this.set(i, LevelSettings.RANDOM);
-		});	
-	}
+public class DungeonSettingsRandom implements IDungeonSettings{
 	
-	private void set(Integer key, LevelSettings value) {
-		this.levelSettings.put(key, LevelSettings.fromType(value));
+	@Override
+	public ILevelSettings getLevel(int y) {
+		return LevelSettings.fromType(LevelSettings.RANDOM);
+	}
+
+	@Override
+	public LevelSettings getSettings(int y) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -1,5 +1,6 @@
 package com.greymerk.roguelike.settings.level;
 
+import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
 import com.greymerk.roguelike.dungeon.room.Room;
 import com.greymerk.roguelike.dungeon.room.RoomProvider;
@@ -32,5 +33,9 @@ public class LevelSettingsNether extends LevelSettingsBase implements ILevelSett
 	public String getName() {
 		return LevelSettings.NETHER.name();
 	}
-	
+
+	@Override
+	public Difficulty getDifficulty() {
+		return Difficulty.HARDEST;
+	}
 }

@@ -1,5 +1,7 @@
 package com.greymerk.roguelike.editor.blocks;
 
+import java.util.List;
+
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.MetaBlock;
 import com.greymerk.roguelike.editor.factories.BlockJumble;
@@ -27,23 +29,12 @@ public enum SilverfishBlock {
 		}
 	}
 	
-	public static IBlockFactory getJumble(){
-		
-		BlockJumble jumble = new BlockJumble();
-		
-		SilverfishBlock[] types = new SilverfishBlock[]{
-				COBBLE,
-				STONEBRICK,
-				STONEBRICK_MOSSY,
-				STONEBRICK_CRACKED
-		};
-		
-		for(SilverfishBlock type : types){
-			jumble.addBlock(get(type));	
-		}		
-		
-		return jumble;
-		
+	public static IBlockFactory getJumble(){	
+		return BlockJumble.of(List.of(
+			get(COBBLE),
+			get(STONEBRICK),
+			get(STONEBRICK_MOSSY),
+			get(STONEBRICK_CRACKED)
+		));
 	}
-	
 }

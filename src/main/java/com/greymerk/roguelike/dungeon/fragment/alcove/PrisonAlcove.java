@@ -13,6 +13,7 @@ import com.greymerk.roguelike.editor.blocks.Air;
 import com.greymerk.roguelike.editor.blocks.IronBar;
 import com.greymerk.roguelike.editor.blocks.stair.IStair;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
+import com.greymerk.roguelike.settings.ILevelSettings;
 import com.greymerk.roguelike.theme.ITheme;
 
 import net.minecraft.util.math.random.Random;
@@ -20,18 +21,21 @@ import net.minecraft.util.math.random.Random;
 public class PrisonAlcove implements IFragment {
 
 	@Override
-	public void generate(IWorldEditor editor, Random rand, ITheme theme, Coord origin, Cardinal dir) {
+	public void generate(IWorldEditor editor, Random rand, ILevelSettings settings, Coord origin, Cardinal dir) {
+		ITheme theme = settings.getTheme();
 		
 		BoundingBox.of(origin).add(dir, 3).add(Cardinal.DOWN).grow(Cardinal.orthogonal(dir)).fill(editor, rand, theme.getPrimary().getFloor());
 		
-		cell(editor, rand, theme, origin.copy().add(dir, Cell.SIZE).freeze());
+		Coord cellPos = origin.copy().add(dir, Cell.SIZE).freeze();
+		
+		cell(editor, rand, theme, cellPos);
 
 		Cardinal.directions.forEach(d -> {
 			if(d != Cardinal.reverse(dir) && rand.nextInt(5) == 0) {
 				if(rand.nextBoolean()) {
-					Fragment.generate(Fragment.WALL_SPAWNER, editor, rand, theme, origin.copy().add(dir, Cell.SIZE), d);	
+					Fragment.generate(Fragment.WALL_SPAWNER, editor, rand, settings, cellPos, d);	
 				} else {
-					Fragment.generate(Fragment.WALL_CHEST, editor, rand, theme, origin.copy().add(dir, Cell.SIZE), d);
+					Fragment.generate(Fragment.WALL_CHEST, editor, rand, settings, cellPos, d);
 				}
 			}
 		});

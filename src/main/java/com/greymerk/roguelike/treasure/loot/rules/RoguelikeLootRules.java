@@ -21,7 +21,7 @@ public class RoguelikeLootRules {
 		lootRules.add(Treasure.STARTER, loot.get(Loot.FOOD, Difficulty.EASIEST),  Difficulty.EASIEST, 2);
 		lootRules.add(Treasure.STARTER, loot.get(Loot.TOOL, Difficulty.EASIEST),  Difficulty.EASIEST, 2);
 		lootRules.add(Treasure.STARTER, loot.get(Loot.SUPPLY, Difficulty.EASIEST),  Difficulty.EASIEST, 2);
-		lootRules.add(Treasure.STARTER, new ItemSpecialty(editor.getRegistryManager(), 0, Difficulty.EASIEST, Equipment.LEGS, Quality.WOOD), Difficulty.EASIEST, 2);
+		lootRules.add(Treasure.STARTER, new ItemSpecialty(editor.getInfo().getRegistryManager(), 0, Difficulty.EASIEST, Equipment.LEGS, Quality.WOOD), Difficulty.EASIEST, 2);
 		List.of(Difficulty.values()).forEach(difficulty -> {
 			lootRules.add(Treasure.ARMOR, loot.get(Loot.POTION, difficulty),  difficulty, 1);
 			lootRules.add(Treasure.ARMOR, loot.get(Loot.ARMOUR, difficulty),  difficulty, 1);
@@ -32,7 +32,7 @@ public class RoguelikeLootRules {
 			lootRules.add(Treasure.WEAPON, loot.get(Loot.FOOD, difficulty),  difficulty, 1);
 			lootRules.add(Treasure.WEAPON, loot.get(Loot.BLOCK, difficulty),  difficulty, 1);
 			lootRules.add(Treasure.BLOCK, loot.get(Loot.BLOCK, difficulty),  difficulty, 8);
-			lootRules.add(Treasure.FOOD, loot.get(Loot.FOOD, difficulty),  difficulty, 4);
+			lootRules.add(Treasure.FOOD, loot.get(Loot.FOOD, difficulty),  difficulty, 5);
 			lootRules.add(Treasure.ORE, loot.get(Loot.ORE, difficulty),  difficulty, 5);
 			lootRules.add(Treasure.ORE, loot.get(Loot.TOOL, difficulty),  difficulty, 1);
 			lootRules.add(Treasure.BREWING, loot.get(Loot.BREWING, difficulty),  difficulty, 8);
@@ -41,7 +41,7 @@ public class RoguelikeLootRules {
 			lootRules.add(Treasure.TOOL, loot.get(Loot.BLOCK, difficulty),  difficulty, 2);
 			lootRules.add(Treasure.SUPPLY, loot.get(Loot.SUPPLY, difficulty),  difficulty, 4);
 			lootRules.add(Treasure.SUPPLY, loot.get(Loot.BLOCK, difficulty),  difficulty, 2);
-			lootRules.add(Treasure.SUPPLY, loot.get(Loot.FOOD, difficulty),  difficulty, 2);
+			lootRules.add(Treasure.SUPPLY, loot.get(Loot.FOOD, difficulty),  difficulty, 1);
 			lootRules.add(Treasure.SUPPLY, loot.get(Loot.ORE, difficulty),  difficulty, 1);
 			lootRules.add(Treasure.SUPPLY, loot.get(Loot.BREWING, difficulty),  difficulty, 1);
 			lootRules.add(Treasure.MUSIC, loot.get(Loot.MUSIC, difficulty),  difficulty, 1);

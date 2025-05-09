@@ -59,8 +59,8 @@ public enum Loot {
 	}
 	
 	public static IWeighted<ItemStack> getProvider(Loot type, Difficulty diff, IWorldEditor editor){
-		FeatureSet features = editor.getFeatureSet();
-		DynamicRegistryManager reg = editor.getRegistryManager();
+		FeatureSet features = editor.getInfo().getFeatureSet();
+		DynamicRegistryManager reg = editor.getInfo().getRegistryManager();
 		
 		switch(type){
 		case WEAPON: return new ItemWeapon(reg, features, 0, diff);

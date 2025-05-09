@@ -14,16 +14,14 @@ import net.minecraft.util.math.ChunkPos;
 
 public class StructureLocator {
 
-	public static List<RegistryKey<StructureSet>> UNDERGROUND = List.of(
-			StructureSetKeys.ANCIENT_CITIES,
-			StructureSetKeys.TRIAL_CHAMBERS);
+	public static List<RegistryKey<StructureSet>> UNDERGROUND = List.of(StructureSetKeys.TRIAL_CHAMBERS);
 	
 	public static boolean hasVillage(IWorldEditor editor, ChunkPos cpos) {
 		return hasStructure(editor, StructureSetKeys.VILLAGES, cpos);
 	}
 	
 	public static boolean hasStructure(IWorldEditor editor, RegistryKey<StructureSet> type, ChunkPos cpos) {
-		return editor.getStructureLocation(type, cpos).isPresent();
+		return editor.getInfo().getStructureLocation(type, cpos).isPresent();
 	}
 	
 	public static Set<Coord> scan(IWorldEditor editor, Coord origin, List<RegistryKey<StructureSet>> types, int range){
@@ -32,7 +30,7 @@ public class StructureLocator {
 		ChunkSet chunks = new ChunkSet(origin, range);
 		chunks.forEach(cpos -> {
 			types.forEach(type -> {
-				editor.getStructureLocation(type, cpos).ifPresent(pos -> {
+				editor.getInfo().getStructureLocation(type, cpos).ifPresent(pos -> {
 					locations.add(pos);
 				});
 			});

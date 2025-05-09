@@ -3,10 +3,8 @@ package com.greymerk.roguelike.dungeon.room;
 import java.util.List;
 
 import com.greymerk.roguelike.dungeon.cell.Cell;
-import com.greymerk.roguelike.dungeon.fragment.Fragment;
 import com.greymerk.roguelike.dungeon.fragment.parts.CellSupport;
 import com.greymerk.roguelike.dungeon.fragment.parts.Pillar;
-import com.greymerk.roguelike.dungeon.layout.Entrance;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.Fill;
@@ -35,21 +33,21 @@ public class LibraryRoom extends AbstractLargeRoom implements IRoom {
 		Coord origin = this.getWorldPos().add(this.direction, Cell.SIZE * 2).freeze();
 		Random rand = editor.getRandom(origin);
 		this.clear(editor, rand, origin);
-		this.entries(editor, rand, origin);
 		this.floor(editor, rand, origin);
 		this.ceiling(editor, rand, origin);
 		this.walls(editor, rand, origin);
 		this.decorations(editor, rand, origin);
 		this.supports(editor, rand, origin);
+		this.generateExits(editor, rand);
 	}
 
 	private void decorations(IWorldEditor editor, Random rand, Coord origin) {
 		Cardinal.directions.forEach(dir -> {
 			Cardinal.orthogonal(dir).forEach(o -> {
-				BookShelf.set(editor, rand, origin.add(dir, 5).add(o, 8).add(Cardinal.UP), Cardinal.reverse(o));
-				settings.getWallFragment(rand).generate(editor, rand, theme, origin.add(dir, 12).add(o, 6), dir);
-				settings.getWallFragment(rand).generate(editor, rand, theme, origin.add(dir, 12).add(o, 6), Cardinal.reverse(dir));
-				settings.getWallFragment(rand).generate(editor, rand, theme, origin.add(dir, 12).add(o, 12), dir);
+				BookShelf.set(editor, rand, settings.getDifficulty(), origin.add(dir, 5).add(o, 8).add(Cardinal.UP), Cardinal.reverse(o));
+				settings.getWallFragment(rand).generate(editor, rand, settings, origin.add(dir, 12).add(o, 6), dir);
+				settings.getWallFragment(rand).generate(editor, rand, settings, origin.add(dir, 12).add(o, 6), Cardinal.reverse(dir));
+				settings.getWallFragment(rand).generate(editor, rand, settings, origin.add(dir, 12).add(o, 12), dir);
 			});
 		});
 		
@@ -125,12 +123,6 @@ public class LibraryRoom extends AbstractLargeRoom implements IRoom {
 		});
 		
 		BoundingBox.of(origin).add(Cardinal.UP, 7).grow(Cardinal.directions, 14).fill(editor, rand, theme.getPrimary().getWall(), Fill.SOLID);
-	}
-
-	private void entries(IWorldEditor editor, Random rand, Coord origin) {
-		this.getEntrancesFromType(Entrance.DOOR).forEach(dir -> {
-			Fragment.generate(Fragment.ARCH, editor, rand, theme, origin.add(dir, 12),  dir);
-		});
 	}
 
 	private void floor(IWorldEditor editor, Random rand, Coord origin) {

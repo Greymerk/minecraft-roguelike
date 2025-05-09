@@ -11,7 +11,12 @@ import net.minecraft.util.math.random.Random;
 
 public enum PotionItem {
 	
-	HEALING, HARM, REGEN, POISON, STRENGTH, WEAKNESS, SLOWNESS, SWIFTNESS, FIRERESIST;
+	HEALING, HARM,
+	REGEN, POISON,
+	STRENGTH, WEAKNESS,
+	SLOWNESS, SWIFTNESS,
+	FIRERESIST, WATER_BREATHING,
+	SLOW_FALLING, INVISIBILITY;
 	
 	public static ItemStack getRandom(Random rand){
 		PotionItem type = PotionItem.values()[rand.nextInt(PotionItem.values().length)];
@@ -92,8 +97,26 @@ public enum PotionItem {
 				return Potions.LONG_FIRE_RESISTANCE;
 			} else {
 				return Potions.FIRE_RESISTANCE;
-			} 
-		default: return Potions.AWKWARD;
+			}
+		case INVISIBILITY:
+			if(extend) {
+				return Potions.LONG_INVISIBILITY;
+			} else {
+				return Potions.INVISIBILITY;
+			}
+		case SLOW_FALLING:
+			if(extend) {
+				return Potions.LONG_SLOW_FALLING;	
+			} else {
+				return Potions.SLOW_FALLING;
+			}
+		case WATER_BREATHING:
+			if(extend) {
+				return Potions.LONG_WATER_BREATHING;
+			} else {
+				return Potions.WATER_BREATHING;
+			}
+		default: return Potions.AWKWARD; 
 		}
 	}
 }

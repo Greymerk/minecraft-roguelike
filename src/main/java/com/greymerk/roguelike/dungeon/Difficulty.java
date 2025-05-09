@@ -31,6 +31,7 @@ public enum Difficulty {
 		return diff.value;
 	}
 	
+	/*
 	public static Difficulty fromY(int y) {
 		if(y >= 40) return EASIEST;
 		if(y >= 20) return EASY;
@@ -38,6 +39,7 @@ public enum Difficulty {
 		if(y >= -30) return HARD;
 		return HARDEST;
 	}
+	*/
 	
 	
 }

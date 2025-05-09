@@ -8,6 +8,7 @@ import com.greymerk.roguelike.editor.blocks.Air;
 import com.greymerk.roguelike.editor.blocks.Quartz;
 import com.greymerk.roguelike.editor.blocks.spawners.Spawner;
 import com.greymerk.roguelike.editor.blocks.stair.IStair;
+import com.greymerk.roguelike.settings.ILevelSettings;
 import com.greymerk.roguelike.theme.ITheme;
 import com.greymerk.roguelike.treasure.Treasure;
 
@@ -30,7 +31,8 @@ public class CryptFragment implements IFragment {
 	}
 	
 	@Override
-	public void generate(IWorldEditor editor, Random rand, ITheme theme, Coord origin, Cardinal dir) {
+	public void generate(IWorldEditor editor, Random rand, ILevelSettings settings, Coord origin, Cardinal dir) {
+		ITheme theme = settings.getTheme();
 		if(empty && rand.nextBoolean()) {
 			Air.get().set(editor, origin);
 		} else {
@@ -42,7 +44,7 @@ public class CryptFragment implements IFragment {
 			Air.get().set(editor, pos);
 		} else {
 			Spawner type = rand.nextBoolean() ? Spawner.SKELETON : Spawner.ZOMBIE;
-			Spawner.generate(editor, rand, pos, type);
+			Spawner.generate(editor, rand, settings.getDifficulty(), pos, type);
 		}
 		
 		pos.add(dir);
@@ -50,7 +52,7 @@ public class CryptFragment implements IFragment {
 			Air.get().set(editor, pos);
 		} else {
 			Treasure type = rand.nextBoolean() ? Treasure.ARMOR : Treasure.WEAPON;
-			Treasure.generate(editor, rand, pos, Cardinal.reverse(dir), type);
+			Treasure.generate(editor, rand, settings.getDifficulty(), pos, Cardinal.reverse(dir), type);
 		}
 		pos.add(Cardinal.UP);
 		IStair stair = theme.getPrimary().getStair();

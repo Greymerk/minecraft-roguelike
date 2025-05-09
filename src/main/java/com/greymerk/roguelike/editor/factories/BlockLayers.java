@@ -22,7 +22,7 @@ public class BlockLayers extends BlockBase{
 		this.layers = new HashMap<Integer, IBlockFactory>();	
 	}
 	
-	public void addLayer(int offset, IBlockFactory toAdd){
+	public void add(int offset, IBlockFactory toAdd){
 		this.layers.put(offset, toAdd);
 	}
 	

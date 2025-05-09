@@ -13,13 +13,14 @@ import com.greymerk.roguelike.theme.ThemeBase;
 public class ThemeWarped extends ThemeBase implements ITheme {
 
 	public ThemeWarped() {
-		this.primary = new BlockSet()
-				.setWall(Warped.get(Warped.PLANK))
-				.setFloor(Warped.get(Warped.NYLIUM))
-				.setStair(Stair.of(Stair.WARPED))
-				.setPillar(Warped.get(Warped.STEM))
-				.setDoor(Door.of(DoorType.WARPED))
-				.setSlab(Slab.get(Slab.WARPED));
+		this.primary = BlockSet.builder()
+				.walls(Warped.get(Warped.PLANK))
+				.floor(Warped.get(Warped.NYLIUM))
+				.stair(Stair.of(Stair.WARPED))
+				.pillar(Warped.get(Warped.STEM))
+				.door(Door.of(DoorType.WARPED))
+				.slab(Slab.get(Slab.WARPED))
+				.build();
 		this.secondary = primary;
 	}
 	

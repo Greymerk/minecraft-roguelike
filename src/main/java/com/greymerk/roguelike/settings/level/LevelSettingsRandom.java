@@ -3,6 +3,7 @@ package com.greymerk.roguelike.settings.level;
 import java.util.Arrays;
 import java.util.List;
 
+import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
 import com.greymerk.roguelike.dungeon.room.Room;
 import com.greymerk.roguelike.settings.ILevelSettings;
@@ -47,4 +48,8 @@ public class LevelSettingsRandom extends LevelSettingsBase implements ILevelSett
 		return LevelSettings.RANDOM.name();
 	}
 
+	@Override
+	public Difficulty getDifficulty() {
+		return Difficulty.HARDEST;
+	}
 }

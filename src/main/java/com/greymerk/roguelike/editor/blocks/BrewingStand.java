@@ -1,6 +1,7 @@
 package com.greymerk.roguelike.editor.blocks;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
@@ -23,24 +24,23 @@ public enum BrewingStand {
 	}
 	
 	public static boolean generate(IWorldEditor editor, Coord pos){
-		MetaBlock stand = MetaBlock.of(Blocks.BREWING_STAND);
-		return stand.set(editor, pos);
+		return MetaBlock.of(Blocks.BREWING_STAND).set(editor, pos);
 	}
 	
-	public static boolean add(IWorldEditor editor, Coord pos, BrewingStand slot, ItemStack item){
-		BrewingStandBlockEntity stand = get(editor, pos);
-		if(stand == null) return false;
-		stand.setStack(slot.id, item);
-		return true;
+	public static void add(IWorldEditor editor, Coord pos, BrewingStand slot, ItemStack item){
+		get(editor, pos).ifPresent(stand -> {
+			stand.setStack(slot.id, item);	
+		});
 	}
 	
-	private static BrewingStandBlockEntity get(IWorldEditor editor, Coord pos){
+	private static Optional<BrewingStandBlockEntity> get(IWorldEditor editor, Coord pos){
 		MetaBlock stand = editor.getBlock(pos);
-		if(stand.getBlock() != Blocks.BREWING_STAND) return null;
-		BlockEntity te = editor.getBlockEntity(pos);
-		if(te == null) return null;
-		if(!(te instanceof BrewingStandBlockEntity)) return null;
-		BrewingStandBlockEntity brewingTE = (BrewingStandBlockEntity)te;
-		return brewingTE;
+		if(stand.getBlock() != Blocks.BREWING_STAND) return Optional.empty();
+		Optional<BlockEntity> obe = editor.getBlockEntity(pos);
+		if(obe.isEmpty()) return Optional.empty();
+		BlockEntity be = obe.get();
+		if(!(be instanceof BrewingStandBlockEntity)) return Optional.empty();
+		BrewingStandBlockEntity brewingTE = (BrewingStandBlockEntity)be;
+		return Optional.of(brewingTE);
 	}
 }

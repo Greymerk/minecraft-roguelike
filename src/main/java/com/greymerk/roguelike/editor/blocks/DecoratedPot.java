@@ -1,5 +1,7 @@
 package com.greymerk.roguelike.editor.blocks;
 
+import java.util.Optional;
+
 import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
@@ -22,21 +24,19 @@ import net.minecraft.util.math.random.Random;
 
 public class DecoratedPot {
 
-	public static void set(IWorldEditor editor, Random rand, Coord origin) {
-		set(editor, rand, origin, Loot.PRECIOUS);
+	public static void set(IWorldEditor editor, Random rand, Difficulty diff, Coord origin) {
+		set(editor, rand, diff, origin, Loot.PRECIOUS);
 	}
 	
-	public static void set(IWorldEditor editor, Random rand, Coord origin, Loot type) {
+	public static void set(IWorldEditor editor, Random rand, Difficulty diff, Coord origin, Loot type) {
 		
 		if(!MetaBlock.of(Blocks.DECORATED_POT).set(editor, origin)) return;
 		
-		BlockEntity be = editor.getBlockEntity(origin);
-		
-		if(be == null) return;
+		Optional<BlockEntity> obe = editor.getBlockEntity(origin);
+		if(obe.isEmpty()) return;
+		BlockEntity be = obe.get();
 		if(!(be instanceof DecoratedPotBlockEntity)) return;
-		
 		DecoratedPotBlockEntity potEntity = (DecoratedPotBlockEntity)be;
-		
 		
 		IWeighted<Item> faceroll = getFaceRoller();
 		
@@ -47,7 +47,7 @@ public class DecoratedPot {
 		
 		potEntity.readComponents(potEntity.getComponents(), changes.build());		
 
-		ItemStack loot = Loot.getLootItem(editor, type, rand, Difficulty.fromY(origin.getY()));
+		ItemStack loot = Loot.getLootItem(editor, type, rand, diff);
 		potEntity.setStack(loot);
 		
 		potEntity.markDirty();
@@ -57,7 +57,7 @@ public class DecoratedPot {
 	private static IWeighted<Item> getFaceRoller(){
 		
 		WeightedRandomizer<Item> faceroll = new WeightedRandomizer<Item>();
-		faceroll.add(new WeightedChoice<Item>(Items.BRICK, 50));
+		faceroll.add(new WeightedChoice<Item>(Items.BRICK, 100));
 		faceroll.add(new WeightedChoice<Item>(Items.ANGLER_POTTERY_SHERD, 1));
 		faceroll.add(new WeightedChoice<Item>(Items.ARCHER_POTTERY_SHERD, 1));
 		faceroll.add(new WeightedChoice<Item>(Items.ARMS_UP_POTTERY_SHERD, 1));

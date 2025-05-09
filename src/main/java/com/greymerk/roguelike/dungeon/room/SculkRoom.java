@@ -2,12 +2,14 @@ package com.greymerk.roguelike.dungeon.room;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import com.greymerk.roguelike.dungeon.cell.Cell;
+import com.greymerk.roguelike.dungeon.cell.CellManager;
+import com.greymerk.roguelike.dungeon.cell.CellState;
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
+import com.greymerk.roguelike.dungeon.fragment.parts.CellSupport;
 import com.greymerk.roguelike.dungeon.fragment.parts.Pillar;
-import com.greymerk.roguelike.dungeon.layout.Entrance;
+import com.greymerk.roguelike.dungeon.layout.ExitType;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.Fill;
@@ -54,8 +56,9 @@ public class SculkRoom extends AbstractLargeRoom implements IRoom {
 		bridges(editor, rand, origin);
 		placeSpawners(editor, rand, origin);
 		placeChests(editor, rand, origin);
-		Filter.get(Filter.SCULK).apply(editor, rand, theme, getBoundingBox().get());
-
+		supports(editor, rand, origin.copy().add(Cardinal.DOWN, 2));
+		Filter.get(Filter.SCULK).apply(editor, rand, settings, getBoundingBox().get());
+		this.generateExits(editor, rand);
 	}
 
 	private void placeChests(IWorldEditor editor, Random rand, Coord origin) {
@@ -64,21 +67,14 @@ public class SculkRoom extends AbstractLargeRoom implements IRoom {
 			.add(new WeightedChoice<Treasure>(Treasure.TOOL, 1))
 			.add(new WeightedChoice<Treasure>(Treasure.WEAPON, 1));
 		
-		List<Coord> empty = BoundingBox.of(origin).add(Cardinal.DOWN, 2).grow(Cardinal.directions, 9).get().stream()
+		BoundingBox.of(origin).add(Cardinal.DOWN, 2).grow(Cardinal.directions, 9).get().stream()
 				.filter(pos -> editor.isAir(pos))
 				.filter(pos -> checkerBoard(pos))
-				.collect(Collectors.toList());
-		RandHelper.shuffle(empty, rand);
-		int count = rand.nextBetween(5, 9);
-		if(empty.size() <= count) {
-			empty.forEach(pos -> {
-				Treasure.generate(editor, rand, pos, types.get(rand));	
-			});
-		} else {
-			empty.subList(0, count).forEach(pos -> {
-				Treasure.generate(editor, rand, pos, types.get(rand));
-			});	
-		}
+				.sorted(RandHelper.randomizer(rand))
+				.limit(rand.nextBetween(3, 7))
+				.forEach(pos -> {
+					Treasure.generate(editor, rand, settings.getDifficulty(), pos, types.get(rand));	
+				});
 	}
 	
 	private boolean checkerBoard(Coord pos) {
@@ -91,7 +87,7 @@ public class SculkRoom extends AbstractLargeRoom implements IRoom {
 	}
 
 	private void bridges(IWorldEditor editor, Random rand, Coord origin) {
-		this.getEntrancesFromType(Entrance.DOOR).forEach(dir -> {
+		Cardinal.directions.forEach(dir -> {
 			bridge(editor, rand, origin, dir);
 		});
 	}
@@ -109,9 +105,13 @@ public class SculkRoom extends AbstractLargeRoom implements IRoom {
 		types.add(new WeightedChoice<Spawner>(Spawner.SKELETON, 3));
 		types.add(new WeightedChoice<Spawner>(Spawner.SPIDER, 2));
 		
-		spawners.forEach(pos -> {
-			if(rand.nextBoolean()) Spawner.generate(editor, rand, pos, types.get(rand));
-		});
+		spawners.stream()
+			.distinct()
+			.sorted(RandHelper.randomizer(rand))
+			.limit(rand.nextBetween(5, 10))
+			.forEach(pos -> {
+				Spawner.generate(editor, rand, this.settings.getDifficulty(), pos, types.get(rand));
+			});
 	}
 
 	private void tower(IWorldEditor editor, Random rand, Coord origin) {
@@ -136,7 +136,7 @@ public class SculkRoom extends AbstractLargeRoom implements IRoom {
 		Cardinal.directions.forEach(dir -> {
 			Cardinal.orthogonal(dir).forEach(o -> {
 				List.of(6, 12).forEach(step -> {
-					settings.getWallFragment(rand).generate(editor, rand, theme, origin.copy().add(dir, 12).add(o, step), dir);
+					settings.getWallFragment(rand).generate(editor, rand, settings, origin.copy().add(dir, 12).add(o, step), dir);
 				});
 			});
 		});
@@ -209,14 +209,47 @@ public class SculkRoom extends AbstractLargeRoom implements IRoom {
 		BoundingBox.of(origin).grow(Cardinal.directions, 14).grow(Cardinal.DOWN, 2).grow(Cardinal.UP, 6).fill(editor, rand, Air.get());
 		Cardinal.directions.forEach(dir -> {
 			BoundingBox.of(origin).add(dir, 15).grow(Cardinal.orthogonal(dir), 15).fill(editor, rand, theme.getPrimary().getWall(), Fill.SOLID);
-			if(this.getEntrance(dir) == Entrance.DOOR) {
-				Fragment.generate(Fragment.ARCH, editor, rand, theme, origin.copy().add(dir, 12), dir);	
+			if(this.getExitType(dir) == ExitType.DOOR) {
+				Fragment.generate(Fragment.ARCH, editor, rand, settings, origin.copy().add(dir, 12), dir);	
 			}
 		});
 		BoundingBox.of(origin).add(Cardinal.UP, 7).grow(Cardinal.directions, 15).fill(editor, rand, theme.getPrimary().getWall(), Fill.SOLID);
 		BoundingBox.of(origin).add(Cardinal.DOWN, 3).grow(Cardinal.directions, 15).fill(editor, rand, theme.getPrimary().getWall());
 	}
 
+	private void supports(IWorldEditor editor, Random rand, Coord origin) {
+		CellSupport.generate(editor, rand, theme, origin);
+		Cardinal.directions.forEach(dir -> {
+			List.of(6, 12).forEach(i -> {
+				CellSupport.generate(editor, rand, theme, origin.copy().add(dir, i));
+				List.of(6, 12).forEach(j -> {
+					CellSupport.generate(editor, rand, theme, origin.copy().add(dir, i).add(Cardinal.left(dir), j));
+				});
+			});
+		});
+	}
+	
+	@Override
+	public CellManager getCells(Cardinal dir) {
+		CellManager cells = new CellManager();
+		BoundingBox.of(Coord.ZERO).add(dir, 2)
+			.grow(Cardinal.directions, 2)
+			.forEach(pos -> {
+				cells.add(Cell.of(pos, CellState.OBSTRUCTED, this));
+			});
+		
+		Cardinal.directions.forEach(d -> {
+			BoundingBox.of(Coord.ZERO.add(dir, 2)).add(d, 3)
+				.grow(Cardinal.orthogonal(d), 2)
+				.forEach(pos -> {
+					if(pos.equals(Coord.ZERO.add(Cardinal.reverse(dir), 3))) return;
+					cells.add(Cell.of(pos, CellState.POTENTIAL, this));
+				});
+		});
+		
+		return cells;
+	}
+	
 	@Override
 	public String getName() {
 		return Room.SCULK.name();

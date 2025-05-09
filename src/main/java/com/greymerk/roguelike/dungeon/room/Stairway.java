@@ -1,12 +1,10 @@
 package com.greymerk.roguelike.dungeon.room;
 
-import com.greymerk.roguelike.dungeon.Floor;
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellManager;
 import com.greymerk.roguelike.dungeon.cell.CellState;
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
 import com.greymerk.roguelike.dungeon.fragment.parts.CellSupport;
-import com.greymerk.roguelike.dungeon.layout.Entrance;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.Fill;
@@ -48,11 +46,8 @@ public class Stairway extends AbstractRoom implements IRoom {
 	}
 
 	private void addDoors(IWorldEditor editor, Random rand) {
-		Fragment.generate(Fragment.ARCH, editor, rand, theme, worldPos, Cardinal.reverse(direction));
-		
-		for(Cardinal dir : this.getEntrancesFromType(Entrance.DOOR)) {
-			Fragment.generate(Fragment.ARCH, editor, rand, theme, worldPos, dir);
-		}
+		Fragment.generate(Fragment.ARCH, editor, rand, settings, worldPos, Cardinal.reverse(direction));
+		this.generateExits(editor, rand);
 	}
 	
 	private void buildSteps(IWorldEditor editor, Random rand, Coord origin) {
@@ -163,24 +158,18 @@ public class Stairway extends AbstractRoom implements IRoom {
 		Coord origin = Coord.ZERO;
 		CellManager cells = new CellManager();
 
-		cells.add(Cell.of(origin.copy(), CellState.OBSTRUCTED).addWalls(Cardinal.orthogonal(dir)));
-		cells.add(Cell.of(origin.copy().add(dir), CellState.OBSTRUCTED).addWalls(Cardinal.orthogonal(dir)));
-		cells.add(Cell.of(origin.copy().add(dir, 2), CellState.OBSTRUCTED).addWalls(Cardinal.orthogonal(dir)).addWall(dir));
+		cells.add(Cell.of(origin.copy(), CellState.OBSTRUCTED, this).addWalls(Cardinal.orthogonal(dir)));
+		cells.add(Cell.of(origin.copy().add(dir), CellState.OBSTRUCTED, this).addWalls(Cardinal.orthogonal(dir)));
+		cells.add(Cell.of(origin.copy().add(dir, 2), CellState.OBSTRUCTED, this).addWalls(Cardinal.orthogonal(dir)).addWall(dir));
 		
-		cells.add(Cell.of(origin.copy().add(Cardinal.DOWN), CellState.OBSTRUCTED).addWall(Cardinal.reverse(dir)).addWalls(Cardinal.orthogonal(dir)));
-		cells.add(Cell.of(origin.copy().add(Cardinal.DOWN).add(dir), CellState.OBSTRUCTED).addWalls(Cardinal.orthogonal(dir)));
+		cells.add(Cell.of(origin.copy().add(Cardinal.DOWN), CellState.OBSTRUCTED, this).addWall(Cardinal.reverse(dir)).addWalls(Cardinal.orthogonal(dir)));
+		cells.add(Cell.of(origin.copy().add(Cardinal.DOWN).add(dir), CellState.OBSTRUCTED, this).addWalls(Cardinal.orthogonal(dir)));
 		
-		if(this.worldPos != null && this.worldPos.getY() >= 70) {
-			cells.add(Cell.of(origin.copy().add(Cardinal.DOWN).add(dir, 2), CellState.OBSTRUCTED).addWall(Cardinal.left(dir)).addWall(dir));
-			cells.add(Cell.of(origin.copy().add(Cardinal.DOWN).add(dir, 2).add(Cardinal.right(dir)), CellState.POTENTIAL));
-		} else {
-			cells.add(Cell.of(origin.copy().add(Cardinal.DOWN).add(dir, 2), CellState.OBSTRUCTED));
-			cells.add(Cell.of(origin.copy().add(Cardinal.DOWN).add(dir, 3), CellState.POTENTIAL));
-			for(Cardinal o : Cardinal.orthogonal(dir)) {
-				cells.add(Cell.of(origin.copy().add(Cardinal.DOWN).add(dir, 2).add(o), CellState.POTENTIAL));
-			}
+		cells.add(Cell.of(origin.copy().add(Cardinal.DOWN).add(dir, 2), CellState.OBSTRUCTED, this));
+		cells.add(Cell.of(origin.copy().add(Cardinal.DOWN).add(dir, 3), CellState.POTENTIAL, this));
+		for(Cardinal o : Cardinal.orthogonal(dir)) {
+			cells.add(Cell.of(origin.copy().add(Cardinal.DOWN).add(dir, 2).add(o), CellState.POTENTIAL, this));
 		}
-		
 		
 		return cells;
 	}
@@ -200,8 +189,4 @@ public class Stairway extends AbstractRoom implements IRoom {
 	public String getName() {
 		return Room.STAIRWAY.name();
 	}
-	
-	@Override
-	public void determineEntrances(Floor f, Coord floorPos) {}
-
 }

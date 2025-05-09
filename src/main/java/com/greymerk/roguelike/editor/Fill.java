@@ -15,8 +15,7 @@ public class Fill {
 	});
 	
 	public static Predicate<BlockContext> ALWAYS = (ctx -> true);
-	public static Predicate<BlockContext> NEVER = ALWAYS.negate();
 	public static Predicate<BlockContext> AIR = (ctx -> ctx.editor().isAir(ctx.pos()));
 	public static Predicate<BlockContext> SOLID = AIR.negate();
-
+	public static Predicate<BlockContext> LIQUID = (ctx -> ctx.editor().getBlock(ctx.pos()).isLiquid());
 }

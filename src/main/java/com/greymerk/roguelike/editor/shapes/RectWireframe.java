@@ -1,9 +1,9 @@
 package com.greymerk.roguelike.editor.shapes;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.StreamSupport;
 
 import com.greymerk.roguelike.editor.BlockContext;
 import com.greymerk.roguelike.editor.Cardinal;
@@ -25,11 +25,7 @@ public class RectWireframe implements IShape {
 	}
 	
 	public static RectWireframe of(IBounded box) {
-		return new RectWireframe(box.getBoundingBox());
-	}
-	
-	public static void fill(IWorldEditor editor, Random rand, Coord start, Coord end, IBlockFactory block){
-		RectWireframe.of(BoundingBox.of(start, end)).fill(editor, rand, block, Fill.ALWAYS);
+		return new RectWireframe(BoundingBox.of(box));
 	}
 	
 	@Override
@@ -47,13 +43,7 @@ public class RectWireframe implements IShape {
 
 	@Override
 	public List<Coord> get(){
-		List<Coord> coords = new ArrayList<Coord>();
-		
-		for(Coord c : this){
-			coords.add(c);
-		}
-		
-		return coords;
+		return StreamSupport.stream(this.spliterator(), false).toList();
 	}
 	
 	@Override
@@ -84,7 +74,7 @@ public class RectWireframe implements IShape {
 			Coord toReturn = cursor.copy();	
 			
 			if(cursor.getZ() == c2.getZ() && cursor.getX() == c2.getX()){
-				cursor = new Coord(c1.getX(), cursor.getY(), c1.getZ());
+				cursor = c1.withY(cursor.getY());
 				cursor.add(Cardinal.UP);
 				return toReturn;
 			}
@@ -92,7 +82,7 @@ public class RectWireframe implements IShape {
 			if(cursor.getY() == c1.getY() || cursor.getY() == c2.getY()){
 				
 				if(cursor.getX() == c2.getX()){
-					cursor = new Coord(c1.getX(), cursor.getY(), cursor.getZ());
+					cursor = cursor.withX(c1.getX());
 					cursor.add(Cardinal.SOUTH);
 					return toReturn;
 				}
@@ -103,7 +93,7 @@ public class RectWireframe implements IShape {
 				}
 				
 				if(cursor.getX() == c1.getX()){
-					cursor = new Coord(c2.getX(), cursor.getY(), cursor.getZ());
+					cursor = cursor.withX(c2.getX());
 					return toReturn;
 				}
 				
@@ -111,16 +101,16 @@ public class RectWireframe implements IShape {
 			}
 
 			if(cursor.getX() == c1.getX()){
-				cursor = new Coord(c2.getX(), cursor.getY(), cursor.getZ());
+				cursor = cursor.withX(c2.getX());
 				return toReturn;
 			}
 			
 			if(cursor.getX() == c2.getX()){
-				cursor = new Coord(c1.getX() ,cursor.getY(), c2.getZ());
+				cursor = Coord.of(c1.getX(), cursor.getY(), c2.getZ());
 				return toReturn;
 			}
 			
-			cursor = new Coord(c2.getX(), cursor.getY(), cursor.getZ());
+			cursor = cursor.withX(c2.getX());
 			return toReturn;
 			
 		}

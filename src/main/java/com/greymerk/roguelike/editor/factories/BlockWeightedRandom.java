@@ -19,7 +19,7 @@ public class BlockWeightedRandom extends BlockBase {
 		blocks = new WeightedRandomizer<IBlockFactory>();
 	}
 
-	public BlockWeightedRandom addBlock(IBlockFactory toAdd, int weight){
+	public BlockWeightedRandom add(IBlockFactory toAdd, int weight){
 		blocks.add(new WeightedChoice<IBlockFactory>(toAdd, weight));
 		return this;
 	}

@@ -5,7 +5,6 @@ import java.util.Optional;
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellManager;
 import com.greymerk.roguelike.dungeon.cell.CellState;
-import com.greymerk.roguelike.dungeon.layout.Entrance;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
@@ -52,7 +51,7 @@ public class BTeamRoom extends AbstractRoom implements IRoom {
 
 	private void decor(IWorldEditor editor, Random rand, Coord origin) {
 		MetaBlock.of(Blocks.JUKEBOX).set(editor, origin.add(direction, 7).add(Cardinal.left(direction), 4));
-		Optional<ITreasureChest> maybeChest = Treasure.generate(editor, rand, origin.add(direction, 7).add(Cardinal.left(direction), 5), Cardinal.reverse(direction), Treasure.EMPTY, ChestType.CHEST); 
+		Optional<ITreasureChest> maybeChest = Treasure.generate(editor, rand, settings.getDifficulty(), origin.add(direction, 7).add(Cardinal.left(direction), 5), Cardinal.reverse(direction), Treasure.EMPTY, ChestType.CHEST); 
 		if(maybeChest.isPresent()) {
 			maybeChest.get().setRandomEmptySlot(new ItemStack(Items.MUSIC_DISC_STAL));	
 		}
@@ -155,7 +154,7 @@ public class BTeamRoom extends AbstractRoom implements IRoom {
 	}
 
 	private void passage(IWorldEditor editor, Random rand, Coord origin) {
-		BoundingBox.of(origin).add(direction, 3).grow(Cardinal.orthogonal(direction)).grow(Cardinal.UP, 3).fill(editor, rand, theme.getPrimary().getWall());
+		BoundingBox.of(origin).add(direction, 3).grow(Cardinal.orthogonal(direction), 2).grow(Cardinal.UP, 3).grow(Cardinal.DOWN).fill(editor, rand, theme.getPrimary().getWall());
 		BoundingBox.of(origin).add(direction, 4).grow(Cardinal.orthogonal(direction)).grow(Cardinal.UP, 2).grow(direction).grow(Cardinal.DOWN).fill(editor, rand, MetaBlock.of(Blocks.COBBLESTONE));
 		BoundingBox.of(origin).add(direction, 4).grow(Cardinal.UP).grow(direction).fill(editor, rand, Air.get());
 		BoundingBox.of(origin).add(direction, 3).grow(Cardinal.UP).grow(direction, 2).fill(editor, rand, MetaBlock.of(Blocks.GRAVEL));
@@ -164,18 +163,13 @@ public class BTeamRoom extends AbstractRoom implements IRoom {
 	private void entry(IWorldEditor editor, Random rand, Coord origin) {
 		Corridor cor = new Corridor();
 		
-		Cardinal.directions.forEach(dir -> {
-			Entrance type = this.getEntrance(dir);
-			if(type == Entrance.DOOR) {
-				cor.addEntrance(dir, Entrance.DOOR);	
-			} else {
-				cor.addEntrance(dir, Entrance.WALL);
-			}
+		this.exits.forEach(e -> {
+			cor.addExit(e);
 		});
 		
+		cor.setDirection(direction);
 		cor.setLevelSettings(settings);
 		cor.worldPos = this.worldPos.copy();
-		cor.addEntrance(direction, Entrance.DOOR);
 		cor.generate(editor);
 	}
 	
@@ -184,18 +178,18 @@ public class BTeamRoom extends AbstractRoom implements IRoom {
 		Coord origin = Coord.ZERO;
 		CellManager cells = new CellManager();
 		
-		cells.add(Cell.of(origin.copy(), CellState.OBSTRUCTED));
-		cells.add(Cell.of(origin.copy().add(dir), CellState.OBSTRUCTED));
-		cells.add(Cell.of(origin.copy().add(dir, 2), CellState.OBSTRUCTED).addWall(dir));
+		cells.add(Cell.of(origin.copy(), CellState.OBSTRUCTED, this));
+		cells.add(Cell.of(origin.copy().add(dir), CellState.OBSTRUCTED, this));
+		cells.add(Cell.of(origin.copy().add(dir, 2), CellState.OBSTRUCTED, this).addWall(dir));
 		
 		for(Cardinal o : Cardinal.orthogonal(dir)) {
-			cells.add(Cell.of(origin.copy().add(dir).add(o), CellState.OBSTRUCTED).addWall(Cardinal.reverse(dir)).addWall(o));
-			cells.add(Cell.of(origin.copy().add(dir, 2).add(o), CellState.OBSTRUCTED).addWall(dir).addWall(o));
+			cells.add(Cell.of(origin.copy().add(dir).add(o), CellState.OBSTRUCTED, this).addWall(Cardinal.reverse(dir)).addWall(o));
+			cells.add(Cell.of(origin.copy().add(dir, 2).add(o), CellState.OBSTRUCTED, this).addWall(dir).addWall(o));
 		}
 		
 		for(Cardinal d : Cardinal.directions) {
 			if(d == dir) continue;
-			cells.add(Cell.of(origin.copy().add(d), CellState.POTENTIAL));
+			cells.add(Cell.of(origin.copy().add(d), CellState.POTENTIAL, this));
 		}
 		
 		return cells;

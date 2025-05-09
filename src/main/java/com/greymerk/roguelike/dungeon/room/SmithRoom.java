@@ -2,13 +2,11 @@ package com.greymerk.roguelike.dungeon.room;
 
 import java.util.List;
 
-import com.greymerk.roguelike.dungeon.Floor;
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellManager;
 import com.greymerk.roguelike.dungeon.cell.CellState;
 import com.greymerk.roguelike.dungeon.fragment.parts.CellSupport;
 import com.greymerk.roguelike.dungeon.fragment.parts.Pillar;
-import com.greymerk.roguelike.dungeon.layout.Entrance;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.Fill;
@@ -110,15 +108,15 @@ public class SmithRoom extends AbstractRoom implements IRoom {
 		MetaBlock table = MetaBlock.of(Blocks.SMITHING_TABLE);
 		table.set(editor, origin.add(Cardinal.right(dir), 2));
 		theme.getPrimary().getStair().setOrientation(Cardinal.reverse(dir), true).fill(editor, rand, BoundingBox.of(origin).add(dir, 2).grow(Cardinal.orthogonal(dir)));
-		Treasure.generate(editor, rand, origin.add(dir, 2).add(Cardinal.left(dir)).add(Cardinal.UP), Cardinal.reverse(dir), Treasure.WEAPON);
-		Treasure.generate(editor, rand, origin.add(dir, 2).add(Cardinal.right(dir)).add(Cardinal.UP), Cardinal.reverse(dir), Treasure.ARMOR);
+		Treasure.generate(editor, rand, settings.getDifficulty(), origin.add(dir, 2).add(Cardinal.left(dir)).add(Cardinal.UP), Cardinal.reverse(dir), Treasure.WEAPON);
+		Treasure.generate(editor, rand, settings.getDifficulty(), origin.add(dir, 2).add(Cardinal.right(dir)).add(Cardinal.UP), Cardinal.reverse(dir), Treasure.ARMOR);
 	}
 
 
 	private void anvilRoom(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
 		sideRoom(editor, rand, origin, dir);
 		theme.getPrimary().getStair().setOrientation(Cardinal.reverse(dir), true).fill(editor, rand, BoundingBox.of(origin).add(dir, 2).grow(Cardinal.orthogonal(dir)));
-		Treasure.generate(editor, rand, origin.add(dir, 2).add(Cardinal.UP), Cardinal.reverse(dir), Treasure.ORE);
+		Treasure.generate(editor, rand, settings.getDifficulty(), origin.add(dir, 2).add(Cardinal.UP), Cardinal.reverse(dir), Treasure.ORE);
 		this.lavaTank(editor, rand, origin, Cardinal.right(dir));
 		this.waterTank(editor, rand, origin, Cardinal.left(dir));
 		Anvil.set(editor, origin, Anvil.CHIPPED, Cardinal.left(dir));
@@ -199,15 +197,13 @@ public class SmithRoom extends AbstractRoom implements IRoom {
 
 	private void entryRoom(IWorldEditor editor, Random rand, Coord origin) {
 		Corridor cor = new Corridor();
-		for(Cardinal dir : this.entrances.keySet()){
-			if(this.entrances.get(dir) == Entrance.DOOR) {
-				cor.addEntrance(dir, Entrance.DOOR);
-			}
-		}
+		this.exits.forEach(e -> {
+			cor.addExit(e);
+		});
 		
+		cor.setDirection(direction);
 		cor.setLevelSettings(settings);
 		cor.worldPos = this.worldPos.copy();
-		cor.addEntrance(direction, Entrance.DOOR);
 		cor.generate(editor);
 		
 		BoundingBox.of(origin).add(direction, 3).grow(Cardinal.DOWN).grow(Cardinal.UP, 3).grow(Cardinal.orthogonal(direction), 2).fill(editor, rand, theme.getPrimary().getWall());
@@ -220,38 +216,23 @@ public class SmithRoom extends AbstractRoom implements IRoom {
 		Coord origin = Coord.ZERO;
 		CellManager cells = new CellManager();
 		
-		cells.add(Cell.of(origin.copy(), CellState.OBSTRUCTED));
-		cells.add(Cell.of(origin.copy().add(dir), CellState.OBSTRUCTED));
-		cells.add(Cell.of(origin.copy().add(dir, 2), CellState.OBSTRUCTED));
-		cells.add(Cell.of(origin.copy().add(dir, 3), CellState.OBSTRUCTED).addWall(dir));
+		cells.add(Cell.of(origin.copy(), CellState.OBSTRUCTED, this));
+		cells.add(Cell.of(origin.copy().add(dir), CellState.OBSTRUCTED, this));
+		cells.add(Cell.of(origin.copy().add(dir, 2), CellState.OBSTRUCTED, this));
+		cells.add(Cell.of(origin.copy().add(dir, 3), CellState.OBSTRUCTED, this).addWall(dir).addWalls(Cardinal.orthogonal(dir)));
 		
 		for(Cardinal o : Cardinal.orthogonal(dir)) {
-			cells.add(Cell.of(origin.copy().add(dir).add(o), CellState.OBSTRUCTED).addWall(Cardinal.reverse(dir)).addWall(o));
-			cells.add(Cell.of(origin.copy().add(dir).add(o), CellState.OBSTRUCTED).addWall(o));
-			cells.add(Cell.of(origin.copy().add(dir, 2).add(o), CellState.OBSTRUCTED).addWall(dir).addWall(o));
+			cells.add(Cell.of(origin.copy().add(dir).add(o), CellState.OBSTRUCTED, this).addWall(Cardinal.reverse(dir)).addWall(o));
+			cells.add(Cell.of(origin.copy().add(dir).add(o), CellState.OBSTRUCTED, this).addWall(o));
+			cells.add(Cell.of(origin.copy().add(dir, 2).add(o), CellState.OBSTRUCTED, this).addWall(dir).addWall(o));
 		}
 		
 		for(Cardinal d : Cardinal.directions) {
 			if(d == dir) continue;
-			cells.add(Cell.of(origin.copy().add(d), CellState.POTENTIAL));
+			cells.add(Cell.of(origin.copy().add(d), CellState.POTENTIAL, this));
 		}
 		
 		return cells;
-	}
-
-
-	@Override
-	public void determineEntrances(Floor f, Coord floorPos) {
-		for(Cardinal dir : Cardinal.directions) {
-			if(dir == this.direction) continue;
-			Cell c = f.getCell(floorPos.copy().add(dir));
-			if(!c.isRoom()) continue;
-			if(!c.getWalls().contains(Cardinal.reverse(dir))){
-				this.addEntrance(dir, Entrance.DOOR);
-			} else {
-				this.addEntrance(dir, Entrance.WALL);
-			}
-		}
 	}
 
 	@Override

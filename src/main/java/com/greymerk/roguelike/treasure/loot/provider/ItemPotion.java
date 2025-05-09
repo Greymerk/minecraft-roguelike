@@ -1,9 +1,6 @@
 package com.greymerk.roguelike.treasure.loot.provider;
 
-import java.util.List;
-
 import com.greymerk.roguelike.dungeon.Difficulty;
-import com.greymerk.roguelike.treasure.loot.potions.PotionForm;
 import com.greymerk.roguelike.treasure.loot.potions.PotionItem;
 import com.greymerk.roguelike.treasure.loot.potions.PotionMixture;
 
@@ -11,9 +8,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.random.Random;
 
 public class ItemPotion extends ItemBase{
-
-	private static final List<PotionItem> common = List.of(
-			PotionItem.HEALING, PotionItem.STRENGTH, PotionItem.SWIFTNESS, PotionItem.REGEN);
 	
 	public ItemPotion(int weight, Difficulty diff) {
 		super(weight, diff);
@@ -36,6 +30,6 @@ public class ItemPotion extends ItemBase{
 			return PotionMixture.getPotion(rand, PotionMixture.LAUDANUM);
 		}
 		
-		return PotionItem.getSpecific(PotionForm.REGULAR, common.get(rand.nextInt(common.size())), true, false);
+		return PotionItem.getRandom(rand);
 	}
 }

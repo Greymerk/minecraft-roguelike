@@ -1,5 +1,7 @@
 package com.greymerk.roguelike.editor.blocks.spawners;
 
+import java.util.Optional;
+
 import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
@@ -25,7 +27,9 @@ public class Spawnable {
 	public void generate(IWorldEditor editor, Random rand, Coord pos, Difficulty diff){
 
 		MetaBlock.of(Blocks.SPAWNER).set(editor, pos);
-		BlockEntity be = editor.getBlockEntity(pos);
+		Optional<BlockEntity> obe = editor.getBlockEntity(pos);
+		if(obe.isEmpty()) return;
+		BlockEntity be = obe.get();
 		if (!(be instanceof MobSpawnerBlockEntity)) return;
 		
 		World world = be.getWorld();

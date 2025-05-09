@@ -1,11 +1,14 @@
 package com.greymerk.roguelike.dungeon.room;
 
+import java.util.List;
+
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellManager;
 import com.greymerk.roguelike.dungeon.cell.CellState;
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
+import com.greymerk.roguelike.dungeon.fragment.parts.CellSupport;
 import com.greymerk.roguelike.dungeon.fragment.parts.CryptFragment;
-import com.greymerk.roguelike.dungeon.layout.Entrance;
+import com.greymerk.roguelike.dungeon.layout.ExitType;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IBlockFactory;
@@ -26,7 +29,7 @@ public class AbyssRoom extends AbstractLargeRoom implements IRoom {
 	@Override
 	public void generate(IWorldEditor editor) {
 		Random rand = editor.getRandom(this.worldPos);
-		Coord origin = this.worldPos.copy().add(direction, Cell.SIZE);
+		Coord origin = this.worldPos.copy().add(direction, Cell.SIZE * 2).freeze();
 		this.clear(editor, rand, origin);
 		this.pillars(editor, rand, origin);
 		this.level(editor, rand, origin.copy());
@@ -38,6 +41,20 @@ public class AbyssRoom extends AbstractLargeRoom implements IRoom {
 		this.fires(editor, rand, origin);
 		this.bridge(editor, rand, origin);
 		this.features(editor, rand, origin);
+		this.supports(editor, rand, origin.copy().add(Cardinal.DOWN, 20).freeze());
+		this.generateExits(editor, rand);
+	}
+
+	private void supports(IWorldEditor editor, Random rand, Coord origin) {
+		CellSupport.generate(editor, rand, theme, origin);
+		Cardinal.directions.forEach(dir -> {
+			List.of(6, 12).forEach(i -> {
+				CellSupport.generate(editor, rand, theme, origin.copy().add(dir, i));
+				List.of(6, 12).forEach(j -> {
+					CellSupport.generate(editor, rand, theme, origin.copy().add(dir, i).add(Cardinal.left(dir), j));
+				});
+			});
+		});
 	}
 
 	private void features(IWorldEditor editor, Random rand, Coord origin) {
@@ -77,18 +94,22 @@ public class AbyssRoom extends AbstractLargeRoom implements IRoom {
 	}
 
 	private void deco(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
-
+		
 		if(rand.nextBoolean()) {
 			if(rand.nextBoolean()) {
-				Candle.generate(editor, rand, origin.copy(), Color.BLACK); return;
+				if(rand.nextBoolean()) {
+					Candle.generate(editor, rand, origin, Color.BLACK); return;	
+				} else {
+					Skull.set(editor, rand, origin, Cardinal.reverse(dir)); return;	
+				}
 			} else {
-				Skull.set(editor, rand, origin.copy(), Cardinal.reverse(dir), Skull.SKELETON); return;	
+				Air.get().set(editor, origin);
 			}
 		}
 
 		CryptFragment crypt = new CryptFragment();
-		crypt.setEmpty(rand.nextInt(3) != 0);
-		crypt.generate(editor, rand, theme, origin.copy(), dir);
+		crypt.setEmpty(rand.nextInt(5) != 0);
+		crypt.generate(editor, rand, settings, origin.copy(), dir);
 	}
 	
 	private void bridge(IWorldEditor editor, Random rand, Coord origin) {
@@ -118,7 +139,7 @@ public class AbyssRoom extends AbstractLargeRoom implements IRoom {
 	private void fire(IWorldEditor editor, Random rand, Coord origin) {
 		IStair stair = theme.getPrimary().getStair();
 		
-		Campfire.generate(editor, origin, Campfire.SOUL);
+		Campfire.generate(editor, origin, theme);
 		for(Cardinal dir : Cardinal.directions) {
 			Coord pos = origin.copy().add(dir);
 			stair.setOrientation(dir, false).set(editor, rand, pos);
@@ -159,24 +180,19 @@ public class AbyssRoom extends AbstractLargeRoom implements IRoom {
 
 	private void level(IWorldEditor editor, Random rand, Coord origin) {
 		for(Cardinal dir : Cardinal.directions) {
-			BoundingBox bb = BoundingBox.of(origin.copy());
-			bb.add(dir, 9).add(Cardinal.DOWN);
-			bb.grow(dir, 6).grow(Cardinal.left(dir), 15).grow(Cardinal.right(dir), 7);
-			RectSolid.fill(editor, rand, bb, theme.getPrimary().getFloor());
+			BoundingBox.of(origin).add(dir, 9).add(Cardinal.DOWN)
+				.grow(dir, 6).grow(Cardinal.left(dir), 15).grow(Cardinal.right(dir), 8)
+				.fill(editor, rand, theme.getPrimary().getFloor());
 			
-			bb = BoundingBox.of(origin.copy());
-			bb.add(dir, 8).add(Cardinal.DOWN);
-			bb.grow(Cardinal.orthogonal(dir), 7);
-			RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall());
-			bb.add(Cardinal.UP, 4);
-			RectSolid.fill(editor, rand, bb, theme.getPrimary().getWall());
+			BoundingBox.of(origin).add(dir, 8).add(Cardinal.DOWN).grow(Cardinal.orthogonal(dir), 7)
+				.fill(editor, rand, theme.getPrimary().getWall());
+
+			BoundingBox.of(origin).add(dir, 8).add(Cardinal.UP, 3).grow(Cardinal.orthogonal(dir), 7)
+				.fill(editor, rand, theme.getPrimary().getWall());
 			
-			Coord pos = origin.copy();
-			pos.add(dir, 12);
-			this.cell(editor, rand, pos.copy().add(Cardinal.right(dir), 6));
-			this.cell(editor, rand, pos.copy());
-			this.cell(editor, rand, pos.copy().add(Cardinal.left(dir), 6));
-			this.cell(editor, rand, pos.copy().add(Cardinal.left(dir), 12));
+			List.of(-6, 0, 6, 12).forEach(offset -> {
+				this.cell(editor, rand, origin.copy().add(dir, 12).add(Cardinal.left(dir), offset));
+			});
 		}
 	}
 
@@ -199,6 +215,13 @@ public class AbyssRoom extends AbstractLargeRoom implements IRoom {
 				pos.add(Cardinal.UP, 2).add(dir, 2).add(o);
 				stair.setOrientation(Cardinal.reverse(o), true).set(editor, rand, pos);	
 			}
+			
+			BoundingBox.of(origin).add(dir, 3).grow(Cardinal.orthogonal(dir)).grow(Cardinal.UP, 2)
+				.forEach(pos -> {
+					if(!editor.isSolid(pos.copy().add(dir))) {
+						Air.get().set(editor, pos);
+					}
+				});
 		}
 	}
 
@@ -253,10 +276,10 @@ public class AbyssRoom extends AbstractLargeRoom implements IRoom {
 
 	private void doors(IWorldEditor editor, Random rand, Coord origin) {
 		for(Cardinal dir : Cardinal.directions) {
-			if(this.entrances.get(dir) != Entrance.DOOR) continue;
+			if(this.getExitType(dir) != ExitType.DOOR) continue;
 			Coord pos = origin.copy();
 			pos.add(dir, 12);
-			Fragment.generate(Fragment.ARCH, editor, rand, theme, pos, dir);
+			Fragment.generate(Fragment.ARCH, editor, rand, settings, pos, dir);
 		}
 	}
 
@@ -282,9 +305,23 @@ public class AbyssRoom extends AbstractLargeRoom implements IRoom {
 		CellManager cells = super.getCells(dir);
 		
 		BoundingBox.of(Coord.ZERO).add(dir, 2).add(Cardinal.DOWN).grow(Cardinal.directions, 2).grow(Cardinal.DOWN)
-			.forEach(pos -> cells.add(new Cell(pos, CellState.OBSTRUCTED)));
+			.forEach(pos -> cells.add(Cell.of(pos, CellState.OBSTRUCTED, this)));
+		
+		Cardinal.directions.forEach(d -> {
+			BoundingBox.of(Coord.ZERO).add(dir, 2).add(d, 3).add(Cardinal.DOWN)
+				.grow(Cardinal.orthogonal(d), 2).grow(Cardinal.DOWN)
+				.forEach(pos -> cells.add(Cell.of(pos, CellState.POTENTIAL, this)));
+		});
 		
 		return cells;
+	}
+	
+	@Override
+	public BoundingBox getBoundingBox(Coord origin, Cardinal dir) {
+		return BoundingBox.of(origin.copy().add(dir, Cell.SIZE * 2))
+			.grow(Cardinal.directions, 15)
+			.grow(Cardinal.UP, 6)
+			.grow(Cardinal.DOWN, 23);
 	}
 	
 	@Override

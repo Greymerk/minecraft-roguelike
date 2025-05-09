@@ -1,17 +1,17 @@
 package com.greymerk.roguelike.dungeon.room;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
+import java.util.TreeSet;
 
-import com.greymerk.roguelike.dungeon.Floor;
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellManager;
 import com.greymerk.roguelike.dungeon.cell.CellState;
-import com.greymerk.roguelike.dungeon.layout.Entrance;
+import com.greymerk.roguelike.dungeon.fragment.Fragment;
+import com.greymerk.roguelike.dungeon.layout.Exit;
+import com.greymerk.roguelike.dungeon.layout.ExitType;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
@@ -20,8 +20,6 @@ import com.greymerk.roguelike.editor.boundingbox.IBounded;
 import com.greymerk.roguelike.settings.ILevelSettings;
 import com.greymerk.roguelike.theme.ITheme;
 
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtString;
 import net.minecraft.util.math.random.Random;
 
 public abstract class AbstractRoom implements IRoom{
@@ -32,12 +30,12 @@ public abstract class AbstractRoom implements IRoom{
 	protected ITheme theme;
 	protected Cardinal direction;
 	protected boolean generated;
-	protected Map<Cardinal, Entrance> entrances;
+	protected Set<Exit> exits;
 	
 	public AbstractRoom() {
 		this.direction = Cardinal.EAST;
 		this.generated = false;
-		this.entrances = new HashMap<Cardinal, Entrance>();
+		this.exits = new TreeSet<Exit>();
 	}
 	
 	public AbstractRoom(ILevelSettings settings, IBounded box, Coord worldPos) {
@@ -50,27 +48,7 @@ public abstract class AbstractRoom implements IRoom{
 		this.worldPos = worldPos.copy().freeze();
 		this.generated = false;
 		this.direction = dir;
-		this.entrances = new HashMap<Cardinal, Entrance>();
-	}
-	
-	@Override
-	public NbtCompound getNbt() {
-		ITheme theme = this.getTheme();
-		Coord pos = this.getWorldPos();
-		
-		NbtCompound nbt = new NbtCompound();
-		nbt.put("type", NbtString.of(getName()));
-		nbt.put("settings", NbtString.of(settings.getName()));
-		nbt.put("theme", NbtString.of(theme.getName()));
-		nbt.put("pos", pos.getNbt());
-		nbt.putBoolean("generated", this.generated);
-		nbt.putInt("dir", Arrays.asList(Cardinal.values()).indexOf(this.direction));
-		NbtCompound ent = new NbtCompound();
-		for(Cardinal dir : this.entrances.keySet()) {
-			ent.put(dir.name(), NbtString.of(this.entrances.get(dir).name()));
-		}
-		nbt.put("entrances", ent);
-		return nbt;
+		this.exits = new TreeSet<Exit>();
 	}
 	
 	@Override
@@ -139,63 +117,68 @@ public abstract class AbstractRoom implements IRoom{
 	}
 	
 	@Override
-	public void addEntrance(Cardinal dir, Entrance type) {
-		this.entrances.put(dir, type);
-	}
-	
-	@Override
 	public CellManager getCells(Cardinal dir) {
 		Coord origin = Coord.ZERO;
 		CellManager cells = new CellManager();
 
-		cells.add(new Cell(origin, CellState.OBSTRUCTED));
+		cells.add(Cell.of(origin, CellState.OBSTRUCTED, this));
 		
 		for(Cardinal d : Cardinal.directions) {
 			if(d == Cardinal.reverse(dir)) continue;
-			cells.add(new Cell(origin.copy().add(d), CellState.POTENTIAL));
+			cells.add(Cell.of(origin.copy().add(d), CellState.POTENTIAL, this));
 		}
 		
 		return cells;
 	}
-	
-	@Override
-	public Entrance getEntrance(Cardinal dir) {
-		if(!this.entrances.containsKey(dir)) return Entrance.ALCOVE;
-		return this.entrances.get(dir);
-	}
-	
-	@Override
-	public List<Cardinal> getEntrancesFromType(Entrance type){
-		List<Cardinal> dirs = new ArrayList<Cardinal>();
-		for(Cardinal dir : this.entrances.keySet()) {
-			if(this.entrances.get(dir) == type) {
-				dirs.add(dir);
-			}
-		}
-		return dirs;
-	}
 
 	@Override
-	public void determineEntrances(Floor f, Coord floorPos) {
-		for(Cardinal dir : Cardinal.directions) {
-			Coord fp = floorPos.copy();
-			fp.add(dir);
-			Cell c = f.getCell(fp);
-			if(c.isRoom() && !c.getWalls().contains(Cardinal.reverse(dir))){
-				this.entrances.put(dir, Entrance.DOOR);
-			} else if(c.getState() == CellState.POTENTIAL) {
-				this.entrances.put(dir, Entrance.ALCOVE);
-				Cell alcove = new Cell(fp, CellState.OBSTRUCTED);
-				Cardinal.directions.forEach(d -> alcove.addWall(d));
-				c.replace(alcove);
-			} else {
-				this.entrances.put(dir, Entrance.WALL);	
+	public void generateExits(IWorldEditor editor, Random rand) {
+		for(Exit exit : this.exits) {
+			Coord origin = exit.origin();
+			Cardinal dir = exit.dir();
+			
+			switch(exit.type()) {
+			case ALCOVE:
+				settings.getAlcove(rand).generate(editor, rand, settings, origin, dir); break;
+			case DOOR:
+				Fragment.generate(Fragment.ARCH, editor, rand, settings, origin, dir); break;
+			case WALL:
+				settings.getWallFragment(rand).generate(editor, rand, settings, origin, dir); break;
+			default:
+				break;
 			}
 		}
+	}
+	
+	@Override
+	public ExitType getExitType(Cardinal dir) {
+		if(dir == Cardinal.reverse(this.direction)) return ExitType.DOOR;
+		
+		for(Exit e : this.exits) {
+			if(e.dir() == dir 
+				&& e.origin().getY() == this.getWorldPos().getY())
+				return e.type();
+		}
+		
+		return ExitType.WALL;
+	}
+	
+	@Override
+	public List<Exit> getExits(){
+		return new ArrayList<Exit>(this.exits);
+	}
+	
+	@Override
+	public void addExit(Exit exit) {
+		this.exits.add(exit);
 	}
 	
 	public void applyFilters(IWorldEditor editor) {
 		Random rand = editor.getRandom(this.getWorldPos());
 		this.settings.applyFilters(editor, rand, getBoundingBox().get());
+	}
+	
+	public ILevelSettings getLevelSettings() {
+		return this.settings;
 	}
 }

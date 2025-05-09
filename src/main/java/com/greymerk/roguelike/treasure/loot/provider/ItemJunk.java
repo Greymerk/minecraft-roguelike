@@ -28,18 +28,27 @@ public class ItemJunk extends ItemBase{
 			loot.put(d, randomizer);
 
 			if(d.gt(Difficulty.MEDIUM)) {
-				randomizer.add(new WeightedRandomLoot(Items.BLAZE_ROD, 1, 3, 100));
-				randomizer.add(new WeightedRandomLoot(Items.AMETHYST_SHARD, 1, 3, 100));
-				randomizer.add(new WeightedRandomLoot(Items.BLAZE_ROD, 1, 3, 100));
+				randomizer.add(new WeightedRandomLoot(Items.BLAZE_ROD, 1, 3, 20));
+				randomizer.add(new WeightedRandomLoot(Items.AMETHYST_SHARD, 1, 3, 50));
 			}
 			
 			if(d.gt(Difficulty.EASY)) {
-				randomizer.add(new WeightedRandomLoot(Items.ENDER_PEARL, 1, 3, 100));
-				randomizer.add(new WeightedRandomLoot(Items.GLOW_INK_SAC, 1, 1, 100));
+				randomizer.add(new WeightedRandomLoot(Items.ENDER_PEARL, 1, 3, 30));
+				randomizer.add(new WeightedRandomLoot(Items.REDSTONE, 1, 3, 30));
+				randomizer.add(new WeightedRandomLoot(Items.LAPIS_LAZULI, 1, 3, 50));
+				randomizer.add(new WeightedRandomLoot(Items.GLOW_INK_SAC, 1, 1, 10));
 			}
 			
-			randomizer.add(new WeightedRandomLoot(Items.LEATHER, 1, d.value + 3, 100));
-			randomizer.add(new WeightedRandomLoot(Items.ARROW, 1, d.value + 3, 100));
+			if(d.gt(Difficulty.HARD)) {
+				randomizer.add(new WeightedRandomLoot(Items.SOUL_TORCH, 1, 3, 100));
+				randomizer.add(new WeightedRandomLoot(Items.SOUL_LANTERN, 1, 3, 20));
+			} else {
+				randomizer.add(new WeightedRandomLoot(Items.TORCH, 3, d.value + 8, 100));
+				randomizer.add(new WeightedRandomLoot(Items.LANTERN, 1, 3, 20));
+			}
+			
+			randomizer.add(new WeightedRandomLoot(Items.LEATHER, 1, 3, 50));
+			randomizer.add(new WeightedRandomLoot(Items.ARROW, 1, 6, 50));
 			randomizer.add(new WeightedRandomLoot(Items.INK_SAC, 1, 1, 100));
 			randomizer.add(new WeightedRandomLoot(Items.FEATHER, 1, 3, 100));
 			randomizer.add(new WeightedRandomLoot(Items.PAPER, 1, 3, 100));
@@ -56,6 +65,7 @@ public class ItemJunk extends ItemBase{
 			randomizer.add(new WeightedRandomLoot(Items.SPIDER_EYE, 1, 1, 100));
 			randomizer.add(new WeightedRandomLoot(Items.SNOWBALL, 1, 1, 100));
 			randomizer.add(new WeightedRandomLoot(Items.LEAD, 1, 1, 10));
+			randomizer.add(new WeightedRandomLoot(Items.POISONOUS_POTATO, 1, 1, 5));
 		});
 	}
 

@@ -2,21 +2,27 @@ package com.greymerk.roguelike.editor;
 
 import java.util.Objects;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
-import net.minecraft.nbt.NbtInt;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 
 /**
 Mutable Coordinate 3DVector
 **/
-public class Coord {
+public class Coord implements Comparable<Coord> {
 	
-	public static final Coord ZERO = new Coord(0,0,0).freeze();
+	public static final Codec<Coord> CODEC = RecordCodecBuilder.create(
+		instance -> instance.group(
+			Codec.INT.fieldOf("x").forGetter(c -> c.x),
+			Codec.INT.fieldOf("y").forGetter(c -> c.y),
+			Codec.INT.fieldOf("z").forGetter(c -> c.z)
+		).apply(instance, Coord::new)
+	);
+	
+	public static final Coord ZERO = Coord.of(0,0,0).freeze();
 	
 	boolean frozen;
 	
@@ -25,21 +31,25 @@ public class Coord {
 	private int z;
 	
 	public static Coord of(BlockPos bp){
-		return new Coord(bp.getX(), bp.getY(), bp.getZ());
+		return Coord.of(bp.getX(), bp.getY(), bp.getZ());
 	}
 	
 	public static Coord of(ChunkPos cpos) {
-		return new Coord(cpos.x << 4, 0, cpos.z << 4);
+		return Coord.of(cpos.x << 4, 0, cpos.z << 4);
 	}
 	
 	public static Coord of(NbtCompound tag) {
 		int x = tag.getInt("x");
 		int y = tag.getInt("y");
 		int z = tag.getInt("z");
+		return Coord.of(x, y, z);
+	}
+	
+	public static Coord of(int x, int y, int z) {
 		return new Coord(x, y, z);
 	}
 	
-	public Coord(int x, int y, int z){
+	private Coord(int x, int y, int z){
 		this.frozen = false;
 		this.x = x;
 		this.y = y;
@@ -47,7 +57,7 @@ public class Coord {
 	}
 		
 	public Coord copy() {
-		return new Coord(x, y ,z);
+		return Coord.of(x, y ,z);
 	}
 	
 	public int getX(){
@@ -62,6 +72,17 @@ public class Coord {
 		return z;
 	}
 	
+	public Coord withX(int x) {
+		return Coord.of(x, this.y, this.z);
+	}
+	
+	public Coord withY(int y) {
+		return Coord.of(this.x, y, this.z);
+	}
+	
+	public Coord withZ(int z) {
+		return Coord.of(this.x, this.y, z);
+	}
 
 	public Coord add(Cardinal dir){
 		return add(dir, 1);
@@ -69,19 +90,19 @@ public class Coord {
 	
 	public Coord add(Cardinal dir, int amount){
 		switch(dir){
-		case EAST: if(this.frozen) {return new Coord(x + amount, y, z);} else {this.x += amount; return this;}
-		case WEST: if(this.frozen) {return new Coord(x - amount, y, z);} else {this.x -= amount; return this;}
-		case UP: if(this.frozen) {return new Coord(x, y + amount, z);} else {this.y += amount; return this;}
-		case DOWN: if(this.frozen) {return new Coord(x, y - amount, z);} else {this.y -= amount; return this;}
-		case NORTH: if(this.frozen) {return new Coord(x, y, z - amount);} else {this.z -= amount; return this;}
-		case SOUTH: if(this.frozen) {return new Coord(x, y, z + amount);} else {this.z += amount; return this;}
+		case EAST: if(this.frozen) {return Coord.of(x + amount, y, z);} else {this.x += amount; return this;}
+		case WEST: if(this.frozen) {return Coord.of(x - amount, y, z);} else {this.x -= amount; return this;}
+		case UP: if(this.frozen) {return Coord.of(x, y + amount, z);} else {this.y += amount; return this;}
+		case DOWN: if(this.frozen) {return Coord.of(x, y - amount, z);} else {this.y -= amount; return this;}
+		case NORTH: if(this.frozen) {return Coord.of(x, y, z - amount);} else {this.z -= amount; return this;}
+		case SOUTH: if(this.frozen) {return Coord.of(x, y, z + amount);} else {this.z += amount; return this;}
 		}
 		return this.frozen ? this.copy() : this;
 	}
 	
 	public Coord add(Coord other){
 		if(this.frozen) {
-			return new Coord(
+			return Coord.of(
 					x + other.x,
 					y + other.y,
 					z + other.z);
@@ -91,13 +112,11 @@ public class Coord {
 			z += other.z;
 			return this;
 		}
-		
-		
 	}
 	
 	public Coord sub(Coord other){
 		if(this.frozen) {
-			return new Coord(
+			return Coord.of(
 					x - other.x,
 					y - other.y,
 					z - other.z);
@@ -110,7 +129,7 @@ public class Coord {
 	}
 	
 	public Coord mul(Coord other) {
-		return new Coord(x * other.x, y * other.y, z * other.z);
+		return Coord.of(x * other.x, y * other.y, z * other.z);
 	}
 	
 	public int dot(Coord other) {
@@ -127,7 +146,7 @@ public class Coord {
 		double px = proj * onto.x;
 		double py = proj * onto.y;
 		double pz = proj * onto.z;
-		return new Coord(
+		return Coord.of(
 					(int)Math.floor(px), 
 					(int)Math.floor(py),
 					(int)Math.floor(pz));
@@ -148,7 +167,7 @@ public class Coord {
 	}
 	
 	public Coord unit() {
-		return new Coord(
+		return Coord.of(
 			x == 0 ? 0 : x / Math.abs(x),
 			y == 0 ? 0 : y / Math.abs(y),
 			z == 0 ? 0 : z / Math.abs(z));
@@ -195,6 +214,12 @@ public class Coord {
 		}
 	}
 	
+	
+	/**
+	 * Protects this Coord object from further mutation.
+	 * Any operations altering the position of this Coord
+	 * will return a copy.
+	 */
 	public Coord freeze() {
 		this.frozen = true;
 		return this;
@@ -207,11 +232,7 @@ public class Coord {
 	
 	@Override
 	public String toString(){
-		String toReturn = "";
-		toReturn += "x: " + x + " ";
-		toReturn += "y: " + y + " ";
-		toReturn += "z: " + z;
-		return toReturn;
+		return String.format("[%d %d %d]", x, y, z);
 	}
 	
 	@Override
@@ -232,20 +253,12 @@ public class Coord {
 	public ChunkPos getChunkPos() {
 		return new ChunkPos(this.x >> 4, this.z >> 4);
 	}
-	
-	public NbtElement getNbt() {
-		NbtCompound nbt = new NbtCompound();
-		nbt.put("x", NbtInt.of(x));
-		nbt.put("y", NbtInt.of(y));
-		nbt.put("z", NbtInt.of(z));
-		return nbt;
-	}
 
-	public JsonElement asJson() {
-		JsonObject jsonCoord = new JsonObject();
-		jsonCoord.addProperty("x", this.x);
-		jsonCoord.addProperty("y", this.y);
-		jsonCoord.addProperty("z", this.z);
-		return jsonCoord;
+	@Override
+	public int compareTo(Coord other) {
+		if(this.x != other.x) return this.x - other.x;
+		if(this.y != other.y) return this.y - other.y;
+		if(this.z != other.z) return this.z - other.z;
+		return 0;
 	}
 }

@@ -2,7 +2,6 @@ package com.greymerk.roguelike.theme;
 
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.MetaBlock;
-import com.greymerk.roguelike.editor.blocks.BlockType;
 import com.greymerk.roguelike.editor.blocks.door.Door;
 import com.greymerk.roguelike.editor.blocks.door.DoorType;
 import com.greymerk.roguelike.editor.blocks.door.IDoor;
@@ -12,6 +11,8 @@ import com.greymerk.roguelike.editor.blocks.stair.IStair;
 import com.greymerk.roguelike.editor.blocks.stair.MetaStair;
 import com.greymerk.roguelike.editor.blocks.stair.Stair;
 import com.greymerk.roguelike.editor.factories.BlockFloor;
+
+import net.minecraft.block.Blocks;
 
 
 public class BlockSet implements IBlockSet {
@@ -24,12 +25,37 @@ public class BlockSet implements IBlockSet {
 	protected IDoor door;
 	protected IBlockFactory lightblock;
 	protected IBlockFactory liquid;
+	private boolean naturalFire;
 	
-	public BlockSet(){}
+	public static Builder builder() {
+		return new Builder();
+	}
+	
+	protected BlockSet() {}
+	
+	private BlockSet(BlockFloor floor, 
+			IBlockFactory walls,
+			IBlockFactory pillar,
+			IStair stair,
+			ISlab slab,
+			IDoor door,
+			IBlockFactory lightblock,
+			IBlockFactory liquid,
+			boolean naturalFire){
+		this.floor = floor;
+		this.walls = walls;
+		this.pillar = pillar;
+		this.stair = stair;
+		this.slab = slab;
+		this.door = door;
+		this.lightblock = lightblock;
+		this.liquid = liquid;
+		this.naturalFire = naturalFire;
+	}
 	
 	@Override
 	public IBlockFactory getWall() {
-		return walls != null ? walls : BlockType.get(BlockType.STONE_BRICK);
+		return walls != null ? walls : MetaBlock.of(Blocks.STONE_BRICKS);
 	}
 
 	@Override
@@ -54,22 +80,12 @@ public class BlockSet implements IBlockSet {
 
 	@Override
 	public IBlockFactory getLightBlock() {
-		return this.lightblock != null ? this.lightblock : BlockType.get(BlockType.GLOWSTONE);
+		return this.lightblock != null ? this.lightblock : MetaBlock.of(Blocks.GLOWSTONE);
 	}
 
 	@Override
 	public IBlockFactory getLiquid() {
-		return this.liquid != null ? this.liquid : BlockType.get(BlockType.WATER_FLOWING);
-	}
-
-	@Override
-	public IBlockSet setSlab(ISlab slab) {
-		this.slab = slab;
-		return this;
-	}
-	
-	public void setLiquid(MetaBlock liquid) {
-		this.liquid = liquid;
+		return this.liquid != null ? this.liquid : MetaBlock.of(Blocks.WATER);
 	}
 	
 	@Override
@@ -78,44 +94,74 @@ public class BlockSet implements IBlockSet {
 	}
 
 	@Override
-	public IBlockSet setFloor(IBlockFactory floor) {
-		this.floor = new BlockFloor(floor);
-		return this;
+	public boolean naturalFire() {
+		return this.naturalFire;
+	}
+	
+	public static class Builder {
+		
+		private BlockFloor floor;
+		private IBlockFactory walls;
+		private IBlockFactory pillar;
+		private IStair stair;
+		private ISlab slab;
+		private IDoor door;
+		private IBlockFactory lightblock;
+		private IBlockFactory liquid;
+		private boolean naturalFire;
+		
+		public Builder() {
+			this.naturalFire = true;
+		}
+		
+		public Builder floor(IBlockFactory floor) {
+			this.floor = BlockFloor.of(floor);
+			return this;
+		}
+		
+		public Builder walls(IBlockFactory walls) {
+			this.walls = walls;
+			return this;
+		}
+		
+		public Builder pillar(IBlockFactory pillar) {
+			this.pillar = pillar;
+			return this;
+		}
+		
+		public Builder stair(IStair stair) {
+			this.stair = stair;
+			return this;
+		}
+		
+		public Builder slab(ISlab slab) {
+			this.slab = slab;
+			return this;
+		}
+		
+		public Builder door(IDoor door) {
+			this.door = door;
+			return this;
+		}
+		
+		public Builder lightblock(IBlockFactory lightblock) {
+			this.lightblock = lightblock;
+			return this;
+		}
+		
+		public Builder liquid(IBlockFactory liquid) {
+			this.liquid = liquid;
+			return this;
+		}
+		
+		public Builder naturalFire(boolean natural) {
+			this.naturalFire = natural;
+			return this;
+		}
+		
+		public BlockSet build() {
+			return new BlockSet(floor, walls, pillar, stair, slab, door, lightblock, liquid, naturalFire);
+		}
 	}
 
-	@Override
-	public IBlockSet setWall(IBlockFactory wall) {
-		this.walls = wall;
-		return this;
-	}
-
-	@Override
-	public IBlockSet setPillar(IBlockFactory pillar) {
-		this.pillar = pillar;
-		return this;
-	}
-
-	@Override
-	public IBlockSet setStair(IStair stair) {
-		this.stair = stair;
-		return this;
-	}
-
-	@Override
-	public IBlockSet setDoor(IDoor door) {
-		this.door = door;
-		return this;
-	}
-
-	@Override
-	public IBlockSet setLightBlock(IBlockFactory lightBlock) {
-		this.lightblock = lightBlock;
-		return this;
-	}
-
-	@Override
-	public IBlockSet setLiquid(IBlockFactory liquid) {
-		this.liquid = liquid;
-		return this;
-	}
 }

@@ -2,6 +2,7 @@ package com.greymerk.roguelike.settings.level;
 
 import java.util.ArrayList;
 
+import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
 import com.greymerk.roguelike.dungeon.room.Room;
 import com.greymerk.roguelike.dungeon.room.RoomProvider;
@@ -46,10 +47,16 @@ public class LevelSettingsCrumbledMossy extends LevelSettingsBase implements ILe
 		this.filters.add(Filter.get(Filter.MUD));
 		this.filters.add(Filter.get(Filter.VINE));
 		this.filters.add(Filter.get(Filter.EXPLOSIVE));
+		
 	}
 
 	@Override
 	public String getName() {
 		return LevelSettings.CRUMBLED_MOSSY.name();
+	}
+
+	@Override
+	public Difficulty getDifficulty() {
+		return Difficulty.HARD;
 	}
 }

@@ -1,23 +1,24 @@
 
 package com.greymerk.roguelike.dungeon.room;
 
-import java.util.Arrays;
+import java.util.List;
 
-import com.greymerk.roguelike.dungeon.layout.Entrance;
+import com.greymerk.roguelike.dungeon.layout.Exit;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
-import com.greymerk.roguelike.editor.boundingbox.IBounded;
 import com.greymerk.roguelike.settings.ILevelSettings;
 import com.greymerk.roguelike.settings.LevelSettings;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 
-import net.minecraft.nbt.NbtCompound;
+import net.minecraft.util.dynamic.Codecs;
 
 public enum Room {
 
 	CORRIDOR, ENTRANCE, STAIRWAY, CROSS, BEDROOM, CRYPT,
 	RESERVOIR, CISTERN, OSSUARY, KITCHEN, CREEPER, ENDER,
 	ABYSS, PRISON, MUSIC, BREWING, PANOPTICON, BANQUET, SCULK,
-	BTEAM, LIBRARY, SMITH;
+	BTEAM, LIBRARY, SMITH, PIT, BALCONY, IMPERIAL_STAIRWAY;
 	
 	public static IRoom fromType(Room type) {
 		switch(type) {
@@ -43,27 +44,28 @@ public enum Room {
 		case BTEAM: return new BTeamRoom();
 		case LIBRARY: return new LibraryRoom();
 		case SMITH: return new SmithRoom();
+		case PIT: return new PitRoom();
+		case BALCONY: return new BalconyRoom();
+		case IMPERIAL_STAIRWAY: return new ImperialStairway();
 		default: return new Corridor();
 		}
 	}
 	
-	public static IRoom createFromNBT(NbtCompound tag) {
-		Room type = get(tag.get("type").asString());
-		IRoom room = fromType(type);
-		room.setLevelSettings(LevelSettings.get(tag.getString("settings")));
-		room.setWorldPos(Coord.of(tag.getCompound("pos")));
-		int dirValue = tag.getInt("dir");
-		room.setDirection(Arrays.asList(Cardinal.values()).get(dirValue));
-		room.setGenerated(tag.getBoolean("generated"));
-		NbtCompound entrances = tag.getCompound("entrances");
-		for(Cardinal dir : Cardinal.directions) {
-			if(!entrances.contains(dir.name())) continue;
-			String entName = entrances.getString(dir.name());
-			Entrance entType = Entrance.valueOf(entName);
-			room.addEntrance(dir, entType);
-		}
-		return room;
-	}
+	public static final Codec<List<Exit>> EXITS_CODEC = Codec.list(Exit.CODEC);
+	
+	public static final Codec<IRoom> CODEC = RecordCodecBuilder.create(
+			instance -> instance.group(
+				Codecs.NON_EMPTY_STRING.fieldOf("name").forGetter(room -> room.getName()),
+				Codecs.NON_EMPTY_STRING.fieldOf("settings").forGetter(room -> room.getLevelSettings().getName()),
+				Coord.CODEC.fieldOf("pos").forGetter(room -> room.getWorldPos()),
+				Codecs.NON_EMPTY_STRING.fieldOf("dir").forGetter(room -> room.getDirection().name()),
+				EXITS_CODEC.fieldOf("exits").forGetter(room -> room.getExits()),
+				Codec.BOOL.fieldOf("generated").forGetter(room -> room.isGenerated())
+			).apply(instance, 
+				(name, settings, pos, dir, exits, generated) -> 
+					Room.getInstance(name, settings, pos, dir, exits, generated))
+	);
+	
 	
 	public static Room get(String name) {
 		for(Room type : Room.values()) {
@@ -99,11 +101,25 @@ public enum Room {
 		return room;
 	}
 	
-	public static IRoom getInstance(Room type, ILevelSettings settings, IBounded box, Coord pos, Cardinal dir) {
+	public static IRoom getInstance(Room type, ILevelSettings settings, Coord pos, Cardinal dir, List<Exit> exits, boolean generated) {
 		IRoom room = fromType(type);
 		room.setLevelSettings(settings);
 		room.setWorldPos(pos);
 		room.setDirection(dir);
+		exits.forEach(e -> {
+			room.addExit(e);
+		});
+		room.setGenerated(generated);
 		return room;
+	}
+	
+	public static IRoom getInstance(String name, String settings, Coord pos, String dir, List<Exit> exits, boolean generated) {
+		return Room.getInstance(
+			Room.get(name),
+			LevelSettings.get(settings),
+			pos,
+			Cardinal.of(dir),
+			exits,
+			generated);
 	}
 }

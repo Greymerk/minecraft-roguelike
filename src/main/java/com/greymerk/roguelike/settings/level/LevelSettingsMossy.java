@@ -2,6 +2,7 @@ package com.greymerk.roguelike.settings.level;
 
 import java.util.ArrayList;
 
+import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
 import com.greymerk.roguelike.dungeon.room.Room;
 import com.greymerk.roguelike.dungeon.room.RoomProvider;
@@ -26,6 +27,9 @@ public class LevelSettingsMossy extends LevelSettingsBase implements ILevelSetti
 		rooms.addRandomChoice(Room.CRYPT, 3);
 		rooms.addRoomSometimes(Room.CREEPER, 0.1);
 		rooms.addRoomSometimes(Room.OSSUARY, 0.2);
+		rooms.addRoomSometimes(Room.ABYSS, 0.3);
+		rooms.addRoomSometimes(Room.PIT, 0.2);
+		rooms.addRoomSometimes(Room.BALCONY, 0.3);
 		rooms.addRoomOnce(Room.CROSS);
 		
 		this.walls = new WeightedRandomizer<Fragment>(10);
@@ -42,10 +46,16 @@ public class LevelSettingsMossy extends LevelSettingsBase implements ILevelSetti
 
 		this.filters = new ArrayList<IFilter>();
 		this.filters.add(Filter.get(Filter.VINE));
+		//this.filters.add(Filter.get(Filter.LEAFLITTER));
 	}
 
 	@Override
 	public String getName() {
 		return LevelSettings.MOSSY.name();
+	}
+
+	@Override
+	public Difficulty getDifficulty() {
+		return Difficulty.HARD;
 	}
 }

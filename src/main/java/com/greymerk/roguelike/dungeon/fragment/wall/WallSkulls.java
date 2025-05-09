@@ -7,6 +7,7 @@ import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.blocks.Candle;
 import com.greymerk.roguelike.editor.blocks.Skull;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
+import com.greymerk.roguelike.settings.ILevelSettings;
 import com.greymerk.roguelike.theme.ITheme;
 
 import net.minecraft.util.math.random.Random;
@@ -14,7 +15,8 @@ import net.minecraft.util.math.random.Random;
 public class WallSkulls implements IFragment{
 
 	@Override
-	public void generate(IWorldEditor editor, Random rand, ITheme theme, Coord origin, Cardinal dir) {
+	public void generate(IWorldEditor editor, Random rand, ILevelSettings settings, Coord origin, Cardinal dir) {
+		ITheme theme = settings.getTheme();
 		theme.getSecondary().getStair().setOrientation(Cardinal.reverse(dir), true)
 		.fill(editor, rand, BoundingBox.of(origin).add(dir, 2).grow(Cardinal.orthogonal(dir)));
 

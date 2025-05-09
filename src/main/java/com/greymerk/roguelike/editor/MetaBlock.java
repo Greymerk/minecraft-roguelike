@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.state.property.Property;
@@ -28,6 +29,10 @@ public class MetaBlock extends BlockBase{
 	
 	public static MetaBlock of(BlockState state) {
 		return new MetaBlock(state);
+	}
+	
+	public static List<MetaBlock> listOf(List<Block> blocks){
+		return blocks.stream().map(b -> MetaBlock.of(b)).toList();
 	}
 	
 	private MetaBlock(Block block){
@@ -62,6 +67,14 @@ public class MetaBlock extends BlockBase{
 		
 	public boolean isIn(TagKey<Block> tag) {
 		return this.state.isIn(tag);
+	}
+	
+	public boolean isIn(List<TagKey<Block>> tags) {
+		for(TagKey<Block> tag : tags) {
+			if(isIn(tag)) return true;
+		}
+		
+		return false;
 	}
 	
 	public <T extends Comparable<T>> T get(Property<T> property) {
@@ -113,16 +126,16 @@ public class MetaBlock extends BlockBase{
 				BlockTags.SHOVEL_MINEABLE,
 				BlockTags.BADLANDS_TERRACOTTA);
 		
-		for(TagKey<Block> tag : tags) {
-			if(this.isIn(tag)) return true;
-		}
-		
-		return false;
+		return this.isIn(tags);
 	}
 
-
-
-
-
-
+	public boolean isLiquid() {
+		Block b = this.state.getBlock();
+		return b == Blocks.WATER || b == Blocks.LAVA;
+	}
+	
+	@Override
+	public String toString() {
+		return this.state.toString();
+	}
 }
