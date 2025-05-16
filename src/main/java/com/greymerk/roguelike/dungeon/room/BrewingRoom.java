@@ -29,7 +29,6 @@ import com.greymerk.roguelike.util.IWeighted;
 
 import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.util.math.random.Random;
 
 public class BrewingRoom extends AbstractRoom implements IRoom {
@@ -293,12 +292,9 @@ public class BrewingRoom extends AbstractRoom implements IRoom {
 	}
 	
 	private void brewingStand(IWorldEditor editor, Random rand, Coord origin) {
-		BrewingStand.generate(editor, origin);
 		IWeighted<ItemStack> provider = Loot.getProvider(Loot.POTION, settings.getDifficulty(), editor);
-		BrewingStand.slots.forEach(slot -> {
-			BrewingStand.add(editor, origin, slot, provider.get(rand));
-		});
-		BrewingStand.add(editor, origin, BrewingStand.FUEL, new ItemStack(Items.BLAZE_POWDER, rand.nextBetween(1, 4)));
+		BrewingStand.generate(editor, rand, origin, rand.nextBetween(1, 4), List.of(
+				provider.get(rand), provider.get(rand), provider.get(rand)));
 	}
 	
 	@Override

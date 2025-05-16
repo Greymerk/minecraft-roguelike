@@ -1,7 +1,5 @@
 package com.greymerk.roguelike.editor.blocks;
 
-import java.util.Optional;
-
 import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
@@ -12,7 +10,6 @@ import com.greymerk.roguelike.util.WeightedChoice;
 import com.greymerk.roguelike.util.WeightedRandomizer;
 
 import net.minecraft.block.Blocks;
-import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.DecoratedPotBlockEntity;
 import net.minecraft.block.entity.Sherds;
 import net.minecraft.component.ComponentChanges;
@@ -29,29 +26,21 @@ public class DecoratedPot {
 	}
 	
 	public static void set(IWorldEditor editor, Random rand, Difficulty diff, Coord origin, Loot type) {
-		
-		if(!MetaBlock.of(Blocks.DECORATED_POT).set(editor, origin)) return;
-		
-		Optional<BlockEntity> obe = editor.getBlockEntity(origin);
-		if(obe.isEmpty()) return;
-		BlockEntity be = obe.get();
-		if(!(be instanceof DecoratedPotBlockEntity)) return;
-		DecoratedPotBlockEntity potEntity = (DecoratedPotBlockEntity)be;
-		
-		IWeighted<Item> faceroll = getFaceRoller();
-		
-		Sherds sherds = new Sherds(faceroll.get(rand), faceroll.get(rand), faceroll.get(rand), faceroll.get(rand));
-		
-		ComponentChanges.Builder changes = ComponentChanges.builder();
-		changes.add(DataComponentTypes.POT_DECORATIONS, sherds);
-		
-		potEntity.readComponents(potEntity.getComponents(), changes.build());		
+		editor.setBlockEntity(origin, MetaBlock.of(Blocks.DECORATED_POT), DecoratedPotBlockEntity.class).ifPresent(potEntity -> {
+			IWeighted<Item> faceroll = getFaceRoller();
+			
+			Sherds sherds = new Sherds(faceroll.get(rand), faceroll.get(rand), faceroll.get(rand), faceroll.get(rand));
+			
+			ComponentChanges.Builder changes = ComponentChanges.builder();
+			changes.add(DataComponentTypes.POT_DECORATIONS, sherds);
+			
+			potEntity.readComponents(potEntity.getComponents(), changes.build());		
 
-		ItemStack loot = Loot.getLootItem(editor, type, rand, diff);
-		potEntity.setStack(loot);
-		
-		potEntity.markDirty();
-		
+			ItemStack loot = Loot.getLootItem(editor, type, rand, diff);
+			potEntity.setStack(loot);
+			
+			potEntity.markDirty();	
+		});
 	}
 	
 	private static IWeighted<Item> getFaceRoller(){

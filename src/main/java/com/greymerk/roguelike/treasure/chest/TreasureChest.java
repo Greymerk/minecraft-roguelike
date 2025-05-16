@@ -18,7 +18,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FacingBlock;
 import net.minecraft.block.HorizontalFacingBlock;
-import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.LootableContainerBlockEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootTable;
@@ -56,17 +55,10 @@ public class TreasureChest implements ITreasureChest, Iterable<ItemStack>{
 	
 	private Optional<ITreasureChest> set(IWorldEditor editor, Random rand, Coord pos, Cardinal dir) {
 		setOrientation(dir);
-		if(!block.set(editor, pos)) {
-			return Optional.empty();
-		}
+		Optional<LootableContainerBlockEntity> container = editor.setBlockEntity(pos, block, LootableContainerBlockEntity.class);
+		if(container.isEmpty()) return Optional.empty();
 		
-		Optional<BlockEntity> obe = editor.getBlockEntity(pos);
-		if(obe.isEmpty()) return Optional.empty();
-		
-		BlockEntity be = obe.get();
-		if(!(be instanceof LootableContainerBlockEntity)) return Optional.empty();
-		
-		this.chest = (LootableContainerBlockEntity) be;
+		this.chest = container.get();
 		this.inventory = new Inventory(rand, chest);
 		
 		Optional<RegistryKey<LootTable>> maybeTable = Treasure.getLootTable(type, diff);

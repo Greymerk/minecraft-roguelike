@@ -126,11 +126,29 @@ public class WorldEditor implements IWorldEditor{
 		return this.world.getBlockEntity(pos.getBlockPos()) != null;
 	}
 	
-	@Override
-	public Optional<BlockEntity> getBlockEntity(Coord pos) {
+	private Optional<BlockEntity> getBlockEntity(Coord pos) {
 		BlockEntity be = world.getBlockEntity(pos.getBlockPos());
 		if(be == null) return Optional.empty();
 		return Optional.of(be);
+	}
+	
+	@Override
+	public <T> Optional<T> getBlockEntity(Coord pos, Class<T> beClass){
+		Optional<BlockEntity> obe = this.getBlockEntity(pos);
+		if(obe.isEmpty()) return Optional.empty();
+		
+		BlockEntity be = obe.get();
+		if(beClass.isInstance(be)) {
+			return Optional.of(beClass.cast(be));
+		} else {
+			return Optional.empty();
+		}
+	}
+	
+	@Override
+	public <T> Optional<T> setBlockEntity(Coord pos, MetaBlock block, Class<T> beClass){
+		if(!this.set(pos, block)) return Optional.empty();
+		return this.getBlockEntity(pos, beClass);
 	}
 	
 	@Override

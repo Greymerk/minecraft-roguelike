@@ -1,7 +1,5 @@
 package com.greymerk.roguelike.editor.blocks;
 
-import java.util.Optional;
-
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
@@ -9,7 +7,6 @@ import com.greymerk.roguelike.editor.MetaBlock;
 
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FurnaceBlock;
-import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.FurnaceBlockEntity;
 import net.minecraft.item.ItemStack;
 
@@ -27,16 +24,14 @@ public class Furnace {
 	}
 	
 	public static void generate(IWorldEditor editor, Cardinal dir, Coord pos, boolean lit, ItemStack fuel){
-		MetaBlock.of(Blocks.FURNACE)
-			.with(FurnaceBlock.LIT, lit)
-			.with(FurnaceBlock.FACING, Cardinal.facing(Cardinal.reverse(dir)))
-			.set(editor, pos);
+		editor.setBlockEntity(pos, 
+			MetaBlock.of(Blocks.FURNACE)
+				.with(FurnaceBlock.LIT, lit)
+				.with(FurnaceBlock.FACING, Cardinal.facing(Cardinal.reverse(dir))), 
+			FurnaceBlockEntity.class).ifPresent(furnace -> {
+				if(fuel.equals(ItemStack.EMPTY)) return;
+				furnace.setStack(FUEL_SLOT, fuel);	
+			});
 		
-		Optional<BlockEntity> obe = editor.getBlockEntity(pos);
-		if(obe.isEmpty()) return;
-		BlockEntity te = obe.get();
-		if(!(te instanceof FurnaceBlockEntity)) return;
-		FurnaceBlockEntity teFurnace = (FurnaceBlockEntity)te;
-		teFurnace.setStack(FUEL_SLOT, fuel);
 	}
 }

@@ -3,7 +3,6 @@ package com.greymerk.roguelike.editor;
 import java.util.Optional;
 import java.util.function.Predicate;
 
-import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
@@ -22,8 +21,10 @@ public interface IWorldEditor {
 	public MetaBlock getBlock(Coord pos);
 	
 	public boolean hasBlockEntity(Coord pos);
+		
+	public <T> Optional<T> getBlockEntity(Coord pos, Class<T> beClass);
 	
-	public Optional<BlockEntity> getBlockEntity(Coord pos);
+	public <T> Optional<T> setBlockEntity(Coord pos, MetaBlock block, Class<T> beClass);
 	
 	public long getSeed(Coord pos);
 	

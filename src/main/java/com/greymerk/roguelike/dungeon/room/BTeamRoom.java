@@ -1,5 +1,6 @@
 package com.greymerk.roguelike.dungeon.room;
 
+import java.util.List;
 import java.util.Optional;
 
 import com.greymerk.roguelike.dungeon.cell.Cell;
@@ -58,10 +59,9 @@ public class BTeamRoom extends AbstractRoom implements IRoom {
 		
 		MetaBlock.of(Blocks.BOOKSHELF).set(editor, origin.add(Cardinal.right(direction), 5).add(direction, 7));
 		Coord stand = origin.add(Cardinal.right(direction), 5).add(direction, 7).add(Cardinal.UP);
-		BrewingStand.generate(editor, stand);
-		BrewingStand.add(editor, stand, BrewingStand.LEFT, PotionMixture.getBooze(rand));
-		BrewingStand.add(editor, stand, BrewingStand.MIDDLE, PotionMixture.getBooze(rand));
-		BrewingStand.add(editor, stand, BrewingStand.RIGHT, PotionMixture.getBooze(rand));
+		
+		BrewingStand.generate(editor, rand, stand, 0, List.of(
+				PotionMixture.getBooze(rand), PotionMixture.getBooze(rand), PotionMixture.getBooze(rand)));
 	}
 
 	private void emeraldB(IWorldEditor editor, Random rand, Coord origin) {

@@ -1,14 +1,11 @@
 package com.greymerk.roguelike.editor.blocks.spawners;
 
-import java.util.Optional;
-
 import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.MetaBlock;
 
 import net.minecraft.block.Blocks;
-import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.MobSpawnerBlockEntity;
 import net.minecraft.block.spawner.MobSpawnerLogic;
 import net.minecraft.nbt.NbtCompound;
@@ -25,28 +22,23 @@ public class Spawnable {
 	}
 		
 	public void generate(IWorldEditor editor, Random rand, Coord pos, Difficulty diff){
-
-		MetaBlock.of(Blocks.SPAWNER).set(editor, pos);
-		Optional<BlockEntity> obe = editor.getBlockEntity(pos);
-		if(obe.isEmpty()) return;
-		BlockEntity be = obe.get();
-		if (!(be instanceof MobSpawnerBlockEntity)) return;
-		
-		World world = be.getWorld();
-		
-		NbtCompound nbt = new NbtCompound();
-		nbt.putInt("x", pos.getX());
-		nbt.putInt("y", pos.getY());
-		nbt.putInt("z", pos.getZ());
-		
-		nbt.put("SpawnPotentials", getSpawnPotentials(rand, diff));
-		nbt.put("SpawnData", getSpawnData(rand, diff));
-		
-		MobSpawnerBlockEntity spawner = (MobSpawnerBlockEntity)be;
-		MobSpawnerLogic logic = spawner.getLogic();
-		spawner.setEntityType(Spawner.getType(type), rand);
-		logic.readNbt(world, pos.getBlockPos(), nbt);
-		spawner.markDirty();
+		editor.setBlockEntity(pos, MetaBlock.of(Blocks.SPAWNER), MobSpawnerBlockEntity.class).ifPresent(be -> {
+			World world = be.getWorld();
+			
+			NbtCompound nbt = new NbtCompound();
+			nbt.putInt("x", pos.getX());
+			nbt.putInt("y", pos.getY());
+			nbt.putInt("z", pos.getZ());
+			
+			nbt.put("SpawnPotentials", getSpawnPotentials(rand, diff));
+			nbt.put("SpawnData", getSpawnData(rand, diff));
+			
+			MobSpawnerBlockEntity spawner = (MobSpawnerBlockEntity)be;
+			MobSpawnerLogic logic = spawner.getLogic();
+			spawner.setEntityType(Spawner.getType(type), rand);
+			logic.readNbt(world, pos.getBlockPos(), nbt);
+			spawner.markDirty();	
+		});
 	}
 	
 	public NbtCompound getSpawnData(Random rand, Difficulty diff) {

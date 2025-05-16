@@ -3,6 +3,8 @@ package com.greymerk.roguelike.dungeon.room;
 import java.util.List;
 
 import com.greymerk.roguelike.dungeon.cell.Cell;
+import com.greymerk.roguelike.dungeon.cell.CellManager;
+import com.greymerk.roguelike.dungeon.cell.CellState;
 import com.greymerk.roguelike.dungeon.fragment.parts.CellSupport;
 import com.greymerk.roguelike.dungeon.fragment.parts.Pillar;
 import com.greymerk.roguelike.editor.Cardinal;
@@ -13,6 +15,7 @@ import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.MetaBlock;
 import com.greymerk.roguelike.editor.blocks.Air;
 import com.greymerk.roguelike.editor.blocks.BookShelf;
+import com.greymerk.roguelike.editor.blocks.Candle;
 import com.greymerk.roguelike.editor.blocks.ColorBlock;
 import com.greymerk.roguelike.editor.blocks.Lantern;
 import com.greymerk.roguelike.editor.blocks.Terracotta;
@@ -36,11 +39,13 @@ public class LibraryRoom extends AbstractLargeRoom implements IRoom {
 		this.floor(editor, rand, origin);
 		this.ceiling(editor, rand, origin);
 		this.walls(editor, rand, origin);
-		this.decorations(editor, rand, origin);
+		//this.decorations(editor, rand, origin);
+		this.shelves(editor, rand, origin);
 		this.supports(editor, rand, origin);
 		this.generateExits(editor, rand);
 	}
 
+	/*
 	private void decorations(IWorldEditor editor, Random rand, Coord origin) {
 		Cardinal.directions.forEach(dir -> {
 			Cardinal.orthogonal(dir).forEach(o -> {
@@ -50,7 +55,35 @@ public class LibraryRoom extends AbstractLargeRoom implements IRoom {
 				settings.getWallFragment(rand).generate(editor, rand, settings, origin.add(dir, 12).add(o, 12), dir);
 			});
 		});
+	}
+	*/
+
+	private void shelves(IWorldEditor editor, Random rand, Coord origin) {
+		Cardinal.directions.forEach(dir -> {
+			Cardinal.orthogonal(dir).forEach(o -> {
+				this.shelf(editor, rand, origin.copy().add(dir, 8).add(o, 5).freeze(), dir);
+			});
+		});
+	}
+
+	private void shelf(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
+		BoundingBox.of(origin).add(Cardinal.UP)
+			.grow(Cardinal.orthogonal(dir)).grow(Cardinal.UP, 2)
+			.forEach(pos -> {
+				if(rand.nextInt(4) == 0) {
+					BookShelf.set(editor, rand, this.settings.getDifficulty(), pos, Cardinal.reverse(dir), rand.nextInt(3) + 1);
+				} else {
+					MetaBlock.of(Blocks.BOOKSHELF).set(editor, pos);
+				}
+			});
+		this.theme.getSecondary().getStair().setOrientation(Cardinal.reverse(dir), true)
+			.fill(editor, rand, BoundingBox.of(origin).add(Cardinal.reverse(dir)).grow(Cardinal.orthogonal(dir)));
 		
+		BoundingBox.of(origin).add(Cardinal.reverse(dir)).add(Cardinal.UP).grow(Cardinal.orthogonal(dir))
+			.forEach(pos -> {
+				if(rand.nextBoolean()) return;
+				Candle.generate(editor, rand, pos);
+			});
 	}
 
 	private void walls(IWorldEditor editor, Random rand, Coord origin) {
@@ -157,6 +190,27 @@ public class LibraryRoom extends AbstractLargeRoom implements IRoom {
 		Cardinal.directions.forEach(dir -> {
 			BoundingBox.of(origin).add(dir, 15).grow(Cardinal.orthogonal(dir), 15).grow(Cardinal.UP, 5).fill(editor, rand, theme.getPrimary().getWall(), Fill.SOLID);
 		});
+	}
+	
+	@Override
+	public CellManager getCells(Cardinal dir) {
+		CellManager cells = new CellManager();
+		BoundingBox.of(Coord.ZERO).add(dir, 2)
+			.grow(Cardinal.directions, 2)
+			.forEach(pos -> {
+				cells.add(Cell.of(pos, CellState.OBSTRUCTED, this));
+			});
+		
+		Cardinal.directions.forEach(d -> {
+			BoundingBox.of(Coord.ZERO.add(dir, 2)).add(d, 3)
+				.grow(Cardinal.orthogonal(d), 2)
+				.forEach(pos -> {
+					if(pos.equals(Coord.ZERO.add(Cardinal.reverse(dir), 3))) return;
+					cells.add(Cell.of(pos, CellState.POTENTIAL, this));
+				});
+		});
+		
+		return cells;
 	}
 
 	@Override
