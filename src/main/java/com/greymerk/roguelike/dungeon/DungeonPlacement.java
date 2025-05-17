@@ -33,7 +33,7 @@ public class DungeonPlacement {
 		ChunkPos villageChunk = ovc.get();
 		
 		Coord village = Coord.of(villageChunk.getCenterAtY(0));
-		Random rand = editor.getRandom(village);
+		Random rand = new CheckedRandom(editor.getSeed(village));
 		
 		Coord chunkFrom = Coord.of(cpos.x, 0, cpos.z);
 		Coord chunkVillage = Coord.of(villageChunk.x, 0, villageChunk.z);

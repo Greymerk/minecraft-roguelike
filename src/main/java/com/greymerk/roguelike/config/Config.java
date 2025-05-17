@@ -11,7 +11,8 @@ public enum Config {
 	DEBUG("debug"),
 	BELOW_SEA_LEVEL("below_sea_level"),
 	ROOMS_PER_LEVEL("rooms_per_level"),
-	ROGUELIKE_LOOT("roguelike_loot");
+	ROGUELIKE_LOOT("roguelike_loot"),
+	RANDOM_SEED("random_seed");
 
 	private final String key;
 	

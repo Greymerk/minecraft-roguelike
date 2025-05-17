@@ -42,6 +42,7 @@ public class ConfigSettings {
 		this.configs.putMixed(MixedKey.ofBoolean(Config.BELOW_SEA_LEVEL.keyOf()), true);
 		this.configs.putMixed(MixedKey.ofInteger(Config.ROOMS_PER_LEVEL.keyOf()), 20);
 		this.configs.putMixed(MixedKey.ofBoolean(Config.ROGUELIKE_LOOT.keyOf()), true);
+		this.configs.putMixed(MixedKey.ofBoolean(Config.RANDOM_SEED.keyOf()), false);
 		if(file.exists()) this.read();
 		this.store();
 	}
@@ -54,6 +55,7 @@ public class ConfigSettings {
 		json.addProperty(Config.BELOW_SEA_LEVEL.keyOf(), this.get(MixedKey.ofBoolean(Config.BELOW_SEA_LEVEL.keyOf())));
 		json.addProperty(Config.ROOMS_PER_LEVEL.keyOf(), this.get(MixedKey.ofInteger(Config.ROOMS_PER_LEVEL.keyOf())));
 		json.addProperty(Config.ROGUELIKE_LOOT.keyOf(), this.get(MixedKey.ofBoolean(Config.ROGUELIKE_LOOT.keyOf())));
+		json.addProperty(Config.RANDOM_SEED.keyOf(), this.get(MixedKey.ofBoolean(Config.RANDOM_SEED.keyOf())));
 		return json;
 	}
 	
@@ -64,6 +66,7 @@ public class ConfigSettings {
 		if(json.has(Config.BELOW_SEA_LEVEL.keyOf())) configs.put(MixedKey.ofBoolean(Config.BELOW_SEA_LEVEL.keyOf()), json.get(Config.BELOW_SEA_LEVEL.keyOf()).getAsBoolean());
 		if(json.has(Config.ROOMS_PER_LEVEL.keyOf())) configs.put(MixedKey.ofInteger(Config.ROOMS_PER_LEVEL.keyOf()), json.get(Config.ROOMS_PER_LEVEL.keyOf()).getAsInt());
 		if(json.has(Config.ROGUELIKE_LOOT.keyOf())) configs.put(MixedKey.ofBoolean(Config.ROGUELIKE_LOOT.keyOf()), json.get(Config.ROGUELIKE_LOOT.keyOf()).getAsBoolean());
+		if(json.has(Config.RANDOM_SEED.keyOf())) configs.put(MixedKey.ofBoolean(Config.RANDOM_SEED.keyOf()), json.get(Config.RANDOM_SEED.keyOf()).getAsBoolean());
 	}
 	
 	public <T> T get(MixedKey<T> key) {

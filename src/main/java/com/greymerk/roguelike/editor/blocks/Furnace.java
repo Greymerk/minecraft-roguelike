@@ -31,7 +31,6 @@ public class Furnace {
 			FurnaceBlockEntity.class).ifPresent(furnace -> {
 				if(fuel.equals(ItemStack.EMPTY)) return;
 				furnace.setStack(FUEL_SLOT, fuel);	
-			});
-		
+		});
 	}
 }

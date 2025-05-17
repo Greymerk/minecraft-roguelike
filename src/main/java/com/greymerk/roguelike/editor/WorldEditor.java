@@ -1,9 +1,13 @@
 package com.greymerk.roguelike.editor;
 
+import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Predicate;
+
+import com.greymerk.roguelike.config.Config;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -78,6 +82,11 @@ public class WorldEditor implements IWorldEditor{
 	
 	@Override
 	public Random getRandom(Coord pos) {
+		if(Config.ofBoolean(Config.RANDOM_SEED)) {
+			long time = Date.from(Instant.now()).getTime();
+			long seed = Objects.hash(time, pos);
+			return new CheckedRandom(seed);
+		}
 		return new CheckedRandom(getSeed(pos));
 	}
 
