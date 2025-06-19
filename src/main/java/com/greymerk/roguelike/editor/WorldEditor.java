@@ -82,7 +82,7 @@ public class WorldEditor implements IWorldEditor{
 	
 	@Override
 	public Random getRandom(Coord pos) {
-		if(Config.ofBoolean(Config.RANDOM_SEED)) {
+		if(!Config.ofBoolean(Config.DETERMINISTIC)) {
 			long time = Date.from(Instant.now()).getTime();
 			long seed = Objects.hash(time, pos);
 			return new CheckedRandom(seed);
