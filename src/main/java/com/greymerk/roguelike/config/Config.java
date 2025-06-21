@@ -12,7 +12,8 @@ public enum Config {
 	BELOW_SEA_LEVEL("below_sea_level"),
 	ROOMS_PER_LEVEL("rooms_per_level"),
 	ROGUELIKE_LOOT("roguelike_loot"),
-	DETERMINISTIC("deterministic");
+	DETERMINISTIC("deterministic"),
+	DISTANCE_TO_VILLAGE("distance_to_village");
 
 	private final String key;
 	

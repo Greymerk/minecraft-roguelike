@@ -39,7 +39,6 @@ public class Spawnable {
 			MobSpawnerBlockEntity spawner = (MobSpawnerBlockEntity)be;
 			MobSpawnerLogic logic = spawner.getLogic();
 			spawner.setEntityType(Spawner.getType(type), rand);
-			//logic.readNbt(world, pos.getBlockPos(), nbt);
 			ReadView view = NbtReadView.create(ErrorReporter.EMPTY, editor.getInfo().getRegistryManager(), nbt);
 			logic.readData(world, pos.getBlockPos(), view);
 			spawner.markDirty();	

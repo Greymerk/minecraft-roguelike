@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.greymerk.roguelike.config.Config;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.util.StructureLocator;
@@ -15,12 +16,12 @@ import net.minecraft.util.math.random.Random;
 public class DungeonPlacement {
 
 	public static boolean validChunkPos(IWorldEditor editor, ChunkPos cpos) {
+
+		int range = Math.clamp(Config.ofInteger(Config.DISTANCE_TO_VILLAGE).orElse(6), 1, 20);
 		
-		final int RANGE = 10;
-		final int VALID_DISTANCE_TO_VILLAGE = 6;
-		
-		ChunkPos start = new ChunkPos(cpos.x - RANGE, cpos.z - RANGE);
-		ChunkPos end = new ChunkPos(cpos.x + RANGE, cpos.z + RANGE);
+		int r = range + 1;
+		ChunkPos start = new ChunkPos(cpos.x - r, cpos.z - r);
+		ChunkPos end = new ChunkPos(cpos.x + r, cpos.z + r);
 		List<ChunkPos> chunks = new ArrayList<ChunkPos>();
 		for(int x = start.x; x < end.x; ++x) {
 			for(int z = start.z; z < end.z; ++z) {
@@ -39,7 +40,9 @@ public class DungeonPlacement {
 		Coord chunkVillage = Coord.of(villageChunk.x, 0, villageChunk.z);
 		
 		int chunkDist = chunkFrom.manhattanDistance(chunkVillage);
-		if(chunkDist != VALID_DISTANCE_TO_VILLAGE) return false;
+		
+		
+		if(chunkDist != range) return false;
 
 		Coord dirToDungeon = Coord.of(
 				rand.nextBetween(-100, 100),
