@@ -1,9 +1,9 @@
 plugins {
-	id 'fabric-loom' version '1.10-SNAPSHOT'
+	id 'fabric-loom' version '1.11-SNAPSHOT'
 	id 'maven-publish'
 }
 
-version = "${project.mod_version}-${project.minecraft_version}-fabric"
+version = "fabric-${project.mod_version}+mc${project.minecraft_version}"
 group = project.maven_group
 
 base {
@@ -79,8 +79,10 @@ java {
 }
 
 jar {
+	inputs.property "archivesName", project.base.archivesName
+
 	from("LICENSE") {
-		rename { "${it}_${project.archivesBaseName}"}
+		rename { "${it}_${inputs.properties.archivesName}"}
 	}
 }
 

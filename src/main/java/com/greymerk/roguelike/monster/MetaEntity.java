@@ -42,7 +42,7 @@ public class MetaEntity implements IEntity {
 	public void setMobClass(MobType type, boolean clear) {
 		
 		LivingEntity oldMob = (LivingEntity)this.mob;
-		LivingEntity newMob = (LivingEntity)MobType.getEntity(this.mob.getWorld(), type);
+		LivingEntity newMob = (LivingEntity)MobType.getEntity(this.mob.getEntityWorld(), type);
 		newMob.copyPositionAndRotation(oldMob);
 		this.mob = (MobEntity)newMob;
 		
@@ -62,7 +62,7 @@ public class MetaEntity implements IEntity {
 		}
 		
 		oldMob.remove(RemovalReason.DISCARDED);
-		newMob.getWorld().spawnEntity(newMob);
+		newMob.getEntityWorld().spawnEntity(newMob);
 	}
 
 	@Override
@@ -95,7 +95,7 @@ public class MetaEntity implements IEntity {
 	@Override
 	public boolean canEnchant(Random rand, Difficulty diff) {
 		
-		World world = this.mob.getWorld();
+		World world = this.mob.getEntityWorld();
 
 		switch(world.getDifficulty()){
 		case PEACEFUL: return false;

@@ -21,7 +21,7 @@ public class ChainFilter implements IFilter {
 			if(!BoundingBox.of(c).grow(Cardinal.DOWN, 4).stream()
 				.allMatch(c2 -> editor.isAir(c2))) return;
 			BoundingBox.of(c).grow(Cardinal.DOWN, rand.nextInt(3) + 1)
-				.fill(editor, rand, MetaBlock.of(Blocks.CHAIN), Fill.AIR);
+				.fill(editor, rand, MetaBlock.of(Blocks.IRON_CHAIN), Fill.AIR);
 		});
 	}
 }

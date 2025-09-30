@@ -124,7 +124,7 @@ public class LibraryRoom extends AbstractLargeRoom implements IRoom {
 				stair.setOrientation(Cardinal.reverse(dir), true).set(editor, rand, origin.add(Cardinal.UP, 4).add(dir, 14).add(o, 9));
 				stair.setOrientation(dir, true).set(editor, rand, origin.add(Cardinal.UP, 4).add(dir, 10).add(o, 9));
 			});
-			MetaBlock.of(Blocks.CHAIN).set(editor, origin.add(dir, 4).add(Cardinal.left(dir), 4).add(Cardinal.UP, 5));
+			MetaBlock.of(Blocks.IRON_CHAIN).set(editor, origin.add(dir, 4).add(Cardinal.left(dir), 4).add(Cardinal.UP, 5));
 			Lantern.set(editor, origin.add(dir, 4).add(Cardinal.left(dir), 4).add(Cardinal.UP, 4));
 			
 			BoundingBox.of(origin).add(Cardinal.UP, 5).add(dir, 14).grow(Cardinal.orthogonal(dir), 14).fill(editor, rand, wall);
