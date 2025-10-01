@@ -2,7 +2,6 @@ package com.greymerk.roguelike.treasure.loot.provider;
 
 import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.treasure.loot.Enchant;
-import com.greymerk.roguelike.treasure.loot.Equipment;
 import com.greymerk.roguelike.treasure.loot.Quality;
 
 import net.minecraft.item.ItemStack;
@@ -26,11 +25,6 @@ public class ItemTool extends ItemBase {
 	public ItemStack getLootItem(Random rand, Difficulty diff) {
 		if(rand.nextInt(2000) == 0) return ItemNovelty.getItem(reg, ItemNovelty.CLEO);
 		return getRandom(reg, features, rand, diff, true);
-	}
-
-	public static ItemStack getTool(DynamicRegistryManager reg, FeatureSet features, Random rand, Difficulty diff, Quality quality, Equipment type, boolean enchant){		
-		ItemStack tool = Equipment.get(type, quality == null ? Quality.get(diff) : quality);
-		return enchant ? Enchant.enchantItem(reg, rand, tool, diff) : tool;
 	}
 	
 	public static ItemStack getRandom(DynamicRegistryManager reg, FeatureSet features, Random rand, Difficulty diff, boolean enchant){
@@ -62,6 +56,7 @@ public class ItemTool extends ItemBase {
 		case DIAMOND: return new ItemStack(Items.DIAMOND_AXE);
 		case GOLD: return new ItemStack(Items.GOLDEN_AXE);
 		case IRON: return new ItemStack(Items.IRON_AXE);
+		case COPPER: return new ItemStack(Items.COPPER_AXE);
 		case STONE: return new ItemStack(Items.STONE_AXE);
 		default: return new ItemStack(Items.WOODEN_AXE);
 		}
@@ -75,6 +70,7 @@ public class ItemTool extends ItemBase {
 		case DIAMOND: return new ItemStack(Items.DIAMOND_SHOVEL);
 		case GOLD: return new ItemStack(Items.GOLDEN_SHOVEL);
 		case IRON: return new ItemStack(Items.IRON_SHOVEL);
+		case COPPER: return new ItemStack(Items.COPPER_SHOVEL);
 		case STONE: return new ItemStack(Items.STONE_SHOVEL);
 		default: return new ItemStack(Items.WOODEN_SHOVEL);
 		}
@@ -88,6 +84,7 @@ public class ItemTool extends ItemBase {
 		case DIAMOND: return new ItemStack(Items.DIAMOND_PICKAXE);
 		case GOLD: return new ItemStack(Items.GOLDEN_PICKAXE);
 		case IRON: return new ItemStack(Items.IRON_PICKAXE);
+		case COPPER: return new ItemStack(Items.COPPER_PICKAXE);
 		case STONE: return new ItemStack(Items.STONE_PICKAXE);
 		default: return new ItemStack(Items.WOODEN_PICKAXE);
 		}

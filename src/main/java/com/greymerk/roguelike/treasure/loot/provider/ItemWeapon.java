@@ -80,6 +80,7 @@ public class ItemWeapon extends ItemBase{
 		case DIAMOND: return new ItemStack(Items.DIAMOND_SWORD);
 		case GOLD: return new ItemStack(Items.GOLDEN_SWORD);
 		case IRON: return new ItemStack(Items.IRON_SWORD);
+		case COPPER: return new ItemStack(Items.COPPER_SWORD);
 		case STONE: return new ItemStack(Items.STONE_SWORD);
 		default: return new ItemStack(Items.WOODEN_SWORD);
 		}

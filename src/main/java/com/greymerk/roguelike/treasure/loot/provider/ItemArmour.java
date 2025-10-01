@@ -65,6 +65,7 @@ public class ItemArmour extends ItemBase {
 			case DIAMOND: return new ItemStack(Items.DIAMOND_HELMET);
 			case GOLD: return new ItemStack(Items.GOLDEN_HELMET);
 			case IRON: return new ItemStack(Items.IRON_HELMET);
+			case COPPER: return new ItemStack(Items.COPPER_HELMET);
 			case STONE: return new ItemStack(Items.CHAINMAIL_HELMET);
 			default:
 				ItemStack item = new ItemStack(Items.LEATHER_HELMET);
@@ -79,6 +80,7 @@ public class ItemArmour extends ItemBase {
 			case DIAMOND: return new ItemStack(Items.DIAMOND_BOOTS);
 			case GOLD: return new ItemStack(Items.GOLDEN_BOOTS);
 			case IRON: return new ItemStack(Items.IRON_BOOTS);
+			case COPPER: return new ItemStack(Items.COPPER_BOOTS);
 			case STONE: return new ItemStack(Items.CHAINMAIL_BOOTS);
 			default:
 				ItemStack item = new ItemStack(Items.LEATHER_BOOTS);
@@ -93,6 +95,7 @@ public class ItemArmour extends ItemBase {
 			case DIAMOND: return new ItemStack(Items.DIAMOND_CHESTPLATE);
 			case GOLD: return new ItemStack(Items.GOLDEN_CHESTPLATE);
 			case IRON: return new ItemStack(Items.IRON_CHESTPLATE);
+			case COPPER: return new ItemStack(Items.COPPER_CHESTPLATE);
 			case STONE: return new ItemStack(Items.CHAINMAIL_CHESTPLATE);
 			default:
 				ItemStack item = new ItemStack(Items.LEATHER_CHESTPLATE);
@@ -106,6 +109,7 @@ public class ItemArmour extends ItemBase {
 			case DIAMOND: return new ItemStack(Items.DIAMOND_LEGGINGS);
 			case GOLD: return new ItemStack(Items.GOLDEN_LEGGINGS);
 			case IRON: return new ItemStack(Items.IRON_LEGGINGS);
+			case COPPER: return new ItemStack(Items.COPPER_LEGGINGS);
 			case STONE: return new ItemStack(Items.CHAINMAIL_LEGGINGS);
 			default:
 				ItemStack item = new ItemStack(Items.LEATHER_LEGGINGS);

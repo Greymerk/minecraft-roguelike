@@ -34,6 +34,7 @@ public enum Equipment {
 			switch(quality){
 			case WOOD: qualityName = "leather"; break;
 			case STONE: qualityName = "chainmail"; break;
+			case COPPER: qualityName = "copper"; break;
 			case IRON: qualityName = "iron"; break;
 			case GOLD: qualityName = "golden"; break;
 			case DIAMOND: qualityName = "diamond"; break;
@@ -44,6 +45,7 @@ public enum Equipment {
 			switch(quality){
 			case WOOD: qualityName = "wooden"; break;
 			case STONE: qualityName = "stone"; break;
+			case COPPER: qualityName= "copper"; break;
 			case IRON: qualityName = "iron"; break;
 			case GOLD: qualityName = "golden"; break;
 			case DIAMOND: qualityName = "diamond"; break;
@@ -61,6 +63,7 @@ public enum Equipment {
 			switch(quality){
 			case WOOD: return new ItemStack(Items.WOODEN_SWORD);
 			case STONE: return new ItemStack(Items.STONE_SWORD);
+			case COPPER: return new ItemStack(Items.COPPER_SWORD);
 			case IRON: return new ItemStack(Items.IRON_SWORD);
 			case GOLD: return new ItemStack(Items.GOLDEN_SWORD);
 			case DIAMOND: return new ItemStack(Items.DIAMOND_SWORD);
@@ -73,6 +76,7 @@ public enum Equipment {
 			switch(quality){
 			case WOOD: return new ItemStack(Items.LEATHER_HELMET);
 			case STONE: return new ItemStack(Items.CHAINMAIL_HELMET);
+			case COPPER: return new ItemStack(Items.COPPER_HELMET);
 			case IRON: return new ItemStack(Items.IRON_HELMET);
 			case GOLD: return new ItemStack(Items.GOLDEN_HELMET);
 			case DIAMOND: return new ItemStack(Items.DIAMOND_HELMET);
@@ -83,6 +87,7 @@ public enum Equipment {
 			switch(quality){
 			case WOOD: return new ItemStack(Items.LEATHER_CHESTPLATE);
 			case STONE: return new ItemStack(Items.CHAINMAIL_CHESTPLATE);
+			case COPPER: return new ItemStack(Items.COPPER_CHESTPLATE);
 			case IRON: return new ItemStack(Items.IRON_CHESTPLATE);
 			case GOLD: return new ItemStack(Items.GOLDEN_CHESTPLATE);
 			case DIAMOND: return new ItemStack(Items.DIAMOND_CHESTPLATE);
@@ -93,6 +98,7 @@ public enum Equipment {
 			switch(quality){
 			case WOOD: return new ItemStack(Items.LEATHER_LEGGINGS);
 			case STONE: return new ItemStack(Items.CHAINMAIL_LEGGINGS);
+			case COPPER: return new ItemStack(Items.COPPER_LEGGINGS);
 			case IRON: return new ItemStack(Items.IRON_LEGGINGS);
 			case GOLD: return new ItemStack(Items.GOLDEN_LEGGINGS);
 			case DIAMOND: return new ItemStack(Items.DIAMOND_LEGGINGS);
@@ -103,6 +109,7 @@ public enum Equipment {
 			switch(quality){
 			case WOOD: return new ItemStack(Items.LEATHER_BOOTS);
 			case STONE: return new ItemStack(Items.CHAINMAIL_BOOTS);
+			case COPPER: return new ItemStack(Items.COPPER_BOOTS);
 			case IRON: return new ItemStack(Items.IRON_BOOTS);
 			case GOLD: return new ItemStack(Items.GOLDEN_BOOTS);
 			case DIAMOND: return new ItemStack(Items.DIAMOND_BOOTS);
@@ -113,6 +120,7 @@ public enum Equipment {
 			switch(quality){
 			case WOOD: return new ItemStack(Items.WOODEN_PICKAXE);
 			case STONE: return new ItemStack(Items.STONE_PICKAXE);
+			case COPPER: return new ItemStack(Items.COPPER_PICKAXE);
 			case IRON: return new ItemStack(Items.IRON_PICKAXE);
 			case GOLD: return new ItemStack(Items.GOLDEN_PICKAXE);
 			case DIAMOND: return new ItemStack(Items.DIAMOND_PICKAXE);
@@ -123,6 +131,7 @@ public enum Equipment {
 			switch(quality){
 			case WOOD: return new ItemStack(Items.WOODEN_AXE);
 			case STONE: return new ItemStack(Items.STONE_AXE);
+			case COPPER: return new ItemStack(Items.COPPER_AXE);
 			case IRON: return new ItemStack(Items.IRON_AXE);
 			case GOLD: return new ItemStack(Items.GOLDEN_AXE);
 			case DIAMOND: return new ItemStack(Items.DIAMOND_AXE);
@@ -133,6 +142,7 @@ public enum Equipment {
 			switch(quality){
 			case WOOD: return new ItemStack(Items.WOODEN_SHOVEL);
 			case STONE: return new ItemStack(Items.STONE_SHOVEL);
+			case COPPER: return new ItemStack(Items.COPPER_SHOVEL);
 			case IRON: return new ItemStack(Items.IRON_SHOVEL);
 			case GOLD: return new ItemStack(Items.GOLDEN_SHOVEL);
 			case DIAMOND: return new ItemStack(Items.DIAMOND_SHOVEL);

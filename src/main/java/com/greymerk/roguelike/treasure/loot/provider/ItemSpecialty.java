@@ -231,6 +231,7 @@ public class ItemSpecialty extends ItemBase {
 			Loot.setItemName(item, "Yew Longbow");
 			Loot.setItemLore(item, "Superior craftsmanship", TextFormat.DARKGREEN);
 			return item;
+		case COPPER:
 		case IRON:
 			item.addEnchantment(Enchant.getEnchant(reg, Enchant.POWER), 1 + rand.nextInt(3));
 			item.addEnchantment(Enchant.getEnchant(reg, Enchant.UNBREAKING), 1 + rand.nextInt(3));
@@ -284,6 +285,7 @@ public class ItemSpecialty extends ItemBase {
 			item = new ItemStack(Items.CHAINMAIL_HELMET);
 			canonical = "Coif";
 			break;
+		case COPPER:
 		case IRON:
 		case GOLD:
 			item = new ItemStack(Items.IRON_HELMET);
@@ -344,6 +346,7 @@ public class ItemSpecialty extends ItemBase {
 			item = new ItemStack(Items.CHAINMAIL_BOOTS);
 			canonical = "Greaves";
 			break;
+		case COPPER:
 		case IRON:
 		case GOLD:
 			item = new ItemStack(Items.IRON_BOOTS);
@@ -406,6 +409,7 @@ public class ItemSpecialty extends ItemBase {
 			item = new ItemStack(Items.CHAINMAIL_LEGGINGS);
 			canonical = "Chausses";
 			break;
+		case COPPER:
 		case IRON:
 		case GOLD:
 			item = new ItemStack(Items.IRON_LEGGINGS);
@@ -465,6 +469,7 @@ public class ItemSpecialty extends ItemBase {
 			item = new ItemStack(Items.CHAINMAIL_CHESTPLATE);
 			canonical = "Hauberk";
 			break;
+		case COPPER:
 		case IRON:
 		case GOLD:
 			item = new ItemStack(Items.IRON_CHESTPLATE);
@@ -529,6 +534,7 @@ public class ItemSpecialty extends ItemBase {
 				value++;
 			}
 			break;
+		case COPPER:
 		case IRON:
 		case GOLD:
 			value += rand.nextInt(3);
@@ -547,6 +553,7 @@ public class ItemSpecialty extends ItemBase {
 		switch(quality){
 		case WOOD: return "Surplus";
 		case STONE: return "Riveted";
+		case COPPER: return "Tarnished";
 		case IRON: return "Gothic";
 		case GOLD: return "Jewelled";
 		case DIAMOND: return "Crystal";
