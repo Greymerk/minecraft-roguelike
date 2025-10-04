@@ -67,6 +67,9 @@ public class ItemJunk extends ItemBase{
 			randomizer.add(new WeightedRandomLoot(Items.LEAD, 1, 1, 10));
 			randomizer.add(new WeightedRandomLoot(Items.RESIN_CLUMP, 1, 1, 10));
 			randomizer.add(new WeightedRandomLoot(Items.POISONOUS_POTATO, 1, 1, 5));
+			randomizer.add(new WeightedRandomLoot(Items.COPPER_NUGGET, 1, 1, 10));
+			randomizer.add(new WeightedRandomLoot(Items.IRON_NUGGET, 1, 1, 10));
+			randomizer.add(new WeightedRandomLoot(Items.GOLD_NUGGET, 1, 1, 10));
 		});
 	}
 
