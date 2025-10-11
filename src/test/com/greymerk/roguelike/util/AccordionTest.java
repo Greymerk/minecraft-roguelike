@@ -38,11 +38,12 @@ class AccordionTest {
 	@Test
 	void testList() {
 		Accordion<String> strings = new Accordion<String>();
+		strings.add("test", 1, 1);
 		strings.addExactly("foo", 1);
 		strings.addAtLeast("bar", 1);
 		strings.add("biz", 3, 3);
 		strings.addExactly("baz", 1);
 		
-		//System.out.println(strings.list(3));
+		System.out.println(strings.list(5));
 	}
 }

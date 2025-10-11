@@ -28,7 +28,7 @@ public class DungeonSettingsDefault implements IDungeonSettings {
 				.addAtLeast(LevelSettings.STONE, 1)
 				.add(LevelSettings.CRUMBLED_STONE)
 				.addAtLeast(LevelSettings.MOSSY, 1)
-				.addAtLeast(LevelSettings.CRUMBLED_MOSSY, 2)
+				.addAtLeast(LevelSettings.CRUMBLED_MOSSY, 1)
 				.add(LevelSettings.TILED_SLATE)
 				.list(((firstLevelY - lastLevelY) / 10) + 1);
 	}

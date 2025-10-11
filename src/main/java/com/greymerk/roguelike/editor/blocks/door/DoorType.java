@@ -8,7 +8,7 @@ import net.minecraft.block.Blocks;
 public enum DoorType {
 
 	IRON, OAK, BIRCH, SPRUCE, JUNGLE, ACACIA, DARKOAK,
-	MANGROVE, CHERRY, BAMBOO, CRIMSON, WARPED;
+	MANGROVE, CHERRY, BAMBOO, CRIMSON, WARPED, COPPER;
 	
 	public static MetaBlock get(DoorType type){	
 		return MetaBlock.of(from(type));
@@ -27,6 +27,7 @@ public enum DoorType {
 		case BAMBOO: return Blocks.BAMBOO_DOOR;
 		case CRIMSON: return Blocks.CRIMSON_DOOR;
 		case WARPED: return Blocks.WARPED_DOOR;
+		case COPPER: return Blocks.COPPER_DOOR;
 		default: return Blocks.OAK_DOOR;
 		}
 	}

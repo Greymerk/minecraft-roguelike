@@ -1,6 +1,7 @@
 package com.greymerk.roguelike.settings;
 
 import com.greymerk.roguelike.settings.level.LevelSettingsBlackstone;
+import com.greymerk.roguelike.settings.level.LevelSettingsCopper;
 import com.greymerk.roguelike.settings.level.LevelSettingsCrumbledMossy;
 import com.greymerk.roguelike.settings.level.LevelSettingsCrumbledStone;
 import com.greymerk.roguelike.settings.level.LevelSettingsDarkOak;
@@ -16,7 +17,7 @@ import com.greymerk.roguelike.settings.level.LevelSettingsTiledDeepslate;
 
 public enum LevelSettings {
 	
-	DEFAULT, OAK, SPRUCE, DARK_OAK, 
+	DEFAULT, OAK, SPRUCE, DARK_OAK, COPPER, 
 	STONE, CRUMBLED_STONE, MOSSY, CRUMBLED_MOSSY,
 	SLATE, TILED_SLATE, NETHER, BLACKSTONE,
 	RANDOM;
@@ -26,6 +27,7 @@ public enum LevelSettings {
 		switch(type) {
 		case DEFAULT: return new LevelSettingsDefault();
 		case BLACKSTONE: return new LevelSettingsBlackstone();
+		case COPPER: return new LevelSettingsCopper();
 		case CRUMBLED_MOSSY: return new LevelSettingsCrumbledMossy();
 		case CRUMBLED_STONE: return new LevelSettingsCrumbledStone();
 		case DARK_OAK: return new LevelSettingsDarkOak();

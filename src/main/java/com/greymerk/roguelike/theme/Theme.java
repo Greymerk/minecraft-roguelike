@@ -1,6 +1,7 @@
 package com.greymerk.roguelike.theme;
 
 import com.greymerk.roguelike.theme.themes.ThemeBlack;
+import com.greymerk.roguelike.theme.themes.ThemeCopper;
 import com.greymerk.roguelike.theme.themes.ThemeCrumbledMossy;
 import com.greymerk.roguelike.theme.themes.ThemeCrumbledStone;
 import com.greymerk.roguelike.theme.themes.ThemeDarkOak;
@@ -20,7 +21,7 @@ import net.minecraft.util.math.random.Random;
 
 public enum Theme {
 
-	DEFAULT, TOWER, OAK, SPRUCE, DARKOAK, 
+	DEFAULT, TOWER, OAK, SPRUCE, DARKOAK, COPPER,
 	STONE, CRUMBLEDSTONE, MOSSY, CRUMBLEDMOSSY,
 	SLATE, TILEDSLATE, NETHER, REDNETHER, WARPED, BLACK;
 	
@@ -32,6 +33,7 @@ public enum Theme {
 		case OAK: return new ThemeOak();
 		case SPRUCE: return new ThemeSpruce();
 		case DARKOAK: return new ThemeDarkOak();
+		case COPPER: return new ThemeCopper();
 		case STONE: return new ThemeStone();
 		case CRUMBLEDSTONE: return new ThemeCrumbledStone();
 		case MOSSY: return new ThemeMossy();

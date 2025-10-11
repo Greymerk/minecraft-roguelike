@@ -21,8 +21,8 @@ public class LevelSettingsStone extends LevelSettingsBase implements ILevelSetti
 		
 		this.rooms = new RoomProvider();
 		rooms.addRandomChoice(Room.CORRIDOR, 10);
-		rooms.addRandomChoice(Room.PRISON, 2);
-		rooms.addRandomChoice(Room.CRYPT, 3);
+		rooms.addRandomChoice(Room.PRISON, 3);
+		rooms.addRandomChoice(Room.CRYPT, 2);
 		rooms.addRoomOnce(Room.CROSS);
 		rooms.addRoomOnce(Room.BALCONY);
 		rooms.addRoomSometimes(Room.PIT, 0.2);
