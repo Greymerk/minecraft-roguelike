@@ -10,8 +10,8 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.resource.featuretoggle.FeatureSet;
 import net.minecraft.structure.StructureSet;
 import net.minecraft.util.math.ChunkPos;
-import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
+import net.minecraft.world.rule.GameRules;
 
 /**
  *  Interface for a class which provides a set of read only methods

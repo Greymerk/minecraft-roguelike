@@ -32,7 +32,7 @@ public class ChunkFeatureMixin {
 		RegistryKey<World> worldKey = world.toServerWorld().getRegistryKey();
 		IWorldEditor editor = new WorldEditor(world, worldKey);
 		IWorldInfo worldInfo = editor.getInfo();
-		if(!worldInfo.getGameRules().getBoolean(RoguelikeRules.GEN_ROGUELIKE_DUNGEONS)) return;
+		if(!worldInfo.getGameRules().getValue(RoguelikeRules.GEN_ROGUELIKE_DUNGEONS)) return;
 		
 		ChunkPos cpos = chunk.getPos();
 		if(!DungeonPlacement.validChunkPos(editor, cpos)) return;

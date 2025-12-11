@@ -15,11 +15,11 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.structure.StructureSet;
 import net.minecraft.util.WorldSavePath;
 import net.minecraft.util.math.ChunkPos;
-import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 import net.minecraft.world.dimension.DimensionTypes;
 import net.minecraft.world.gen.chunk.placement.StructurePlacement;
 import net.minecraft.world.gen.chunk.placement.StructurePlacementCalculator;
+import net.minecraft.world.rule.GameRules;
 
 public class WorldInfo implements IWorldInfo {
 
@@ -33,6 +33,10 @@ public class WorldInfo implements IWorldInfo {
 	private WorldInfo(World world, RegistryKey<World> worldKey) {
 		this.world = world;
 		this.worldKey = worldKey;
+	}
+	
+	private ServerWorld getServerWorld() {
+		return this.world.getServer().getWorld(this.worldKey);
 	}
 	
 	@Override
@@ -76,7 +80,7 @@ public class WorldInfo implements IWorldInfo {
 	
 	@Override
 	public GameRules getGameRules() {
-		return world.getServer().getGameRules();
+		return this.getServerWorld().getGameRules();
 	}
 	
 	@Override

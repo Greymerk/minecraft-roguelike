@@ -19,7 +19,7 @@ public class ChunkDungeonGenerate implements Generate {
 	public void onChunkGenerate(ServerWorld world, WorldChunk chunk) {
 		IWorldEditor editor = WorldEditor.of(world);
 		IWorldInfo worldInfo = editor.getInfo();
-		if(!worldInfo.getGameRules().getBoolean(RoguelikeRules.GEN_ROGUELIKE_DUNGEONS)) return;
+		if(!worldInfo.getGameRules().getValue(RoguelikeRules.GEN_ROGUELIKE_DUNGEONS)) return;
 		
 		ChunkPos cpos = chunk.getPos();
 		if(!DungeonPlacement.validChunkPos(editor, cpos)) return;
