@@ -8,32 +8,32 @@ import com.greymerk.roguelike.monster.MetaEntity;
 import com.greymerk.roguelike.monster.MonsterProfile;
 
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents.Load;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.mob.SkeletonEntity;
-import net.minecraft.entity.mob.ZombieEntity;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.core.Holder;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.monster.skeleton.Skeleton;
+import net.minecraft.world.entity.monster.zombie.Zombie;
 
 public class EntityLoadEvent implements Load{
 
 	@Override
-	public void onLoad(Entity entity, ServerWorld world) {
-		if(!(entity instanceof SkeletonEntity || entity instanceof ZombieEntity)) return;
-		Random rand = world.getRandom();
-		MobEntity mob = (MobEntity)entity;
+	public void onLoad(Entity entity, ServerLevel world) {
+		if(!(entity instanceof Skeleton || entity instanceof Zombie)) return;
+		RandomSource rand = world.getRandom();
+		Mob mob = (Mob)entity;
 		
-		Map<RegistryEntry<StatusEffect>, StatusEffectInstance> effects = mob.getActiveStatusEffects();
-		if(!effects.containsKey(StatusEffects.MINING_FATIGUE)) return;
+		Map<Holder<MobEffect>, MobEffectInstance> effects = mob.getActiveEffectsMap();
+		if(!effects.containsKey(MobEffects.MINING_FATIGUE)) return;
 		
-		StatusEffectInstance effect = effects.get(StatusEffects.MINING_FATIGUE);
+		MobEffectInstance effect = effects.get(MobEffects.MINING_FATIGUE);
 		int amp = effect.getAmplifier();
 		//int level = rand.nextInt(amp) + 1;
-		mob.removeStatusEffect(StatusEffects.MINING_FATIGUE);
+		mob.removeEffect(MobEffects.MINING_FATIGUE);
 		
 		IEntity monster = new MetaEntity(mob);
 		

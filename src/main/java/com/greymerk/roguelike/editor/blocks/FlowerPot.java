@@ -2,15 +2,13 @@ package com.greymerk.roguelike.editor.blocks;
 
 import java.util.Arrays;
 import java.util.List;
-
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.MetaBlock;
-
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.random.Random;
 
 public enum FlowerPot {
 
@@ -29,11 +27,11 @@ public enum FlowerPot {
 	public static List<FlowerPot> saplings = List.of(
 			OAK, BIRCH, SPRUCE, JUNGLE, ACACIA, DARKOAK, MANGROVE, AZALEA, CHERRY, PALE_OAK);
 	
-	public static void generate(IWorldEditor editor, Random rand, Coord origin){
+	public static void generate(IWorldEditor editor, RandomSource rand, Coord origin){
 		generate(editor, rand, origin, Arrays.asList(FlowerPot.values()));
 	}
 	
-	public static void generate(IWorldEditor editor, Random rand, Coord origin, List<FlowerPot> types) {
+	public static void generate(IWorldEditor editor, RandomSource rand, Coord origin, List<FlowerPot> types) {
 		generate(editor, origin, types.get(rand.nextInt(types.size())));
 	}
 	
@@ -68,8 +66,8 @@ public enum FlowerPot {
 		case PALE_OAK: return Blocks.POTTED_PALE_OAK_SAPLING;
 		case SHRUB: return Blocks.POTTED_DEAD_BUSH;
 		case FERN: return Blocks.POTTED_FERN;
-		case AZALEA: return Blocks.POTTED_AZALEA_BUSH;
-		case AZALEA_FLOWERING: return Blocks.POTTED_FLOWERING_AZALEA_BUSH;
+		case AZALEA: return Blocks.POTTED_AZALEA;
+		case AZALEA_FLOWERING: return Blocks.POTTED_FLOWERING_AZALEA;
 		case CRIMSON_FUNGUS: return Blocks.POTTED_CRIMSON_FUNGUS;
 		case CRIMSON_ROOTS: return Blocks.POTTED_CRIMSON_ROOTS;
 		case MANGROVE: return Blocks.POTTED_MANGROVE_PROPAGULE;

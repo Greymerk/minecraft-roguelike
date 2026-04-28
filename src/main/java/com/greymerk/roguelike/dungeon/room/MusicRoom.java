@@ -16,16 +16,15 @@ import com.greymerk.roguelike.editor.blocks.stair.IStair;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.editor.shapes.RectSolid;
 import com.greymerk.roguelike.treasure.Treasure;
-
-import net.minecraft.block.Blocks;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.block.Blocks;
 
 public class MusicRoom extends AbstractMediumRoom implements IRoom {
 
 	@Override
 	public void generate(IWorldEditor editor) {
 		Coord origin = worldPos.copy().add(direction, Cell.SIZE);
-		Random rand = editor.getRandom(origin);
+		RandomSource rand = editor.getRandom(origin);
 		BoundingBox bb = BoundingBox.of(origin);
 		bb.grow(Cardinal.directions, 5).grow(Cardinal.UP, 5);
 		RectSolid.fill(editor, rand, bb, Air.get());
@@ -150,7 +149,7 @@ public class MusicRoom extends AbstractMediumRoom implements IRoom {
 		doors(editor, rand, origin);
 	}
 
-	private void doors(IWorldEditor editor, Random rand, Coord origin) {
+	private void doors(IWorldEditor editor, RandomSource rand, Coord origin) {
 		this.exits.forEach(exit -> {
 			if(exit.type() == ExitType.DOOR) {
 				Fragment.generate(Fragment.ARCH, editor, rand, settings, exit.origin(), exit.dir());	

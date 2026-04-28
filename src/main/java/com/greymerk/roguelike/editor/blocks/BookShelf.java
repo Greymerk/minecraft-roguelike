@@ -2,7 +2,11 @@ package com.greymerk.roguelike.editor.blocks;
 
 import java.util.List;
 import java.util.stream.IntStream;
-
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.entity.ChiseledBookShelfBlockEntity;
 import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
@@ -11,40 +15,34 @@ import com.greymerk.roguelike.editor.MetaBlock;
 import com.greymerk.roguelike.treasure.loot.Enchant;
 import com.greymerk.roguelike.util.math.RandHelper;
 
-import net.minecraft.block.Blocks;
-import net.minecraft.block.HorizontalFacingBlock;
-import net.minecraft.block.entity.ChiseledBookshelfBlockEntity;
-import net.minecraft.item.Items;
-import net.minecraft.util.math.random.Random;
-
 public class BookShelf {
 
-	public static void set(IWorldEditor editor, Random rand, Difficulty diff, Coord origin, Cardinal dir) {
+	public static void set(IWorldEditor editor, RandomSource rand, Difficulty diff, Coord origin, Cardinal dir) {
 		BookShelf.set(editor, rand, diff, origin, dir, rand.nextInt(3) + 1);
 	}
 	
-	public static void set(IWorldEditor editor, Random rand, Difficulty diff, Coord origin, Cardinal dir, int bookCount) {
+	public static void set(IWorldEditor editor, RandomSource rand, Difficulty diff, Coord origin, Cardinal dir, int bookCount) {
 		
 		editor.setBlockEntity(origin, 
 				MetaBlock.of(Blocks.CHISELED_BOOKSHELF)
-					.with(HorizontalFacingBlock.FACING, Cardinal.facing(Cardinal.reverse(dir))),
-				ChiseledBookshelfBlockEntity.class).ifPresent(shelf -> {
+					.with(HorizontalDirectionalBlock.FACING, Cardinal.facing(Cardinal.reverse(dir))),
+				ChiseledBookShelfBlockEntity.class).ifPresent(shelf -> {
 			List<Integer> slots = getSlots(rand, bookCount);
 			
 			int firstSlot = slots.getFirst();
-			shelf.setStack(firstSlot, Enchant.getBook(editor.getInfo().getRegistryManager(), rand, diff));
+			shelf.setItem(firstSlot, Enchant.getBook(editor.getInfo().getRegistryManager(), rand, diff));
 			
 			if(slots.size() > 1) {
 				slots.subList(1, slots.size()).forEach(i -> {
-					shelf.setStack(i, Items.BOOK.getDefaultStack());
+					shelf.setItem(i, Items.BOOK.getDefaultInstance());
 				});
 			}
 			
-			shelf.markDirty();	
+			shelf.setChanged();	
 		});
 	}
 	
-	private static List<Integer> getSlots(Random rand, int slotCount){
+	private static List<Integer> getSlots(RandomSource rand, int slotCount){
 		return IntStream.rangeClosed(0, 5)
 			.boxed()
 			.sorted(RandHelper.randomizer(rand))

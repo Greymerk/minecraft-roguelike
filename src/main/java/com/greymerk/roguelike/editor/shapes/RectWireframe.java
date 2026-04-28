@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.StreamSupport;
-
+import net.minecraft.util.RandomSource;
 import com.greymerk.roguelike.editor.BlockContext;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
@@ -13,8 +13,6 @@ import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.editor.boundingbox.IBounded;
-
-import net.minecraft.util.math.random.Random;
 
 public class RectWireframe implements IShape {
 
@@ -29,12 +27,12 @@ public class RectWireframe implements IShape {
 	}
 	
 	@Override
-	public void fill(IWorldEditor editor, Random rand, IBlockFactory block){
+	public void fill(IWorldEditor editor, RandomSource rand, IBlockFactory block){
 		fill(editor, rand, block, Fill.ALWAYS);
 	}
 	
 	@Override
-	public void fill(IWorldEditor editor, Random rand, IBlockFactory block, Predicate<BlockContext> p) {
+	public void fill(IWorldEditor editor, RandomSource rand, IBlockFactory block, Predicate<BlockContext> p) {
 		for(Coord c : this){
 			block.set(editor, rand, c, p);
 		}

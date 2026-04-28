@@ -1,6 +1,6 @@
 package com.greymerk.roguelike.util;
 
-import net.minecraft.util.math.random.Random;
+import net.minecraft.util.RandomSource;
 
 public class WeightedChoice<T> implements IWeighted<T>{
 
@@ -18,7 +18,7 @@ public class WeightedChoice<T> implements IWeighted<T>{
 	}
 
 	@Override
-	public T get(Random rand) {
+	public T get(RandomSource rand) {
 		return item;
 	}
 }

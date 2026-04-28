@@ -5,14 +5,14 @@ import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.WorldEditor;
 import com.greymerk.roguelike.state.RoguelikeState;
 
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents.StartWorldTick;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents.StartLevelTick;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.world.ServerWorld;
+import net.minecraft.server.level.ServerLevel;
 
-public class WorldTickGenerateRooms implements StartWorldTick{
+public class WorldTickGenerateRooms implements StartLevelTick{
 	
 	@Override
-	public void onStartTick(ServerWorld world) {
+	public void onStartTick(ServerLevel world) {
 		if(!RoguelikeState.flagForGenerationCheck) return;
 		
 		IWorldEditor editor = WorldEditor.of(world);

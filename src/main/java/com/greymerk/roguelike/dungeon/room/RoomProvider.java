@@ -4,12 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+import net.minecraft.util.RandomSource;
 import com.greymerk.roguelike.util.WeightedChoice;
 import com.greymerk.roguelike.util.WeightedRandomizer;
 import com.greymerk.roguelike.util.math.RandHelper;
-
-import net.minecraft.util.math.random.Random;
 
 public class RoomProvider {
 
@@ -48,7 +46,7 @@ public class RoomProvider {
 		this.random.add(choice);
 	}
 	
-	public List<Room> getRooms(Random rand, int count){
+	public List<Room> getRooms(RandomSource rand, int count){
 		List<Room> rooms = new ArrayList<Room>();
 		this.addOnce.forEach(room -> rooms.add(room));
 		if(rooms.size() >= count) return rooms;
@@ -64,7 +62,7 @@ public class RoomProvider {
 		return rooms;
 	}
 	
-	public Room get(Random rand) {
+	public Room get(RandomSource rand) {
 		return this.random.get(rand);
 	}
 }

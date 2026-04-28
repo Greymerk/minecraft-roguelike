@@ -4,10 +4,9 @@ import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.MetaBlock;
-
-import net.minecraft.block.Blocks;
-import net.minecraft.block.SculkVeinBlock;
-import net.minecraft.util.math.Direction;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SculkVeinBlock;
 
 public class SculkVein {
 
@@ -38,6 +37,6 @@ public class SculkVein {
 		Direction facing = Cardinal.directions.contains(dir) 
 				? Cardinal.facing(Cardinal.reverse(dir))
 				: Cardinal.facing(dir);
-		vein.with(SculkVeinBlock.getProperty(facing), true);
+		vein.with(SculkVeinBlock.getFaceProperty(facing), true);
 	}
 }

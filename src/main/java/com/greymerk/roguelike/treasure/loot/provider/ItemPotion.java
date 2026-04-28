@@ -3,9 +3,8 @@ package com.greymerk.roguelike.treasure.loot.provider;
 import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.treasure.loot.potions.PotionItem;
 import com.greymerk.roguelike.treasure.loot.potions.PotionMixture;
-
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.ItemStack;
 
 public class ItemPotion extends ItemBase{
 	
@@ -14,7 +13,7 @@ public class ItemPotion extends ItemBase{
 	}
 	
 	@Override
-	public ItemStack getLootItem(Random rand, Difficulty diff) {
+	public ItemStack getLootItem(RandomSource rand, Difficulty diff) {
 		
 		if(rand.nextInt(20) == 0) {
 			if(diff.gt(Difficulty.MEDIUM) && rand.nextInt(3) == 0) {

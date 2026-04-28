@@ -2,9 +2,8 @@ package com.greymerk.roguelike.treasure.loot.provider;
 
 import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.treasure.loot.items.MusicDisk;
-
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.ItemStack;
 
 public class ItemMusic extends ItemBase{
 
@@ -13,7 +12,7 @@ public class ItemMusic extends ItemBase{
 	}
 
 	@Override
-	public ItemStack getLootItem(Random rand, Difficulty diff) {
+	public ItemStack getLootItem(RandomSource rand, Difficulty diff) {
 		return MusicDisk.getRandomRecord(rand);
 	}
 	

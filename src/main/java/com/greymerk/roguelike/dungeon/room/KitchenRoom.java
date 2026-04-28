@@ -15,17 +15,16 @@ import com.greymerk.roguelike.editor.blocks.stair.IStair;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.treasure.Treasure;
 import com.greymerk.roguelike.treasure.chest.ChestType;
-
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 
 public class KitchenRoom extends AbstractMediumRoom implements IRoom {
 
 	@Override
 	public void generate(IWorldEditor editor) {
 		Coord origin = worldPos.copy().add(direction, Cell.SIZE).freeze();
-		Random rand = editor.getRandom(origin);
+		RandomSource rand = editor.getRandom(origin);
 		IBlockFactory wall = theme.getPrimary().getWall();
 		IStair stair = theme.getPrimary().getStair();
 		IBlockFactory pillar = theme.getPrimary().getPillar();
@@ -91,7 +90,7 @@ public class KitchenRoom extends AbstractMediumRoom implements IRoom {
 		this.generateExits(editor, rand);
 	}
 
-	private void chest(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
+	private void chest(IWorldEditor editor, RandomSource rand, Coord origin, Cardinal dir) {
 		IStair stair = theme.getSecondary().getStair();
 		
 		stair.setOrientation(Cardinal.reverse(dir), false).fill(editor, rand, BoundingBox.of(origin).add(dir, 2).grow(Cardinal.orthogonal(dir)));
@@ -105,16 +104,16 @@ public class KitchenRoom extends AbstractMediumRoom implements IRoom {
 		Candle.generate(editor, rand, origin.copy().add(Cardinal.reverse(dir)).add(Cardinal.left(dir)).add(Cardinal.UP));
 	}
 
-	private void table(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
+	private void table(IWorldEditor editor, RandomSource rand, Coord origin, Cardinal dir) {
 		IStair stair = theme.getSecondary().getStair();
 		
 		stair.setOrientation(Cardinal.reverse(dir), true).fill(editor, rand, BoundingBox.of(origin).add(dir, 2).grow(Cardinal.orthogonal(dir)));
 		stair.setOrientation(Cardinal.left(dir), true).fill(editor, rand, BoundingBox.of(origin).add(Cardinal.right(dir), 2).grow(Cardinal.orthogonal(Cardinal.right(dir))));
 		Treasure.generate(editor, rand, settings.getDifficulty(), origin.copy().add(Cardinal.UP).add(dir, 2), Treasure.FOOD, ChestType.BARREL);
-		Furnace.generate(editor, Cardinal.left(dir), origin.copy().add(Cardinal.UP).add(Cardinal.right(dir), 2), true, new ItemStack(Items.COAL, rand.nextBetween(1, 4)));
+		Furnace.generate(editor, Cardinal.left(dir), origin.copy().add(Cardinal.UP).add(Cardinal.right(dir), 2), true, new ItemStack(Items.COAL, rand.nextIntBetweenInclusive(1, 4)));
 	}
 
-	private void cornerPillars(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
+	private void cornerPillars(IWorldEditor editor, RandomSource rand, Coord origin, Cardinal dir) {
 		Pillar.generate(editor, rand, origin.copy().add(Cardinal.right(dir), 2).add(Cardinal.reverse(dir), 2),  theme.getSecondary(), 2, Cardinal.directions);
 		Pillar.generate(editor, rand, origin.copy().add(Cardinal.right(dir), 2).add(Cardinal.reverse(dir), 2).add(dir, 4),  theme.getSecondary(), 2, Cardinal.directions);
 		Pillar.generate(editor, rand, origin.copy().add(Cardinal.left(dir), 2).add(Cardinal.reverse(dir), 2).add(dir, 4),  theme.getSecondary(), 2, Cardinal.directions);

@@ -1,6 +1,6 @@
 package com.greymerk.roguelike.util;
 
-import net.minecraft.text.Text;
+import net.minecraft.network.chat.Component;
 
 public enum TextFormat {
 
@@ -8,9 +8,9 @@ public enum TextFormat {
 	GRAY, DARKGRAY, BLUE, GREEN, AQUA, RED, LIGHTPURPLE, YELLOW, WHITE, 
 	OBFUSCATED, BOLD, STRIKETHROUGH, UNDERLINE, ITALIC, RESET;
 	
-	public static Text apply(String text, TextFormat option){
+	public static Component apply(String text, TextFormat option){
 		String withCode = "\u00A7" + getCodeChar(option) + text;
-		return Text.of(withCode);
+		return Component.nullToEmpty(withCode);
 	}
 	
 	public static String getCode(TextFormat option){

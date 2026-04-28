@@ -1,22 +1,21 @@
 package com.greymerk.roguelike.treasure.loot.items;
 
 import com.greymerk.roguelike.treasure.loot.potions.PotionItem;
-
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.PotionContentsComponent;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.potion.Potion;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.Potion;
+import net.minecraft.world.item.alchemy.PotionContents;
 
 public class TippedArrow {
 
-	public static ItemStack get(Random rand){	
+	public static ItemStack get(RandomSource rand){	
 		return get(rand, 1);
 	}
 	
-	public static ItemStack get(Random rand, int amount){
+	public static ItemStack get(RandomSource rand, int amount){
 		PotionItem type = PotionItem.values()[rand.nextInt(PotionItem.values().length)];
 		return get(type, amount);
 	}
@@ -25,27 +24,27 @@ public class TippedArrow {
 		return get(type, 1);
 	}
 	
-	public static ItemStack get(RegistryEntry<Potion> type){
+	public static ItemStack get(Holder<Potion> type){
 		return get(type, 1);
 	}
 	
 	public static ItemStack get(PotionItem type, int amount){
 		
-		RegistryEntry<Potion> pot = PotionItem.getEffect(type, false, false);
+		Holder<Potion> pot = PotionItem.getEffect(type, false, false);
 		return get(pot, amount);
 
 	}
 	
-	public static ItemStack get(RegistryEntry<Potion> type, int amount){
+	public static ItemStack get(Holder<Potion> type, int amount){
 		
 		ItemStack arrow = new ItemStack(Items.TIPPED_ARROW, amount);
-		PotionContentsComponent contents = new PotionContentsComponent(type);
-		arrow.set(DataComponentTypes.POTION_CONTENTS, contents);
+		PotionContents contents = new PotionContents(type);
+		arrow.set(DataComponents.POTION_CONTENTS, contents);
 		
 		return arrow;
 	}
 	
-	public static ItemStack getHarmful(Random rand, int amount){
+	public static ItemStack getHarmful(RandomSource rand, int amount){
 		switch(rand.nextInt(4)){
 		case 0: return TippedArrow.get(PotionItem.HARM, amount);
 		case 1: return TippedArrow.get(PotionItem.POISON, amount);

@@ -7,14 +7,13 @@ import com.greymerk.roguelike.editor.MetaBlock;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.editor.boundingbox.IBounded;
 import com.greymerk.roguelike.settings.ILevelSettings;
-
-import net.minecraft.block.Blocks;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.block.Blocks;
 
 public class ChainFilter implements IFilter {
 
 	@Override
-	public void apply(IWorldEditor editor, Random rand, ILevelSettings settings, IBounded box) {
+	public void apply(IWorldEditor editor, RandomSource rand, ILevelSettings settings, IBounded box) {
 		box.forEach(c -> {
 			if(rand.nextInt(50) != 0) return;
 			if(!editor.isFaceFullSquare(c.copy().add(Cardinal.UP), Cardinal.DOWN)) return;

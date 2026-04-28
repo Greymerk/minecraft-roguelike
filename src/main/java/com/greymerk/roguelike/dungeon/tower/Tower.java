@@ -3,8 +3,7 @@ package com.greymerk.roguelike.dungeon.tower;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.theme.Theme;
-
-import net.minecraft.util.math.random.Random;
+import net.minecraft.util.RandomSource;
 
 public enum Tower {
 
@@ -50,7 +49,7 @@ public enum Tower {
 		return false;
 	}
 
-	public static Tower getRandom(Random rand) {
+	public static Tower getRandom(RandomSource rand) {
 		return Tower.values()[rand.nextInt(Tower.values().length)];
 	}
 }

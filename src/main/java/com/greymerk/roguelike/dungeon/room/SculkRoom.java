@@ -2,7 +2,8 @@ package com.greymerk.roguelike.dungeon.room;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.block.Blocks;
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellManager;
 import com.greymerk.roguelike.dungeon.cell.CellState;
@@ -29,9 +30,6 @@ import com.greymerk.roguelike.util.WeightedChoice;
 import com.greymerk.roguelike.util.WeightedRandomizer;
 import com.greymerk.roguelike.util.math.RandHelper;
 
-import net.minecraft.block.Blocks;
-import net.minecraft.util.math.random.Random;
-
 public class SculkRoom extends AbstractLargeRoom implements IRoom {
 
 	List<Coord> spawners;
@@ -44,7 +42,7 @@ public class SculkRoom extends AbstractLargeRoom implements IRoom {
 	@Override
 	public void generate(IWorldEditor editor) {
 		Coord origin = this.getWorldPos().copy().add(direction, Cell.SIZE * 2).freeze();
-		Random rand = editor.getRandom(origin);
+		RandomSource rand = editor.getRandom(origin);
 		
 		clear(editor, rand, origin);
 		ceiling(editor, rand, origin);
@@ -61,7 +59,7 @@ public class SculkRoom extends AbstractLargeRoom implements IRoom {
 		this.generateExits(editor, rand);
 	}
 
-	private void placeChests(IWorldEditor editor, Random rand, Coord origin) {
+	private void placeChests(IWorldEditor editor, RandomSource rand, Coord origin) {
 		WeightedRandomizer<Treasure> types = new WeightedRandomizer<Treasure>()
 			.add(new WeightedChoice<Treasure>(Treasure.ARMOR, 1))
 			.add(new WeightedChoice<Treasure>(Treasure.TOOL, 1))
@@ -71,7 +69,7 @@ public class SculkRoom extends AbstractLargeRoom implements IRoom {
 				.filter(pos -> editor.isAir(pos))
 				.filter(pos -> checkerBoard(pos))
 				.sorted(RandHelper.randomizer(rand))
-				.limit(rand.nextBetween(3, 7))
+				.limit(rand.nextIntBetweenInclusive(3, 7))
 				.forEach(pos -> {
 					Treasure.generate(editor, rand, settings.getDifficulty(), pos, types.get(rand));	
 				});
@@ -86,18 +84,18 @@ public class SculkRoom extends AbstractLargeRoom implements IRoom {
 		return false;
 	}
 
-	private void bridges(IWorldEditor editor, Random rand, Coord origin) {
+	private void bridges(IWorldEditor editor, RandomSource rand, Coord origin) {
 		Cardinal.directions.forEach(dir -> {
 			bridge(editor, rand, origin, dir);
 		});
 	}
 
-	private void bridge(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
+	private void bridge(IWorldEditor editor, RandomSource rand, Coord origin, Cardinal dir) {
 		BoundingBox.of(origin).add(dir, 3).add(Cardinal.DOWN).grow(Cardinal.orthogonal(dir)).grow(dir, 7).fill(editor, rand, theme.getPrimary().getFloor());
 		BoundingBox.of(origin).add(dir, 4).add(Cardinal.DOWN, 2).grow(Cardinal.orthogonal(dir), 2).grow(dir, 5).fill(editor, rand, theme.getPrimary().getWall());
 	}
 
-	private void placeSpawners(IWorldEditor editor, Random rand, Coord origin) {
+	private void placeSpawners(IWorldEditor editor, RandomSource rand, Coord origin) {
 		WeightedRandomizer<Spawner> types = new WeightedRandomizer<Spawner>();
 		types.add(new WeightedChoice<Spawner>(Spawner.CAVESPIDER, 1));
 		types.add(new WeightedChoice<Spawner>(Spawner.CREEPER, 1));
@@ -108,13 +106,13 @@ public class SculkRoom extends AbstractLargeRoom implements IRoom {
 		spawners.stream()
 			.distinct()
 			.sorted(RandHelper.randomizer(rand))
-			.limit(rand.nextBetween(5, 10))
+			.limit(rand.nextIntBetweenInclusive(5, 10))
 			.forEach(pos -> {
 				Spawner.generate(editor, rand, this.settings.getDifficulty(), pos, types.get(rand));
 			});
 	}
 
-	private void tower(IWorldEditor editor, Random rand, Coord origin) {
+	private void tower(IWorldEditor editor, RandomSource rand, Coord origin) {
 		IBlockFactory walls = theme.getPrimary().getWall();
 		BoundingBox.of(origin).add(Cardinal.DOWN, 2).grow(Cardinal.directions, 3).fill(editor, rand, walls);
 		BoundingBox.of(origin).add(Cardinal.DOWN).grow(Cardinal.directions, 2).fill(editor, rand, walls);
@@ -132,7 +130,7 @@ public class SculkRoom extends AbstractLargeRoom implements IRoom {
 		MetaBlock.of(Blocks.SCULK_CATALYST).set(editor, origin);
 	}
 
-	private void deco(IWorldEditor editor, Random rand, Coord origin) {
+	private void deco(IWorldEditor editor, RandomSource rand, Coord origin) {
 		Cardinal.directions.forEach(dir -> {
 			Cardinal.orthogonal(dir).forEach(o -> {
 				List.of(6, 12).forEach(step -> {
@@ -142,7 +140,7 @@ public class SculkRoom extends AbstractLargeRoom implements IRoom {
 		});
 	}
 
-	private void pillars(IWorldEditor editor, Random rand, Coord origin) {
+	private void pillars(IWorldEditor editor, RandomSource rand, Coord origin) {
 		Cardinal.directions.forEach(dir -> {
 			Cardinal.orthogonal(dir).forEach(o -> {
 				List.of(3, 9).forEach(step -> {
@@ -153,7 +151,7 @@ public class SculkRoom extends AbstractLargeRoom implements IRoom {
 		});
 	}
 
-	private void pillarSet(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
+	private void pillarSet(IWorldEditor editor, RandomSource rand, Coord origin, Cardinal dir) {
 		theme.getPrimary().getStair().setOrientation(Cardinal.reverse(dir), true).set(editor, rand, origin.copy().add(dir, 2).add(Cardinal.UP, 4));
 		Cardinal.orthogonal(dir).forEach(o -> {
 			Pillar.generate(editor, rand, origin.copy().add(dir, 2).add(o), theme, 4, List.of(o, Cardinal.reverse(dir)));
@@ -161,13 +159,13 @@ public class SculkRoom extends AbstractLargeRoom implements IRoom {
 		});		
 	}
 
-	private void braziers(IWorldEditor editor, Random rand, Coord origin) {
+	private void braziers(IWorldEditor editor, RandomSource rand, Coord origin) {
 		Cardinal.directions.forEach(dir -> {
 			brazier(editor, rand, origin.add(dir, 9).add(Cardinal.left(dir), 9).freeze());
 		});
 	}
 
-	private void brazier(IWorldEditor editor, Random rand, Coord origin) {
+	private void brazier(IWorldEditor editor, RandomSource rand, Coord origin) {
 		IBlockFactory walls = theme.getPrimary().getWall();
 		IStair stair = theme.getPrimary().getStair();
 		ISlab slab = theme.getPrimary().getSlab();
@@ -184,7 +182,7 @@ public class SculkRoom extends AbstractLargeRoom implements IRoom {
 		BoundingBox.of(origin).add(Cardinal.DOWN, 2).grow(Cardinal.directions, 2).fill(editor, rand, walls);
 	}
 
-	private void floor(IWorldEditor editor, Random rand, Coord origin) {
+	private void floor(IWorldEditor editor, RandomSource rand, Coord origin) {
 		Cardinal.directions.forEach(dir -> {
 			BoundingBox.of(origin).add(Cardinal.DOWN).add(dir, 12).grow(dir, 3).grow(Cardinal.left(dir), 15).grow(Cardinal.right(dir), 11).fill(editor, rand, theme.getPrimary().getFloor());
 			BoundingBox.of(origin).add(Cardinal.DOWN).add(dir, 11).grow(Cardinal.orthogonal(dir), 11).fill(editor, rand, theme.getPrimary().getWall());
@@ -196,7 +194,7 @@ public class SculkRoom extends AbstractLargeRoom implements IRoom {
 		
 	}
 
-	private void ceiling(IWorldEditor editor, Random rand, Coord origin) {
+	private void ceiling(IWorldEditor editor, RandomSource rand, Coord origin) {
 		Cardinal.directions.forEach(dir -> {
 			List.of(2, 4, 8, 10).forEach(step -> {
 				BoundingBox.of(origin).add(Cardinal.UP, 6).add(dir, step).grow(Cardinal.orthogonal(dir), 15).fill(editor, rand, theme.getPrimary().getWall());
@@ -205,7 +203,7 @@ public class SculkRoom extends AbstractLargeRoom implements IRoom {
 		});
 	}
 
-	private void clear(IWorldEditor editor, Random rand, Coord origin) {
+	private void clear(IWorldEditor editor, RandomSource rand, Coord origin) {
 		BoundingBox.of(origin).grow(Cardinal.directions, 14).grow(Cardinal.DOWN, 2).grow(Cardinal.UP, 6).fill(editor, rand, Air.get());
 		Cardinal.directions.forEach(dir -> {
 			BoundingBox.of(origin).add(dir, 15).grow(Cardinal.orthogonal(dir), 15).fill(editor, rand, theme.getPrimary().getWall(), Fill.SOLID);
@@ -217,7 +215,7 @@ public class SculkRoom extends AbstractLargeRoom implements IRoom {
 		BoundingBox.of(origin).add(Cardinal.DOWN, 3).grow(Cardinal.directions, 15).fill(editor, rand, theme.getPrimary().getWall());
 	}
 
-	private void supports(IWorldEditor editor, Random rand, Coord origin) {
+	private void supports(IWorldEditor editor, RandomSource rand, Coord origin) {
 		CellSupport.generate(editor, rand, theme, origin);
 		Cardinal.directions.forEach(dir -> {
 			List.of(6, 12).forEach(i -> {

@@ -13,14 +13,15 @@ import com.greymerk.roguelike.editor.Statistics;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.JsonOps;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-
-import net.minecraft.registry.RegistryKey;
+import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.world.PersistentState;
-import net.minecraft.world.PersistentStateType;
-import net.minecraft.world.World;
+import net.minecraft.util.datafix.DataFixTypes;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.saveddata.SavedData;
+import net.minecraft.world.level.saveddata.SavedDataType;
 
-public class RoguelikeState extends PersistentState {
+public class RoguelikeState extends SavedData {
 	
 	public static final Codec<List<Dungeon>> DUNGEON_LIST_CODEC = Codec.list(Dungeon.CODEC);
 	
@@ -46,12 +47,12 @@ public class RoguelikeState extends PersistentState {
 
 	public void addDungeon(Dungeon toAdd) {
 		this.dungeons.add(toAdd);
-		this.markDirty();
+		this.setDirty();
 	}
 	
 	public void removeDungeon(Dungeon toRemove) {
 		this.dungeons.remove(toRemove);
-		this.markDirty();
+		this.setDirty();
 	}
 	
 	public boolean hasDungeons() {
@@ -71,7 +72,7 @@ public class RoguelikeState extends PersistentState {
 			});	
 		}
 		this.dungeons.removeIf(d -> d.isGenerated());
-		this.markDirty();
+		this.setDirty();
 	}
 	
 	public List<Dungeon> getLoadedDungeons(IWorldEditor editor){
@@ -88,19 +89,19 @@ public class RoguelikeState extends PersistentState {
 				.toList();
 	}
     
-    public static RoguelikeState getServerState(RegistryKey<World> worldKey, MinecraftServer server) {
-        return server.getWorld(worldKey)
-        		.getPersistentStateManager()
-        		.getOrCreate(getPersistentStateType());
+    public static RoguelikeState getServerState(ResourceKey<Level> worldKey, MinecraftServer server) {
+        return server.getLevel(worldKey)
+        		.getDataStorage()
+        		.computeIfAbsent(getPersistentStateType());
     }
     
-    public static PersistentStateType<RoguelikeState> getPersistentStateType() {
+    public static SavedDataType<RoguelikeState> getPersistentStateType() {
     	
-    	return new PersistentStateType<RoguelikeState>(
-    			Roguelike.MODID,
-    			RoguelikeState::new,
-    			CODEC,
-    			null);
+    	return new SavedDataType<>(
+                Identifier.fromNamespaceAndPath(Roguelike.MODID, "state"),
+                RoguelikeState::new,
+                CODEC,
+                DataFixTypes.LEVEL);
     		
     }
 }

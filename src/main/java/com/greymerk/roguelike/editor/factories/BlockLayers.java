@@ -3,13 +3,11 @@ package com.greymerk.roguelike.editor.factories;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Predicate;
-
+import net.minecraft.util.RandomSource;
 import com.greymerk.roguelike.editor.BlockContext;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
-
-import net.minecraft.util.math.random.Random;
 
 public class BlockLayers extends BlockBase{
 
@@ -27,7 +25,7 @@ public class BlockLayers extends BlockBase{
 	}
 	
 	@Override
-	public boolean set(IWorldEditor editor, Random rand, Coord pos, Predicate<BlockContext> p) {
+	public boolean set(IWorldEditor editor, RandomSource rand, Coord pos, Predicate<BlockContext> p) {
 		for(int offset : this.layers.keySet()) {
 			if(Math.floorMod(pos.getY(), 10) - offset == 0) {
 				return this.layers.get(offset).set(editor, rand, pos, p);

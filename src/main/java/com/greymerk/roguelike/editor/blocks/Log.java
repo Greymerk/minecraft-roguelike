@@ -2,16 +2,15 @@ package com.greymerk.roguelike.editor.blocks;
 
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.MetaBlock;
-
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.PillarBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.RotatedPillarBlock;
 
 public class Log {
 
 	public static MetaBlock get(Wood type, Cardinal dir){
 		return MetaBlock.of(fromType(type))
-			.with(PillarBlock.AXIS, Cardinal.axis(dir));
+			.with(RotatedPillarBlock.AXIS, Cardinal.axis(dir));
 		
 	}
 	

@@ -6,39 +6,38 @@ import com.greymerk.roguelike.treasure.loot.Equipment;
 import com.greymerk.roguelike.treasure.loot.Quality;
 import com.greymerk.roguelike.treasure.loot.Slot;
 import com.greymerk.roguelike.treasure.loot.trim.Trim;
-
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.DyedColorComponent;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.registry.DynamicRegistryManager;
-import net.minecraft.resource.featuretoggle.FeatureSet;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.flag.FeatureFlagSet;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.component.DyedItemColor;
 
 public class ItemArmour extends ItemBase {
 
-	private DynamicRegistryManager registry;
-	private FeatureSet features;
+	private RegistryAccess registry;
+	private FeatureFlagSet features;
 	
-	public ItemArmour(int weight, Difficulty diff, FeatureSet features, DynamicRegistryManager reg) {
+	public ItemArmour(int weight, Difficulty diff, FeatureFlagSet features, RegistryAccess reg) {
 		super(weight, diff);
 		this.features = features;
 		this.registry = reg;
 	}	
 	
 	@Override
-	public ItemStack getLootItem(Random rand, Difficulty diff) {
+	public ItemStack getLootItem(RandomSource rand, Difficulty diff) {
 		return getRandom(this.features, this.registry, rand, diff, true);
 	}
 
-	public static ItemStack getRandom(FeatureSet features, DynamicRegistryManager reg, Random rand, Difficulty diff, boolean enchant){
+	public static ItemStack getRandom(FeatureFlagSet features, RegistryAccess reg, RandomSource rand, Difficulty diff, boolean enchant){
 		ItemStack item = getRandom(features, reg, rand, diff,
 				Slot.getSlotByNumber(rand.nextInt(4) + 1),
 				enchant);
 		return item;
 	}
 	
-	public static ItemStack getRandom(FeatureSet features, DynamicRegistryManager reg, Random rand, Difficulty diff, Slot slot, boolean enchant){
+	public static ItemStack getRandom(FeatureFlagSet features, RegistryAccess reg, RandomSource rand, Difficulty diff, Slot slot, boolean enchant){
 		if(enchant && rand.nextInt(20 + (Difficulty.value(diff) * 10)) == 0){
 			switch(slot){
 			case HEAD: return ItemSpecialty.getRandomItem(reg, Equipment.HELMET, rand, diff); 
@@ -55,7 +54,7 @@ public class ItemArmour extends ItemBase {
 		return item;
 	}
 	
-	public static ItemStack get(Random rand, Slot slot, Quality quality) {
+	public static ItemStack get(RandomSource rand, Slot slot, Quality quality) {
 		
 		switch(slot){
 		
@@ -124,8 +123,8 @@ public class ItemArmour extends ItemBase {
 		
 		int color = r << 16 | g << 8 | b << 0;;
         
-		DyedColorComponent dye = new DyedColorComponent(color);
-		armor.set(DataComponentTypes.DYED_COLOR, dye);
+		DyedItemColor dye = new DyedItemColor(color);
+		armor.set(DataComponents.DYED_COLOR, dye);
 		return armor;
 	}
 

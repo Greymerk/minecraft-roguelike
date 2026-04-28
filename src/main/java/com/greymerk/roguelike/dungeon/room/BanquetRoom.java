@@ -1,7 +1,8 @@
 package com.greymerk.roguelike.dungeon.room;
 
 import java.util.List;
-
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.block.Blocks;
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellManager;
 import com.greymerk.roguelike.dungeon.cell.CellState;
@@ -16,15 +17,12 @@ import com.greymerk.roguelike.editor.blocks.Air;
 import com.greymerk.roguelike.editor.blocks.Candle;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 
-import net.minecraft.block.Blocks;
-import net.minecraft.util.math.random.Random;
-
 public class BanquetRoom extends AbstractLargeRoom implements IRoom {
 
 	@Override
 	public void generate(IWorldEditor editor) {
 		Coord origin = this.getWorldPos().copy().add(direction, Cell.SIZE * 2).freeze();
-		Random rand = editor.getRandom(origin);
+		RandomSource rand = editor.getRandom(origin);
 
 		clear(editor, rand, origin);
 		ceiling(editor, rand, origin);
@@ -35,7 +33,7 @@ public class BanquetRoom extends AbstractLargeRoom implements IRoom {
 		this.generateExits(editor, rand);
 	}
 	
-	private void supports(IWorldEditor editor, Random rand, Coord origin) {
+	private void supports(IWorldEditor editor, RandomSource rand, Coord origin) {
 		CellSupport.generate(editor, rand, theme, origin);
 		Cardinal.directions.forEach(dir -> {
 			List.of(6, 12).forEach(i -> {
@@ -47,13 +45,13 @@ public class BanquetRoom extends AbstractLargeRoom implements IRoom {
 		});
 	}
 
-	private void tables(IWorldEditor editor, Random rand, Coord origin) {
+	private void tables(IWorldEditor editor, RandomSource rand, Coord origin) {
 		Cardinal.orthogonal(direction).forEach(o -> {
 			table(editor, rand, origin.copy().add(o, 3).freeze(), o);
 		});
 	}
 
-	private void table(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
+	private void table(IWorldEditor editor, RandomSource rand, Coord origin, Cardinal dir) {
 		BoundingBox.of(origin).grow(Cardinal.orthogonal(dir), 3).fill(editor, rand, theme.getSecondary().getWall());
 		Cardinal.parallel(dir).forEach(p -> {
 			theme.getSecondary().getStair().setOrientation(p, true).fill(editor, rand, BoundingBox.of(origin).add(p).grow(Cardinal.orthogonal(dir), 4));
@@ -74,7 +72,7 @@ public class BanquetRoom extends AbstractLargeRoom implements IRoom {
 		});
 	}
 
-	private void pillars(IWorldEditor editor, Random rand, Coord origin) {
+	private void pillars(IWorldEditor editor, RandomSource rand, Coord origin) {
 		Cardinal.directions.forEach(dir -> {
 			Cardinal.orthogonal(dir).forEach(o -> {
 				List.of(3, 9).forEach(step -> {
@@ -86,7 +84,7 @@ public class BanquetRoom extends AbstractLargeRoom implements IRoom {
 		
 	}
 
-	private void pillarSet(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
+	private void pillarSet(IWorldEditor editor, RandomSource rand, Coord origin, Cardinal dir) {
 		Pillar.generate(editor, rand, origin, theme, 3);
 		theme.getPrimary().getWall().set(editor, rand, origin.copy().add(Cardinal.UP, 5));
 		theme.getPrimary().getStair().setOrientation(Cardinal.reverse(dir), true).set(editor, rand, origin.copy().add(dir, 5).add(Cardinal.UP, 2));
@@ -97,7 +95,7 @@ public class BanquetRoom extends AbstractLargeRoom implements IRoom {
 		});
 	}
 
-	private void ceiling(IWorldEditor editor, Random rand, Coord origin) {
+	private void ceiling(IWorldEditor editor, RandomSource rand, Coord origin) {
 		Cardinal.directions.forEach(dir -> {
 			List.of(8, 10, 14).forEach(step -> {
 				BoundingBox.of(origin).add(Cardinal.UP, 4).add(dir, step).grow(Cardinal.orthogonal(dir), 15).fill(editor, rand, theme.getPrimary().getWall());
@@ -116,7 +114,7 @@ public class BanquetRoom extends AbstractLargeRoom implements IRoom {
 		BoundingBox.of(origin).add(Cardinal.UP, 6).grow(Cardinal.directions, 8).fill(editor, rand, theme.getPrimary().getWall(), Fill.SOLID);
 	}
 
-	private void clear(IWorldEditor editor, Random rand, Coord origin) {
+	private void clear(IWorldEditor editor, RandomSource rand, Coord origin) {
 		BoundingBox.of(origin).grow(Cardinal.directions, 14).grow(Cardinal.UP, 4).fill(editor, rand, Air.get());
 		BoundingBox.of(origin).add(Cardinal.UP, 5).grow(Cardinal.directions, 8).fill(editor, rand, Air.get());
 		Cardinal.directions.forEach(dir -> {

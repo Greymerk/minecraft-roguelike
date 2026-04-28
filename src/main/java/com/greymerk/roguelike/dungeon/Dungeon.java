@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
+import net.minecraft.util.RandomSource;
 import com.google.common.base.Stopwatch;
 import com.greymerk.roguelike.debug.Debug;
 import com.greymerk.roguelike.dungeon.layout.ExclusionZones;
@@ -23,8 +23,6 @@ import com.greymerk.roguelike.state.RoguelikeState;
 import com.greymerk.roguelike.theme.Theme;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-
-import net.minecraft.util.math.random.Random;
 
 public class Dungeon implements Iterable<IRoom>{
 
@@ -89,7 +87,7 @@ public class Dungeon implements Iterable<IRoom>{
 	}
 	
 	public void generate(IWorldEditor editor) {
-		Random rand = editor.getRandom(origin);
+		RandomSource rand = editor.getRandom(origin);
 		
 		Stopwatch watch = Stopwatch.createStarted();
 		

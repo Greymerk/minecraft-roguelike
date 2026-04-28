@@ -2,16 +2,14 @@ package com.greymerk.roguelike.treasure.loot.rules;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.ItemStack;
 import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.treasure.Treasure;
 import com.greymerk.roguelike.treasure.TreasureManager;
 import com.greymerk.roguelike.treasure.chest.ITreasureChest;
 import com.greymerk.roguelike.util.IWeighted;
 import com.greymerk.roguelike.util.WeightedChoice;
-
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.random.Random;
 
 public class LootRuleManager {
 
@@ -39,13 +37,13 @@ public class LootRuleManager {
 		this.rules.addAll(other.rules);
 	}
 	
-	public void process(Random rand, TreasureManager treasure){
+	public void process(RandomSource rand, TreasureManager treasure){
 		for(LootRule rule : this.rules){
 			rule.process(rand, treasure);
 		}
 	}
 	
-	public void process(Random rand, ITreasureChest chest) {
+	public void process(RandomSource rand, ITreasureChest chest) {
 		for(LootRule rule : this.rules) {
 			rule.process(rand, chest);
 		}

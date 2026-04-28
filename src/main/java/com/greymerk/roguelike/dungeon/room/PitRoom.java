@@ -1,7 +1,8 @@
 package com.greymerk.roguelike.dungeon.room;
 
 import java.util.List;
-
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.block.Blocks;
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellManager;
 import com.greymerk.roguelike.dungeon.cell.CellState;
@@ -19,15 +20,12 @@ import com.greymerk.roguelike.editor.blocks.Piston;
 import com.greymerk.roguelike.editor.blocks.RedstoneTorch;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 
-import net.minecraft.block.Blocks;
-import net.minecraft.util.math.random.Random;
-
 public class PitRoom extends AbstractMediumRoom {
 
 	@Override
 	public void generate(IWorldEditor editor) {
 		Coord origin = this.worldPos.copy().add(direction, Cell.SIZE).freeze();
-		Random rand = editor.getRandom(origin);
+		RandomSource rand = editor.getRandom(origin);
 		this.centerRoom(editor, rand, origin);
 		Cardinal.directions.forEach(dir -> {
 			if(this.getExitType(dir) == ExitType.DOOR) {
@@ -42,7 +40,7 @@ public class PitRoom extends AbstractMediumRoom {
 		this.supports(editor, rand, origin.add(Cardinal.DOWN, 20).freeze());
 	}
 	
-	private void supports(IWorldEditor editor, Random rand, Coord origin) {
+	private void supports(IWorldEditor editor, RandomSource rand, Coord origin) {
 		CellSupport.generate(editor, rand, theme, origin.copy().add(Cardinal.DOWN));
 		Cardinal.directions.forEach(dir -> {
 			CellSupport.generate(editor, rand, theme, origin.copy().add(dir, 6));
@@ -50,7 +48,7 @@ public class PitRoom extends AbstractMediumRoom {
 		});
 	}
 
-	private void tunnelDown(IWorldEditor editor, Random rand, Coord origin) {
+	private void tunnelDown(IWorldEditor editor, RandomSource rand, Coord origin) {
 		BoundingBox.of(origin).grow(Cardinal.DOWN, 16).grow(Cardinal.directions).fill(editor, rand, Air.get());
 		Cardinal.directions.forEach(dir -> {
 			BoundingBox.of(origin).add(Cardinal.DOWN).add(dir, 2)
@@ -59,7 +57,7 @@ public class PitRoom extends AbstractMediumRoom {
 		});
 	}
 
-	private void lowerRoom(IWorldEditor editor, Random rand, Coord origin) {
+	private void lowerRoom(IWorldEditor editor, RandomSource rand, Coord origin) {
 		BoundingBox.of(origin).grow(Cardinal.directions, 8).grow(Cardinal.UP, 4).fill(editor, rand, Air.get());
 		Cardinal.directions.forEach(dir -> {
 			BoundingBox.of(origin).add(dir, 9).grow(Cardinal.orthogonal(dir), 9).grow(Cardinal.UP, 3)
@@ -84,7 +82,7 @@ public class PitRoom extends AbstractMediumRoom {
 		this.lowerRoomPond(editor, rand, origin);
 	}
 
-	private void lowerRoomPond(IWorldEditor editor, Random rand, Coord origin) {
+	private void lowerRoomPond(IWorldEditor editor, RandomSource rand, Coord origin) {
 		BoundingBox.of(origin).add(Cardinal.DOWN, 2).grow(Cardinal.directions, 3).fill(editor, rand, theme.getPrimary().getWall());
 		BoundingBox.of(origin).add(Cardinal.DOWN).grow(Cardinal.directions, 2).fill(editor, rand, theme.getPrimary().getLiquid());
 		Cardinal.directions.forEach(dir -> {
@@ -93,7 +91,7 @@ public class PitRoom extends AbstractMediumRoom {
 		});
 	}
 
-	private void lowerRoomCeiling(IWorldEditor editor, Random rand, Coord origin) {
+	private void lowerRoomCeiling(IWorldEditor editor, RandomSource rand, Coord origin) {
 		BoundingBox.of(origin).add(Cardinal.UP, 5).grow(Cardinal.directions, 8).fill(editor, rand, theme.getPrimary().getWall(), Fill.SOLID);
 		Cardinal.directions.forEach(dir -> {
 			List.of(2, 4, 8).forEach(i -> {
@@ -102,7 +100,7 @@ public class PitRoom extends AbstractMediumRoom {
 		});
 	}
 
-	private void centerRoom(IWorldEditor editor, Random rand, Coord origin) {
+	private void centerRoom(IWorldEditor editor, RandomSource rand, Coord origin) {
 		BoundingBox.of(origin).grow(Cardinal.directions, 2).grow(Cardinal.UP, 3).fill(editor, rand, Air.get());
 		BoundingBox.of(origin).grow(Cardinal.directions, 3).add(Cardinal.DOWN).fill(editor, rand, this.theme.getPrimary().getWall());
 		Cardinal.directions.forEach(dir -> {
@@ -111,7 +109,7 @@ public class PitRoom extends AbstractMediumRoom {
 		BoundingBox.of(origin).add(Cardinal.UP, 4).grow(Cardinal.directions, 3).fill(editor, rand, theme.getPrimary().getWall(), Fill.SOLID);
 	}
 	
-	private void entryDoorWay(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
+	private void entryDoorWay(IWorldEditor editor, RandomSource rand, Coord origin, Cardinal dir) {
 		Corridor room = new Corridor();
 		Coord wp = origin.add(dir, Cell.SIZE);
 		room.setWorldPos(wp);
@@ -126,7 +124,7 @@ public class PitRoom extends AbstractMediumRoom {
 		room.generate(editor);
 	}
 	
-	private void pistonTrap(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
+	private void pistonTrap(IWorldEditor editor, RandomSource rand, Coord origin, Cardinal dir) {
 		BoundingBox.of(origin).add(dir, 3).grow(Cardinal.UP, 2).grow(Cardinal.DOWN, 2).grow(Cardinal.orthogonal(dir), 2).grow(dir, 3).fill(editor, rand, this.theme.getPrimary().getWall());
 		MetaBlock.of(Blocks.STONE_PRESSURE_PLATE).set(editor, origin.add(dir, 2));
 		RedstoneTorch.generate(editor, origin.add(dir, 3).add(Cardinal.DOWN), dir, true);

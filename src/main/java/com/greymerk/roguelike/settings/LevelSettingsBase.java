@@ -1,7 +1,7 @@
 package com.greymerk.roguelike.settings;
 
 import java.util.List;
-
+import net.minecraft.util.RandomSource;
 import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
 import com.greymerk.roguelike.dungeon.fragment.IFragment;
@@ -12,8 +12,6 @@ import com.greymerk.roguelike.filter.IFilter;
 import com.greymerk.roguelike.theme.ITheme;
 import com.greymerk.roguelike.theme.Theme;
 import com.greymerk.roguelike.util.WeightedRandomizer;
-
-import net.minecraft.util.math.random.Random;
 
 public abstract class LevelSettingsBase implements ILevelSettings {
 
@@ -30,14 +28,14 @@ public abstract class LevelSettingsBase implements ILevelSettings {
 	}
 	
 	@Override
-	public IFragment getWallFragment(Random rand) {
+	public IFragment getWallFragment(RandomSource rand) {
 		if(this.walls.isEmpty()) return Fragment.fromType(Fragment.WALL_EMPTY);
 		Fragment type = this.walls.get(rand);
 		return Fragment.fromType(type);
 	}
 	
 	@Override
-	public IFragment getAlcove(Random rand) {
+	public IFragment getAlcove(RandomSource rand) {
 		if(this.alcoves.isEmpty()) return getWallFragment(rand);
 		Fragment type = this.alcoves.get(rand);
 		return Fragment.fromType(type);
@@ -55,7 +53,7 @@ public abstract class LevelSettingsBase implements ILevelSettings {
 	}
 	
 	@Override
-	public void applyFilters(IWorldEditor editor, Random rand, IBounded box) {
+	public void applyFilters(IWorldEditor editor, RandomSource rand, IBounded box) {
 		if(this.filters == null) return;
 		for(IFilter filter : this.filters) {
 			filter.apply(editor, rand, this, box);

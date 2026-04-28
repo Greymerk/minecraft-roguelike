@@ -1,8 +1,7 @@
 package com.greymerk.roguelike.treasure.chest;
 
 import com.greymerk.roguelike.editor.MetaBlock;
-
-import net.minecraft.block.Blocks;
+import net.minecraft.world.level.block.Blocks;
 
 public enum ChestType {
 

@@ -10,17 +10,16 @@ import com.greymerk.roguelike.editor.blocks.stair.IStair;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.settings.ILevelSettings;
 import com.greymerk.roguelike.theme.ITheme;
-
-import net.minecraft.util.math.random.Random;
+import net.minecraft.util.RandomSource;
 
 public class ArchWay implements IFragment {
 
 	@Override
-	public void generate(IWorldEditor editor, Random rand, ILevelSettings settings, Coord origin, Cardinal dir) {
+	public void generate(IWorldEditor editor, RandomSource rand, ILevelSettings settings, Coord origin, Cardinal dir) {
 		arch(editor, rand, settings, origin.copy().add(dir, 3).freeze(), dir);
 	}
 
-	private void arch(IWorldEditor editor, Random rand, ILevelSettings settings, Coord origin, Cardinal dir) {
+	private void arch(IWorldEditor editor, RandomSource rand, ILevelSettings settings, Coord origin, Cardinal dir) {
 		ITheme theme = settings.getTheme();
 		
 		BoundingBox.of(origin).grow(Cardinal.orthogonal(dir), 2).grow(Cardinal.UP, 3).fill(editor, rand, Air.get());

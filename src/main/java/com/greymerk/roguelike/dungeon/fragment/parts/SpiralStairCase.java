@@ -10,14 +10,13 @@ import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.editor.shapes.Line;
 import com.greymerk.roguelike.settings.ILevelSettings;
 import com.greymerk.roguelike.theme.ITheme;
-
-import net.minecraft.util.math.random.Random;
+import net.minecraft.util.RandomSource;
 
 public class SpiralStairCase implements IFragment {
 
 	Line stairWell;
 	
-	public static void generate(IWorldEditor editor, Random rand, ITheme theme, Line line) {
+	public static void generate(IWorldEditor editor, RandomSource rand, ITheme theme, Line line) {
 		line.forEach(pos -> {
 			spiralStairStep(editor, rand, pos, Cardinal.directions.get(Math.floorMod(pos.getY(), 4)), theme);
 		});
@@ -27,7 +26,7 @@ public class SpiralStairCase implements IFragment {
 		this.stairWell = new Line(start, end);
 	}
 	
-	public void generate(IWorldEditor editor, Random rand, ITheme theme) {
+	public void generate(IWorldEditor editor, RandomSource rand, ITheme theme) {
 		for(Coord pos : stairWell) {
 			Cardinal dir = Cardinal.directions.get(Math.floorMod(pos.getY(), 4));
 			spiralStairStep(editor, rand, pos, dir, theme);
@@ -35,11 +34,11 @@ public class SpiralStairCase implements IFragment {
 	}
 	
 	@Override
-	public void generate(IWorldEditor editor, Random rand, ILevelSettings settings, Coord origin, Cardinal dir) {
+	public void generate(IWorldEditor editor, RandomSource rand, ILevelSettings settings, Coord origin, Cardinal dir) {
 		spiralStairStep(editor, rand, origin, dir, settings.getTheme());
 	}
 	
-	public static void spiralStairStep(IWorldEditor editor, Random rand, Coord origin, Cardinal dir, ITheme theme){
+	public static void spiralStairStep(IWorldEditor editor, RandomSource rand, Coord origin, Cardinal dir, ITheme theme){
 		BoundingBox.of(origin).grow(Cardinal.directions).fill(editor, rand, Air.get());
 		theme.getPrimary().getWall().set(editor, rand, origin);
 		

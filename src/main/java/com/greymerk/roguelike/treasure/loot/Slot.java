@@ -1,8 +1,7 @@
 package com.greymerk.roguelike.treasure.loot;
 
-import net.minecraft.util.math.random.Random;
-
-import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.EquipmentSlot;
 
 public enum Slot {
 
@@ -32,7 +31,7 @@ public enum Slot {
 		}
 	}
 	
-	public static Slot getRandomArmourSlot(Random rand){
+	public static Slot getRandomArmourSlot(RandomSource rand){
 		return getSlotByNumber(1 + rand.nextInt(4));
 	}
 }

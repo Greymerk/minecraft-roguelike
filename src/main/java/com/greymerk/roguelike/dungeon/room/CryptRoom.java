@@ -2,7 +2,7 @@ package com.greymerk.roguelike.dungeon.room;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import net.minecraft.util.RandomSource;
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
 import com.greymerk.roguelike.dungeon.fragment.IFragment;
@@ -21,14 +21,12 @@ import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.editor.shapes.RectSolid;
 import com.greymerk.roguelike.editor.shapes.Shape;
 
-import net.minecraft.util.math.random.Random;
-
 public class CryptRoom extends AbstractMediumRoom implements IRoom {
 
 	@Override
 	public void generate(IWorldEditor editor) {
 		Coord origin = this.worldPos.copy().add(direction, Cell.SIZE).freeze();
-		Random rand = editor.getRandom(origin);
+		RandomSource rand = editor.getRandom(origin);
 		roomCenter(editor, rand, origin);
 		CellSupport.generate(editor, rand, theme, origin.copy());
 		
@@ -68,7 +66,7 @@ public class CryptRoom extends AbstractMediumRoom implements IRoom {
 		}
 	}
 	
-	private void sarcophagus(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
+	private void sarcophagus(IWorldEditor editor, RandomSource rand, Coord origin, Cardinal dir) {
 		IBlockFactory walls = theme.getPrimary().getWall();
 		IStair stair = theme.getPrimary().getStair();
 		
@@ -127,7 +125,7 @@ public class CryptRoom extends AbstractMediumRoom implements IRoom {
 		Fragment.generate(Fragment.SARCOPHAGUS, editor, rand, settings, origin.copy(), dir);
 	}
 
-	private void entryWay(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
+	private void entryWay(IWorldEditor editor, RandomSource rand, Coord origin, Cardinal dir) {
 		IStair stair = this.theme.getPrimary().getStair();
 		IBlockFactory wall = this.theme.getPrimary().getWall();
 		
@@ -175,7 +173,7 @@ public class CryptRoom extends AbstractMediumRoom implements IRoom {
 		Fragment.generate(Fragment.ARCH, editor, rand, settings, origin.copy().add(dir, 6), dir);
 	}
 
-	private void entrySideWall(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
+	private void entrySideWall(IWorldEditor editor, RandomSource rand, Coord origin, Cardinal dir) {
 		IStair stair = theme.getPrimary().getStair();
 		
 		BoundingBox bb = BoundingBox.of(origin.copy());
@@ -202,7 +200,7 @@ public class CryptRoom extends AbstractMediumRoom implements IRoom {
 		settings.getWallFragment(rand).generate(editor, rand, settings, origin, dir);
 	}
 
-	private void cornerCell(IWorldEditor editor, Random rand, Coord origin, List<Cardinal> doors) {
+	private void cornerCell(IWorldEditor editor, RandomSource rand, Coord origin, List<Cardinal> doors) {
 		IStair stair = theme.getPrimary().getStair();
 		
 		BoundingBox bb = BoundingBox.of(origin.copy()).grow(Cardinal.directions, 2).grow(Cardinal.UP, 3);
@@ -234,7 +232,7 @@ public class CryptRoom extends AbstractMediumRoom implements IRoom {
 		}
 	}
 
-	private void roomCenter(IWorldEditor editor, Random rand, Coord origin) {
+	private void roomCenter(IWorldEditor editor, RandomSource rand, Coord origin) {
 		IStair stair = this.theme.getPrimary().getStair();
 		IBlockFactory wall = this.theme.getPrimary().getWall();
 		
@@ -256,7 +254,7 @@ public class CryptRoom extends AbstractMediumRoom implements IRoom {
 		BoundingBox.of(origin.copy()).add(Cardinal.DOWN).grow(Cardinal.directions, 4).fill(editor, rand, theme.getPrimary().getFloor());
 	}
 	
-	private void cryptWall(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
+	private void cryptWall(IWorldEditor editor, RandomSource rand, Coord origin, Cardinal dir) {
 		BoundingBox bb = BoundingBox.of(origin.copy());
 		bb.grow(Cardinal.orthogonal(dir), 4).grow(Cardinal.DOWN).grow(Cardinal.UP, 5).grow(dir, 3);
 		RectSolid.fill(editor, rand, bb, this.theme.getPrimary().getWall());
@@ -273,7 +271,7 @@ public class CryptRoom extends AbstractMediumRoom implements IRoom {
 		}
 	}
 	
-	private void crypt(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
+	private void crypt(IWorldEditor editor, RandomSource rand, Coord origin, Cardinal dir) {
 		IFragment crypt = new CryptFragment(rand.nextInt(5) != 0);
 		crypt.generate(editor, rand, settings, origin.copy(), dir);
 	}

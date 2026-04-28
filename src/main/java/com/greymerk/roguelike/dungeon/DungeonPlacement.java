@@ -3,15 +3,13 @@ package com.greymerk.roguelike.dungeon;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.levelgen.LegacyRandomSource;
 import com.greymerk.roguelike.config.Config;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.util.StructureLocator;
-
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.math.random.CheckedRandom;
-import net.minecraft.util.math.random.Random;
 
 public class DungeonPlacement {
 
@@ -20,11 +18,11 @@ public class DungeonPlacement {
 		int range = Math.clamp(Config.ofInteger(Config.DISTANCE_TO_VILLAGE).orElse(6), 1, 20);
 		
 		int r = range + 1;
-		ChunkPos start = new ChunkPos(cpos.x - r, cpos.z - r);
-		ChunkPos end = new ChunkPos(cpos.x + r, cpos.z + r);
+		ChunkPos start = new ChunkPos(cpos.x() - r, cpos.z() - r);
+		ChunkPos end = new ChunkPos(cpos.x() + r, cpos.z() + r);
 		List<ChunkPos> chunks = new ArrayList<ChunkPos>();
-		for(int x = start.x; x < end.x; ++x) {
-			for(int z = start.z; z < end.z; ++z) {
+		for(int x = start.x(); x < end.x(); ++x) {
+			for(int z = start.z(); z < end.z(); ++z) {
 				chunks.add(new ChunkPos(x, z));
 			}
 		}
@@ -33,11 +31,11 @@ public class DungeonPlacement {
 		if(ovc.isEmpty()) return false;
 		ChunkPos villageChunk = ovc.get();
 		
-		Coord village = Coord.of(villageChunk.getCenterAtY(0));
-		Random rand = new CheckedRandom(editor.getSeed(village));
+		Coord village = Coord.of(villageChunk.getMiddleBlockPosition(0));
+		RandomSource rand = new LegacyRandomSource(editor.getSeed(village));
 		
-		Coord chunkFrom = Coord.of(cpos.x, 0, cpos.z);
-		Coord chunkVillage = Coord.of(villageChunk.x, 0, villageChunk.z);
+		Coord chunkFrom = Coord.of(cpos.x(), 0, cpos.z());
+		Coord chunkVillage = Coord.of(villageChunk.x(), 0, villageChunk.z());
 		
 		int chunkDist = chunkFrom.manhattanDistance(chunkVillage);
 		
@@ -45,11 +43,11 @@ public class DungeonPlacement {
 		if(chunkDist != range) return false;
 
 		Coord dirToDungeon = Coord.of(
-				rand.nextBetween(-100, 100),
+				rand.nextIntBetweenInclusive(-100, 100),
 				0,
-				rand.nextBetween(-100, 100));
+				rand.nextIntBetweenInclusive(-100, 100));
 		
-		Coord chunkCenter = Coord.of(cpos.getCenterAtY(0));
+		Coord chunkCenter = Coord.of(cpos.getMiddleBlockPosition(0));
 		Coord dirToChunk = chunkCenter.copy().sub(village);
 		Coord projection = dirToChunk.project(dirToDungeon);
 		
@@ -73,8 +71,8 @@ public class DungeonPlacement {
 	
 	@Deprecated
 	public static boolean hasVillage(long seed, ChunkPos cpos) {
-		int chunkX = cpos.x;
-		int chunkZ = cpos.z;
+		int chunkX = cpos.x();
+		int chunkZ = cpos.z();
 		
 		byte spacing = 34; // used to be 32
 		byte separation = 8;
@@ -91,7 +89,7 @@ public class DungeonPlacement {
 		int zMod = chunkZ / spacing;
 		
 		long positionSeed = xMod * magicNumber1 + zMod * magicNumber2 + seed + salt;
-		Random rand = new CheckedRandom(positionSeed);
+		RandomSource rand = new LegacyRandomSource(positionSeed);
 		
 		xMod *= spacing;
 		zMod *= spacing;

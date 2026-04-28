@@ -3,9 +3,8 @@ package com.greymerk.roguelike.editor.blocks.spawners;
 import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
-
-import net.minecraft.entity.EntityType;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.EntityType;
 
 public enum Spawner {
 	
@@ -61,12 +60,12 @@ public enum Spawner {
 	
 	
 
-	public static void generate(IWorldEditor editor, Random rand, Difficulty diff, Coord pos){
+	public static void generate(IWorldEditor editor, RandomSource rand, Difficulty diff, Coord pos){
 		Spawner type = common[rand.nextInt(common.length)];
 		generate(editor, rand, diff, pos, type);
 	}
 	
-	public static void generate(IWorldEditor editor, Random rand, Difficulty diff, Coord pos, Spawner type) {
+	public static void generate(IWorldEditor editor, RandomSource rand, Difficulty diff, Coord pos, Spawner type) {
 		new Spawnable(type).generate(editor, rand, pos, diff);
 	}
 }

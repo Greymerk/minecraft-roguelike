@@ -7,28 +7,27 @@ import com.greymerk.roguelike.monster.MonsterProfile;
 import com.greymerk.roguelike.treasure.loot.provider.ItemNovelty;
 import com.greymerk.roguelike.util.WeightedChoice;
 import com.greymerk.roguelike.util.WeightedRandomizer;
-
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.registry.DynamicRegistryManager;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.World;
+import net.minecraft.core.RegistryAccess;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
 
 public class ProfileBaby implements IMonsterProfile {
 
 	@Override
-	public void addEquipment(World world, Random rand, Difficulty diff, IEntity mob) {
+	public void addEquipment(Level world, RandomSource rand, Difficulty diff, IEntity mob) {
 		mob.setChild(true);
 		
 		if(rand.nextInt(4) == 0){
 			MonsterProfile.get(MonsterProfile.VILLAGER).addEquipment(world, rand, diff, mob);
 		}
 		
-		mob.setSlot(EquipmentSlot.MAINHAND, toy(world.getRegistryManager(), rand));
+		mob.setSlot(EquipmentSlot.MAINHAND, toy(world.registryAccess(), rand));
 	}
 	
-	private ItemStack toy(DynamicRegistryManager reg, Random rand) {
+	private ItemStack toy(RegistryAccess reg, RandomSource rand) {
 		
 		if(rand.nextInt(100) == 0) return ItemNovelty.getItem(reg, ItemNovelty.VECHS);
 		

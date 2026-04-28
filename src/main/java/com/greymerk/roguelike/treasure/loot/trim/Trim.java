@@ -1,29 +1,29 @@
 package com.greymerk.roguelike.treasure.loot.trim;
 
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.equipment.trim.ArmorTrim;
-import net.minecraft.item.equipment.trim.ArmorTrimMaterial;
-import net.minecraft.item.equipment.trim.ArmorTrimPattern;
-import net.minecraft.registry.DynamicRegistryManager;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.core.Holder;
+import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.equipment.trim.ArmorTrim;
+import net.minecraft.world.item.equipment.trim.TrimMaterial;
+import net.minecraft.world.item.equipment.trim.TrimPattern;
 
 public class Trim {
 
     
-	public static ItemStack addRandom(DynamicRegistryManager registry, ItemStack item, Random rand) {
-	    return set(registry, item, TrimPattern.getRandom(rand), TrimMaterial.getRandom(rand));
+	public static ItemStack addRandom(RegistryAccess registry, ItemStack item, RandomSource rand) {
+	    return set(registry, item, com.greymerk.roguelike.treasure.loot.trim.TrimPattern.getRandom(rand), com.greymerk.roguelike.treasure.loot.trim.TrimMaterial.getRandom(rand));
 	}
 	
-	public static ItemStack set(DynamicRegistryManager registry, ItemStack item, TrimPattern pat, TrimMaterial mat) {
+	public static ItemStack set(RegistryAccess registry, ItemStack item, com.greymerk.roguelike.treasure.loot.trim.TrimPattern pat, com.greymerk.roguelike.treasure.loot.trim.TrimMaterial mat) {
 		
-		RegistryEntry<ArmorTrimPattern> pattern = TrimPattern.getEntry(registry, pat);
-	    RegistryEntry<ArmorTrimMaterial> material = TrimMaterial.getEntry(registry, mat);
+		Holder<TrimPattern> pattern = com.greymerk.roguelike.treasure.loot.trim.TrimPattern.getEntry(registry, pat);
+	    Holder<TrimMaterial> material = com.greymerk.roguelike.treasure.loot.trim.TrimMaterial.getEntry(registry, mat);
 	    
 	    ArmorTrim at = new ArmorTrim(material, pattern);
 	    
-	    item.set(DataComponentTypes.TRIM, at);
+	    item.set(DataComponents.TRIM, at);
 	    
 	    return item;
 	}

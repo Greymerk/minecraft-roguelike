@@ -18,8 +18,8 @@ import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerChunkEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents.Load;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLevelEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLevelEvents.Load;
 
 public class Roguelike implements ModInitializer {
 
@@ -33,10 +33,10 @@ public class Roguelike implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		Load listener = new ServerLoadListener();
-		ServerWorldEvents.LOAD.register(listener);
+		ServerLevelEvents.LOAD.register(listener);
 		
 		ServerEntityEvents.ENTITY_LOAD.register(new EntityLoadEvent());
-		ServerTickEvents.START_WORLD_TICK.register(new WorldTickGenerateRooms());
+		ServerTickEvents.START_LEVEL_TICK.register(new WorldTickGenerateRooms());
 		ServerChunkEvents.CHUNK_LOAD.register(new ChunkLoadRoomFlagEvent());
 		ServerChunkEvents.CHUNK_GENERATE.register(new ChunkDungeonGenerate());
 		

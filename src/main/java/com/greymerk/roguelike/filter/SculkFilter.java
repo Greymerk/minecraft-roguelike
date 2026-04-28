@@ -8,16 +8,15 @@ import com.greymerk.roguelike.editor.blocks.SculkVein;
 import com.greymerk.roguelike.editor.boundingbox.IBounded;
 import com.greymerk.roguelike.editor.factories.BlockWeightedRandom;
 import com.greymerk.roguelike.settings.ILevelSettings;
-
-import net.minecraft.block.Blocks;
-import net.minecraft.block.SculkShriekerBlock;
-import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SculkShriekerBlock;
 
 public class SculkFilter implements IFilter {
 	
 	@Override
-	public void apply(IWorldEditor editor, Random rand, ILevelSettings settings, IBounded box) {
+	public void apply(IWorldEditor editor, RandomSource rand, ILevelSettings settings, IBounded box) {
 		box.forEach(pos -> {
 			if(rand.nextInt(8) != 0) return;
 			if(!editor.isAir(pos)) return;
@@ -25,7 +24,7 @@ public class SculkFilter implements IFilter {
 		});
 	}
 
-	private void generate(IWorldEditor editor, Random rand, Coord origin, int counter) {
+	private void generate(IWorldEditor editor, RandomSource rand, Coord origin, int counter) {
 		if (counter <= 0) return;
 		if(!editor.isAir(origin.copy().add(Cardinal.UP))) return;
 		MetaBlock block = editor.getBlock(origin);

@@ -1,17 +1,17 @@
 package com.greymerk.roguelike.treasure.loot.items;
 
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.OminousBottleAmplifierComponent;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.component.OminousBottleAmplifier;
 
 public class OminousBottle {
 
 	public static ItemStack get(int rank) {
 		
 		ItemStack bottle = new ItemStack(Items.OMINOUS_BOTTLE);
-		OminousBottleAmplifierComponent amp = new OminousBottleAmplifierComponent(Math.clamp(rank, 0, 4));
-		bottle.set(DataComponentTypes.OMINOUS_BOTTLE_AMPLIFIER, amp);
+		OminousBottleAmplifier amp = new OminousBottleAmplifier(Math.clamp(rank, 0, 4));
+		bottle.set(DataComponents.OMINOUS_BOTTLE_AMPLIFIER, amp);
 		
 		return bottle;
 	}

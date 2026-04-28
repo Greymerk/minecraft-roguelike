@@ -1,8 +1,7 @@
 package com.greymerk.roguelike.util;
 
-import net.minecraft.util.math.random.Random;
-
-import net.minecraft.util.DyeColor;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.DyeColor;
 
 public enum Color {
 
@@ -32,7 +31,7 @@ public enum Color {
 		}
 	}
 	
-	public static Color get(Random rand){
+	public static Color get(RandomSource rand){
 		return Color.values()[rand.nextInt(Color.values().length)];
 	}
 	

@@ -11,16 +11,15 @@ import com.greymerk.roguelike.editor.blocks.stair.IStair;
 import com.greymerk.roguelike.editor.shapes.Column;
 import com.greymerk.roguelike.settings.ILevelSettings;
 import com.greymerk.roguelike.theme.ITheme;
-
-import net.minecraft.util.math.random.Random;
+import net.minecraft.util.RandomSource;
 
 public class CellSupport implements IFragment {
 
-	public static void generate(IWorldEditor editor, Random rand, ITheme theme, Coord origin) {
+	public static void generate(IWorldEditor editor, RandomSource rand, ITheme theme, Coord origin) {
 		CellSupport.generate(editor, rand, theme, origin, Cardinal.NORTH);
 	}
 	
-	public static void generate(IWorldEditor editor, Random rand, ITheme theme, Coord origin, Cardinal d) {
+	public static void generate(IWorldEditor editor, RandomSource rand, ITheme theme, Coord origin, Cardinal d) {
 		IBlockFactory wall = theme.getPrimary().getWall();
 		
 		for(Cardinal dir : Cardinal.directions) {
@@ -44,11 +43,11 @@ public class CellSupport implements IFragment {
 	}
 	
 	@Override
-	public void generate(IWorldEditor editor, Random rand, ILevelSettings settings, Coord origin, Cardinal d) {
+	public void generate(IWorldEditor editor, RandomSource rand, ILevelSettings settings, Coord origin, Cardinal d) {
 		CellSupport.generate(editor, rand, settings.getTheme(), origin, d);
 	}
 	
-	public static void crossBar(IWorldEditor editor, Random rand, ITheme theme, Coord origin, Cardinal dir) {
+	public static void crossBar(IWorldEditor editor, RandomSource rand, ITheme theme, Coord origin, Cardinal dir) {
 		IBlockFactory wall = theme.getPrimary().getWall();
 		IStair stair = theme.getPrimary().getStair();
 		

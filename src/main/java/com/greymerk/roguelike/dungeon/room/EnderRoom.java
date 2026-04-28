@@ -16,15 +16,14 @@ import com.greymerk.roguelike.theme.IBlockSet;
 import com.greymerk.roguelike.theme.ITheme;
 import com.greymerk.roguelike.theme.ThemeBase;
 import com.greymerk.roguelike.theme.blocksets.EnderBlocks;
-
-import net.minecraft.util.math.random.Random;
+import net.minecraft.util.RandomSource;
 
 public class EnderRoom extends AbstractMediumRoom implements IRoom {
 
 	@Override
 	public void generate(IWorldEditor editor) {
 		Coord origin = worldPos.copy().add(direction, Cell.SIZE);
-		Random rand = editor.getRandom(origin);
+		RandomSource rand = editor.getRandom(origin);
 		IBlockSet blocks = new EnderBlocks();
 		this.clear(editor, rand, origin, blocks);
 		this.walls(editor, rand, origin, blocks);
@@ -37,7 +36,7 @@ public class EnderRoom extends AbstractMediumRoom implements IRoom {
 		this.generateExits(editor, rand);
 	}
 
-	private void supports(IWorldEditor editor, Random rand, Coord origin, IBlockSet blocks) {
+	private void supports(IWorldEditor editor, RandomSource rand, Coord origin, IBlockSet blocks) {
 		ITheme ender = new EnderTheme();
 		
 		CellSupport.generate(editor, rand, ender, origin);
@@ -50,7 +49,7 @@ public class EnderRoom extends AbstractMediumRoom implements IRoom {
 		}
 	}
 
-	private void enderchest(IWorldEditor editor, Random rand, Coord origin, IBlockSet blocks) {
+	private void enderchest(IWorldEditor editor, RandomSource rand, Coord origin, IBlockSet blocks) {
 		Coord pos = origin.copy();
 		Cardinal dir = Cardinal.randDirs(rand).get(0);
 		pos.add(dir, 6);
@@ -59,7 +58,7 @@ public class EnderRoom extends AbstractMediumRoom implements IRoom {
 		EnderChest.set(editor, Cardinal.reverse(o), pos);	
 	}
 
-	private void ceiling(IWorldEditor editor, Random rand, Coord origin, IBlockSet blocks) {
+	private void ceiling(IWorldEditor editor, RandomSource rand, Coord origin, IBlockSet blocks) {
 		for(Cardinal dir : Cardinal.directions) {
 			BoundingBox bb = BoundingBox.of(origin.copy());
 			bb.add(Cardinal.UP, 6).add(dir, 2);
@@ -92,7 +91,7 @@ public class EnderRoom extends AbstractMediumRoom implements IRoom {
 		RectSolid.fill(editor, rand, bb, blocks.getWall(), Fill.SOLID);
 	}
 
-	private void floor(IWorldEditor editor, Random rand, Coord origin, IBlockSet blocks) {
+	private void floor(IWorldEditor editor, RandomSource rand, Coord origin, IBlockSet blocks) {
 		BoundingBox bb = BoundingBox.of(origin.copy());
 		bb.grow(Cardinal.directions, 7);
 		bb.add(Cardinal.DOWN);
@@ -111,7 +110,7 @@ public class EnderRoom extends AbstractMediumRoom implements IRoom {
 		}
 	}
 
-	private void pillars(IWorldEditor editor, Random rand, Coord origin, IBlockSet blocks) {
+	private void pillars(IWorldEditor editor, RandomSource rand, Coord origin, IBlockSet blocks) {
 		IStair stair = blocks.getStair();
 		
 		// central pillars
@@ -165,7 +164,7 @@ public class EnderRoom extends AbstractMediumRoom implements IRoom {
 		
 	}
 
-	private void walls(IWorldEditor editor, Random rand, Coord origin, IBlockSet blocks) {
+	private void walls(IWorldEditor editor, RandomSource rand, Coord origin, IBlockSet blocks) {
 		for(Cardinal dir : Cardinal.directions) {
 			BoundingBox bb = BoundingBox.of(origin.copy());
 			bb.add(dir, 9).grow(Cardinal.orthogonal(dir), 9).grow(Cardinal.UP, 5).grow(Cardinal.DOWN);
@@ -173,7 +172,7 @@ public class EnderRoom extends AbstractMediumRoom implements IRoom {
 		}
 	}
 
-	private void clear(IWorldEditor editor, Random rand, Coord origin, IBlockSet blocks) {
+	private void clear(IWorldEditor editor, RandomSource rand, Coord origin, IBlockSet blocks) {
 
 		BoundingBox bb = BoundingBox.of(origin.copy());
 		bb.grow(Cardinal.directions, 8);

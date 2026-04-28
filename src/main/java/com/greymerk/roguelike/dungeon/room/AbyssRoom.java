@@ -1,7 +1,7 @@
 package com.greymerk.roguelike.dungeon.room;
 
 import java.util.List;
-
+import net.minecraft.util.RandomSource;
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellManager;
 import com.greymerk.roguelike.dungeon.cell.CellState;
@@ -22,13 +22,11 @@ import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.editor.shapes.RectSolid;
 import com.greymerk.roguelike.util.Color;
 
-import net.minecraft.util.math.random.Random;
-
 public class AbyssRoom extends AbstractLargeRoom implements IRoom {
 
 	@Override
 	public void generate(IWorldEditor editor) {
-		Random rand = editor.getRandom(this.worldPos);
+		RandomSource rand = editor.getRandom(this.worldPos);
 		Coord origin = this.worldPos.copy().add(direction, Cell.SIZE * 2).freeze();
 		this.clear(editor, rand, origin);
 		this.pillars(editor, rand, origin);
@@ -45,7 +43,7 @@ public class AbyssRoom extends AbstractLargeRoom implements IRoom {
 		this.generateExits(editor, rand);
 	}
 
-	private void supports(IWorldEditor editor, Random rand, Coord origin) {
+	private void supports(IWorldEditor editor, RandomSource rand, Coord origin) {
 		CellSupport.generate(editor, rand, theme, origin);
 		Cardinal.directions.forEach(dir -> {
 			List.of(6, 12).forEach(i -> {
@@ -57,7 +55,7 @@ public class AbyssRoom extends AbstractLargeRoom implements IRoom {
 		});
 	}
 
-	private void features(IWorldEditor editor, Random rand, Coord origin) {
+	private void features(IWorldEditor editor, RandomSource rand, Coord origin) {
 		for(Cardinal dir : Cardinal.directions) {
 			Coord pos = origin.copy().add(dir, 8).add(Cardinal.DOWN, 6);
 			this.feature(editor, rand, pos.copy(), dir);
@@ -75,7 +73,7 @@ public class AbyssRoom extends AbstractLargeRoom implements IRoom {
 		}
 	}
 
-	private void feature(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
+	private void feature(IWorldEditor editor, RandomSource rand, Coord origin, Cardinal dir) {
 		BoundingBox bb = BoundingBox.of(origin.copy());
 		bb.add(dir);
 		bb.grow(dir, 5).grow(Cardinal.orthogonal(dir), 2).grow(Cardinal.UP, 4);
@@ -83,7 +81,7 @@ public class AbyssRoom extends AbstractLargeRoom implements IRoom {
 		this.decorations(editor, rand, origin, dir);
 	}
 
-	private void decorations(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
+	private void decorations(IWorldEditor editor, RandomSource rand, Coord origin, Cardinal dir) {
 		for(Cardinal o : Cardinal.orthogonal(dir)) {
 			Coord pos = origin.copy();
 			pos.add(Cardinal.UP).add(o).add(dir);
@@ -93,7 +91,7 @@ public class AbyssRoom extends AbstractLargeRoom implements IRoom {
 		}		
 	}
 
-	private void deco(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
+	private void deco(IWorldEditor editor, RandomSource rand, Coord origin, Cardinal dir) {
 		
 		if(rand.nextBoolean()) {
 			if(rand.nextBoolean()) {
@@ -112,7 +110,7 @@ public class AbyssRoom extends AbstractLargeRoom implements IRoom {
 		crypt.generate(editor, rand, settings, origin.copy(), dir);
 	}
 	
-	private void bridge(IWorldEditor editor, Random rand, Coord origin) {
+	private void bridge(IWorldEditor editor, RandomSource rand, Coord origin) {
 		for(Cardinal dir : Cardinal.directions) {
 			BoundingBox bb = BoundingBox.of(origin.copy());
 			bb.add(Cardinal.DOWN).add(dir, 3);
@@ -127,7 +125,7 @@ public class AbyssRoom extends AbstractLargeRoom implements IRoom {
 		this.cell(editor, rand, origin);
 	}
 
-	private void fires(IWorldEditor editor, Random rand, Coord origin) {
+	private void fires(IWorldEditor editor, RandomSource rand, Coord origin) {
 		for(Cardinal dir : Cardinal.directions) {
 			Coord pos = origin.copy().add(dir, 9);
 			this.fire(editor, rand, pos.copy().add(Cardinal.right(dir), 3));
@@ -136,7 +134,7 @@ public class AbyssRoom extends AbstractLargeRoom implements IRoom {
 		}
 	}
 
-	private void fire(IWorldEditor editor, Random rand, Coord origin) {
+	private void fire(IWorldEditor editor, RandomSource rand, Coord origin) {
 		IStair stair = theme.getPrimary().getStair();
 		
 		Campfire.generate(editor, origin, theme);
@@ -150,7 +148,7 @@ public class AbyssRoom extends AbstractLargeRoom implements IRoom {
 		}
 	}
 
-	private void ceiling(IWorldEditor editor, Random rand, Coord origin) {
+	private void ceiling(IWorldEditor editor, RandomSource rand, Coord origin) {
 		BoundingBox bb = BoundingBox.of(origin.copy());
 		bb.add(Cardinal.UP, 4);
 		bb.grow(Cardinal.directions, 7);
@@ -171,14 +169,14 @@ public class AbyssRoom extends AbstractLargeRoom implements IRoom {
 		
 	}
 
-	private void floor(IWorldEditor editor, Random rand, Coord origin) {
+	private void floor(IWorldEditor editor, RandomSource rand, Coord origin) {
 		BoundingBox bb = BoundingBox.of(origin.copy());
 		bb.add(Cardinal.DOWN, 21);
 		bb.grow(Cardinal.directions, 7);
 		RectSolid.fill(editor, rand, bb, theme.getPrimary().getFloor());
 	}
 
-	private void level(IWorldEditor editor, Random rand, Coord origin) {
+	private void level(IWorldEditor editor, RandomSource rand, Coord origin) {
 		for(Cardinal dir : Cardinal.directions) {
 			BoundingBox.of(origin).add(dir, 9).add(Cardinal.DOWN)
 				.grow(dir, 6).grow(Cardinal.left(dir), 15).grow(Cardinal.right(dir), 8)
@@ -196,7 +194,7 @@ public class AbyssRoom extends AbstractLargeRoom implements IRoom {
 		}
 	}
 
-	private void cell(IWorldEditor editor, Random rand, Coord origin) {
+	private void cell(IWorldEditor editor, RandomSource rand, Coord origin) {
 		IStair stair = theme.getPrimary().getStair();
 		IBlockFactory walls = theme.getPrimary().getWall();
 		
@@ -225,7 +223,7 @@ public class AbyssRoom extends AbstractLargeRoom implements IRoom {
 		}
 	}
 
-	private void pillars(IWorldEditor editor, Random rand, Coord origin) {
+	private void pillars(IWorldEditor editor, RandomSource rand, Coord origin) {
 		for(Cardinal dir : Cardinal.directions) {
 			this.innerPillarSet(editor, rand, origin.copy().add(dir, 8).add(Cardinal.UP, 3), dir);
 			for(Cardinal o : Cardinal.orthogonal(dir)) {
@@ -236,7 +234,7 @@ public class AbyssRoom extends AbstractLargeRoom implements IRoom {
 		}
 	}
 
-	private void innerPillarSet(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
+	private void innerPillarSet(IWorldEditor editor, RandomSource rand, Coord origin, Cardinal dir) {
 		for(Cardinal o : Cardinal.orthogonal(dir)) {
 			BoundingBox bb = BoundingBox.of(origin.copy());
 			bb.grow(Cardinal.DOWN, 23);
@@ -262,7 +260,7 @@ public class AbyssRoom extends AbstractLargeRoom implements IRoom {
 		this.crossBar(editor, rand, pos, dir);
 	}
 
-	private void crossBar(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
+	private void crossBar(IWorldEditor editor, RandomSource rand, Coord origin, Cardinal dir) {
 		IStair stair = theme.getPrimary().getStair();
 		
 		BoundingBox bb = BoundingBox.of(origin);
@@ -274,7 +272,7 @@ public class AbyssRoom extends AbstractLargeRoom implements IRoom {
 		}
 	}
 
-	private void doors(IWorldEditor editor, Random rand, Coord origin) {
+	private void doors(IWorldEditor editor, RandomSource rand, Coord origin) {
 		for(Cardinal dir : Cardinal.directions) {
 			if(this.getExitType(dir) != ExitType.DOOR) continue;
 			Coord pos = origin.copy();
@@ -283,7 +281,7 @@ public class AbyssRoom extends AbstractLargeRoom implements IRoom {
 		}
 	}
 
-	private void clear(IWorldEditor editor, Random rand, Coord origin) {
+	private void clear(IWorldEditor editor, RandomSource rand, Coord origin) {
 		BoundingBox bb = BoundingBox.of(origin.copy());
 		bb.grow(Cardinal.UP, 3).grow(Cardinal.directions, 14);
 		RectSolid.fill(editor, rand, bb, Air.get());

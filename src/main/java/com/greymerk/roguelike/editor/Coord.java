@@ -1,13 +1,11 @@
 package com.greymerk.roguelike.editor;
 
 import java.util.Objects;
-
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.ChunkPos;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
 
 /**
 Mutable Coordinate 3DVector
@@ -35,10 +33,10 @@ public class Coord implements Comparable<Coord> {
 	}
 	
 	public static Coord of(ChunkPos cpos) {
-		return Coord.of(cpos.x << 4, 0, cpos.z << 4);
+		return Coord.of(cpos.x() << 4, 0, cpos.z() << 4);
 	}
 	
-	public static Coord of(NbtCompound tag) {
+	public static Coord of(CompoundTag tag) {
 		int x = tag.getInt("x").get();
 		int y = tag.getInt("y").get();
 		int z = tag.getInt("z").get();

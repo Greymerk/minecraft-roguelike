@@ -4,9 +4,8 @@ import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.MetaBlock;
-
-import net.minecraft.block.Blocks;
-import net.minecraft.block.EnderChestBlock;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.EnderChestBlock;
 
 public class EnderChest {
 	public static void set(IWorldEditor editor, Cardinal dir, Coord pos){

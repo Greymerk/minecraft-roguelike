@@ -1,16 +1,14 @@
 package com.greymerk.roguelike.treasure.loot.provider;
 
 import java.util.List;
-
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Blocks;
 import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.editor.blocks.ColorBlock;
 import com.greymerk.roguelike.treasure.loot.WeightedRandomLoot;
 import com.greymerk.roguelike.util.Color;
 import com.greymerk.roguelike.util.WeightedRandomizer;
-
-import net.minecraft.block.Blocks;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.random.Random;
 
 public class ItemBlock extends ItemBase{
 	
@@ -54,7 +52,7 @@ public class ItemBlock extends ItemBase{
 	}
 
 	@Override
-	public ItemStack getLootItem(Random rand, Difficulty diff) {
+	public ItemStack getLootItem(RandomSource rand, Difficulty diff) {
 		return this.loot.get(rand);
 	}
 }

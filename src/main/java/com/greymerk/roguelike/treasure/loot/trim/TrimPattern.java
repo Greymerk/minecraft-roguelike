@@ -2,19 +2,16 @@ package com.greymerk.roguelike.treasure.loot.trim;
 
 import java.util.Arrays;
 import java.util.List;
-
+import net.minecraft.core.Holder;
+import net.minecraft.core.Registry;
+import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.nbt.StringTag;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.equipment.trim.TrimPatterns;
 import com.greymerk.roguelike.util.math.RandHelper;
-
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.equipment.trim.ArmorTrimPattern;
-import net.minecraft.item.equipment.trim.ArmorTrimPatterns;
-import net.minecraft.nbt.NbtString;
-import net.minecraft.registry.DynamicRegistryManager;
-import net.minecraft.registry.Registry;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.util.math.random.Random;
 
 public enum TrimPattern {
 
@@ -26,48 +23,48 @@ public enum TrimPattern {
 		return item;
 	}
 	
-	public static RegistryEntry<ArmorTrimPattern> getEntry(DynamicRegistryManager registry, Random rand){
+	public static Holder<net.minecraft.world.item.equipment.trim.TrimPattern> getEntry(RegistryAccess registry, RandomSource rand){
 		TrimPattern choice = getRandom(rand);
 		return getEntry(registry, choice);
 	}
 	
-	public static RegistryEntry<ArmorTrimPattern> getEntry(DynamicRegistryManager registry, TrimPattern mat){
-		Registry<ArmorTrimPattern> patterns = registry.getOrThrow(RegistryKeys.TRIM_PATTERN);
-		RegistryKey<ArmorTrimPattern> key = getRegistryKey(mat);
+	public static Holder<net.minecraft.world.item.equipment.trim.TrimPattern> getEntry(RegistryAccess registry, TrimPattern mat){
+		Registry<net.minecraft.world.item.equipment.trim.TrimPattern> patterns = registry.lookupOrThrow(Registries.TRIM_PATTERN);
+		ResourceKey<net.minecraft.world.item.equipment.trim.TrimPattern> key = getRegistryKey(mat);
 		return patterns.getOrThrow(key);
 	}
 	
-	public static RegistryKey<ArmorTrimPattern> getRegistryKey(Random rand){
+	public static ResourceKey<net.minecraft.world.item.equipment.trim.TrimPattern> getRegistryKey(RandomSource rand){
 		TrimPattern choice = Arrays.asList(TrimPattern.values()).get(rand.nextInt(TrimPattern.values().length));
 		return getRegistryKey(choice);
 	}
 	
-	public static RegistryKey<ArmorTrimPattern> getRegistryKey(TrimPattern pattern){
+	public static ResourceKey<net.minecraft.world.item.equipment.trim.TrimPattern> getRegistryKey(TrimPattern pattern){
 		switch(pattern) {
-		case COAST: return ArmorTrimPatterns.COAST;
-		case DUNE: return ArmorTrimPatterns.DUNE;
-		case EYE: return ArmorTrimPatterns.EYE;
-		case HOST: return ArmorTrimPatterns.HOST;
-		case RAISER: return ArmorTrimPatterns.RAISER;
-		case RIB: return ArmorTrimPatterns.RIB;
-		case SENTRY: return ArmorTrimPatterns.SENTRY;
-		case SHAPER: return ArmorTrimPatterns.SHAPER;
-		case SILENCE: return ArmorTrimPatterns.SILENCE;
-		case SNOUT: return ArmorTrimPatterns.SNOUT;
-		case SPIRE: return ArmorTrimPatterns.SPIRE;
-		case TIDE: return ArmorTrimPatterns.TIDE;
-		case VEX: return ArmorTrimPatterns.VEX;
-		case WARD: return ArmorTrimPatterns.WARD;
-		case WAYFINDER: return ArmorTrimPatterns.WAYFINDER;
-		case WILD: return ArmorTrimPatterns.WILD;
-		case BOLT: return ArmorTrimPatterns.BOLT;
-		case FLOW: return ArmorTrimPatterns.FLOW;
-		default: return ArmorTrimPatterns.COAST;
+		case COAST: return TrimPatterns.COAST;
+		case DUNE: return TrimPatterns.DUNE;
+		case EYE: return TrimPatterns.EYE;
+		case HOST: return TrimPatterns.HOST;
+		case RAISER: return TrimPatterns.RAISER;
+		case RIB: return TrimPatterns.RIB;
+		case SENTRY: return TrimPatterns.SENTRY;
+		case SHAPER: return TrimPatterns.SHAPER;
+		case SILENCE: return TrimPatterns.SILENCE;
+		case SNOUT: return TrimPatterns.SNOUT;
+		case SPIRE: return TrimPatterns.SPIRE;
+		case TIDE: return TrimPatterns.TIDE;
+		case VEX: return TrimPatterns.VEX;
+		case WARD: return TrimPatterns.WARD;
+		case WAYFINDER: return TrimPatterns.WAYFINDER;
+		case WILD: return TrimPatterns.WILD;
+		case BOLT: return TrimPatterns.BOLT;
+		case FLOW: return TrimPatterns.FLOW;
+		default: return TrimPatterns.COAST;
 		}
 	}
 	
-	public static NbtString getNbt(TrimPattern pattern) {
-		return NbtString.of(getId(pattern));
+	public static StringTag getNbt(TrimPattern pattern) {
+		return StringTag.valueOf(getId(pattern));
 	}
 	
 	public static String getId(TrimPattern pattern) {
@@ -92,7 +89,7 @@ public enum TrimPattern {
 		}
 	}
 	
-	public static TrimPattern getRandom(Random rand) {
+	public static TrimPattern getRandom(RandomSource rand) {
 		List<TrimPattern> mats = Arrays.asList(TrimPattern.values());
 		RandHelper.shuffle(mats, rand);
 		return mats.get(0);

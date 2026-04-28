@@ -8,19 +8,18 @@ import com.greymerk.roguelike.treasure.loot.Slot;
 import com.greymerk.roguelike.treasure.loot.items.Shield;
 import com.greymerk.roguelike.treasure.loot.provider.ItemArmour;
 import com.greymerk.roguelike.treasure.loot.provider.ItemNovelty;
-
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.World;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 
 public class ProfileRleahy implements IMonsterProfile {
 
 	@Override
-	public void addEquipment(World world, Random rand, Difficulty diff, IEntity mob) {
-		ItemStack weapon = ItemNovelty.getItem(world.getRegistryManager(), ItemNovelty.RLEAHY);
+	public void addEquipment(Level world, RandomSource rand, Difficulty diff, IEntity mob) {
+		ItemStack weapon = ItemNovelty.getItem(world.registryAccess(), ItemNovelty.RLEAHY);
 		mob.setSlot(EquipmentSlot.MAINHAND, weapon);
-		mob.setSlot(EquipmentSlot.OFFHAND, Shield.get(world.getRegistryManager(), rand));
+		mob.setSlot(EquipmentSlot.OFFHAND, Shield.get(world.registryAccess(), rand));
 		
 		ItemStack item = ItemArmour.get(rand, Slot.FEET, Quality.WOOD);
 		ItemArmour.dyeArmor(item, 32, 32, 32);

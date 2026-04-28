@@ -12,8 +12,7 @@ import com.greymerk.roguelike.editor.factories.BlockJumble;
 import com.greymerk.roguelike.editor.factories.BlockWeightedRandom;
 import com.greymerk.roguelike.theme.BlockSet;
 import com.greymerk.roguelike.theme.IBlockSet;
-
-import net.minecraft.block.Blocks;
+import net.minecraft.world.level.block.Blocks;
 
 public class EnderBlocks extends BlockSet implements IBlockSet {
 

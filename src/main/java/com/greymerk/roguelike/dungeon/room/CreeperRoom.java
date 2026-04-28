@@ -1,7 +1,8 @@
 package com.greymerk.roguelike.dungeon.room;
 
 import java.util.List;
-
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.block.Blocks;
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
 import com.greymerk.roguelike.dungeon.fragment.parts.Pillar;
@@ -20,14 +21,11 @@ import com.greymerk.roguelike.treasure.Treasure;
 import com.greymerk.roguelike.treasure.chest.ChestType;
 import com.greymerk.roguelike.util.math.RandHelper;
 
-import net.minecraft.block.Blocks;
-import net.minecraft.util.math.random.Random;
-
 public class CreeperRoom extends AbstractMediumRoom implements IRoom {
 
 	@Override
 	public void generate(IWorldEditor editor) {
-		Random rand = editor.getRandom(worldPos.copy());
+		RandomSource rand = editor.getRandom(worldPos.copy());
 		Coord origin = this.getWorldPos().copy().add(direction, Cell.SIZE).freeze();
 		
 		clear(editor, rand, origin);
@@ -39,7 +37,7 @@ public class CreeperRoom extends AbstractMediumRoom implements IRoom {
 		Spawner.generate(editor, rand, settings.getDifficulty(), origin.copy().add(Cardinal.UP, 5), Spawner.CREEPER);
 	}
 	
-	private void entrances(IWorldEditor editor, Random rand, Coord origin) {
+	private void entrances(IWorldEditor editor, RandomSource rand, Coord origin) {
 		Cardinal.directions.forEach(dir -> {
 			if(this.getExitType(dir) == ExitType.DOOR) {
 				entry(editor, rand, origin.copy().add(dir, Cell.SIZE).freeze(), dir);
@@ -50,7 +48,7 @@ public class CreeperRoom extends AbstractMediumRoom implements IRoom {
 		});
 	}
 
-	private void chest(IWorldEditor editor, Random rand, Coord origin) {
+	private void chest(IWorldEditor editor, RandomSource rand, Coord origin) {
 		BoundingBox.of(origin).grow(Cardinal.directions, 2).get().stream()
 			.sorted(RandHelper.randomizer(rand))
 			.findFirst().ifPresent(pos -> {
@@ -59,7 +57,7 @@ public class CreeperRoom extends AbstractMediumRoom implements IRoom {
 			});
 	}
 
-	private void tnt(IWorldEditor editor, Random rand, Coord origin) {
+	private void tnt(IWorldEditor editor, RandomSource rand, Coord origin) {
 		BlockWeightedRandom floor = new BlockWeightedRandom();
 		floor.add(MetaBlock.of(Blocks.GRAVEL), 2);
 		floor.add(theme.getPrimary().getFloor(), 1);
@@ -76,7 +74,7 @@ public class CreeperRoom extends AbstractMediumRoom implements IRoom {
 		});
 	}
 
-	private void entry(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
+	private void entry(IWorldEditor editor, RandomSource rand, Coord origin, Cardinal dir) {
 		BoundingBox.of(origin).grow(dir, 2).grow(Cardinal.orthogonal(dir), 2).grow(Cardinal.reverse(dir)).grow(Cardinal.UP, 6).fill(editor, rand, Air.get());
 		BoundingBox.of(origin).add(Cardinal.DOWN).grow(Cardinal.directions).grow(dir).fill(editor, rand, theme.getPrimary().getFloor());
 		
@@ -98,7 +96,7 @@ public class CreeperRoom extends AbstractMediumRoom implements IRoom {
 		Fragment.generate(Fragment.ARCH, editor, rand, settings, origin.copy(), dir);
 	}
 
-	private void pillars(IWorldEditor editor, Random rand, Coord origin) {
+	private void pillars(IWorldEditor editor, RandomSource rand, Coord origin) {
 		Cardinal.directions.forEach(dir -> {
 			Cardinal.orthogonal(dir).forEach(o -> {
 				Pillar.generate(editor, rand, origin.copy().add(dir, 4).add(o, 2), theme, 2, List.of(Cardinal.reverse(dir), Cardinal.reverse(o)));
@@ -106,7 +104,7 @@ public class CreeperRoom extends AbstractMediumRoom implements IRoom {
 		});
 	}
 
-	private void ceiling(IWorldEditor editor, Random rand, Coord origin) {
+	private void ceiling(IWorldEditor editor, RandomSource rand, Coord origin) {
 		IBlockFactory walls = theme.getPrimary().getWall();
 		BoundingBox.of(origin).add(Cardinal.UP, 3).grow(Cardinal.UP).fill(editor, rand, walls);
 		Cardinal.directions.forEach(dir -> {
@@ -123,7 +121,7 @@ public class CreeperRoom extends AbstractMediumRoom implements IRoom {
 		BoundingBox.of(origin).add(Cardinal.UP, 7).grow(Cardinal.directions, 4).fill(editor, rand, theme.getPrimary().getWall());
 	}
 
-	private void clear(IWorldEditor editor, Random rand, Coord origin) {
+	private void clear(IWorldEditor editor, RandomSource rand, Coord origin) {
 		BoundingBox.of(origin).grow(Cardinal.directions, 4).grow(Cardinal.UP, 6).fill(editor, rand, Air.get());
 		BoundingBox.of(origin).add(Cardinal.DOWN).grow(Cardinal.directions, 4).fill(editor, rand, theme.getPrimary().getFloor());
 	}

@@ -11,8 +11,7 @@ import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.blocks.stair.IStair;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.editor.shapes.Shape;
-
-import net.minecraft.util.math.random.Random;
+import net.minecraft.util.RandomSource;
 
 public class EntranceRoom  extends AbstractRoom implements IRoom{
 
@@ -20,7 +19,7 @@ public class EntranceRoom  extends AbstractRoom implements IRoom{
 	@Override
 	public void generate(IWorldEditor editor) {		
 		Coord origin = this.getWorldPos().freeze();
-		Random rand = editor.getRandom(origin);
+		RandomSource rand = editor.getRandom(origin);
 		IStair stair = theme.getPrimary().getStair();
 		
 		BoundingBox.of(origin).grow(Cardinal.directions, 5).grow(Cardinal.UP, 5).grow(Cardinal.DOWN)

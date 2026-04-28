@@ -2,7 +2,16 @@ package com.greymerk.roguelike.treasure.loot;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.network.chat.Component;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.flag.FeatureFlagSet;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.component.ItemLore;
 import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.treasure.chest.ITreasureChest;
@@ -24,17 +33,6 @@ import com.greymerk.roguelike.treasure.loot.rules.RoguelikeLootRules;
 import com.greymerk.roguelike.util.IWeighted;
 import com.greymerk.roguelike.util.TextFormat;
 
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.LoreComponent;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.registry.DynamicRegistryManager;
-import net.minecraft.resource.featuretoggle.FeatureSet;
-import net.minecraft.text.Text;
-import net.minecraft.util.Rarity;
-import net.minecraft.util.math.random.Random;
-
 public enum Loot {
 	
 	WEAPON, ARMOUR, BLOCK, JUNK, ORE, TOOL, POTION, FOOD,
@@ -50,17 +48,17 @@ public enum Loot {
 		return loot;
 	}
 	
-	public static void fillChest(IWorldEditor editor, ITreasureChest chest, Random rand) {
+	public static void fillChest(IWorldEditor editor, ITreasureChest chest, RandomSource rand) {
 		RoguelikeLootRules.getLoot(editor).process(rand, chest);
 	}
 	
-	public static ItemStack getLootItem(IWorldEditor editor, Loot type, Random rand, Difficulty diff) {
+	public static ItemStack getLootItem(IWorldEditor editor, Loot type, RandomSource rand, Difficulty diff) {
 		return getProvider(type, diff, editor).get(rand);
 	}
 	
 	public static IWeighted<ItemStack> getProvider(Loot type, Difficulty diff, IWorldEditor editor){
-		FeatureSet features = editor.getInfo().getFeatureSet();
-		DynamicRegistryManager reg = editor.getInfo().getRegistryManager();
+		FeatureFlagSet features = editor.getInfo().getFeatureSet();
+		RegistryAccess reg = editor.getInfo().getRegistryManager();
 		
 		switch(type){
 		case WEAPON: return new ItemWeapon(reg, features, 0, diff);
@@ -82,7 +80,7 @@ public enum Loot {
 		return new WeightedRandomLoot(Items.STICK, 1);
 	}
 	
-	public static ItemStack getEquipmentBySlot(FeatureSet features, DynamicRegistryManager reg, Random rand, EquipmentSlot slot, Difficulty diff, boolean enchant){
+	public static ItemStack getEquipmentBySlot(FeatureFlagSet features, RegistryAccess reg, RandomSource rand, EquipmentSlot slot, Difficulty diff, boolean enchant){
 		if(slot == EquipmentSlot.MAINHAND){
 			return ItemWeapon.getRandom(reg, features, rand, diff, enchant);
 		}
@@ -90,7 +88,7 @@ public enum Loot {
 		return ItemArmour.getRandom(features, reg, rand, diff, Slot.getSlot(slot), enchant);
 	}
 	
-	public static ItemStack getEquipmentBySlot(FeatureSet features, DynamicRegistryManager reg, Random rand, Slot slot, Difficulty diff, boolean enchant){
+	public static ItemStack getEquipmentBySlot(FeatureFlagSet features, RegistryAccess reg, RandomSource rand, Slot slot, Difficulty diff, boolean enchant){
 		
 		if(slot == Slot.WEAPON){
 			return ItemWeapon.getRandom(reg, features, rand, diff, enchant);
@@ -101,20 +99,20 @@ public enum Loot {
 
 	public static void setRarity(ItemStack item, Rarity type) {
 		switch(type) {
-		case COMMON: item.set(DataComponentTypes.RARITY, Rarity.COMMON); return;
-		case UNCOMMON: item.set(DataComponentTypes.RARITY, Rarity.UNCOMMON); return;
-		case RARE: item.set(DataComponentTypes.RARITY, Rarity.RARE); return;
-		case EPIC: item.set(DataComponentTypes.RARITY, Rarity.EPIC); return;
+		case COMMON: item.set(DataComponents.RARITY, Rarity.COMMON); return;
+		case UNCOMMON: item.set(DataComponents.RARITY, Rarity.UNCOMMON); return;
+		case RARE: item.set(DataComponents.RARITY, Rarity.RARE); return;
+		case EPIC: item.set(DataComponents.RARITY, Rarity.EPIC); return;
 		default: 
 		}
 		
 	}
 	
 	public static void setItemLore(ItemStack item, String loreText){
-		List<Text> lines = new ArrayList<Text>();
-		lines.add(Text.of(loreText));
-		LoreComponent lore = new LoreComponent(lines);
-		item.set(DataComponentTypes.LORE, lore);
+		List<Component> lines = new ArrayList<Component>();
+		lines.add(Component.nullToEmpty(loreText));
+		ItemLore lore = new ItemLore(lines);
+		item.set(DataComponents.LORE, lore);
 	}
 	
 	public static void setItemLore(ItemStack item, String loreText, TextFormat option){
@@ -122,6 +120,6 @@ public enum Loot {
 	}
 		
 	public static void setItemName(ItemStack item, String name){
-		item.set(DataComponentTypes.CUSTOM_NAME, Text.literal(name));
+		item.set(DataComponents.CUSTOM_NAME, Component.literal(name));
 	}
 }

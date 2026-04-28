@@ -2,10 +2,9 @@ package com.greymerk.roguelike.editor.blocks;
 
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.MetaBlock;
-
-import net.minecraft.block.Blocks;
-import net.minecraft.block.TrapdoorBlock;
-import net.minecraft.block.enums.BlockHalf;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.TrapDoorBlock;
+import net.minecraft.world.level.block.state.properties.Half;
 
 public enum Trapdoor {
 
@@ -22,9 +21,9 @@ public enum Trapdoor {
 	}
 	
 	public static MetaBlock setOrientation(MetaBlock slab, Cardinal dir, boolean bottom, boolean open){
-		slab.with(TrapdoorBlock.FACING, Cardinal.facing(dir));
-		slab.with(TrapdoorBlock.HALF, bottom ? BlockHalf.BOTTOM : BlockHalf.TOP);
-		slab.with(TrapdoorBlock.OPEN, open);
+		slab.with(TrapDoorBlock.FACING, Cardinal.facing(dir));
+		slab.with(TrapDoorBlock.HALF, bottom ? Half.BOTTOM : Half.TOP);
+		slab.with(TrapDoorBlock.OPEN, open);
 		return slab;
 	}
 }

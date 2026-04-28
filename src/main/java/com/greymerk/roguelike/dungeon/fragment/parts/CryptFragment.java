@@ -11,8 +11,7 @@ import com.greymerk.roguelike.editor.blocks.stair.IStair;
 import com.greymerk.roguelike.settings.ILevelSettings;
 import com.greymerk.roguelike.theme.ITheme;
 import com.greymerk.roguelike.treasure.Treasure;
-
-import net.minecraft.util.math.random.Random;
+import net.minecraft.util.RandomSource;
 
 public class CryptFragment implements IFragment {
 
@@ -31,7 +30,7 @@ public class CryptFragment implements IFragment {
 	}
 	
 	@Override
-	public void generate(IWorldEditor editor, Random rand, ILevelSettings settings, Coord origin, Cardinal dir) {
+	public void generate(IWorldEditor editor, RandomSource rand, ILevelSettings settings, Coord origin, Cardinal dir) {
 		ITheme theme = settings.getTheme();
 		if(empty && rand.nextBoolean()) {
 			Air.get().set(editor, origin);

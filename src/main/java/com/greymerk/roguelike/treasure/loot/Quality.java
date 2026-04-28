@@ -2,13 +2,11 @@ package com.greymerk.roguelike.treasure.loot;
 
 import java.util.HashMap;
 import java.util.Map;
-
+import net.minecraft.util.RandomSource;
 import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.util.IWeighted;
 import com.greymerk.roguelike.util.WeightedChoice;
 import com.greymerk.roguelike.util.WeightedRandomizer;
-
-import net.minecraft.util.math.random.Random;
 
 public enum Quality{
 	
@@ -47,7 +45,7 @@ public enum Quality{
 		return randomizer;
 	}
 	
-	public static Quality get(Random rand, Difficulty diff, Equipment type) {
+	public static Quality get(RandomSource rand, Difficulty diff, Equipment type) {
 		
 		switch(type){
 		case HELMET:
@@ -76,15 +74,15 @@ public enum Quality{
 		}
 	}
 
-	public static Quality getArmourQuality(Random rand, Difficulty diff) {
+	public static Quality getArmourQuality(RandomSource rand, Difficulty diff) {
 		return armourQuality.get(diff).get(rand);
 	}
 
-	public static Quality getToolQuality(Random rand, Difficulty diff) {
+	public static Quality getToolQuality(RandomSource rand, Difficulty diff) {
 		return weaponQuality.get(diff).get(rand);
 	}
 
-	public static Quality getWeaponQuality(Random rand, Difficulty diff) {
+	public static Quality getWeaponQuality(RandomSource rand, Difficulty diff) {
 		return weaponQuality.get(diff).get(rand);
 	}
 	

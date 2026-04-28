@@ -13,14 +13,13 @@ import com.greymerk.roguelike.theme.ITheme;
 import com.greymerk.roguelike.treasure.Treasure;
 import com.greymerk.roguelike.util.WeightedChoice;
 import com.greymerk.roguelike.util.WeightedRandomizer;
-
-import net.minecraft.util.math.random.Random;
+import net.minecraft.util.RandomSource;
 
 public class WallChest implements IFragment {
 
 	private Treasure type;
 	
-	public static void generate(IWorldEditor editor, Random rand, ILevelSettings settings, Coord origin, Cardinal dir, Treasure type) {
+	public static void generate(IWorldEditor editor, RandomSource rand, ILevelSettings settings, Coord origin, Cardinal dir, Treasure type) {
 		new WallChest(type).generate(editor, rand, settings, origin, dir);
 	}
 	
@@ -31,7 +30,7 @@ public class WallChest implements IFragment {
 	public WallChest() {};
 	
 	@Override
-	public void generate(IWorldEditor editor, Random rand, ILevelSettings settings, Coord origin, Cardinal dir) {
+	public void generate(IWorldEditor editor, RandomSource rand, ILevelSettings settings, Coord origin, Cardinal dir) {
 		ITheme theme = settings.getTheme();
 		BoundingBox bb = BoundingBox.of(origin.copy());
 		bb.add(dir, 2).grow(Cardinal.orthogonal(dir));

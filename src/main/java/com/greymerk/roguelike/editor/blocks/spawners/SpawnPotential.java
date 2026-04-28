@@ -3,17 +3,16 @@ package com.greymerk.roguelike.editor.blocks.spawners;
 import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.treasure.loot.Equipment;
 import com.greymerk.roguelike.treasure.loot.Quality;
-
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtList;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.util.RandomSource;
 
 public class SpawnPotential {
 	
 	Spawner type;
 	int weight;
 	boolean equip;
-	NbtCompound nbt;
+	CompoundTag nbt;
 	
 	
 	public SpawnPotential(Spawner type){
@@ -28,25 +27,25 @@ public class SpawnPotential {
 		this(type, equip, weight, null);
 	}
 	
-	public SpawnPotential(Spawner type, boolean equip, int weight, NbtCompound nbt){
+	public SpawnPotential(Spawner type, boolean equip, int weight, CompoundTag nbt){
 		this.type = type;
 		this.equip = equip;
 		this.weight = weight;
 		this.nbt = nbt;
 	}
 	
-	public NbtCompound get(Difficulty diff){
-		NbtCompound nbt = this.nbt == null ? new NbtCompound() : this.nbt.copy();
+	public CompoundTag get(Difficulty diff){
+		CompoundTag nbt = this.nbt == null ? new CompoundTag() : this.nbt.copy();
 		return getPotential(getRoguelike(diff, type, nbt));
 	}
 	
-	public NbtList get(Random rand, Difficulty diff){
+	public ListTag get(RandomSource rand, Difficulty diff){
 		
-		NbtList potentials = new NbtList();
+		ListTag potentials = new ListTag();
 		
 		if(this.type == Spawner.ZOMBIE){
 			for(int i = 0; i < 24; ++i){
-				NbtCompound mob = new NbtCompound();
+				CompoundTag mob = new CompoundTag();
 				mob = getRoguelike(diff, this.type, mob);
 				
 				Equipment tool = switch(rand.nextInt(3)) {
@@ -67,7 +66,7 @@ public class SpawnPotential {
 		
 		if(this.type == Spawner.SKELETON){
 			for(int i = 0; i < 12; ++i){
-				NbtCompound mob = new NbtCompound();
+				CompoundTag mob = new CompoundTag();
 				mob = getRoguelike(diff, this.type, mob);
 				mob = equipHands(mob, "minecraft:bow", null);
 				mob = equipArmour(mob, rand, diff);
@@ -77,29 +76,29 @@ public class SpawnPotential {
 			return potentials;
 		}
 
-		potentials.add(getPotential(getRoguelike(diff, this.type, new NbtCompound())));
+		potentials.add(getPotential(getRoguelike(diff, this.type, new CompoundTag())));
 		return potentials;
 	}
 	
-	public NbtCompound getSpawnData(Random rand, Difficulty diff) {
-		return getSpawnData(getRoguelike(diff, this.type, new NbtCompound()));
+	public CompoundTag getSpawnData(RandomSource rand, Difficulty diff) {
+		return getSpawnData(getRoguelike(diff, this.type, new CompoundTag()));
 	}
 	
-	private NbtCompound getPotential(NbtCompound mob){
-		NbtCompound potential = new NbtCompound();
+	private CompoundTag getPotential(CompoundTag mob){
+		CompoundTag potential = new CompoundTag();
 		potential.put("data", getSpawnData(mob));
 		potential.putInt("weight", this.weight);
 		return potential;
 	}
 	
-	private NbtCompound getSpawnData(NbtCompound mob) {
-		NbtCompound data = new NbtCompound();
+	private CompoundTag getSpawnData(CompoundTag mob) {
+		CompoundTag data = new CompoundTag();
 		data.put("entity", mob);
 		return data;
 	}
 	
-	private NbtCompound equipHands(NbtCompound mob, String weapon, String offhand){
-		NbtList hands = new NbtList();
+	private CompoundTag equipHands(CompoundTag mob, String weapon, String offhand){
+		ListTag hands = new ListTag();
 		hands.add(getItem(weapon));
 		hands.add(getItem(offhand));
 		mob.put("HandItems", hands);
@@ -107,9 +106,9 @@ public class SpawnPotential {
 		return mob;
 	}
 	
-	private NbtCompound equipArmour(NbtCompound mob, Random rand, Difficulty diff){
+	private CompoundTag equipArmour(CompoundTag mob, RandomSource rand, Difficulty diff){
 		
-		NbtList armour = new NbtList();
+		ListTag armour = new ListTag();
 		armour.add(getItem(Equipment.getName(Equipment.FEET, Quality.getArmourQuality(rand, diff))));
 		armour.add(getItem(Equipment.getName(Equipment.LEGS, Quality.getArmourQuality(rand, diff))));
 		armour.add(getItem(Equipment.getName(Equipment.CHEST, Quality.getArmourQuality(rand, diff))));
@@ -119,22 +118,22 @@ public class SpawnPotential {
 		return mob;
 	}
 	
-	private NbtCompound getItem(String itemName){
-		NbtCompound item = new NbtCompound();
+	private CompoundTag getItem(String itemName){
+		CompoundTag item = new CompoundTag();
 		if(itemName == null) return item;
 		item.putString("id", itemName);
 		item.putInt("Count", 1);
 		return item;
 	}
 	
-	private NbtCompound getRoguelike(Difficulty diff, Spawner type, NbtCompound tag){
+	private CompoundTag getRoguelike(Difficulty diff, Spawner type, CompoundTag tag){
    	
 		tag.putString("id", Spawner.getName(type));
 		
-		NbtList activeEffects = new NbtList();
+		ListTag activeEffects = new ListTag();
 		tag.put("active_effects", activeEffects);
 		
-		NbtCompound buff = new NbtCompound();
+		CompoundTag buff = new CompoundTag();
 		activeEffects.add(buff);
 		
 		buff.putString("id", "minecraft:mining_fatigue");

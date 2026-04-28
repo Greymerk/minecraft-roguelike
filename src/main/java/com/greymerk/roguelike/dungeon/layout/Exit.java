@@ -1,13 +1,11 @@
 package com.greymerk.roguelike.dungeon.layout;
 
 import java.util.Objects;
-
+import net.minecraft.util.ExtraCodecs;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-
-import net.minecraft.util.dynamic.Codecs;
 
 public class Exit implements Comparable<Exit>{
 
@@ -17,9 +15,9 @@ public class Exit implements Comparable<Exit>{
 	
 	public static Codec<Exit> CODEC = RecordCodecBuilder.create(
 			instance -> instance.group(
-					Codecs.NON_EMPTY_STRING.fieldOf("type").forGetter(exit -> exit.type.name()),
+					ExtraCodecs.NON_EMPTY_STRING.fieldOf("type").forGetter(exit -> exit.type.name()),
 					Coord.CODEC.fieldOf("origin").forGetter(exit -> exit.origin),
-					Codecs.NON_EMPTY_STRING.fieldOf("dir").forGetter(exit -> exit.dir.name())
+					ExtraCodecs.NON_EMPTY_STRING.fieldOf("dir").forGetter(exit -> exit.dir.name())
 			).apply(instance, (type, origin, dir) -> Exit.of(ExitType.valueOf(type), origin, Cardinal.of(dir)))
 	);
 	

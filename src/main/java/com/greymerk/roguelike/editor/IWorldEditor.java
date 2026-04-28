@@ -2,10 +2,9 @@ package com.greymerk.roguelike.editor;
 
 import java.util.Optional;
 import java.util.function.Predicate;
-
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.World;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.Level;
 
 /** Interface for class that provides read/write methods for editing
  *  a world.
@@ -28,7 +27,7 @@ public interface IWorldEditor {
 	
 	public long getSeed(Coord pos);
 	
-	public Random getRandom(Coord pos);
+	public RandomSource getRandom(Coord pos);
 	
 	public boolean isChunkLoaded(Coord pos);
 	
@@ -40,7 +39,7 @@ public interface IWorldEditor {
 	
 	public boolean isFaceFullSquare(Coord pos, Cardinal dir);
 	
-	public RegistryKey<World> getRegistryKey();
+	public ResourceKey<Level> getRegistryKey();
 
 	public boolean isAir(Coord pos);
 	

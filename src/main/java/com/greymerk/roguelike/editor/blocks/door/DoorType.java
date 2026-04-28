@@ -1,9 +1,8 @@
 package com.greymerk.roguelike.editor.blocks.door;
 
 import com.greymerk.roguelike.editor.MetaBlock;
-
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 
 public enum DoorType {
 

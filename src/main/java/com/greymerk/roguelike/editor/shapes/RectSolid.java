@@ -3,7 +3,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.StreamSupport;
-
+import net.minecraft.util.RandomSource;
 import com.greymerk.roguelike.editor.BlockContext;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
@@ -13,8 +13,6 @@ import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.editor.boundingbox.IBounded;
 
-import net.minecraft.util.math.random.Random;
-
 public class RectSolid implements IShape {
 
 	private BoundingBox bb;
@@ -23,21 +21,21 @@ public class RectSolid implements IShape {
 		this.bb = BoundingBox.of(box);
 	}
 	
-	public static void fill(IWorldEditor editor, Random rand, IBounded box, IBlockFactory blocks) {
+	public static void fill(IWorldEditor editor, RandomSource rand, IBounded box, IBlockFactory blocks) {
 		new RectSolid(BoundingBox.of(box)).fill(editor, rand, blocks, Fill.ALWAYS);
 	}
 	
-	public static void fill(IWorldEditor editor, Random rand, IBounded box, IBlockFactory blocks, Predicate<BlockContext> p) {
+	public static void fill(IWorldEditor editor, RandomSource rand, IBounded box, IBlockFactory blocks, Predicate<BlockContext> p) {
 		new RectSolid(BoundingBox.of(box)).fill(editor, rand, blocks, p);
 	}
 	
 	@Override
-	public void fill(IWorldEditor editor, Random rand, IBlockFactory block){
+	public void fill(IWorldEditor editor, RandomSource rand, IBlockFactory block){
 		this.forEach(c -> block.set(editor, rand, c));
 	}
 	
 	@Override
-	public void fill(IWorldEditor editor, Random rand, IBlockFactory block, Predicate<BlockContext> p) {
+	public void fill(IWorldEditor editor, RandomSource rand, IBlockFactory block, Predicate<BlockContext> p) {
 		this.forEach(c -> block.set(editor, rand, c, p));
 	}
 

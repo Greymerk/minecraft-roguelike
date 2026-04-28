@@ -2,13 +2,11 @@ package com.greymerk.roguelike.treasure.loot;
 
 import java.util.HashMap;
 import java.util.Map;
-
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.ItemStack;
 import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.util.IWeighted;
-
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.random.Random;
 
 public class LootSettings {
 
@@ -32,7 +30,7 @@ public class LootSettings {
 		if(override != null) this.loot.putAll(override.loot);
 	}
 	
-	public ItemStack get(Loot type, Random rand){
+	public ItemStack get(Loot type, RandomSource rand){
 		IWeighted<ItemStack> provider = loot.get(type);
 		return provider.get(rand);
 	}

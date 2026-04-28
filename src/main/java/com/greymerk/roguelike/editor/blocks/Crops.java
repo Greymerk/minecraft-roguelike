@@ -2,10 +2,9 @@ package com.greymerk.roguelike.editor.blocks;
 
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.MetaBlock;
-
-import net.minecraft.block.Blocks;
-import net.minecraft.block.CarvedPumpkinBlock;
-import net.minecraft.block.CocoaBlock;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.CarvedPumpkinBlock;
+import net.minecraft.world.level.block.CocoaBlock;
 
 public enum Crops {
 
@@ -31,8 +30,8 @@ public enum Crops {
 	
 	public static MetaBlock getPumpkin(Cardinal dir, boolean lit){
 		return MetaBlock.of(lit 
-				? Blocks.JACK_O_LANTERN.getDefaultState() 
-				: Blocks.CARVED_PUMPKIN.getDefaultState()) 
+				? Blocks.JACK_O_LANTERN.defaultBlockState() 
+				: Blocks.CARVED_PUMPKIN.defaultBlockState()) 
 			.with(CarvedPumpkinBlock.FACING, Cardinal.facing(Cardinal.reverse(dir)));
 	}
 }

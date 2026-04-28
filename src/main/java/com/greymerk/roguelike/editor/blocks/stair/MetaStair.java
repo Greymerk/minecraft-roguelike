@@ -1,7 +1,12 @@
 package com.greymerk.roguelike.editor.blocks.stair;
 
 import java.util.function.Predicate;
-
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.StairBlock;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.Half;
+import net.minecraft.world.level.block.state.properties.StairsShape;
 import com.greymerk.roguelike.editor.BlockContext;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
@@ -9,13 +14,6 @@ import com.greymerk.roguelike.editor.Fill;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.MetaBlock;
 import com.greymerk.roguelike.editor.shapes.IShape;
-
-import net.minecraft.block.Block;
-import net.minecraft.block.StairsBlock;
-import net.minecraft.block.enums.BlockHalf;
-import net.minecraft.block.enums.StairShape;
-import net.minecraft.state.property.Properties;
-import net.minecraft.util.math.random.Random;
 
 public class MetaStair implements IStair{
 
@@ -42,31 +40,31 @@ public class MetaStair implements IStair{
 	}
 	
 	public MetaStair setOrientation(Cardinal dir, Boolean upsideDown){
-		stair.with(StairsBlock.FACING, Cardinal.facing(dir));
-		stair.with(StairsBlock.HALF, upsideDown ? BlockHalf.TOP : BlockHalf.BOTTOM);
-		stair.with(Properties.WATERLOGGED, false);
+		stair.with(StairBlock.FACING, Cardinal.facing(dir));
+		stair.with(StairBlock.HALF, upsideDown ? Half.TOP : Half.BOTTOM);
+		stair.with(BlockStateProperties.WATERLOGGED, false);
 		return this;
 	}
 	
-	public boolean set(IWorldEditor editor, Random rand, Coord pos) {
+	public boolean set(IWorldEditor editor, RandomSource rand, Coord pos) {
 		setStairShape(editor, pos);
 		return this.stair.set(editor, rand, pos);
 	}
 	
-	public boolean set(IWorldEditor editor, Random rand, Coord pos, Predicate<BlockContext> p) {
+	public boolean set(IWorldEditor editor, RandomSource rand, Coord pos, Predicate<BlockContext> p) {
 		setStairShape(editor, pos);
 		return this.stair.set(editor, rand, pos, p);
 	}
 	
 	@Override
-	public void fill(IWorldEditor editor, Random rand, IShape shape, Predicate<BlockContext> p) {
+	public void fill(IWorldEditor editor, RandomSource rand, IShape shape, Predicate<BlockContext> p) {
 		shape.get().forEach(pos -> {
 			this.set(editor, rand, pos, p);
 		});
 	}
 	
 	@Override
-	public void fill(IWorldEditor editor, Random rand, IShape shape) {
+	public void fill(IWorldEditor editor, RandomSource rand, IShape shape) {
 		this.fill(editor, rand, shape, Fill.ALWAYS);
 	}
 	
@@ -78,11 +76,11 @@ public class MetaStair implements IStair{
 			MetaStair other = new MetaStair(mb);
 			if(other.isUpsideDown() == this.isUpsideDown()){
 				if(other.direction() == Cardinal.left(this.direction())) {
-					this.setShape(StairShape.INNER_LEFT);
+					this.setShape(StairsShape.INNER_LEFT);
 					return;
 				}
 				if(other.direction() == Cardinal.right(this.direction())) {
-					this.setShape(StairShape.INNER_RIGHT);
+					this.setShape(StairsShape.INNER_RIGHT);
 					return;
 				}
 			}
@@ -94,39 +92,39 @@ public class MetaStair implements IStair{
 			MetaStair other = new MetaStair(mb);
 			if(other.isUpsideDown() == this.isUpsideDown()){
 				if(other.direction() == Cardinal.left(this.direction())) {
-					this.setShape(StairShape.OUTER_LEFT);
+					this.setShape(StairsShape.OUTER_LEFT);
 					return;
 				}
 				if(other.direction() == Cardinal.right(this.direction())) {
-					this.setShape(StairShape.OUTER_RIGHT);
+					this.setShape(StairsShape.OUTER_RIGHT);
 					return;
 				}
 			}
 		}
 		
-		this.setShape(StairShape.STRAIGHT); // resetting by default
+		this.setShape(StairsShape.STRAIGHT); // resetting by default
 	}
 	
     public Cardinal direction() {
-    	return Cardinal.of(this.stair.get(StairsBlock.FACING));
+    	return Cardinal.of(this.stair.get(StairBlock.FACING));
     }
     
     public boolean isUpsideDown() {
-    	return this.stair.get(StairsBlock.HALF) == BlockHalf.TOP;
+    	return this.stair.get(StairBlock.HALF) == Half.TOP;
     }
     
     private boolean isStair(MetaBlock mb) {
-    	return mb.getBlock() instanceof StairsBlock;
+    	return mb.getBlock() instanceof StairBlock;
     }
     
-    private MetaStair setShape(StairShape shape) {
-		stair.with(StairsBlock.SHAPE, shape);
+    private MetaStair setShape(StairsShape shape) {
+		stair.with(StairBlock.SHAPE, shape);
 		return this;
 	}
 
 	@Override
 	public IStair waterlog() {
-		this.stair.with(Properties.WATERLOGGED, true);
+		this.stair.with(BlockStateProperties.WATERLOGGED, true);
 		return this;
 	}
 }

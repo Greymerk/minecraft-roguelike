@@ -6,47 +6,45 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Predicate;
-
+import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.FallingBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.ChunkAccess;
+import net.minecraft.world.level.chunk.status.ChunkStatus;
+import net.minecraft.world.level.levelgen.LegacyRandomSource;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import com.greymerk.roguelike.config.Config;
-
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.FallingBlock;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.random.CheckedRandom;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.World;
-import net.minecraft.world.chunk.Chunk;
-import net.minecraft.world.chunk.ChunkStatus;
 
 public class WorldEditor implements IWorldEditor{
 
-	private World world;
-	private RegistryKey<World> worldKey;
+	private Level world;
+	private ResourceKey<Level> worldKey;
 	private IWorldInfo worldInfo;
 	private Statistics stats;
 	
-	public static WorldEditor of(World world) {
+	public static WorldEditor of(Level world) {
 		return new WorldEditor(world);
 	}
 	
-	public static WorldEditor of(ServerWorld world) {
+	public static WorldEditor of(ServerLevel world) {
 		return new WorldEditor(world);
 	}
 	
 	@Deprecated
-	public WorldEditor(StructureWorldAccess world, RegistryKey<World> worldKey){}
+	public WorldEditor(WorldGenLevel world, ResourceKey<Level> worldKey){}
 
-	private WorldEditor(World world) {
+	private WorldEditor(Level world) {
 		this.world = world;
-		this.worldKey = world.getRegistryKey();
+		this.worldKey = world.dimension();
 		this.worldInfo = WorldInfo.of(world, worldKey);
 		this.stats = new Statistics();
 	}
@@ -54,13 +52,13 @@ public class WorldEditor implements IWorldEditor{
 	@Override
 	public boolean set(Coord pos, MetaBlock block, Predicate<BlockContext> p) {
 		if(!p.and(Fill.IGNORE_BLOCK_ENTITIES).test(BlockContext.of(this, pos, block))) return false;
-		return world.setBlockState(pos.getBlockPos(), block.getState(), block.getFlag());
+		return world.setBlock(pos.getBlockPos(), block.getState(), block.getFlag());
 	}
 	
 	@Override
 	public boolean set(Coord pos, MetaBlock block) {
 		if(!Fill.IGNORE_BLOCK_ENTITIES.test(BlockContext.of(this, pos, block))) return false;
-		return world.setBlockState(pos.getBlockPos(), block.getState(), block.getFlag());
+		return world.setBlock(pos.getBlockPos(), block.getState(), block.getFlag());
 	}
 	
 	@Override
@@ -71,7 +69,7 @@ public class WorldEditor implements IWorldEditor{
 
 	@Override
 	public boolean isAir(Coord pos) {
-		return this.world.isAir(pos.getBlockPos());
+		return this.world.isEmptyBlock(pos.getBlockPos());
 	}
 
 	
@@ -81,29 +79,29 @@ public class WorldEditor implements IWorldEditor{
 	}
 	
 	@Override
-	public Random getRandom(Coord pos) {
+	public RandomSource getRandom(Coord pos) {
 		if(!Config.ofBoolean(Config.DETERMINISTIC)) {
 			long time = Date.from(Instant.now()).getTime();
 			long seed = Objects.hash(time, pos);
-			return new CheckedRandom(seed);
+			return new LegacyRandomSource(seed);
 		}
-		return new CheckedRandom(getSeed(pos));
+		return new LegacyRandomSource(getSeed(pos));
 	}
 
 	@Override
 	public boolean isChunkLoaded(Coord pos) {
 		ChunkPos cp = pos.getChunkPos();
-		return world.isChunkLoaded(cp.x, cp.z);
+		return world.hasChunk(cp.x(), cp.z());
 	}
 	
 	@Override
 	public boolean surroundingChunksLoaded(Coord pos) {
 		ChunkPos cpos = pos.getChunkPos();
-		for(int x = cpos.x - 1; x <= cpos.x + 1; x++) {
-			for(int z = cpos.z - 1; z <= cpos.z + 1; z++) {
-				if(!world.isChunkLoaded(x, z)) return false;
-				Chunk chunk = world.getChunk(x, z);
-				ChunkStatus status = chunk.getStatus();
+		for(int x = cpos.x() - 1; x <= cpos.x() + 1; x++) {
+			for(int z = cpos.z() - 1; z <= cpos.z() + 1; z++) {
+				if(!world.hasChunk(x, z)) return false;
+				ChunkAccess chunk = world.getChunk(x, z);
+				ChunkStatus status = chunk.getPersistedStatus();
 				if(status != ChunkStatus.FULL) return false;
 			}
 		}
@@ -114,19 +112,19 @@ public class WorldEditor implements IWorldEditor{
 
 	@Override
 	public boolean isSolid(Coord pos) {
-		return this.world.getBlockState(pos.getBlockPos()).isSolidBlock(world, pos.getBlockPos());
+		return this.world.getBlockState(pos.getBlockPos()).isRedstoneConductor(world, pos.getBlockPos());
 	}
 	
 	@Override
 	public boolean isSupported(Coord pos) {
-		if(pos.getY() <= world.getBottomY()) return false;
+		if(pos.getY() <= world.getMinY()) return false;
 		Coord under = pos.copy().add(Cardinal.DOWN);
 		Block b = this.world.getBlockState(under.getBlockPos()).getBlock();
 		if(b instanceof FallingBlock) {
 			return isSupported(under);
 		}
 		
-		if(!FallingBlock.canFallThrough(world.getBlockState(under.getBlockPos()))) return true;
+		if(!FallingBlock.isFree(world.getBlockState(under.getBlockPos()))) return true;
 		return false;
 	}
 
@@ -164,17 +162,17 @@ public class WorldEditor implements IWorldEditor{
 	public boolean isFaceFullSquare(Coord pos, Cardinal dir) {
 		BlockState b = this.world.getBlockState(pos.getBlockPos());
 		Direction facing = Cardinal.facing(dir);
-		VoxelShape shape = b.getSidesShape(world, pos.getBlockPos());
+		VoxelShape shape = b.getBlockSupportShape(world, pos.getBlockPos());
 		VoxelShape collision = b.getCollisionShape(world, pos.getBlockPos());
-		boolean isShapeSquare = Block.isFaceFullSquare(shape, facing);
-		boolean isCollisionSquare = Block.isFaceFullSquare(collision, facing);
+		boolean isShapeSquare = Block.isFaceFull(shape, facing);
+		boolean isCollisionSquare = Block.isFaceFull(collision, facing);
 		return isShapeSquare || isCollisionSquare;
 	}
 	
 	@Override
 	public Coord findSurface(Coord pos) {
 
-		Coord cursor = pos.withY(world.getTopYInclusive());
+		Coord cursor = pos.withY(world.getMaxY());
 		int seaLevel = this.worldInfo.getSeaLevel();
 
 		while(cursor.getY() > seaLevel - 3) {
@@ -184,7 +182,7 @@ public class WorldEditor implements IWorldEditor{
 				continue;
 			}
 			
-			if(!world.isAir(cursor.getBlockPos()) && !m.isPlant()) return cursor;
+			if(!world.isEmptyBlock(cursor.getBlockPos()) && !m.isPlant()) return cursor;
 			cursor.add(Cardinal.DOWN);
 		}
 		
@@ -198,7 +196,7 @@ public class WorldEditor implements IWorldEditor{
 	}
 	
 	@Override
-	public RegistryKey<World> getRegistryKey(){
+	public ResourceKey<Level> getRegistryKey(){
 		return this.worldKey;
 	}
 

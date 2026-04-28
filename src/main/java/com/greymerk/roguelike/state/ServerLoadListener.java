@@ -1,13 +1,13 @@
 package com.greymerk.roguelike.state;
 
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLevelEvents;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.world.ServerWorld;
+import net.minecraft.server.level.ServerLevel;
 
-public class ServerLoadListener implements ServerWorldEvents.Load{
+public class ServerLoadListener implements ServerLevelEvents.Load{
 
 	@Override
-	public void onWorldLoad(MinecraftServer server, ServerWorld world) {
+	public void onLevelLoad(MinecraftServer server, ServerLevel world) {
 		
 	}
 }
