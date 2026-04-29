@@ -6,20 +6,19 @@ import com.greymerk.roguelike.dungeon.room.RoomProvider;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.boundingbox.IBounded;
 import com.greymerk.roguelike.theme.ITheme;
-
-import net.minecraft.util.math.random.Random;
+import net.minecraft.util.RandomSource;
 
 public interface ILevelSettings {
 
-	public IFragment getWallFragment(Random rand);
+	public IFragment getWallFragment(RandomSource rand);
 	
-	public IFragment getAlcove(Random rand);
+	public IFragment getAlcove(RandomSource rand);
 	
 	public ITheme getTheme();
 	
 	public RoomProvider getRooms();
 	
-	public void applyFilters(IWorldEditor editor, Random rand, IBounded box);
+	public void applyFilters(IWorldEditor editor, RandomSource rand, IBounded box);
 	
 	public String getName();
 	

@@ -10,14 +10,13 @@ import com.greymerk.roguelike.editor.boundingbox.IBounded;
 import com.greymerk.roguelike.editor.factories.BlockJumble;
 import com.greymerk.roguelike.editor.shapes.Shape;
 import com.greymerk.roguelike.settings.ILevelSettings;
-
-import net.minecraft.block.Blocks;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.block.Blocks;
 
 public class MudFilter implements IFilter{
 
 	@Override
-	public void apply(IWorldEditor editor, Random rand, ILevelSettings settings, IBounded box) {
+	public void apply(IWorldEditor editor, RandomSource rand, ILevelSettings settings, IBounded box) {
 		for(Coord pos : box.getShape(Shape.RECTSOLID)){
 			if(rand.nextInt(40) != 0) continue;
 			if(!validLocation(editor, rand, pos)) continue;
@@ -25,7 +24,7 @@ public class MudFilter implements IFilter{
 		}
 	}
 	
-	private void generate(IWorldEditor editor, Random rand, Coord pos, int counter){
+	private void generate(IWorldEditor editor, RandomSource rand, Coord pos, int counter){
 		if(counter <= 0) return;
 		
 		for(Cardinal dir : Cardinal.directions){
@@ -83,7 +82,7 @@ public class MudFilter implements IFilter{
 		}
 	}
 	
-	private boolean validLocation(IWorldEditor editor, Random rand, Coord origin){
+	private boolean validLocation(IWorldEditor editor, RandomSource rand, Coord origin){
 		
 		if(!editor.isSolid(origin)) return false;
 		

@@ -1,7 +1,7 @@
 package com.greymerk.roguelike.dungeon.fragment.alcove;
 
 import java.util.List;
-
+import net.minecraft.util.RandomSource;
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
 import com.greymerk.roguelike.dungeon.fragment.IFragment;
@@ -23,12 +23,10 @@ import com.greymerk.roguelike.theme.ITheme;
 import com.greymerk.roguelike.treasure.Treasure;
 import com.greymerk.roguelike.util.math.RandHelper;
 
-import net.minecraft.util.math.random.Random;
-
 public class SafetyCell implements IFragment {
 
 	@Override
-	public void generate(IWorldEditor editor, Random rand, ILevelSettings settings, Coord origin, Cardinal dir) {
+	public void generate(IWorldEditor editor, RandomSource rand, ILevelSettings settings, Coord origin, Cardinal dir) {
 		
 		cell(editor, rand, origin.copy().add(dir, Cell.SIZE).freeze(), dir, settings);
 		
@@ -37,7 +35,7 @@ public class SafetyCell implements IFragment {
 		Button.generate(editor, origin.copy().add(dir, 4).add(Cardinal.UP).add(Cardinal.left(dir)), dir, Button.OAK);
 	}
 
-	private void cell(IWorldEditor editor, Random rand, Coord origin, Cardinal direction, ILevelSettings settings) {
+	private void cell(IWorldEditor editor, RandomSource rand, Coord origin, Cardinal direction, ILevelSettings settings) {
 
 		ITheme theme = settings.getTheme();
 		

@@ -4,20 +4,19 @@ import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.MetaBlock;
-
-import net.minecraft.block.Blocks;
-import net.minecraft.block.LeafLitterBlock;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LeafLitterBlock;
 
 public class LeafLitter {
 
-	public static void set(IWorldEditor editor, Random rand, Coord origin) {
+	public static void set(IWorldEditor editor, RandomSource rand, Coord origin) {
 		if(!canPlaceAt(editor, origin.freeze())) return;
 		Cardinal dir = Cardinal.randDirs(rand).getFirst();
-		int count = rand.nextBetween(1, 4);
+		int count = rand.nextIntBetweenInclusive(1, 4);
 		MetaBlock.of(Blocks.LEAF_LITTER)
-			.with(LeafLitterBlock.HORIZONTAL_FACING, Cardinal.facing(dir))
-			.with(LeafLitterBlock.SEGMENT_AMOUNT, count)
+			.with(LeafLitterBlock.FACING, Cardinal.facing(dir))
+			.with(LeafLitterBlock.AMOUNT, count)
 			.set(editor, origin);
 	}
 	

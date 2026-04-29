@@ -1,13 +1,13 @@
 package com.greymerk.roguelike.treasure.loot.potions;
 
-import net.minecraft.component.type.PotionContentsComponent;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.Potions;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.core.Holder;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.Potion;
+import net.minecraft.world.item.alchemy.PotionContents;
+import net.minecraft.world.item.alchemy.Potions;
 
 public enum PotionItem {
 	
@@ -18,16 +18,16 @@ public enum PotionItem {
 	FIRERESIST, WATER_BREATHING,
 	SLOW_FALLING, INVISIBILITY;
 	
-	public static ItemStack getRandom(Random rand){
+	public static ItemStack getRandom(RandomSource rand){
 		PotionItem type = PotionItem.values()[rand.nextInt(PotionItem.values().length)];
 		return getSpecific(rand, type);
 	}
 	
-	public static ItemStack getSpecific(Random rand, PotionItem effect){
+	public static ItemStack getSpecific(RandomSource rand, PotionItem effect){
 		return getSpecific(PotionForm.REGULAR, effect, rand.nextBoolean(), rand.nextBoolean());
 	}
 	
-	public static ItemStack getSpecific(Random rand, PotionForm type, PotionItem effect){
+	public static ItemStack getSpecific(RandomSource rand, PotionForm type, PotionItem effect){
 		return getSpecific(type, effect, rand.nextBoolean(), rand.nextBoolean());
 	}
 		
@@ -42,14 +42,14 @@ public enum PotionItem {
 		default: potion = Items.POTION; break;
 		}
 		
-		RegistryEntry<Potion> data = getEffect(effect, upgrade, extend);
+		Holder<Potion> data = getEffect(effect, upgrade, extend);
 		
-		return PotionContentsComponent.createStack(potion, data);
+		return PotionContents.createItemStack(potion, data);
 		
 		
 	}
 	
-	public static RegistryEntry<Potion> getEffect(PotionItem effect, boolean upgrade, boolean extend){
+	public static Holder<Potion> getEffect(PotionItem effect, boolean upgrade, boolean extend){
 		
 		if(effect == null) return Potions.AWKWARD;
 		

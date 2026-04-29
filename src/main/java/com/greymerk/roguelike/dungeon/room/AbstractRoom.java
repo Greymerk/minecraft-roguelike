@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
-
+import net.minecraft.util.RandomSource;
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellManager;
 import com.greymerk.roguelike.dungeon.cell.CellState;
@@ -20,8 +20,6 @@ import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.editor.boundingbox.IBounded;
 import com.greymerk.roguelike.settings.ILevelSettings;
 import com.greymerk.roguelike.theme.ITheme;
-
-import net.minecraft.util.math.random.Random;
 
 public abstract class AbstractRoom implements IRoom{
 	
@@ -136,7 +134,7 @@ public abstract class AbstractRoom implements IRoom{
 	}
 
 	@Override
-	public void generateExits(IWorldEditor editor, Random rand) {
+	public void generateExits(IWorldEditor editor, RandomSource rand) {
 		for(Exit exit : this.exits) {
 			Coord origin = exit.origin();
 			Cardinal dir = exit.dir();
@@ -178,7 +176,7 @@ public abstract class AbstractRoom implements IRoom{
 	}
 	
 	public void applyFilters(IWorldEditor editor) {
-		Random rand = editor.getRandom(this.getWorldPos());
+		RandomSource rand = editor.getRandom(this.getWorldPos());
 		this.settings.applyFilters(editor, rand, getBoundingBox().get());
 	}
 	

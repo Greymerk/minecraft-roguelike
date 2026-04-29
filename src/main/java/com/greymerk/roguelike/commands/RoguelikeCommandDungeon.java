@@ -1,7 +1,13 @@
 package com.greymerk.roguelike.commands;
 
 import java.util.List;
-
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.Commands;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.Level;
 import com.greymerk.roguelike.Roguelike;
 import com.greymerk.roguelike.dungeon.Dungeon;
 import com.greymerk.roguelike.editor.Coord;
@@ -9,35 +15,27 @@ import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.WorldEditor;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.server.command.CommandManager;
-import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.text.Text;
-import net.minecraft.world.World;
-
 public class RoguelikeCommandDungeon {
 
-	public static LiteralArgumentBuilder<ServerCommandSource> getDungeon(){
-		return CommandManager.literal("dungeon")
+	public static LiteralArgumentBuilder<CommandSourceStack> getDungeon(){
+		return Commands.literal("dungeon")
 				.then(getDungeonHere());
 				
 	}
 	
-	public static LiteralArgumentBuilder<ServerCommandSource> getDungeonHere(){
-		return CommandManager.literal("here")
+	public static LiteralArgumentBuilder<CommandSourceStack> getDungeonHere(){
+		return Commands.literal("here")
 			.executes(context -> {
-				ServerCommandSource source = context.getSource();
+				CommandSourceStack source = context.getSource();
 				Entity entity = source.getEntity();
-				World world = entity.getEntityWorld();
-				RegistryKey<World> key = world.getRegistryKey();
-				ServerWorld sw = world.getServer().getWorld(key);
+				Level world = entity.level();
+				ResourceKey<Level> key = world.dimension();
+				ServerLevel sw = world.getServer().getLevel(key);
 				IWorldEditor editor = WorldEditor.of(sw);
-				Coord pos = Coord.of(entity.getBlockPos());
+				Coord pos = Coord.of(entity.blockPosition());
 				try{
 					Dungeon.generate(editor, pos, true);
-					source.sendFeedback(() -> Text.literal("Generating dungeon at " + pos.toString()), false);
+					source.sendSuccess(() -> Component.literal("Generating dungeon at " + pos.toString()), false);
 				} catch(Exception e){
 					Roguelike.LOGGER.error(e.getLocalizedMessage());
 					List.of(e.getStackTrace()).forEach(line -> {

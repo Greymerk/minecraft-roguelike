@@ -4,27 +4,25 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.alchemy.PotionContents;
 import com.greymerk.roguelike.treasure.loot.ItemHideFlags;
 import com.greymerk.roguelike.treasure.loot.Loot;
 import com.greymerk.roguelike.util.Color;
 import com.greymerk.roguelike.util.TextFormat;
 import com.greymerk.roguelike.util.math.RandHelper;
 
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.PotionContentsComponent;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.util.Rarity;
-import net.minecraft.util.math.random.Random;
-
 public enum PotionMixture {
 
 	TEQUILA, MOONSHINE, ABSINTHE, VILE, 
 	LAUDANUM, ANIMUS, STOUT, STAMINA, NECTAR, COFFEE, AURA;
 	
-	public static ItemStack getPotion(Random rand, PotionMixture type){
+	public static ItemStack getPotion(RandomSource rand, PotionMixture type){
 		ItemStack potion;
 		switch(type){
 		case TEQUILA:
@@ -153,7 +151,7 @@ public enum PotionMixture {
 		return new ItemStack(Items.GLASS_BOTTLE);
 	}
 	
-	public static ItemStack getBooze(Random rand){
+	public static ItemStack getBooze(RandomSource rand){
 		
 		final PotionMixture[] booze = {TEQUILA, LAUDANUM, MOONSHINE, ABSINTHE, STOUT};
 		List<PotionMixture> potions = Arrays.asList(booze);
@@ -162,14 +160,14 @@ public enum PotionMixture {
 		return getPotion(rand, type);
 	}
 	
-	public static ItemStack getRandom(Random rand){
+	public static ItemStack getRandom(RandomSource rand){
 		final PotionMixture[] potions = {LAUDANUM, ANIMUS, STAMINA, NECTAR, COFFEE, AURA};
 		int choice = rand.nextInt(potions.length);
 		PotionMixture type = potions[choice];
 		return getPotion(rand, type);
 	}
 	
-	public static void addRandomEffects(Random rand, ItemStack potion, int numEffects){
+	public static void addRandomEffects(RandomSource rand, ItemStack potion, int numEffects){
 		
 		List<PotionEffect> effects = new ArrayList<PotionEffect>(Arrays.asList(PotionEffect.values()));
 		RandHelper.shuffle(effects, rand);
@@ -194,9 +192,9 @@ public enum PotionMixture {
 	}
 	
 	public static void setColor(ItemStack potion, int color){
-		PotionContentsComponent contents = potion.getOrDefault(DataComponentTypes.POTION_CONTENTS, PotionContentsComponent.DEFAULT);
-		List<StatusEffectInstance> effects = contents.customEffects();
-		PotionContentsComponent c = new PotionContentsComponent(Optional.empty(), Optional.of(color), effects, contents.customName());
-		potion.set(DataComponentTypes.POTION_CONTENTS, c);
+		PotionContents contents = potion.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY);
+		List<MobEffectInstance> effects = contents.customEffects();
+		PotionContents c = new PotionContents(Optional.empty(), Optional.of(color), effects, contents.customName());
+		potion.set(DataComponents.POTION_CONTENTS, c);
 	}
 }

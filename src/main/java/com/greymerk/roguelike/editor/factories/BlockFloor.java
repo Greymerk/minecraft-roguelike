@@ -1,15 +1,13 @@
 package com.greymerk.roguelike.editor.factories;
 
 import java.util.function.Predicate;
-
+import net.minecraft.util.RandomSource;
 import com.greymerk.roguelike.editor.BlockContext;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.Fill;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.blocks.Air;
-
-import net.minecraft.util.math.random.Random;
 
 /**
  * This BlockFactory serves the special purpose of
@@ -39,13 +37,13 @@ public class BlockFloor extends BlockBase implements IBlockFactory{
 	}
 	
 	@Override
-	public boolean set(IWorldEditor editor, Random rand, Coord pos, Predicate<BlockContext> p) {
+	public boolean set(IWorldEditor editor, RandomSource rand, Coord pos, Predicate<BlockContext> p) {
 		return floor.set(editor, rand, pos, Fill.SOLID.and(p))
 		    || bridge.set(editor, rand, pos, Fill.AIR.and(p));
 	}
 
 	@Override
-	public boolean set(IWorldEditor editor, Random rand, Coord pos) {
+	public boolean set(IWorldEditor editor, RandomSource rand, Coord pos) {
 		return floor.set(editor, rand, pos, Fill.SOLID)
 			|| bridge.set(editor, rand, pos, Fill.AIR);
 	}

@@ -5,17 +5,16 @@ import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.MetaBlock;
 import com.greymerk.roguelike.util.Color;
-
-import net.minecraft.block.BedBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.HorizontalFacingBlock;
-import net.minecraft.block.enums.BedPart;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.block.BedBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.state.properties.BedPart;
 
 public class Bed {
 
-	public static void generate(IWorldEditor editor, Random rand, Cardinal dir, Coord pos) {
+	public static void generate(IWorldEditor editor, RandomSource rand, Cardinal dir, Coord pos) {
 		generate(editor, dir, pos, Color.get(rand));
 	}
 	
@@ -27,12 +26,12 @@ public class Bed {
 	public static void generate(IWorldEditor editor, Cardinal dir, Coord origin, Color color){
 		MetaBlock.of(getFromColor(color))
 			.with(BedBlock.PART, BedPart.HEAD)
-			.with(HorizontalFacingBlock.FACING, Cardinal.facing(dir))
+			.with(HorizontalDirectionalBlock.FACING, Cardinal.facing(dir))
 			.set(editor, origin);
 		
 		MetaBlock.of(getFromColor(color))
 			.with(BedBlock.PART, BedPart.FOOT)
-			.with(HorizontalFacingBlock.FACING, Cardinal.facing(dir))
+			.with(HorizontalDirectionalBlock.FACING, Cardinal.facing(dir))
 			.set(editor, origin.copy().add(dir));
 	}
 	

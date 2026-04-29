@@ -1,7 +1,9 @@
 package com.greymerk.roguelike.dungeon.room;
 
 import java.util.List;
-
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellManager;
 import com.greymerk.roguelike.dungeon.cell.CellState;
@@ -21,16 +23,12 @@ import com.greymerk.roguelike.editor.blocks.stair.IStair;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.treasure.Treasure;
 
-import net.minecraft.block.Blocks;
-import net.minecraft.block.HorizontalFacingBlock;
-import net.minecraft.util.math.random.Random;
-
 public class SmithRoom extends AbstractRoom implements IRoom {
 
 	@Override
 	public void generate(IWorldEditor editor) {
 		Coord origin = this.getWorldPos().freeze();
-		Random rand = editor.getRandom(origin);
+		RandomSource rand = editor.getRandom(origin);
 		
 		this.clear(editor, rand, origin);
 		this.entryRoom(editor, rand, origin);
@@ -40,7 +38,7 @@ public class SmithRoom extends AbstractRoom implements IRoom {
 		this.supports(editor, rand, origin);
 	}
 
-	private void supports(IWorldEditor editor, Random rand, Coord origin) {
+	private void supports(IWorldEditor editor, RandomSource rand, Coord origin) {
 		CellSupport.generate(editor, rand, theme, origin.add(direction, 6));
 		CellSupport.generate(editor, rand, theme, origin.add(direction, 12));
 		CellSupport.generate(editor, rand, theme, origin.add(direction, 18));
@@ -49,7 +47,7 @@ public class SmithRoom extends AbstractRoom implements IRoom {
 		});
 	}
 
-	private void smelters(IWorldEditor editor, Random rand, Coord origin) {
+	private void smelters(IWorldEditor editor, RandomSource rand, Coord origin) {
 		IStair stair = theme.getPrimary().getStair();
 		IBlockFactory wall = theme.getPrimary().getWall();
 		BoundingBox.of(origin).add(direction, 3).grow(Cardinal.DOWN).grow(Cardinal.UP, 5).grow(Cardinal.orthogonal(direction), 3).fill(editor, rand, wall);
@@ -64,20 +62,20 @@ public class SmithRoom extends AbstractRoom implements IRoom {
 		});
 	}
 
-	private void smelter(IWorldEditor editor, Random rand, Coord origin) {
-		MetaBlock chest = MetaBlock.of(Blocks.CHEST).with(HorizontalFacingBlock.FACING, Cardinal.facing(direction));
+	private void smelter(IWorldEditor editor, RandomSource rand, Coord origin) {
+		MetaBlock chest = MetaBlock.of(Blocks.CHEST).with(HorizontalDirectionalBlock.FACING, Cardinal.facing(direction));
 		chest.set(editor, origin);
 		Hopper.generate(editor, rand, origin.add(direction), Cardinal.reverse(direction));
 		Hopper.generate(editor, rand, origin.add(direction, 2).add(Cardinal.UP), Cardinal.reverse(direction));
 		Hopper.generate(editor, rand, origin.add(direction).add(Cardinal.UP, 2), Cardinal.DOWN);
 		chest.set(editor, origin.add(direction, 2).add(Cardinal.UP, 2));
 		chest.set(editor, origin.add(direction).add(Cardinal.UP, 3));
-		MetaBlock furnace = MetaBlock.of(Blocks.BLAST_FURNACE).with(HorizontalFacingBlock.FACING, Cardinal.facing(direction));
+		MetaBlock furnace = MetaBlock.of(Blocks.BLAST_FURNACE).with(HorizontalDirectionalBlock.FACING, Cardinal.facing(direction));
 		furnace.set(editor, origin.add(direction).add(Cardinal.UP));
 		
 	}
 
-	private void mainRoom(IWorldEditor editor, Random rand, Coord origin) {
+	private void mainRoom(IWorldEditor editor, RandomSource rand, Coord origin) {
 		IStair stair = theme.getPrimary().getStair();
 		IBlockFactory wall = theme.getPrimary().getWall();
 		BoundingBox.of(origin).add(Cardinal.DOWN).grow(Cardinal.reverse(direction), 4).grow(direction, 8).grow(Cardinal.orthogonal(direction), 3).fill(editor, rand, theme.getPrimary().getFloor());
@@ -101,9 +99,9 @@ public class SmithRoom extends AbstractRoom implements IRoom {
 	}
 
 
-	private void smithingRoom(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
+	private void smithingRoom(IWorldEditor editor, RandomSource rand, Coord origin, Cardinal dir) {
 		sideRoom(editor, rand, origin, dir);
-		MetaBlock grindstone = MetaBlock.of(Blocks.GRINDSTONE).with(HorizontalFacingBlock.FACING, Cardinal.facing(Cardinal.left(dir)));
+		MetaBlock grindstone = MetaBlock.of(Blocks.GRINDSTONE).with(HorizontalDirectionalBlock.FACING, Cardinal.facing(Cardinal.left(dir)));
 		grindstone.set(editor, origin.add(Cardinal.left(dir), 2));
 		MetaBlock table = MetaBlock.of(Blocks.SMITHING_TABLE);
 		table.set(editor, origin.add(Cardinal.right(dir), 2));
@@ -113,7 +111,7 @@ public class SmithRoom extends AbstractRoom implements IRoom {
 	}
 
 
-	private void anvilRoom(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
+	private void anvilRoom(IWorldEditor editor, RandomSource rand, Coord origin, Cardinal dir) {
 		sideRoom(editor, rand, origin, dir);
 		theme.getPrimary().getStair().setOrientation(Cardinal.reverse(dir), true).fill(editor, rand, BoundingBox.of(origin).add(dir, 2).grow(Cardinal.orthogonal(dir)));
 		Treasure.generate(editor, rand, settings.getDifficulty(), origin.add(dir, 2).add(Cardinal.UP), Cardinal.reverse(dir), Treasure.ORE);
@@ -122,7 +120,7 @@ public class SmithRoom extends AbstractRoom implements IRoom {
 		Anvil.set(editor, origin, Anvil.CHIPPED, Cardinal.left(dir));
 	}
 	
-	private void waterTank(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
+	private void waterTank(IWorldEditor editor, RandomSource rand, Coord origin, Cardinal dir) {
 		IStair stair = theme.getPrimary().getStair();
 		BoundingBox.of(origin).add(dir, 3).grow(Cardinal.orthogonal(dir), 2).grow(dir, 2).grow(Cardinal.UP, 3).grow(Cardinal.DOWN).fill(editor, rand, theme.getPrimary().getWall());
 		BoundingBox.of(origin).add(dir, 3).add(Cardinal.UP).grow(Cardinal.orthogonal(dir)).grow(dir).fill(editor, rand, Air.get());
@@ -138,7 +136,7 @@ public class SmithRoom extends AbstractRoom implements IRoom {
 		});
 	}
 
-	private void lavaTank(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
+	private void lavaTank(IWorldEditor editor, RandomSource rand, Coord origin, Cardinal dir) {
 		IStair stair = theme.getPrimary().getStair();
 		BoundingBox.of(origin).add(dir, 3).grow(Cardinal.orthogonal(dir), 2).grow(dir, 2).grow(Cardinal.UP, 3).grow(Cardinal.DOWN).fill(editor, rand, theme.getPrimary().getWall());
 		BoundingBox.of(origin).add(dir, 3).add(Cardinal.UP).grow(Cardinal.orthogonal(dir)).grow(dir).fill(editor, rand, Air.get());
@@ -151,7 +149,7 @@ public class SmithRoom extends AbstractRoom implements IRoom {
 		BoundingBox.of(origin).add(dir, 3).grow(dir).grow(Cardinal.orthogonal(dir)).fill(editor, rand, MetaBlock.of(Blocks.LAVA));
 	}
 
-	private void sideRoom(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
+	private void sideRoom(IWorldEditor editor, RandomSource rand, Coord origin, Cardinal dir) {
 		BoundingBox.of(origin).add(Cardinal.DOWN).grow(Cardinal.orthogonal(dir), 3).grow(Cardinal.reverse(dir), 2).grow(dir, 3).fill(editor, rand, theme.getPrimary().getFloor());
 		BoundingBox.of(origin).add(Cardinal.UP, 4).grow(Cardinal.directions, 2).fill(editor, rand, theme.getPrimary().getWall(), Fill.SOLID);
 		BoundingBox.of(origin).add(dir, 3).grow(Cardinal.DOWN).grow(Cardinal.UP, 3).grow(Cardinal.orthogonal(dir), 2).fill(editor, rand, theme.getPrimary().getWall(), Fill.SOLID);
@@ -166,7 +164,7 @@ public class SmithRoom extends AbstractRoom implements IRoom {
 	}
 
 
-	private void anteroom(IWorldEditor editor, Random rand, Coord origin) {
+	private void anteroom(IWorldEditor editor, RandomSource rand, Coord origin) {
 		IStair stair = theme.getPrimary().getStair();
 		
 		BoundingBox.of(origin).add(direction, 3).add(Cardinal.DOWN).grow(direction, 4).grow(Cardinal.orthogonal(direction), 2).fill(editor, rand, theme.getPrimary().getFloor());
@@ -185,7 +183,7 @@ public class SmithRoom extends AbstractRoom implements IRoom {
 	}
 
 
-	private void clear(IWorldEditor editor, Random rand, Coord origin) {
+	private void clear(IWorldEditor editor, RandomSource rand, Coord origin) {
 		BoundingBox.of(origin).add(direction, 4).grow(Cardinal.orthogonal(direction), 2).grow(Cardinal.UP, 3).grow(direction, 3).fill(editor, rand, Air.get());;
 		BoundingBox.of(origin).add(direction, 8).grow(direction, 8).grow(Cardinal.orthogonal(direction), 4).grow(Cardinal.UP, 4).fill(editor, rand, Air.get());
 		BoundingBox.of(origin).add(direction, 17).grow(direction, 2).grow(Cardinal.orthogonal(direction), 2).grow(Cardinal.UP, 4).fill(editor, rand, Air.get());
@@ -195,7 +193,7 @@ public class SmithRoom extends AbstractRoom implements IRoom {
 	}
 
 
-	private void entryRoom(IWorldEditor editor, Random rand, Coord origin) {
+	private void entryRoom(IWorldEditor editor, RandomSource rand, Coord origin) {
 		Corridor cor = new Corridor();
 		this.exits.forEach(e -> {
 			cor.addExit(e);

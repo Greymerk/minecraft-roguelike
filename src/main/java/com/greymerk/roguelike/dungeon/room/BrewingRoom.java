@@ -1,7 +1,9 @@
 package com.greymerk.roguelike.dungeon.room;
 
 import java.util.List;
-
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Blocks;
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellManager;
 import com.greymerk.roguelike.dungeon.cell.CellState;
@@ -27,16 +29,12 @@ import com.greymerk.roguelike.treasure.Treasure;
 import com.greymerk.roguelike.treasure.loot.Loot;
 import com.greymerk.roguelike.util.IWeighted;
 
-import net.minecraft.block.Blocks;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.random.Random;
-
 public class BrewingRoom extends AbstractRoom implements IRoom {
 
 	@Override
 	public void generate(IWorldEditor editor) {
 		Coord origin = this.getWorldPos().copy();
-		Random rand = editor.getRandom(origin);
+		RandomSource rand = editor.getRandom(origin);
 		
 		entry(editor, rand, origin);
 		mainRoom(editor, rand, origin.copy().add(direction, 9));
@@ -49,7 +47,7 @@ public class BrewingRoom extends AbstractRoom implements IRoom {
 				origin.copy().add(direction, 12).add(Cardinal.right(direction), 6).add(Cardinal.DOWN, 6)));
 	}
 
-	private void basement(IWorldEditor editor, Random rand, Coord origin) {
+	private void basement(IWorldEditor editor, RandomSource rand, Coord origin) {
 		
 		IBlockFactory walls = theme.getPrimary().getWall();
 		
@@ -73,7 +71,7 @@ public class BrewingRoom extends AbstractRoom implements IRoom {
 		labRoom(editor, rand, origin.copy().add(Cardinal.left(direction), 6));
 	}
 
-	private void labRoom(IWorldEditor editor, Random rand, Coord origin) {
+	private void labRoom(IWorldEditor editor, RandomSource rand, Coord origin) {
 		IBlockFactory pillar = theme.getPrimary().getWall();
 		IBlockFactory floor = theme.getPrimary().getFloor();
 		IBlockFactory walls = theme.getPrimary().getWall();
@@ -118,7 +116,7 @@ public class BrewingRoom extends AbstractRoom implements IRoom {
 	
 
 
-	private void basementEntry(IWorldEditor editor, Random rand, Coord origin) {
+	private void basementEntry(IWorldEditor editor, RandomSource rand, Coord origin) {
 		IBlockFactory pillar = theme.getPrimary().getWall();
 		IBlockFactory floor = theme.getPrimary().getFloor();
 		IBlockFactory walls = theme.getPrimary().getWall();
@@ -166,7 +164,7 @@ public class BrewingRoom extends AbstractRoom implements IRoom {
 		theme.getPrimary().getDoor().generate(editor, origin.copy().add(Cardinal.left(direction), 6).add(Cardinal.reverse(direction), 3), Cardinal.right(direction));
 	}
 
-	private void mainRoom(IWorldEditor editor, Random rand, Coord origin) {
+	private void mainRoom(IWorldEditor editor, RandomSource rand, Coord origin) {
 		IBlockFactory pillar = theme.getSecondary().getPillar();
 		IBlockFactory floor = theme.getSecondary().getFloor();
 		IBlockFactory walls = theme.getPrimary().getWall();
@@ -265,7 +263,7 @@ public class BrewingRoom extends AbstractRoom implements IRoom {
 		Fragment.generate(Fragment.WALL_CANDLES, editor, rand, settings, origin.copy().add(direction, 3), direction);
 	}
 
-	private void entry(IWorldEditor editor, Random rand, Coord origin) {
+	private void entry(IWorldEditor editor, RandomSource rand, Coord origin) {
 		Corridor cor = new Corridor();
 		
 		this.exits.forEach(e -> {
@@ -277,12 +275,12 @@ public class BrewingRoom extends AbstractRoom implements IRoom {
 		cor.generate(editor);
 	}
 	
-	private void shelf(IWorldEditor editor, Random rand, Coord origin, Cardinal dir, IStair stair) {
+	private void shelf(IWorldEditor editor, RandomSource rand, Coord origin, Cardinal dir, IStair stair) {
 		stair.setOrientation(Cardinal.reverse(dir), true)
 			.fill(editor, rand, BoundingBox.of(origin).add(dir, 2).grow(Cardinal.orthogonal(dir)).getShape(Shape.RECTSOLID));
 	}
 	
-	private void wartFarm(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
+	private void wartFarm(IWorldEditor editor, RandomSource rand, Coord origin, Cardinal dir) {
 		BoundingBox bb = BoundingBox.of(origin).add(dir).grow(Cardinal.orthogonal(dir));
 		bb.getShape(Shape.RECTSOLID).fill(editor, rand, Trapdoor.getWooden(Wood.SPRUCE, dir, false, true));
 		bb.add(dir);
@@ -291,9 +289,9 @@ public class BrewingRoom extends AbstractRoom implements IRoom {
 		bb.getShape(Shape.RECTSOLID).fill(editor, rand, MetaBlock.of(Blocks.NETHER_WART));
 	}
 	
-	private void brewingStand(IWorldEditor editor, Random rand, Coord origin) {
+	private void brewingStand(IWorldEditor editor, RandomSource rand, Coord origin) {
 		IWeighted<ItemStack> provider = Loot.getProvider(Loot.POTION, settings.getDifficulty(), editor);
-		BrewingStand.generate(editor, rand, origin, rand.nextBetween(1, 4), List.of(
+		BrewingStand.generate(editor, rand, origin, rand.nextIntBetweenInclusive(1, 4), List.of(
 				provider.get(rand), provider.get(rand), provider.get(rand)));
 	}
 	

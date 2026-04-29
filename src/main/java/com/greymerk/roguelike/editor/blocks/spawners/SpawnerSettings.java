@@ -2,13 +2,11 @@ package com.greymerk.roguelike.editor.blocks.spawners;
 
 import java.util.HashMap;
 import java.util.Map;
-
+import net.minecraft.util.RandomSource;
 import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.util.WeightedRandomizer;
-
-import net.minecraft.util.math.random.Random;
 
 public class SpawnerSettings {
 
@@ -48,7 +46,7 @@ public class SpawnerSettings {
 	
 
 
-	public void generate(IWorldEditor editor, Random rand, Coord cursor, Spawner type, Difficulty diff){
+	public void generate(IWorldEditor editor, RandomSource rand, Coord cursor, Spawner type, Difficulty diff){
 		Spawnable toSpawn = spawners.containsKey(type) ? spawners.get(type).get(rand) : new Spawnable(type);
 		toSpawn.generate(editor, rand, cursor, diff);
 	}

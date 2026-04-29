@@ -4,19 +4,18 @@ import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.treasure.loot.Enchant;
 import com.greymerk.roguelike.treasure.loot.Equipment;
 import com.greymerk.roguelike.treasure.loot.Quality;
-
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.registry.DynamicRegistryManager;
-import net.minecraft.resource.featuretoggle.FeatureSet;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.core.RegistryAccess;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.flag.FeatureFlagSet;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 
 public class ItemWeapon extends ItemBase{
 	
-	DynamicRegistryManager reg;
-	FeatureSet features;
+	RegistryAccess reg;
+	FeatureFlagSet features;
 	
-	public ItemWeapon(DynamicRegistryManager reg, FeatureSet features, int weight, Difficulty diff) {
+	public ItemWeapon(RegistryAccess reg, FeatureFlagSet features, int weight, Difficulty diff) {
 		super(weight, diff);
 		this.features = features;
 		this.reg = reg;
@@ -24,12 +23,12 @@ public class ItemWeapon extends ItemBase{
 
 	
 	@Override
-	public ItemStack getLootItem(Random rand, Difficulty diff) {
+	public ItemStack getLootItem(RandomSource rand, Difficulty diff) {
 		if(rand.nextInt(1000) == 0) return ItemNovelty.getItem(reg, ItemNovelty.GREYMERK);
 		return getRandom(this.reg, this.features, rand, diff, true);
 	}
 
-	public static ItemStack getRandom(DynamicRegistryManager reg, FeatureSet features, Random rand, Difficulty diff, boolean enchant){
+	public static ItemStack getRandom(RegistryAccess reg, FeatureFlagSet features, RandomSource rand, Difficulty diff, boolean enchant){
 		if(rand.nextInt(10) == 0){
 			return ItemWeapon.getBow(reg, features, rand, diff, enchant);
 		} else {
@@ -37,7 +36,7 @@ public class ItemWeapon extends ItemBase{
 		}
 	}
 	
-	public static ItemStack getBow(DynamicRegistryManager reg, FeatureSet features, Random rand, Difficulty diff, boolean enchant){
+	public static ItemStack getBow(RegistryAccess reg, FeatureFlagSet features, RandomSource rand, Difficulty diff, boolean enchant){
 		
 		if(enchant && rand.nextInt(1000) == 0) return ItemNovelty.getItem(reg, ItemNovelty.WINDFORCE);
 		
@@ -50,7 +49,7 @@ public class ItemWeapon extends ItemBase{
 		return bow;
 	}
 	
-	public static ItemStack getSword(DynamicRegistryManager reg, FeatureSet features, Random rand, Difficulty diff, boolean enchant){
+	public static ItemStack getSword(RegistryAccess reg, FeatureFlagSet features, RandomSource rand, Difficulty diff, boolean enchant){
 		
 		if(enchant && rand.nextInt(1000) == 0) return ItemNovelty.getItem(reg, ItemNovelty.NULL);
 		
@@ -64,12 +63,12 @@ public class ItemWeapon extends ItemBase{
 		return sword;		
 	}
 	
-	public static ItemStack getSword(DynamicRegistryManager reg, FeatureSet features, Random rand, Difficulty diff, boolean enchant, Quality quality){
+	public static ItemStack getSword(RegistryAccess reg, FeatureFlagSet features, RandomSource rand, Difficulty diff, boolean enchant, Quality quality){
 		ItemStack sword = quality != null ? getSwordByQuality(quality) : pickSword(rand, diff);
 		return enchant ? Enchant.enchantItem(reg, rand, sword, diff) : sword;
 	}
 	
-	private static ItemStack pickSword(Random rand, Difficulty diff){
+	private static ItemStack pickSword(RandomSource rand, Difficulty diff){
 		Quality quality = Quality.getWeaponQuality(rand, diff);
 		return getSwordByQuality(quality);
 	}

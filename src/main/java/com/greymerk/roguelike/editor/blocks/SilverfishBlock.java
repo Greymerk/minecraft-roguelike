@@ -1,13 +1,11 @@
 package com.greymerk.roguelike.editor.blocks;
 
 import java.util.List;
-
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.MetaBlock;
 import com.greymerk.roguelike.editor.factories.BlockJumble;
-
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
 
 public enum SilverfishBlock {
 

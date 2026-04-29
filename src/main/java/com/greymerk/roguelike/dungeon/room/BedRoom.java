@@ -2,7 +2,10 @@ package com.greymerk.roguelike.dungeon.room;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Blocks;
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellManager;
 import com.greymerk.roguelike.dungeon.cell.CellState;
@@ -26,17 +29,12 @@ import com.greymerk.roguelike.editor.shapes.RectSolid;
 import com.greymerk.roguelike.editor.shapes.Shape;
 import com.greymerk.roguelike.treasure.Treasure;
 
-import net.minecraft.block.Blocks;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.util.math.random.Random;
-
 public class BedRoom extends AbstractRoom implements IRoom {
 
 	@Override
 	public void generate(IWorldEditor editor) {
 		Coord origin = this.getWorldPos();
-		Random rand = editor.getRandom(origin);
+		RandomSource rand = editor.getRandom(origin);
 		
 		Corridor cor = new Corridor();
 		this.exits.forEach(e -> {
@@ -78,7 +76,7 @@ public class BedRoom extends AbstractRoom implements IRoom {
 		CellSupport.generate(editor, rand, theme, origin.copy().add(direction, 12));
 	}
 	
-	private void setPillars(IWorldEditor editor, Random rand, Coord origin) {
+	private void setPillars(IWorldEditor editor, RandomSource rand, Coord origin) {
 		List<Coord> stops = new ArrayList<Coord>();
 		Coord pos = origin.copy();
 		pos.add(this.direction, 5);
@@ -107,7 +105,7 @@ public class BedRoom extends AbstractRoom implements IRoom {
 		
 	}
 
-	private void pillar(IWorldEditor editor, Random rand, Coord origin) {
+	private void pillar(IWorldEditor editor, RandomSource rand, Coord origin) {
 		
 		IBlockFactory pillar = this.theme.getSecondary().getPillar();
 		IBlockFactory wall = this.theme.getSecondary().getWall();
@@ -127,7 +125,7 @@ public class BedRoom extends AbstractRoom implements IRoom {
 		}
 	}
 	
-	private void ceiling(IWorldEditor editor, Random rand, Coord origin) {
+	private void ceiling(IWorldEditor editor, RandomSource rand, Coord origin) {
 		BoundingBox bb = BoundingBox.of(origin);
 		bb.add(direction, 5).add(Cardinal.UP, 4);
 		bb.grow(Cardinal.orthogonal(direction), 2).grow(direction, 8);
@@ -189,7 +187,7 @@ public class BedRoom extends AbstractRoom implements IRoom {
 
 	}
 	
-	private void decorations(IWorldEditor editor, Random rand, Coord origin) {
+	private void decorations(IWorldEditor editor, RandomSource rand, Coord origin) {
 		for(Cardinal o : Cardinal.orthogonal(direction)) {
 			Coord pos = origin.copy();
 			pos.add(direction, 7);
@@ -217,7 +215,7 @@ public class BedRoom extends AbstractRoom implements IRoom {
 		pos.add(direction);
 		MetaBlock.of(Blocks.CRAFTING_TABLE).set(editor, pos);
 		pos.add(direction);
-		Furnace.generate(editor, Cardinal.left(direction), pos, false, new ItemStack(Items.COAL, rand.nextBetween(1, 4)));
+		Furnace.generate(editor, Cardinal.left(direction), pos, false, new ItemStack(Items.COAL, rand.nextIntBetweenInclusive(1, 4)));
 	}
 	
 	@Override

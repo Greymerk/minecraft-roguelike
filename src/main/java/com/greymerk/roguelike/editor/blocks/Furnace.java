@@ -4,11 +4,10 @@ import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.MetaBlock;
-
-import net.minecraft.block.Blocks;
-import net.minecraft.block.FurnaceBlock;
-import net.minecraft.block.entity.FurnaceBlockEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.FurnaceBlock;
+import net.minecraft.world.level.block.entity.FurnaceBlockEntity;
 
 public class Furnace {
 
@@ -30,7 +29,7 @@ public class Furnace {
 				.with(FurnaceBlock.FACING, Cardinal.facing(Cardinal.reverse(dir))), 
 			FurnaceBlockEntity.class).ifPresent(furnace -> {
 				if(fuel.equals(ItemStack.EMPTY)) return;
-				furnace.setStack(FUEL_SLOT, fuel);	
+				furnace.setItem(FUEL_SLOT, fuel);	
 		});
 	}
 }

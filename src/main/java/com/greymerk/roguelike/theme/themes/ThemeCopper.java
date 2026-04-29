@@ -1,7 +1,7 @@
 package com.greymerk.roguelike.theme.themes;
 
 import java.util.List;
-
+import net.minecraft.world.level.block.Blocks;
 import com.greymerk.roguelike.editor.MetaBlock;
 import com.greymerk.roguelike.editor.blocks.door.Door;
 import com.greymerk.roguelike.editor.blocks.door.DoorType;
@@ -15,8 +15,6 @@ import com.greymerk.roguelike.theme.BlockSet;
 import com.greymerk.roguelike.theme.ITheme;
 import com.greymerk.roguelike.theme.Theme;
 import com.greymerk.roguelike.theme.ThemeBase;
-
-import net.minecraft.block.Blocks;
 
 public class ThemeCopper extends ThemeBase implements ITheme {
 

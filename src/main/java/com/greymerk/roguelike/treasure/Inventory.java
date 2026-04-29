@@ -2,18 +2,16 @@ package com.greymerk.roguelike.treasure;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import com.greymerk.roguelike.util.math.RandHelper;
 
-import net.minecraft.block.entity.LootableContainerBlockEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.random.Random;
-
 public class Inventory {
-	private LootableContainerBlockEntity chest;
+	private RandomizableContainerBlockEntity chest;
 	List<Integer> shuffledSlots;
 	
-	public Inventory(Random rand, LootableContainerBlockEntity chest){
+	public Inventory(RandomSource rand, RandomizableContainerBlockEntity chest){
 		this.chest = chest;
 		this.shuffledSlots = new ArrayList<Integer>();
 		for(int i = 0; i < this.getInventorySize(); ++i){
@@ -38,7 +36,7 @@ public class Inventory {
 	
 	public boolean isEmptySlot(int slot){		
 		try{
-			ItemStack item = chest.getStack(slot);
+			ItemStack item = chest.getItem(slot);
 			return item.isEmpty();
 		} catch(NullPointerException e){
 			return false;
@@ -47,7 +45,7 @@ public class Inventory {
 	
 	public boolean setInventorySlot(int slot, ItemStack item){
 		try{
-			chest.setStack(slot, item);
+			chest.setItem(slot, item);
 			return true;
 		} catch(NullPointerException e){
 			return false;
@@ -61,7 +59,7 @@ public class Inventory {
 		}
 		
 		try{
-			return chest.size();
+			return chest.getContainerSize();
 		} catch(NullPointerException e){
 			return 0;
 		}

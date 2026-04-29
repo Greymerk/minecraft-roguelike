@@ -2,7 +2,7 @@ package com.greymerk.roguelike.dungeon.fragment.parts;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import net.minecraft.util.RandomSource;
 import com.greymerk.roguelike.dungeon.fragment.IFragment;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
@@ -16,12 +16,10 @@ import com.greymerk.roguelike.theme.ITheme;
 import com.greymerk.roguelike.treasure.Treasure;
 import com.greymerk.roguelike.util.math.RandHelper;
 
-import net.minecraft.util.math.random.Random;
-
 public class Sarcophagus implements IFragment {
 
 	@Override
-	public void generate(IWorldEditor editor, Random rand, ILevelSettings settings, Coord origin, Cardinal dir) {
+	public void generate(IWorldEditor editor, RandomSource rand, ILevelSettings settings, Coord origin, Cardinal dir) {
 		ITheme theme = settings.getTheme();
 		
 		

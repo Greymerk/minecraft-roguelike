@@ -5,26 +5,25 @@ import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.Fill;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.MetaBlock;
-
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.SkullBlock;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SkullBlock;
 
 public enum Skull {
 
 	SKELETON, WITHER, ZOMBIE, STEVE, CREEPER;
 	
-	public static void set(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
+	public static void set(IWorldEditor editor, RandomSource rand, Coord origin, Cardinal dir) {
 		Skull type = rand.nextInt(10) == 0 ? Skull.WITHER : Skull.SKELETON;
 		Skull.set(editor, rand, origin, dir, type);
 	}
 	
-	public static void set(IWorldEditor editor, Random rand, Coord origin, Cardinal dir, Skull type){
+	public static void set(IWorldEditor editor, RandomSource rand, Coord origin, Cardinal dir, Skull type){
 		setRotation(rand, MetaBlock.of(Skull.fromType(type)), dir).set(editor, origin, Fill.SUPPORTED);
 	}
 	
-	public static MetaBlock setRotation(Random rand, MetaBlock skull, Cardinal dir){
+	public static MetaBlock setRotation(RandomSource rand, MetaBlock skull, Cardinal dir){
 		int directionValue = getDirectionValue(dir);
 		
 		// nudge the skull so that it isn't perfectly aligned.

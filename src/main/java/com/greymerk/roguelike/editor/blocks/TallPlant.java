@@ -4,25 +4,24 @@ import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.MetaBlock;
-
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.TallPlantBlock;
-import net.minecraft.block.enums.DoubleBlockHalf;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.DoublePlantBlock;
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 
 public enum TallPlant {
 
 	SUNFLOWER, LILAC, TALLGRASS, FERN, ROSE, PEONY;
 	
-	public static void generate(IWorldEditor editor, Random rand, Coord origin) {
+	public static void generate(IWorldEditor editor, RandomSource rand, Coord origin) {
 		TallPlant type = TallPlant.values()[rand.nextInt(TallPlant.values().length)];
 		generate(editor, type, origin);
 	}
 	
 	public static void generate(IWorldEditor editor, TallPlant type, Coord origin){
-		MetaBlock.of(TallPlant.fromType(type)).with(TallPlantBlock.HALF, DoubleBlockHalf.LOWER).set(editor, origin.copy());
-		MetaBlock.of(TallPlant.fromType(type)).with(TallPlantBlock.HALF, DoubleBlockHalf.UPPER).set(editor, origin.copy().add(Cardinal.UP));
+		MetaBlock.of(TallPlant.fromType(type)).with(DoublePlantBlock.HALF, DoubleBlockHalf.LOWER).set(editor, origin.copy());
+		MetaBlock.of(TallPlant.fromType(type)).with(DoublePlantBlock.HALF, DoubleBlockHalf.UPPER).set(editor, origin.copy().add(Cardinal.UP));
 	}
 	
 	public static Block fromType(TallPlant type){

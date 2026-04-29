@@ -7,19 +7,18 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 import java.util.RandomAccess;
-
-import net.minecraft.util.math.random.Random;
+import net.minecraft.util.RandomSource;
 
 public class RandHelper {
 
 	private static final int SHUFFLE_THRESHOLD = 5;
 	
-	public static <T> T pickFrom(List<T> list, Random rand) {
+	public static <T> T pickFrom(List<T> list, RandomSource rand) {
 		if(list.size() == 0) return null;
 		return list.get(rand.nextInt(list.size()));
 	}
 	
-	public static <T> List<T> pickCountFrom(List<T> list, Random rand, int count){
+	public static <T> List<T> pickCountFrom(List<T> list, RandomSource rand, int count){
 		List<T> copy = new ArrayList<T>(list);
 		shuffle(copy, rand);
 		if(copy.size() < count) return copy;
@@ -27,7 +26,7 @@ public class RandHelper {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public static void shuffle(List<?> list, Random rnd) {
+	public static void shuffle(List<?> list, RandomSource rnd) {
         int size = list.size();
         if (size < SHUFFLE_THRESHOLD || list instanceof RandomAccess) {
             for (int i=size; i>1; i--)
@@ -62,16 +61,16 @@ public class RandHelper {
 	    x[b] = t;
 	}
 	
-	public static <T> Comparator<T> randomizer(Random rand){
+	public static <T> Comparator<T> randomizer(RandomSource rand){
 		return new RandomComparator<>(rand);
 	}
 	
 	private static final class RandomComparator<T> implements Comparator<T> {
 
 	    private final Map<T, Integer> map = new IdentityHashMap<>();
-	    private final Random random;
+	    private final RandomSource random;
 
-	    public RandomComparator(Random rand) {
+	    public RandomComparator(RandomSource rand) {
 	        this.random = rand;
 	    }
 

@@ -16,8 +16,7 @@ import com.greymerk.roguelike.theme.themes.ThemeStone;
 import com.greymerk.roguelike.theme.themes.ThemeTiledSlate;
 import com.greymerk.roguelike.theme.themes.ThemeTower;
 import com.greymerk.roguelike.theme.themes.ThemeWarped;
-
-import net.minecraft.util.math.random.Random;
+import net.minecraft.util.RandomSource;
 
 public enum Theme {
 
@@ -60,7 +59,7 @@ public enum Theme {
 		return false;
 	}
 	
-	public static ITheme getRandom(Random rand) {
+	public static ITheme getRandom(RandomSource rand) {
 		return Theme.getTheme(Theme.values()[rand.nextInt(Theme.values().length)]);
 	}
 	

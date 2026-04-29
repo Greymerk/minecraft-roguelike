@@ -1,6 +1,6 @@
 package com.greymerk.roguelike.treasure.loot.books;
 
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 
 public enum Book {
 

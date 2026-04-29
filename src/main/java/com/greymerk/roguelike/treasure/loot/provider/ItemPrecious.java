@@ -3,15 +3,13 @@ package com.greymerk.roguelike.treasure.loot.provider;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.treasure.loot.WeightedRandomLoot;
 import com.greymerk.roguelike.treasure.loot.items.OminousBottle;
 import com.greymerk.roguelike.util.WeightedRandomizer;
-
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.util.math.random.Random;
 
 public class ItemPrecious extends ItemBase{
 	
@@ -42,7 +40,7 @@ public class ItemPrecious extends ItemBase{
 	}
 
 	@Override
-	public ItemStack getLootItem(Random rand, Difficulty diff){
+	public ItemStack getLootItem(RandomSource rand, Difficulty diff){
 		if(diff.gt(Difficulty.EASY) && rand.nextInt(30) == 0) {
 			return OminousBottle.get(rand.nextInt(1 + diff.value));
 		}

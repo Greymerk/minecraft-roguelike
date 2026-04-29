@@ -4,39 +4,38 @@ import java.nio.file.Path;
 import java.util.Optional;
 
 import com.greymerk.roguelike.state.RoguelikeState;
-
-import net.minecraft.registry.DynamicRegistryManager;
-import net.minecraft.registry.Registry;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.resource.featuretoggle.FeatureSet;
+import net.minecraft.core.Registry;
+import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.structure.StructureSet;
-import net.minecraft.util.WorldSavePath;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.world.World;
-import net.minecraft.world.dimension.DimensionTypes;
-import net.minecraft.world.gen.chunk.placement.StructurePlacement;
-import net.minecraft.world.gen.chunk.placement.StructurePlacementCalculator;
-import net.minecraft.world.rule.GameRules;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.flag.FeatureFlagSet;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.chunk.ChunkGeneratorStructureState;
+import net.minecraft.world.level.dimension.BuiltinDimensionTypes;
+import net.minecraft.world.level.gamerules.GameRules;
+import net.minecraft.world.level.levelgen.structure.StructureSet;
+import net.minecraft.world.level.levelgen.structure.placement.StructurePlacement;
+import net.minecraft.world.level.storage.LevelResource;
 
 public class WorldInfo implements IWorldInfo {
 
-	private World world;
-	RegistryKey<World> worldKey;
+	private Level world;
+	ResourceKey<Level> worldKey;
 	
-	public static WorldInfo of(World world, RegistryKey<World> worldKey) {
+	public static WorldInfo of(Level world, ResourceKey<Level> worldKey) {
 		return new WorldInfo(world, worldKey);
 	}
 	
-	private WorldInfo(World world, RegistryKey<World> worldKey) {
+	private WorldInfo(Level world, ResourceKey<Level> worldKey) {
 		this.world = world;
 		this.worldKey = worldKey;
 	}
 	
-	private ServerWorld getServerWorld() {
-		return this.world.getServer().getWorld(this.worldKey);
+	private ServerLevel getServerWorld() {
+		return this.world.getServer().getLevel(this.worldKey);
 	}
 	
 	@Override
@@ -48,34 +47,34 @@ public class WorldInfo implements IWorldInfo {
 
 	@Override
 	public int getTopYInclusive() {
-		return world.getTopYInclusive();
+		return world.getMaxY();
 	}
 	
 	@Override
 	public int getBottomY() {
-		return world.getBottomY();
+		return world.getMinY();
 	}
 	
 	@Override
 	public boolean isOverworld() {
 		MinecraftServer mcServer = world.getServer();
-		ServerWorld sw = mcServer.getWorld(worldKey);
-		return sw.getDimensionEntry().matchesKey(DimensionTypes.OVERWORLD);
+		ServerLevel sw = mcServer.getLevel(worldKey);
+		return sw.dimensionTypeRegistration().is(BuiltinDimensionTypes.OVERWORLD);
 	}
 	
 	@Override
-	public DynamicRegistryManager getRegistryManager() {
-		return this.world.getRegistryManager();
+	public RegistryAccess getRegistryManager() {
+		return this.world.registryAccess();
 	}
 	
 	@Override
-	public FeatureSet getFeatureSet() {
-		return this.world.getEnabledFeatures();
+	public FeatureFlagSet getFeatureSet() {
+		return this.world.enabledFeatures();
 	}
 	
 	@Override
 	public Path getWorldDirectory() {
-		return this.world.getServer().getSavePath(WorldSavePath.ROOT);
+		return this.world.getServer().getWorldPath(LevelResource.ROOT);
 	}
 	
 	@Override
@@ -84,7 +83,7 @@ public class WorldInfo implements IWorldInfo {
 	}
 	
 	@Override
-	public RegistryKey<World> getRegistryKey(){
+	public ResourceKey<Level> getRegistryKey(){
 		return this.worldKey;
 	}
 	
@@ -96,21 +95,21 @@ public class WorldInfo implements IWorldInfo {
 	@Override
 	public long getSeed() {
 		MinecraftServer server = this.world.getServer();
-		ServerWorld sw = server.getOverworld();
+		ServerLevel sw = server.overworld();
 		return sw.getSeed();
 	}
 	
 	@Override
-	public Optional<Coord> getStructureLocation(RegistryKey<StructureSet> key, ChunkPos cpos){
+	public Optional<Coord> getStructureLocation(ResourceKey<StructureSet> key, ChunkPos cpos){
 		MinecraftServer mcServer = world.getServer();
-		ServerWorld sw = mcServer.getWorld(worldKey);
-		StructurePlacementCalculator calculator = sw.getChunkManager().getStructurePlacementCalculator();
-		DynamicRegistryManager reg = world.getRegistryManager();
-		Registry<StructureSet> structures = reg.getOrThrow(RegistryKeys.STRUCTURE_SET);
-		StructureSet structure = structures.get(key);
+		ServerLevel sw = mcServer.getLevel(worldKey);
+		ChunkGeneratorStructureState calculator = sw.getChunkSource().getGeneratorState();
+		RegistryAccess reg = world.registryAccess();
+		Registry<StructureSet> structures = reg.lookupOrThrow(Registries.STRUCTURE_SET);
+		StructureSet structure = structures.getValue(key);
 		StructurePlacement placement = structure.placement(); 
 		
-		if(!placement.shouldGenerate(calculator, cpos.x, cpos.z)) return Optional.empty();
+		if(!placement.isStructureChunk(calculator, cpos.x(), cpos.z())) return Optional.empty();
 		return Optional.of(Coord.of(placement.getLocatePos(cpos)));
 	}
 
@@ -130,7 +129,7 @@ public class WorldInfo implements IWorldInfo {
 	}
 	
 	public boolean isFlat() {
-		return this.world.getServer().getOverworld().isFlat();
+		return this.world.getServer().overworld().isFlat();
 	}
 	
 }

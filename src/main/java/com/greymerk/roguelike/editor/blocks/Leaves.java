@@ -1,8 +1,7 @@
 package com.greymerk.roguelike.editor.blocks;
 
 import com.greymerk.roguelike.editor.MetaBlock;
-
-import net.minecraft.block.LeavesBlock;
+import net.minecraft.world.level.block.LeavesBlock;
 
 public class Leaves {
 	

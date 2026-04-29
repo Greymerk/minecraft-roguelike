@@ -1,7 +1,8 @@
 package com.greymerk.roguelike.dungeon.room;
 
 import java.util.List;
-
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.block.Blocks;
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellManager;
 import com.greymerk.roguelike.dungeon.cell.CellState;
@@ -26,15 +27,12 @@ import com.greymerk.roguelike.editor.factories.BlockFloor;
 import com.greymerk.roguelike.util.Color;
 import com.greymerk.roguelike.util.math.RandHelper;
 
-import net.minecraft.block.Blocks;
-import net.minecraft.util.math.random.Random;
-
 public class LibraryRoom extends AbstractLargeRoom implements IRoom {
 
 	@Override
 	public void generate(IWorldEditor editor) {
 		Coord origin = this.getWorldPos().add(this.direction, Cell.SIZE * 2).freeze();
-		Random rand = editor.getRandom(origin);
+		RandomSource rand = editor.getRandom(origin);
 		this.clear(editor, rand, origin);
 		this.floor(editor, rand, origin);
 		this.ceiling(editor, rand, origin);
@@ -58,7 +56,7 @@ public class LibraryRoom extends AbstractLargeRoom implements IRoom {
 	}
 	*/
 
-	private void shelves(IWorldEditor editor, Random rand, Coord origin) {
+	private void shelves(IWorldEditor editor, RandomSource rand, Coord origin) {
 		Cardinal.directions.forEach(dir -> {
 			Cardinal.orthogonal(dir).forEach(o -> {
 				this.shelf(editor, rand, origin.copy().add(dir, 8).add(o, 5).freeze(), dir);
@@ -66,7 +64,7 @@ public class LibraryRoom extends AbstractLargeRoom implements IRoom {
 		});
 	}
 
-	private void shelf(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
+	private void shelf(IWorldEditor editor, RandomSource rand, Coord origin, Cardinal dir) {
 		BoundingBox.of(origin).add(Cardinal.UP)
 			.grow(Cardinal.orthogonal(dir)).grow(Cardinal.UP, 2)
 			.forEach(pos -> {
@@ -86,7 +84,7 @@ public class LibraryRoom extends AbstractLargeRoom implements IRoom {
 			});
 	}
 
-	private void walls(IWorldEditor editor, Random rand, Coord origin) {
+	private void walls(IWorldEditor editor, RandomSource rand, Coord origin) {
 		IBlockFactory wall = theme.getPrimary().getWall();
 		IStair stair = theme.getPrimary().getStair();
 		
@@ -136,7 +134,7 @@ public class LibraryRoom extends AbstractLargeRoom implements IRoom {
 		});
 	}
 
-	private void supports(IWorldEditor editor, Random rand, Coord origin) {
+	private void supports(IWorldEditor editor, RandomSource rand, Coord origin) {
 		CellSupport.generate(editor, rand, theme, origin);
 		Cardinal.directions.forEach(dir -> {
 			List.of(6, 12).forEach(i -> {
@@ -148,7 +146,7 @@ public class LibraryRoom extends AbstractLargeRoom implements IRoom {
 		});
 	}
 	
-	private void ceiling(IWorldEditor editor, Random rand, Coord origin) {
+	private void ceiling(IWorldEditor editor, RandomSource rand, Coord origin) {
 		Cardinal.directions.forEach(dir -> {
 			List.of(2, 4, 8, 10, 14).forEach(step -> {
 				BoundingBox.of(origin).add(Cardinal.UP, 6).add(dir, step).grow(Cardinal.orthogonal(dir), 14).fill(editor, rand, theme.getPrimary().getWall());	
@@ -158,7 +156,7 @@ public class LibraryRoom extends AbstractLargeRoom implements IRoom {
 		BoundingBox.of(origin).add(Cardinal.UP, 7).grow(Cardinal.directions, 14).fill(editor, rand, theme.getPrimary().getWall(), Fill.SOLID);
 	}
 
-	private void floor(IWorldEditor editor, Random rand, Coord origin) {
+	private void floor(IWorldEditor editor, RandomSource rand, Coord origin) {
 		List<Color> colors = RandHelper.pickCountFrom(List.of(Color.values()), rand, 4);
 		BlockCheckers tiles = new BlockCheckers(
 				ColorBlock.get(ColorBlock.CLAY, colors.get(0)),
@@ -185,7 +183,7 @@ public class LibraryRoom extends AbstractLargeRoom implements IRoom {
 		});
 	}
 
-	private void clear(IWorldEditor editor, Random rand, Coord origin) {
+	private void clear(IWorldEditor editor, RandomSource rand, Coord origin) {
 		BoundingBox.of(origin).grow(Cardinal.directions, 14).grow(Cardinal.UP, 6).fill(editor, rand, Air.get());;
 		Cardinal.directions.forEach(dir -> {
 			BoundingBox.of(origin).add(dir, 15).grow(Cardinal.orthogonal(dir), 15).grow(Cardinal.UP, 5).fill(editor, rand, theme.getPrimary().getWall(), Fill.SOLID);

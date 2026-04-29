@@ -1,15 +1,13 @@
 package com.greymerk.roguelike.editor.blocks.slab;
 
 import java.util.function.Predicate;
-
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SlabBlock;
+import net.minecraft.world.level.block.state.properties.SlabType;
 import com.greymerk.roguelike.editor.BlockContext;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.MetaBlock;
-
-import net.minecraft.block.Block;
-import net.minecraft.block.SlabBlock;
-import net.minecraft.block.enums.SlabType;
 
 public class MetaSlab implements ISlab {
 

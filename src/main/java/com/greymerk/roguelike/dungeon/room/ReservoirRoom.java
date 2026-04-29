@@ -14,15 +14,14 @@ import com.greymerk.roguelike.editor.blocks.Lantern;
 import com.greymerk.roguelike.editor.blocks.stair.IStair;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.editor.shapes.RectSolid;
-
-import net.minecraft.util.math.random.Random;
+import net.minecraft.util.RandomSource;
 
 public class ReservoirRoom extends AbstractLargeRoom implements IRoom {
 
 	@Override
 	public void generate(IWorldEditor editor) {
 		Coord origin = worldPos.copy().add(direction, Cell.SIZE * 2);
-		Random rand = editor.getRandom(origin);
+		RandomSource rand = editor.getRandom(origin);
 		this.clearUpper(editor, rand, origin);
 		this.buildCells(editor, rand, origin);
 		this.clearBasin(editor, rand, origin);
@@ -34,7 +33,7 @@ public class ReservoirRoom extends AbstractLargeRoom implements IRoom {
 	}
 	
 
-	private void clearBasin(IWorldEditor editor, Random rand, Coord origin) {
+	private void clearBasin(IWorldEditor editor, RandomSource rand, Coord origin) {
 		BoundingBox bb = BoundingBox.of(origin.copy());
 		bb.add(Cardinal.DOWN, 2);
 		bb.grow(Cardinal.directions, 10);
@@ -42,7 +41,7 @@ public class ReservoirRoom extends AbstractLargeRoom implements IRoom {
 		RectSolid.fill(editor, rand, bb, Air.get());
 	}
 
-	private void clearUpper(IWorldEditor editor, Random rand, Coord origin) {
+	private void clearUpper(IWorldEditor editor, RandomSource rand, Coord origin) {
 		for(Cardinal dir : Cardinal.directions) {
 			BoundingBox bb = BoundingBox.of(origin.copy());
 			bb.add(dir, 10).grow(dir, 4);
@@ -59,7 +58,7 @@ public class ReservoirRoom extends AbstractLargeRoom implements IRoom {
 		RectSolid.fill(editor, rand, bb, Air.get());
 	}
 
-	private void addLiquid(IWorldEditor editor, Random rand, Coord origin) {
+	private void addLiquid(IWorldEditor editor, RandomSource rand, Coord origin) {
 		IBlockFactory liquid = theme.getPrimary().getLiquid();
 		
 		BoundingBox bb = BoundingBox.of(origin);
@@ -67,7 +66,7 @@ public class ReservoirRoom extends AbstractLargeRoom implements IRoom {
 		RectSolid.fill(editor, rand, bb, liquid, Fill.AIR);
 	}
 
-	private void ceiling(IWorldEditor editor, Random rand, Coord origin) {
+	private void ceiling(IWorldEditor editor, RandomSource rand, Coord origin) {
 		IBlockFactory wall = theme.getPrimary().getWall();
 		IStair stair = theme.getPrimary().getStair();
 		
@@ -106,7 +105,7 @@ public class ReservoirRoom extends AbstractLargeRoom implements IRoom {
 		}
 	}
 
-	private void buildCells(IWorldEditor editor, Random rand, Coord origin) {
+	private void buildCells(IWorldEditor editor, RandomSource rand, Coord origin) {
 		IBlockFactory wall = theme.getPrimary().getWall();
 		
 		for(Cardinal dir : Cardinal.directions) {
@@ -147,7 +146,7 @@ public class ReservoirRoom extends AbstractLargeRoom implements IRoom {
 		}
 	}
 	
-	private void cell(IWorldEditor editor, Random rand, Coord origin) {
+	private void cell(IWorldEditor editor, RandomSource rand, Coord origin) {
 		IBlockFactory wall = theme.getPrimary().getWall();
 		IBlockFactory pillar = theme.getPrimary().getPillar();
 		IStair stair = theme.getPrimary().getStair();
@@ -175,7 +174,7 @@ public class ReservoirRoom extends AbstractLargeRoom implements IRoom {
 		CellSupport.generate(editor, rand, theme, origin.copy());
 	}
 
-	private void basin(IWorldEditor editor, Random rand, Coord origin) {
+	private void basin(IWorldEditor editor, RandomSource rand, Coord origin) {
 		IBlockFactory wall = theme.getPrimary().getWall();
 		
 		for(Cardinal dir : Cardinal.directions) {
@@ -203,7 +202,7 @@ public class ReservoirRoom extends AbstractLargeRoom implements IRoom {
 		}
 	}
 
-	private void addArches(IWorldEditor editor, Random rand, Coord origin) {
+	private void addArches(IWorldEditor editor, RandomSource rand, Coord origin) {
 		for(Cardinal dir : Cardinal.directions) {
 			Coord pos = origin.copy();
 			pos.add(Cardinal.DOWN, 6);
@@ -217,7 +216,7 @@ public class ReservoirRoom extends AbstractLargeRoom implements IRoom {
 		}
 	}
 	
-	private void largeArch(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
+	private void largeArch(IWorldEditor editor, RandomSource rand, Coord origin, Cardinal dir) {
 		IBlockFactory wall = theme.getPrimary().getWall();
 		IBlockFactory pillar = theme.getPrimary().getPillar();
 		IStair stair = theme.getPrimary().getStair();

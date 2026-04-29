@@ -2,7 +2,8 @@ package com.greymerk.roguelike.dungeon.fragment.parts;
 
 import java.util.List;
 import java.util.Optional;
-
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.block.Blocks;
 import com.greymerk.roguelike.dungeon.fragment.IFragment;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
@@ -15,17 +16,14 @@ import com.greymerk.roguelike.editor.shapes.Line;
 import com.greymerk.roguelike.settings.ILevelSettings;
 import com.greymerk.roguelike.util.math.RandHelper;
 
-import net.minecraft.block.Blocks;
-import net.minecraft.util.math.random.Random;
-
 public class SpiderNest implements IFragment {
 
-	public static void generate(IWorldEditor editor, Random rand, ILevelSettings settings, Coord origin) {
+	public static void generate(IWorldEditor editor, RandomSource rand, ILevelSettings settings, Coord origin) {
 		new SpiderNest().generate(editor, rand, settings, origin, Cardinal.NORTH);
 	}
 	
 	@Override
-	public void generate(IWorldEditor editor, Random rand, ILevelSettings settings, Coord origin, Cardinal dir) {
+	public void generate(IWorldEditor editor, RandomSource rand, ILevelSettings settings, Coord origin, Cardinal dir) {
 		if(!this.validLocation(editor, origin)) return;
 		
 		Spawner.generate(editor, rand, settings.getDifficulty(), origin, Spawner.CAVESPIDER);

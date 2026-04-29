@@ -1,10 +1,9 @@
 package com.greymerk.roguelike.treasure.loot.items;
 
-import net.minecraft.util.math.random.Random;
-
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 
 public enum MusicDisk{
 
@@ -15,7 +14,7 @@ public enum MusicDisk{
 		return new ItemStack(getId(type));
 	}
 	
-	public static ItemStack getRandomRecord(Random rand){
+	public static ItemStack getRandomRecord(RandomSource rand){
 		return getRecord(MusicDisk.values()[rand.nextInt(MusicDisk.values().length)]);
 	}
 	

@@ -1,7 +1,7 @@
 package com.greymerk.roguelike.dungeon.room;
 
 import java.util.List;
-
+import net.minecraft.util.RandomSource;
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellManager;
 import com.greymerk.roguelike.dungeon.cell.CellState;
@@ -15,15 +15,13 @@ import com.greymerk.roguelike.editor.blocks.Air;
 import com.greymerk.roguelike.editor.blocks.IronBar;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 
-import net.minecraft.util.math.random.Random;
-
 public class BalconyRoom  extends AbstractRoom implements IRoom {
 
 	@Override
 	public void generate(IWorldEditor editor) {
 
 		Coord origin = this.getWorldPos().add(this.direction, Cell.SIZE).freeze();
-		Random rand = editor.getRandom(origin);
+		RandomSource rand = editor.getRandom(origin);
 		
 		this.clear(editor, rand, origin);
 		this.mainWalls(editor, rand, origin);
@@ -34,7 +32,7 @@ public class BalconyRoom  extends AbstractRoom implements IRoom {
 		this.generateExits(editor, rand);
 	}
 
-	private void supports(IWorldEditor editor, Random rand, Coord origin) {
+	private void supports(IWorldEditor editor, RandomSource rand, Coord origin) {
 		CellSupport.generate(editor, rand, theme, origin);
 		Cardinal.directions.forEach(dir -> {
 			CellSupport.generate(editor, rand, theme, origin.add(dir, Cell.SIZE));
@@ -42,7 +40,7 @@ public class BalconyRoom  extends AbstractRoom implements IRoom {
 		});
 	}
 
-	private void lowerRoom(IWorldEditor editor, Random rand, Coord origin) {
+	private void lowerRoom(IWorldEditor editor, RandomSource rand, Coord origin) {
 		Cardinal.directions.forEach(dir -> {
 			
 			BoundingBox.of(origin).add(dir, 8).add(Cardinal.UP, 3)
@@ -77,7 +75,7 @@ public class BalconyRoom  extends AbstractRoom implements IRoom {
 		});
 	}
 
-	private void upperRoom(IWorldEditor editor, Random rand, Coord origin) {
+	private void upperRoom(IWorldEditor editor, RandomSource rand, Coord origin) {
 		Cardinal.directions.forEach(dir -> {
 			BoundingBox.of(origin).add(Cardinal.UP, 3).add(dir, 8)
 				.grow(Cardinal.orthogonal(dir), 8)
@@ -107,7 +105,7 @@ public class BalconyRoom  extends AbstractRoom implements IRoom {
 		
 	}
 
-	private void ceiling(IWorldEditor editor, Random rand, Coord origin) {
+	private void ceiling(IWorldEditor editor, RandomSource rand, Coord origin) {
 		Cardinal.directions.forEach(dir -> {
 			List.of(2, 4, 8).forEach(i -> {
 				BoundingBox.of(origin).add(Cardinal.UP, 4).add(dir, i)
@@ -124,7 +122,7 @@ public class BalconyRoom  extends AbstractRoom implements IRoom {
 		});
 	}
 
-	private void mainWalls(IWorldEditor editor, Random rand, Coord origin) {
+	private void mainWalls(IWorldEditor editor, RandomSource rand, Coord origin) {
 		BoundingBox.of(origin).add(Cardinal.DOWN, 11).grow(Cardinal.directions, 8)
 			.fill(editor, rand, this.settings.getTheme().getPrimary().getFloor());
 		
@@ -143,7 +141,7 @@ public class BalconyRoom  extends AbstractRoom implements IRoom {
 		});
 	}
 
-	private void clear(IWorldEditor editor, Random rand, Coord origin) {
+	private void clear(IWorldEditor editor, RandomSource rand, Coord origin) {
 		BoundingBox.of(origin).grow(Cardinal.directions, 8)
 			.grow(Cardinal.UP, 4)
 			.grow(Cardinal.DOWN, 10)

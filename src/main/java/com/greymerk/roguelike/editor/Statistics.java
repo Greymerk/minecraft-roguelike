@@ -2,20 +2,18 @@ package com.greymerk.roguelike.editor;
 
 import java.util.HashMap;
 import java.util.Map;
-
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.util.ExtraCodecs;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.util.dynamic.Codecs;
-
 public class Statistics {
 
-	private static final Codec<Map<RegistryEntry<Item>, Integer>> ENTRY_MAP_CODEC = Codec.unboundedMap(Item.ENTRY_CODEC, Codecs.POSITIVE_INT);
+	private static final Codec<Map<Holder<Item>, Integer>> ENTRY_MAP_CODEC = Codec.unboundedMap(Item.CODEC, ExtraCodecs.POSITIVE_INT);
 	
 	public static final Codec<Statistics> CODEC = RecordCodecBuilder.create(
 			instance -> instance.group(
@@ -24,21 +22,21 @@ public class Statistics {
 		);
 
 	
-	Map<RegistryEntry<Item>, Integer> items;
+	Map<Holder<Item>, Integer> items;
 	
-	private static Statistics of(Map<RegistryEntry<Item>, Integer> itemMap) {
+	private static Statistics of(Map<Holder<Item>, Integer> itemMap) {
 		Statistics stats = new Statistics();
 		stats.items = itemMap;
 		return stats;
 	}
 	
 	public Statistics() {
-		this.items = new HashMap<RegistryEntry<Item>, Integer>();
+		this.items = new HashMap<Holder<Item>, Integer>();
 	}
 	
 	public void add(ItemStack toAdd) {
 		if(toAdd.getItem().equals(Items.AIR)) return;
-		items.merge(Registries.ITEM.getEntry(toAdd.getItem()), toAdd.getCount(), Integer::sum);
+		items.merge(BuiltInRegistries.ITEM.wrapAsHolder(toAdd.getItem()), toAdd.getCount(), Integer::sum);
 	}
 	
 	public void merge(Statistics other) {

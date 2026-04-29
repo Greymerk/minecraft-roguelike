@@ -4,11 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-
+import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
 import com.greymerk.roguelike.util.math.RandHelper;
-
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.random.Random;
 
 public enum Cardinal {
 	NORTH, EAST, WEST, SOUTH, UP, DOWN;
@@ -130,7 +128,7 @@ public enum Cardinal {
 		}
 	}
 	
-	public static List<Cardinal> randDirs(Random rand){
+	public static List<Cardinal> randDirs(RandomSource rand){
 		List<Cardinal> dirs = new ArrayList<Cardinal>(directions);
 		RandHelper.shuffle(dirs, rand);
 		return dirs;

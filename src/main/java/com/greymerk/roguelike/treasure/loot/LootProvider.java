@@ -2,11 +2,9 @@ package com.greymerk.roguelike.treasure.loot;
 
 import java.util.HashMap;
 import java.util.Map;
-
+import net.minecraft.world.item.ItemStack;
 import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.util.IWeighted;
-
-import net.minecraft.item.ItemStack;
 
 public class LootProvider implements ILoot {
 

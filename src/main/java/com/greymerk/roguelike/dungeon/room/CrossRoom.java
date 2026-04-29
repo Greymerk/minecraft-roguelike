@@ -1,7 +1,7 @@
 package com.greymerk.roguelike.dungeon.room;
 
 import java.util.List;
-
+import net.minecraft.util.RandomSource;
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.fragment.parts.CellSupport;
 import com.greymerk.roguelike.dungeon.fragment.parts.Pillar;
@@ -15,14 +15,12 @@ import com.greymerk.roguelike.editor.blocks.stair.IStair;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.filter.Filter;
 
-import net.minecraft.util.math.random.Random;
-
 public class CrossRoom extends AbstractMediumRoom implements IRoom {
 
 	@Override
 	public void generate(IWorldEditor editor) {
 		Coord origin = this.getWorldPos().copy().add(direction, Cell.SIZE).freeze();
-		Random rand = editor.getRandom(origin);
+		RandomSource rand = editor.getRandom(origin);
 		
 		clear(editor, rand, origin);
 		corners(editor, rand, origin);
@@ -34,11 +32,11 @@ public class CrossRoom extends AbstractMediumRoom implements IRoom {
 
 	}
 	
-	private void pots(IWorldEditor editor, Random rand, Coord origin) {
+	private void pots(IWorldEditor editor, RandomSource rand, Coord origin) {
 		Filter.get(Filter.POTS).apply(editor, rand, settings, BoundingBox.of(origin).grow(Cardinal.directions, 8));
 	}
 
-	private void supports(IWorldEditor editor, Random rand, Coord origin) {
+	private void supports(IWorldEditor editor, RandomSource rand, Coord origin) {
 		CellSupport.generate(editor, rand, theme, origin);
 		Cardinal.directions.forEach(dir -> {
 			CellSupport.generate(editor, rand, theme, origin.copy().add(dir, Cell.SIZE));
@@ -46,7 +44,7 @@ public class CrossRoom extends AbstractMediumRoom implements IRoom {
 		});
 	}
 
-	private void center(IWorldEditor editor, Random rand, Coord origin) {
+	private void center(IWorldEditor editor, RandomSource rand, Coord origin) {
 		IBlockFactory walls = theme.getPrimary().getWall();
 		IStair stair = theme.getPrimary().getStair();
 		walls.set(editor, rand, origin.copy().add(Cardinal.UP, 6));
@@ -67,7 +65,7 @@ public class CrossRoom extends AbstractMediumRoom implements IRoom {
 		});
 	}
 
-	private void sides(IWorldEditor editor, Random rand, Coord origin) {
+	private void sides(IWorldEditor editor, RandomSource rand, Coord origin) {
 		IBlockFactory walls = theme.getPrimary().getWall();
 		IStair stair = theme.getPrimary().getStair();
 		Cardinal.directions.forEach(dir -> {
@@ -88,13 +86,13 @@ public class CrossRoom extends AbstractMediumRoom implements IRoom {
 		});
 	}
 
-	private void corners(IWorldEditor editor, Random rand, Coord origin) {
+	private void corners(IWorldEditor editor, RandomSource rand, Coord origin) {
 		Cardinal.directions.forEach(dir -> {
 			corner(editor, rand, origin.copy().add(dir, 6).add(Cardinal.left(dir), 6));
 		});
 	}
 
-	private void corner(IWorldEditor editor, Random rand, Coord origin) {
+	private void corner(IWorldEditor editor, RandomSource rand, Coord origin) {
 		Cardinal.directions.forEach(dir -> {
 			BoundingBox.of(origin).add(dir, 2).add(Cardinal.UP, 3).grow(Cardinal.orthogonal(dir)).grow(Cardinal.left(dir)).grow(Cardinal.UP, 2).fill(editor, rand, theme.getPrimary().getWall());
 			Pillar.generate(editor, rand, origin.copy().add(dir, 2).add(Cardinal.left(dir), 2), theme, 2, List.of(Cardinal.reverse(dir), Cardinal.right(dir)));
@@ -102,7 +100,7 @@ public class CrossRoom extends AbstractMediumRoom implements IRoom {
 		BoundingBox.of(origin).add(Cardinal.UP, 5).grow(Cardinal.directions).fill(editor, rand, theme.getPrimary().getWall(), Fill.SOLID);
 	}
 
-	private void clear(IWorldEditor editor, Random rand, Coord origin) {
+	private void clear(IWorldEditor editor, RandomSource rand, Coord origin) {
 		BoundingBox.of(origin).grow(Cardinal.directions, 8).grow(Cardinal.UP, 4).fill(editor, rand, Air.get());
 		BoundingBox.of(origin).add(Cardinal.UP, 5).grow(Cardinal.directions, 4).fill(editor, rand, Air.get());
 		BoundingBox.of(origin).add(Cardinal.UP, 6).grow(Cardinal.directions, 2).fill(editor, rand, Air.get());

@@ -6,20 +6,19 @@ import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.MetaBlock;
 import com.greymerk.roguelike.editor.boundingbox.IBounded;
 import com.greymerk.roguelike.settings.ILevelSettings;
-
-import net.minecraft.block.Blocks;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.block.Blocks;
 
 public class ExplosiveTrapFilter implements IFilter {
 
 	@Override
-	public void apply(IWorldEditor editor, Random rand, ILevelSettings settings, IBounded box) {
+	public void apply(IWorldEditor editor, RandomSource rand, ILevelSettings settings, IBounded box) {
 		box.forEach(pos -> {
 			if(rand.nextInt(200) == 0) addTrap(editor, rand, pos);
 		});
 	}
 	
-	private void addTrap(IWorldEditor editor, Random rand, Coord pos) {
+	private void addTrap(IWorldEditor editor, RandomSource rand, Coord pos) {
 		if(!editor.isAir(pos)) return;
 		if(!editor.isFaceFullSquare(pos.copy().add(Cardinal.DOWN), Cardinal.UP)) return;
 		if(!isEncased(editor, pos.copy().add(Cardinal.DOWN, 2))) return;

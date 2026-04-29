@@ -7,23 +7,21 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
-
+import net.minecraft.util.ExtraCodecs;
 import com.greymerk.roguelike.dungeon.room.IRoom;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
-import net.minecraft.util.dynamic.Codecs;
-
 public class Cell {
 
-	private static final Codec<List<String>> LIST_CODEC = Codec.list(Codecs.NON_EMPTY_STRING);
+	private static final Codec<List<String>> LIST_CODEC = Codec.list(ExtraCodecs.NON_EMPTY_STRING);
 	
 	public static final Codec<Cell> CODEC = RecordCodecBuilder.create(
 			instance -> instance.group(
 				Coord.CODEC.fieldOf("floorPos").forGetter(cell -> cell.floorPos),
-				Codecs.NON_EMPTY_STRING.fieldOf("state").forGetter(cell -> cell.state.name()),
+				ExtraCodecs.NON_EMPTY_STRING.fieldOf("state").forGetter(cell -> cell.state.name()),
 				LIST_CODEC.fieldOf("walls").forGetter(cell -> cell.getWalls().stream().map(dir -> dir.name()).collect(Collectors.toList()))
 			).apply(instance, (fp, state, walls) -> Cell.of(fp, CellState.of(state), null, 
 					walls.stream().map(dir -> Cardinal.of(dir)).collect(Collectors.toList())))

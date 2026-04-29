@@ -2,7 +2,7 @@ package com.greymerk.roguelike.settings.level;
 
 import java.util.Arrays;
 import java.util.List;
-
+import net.minecraft.util.RandomSource;
 import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.dungeon.fragment.Fragment;
 import com.greymerk.roguelike.dungeon.room.Room;
@@ -12,13 +12,11 @@ import com.greymerk.roguelike.settings.LevelSettingsBase;
 import com.greymerk.roguelike.theme.Theme;
 import com.greymerk.roguelike.util.WeightedChoice;
 
-import net.minecraft.util.math.random.Random;
-
 public class LevelSettingsRandom extends LevelSettingsBase implements ILevelSettings{
 
 	public LevelSettingsRandom() {
 		super();
-		Random rand = Random.create();
+		RandomSource rand = RandomSource.create();
 		this.theme = Theme.getRandom(rand);
 		
 		Arrays.asList(Room.values()).forEach(room -> {

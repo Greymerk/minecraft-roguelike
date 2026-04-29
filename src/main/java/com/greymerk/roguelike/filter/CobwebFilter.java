@@ -7,14 +7,13 @@ import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.MetaBlock;
 import com.greymerk.roguelike.editor.boundingbox.IBounded;
 import com.greymerk.roguelike.settings.ILevelSettings;
-
-import net.minecraft.block.Blocks;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.block.Blocks;
 
 public class CobwebFilter implements IFilter{
 
 	@Override
-	public void apply(IWorldEditor editor, Random rand, ILevelSettings settings, IBounded box) {
+	public void apply(IWorldEditor editor, RandomSource rand, ILevelSettings settings, IBounded box) {
 		box.forEach(pos -> {
 			if(!editor.isAir(pos)) return;
 			if(rand.nextInt(100) != 0) return;
@@ -26,7 +25,7 @@ public class CobwebFilter implements IFilter{
 		});
 	}
 	
-	private void placeWeb(IWorldEditor editor, Random rand, Coord pos, int count){
+	private void placeWeb(IWorldEditor editor, RandomSource rand, Coord pos, int count){
 		if(!editor.isAir(pos)) return;
 		if(count <= 0) return;
 		

@@ -1,24 +1,24 @@
 package com.greymerk.roguelike.treasure.loot.items;
 
-import net.minecraft.block.entity.BannerPattern;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.BannerPatternsComponent;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.registry.DynamicRegistryManager;
-import net.minecraft.registry.Registry;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.core.Registry;
+import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.entity.BannerPattern;
+import net.minecraft.world.level.block.entity.BannerPatternLayers;
 
 public class Shield {
 
-	public static ItemStack get(DynamicRegistryManager reg, Random rand){
+	public static ItemStack get(RegistryAccess reg, RandomSource rand){
 		
-		Registry<BannerPattern> patterns = reg.getOrThrow(RegistryKeys.BANNER_PATTERN);
+		Registry<BannerPattern> patterns = reg.lookupOrThrow(Registries.BANNER_PATTERN);
 		ItemStack shield = new ItemStack(Items.SHIELD); 
 		
-		BannerPatternsComponent component = Banner.createLayersComponent(patterns, rand, rand.nextInt(3) + 3);
-		shield.set(DataComponentTypes.BANNER_PATTERNS, component);
+		BannerPatternLayers component = Banner.createLayersComponent(patterns, rand, rand.nextInt(3) + 3);
+		shield.set(DataComponents.BANNER_PATTERNS, component);
 		
 		return shield;
 	}

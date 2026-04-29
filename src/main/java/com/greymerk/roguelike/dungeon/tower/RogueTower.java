@@ -15,13 +15,12 @@ import com.greymerk.roguelike.editor.shapes.Line;
 import com.greymerk.roguelike.editor.shapes.RectSolid;
 import com.greymerk.roguelike.editor.shapes.Shape;
 import com.greymerk.roguelike.theme.ITheme;
-
-import net.minecraft.util.math.random.Random;
+import net.minecraft.util.RandomSource;
 
 
 public class RogueTower implements ITower{
 
-	public void generate(IWorldEditor editor, Random rand, ITheme theme, Coord dungeon){
+	public void generate(IWorldEditor editor, RandomSource rand, ITheme theme, Coord dungeon){
 		IBlockFactory walls = theme.getPrimary().getWall();
 		IStair stair = theme.getPrimary().getStair();
 		Coord origin = Tower.getBaseCoord(editor, dungeon).freeze();
@@ -123,7 +122,7 @@ public class RogueTower implements ITower{
 		SpiralStairCase.generate(editor, rand, theme, Line.of(origin.copy().add(Cardinal.UP, 4), dungeon));
 	}
 	
-	private void addCrenellation(IWorldEditor editor, Random rand, Coord origin, IBlockFactory blocks){
+	private void addCrenellation(IWorldEditor editor, RandomSource rand, Coord origin, IBlockFactory blocks){
 		blocks.set(editor, rand, origin.copy());
 		Torch.generate(editor, Torch.WOODEN, Cardinal.UP, origin.copy().add(Cardinal.UP));
 	}

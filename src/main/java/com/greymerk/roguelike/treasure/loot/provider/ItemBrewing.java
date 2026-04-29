@@ -3,11 +3,10 @@ package com.greymerk.roguelike.treasure.loot.provider;
 import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.treasure.loot.WeightedRandomLoot;
 import com.greymerk.roguelike.util.WeightedRandomizer;
-
-import net.minecraft.block.Blocks;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Blocks;
 
 public class ItemBrewing extends ItemBase{
 
@@ -34,7 +33,7 @@ public class ItemBrewing extends ItemBase{
 	}
 
 	@Override
-	public ItemStack getLootItem(Random rand, Difficulty diff) {
+	public ItemStack getLootItem(RandomSource rand, Difficulty diff) {
 		return this.items.get(rand);
 	}
 }

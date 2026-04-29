@@ -3,7 +3,7 @@ package com.greymerk.roguelike.dungeon.room;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
-
+import net.minecraft.util.RandomSource;
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellManager;
 import com.greymerk.roguelike.dungeon.cell.CellState;
@@ -22,13 +22,11 @@ import com.greymerk.roguelike.editor.blocks.stair.IStair;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.editor.shapes.Shape;
 
-import net.minecraft.util.math.random.Random;
-
 public class PanopticonRoom extends AbstractLargeRoom implements IRoom {
 
 	@Override
 	public void generate(IWorldEditor editor) {
-		Random rand = editor.getRandom(this.getWorldPos());
+		RandomSource rand = editor.getRandom(this.getWorldPos());
 		Coord origin = this.worldPos.copy().add(direction, Cell.SIZE * 2).freeze();
 		
 		clear(editor, rand, origin.copy().freeze());
@@ -45,7 +43,7 @@ public class PanopticonRoom extends AbstractLargeRoom implements IRoom {
 		supports(editor, rand, origin.copy().add(Cardinal.DOWN, 10).freeze());
 	}
 
-	private void supports(IWorldEditor editor, Random rand, Coord origin) {
+	private void supports(IWorldEditor editor, RandomSource rand, Coord origin) {
 		CellSupport.generate(editor, rand, theme, origin);
 		Cardinal.directions.forEach(dir -> {
 			List.of(6, 12).forEach(i -> {
@@ -57,7 +55,7 @@ public class PanopticonRoom extends AbstractLargeRoom implements IRoom {
 		});
 	}
 
-	private void decorations(IWorldEditor editor, Random rand, Coord origin) {
+	private void decorations(IWorldEditor editor, RandomSource rand, Coord origin) {
 		Cardinal.directions.forEach(dir -> {
 			if(this.getExitType(dir) != ExitType.DOOR) {
 				deco(editor, rand, origin.copy().add(Cardinal.UP, 2).add(dir, 12), dir);
@@ -78,7 +76,7 @@ public class PanopticonRoom extends AbstractLargeRoom implements IRoom {
 	}
 
 	
-	private void deco(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
+	private void deco(IWorldEditor editor, RandomSource rand, Coord origin, Cardinal dir) {
 		Cardinal.orthogonal(dir).forEach(o -> {
 			theme.getPrimary().getStair().setOrientation(Cardinal.reverse(o), true)
 				.set(editor, rand, origin.copy().add(dir, 2).add(o).add(Cardinal.UP, 2));
@@ -86,7 +84,7 @@ public class PanopticonRoom extends AbstractLargeRoom implements IRoom {
 		this.settings.getWallFragment(rand).generate(editor, rand, settings, origin, dir);
 	}
 
-	private void bars(IWorldEditor editor, Random rand, Coord origin) {
+	private void bars(IWorldEditor editor, RandomSource rand, Coord origin) {
 		Cardinal.directions.forEach(dir -> {
 			barWall(editor, rand, origin.copy().add(Cardinal.DOWN, 10).add(dir, 10), dir);
 			barWall(editor, rand, origin.copy().add(Cardinal.DOWN, 6).add(dir, 10), dir);
@@ -114,11 +112,11 @@ public class PanopticonRoom extends AbstractLargeRoom implements IRoom {
 		});
 	}
 	
-	private void barWall(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
+	private void barWall(IWorldEditor editor, RandomSource rand, Coord origin, Cardinal dir) {
 		BoundingBox.of(origin).grow(Cardinal.orthogonal(dir)).grow(Cardinal.UP, 2).fill(editor, rand, IronBar.getBroken(), Fill.AIR);
 	}
 
-	private void bridges(IWorldEditor editor, Random rand, Coord origin) {
+	private void bridges(IWorldEditor editor, RandomSource rand, Coord origin) {
 		IStair stair = theme.getPrimary().getStair();
 		this.getEntrancesFromType(ExitType.DOOR).forEach(dir -> {
 			BoundingBox.of(origin).add(Cardinal.DOWN).add(dir, 3).grow(Cardinal.orthogonal(dir)).grow(dir, 13).fill(editor, rand, theme.getPrimary().getFloor());
@@ -154,7 +152,7 @@ public class PanopticonRoom extends AbstractLargeRoom implements IRoom {
 		return dirs;
 	}
 
-	private void upperPlatforms(IWorldEditor editor, Random rand, Coord origin) {
+	private void upperPlatforms(IWorldEditor editor, RandomSource rand, Coord origin) {
 		Cardinal.directions.forEach(dir -> {
 			Cardinal.orthogonal(dir).forEach(o -> {
 				BoundingBox.of(origin).add(dir, 10).add(o, 5).grow(o, 2).fill(editor, rand, theme.getPrimary().getWall());
@@ -165,7 +163,7 @@ public class PanopticonRoom extends AbstractLargeRoom implements IRoom {
 		});
 	}
 
-	private void middlePlatforms(IWorldEditor editor, Random rand, Coord origin) {
+	private void middlePlatforms(IWorldEditor editor, RandomSource rand, Coord origin) {
 		Cardinal.directions.forEach(dir -> {
 			BoundingBox.of(origin).add(dir, 9).grow(Cardinal.orthogonal(dir), 14).grow(dir).fill(editor, rand, theme.getPrimary().getWall());
 			BoundingBox.of(origin).add(dir, 14).grow(Cardinal.orthogonal(dir), 14).fill(editor, rand, theme.getPrimary().getWall());
@@ -180,7 +178,7 @@ public class PanopticonRoom extends AbstractLargeRoom implements IRoom {
 		
 	}
 
-	private void lowerPlatforms(IWorldEditor editor, Random rand, Coord origin) {
+	private void lowerPlatforms(IWorldEditor editor, RandomSource rand, Coord origin) {
 		Cardinal.directions.forEach(dir -> {
 			BoundingBox.of(origin).add(dir, 8).grow(dir, 3).grow(Cardinal.orthogonal(dir), 14).fill(editor, rand, theme.getPrimary().getWall());
 			BoundingBox.of(origin).add(dir, 14).grow(Cardinal.orthogonal(dir), 14).fill(editor, rand, theme.getPrimary().getWall());
@@ -192,7 +190,7 @@ public class PanopticonRoom extends AbstractLargeRoom implements IRoom {
 		});
 	}
 
-	private void pillars(IWorldEditor editor, Random rand, Coord origin) {
+	private void pillars(IWorldEditor editor, RandomSource rand, Coord origin) {
 		Cardinal.directions.forEach(dir -> {
 			cornerPillarSet(editor, rand, origin.copy().add(Cardinal.DOWN, 10).add(dir, 7).add(Cardinal.left(dir), 7).freeze(),
 					List.of(dir, Cardinal.left(dir)));
@@ -203,7 +201,7 @@ public class PanopticonRoom extends AbstractLargeRoom implements IRoom {
 		});
 	}
 
-	private void cornerPillarSet(IWorldEditor editor, Random rand, Coord origin, List<Cardinal> corner) {
+	private void cornerPillarSet(IWorldEditor editor, RandomSource rand, Coord origin, List<Cardinal> corner) {
 		pillar(editor, rand, origin.add(corner.getFirst()).add(corner.getLast()),
 				List.of(Cardinal.reverse(corner.getFirst()), Cardinal.reverse(corner.getLast())), 2);
 		pillar(editor, rand, origin.add(corner.getFirst(), 2).add(corner.getLast(), 2),
@@ -225,7 +223,7 @@ public class PanopticonRoom extends AbstractLargeRoom implements IRoom {
 		});
 	}
 
-	private void mainPillarSet(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
+	private void mainPillarSet(IWorldEditor editor, RandomSource rand, Coord origin, Cardinal dir) {
 		pillar(editor, rand, origin.copy().add(dir), Cardinal.directions, 2);
 		pillar(editor, rand, origin.copy().add(dir).add(Cardinal.UP, 4), Cardinal.directions, 2);
 		
@@ -238,14 +236,14 @@ public class PanopticonRoom extends AbstractLargeRoom implements IRoom {
 	
 	
 
-	private void pillar(IWorldEditor editor, Random rand, Coord origin, List<Cardinal> directions, int height) {
+	private void pillar(IWorldEditor editor, RandomSource rand, Coord origin, List<Cardinal> directions, int height) {
 		BoundingBox.of(origin).grow(Cardinal.UP, height).fill(editor, rand, theme.getPrimary().getPillar());
 		directions.forEach(dir -> {
 			theme.getPrimary().getStair().setOrientation(dir, true).set(editor, rand, origin.copy().add(dir).add(Cardinal.UP, height));
 		});
 	}
 
-	private void ceiling(IWorldEditor editor, Random rand, Coord origin) {
+	private void ceiling(IWorldEditor editor, RandomSource rand, Coord origin) {
 		Cardinal.directions.forEach(dir -> {
 			List.of(2, 4, 8, 10, 14).forEach(step -> {
 				BoundingBox.of(origin).add(Cardinal.UP, 5).add(dir, step).grow(Cardinal.orthogonal(dir), 14).fill(editor, rand, theme.getPrimary().getWall());	
@@ -253,7 +251,7 @@ public class PanopticonRoom extends AbstractLargeRoom implements IRoom {
 		});
 	}
 
-	private void tower(IWorldEditor editor, Random rand, Coord origin) {
+	private void tower(IWorldEditor editor, RandomSource rand, Coord origin) {
 		IBlockFactory walls = theme.getPrimary().getWall();
 		IStair stair = theme.getPrimary().getStair();
 		
@@ -285,13 +283,13 @@ public class PanopticonRoom extends AbstractLargeRoom implements IRoom {
 		});
 	}
 
-	private void doors(IWorldEditor editor, Random rand, Coord origin) {
+	private void doors(IWorldEditor editor, RandomSource rand, Coord origin) {
 		this.getEntrancesFromType(ExitType.DOOR).forEach(dir -> {
 			Fragment.generate(Fragment.ARCH, editor, rand, settings, origin.copy().add(dir, 12), dir);
 		});
 	}
 
-	private void clear(IWorldEditor editor, Random rand, Coord origin) {
+	private void clear(IWorldEditor editor, RandomSource rand, Coord origin) {
 		BoundingBox.of(origin).grow(Cardinal.directions, 14).grow(Cardinal.DOWN, 10).grow(Cardinal.UP, 5).fill(editor, rand, Air.get());
 		BoundingBox.of(origin).add(Cardinal.DOWN, 11).grow(Cardinal.directions, 15).fill(editor, rand, theme.getPrimary().getFloor());
 		BoundingBox.of(origin).add(Cardinal.UP, 6).grow(Cardinal.directions, 15).fill(editor, rand, theme.getPrimary().getWall(), Fill.SOLID);

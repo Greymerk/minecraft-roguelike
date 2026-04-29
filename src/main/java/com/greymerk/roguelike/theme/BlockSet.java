@@ -11,8 +11,7 @@ import com.greymerk.roguelike.editor.blocks.stair.IStair;
 import com.greymerk.roguelike.editor.blocks.stair.MetaStair;
 import com.greymerk.roguelike.editor.blocks.stair.Stair;
 import com.greymerk.roguelike.editor.factories.BlockFloor;
-
-import net.minecraft.block.Blocks;
+import net.minecraft.world.level.block.Blocks;
 
 
 public class BlockSet implements IBlockSet {

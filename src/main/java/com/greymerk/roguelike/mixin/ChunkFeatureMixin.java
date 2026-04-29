@@ -13,32 +13,31 @@ import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.IWorldInfo;
 import com.greymerk.roguelike.editor.WorldEditor;
 import com.greymerk.roguelike.gamerules.RoguelikeRules;
-
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.World;
-import net.minecraft.world.chunk.Chunk;
-import net.minecraft.world.gen.StructureAccessor;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.StructureManager;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkAccess;
+import net.minecraft.world.level.chunk.ChunkGenerator;
 
 @Deprecated
 @Mixin(ChunkGenerator.class)
 public class ChunkFeatureMixin {
 	
-	@Inject(at = @At("HEAD"), method = "generateFeatures")
-	public void generateFeatures(StructureWorldAccess world, Chunk chunk, StructureAccessor structureAccessor, CallbackInfo info) {
-		RegistryKey<World> worldKey = world.toServerWorld().getRegistryKey();
+	@Inject(at = @At("HEAD"), method = "applyBiomeDecoration")
+	public void generateFeatures(WorldGenLevel world, ChunkAccess chunk, StructureManager structureAccessor, CallbackInfo info) {
+		ResourceKey<Level> worldKey = world.getLevel().dimension();
 		IWorldEditor editor = new WorldEditor(world, worldKey);
 		IWorldInfo worldInfo = editor.getInfo();
-		if(!worldInfo.getGameRules().getValue(RoguelikeRules.GEN_ROGUELIKE_DUNGEONS)) return;
+		if(!worldInfo.getGameRules().get(RoguelikeRules.GEN_ROGUELIKE_DUNGEONS)) return;
 		
 		ChunkPos cpos = chunk.getPos();
 		if(!DungeonPlacement.validChunkPos(editor, cpos)) return;
 		
-		Coord pos = Coord.of(cpos.getCenterX(), worldInfo.getTopYInclusive(), cpos.getCenterZ()).freeze();
-		Random rand = editor.getRandom(pos);
+		Coord pos = Coord.of(cpos.getMiddleBlockX(), worldInfo.getTopYInclusive(), cpos.getMiddleBlockZ()).freeze();
+		RandomSource rand = editor.getRandom(pos);
 		Double chance = Math.clamp(Config.ofDouble(Config.FREQUENCY), 0, 1.0);
 		Double roll = rand.nextDouble();
 		if(chance == 1.0 || roll < chance) {

@@ -2,10 +2,9 @@ package com.greymerk.roguelike.editor.blocks;
 
 import com.greymerk.roguelike.editor.MetaBlock;
 import com.greymerk.roguelike.util.Color;
-
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 
 public enum ColorBlock {
 
@@ -44,45 +43,45 @@ public enum ColorBlock {
 
 	private static BlockState getClay(Color color) {
 		switch(color){
-		case WHITE: return Blocks.WHITE_TERRACOTTA.getDefaultState();
-		case ORANGE: return Blocks.ORANGE_TERRACOTTA.getDefaultState();
-		case MAGENTA: return Blocks.MAGENTA_TERRACOTTA.getDefaultState();
-		case LIGHT_BLUE: return Blocks.LIGHT_BLUE_TERRACOTTA.getDefaultState();
-		case YELLOW: return Blocks.YELLOW_TERRACOTTA.getDefaultState();
-		case LIME: return Blocks.LIME_TERRACOTTA.getDefaultState();
-		case PINK: return Blocks.PINK_TERRACOTTA.getDefaultState();
-		case GRAY: return Blocks.GRAY_TERRACOTTA.getDefaultState();
-		case LIGHT_GRAY: return Blocks.LIGHT_GRAY_TERRACOTTA.getDefaultState();
-		case CYAN: return Blocks.CYAN_TERRACOTTA.getDefaultState();
-		case PURPLE: return Blocks.PURPLE_TERRACOTTA.getDefaultState();
-		case BLUE: return Blocks.BLUE_TERRACOTTA.getDefaultState();
-		case BROWN: return Blocks.BROWN_TERRACOTTA.getDefaultState();
-		case GREEN: return Blocks.GREEN_TERRACOTTA.getDefaultState();
-		case RED: return Blocks.RED_TERRACOTTA.getDefaultState();
-		case BLACK: return Blocks.BLACK_TERRACOTTA.getDefaultState();
-		default: return Blocks.TERRACOTTA.getDefaultState();
+		case WHITE: return Blocks.WHITE_TERRACOTTA.defaultBlockState();
+		case ORANGE: return Blocks.ORANGE_TERRACOTTA.defaultBlockState();
+		case MAGENTA: return Blocks.MAGENTA_TERRACOTTA.defaultBlockState();
+		case LIGHT_BLUE: return Blocks.LIGHT_BLUE_TERRACOTTA.defaultBlockState();
+		case YELLOW: return Blocks.YELLOW_TERRACOTTA.defaultBlockState();
+		case LIME: return Blocks.LIME_TERRACOTTA.defaultBlockState();
+		case PINK: return Blocks.PINK_TERRACOTTA.defaultBlockState();
+		case GRAY: return Blocks.GRAY_TERRACOTTA.defaultBlockState();
+		case LIGHT_GRAY: return Blocks.LIGHT_GRAY_TERRACOTTA.defaultBlockState();
+		case CYAN: return Blocks.CYAN_TERRACOTTA.defaultBlockState();
+		case PURPLE: return Blocks.PURPLE_TERRACOTTA.defaultBlockState();
+		case BLUE: return Blocks.BLUE_TERRACOTTA.defaultBlockState();
+		case BROWN: return Blocks.BROWN_TERRACOTTA.defaultBlockState();
+		case GREEN: return Blocks.GREEN_TERRACOTTA.defaultBlockState();
+		case RED: return Blocks.RED_TERRACOTTA.defaultBlockState();
+		case BLACK: return Blocks.BLACK_TERRACOTTA.defaultBlockState();
+		default: return Blocks.TERRACOTTA.defaultBlockState();
 		}
 	}
 	
 	private static BlockState getGlazed(Color color) {
 		switch(color){
-		case WHITE: return Blocks.WHITE_GLAZED_TERRACOTTA.getDefaultState();
-		case ORANGE: return Blocks.ORANGE_GLAZED_TERRACOTTA.getDefaultState();
-		case MAGENTA: return Blocks.MAGENTA_GLAZED_TERRACOTTA.getDefaultState();
-		case LIGHT_BLUE: return Blocks.LIGHT_BLUE_GLAZED_TERRACOTTA.getDefaultState();
-		case YELLOW: return Blocks.YELLOW_GLAZED_TERRACOTTA.getDefaultState();
-		case LIME: return Blocks.LIME_GLAZED_TERRACOTTA.getDefaultState();
-		case PINK: return Blocks.PINK_GLAZED_TERRACOTTA.getDefaultState();
-		case GRAY: return Blocks.GRAY_GLAZED_TERRACOTTA.getDefaultState();
-		case LIGHT_GRAY: return Blocks.LIGHT_GRAY_GLAZED_TERRACOTTA.getDefaultState();
-		case CYAN: return Blocks.CYAN_GLAZED_TERRACOTTA.getDefaultState();
-		case PURPLE: return Blocks.PURPLE_GLAZED_TERRACOTTA.getDefaultState();
-		case BLUE: return Blocks.BLUE_GLAZED_TERRACOTTA.getDefaultState();
-		case BROWN: return Blocks.BROWN_GLAZED_TERRACOTTA.getDefaultState();
-		case GREEN: return Blocks.GREEN_GLAZED_TERRACOTTA.getDefaultState();
-		case RED: return Blocks.RED_GLAZED_TERRACOTTA.getDefaultState();
-		case BLACK: return Blocks.BLACK_GLAZED_TERRACOTTA.getDefaultState();
-		default: return Blocks.WHITE_GLAZED_TERRACOTTA.getDefaultState();
+		case WHITE: return Blocks.WHITE_GLAZED_TERRACOTTA.defaultBlockState();
+		case ORANGE: return Blocks.ORANGE_GLAZED_TERRACOTTA.defaultBlockState();
+		case MAGENTA: return Blocks.MAGENTA_GLAZED_TERRACOTTA.defaultBlockState();
+		case LIGHT_BLUE: return Blocks.LIGHT_BLUE_GLAZED_TERRACOTTA.defaultBlockState();
+		case YELLOW: return Blocks.YELLOW_GLAZED_TERRACOTTA.defaultBlockState();
+		case LIME: return Blocks.LIME_GLAZED_TERRACOTTA.defaultBlockState();
+		case PINK: return Blocks.PINK_GLAZED_TERRACOTTA.defaultBlockState();
+		case GRAY: return Blocks.GRAY_GLAZED_TERRACOTTA.defaultBlockState();
+		case LIGHT_GRAY: return Blocks.LIGHT_GRAY_GLAZED_TERRACOTTA.defaultBlockState();
+		case CYAN: return Blocks.CYAN_GLAZED_TERRACOTTA.defaultBlockState();
+		case PURPLE: return Blocks.PURPLE_GLAZED_TERRACOTTA.defaultBlockState();
+		case BLUE: return Blocks.BLUE_GLAZED_TERRACOTTA.defaultBlockState();
+		case BROWN: return Blocks.BROWN_GLAZED_TERRACOTTA.defaultBlockState();
+		case GREEN: return Blocks.GREEN_GLAZED_TERRACOTTA.defaultBlockState();
+		case RED: return Blocks.RED_GLAZED_TERRACOTTA.defaultBlockState();
+		case BLACK: return Blocks.BLACK_GLAZED_TERRACOTTA.defaultBlockState();
+		default: return Blocks.WHITE_GLAZED_TERRACOTTA.defaultBlockState();
 		}
 	}
 	

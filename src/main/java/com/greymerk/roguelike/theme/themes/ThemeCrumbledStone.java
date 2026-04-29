@@ -12,8 +12,7 @@ import com.greymerk.roguelike.theme.BlockSet;
 import com.greymerk.roguelike.theme.ITheme;
 import com.greymerk.roguelike.theme.Theme;
 import com.greymerk.roguelike.theme.ThemeBase;
-
-import net.minecraft.block.Blocks;
+import net.minecraft.world.level.block.Blocks;
 
 public class ThemeCrumbledStone extends ThemeBase implements ITheme {
 

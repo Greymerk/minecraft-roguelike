@@ -2,14 +2,13 @@ package com.greymerk.roguelike.treasure.loot.potions;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.PotionContentsComponent;
-import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.item.ItemStack;
-import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.alchemy.PotionContents;
 
 public enum PotionEffect {
 	
@@ -26,55 +25,55 @@ public enum PotionEffect {
 		this.id = id;
 	}
 	
-	public static RegistryEntry<StatusEffect> getStatusEffect(PotionEffect type) {
+	public static Holder<MobEffect> getStatusEffect(PotionEffect type) {
 		switch(type) {
-		case ABSORPTION: return StatusEffects.ABSORPTION;
-		case BAD_LUCK: return StatusEffects.UNLUCK;
-		case BLINDNESS: return StatusEffects.BLINDNESS;
-		case DAMAGE: return StatusEffects.INSTANT_DAMAGE;
-		case FATIGUE: return StatusEffects.MINING_FATIGUE;
-		case FIRERESIST: return StatusEffects.FIRE_RESISTANCE;
-		case GLOWING: return StatusEffects.GLOWING;
-		case HASTE: return StatusEffects.HASTE;
-		case HEALTH: return StatusEffects.INSTANT_HEALTH;
-		case HEALTHBOOST: return StatusEffects.HEALTH_BOOST;
-		case HUNGER: return StatusEffects.HUNGER;
-		case INVISIBILITY: return StatusEffects.INVISIBILITY;
-		case JUMP: return StatusEffects.JUMP_BOOST;
-		case LEVITATION: return StatusEffects.LEVITATION;
-		case LUCK: return StatusEffects.LUCK;
-		case NAUSIA: return StatusEffects.NAUSEA;
-		case NIGHTVISION: return StatusEffects.NIGHT_VISION;
-		case POISON: return StatusEffects.POISON;
-		case REGEN: return StatusEffects.REGENERATION;
-		case RESISTANCE: return StatusEffects.RESISTANCE;
-		case SATURATION: return StatusEffects.SATURATION;
-		case SLOWNESS: return StatusEffects.SLOWNESS;
-		case SPEED: return StatusEffects.SPEED;
-		case STRENGTH: return StatusEffects.STRENGTH;
-		case WATERBREATH: return StatusEffects.WATER_BREATHING;
-		case WEAKNESS: return StatusEffects.WEAKNESS;
-		case WITHER: return StatusEffects.WITHER;
-		default: return StatusEffects.WEAKNESS;
+		case ABSORPTION: return MobEffects.ABSORPTION;
+		case BAD_LUCK: return MobEffects.UNLUCK;
+		case BLINDNESS: return MobEffects.BLINDNESS;
+		case DAMAGE: return MobEffects.INSTANT_DAMAGE;
+		case FATIGUE: return MobEffects.MINING_FATIGUE;
+		case FIRERESIST: return MobEffects.FIRE_RESISTANCE;
+		case GLOWING: return MobEffects.GLOWING;
+		case HASTE: return MobEffects.HASTE;
+		case HEALTH: return MobEffects.INSTANT_HEALTH;
+		case HEALTHBOOST: return MobEffects.HEALTH_BOOST;
+		case HUNGER: return MobEffects.HUNGER;
+		case INVISIBILITY: return MobEffects.INVISIBILITY;
+		case JUMP: return MobEffects.JUMP_BOOST;
+		case LEVITATION: return MobEffects.LEVITATION;
+		case LUCK: return MobEffects.LUCK;
+		case NAUSIA: return MobEffects.NAUSEA;
+		case NIGHTVISION: return MobEffects.NIGHT_VISION;
+		case POISON: return MobEffects.POISON;
+		case REGEN: return MobEffects.REGENERATION;
+		case RESISTANCE: return MobEffects.RESISTANCE;
+		case SATURATION: return MobEffects.SATURATION;
+		case SLOWNESS: return MobEffects.SLOWNESS;
+		case SPEED: return MobEffects.SPEED;
+		case STRENGTH: return MobEffects.STRENGTH;
+		case WATERBREATH: return MobEffects.WATER_BREATHING;
+		case WEAKNESS: return MobEffects.WEAKNESS;
+		case WITHER: return MobEffects.WITHER;
+		default: return MobEffects.WEAKNESS;
 		}
 	}
 	
 	public static void addCustomEffect(ItemStack potion, PotionEffect type, int amplifier, int duration){
 		
-		RegistryEntry<StatusEffect> effect = getStatusEffect(type);
-		PotionContentsComponent contents = potion.getOrDefault(DataComponentTypes.POTION_CONTENTS, PotionContentsComponent.DEFAULT);
-		List<StatusEffectInstance> effects = contents.customEffects();
-		StatusEffectInstance instance = new StatusEffectInstance(effect, duration * TICKS_PER_SECOND, Math.max(0, amplifier - 1));
+		Holder<MobEffect> effect = getStatusEffect(type);
+		PotionContents contents = potion.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY);
+		List<MobEffectInstance> effects = contents.customEffects();
+		MobEffectInstance instance = new MobEffectInstance(effect, duration * TICKS_PER_SECOND, Math.max(0, amplifier - 1));
 		
-		List<StatusEffectInstance> flist = new ArrayList<StatusEffectInstance>();
+		List<MobEffectInstance> flist = new ArrayList<MobEffectInstance>();
 		flist.addAll(effects);
 		flist.add(instance);
 		
-		PotionContentsComponent replace = new PotionContentsComponent(java.util.Optional.empty(), contents.customColor(), flist, contents.customName());
-		potion.set(DataComponentTypes.POTION_CONTENTS, replace);
+		PotionContents replace = new PotionContents(java.util.Optional.empty(), contents.customColor(), flist, contents.customName());
+		potion.set(DataComponents.POTION_CONTENTS, replace);
 	}
 	
-	public static StatusEffectInstance getInstance(PotionEffect type, int amplifier, int duration) {
-		return new StatusEffectInstance(getStatusEffect(type), duration * TICKS_PER_SECOND, Math.max(0, amplifier - 1));
+	public static MobEffectInstance getInstance(PotionEffect type, int amplifier, int duration) {
+		return new MobEffectInstance(getStatusEffect(type), duration * TICKS_PER_SECOND, Math.max(0, amplifier - 1));
 	}
 }

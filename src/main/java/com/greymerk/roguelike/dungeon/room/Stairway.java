@@ -16,14 +16,13 @@ import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.editor.boundingbox.IBounded;
 import com.greymerk.roguelike.editor.shapes.RectSolid;
 import com.greymerk.roguelike.editor.shapes.Shape;
-
-import net.minecraft.util.math.random.Random;
+import net.minecraft.util.RandomSource;
 
 public class Stairway extends AbstractRoom implements IRoom {
 	
 	@Override
 	public void generate(IWorldEditor editor) {
-		Random rand = editor.getRandom(getWorldPos());
+		RandomSource rand = editor.getRandom(getWorldPos());
 		Coord origin = this.worldPos.copy();
 		this.fillWalls(editor, rand, origin.copy());
 		buildCell(editor, rand, origin, direction, true);
@@ -35,7 +34,7 @@ public class Stairway extends AbstractRoom implements IRoom {
 		this.addDoors(editor, rand);
 	}
 
-	private void fillWalls(IWorldEditor editor, Random rand, Coord origin) {
+	private void fillWalls(IWorldEditor editor, RandomSource rand, Coord origin) {
 		for(Cardinal o : Cardinal.orthogonal(direction)) {
 			for(int i = 0; i < 10; ++i) {
 				BoundingBox bb = BoundingBox.of(origin);
@@ -45,18 +44,18 @@ public class Stairway extends AbstractRoom implements IRoom {
 		}
 	}
 
-	private void addDoors(IWorldEditor editor, Random rand) {
+	private void addDoors(IWorldEditor editor, RandomSource rand) {
 		Fragment.generate(Fragment.ARCH, editor, rand, settings, worldPos, Cardinal.reverse(direction));
 		this.generateExits(editor, rand);
 	}
 	
-	private void buildSteps(IWorldEditor editor, Random rand, Coord origin) {
+	private void buildSteps(IWorldEditor editor, RandomSource rand, Coord origin) {
 		for(int i = 0; i < 10; ++i) {
 			this.oneStep(editor, rand, origin, i);
 		}
 	}
 	
-	private void oneStep(IWorldEditor editor, Random rand, Coord origin, int step) {
+	private void oneStep(IWorldEditor editor, RandomSource rand, Coord origin, int step) {
 		IStair stair = theme.getPrimary().getStair();
 		
 		BoundingBox bb = BoundingBox.of(origin.copy());
@@ -94,7 +93,7 @@ public class Stairway extends AbstractRoom implements IRoom {
 		});
 	}
 	
-	private void buildCell(IWorldEditor editor, Random rand, Coord origin, Cardinal cellEntry, boolean candles) {
+	private void buildCell(IWorldEditor editor, RandomSource rand, Coord origin, Cardinal cellEntry, boolean candles) {
 		IStair stair = theme.getPrimary().getStair();
 		CellSupport.generate(editor, rand, theme, origin.copy());
 		

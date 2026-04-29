@@ -1,7 +1,7 @@
 package com.greymerk.roguelike.editor.blocks.slab;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 
 public enum Slab {
 

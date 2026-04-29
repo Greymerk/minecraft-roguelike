@@ -1,13 +1,11 @@
 package com.greymerk.roguelike.editor.factories;
 
 import java.util.function.Predicate;
-
+import net.minecraft.util.RandomSource;
 import com.greymerk.roguelike.editor.BlockContext;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IBlockFactory;
 import com.greymerk.roguelike.editor.IWorldEditor;
-
-import net.minecraft.util.math.random.Random;
 
 public class BlockCheckers extends BlockBase {
 
@@ -31,7 +29,7 @@ public class BlockCheckers extends BlockBase {
 	
 	
 	@Override
-	public boolean set(IWorldEditor editor, Random rand, Coord origin, Predicate<BlockContext> p) {
+	public boolean set(IWorldEditor editor, RandomSource rand, Coord origin, Predicate<BlockContext> p) {
 		
 		int x = origin.getX() - this.offset.getX();
 		int y = origin.getY() - this.offset.getY();

@@ -2,16 +2,14 @@ package com.greymerk.roguelike.editor;
 
 import java.nio.file.Path;
 import java.util.Optional;
-
+import net.minecraft.core.RegistryAccess;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.flag.FeatureFlagSet;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.gamerules.GameRules;
+import net.minecraft.world.level.levelgen.structure.StructureSet;
 import com.greymerk.roguelike.state.RoguelikeState;
-
-import net.minecraft.registry.DynamicRegistryManager;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.resource.featuretoggle.FeatureSet;
-import net.minecraft.structure.StructureSet;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.world.World;
-import net.minecraft.world.rule.GameRules;
 
 /**
  *  Interface for a class which provides a set of read only methods
@@ -37,9 +35,9 @@ public interface IWorldInfo {
 	 */
 	public boolean isOverworld();
 	
-	public DynamicRegistryManager getRegistryManager();
+	public RegistryAccess getRegistryManager();
 	
-	public FeatureSet getFeatureSet();
+	public FeatureFlagSet getFeatureSet();
 	
 	public Path getWorldDirectory();
 	
@@ -47,11 +45,11 @@ public interface IWorldInfo {
 	
 	public GameRules getGameRules();
 	
-	public RegistryKey<World> getRegistryKey();
+	public ResourceKey<Level> getRegistryKey();
 	
 	public long getSeed();
 	
-	public Optional<Coord> getStructureLocation(RegistryKey<StructureSet> key, ChunkPos cpos);
+	public Optional<Coord> getStructureLocation(ResourceKey<StructureSet> key, ChunkPos cpos);
 
 	/**
 	 * This is the first levelY that would appear below sea level

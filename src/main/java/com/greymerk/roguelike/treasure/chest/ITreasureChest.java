@@ -2,8 +2,7 @@ package com.greymerk.roguelike.treasure.chest;
 
 import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.treasure.Treasure;
-
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 
 public interface ITreasureChest {
 	

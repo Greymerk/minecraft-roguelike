@@ -2,14 +2,13 @@ package com.greymerk.roguelike.editor;
 
 import java.util.List;
 import java.util.function.Predicate;
-
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.state.property.Property;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.Property;
 
 /**
 A Wrapper for Mojang's BlockState objects
@@ -36,7 +35,7 @@ public class MetaBlock extends BlockBase{
 	}
 	
 	private MetaBlock(Block block){
-		this.state = block.getDefaultState();
+		this.state = block.defaultBlockState();
 	}
 	
 	private MetaBlock(BlockState state){
@@ -56,17 +55,17 @@ public class MetaBlock extends BlockBase{
 	}
 	
 	@Override
-	public boolean set(IWorldEditor editor, Random rand, Coord pos) {
+	public boolean set(IWorldEditor editor, RandomSource rand, Coord pos) {
 		return editor.set(pos, this);
 	}
 	
 	@Override
-	public boolean set(IWorldEditor editor, Random rand, Coord pos, Predicate<BlockContext> p) {
+	public boolean set(IWorldEditor editor, RandomSource rand, Coord pos, Predicate<BlockContext> p) {
 		return editor.set(pos, this, p);
 	}
 		
 	public boolean isIn(TagKey<Block> tag) {
-		return this.state.isIn(tag);
+		return this.state.is(tag);
 	}
 	
 	public boolean isIn(List<TagKey<Block>> tags) {
@@ -78,7 +77,7 @@ public class MetaBlock extends BlockBase{
 	}
 	
 	public <T extends Comparable<T>> T get(Property<T> property) {
-		return this.state.get(property);
+		return this.state.getValue(property);
 	}
 
 	public Block getBlock() {
@@ -86,11 +85,11 @@ public class MetaBlock extends BlockBase{
 	}
 	
 	public int getFlag(){
-		return Block.NOTIFY_ALL;
+		return Block.UPDATE_ALL;
 	}
 	
 	public <T extends Comparable<T>, V extends T> MetaBlock with(Property<T> property, V value) {
-		this.state = this.state.with(property, value);
+		this.state = this.state.setValue(property, value);
 		return this;
 	}
 	
@@ -105,7 +104,7 @@ public class MetaBlock extends BlockBase{
 	}
 	
 	public boolean isReplaceable() {
-		return this.state.isReplaceable();
+		return this.state.canBeReplaced();
 	}
 	
 	public boolean isPlant() {
@@ -123,7 +122,7 @@ public class MetaBlock extends BlockBase{
 				BlockTags.SAND, 
 				BlockTags.SNOW,
 				BlockTags.STONE_ORE_REPLACEABLES, 
-				BlockTags.SHOVEL_MINEABLE,
+				BlockTags.MINEABLE_WITH_SHOVEL,
 				BlockTags.BADLANDS_TERRACOTTA);
 		
 		return this.isIn(tags);

@@ -2,7 +2,7 @@
 package com.greymerk.roguelike.dungeon.room;
 
 import java.util.List;
-
+import net.minecraft.util.ExtraCodecs;
 import com.greymerk.roguelike.dungeon.layout.Exit;
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
@@ -11,8 +11,6 @@ import com.greymerk.roguelike.settings.ILevelSettings;
 import com.greymerk.roguelike.settings.LevelSettings;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-
-import net.minecraft.util.dynamic.Codecs;
 
 public enum Room {
 
@@ -56,10 +54,10 @@ public enum Room {
 	
 	public static final Codec<IRoom> CODEC = RecordCodecBuilder.create(
 			instance -> instance.group(
-				Codecs.NON_EMPTY_STRING.fieldOf("name").forGetter(room -> room.getName()),
-				Codecs.NON_EMPTY_STRING.fieldOf("settings").forGetter(room -> room.getLevelSettings().getName()),
+				ExtraCodecs.NON_EMPTY_STRING.fieldOf("name").forGetter(room -> room.getName()),
+				ExtraCodecs.NON_EMPTY_STRING.fieldOf("settings").forGetter(room -> room.getLevelSettings().getName()),
 				Coord.CODEC.fieldOf("pos").forGetter(room -> room.getWorldPos()),
-				Codecs.NON_EMPTY_STRING.fieldOf("dir").forGetter(room -> room.getDirection().name()),
+				ExtraCodecs.NON_EMPTY_STRING.fieldOf("dir").forGetter(room -> room.getDirection().name()),
 				EXITS_CODEC.fieldOf("exits").forGetter(room -> room.getExits()),
 				Codec.BOOL.fieldOf("generated").forGetter(room -> room.isGenerated()),
 				Statistics.CODEC.fieldOf("stats").forGetter(room -> room.getStats())

@@ -5,16 +5,15 @@ import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.MetaBlock;
 import com.greymerk.roguelike.editor.shapes.IShape;
-
-import net.minecraft.block.Blocks;
-import net.minecraft.block.VineBlock;
-import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.VineBlock;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 
 public class Vine {
 
-	public static void fill(IWorldEditor editor, Random rand, IShape toFill){
+	public static void fill(IWorldEditor editor, RandomSource rand, IShape toFill){
 		toFill.forEach(c -> {
 			set(editor, c);
 		});
@@ -46,7 +45,7 @@ public class Vine {
 		Direction facing = Cardinal.directions.contains(dir) 
 				? Cardinal.facing(Cardinal.reverse(dir))
 				: Cardinal.facing(dir);
-		BooleanProperty facingProperty = VineBlock.getFacingProperty(facing);
+		BooleanProperty facingProperty = VineBlock.getPropertyForFace(facing);
 		if(facingProperty == null) return;
 		MetaBlock.of(Blocks.VINE)
 			.with(facingProperty, true)

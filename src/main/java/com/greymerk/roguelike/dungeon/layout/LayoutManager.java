@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.StreamSupport;
-
+import net.minecraft.util.RandomSource;
 import com.greymerk.roguelike.config.Config;
 import com.greymerk.roguelike.debug.Debug;
 import com.greymerk.roguelike.dungeon.Floor;
@@ -25,8 +25,6 @@ import com.greymerk.roguelike.util.math.RandHelper;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.JsonOps;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-
-import net.minecraft.util.math.random.Random;
 
 public class LayoutManager {
 
@@ -69,7 +67,7 @@ public class LayoutManager {
 		
 		for(Floor floor : this.floors) {
 		
-			Random rand = editor.getRandom(floor.getOrigin());
+			RandomSource rand = editor.getRandom(floor.getOrigin());
 			ILevelSettings levelSettings = settings.getLevel(floor.getOrigin().getY());
 			
 			final boolean aboveDungeon = Config.ofBoolean(Config.BELOW_SEA_LEVEL) 
@@ -100,7 +98,7 @@ public class LayoutManager {
 		}
 	}
 	
-	private void determineExits(IWorldEditor editor, Random rand, Floor floor) {
+	private void determineExits(IWorldEditor editor, RandomSource rand, Floor floor) {
 		CellManager cells = floor.getCells();
 		cells.forEach(cell -> {
 			Cardinal.directions.forEach(dir -> {		
@@ -118,7 +116,7 @@ public class LayoutManager {
 		});
 	}
 
-	private void connectFloorBranches(IWorldEditor editor, Random rand, Floor floor, ILevelSettings settings) {
+	private void connectFloorBranches(IWorldEditor editor, RandomSource rand, Floor floor, ILevelSettings settings) {
 		while(!floor.getCells().isConnected()) {
 			CellManager cm = floor.getCells();
 			List<Cell> nearest = cm.getNearestPotentials();
@@ -130,7 +128,7 @@ public class LayoutManager {
 		}
 	}
 
-	private void placeRoom(IRoom room, Random rand, Floor floor, boolean shuffle) {
+	private void placeRoom(IRoom room, RandomSource rand, Floor floor, boolean shuffle) {
 		// try to find a place that avoids exclusion zones :)
 		if(findFit(room, rand, floor, true, shuffle)) return;
 		
@@ -138,7 +136,7 @@ public class LayoutManager {
 		findFit(room, rand, floor, false, shuffle);
 	}
 	
-	private boolean findFit(IRoom room, Random rand, Floor floor, boolean avoidZones, boolean shuffle) {
+	private boolean findFit(IRoom room, RandomSource rand, Floor floor, boolean avoidZones, boolean shuffle) {
 		for(Cell c : room.getCells(Cardinal.NORTH)) {
 			if(c.getLevelOffset() + this.floors.indexOf(floor) > this.floors.size() - 1) return false;
 		}

@@ -6,7 +6,10 @@ import java.util.Objects;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
-
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.chunk.LevelChunk;
 import org.jetbrains.annotations.NotNull;
 
 import com.greymerk.roguelike.editor.BlockContext;
@@ -18,11 +21,6 @@ import com.greymerk.roguelike.editor.shapes.IShape;
 import com.greymerk.roguelike.editor.shapes.Shape;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.chunk.WorldChunk;
 
 public class BoundingBox implements IBounded, IShape, Iterable<Coord>{
 
@@ -40,11 +38,11 @@ public class BoundingBox implements IBounded, IShape, Iterable<Coord>{
 		return new BoundingBox(origin);
 	}
 	
-	public static BoundingBox of(WorldChunk chunk) {
+	public static BoundingBox of(LevelChunk chunk) {
 		ChunkPos cpos = chunk.getPos();
 		return BoundingBox.of(
-				Coord.of(cpos.getStartX(), chunk.getBottomY(), cpos.getStartZ()),
-				Coord.of(cpos.getEndX(), chunk.getTopYInclusive(), cpos.getEndZ())
+				Coord.of(cpos.getMinBlockX(), chunk.getMinY(), cpos.getMinBlockZ()),
+				Coord.of(cpos.getMaxBlockX(), chunk.getMaxY(), cpos.getMaxBlockZ())
 				);
 				
 	}
@@ -72,7 +70,7 @@ public class BoundingBox implements IBounded, IShape, Iterable<Coord>{
 		this.correct();
 	}
 	
-	public BoundingBox(NbtCompound tag) {
+	public BoundingBox(CompoundTag tag) {
 		this.start = Coord.of(tag.getCompound("start").get());
 		this.end = Coord.of(tag.getCompound("end").get());
 		this.correct();
@@ -215,13 +213,13 @@ public class BoundingBox implements IBounded, IShape, Iterable<Coord>{
 	}
 
 	@Override
-	public void fill(IWorldEditor editor, Random rand, @NotNull IBlockFactory block) {
+	public void fill(IWorldEditor editor, RandomSource rand, @NotNull IBlockFactory block) {
 		this.getShape(Shape.RECTSOLID).fill(editor, rand, block);
 		
 	}
 
 	@Override
-	public void fill(IWorldEditor editor, Random rand, @NotNull IBlockFactory block, Predicate<BlockContext> p) {
+	public void fill(IWorldEditor editor, RandomSource rand, @NotNull IBlockFactory block, Predicate<BlockContext> p) {
 		this.getShape(Shape.RECTSOLID).fill(editor, rand, block, p);
 		
 	}

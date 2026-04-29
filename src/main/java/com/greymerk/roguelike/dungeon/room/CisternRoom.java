@@ -1,7 +1,8 @@
 package com.greymerk.roguelike.dungeon.room;
 
 import java.util.List;
-
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.block.Blocks;
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.fragment.parts.CellSupport;
 import com.greymerk.roguelike.dungeon.layout.Exit;
@@ -18,14 +19,11 @@ import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.editor.factories.BlockJumble;
 import com.greymerk.roguelike.editor.shapes.RectSolid;
 
-import net.minecraft.block.Blocks;
-import net.minecraft.util.math.random.Random;
-
 public class CisternRoom extends AbstractMediumRoom implements IRoom {
 
 	@Override
 	public void generate(IWorldEditor editor) {
-		Random rand = editor.getRandom(this.worldPos);
+		RandomSource rand = editor.getRandom(this.worldPos);
 		Coord origin = this.worldPos.copy().add(direction, Cell.SIZE);
 		
 		this.clear(editor, rand, origin);
@@ -37,7 +35,7 @@ public class CisternRoom extends AbstractMediumRoom implements IRoom {
 		this.generateExits(editor, rand);
 	}
 	
-	private void supports(IWorldEditor editor, Random rand, Coord origin) {
+	private void supports(IWorldEditor editor, RandomSource rand, Coord origin) {
 		CellSupport.generate(editor, rand, theme, origin.copy());
 		for(Cardinal dir : Cardinal.directions) {
 			Coord pos = origin.copy();
@@ -48,7 +46,7 @@ public class CisternRoom extends AbstractMediumRoom implements IRoom {
 		}
 	}
 	
-	private void ceiling(IWorldEditor editor, Random rand, Coord origin) {
+	private void ceiling(IWorldEditor editor, RandomSource rand, Coord origin) {
 		IBlockFactory wall = theme.getPrimary().getWall();
 		
 		Cardinal.directions.forEach(dir -> {
@@ -66,7 +64,7 @@ public class CisternRoom extends AbstractMediumRoom implements IRoom {
 		BoundingBox.of(origin).add(Cardinal.UP, 6).grow(Cardinal.directions, 8).fill(editor, rand, wall, Fill.SOLID);
 	}
 
-	private void water(IWorldEditor editor, Random rand, Coord origin) {
+	private void water(IWorldEditor editor, RandomSource rand, Coord origin) {
 		BoundingBox.of(origin).add(Cardinal.DOWN, 2)
 			.grow(Cardinal.directions, 9)
 			.fill(editor, rand, BlockJumble.ofBlocks(
@@ -76,7 +74,7 @@ public class CisternRoom extends AbstractMediumRoom implements IRoom {
 			.fill(editor, rand, theme.getPrimary().getLiquid(), Fill.AIR);
 	}
 
-	private void bridges(IWorldEditor editor, Random rand, Coord origin) {
+	private void bridges(IWorldEditor editor, RandomSource rand, Coord origin) {
 		
 		IBlockFactory floor = theme.getPrimary().getFloor();
 		IBlockFactory wall = theme.getPrimary().getWall();
@@ -127,7 +125,7 @@ public class CisternRoom extends AbstractMediumRoom implements IRoom {
 		}
 	}
 
-	private void walls(IWorldEditor editor, Random rand, Coord origin) {
+	private void walls(IWorldEditor editor, RandomSource rand, Coord origin) {
 		IStair stair = theme.getPrimary().getStair();
 		
 		Cardinal.directions.forEach(dir -> {
@@ -186,7 +184,7 @@ public class CisternRoom extends AbstractMediumRoom implements IRoom {
 		}
 	}
 
-	private void wallPillarPiece(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
+	private void wallPillarPiece(IWorldEditor editor, RandomSource rand, Coord origin, Cardinal dir) {
 		IStair stair = theme.getPrimary().getStair();
 		
 		Coord pos = origin.copy();
@@ -228,7 +226,7 @@ public class CisternRoom extends AbstractMediumRoom implements IRoom {
 		}
 	}
 
-	private void clear(IWorldEditor editor, Random rand, Coord origin) {
+	private void clear(IWorldEditor editor, RandomSource rand, Coord origin) {
 		BoundingBox.of(origin.copy()).add(Cardinal.DOWN)
 			.grow(Cardinal.UP, 6).grow(Cardinal.directions, 8)
 			.fill(editor, rand, Air.get(), Fill.SOLID);

@@ -2,7 +2,7 @@ package com.greymerk.roguelike.dungeon.room;
 
 import java.util.List;
 import java.util.stream.IntStream;
-
+import net.minecraft.util.RandomSource;
 import com.greymerk.roguelike.dungeon.cell.Cell;
 import com.greymerk.roguelike.dungeon.cell.CellManager;
 import com.greymerk.roguelike.dungeon.cell.CellState;
@@ -21,14 +21,12 @@ import com.greymerk.roguelike.editor.blocks.IronBar;
 import com.greymerk.roguelike.editor.boundingbox.BoundingBox;
 import com.greymerk.roguelike.editor.boundingbox.IBounded;
 
-import net.minecraft.util.math.random.Random;
-
 public class ImperialStairway extends AbstractRoom implements IRoom {
 
 	@Override
 	public void generate(IWorldEditor editor) {
 		Coord origin = this.getWorldPos().add(direction, Cell.SIZE * 2).freeze();
-		Random rand = editor.getRandom(this.getWorldPos());
+		RandomSource rand = editor.getRandom(this.getWorldPos());
 		
 		this.clear(editor, rand, origin);
 		this.walls(editor, rand, origin);
@@ -41,7 +39,7 @@ public class ImperialStairway extends AbstractRoom implements IRoom {
 		this.generateExits(editor, rand);
 	}
 
-	private void supports(IWorldEditor editor, Random rand, Coord origin) {
+	private void supports(IWorldEditor editor, RandomSource rand, Coord origin) {
 		CellSupport.generate(editor, rand, theme, origin);
 		Cardinal.directions.forEach(dir -> {
 			List.of(6, 12).forEach(i -> {
@@ -53,7 +51,7 @@ public class ImperialStairway extends AbstractRoom implements IRoom {
 		});
 	}
 
-	private void lowerRoom(IWorldEditor editor, Random rand, Coord origin) {
+	private void lowerRoom(IWorldEditor editor, RandomSource rand, Coord origin) {
 
 		BoundingBox.of(origin).add(direction, 14).add(Cardinal.UP, 3)
 			.grow(Cardinal.orthogonal(direction), 14).grow(Cardinal.UP, 5)
@@ -114,7 +112,7 @@ public class ImperialStairway extends AbstractRoom implements IRoom {
 		this.coveArch(editor, rand, origin.add(direction, 10).freeze(), direction);
 	}
 
-	private void inlay(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
+	private void inlay(IWorldEditor editor, RandomSource rand, Coord origin, Cardinal dir) {
 		theme.getPrimary().getStair().setOrientation(Cardinal.reverse(dir), true)
 			.set(editor, rand, origin.add(dir, 4).add(Cardinal.UP, 2));
 		
@@ -124,7 +122,7 @@ public class ImperialStairway extends AbstractRoom implements IRoom {
 		});
 	}
 
-	private void coveArch(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
+	private void coveArch(IWorldEditor editor, RandomSource rand, Coord origin, Cardinal dir) {
 		Cardinal.orthogonal(dir).forEach(o -> {
 			IntStream.range(0, 3).forEach(i -> {
 				theme.getPrimary().getStair().setOrientation(Cardinal.reverse(o), true)
@@ -136,7 +134,7 @@ public class ImperialStairway extends AbstractRoom implements IRoom {
 		});
 	}
 
-	private void buttress(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
+	private void buttress(IWorldEditor editor, RandomSource rand, Coord origin, Cardinal dir) {
 		BoundingBox.of(origin).add(dir, 4).grow(Cardinal.UP).fill(editor, rand, theme.getPrimary().getPillar());
 		theme.getPrimary().getWall()
 			.set(editor, rand, origin.add(dir, 4).add(Cardinal.UP, 2));
@@ -155,7 +153,7 @@ public class ImperialStairway extends AbstractRoom implements IRoom {
 		});
 	}
 
-	private void tunnels(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
+	private void tunnels(IWorldEditor editor, RandomSource rand, Coord origin, Cardinal dir) {
 		this.cell(editor, rand, origin.add(dir, 6).freeze(), List.of(
 				Exit.of(ExitType.ALCOVE, origin.add(dir, 6), Cardinal.left(dir)),
 				Exit.of(ExitType.ALCOVE, origin.add(dir, 6), Cardinal.right(dir)),
@@ -185,7 +183,7 @@ public class ImperialStairway extends AbstractRoom implements IRoom {
 		
 	}
 
-	private void cell(IWorldEditor editor, Random rand, Coord origin, List<Exit> exits) {
+	private void cell(IWorldEditor editor, RandomSource rand, Coord origin, List<Exit> exits) {
 		Cardinal.directions.forEach(dir -> {
 			BoundingBox.of(origin).add(Cardinal.UP, 3).add(dir, 2)
 				.grow(Cardinal.orthogonal(dir)).grow(Cardinal.left(dir))
@@ -205,7 +203,7 @@ public class ImperialStairway extends AbstractRoom implements IRoom {
 		});
 	}
 
-	private void stairway(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
+	private void stairway(IWorldEditor editor, RandomSource rand, Coord origin, Cardinal dir) {
 		BoundingBox.of(origin).add(Cardinal.DOWN, 6).add(dir, 4)
 			.grow(Cardinal.orthogonal(dir), 14).grow(dir, 10)
 			.fill(editor, rand, theme.getPrimary().getWall());
@@ -273,7 +271,7 @@ public class ImperialStairway extends AbstractRoom implements IRoom {
 		
 	}
 
-	private void archShelf(IWorldEditor editor, Random rand, Coord origin, Cardinal dir) {
+	private void archShelf(IWorldEditor editor, RandomSource rand, Coord origin, Cardinal dir) {
 		Cardinal.orthogonal(dir).forEach(o -> {
 			Pillar.generate(editor, rand, origin.add(dir, 2).add(o, 2), theme, 2, List.of(Cardinal.reverse(o)));
 		});
@@ -285,7 +283,7 @@ public class ImperialStairway extends AbstractRoom implements IRoom {
 		this.settings.getWallFragment(rand).generate(editor, rand, settings, origin, dir);
 	}
 
-	private void steps(IWorldEditor editor, Random rand, Coord origin, Cardinal dir, int count) {
+	private void steps(IWorldEditor editor, RandomSource rand, Coord origin, Cardinal dir, int count) {
 		IntStream.range(0, count).forEach(i -> {
 			theme.getPrimary().getStair().setOrientation(Cardinal.reverse(dir), false)
 				.fill(editor, rand, 
@@ -307,7 +305,7 @@ public class ImperialStairway extends AbstractRoom implements IRoom {
 		
 	}
 
-	private void upperLevel(IWorldEditor editor, Random rand, Coord origin) {
+	private void upperLevel(IWorldEditor editor, RandomSource rand, Coord origin) {
 		Cardinal.directions.forEach(dir -> {
 			BoundingBox.of(origin).add(dir, 10).add(Cardinal.DOWN)
 				.grow(dir, 4).grow(Cardinal.orthogonal(dir), 14)
@@ -359,7 +357,7 @@ public class ImperialStairway extends AbstractRoom implements IRoom {
 		});
 	}
 
-	private void ceiling(IWorldEditor editor, Random rand, Coord origin) {
+	private void ceiling(IWorldEditor editor, RandomSource rand, Coord origin) {
 		Cardinal.directions.forEach(dir -> {
 			List.of(2, 4, 8, 10, 14).forEach(i -> {
 				BoundingBox.of(origin).add(Cardinal.UP, 4).add(dir, i)
@@ -373,7 +371,7 @@ public class ImperialStairway extends AbstractRoom implements IRoom {
 			.fill(editor, rand, theme.getPrimary().getWall(), Fill.SOLID);
 	}
 
-	private void walls(IWorldEditor editor, Random rand, Coord origin) {
+	private void walls(IWorldEditor editor, RandomSource rand, Coord origin) {
 		Cardinal.directions.forEach(dir -> {
 			BoundingBox.of(origin).add(dir, 15)
 				.grow(Cardinal.orthogonal(dir), 15)
@@ -386,7 +384,7 @@ public class ImperialStairway extends AbstractRoom implements IRoom {
 			.fill(editor, rand, theme.getPrimary().getFloor());
 	}
 
-	private void clear(IWorldEditor editor, Random rand, Coord origin) {
+	private void clear(IWorldEditor editor, RandomSource rand, Coord origin) {
 		BoundingBox.of(origin)
 			.grow(Cardinal.directions, 14)
 			.grow(Cardinal.UP, 4).grow(Cardinal.DOWN, 10)

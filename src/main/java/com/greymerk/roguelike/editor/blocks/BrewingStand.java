@@ -2,17 +2,15 @@ package com.greymerk.roguelike.editor.blocks;
 
 import java.util.List;
 import java.util.stream.IntStream;
-
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BrewingStandBlockEntity;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.MetaBlock;
 import com.greymerk.roguelike.util.math.RandHelper;
-
-import net.minecraft.block.Blocks;
-import net.minecraft.block.entity.BrewingStandBlockEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.util.math.random.Random;
 
 public enum BrewingStand {
 
@@ -25,7 +23,7 @@ public enum BrewingStand {
 		this.id = id;
 	}
 	
-	public static void generate(IWorldEditor editor, Random rand, Coord pos, int fuel, List<ItemStack> potions){
+	public static void generate(IWorldEditor editor, RandomSource rand, Coord pos, int fuel, List<ItemStack> potions){
 		editor.setBlockEntity(pos, MetaBlock.of(Blocks.BREWING_STAND), BrewingStandBlockEntity.class).ifPresent(stand -> {
 			List<BrewingStand> shuffledSlots = slots.stream()
 				.sorted(RandHelper.randomizer(rand))
@@ -34,10 +32,10 @@ public enum BrewingStand {
 			IntStream
 				.range(0, Math.min(shuffledSlots.size(), potions.size()))
 				.forEach(i -> {
-					stand.setStack(shuffledSlots.get(i).id, potions.get(i));
+					stand.setItem(shuffledSlots.get(i).id, potions.get(i));
 				});
 			
-			if(fuel > 0) stand.setStack(FUEL.id, new ItemStack(Items.BLAZE_POWDER, fuel));
+			if(fuel > 0) stand.setItem(FUEL.id, new ItemStack(Items.BLAZE_POWDER, fuel));
 		});
 	}
 }
