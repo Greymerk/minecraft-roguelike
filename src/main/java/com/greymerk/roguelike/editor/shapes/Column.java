@@ -27,12 +27,12 @@ public class Column implements IShape {
 	
 	@Override
 	public void fill(IWorldEditor editor, RandomSource rand, IBlockFactory block) {
-		this.forEach(c -> block.set(editor, rand, top, Fill.ALWAYS));
+		this.forEach(_ -> block.set(editor, rand, top, Fill.ALWAYS));
 	}
 
 	@Override
 	public void fill(IWorldEditor editor, RandomSource rand, IBlockFactory block, Predicate<BlockContext> p) {
-		this.forEach(c -> block.set(editor, rand, top, p));
+		this.forEach(_ -> block.set(editor, rand, top, p));
 	}
 	
 	public List<Coord> getUntilSolid(IWorldEditor editor){

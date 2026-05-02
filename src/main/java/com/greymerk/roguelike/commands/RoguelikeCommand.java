@@ -11,7 +11,7 @@ import net.minecraft.server.permissions.Permissions;
 public class RoguelikeCommand {
 	
 	public static CommandRegistrationCallback getListener() {
-		return (dispatcher, registryAccess, environment) -> dispatcher.register(getCommand());
+		return (dispatcher, _, _) -> dispatcher.register(getCommand());
 	}
 	
 	public static LiteralArgumentBuilder<CommandSourceStack> getCommand(){

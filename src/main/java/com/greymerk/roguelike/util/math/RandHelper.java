@@ -81,7 +81,7 @@ public class RandHelper {
 
 	    private int valueFor(T t) {
 	        synchronized (map) {
-	            return map.computeIfAbsent(t, ignore -> random.nextInt());
+	            return map.computeIfAbsent(t, _ -> random.nextInt());
 	        }
 	    }
 

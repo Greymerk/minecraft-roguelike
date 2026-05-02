@@ -11,8 +11,8 @@ import com.greymerk.roguelike.editor.Coord;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.DataResult;
 
-import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtOps;
+import net.minecraft.nbt.Tag;
 
 class BoundingBoxTest {
 
@@ -179,9 +179,9 @@ class BoundingBoxTest {
 		Coord e = Coord.of(-9, 2, 18);
 		BoundingBox bb = BoundingBox.of(s, e);
 		
-		final DataResult<NbtElement> enc = BoundingBox.CODEC.encodeStart(NbtOps.INSTANCE, bb);
-		NbtElement nbt = enc.getOrThrow();
-		final DataResult<Pair<BoundingBox, NbtElement>> dec = BoundingBox.CODEC.decode(NbtOps.INSTANCE, nbt);
+		final DataResult<Tag> enc = BoundingBox.CODEC.encodeStart(NbtOps.INSTANCE, bb);
+		Tag nbt = enc.getOrThrow();
+		final DataResult<Pair<BoundingBox, Tag>> dec = BoundingBox.CODEC.decode(NbtOps.INSTANCE, nbt);
 		BoundingBox bb2 = dec.getOrThrow().getFirst();
 		
 		assert(bb.equals(bb2));		

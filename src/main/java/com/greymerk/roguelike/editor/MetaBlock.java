@@ -107,25 +107,33 @@ public class MetaBlock extends BlockBase{
 		return this.state.canBeReplaced();
 	}
 	
-	public boolean isPlant() {
-		if(this.isIn(BlockTags.LOGS)) return true;
-		if(this.isIn(BlockTags.SWORD_EFFICIENT)) return true;
-		return false;
-	}
-	
 	public boolean isGround() {
-		if(this.isPlant()) return false;
+		if(this.isIn(BlockTags.AIR)) return false;
 		
-		List<TagKey<Block>> tags = List.of(
+		// plants etc
+		if(this.isIn(List.of(
+			BlockTags.SWORD_EFFICIENT,
+			BlockTags.MINEABLE_WITH_HOE,
+			BlockTags.MINEABLE_WITH_AXE,
+			BlockTags.SNOW,
+			BlockTags.CLIMBABLE,
+			BlockTags.REPLACEABLE_BY_TREES,
+			BlockTags.FLOWERS
+			))) return false;
+		
+		if(this.getBlock() == Blocks.CACTUS) return false;
+		if(this.getBlock() == Blocks.ICE) return false;
+		
+		// stone & dirt etc
+		return this.isIn(List.of(
 				BlockTags.BASE_STONE_OVERWORLD, 
 				BlockTags.DIRT, 
-				BlockTags.SAND, 
-				BlockTags.SNOW,
+				BlockTags.SAND,
+				BlockTags.ICE,
 				BlockTags.STONE_ORE_REPLACEABLES, 
 				BlockTags.MINEABLE_WITH_SHOVEL,
-				BlockTags.BADLANDS_TERRACOTTA);
+				BlockTags.BADLANDS_TERRACOTTA));
 		
-		return this.isIn(tags);
 	}
 
 	public boolean isLiquid() {

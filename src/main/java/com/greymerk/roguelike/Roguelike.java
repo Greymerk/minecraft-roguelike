@@ -30,6 +30,7 @@ public class Roguelike implements ModInitializer {
 		RoguelikeRules.init();	
 	}
 	
+	@SuppressWarnings("deprecation")
 	@Override
 	public void onInitialize() {
 		Load listener = new ServerLoadListener();

@@ -5,10 +5,10 @@ import org.junit.jupiter.api.Test;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.DataResult;
 
-import net.minecraft.nbt.NbtElement;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.NbtOps;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
+import net.minecraft.nbt.Tag;
+import net.minecraft.world.level.ChunkPos;
 
 class CoordTest {
 
@@ -201,12 +201,12 @@ class CoordTest {
 
 	void testGetChunkPos() {
 		ChunkPos cp = new ChunkPos(0,0);
-		BlockPos bp = cp.getCenterAtY(0);
+		BlockPos bp = cp.getMiddleBlockPosition(0);
 		Coord pos = Coord.of(bp);
 		assert(cp.equals(pos.getChunkPos()));
 		
 		cp = new ChunkPos(3, -5);
-		bp = cp.getCenterAtY(0);
+		bp = cp.getMiddleBlockPosition(0);
 		pos = Coord.of(bp);
 		assert(cp.equals(pos.getChunkPos()));
 		
@@ -245,11 +245,11 @@ class CoordTest {
 	void testCodec() {
 		final Coord c = Coord.of(12, -4, 0);
 		
-		final DataResult<NbtElement> enc = Coord.CODEC.encodeStart(NbtOps.INSTANCE, c);
+		final DataResult<Tag> enc = Coord.CODEC.encodeStart(NbtOps.INSTANCE, c);
 		
-		NbtElement e = enc.getOrThrow();
+		Tag e = enc.getOrThrow();
 		
-		final DataResult<Pair<Coord, NbtElement>> dec = Coord.CODEC.decode(NbtOps.INSTANCE, e);
+		final DataResult<Pair<Coord, Tag>> dec = Coord.CODEC.decode(NbtOps.INSTANCE, e);
 		
 		Coord d = dec.getOrThrow().getFirst();
 		

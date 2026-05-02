@@ -31,7 +31,7 @@ public class SpiderNest implements IFragment {
 		
 		ends.forEach(end -> {
 			getStrand(editor, origin, end).ifPresent(strand -> {
-				strand.forEach(c -> {
+				strand.forEach(_ -> {
 					strand.fill(editor, rand, MetaBlock.of(Blocks.COBWEB), Fill.AIR);
 				});
 			});

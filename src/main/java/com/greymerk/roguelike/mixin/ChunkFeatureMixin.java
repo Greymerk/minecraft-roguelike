@@ -13,10 +13,10 @@ import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.IWorldInfo;
 import com.greymerk.roguelike.editor.WorldEditor;
 import com.greymerk.roguelike.gamerules.RoguelikeRules;
-import net.minecraft.resources.ResourceKey;
+
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ChunkPos;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.chunk.ChunkAccess;
@@ -26,10 +26,11 @@ import net.minecraft.world.level.chunk.ChunkGenerator;
 @Mixin(ChunkGenerator.class)
 public class ChunkFeatureMixin {
 	
+	@Deprecated
 	@Inject(at = @At("HEAD"), method = "applyBiomeDecoration")
 	public void generateFeatures(WorldGenLevel world, ChunkAccess chunk, StructureManager structureAccessor, CallbackInfo info) {
-		ResourceKey<Level> worldKey = world.getLevel().dimension();
-		IWorldEditor editor = new WorldEditor(world, worldKey);
+		ServerLevel sw = world.getLevel();
+		IWorldEditor editor = WorldEditor.of(sw);
 		IWorldInfo worldInfo = editor.getInfo();
 		if(!worldInfo.getGameRules().get(RoguelikeRules.GEN_ROGUELIKE_DUNGEONS)) return;
 		

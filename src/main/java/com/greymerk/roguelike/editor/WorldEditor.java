@@ -2,18 +2,18 @@ package com.greymerk.roguelike.editor;
 
 import java.time.Instant;
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Predicate;
+
+import com.greymerk.roguelike.config.Config;
+
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.FallingBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -22,7 +22,6 @@ import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.chunk.status.ChunkStatus;
 import net.minecraft.world.level.levelgen.LegacyRandomSource;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import com.greymerk.roguelike.config.Config;
 
 public class WorldEditor implements IWorldEditor{
 
@@ -38,9 +37,6 @@ public class WorldEditor implements IWorldEditor{
 	public static WorldEditor of(ServerLevel world) {
 		return new WorldEditor(world);
 	}
-	
-	@Deprecated
-	public WorldEditor(WorldGenLevel world, ResourceKey<Level> worldKey){}
 
 	private WorldEditor(Level world) {
 		this.world = world;
@@ -177,12 +173,7 @@ public class WorldEditor implements IWorldEditor{
 
 		while(cursor.getY() > seaLevel - 3) {
 			MetaBlock m = this.getBlock(cursor);
-			if(m.isIn(List.of(BlockTags.LOGS, BlockTags.LEAVES))) {
-				cursor.add(Cardinal.DOWN);
-				continue;
-			}
-			
-			if(!world.isEmptyBlock(cursor.getBlockPos()) && !m.isPlant()) return cursor;
+			if(m.isGround()) return cursor;
 			cursor.add(Cardinal.DOWN);
 		}
 		
