@@ -127,7 +127,7 @@ public class MetaBlock extends BlockBase{
 		// stone & dirt etc
 		return this.isIn(List.of(
 				BlockTags.BASE_STONE_OVERWORLD, 
-				BlockTags.DIRT, 
+				BlockTags.SUBSTRATE_OVERWORLD, 
 				BlockTags.SAND,
 				BlockTags.ICE,
 				BlockTags.STONE_ORE_REPLACEABLES, 

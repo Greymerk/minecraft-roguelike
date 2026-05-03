@@ -49,7 +49,6 @@ public class SculkRoom extends AbstractLargeRoom implements IRoom {
 		floor(editor, rand, origin);
 		braziers(editor, rand, origin);
 		pillars(editor, rand, origin);
-		deco(editor, rand, origin);
 		tower(editor, rand, origin);
 		bridges(editor, rand, origin);
 		placeSpawners(editor, rand, origin);
@@ -128,16 +127,6 @@ public class SculkRoom extends AbstractLargeRoom implements IRoom {
 		Lantern.set(editor, origin.copy().add(Cardinal.UP, 6), Lantern.SOUL, true);
 		BoundingBox.of(origin).add(Cardinal.UP, 7).grow(Cardinal.directions, 2).fill(editor, rand, walls);
 		MetaBlock.of(Blocks.SCULK_CATALYST).set(editor, origin);
-	}
-
-	private void deco(IWorldEditor editor, RandomSource rand, Coord origin) {
-		Cardinal.directions.forEach(dir -> {
-			Cardinal.orthogonal(dir).forEach(o -> {
-				List.of(6, 12).forEach(step -> {
-					settings.getWallFragment(rand).generate(editor, rand, settings, origin.copy().add(dir, 12).add(o, step), dir);
-				});
-			});
-		});
 	}
 
 	private void pillars(IWorldEditor editor, RandomSource rand, Coord origin) {
