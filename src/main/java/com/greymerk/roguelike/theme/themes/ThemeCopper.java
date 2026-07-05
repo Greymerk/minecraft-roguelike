@@ -34,8 +34,8 @@ public class ThemeCopper extends ThemeBase implements ITheme {
 				));
 		
 		BlockJumble copper = BlockJumble.of(List.of(
-				MetaBlock.of(Blocks.CHISELED_COPPER),
-				MetaBlock.of(Blocks.CUT_COPPER)
+				MetaBlock.of(Blocks.CHISELED_COPPER.waxed().unaffected()),
+				MetaBlock.of(Blocks.CUT_COPPER.waxed().unaffected())
 				));
 
 		BlockLayers walls = new BlockLayers(base);

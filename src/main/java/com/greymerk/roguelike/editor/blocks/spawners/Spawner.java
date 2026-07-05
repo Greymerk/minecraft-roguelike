@@ -3,8 +3,10 @@ package com.greymerk.roguelike.editor.blocks.spawners;
 import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
+
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 
 public enum Spawner {
 	
@@ -38,22 +40,22 @@ public enum Spawner {
 	public static EntityType<?> getType(Spawner type){
 		
 		switch(type) {
-		case BAT: return EntityType.BAT;
-		case BLAZE: return EntityType.BLAZE;
-		case CAVESPIDER: return EntityType.CAVE_SPIDER;
-		case CREEPER: return EntityType.CREEPER;
-		case ENDERMAN: return EntityType.ENDERMAN;
-		case LAVASLIME: return EntityType.MAGMA_CUBE;
-		case PIGZOMBIE: return EntityType.ZOMBIFIED_PIGLIN;
-		case PRIMEDTNT: return EntityType.TNT;
-		case SILVERFISH: return EntityType.SILVERFISH;
-		case SKELETON: return EntityType.SKELETON;
-		case SLIME: return EntityType.SLIME;
-		case SPIDER: return EntityType.SPIDER;
-		case WITCH: return EntityType.WITCH;
-		case WITHERBOSS: return EntityType.WITHER;
-		case ZOMBIE: return EntityType.ZOMBIE;
-		default: return EntityType.ZOMBIE;
+		case BAT: return EntityTypes.BAT;
+		case BLAZE: return EntityTypes.BLAZE;
+		case CAVESPIDER: return EntityTypes.CAVE_SPIDER;
+		case CREEPER: return EntityTypes.CREEPER;
+		case ENDERMAN: return EntityTypes.ENDERMAN;
+		case LAVASLIME: return EntityTypes.MAGMA_CUBE;
+		case PIGZOMBIE: return EntityTypes.ZOMBIFIED_PIGLIN;
+		case PRIMEDTNT: return EntityTypes.TNT;
+		case SILVERFISH: return EntityTypes.SILVERFISH;
+		case SKELETON: return EntityTypes.SKELETON;
+		case SLIME: return EntityTypes.SLIME;
+		case SPIDER: return EntityTypes.SPIDER;
+		case WITCH: return EntityTypes.WITCH;
+		case WITHERBOSS: return EntityTypes.WITHER;
+		case ZOMBIE: return EntityTypes.ZOMBIE;
+		default: return EntityTypes.ZOMBIE;
 		
 		}
 	}

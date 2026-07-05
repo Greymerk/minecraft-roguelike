@@ -45,7 +45,7 @@ public class ItemBlock extends ItemBase{
 		if(diff.lt(Difficulty.HARD)) {
 			WeightedRandomizer<ItemStack> wool = new WeightedRandomizer<ItemStack>(2);
 			List.of(Color.values()).forEach(color -> {
-				wool.add(new WeightedRandomLoot(ColorBlock.getWool(color), 2, 8, 1));
+				wool.add(new WeightedRandomLoot(ColorBlock.getWool(color).getBlock(), 2, 8, 1));
 			});
 			this.loot.add(wool);
 		}

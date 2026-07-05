@@ -68,7 +68,7 @@ public class Banner {
 	public static ItemStack get(RegistryAccess reg, RandomSource rand){
 		Registry<BannerPattern> patterns = reg.lookupOrThrow(Registries.BANNER_PATTERN);
 		
-		ItemStack banner = new ItemStack(Items.BLACK_BANNER);
+		ItemStack banner = new ItemStack(Items.BANNER.black());
 		banner.set(DataComponents.BANNER_PATTERNS, createLayersComponent(patterns, rand, rand.nextInt(3) + 3));
 		return banner;
 	}

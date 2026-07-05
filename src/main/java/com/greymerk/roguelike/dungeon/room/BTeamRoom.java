@@ -75,7 +75,7 @@ public class BTeamRoom extends AbstractRoom implements IRoom {
 	}
 
 	private void table(IWorldEditor editor, RandomSource rand, Coord origin) {
-		MetaBlock carpet = MetaBlock.of(Blocks.GRAY_CARPET);
+		MetaBlock carpet = MetaBlock.of(Blocks.CARPET.gray());
 		IStair chair = Stair.of(Stair.NETHERBRICK);
 		BoundingBox.of(origin).add(direction).grow(Cardinal.orthogonal(direction), 4).fill(editor, rand, carpet);
 		BoundingBox.of(origin).add(direction, 6).grow(Cardinal.orthogonal(direction), 4).fill(editor, rand, carpet);
@@ -100,7 +100,7 @@ public class BTeamRoom extends AbstractRoom implements IRoom {
 		BoundingBox.of(origin).add(Cardinal.left(direction), 6).add(Cardinal.UP, 4).grow(direction, 7).fill(editor, rand, theme.getPrimary().getWall());
 		BoundingBox.of(origin).add(Cardinal.left(direction), 6).add(Cardinal.UP).grow(Cardinal.UP, 2).grow(direction, 7).fill(editor, rand, MetaBlock.of(Blocks.BOOKSHELF));
 		BoundingBox.of(origin).add(Cardinal.left(direction), 6).add(direction, 2).grow(direction, 3).fill(editor, rand, MetaBlock.of(Blocks.NOTE_BLOCK));
-		BoundingBox.of(origin).add(Cardinal.left(direction), 6).add(direction, 2).add(Cardinal.UP).grow(Cardinal.UP, 2).grow(direction, 3).fill(editor, rand, MetaBlock.of(Blocks.BLACK_WOOL));
+		BoundingBox.of(origin).add(Cardinal.left(direction), 6).add(direction, 2).add(Cardinal.UP).grow(Cardinal.UP, 2).grow(direction, 3).fill(editor, rand, MetaBlock.of(Blocks.WOOL.black()));
 		Log.get(Wood.JUNGLE, Cardinal.left(direction)).set(editor, origin.add(Cardinal.left(direction), 6).add(direction).add(Cardinal.UP, 2));
 		Log.get(Wood.JUNGLE, Cardinal.left(direction)).set(editor, origin.add(Cardinal.left(direction), 6).add(direction, 6).add(Cardinal.UP, 2));
 		MetaBlock cocao = Crops.getCocao(Cardinal.left(direction));

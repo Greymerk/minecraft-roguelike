@@ -26,7 +26,7 @@ public enum DoorType {
 		case BAMBOO: return Blocks.BAMBOO_DOOR;
 		case CRIMSON: return Blocks.CRIMSON_DOOR;
 		case WARPED: return Blocks.WARPED_DOOR;
-		case COPPER: return Blocks.COPPER_DOOR;
+		case COPPER: return Blocks.COPPER_DOOR.weathering().unaffected();
 		default: return Blocks.OAK_DOOR;
 		}
 	}

@@ -2,9 +2,7 @@ package com.greymerk.roguelike.editor.blocks;
 
 import java.util.Arrays;
 import java.util.List;
-import net.minecraft.util.RandomSource;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
+
 import com.greymerk.roguelike.editor.Cardinal;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
@@ -14,6 +12,10 @@ import com.greymerk.roguelike.editor.factories.BlockCheckers;
 import com.greymerk.roguelike.editor.shapes.RectSolid;
 import com.greymerk.roguelike.util.Color;
 import com.greymerk.roguelike.util.math.RandHelper;
+
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class Carpet {
 
@@ -43,25 +45,7 @@ public class Carpet {
 		return MetaBlock.of(fromColor(color));
 	}
 	
-	private static Block fromColor(Color color) {
-		switch(color) {
-		case BLACK: return Blocks.BLACK_CARPET;
-		case BLUE: return Blocks.BLUE_CARPET;
-		case BROWN: return Blocks.BROWN_CARPET;
-		case CYAN: return Blocks.CYAN_CARPET;
-		case GRAY: return Blocks.GRAY_CARPET;
-		case GREEN: return Blocks.GREEN_CARPET;
-		case LIGHT_BLUE: return Blocks.LIGHT_BLUE_CARPET;
-		case LIGHT_GRAY: return Blocks.LIGHT_GRAY_CARPET;
-		case LIME: return Blocks.LIME_CARPET;
-		case MAGENTA: return Blocks.MAGENTA_CARPET;
-		case ORANGE: return Blocks.ORANGE_CARPET;
-		case PINK: return Blocks.PINK_CARPET;
-		case PURPLE: return Blocks.PURPLE_CARPET;
-		case RED: return Blocks.RED_CARPET;
-		case WHITE: return Blocks.WHITE_CARPET;
-		case YELLOW: return Blocks.YELLOW_CARPET;
-		default: return Blocks.BLACK_CARPET;
-		}
+	private static BlockState fromColor(Color color) {
+		return Blocks.CARPET.pick(Color.get(color)).defaultBlockState();
 	}
 }

@@ -19,7 +19,7 @@ public class WallBanner {
 	
 	public static void generate(IWorldEditor editor, ItemStack banner, Coord origin, Cardinal dir) {
 		editor.setBlockEntity(origin,
-			MetaBlock.of(Blocks.BLACK_WALL_BANNER)
+			MetaBlock.of(Blocks.WALL_BANNER.black())
 				.with(HorizontalDirectionalBlock.FACING, Cardinal.facing(dir)), 
 			BannerBlockEntity.class).ifPresent(bannerEntity -> {
 				bannerEntity.applyComponentsFromItemStack(banner);
