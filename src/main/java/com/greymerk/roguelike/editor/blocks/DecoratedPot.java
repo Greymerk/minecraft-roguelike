@@ -1,5 +1,7 @@
 package com.greymerk.roguelike.editor.blocks;
 
+import java.util.Optional;
+
 import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
@@ -8,11 +10,13 @@ import com.greymerk.roguelike.treasure.loot.Loot;
 import com.greymerk.roguelike.util.IWeighted;
 import com.greymerk.roguelike.util.WeightedChoice;
 import com.greymerk.roguelike.util.WeightedRandomizer;
+
 import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.DecoratedPotBlockEntity;
@@ -28,7 +32,11 @@ public class DecoratedPot {
 		editor.setBlockEntity(origin, MetaBlock.of(Blocks.DECORATED_POT), DecoratedPotBlockEntity.class).ifPresent(potEntity -> {
 			IWeighted<Item> faceroll = getFaceRoller();
 			
-			PotDecorations sherds = new PotDecorations(faceroll.get(rand), faceroll.get(rand), faceroll.get(rand), faceroll.get(rand));
+			PotDecorations sherds = new PotDecorations(
+					faceOf(faceroll.get(rand)), 
+					faceOf(faceroll.get(rand)), 
+					faceOf(faceroll.get(rand)), 
+					faceOf(faceroll.get(rand)));
 			
 			DataComponentPatch.Builder changes = DataComponentPatch.builder();
 			changes.set(DataComponents.POT_DECORATIONS, sherds);
@@ -40,6 +48,10 @@ public class DecoratedPot {
 			
 			potEntity.setChanged();	
 		});
+	}
+	
+	private static Optional<ItemStackTemplate> faceOf(Item item){
+		return Optional.of(ItemStackTemplate.fromNonEmptyStack(new ItemStack(item)));
 	}
 	
 	private static IWeighted<Item> getFaceRoller(){
