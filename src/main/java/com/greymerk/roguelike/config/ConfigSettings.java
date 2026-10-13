@@ -44,6 +44,7 @@ public class ConfigSettings {
 		this.configs.putMixed(MixedKey.ofBoolean(Config.ROGUELIKE_LOOT.keyOf()), true);
 		this.configs.putMixed(MixedKey.ofBoolean(Config.DETERMINISTIC.keyOf()), true);
 		this.configs.putMixed(MixedKey.ofInteger(Config.DISTANCE_TO_VILLAGE.keyOf()), 6);
+		this.configs.putMixed(MixedKey.ofBoolean(Config.MENDING_LOOT.keyOf()), true);
 		if(file.exists()) this.read();
 		this.store();
 	}
@@ -58,6 +59,7 @@ public class ConfigSettings {
 		json.addProperty(Config.ROGUELIKE_LOOT.keyOf(), this.get(MixedKey.ofBoolean(Config.ROGUELIKE_LOOT.keyOf())));
 		json.addProperty(Config.DETERMINISTIC.keyOf(), this.get(MixedKey.ofBoolean(Config.DETERMINISTIC.keyOf())));
 		json.addProperty(Config.DISTANCE_TO_VILLAGE.keyOf(), this.get(MixedKey.ofInteger(Config.DISTANCE_TO_VILLAGE.keyOf())));
+		json.addProperty(Config.MENDING_LOOT.keyOf(), this.get(MixedKey.ofBoolean(Config.MENDING_LOOT.keyOf())));
 		return json;
 	}
 	
@@ -70,6 +72,7 @@ public class ConfigSettings {
 		if(json.has(Config.ROGUELIKE_LOOT.keyOf())) configs.put(MixedKey.ofBoolean(Config.ROGUELIKE_LOOT.keyOf()), json.get(Config.ROGUELIKE_LOOT.keyOf()).getAsBoolean());
 		if(json.has(Config.DETERMINISTIC.keyOf())) configs.put(MixedKey.ofBoolean(Config.DETERMINISTIC.keyOf()), json.get(Config.DETERMINISTIC.keyOf()).getAsBoolean());
 		if(json.has(Config.DISTANCE_TO_VILLAGE.keyOf())) configs.put(MixedKey.ofInteger(Config.DISTANCE_TO_VILLAGE.keyOf()), json.get(Config.DISTANCE_TO_VILLAGE.keyOf()).getAsInt());
+		if(json.has(Config.MENDING_LOOT.keyOf())) configs.put(MixedKey.ofBoolean(Config.MENDING_LOOT.keyOf()), json.get(Config.MENDING_LOOT.keyOf()).getAsBoolean());
 	}
 	
 	public <T> T get(MixedKey<T> key) {

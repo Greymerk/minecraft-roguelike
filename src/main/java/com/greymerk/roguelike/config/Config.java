@@ -13,7 +13,8 @@ public enum Config {
 	ROOMS_PER_LEVEL("rooms_per_level"),
 	ROGUELIKE_LOOT("roguelike_loot"),
 	DETERMINISTIC("deterministic"),
-	DISTANCE_TO_VILLAGE("distance_to_village");
+	DISTANCE_TO_VILLAGE("distance_to_village"),
+	MENDING_LOOT("mending_loot");
 
 	private final String key;
 	

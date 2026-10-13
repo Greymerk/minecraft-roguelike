@@ -18,6 +18,8 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
+
+import com.greymerk.roguelike.config.Config;
 import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.util.math.RandHelper;
 
@@ -195,7 +197,7 @@ public enum Enchant {
 			return Enchant.getBook(reg, rand, type, diff);	
 		}
 
-		if(rand.nextInt(6) == 0) return Enchant.getBook(reg, Enchant.MENDING);
+		if(rand.nextInt(6) == 0 && Config.ofBoolean(Config.MENDING_LOOT)) return Enchant.getBook(reg, Enchant.MENDING);
 		
 		Optional<HolderSet.Named<Enchantment>> optional = reg.lookupOrThrow(Registries.ENCHANTMENT)
 				.get(EnchantmentTags.IN_ENCHANTING_TABLE);

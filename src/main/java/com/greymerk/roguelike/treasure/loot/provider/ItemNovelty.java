@@ -1,5 +1,6 @@
 package com.greymerk.roguelike.treasure.loot.provider;
 
+import com.greymerk.roguelike.config.Config;
 import com.greymerk.roguelike.treasure.loot.Enchant;
 import com.greymerk.roguelike.treasure.loot.Loot;
 import com.greymerk.roguelike.util.IWeighted;
@@ -43,7 +44,7 @@ public enum ItemNovelty {
 			item.enchant(Enchant.getEnchant(reg, Enchant.SHARPNESS), 5);
 			item.enchant(Enchant.getEnchant(reg, Enchant.KNOCKBACK), 2);
 			item.enchant(Enchant.getEnchant(reg, Enchant.UNBREAKING), 3);
-			item.enchant(Enchant.getEnchant(reg, Enchant.MENDING), 1);
+			if(Config.ofBoolean(Config.MENDING_LOOT)) item.enchant(Enchant.getEnchant(reg, Enchant.MENDING), 1);
 			return item;
 		case ZISTEAU:
 			item = new ItemStack(Items.OAK_SIGN);
@@ -101,7 +102,7 @@ public enum ItemNovelty {
 			item.enchant(Enchant.getEnchant(reg, Enchant.PUNCH), 2);
 			item.enchant(Enchant.getEnchant(reg, Enchant.UNBREAKING), 3);
 			item.enchant(Enchant.getEnchant(reg, Enchant.INFINITY), 1);
-			item.enchant(Enchant.getEnchant(reg, Enchant.MENDING), 1);
+			if(Config.ofBoolean(Config.MENDING_LOOT)) item.enchant(Enchant.getEnchant(reg, Enchant.MENDING), 1);
 			return item;
 		case VECHS:
 			item = new ItemStack(Items.STICK);

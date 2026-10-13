@@ -1,5 +1,6 @@
 package com.greymerk.roguelike.treasure.loot.provider;
 
+import com.greymerk.roguelike.config.Config;
 import com.greymerk.roguelike.dungeon.Difficulty;
 import com.greymerk.roguelike.treasure.loot.Enchant;
 import com.greymerk.roguelike.treasure.loot.Equipment;
@@ -147,7 +148,7 @@ public class ItemSpecialty extends ItemBase {
 				return item;
 			}
 			
-			if(rand.nextInt(5) == 0){
+			if(Config.ofBoolean(Config.MENDING_LOOT) && rand.nextInt(5) == 0){
 				item.enchant(Enchant.getEnchant(reg, Enchant.MENDING), 1);
 			}
 			
@@ -168,7 +169,7 @@ public class ItemSpecialty extends ItemBase {
 				return item;
 			}
 			
-			if(rand.nextInt(5) == 0){
+			if(Config.ofBoolean(Config.MENDING_LOOT) && rand.nextInt(5) == 0){
 				item.enchant(Enchant.getEnchant(reg, Enchant.MENDING), 1);
 			}
 			
@@ -200,7 +201,7 @@ public class ItemSpecialty extends ItemBase {
 				return item;
 			}
 			item.enchant(Enchant.getEnchant(reg, Enchant.UNBREAKING), quality == Quality.DIAMOND ? 3 : 1 + rand.nextInt(2));
-			item.enchant(Enchant.getEnchant(reg, Enchant.MENDING), 1);
+			if(Config.ofBoolean(Config.MENDING_LOOT)) item.enchant(Enchant.getEnchant(reg, Enchant.MENDING), 1);
 			Loot.setItemName(item, "Eldritch Blade");
 			Loot.setItemLore(item, "Rune Etched", TextFormat.DARKGREEN);
 			return item;
@@ -210,7 +211,7 @@ public class ItemSpecialty extends ItemBase {
 				item.enchant(Enchant.getEnchant(reg, Enchant.SHARPNESS), 1);
 			}
 			item.enchant(Enchant.getEnchant(reg, Enchant.UNBREAKING), 3);
-			item.enchant(Enchant.getEnchant(reg, Enchant.MENDING), 1);
+			if(Config.ofBoolean(Config.MENDING_LOOT)) item.enchant(Enchant.getEnchant(reg, Enchant.MENDING), 1);
 			Loot.setItemName(item, "Tempered Blade");
 			Loot.setItemLore(item, "Highly Durable", TextFormat.DARKGREEN);
 			return item;
@@ -251,7 +252,7 @@ public class ItemSpecialty extends ItemBase {
 			item.enchant(Enchant.getEnchant(reg, Enchant.FLAME), 1);
 			item.enchant(Enchant.getEnchant(reg, Enchant.INFINITY), 1);
 			item.enchant(Enchant.getEnchant(reg, Enchant.UNBREAKING), getUnbreakingLevel(quality, rand));
-			item.enchant(Enchant.getEnchant(reg, Enchant.MENDING), 1);
+			if(Config.ofBoolean(Config.MENDING_LOOT)) item.enchant(Enchant.getEnchant(reg, Enchant.MENDING), 1);
 			Loot.setItemName(item, "Eldritch Bow");
 			Loot.setItemLore(item, "Warm to the touch", TextFormat.DARKGREEN);
 			return item;
@@ -260,7 +261,7 @@ public class ItemSpecialty extends ItemBase {
 			item.enchant(Enchant.getEnchant(reg, Enchant.FLAME), 1);
 			item.enchant(Enchant.getEnchant(reg, Enchant.INFINITY), 1);
 			item.enchant(Enchant.getEnchant(reg, Enchant.UNBREAKING), getUnbreakingLevel(quality, rand));
-			item.enchant(Enchant.getEnchant(reg, Enchant.MENDING), 1);
+			if(Config.ofBoolean(Config.MENDING_LOOT)) item.enchant(Enchant.getEnchant(reg, Enchant.MENDING), 1);
 			Loot.setItemName(item, "Eldritch Bow");
 			Loot.setItemLore(item, "Warm to the touch", TextFormat.DARKGREEN);
 			return item;
@@ -320,7 +321,7 @@ public class ItemSpecialty extends ItemBase {
 		
 		item.enchant(Enchant.getEnchant(reg, Enchant.UNBREAKING), getUnbreakingLevel(quality, rand));
 
-		if(rand.nextInt(10) == 0){
+		if(rand.nextInt(10) == 0 && Config.ofBoolean(Config.MENDING_LOOT)){
 			item.enchant(Enchant.getEnchant(reg, Enchant.MENDING), 1);
 		}		
 		
@@ -383,7 +384,7 @@ public class ItemSpecialty extends ItemBase {
 		
 		item.enchant(Enchant.getEnchant(reg, Enchant.UNBREAKING), getUnbreakingLevel(quality, rand));
 		
-		if(rand.nextInt(10) == 0){
+		if(rand.nextInt(10) == 0 && Config.ofBoolean(Config.MENDING_LOOT)){
 			item.enchant(Enchant.getEnchant(reg, Enchant.MENDING), 1);
 		}
 		
@@ -444,7 +445,7 @@ public class ItemSpecialty extends ItemBase {
 		
 		item.enchant(Enchant.getEnchant(reg, Enchant.UNBREAKING), getUnbreakingLevel(quality, rand));
 		
-		if(rand.nextInt(10) == 0){
+		if(rand.nextInt(10) == 0 && Config.ofBoolean(Config.MENDING_LOOT)){
 			item.enchant(Enchant.getEnchant(reg, Enchant.MENDING), 1);
 		}
 		
@@ -505,7 +506,7 @@ public class ItemSpecialty extends ItemBase {
 		
 		item.enchant(Enchant.getEnchant(reg, Enchant.UNBREAKING), getUnbreakingLevel(quality, rand));
 		
-		if(rand.nextInt(10) == 0){
+		if(Config.ofBoolean(Config.MENDING_LOOT) && rand.nextInt(10) == 0){
 			item.enchant(Enchant.getEnchant(reg, Enchant.MENDING), 1);
 		}
 		
