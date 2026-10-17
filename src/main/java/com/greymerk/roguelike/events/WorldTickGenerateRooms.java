@@ -1,5 +1,9 @@
 package com.greymerk.roguelike.events;
+import java.util.List;
+
+import com.greymerk.roguelike.debug.Debug;
 import com.greymerk.roguelike.dungeon.Dungeon;
+import com.greymerk.roguelike.dungeon.room.IRoom;
 import com.greymerk.roguelike.editor.Coord;
 import com.greymerk.roguelike.editor.IWorldEditor;
 import com.greymerk.roguelike.editor.WorldEditor;
@@ -10,6 +14,8 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 
 public class WorldTickGenerateRooms implements StartLevelTick{
+	
+	private static final int ROOMS_PER_TICK = 50;
 	
 	@Override
 	public void onStartTick(ServerLevel world) {
@@ -30,8 +36,11 @@ public class WorldTickGenerateRooms implements StartLevelTick{
 			});;
 		
 		// check for rooms that can be generated
-		state.getLoadedRooms(editor).stream()
+		List<IRoom> rooms = state.getLoadedRooms(editor); 
+		if(rooms.isEmpty()) RoguelikeState.flagForGenerationCheck = false;		
+		rooms.stream()
 			.sorted((a, b) -> a.getWorldPos().getY() - b.getWorldPos().getY())
+			.limit(ROOMS_PER_TICK)
 			.forEach(room -> {
 				editor.clearStats();
 				room.generate(editor);
@@ -41,6 +50,5 @@ public class WorldTickGenerateRooms implements StartLevelTick{
 			});
 		
 		state.update(editor);
-		RoguelikeState.flagForGenerationCheck = false;
 	}
 }
